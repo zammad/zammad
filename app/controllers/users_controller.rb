@@ -55,16 +55,23 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-#    params[:user][:role_ids] = params[:role_ids]
-#    logger.debug params[:user].inspect
     @user.created_by_id = (current_user && current_user.id) || 1
     respond_to do |format|
       if @user.save
 
         # if it's a signup, add user to customer role
         if @user.created_by_id == 1
-          role_id = Role.where( :name => 'Customer' ).first.id
-          @user.role_ids = [role_id]
+          
+          # check if it's first user
+          count = User.all.count()
+          role_ids = []
+          if count <= 2
+            role_ids.push Role.where( :name => 'Admin' ).first.id
+            role_ids.push Role.where( :name => 'Agent' ).first.id
+          else
+            role_ids.push Role.where( :name => 'Customer' ).first.id
+          end
+          @user.role_ids = role_ids
 
         # else do assignment as defined
         else
@@ -78,6 +85,7 @@ class UsersController < ApplicationController
         
         # send inviteation if needed
         if params[:invite]
+          
 #          logger.debug('IIIIIIIIIIIIIIIIIIIIIIIIIIIIII')
 #          exit '123'
         end

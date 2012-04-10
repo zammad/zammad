@@ -92,6 +92,21 @@ class App.Auth extends App.Ajax
       success: (data, status, xhr) =>
         console.log 'logincheck:success', data
 
+        # if session is not valid
+        if data.error
+  
+          # update config
+          for key, value of data.config
+            window.Config[key] = value
+
+          # empty session
+          window.Session = {}
+
+          # rebuild navbar with new navbar items
+          Spine.trigger 'navrebuild'
+
+          return false;
+
         # set avatar
         if !data.session.image
           data.session.image = 'http://placehold.it/48x48'

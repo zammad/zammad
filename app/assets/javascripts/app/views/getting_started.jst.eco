@@ -4,12 +4,21 @@
   <div class="container">
   
     <div class="row">
-      <div class="span6">
+    <% if @master_user: %>
+      <div class="span6 master_user">
+        <h2>Master Agent</h2>
+        <form class="form-stacked">
+          <%- @form_master %>
+          <button class="btn-primary submit">Next...</button>          
+        </form>
+      </div>
+    <% end %>
+      <div class="span6 agent_user hide">
         <h2>Invite Agents</h2>
         <form class="form-stacked">
-          <%- @form %>
+          <%- @form_agent %>
+          <button class="btn-primary submit">Send Invitation</button>          
         </form>
-        <button class="btn-primary submit">Send Invitation</button>          
       </div>
       <div class="span6">
         <h2>Tour</h2>

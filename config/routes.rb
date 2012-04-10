@@ -39,6 +39,9 @@ Zammad::Application.routes.draw do
   # networks
   resources :networks,            :only => [:create, :show, :index, :update, :destroy]
 
+  # getting_started
+  match '/getting_started',       :to => 'getting_started#index'
+
   # sessions
   resources :sessions,          :only => [:create, :destroy, :show]
   match '/signin',   :to => 'sessions#create'
