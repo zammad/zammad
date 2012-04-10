@@ -1,0 +1,23 @@
+<div class="hero-unit">
+<h1>Getting started!<small></small></h1>
+
+  <div class="container">
+  
+    <div class="row">
+      <div class="span6">
+        <h2>Invite Agents</h2>
+        <form class="form-stacked">
+          <%- @form %>
+        </form>
+        <button class="btn-primary submit">Send Invitation</button>          
+      </div>
+      <div class="span6">
+        <h2>Tour</h2>
+        <p>
+          Learn all about ...
+        </p>
+      </div>
+    </div>
+    
+  </div>
+</div>

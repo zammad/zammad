@@ -1,0 +1,100 @@
+<div class="page-header">
+  <h1><%= @ticket.title %> <small><%= @ticket.number %></small></h1>
+</div>
+
+<div class="row">
+  <div class="span9">
+
+    <div class="row">
+      <div class="span1 media-grid">
+        <img class="thumbnail user-data" data-id="<%= window.Session['id'] %>"" src="<%- window.Session['image'] %>" alt="">
+      </div>
+      
+      <div class="span8">
+        <div class="row ">
+
+          <form class="form-stacked keepleft update-box">
+  
+              <%- @form_ticket %>
+
+              <%- @form_article %>
+  
+              <div class="keepleft" id="file-uploader"></div>
+              &nbsp;
+              <input type="submit" class="btn primary submit" value="submit">
+
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  
+<% for article in @articles: %>
+    <div class="row article<% if article.internal is true: %> internal<% end %>" data-id="<%= article.id %>">
+      <div class="span1">
+        <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
+      </div>
+      
+      <div class="span7 article-message">
+        <% if article.from: %>
+          <strong title="From: <%= article.from %>"><%= article.from %></strong>
+          <% if article.actions: %>
+            <% for action in article.actions: %>
+              -
+              <a href="#" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%= action.name %></a>
+            <% end %>
+          <% end %>
+          - <%= article.humanTime %> ago
+          <br/>
+        <% end %>
+        <% if article.to: %>
+          <span title="To: <%= article.to %>"><%= article.to %></span>
+          <br/>
+        <% end %>
+        <% if article.cc: %>
+          <span title="Cc: <%= article.cc %>"><%= article.cc %></span>
+          <br/>
+        <% end %>
+        <% if article.subject: %>
+          <span title="Subject: <%= article.subject %>"><%= article.subject %></span>
+          <br/>
+        <% end %>
+        <% if article.attachments: %>
+          <% for attachment in article.attachments: %>
+            <a href="ticket_attachment/<%= attachment.id %>" target="_blank" data-type="attachment" class="" title="<%= attachment.size %>"><%= attachment.filename %></a>
+          <% end %>
+          <br/>
+        <% end %>
+        <div style="white-space:pre-wrap;"><%- window.linkify( article.body.trim() ) %></div>
+      </div>
+    </div>
+<% end %>
+
+  </div>
+
+  <div class="span3">
+    <div class="row" id="customer_info"></div>
+
+    <div class="row">
+      <div class="well">
+        <h3>Actions</h3>
+        <ul>
+          <li><a href="#" data-type="history">History</a></li>
+          <li><a href="#" data-type="merge">Merge</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="well">
+        <h3>Linked Objects</h3>
+        <ul>
+          <li><a href="#" data-type="history">T:12312313</a></li>
+          <li><a href="#" data-type="history">F:12313123</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</div>

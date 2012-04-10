@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1><%= @head %> <small>Management</small></h1>
+</div>
+
+<div class="row">
+  <div class="span3">
+    <ul class="nav nav-tabs nav-stacked">
+    <% if @menus: %>
+    <% for menu in @menus: %>
+      <li class="<%= menu['class'] %>"><a data-type="<%= menu['data-type'] %>" ><%= menu.name %></a></li>
+<!--
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= menu.name %><b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">List</a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">New</a></li>
+        </ul>
+      </li>
+-->
+    <% end %>
+    <% end %>
+    </ul>
+
+    <% for note in @notes: %>
+      <p><%= note %></p>
+    <% end %>
+
+    <% if @buttons: %>
+    <% for button in @buttons: %>
+      <p><a data-type="<%= button['data-type'] %>" class="btn <%= button['class'] %>"><%= button.name %></a></p>
+    <% end %>
+    <% end %>
+    
+  </div>
+
+  <div class="span9 table-overview"></div>
+
+</div>

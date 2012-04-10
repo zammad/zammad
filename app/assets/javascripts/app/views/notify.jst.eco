@@ -1,0 +1,4 @@
+<div class="alert <%= @data.type %>">
+  <a class="close" href="#">×</a>
+  <%= @data.text %>
+</div>

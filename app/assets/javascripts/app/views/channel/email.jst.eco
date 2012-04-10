@@ -1,0 +1,104 @@
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#channel-inbound" data-toggle="tab">Inbound</a></li>
+        <li><a href="#channel-outbound" data-toggle="tab">Outbound</a></li>
+        <li><a href="#channel-filter" data-toggle="tab">Filter</a></li>
+        <li><a href="#channel-settings" data-toggle="tab">Settings</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="channel-inbound">
+          
+<table class="table table-striped">
+<tr>
+ <th>Host</th>
+ <th>User</th>
+ <th>Type</th>
+ <th>Active</th>
+ <th>Delete</th>
+</tr>
+<tr> 
+ <td>lalal.example.com</td>
+ <td>wpt234rwr</td>
+ <td>IMAP</td>
+ <td>true</td>
+  <td>x</td>
+</tr>
+<tr> 
+ <td>l31alal.example.com</td>
+ <td>wpt23dd4rwr</td>
+ <td>POP3</td>
+ <td>true</td>
+  <td>x</td>
+</tr>
+</table>
+
+        </div>
+        <div class="tab-pane" id="channel-outbound">
+<table class="table table-striped">
+<tr>
+ <th>Host</th>
+ <th>User</th>
+ <th>Type</th>
+ <th>Active</th>
+  <th>Delete</th>
+</tr>
+<tr> 
+ <td>lalal.example.com</td>
+ <td>wpt234rwr</td>
+ <td>SMTP</td>
+ <td>true</td>
+  <td>x</td>
+</tr>
+<tr> 
+ <td>l31alal.example.com</td>
+ <td>wpt23dd4rwr</td>
+ <td>Sendmail</td>
+ <td>true</td>
+ <td>x</td>
+</tr>
+</table>
+        </div>
+        <div class="tab-pane" id="channel-filter">
+<table class="table table-striped">
+<tr>
+ <th>Name</th>
+ <th>Active</th>
+  <th>Delete</th>
+</tr>
+<tr> 
+ <td>lalal.example.com</td>
+ <td>true</td>
+  <td>x</td>
+</tr>
+<tr> 
+ <td>wpt23dd4rwr</td>
+ <td>true</td>
+  <td>x</td>
+</tr>
+</table>
+        </div>
+        <div class="tab-pane" id="channel-settings">
+          <h2>Max. Email Size</h2>
+          <p>lala alals alals ala.</p>
+          <hr/>
+          <h2>PostmasterFollowUpSearchIn</h2>
+          <p>o References - Executes follow up checks on In-Reply-To or References headers for mails that don't have a ticket number in the subject.</p>
+          <p>o Body - Executes follow up mail body checks in mails that don't have a ticket number in the subject.</p>
+          <p>o Attachment - Executes follow up mail attachments checks in mails that don't have a ticket number in the subject.</p>
+          <p>o Raw - Executes follow up plain/raw mail checks in mails that don't have a ticket number in the subject.</p>
+          <hr/>
+          <h2>FollowUpState</h2>
+          <p>Defines the state of a ticket if it gets a follow-up.</p>
+          <hr/>
+          <h2>Blocks Emails</h2>
+          <p>Blocks all the incoming emails that do not have a valid ticket number in subject with From: @example.com address.</p>
+            <h2>Subject</h2>
+            <p>Defines the subject for rejected emails.</p>
+            <h2>Body</h2>
+            <p>Defines the body for rejected emails.</p>
+          <hr/>
+          <h2>SendNoAutoResponseRegExp</h2>
+          <p>If this regex matches, no message will be send by the autoresponder.</p>
+          <p>(MAILER-DAEMON|postmaster|abuse)@.+?\..+?</p>
+          <hr/>
+        </div>
+      </div>

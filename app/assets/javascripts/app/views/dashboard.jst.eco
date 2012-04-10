@@ -1,0 +1,21 @@
+<div class="page-header">
+  <h1><%= @head %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h1>
+</div>
+
+<div class="row">
+  <div class="span9">
+<!--
+    <div class="row">
+      <div class="span9">
+        <h2>Network</h2>
+      Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+      Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+      </div>
+    </div>
+-->
+    <div class="main-overviews"></div>
+  </div>
+  <div class="span3">
+    <div class="side-overviews"></div>
+  </div>
+</div>

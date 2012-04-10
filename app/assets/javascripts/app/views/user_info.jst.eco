@@ -1,0 +1,55 @@
+<div class="well">
+  <h3>Customer</h3>
+<% if @user.image: %>
+  <img class="thumbnail" src="<%- @user.image %>" alt="">
+<% end %>
+  <div class="row">
+    <div class="customer-info" title="Name"><%= @user['firstname'] %> <%= @user['lastname'] %></div>
+  </div>
+<% for row in @data: %>
+  <% if @user[row.name]: %>
+    <div class="row">
+      <% if row.tag isnt 'textarea': %>
+        <div class="customer-info" title="<%= row.display %>"><%- window.linkify( @user[row.name] ) %></div>
+      <% else: %>
+        <div class="customer-info" title="<%= row.display %>">
+          <strong><%= row.display %></strong><br/>
+          <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type=edit><%= @user[row.name] %></textarea>
+       </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+<% if @user['accounts']: %>
+  <div class="row">
+    <div class="customer-info">
+      <strong>Linked Accounts</strong><br/>
+  <% for account of @user['accounts']: %>
+      <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
+  <% end %>
+    </div>
+  </div>
+<% end %>
+<% if @user['links']: %>
+  <% for link in @user['links']: %>
+  <div class="row">
+    <div class="customer-info">
+      <strong><%= link['title'] %></strong><br/>
+      <% for item in link['items']: %>
+        <% if item['url']: %>
+          <a href="<%= item['url'] %>" title="<%= item['title'] %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
+        <% else: %>  
+          <span title="<%= item['title'] %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
+        <% end %>  
+          <%= item['name'] %>
+        <% if item['url']: %>
+          </a>
+        <% else: %>
+          </span>
+        <% end %>  
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+</div>

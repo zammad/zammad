@@ -1,0 +1,13 @@
+<div class="hero-unit">
+  <h1>Join <%= Config.product_name %><small></small></h1>
+
+  <div class="container">
+  
+    <form>
+      <%- @form %>
+      <button class="btn cancel">Cancel</button>
+      <button class="btn-primary submit">Create my account</button>
+    </form>
+    
+  </div>
+</div>

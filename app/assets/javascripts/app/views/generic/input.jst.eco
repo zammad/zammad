@@ -1,0 +1,1 @@
+<input id="<%= @attribute.id %>" type="<%= @attribute.type %>" name="<%= @attribute.name %>" value="<%= @attribute.value %>" class="<%= @attribute.class %>" <%= @attribute.required %> <%= @attribute.autofocus %> <%- @attribute.autocapitalize %>/>

@@ -1,0 +1,96 @@
+body {
+  padding-top:60px;
+}
+
+/*
+#content > *:not(.active) {
+  display: none !important;
+}
+*/
+
+[class^="icon-"],
+[class*=" icon-"] {
+  background-image: url("../assets/glyphicons-halflings.png");
+}
+  
+.edit {
+  min-height:30px;
+}
+
+.edit:focus {
+  color: #000000;
+  outline: 0;
+}
+
+.delete {
+  background:url("../assets/close.png") no-repeat;
+  text-indent: -9999em;
+  border: 0;
+  width: 40px;
+  height: 40px;
+  cursor:pointer;
+  float: right;
+  position: relative;
+  top: -15px;
+  left: 30px; 
+  margin: 4px;
+  clear: right;
+}
+
+/*
+.dropdown-menu {
+  min-width: 220px;
+}
+*/
+
+footer {
+//  margin-top: 17px;
+  padding-top: 17px;
+  border-top: 1px solid #EEE;
+}
+
+.form-horizontal .controls {
+  margin-left: 150px;
+}
+
+.search-query {
+  width: 160px;
+}
+
+.keepleft {
+  float:left;
+}
+
+.update-box {
+  margin-left: 10px;
+}
+
+.article {
+
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  
+  border: 1px solid #ffffff;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.article-message {
+  padding-left: 4px;
+}
+
+.internal {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  border: 1px solid #fbeed5;
+}
+
+.customer-info {
+  width:86%;
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 10px;
+}

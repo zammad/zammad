@@ -1,0 +1,5 @@
+<form class="form-stacked keepleft update-box bulk-action-form">
+  <%- @form_ticket %>
+  <%- @form_article %>
+  <input type="submit" class="btn primary submit" value="update">
+</form>

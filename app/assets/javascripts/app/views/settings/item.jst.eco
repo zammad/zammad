@@ -1,0 +1,7 @@
+<form class="">
+  <h2><%= @setting.title %></h2>
+  <p><%= @setting.description %></p>
+  <%- @form %>
+  <input type="submit" class="btn" value="Submit"/>
+</form>
+<hr/>

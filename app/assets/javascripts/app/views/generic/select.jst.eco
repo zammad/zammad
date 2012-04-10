@@ -1,0 +1,5 @@
+<select id="<%= @attribute.id %>" class="<%= @attribute.class %>" name="<%= @attribute.name %>" <%= @attribute.multiple %>>
+<% for row in @attribute.options: %>
+  <option value="<%= row.value %>" <%= row.selected %> <%= row.disabled %>><%= row.name %></option>
+<% end %>
+</select>

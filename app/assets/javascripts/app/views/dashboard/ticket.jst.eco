@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="span9">
+    <h2><%= @overview.meta.name %> <small><a href="#" data-type="settings" class="icon-edit"></a>
+    </small></h2>
+    <div class="pagination">
+      <ul>
+        <% if @start_page != 1: %>
+          <li><a href="#" data-id="<%= @start_page - 1 %>" data-type="page">«</a></li>
+        <% end %>
+        <% for item in [1..@pages_total]: %>
+          <li>
+            <a href="#" data-id="<%= item %>" data-type="page"><%= item %></a>
+          </li>
+        <% end %>
+        <% if @start_page != @pages_total: %>
+          <li><a href="#" data-id="<%= @start_page + 1 %>" data-type="page">»</a></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="table-overview"></div>
+  </div>
+</div>

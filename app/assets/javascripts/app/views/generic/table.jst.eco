@@ -1,0 +1,41 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+    <% if @checkbox: %>
+      <th><input type="checkbox" value="" name="bulk_all"/></th>
+    <% end %>
+<% for row in @header: %>
+      <th><%= row %></th>
+<% end %>
+<!--
+      <th>Destory</th>
+-->
+    </tr>
+  </thead>
+  <tbody>
+<% for object in @objects: %>
+  <tr class="item" data-id="<%= object.id %>">
+    <% if @checkbox: %>
+    <td>
+        <input type="checkbox" value="<%= object.id %>" name="bulk"/>
+    </td>
+    <% end %>
+  <% for row in @overview: %>
+    <td>
+      <% if row.link: %>
+        <a href="#" data-type="edit"><%= object[row.name]['name'] %></a>
+      <% else: %>
+        <span <% if row.class: %>class="<%= row.class %>"<% end %> <% if row.data && row.data.id: %>data-id="<%= object[row.name]['id'] %>"<% end %>><%= object[row.name]['name'] %></span>
+      <% end %>
+    </td>
+  <% end %>
+<!--
+    <td><%= object.updated_at %></td>
+    <td>    
+      <a data-type="destroy">Destroy</a>
+    </td>
+-->
+  </tr>
+<% end %>
+  </tbody>
+</table>

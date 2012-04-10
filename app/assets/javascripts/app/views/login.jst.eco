@@ -1,0 +1,52 @@
+<div id="login">
+
+  <div class="hero-unit">
+  <h1>Welcome stranger!</h1>
+
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          Sign in with
+          <form id="login" class="form-search">
+            <input name="username" type="text" class="input span3" placeholder="Username" value="<%= @item.username %>" autocapitalize="off"/>
+            <input name="password" type="password" class="input span3" placeholder="Password"/>
+            <button class="btn-primary" type="submit">Sign in</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span12">
+          <p>--- or ---</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span12">
+          Sign in using
+          <ul>
+            <li><a href="/auth/twitter">twitter</a></li>
+            <li><a href="/auth/facebook">facebook</a></li>
+            <li><a href="/auth/linked_in">linkedin</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span12">
+          <p>--- or ---</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span12">
+          <p>New to <%= Config.product_name %>, join today!</p>
+          <p><a href="#signup" class="btn">Sign up</a>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</div>

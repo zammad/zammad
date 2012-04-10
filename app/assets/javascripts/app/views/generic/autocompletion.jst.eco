@@ -1,0 +1,2 @@
+<input id="<%= @attribute.id %>" type="hidden" name="<%= @attribute.name %>" value="<%= @attribute.value %>" <%= @attribute.required %> />
+<input id="<%= @attribute.id %>_autocompletion" type="text" name="<%= @attribute.name %>_autocompletion" value="" class="<%= @attribute.class %>" <%= @attribute.required %> <%= @attribute.autofocus %> <%- @attribute.autocapitalize %>/>
