@@ -151,37 +151,6 @@ class CreateTicket < ActiveRecord::Migration
     add_index :overviews_groups, [:overview_id]
     add_index :overviews_groups, [:group_id]
 
-    create_table :account_inbounds do |t|
-      t.references :group,                            :null => true
-      t.column :login,        :string, :limit => 250, :null => false
-      t.column :password,     :string, :limit => 250, :null => false
-      t.column :host,         :string, :limit => 250, :null => false
-      t.column :account_type, :string, :limit => 20,  :null => false
-      t.column :trusted,      :boolean,               :null => false, :default => false
-      t.column :active,       :boolean,               :null => false, :default => true
-      t.column :note,         :string, :limit => 250, :null => true
-      t.timestamps
-    end
-
-    create_table :account_outbounds do |t|
-      t.column :realname,     :string, :limit => 250, :null => false
-      t.column :address,      :string, :limit => 250, :null => false
-      t.column :account_type, :string, :limit => 20,  :null => false
-      t.column :login,        :string, :limit => 250, :null => true
-      t.column :password,     :string, :limit => 250, :null => true
-      t.column :host,         :string, :limit => 250, :null => true
-      t.column :active,       :boolean,               :null => false, :default => true
-      t.column :note,         :string, :limit => 250, :null => true
-      t.timestamps
-    end
-
-    create_table :account_inbound_filters do |t|
-      t.column :name,   :string, :limit => 250, :null => false
-      t.column :key,    :string, :limit => 250, :null => false
-      t.column :value,  :string, :limit => 250, :null => false
-    end
-    add_index :account_inbound_filters, [:name]
-
     create_table :triggers do |t|
       t.column :name,   :string, :limit => 250, :null => false
       t.column :key,    :string, :limit => 250, :null => false
@@ -192,7 +161,6 @@ class CreateTicket < ActiveRecord::Migration
     add_index :triggers, [:value]
 
     create_table :notifications do |t|
-      t.references :account_outbounds,                  :null => false
       t.column :subject,      :string, :limit => 250,   :null => false
       t.column :body,         :string, :limit => 8000,  :null => false
       t.column :content_type, :string, :limit => 250,   :null => false
@@ -245,8 +213,5 @@ class CreateTicket < ActiveRecord::Migration
     drop_table :ticket_priorities
     drop_table :ticket_states
     drop_table :ticket_state_types
-    drop_table :account_inbounds
-    drop_table :account_inbound_filters
-    drop_table :account_outbounds
   end
 end

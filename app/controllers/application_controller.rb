@@ -99,43 +99,19 @@ class ApplicationController < ActionController::Base
   # logging out removes it.
   def current_user
       @_current_user ||= session[:user_id] &&
-      User.find_by_id(session[:user_id])
+      User.find_by_id( session[:user_id] )
   end
 
-#  def authenticate
-#    unless current_user
-#      respond_to do |format|
-#        format.html {
-#          flash[:notice] = "You're not logged in!"
-#          store_location
-#          redirect_to :login
-#        }
-#        format.json {
-#          render :json => { :error => 'login required' }, :status => :unauthorized
-#        }
-#      end
-#      return false
-#    end
-#  end
-#  def store_location
-#    session[:return_to] = request.url
-#  end
-#  def redirect_back_or_default(default)
-#    redirect_to(session[:return_to] || default)
-#    session[:return_to] = nil
-#  end
   def authentication_check
     logger.debug 'authentication_check'
+#      logger.debug session.inspect
     
     # check http basic auth
     authenticate_with_http_basic do |user, password|
       logger.debug 'http basic auth check'
-#      logger.debug session.inspect
-      logger.debug user
-      logger.debug password
-      userdata = User.where(:login => user).first
-#      logger.debug userdata.inspect
-
+#      logger.debug user
+#      logger.debug password
+      userdata = User.where( :login => user ).first
       message = ''
       if !userdata
         message = 'authentication failed, user'
@@ -154,18 +130,14 @@ class ApplicationController < ActionController::Base
         end
       end
       return true
-#      return true
-#      request_http_basic_authentication
     end
 
 #    logger.debug 'session check'
 #    logger.debug session.inspect
 #    session[:user_id] = 2
     if !session[:user_id]
-#         = userdata.id
       logger.debug '!session user_id'
-#      session[:name] = 'lol'
-      logger.debug session.inspect
+#      logger.debug session.inspect
       message = 'no valid session, user_id'
       respond_to do |format|
         format.json {
@@ -176,10 +148,9 @@ class ApplicationController < ActionController::Base
     end
 
     # check session auth
-#    logger.debug request.env.inspect
 #    return 1231
 #    request_http_basic_authentication
-
+    return false
   end
 
   # Sets the current user into a named Thread location so that it can be accessed
