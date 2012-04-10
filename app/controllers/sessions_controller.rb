@@ -40,32 +40,37 @@ class SessionsController < ApplicationController
 #    user = User.authenticate('hansi', 'test')
     
     respond_to do |format|
-      if session[:user_id]
-        
-        # Save the user ID in the session so it can be used in
-        # subsequent requests
-        user = user_data_full( session[:user_id] )
-        
-        # auto population of default collections
-        default_collection = default_collections()
-        
-        # config
-        config = {}
-        Setting.where( :frontend => true ).each { |setting|
-          config[setting.name] = setting.state[:value]
+
+      # config
+      config = {}
+      Setting.where( :frontend => true ).each { |setting|
+        config[setting.name] = setting.state[:value]
+      }
+
+      # no valid sessions
+      if !session[:user_id]
+        render :json => {
+          :error  => 'no valid session',
+          :config => config,
         }
-        
-        #, :status => :created
-        format.json {
-          render :json => {
-            :session             => user,
-            :default_collections => default_collection,
-            :config              => config
-          }
-        }
-      else
-        format.json { render :json => { :error => 'no valid session' }, :status => :unprocessable_entity }
+        return
       end
+
+      # Save the user ID in the session so it can be used in
+      # subsequent requests
+      user = user_data_full( session[:user_id] )
+
+      # auto population of default collections
+      default_collection = default_collections()
+
+      #, :status => :created
+      format.json {
+        render :json => {
+          :session             => user,
+          :default_collections => default_collection,
+          :config              => config,
+        }
+      }
     end
   end
 

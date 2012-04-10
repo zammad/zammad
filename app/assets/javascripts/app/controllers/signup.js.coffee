@@ -32,7 +32,6 @@ class Index extends App.Controller
     )
 
   cancel: ->
-    @log 'cancel....'
     @navigate 'login'
 
   submit: (e) ->
@@ -51,10 +50,7 @@ class Index extends App.Controller
     if !@params.login && @params.email
       @params.login = @params.email
       
-#    role = App.Role.findByAttribute("name", "Customer")
-#    @params.role_ids = role.id
-#    @params.role_ids = 3
-    @params.role_ids = []
+    @params.role_ids = [0]
     @log 'updateAttributes', @params
     user = new User
     user.load(@params)
@@ -82,7 +78,6 @@ class Index extends App.Controller
     )
   
   success: (data, status, xhr) =>
-    @log 'login:success', data
 
     # login check
     auth = new App.Auth
@@ -98,7 +93,6 @@ class Index extends App.Controller
     @navigate '#'
 
   error: (xhr, statusText, error) =>
-    console.log 'login:error'
     
     # add notify
     Spine.trigger 'notify:removeall'
