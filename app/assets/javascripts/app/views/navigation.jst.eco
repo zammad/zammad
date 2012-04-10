@@ -40,13 +40,6 @@
               <li><a href="#login">Sign in</a></li>
             </ul>
 <% end %>
-<!--
-            <ul class="nav">
-              <li><a href="#notes">Notes</a></li>
-              <li><a href="#register">Register</a></li>
-              <li><a href="#login">Login</a></li>
-            </ul>
--->
         </div>
       </div>
     </div>

@@ -70,7 +70,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.column     :created_by_id,    :integer,             :null => false
       t.timestamps
     end
-    add_index :network_category_subscriptions, [:network_categories_id, :created_by_id], :unique => true, :name => 'index_network_category_subscriptions_on_network_categories_i_and_c'
+    add_index :network_category_subscriptions, [:network_categories_id, :created_by_id], :unique => true, :name => 'index_network_category_subscriptions_on_network_c_i_and_c'
 
     
     create_table :network_item_subscriptions do |t|

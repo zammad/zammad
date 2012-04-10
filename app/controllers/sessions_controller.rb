@@ -135,10 +135,10 @@ class SessionsController < ApplicationController
       default_collection['TicketPriority']      = Ticket::Priority.all
       default_collection['TicketArticleType']   = Ticket::Article::Type.all
       default_collection['TicketArticleSender'] = Ticket::Article::Sender.all
-      default_collection['Forum']               = Forum.all
-      default_collection['ForumCategory']       = Forum::Category.all
-      default_collection['ForumCategoryType']   = Forum::Category::Type.all
-      default_collection['ForumPrivacy']        = Forum::Privacy.all
+      default_collection['Network']             = Network.all
+      default_collection['NetworkCategory']     = Network::Category.all
+      default_collection['NetworkCategoryType'] = Network::Category::Type.all
+      default_collection['NetworkPrivacy']      = Network::Privacy.all
       return default_collection  
     end
 end

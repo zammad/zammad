@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include UserInfo
   protect_from_forgery
-  http_basic_authenticate_with :name => "test", :password => "ttt"
+#  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user, :authentication_check
 
@@ -128,7 +128,6 @@ class ApplicationController < ActionController::Base
     logger.debug 'authentication_check'
     
     # check http basic auth
-    if false
     authenticate_with_http_basic do |user, password|
       logger.debug 'http basic auth check'
 #      logger.debug session.inspect
@@ -149,11 +148,6 @@ class ApplicationController < ActionController::Base
       # message = 'login required'
       if message != ''
         respond_to do |format|
-#          format.html {
-#            flash[:notice] = "You're not logged in!"
-#            store_location
-#            redirect_to :login
-#          }
           format.json {
             render :json => { :error => message }, :status => :unauthorized
           }
@@ -163,10 +157,9 @@ class ApplicationController < ActionController::Base
 #      return true
 #      request_http_basic_authentication
     end
-    end
 
-    logger.debug 'session check'
-    logger.debug session.inspect
+#    logger.debug 'session check'
+#    logger.debug session.inspect
 #    session[:user_id] = 2
     if !session[:user_id]
 #         = userdata.id
@@ -175,11 +168,6 @@ class ApplicationController < ActionController::Base
       logger.debug session.inspect
       message = 'no valid session, user_id'
       respond_to do |format|
-#        format.html {
-#          flash[:notice] = "You're not logged in!"
-#          store_location
-#          redirect_to :login
-#        }
         format.json {
           render :json => { :error => message }, :status => :unauthorized
         }

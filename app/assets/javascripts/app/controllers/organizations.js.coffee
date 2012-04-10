@@ -40,9 +40,6 @@ Config.NavBar['AdminTrigger'] = { prio: 3000, parent: '#admin', name: 'Trigger',
 Config.NavBar['AdminScheduler'] = { prio: 3500, parent: '#admin', name: 'Scheduler', target: '#scheduler', role: ['Admin'] }
 
 
-Config.NavBar['Note'] = { prio: 1500, parent: '', name: 'Notes', target: '#notes', role: ['Notes'] }
-#Config.NavBar['Post'] = { prio: 1600, parent: '', name: 'Posts', target: '#posts', role: ['Agent'] }
-
 Config.NavBar['Setting'] = { prio: 20000, parent: '', name: 'Settings', target: '#settings', role: ['Admin'] }
 Config.NavBar['SettingSystem']   = { prio: 1400, parent: '#settings', name: 'System', target: '#settings/system', role: ['Admin'] }
 Config.NavBar['SettingSecurity'] = { prio: 1500, parent: '#settings', name: 'Security', target: '#settings/security', role: ['Admin'] }
