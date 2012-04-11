@@ -13,20 +13,20 @@ want to answer them with a team of agents? You're going to love Zammad!
 == Getting Started
 
 1. Install Zammad on your system
-     <tt>tar -xzvf zammad-1.0.1.tar.gz</tt> 
+     shell>tar -xzvf zammad-1.0.1.tar.gz 
 
 2. Install all dependencies
-     <tt>cd zammad</tt>
-     <tt>bundle install</tt>
+     shell> cd zammad
+     shell> bundle install
 
 3. Configure your databases (if needed)
 
 4. Initialize your databse
-     <tt>rake db:migrate</tt>
-     <tt>rake db:seed</tt> 
+     shell> rake db:migrate
+     shell> rake db:seed 
 
-5. Change directory to <tt>zammad</tt> and start the web server:
-       <tt>cd zammad; rails server</tt>
+5. Change directory to <tt>zammad</tt> (if needed) and start the web server:
+     shell> rails server
 
 6. Go to http://localhost:3000/app#getting_started and you'll see:
        "Welcome to Zammad!", there you need to create your admin
