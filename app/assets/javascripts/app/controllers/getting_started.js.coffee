@@ -10,9 +10,6 @@ class Index extends App.Controller
   constructor: ->
     super
     
-    # check authentication
-#    return if !@authenticate()
-    
     # set title
     @title 'Get Started'
     @navupdate '#get_started'
@@ -41,14 +38,16 @@ class Index extends App.Controller
         # load group collection
         @loadCollection( type: 'Group', data: data.groups )
 
-        # load role collection
-        @loadCollection( type: 'Role', data: data.roles )
-
         # render page
         @render()
     )
 
   render: ->
+    
+    # check authentication, redirect to login if master user already exists
+    if !@master_user && !@authenticate()
+      @navigate '#login'
+
     @html App.view('getting_started')(
       form_agent:  @formGen( model: App.User, required: 'invite_agent' ),
       form_master: @formGen( model: App.User, required: 'signup' ),
@@ -91,7 +90,6 @@ class Index extends App.Controller
         # send email
         
         # clear form
-#        @fetch()
         auth = new App.Auth
         auth.login(
           data: {
@@ -110,6 +108,7 @@ class Index extends App.Controller
     @log 'login:success', data
 
     if @master_user
+      
       # login check
       auth = new App.Auth
       auth.loginCheck()
@@ -127,5 +126,4 @@ class Index extends App.Controller
 #      @navigate '#getting_started'
 #      @fetch()
     
-
 Config.Routes['getting_started'] = Index

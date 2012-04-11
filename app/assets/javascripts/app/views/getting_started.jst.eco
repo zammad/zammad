@@ -1,8 +1,17 @@
 <div class="hero-unit">
-<h1>Getting started!<small></small></h1>
+
+  <h1>Getting started!<small></small></h1>
 
   <div class="container">
-  
+    <div class="row">
+      <div class="span12">
+        <ol>
+          <li>Create Admin</li>
+          <li>Invite Agents</li>
+          <li>Configure Channels</li>
+        </ol>
+      </div>  
+    </div>  
     <div class="row">
     <% if @master_user: %>
       <div class="span6 master_user">

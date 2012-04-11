@@ -11,18 +11,11 @@ class GettingStartedController < ApplicationController
 
     # get all groups
     @groups = Group.where( :active => true )
-    @roles  = Role.where( :active => true )
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :master_user => master_user,
-          :groups      => @groups,
-          :roles       => @roles,
-        }
-      }
-    end
+    render :json => {
+      :master_user => master_user,
+      :groups      => @groups,
+    }
   end
-
 end
