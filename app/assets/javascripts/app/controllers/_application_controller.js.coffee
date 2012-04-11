@@ -484,7 +484,12 @@ class App.Controller extends Spine.Controller
 
   authenticate: ->
     console.log 'authenticate', window.Session
+    
+    # return rtue if session exists
     return true if window.Session['id']
+
+    # remember requested url
+    window.Config['requested_url'] = window.location.hash
 
     # redirect to login  
     @navigate '#login'

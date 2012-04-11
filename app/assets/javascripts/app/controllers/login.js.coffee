@@ -71,7 +71,13 @@ class Index extends App.Controller
     }
     
     # redirect to #
-    @navigate '#/'
+    if window.Config['requested_url'] isnt ''
+      @navigate window.Config['requested_url']
+      
+      # reset
+      window.Config['requested_url'] = ''
+    else
+      @navigate '#/'
 
   error: (xhr, statusText, error) =>
     console.log 'login:error'
