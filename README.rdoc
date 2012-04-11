@@ -28,8 +28,9 @@ want to answer them with a team of agents? You're going to love Zammad!
 5. Change directory to <tt>zammad</tt> and start the web server:
        <tt>cd zammad; rails server</tt>
 
-6. Go to http://localhost:3000/app and you'll see:
-       "Welcome to Zammad!"
+6. Go to http://localhost:3000/app#getting_started and you'll see:
+       "Welcome to Zammad!", there you need to create your admin
+       user and you need to invite other agents.
 
 * The Getting Started Guide: http://guides.zammd.org/getting_started.html
 
