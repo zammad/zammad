@@ -22,7 +22,7 @@ want to answer them with a team of agents? You're going to love Zammad!
 
 3. Configure your databases (if needed)
 
-4. Initialize your databse
+4. Initialize your database
      shell> rake db:migrate
      shell> rake db:seed 
 
