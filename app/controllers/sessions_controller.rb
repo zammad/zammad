@@ -6,81 +6,65 @@ class SessionsController < ApplicationController
   # "Create" a login, aka "log the user in"
   def create
     logger.debug 'session create'
-    logger.debug params.inspect
-    logger.debug 'b auth'
-    user = User.authenticate(params[:username], params[:password])
-    logger.debug 'a auth'
-#    user = User.authenticate('hansi', 'test')
+#    logger.debug params.inspect
+    user = User.authenticate( params[:username], params[:password] )
 
-    respond_to do |format|
-      if user
-
-        # do not show password
-        user['password'] = ''
-        
-        user['roles']         = user.roles.select('id, name').where(:active => true)      
-        user['groups']        = user.groups.select('id, name').where(:active => true)      
-        user['organization']  = user.organization     
-        user['organizations'] = user.organizations.select('id, name').where(:active => true)      
-        
-        # auto population of default collections
-        default_collection = default_collections()
-        
-        session[:user_id] = user.id
-        format.json { render :json => { :session => user, :default_collections => default_collection }, :status => :created }
-      else
-        format.json { render :json => { :error => 'login failed' }, :status => :unprocessable_entity }
-      end
+    # auth failed
+    if !user
+      render :json => { :error => 'login failed' }, :status => :unprocessable_entity
     end
+    
+    # do not show password
+    user['password'] = ''
+    
+    user['roles']         = user.roles.select('id, name').where(:active => true)      
+    user['groups']        = user.groups.select('id, name').where(:active => true)      
+    user['organization']  = user.organization     
+    user['organizations'] = user.organizations.select('id, name').where(:active => true)      
+    
+    # auto population of default collections
+    default_collection = default_collections()
+    
+    # set session user_id
+    session[:user_id] = user.id
+    
+    # return new session data
+    render :json => { :session => user, :default_collections => default_collection }, :status => :created
   end
 
   def show
-    logger.debug 'session show'
-    logger.debug params.inspect
-#    user = User.authenticate('hansi', 'test')
     
-    respond_to do |format|
-
-      # config
-      config = {}
-      Setting.where( :frontend => true ).each { |setting|
-        config[setting.name] = setting.state[:value]
+    # no valid sessions
+    if !session[:user_id]
+      render :json => {
+        :error  => 'no valid session',
+        :config => config_frontend,
       }
-
-      # no valid sessions
-      if !session[:user_id]
-        render :json => {
-          :error  => 'no valid session',
-          :config => config,
-        }
-        return
-      end
-
-      # Save the user ID in the session so it can be used in
-      # subsequent requests
-      user = user_data_full( session[:user_id] )
-
-      # auto population of default collections
-      default_collection = default_collections()
-
-      #, :status => :created
-      format.json {
-        render :json => {
-          :session             => user,
-          :default_collections => default_collection,
-          :config              => config,
-        }
-      }
+      return
     end
+
+    # Save the user ID in the session so it can be used in
+    # subsequent requests
+    user = user_data_full( session[:user_id] )
+
+    # auto population of default collections
+    default_collection = default_collections()
+
+    # return current session
+    render :json => {
+      :session             => user,
+      :default_collections => default_collection,
+      :config              => config_frontend,
+    }
   end
 
   # "Delete" a login, aka "log the user out"
   def destroy
+    
     # Remove the user id from the session
     @_current_user = session[:user_id] = nil
-    respond_to do |format|
-      format.json { render :json => { } }
-    end
+
+    render :json => { }
   end
   
   def create_omniauth

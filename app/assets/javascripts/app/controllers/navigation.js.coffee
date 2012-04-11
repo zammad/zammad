@@ -1,10 +1,4 @@
 $ = jQuery.sub()
-Note = App.Note
-
-$.fn.item = ->
-  elementID   = $(@).data('id')
-  elementID or= $(@).parents('[data-id]').data('id')
-  Note.find(elementID)
 
 class App.Navigation extends Spine.Controller
   events:
@@ -21,13 +15,14 @@ class App.Navigation extends Spine.Controller
     Spine.bind 'navrebuild', (user) =>
       @log 'navbarrebuild', user
       @render(user)
+      @delay( @sync, 1600 )
 
     Spine.bind 'navupdate_remote', (user) =>
       @log 'navupdate_remote'
       @sync
     
     # rerender if new overview data is there
-    @delay( @sync, 1800 )
+    @delay( @sync, 1600 )
     
   render: (user) ->
 #    @log 'nav render', Config.NavBar

@@ -14,11 +14,9 @@ class Index extends App.Controller
     
     # set title
     @title 'Sign up'
-
-    @render()
-    
     @navupdate '#signup'
 
+    @render()
     
   render: ->
     
@@ -108,8 +106,3 @@ class Index extends App.Controller
     )
 
 Config.Routes['signup'] = Index
-
-#class App.SignUp extends App.Router
-#  routes:
-#    'signup': Index
-#Config.Controller.push App.SignUp

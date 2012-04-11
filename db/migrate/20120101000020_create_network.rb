@@ -24,9 +24,9 @@ class CreateNetwork < ActiveRecord::Migration
     add_index :network_privacies, [:name], :unique => true
 
     create_table :network_categories do |t|
-      t.references :network_category_type,                  :null => false
-      t.references :network_privacy,                        :null => false
-      t.references :network,                                :null => false
+      t.references :network_category_type,                :null => false
+      t.references :network_privacy,                      :null => false
+      t.references :network,                              :null => false
       t.column :name,           :string, :limit => 200,   :null => false
       t.column :note,           :string, :limit => 250,   :null => true
       t.column :allow_comments, :boolean,                 :null => false, :default => true
@@ -41,7 +41,7 @@ class CreateNetwork < ActiveRecord::Migration
     end
 
     create_table :network_items do |t|
-      t.references :network_category,                       :null => false
+      t.references :network_category,                     :null => false
       t.column :title,          :string, :limit => 200,   :null => false
       t.column :body,           :string, :limit => 25000, :null => false
       t.column :created_by_id,  :integer,                 :null => false
@@ -50,36 +50,33 @@ class CreateNetwork < ActiveRecord::Migration
     add_index :network_items, [:network_category_id]
 
     create_table :network_item_comments do |t|
-      t.references :network_item,                           :null => false
+      t.references :network_item,                         :null => false
       t.column :body,           :string, :limit => 25000, :null => false
       t.column :created_by_id,  :integer,                 :null => false
       t.timestamps
     end
     add_index :network_item_comments, [:network_item_id]
-
     
     create_table :network_item_plus do |t|
-      t.references :network_item,                           :null => false
+      t.references :network_item,                         :null => false
       t.column     :created_by_id,      :integer,         :null => false
       t.timestamps
     end
     add_index :network_item_plus, [:network_item_id, :created_by_id], :unique => true
 
     create_table :network_category_subscriptions do |t|
-      t.references :network_categories,                       :null => false
-      t.column     :created_by_id,    :integer,             :null => false
+      t.references :network_categories,                   :null => false
+      t.column     :created_by_id,      :integer,         :null => false
       t.timestamps
     end
     add_index :network_category_subscriptions, [:network_categories_id, :created_by_id], :unique => true, :name => 'index_network_category_subscriptions_on_network_c_i_and_c'
 
-    
     create_table :network_item_subscriptions do |t|
-      t.references :network_item,                           :null => false
-      t.column     :created_by_id,  :integer,             :null => false
+      t.references :network_item,                         :null => false
+      t.column     :created_by_id,    :integer,           :null => false
       t.timestamps
     end
     add_index :network_item_subscriptions, [:network_item_id, :created_by_id], :unique => true, :name => 'index_network_item_subscriptions_on_item_id_and_created_by_id'
-
     
   end
 

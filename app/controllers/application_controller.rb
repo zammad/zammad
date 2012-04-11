@@ -3,65 +3,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
-  helper_method :current_user, :authentication_check
+  helper_method :current_user, :authentication_check, :config_frontend, :user_data_full
 
   before_filter :set_user, :cors_preflight_check
   after_filter :set_access_control_headers
 
-  def user_data_full (user_id)
-
-    # get user
-    user = User.find(user_id)
-
-    # get linked accounts
-    user['accounts'] = {}
-    authorizations = user.authorizations() || []
-    authorizations.each do | authorization |
-      user['accounts'][authorization.provider] = {
-        :uid      => authorization[:uid],
-        :username => authorization[:username]
-      }
-    end
-
-    # do not show password
-    user['password'] = ''
-    
-    # show linked topics and items
-    user['links'] = []
-    ticket_state_list_open   = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending remidner', 'pending action']) )
-    ticket_state_list_closed = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['closed'] ) )
-
-    tickets_open   = Ticket.where(:customer_id => user_id, :ticket_state_id => ticket_state_list_open).count()
-    tickets_closed = Ticket.where(:customer_id => user_id, :ticket_state_id => ticket_state_list_closed).count()
-
-    topic = {
-      :title => 'Tickets',
-      :items => [
-        {
-          :url   => '',
-          :name  => 'open (' + tickets_open.to_s + ')',
-          :title => 'Open Tickets',
-          :class => 'user-tickets',
-          :data  => 'open'
-        },
-        {
-          :url   => '',
-          :name  => 'closed (' + tickets_closed.to_s + ')',
-          :title => 'Closed Tickets',
-          :class => 'user-tickets',
-          :data  => 'closed'
-        }
-      ]
-    }
-    user['links'].push topic
-
-    # set roles
-    user['roles']         = user.roles.select('id, name').where(:active => true)
-    user['groups']        = user.groups.select('id, name').where(:active => true)
-    user['organization']  = user.organization
-    user['organizations'] = user.organizations.select('id, name').where(:active => true)
-    return user
-  end
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers 
@@ -121,15 +67,15 @@ class ApplicationController < ActionController::Base
         end
       end
 
-      # message = 'login required'
       if message != ''
-        respond_to do |format|
-          format.json {
-            render :json => { :error => message }, :status => :unauthorized
-          }
-        end
+        render(
+          :json   => {
+            :error => message,
+          },
+          :status => :unauthorized
+        )
       end
-      return true
+      return false
     end
 
 #    logger.debug 'session check'
@@ -137,17 +83,16 @@ class ApplicationController < ActionController::Base
 #    session[:user_id] = 2
     if !session[:user_id]
       logger.debug '!session user_id'
-#      logger.debug session.inspect
       message = 'no valid session, user_id'
-      respond_to do |format|
-        format.json {
-          render :json => { :error => message }, :status => :unauthorized
-        }
-      end
-      return true
+      render(
+        :json => {
+          :error  => message,
+        },
+        :status => :unauthorized
+      )
+      return false
     end
 
-    # check session auth
 #    return 1231
 #    request_http_basic_authentication
     return false
@@ -178,7 +123,72 @@ class ApplicationController < ActionController::Base
       :history_type_id             => history_type.id,
       :history_object_id           => history_object.id,
       :created_by_id               => session[:user_id]
-    )    
+    )
+  end
+
+  def config_frontend
+    
+    # config
+    config = {}
+    Setting.where( :frontend => true ).each { |setting|
+      config[setting.name] = setting.state[:value]
+    }
+    return config
+  end
+
+  def user_data_full (user_id)
+
+    # get user
+    user = User.find(user_id)
+
+    # get linked accounts
+    user['accounts'] = {}
+    authorizations = user.authorizations() || []
+    authorizations.each do | authorization |
+      user['accounts'][authorization.provider] = {
+        :uid      => authorization[:uid],
+        :username => authorization[:username]
+      }
+    end
+
+    # do not show password
+    user['password'] = ''
+    
+    # show linked topics and items
+    user['links'] = []
+    ticket_state_list_open   = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending remidner', 'pending action']) )
+    ticket_state_list_closed = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['closed'] ) )
+
+    tickets_open   = Ticket.where(:customer_id => user_id, :ticket_state_id => ticket_state_list_open).count()
+    tickets_closed = Ticket.where(:customer_id => user_id, :ticket_state_id => ticket_state_list_closed).count()
+
+    topic = {
+      :title => 'Tickets',
+      :items => [
+        {
+          :url   => '',
+          :name  => 'open (' + tickets_open.to_s + ')',
+          :title => 'Open Tickets',
+          :class => 'user-tickets',
+          :data  => 'open'
+        },
+        {
+          :url   => '',
+          :name  => 'closed (' + tickets_closed.to_s + ')',
+          :title => 'Closed Tickets',
+          :class => 'user-tickets',
+          :data  => 'closed'
+        }
+      ]
+    }
+    user['links'].push topic
+
+    # set roles
+    user['roles']         = user.roles.select('id, name').where(:active => true)
+    user['groups']        = user.groups.select('id, name').where(:active => true)
+    user['organization']  = user.organization
+    user['organizations'] = user.organizations.select('id, name').where(:active => true)
+    return user
   end
 
 end
