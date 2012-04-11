@@ -19,6 +19,8 @@ class Index extends App.ControllerLevel2
   constructor: ->
     super
 
+    return if !@authenticate()
+
     # render page
     @render()
 

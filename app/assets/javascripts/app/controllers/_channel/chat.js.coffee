@@ -1,18 +1,15 @@
 $ = jQuery.sub()
 
-class App.ChannelChat extends App.Controller
-  events:
-    'click [data-toggle="tabnav"]': 'toggle',
-    
+class App.ChannelChat extends App.ControllerTabs
   constructor: ->
     super
 
-    # render page
-    @render()
+    @tabs = [
+      {
+        name:       'Settings',
+        target:     'setting',
+        controller: App.SettingsArea, params: { area: 'Chat::Base' },
+      },
+    ]
 
-  render: ->
-    
-    @html App.view('channel/chat')(
-      head: 'some header'
-    )
-    
+    @render()    

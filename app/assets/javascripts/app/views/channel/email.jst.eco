@@ -1,11 +1,4 @@
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#channel-inbound" data-toggle="tab">Inbound</a></li>
-        <li><a href="#channel-outbound" data-toggle="tab">Outbound</a></li>
-        <li><a href="#channel-filter" data-toggle="tab">Filter</a></li>
-        <li><a href="#channel-settings" data-toggle="tab">Settings</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="channel-inbound">
+  <div class="tab-pane active" id="channel-inbound">
           
 <table class="table table-striped">
 <tr>
@@ -31,8 +24,9 @@
 </tr>
 </table>
 
-        </div>
-        <div class="tab-pane" id="channel-outbound">
+</div>
+<div class="tab-pane" id="channel-outbound">
+
 <table class="table table-striped">
 <tr>
  <th>Host</th>
@@ -76,29 +70,3 @@
 </tr>
 </table>
         </div>
-        <div class="tab-pane" id="channel-settings">
-          <h2>Max. Email Size</h2>
-          <p>lala alals alals ala.</p>
-          <hr/>
-          <h2>PostmasterFollowUpSearchIn</h2>
-          <p>o References - Executes follow up checks on In-Reply-To or References headers for mails that don't have a ticket number in the subject.</p>
-          <p>o Body - Executes follow up mail body checks in mails that don't have a ticket number in the subject.</p>
-          <p>o Attachment - Executes follow up mail attachments checks in mails that don't have a ticket number in the subject.</p>
-          <p>o Raw - Executes follow up plain/raw mail checks in mails that don't have a ticket number in the subject.</p>
-          <hr/>
-          <h2>FollowUpState</h2>
-          <p>Defines the state of a ticket if it gets a follow-up.</p>
-          <hr/>
-          <h2>Blocks Emails</h2>
-          <p>Blocks all the incoming emails that do not have a valid ticket number in subject with From: @example.com address.</p>
-            <h2>Subject</h2>
-            <p>Defines the subject for rejected emails.</p>
-            <h2>Body</h2>
-            <p>Defines the body for rejected emails.</p>
-          <hr/>
-          <h2>SendNoAutoResponseRegExp</h2>
-          <p>If this regex matches, no message will be send by the autoresponder.</p>
-          <p>(MAILER-DAEMON|postmaster|abuse)@.+?\..+?</p>
-          <hr/>
-        </div>
-      </div>

@@ -1,18 +1,15 @@
 $ = jQuery.sub()
 
-class App.ChannelWeb extends App.Controller
-  events:
-    'click [data-toggle="tabnav"]': 'toggle',
-    
+class App.ChannelWeb extends App.ControllerTabs
   constructor: ->
     super
 
-    # render page
-    @render()
+    @tabs = [
+      {
+        name:       'Settings',
+        target:     'w-setting',
+        controller: App.SettingsArea, params: { area: 'CustomerWeb::Base' },
+      },
+    ]
 
-  render: ->
-    
-    @html App.view('channel/web')(
-      head: 'some header'
-    )
-    
+    @render()      

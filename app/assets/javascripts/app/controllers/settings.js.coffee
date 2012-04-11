@@ -7,6 +7,8 @@ class Index extends App.ControllerLevel2
   constructor: ->
     super
 
+    return if !@authenticate()
+
     # system
     if @type is 'system'
       @menu = [

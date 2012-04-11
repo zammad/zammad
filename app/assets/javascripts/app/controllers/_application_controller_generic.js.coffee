@@ -188,8 +188,6 @@ class App.ControllerLevel2 extends App.Controller
   constructor: ->
     super
 
-    return if !@authenticate()
-
   render: ->
     @log 'ttt', @target, @
     # set title
@@ -227,4 +225,22 @@ class App.ControllerLevel2 extends App.Controller
     @el.find('.tabbable').addClass('hide')
     @el.find('#' + target).removeClass('hide')
 #    window.scrollTo(0,0)
-    
+
+class App.ControllerTabs extends App.Controller
+  constructor: ->
+    super
+
+  render: ->
+    @html App.view('generic/tabs')(
+      tabs: @tabs,
+    )
+    @el.find('.nav-tabs li:first').addClass('active')
+
+    for tab in @tabs
+      @el.find('.tab-content').append('<div class="tab-pane" id="' + tab.target + '">' + tab.target + '</div>')
+      if tab.controller
+        params = tab.params || {}
+        params.el = @el.find( '#' + tab.target )
+        new tab.controller( params )
+
+    @el.find('.tab-content .tab-pane:first').addClass('active')

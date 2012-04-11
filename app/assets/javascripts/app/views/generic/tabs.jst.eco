@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs">
+  <% for tab in @tabs: %>
+    <li><a href="#<%= tab.target %>" data-toggle="tab"><%= tab.name %></a></li>
+  <% end %>
+</ul>
+<div class="tab-content"></div>
