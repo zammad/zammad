@@ -15,14 +15,14 @@ class App.Navigation extends Spine.Controller
     Spine.bind 'navrebuild', (user) =>
       @log 'navbarrebuild', user
       @render(user)
-      @delay( @sync, 1600 )
 
     Spine.bind 'navupdate_remote', (user) =>
       @log 'navupdate_remote'
-      @sync
+      @delay( @sync, 500 )
     
     # rerender if new overview data is there
-    @delay( @sync, 1600 )
+    @delay( @sync, 800 )
+    @delay( @sync, 2000 )
     
   render: (user) ->
 #    @log 'nav render', Config.NavBar
@@ -121,7 +121,7 @@ class App.Navigation extends Spine.Controller
     clearInterval(@intervalID) if @intervalID
     
     # request new data
-    @intervalID = every 40000, () =>
+    @intervalID = every 30000, () =>
       @ticket_overview()
  
   # get data

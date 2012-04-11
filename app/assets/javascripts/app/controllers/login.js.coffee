@@ -1,10 +1,4 @@
 $ = jQuery.sub()
-Note = App.Note
-
-$.fn.item = ->
-  elementID   = $(@).data('id')
-  elementID or= $(@).parents('[data-id]').data('id')
-  Note.find(elementID)
 
 class Index extends App.Controller
   events:
@@ -63,13 +57,16 @@ class Index extends App.Controller
 
     Spine.trigger 'navrebuild', data.session
 
+    # rebuild navbar with updated ticket count of overviews
+    Spine.trigger 'navupdate_remote'
+
     # add notify
     Spine.trigger 'notify:removeall'
     Spine.trigger 'notify', {
       type: 'success',
       msg: 'Login successfully! Have a nice day!', 
     }
-    
+
     # redirect to #
     if window.Config['requested_url'] isnt ''
       @navigate window.Config['requested_url']
@@ -96,8 +93,3 @@ class Index extends App.Controller
     )
 
 Config.Routes['login'] = Index
-
-#class App.Login extends App.Router
-#  routes:
-#    'login': Index
-#Config.Controller.push App.Login
