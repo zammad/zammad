@@ -13,7 +13,7 @@ want to answer them with a team of agents? You're going to love Zammad!
 == Getting Started
 
 1. Install Zammad on your system
-     shell>tar -xzvf zammad-1.0.1.tar.gz 
+     shell> tar -xzvf zammad-1.0.1.tar.gz
 
 2. Install all dependencies
      shell> cd zammad
