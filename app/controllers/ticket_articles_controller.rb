@@ -2,27 +2,20 @@ class TicketArticlesController < ApplicationController
   before_filter :authentication_check
 
   # GET /articles
-  # GET /articles.json
   def index
     @articles = Ticket::Article.all
 
-    respond_to do |format|
-      format.json { render :json => @articles }
-    end
+    render :json => @articles
   end
 
   # GET /articles/1
-  # GET /articles/1.json
   def show
     @article = Ticket::Article.find(params[:id])
 
-    respond_to do |format|
-      format.json { render :json => @article }
-    end
+    render :json => @article
   end
 
   # POST /articles
-  # POST /articles.json
   def create
     @article = Ticket::Article.new(params[:ticket_article])
     @article.created_by_id = current_user.id
@@ -33,43 +26,35 @@ class TicketArticlesController < ApplicationController
       :o_id => @article.ticket_id
     )
 
-    respond_to do |format|
-      if @article.save
-        format.json { render :json => @article, :status => :created }
-        
-        # remove attachments from upload cache
-        Store.remove(
-          :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
-          :o_id => @article.ticket_id
-        )
-      else
-        format.json { render :json => @article.errors, :status => :unprocessable_entity }
-      end
+    if @article.save
+      render :json => @article, :status => :created
+
+      # remove attachments from upload cache
+      Store.remove(
+        :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
+        :o_id   => @article.ticket_id
+      )
+    else
+      render :json => @article.errors, :status => :unprocessable_entity
     end
   end
 
   # PUT /articles/1
-  # PUT /articles/1.json
   def update
     @article = Ticket::Article.find(params[:id])
 
-    respond_to do |format|
-      if @article.update_attributes(params[:ticket_article])
-        format.json { render :json => @article, :status => :ok }
-      else
-        format.json { render :json => @article.errors, :status => :unprocessable_entity }
-      end
+    if @article.update_attributes(params[:ticket_article])
+      render :json => @article, :status => :ok
+    else
+      render :json => @article.errors, :status => :unprocessable_entity
     end
   end
 
   # DELETE /articles/1
-  # DELETE /articles/1.json
   def destroy
     @article = Ticket::Article.find(params[:id])
     @article.destroy
 
-    respond_to do |format|
-      format.json { head :ok }
-    end
+    head :ok
   end
 end
