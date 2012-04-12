@@ -17,8 +17,8 @@ want to answer them with a team of agents? You're going to love Zammad!
 
 2. Install all dependencies
      shell> cd zammad
-     shell> sudo - gem install bundler # (only if bundler is not installed)
-     shell> sudo - bundle install
+     shell> sudo gem install rails
+     shell> sudo bundle install
 
 3. Configure your databases (if needed)
 
