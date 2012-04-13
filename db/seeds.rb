@@ -1225,26 +1225,12 @@ Overview.create(
 )
 
 Channel.create(
-  :adapter => 'IMAP',
-  :area    => 'Email::Inbound',
-  :options => {
-    :host     => 'edenhofer.de',
-    :user     => 'mebox',
-    :password => '123',
-    :ssl      => true,
-  },
-  :active         => true,
-  :created_by_id  => User.where( :login => '-' ).first.id
-)
-
-
-Channel.create(
   :adapter => 'SMTP',
   :area    => 'Email::Outbound',
   :options => {
-    :host     => 'edenhofer.de',
-    :user     => 'me-box',
-    :password => 'BidZ&2#.z',
+    :host     => 'host.example.com',
+    :user     => '',
+    :password => '',
     :ssl      => true,
   },
   :group_id       => 1,
