@@ -4,13 +4,16 @@ class Channel::IMAP < Channel::EmailParser
   include UserInfo
 
   def fetch (channel)
-    puts 'fetching imap'
+    puts "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]})"
 
     imap = Net::IMAP.new(channel[:options][:host], 993, true )
     imap.authenticate('LOGIN', channel[:options][:user], channel[:options][:password])
     imap.select('INBOX')
-    count = 0
+    count     = 0
+    count_all = imap.search(['ALL']).count
     imap.search(['ALL']).each do |message_id|
+      count += 1
+      puts " - message #{count.to_s}/#{count_all.to_s}"
       msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
 #      puts msg.to_s
 
@@ -18,11 +21,13 @@ class Channel::IMAP < Channel::EmailParser
       if parse(channel, msg)
         imap.store(message_id, "+FLAGS", [:Deleted])
       end
-      count += 1
     end
     imap.expunge()
     imap.disconnect()
-    puts "#{count.to_s} mails fetched. done."
+    if count == 0
+      puts " - no message"
+    end
+    puts "done"
   end
   def send(attr, notification = false)
     channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
