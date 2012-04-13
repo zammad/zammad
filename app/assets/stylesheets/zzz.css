@@ -12,7 +12,14 @@ body {
 [class*=" icon-"] {
   background-image: url("../assets/glyphicons-halflings.png");
 }
-  
+
+/*
+ * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
+ */
+form {
+  margin: 0 0 0 0;
+}
+
 .edit {
   min-height:30px;
 }
