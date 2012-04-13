@@ -1,20 +1,34 @@
-#http://blog.ethanvizitei.com/2008/06/using-ruby-for-imap-with-gmail.html
+require 'net/pop'
 
+class Channel::POP3 < Channel::EmailParser
+  include UserInfo
 
-pop = Net::POP3.new("pop.gmail.com", port)
-pop.enable_ssl
-pop.start('YourAccount', 'YourPassword') 
-if pop.mails.empty?
-  puts 'No mail.'
-else
-  i = 0
-  pop.each_mail do |m| 
-    File.open("inbox/#{i}", 'w') do |f|
-      f.write m.pop
+  def fetch (channel)
+    puts 'fetching pop3'
+
+    pop = Net::POP3.new( channel[:options][:host], 995 )
+    pop.enable_ssl
+    pop.start( channel[:options][:user], channel[:options][:password] ) 
+    count = 0
+    pop.each_mail do |m|
+      
+      # delete email from server after article was created
+      if parse(channel, m.pop)
+        m.delete
+      end
+      count += 1
     end
-    m.delete
-    i += 1
+    pop.finish
+    puts "#{count.to_s} mails popped. done."
   end
-  puts "#{pop.mails.size} mails popped."
+  def send(attr, notification = false)
+    channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
+    begin
+      c = eval 'Channel::' + channel[:adapter] + '.new'
+      c.send(attr, channel, notification)
+    rescue Exception => e
+      puts "can't use " + 'Channel::' + channel[:adapter]
+      puts e.inspect
+    end
+  end
 end
-pop.finish 
