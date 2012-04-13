@@ -163,7 +163,8 @@ From: #{ticket.articles[-1].from}
     # customer
     elsif data[:recipient] == 'customer'
       if ticket.customer_id != 1
-        recipients.push ticket.customer
+# temporarily disabled        
+#        recipients.push ticket.customer
       end
 
     # owner or group of agents to work on
