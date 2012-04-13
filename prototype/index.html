@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Tulipa</title>
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="sidebar">
+        <header class="clearfix">
+        </header>
+        <div class="content">
+            <!--<div class="topbar agent clearfix">
+              <div class="avatarHolder">
+                <div class="avatar" style="background-image: url(img/agent.jpg)"></div>
+              </div>
+              <div class="name">Stefan Lober</div>
+              <ul class="userActions">
+                <li class="settings">Settings</li>
+                <li class="logout">Logout</li>
+              </ul>
+            </div>-->
+            <div class="inbox">
+              <div class="listHeader">Tickets</div>
+              <ul class="listView">
+                <li class="all selected">All <span class="new counter">15</span></li>
+                <li class="personal">My</li>
+                <li class="escalating">Escalating</li>
+                <li class="unassigned">Unassigned</li>
+              </ul>
+            </div>
+        </div>
+    </div>
+    <div class="twoColumns">
+        <div class="stream">
+            <header class="clearfix">
+              <h2>All Tickets</h2>
+              <!--<label for="sortby">Sorty By</label>-->
+              <select id="sortby">
+                <option selected>Sort by</option>
+                <option>Date</option>
+                <option>Escalation</option>
+                <option>Answers</option>
+                <option>Agent</option>
+              </select>
+              <input type="search" />
+            </header>
+            <div class="content">
+              <article class="ma selected urgent">
+                  <img src="img/sebastian.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Sebastian</span><span class="service">via Mail</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">1 Tagen</span>
+                      </div>
+                      glaub querformat is gschissen bei plakaten. hab zumindest noch nie eins gesehen. Mit freundlichen Grüßen  Sebastian Kretz  
+                      Staatl. geprüfter Leiter für Popularmusik  
+                      Staatl. geprüfter Chorleiter ...
+                      <!--<section class="answer">
+                          <img src="img/agent.jpg" />
+                          <textarea></textarea>
+                          <button type="submit" class="main">absenden</button>
+                      </section>-->
+                  </section>
+              </article>
+              <article class="tw urgent">
+                  <img src="img/martin.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Martin Edenhofer</span><span class="service">via Twitter</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">3 Tagen</span>
+                      </div>
+                      How can I return my new bought Canon Printer? #2124
+                  </section>
+              </article>
+              <article class="fb urgent">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span><span class="service">via Mail</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb important">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span><span class="service">via Facebook</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb important">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb important">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb important">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb important">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+              <article class="fb">
+                  <img src="img/mrflix.square.jpg" />
+                  <section>
+                      <div class="info">
+                          <span class="name">Felix</span>
+                          <nav>
+                              <span class="answer">antworten</span>
+                              <span class="mark">markieren</span>
+                          </nav>
+                          <span class="time">2 Tagen</span>
+                      </div>
+                      I love your service. But I got a problem: when ever I try to login, a server message occurs saying "Error 101: '; drop table passwords' is no valid password".
+                  </section>
+              </article>
+            </div>
+        </div><!-- /stream -->
+        <div class="conversation">
+            <header class="clearfix">
+              <h2>Sebastian Kretz</h2>
+              <button class="profil">Profil</button>
+              <button class="tickets">Tickets</button>
+            </header>
+            <div class="content">
+              <section class="customer">
+                  <div class="info"><img src="img/sebastian.square.jpg" /></div>
+                  <div class="body">
+                  heyho,<br>
+                  <br>
+                  mir sind noch 2 kleine dinge aufgefallen.<br>
+                  <br>
+                  könntest du beim Text bei der Bandvorstellung den Vornamen vor den Nachnamen stellen.<br>
+                  <br>
+                  also: Sebastian Kretz etc.....<br>
+                  <br>
+                  Und nach dem ";)" einen Absatz machen.<br>
+                  <br>
+                  mercy<br>
+                  <br>
+                  bis dann<br>
+                  gruß<br>
+                  sebastian<br>
+                  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz
+                  </div>
+              </section>
+              <section class="agent">
+                  <div class="info"><img src="img/mrflix.square.jpg" /></div>
+                  <div class="body">
+                  passt.<br>
+                  <br>
+                  was is jetz eigentlich aus dem poster worn?
+                  </div>
+              </section>
+              <section class="agent note">
+                  <div class="info"><img src="img/mrflix.square.jpg" /></div>
+                  <div class="body">
+                  Sebastian ist ziemlich nett.
+                  </div>
+              </section>
+              <section class="customer">                
+                  <div class="info"><img src="img/sebastian.square.jpg" /></div>
+                  <div class="body">
+                  Hey,<br>
+                  ach ja stimmt.<br>
+  <br>
+                  Also wir würden einfach das Bild von der Homepage mit Schriftzug nehmen und unten soll n Weißer Balken hin wo die Veranstalter dann selber ort und datum reinschreiben können.<br>
+  <br>
+                  Mit dem "Fäuste-Foto" ist das ganze nicht möglich oder?<br>
+                  Würd bisl freundlicher wirken...wobei das andere auch cool ist..<br>
+  <br>
+                  weist du was ich mein?<br>
+  <br>
+                  gruß<br>
+                  basti<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+  <br>
+                  Am 03.06.2011 um 03:33 schrieb Felix Niklas:
+                  <blockquote>
+                  passt.<br>
+  <br>
+                  was is jetz eigentlich aus dem poster worn?
+                  <blockquote>
+                  On Jun 3, 2011, at 2:13 AM, Sebastian Kretz wrote:<br>
+  <br>
+                  heyho,<br>
+  <br>
+                  mir sind noch 2 kleine dinge aufgefallen.<br>
+  <br>
+                  könntest du beim Text bei der Bandvorstellung den Vornamen vor den Nachnamen stellen.<br>
+  <br>
+                  also: Sebastian Kretz etc.....<br>
+  <br>
+                  Und nach dem ";)" einen Absatz machen.<br>
+  <br>
+                  mercy<br>
+  <br>
+                  bis dann<br>
+                  gruß<br>
+                  sebastian<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+                  </blockquote>
+                  </blockquote>
+                  </div>
+              </section>
+              <section class="agent">
+                  <div class="info"><img src="img/mrflix.square.jpg" /></div>
+                  <div class="body">
+                  das quadratisch ist bleibt und du unten eh platz für den veranstalter willst würds schon funktionieren.<br>
+                  stellst du's dir so in etwa vor?<br>
+                  <Furchtbarschee-Poster.jpg>
+                  </div>
+              </section>
+              <section class="customer">
+                  <div class="info"><img src="img/sebastian.square.jpg" /></div>
+                  <div class="body">
+                  dere,<br>
+                  finds cool aber glaub des andere schaut trotzdem besser aus.<br>
+  <br>
+                  hau da einfach nen weißen balken drunter und gut ist ^^<br>
+  <br>
+                  mercy<br>
+  <br>
+                  bis dann<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+  <br>
+                  Am 03.06.2011 um 09:48 schrieb Felix Niklas:
+                  <blockquote>
+                  das quadratisch ist bleibt und du unten eh platz für den veranstalter willst würds schon funktionieren.<br>
+                  stellst du's dir so in etwa vor?<br>
+  <br>
+                  <Furchtbarschee-Poster.jpg><br>
+  <br>
+                  On Jun 3, 2011, at 9:27 AM, Sebastian Kretz wrote:
+                  <blockquote>
+                  Hey,<br>
+                  ach ja stimmt.<br>
+  <br>
+                  Also wir würden einfach das Bild von der Homepage mit Schriftzug nehmen und unten soll n Weißer Balken hin wo die Veranstalter dann selber ort und datum reinschreiben können.<br>
+  <br>
+                  Mit dem "Fäuste-Foto" ist das ganze nicht möglich oder?<br>
+                  Würd bisl freundlicher wirken...wobei das andere auch cool ist..<br>
+  <br>
+                  weist du was ich mein?<br>
+  <br>
+                  gruß<br>
+                  basti<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+  <br>
+                  Am 03.06.2011 um 03:33 schrieb Felix Niklas:
+                  <blockquote>
+                  passt.<br>
+  <br>
+                  was is jetz eigentlich aus dem poster worn?<br>
+  <br>
+                  On Jun 3, 2011, at 2:13 AM, Sebastian Kretz wrote:
+                  <blockquote>
+                  heyho,<br>
+  <br>
+                  mir sind noch 2 kleine dinge aufgefallen.<br>
+  <br>
+                  könntest du beim Text bei der Bandvorstellung den Vornamen vor den Nachnamen stellen.<br>
+  <br>
+                  also: Sebastian Kretz etc.....<br>
+  <br>
+                  Und nach dem ";)" einen Absatz machen.<br>
+  <br>
+                  mercy<br>
+  <br>
+                  bis dann<br>
+                  gruß<br>
+                  sebastian<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+                  </blockquote></blockquote></blockquote></blockquote>
+                  </div>
+              </section>
+              <section class="agent">
+                  <div class="info"><img src="img/mrflix.square.jpg" /></div>
+                  <div class="body">
+                  <Furchtbarschee-Poster-blau.jpg>
+                  Seitenverhältnis-Problem. Ganzes Plakat in Querformat oder das Muster bis nach oben verlängern?
+                  </div>
+              </section>
+              <section class="customer">
+                  <div class="info"><img src="img/sebastian.square.jpg" /></div>
+                  <div class="body">
+                  glaub querformat is gschissen bei plakaten.<br>
+                  hab zumindest noch nie eins gesehen.<br>
+  <br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+  <br>
+                  Am 03.06.2011 um 18:08 schrieb Felix Niklas:
+                  <blockquote>
+                  <Furchtbarschee-Poster-blau.jpg><br>
+                  Seitenverhältnis-Problem. Ganzes Plakat in Querformat oder das Muster bis nach oben verlängern?<br>
+  <br>
+  <br>
+                  On Jun 3, 2011, at 5:58 PM, Sebastian Kretz wrote:
+                  <blockquote>
+                  dere,<br>
+                  finds cool aber glaub des andere schaut trotzdem besser aus.<br>
+  <br>
+                  hau da einfach nen weißen balken drunter und gut ist ^^<br>
+  <br>
+                  mercy<br>
+  <br>
+                  bis dann<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+  <br>
+                  Am 03.06.2011 um 09:48 schrieb Felix Niklas:
+                  <blockquote>
+                  das quadratisch ist bleibt und du unten eh platz für den veranstalter willst würds schon funktionieren.<br>
+                  stellst du's dir so in etwa vor?<br>
+  <br>
+                  <Furchtbarschee-Poster.jpg>
+  <br>
+                  On Jun 3, 2011, at 9:27 AM, Sebastian Kretz wrote:
+                  <blockquote>
+                  Hey,<br>
+                  ach ja stimmt.<br>
+  <br>
+                  Also wir würden einfach das Bild von der Homepage mit Schriftzug nehmen und unten soll n Weißer Balken hin wo die Veranstalter dann selber ort und datum reinschreiben können.<br>
+  <br>
+                  Mit dem "Fäuste-Foto" ist das ganze nicht möglich oder?<br>
+                  Würd bisl freundlicher wirken...wobei das andere auch cool ist..<br>
+  <br>
+                  weist du was ich mein?<br>
+  <br>
+                  gruß<br>
+                  basti<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz<br>
+  <br>
+                  Am 03.06.2011 um 03:33 schrieb Felix Niklas:
+                  <blockquote>
+                  passt.<br>
+  <br>
+                  was is jetz eigentlich aus dem poster worn?<br>
+  <br>
+                  On Jun 3, 2011, at 2:13 AM, Sebastian Kretz wrote:
+                  <blockquote>
+                  heyho,<br>
+  <br>
+                  mir sind noch 2 kleine dinge aufgefallen.<br>
+  <br>
+                  könntest du beim Text bei der Bandvorstellung den Vornamen vor den Nachnamen stellen.<br>
+  <br>
+                  also: Sebastian Kretz etc.....<br>
+  <br>
+                  Und nach dem ";)" einen Absatz machen.<br>
+  <br>
+                  mercy<br>
+  <br>
+                  bis dann<br>
+                  gruß<br>
+                  sebastian<br>
+  <br>
+                  Mit freundlichen Grüßen<br>
+                  Sebastian Kretz<br>
+                  Staatl. geprüfter Leiter für Popularmusik<br>
+                  Staatl. geprüfter Chorleiter<br>
+                  _______________________________________________<br>
+                  Wöhrdstraße 91<br>
+                  93059 Regensburg<br>
+                  Tel: 0175/9683522<br>
+                  www.KretzSebastian.de<br>
+                  www.FurchtbarSchee.de<br>
+                  www.myspace.com/SebastianKretz
+                  </blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
+                  </div>
+              </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
