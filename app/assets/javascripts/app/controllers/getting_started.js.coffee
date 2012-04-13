@@ -4,7 +4,7 @@ class Index extends App.Controller
   className: 'container getstarted'
 
   events:
-    'submit form': 'submit',
+    'submit form':   'submit',
     'click .submit': 'submit',
 
   constructor: ->
@@ -87,43 +87,45 @@ class Index extends App.Controller
     # save user
     user.save(
       success: (r) =>
-        # send email
-        
-        # clear form
-        auth = new App.Auth
-        auth.login(
-          data: {
-            username: @params.login,
-            password: @params.password,
-          },
-          success: @success
-#          error: @error,
-        )
+
+        if @master_user
+          @master_user = false
+          auth = new App.Auth
+          auth.login(
+            data: {
+              username: @params.login,
+              password: @params.password,
+            },
+            success: @relogin
+#            error: @error,
+          )
+        else
+
+          # rerender page    
+          @render()
+          
 #      error: =>
 #        @modalHide()
     )
 
 
-  success: (data, status, xhr) =>
+  relogin: (data, status, xhr) =>
     @log 'login:success', data
 
-    if @master_user
-      
-      # login check
-      auth = new App.Auth
-      auth.loginCheck()
+    # login check
+    auth = new App.Auth
+    auth.loginCheck()
   
-      # add notify
-      Spine.trigger 'notify:removeall'
+    # add notify
+    Spine.trigger 'notify:removeall'
 #      @notify
 #        type: 'success',
 #        msg: 'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
       
-      @el.find('.master_user').fadeOut('slow', =>
-        @el.find('.agent_user').fadeIn()
-      )
-      # redirect to #
-#      @navigate '#getting_started'
-#      @fetch()
+    @el.find('.master_user').fadeOut('slow', =>
+      @el.find('.agent_user').fadeIn()
+    )
+
+
     
 Config.Routes['getting_started'] = Index
