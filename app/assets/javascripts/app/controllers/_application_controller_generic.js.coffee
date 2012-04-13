@@ -10,7 +10,6 @@ class App.ControllerGenericNew extends App.ControllerModal
     @render()
   
   render: ->
-    @log 'ren new', @el
     @html App.view('generic/admin/new')(
       form: @formGen( model: @genericObject ),
       head: 'New ' + @pageData.object
@@ -90,6 +89,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
         @modalHide()
       error: =>
         @log 'errors'
+
         @modalHide()
     )
 
@@ -148,15 +148,15 @@ class App.ControllerGenericIndex extends App.Controller
       )
 
     @html App.view('generic/admin/index')(
-      head: @pageData.objects,
-      notes: @pageData.notes,
+      head:    @pageData.objects,
+      notes:   @pageData.notes,
       buttons: @pageData.buttons,
-      menus: @pageData.menus,
+      menus:   @pageData.menus,
     )
 
     # append content table
     table = @table(
-      model: @genericObject,
+      model:   @genericObject,
       objects: objects,
     )
     @el.find('.table-overview').append(table)
@@ -189,7 +189,7 @@ class App.ControllerLevel2 extends App.Controller
     super
 
   render: ->
-    @log 'ttt', @target, @
+
     # set title
     @title @page.title
     @navupdate @page.nav
@@ -200,21 +200,20 @@ class App.ControllerLevel2 extends App.Controller
       type:     @type,
       target:   @target,
     )
+    
+    if !@target
+      @target = @menu[0]['target']
+    
     for menu in @menu
-      @el.find('.nav-tab-content').append('<div class="tabbable" id="' + menu.target + '">' + menu.name + '</div>')
-      if menu.controller
+      @el.find('.nav-tab-content').append('<div class="tabbable" id="' + menu.target + '"></div>')
+      if menu.controller && ( @toggleable is true || ( @toggleable is false && menu.target is @target ) )
         params    = menu.params || {}
         params.el = @el.find( '#' + menu.target )
         new menu.controller( params )
 
     @el.find('.tabbable').addClass('hide')
-    if @target
-      @el.find( '#' + @target ).removeClass('hide')
-    else
-      @el.find('.tabbable:first').removeClass('hide')
-
-    @el.find('[data-toggle="tabnav"]:first').addClass('active')
-
+    @el.find( '#' + @target ).removeClass('hide')
+    @el.find('[data-toggle="tabnav"][href*="/' + @target + '"]').parent().addClass('active')
     
   toggle: (e) ->
     return true if @toggleable is false
@@ -237,7 +236,7 @@ class App.ControllerTabs extends App.Controller
     @el.find('.nav-tabs li:first').addClass('active')
 
     for tab in @tabs
-      @el.find('.tab-content').append('<div class="tab-pane" id="' + tab.target + '">' + tab.target + '</div>')
+      @el.find('.tab-content').append('<div class="tab-pane" id="' + tab.target + '"></div>')
       if tab.controller
         params = tab.params || {}
         params.el = @el.find( '#' + tab.target )
