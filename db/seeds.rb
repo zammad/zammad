@@ -1241,7 +1241,7 @@ Channel.create(
   :adapter        => 'Sendmail',
   :area           => 'Email::Outbound',
   :options        => {},
-  :active         => false,
+  :active         => true,
   :created_by_id  => User.where( :login => '-' ).first.id
 )
 
