@@ -76,7 +76,7 @@ class App.Controller extends Spine.Controller
         # set default value
         else
           if 'default' of attribute
-            @log 'default', attribute.default
+#            @log 'default', attribute.default
             attribute.value = attribute.default
           else
             attribute.value = ''
