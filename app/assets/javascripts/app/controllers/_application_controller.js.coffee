@@ -657,10 +657,10 @@ class App.ControllerModal extends App.Controller
   tag: 'div',
 
   events:
-    'submit form': 'submit',
+    'submit form':   'submit',
     'click .submit': 'submit',
     'click .cancel': 'modalHide',
-    'click .close': 'modalHide',
+    'click .close':  'modalHide',
 
   constructor: (options) ->
 
