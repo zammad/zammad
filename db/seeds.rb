@@ -627,7 +627,7 @@ Setting.create(
     :value => {
       :checksum => false,
       :file     => '/tmp/counter.log',
-      :min_size => 4,
+      :min_size => 5,
     },
   },
   :frontend    => false
@@ -713,9 +713,129 @@ Setting.create(
 )
 
 Setting.create(
+  :title       => 'Enable Ticket creation',
+  :name        => 'customer_ticket_create',
+  :area        => 'CustomerWeb::Base',
+  :description => 'Defines if a customer can create tickets via the web interface.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'customer_ticket_create', 
+        :tag       => 'select',
+        :options   => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state       => {
+    :value => true,
+  },
+  :frontend    => true
+)
+
+Setting.create(
+  :title       => 'Enable Ticket View/Update',
+  :name        => 'customer_ticket_view',
+  :area        => 'CustomerWeb::Base',
+  :description => 'Defines if a customer view and update his own tickets.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'customer_ticket_view', 
+        :tag       => 'select',
+        :options   => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state       => {
+    :value => true,
+  },
+  :frontend    => true
+)
+
+Setting.create(
+  :title       => 'Max. Email Size',
+  :name        => 'postmaster_max_size',
+  :area        => 'Email::Base',
+  :description => 'Maximal size in MB of emails.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'postmaster_max_size', 
+        :tag       => 'select',
+        :options   => {
+          1 => 1,
+          2 => 2,
+          3 => 3,
+          4 => 4,
+          5 => 5,
+          6 => 6,
+          7 => 7,
+          8 => 8,
+          9 => 9,
+          10 => 10,
+          11 => 11,
+          12 => 12,
+          13 => 13,
+          14 => 14,
+          15 => 15,
+          16 => 16,
+          17 => 17,
+          18 => 18,
+          19 => 19,
+          20 => 20,
+        },
+      },
+    ],
+  },
+  :state       => {
+    :value => 10,
+  },
+  :frontend    => false
+)
+
+Setting.create(
+  :title       => 'Additional follow up detection',
+  :name        => 'postmaster_follow_up_search_in',
+  :area        => 'Email::Base',
+  :description => '"References" - Executes follow up checks on In-Reply-To or References headers for mails that don\'t have a ticket number in the subject. "Body" - Executes follow up mail body checks in mails that don\'t have a ticket number in the subject. "Attachment" - Executes follow up mail attachments checks in mails that don\'t have a ticket number in the subject. "Raw" - Executes follow up plain/raw mail checks in mails that don\'t have a ticket number in the subject.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'postmaster_follow_up_search_in', 
+        :tag       => 'checkbox',
+        :options   => {
+          'references' => 'References',
+          'body'       => 'Body',
+          'attachment' => 'Attachment',
+          'raw'        => 'Raw',
+        },
+      },
+    ],
+  },
+  :state       => {
+    :value => ['subject'],
+  },
+  :frontend    => false
+)
+
+Setting.create(
   :title       => 'Notification Sender',
   :name        => 'notification_sender',
-  :area        => 'Ticket::Notification',
+  :area        => 'Email::Base',
   :description => 'Defines the sender of email notifications.',
   :options     => {
     :form => [
@@ -728,10 +848,77 @@ Setting.create(
     ],
   },
   :state       => {
-    :value => 'Notify <noreply@znuny.com>',
+    :value => 'Notification Master <noreply@#{config.fqdn}>',
   },
   :frontend    => false
 )
+
+Setting.create(
+  :title       => 'System Sender',
+  :name        => 'system_sender',
+  :area        => 'Email::Base',
+  :description => 'ONLY TEMP!',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => false,
+        :name      => 'system_sender', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state       => {
+    :value => 'Zammad Team <zammad@#{config.fqdn}>',
+  },
+  :frontend    => false
+)
+Setting.create(
+  :title       => 'Block Notifications',
+  :name        => 'send_no_auto_response_reg_exp',
+  :area        => 'Email::Base',
+  :description => 'If this regex matches, no notification will be send by the sender.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => false,
+        :name      => 'send_no_auto_response_reg_exp', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state       => {
+    :value => '(MAILER-DAEMON|postmaster|abuse)@.+?\..+?',
+  },
+  :frontend    => false
+)
+
+Setting.create(
+  :title       => 'Enable Chat',
+  :name        => 'chat',
+  :area        => 'Chat::Base',
+  :description => 'Enable/Disable online chat.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'chat', 
+        :tag       => 'select',
+        :options   => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state       => {
+    :value => false,
+  },
+  :frontend    => true
+)
+
 
 Role.create(
   :id             => 1,
@@ -818,56 +1005,35 @@ Ticket::Article::Sender.create( :name => 'Agent' )
 Ticket::Article::Sender.create( :name => 'Customer' )
 Ticket::Article::Sender.create( :name => 'System' )
 
-for i in (1..10)
-  next
-  ticket = Ticket.create(
-#    :number             => '1314' + i.to_s,
-    :group_id           => Group.where(:name => 'Users' ).first.id,
-    :customer_id        => User.where(:login => '-').first.id,
-    :title              => 'printer isn\'t working...',
-    :ticket_state_id    => Ticket::State.where(:name => 'new').first.id,
-    :ticket_priority_id => Ticket::Priority.where(:name => '2 normal').first.id,
-    :created_by_id      => User.where(:login => '-').first.id
-  )
-  Ticket::Article.create(
-    :created_by_id            => User.where(:login => '-').first.id,
-    :ticket_id                => ticket.id, 
-    :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'email').first.id,
-    :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Agent').first.id,
-    :body                     => 'Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    :from                     => 'Some Agent <agent@localhost>',
-    :internal                 => false
-  )
-  Ticket::Article.create(
-    :created_by_id            => User.where(:login => '-').first.id,
-    :ticket_id                => ticket.id, 
-    :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'email').first.id,
-    :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer').first.id,
-    :body                     => 'Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.',
-    :from                     => 'Some Customer <customer@localhost>',
-    :internal                 => false
-  )
-end
+ticket = Ticket.create(
+  :group_id           => Group.where( :name => 'Users' ).first.id,
+  :customer_id        => User.where( :login => '-' ).first.id,
+  :owner_id           => User.where( :login => '-' ).first.id,
+  :title              => 'Welcome to Zammad!',
+  :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
+  :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+  :created_by_id      => User.where( :login => '-' ).first.id
+)
+Ticket::Article.create(
+  :created_by_id            => User.where(:login => '-').first.id,
+  :ticket_id                => ticket.id, 
+  :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'email' ).first.id,
+  :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
+  :from                     => 'Zammad Feedback <feedback@zammad.org>',
+  :body                     => 'Welcome!
 
-#Ticket.create(
-#  :number             => '1315',
-#  :group_id           => Group.where(:name => 'Users' ).first.id,
-#  :customer_id        => User.where(:login => '-').first.id,
-#  :title              => 'iphone isn\'t working...',
-#  :ticket_state_id    => Ticket::State.where(:name => 'new').first.id,
-#  :ticket_priority_id => Ticket::Priority.where(:name => '2 normal').first.id,
-#  :created_by_id      => User.where(:login => '-').first.id
-#)
+Thank you for installing Zammad.
 
-#Ticket.create(
-#  :number             => '1316',
-#  :group_id           => Group.where(:name => 'Users' ).first.id,
-#  :customer_id        => User.where(:login => '-').first.id,
-#  :title              => 'android isn\'t working...',
-#  :ticket_state_id    => Ticket::State.where(:name => 'new').first.id,
-#  :ticket_priority_id => Ticket::Priority.where(:name => '2 normal').first.id,
-#  :created_by_id      => User.where(:login => '-').first.id
-#)
+You will find updates and patches at http://zammad.org/. Online
+documentation is available at http://guides.zammad.org/. You can also
+use our forums at http://forums.zammad.org/
+
+Regards,
+
+The Zammad.org Project
+',
+  :internal                 => false
+)
 
 Overview.create(
   :name => 'my_assigned',
@@ -1058,6 +1224,74 @@ Overview.create(
   }
 )
 
+Channel.create(
+  :adapter => 'IMAP',
+  :area    => 'Email::Inbound',
+  :options => {
+    :host     => 'edenhofer.de',
+    :user     => 'mebox',
+    :password => '123',
+    :ssl      => true,
+  },
+  :active         => true,
+  :created_by_id  => User.where( :login => '-' ).first.id
+)
+
+
+Channel.create(
+  :adapter => 'SMTP',
+  :area    => 'Email::Outbound',
+  :options => {
+    :host     => 'edenhofer.de',
+    :user     => 'me-box',
+    :password => 'BidZ&2#.z',
+    :ssl      => true,
+  },
+  :group_id       => 1,
+  :active         => false,
+  :created_by_id  => User.where( :login => '-' ).first.id
+)
+Channel.create(
+  :adapter        => 'Sendmail',
+  :area           => 'Email::Outbound',
+  :options        => {},
+  :active         => false,
+  :created_by_id  => User.where( :login => '-' ).first.id
+)
+
+Channel.create(
+  :adapter => 'Twitter2',
+  :area    => 'Twitter',
+  :options => {
+    :consumer_key       => 'PJ4c3dYYRtSZZZdOKo8ow',
+    :consumer_secret    => 'ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk',
+    :oauth_token        => '293437546-xxRa9g74CercnU5AvY1uQwLLGIYrV1ezYtpX8oKW',
+    :oauth_token_secret => 'ju0E4l9OdY2Lh1iTKMymAu6XVfOaU2oGxmcbIMRZQK4',
+    :search             => [
+      {
+        :item  => '#otrs',
+        :group => 'Twitter',
+      },
+      {
+        :item  => '#zombie42',
+        :group => 'Twitter',
+      },
+      {
+        :item  => '#otterhub',
+        :group => 'Twitter',
+      },
+    ],
+    :mentions => {
+      :group => 'Twitter',
+    },
+    :direct_messages => {
+      :group => 'Twitter',
+    }
+  },
+  :active         => true,
+  :created_by_id  => User.where( :login => '-' ).first.id
+)
+
 network = Network.create(
   :name   => 'base'
 )
@@ -1066,96 +1300,96 @@ Network::Category::Type.create(
   :name   => 'Announcement'
 )
 Network::Category::Type.create(
-  :name   => 'Idea'
+  :name => 'Idea'
 )
 Network::Category::Type.create(
-  :name   => 'Question'
+  :name => 'Question'
 )
 Network::Category::Type.create(
-  :name   => 'Bug Report'
+  :name => 'Bug Report'
 )
 
 Network::Privacy.create(
-  :name   => 'logged in',
-  :key    => 'loggedIn'
+  :name => 'logged in',
+  :key  => 'loggedIn'
 )
 Network::Privacy.create(
-  :name   => 'logged in and moderator',
-  :key   => 'loggedInModerator'
+  :name => 'logged in and moderator',
+  :key  => 'loggedInModerator'
 )
 Network::Category.create(
-  :name                   => 'Announcements',
+  :name                     => 'Announcements',
   :network_id               => network.id,
-  :allow_comments         => true,
+  :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Announcement').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in and moderator').first.id,
-  :allow_comments         => true
+  :allow_comments           => true
 )
 Network::Category.create(
-  :name                   => 'Questions',
+  :name                     => 'Questions',
   :network_id               => network.id,
-  :allow_comments         => true,
-  :network_category_type_id              => Network::Category::Type.where(:name => 'Question').first.id,
-  :network_privacy_id                    => Network::Privacy.where(:name => 'logged in').first.id
+  :allow_comments           => true,
+  :network_category_type_id => Network::Category::Type.where(:name => 'Question').first.id,
+  :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id
 #  :network_categories_moderator_user_ids => User.where(:login => '-').first.id
 )
 Network::Category.create(
-  :name                   => 'Ideas',
+  :name                     => 'Ideas',
   :network_id               => network.id,
-  :allow_comments         => true,
+  :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Idea').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
-  :allow_comments         => true
+  :allow_comments           => true
 )
 Network::Category.create(
-  :name                   => 'Bug Reports',
+  :name                     => 'Bug Reports',
   :network_id               => network.id,
-  :allow_comments         => true,
+  :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Bug Report').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
-  :allow_comments         => true
+  :allow_comments           => true
 )
 item = Network::Item.create(
-  :title                  => 'Example Announcement',
-  :body                   => 'Some announcement....',
-  :network_category_id      => Network::Category.where(:name => 'Announcements').first.id,
-  :created_by_id          => User.where(:login => '-').first.id
+  :title                => 'Example Announcement',
+  :body                 => 'Some announcement....',
+  :network_category_id  => Network::Category.where(:name => 'Announcements').first.id,
+  :created_by_id        => User.where(:login => '-').first.id
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
-  :body           => 'Some comment....',
-  :created_by_id  => User.where(:login => '-').first.id
+  :body             => 'Some comment....',
+  :created_by_id    => User.where(:login => '-').first.id
 )
 item = Network::Item.create(
-  :title                  => 'Example Question?',
-  :body                   => 'Some questions....',
-  :network_category_id      => Network::Category.where(:name => 'Questions').first.id,
-  :created_by_id          => User.where(:login => '-').first.id
+  :title                => 'Example Question?',
+  :body                 => 'Some questions....',
+  :network_category_id  => Network::Category.where(:name => 'Questions').first.id,
+  :created_by_id        => User.where(:login => '-').first.id
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
-  :body           => 'Some comment....',
-  :created_by_id  => User.where(:login => '-').first.id
+  :body             => 'Some comment....',
+  :created_by_id    => User.where(:login => '-').first.id
 )
 item = Network::Item.create(
-  :title                  => 'Example Idea',
-  :body                   => 'Some idea....',
-  :network_category_id      => Network::Category.where(:name => 'Ideas').first.id,
-  :created_by_id          => User.where(:login => '-').first.id
+  :title                => 'Example Idea',
+  :body                 => 'Some idea....',
+  :network_category_id  => Network::Category.where(:name => 'Ideas').first.id,
+  :created_by_id        => User.where(:login => '-').first.id
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
-  :body           => 'Some comment....',
-  :created_by_id  => User.where(:login => '-').first.id
+  :body             => 'Some comment....',
+  :created_by_id    => User.where(:login => '-').first.id
 )
 item = Network::Item.create(
-  :title                  => 'Example Bug Report',
-  :body                   => 'Some bug....',
-  :network_category_id      => Network::Category.where(:name => 'Bug Reports').first.id,
-  :created_by_id          => User.where(:login => '-').first.id
+  :title                => 'Example Bug Report',
+  :body                 => 'Some bug....',
+  :network_category_id  => Network::Category.where(:name => 'Bug Reports').first.id,
+  :created_by_id        => User.where(:login => '-').first.id
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
-  :body           => 'Some comment....',
-  :created_by_id  => User.where(:login => '-').first.id
+  :body             => 'Some comment....',
+  :created_by_id    => User.where(:login => '-').first.id
 )

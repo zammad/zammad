@@ -4,12 +4,11 @@ require 'net/imap'
 class Channel::IMAP
   include UserInfo
 
-#  def fetch(:oauth_token, :oauth_token_secret)
   def fetch (account)
     puts 'fetching imap'
 
-    imap = Net::IMAP.new(account[:host], 993, true )
-    imap.authenticate('LOGIN', account[:user], account[:pw])
+    imap = Net::IMAP.new(account[:options][:host], 993, true )
+    imap.authenticate('LOGIN', account[:options][:user], account[:options][:password])
     imap.select('INBOX')
     imap.search(['ALL']).each do |message_id|
       msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
@@ -50,7 +49,7 @@ class Channel::IMAP
         end
   
         # get ticket# from subject
-        ticket = Ticket.number_check(mail[:subject].value)
+        ticket = Ticket.number_check( mail[:subject].value )
         
         # set ticket state to open if not new
         if ticket
@@ -65,7 +64,7 @@ class Channel::IMAP
         # create new ticket
         if !ticket then
           ticket = Ticket.create(
-            :group_id           => Group.where( :name => account[:group] ).first.id,
+            :group_id           => account[:group_id],
             :customer_id        => user.id,
             :title              => conv(mail['subject'].charset || 'LATIN1', mail['subject'].to_s),
             :ticket_state_id    => Ticket::State.where(:name => 'new').first.id,
@@ -143,59 +142,16 @@ class Channel::IMAP
     end
     imap.expunge()
     imap.disconnect()
+    puts 'done'
   end
-  def send(attr, account, notification = false)
-    mail = Mail.new
-
-    # set organization
-    organization = Setting.get('organization')
-    if organization then;
-      mail['organization'] = organization.to_s
+  def send(attr, notification = false)
+    channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
+    begin
+      c = eval 'Channel::' + channel[:adapter] + '.new'
+      c.send(attr, channel, notification)
+    rescue Exception => e
+      puts "can't use " + 'Channel::' + channel[:adapter]
+      puts e.inspect
     end
-    
-    # notification
-    if notification
-      attr['X-Loop']         = 'yes'
-      attr['Precedence']     = 'bulk'
-      attr['Auto-Submitted'] = 'auto-generated'
-    end
-    
-    # set headers
-    attr.each do |key, v|
-      if key.to_s != 'attachments' && key.to_s != 'body'
-        mail[key.to_s] = v.to_s
-      end
-    end
-
-    # add body    
-    mail.text_part = Mail::Part.new do
-      body attr[:body]
-    end
-
-    # add attachments
-    if attr[:attachments]
-      attr[:attachments].each do |attachment|
-        mail.attachments[attachment.filename] = {
-          :content_type => attachment.preferences['Content-Type'],
-          :mime_type    => attachment.preferences['Mime-Type'],
-          :content      => attachment.store_file.data
-        }
-      end
-    end
-
-    #mail.delivery_method :sendmail
-    mail.delivery_method :smtp, {
-      :openssl_verify_mode  => 'none',
-      :address              => account[:host],
-    #  :port                 => 587,
-      :port                 => 25,
-      :domain               => account[:host],
-      :user_name            => account[:user],
-      :password             => account[:pw],
-    #  :authentication       => 'plain',
-      :enable_starttls_auto => true
-    }
-    mail.deliver    
-    
   end
 end

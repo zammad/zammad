@@ -21,10 +21,11 @@ Zammad::Application.routes.draw do
   resources :notes
 
   # tickets
-  resources :ticket_articles,   :only => [:create, :show, :index, :update]
-  resources :ticket_priorities, :only => [:create, :show, :index, :update]
-  resources :ticket_states,     :only => [:create, :show, :index, :update]
-  resources :tickets,           :only => [:create, :show, :index, :update]
+  resources :channels,            :only => [:create, :show, :index, :update, :destroy]
+  resources :ticket_articles,     :only => [:create, :show, :index, :update]
+  resources :ticket_priorities,   :only => [:create, :show, :index, :update]
+  resources :ticket_states,       :only => [:create, :show, :index, :update]
+  resources :tickets,             :only => [:create, :show, :index, :update]
   match '/ticket_full/:id',       :to => 'ticket_overviews#ticket_full'
   match '/ticket_attachment/:id', :to => 'ticket_overviews#ticket_attachment'
   match '/ticket_attachment_new', :to => 'ticket_overviews#ticket_attachment_new'
@@ -43,7 +44,7 @@ Zammad::Application.routes.draw do
   match '/getting_started',       :to => 'getting_started#index'
 
   # sessions
-  resources :sessions,          :only => [:create, :destroy, :show]
+  resources :sessions,            :only => [:create, :destroy, :show]
   match '/signin',   :to => 'sessions#create'
   match '/signshow', :to => 'sessions#show'
   match '/signout',  :to => 'sessions#destroy'

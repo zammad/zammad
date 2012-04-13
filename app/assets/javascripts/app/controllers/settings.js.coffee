@@ -2,7 +2,7 @@ $ = jQuery.sub()
 
 class Index extends App.ControllerLevel2
   toggleable: false
-  toggleable: true
+#  toggleable: true
 
   constructor: ->
     super

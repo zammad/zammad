@@ -1,4 +1,3 @@
-#require 'rubygems'
 require 'twitter'
 
 class Channel::Twitter2
@@ -37,6 +36,7 @@ class Channel::Twitter2
       @article_type = 'twitter direct-message'
       fetch_loop(tweets, account, account[:direct_messages][:group])
     end
+    puts 'done'
   end
 
   def fetch_loop(tweets, account, group)
@@ -103,7 +103,6 @@ class Channel::Twitter2
 #    puts tweet.inspect
 #    user = User.where( :login => tweet.sender.screen_name ).first
     auth = Authorization.where( :uid => sender.id, :provider => 'twitter' ).first
-#    user = undef
     user = nil
     if auth
       puts 'user_id', auth.user_id

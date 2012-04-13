@@ -3,6 +3,7 @@
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="">
+        
 <table class="table table-striped">
 <tr>
  <th>Name</th>
@@ -20,5 +21,6 @@
  <td>x</td>
 </tr>
 </table>
+
         </div>
       </div>

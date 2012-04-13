@@ -214,7 +214,6 @@ From: #{ticket.articles[-1].from}
           :subject    => subject,
           :body       => body, 
         },
-        Rails.application.config.channel_email,
         true
       )
     end

@@ -130,8 +130,8 @@ class ApplicationController < ActionController::Base
     
     # config
     config = {}
-    Setting.where( :frontend => true ).each { |setting|
-      config[setting.name] = setting.state[:value]
+    Setting.select('name').where( :frontend => true ).each { |setting|
+      config[setting.name] = Setting.get(setting.name)
     }
     return config
   end

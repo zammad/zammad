@@ -1,17 +1,31 @@
 class Setting < ActiveRecord::Base
-  store     :options
-  store     :state
-  store     :state_initial
+  store         :options
+  store         :state
+  store         :state_initial
   before_create :set_initial
 
   @@config = nil
 
   def self.load
+    
+    # check if config is already generated
     return @@config if @@config
+    
+    # read all config settings
     config = {}
     Setting.select('name, state').order(:id).each { |setting|
       config[setting.name] = setting.state[:value]
     }
+    
+    # config lookups
+    config.each { |key, value|
+      next if value.class.to_s != 'String'
+      config[key].gsub!( /\#\{config\.(.+?)\}/ ) { |s|
+        s = config[$1].to_s
+      }
+    }
+    
+    # store for class requests
     @@config = config
     return config
   end

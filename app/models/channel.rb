@@ -1,11 +1,19 @@
 class Channel < ActiveRecord::Base
+  store :options
+
+  def self.send2
+    # find outbound
+    
+  end
+
   def self.fetch
-    Rails.application.config.channel.each { |channel|
+    channels = Channel.where( 'active = ? AND area LIKE ?', true, '%::Inbound' )
+    channels.each { |channel|
       begin
-        c = eval channel[:module] + '.new'
+        c = eval 'Channel::' + channel[:adapter] + '.new'
         c.fetch(channel)
       rescue Exception => e
-        puts "can't use " + channel[:module]
+        puts "can't use " + 'Channel::' + channel[:adapter]
         puts e.inspect
       end
     }

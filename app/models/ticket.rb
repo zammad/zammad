@@ -158,7 +158,7 @@ class Ticket < ActiveRecord::Base
           self.message_id = '<' + DateTime.current.to_s(:number) + '.' + self.ticket_id.to_s + '.' + rand(999999).to_s() + '@' + fqdn + '>'
 
           # set sender
-          self.from = Rails.application.config.email_sender
+          self.from = Setting.get('system_sender')
         end
       end
       def attachment_check
@@ -235,8 +235,7 @@ class Ticket < ActiveRecord::Base
               :subject     => subject,
               :body        => self.body,
               :attachments => self.attachments
-            },
-            Rails.application.config.channel_email
+            }
           )
         end
       end

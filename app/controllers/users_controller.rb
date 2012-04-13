@@ -37,15 +37,25 @@ class UsersController < ApplicationController
       if @user.created_by_id == 1
         
         # check if it's first user
-        count = User.all.count()
-        role_ids = []
+        count     = User.all.count()
+        group_ids = []
+        role_ids  = []
+
+        # add first user as admin/agent and to all groups
         if count <= 2
-          role_ids.push Role.where( :name => 'Admin' ).first.id
-          role_ids.push Role.where( :name => 'Agent' ).first.id
+          Role.where( :name => [ 'Admin', 'Agent'] ).each { |role|
+            role_ids.push role.id
+          }
+          Group.all().each { |group|
+            group_ids.push group.id
+          }
+          
+        # everybody else will go as customer per default
         else
           role_ids.push Role.where( :name => 'Customer' ).first.id
         end
-        @user.role_ids = role_ids
+        @user.role_ids  = role_ids
+        @user.group_ids = group_ids
 
       # else do assignment as defined
       else
