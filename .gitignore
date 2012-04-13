@@ -16,3 +16,5 @@
 
 # Ignore .project files
 /.project
+
+db/schema.rb
