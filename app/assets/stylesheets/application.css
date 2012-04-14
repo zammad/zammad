@@ -6,7 +6,20 @@
  *s= require_tree . 
  *= require bootstrap.css
  *= require fileuploader.css
+ *= require ./ui-lightness/jquery.ui.core.css
+ *= require ./ui-lightness/jquery.ui.resizable.css
+ *= require ./ui-lightness/jquery.ui.selectable.css
+ *= require ./ui-lightness/jquery.ui.accordion.css
+ *= require ./ui-lightness/jquery.ui.autocomplete.css
+ *= require ./ui-lightness/jquery.ui.button.css
+ *= require ./ui-lightness/jquery.ui.dialog.css
+ *= require ./ui-lightness/jquery.ui.slider.css
+ *= require ./ui-lightness/jquery.ui.tabs.css
+ *= require ./ui-lightness/jquery.ui.datepicker.css
+ *= require ./ui-lightness/jquery.ui.progressbar.css
  *= require zzz.css
- *= require_tree ./ui-lightness/ 
+ *
+ *= require_tree ./custom/
+ * 
 */
 
