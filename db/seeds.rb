@@ -559,14 +559,14 @@ Setting.create(
         :name      => 'ticket_number', 
         :tag       => 'select',
         :options     => {
-          'Increment' => 'Increment',
-          'Date'      => 'Date',
+          'increment' => 'Increment (SystemID.Counter)',
+          'date'      => 'Date (Year.Month.Day.SystemID.Counter)',
         },
       },
     ],
   },
   :state       => {
-    :value => 'Increment',
+    :value => 'increment',
   },
   :frontend    => false
 )
