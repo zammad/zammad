@@ -3,6 +3,9 @@ class Setting < ActiveRecord::Base
   store         :state
   store         :state_initial
   before_create :set_initial
+  after_create  :delete_cache
+  after_update  :delete_cache
+  after_destroy :delete_cache
 
   @@config = nil
 
@@ -36,6 +39,9 @@ class Setting < ActiveRecord::Base
   end
   
   private
+    def delete_cache
+      @@config = nil
+    end
     def set_initial
       self.state_initial = self.state
     end
