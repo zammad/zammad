@@ -67,9 +67,7 @@ class TicketOverviewsController < ApplicationController
         result.push all.merge( { :count => count } )
       }
 
-      respond_to do |format|
-        format.json { render :json => result }
-      end   
+      render :json => result
       return
     end
 
@@ -110,21 +108,17 @@ class TicketOverviewsController < ApplicationController
     }
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :overview      => overview_selected,
-          :tickets       => tickets,
-          :tickets_count => tickets_count,
-          :users         => users,
-          :bulk          => {
-            :owner_id => {
-              :id => bulk_owner_ids,
-            }
-          },
+    render :json => {
+      :overview      => overview_selected,
+      :tickets       => tickets,
+      :tickets_count => tickets_count,
+      :users         => users,
+      :bulk          => {
+        :owner_id => {
+          :id => bulk_owner_ids,
         }
-      }
-    end
+      },
+    }
   end
 
 
@@ -157,29 +151,25 @@ class TicketOverviewsController < ApplicationController
     }
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
+    render :json => {
 #          :ticket   => ticket,
 #          :articles => articles,
-          :users    => users,
-          :edit_form => {
-            :owner_id => {
-              :id => ticket_owner_ids
-            },
-            :group_id => {
-              :id => ticket_group_ids
-            },
-            :ticket_state_id => {
-              :id => ticket_state_ids
-            },
-            :ticket_priority_id => {
-              :id => ticket_priority_ids
-            }
-          }
+      :users    => users,
+      :edit_form => {
+        :owner_id => {
+          :id => ticket_owner_ids
+        },
+        :group_id => {
+          :id => ticket_group_ids
+        },
+        :ticket_state_id => {
+          :id => ticket_state_ids
+        },
+        :ticket_priority_id => {
+          :id => ticket_priority_ids
         }
       }
-    end
+    }
   end
 
   # GET /ticket_full/1
@@ -230,20 +220,16 @@ class TicketOverviewsController < ApplicationController
     log_view(ticket)
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :ticket   => ticket,
-          :articles => articles,
-          :users    => users,
-          :edit_form => {
-            :owner_id => {
-              :id => owner_ids
-            }
-          }
+    render :json => {
+      :ticket   => ticket,
+      :articles => articles,
+      :users    => users,
+      :edit_form => {
+        :owner_id => {
+          :id => owner_ids
         }
       }
-    end
+    }
   end
 
   # POST /ticket_attachment/new
@@ -268,13 +254,9 @@ class TicketOverviewsController < ApplicationController
     )
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :success  => true,
-        }
-      }
-    end
+    render :json => {
+      :success  => true,
+    }
   end
   
   # GET /ticket_attachment/1
@@ -340,17 +322,13 @@ class TicketOverviewsController < ApplicationController
 #    end
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :tickets => {
-            :open   => tickets_open,
-            :closed => tickets_closed
-          }
-#          :users => users,
-        }
+    render :json => {
+      :tickets => {
+        :open   => tickets_open,
+        :closed => tickets_closed
       }
-    end
+#          :users => users,
+    }
   end
 
   # GET /ticket_history/1
@@ -377,18 +355,14 @@ class TicketOverviewsController < ApplicationController
     history_attributes = History::Attribute.all()
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :ticket             => ticket,
-          :users              => users,
-          :history            => history,
-          :history_objects    => history_objects,
-          :history_types      => history_types,
-          :history_attributes => history_attributes
-        }
-      }
-    end
+    render :json => {
+      :ticket             => ticket,
+      :users              => users,
+      :history            => history,
+      :history_objects    => history_objects,
+      :history_types      => history_types,
+      :history_attributes => history_attributes
+    }
   end
   
   # GET /activity_stream
@@ -419,15 +393,11 @@ class TicketOverviewsController < ApplicationController
     }
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :activity_stream => activity_stream,
-          :tickets         => tickets,
-          :users           => users,
-        }
-      }
-    end
+    render :json => {
+      :activity_stream => activity_stream,
+      :tickets         => tickets,
+      :users           => users,
+    }
   end
   
   # GET /recent_viewed
@@ -458,15 +428,11 @@ class TicketOverviewsController < ApplicationController
     }
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :recent_viewed => recent_viewed,
-          :tickets       => tickets,
-          :users         => users,
-        }
-      }
-    end
+    render :json => {
+      :recent_viewed => recent_viewed,
+      :tickets       => tickets,
+      :users         => users,
+    }
   end
   
   # GET /user_search
@@ -497,10 +463,6 @@ class TicketOverviewsController < ApplicationController
     end
 
     # return result
-    respond_to do |format|
-      format.json {
-        render :json => users
-      }
-    end    
+    render :json => users
   end
 end
