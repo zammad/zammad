@@ -39,6 +39,13 @@ gem "daemons"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
+# e. g. on linux we need a javascript execution
+# gem 'execjs'
+# gem 'therubyracer'
+
+# e. g. for mysql you need to load mysql
+# gem 'mysql'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
