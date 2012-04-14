@@ -139,21 +139,11 @@ class ApplicationController < ActionController::Base
   def user_data_full (user_id)
 
     # get user
-    user = User.find(user_id)
-
-    # get linked accounts
-    user['accounts'] = {}
-    authorizations = user.authorizations() || []
-    authorizations.each do | authorization |
-      user['accounts'][authorization.provider] = {
-        :uid      => authorization[:uid],
-        :username => authorization[:username]
-      }
-    end
+    user = User.find_fulldata(user_id)
 
     # do not show password
     user['password'] = ''
-    
+ 
     # show linked topics and items
     user['links'] = []
     ticket_state_list_open   = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending remidner', 'pending action']) )
@@ -183,11 +173,6 @@ class ApplicationController < ActionController::Base
     }
     user['links'].push topic
 
-    # set roles
-    user['roles']         = user.roles.select('id, name').where(:active => true)
-    user['groups']        = user.groups.select('id, name').where(:active => true)
-    user['organization']  = user.organization
-    user['organizations'] = user.organizations.select('id, name').where(:active => true)
     return user
   end
 

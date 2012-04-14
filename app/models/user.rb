@@ -1,12 +1,17 @@
 class User < ActiveRecord::Base
-  before_create :check_name, :check_email, :check_image
+  before_create           :check_name, :check_email, :check_image
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :organizations
-  belongs_to :organization,               :class_name => 'Organization'
-  has_many :authorizations
+  belongs_to              :organization,  :class_name => 'Organization'
+  has_many                :authorizations
+  after_create            :delete_cache
+  after_update            :delete_cache
+  after_destroy           :delete_cache
 
-  def self.authenticate(username, password)
+  @@cache = {}
+
+  def self.authenticate( username, password )
     user = User.where( :login => username, :active => true ).first
     return nil if user.nil?
     logger.debug 'auth'
@@ -47,8 +52,39 @@ class User < ActiveRecord::Base
 
   end
   
+  def self.find_fulldata(user_id)
+
+    return @@cache[user_id] if @@cache[user_id]
+
+    # get user
+    user = User.find(user_id)
+
+    # get linked accounts
+    user['accounts'] = {}
+    authorizations = user.authorizations() || []
+    authorizations.each do | authorization |
+      user['accounts'][authorization.provider] = {
+        :uid      => authorization[:uid],
+        :username => authorization[:username]
+      }
+    end
+  
+    # set roles
+    user['roles']         = user.roles.select('id, name').where(:active => true)
+    user['groups']        = user.groups.select('id, name').where(:active => true)
+    user['organization']  = user.organization
+    user['organizations'] = user.organizations.select('id, name').where(:active => true)
+
+    @@cache[user_id] = user
+
+    return user
+  end
   
   private
+    def delete_cache
+      @@cache[self.id] = nil
+    end
+
     def check_name
       if self.firstname && (!self.lastname || self.lastname == '') then
         name = self.firstname.split(' ', 2)
