@@ -99,15 +99,15 @@ class CreateTicket < ActiveRecord::Migration
       t.references :ticket,                                 :null => false
       t.references :ticket_article_type,                    :null => false
       t.references :ticket_article_sender,                  :null => false
-      t.column :from,           :string, :limit => 3800,    :null => true
-      t.column :to,             :string, :limit => 3800,    :null => true
-      t.column :cc,             :string, :limit => 3800,    :null => true
-      t.column :subject,        :string, :limit => 3800,    :null => true
-      t.column :message_id,     :string, :limit => 3800,    :null => true
+      t.column :from,           :string, :limit => 3000,    :null => true
+      t.column :to,             :string, :limit => 3000,    :null => true
+      t.column :cc,             :string, :limit => 3000,    :null => true
+      t.column :subject,        :string, :limit => 3000,    :null => true
+      t.column :message_id,     :string, :limit => 3000,    :null => true
       t.column :message_id_md5, :string, :limit => 32,      :null => true
-      t.column :in_reply_to,    :string, :limit => 3800,    :null => true
-      t.column :references,     :string, :limit => 3800,    :null => true
-      t.column :body,           :string, :limit => 1800000, :null => true
+      t.column :in_reply_to,    :string, :limit => 3000,    :null => true
+      t.column :references,     :string, :limit => 3200,    :null => true
+      t.column :body,           :text,                      :null => true
       t.column :internal,       :boolean,                   :null => false, :default => false
       t.column :created_by_id,  :integer,                   :null => false
       t.timestamps
