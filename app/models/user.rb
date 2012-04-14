@@ -58,30 +58,53 @@ class User < ActiveRecord::Base
 
     # get user
     user = User.find(user_id)
+    data = user.attributes
+
 
     # get linked accounts
-    user['accounts'] = {}
+    data['accounts'] = {}
     authorizations = user.authorizations() || []
     authorizations.each do | authorization |
-      user['accounts'][authorization.provider] = {
+      data['accounts'][authorization.provider] = {
         :uid      => authorization[:uid],
         :username => authorization[:username]
       }
     end
   
     # set roles
-    user['roles']         = user.roles.select('id, name').where(:active => true)
-    user['groups']        = user.groups.select('id, name').where(:active => true)
-    user['organization']  = user.organization
-    user['organizations'] = user.organizations.select('id, name').where(:active => true)
+    roles = []
+    user.roles.select('id, name').where( :active => true ).each { |role|
+      roles.push role
+    }
+    data['roles'] = roles
 
-    @@cache[user_id] = user
+    groups = []
+    user.groups.select('id, name').where( :active => true ).each { |group|
+      groups.push group
+    }
+    data['groups'] = groups
+    
+    organization = user.organization
+    data['organization'] = organization
 
-    return user
+    organizations = []
+    user.organizations.select('id, name').where( :active => true ).each { |organization|
+      organizations.push organization
+    }
+    data['organizations'] = organizations
+
+    @@cache[user_id] = data
+
+    return data
   end
-  
+
+  def cache_reset
+    @@cache[self.id] = nil
+  end
+      
   private
     def delete_cache
+      puts 'delete_cache', self.insepct
       @@cache[self.id] = nil
     end
 
