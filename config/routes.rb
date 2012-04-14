@@ -3,6 +3,10 @@ Zammad::Application.routes.draw do
   # app init
   match '/init', :to => 'init#index'
   match '/app',  :to => 'init#index'
+  
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  root :to => 'init#index'
 
   # omniauth
   match '/auth/:provider/callback', :to => 'sessions#create_omniauth'
@@ -48,7 +52,6 @@ Zammad::Application.routes.draw do
   match '/signin',   :to => 'sessions#create'
   match '/signshow', :to => 'sessions#show'
   match '/signout',  :to => 'sessions#destroy'
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
