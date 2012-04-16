@@ -87,12 +87,13 @@ class Index extends App.Controller
     # find sender_id
     sender = App.TicketArticleSender.findByAttribute("name", "Customer")
     type   = App.TicketArticleType.findByAttribute("name", "phone")
-    group  = App.Group.find(params.group_id)
+    if params.group_id
+      group  = App.Group.find(params.group_id)
 
     # create article
     params['article'] = {
       from:                     params.customer_id_autocompletion,
-      to:                       group.name,
+      to:                       (group && group.name) || '',
       subject:                  params.subject,
       body:                     params.body,
       ticket_article_type_id:   type.id,
@@ -127,6 +128,9 @@ class Index extends App.Controller
             
           # create new create screen
           @render()
+          
+          # scroll to top
+          window.scrollTo(0,0)
 
         error: =>
           @log 'save failed!'
