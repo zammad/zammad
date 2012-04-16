@@ -83,8 +83,26 @@ class Index extends App.Controller
     # create ticket
     object = new App.Ticket
     @log 'updateAttributes', params
-    object.load(params)
     
+    # find sender_id
+    sender = App.TicketArticleSender.findByAttribute("name", "Customer")
+    type   = App.TicketArticleType.findByAttribute("name", "phone")
+    group  = App.Group.find(params.group_id)
+
+    # create article
+    params['article'] = {
+      from:                     params.customer_id_autocompletion,
+      to:                       group.name,
+      subject:                  params.subject,
+      body:                     params.body,
+      ticket_article_type_id:   type.id,
+      ticket_article_sender_id: sender.id,
+      created_by_id:            params.customer_id,
+    }
+#          console.log('params', params)
+    
+    object.load(params)
+
     # validate form
     errors = object.validate()
     
@@ -101,24 +119,6 @@ class Index extends App.Controller
 
       object.save(
         success: (r) =>
-          
-          # find sender_id
-          sender = App.TicketArticleSender.findByAttribute("name", "Customer")
-          type   = App.TicketArticleType.findByAttribute("name", "phone")
-
-          # create article
-          article = new App.TicketArticle
-          article.load(
-            from:                     'some guy',
-            to:                       'some group',
-            subject:                  params.subject,
-            body:                     params.body,
-            ticket_id:                r.id,
-            ticket_article_type_id:   type.id,
-            ticket_article_sender_id: sender.id,
-          )
-          article.save()
-#          console.log('params', params)
 
           # notify UI
           @notify
