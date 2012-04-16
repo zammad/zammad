@@ -1,10 +1,10 @@
 #s#= require json2
-#= require jquery
+#= require ./lib/jquery-1.7.2.min.js
+#= require ./lib/ui/jquery-ui-1.8.18.custom.min.js
 
 #= require ./lib/spine/spine.coffee
 #= require ./lib/spine/ajax.coffee
 #= require ./lib/spine/route.coffee
-#not_userd= require ./lib/spine/manager.coffee
 
 #= require ./lib/bootstrap-dropdown.js
 #= require ./lib/bootstrap-tooltip.js
@@ -14,12 +14,6 @@
 
 #= require ./lib/underscore.coffee
 #= require ./lib/ba-linkify.js
-#= require ./lib/ui/jquery.ui.core.js
-#= require ./lib/ui/jquery.ui.widget.js
-#= require ./lib/ui/jquery.ui.position.js
-#= require ./lib/ui/jquery.ui.autocomplete.js
-#not_used= require_tree ./lib/uis
-#not_used= require ./lib/jquery.autocomplete.js
 #= require ./lib/jquery.tagsinput.js
 #= require ./lib/fileuploader.js
 
