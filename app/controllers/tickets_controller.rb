@@ -55,7 +55,10 @@ class TicketsController < ApplicationController
         :o_id   => @article.ticket_id
       )
     end
-      
+
+    # execute ticket events      
+    Ticket::Observer::Notification.transaction
+
     render :json => @ticket, :status => :created
   end
 
@@ -64,6 +67,10 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(params[:id])
 
     if @ticket.update_attributes(params[:ticket])
+      
+      # execute ticket events
+      Ticket::Observer::Notification.transaction
+
       render :json => @ticket, :status => :ok
     else
       render :json => @ticket.errors, :status => :unprocessable_entity
@@ -74,6 +81,9 @@ class TicketsController < ApplicationController
   def destroy
     @ticket = Ticket.find(params[:id])
     @ticket.destroy
+
+    # execute ticket events      
+    Ticket::Observer::Notification.transaction
 
     head :ok
   end

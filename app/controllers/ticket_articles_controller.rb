@@ -27,13 +27,17 @@ class TicketArticlesController < ApplicationController
     )
 
     if @article.save
-      render :json => @article, :status => :created
 
       # remove attachments from upload cache
       Store.remove(
         :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
         :o_id   => @article.ticket_id
       )
+      
+      # execute ticket events
+      Ticket::Observer::Notification.transaction
+
+      render :json => @article, :status => :created
     else
       render :json => @article.errors, :status => :unprocessable_entity
     end
@@ -44,6 +48,10 @@ class TicketArticlesController < ApplicationController
     @article = Ticket::Article.find(params[:id])
 
     if @article.update_attributes(params[:ticket_article])
+      
+      # execute ticket events
+      Ticket::Observer::Notification.transaction
+
       render :json => @article, :status => :ok
     else
       render :json => @article.errors, :status => :unprocessable_entity
