@@ -1,5 +1,7 @@
 # clear cache
-Rails.cache.clear
+if Zammad::Application.config.cache_store[1] && File.directory?(Zammad::Application.config.cache_store[1])
+  Rails.cache.clear
+end
 
 # to get rails caching working, load models
 Dir.foreach("#{Rails.root}/app/models") do |model_name|

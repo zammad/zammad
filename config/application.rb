@@ -61,9 +61,8 @@ module Zammad
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    
-    
+
     # Use a different cache store in production
-    config.cache_store = :file_store, 'tmp/cache/file_store' 
+    config.cache_store = :file_store, 'tmp/cache/file_store'
   end
 end
