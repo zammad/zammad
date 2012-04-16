@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include UserInfo
-  protect_from_forgery
 #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user, :authentication_check, :config_frontend, :user_data_full

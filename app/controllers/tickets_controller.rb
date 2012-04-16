@@ -1,5 +1,4 @@
 class TicketsController < ApplicationController
-  skip_before_filter :verify_authenticity_token
   before_filter :authentication_check
 
   # GET /tickets
