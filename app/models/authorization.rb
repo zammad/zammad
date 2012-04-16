@@ -1,7 +1,7 @@
 class Authorization < ActiveRecord::Base
-  belongs_to :user
-  validates_presence_of :user_id, :uid, :provider
-  validates_uniqueness_of :uid, :scope => :provider
+  belongs_to              :user
+  validates_presence_of   :user_id, :uid, :provider
+  validates_uniqueness_of :uid,     :scope => :provider
   
   def self.find_from_hash(hash)
     auth = Authorization.where( :provider => hash['provider'], :uid => hash['uid'] )
@@ -19,8 +19,11 @@ class Authorization < ActiveRecord::Base
       if hash['info']['image']
         user = User.where( :id => auth.first.user_id ).first
         user.update_attributes(
-          :image    => hash['info']['image']
+          :image => hash['info']['image']
         )
+
+        # reset cache
+        user.cache_delete
       end
     end
 
@@ -44,6 +47,8 @@ class Authorization < ActiveRecord::Base
       :token    => hash['credentials']['token'],
       :secret   => hash['credentials']['secret']
     )
-  end
 
+    # reset cache
+    user.cache_delete
+  end
 end

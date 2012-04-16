@@ -29,6 +29,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :active,         :boolean,               :null => false, :default => true
       t.column :note,           :string, :limit => 250, :null => true
       t.column :source,         :string, :limit => 200, :null => true
+      t.column :preferences,    :string, :limit => 4000,:null => true
       t.column :created_by_id,  :integer,               :null => false
       t.timestamps
     end

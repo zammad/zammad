@@ -146,25 +146,23 @@ class ApplicationController < ActionController::Base
  
     # show linked topics and items
     user['links'] = []
-    ticket_state_list_open   = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending remidner', 'pending action']) )
-    ticket_state_list_closed = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['closed'] ) )
 
-    tickets_open   = Ticket.where(:customer_id => user_id, :ticket_state_id => ticket_state_list_open).count()
-    tickets_closed = Ticket.where(:customer_id => user_id, :ticket_state_id => ticket_state_list_closed).count()
+    # TEMP: compat. reasons
+    user[:preferences] = {} if !user[:preferences]
 
     topic = {
       :title => 'Tickets',
       :items => [
         {
           :url   => '',
-          :name  => 'open (' + tickets_open.to_s + ')',
+          :name  => 'open (' + user[:preferences][:tickets_open].to_s + ')',
           :title => 'Open Tickets',
           :class => 'user-tickets',
           :data  => 'open'
         },
         {
           :url   => '',
-          :name  => 'closed (' + tickets_closed.to_s + ')',
+          :name  => 'closed (' + user[:preferences][:tickets_closed].to_s + ')',
           :title => 'Closed Tickets',
           :class => 'user-tickets',
           :data  => 'closed'

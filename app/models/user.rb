@@ -1,15 +1,16 @@
-class User < ActiveRecord::Base
+class User < ApplicationModel
   before_create           :check_name, :check_email, :check_image
-  has_and_belongs_to_many :groups
-  has_and_belongs_to_many :roles
-  has_and_belongs_to_many :organizations
-  belongs_to              :organization,  :class_name => 'Organization'
-  has_many                :authorizations
-  after_create            :delete_cache
-  after_update            :delete_cache
-  after_destroy           :delete_cache
+  after_create            :cache_delete
+  after_update            :cache_delete
+  after_destroy           :cache_delete
 
-  @@cache = {}
+  has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
+  has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update
+  has_and_belongs_to_many :organizations,   :after_add => :cache_update, :after_remove => :cache_update
+  has_many                :authorizations,  :after_add => :cache_update, :after_remove => :cache_update
+  belongs_to              :organization,    :class_name => 'Organization'
+
+  store                   :preferences
 
   def self.authenticate( username, password )
     user = User.where( :login => username, :active => true ).first
@@ -54,7 +55,7 @@ class User < ActiveRecord::Base
   
   def self.find_fulldata(user_id)
 
-    return @@cache[user_id] if @@cache[user_id]
+    return cache_get(user_id) if cache_get(user_id)
 
     # get user
     user = User.find(user_id)
@@ -93,21 +94,12 @@ class User < ActiveRecord::Base
     }
     data['organizations'] = organizations
 
-    @@cache[user_id] = data
+    cache_set(user.id, data)
 
     return data
   end
 
-  def cache_reset
-    @@cache[self.id] = nil
-  end
-      
   private
-    def delete_cache
-      puts 'delete_cache', self.insepct
-      @@cache[self.id] = nil
-    end
-
     def check_name
       if self.firstname && (!self.lastname || self.lastname == '') then
         name = self.firstname.split(' ', 2)

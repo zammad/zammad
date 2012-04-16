@@ -1,12 +1,16 @@
 class Ticket < ActiveRecord::Base
   before_create :number_generate, :check_defaults
-  belongs_to :group
-  has_many   :articles
-  belongs_to :ticket_state,    :class_name => 'Ticket::State'
-  belongs_to :ticket_priority, :class_name => 'Ticket::Priority'
-  belongs_to :owner,           :class_name => 'User'
-  belongs_to :customer,        :class_name => 'User'
-  belongs_to :created_by,      :class_name => 'User'
+  after_create  :user_ticket_counter_update
+  after_update  :user_ticket_counter_update
+  after_destroy :user_ticket_counter_update
+  
+  belongs_to    :group
+  has_many      :articles
+  belongs_to    :ticket_state,    :class_name => 'Ticket::State'
+  belongs_to    :ticket_priority, :class_name => 'Ticket::Priority'
+  belongs_to    :owner,           :class_name => 'User'
+  belongs_to    :customer,        :class_name => 'User'
+  belongs_to    :created_by,      :class_name => 'User'
 
   @@number_adapter = nil
 
@@ -88,6 +92,21 @@ class Ticket < ActiveRecord::Base
     end
 
     return subject
+  end
+
+  def user_ticket_counter_update
+    return if !self.customer_id
+
+    ticket_state_list_open   = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending remidner', 'pending action']) )
+    ticket_state_list_closed = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['closed'] ) )
+
+    tickets_open   = Ticket.where( :customer_id => self.customer_id, :ticket_state_id => ticket_state_list_open ).count()
+    tickets_closed = Ticket.where( :customer_id => self.customer_id, :ticket_state_id => ticket_state_list_closed ).count()
+
+    customer = User.find( self.customer_id )
+    customer[:preferences][:tickets_open]   = tickets_open
+    customer[:preferences][:tickets_closed] = tickets_closed
+    customer.save
   end
 
   private
