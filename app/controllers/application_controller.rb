@@ -3,10 +3,8 @@ class ApplicationController < ActionController::Base
 #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user, :authentication_check, :config_frontend, :user_data_full
-
   before_filter :set_user, :cors_preflight_check
-  after_filter :set_access_control_headers
-
+  after_filter  :set_access_control_headers, :trigger_events
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers 
@@ -37,6 +35,11 @@ class ApplicationController < ActionController::Base
    
    
   private
+
+  # execute events      
+  def trigger_events
+    Ticket::Observer::Notification.transaction
+  end
 
   # Finds the User with the ID stored in the session with the key
   # :current_user_id This is a common way to handle user login in
