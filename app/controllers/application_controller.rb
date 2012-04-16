@@ -148,21 +148,21 @@ class ApplicationController < ActionController::Base
     user['links'] = []
 
     # TEMP: compat. reasons
-    user[:preferences] = {} if !user[:preferences]
+    user['preferences'] = {} if user['preferences'] == nil
 
     topic = {
       :title => 'Tickets',
       :items => [
         {
           :url   => '',
-          :name  => 'open (' + user[:preferences][:tickets_open].to_s + ')',
+          :name  => 'open (' + user['preferences'][:tickets_open].to_s + ')',
           :title => 'Open Tickets',
           :class => 'user-tickets',
           :data  => 'open'
         },
         {
           :url   => '',
-          :name  => 'closed (' + user[:preferences][:tickets_closed].to_s + ')',
+          :name  => 'closed (' + user['preferences'][:tickets_closed].to_s + ')',
           :title => 'Closed Tickets',
           :class => 'user-tickets',
           :data  => 'closed'
