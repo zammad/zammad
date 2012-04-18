@@ -3,7 +3,6 @@ require 'twitter'
 class Channel::Twitter2
   include UserInfo
 
-#  def fetch(:oauth_token, :oauth_token_secret)
   def fetch (channel)
 
     puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
@@ -48,8 +47,7 @@ class Channel::Twitter2
     tweets.each do |tweet|
       
       # check if tweet is already imported
-      puts '------------------------------------------------------'
-      article = Ticket::Article.where( :message_id => tweet.id ).first
+      article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
 
       # check if sender already exists
       next if article
@@ -111,7 +109,7 @@ class Channel::Twitter2
       puts 'user_id', auth.user_id
       user = User.where( :id => auth.user_id ).first
     end
-    if !user then
+    if !user
       puts 'create user...'
       roles = Role.where( :name => 'Customer' )
       user = User.create(
@@ -144,11 +142,11 @@ class Channel::Twitter2
   
   def fetch_ticket_create(user, tweet, sender, channel, group)
 
-    puts '+++++++++++++++++++++++++++' + tweet.inspect
+#    puts '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
-    if tweet['in_reply_to_status_id'] then
+    if tweet['in_reply_to_status_id']
       puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
-      article = Ticket::Article.where( :message_id => tweet.in_reply_to_status_id ).first
+      article = Ticket::Article.where( :message_id => tweet.in_reply_to_status_id.to_s ).first
       if article
         puts 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
         return article.ticket
@@ -156,18 +154,16 @@ class Channel::Twitter2
     end
     
     # find if record already exists
-    article = Ticket::Article.where( :message_id => tweet.id ).first
+    article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
     if article
       return article.ticket
     end
     
-#    auth = Authorization.where( :uid => tweet.sender.id, :provider => 'twitter' )
-    puts 'custimer_id', user.id, user.inspect
     ticket = nil
     if @article_type == 'twitter direct-message'
       ticket = Ticket.where( :customer_id => user.id ).first
     end
-    if !ticket then
+    if !ticket
       ticket = Ticket.create(
         :group_id           => Group.where( :name => group ).first.id,
         :customer_id        => user.id,
@@ -183,7 +179,7 @@ class Channel::Twitter2
   def fetch_article_create(user,ticket,tweet, sender)
 
     # find if record already exists
-    article = Ticket::Article.where( :message_id => tweet.id ).first
+    article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
     if article
       return article
     end
@@ -224,7 +220,7 @@ class Channel::Twitter2
       :oauth_token_secret => channel[:options][:oauth_token_secret]
     )
     puts 'to:' + atts[:to].to_s
-    if atts[:type] == 'twitter direct-message' then
+    if atts[:type] == 'twitter direct-message'
       dm = client.direct_message_create(
         atts[:to].to_s,
         atts[:body].to_s,
@@ -234,7 +230,7 @@ class Channel::Twitter2
       return dm      
     end
       
-    if atts[:type] == 'twitter status' then
+    if atts[:type] == 'twitter status'
       message = client.update(
         atts[:body].to_s,
         options = {
