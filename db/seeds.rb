@@ -13,17 +13,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'product_name', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'product_name', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Zammad',
   },
-  :frontend    => true
+  :frontend => true
 )
 
 Setting.create(
@@ -34,17 +34,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'organization', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'organization', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Example Inc.',
   },
-  :frontend    => true
+  :frontend => true
 )
 
 Setting.create(
@@ -55,11 +55,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'system_id', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'system_id', 
+        :tag      => 'select',
+        :options  => {
           '10' => '10',
           '11' => '11',
           '12' => '12',
@@ -68,10 +68,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => '10',
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'Fully Qualified Domain Name',
@@ -81,17 +81,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'fqdn', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'fqdn', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'zammad.example.com',
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'http type',
@@ -101,11 +101,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'storage', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'storage', 
+        :tag      => 'select',
+        :options  => {
           'https' => 'https',
           'http'  => 'http',
         },
@@ -128,11 +128,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'storage', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'storage', 
+        :tag      => 'select',
+        :options  => {
           'DB' => 'Database',
           'FS' => 'Filesystem',
         },
@@ -154,11 +154,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'user_create_account', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'user_create_account', 
+        :tag      => 'select',
+        :options  => {
           1 => 'yes',
           0 => 'no',
         },
@@ -178,11 +178,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'user_lost_password', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'user_lost_password', 
+        :tag      => 'select',
+        :options  => {
           1 => 'yes',
           0 => 'no',
         },
@@ -202,11 +202,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'switch_to_user', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'switch_to_user', 
+        :tag      => 'select',
+        :options  => {
           1 => 'yes',
           0 => 'no',
         },
@@ -226,11 +226,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'auth_db', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'auth_db', 
+        :tag      => 'select',
+        :options  => {
           1 => 'yes',
           0 => 'no',
         },
@@ -246,49 +246,102 @@ Setting.create(
   :title       => 'Autentication via Twitter',
   :name        => 'auth_twitter',
   :area        => 'Security::Authentication',
-  :description => 'Enables user authentication via twitter.',
+  :description => 'Enables user authentication via twitter. Register your app first at https://dev.twitter.com/apps',
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'auth_twitter', 
-        :tag       => 'select',
-        :options     => {
-          1 => 'yes',
-          0 => 'no',
+        :display  => '',
+        :null     => true,
+        :name     => 'auth_twitter', 
+        :tag      => 'select',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
-  :state       => {
-    :value => 1,
+  :state => {
+    :value => false,
   },
-  :frontend    => true
+  :frontend => true
+)
+Setting.create(
+  :title       => 'Twitter App Credentials',
+  :name        => 'auth_twitter_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'App credentials for Twitter.',
+  :options     => {
+    :form => [
+      {
+        :display  => 'Twitter Key',
+        :null     => true,
+        :name     => 'key', 
+        :tag      => 'input',
+      },
+      {
+        :display  => 'Twitter Secret',
+        :null     => true,
+        :name     => 'secret', 
+        :tag      => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {}
+  },
+  :frontend => false
 )
 Setting.create(
   :title       => 'Autentication via Facebook',
   :name        => 'auth_facebook',
   :area        => 'Security::Authentication',
-  :description => 'Enables user authentication via Facebook.',
+  :description => 'Enables user authentication via Facebook. Register your app first at https://developers.facebook.com/apps/',
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'auth_facebook', 
-        :tag       => 'select',
-        :options     => {
-          1 => 'yes',
-          0 => 'no',
+        :display  => '',
+        :null     => true,
+        :name     => 'auth_facebook', 
+        :tag      => 'select',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => false,
   },
-  :frontend    => true
+  :frontend => true
+)
+
+Setting.create(
+  :title       => 'Facebook App Credentials',
+  :name        => 'auth_facebook_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'App credentials for Facebook.',
+  :options     => {
+    :form => [
+      {
+        :display   => 'App ID',
+        :null      => true,
+        :name      => 'app_id', 
+        :tag       => 'input',
+      },
+      {
+        :display   => 'App Secret',
+        :null      => true,
+        :name      => 'app_secret', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {},
+  },
+  :frontend => false
 )
 Setting.create(
   :title       => 'Autentication via LinkedIn',
@@ -303,17 +356,44 @@ Setting.create(
         :name      => 'auth_linkedin', 
         :tag       => 'select',
         :options     => {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => false,
   },
   :frontend    => true
 )
+Setting.create(
+  :title       => 'LinkedIn App Credentials',
+  :name        => 'auth_linkedin_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'Enables user authentication via LinkedIn.',
+  :options     => {
+    :form => [
+      {
+        :display   => 'App ID',
+        :null      => true,
+        :name      => 'app_id', 
+        :tag       => 'input',
+      },
+      {
+        :display   => 'App Secret',
+        :null      => true,
+        :name      => 'app_secret', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {},
+  },
+  :frontend => false
+)
+
 Setting.create(
   :title       => 'Minimal size',
   :name        => 'password_min_size',
