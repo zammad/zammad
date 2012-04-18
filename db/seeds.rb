@@ -157,16 +157,16 @@ Setting.create(
         :display  => '',
         :null     => true,
         :name     => 'user_create_account', 
-        :tag      => 'select',
-        :options  => {
-          1 => 'yes',
-          0 => 'no',
+        :tag      => 'boolean',
+        :options     => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => true,
   },
   :frontend    => true
 )
@@ -181,16 +181,16 @@ Setting.create(
         :display  => '',
         :null     => true,
         :name     => 'user_lost_password', 
-        :tag      => 'select',
-        :options  => {
-          1 => 'yes',
-          0 => 'no',
+        :tag      => 'boolean',
+        :options     => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => true,
   },
   :frontend    => true
 )
@@ -205,18 +205,18 @@ Setting.create(
         :display  => '',
         :null     => true,
         :name     => 'switch_to_user', 
-        :tag      => 'select',
+        :tag      => 'boolean',
         :options  => {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
-  :state       => {
-    :value => 0,
+  :state => {
+    :value => false,
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'Autentication via Database',
@@ -229,18 +229,18 @@ Setting.create(
         :display  => '',
         :null     => true,
         :name     => 'auth_db', 
-        :tag      => 'select',
+        :tag      => 'boolean',
         :options  => {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
-  :state       => {
-    :value => 1,
+  :state => {
+    :value => true,
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'Autentication via Twitter',
@@ -253,7 +253,7 @@ Setting.create(
         :display  => '',
         :null     => true,
         :name     => 'auth_twitter', 
-        :tag      => 'select',
+        :tag      => 'boolean',
         :options  => {
           true  => 'yes',
           false => 'no',
@@ -303,7 +303,7 @@ Setting.create(
         :display  => '',
         :null     => true,
         :name     => 'auth_facebook', 
-        :tag      => 'select',
+        :tag      => 'boolean',
         :options  => {
           true  => 'yes',
           false => 'no',
@@ -343,6 +343,58 @@ Setting.create(
   },
   :frontend => false
 )
+
+Setting.create(
+  :title       => 'Autentication via Google',
+  :name        => 'auth_google_oauth2',
+  :area        => 'Security::Authentication',
+  :description => 'Enables user authentication via Google.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'auth_google_oauth2', 
+        :tag       => 'boolean',
+        :options   => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state       => {
+    :value => false,
+  },
+  :frontend    => true
+)
+Setting.create(
+  :title       => 'Google App Credentials',
+  :name        => 'auth_google_oauth2_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'Enables user authentication via Google.',
+  :options     => {
+    :form => [
+      {
+        :display   => 'Client ID',
+        :null      => true,
+        :name      => 'client_id', 
+        :tag       => 'input',
+      },
+      {
+        :display   => 'Client Secret',
+        :null      => true,
+        :name      => 'client_secret', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {},
+  },
+  :frontend => false
+)
+
 Setting.create(
   :title       => 'Autentication via LinkedIn',
   :name        => 'auth_linkedin',
@@ -354,8 +406,8 @@ Setting.create(
         :display   => '',
         :null      => true,
         :name      => 'auth_linkedin', 
-        :tag       => 'select',
-        :options     => {
+        :tag       => 'boolean',
+        :options   => {
           true  => 'yes',
           false => 'no',
         },
@@ -638,17 +690,17 @@ Setting.create(
         :null      => true,
         :name      => 'ticket_number', 
         :tag       => 'select',
-        :options     => {
+        :options   => {
           'increment' => 'Increment (SystemID.Counter)',
           'date'      => 'Date (Year.Month.Day.SystemID.Counter)',
         },
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'increment',
   },
-  :frontend    => false
+  :frontend => false
 )
 Setting.create(
   :title       => 'Ticket Number Increment',
@@ -658,21 +710,21 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => 'Checksum',
-        :null      => true,
-        :name      => 'checksum', 
-        :tag       => 'select',
-        :options   => {
+        :display  => 'Checksum',
+        :null     => true,
+        :name     => 'checksum', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
       {
-        :display   => 'Min. size of number',
-        :null      => true,
-        :name      => 'min_size', 
-        :tag       => 'select',
-        :options   => {
+        :display  => 'Min. size of number',
+        :null     => true,
+        :name     => 'min_size', 
+        :tag      => 'select',
+        :options  => {
           1 => 1,
           2 => 2,
           3 => 3,
@@ -696,21 +748,21 @@ Setting.create(
         },
       },
       {
-        :display   => 'Logfile',
-        :null      => false,
-        :name      => 'file', 
-        :tag       => 'input',
+        :display  => 'Logfile',
+        :null     => false,
+        :name     => 'file', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => {
       :checksum => false,
       :file     => '/tmp/counter.log',
       :min_size => 5,
     },
   },
-  :frontend    => false
+  :frontend => false
 )
 Setting.create(
   :title       => 'Ticket Number Increment Date',
@@ -720,30 +772,30 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => 'Checksum',
-        :null      => true,
-        :name      => 'checksum', 
-        :tag       => 'select',
-        :options   => {
+        :display  => 'Checksum',
+        :null     => true,
+        :name     => 'checksum', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
       {
-        :display   => 'Logfile',
-        :null      => false,
-        :name      => 'file', 
-        :tag       => 'input',
+        :display  => 'Logfile',
+        :null     => false,
+        :name     => 'file', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => {
       :checksum => false,
       :file     => '/tmp/counter.log',
     }
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -765,10 +817,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'SystemAddressName',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -779,17 +831,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'ticket_define_email_from_seperator', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'ticket_define_email_from_seperator', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'via',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -800,21 +852,21 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'customer_ticket_create', 
-        :tag       => 'select',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'customer_ticket_create', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => true,
   },
-  :frontend    => true
+  :frontend => true
 )
 
 Setting.create(
@@ -825,11 +877,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'customer_ticket_view', 
-        :tag       => 'select',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'customer_ticket_view', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
@@ -879,10 +931,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 10,
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -893,11 +945,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'postmaster_follow_up_search_in', 
-        :tag       => 'checkbox',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'postmaster_follow_up_search_in', 
+        :tag      => 'checkbox',
+        :options  => {
           'references' => 'References',
           'body'       => 'Body',
           'attachment' => 'Attachment',
@@ -906,10 +958,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => ['subject'],
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -920,17 +972,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'notification_sender', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'notification_sender', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Notification Master <noreply@#{config.fqdn}>',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -941,17 +993,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'system_sender', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'system_sender', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Zammad Team <zammad@#{config.fqdn}>',
   },
-  :frontend    => false
+  :frontend => false
 )
 Setting.create(
   :title       => 'Block Notifications',
@@ -961,17 +1013,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'send_no_auto_response_reg_exp', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'send_no_auto_response_reg_exp', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => '(MAILER-DAEMON|postmaster|abuse)@.+?\..+?',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -982,21 +1034,21 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'chat', 
-        :tag       => 'select',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'chat', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => false,
   },
-  :frontend    => true
+  :frontend => true
 )
 
 

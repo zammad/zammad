@@ -28,6 +28,11 @@ class Index extends App.Controller
         name:   'LinkedIn',
         config: 'auth_linkedin',
       },
+      google_oauth2: {
+        url:    '/auth/google_oauth2',
+        name:   'Google',
+        config: 'auth_google_oauth2',
+      },
     }
     auth_providers = []
     for key, provider of auth_provider_all
