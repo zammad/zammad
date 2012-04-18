@@ -12,7 +12,32 @@ class Index extends App.Controller
     @navupdate '#login'
 
   render: (data = {}) ->
-    @html App.view('login')(item: data)
+    auth_provider_all = {
+      facebook: {
+        url:    '/auth/facebook',
+        name:   'Facebook',
+        config: 'auth_facebook',
+      },
+      twitter: {
+        url:    '/auth/twitter',
+        name:   'Twitter',
+        config: 'auth_twitter',
+      },
+      linkedin: {
+        url:    '/auth/linkedin',
+        name:   'LinkedIn',
+        config: 'auth_linkedin',
+      },
+    }
+    auth_providers = []
+    for key, provider of auth_provider_all
+      if Config[provider.config] is true || Config[provider.config] is "true"
+        auth_providers.push provider
+    
+    @html App.view('login')(
+      item:           data,
+      auth_providers: auth_providers
+    )
     if $(@el).find('[name="username"]').val()
       $(@el).find('[name="username"]').focus()
   
