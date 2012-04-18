@@ -79,11 +79,9 @@ class SessionsController < ApplicationController
 
     # Create a new user or add an auth to existing user, depending on
     # whether there is already a user signed in.
-    authorization = nil
-    if current_user
+    authorization = Authorization.find_from_hash(auth)
+    if !authorization
       authorization = Authorization.create_from_hash(auth, current_user)
-    else
-      authorization = Authorization.find_from_hash(auth)
     end
 
     # Log the authorizing user in.
@@ -98,18 +96,6 @@ class SessionsController < ApplicationController
       
       # auto population of default collections
       default_collection = {}
-#      default_collection['User']                = User.all
-#      # get linked accounts
-#      default_collection['User'].each do |user|
-#        user['accounts'] = {}
-#        authorizations = user.authorizations() || []
-#        authorizations.each do | authorization |
-#          user['accounts'][authorization.provider] = {
-#            :uid      => authorization[:uid],
-#            :username => authorization[:username]
-#          }
-#        end
-#      end
       default_collection['Role']                = Role.all
       default_collection['Group']               = Group.all
       default_collection['Organization']        = Organization.all
