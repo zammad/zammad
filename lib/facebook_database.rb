@@ -9,8 +9,8 @@ module OmniAuth
         # database lookup
         puts 'FacebookDatabase -> initialize'
         config = Setting.get('auth_facebook_credentials') || {}
-        *args[0] = config['app_id']
-        *args[1] = config['app_secret']
+        args[0] = config['app_id']
+        args[1] = config['app_secret']
         super
       end
 
