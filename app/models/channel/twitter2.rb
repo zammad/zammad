@@ -213,9 +213,11 @@ class Channel::Twitter2
 
   end
   
-  def send(atts, channel)
+  def send(attr, notification = false)
 #    logger.debug('tweeeeettttt!!!!!!')
-    @client = Twitter::Client.new(
+    channel = Channel.where( :area => 'Twitter::Inbound', :active => true ).first
+
+    client = Twitter::Client.new(
       :consumer_key       => channel[:options][:consumer_key],
       :consumer_secret    => channel[:options][:consumer_secret],
       :oauth_token        => channel[:options][:oauth_token],
@@ -223,23 +225,23 @@ class Channel::Twitter2
     )
     puts 'to:' + atts[:to].to_s
     if atts[:type] == 'twitter direct-message' then
-      dm = @client.direct_message_create(
+      dm = client.direct_message_create(
         atts[:to].to_s,
         atts[:body].to_s,
         options = {}
       )
-      puts dm.inspect
+#      puts dm.inspect
       return dm      
     end
       
     if atts[:type] == 'twitter status' then
-      message = @client.update(
+      message = client.update(
         atts[:body].to_s,
         options = {
           :in_reply_to_status_id => atts[:in_reply_to]
         }
       )
-      puts message.inspect
+#      puts message.inspect
       return message
     end
 
