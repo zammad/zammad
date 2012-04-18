@@ -1379,7 +1379,7 @@ Channel.create(
 
 Channel.create(
   :adapter => 'Twitter2',
-  :area    => 'Twitter',
+  :area    => 'Twitter::Inbound',
   :options => {
     :consumer_key       => 'PJ4c3dYYRtSZZZdOKo8ow',
     :consumer_secret    => 'ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk',

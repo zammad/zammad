@@ -4,42 +4,45 @@ class Channel::Twitter2
   include UserInfo
 
 #  def fetch(:oauth_token, :oauth_token_secret)
-  def fetch (account)
+  def fetch (channel)
 
-    puts 'fetching tweets'
+    puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
     @client = Twitter::Client.new(
-      :consumer_key       => account[:consumer_key],
-      :consumer_secret    => account[:consumer_secret],
-      :oauth_token        => account[:oauth_token],
-      :oauth_token_secret => account[:oauth_token_secret]
+      :consumer_key       => channel[:options][:consumer_key],
+      :consumer_secret    => channel[:options][:consumer_secret],
+      :oauth_token        => channel[:options][:oauth_token],
+      :oauth_token_secret => channel[:options][:oauth_token_secret]
     )
     
     # search results
-    if account[:search]
-      account[:search].each { |search|
+    if channel[:options][:search]
+      channel[:options][:search].each { |search|
+        puts " - searching for #{search[:item]}"
         tweets = @client.search( search[:item] )
         @article_type = 'twitter status'
-        fetch_loop(tweets, account, search[:group])
+        fetch_loop(tweets, channel, search[:group])
       }
     end
 
     # mentions
-    if account[:mentions]
+    if channel[:options][:mentions]
+      puts " - searching for mentions"
       tweets = @client.mentions
       @article_type = 'twitter status'
-      fetch_loop(tweets, account, account[:mentions][:group])
+      fetch_loop(tweets, channel, channel[:options][:mentions][:group])
     end
     
     # direct messages
-    if account[:direct_messages]
+    if channel[:options][:direct_messages]
+      puts " - searching for direct_messages"
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
-      fetch_loop(tweets, account, account[:direct_messages][:group])
+      fetch_loop(tweets, channel, channel[:options][:direct_messages][:group])
     end
     puts 'done'
   end
 
-  def fetch_loop(tweets, account, group)
+  def fetch_loop(tweets, channel, group)
 
     # find tweets
     tweets.each do |tweet|
@@ -54,7 +57,7 @@ class Channel::Twitter2
       # use transaction
       ActiveRecord::Base.transaction do
         puts 'import tweet'
-        fetch_import(tweet, account, group)
+        fetch_import(tweet, channel, group)
       end
       
       # execute ticket events      
@@ -62,7 +65,7 @@ class Channel::Twitter2
     end
   end
   
-  def fetch_import(tweet, account, group)
+  def fetch_import(tweet, channel, group)
     
     # do sender lockup if needed
     sender = nil
@@ -86,13 +89,13 @@ class Channel::Twitter2
       puts 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
       tweet_sub = @client.status(tweet.in_reply_to_status_id)
 #        puts tweet_sub.inspect
-      (user, ticket, article) = fetch_import(tweet_sub, account, group)
+      (user, ticket, article) = fetch_import(tweet_sub, channel, group)
     end
     
     # create stuff
     user = fetch_user_create(tweet, sender)
     if !ticket
-      ticket = fetch_ticket_create(user, tweet, sender, account, group)
+      ticket = fetch_ticket_create(user, tweet, sender, channel, group)
     end
     article = fetch_article_create(user, ticket, tweet, sender)
     return user, ticket, article
@@ -139,7 +142,7 @@ class Channel::Twitter2
     return user 
   end
   
-  def fetch_ticket_create(user, tweet, sender, account, group)
+  def fetch_ticket_create(user, tweet, sender, channel, group)
 
     puts '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
@@ -210,13 +213,13 @@ class Channel::Twitter2
 
   end
   
-  def send(atts, account)
+  def send(atts, channel)
 #    logger.debug('tweeeeettttt!!!!!!')
     @client = Twitter::Client.new(
-      :consumer_key       => account[:consumer_key],
-      :consumer_secret    => account[:consumer_secret],
-      :oauth_token        => account[:oauth_token],
-      :oauth_token_secret => account[:oauth_token_secret]
+      :consumer_key       => channel[:options][:consumer_key],
+      :consumer_secret    => channel[:options][:consumer_secret],
+      :oauth_token        => channel[:options][:oauth_token],
+      :oauth_token_secret => channel[:options][:oauth_token_secret]
     )
     puts 'to:' + atts[:to].to_s
     if atts[:type] == 'twitter direct-message' then
