@@ -3,21 +3,10 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
- *s= require_tree . 
- *= require bootstrap.css
- *= require fileuploader.css
- *= require ./ui-lightness/jquery.ui.core.css
- *= require ./ui-lightness/jquery.ui.resizable.css
- *= require ./ui-lightness/jquery.ui.selectable.css
- *= require ./ui-lightness/jquery.ui.accordion.css
- *= require ./ui-lightness/jquery.ui.autocomplete.css
- *= require ./ui-lightness/jquery.ui.button.css
- *= require ./ui-lightness/jquery.ui.dialog.css
- *= require ./ui-lightness/jquery.ui.slider.css
- *= require ./ui-lightness/jquery.ui.tabs.css
- *= require ./ui-lightness/jquery.ui.datepicker.css
- *= require ./ui-lightness/jquery.ui.progressbar.css
- *= require zzz.css
+ *= require ./bootstrap.css
+ *= require ./fileuploader.css
+ *= require ./ui-lightness/jquery-ui-1.8.18.custom.css
+ *= require ./zzz.css
  *
  *= require_tree ./custom/
  * 

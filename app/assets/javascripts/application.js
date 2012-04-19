@@ -6,7 +6,5 @@
 //
 
 //= require init.js
-//= require jquery
-//= require jquery_ujs
 //= require app
 //not_used#= require_tree .

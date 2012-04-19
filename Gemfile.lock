@@ -83,6 +83,9 @@ GEM
       rack
     omniauth-facebook (1.2.0)
       omniauth-oauth2 (~> 1.0.0)
+    omniauth-google-oauth2 (0.1.9)
+      omniauth (~> 1.0)
+      omniauth-oauth2
     omniauth-linkedin (0.0.6)
       omniauth-oauth (~> 1.0.0)
     omniauth-oauth (1.0.0)
@@ -160,6 +163,7 @@ DEPENDENCIES
   mime-types
   omniauth
   omniauth-facebook
+  omniauth-google-oauth2
   omniauth-linkedin
   omniauth-twitter
   rails (= 3.2.2)

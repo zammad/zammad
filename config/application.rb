@@ -29,6 +29,7 @@ module Zammad
       'ticket::_observer::_first_response',
       'ticket::_observer::_last_contact',
       'ticket::_observer::_close_time',
+      'ticket::_observer::_user_ticket_counter',
       'ticket::_observer::_notification'
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

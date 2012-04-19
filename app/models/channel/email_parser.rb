@@ -117,8 +117,6 @@ class Channel::EmailParser
           )
         end
       end
-
-      return true
     end
 
     # execute ticket events      

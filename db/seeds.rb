@@ -13,17 +13,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'product_name', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'product_name', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Zammad',
   },
-  :frontend    => true
+  :frontend => true
 )
 
 Setting.create(
@@ -34,17 +34,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'organization', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'organization', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Example Inc.',
   },
-  :frontend    => true
+  :frontend => true
 )
 
 Setting.create(
@@ -55,11 +55,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'system_id', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'system_id', 
+        :tag      => 'select',
+        :options  => {
           '10' => '10',
           '11' => '11',
           '12' => '12',
@@ -68,10 +68,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => '10',
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'Fully Qualified Domain Name',
@@ -81,17 +81,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'fqdn', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'fqdn', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'zammad.example.com',
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'http type',
@@ -101,11 +101,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'storage', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'storage', 
+        :tag      => 'select',
+        :options  => {
           'https' => 'https',
           'http'  => 'http',
         },
@@ -128,11 +128,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'storage', 
-        :tag       => 'select',
-        :options     => {
+        :display  => '',
+        :null     => true,
+        :name     => 'storage', 
+        :tag      => 'select',
+        :options  => {
           'DB' => 'Database',
           'FS' => 'Filesystem',
         },
@@ -154,19 +154,19 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'user_create_account', 
-        :tag       => 'select',
+        :display  => '',
+        :null     => true,
+        :name     => 'user_create_account', 
+        :tag      => 'boolean',
         :options     => {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => true,
   },
   :frontend    => true
 )
@@ -178,19 +178,19 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'user_lost_password', 
-        :tag       => 'select',
+        :display  => '',
+        :null     => true,
+        :name     => 'user_lost_password', 
+        :tag      => 'boolean',
         :options     => {
-          1 => 'yes',
-          0 => 'no',
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => true,
   },
   :frontend    => true
 )
@@ -202,21 +202,21 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'switch_to_user', 
-        :tag       => 'select',
-        :options     => {
-          1 => 'yes',
-          0 => 'no',
+        :display  => '',
+        :null     => true,
+        :name     => 'switch_to_user', 
+        :tag      => 'boolean',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
-  :state       => {
-    :value => 0,
+  :state => {
+    :value => false,
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'Autentication via Database',
@@ -226,70 +226,175 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'auth_db', 
-        :tag       => 'select',
-        :options     => {
-          1 => 'yes',
-          0 => 'no',
+        :display  => '',
+        :null     => true,
+        :name     => 'auth_db', 
+        :tag      => 'boolean',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
-  :state       => {
-    :value => 1,
+  :state => {
+    :value => true,
   },
-  :frontend    => true
+  :frontend => true
 )
 Setting.create(
   :title       => 'Autentication via Twitter',
   :name        => 'auth_twitter',
   :area        => 'Security::Authentication',
-  :description => 'Enables user authentication via twitter.',
+  :description => 'Enables user authentication via twitter. Register your app first at https://dev.twitter.com/apps',
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'auth_twitter', 
-        :tag       => 'select',
-        :options     => {
-          1 => 'yes',
-          0 => 'no',
+        :display  => '',
+        :null     => true,
+        :name     => 'auth_twitter', 
+        :tag      => 'boolean',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
-  :state       => {
-    :value => 1,
+  :state => {
+    :value => false,
   },
-  :frontend    => true
+  :frontend => true
+)
+Setting.create(
+  :title       => 'Twitter App Credentials',
+  :name        => 'auth_twitter_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'App credentials for Twitter.',
+  :options     => {
+    :form => [
+      {
+        :display  => 'Twitter Key',
+        :null     => true,
+        :name     => 'key', 
+        :tag      => 'input',
+      },
+      {
+        :display  => 'Twitter Secret',
+        :null     => true,
+        :name     => 'secret', 
+        :tag      => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {}
+  },
+  :frontend => false
 )
 Setting.create(
   :title       => 'Autentication via Facebook',
   :name        => 'auth_facebook',
   :area        => 'Security::Authentication',
-  :description => 'Enables user authentication via Facebook.',
+  :description => 'Enables user authentication via Facebook. Register your app first at https://developers.facebook.com/apps/',
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'auth_facebook', 
-        :tag       => 'select',
-        :options     => {
-          1 => 'yes',
-          0 => 'no',
+        :display  => '',
+        :null     => true,
+        :name     => 'auth_facebook', 
+        :tag      => 'boolean',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => false,
+  },
+  :frontend => true
+)
+
+Setting.create(
+  :title       => 'Facebook App Credentials',
+  :name        => 'auth_facebook_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'App credentials for Facebook.',
+  :options     => {
+    :form => [
+      {
+        :display   => 'App ID',
+        :null      => true,
+        :name      => 'app_id', 
+        :tag       => 'input',
+      },
+      {
+        :display   => 'App Secret',
+        :null      => true,
+        :name      => 'app_secret', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {},
+  },
+  :frontend => false
+)
+
+Setting.create(
+  :title       => 'Autentication via Google',
+  :name        => 'auth_google_oauth2',
+  :area        => 'Security::Authentication',
+  :description => 'Enables user authentication via Google.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'auth_google_oauth2', 
+        :tag       => 'boolean',
+        :options   => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state       => {
+    :value => false,
   },
   :frontend    => true
 )
+Setting.create(
+  :title       => 'Google App Credentials',
+  :name        => 'auth_google_oauth2_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'Enables user authentication via Google.',
+  :options     => {
+    :form => [
+      {
+        :display   => 'Client ID',
+        :null      => true,
+        :name      => 'client_id', 
+        :tag       => 'input',
+      },
+      {
+        :display   => 'Client Secret',
+        :null      => true,
+        :name      => 'client_secret', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {},
+  },
+  :frontend => false
+)
+
 Setting.create(
   :title       => 'Autentication via LinkedIn',
   :name        => 'auth_linkedin',
@@ -301,19 +406,46 @@ Setting.create(
         :display   => '',
         :null      => true,
         :name      => 'auth_linkedin', 
-        :tag       => 'select',
-        :options     => {
-          1 => 'yes',
-          0 => 'no',
+        :tag       => 'boolean',
+        :options   => {
+          true  => 'yes',
+          false => 'no',
         },
       },
     ],
   },
   :state       => {
-    :value => 1,
+    :value => false,
   },
   :frontend    => true
 )
+Setting.create(
+  :title       => 'LinkedIn App Credentials',
+  :name        => 'auth_linkedin_credentials',
+  :area        => 'Security::Authentication',
+  :description => 'Enables user authentication via LinkedIn.',
+  :options     => {
+    :form => [
+      {
+        :display   => 'App ID',
+        :null      => true,
+        :name      => 'app_id', 
+        :tag       => 'input',
+      },
+      {
+        :display   => 'App Secret',
+        :null      => true,
+        :name      => 'app_secret', 
+        :tag       => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => {},
+  },
+  :frontend => false
+)
+
 Setting.create(
   :title       => 'Minimal size',
   :name        => 'password_min_size',
@@ -558,17 +690,17 @@ Setting.create(
         :null      => true,
         :name      => 'ticket_number', 
         :tag       => 'select',
-        :options     => {
+        :options   => {
           'increment' => 'Increment (SystemID.Counter)',
           'date'      => 'Date (Year.Month.Day.SystemID.Counter)',
         },
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'increment',
   },
-  :frontend    => false
+  :frontend => false
 )
 Setting.create(
   :title       => 'Ticket Number Increment',
@@ -578,21 +710,21 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => 'Checksum',
-        :null      => true,
-        :name      => 'checksum', 
-        :tag       => 'select',
-        :options   => {
+        :display  => 'Checksum',
+        :null     => true,
+        :name     => 'checksum', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
       {
-        :display   => 'Min. size of number',
-        :null      => true,
-        :name      => 'min_size', 
-        :tag       => 'select',
-        :options   => {
+        :display  => 'Min. size of number',
+        :null     => true,
+        :name     => 'min_size', 
+        :tag      => 'select',
+        :options  => {
           1 => 1,
           2 => 2,
           3 => 3,
@@ -616,21 +748,21 @@ Setting.create(
         },
       },
       {
-        :display   => 'Logfile',
-        :null      => false,
-        :name      => 'file', 
-        :tag       => 'input',
+        :display  => 'Logfile',
+        :null     => false,
+        :name     => 'file', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => {
       :checksum => false,
       :file     => '/tmp/counter.log',
       :min_size => 5,
     },
   },
-  :frontend    => false
+  :frontend => false
 )
 Setting.create(
   :title       => 'Ticket Number Increment Date',
@@ -640,30 +772,30 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => 'Checksum',
-        :null      => true,
-        :name      => 'checksum', 
-        :tag       => 'select',
-        :options   => {
+        :display  => 'Checksum',
+        :null     => true,
+        :name     => 'checksum', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
       {
-        :display   => 'Logfile',
-        :null      => false,
-        :name      => 'file', 
-        :tag       => 'input',
+        :display  => 'Logfile',
+        :null     => false,
+        :name     => 'file', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => {
       :checksum => false,
       :file     => '/tmp/counter.log',
     }
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -685,10 +817,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'SystemAddressName',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -699,17 +831,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'ticket_define_email_from_seperator', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'ticket_define_email_from_seperator', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'via',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -720,21 +852,21 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'customer_ticket_create', 
-        :tag       => 'select',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'customer_ticket_create', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => true,
   },
-  :frontend    => true
+  :frontend => true
 )
 
 Setting.create(
@@ -745,11 +877,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'customer_ticket_view', 
-        :tag       => 'select',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'customer_ticket_view', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
@@ -799,10 +931,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 10,
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -813,11 +945,11 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'postmaster_follow_up_search_in', 
-        :tag       => 'checkbox',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'postmaster_follow_up_search_in', 
+        :tag      => 'checkbox',
+        :options  => {
           'references' => 'References',
           'body'       => 'Body',
           'attachment' => 'Attachment',
@@ -826,10 +958,10 @@ Setting.create(
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => ['subject'],
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -840,17 +972,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'notification_sender', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'notification_sender', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Notification Master <noreply@#{config.fqdn}>',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -861,17 +993,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'system_sender', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'system_sender', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => 'Zammad Team <zammad@#{config.fqdn}>',
   },
-  :frontend    => false
+  :frontend => false
 )
 Setting.create(
   :title       => 'Block Notifications',
@@ -881,17 +1013,17 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => false,
-        :name      => 'send_no_auto_response_reg_exp', 
-        :tag       => 'input',
+        :display  => '',
+        :null     => false,
+        :name     => 'send_no_auto_response_reg_exp', 
+        :tag      => 'input',
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => '(MAILER-DAEMON|postmaster|abuse)@.+?\..+?',
   },
-  :frontend    => false
+  :frontend => false
 )
 
 Setting.create(
@@ -902,21 +1034,21 @@ Setting.create(
   :options     => {
     :form => [
       {
-        :display   => '',
-        :null      => true,
-        :name      => 'chat', 
-        :tag       => 'select',
-        :options   => {
+        :display  => '',
+        :null     => true,
+        :name     => 'chat', 
+        :tag      => 'boolean',
+        :options  => {
           true  => 'yes',
           false => 'no',
         },
       },
     ],
   },
-  :state       => {
+  :state => {
     :value => false,
   },
-  :frontend    => true
+  :frontend => true
 )
 
 
@@ -1241,39 +1373,6 @@ Channel.create(
   :adapter        => 'Sendmail',
   :area           => 'Email::Outbound',
   :options        => {},
-  :active         => true,
-  :created_by_id  => User.where( :login => '-' ).first.id
-)
-
-Channel.create(
-  :adapter => 'Twitter2',
-  :area    => 'Twitter',
-  :options => {
-    :consumer_key       => 'PJ4c3dYYRtSZZZdOKo8ow',
-    :consumer_secret    => 'ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk',
-    :oauth_token        => '293437546-xxRa9g74CercnU5AvY1uQwLLGIYrV1ezYtpX8oKW',
-    :oauth_token_secret => 'ju0E4l9OdY2Lh1iTKMymAu6XVfOaU2oGxmcbIMRZQK4',
-    :search             => [
-      {
-        :item  => '#otrs',
-        :group => 'Twitter',
-      },
-      {
-        :item  => '#zombie42',
-        :group => 'Twitter',
-      },
-      {
-        :item  => '#otterhub',
-        :group => 'Twitter',
-      },
-    ],
-    :mentions => {
-      :group => 'Twitter',
-    },
-    :direct_messages => {
-      :group => 'Twitter',
-    }
-  },
   :active         => true,
   :created_by_id  => User.where( :login => '-' ).first.id
 )

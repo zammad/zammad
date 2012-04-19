@@ -27,13 +27,14 @@ class TicketArticlesController < ApplicationController
     )
 
     if @article.save
-      render :json => @article, :status => :created
 
       # remove attachments from upload cache
       Store.remove(
         :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
         :o_id   => @article.ticket_id
       )
+      
+      render :json => @article, :status => :created
     else
       render :json => @article.errors, :status => :unprocessable_entity
     end

@@ -66,37 +66,29 @@ class SessionsController < ApplicationController
 
     render :json => { }
   end
-  
+    
   def create_omniauth
-#    auth = request.env['rack.auth']
     auth = request.env['omniauth.auth']
 
-    logger.info(auth.inspect)
     if !auth
       logger.info("AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT")
-#      logger.info()
-#      logger.info("PROVIDER: #{provider}, UID: #{uid}, EMAIL: #{email}")
+
+      # redirect to app
+      redirect_to '/app#'
     end
-    logger.info(1111111)
-#    raise auth.to_yaml
-    unless @auth = Authorization.find_from_hash(auth)
-      # Create a new user or add an auth to existing user, depending on
-      # whether there is already a user signed in.
-      @auth = Authorization.create_from_hash(auth, current_user)
+
+    # Create a new user or add an auth to existing user, depending on
+    # whether there is already a user signed in.
+    authorization = Authorization.find_from_hash(auth)
+    if !authorization
+      authorization = Authorization.create_from_hash(auth, current_user)
     end
-#    logger.info(2222222)
-#    logger.info(@auth)
-#    logger.info(@auth.inspect)
-#    logger.info(@auth.user)
+
     # Log the authorizing user in.
-#    self.current_user = @auth.user
-#    user = @auth.user
-#    logger.info(333333333)
-#    exit
-    session[:user_id] = @auth.user.id
+    session[:user_id] = authorization.user.id
 
     # redirect to app
-    redirect_to '/app#' 
+    redirect_to '/app#'
   end
   
   private
@@ -104,18 +96,6 @@ class SessionsController < ApplicationController
       
       # auto population of default collections
       default_collection = {}
-#      default_collection['User']                = User.all
-#      # get linked accounts
-#      default_collection['User'].each do |user|
-#        user['accounts'] = {}
-#        authorizations = user.authorizations() || []
-#        authorizations.each do | authorization |
-#          user['accounts'][authorization.provider] = {
-#            :uid      => authorization[:uid],
-#            :username => authorization[:username]
-#          }
-#        end
-#      end
       default_collection['Role']                = Role.all
       default_collection['Group']               = Group.all
       default_collection['Organization']        = Organization.all

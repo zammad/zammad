@@ -182,14 +182,19 @@ class App.Controller extends Spine.Controller
     if attribute.tag is 'boolean'
       
       # build options list
-      attribute.options = [
-        { name: 'active', value: true } 
-        { name: 'inactive', value: false } 
-      ] || []
+      if _.isEmpty(attribute.options)
+        attribute.options = [
+          { name: 'active', value: true } 
+          { name: 'inactive', value: false } 
+        ]
+      
+      # update boolean types
+      for record in attribute.options
+        record.value = '{boolean}::' + record.value
 
       # finde selected item of list
       for record in attribute.options
-        if record.value is attribute.value
+        if record.value is '{boolean}::' + attribute.value
           record.selected = 'selected'
           
       # return item
@@ -286,6 +291,15 @@ class App.Controller extends Spine.Controller
         else
           param[key.name].push key.value
       else
+
+        # check boolean
+        boolean = key.value.split '::'
+        if boolean[0] is '{boolean}'
+          if boolean[1] is 'true'
+            key.value = true
+          else
+            key.value = false
+
         param[key.name] = key.value
 
     @log 'formParam', form, param

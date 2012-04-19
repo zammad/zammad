@@ -20,11 +20,42 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(params[:ticket])
     @ticket.created_by_id = current_user.id
 
-    if @ticket.save
-      render :json => @ticket, :status => :created
-    else
-      render :json => @ticket.errors, :status => :unprocessable_entity
+    # check if article is given
+    if !params[:article]
+      render :json => 'article hash is missing', :status => :unprocessable_entity
+      return
     end
+
+    # create ticket
+    if !@ticket.save
+      render :json => @ticket.errors, :status => :unprocessable_entity
+      return
+    end
+    
+    # create article if given
+    if params[:article]
+      @article = Ticket::Article.new(params[:article])
+      @article.created_by_id = params[:article][:created_by_id] || current_user.id
+      @article.ticket_id     = @ticket.id
+    
+      # find attachments in upload cache
+      @article['attachments'] = Store.list(
+        :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
+        :o_id => @article.ticket_id
+      )
+      if !@article.save
+        render :json => @article.errors, :status => :unprocessable_entity
+        return
+      end
+      
+      # remove attachments from upload cache
+      Store.remove(
+        :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
+        :o_id   => @article.ticket_id
+      )
+    end
+
+    render :json => @ticket, :status => :created
   end
 
   # PUT /tickets/1
