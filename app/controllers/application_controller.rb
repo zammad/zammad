@@ -3,18 +3,19 @@ class ApplicationController < ActionController::Base
 #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user, :authentication_check, :config_frontend, :user_data_full
-  before_filter :set_user, :cors_preflight_check
-  after_filter  :set_access_control_headers, :trigger_events
+
+  before_filter :set_user
+  before_filter :cors_preflight_check
+
+  after_filter  :set_access_control_headers
+  after_filter  :trigger_events
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers 
-#    headers['Access-Control-Allow-Origin'] = 'http://localhost/' 
-#    headers['Access-Control-Request-Method'] = '*' 
-#    headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
-    headers['Access-Control-Allow-Origin'] = 'http://localhost/'
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, OPTIONS'
-    headers['Access-Control-Max-Age'] = "1728000"
-    headers['Access-Control-Allow-Headers'] = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
+    headers['Access-Control-Allow-Origin']      = '*'
+    headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Max-Age']           = '1728000'
+    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
    
@@ -23,13 +24,14 @@ class ApplicationController < ActionController::Base
   # text/plain.
   
   def cors_preflight_check
-    if request.method == :options
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-      headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
-      headers['Access-Control-Max-Age'] = '1728000'
-#      headers['Access-Control-Allow-Credentials'] = 'true'
+    if request.method == 'OPTIONS'
+      headers['Access-Control-Allow-Origin']      = '*'
+      headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
+      headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
+      headers['Access-Control-Max-Age']           = '1728000'
+      headers['Access-Control-Allow-Credentials'] = 'true'
       render :text => '', :content_type => 'text/plain'
+      return false
     end
   end
    
@@ -51,14 +53,13 @@ class ApplicationController < ActionController::Base
   end
 
   def authentication_check
-    logger.debug 'authentication_check'
-#      logger.debug session.inspect
-    
+    puts 'authentication_check'
+
+#    puts params.inspect
+
     # check http basic auth
     authenticate_with_http_basic do |user, password|
-      logger.debug 'http basic auth check'
-#      logger.debug user
-#      logger.debug password
+      puts 'http basic auth check'
       userdata = User.where( :login => user ).first
       message = ''
       if !userdata
@@ -69,23 +70,23 @@ class ApplicationController < ActionController::Base
         end
       end
 
-      if message != ''
-        render(
-          :json   => {
-            :error => message,
-          },
-          :status => :unauthorized
-        )
-      end
+      # return auth ok
+      return true if message == ''
+      
+      # return auth not ok
+      render(
+        :json   => {
+          :error => message,
+        },
+        :status => :unauthorized
+      )
       return false
     end
 
-#    logger.debug 'session check'
-#    logger.debug session.inspect
-#    session[:user_id] = 2
+    # return auth not ok (no session exists)
     if !session[:user_id]
-      logger.debug '!session user_id'
       message = 'no valid session, user_id'
+      puts message
       render(
         :json => {
           :error  => message,
@@ -95,14 +96,14 @@ class ApplicationController < ActionController::Base
       return false
     end
 
-#    return 1231
-#    request_http_basic_authentication
-    return false
+    # return auth ok
+    return true
   end
 
   # Sets the current user into a named Thread location so that it can be accessed
   # by models and observers
   def set_user
+    puts 'set_user'
     UserInfo.current_user_id = session[:user_id]
   end
 
