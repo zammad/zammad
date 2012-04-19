@@ -48,8 +48,12 @@ class ApplicationController < ActionController::Base
   # a Rails application; logging in sets the session value and
   # logging out removes it.
   def current_user
-      @_current_user ||= session[:user_id] &&
-      User.find_by_id( session[:user_id] )
+    @_current_user ||= session[:user_id] &&
+    User.find_by_id( session[:user_id] )
+  end
+  def current_user_set(user)
+    @_current_user = user
+    set_user
   end
 
   def authentication_check
@@ -71,7 +75,12 @@ class ApplicationController < ActionController::Base
       end
 
       # return auth ok
-      return true if message == ''
+      if message == ''
+        
+        # set basic auth user to current user
+        current_user_set(userdata)
+        return true
+      end
       
       # return auth not ok
       render(
@@ -103,8 +112,8 @@ class ApplicationController < ActionController::Base
   # Sets the current user into a named Thread location so that it can be accessed
   # by models and observers
   def set_user
-    puts 'set_user'
-    UserInfo.current_user_id = session[:user_id]
+    return if !current_user
+    UserInfo.current_user_id = current_user.id
   end
 
   def log_view (object)
