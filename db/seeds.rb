@@ -1377,39 +1377,6 @@ Channel.create(
   :created_by_id  => User.where( :login => '-' ).first.id
 )
 
-Channel.create(
-  :adapter => 'Twitter2',
-  :area    => 'Twitter::Inbound',
-  :options => {
-    :consumer_key       => 'PJ4c3dYYRtSZZZdOKo8ow',
-    :consumer_secret    => 'ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk',
-    :oauth_token        => '293437546-xxRa9g74CercnU5AvY1uQwLLGIYrV1ezYtpX8oKW',
-    :oauth_token_secret => 'ju0E4l9OdY2Lh1iTKMymAu6XVfOaU2oGxmcbIMRZQK4',
-    :search             => [
-      {
-        :item  => '#otrs',
-        :group => 'Twitter',
-      },
-      {
-        :item  => '#zombie42',
-        :group => 'Twitter',
-      },
-      {
-        :item  => '#otterhub',
-        :group => 'Twitter',
-      },
-    ],
-    :mentions => {
-      :group => 'Twitter',
-    },
-    :direct_messages => {
-      :group => 'Twitter',
-    }
-  },
-  :active         => true,
-  :created_by_id  => User.where( :login => '-' ).first.id
-)
-
 network = Network.create(
   :name   => 'base'
 )
