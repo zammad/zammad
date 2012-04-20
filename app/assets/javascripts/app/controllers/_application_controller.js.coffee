@@ -12,6 +12,12 @@ class App.Controller extends Spine.Controller
   navupdate: (url) ->
     Spine.trigger 'navupdate', url
 
+  scrollTo: ( x = 0, y = 0 ) ->
+    a = ->
+      window.scrollTo( 0,0 )
+
+    @delay( a, 0 )
+
 #  # extend delegateEvents to unbind and undelegate
 #  delegateEvents: ->
 #    
