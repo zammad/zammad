@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
     # auth failed
     if !user
       render :json => { :error => 'login failed' }, :status => :unprocessable_entity
+      return
     end
     
     # do not show password
@@ -27,15 +28,47 @@ class SessionsController < ApplicationController
     
     # set session user_id
     session[:user_id] = user.id
-    
+
+    # check logon session
+    logon_session_key = nil
+    if params['logon_session']
+      puts 'create sessions session con'
+      logon_session_key = Digest::MD5.hexdigest( rand(999999).to_s + Time.new.to_s )
+      ActiveRecord::SessionStore::Session.create(
+        :session_id => logon_session_key,
+        :data => {
+          :user_id => user.id
+        }
+      )
+    end
+
     # return new session data
-    render :json => { :session => user, :default_collections => default_collection }, :status => :created
+    render :json => {
+      :session             => user,
+      :default_collections => default_collection,
+      :logon_session       => logon_session_key,
+    },
+    :status => :created
   end
 
   def show
-    
+
+    user_id = nil
+
     # no valid sessions
-    if !session[:user_id]
+    if session[:user_id]
+      user_id = session[:user_id]
+    end
+
+    # check logon session
+    if params['logon_session']
+      session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
+      if session
+        user_id = session.data[:user_id]
+      end
+    end
+
+    if !user_id
       render :json => {
         :error  => 'no valid session',
         :config => config_frontend,
@@ -45,7 +78,7 @@ class SessionsController < ApplicationController
 
     # Save the user ID in the session so it can be used in
     # subsequent requests
-    user = user_data_full( session[:user_id] )
+    user = user_data_full( user_id )
 
     # auto population of default collections
     default_collection = default_collections()

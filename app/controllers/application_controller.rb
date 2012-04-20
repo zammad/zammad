@@ -92,6 +92,18 @@ class ApplicationController < ActionController::Base
       return false
     end
 
+    # check logon session
+    if params['logon_session'] 
+      session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
+      if session
+        userdata = User.find( user_id = session.data[:user_id] )
+      end
+
+      # set logon session user to current user
+      current_user_set(userdata)
+      return true
+    end
+
     # return auth not ok (no session exists)
     if !session[:user_id]
       message = 'no valid session, user_id'
