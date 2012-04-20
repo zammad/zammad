@@ -4,7 +4,7 @@ class TicketOverviewsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def show
-    
+
     # build up attributes hash
     overview_selected = nil
     overviews = Overview.all
@@ -376,7 +376,7 @@ class TicketOverviewsController < ApplicationController
 
       # load article ids
 #      if item.history_object == 'Ticket'
-        tickets.push Ticket.find(item.o_id)
+        tickets.push Ticket.find( item['o_id'] )
 #      end
 #      if item.history_object 'Ticket::Article'
 #        tickets.push Ticket::Article.find(item.o_id)
@@ -386,8 +386,8 @@ class TicketOverviewsController < ApplicationController
 #      end
           
       # load users
-      if !users[item.created_by_id]
-        users[item.created_by_id] = user_data_full(item.created_by_id)
+      if !users[ item['created_by_id'] ]
+        users[ item['created_by_id'] ] = user_data_full( item['created_by_id'] )
       end
     }
 
@@ -411,7 +411,7 @@ class TicketOverviewsController < ApplicationController
 
       # load article ids
 #      if item.history_object == 'Ticket'
-        tickets.push Ticket.find(item.o_id)
+        tickets.push Ticket.find( item['o_id'] )
 #      end
 #      if item.history_object 'Ticket::Article'
 #        tickets.push Ticket::Article.find(item.o_id)
@@ -421,8 +421,8 @@ class TicketOverviewsController < ApplicationController
 #      end
           
       # load users
-      if !users[item.created_by_id]
-        users[item.created_by_id] = user_data_full(item.created_by_id)
+      if !users[ item['created_by_id'] ]
+        users[ item['created_by_id'] ] = user_data_full( item['created_by_id'] )
       end
     }
 

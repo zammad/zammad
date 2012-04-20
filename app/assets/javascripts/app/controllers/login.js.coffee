@@ -48,22 +48,14 @@ class Index extends App.Controller
   
   login: (e) ->
     e.preventDefault()
-    e.stopPropagation();
-
-    @log 'submit', $(e.target)
-    @username = $(e.target).find('[name="username"]').val()
-    @password = $(e.target).find('[name="password"]').val()
-#    @log @username, @password 
+    params = @formParam(e.target)
     
     # session create with login/password
     auth = new App.Auth
     auth.login(
-      data: {
-        username: @username,
-        password: @password,
-      },
+      data:    params,
       success: @success
-      error: @error,
+      error:   @error,
     )
  
   success: (data, status, xhr) =>

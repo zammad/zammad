@@ -6,11 +6,16 @@
     <div class="container">
       <div class="row">
         <div class="span12">
-          Sign in with
+          <p>Sign in with</p>
           <form id="login" class="form-search">
-            <input name="username" type="text" class="input span3" placeholder="Username" value="<%= @item.username %>" autocapitalize="off"/>
+            <input name="username" type="text" class="input span3" placeholder="Username or email" value="<%= @item.username %>" autocapitalize="off"/>
             <input name="password" type="password" class="input span3" placeholder="Password"/>
-            <button class="btn-primary" type="submit">Sign in</button>
+            <button class="btn btn-primary" type="submit">Sign in</button>
+            <div>
+              <span class="small"><input name="remember_me" value="1" type="checkbox"/> Remember me</span>
+              <span class="small">&middot;</span>
+              <a href="#resend_password" class="small">Forgot password?</a>
+            </div>
           </form>
         </div>
       </div>
@@ -25,7 +30,7 @@
       
       <div class="row">
         <div class="span12">
-          Sign in using
+          <p>Sign in using</p>
           <ul>
           <% for auth_provider in @auth_providers: %>
             <li><a href="<%= auth_provider.url %>"><%= auth_provider.name %></a></li>

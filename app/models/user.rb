@@ -13,31 +13,38 @@ class User < ApplicationModel
   store                   :preferences
 
   def self.authenticate( username, password )
+    
+    # do not authenticate with nothing
+    return if !username
+    return if !password
+    
+    # try to find user based on login
     user = User.where( :login => username, :active => true ).first
-    return nil if user.nil?
-    logger.debug 'auth'
-    logger.debug username
-    logger.debug user.login
-    logger.debug password
-    logger.debug user.password
-    logger.debug user.inspect
-#    return user
-    return user if user.password == password
-    return
+    
+    # try second lookup with email
+    if !user
+      user = User.where( :email => username, :active => true ).first
+    end
+    
+    # no user found
+    if !user
+      return nil
+    end
+    
+    # auth ok
+    if user.password == password
+      return user
+    end
+
+    # auth failed
+    return false
   end
 
   def self.create_from_hash!(hash)
-#    logger.debug(hash.inspect)
-#    raise hash.to_yaml  
-#    exit
     url = ''
     if hash['info']['urls'] then
       url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
     end
-#    logger.debug(hash['info'].inspect)
-#    raise url.to_yaml
-#    exit
-#    logger.debug('aaaaaaaa')
     roles = Role.where( :name => 'Customer' )
     create(
       :login         => hash['info']['nickname'] || hash['uid'],
@@ -60,7 +67,6 @@ class User < ApplicationModel
     # get user
     user = User.find(user_id)
     data = user.attributes
-
 
     # get linked accounts
     data['accounts'] = {}

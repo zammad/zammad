@@ -25,12 +25,15 @@ class History < ActiveRecord::Base
       where( :history_type_id   => History::Type.where( :name => ['created', 'updated']) ).
       order('created_at DESC, id DESC').
       limit(10)
+    datas = []
     stream.each do |item|
-      item['history_object'] = item.history_object
-      item['history_type']   = item.history_type
+      data = item.attributes
+      data['history_object'] = item.history_object
+      data['history_type']   = item.history_type
+      datas.push data
 #      item['history_attribute'] = item.history_attribute
     end
-    return stream
+    return datas
   end
 
   def self.recent_viewed(user)
@@ -40,12 +43,15 @@ class History < ActiveRecord::Base
       where( :history_type_id => History::Type.where( :name => ['viewed']) ).
       order('created_at DESC, id DESC').
       limit(10)
+    datas = []
     stream.each do |item|
-      item['history_object'] = item.history_object
-      item['history_type'] = item.history_type
+      data = item.attributes
+      data['history_object'] = item.history_object
+      data['history_type']   = item.history_type
+      datas.push data
 #      item['history_attribute'] = item.history_attribute
     end
-    return stream
+    return datas
   end
   
   private
