@@ -6,7 +6,7 @@
     <div class="container">
       <div class="row">
         <div class="span12">
-          Sign in with
+          <p>Sign in with</p>
           <form id="login" class="form-search">
             <input name="username" type="text" class="input span3" placeholder="Username or email" value="<%= @item.username %>" autocapitalize="off"/>
             <input name="password" type="password" class="input span3" placeholder="Password"/>
@@ -30,7 +30,7 @@
       
       <div class="row">
         <div class="span12">
-          Sign in using
+          <p>Sign in using</p>
           <ul>
           <% for auth_provider in @auth_providers: %>
             <li><a href="<%= auth_provider.url %>"><%= auth_provider.name %></a></li>
