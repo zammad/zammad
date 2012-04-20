@@ -41,14 +41,24 @@ class Index extends App.Controller
     
     @html App.view('login')(
       item:           data,
-      auth_providers: auth_providers
+      auth_providers: auth_providers,
     )
-    if $(@el).find('[name="username"]').val()
+    
+    # set focus
+    if !$(@el).find('[name="username"]').val()
       $(@el).find('[name="username"]').focus()
-  
+    else
+      $(@el).find('[name="password"]').focus()
+
+    # scroll to top
+    @scrollTo()
+
   login: (e) ->
     e.preventDefault()
     params = @formParam(e.target)
+    
+    # remember username
+    @username = params['username']
     
     # session create with login/password
     auth = new App.Auth
