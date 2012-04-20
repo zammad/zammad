@@ -13,10 +13,27 @@ class User < ApplicationModel
   store                   :preferences
 
   def self.authenticate( username, password )
+    
+    # try to find user based on login
     user = User.where( :login => username, :active => true ).first
-    return nil if user.nil?
-    return user if user.password == password
-    return
+    
+    # try second lookup with email
+    if !user
+      user = User.where( :email => username, :active => true ).first
+    end
+    
+    # no user found
+    if !user
+      return nil
+    end
+    
+    # auth ok
+    if user.password == password
+      return user
+    end
+
+    # auth failed
+    return false
   end
 
   def self.create_from_hash!(hash)

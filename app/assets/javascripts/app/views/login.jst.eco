@@ -8,9 +8,9 @@
         <div class="span12">
           Sign in with
           <form id="login" class="form-search">
-            <input name="username" type="text" class="input span3" placeholder="Username" value="<%= @item.username %>" autocapitalize="off"/>
+            <input name="username" type="text" class="input span3" placeholder="Username or email" value="<%= @item.username %>" autocapitalize="off"/>
             <input name="password" type="password" class="input span3" placeholder="Password"/>
-            <button class="btn-primary" type="submit">Sign in</button>
+            <button class="btn btn-primary" type="submit">Sign in</button>
           </form>
         </div>
       </div>
