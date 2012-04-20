@@ -5,8 +5,8 @@
   
     <form>
       <%- @form %>
-      <button class="btn cancel">Cancel</button>
-      <button class="btn-primary submit">Create my account</button>
+      <a href="#/" class="btn cancel">Cancel</a>
+      <button class="btn btn-primary submit">Create my account</button>
     </form>
     
   </div>
