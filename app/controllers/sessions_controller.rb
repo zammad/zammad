@@ -16,9 +16,6 @@ class SessionsController < ApplicationController
     
     user = User.find_fulldata(user.id)
     
-    # do not show password
-    user['password'] = ''
-    
     # auto population of default collections
     default_collection = default_collections()
     
@@ -98,7 +95,7 @@ class SessionsController < ApplicationController
     @_current_user = session[:user_id] = nil
 
     # reset session cookie (set :expire_after to '' in case remember_me is active)
-    request.env['rack.session.options'][:expire_after] = ''
+    request.env['rack.session.options'][:expire_after] = -1.year.from_now
     request.env['rack.session.options'][:renew] = true
 
     render :json => { }

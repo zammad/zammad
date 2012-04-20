@@ -1,5 +1,6 @@
 class User < ApplicationModel
   before_create           :check_name, :check_email, :check_image
+  before_update           :check_password
   after_create            :cache_delete
   after_update            :cache_delete
   after_destroy           :cache_delete
@@ -15,8 +16,8 @@ class User < ApplicationModel
   def self.authenticate( username, password )
     
     # do not authenticate with nothing
-    return if !username
-    return if !password
+    return if !username || username == ''
+    return if !password || password == '' 
     
     # try to find user based on login
     user = User.where( :login => username, :active => true ).first
@@ -68,6 +69,9 @@ class User < ApplicationModel
     user = User.find(user_id)
     data = user.attributes
 
+    # do not show password
+    user['password'] = ''
+
     # get linked accounts
     data['accounts'] = {}
     authorizations = user.authorizations() || []
@@ -84,13 +88,15 @@ class User < ApplicationModel
       roles.push role
     }
     data['roles'] = roles
+    data['role_ids'] = user.role_ids
 
     groups = []
     user.groups.select('id, name').where( :active => true ).each { |group|
       groups.push group
     }
     data['groups'] = groups
-    
+    data['group_ids'] = user.group_ids
+
     organization = user.organization
     data['organization'] = organization
 
@@ -99,6 +105,7 @@ class User < ApplicationModel
       organizations.push organization
     }
     data['organizations'] = organizations
+    data['organization_ids'] = user.organization_ids
 
     cache_set(user.id, data)
 
@@ -125,6 +132,16 @@ class User < ApplicationModel
           hash = Digest::MD5.hexdigest(self.email)
           self.image = "http://www.gravatar.com/avatar/#{hash}?s=48"
         end
+      end
+    end
+    def check_password
+      
+      # set old password again
+      if self.password == '' || !self.password
+
+        # get current record
+        current = User.find(self.id)
+        self.password = current.password
       end
     end
 end

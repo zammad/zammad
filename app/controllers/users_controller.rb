@@ -4,26 +4,16 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-
-    @users.each {|i|
-#      r = i.roles.select('id, name').where(:active => true)
-#      i['roles'] = r
-      role_ids            = i.role_ids
-      group_ids           = i.group_ids
-      organization_id     = i.organization_id
-      i[:role_ids]        = role_ids
-      i[:group_ids]       = group_ids
-      i[:organization_id] = organization_id
+    @users_all = []
+    @users.each {|user|
+      @users_all.push user_data_full( user.id )
     }
-
-    render :json => @users
+    render :json => @users_all
   end
 
   # GET /users/1
   def show
-#    @user = User.find(params[:id])
-    @user = user_data_full(params[:id])
-
+    @user = user_data_full( params[:id] )
     render :json => @user
   end
 
@@ -90,6 +80,11 @@ class UsersController < ApplicationController
       if params[:group_ids]
         @user.group_ids = params[:group_ids]
       end
+      if params[:organization_ids]
+        @user.organization_ids = params[:organization_ids]
+      end
+      
+      @user = user_data_full( params[:id] )
       render :json => @user, :status => :ok
     else
       render :json => @user.errors, :status => :unprocessable_entity
