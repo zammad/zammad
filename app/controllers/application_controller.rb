@@ -94,9 +94,9 @@ class ApplicationController < ActionController::Base
 
     # check logon session
     if params['logon_session'] 
-      session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
-      if session
-        userdata = User.find( user_id = session.data[:user_id] )
+      logon_session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
+      if logon_session
+        userdata = User.find( user_id = logon_session.data[:user_id] )
       end
 
       # set logon session user to current user
