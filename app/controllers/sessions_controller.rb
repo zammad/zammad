@@ -32,7 +32,6 @@ class SessionsController < ApplicationController
     # check logon session
     logon_session_key = nil
     if params['logon_session']
-      puts 'create sessions session con'
       logon_session_key = Digest::MD5.hexdigest( rand(999999).to_s + Time.new.to_s )
       ActiveRecord::SessionStore::Session.create(
         :session_id => logon_session_key,

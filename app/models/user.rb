@@ -15,29 +15,15 @@ class User < ApplicationModel
   def self.authenticate( username, password )
     user = User.where( :login => username, :active => true ).first
     return nil if user.nil?
-    logger.debug 'auth'
-    logger.debug username
-    logger.debug user.login
-    logger.debug password
-    logger.debug user.password
-    logger.debug user.inspect
-#    return user
     return user if user.password == password
     return
   end
 
   def self.create_from_hash!(hash)
-#    logger.debug(hash.inspect)
-#    raise hash.to_yaml  
-#    exit
     url = ''
     if hash['info']['urls'] then
       url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
     end
-#    logger.debug(hash['info'].inspect)
-#    raise url.to_yaml
-#    exit
-#    logger.debug('aaaaaaaa')
     roles = Role.where( :name => 'Customer' )
     create(
       :login         => hash['info']['nickname'] || hash['uid'],
@@ -60,7 +46,6 @@ class User < ApplicationModel
     # get user
     user = User.find(user_id)
     data = user.attributes
-
 
     # get linked accounts
     data['accounts'] = {}

@@ -4,7 +4,7 @@ class TicketOverviewsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def show
-    
+
     # build up attributes hash
     overview_selected = nil
     overviews = Overview.all
