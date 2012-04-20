@@ -11,6 +11,11 @@
             <input name="username" type="text" class="input span3" placeholder="Username or email" value="<%= @item.username %>" autocapitalize="off"/>
             <input name="password" type="password" class="input span3" placeholder="Password"/>
             <button class="btn btn-primary" type="submit">Sign in</button>
+            <div>
+              <span class="small"><input name="remember_me" value="1" type="checkbox"/> Remember me</span>
+              <span class="small">&middot;</span>
+              <a href="#resend_password" class="small">Forgot password?</a>
+            </div>
           </form>
         </div>
       </div>

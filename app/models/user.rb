@@ -14,6 +14,10 @@ class User < ApplicationModel
 
   def self.authenticate( username, password )
     
+    # do not authenticate with nothing
+    return if !username
+    return if !password
+    
     # try to find user based on login
     user = User.where( :login => username, :active => true ).first
     

@@ -5,8 +5,7 @@ class SessionsController < ApplicationController
 
   # "Create" a login, aka "log the user in"
   def create
-    logger.debug 'session create'
-#    logger.debug params.inspect
+
     user = User.authenticate( params[:username], params[:password] )
 
     # auth failed
@@ -15,30 +14,32 @@ class SessionsController < ApplicationController
       return
     end
     
+    user = User.find_fulldata(user.id)
+    
     # do not show password
     user['password'] = ''
-    
-    user['roles']         = user.roles.select('id, name').where(:active => true)      
-    user['groups']        = user.groups.select('id, name').where(:active => true)      
-    user['organization']  = user.organization     
-    user['organizations'] = user.organizations.select('id, name').where(:active => true)      
     
     # auto population of default collections
     default_collection = default_collections()
     
     # set session user_id
-    session[:user_id] = user.id
+    session[:user_id] = user['id']
 
     # check logon session
     logon_session_key = nil
     if params['logon_session']
       logon_session_key = Digest::MD5.hexdigest( rand(999999).to_s + Time.new.to_s )
-      ActiveRecord::SessionStore::Session.create(
+      session = ActiveRecord::SessionStore::Session.create(
         :session_id => logon_session_key,
         :data => {
-          :user_id => user.id
+          :user_id => user['id']
         }
       )
+    end
+
+    # remember me - set session cookie to expire later
+    if params[:remember_me]
+      request.env['rack.session.options'][:expire_after] = 1.year.from_now
     end
 
     # return new session data
@@ -92,9 +93,13 @@ class SessionsController < ApplicationController
 
   # "Delete" a login, aka "log the user out"
   def destroy
-    
+
     # Remove the user id from the session
     @_current_user = session[:user_id] = nil
+
+    # reset session cookie (set :expire_after to '' in case remember_me is active)
+    request.env['rack.session.options'][:expire_after] = ''
+    request.env['rack.session.options'][:renew] = true
 
     render :json => { }
   end
