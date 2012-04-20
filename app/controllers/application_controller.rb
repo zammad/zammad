@@ -146,7 +146,7 @@ class ApplicationController < ActionController::Base
       :o_id                        => object.id,
       :history_type_id             => history_type.id,
       :history_object_id           => history_object.id,
-      :created_by_id               => session[:user_id]
+      :created_by_id               => current_user.id
     )
   end
 
