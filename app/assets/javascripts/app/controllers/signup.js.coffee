@@ -1,5 +1,4 @@
 $ = jQuery.sub()
-User = App.User
 
 class Index extends App.Controller
   className: 'container signup'
@@ -21,12 +20,12 @@ class Index extends App.Controller
   render: ->
     
     # set password as required
-    for item in User.configure_attributes
+    for item in App.User.configure_attributes
       if item.name is 'password'
         item.null = false
 
     @html App.view('signup')(
-      form: @formGen( model: User, required: 'signup' ),
+      form: @formGen( model: App.User, required: 'signup' ),
     )
 
   cancel: ->
@@ -38,7 +37,7 @@ class Index extends App.Controller
     @params = @formParam(e.target)
     ###
     for num in [1..199]
-      user = new User
+      user = new App.User
       params.login = 'login_c' + num
       user.updateAttributes(params)
     return false
@@ -50,7 +49,7 @@ class Index extends App.Controller
       
     @params.role_ids = [0]
     @log 'updateAttributes', @params
-    user = new User
+    user = new App.User
     user.load(@params)
 
     errors = user.validate()
