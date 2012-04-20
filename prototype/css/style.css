@@ -6,6 +6,7 @@ body {
     color: rgba(0,0,0,.89);
     font: 12px/17px "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: url(../img/minimalism_by_nerdynotdirty.jpg);
+    background: url(../img/bg.jpg);
     background-size: cover;
 }
 .avatar {
@@ -15,8 +16,9 @@ body {
     background-size: cover;
 }
 header {
-    height: 36px;
-    padding: 8px 0 8px 13px;
+    height: 40px;
+    padding: 12px 0 8px 13px;
+    background: #eee;
     border-bottom: 1px solid hsla(222, 10%, 55%,.34);
 }
     h2 {
@@ -29,6 +31,9 @@ header {
     header button {
         margin-right: 13px;
         float: right;
+    }
+    header button {
+        margin-top: -3px;
     }
 .sidebar {
     width: 200px;
@@ -105,8 +110,16 @@ header {
             float: right;
             padding: 1px 5px;
             font-size: 10px;
-            background: hsl(10, 100%, 50%);
-            border-radius: 3px;
+            font-weight: bold;
+            text-shadow: 0 1px rgba(255,255,255,.55);
+            background-color: hsl(55, 100%, 50%);
+            background-image: -webkit-linear-gradient(transparent, rgba(0,0,0,.05));
+            border-radius: 2px;
+            border: 1px solid rgba(0,0,0,.34);
+            box-shadow: 
+                0 1px rgba(0,0,0,.05), 
+                0 1px 3px rgba(0,0,0,.05),
+                0 0 0 1px rgba(255,255,255,.21) inset;
         }
 .twoColumns, .stream, .conversation { 
     top: 0;
@@ -121,9 +134,10 @@ header {
         left: 0;
         right: 0;
         bottom: 0;
-        top: 36px;
+        top: 40px;
         position: absolute;
         overflow: auto;
+        background: white;
     }
 .stream {
     left: 0;
@@ -139,28 +153,37 @@ header {
 .stream.important article { border-left: 5px solid rgba(0,255,0,.34); }
 .stream article.urgent { border-left-color: rgba(255,0,0,.55); }
 .stream article.important { border-left-color: rgba(255,180,80,.89); }
-.stream article:before { width: 16px; height: 16px; top: 44px; left: 44px; content: " "; position: absolute; display: none; z-index: 1; opacity: 0.8; }
-.stream article:hover:before { display: block; }
-.stream article.fbt:before { background: url(img/facebook_16.png); }
 .stream article.selected { 
-    background-image: -webkit-linear-gradient(rgba(0,0,0,.13), rgba(0,0,0,.08));
+    background: hsl(55, 100%, 50%);
 }
-.stream section { 
-    height: 100%;
+    .stream article.selected p {
+        color: black;
+    }
+.stream section {
     margin-left: 63px;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
-.stream .name { font-weight: bold; }
-.stream nav, .stream .time { float: right; }
-.stream nav { display: none; margin-top: -3px; }
-.stream nav span { color: hsl(222, 10%, 75%); padding-left: 3px; cursor: pointer; }
-.stream nav span:hover { color: hsl(222, 10%, 34%); }
-.stream article:hover nav { display: block; }
-.stream .time, .stream .service { padding-left: 5px; color: rgba(0,0,0,.34); font-size: 0.9em; }
-.stream article:hover .time { display: none; }
-.stream .service { visibility: hidden; }
-.stream article:hover .service { visibility: visible; }
+.stream .name { 
+    font-weight: bold;
+}
+.stream nav, .stream .time { 
+    float: right;
+}
+.stream nav {
+    margin-top: -5px;
+}
+.stream nav span { 
+    color: rgba(0,0,0,.34);
+    padding-left: 3px;
+    cursor: pointer;
+}
+.stream nav span:hover {
+    color: rgba(0,0,0,1);
+}
+.stream .time, .stream .channel {
+    padding-left: 5px;
+    color: black;
+    font-size: 0.95em;
+}
 .stream img { 
     left: 13px;
     position: absolute;
@@ -182,6 +205,12 @@ header {
     }
     .stream section.answer button { float: right; }
     .stream section.answer img { top: 6px; left: 5px; width: 25px; border-radius: 2px; }
+    .stream p {
+        height: 32px;
+        color: rgba(0,0,0,.50);
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 .conversation {
     left: 40%;
     right: 0;
@@ -198,15 +227,17 @@ header {
     .conversation .agent .body, .conversation .customer .body {
         min-height: 34px;
         float: left;
-        padding: 8px 13px;
+        padding: 0 13px;
         margin: 0 0 13px 58px;
         background: white;
-        border: 1px solid hsla(222, 10%, 55%,.34);
         border-radius: 5px;
         box-shadow: 0 1px 2px hsla(222, 10%, 55%,.34);
     }
     .conversation .agent .body { float: right; margin: 0 58px 13px 0; }
     .converastion .agent { float: right; }
+    .conversation .body p {
+        margin: 8px 0;
+    }
     .converastion .customer { float: left; }
     blockquote {
       margin: 8px 0;
@@ -227,6 +258,7 @@ header {
 button {
     padding: 3px 13px;
     color: rgba(0,0,0,.89);
+    line-height: 15px;
     text-shadow: 0 1px rgba(255,255,255,.34);
     background: rgba(0,0,0,.13);
     background: -webkit-linear-gradient(rgba(0,0,0,.03), rgba(0,0,0,.08));
