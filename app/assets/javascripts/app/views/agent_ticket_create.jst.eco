@@ -22,6 +22,6 @@
     </div>
   </div>
   <div class="form-actions">
-    <button type="reset" class="btn">Cancel</button>&nbsp;<input type="submit" class="btn-primary" value="Create"/>
+    <button type="reset" class="btn">Cancel</button>&nbsp;<input type="submit" class="btn btn-primary" value="Create"/>
   </div>
 </form>
