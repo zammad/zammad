@@ -10,5 +10,8 @@ require 'facebook_database'
 require 'linked_in_database'
 require 'google_oauth2_database'
 
+# load notification factory (replace all tags)
+require 'notification_factory'
+
 # Initialize the rails application
 Zammad::Application.initialize!

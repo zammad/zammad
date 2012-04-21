@@ -1,27 +1,3 @@
-class String
-  def message_quote
-    quote = self.split("\n")
-    body_quote = ''
-    quote.each do |line|
-      body_quote = body_quote + '> ' + line + "\n"
-    end
-    body_quote
-  end
-  def word_wrap(*args)
-    options = args.extract_options!
-    unless args.blank?
-      options[:line_width] = args[0] || 80
-    end
-    options.reverse_merge!(:line_width => 80)
-
-    lines = self
-    lines.split("\n").collect do |line|
-      line.length > options[:line_width] ? line.gsub(/(.{1,#{options[:line_width]}})(\s+|$)/, "\\1\n").strip : line
-    end * "\n"
-  end
-
-end
-
 class Ticket::Observer::Notification < ActiveRecord::Observer
   observe :ticket, 'ticket::_article'
 
@@ -42,10 +18,11 @@ class Ticket::Observer::Notification < ActiveRecord::Observer
             :event     => event,
             :recipient => 'to_work_on', # group|owner|to_work_on|customer
             :subject   => 'New Ticket (#{ticket.title})',
-            :body      => 'New Ticket (#{ticket.title}) in Group #{ticket.group.name}
+            :body      => 'Hi #{recipient.firstname},
+
+a new Ticket (#{ticket.title}) in Group #{ticket.group.name}
             
 From: #{ticket.articles[-1].from}
-
 <snip>
 #{ticket.articles[-1].body}
 </snip>
@@ -99,10 +76,11 @@ Your Zammad Team
               :event     => event,
               :recipient => 'to_work_on', # group|owner|to_work_on|customer
               :subject   => 'Follow Up (#{ticket.title})',
-              :body      => 'Follow Up (#{ticket.title}) in Group #{ticket.group.name}
+              :body      => 'Hi #{recipient.firstname},
+
+a follow Up (#{ticket.title}) in Group #{ticket.group.name}
             
 From: #{ticket.articles[-1].from}
-
 <snip>
 #{ticket.articles[-1].body}
 </snip>
@@ -176,46 +154,31 @@ From: #{ticket.articles[-1].from}
       end
     end
 
-    # prepare subject & body
-    [:subject, :body].each { |key|
-      data[key.to_sym].gsub!( /\#\{(.+?)\}/ ) { |s|
-      
-        # use quoted text
-        callback = $1
-        callback.gsub!( /.body$/ ) { |item|
-          item = item + '.word_wrap( :line_width => 80 ).message_quote.chomp'
-        }
-
-        # use config params
-        callback.gsub!( /^config.(.+?)$/ ) { |item|
-          name = $1
-          item = "Setting.get('#{$1}')"
-        }
-
-        # replace value
-        s = eval callback
-      }      
-    }
-
-    # rebuild subject
-    data[:subject] = ticket.subject_build( data[:subject] )
-
     # send notifications
-    sender = Setting.get('notification_sender')
     recipients.each do |user|
       next if !user.email || user.email == ''
-      a = Channel::IMAP.new
-      subject = data[:subject]
-      body    = data[:body]
-      message = a.send(
-        {
-  #        :in_reply_to => self.in_reply_to,
-          :from       => sender,
-          :to         => user.email,
-          :subject    => subject,
-          :body       => body, 
-        },
-        true
+
+      # prepare subject & body
+      notification = {}
+      [:subject, :body].each { |key|
+        notification[key.to_sym] = NotificationFactory.build(
+          :string  => data[key.to_sym],
+          :objects => {
+            :ticket    => ticket,
+            :article   => article,
+            :recipient => user,
+          }
+        )
+      }
+
+      # rebuild subject
+      notification[:subject] = ticket.subject_build( notification[:subject] )
+
+      # send notification
+      NotificationFactory.send(
+        :recipient => user,
+        :subject   => notification[:subject],
+        :body      => notification[:body]
       )
     end
   end
