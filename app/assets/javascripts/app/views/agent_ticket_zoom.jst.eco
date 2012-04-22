@@ -2,16 +2,16 @@
   <h1><%= @ticket.title %> <small><%= @ticket.number %></small></h1>
 </div>
 
-<div class="row">
+<div class="row ticket-answer">
   <div class="span9">
 
-    <div class="row">
-      <div class="span1 media-grid">
+    <div class="row well">
+      <div class="avatar span1 media-grid">
         <img class="thumbnail user-data" data-id="<%= window.Session['id'] %>"" src="<%- window.Session['image'] %>" alt="">
       </div>
       
       <div class="span8">
-        <div class="row ">
+        <div class="row">
 
           <form class="form-stacked keepleft update-box">
   
@@ -21,7 +21,7 @@
   
               <div class="keepleft" id="file-uploader"></div>
               &nbsp;
-              <input type="submit" class="btn primary submit" value="submit">
+              <input type="submit" class="btn btn-primary submit" value="submit">
 
           </form>
         </div>

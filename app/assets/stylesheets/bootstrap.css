@@ -1410,7 +1410,7 @@ table .span24 {
 .icon-glass {
   background-position: 0      0;
 }
-.icon-music {
+.icon-attachment {
   background-position: -24px 0;
 }
 .icon-search {
@@ -3192,6 +3192,11 @@ input[type="submit"].btn.btn-mini {
   -webkit-border-radius: 0 3px 3px 0;
   -moz-border-radius: 0 3px 3px 0;
   border-radius: 0 3px 3px 0;
+}
+.pagination li:only-child a {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 .pagination-centered {
   text-align: center;

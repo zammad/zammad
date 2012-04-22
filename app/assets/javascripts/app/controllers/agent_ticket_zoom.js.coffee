@@ -110,7 +110,7 @@ class Index extends App.Controller
     
     @configure_attributes_ticket = [
       { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', default: 'new', class: 'span2', item_class: 'keepleft' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', default: '2 normal', class: 'span2', item_class: 'keepleft' },
+      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', default: '2 normal', class: 'span1', item_class: 'keepleft' },
       { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', class: 'span2', item_class: 'keepleft'  },
       { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'keepleft' },
     ]

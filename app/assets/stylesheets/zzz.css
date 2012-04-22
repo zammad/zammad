@@ -74,15 +74,29 @@ footer {
 }
 
 .keepleft {
-  float:left;
+  float: left;
+}
+
+.keepright {
+  float: right;
 }
 
 .update-box {
   margin-left: 10px;
 }
 
-.article {
+.ticket-answer .well {
+    margin-left: 0;
+    margin-right: 20px;
+}
 
+.ticket-answer .avatar {
+    margin-left: 0;
+}
+.ticket-answer .span8 { width: 560px; }
+
+.article {
+  margin-left: 0;
   padding-top: 4px;
   padding-bottom: 4px;
   margin-top: 5px;
