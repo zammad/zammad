@@ -18,7 +18,7 @@
     </ul>
   </div>
 
-  <div class="pagination keepleft">
+  <div class="pagination keepright">
     <ul>
       <% for item in @view_modes: %>
         <li class="<%= item.class %>">
