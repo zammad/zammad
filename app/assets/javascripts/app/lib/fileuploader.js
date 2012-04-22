@@ -485,8 +485,8 @@ qq.FileUploader = function(o){
         listElement: null,
                 
         template: '<div class="qq-uploader">' + 
-                '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
-                '<div class="qq-upload-button">Upload a file</div>' +
+                '<div class="qq-upload-drop-area btn"><i class="icon-attachment"></i> Drop to attach files</div>' +
+                '<div class="qq-upload-button btn"><i class="icon-attachment"></i> Attach files</div>' +
                 '<ul class="qq-upload-list"></ul>' + 
              '</div>',
 
@@ -549,7 +549,8 @@ qq.extend(qq.FileUploader.prototype, {
     },
     _setupDragDrop: function(){
         var self = this,
-            dropArea = this._find(this._element, 'drop');                        
+            dropArea = this._find(this._element, 'drop'),
+            button = this._find(this._element, 'button');                     
 
         var dz = new qq.UploadDropZone({
             element: dropArea,
@@ -565,6 +566,7 @@ qq.extend(qq.FileUploader.prototype, {
             },
             onDrop: function(e){
                 dropArea.style.display = 'none';
+                button.style.display = 'inline-block';
                 qq.removeClass(dropArea, self._classes.dropActive);
                 self._uploadFileList(e.dataTransfer.files);    
             }
@@ -575,7 +577,8 @@ qq.extend(qq.FileUploader.prototype, {
         qq.attach(document, 'dragenter', function(e){     
             if (!dz._isValidFileDrag(e)) return; 
             
-            dropArea.style.display = 'block';            
+            dropArea.style.display = 'block';
+            button.style.display = 'none';          
         });                 
         qq.attach(document, 'dragleave', function(e){
             if (!dz._isValidFileDrag(e)) return;            
@@ -583,7 +586,8 @@ qq.extend(qq.FileUploader.prototype, {
             var relatedTarget = document.elementFromPoint(e.clientX, e.clientY);
             // only fire when leaving document out
             if ( ! relatedTarget || relatedTarget.nodeName == "HTML"){               
-                dropArea.style.display = 'none';                                            
+                dropArea.style.display = 'none'; 
+                button.style.display = 'inline-block';                                           
             }
         });                
     },
