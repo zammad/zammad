@@ -601,8 +601,8 @@ class App.Controller extends Spine.Controller
     # users
     if params.type == 'User'
       for user of params.data
-        if user && !user.image
-          user.image = 'http://placehold.it/48x48'
+        if params.data[user] && !params.data[user]['image']
+          params.data[user]['image'] = 'http://placehold.it/48x48'
         App.User.refresh( params.data[user], options: { clear: true } )
 
     # tickets
