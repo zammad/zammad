@@ -6,10 +6,10 @@
   <div class="span9">
 
     <div class="row well">
-      <div class="avatar span1 media-grid">
+      <div class="avatar span1 thumbnails">
         <img class="thumbnail user-data" data-id="<%= window.Session['id'] %>"" src="<%- window.Session['image'] %>" alt="">
       </div>
-      
+
       <div class="span8">
         <div class="row">
 
@@ -26,16 +26,16 @@
           </form>
         </div>
       </div>
-      
+
     </div>
-  
+
 <% for article in @articles: %>
-    <div class="row article<% if article.internal is true: %> internal<% end %>" data-id="<%= article.id %>">
-      <div class="span1">
+    <div class="row well article" data-id="<%= article.id %>">
+      <div class="avatar span1 thumbnails">
         <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
       </div>
       
-      <div class="span7 article-message">
+      <div class="span8 well-muted article-message <% if article.internal is true: %> internal<% end %>">
         <% if article.from: %>
           <strong title="From: <%= article.from %>"><%= article.from %></strong>
           <% if article.actions: %>
@@ -84,7 +84,7 @@
         </ul>
       </div>
     </div>
-
+<!--
     <div class="row">
       <div class="well">
         <h3>Linked Objects</h3>
@@ -94,7 +94,7 @@
         </ul>
       </div>
     </div>
-
+-->
   </div>
 
 </div>
