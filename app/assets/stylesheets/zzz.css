@@ -175,3 +175,24 @@ footer {
   padding-left: 20px;
   padding-right: 10px;
 }
+
+/*
+ * noty changes
+ */
+.noty_bar.noty_layout_top {
+  top: 48px;
+  position: fixed;
+  left: 50%;
+  margin-left: -350px;
+  width: 700px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+
+}
+.noty_bar.noty_theme_twitter {
+  font-size: 14px;
+  line-height: 14px;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.9;
+}

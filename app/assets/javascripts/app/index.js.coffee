@@ -15,6 +15,7 @@
 #= require ./lib/underscore.coffee
 #= require ./lib/ba-linkify.js
 #= require ./lib/jquery.tagsinput.js
+#= require ./lib/jquery.noty.js
 #= require ./lib/fileuploader.js
 
 #not_used= require_tree ./lib
@@ -157,7 +158,6 @@ class App.Run extends Spine.Controller
     
     # start content
     new App.Content( el: @el.find('#content') );
-
 
 #class App.Content extends Spine.Stack
 class App.Content extends Spine.Controller
