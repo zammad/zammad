@@ -445,16 +445,16 @@ class TicketOverviewsController < ApplicationController
     # do query
     user_all = User.find(
       :all,
-      :limit => limit,
+      :limit      => limit,
       :conditions => ['firstname LIKE ? or lastname LIKE ? or email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"],
-      :order => 'firstname'
+      :order      => 'firstname'
     )
     
     # build result list
     users = []
     user_all.each do |user|
       realname = user.firstname.to_s + ' ' + user.lastname.to_s
-      if !user.email.empty? 
+      if user.email 
         realname = realname + ' <' +  user.email.to_s + '>'
       end
       a = { :id => user.id, :label => realname, :value => realname }
