@@ -12,11 +12,13 @@ Zammad::Application.routes.draw do
   match '/auth/:provider/callback', :to => 'sessions#create_omniauth'
 
   # base objects
-  resources :settings,          :only => [:create, :show, :index, :update]
-  resources :users,             :only => [:create, :show, :index, :update]
-  resources :groups,            :only => [:create, :show, :index, :update]
-  resources :roles,             :only => [:create, :show, :index, :update]
-  resources :organizations,     :only => [:create, :show, :index, :update]
+  resources :settings,            :only => [:create, :show, :index, :update]
+  resources :users,               :only => [:create, :show, :index, :update]
+  match '/users/password_reset',        :to => 'users#password_reset_send'
+  match '/users/password_reset_verify', :to => 'users#password_reset_verify'
+  resources :groups,              :only => [:create, :show, :index, :update]
+  resources :roles,               :only => [:create, :show, :index, :update]
+  resources :organizations,       :only => [:create, :show, :index, :update]
 
   # overviews
   resources :overviews
@@ -49,9 +51,9 @@ Zammad::Application.routes.draw do
 
   # sessions
   resources :sessions,            :only => [:create, :destroy, :show]
-  match '/signin',   :to => 'sessions#create'
-  match '/signshow', :to => 'sessions#show'
-  match '/signout',  :to => 'sessions#destroy'
+  match '/signin',                :to => 'sessions#create'
+  match '/signshow',              :to => 'sessions#show'
+  match '/signout',               :to => 'sessions#destroy'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

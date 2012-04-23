@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authentication_check, :except => [:create]
+  before_filter :authentication_check, :except => [:create, :password_reset_send, :password_reset_verify]
 
   # GET /users
   def index
@@ -98,4 +98,26 @@ class UsersController < ApplicationController
 
     head :ok
   end
+
+  # POST /users/reset_password
+  def password_reset_send
+    puts params.inspect
+    success = User.password_reset_send( params[:username] )
+    if success
+      render :json => { :message => 'ok' }, :status => :ok
+    else
+      render :json => { :message => 'failed' }, :status => :unprocessable_entity
+    end
+  end
+
+  # get /users/verify_password/:hash
+  def password_reset_verify
+    success = User.password_reset_verify( params[:hash] )
+    if success
+      render :json => { :message => 'ok' }, :status => :ok
+    else
+      render :json => { :message => 'failed' }, :status => :unprocessable_entity
+    end
+  end
+
 end

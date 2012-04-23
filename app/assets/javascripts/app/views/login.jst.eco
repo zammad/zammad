@@ -14,7 +14,7 @@
             <div>
               <span class="small"><input name="remember_me" value="1" type="checkbox"/> Remember me</span>
               <span class="small">&middot;</span>
-              <a href="#resend_password" class="small">Forgot password?</a>
+              <a href="#reset_password" class="small">Forgot password?</a>
             </div>
           </form>
         </div>

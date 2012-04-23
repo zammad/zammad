@@ -8,6 +8,7 @@ class User < ApplicationModel
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
   has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update
   has_and_belongs_to_many :organizations,   :after_add => :cache_update, :after_remove => :cache_update
+  has_many                :tokens,          :after_add => :cache_update, :after_remove => :cache_update
   has_many                :authorizations,  :after_add => :cache_update, :after_remove => :cache_update
   belongs_to              :organization,    :class_name => 'Organization'
 
@@ -47,7 +48,7 @@ class User < ApplicationModel
       url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
     end
     roles = Role.where( :name => 'Customer' )
-    create(
+    self.create(
       :login         => hash['info']['nickname'] || hash['uid'],
       :firstname     => hash['info']['name'],
       :email         => hash['info']['email'],
@@ -60,7 +61,86 @@ class User < ApplicationModel
     )
 
   end
-  
+
+  def self.password_reset_send(username)
+puts '2'+username.inspect
+    return if !username || username == ''
+
+    # try to find user based on login
+    user = User.where( :login => username, :active => true ).first
+    
+    # try second lookup with email
+    if !user
+      user = User.where( :email => username, :active => true ).first
+    end
+
+    # check if email address exists
+    return if !user.email
+
+    # generate token
+    token = Token.create( :action => 'PasswordReset', :user_id => user.id )
+
+    # send mail
+    data = {}
+    data[:subject] = 'Reset your #{config.product_name} password'
+    data[:body]    = 'Forgot your password?
+
+We received a request to reset the password for your #{config.product_name} account (#{user.login}).
+
+If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
+
+#{config.http_type}://#{config.fqdn}/password_reset_verify/#{token.name}
+
+This link takes you to a page where you can change your password.
+
+If you don\'t want to reset your password, please ignore this message. Your password will not be reset. 
+
+Your #{config.product_name} Team
+'
+
+    # prepare subject & body
+    [:subject, :body].each { |key|
+      data[key.to_sym] = NotificationFactory.build(
+        :string  => data[key.to_sym],
+        :objects => {
+          :token => token,
+          :user  => user,
+        }
+      )
+    }
+
+    # send notification
+    NotificationFactory.send(
+      :recipient => user,
+      :subject   => data[:subject],
+      :body      => data[:body]
+    )
+    return true
+  end
+
+  def self.password_reset_check(token)
+
+    # check token
+    token = Token.check( :action => 'PasswordReset', :name => token )
+    return if !token
+    return true
+  end
+
+  def self.password_reset_via_token(token,password)
+    
+    # check token
+    token = Token.check( :action => 'PasswordReset', :name => token )
+    return if !token
+    
+    # reset password
+    token.user.update_attributes( :password => password )
+    
+    # delete token
+    token.delete
+    token.save
+    return true
+  end
+
   def self.find_fulldata(user_id)
 
     return cache_get(user_id) if cache_get(user_id)
