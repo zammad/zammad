@@ -45,10 +45,6 @@ body {
   color: #999999;
 }
 
-.update-box .controls .span2 {
-  width: 132px;
-}
-
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
  */
@@ -108,19 +104,19 @@ footer {
   float: right;
 }
 
-.update-box {
-  margin-left: 10px;
-}
-
-.ticket-answer .well {
-    margin-left: 0;
-    margin-right: 20px;
-}
-
 .ticket-answer .avatar {
-    margin-left: 0;
+    margin-left: 10px;
 }
-.ticket-answer .span8 { width: 558px; }
+.ticket-answer .span8 {
+  width: 558px;
+}
+
+.ticket-answer .span9 {
+  width: 710px;
+}
+.ticket-answer .span3 {
+  width: 200px;
+}
 
 .article {
   border: none;
@@ -131,8 +127,8 @@ footer {
   margin-top: 0px;
   margin-bottom: 10px;
 
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 0px;
+  padding-bottom: 2px;
   padding-right: 0px;
   
   background-color: #ffffff;
@@ -140,21 +136,23 @@ footer {
 
 .article-message {
   
-  margin: 0 0 0 0;
+  margin-top: 0px;
+  margin-bottom: 6px;
   margin-left: 10px;
-  padding-top: 8px;
+
+  padding-top: 10px;
   padding-bottom: 8px;
-  padding-left: 8px;
+  padding-left: 10px;
   
   width: 580px;
 }
 
 .article .span8 {
-  width: 578px;
+  width: 602px;
 }
 
 .well-muted {
-  background-color: #fff;
+  background-color: whiteSmoke;
   border: 1px solid #eee;
   border: 1px solid rgba(0, 0, 0, 0.05);
   -webkit-border-radius: 4px;

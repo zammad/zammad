@@ -5,32 +5,8 @@
 <div class="row ticket-answer">
   <div class="span9">
 
-    <div class="row well">
-      <div class="avatar span1 thumbnails">
-        <img class="thumbnail user-data" data-id="<%= window.Session['id'] %>"" src="<%- window.Session['image'] %>" alt="">
-      </div>
-
-      <div class="span8">
-        <div class="row">
-
-          <form class="form-stacked keepleft update-box">
-  
-              <%- @form_ticket %>
-
-              <%- @form_article %>
-  
-              <div class="keepleft" id="file-uploader"></div>
-              &nbsp;
-              <input type="submit" class="btn btn-primary submit" value="submit">
-
-          </form>
-        </div>
-      </div>
-
-    </div>
-
 <% for article in @articles: %>
-    <div class="row well article" data-id="<%= article.id %>">
+    <div class="row article" data-id="<%= article.id %>">
       <div class="avatar span1 thumbnails">
         <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
       </div>
@@ -69,6 +45,24 @@
       </div>
     </div>
 <% end %>
+
+    <div class="row article">
+      <div class="avatar span1 thumbnails">
+        <img class="thumbnail user-data" data-id="<%= window.Session['id'] %>"" src="<%- window.Session['image'] %>" alt="">
+      </div>
+      <div class="span8 well-muted article-message">
+        <form class="form-stacked keepleft">
+
+            <%- @form_ticket %>
+
+            <%- @form_article %>
+
+            <div class="keepleft" id="file-uploader"></div>
+            &nbsp;
+            <input type="submit" class="btn btn-primary submit" value="submit">
+        </form>
+      </div>
+    </div>
 
   </div>
 
