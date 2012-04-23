@@ -27,7 +27,7 @@ From: #{ticket.articles[-1].from}
 #{ticket.articles[-1].body}
 </snip>
 
-#{config.http_type}://#{config.fqdn}/ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
+#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
 '
           },
           ticket,
@@ -85,7 +85,7 @@ From: #{ticket.articles[-1].from}
 #{ticket.articles[-1].body}
 </snip>
 
-#{config.http_type}://#{config.fqdn}/ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
+#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
 '
             },
             ticket,
@@ -110,7 +110,7 @@ From: #{ticket.articles[-1].from}
 #{ticket.articles[-1].body}
 </snip>
 
-#{config.http_type}://#{config.fqdn}/ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
+#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
 '
             },
             ticket,

@@ -88,7 +88,7 @@ We received a request to reset the password for your #{config.product_name} acco
 
 If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
 
-#{config.http_type}://#{config.fqdn}/password_reset_verify/#{token.name}
+#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
 
 This link takes you to a page where you can change your password.
 
