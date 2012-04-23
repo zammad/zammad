@@ -454,7 +454,7 @@ class TicketOverviewsController < ApplicationController
     users = []
     user_all.each do |user|
       realname = user.firstname.to_s + ' ' + user.lastname.to_s
-      if user.email 
+      if user.email && user.email.to_s != ''
         realname = realname + ' <' +  user.email.to_s + '>'
       end
       a = { :id => user.id, :label => realname, :value => realname }
