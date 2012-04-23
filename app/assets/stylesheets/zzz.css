@@ -22,6 +22,15 @@ body {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
+/* improved spacing */
+.pagination {
+  margin: 0px 0px;
+}
+.pagination a {
+  padding: 0px 10px;
+  line-height: 26px;
+}
+
 /* replace music icon with attachment */
 .icon-attachment {
   background-position: -24px 0;
