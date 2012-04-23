@@ -5,7 +5,7 @@
     </div>
   <% end %>
 <% end %>
-<% if @user['accounts']: %>
+<% if !_.isEmpty(@user['accounts']): %>
   <div class="row">
     <div class="customer-info">
       <strong>Linked Accounts</strong><br/>
@@ -15,7 +15,7 @@
     </div>
   </div>
 <% end %>
-<% if @user['links']: %>
+<% if !_.isEmpty(@user['links']): %>
   <% for link in @user['links']: %>
   <div class="row">
     <div class="customer-info">
