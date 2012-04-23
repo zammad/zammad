@@ -100,11 +100,12 @@ From: #{ticket.articles[-1].from}
             {
               :event     => event,
               :recipient => 'owner', # group|owner|to_work_on
-              :subject   => 'Update (#{ticket.title})',
-              :body      => 'Update (#{ticket.title}) in Group #{ticket.group.name}
+              :subject   => 'Updated (#{ticket.title})',
+              :body      => 'Hi #{recipient.firstname},
+              
+Updated (#{ticket.title}) in Group #{ticket.group.name}
             
 From: #{ticket.articles[-1].from}
-
 <snip>
 #{ticket.articles[-1].body}
 </snip>
