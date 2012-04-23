@@ -6,7 +6,6 @@ class Index extends App.Controller
   events:
     'submit form': 'submit',
     'click .submit': 'submit',
-    'click .cancel': 'cancel',
 
   constructor: ->
     super
@@ -18,7 +17,6 @@ class Index extends App.Controller
     @render()
     
   render: ->
-    
    configure_attributes = [
       { name: 'username', display: 'Enter your username or email address:', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4',  },
     ]
@@ -27,11 +25,7 @@ class Index extends App.Controller
       form: @formGen( model: { configure_attributes: configure_attributes } ),
     )
 
-  cancel: ->
-    @navigate 'login'
-
   submit: (e) ->
-    @log 'submit'
     e.preventDefault()
     params = @formParam(e.target)
 
@@ -46,22 +40,82 @@ class Index extends App.Controller
     )
   
   success: (data, status, xhr) =>
-
-    @html App.view('reset_password_sent')()
-
-  error: (xhr, statusText, error) =>
-    
-    # add notify
-    Spine.trigger 'notify:removeall'
-    Spine.trigger 'notify', {
-      type: 'warning',
-      msg: 'Wrong Username and Password combination.', 
-    }
-    
-    # rerender login page
-    @render(
-      msg: 'Wrong Username and Password combination.', 
-      username: @username
-    )
+    @html App.view('generic/hero_message')(
+      head:    'We\'ve sent password reset instructions to your email address',
+      message: 'If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try <a href="#reset_password">resending your request</a>.'
+    );
 
 Config.Routes['reset_password'] = Index
+
+
+class Verify extends App.Controller
+  className: 'container'
+  
+  events:
+    'submit form': 'submit',
+    'click .submit': 'submit',
+
+  constructor: ->
+    super
+    
+    # set title
+    @title 'Reset Password'
+    @navupdate '#reset_password_verify'
+
+    # get data
+    ajax = new App.Ajax
+    params = {}
+    params['token'] = @token
+    ajax.ajax(
+      type: 'POST',
+      url:  '/users/password_reset_verify',
+      data: JSON.stringify(params),
+      processData: true,
+      success: @render_success
+      error:   @render_failed
+    )
+
+  render_success: ->
+   configure_attributes = [
+      { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input span4',  },
+    ]
+
+    @html App.view('reset_password_change')(
+      form: @formGen( model: { configure_attributes: configure_attributes } ),
+    )
+    
+  render_failed: ->
+    @html App.view('generic/hero_message')(
+      head:    'Failed!',
+      message: 'Token is not valid!'
+    );
+
+  submit: (e) ->
+    e.preventDefault()
+    params = @formParam(e.target)
+    params['token'] = @token
+
+    # get data
+    ajax = new App.Ajax
+    ajax.ajax(
+      type: 'POST',
+      url:  '/users/password_reset_verify',
+      data: JSON.stringify(params),
+      processData: true,
+      success: @render_changed_success
+      error:   @render_changed_failed
+    )
+
+  render_changed_success: (data, status, xhr) =>
+    @html App.view('generic/hero_message')(
+      head:    'Woo hoo! Your password has been changed!',
+      message: 'Please try to login!',
+    );
+
+  render_changed_failed: ->
+    @html App.view('generic/hero_message')(
+      head:    'Failed!',
+      message: 'Ask your admin!',
+    );
+
+Config.Routes['reset_password_verify/:token'] = Verify

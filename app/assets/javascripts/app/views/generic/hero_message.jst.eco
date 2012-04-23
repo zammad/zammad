@@ -1,0 +1,8 @@
+<div class="hero-unit">
+  <h2><%= @head %> <small><%= @head_small %></small></h2>
+  <div class="container">
+    <p>
+      <%- @message %>
+    </p>
+  </div>
+</div>

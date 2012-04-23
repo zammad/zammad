@@ -63,7 +63,6 @@ class User < ApplicationModel
   end
 
   def self.password_reset_send(username)
-puts '2'+username.inspect
     return if !username || username == ''
 
     # try to find user based on login

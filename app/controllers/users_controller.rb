@@ -101,7 +101,6 @@ class UsersController < ApplicationController
 
   # POST /users/reset_password
   def password_reset_send
-    puts params.inspect
     success = User.password_reset_send( params[:username] )
     if success
       render :json => { :message => 'ok' }, :status => :ok
@@ -112,7 +111,11 @@ class UsersController < ApplicationController
 
   # get /users/verify_password/:hash
   def password_reset_verify
-    success = User.password_reset_verify( params[:hash] )
+    if params[:password]
+      success = User.password_reset_via_token( params[:token], params[:password] )
+    else
+      success = User.password_reset_check( params[:token] )
+    end
     if success
       render :json => { :message => 'ok' }, :status => :ok
     else
