@@ -10,38 +10,36 @@ class App.Notify extends Spine.Controller
     super
     
     Spine.bind 'notify', (data) =>
-      @[data.type] data.msg
+      @render(data)
 
     Spine.bind 'notify:removeall', =>
       @log 'notify:removeall', @
       @destroyAll()
 
-  info: (data) ->
-    @render( text: arguments[0], type: 'information' )
-    
-  warning: (data) ->
-    @render( text: arguments[0], type: 'alert' )
-    
-  error: (data) ->
-    @render( text: arguments[0], type: 'error' )
-    
-  success: (data) ->
-    @render( text: arguments[0], type: 'success' )
-    
   render: (data) ->
 #    notify = App.view('notify')(data: data)
 #    @append( notify )
+
+    # match noty naming
+    if data['type'] is 'info'
+      data['type'] = 'information'
+
     $.noty.closeAll()
     $('#notify').noty(
       {
-        text:             data.text,
-        layout:           'top',
-        type:             data.type,
-        theme:            'noty_theme_twitter',
-        animateOpen:      { height: 'toggle' },
-        animateClose:     { height: 'toggle' },
+        text:     data.msg,
+        layout:   'top',
+        type:     data.type,
+        theme:    'noty_theme_twitter',
+        animateOpen: { 
+          height: 'toggle'
+          opacity: 0.85,
+        },
+        animateClose: {
+          opacity: 0.25,
+        },
         speed:            450,
-        timeout:          3600,
+        timeout:          data.timeout || 3800,
         closeButton:      false,
         closeOnSelfClick: true,
         closeOnSelfOver:  false,

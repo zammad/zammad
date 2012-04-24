@@ -59,10 +59,6 @@ class Index extends App.Controller
       form: @formGen( model: { configure_attributes: configure_attributes, className: 'create' } ),
     )
     
-#    @modalShow(
-#      navigateBack: true
-#    )
-
   user_new: (e) =>
     e.preventDefault()
     new UserNew()
@@ -123,14 +119,15 @@ class Index extends App.Controller
 
           # notify UI
           @notify
-            type: 'success',
-            msg: 'Ticket ' + r.number + ' created!'
-            
+            type:    'success',
+            msg:     "Ticket <a href=\"#ticket/zoom/#{r.id}\">#{r.number}</a> created!",
+            timeout: 12000,
+      
           # create new create screen
           @render()
           
           # scroll to top
-          window.scrollTo(0,0)
+          @scrollTo()
 
         error: =>
           @log 'save failed!'
