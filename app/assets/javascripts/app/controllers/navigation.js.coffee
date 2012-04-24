@@ -1,6 +1,6 @@
 $ = jQuery.sub()
 
-class App.Navigation extends Spine.Controller
+class App.Navigation extends App.Controller
   events:
     'focusin [data-type=edit]':     'edit_in'
 
@@ -8,6 +8,12 @@ class App.Navigation extends Spine.Controller
     super
     @log 'nav...'
     @render()
+    
+    sync_ticket_overview = =>
+      @sync(@ticket_overview, 30000,'interval_id_ticket_overview')
+
+    sync_recent_viewed = =>
+      @sync(@recent_viewed, 40000, 'interval_id_recent_viewed')
     
     Spine.bind 'navupdate', (data) =>
       @update(arguments[0])
@@ -18,21 +24,36 @@ class App.Navigation extends Spine.Controller
 
     Spine.bind 'navupdate_remote', (user) =>
       @log 'navupdate_remote'
-      @delay( @sync, 500 )
+      @delay( sync_ticket_overview, 500 )
+      @delay( sync_recent_viewed, 1000 )
     
     # rerender if new overview data is there
-    @delay( @sync, 800 )
-    @delay( @sync, 2000 )
+    @delay( sync_ticket_overview, 800 )
+    @delay( sync_ticket_overview, 2000 )
+    
+    @delay( sync_recent_viewed, 1000 )
     
   render: (user) ->
-#    @log 'nav render', Config.NavBar
-#    @log '111', _.keys(Config.NavBar)
-    navbar =  _.values(Config.NavBar)
+    nav_left  = @getItems( navbar: Config.NavBar )
+    nav_right = @getItems( navbar: Config.NavBarRight )
+
+    @html App.view('navigation')(
+      navbar_left:  nav_left,
+      navbar_right: nav_right,
+      user:         user,
+    )
+
+  getItems: (data) ->
+    navbar =  _.values(data.navbar)
     
     level1 = []
     dropdown = {}
 
     for item in navbar
+      if typeof item.callback is 'function'
+        data = item.callback() || {}
+        for key, value of data
+          item[key] = value
       if !item.parent
         match = 0
         if !window.Session['roles']
@@ -72,10 +93,7 @@ class App.Navigation extends Spine.Controller
             itemLevel1.child = sub
             
     nav = @getOrder(level1)
-    @html App.view('navigation')(
-      navbar: nav,
-      user: user,
-    )
+    return nav
 
   getOrder: (data) ->
     newlist = {}
@@ -110,20 +128,24 @@ class App.Navigation extends Spine.Controller
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
 #      @el.find("[href*=\"#{url}\"]").parents('li').addClass('active')
 
-  sync: =>
+  sync: (action, interval, interval_id) =>
     
-    @ticket_overview()
+    # check global var
+    if !@intervalID
+      @intervalID = {}
+
+    action()
 
     # auto save
     every = (ms, cb) -> setInterval cb, ms
 
     # clear auto save
-    clearInterval(@intervalID) if @intervalID
-    
+    clearInterval(@intervalID[interval_id]) if @intervalID[interval_id]
+
     # request new data
-    @intervalID = every 30000, () =>
-      @ticket_overview()
- 
+    @intervalID[interval_id] = every interval, () =>
+      action()
+
   # get data
   ticket_overview: =>
 
@@ -157,6 +179,68 @@ class App.Navigation extends Spine.Controller
             name:   item.name + ' (' + item.count + ')',
             target: '#ticket/view/' + item.url,
             role:   ['Agent'],
+          }
+
+        # rebuild navbar
+        Spine.trigger 'navrebuild', window.Session
+    )
+
+
+  # get data
+  recent_viewed: =>
+
+    # do no load and rerender if sub-menu is open
+    open = @el.find('.open').val()
+    if open isnt undefined
+      return
+    
+    # do no load and rerender if user is not logged in
+    if !window.Session['id']
+      return
+
+    @ajax = new App.Ajax
+    @ajax.ajax(
+      type:  'GET',
+      url:   '/recent_viewed',
+      data:  {
+        limit: 5,
+      }
+      processData: true,
+      success: (data, status, xhr) =>
+
+        items = data.recent_viewed
+
+        # load user collection
+        @loadCollection( type: 'User', data: data.users )
+
+        # load ticket collection
+        @loadCollection( type: 'Ticket', data: data.tickets )
+
+        # remove old views
+        for key of Config.NavBarRight
+          if Config.NavBarRight[key].parent is '#current_user'
+            part = Config.NavBarRight[key].target.split '::'
+            if part is 'RecendViewed'
+              delete Config.NavBarRight[key]
+
+        # add new views
+        prio = 5000
+        for item in items
+          divider   = false
+          navheader = false
+          if prio is 5000
+            divider   = true
+            navheader = 'Recent Viewed'
+          ticket = App.Ticket.find(item.o_id)
+          prio++
+          Config.NavBarRight['RecendViewed::' + ticket.id] = {
+            prio:      prio,
+            parent:    '#current_user',
+            name:      item.history_object.name + ' (' + ticket.title + ')',
+            target:    '#ticket/zoom/' + ticket.id,
+            role:      ['Agent'],
+            divider:   divider,
+            navheader: navheader
           }
 
         # rebuild navbar

@@ -31,9 +31,9 @@ class Index extends App.Controller
         activity_stream: {
           controller: App.DashboardActivityStream,
         },
-        recent_viewed: {
-          controller: App.DashboardRecentViewed,
-        }
+#        recent_viewed: {
+#          controller: App.DashboardRecentViewed,
+#        }
       }
     }
 

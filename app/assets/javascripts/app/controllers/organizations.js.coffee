@@ -40,7 +40,7 @@ Config.NavBar['AdminTrigger'] = { prio: 3000, parent: '#admin', name: 'Trigger',
 Config.NavBar['AdminScheduler'] = { prio: 3500, parent: '#admin', name: 'Scheduler', target: '#scheduler', role: ['Admin'] }
 
 
-Config.NavBar['Setting'] = { prio: 20000, parent: '', name: 'Settings', target: '#settings', role: ['Admin'] }
+Config.NavBar['Setting']         = { prio: 20000, parent: '', name: 'Settings', target: '#settings', role: ['Admin'] }
 Config.NavBar['SettingSystem']   = { prio: 1400, parent: '#settings', name: 'System', target: '#settings/system', role: ['Admin'] }
 Config.NavBar['SettingSecurity'] = { prio: 1500, parent: '#settings', name: 'Security', target: '#settings/security', role: ['Admin'] }
 Config.NavBar['SettingTicket']   = { prio: 1600, parent: '#settings', name: 'Ticket', target: '#settings/ticket', role: ['Admin'] }
@@ -60,3 +60,18 @@ Config.NavBar['TicketOverview'] = { prio: 1000, parent: '', name: 'Overviews', t
 #Config.NavBar[''] = { prio: 1600, parent: '', name: 'anybody+agent', target: '#aa', role: ['Anybody', 'Agent'] }
 #Config.NavBar[''] = { prio: 1600, parent: '', name: 'Anybody', target: '#anybody', role: ['Anybody'] }
 Config.NavBar['CustomerTickets'] = { prio: 1600, parent: '', name: 'Tickets', target: '#customer_tickets', role: ['Customer'] }
+
+Config.NavBarRight['TicketNew'] = { prio: 8000, parent: '', name: 'New', target: '#ticket_create', role: ['Agent'] }
+Config.NavBarRight['User'] = {
+  prio:   10000,
+  parent: '',
+  callback: ->
+    item = {}
+    item['name'] = window.Session['login']
+    return item
+  target: '#current_user',
+  role:   [ 'Agent', 'Customer' ]
+}
+Config.NavBarRight['UserProfile'] = { prio: 1700, parent: '#current_user', name: 'Profile', target: '#profile', role: [ 'Agent', 'Customer' ] }
+Config.NavBarRight['UserLogout']  = { prio: 1800, parent: '#current_user', name: 'Sign out', target: '#logout', divider: true, role: [ 'Agent', 'Customer' ] }
+
