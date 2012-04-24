@@ -20,9 +20,11 @@ class App.Notify extends Spine.Controller
 #    notify = App.view('notify')(data: data)
 #    @append( notify )
 
-    # match noty naming
+    # map noty naming
     if data['type'] is 'info'
       data['type'] = 'information'
+    if data['type'] is 'warning'
+      data['type'] = 'alert'
 
     $.noty.closeAll()
     $('#notify').noty(

@@ -114,7 +114,7 @@ class Index extends App.Controller
     # add notify
     Spine.trigger 'notify:removeall'
     Spine.trigger 'notify', {
-      type: 'warning',
+      type: 'error',
       msg: 'Wrong Username and Password combination.', 
     }
     
