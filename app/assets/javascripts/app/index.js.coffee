@@ -16,6 +16,7 @@
 #= require ./lib/ba-linkify.js
 #= require ./lib/jquery.tagsinput.js
 #= require ./lib/jquery.noty.js
+#= require ./lib/waypoints.js
 #= require ./lib/fileuploader.js
 
 #not_used= require_tree ./lib
@@ -159,29 +160,19 @@ class App.Run extends Spine.Controller
     # start content
     new App.Content( el: @el.find('#content') );
 
-#class App.Content extends Spine.Stack
 class App.Content extends Spine.Controller
   className: 'container'
 
   constructor: ->
-#    @controllers = {}
-#    @routes = {}
-#    @default = '/'
-#    for route, controller of Config.Routes
-##      @log 'route,controller', route, controller
-#      @controllers[route] = controller
-#      @routes[route] = route
-
     super
     @log 'RUN content'#, @
 
     for route, callback of Config.Routes
-#      @log 'route,controller', route#, controller
       do (route, callback) =>
         @route(route, (params) ->
-#          @log 'routing...', route
           Config['ActiveController'] = route
-          
+          Spine.trigger( 'ws:send', JSON.stringify( { action: 'active_controller', controller: route, params: params } ) )
+
           # unbind in controller area
           @el.unbind()
           @el.undelegate()
@@ -194,11 +185,6 @@ class App.Content extends Spine.Controller
 #          window.scrollTo(0,0)
         )
 
-#    for name, object of Config.Controller
-##      @log 'new', object, @el
-#      new object( el: @el, auth: @auth )
-
     Spine.Route.setup()    
 
 window.App = App
-

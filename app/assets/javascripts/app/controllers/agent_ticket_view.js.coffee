@@ -31,6 +31,7 @@ class Index extends App.Controller
 
   fetch: ->
 
+
     # get data
     @ajax = new App.Ajax
     @ajax.ajax(
@@ -68,7 +69,7 @@ class Index extends App.Controller
         @loadCollection( type: 'Ticket', data: data.tickets )
 
         # remember ticket order
-        @tickets = data.tickets
+        @tickets = @tickets.concat( data.tickets )
 
         # remember ticket count
         @tickets_count = data.tickets_count
@@ -87,6 +88,7 @@ class Index extends App.Controller
 
   render: ->
 
+    # get total pages
     pages_total =  parseInt( ( @tickets_count / @overview.view[@view_mode].per_page ) + 0.99999 ) || 1
 
     # render init page
@@ -111,7 +113,7 @@ class Index extends App.Controller
     )
     html = $(html)
 #    html.find('li').removeClass('active')
-    html.find("[data-id=\"#{@start_page}\"]").parents('li').addClass('active')
+#    html.find("[data-id=\"#{@start_page}\"]").parents('li').addClass('active')
     @html html
     
     # create table/overview
@@ -158,6 +160,15 @@ class Index extends App.Controller
         # show
         @el.find('.bulk-action').removeClass('hide')
     )
+
+    # set waypoint if not already at the end
+    if @start_page < pages_total
+      a = =>
+#        alert('You have scrolled to an entry.')
+        @start_page = @start_page + 1
+        @fetch()
+      
+      $('footer').waypoint( a, { offset: '120%', triggerOnce: true } )
 
   page: (e) =>
     e.preventDefault()

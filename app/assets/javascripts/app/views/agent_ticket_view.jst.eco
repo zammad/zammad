@@ -1,7 +1,22 @@
 <div class="page-header">
-  <h1><%- @overview.meta.name %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h1>
+  <div class="row">
+    <div class="span6">
+      <h1><%- @overview.meta.name %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h1>
+    </div>
+    <div class="span6">
+      <div class="pagination keepright">
+        <ul>
+          <% for item in @view_modes: %>
+            <li class="<%= item.class %>">
+              <a href="#" data-type="view-mode" data-mode="<%= item.type %>"><%= item.name %></a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-
+<!--
   <div class="pagination keepleft">
     <ul>
       <% if @start_page != 1: %>
@@ -17,16 +32,7 @@
       <% end %>
     </ul>
   </div>
-
-  <div class="pagination keepright">
-    <ul>
-      <% for item in @view_modes: %>
-        <li class="<%= item.class %>">
-          <a href="#" data-type="view-mode" data-mode="<%= item.type %>"><%= item.name %></a>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+-->
 
 <div class="row">
   <div class="span12 table-overview"></div>
