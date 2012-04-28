@@ -24,7 +24,10 @@ body {
 }
 /* improved spacing */
 .pagination {
-  margin: 0px 0px;
+  padding-top: 2px;
+  margin: 0px 4px;
+  height: 30px;
+  float: right;
 }
 .pagination a {
   padding: 0px 10px;

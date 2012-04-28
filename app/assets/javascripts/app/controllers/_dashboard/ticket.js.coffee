@@ -67,7 +67,7 @@ class App.DashboardTicket extends App.Controller
     )
     html = $(html)
     html.find('li').removeClass('active')
-    html.find("[data-id=\"#{@start_page}\"]").parents('li').addClass('active')
+    html.find(".page [data-id=\"#{@start_page}\"]").parents('li').addClass('active')
 
 
     shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d.overview )

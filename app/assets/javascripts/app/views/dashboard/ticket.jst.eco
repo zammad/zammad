@@ -1,21 +1,34 @@
 <div class="row">
   <div class="span9">
-    <h2><%= @overview.meta.name %> <small><a href="#" data-type="settings" class="icon-edit"></a>
-    </small></h2>
-    <div class="pagination">
-      <ul>
-        <% if @start_page != 1: %>
-          <li><a href="#" data-id="<%= @start_page - 1 %>" data-type="page">«</a></li>
-        <% end %>
-        <% for item in [1..@pages_total]: %>
-          <li>
-            <a href="#" data-id="<%= item %>" data-type="page"><%= item %></a>
-          </li>
-        <% end %>
-        <% if @start_page != @pages_total: %>
-          <li><a href="#" data-id="<%= @start_page + 1 %>" data-type="page">»</a></li>
-        <% end %>
-      </ul>
+    <div class="row">
+      <div class="span4">
+      <h2><%= @overview.meta.name %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h2>
+      </div>
+      <div class="span5">
+        <div class="pagination">
+          <ul>
+            <li>
+            <% if @start_page != 1: %>
+              <a href="#" data-id="<%= @start_page - 1 %>" data-type="page">«</a>
+            <% else: %>
+              <a href="#" data-id="<%= @start_page %>" data-type="page">«</a>
+            <% end %>
+            </li>
+            <% for item in [1..@pages_total]: %>
+              <li class="page">
+                <a href="#" data-id="<%= item %>" data-type="page"><%= item %></a>
+              </li>
+            <% end %>
+            <li>
+            <% if @start_page != @pages_total: %>
+              <a href="#" data-id="<%= @start_page + 1 %>" data-type="page">»</a>
+            <% else: %>
+              <a href="#" data-id="<%= @start_page %>" data-type="page">»</a>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="table-overview"></div>
   </div>
