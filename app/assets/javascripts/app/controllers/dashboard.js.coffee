@@ -30,6 +30,9 @@ class Index extends App.Controller
       side: {
         activity_stream: {
           controller: App.DashboardActivityStream,
+          params: {
+            limit: 8,
+          },
         },
         rss_atom: {
           controller: App.DashboardRss,

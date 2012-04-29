@@ -16,7 +16,7 @@ class App.DashboardActivityStream extends App.Controller
       type:  'GET',
       url:   '/activity_stream',
       data:  {
-        limit: 10,
+        limit: @limit,
       }
       processData: true,
 #      data: JSON.stringify( view: @view ),

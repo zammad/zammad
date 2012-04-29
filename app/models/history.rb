@@ -17,14 +17,15 @@ class History < ActiveRecord::Base
     return history
   end
   
-  def self.activity_stream(user)
+  def self.activity_stream(user, limit = 10)
 #    g = Group.where( :active => true ).joins(:users).where( 'users.id' => user.id )
 #    stream = History.select("distinct(histories.o_id), created_by_id, history_attribute_id, history_type_id, history_object_id, value_from, value_to").
+#      where( :history_type_id   => History::Type.where( :name => ['created', 'updated']) ).
     stream = History.select("distinct(histories.o_id), created_by_id, history_type_id, history_object_id").
       where( :history_object_id => History::Object.where( :name => 'Ticket').first.id ).
-      where( :history_type_id   => History::Type.where( :name => ['created', 'updated']) ).
+      where( :history_type_id   => History::Type.where( :name => ['updated']) ).
       order('created_at DESC, id DESC').
-      limit(10)
+      limit(limit)
     datas = []
     stream.each do |item|
       data = item.attributes

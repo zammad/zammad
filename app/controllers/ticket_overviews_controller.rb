@@ -367,7 +367,7 @@ class TicketOverviewsController < ApplicationController
   # GET /activity_stream
   # GET /activity_stream.json
   def activity_stream
-    activity_stream = History.activity_stream(current_user)
+    activity_stream = History.activity_stream(current_user, params[:limit])
 
     # get related users
     users = {}
