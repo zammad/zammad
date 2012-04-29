@@ -601,8 +601,20 @@ class App.Controller extends Spine.Controller
     # users
     if params.type == 'User'
       for user of params.data
+        
+        # set image url
         if params.data[user] && !params.data[user]['image']
           params.data[user]['image'] = 'http://placehold.it/48x48'
+          
+        # set realname
+        params.data[user]['realname'] = ''
+        if params.data[user]['firstname']
+          params.data[user]['realname'] = params.data[user]['firstname']
+        if params.data[user]['lastname']
+          if params.data[user]['realname'] isnt ''
+            params.data[user]['realname'] = params.data[user]['realname'] + ' '
+          params.data[user]['realname'] = params.data[user]['realname'] + params.data[user]['lastname']
+            
         App.User.refresh( params.data[user], options: { clear: true } )
 
     # tickets
@@ -670,7 +682,6 @@ class App.Controller extends Spine.Controller
     else
       for object in params.data
         App[params.type].refresh( object, options: { clear: true } )
-
 
 class App.ControllerModal extends App.Controller
   className: 'modal hide fade',

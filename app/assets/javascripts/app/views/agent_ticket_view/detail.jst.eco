@@ -19,7 +19,7 @@
       <b>State:</b> <%= ticket.ticket_state.name %>
       <b>Priority:</b> <%= ticket.ticket_priority.name %>
       <b>Group:</b> <%= ticket.group.name %>
-      <b>Owner:</b> <%= ticket.owner.firstname + ' ' + ticket.owner.lastname %>
+      <b>Owner:</b> <%= ticket.owner.realname %>
     </div>
   </div>
   <hr/>

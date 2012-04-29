@@ -4,7 +4,7 @@
   <img class="thumbnail" src="<%- @user.image %>" alt="">
 <% end %>
   <div class="row">
-    <div class="customer-info" title="Name"><%= @user['firstname'] %> <%= @user['lastname'] %></div>
+    <div class="customer-info" title="Name"><%= @user['firstname'] %></div>
   </div>
 <% for row in @data: %>
   <% if @user[row.name]: %>
