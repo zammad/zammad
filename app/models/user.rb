@@ -1,6 +1,8 @@
 class User < ApplicationModel
-  before_create           :check_name, :check_email, :check_image
-  before_update           :check_password
+  include Gmaps
+
+  before_create           :check_name, :check_email, :check_image, :check_geo
+  before_update           :check_password, :check_geo
   after_create            :cache_delete
   after_update            :cache_delete
   after_destroy           :cache_delete
@@ -191,28 +193,84 @@ Your #{config.product_name} Team
     return data
   end
 
+  # update all users geo data
+  def self.geo_update_all
+    User.all.each { |user|
+      user.geo_update
+      user.save
+    }
+  end
+
+  # update geo data of one user
+  def geo_update
+    address = ''
+    location = ['street', 'zip', 'city', 'country']
+    location.each { |item|
+      if self[item] && self[item] != ''
+        address = address + ',' + self[item]
+      end
+    }
+
+    # return if no address is given
+    return if address == ''
+
+    # dp lookup
+    latlng = Gmaps.geocode(address)
+    if latlng
+      self.preferences['lat'] = latlng[0]
+      self.preferences['lng'] = latlng[1]
+    end
+  end
+
   private
+    def check_geo
+
+      location = ['street', 'zip', 'city', 'country']
+      
+      # check if geo update is needed
+      current = User.find( self.id )
+      current_location = {}
+      location.each { |item|
+        current_location[item] = current[item]
+      }
+      
+      # get full address
+      next_location = {}
+      location.each { |item|
+        next_location[item] = self[item]
+      }
+
+      # return if address hasn't changed and geo data is already available
+      return if ( current_location == next_location ) && ( self.preferences['lat'] && self.preferences['lng'] )
+
+      # geo update
+      self.geo_update
+    end
+
     def check_name
-      if self.firstname && (!self.lastname || self.lastname == '') then
+      if self.firstname && (!self.lastname || self.lastname == '')
         name = self.firstname.split(' ', 2)
         self.firstname = name[0]
         self.lastname  = name[1]
       end
     end
+
     def check_email
-      if self.email then
+      if self.email
         self.email = self.email.downcase
       end
     end
+
     def check_image
       require 'digest/md5'
-      if !self.image || self.image == '' then
-        if self.email then
+      if !self.image || self.image == ''
+        if self.email
           hash = Digest::MD5.hexdigest(self.email)
           self.image = "http://www.gravatar.com/avatar/#{hash}?s=48"
         end
       end
     end
+
     def check_password
       
       # set old password again
