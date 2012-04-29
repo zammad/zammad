@@ -49,6 +49,9 @@ Zammad::Application.routes.draw do
   # getting_started
   match '/getting_started',       :to => 'getting_started#index'
 
+  # getting_started
+  match '/rss_fetch',             :to => 'rss#fetch'
+
   # sessions
   resources :sessions,            :only => [:create, :destroy, :show]
   match '/signin',                :to => 'sessions#create'

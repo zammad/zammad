@@ -31,6 +31,23 @@ class Index extends App.Controller
         activity_stream: {
           controller: App.DashboardActivityStream,
         },
+        rss_atom: {
+          controller: App.DashboardRss,
+          params: {
+            head:  'Heise ATOM',
+            url:   'http://www.heise.de/newsticker/heise-atom.xml',
+            limit: 5,
+          },
+        },
+#        rss_rdf: {
+#          controller: App.DashboardRss,
+#          params: {
+#            head:  'Heise RDF',
+#            url:   'http://www.heise.de/newsticker/heise.rdf',
+#            limit: 5,
+#          },
+#        },
+
 #        recent_viewed: {
 #          controller: App.DashboardRecentViewed,
 #        }

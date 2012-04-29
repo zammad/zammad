@@ -22,20 +22,22 @@ gem 'jquery-rails'
 # Optional support for eco templates
 gem 'eco'
 
-gem "omniauth"  
-gem "omniauth-twitter"  
-gem "omniauth-facebook"  
-gem "omniauth-linkedin"  
-gem "omniauth-google-oauth2"
+gem 'omniauth'  
+gem 'omniauth-twitter'  
+gem 'omniauth-facebook'  
+gem 'omniauth-linkedin'  
+gem 'omniauth-google-oauth2'
 
-gem "twitter"
-gem "koala"
-gem "mail"
+gem 'twitter'
+gem 'koala'
+gem 'mail'
 
-gem "mime-types"
+gem 'mime-types'
 
 gem 'delayed_job_active_record'
-gem "daemons"
+gem 'daemons'
+
+gem 'simple-rss'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
