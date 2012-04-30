@@ -6,21 +6,21 @@
           <% for item in @navbar_left: %>
             <% if item.child: %>
             <li class="dropdown">
-              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%= item.name %> <b class="caret"></b></a>
+              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%= T(item.name) %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <% for item in item.child: %>
                   <% if item.divider: %>
                   <li class="divider"></li>
                   <% end %>
                   <% if item.navheader: %>
-                  <li class="nav-header"><%= item.navheader %></li>
+                  <li class="nav-header"><%= T(item.navheader) %></li>
                   <% end %>
-                  <li><a href="<%= item.target %>"><%= item.name %></a></li>
+                  <li><a href="<%= item.target %>"><%= T(item.name) %></a></li>
                 <% end %>
               </ul>
             </li>
             <% else: %>
-            <li><a href="<%= item.target %>"><%= item.name %></a></li>
+            <li><a href="<%= item.target %>"><%= T(item.name) %></a></li>
             <% end %>
           <% end %>
         </ul>
@@ -32,27 +32,27 @@
         <% for item in @navbar_right: %>
           <% if item.child: %>
             <li class="dropdown">
-              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%= item.name %> <b class="caret"></b></a>
+              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%= T(item.name) %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <% for item in item.child: %>
                   <% if item.divider: %>
                   <li class="divider"></li>
                   <% end %>
                   <% if item.navheader: %>
-                  <li class="nav-header"><%= item.navheader %></li>
+                  <li class="nav-header"><%= T(item.navheader) %></li>
                   <% end %>
-                  <li><a href="<%= item.target %>"><%= item.name %></a></li>
+                  <li><a href="<%= item.target %>"><%= T(item.name) %></a></li>
                 <% end %>
               </ul>
             </li>
             <% else: %>
-            <li><a href="<%= item.target %>"><%= item.name %></a></li>
+            <li><a href="<%= item.target %>"><%= T(item.name) %></a></li>
             <% end %>
           <% end %>
         </ul>
 <% else: %>
         <ul class="nav pull-right">
-          <li><a href="#login">Sign in</a></li>
+          <li><a href="#login"><%= T('Sign in') %></a></li>
         </ul>
 <% end %>
     </div>

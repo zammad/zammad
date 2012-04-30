@@ -3,9 +3,9 @@ $ = jQuery.sub()
 class Index extends App.Controller
   events:
     'click .customer_new': 'user_new'
-    'submit form': 'submit',
-    'click .submit': 'submit',
-    'click .cancel': 'cancel',
+    'submit form':         'submit',
+    'click .submit':       'submit',
+    'click .cancel':       'cancel',
 
   constructor: ->
     super
@@ -68,8 +68,8 @@ class Index extends App.Controller
       { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
       { name: 'subject',            display: 'Subject',  tag: 'input',    type: 'text', limit: 100, null: false, default: defaults['subject'], class: 'span7', },
       { name: 'body',               display: 'Text',     tag: 'textarea', rows: 6,                  null: false, default: defaults['body'],    class: 'span7', },
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['ticket_state_id'],    class: 'medium' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['ticket_priority_id'], class: 'medium' },
+      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['ticket_state_id'],    translate: true, class: 'medium' },
+      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['ticket_priority_id'], translate: true, class: 'medium' },
     ]
     @html App.view('agent_ticket_create')(
       head: 'New Ticket',
@@ -188,7 +188,7 @@ class UserNew extends App.ControllerModal
     user = new App.User
     
     # find role_id
-    role = App.Role.findByAttribute("name", "Customer")
+    role = App.Role.findByAttribute( 'name', 'Customer' )
     params.role_ids = role.id
     @log 'updateAttributes', params
     user.load(params)

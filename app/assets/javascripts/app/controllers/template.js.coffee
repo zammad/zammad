@@ -11,11 +11,9 @@ class App.TemplateUI extends App.Controller
 
     # fetch item on demand
     fetch_needed = 1
-#    if App.User.exists(@user_id)
-#      @user = App.User.find(@user_id)
-#      @log 'exists', @user
-#      fetch_needed = 0
-#      @render()
+    if App.Template.count() > 0
+      fetch_needed = 0
+      @render()
 
     if fetch_needed
       @reload()
@@ -50,9 +48,10 @@ class App.TemplateUI extends App.Controller
     # get params
     params = @formParam(e.target)
     template = App.Template.find( params['template_id'] )
-    template.destroy()
-    @template_id = undefined
-    @render()
+    if confirm('Sure?')
+      template.destroy() 
+      @template_id = undefined
+      @render()
 
   select: (e) =>
     e.preventDefault()

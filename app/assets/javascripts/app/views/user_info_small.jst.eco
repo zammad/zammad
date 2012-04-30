@@ -1,14 +1,14 @@
 <% for row in @data: %>
   <% if @user[row.name]: %>
     <div class="row">
-      <div class="customer-info" title="<%= row.display %>"><%- window.linkify( @user[row.name] ) %></div>
+      <div class="customer-info" title="<%= T(row.display) %>"><%- window.linkify( @user[row.name] ) %></div>
     </div>
   <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
   <div class="row">
     <div class="customer-info">
-      <strong>Linked Accounts</strong><br/>
+      <strong><%= T('Linked Accounts') %></strong><br/>
   <% for account of @user['accounts']: %>
       <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
   <% end %>
@@ -19,14 +19,14 @@
   <% for link in @user['links']: %>
   <div class="row">
     <div class="customer-info">
-      <strong><%= link['title'] %></strong><br/>
+      <strong><%= T(link['title']) %></strong><br/>
       <% for item in link['items']: %>
         <% if item['url']: %>
-          <a href="<%= item['url'] %>" title="<%= item['title'] %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
+          <a href="<%= item['url'] %>" title="<%= T(item['title']) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
         <% else: %>  
-          <span title="<%= item['title'] %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
+          <span title="<%= T(item['title']) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
         <% end %>  
-          <%= item['name'] %>
+          <%= T(item['name']) %>
         <% if item['url']: %>
           </a>
         <% else: %>

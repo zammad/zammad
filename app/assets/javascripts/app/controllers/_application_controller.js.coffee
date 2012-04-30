@@ -163,9 +163,12 @@ class App.Controller extends Spine.Controller
               if name
                name = name + ' '
             name = name + item.lastname
-           
+
+          name_new = name
+          if attribute.translate
+            name_new = T(name)
           attribute.options.push {
-            name:  name,
+            name:  name_new,
             value: item.id,
             note:  item.note,
           }

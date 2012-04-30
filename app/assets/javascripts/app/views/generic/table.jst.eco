@@ -5,7 +5,7 @@
       <th><input type="checkbox" value="" name="bulk_all"/></th>
     <% end %>
 <% for row in @header: %>
-      <th><%= row %></th>
+      <th><%= T(row) %></th>
 <% end %>
 <!--
       <th>Destory</th>
