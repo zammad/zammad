@@ -150,6 +150,10 @@ footer {
   width: 580px;
 }
 
+.article-message hr {
+  margin: 6px 0px 6px -10px;
+}
+
 .article .span8 {
   width: 602px;
 }
