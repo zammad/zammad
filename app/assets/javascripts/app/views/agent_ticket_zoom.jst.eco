@@ -1,5 +1,15 @@
 <div class="page-header">
-  <h1><%= @ticket.title %> <small><%= @ticket.number %></small></h1>
+  <div class="row">
+    <div class="span8">
+      <h1><%= @ticket.title %> <small><%= @ticket.number %></small></h1>
+    </div>
+    <div class="span4 keepright">
+      <%= @ticket.group.name %>
+      <%= @ticket.ticket_state.name %>
+      <%= @ticket.ticket_priority.name %>
+      <%= @ticket.humanTime %>
+    </div>
+  </div>
 </div>
 
 <div class="row ticket-answer">
@@ -13,7 +23,8 @@
       
       <div class="span8 well-muted article-message <% if article.internal is true: %> internal<% end %>">
         <% if article.from: %>
-          <strong title="From: <%= article.from %>"><%= article.from %></strong>
+          <div>
+          <strong title="<%= T('From') %>: <%= article.from %>"><%= article.from %></strong>
           <% if article.actions: %>
             <% for action in article.actions: %>
               -
@@ -21,26 +32,25 @@
             <% end %>
           <% end %>
           - <%= article.humanTime %> ago
-          <br/>
+          </div>
         <% end %>
         <% if article.to: %>
-          <span title="To: <%= article.to %>"><%= article.to %></span>
-          <br/>
+          <div title="<%= T('To') %>: <%= article.to %>"><%= article.to %></div>
         <% end %>
         <% if article.cc: %>
-          <span title="Cc: <%= article.cc %>"><%= article.cc %></span>
-          <br/>
+          <div title="<%= T('Cc') %>: <%= article.cc %>"><%= article.cc %></div>
         <% end %>
         <% if article.subject: %>
-          <span title="Subject: <%= article.subject %>"><%= article.subject %></span>
-          <br/>
+          <div title="<%= T('Subject') %>: <%= article.subject %>"><%= article.subject %></div>
         <% end %>
         <% if article.attachments: %>
+          <div>
           <% for attachment in article.attachments: %>
             <a href="ticket_attachment/<%= attachment.id %>" target="_blank" data-type="attachment" class="" title="<%= attachment.size %>"><%= attachment.filename %></a>
           <% end %>
-          <br/>
+          </div>
         <% end %>
+        <hr/>
         <div style="white-space:pre-wrap;"><%- window.linkify( article.body.trim() ) %></div>
       </div>
     </div>
@@ -59,7 +69,7 @@
 
             <div class="keepleft" id="file-uploader"></div>
             &nbsp;
-            <input type="submit" class="btn btn-primary submit" value="submit">
+            <button type="submit" class="btn btn-primary submit"><%= T('Submit') %></button>
         </form>
       </div>
     </div>
