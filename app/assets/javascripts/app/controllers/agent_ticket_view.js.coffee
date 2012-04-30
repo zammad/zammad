@@ -168,7 +168,7 @@ class Index extends App.Controller
         @start_page = @start_page + 1
         @fetch()
       
-      $('footer').waypoint( a, { offset: '140%', triggerOnce: true } )
+      $('footer').waypoint( a, { offset: '150%', triggerOnce: true } )
 
   page: (e) =>
     e.preventDefault()

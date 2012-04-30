@@ -160,6 +160,27 @@ class App.Run extends Spine.Controller
     # start content
     new App.Content( el: @el.find('#content') );
 
+    @ws = new WebSocket("ws://localhost:3001/");
+  
+    # Set event handlers.
+    @ws.onopen = ->
+      console.log("onopen")
+
+    @ws.onmessage = (e) ->
+      # e.data contains received string.
+      console.log("onmessage: " + e.data)
+      eval e.data
+
+    Spine.bind 'ws:send', (data) =>
+      @log 'ws:send', data
+      @ws.send(data);
+
+    @ws.onclose = ->
+      console.log("onclose")
+
+    @ws.onerror = ->
+      console.log("onerror")
+
 class App.Content extends Spine.Controller
   className: 'container'
 
@@ -176,6 +197,9 @@ class App.Content extends Spine.Controller
           # unbind in controller area
           @el.unbind()
           @el.undelegate()
+ 
+          # remove waypoints
+          $('footer').waypoint('remove')
  
           params.el = @el
           params.auth = @auth

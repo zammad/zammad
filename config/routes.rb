@@ -19,6 +19,7 @@ Zammad::Application.routes.draw do
   resources :groups,              :only => [:create, :show, :index, :update]
   resources :roles,               :only => [:create, :show, :index, :update]
   resources :organizations,       :only => [:create, :show, :index, :update]
+  resources :templates
 
   # overviews
   resources :overviews

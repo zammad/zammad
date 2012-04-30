@@ -6,19 +6,13 @@
   <div class="row">
     <div class="span9">
       <%- @form %>
-        <!--
-          <legend>Example form legend</legend>
-        -->
-          <!--
-          <div class="clearfix">
-            <label for="fileInput">File input</label>
-            <div class="input">
-              <input class="input-file" id="fileInput" name="fileInput" type="file" />
-            </div>
-          </div><!-- /clearfix -->
+      <!--
+        <legend>Example form legend</legend>
+      -->
     </div>
     <div class="span3">
       <div class="span3" id="customer_info"></div>
+      <div class="span3" id="ticket_template"></div>
     </div>
   </div>
   <div class="form-actions">
