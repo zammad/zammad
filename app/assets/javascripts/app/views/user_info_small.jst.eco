@@ -26,7 +26,7 @@
         <% else: %>  
           <span title="<%= T(item['title']) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
         <% end %>  
-          <%= T(item['name']) %>
+          <%= T(item['name']) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
         <% if item['url']: %>
           </a>
         <% else: %>

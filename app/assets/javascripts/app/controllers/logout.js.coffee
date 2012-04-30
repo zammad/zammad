@@ -23,8 +23,3 @@ class Index extends Spine.Controller
     @navigate 'login'
 
 Config.Routes['logout'] = Index
-
-#class App.Logout extends App.Router
-#  routes:
-#    'logout': Index
-#Config.Controller.push App.Logout

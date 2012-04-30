@@ -15,7 +15,7 @@
                   <% if item.navheader: %>
                   <li class="nav-header"><%= T(item.navheader) %></li>
                   <% end %>
-                  <li><a href="<%= item.target %>"><%= T(item.name) %></a></li>
+                  <li><a href="<%= item.target %>"><%= T(item.name) %><% if item['count'] isnt undefined: %> <span class="count">(<%= item['count'] %>)</span><% end %></a></li>
                 <% end %>
               </ul>
             </li>
@@ -41,7 +41,7 @@
                   <% if item.navheader: %>
                   <li class="nav-header"><%= T(item.navheader) %></li>
                   <% end %>
-                  <li><a href="<%= item.target %>"><%= T(item.name) %></a></li>
+                  <li><a href="<%= item.target %>"><%= T(item.name) %><% if item['count'] isnt undefined: %> <span class="count">(<%= item['count'] %>)</span><% end %></a></li>
                 <% end %>
               </ul>
             </li>

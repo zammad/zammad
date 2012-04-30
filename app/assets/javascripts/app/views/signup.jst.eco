@@ -1,13 +1,13 @@
 <div class="hero-unit">
-  <h1>Join <%= Config.product_name %><small></small></h1>
+  <h1><%= T('Join') %> <%= Config.product_name %><small></small></h1>
 
   <div class="container">
     <form class="form-horizontal">
       <p>
         <%- @form %>
       </p>
-      <a href="#/" class="btn cancel">Cancel</a>
-      <button class="btn btn-primary submit">Create my account</button>
+      <a href="#/" class="btn cancel"><%= T('Cancel') %></a>
+      <button class="btn btn-primary submit"><%= T('Create my account') %></button>
     </form>
   </div>
 </div>

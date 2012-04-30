@@ -6,15 +6,15 @@
     <div class="container">
       <div class="row">
         <div class="span12">
-          <p>Sign in with</p>
+          <p><%= T('Sign in with') %></p>
           <form id="login" class="form-search">
-            <input name="username" type="text" class="input span3" placeholder="Username or email" value="<%= @item.username %>" autocapitalize="off"/>
-            <input name="password" type="password" class="input span3" placeholder="Password"/>
-            <button class="btn btn-primary" type="submit">Sign in</button>
+            <input name="username" type="text" class="input span3" placeholder="<%= T('Username or email') %>" value="<%= @item.username %>" autocapitalize="off"/>
+            <input name="password" type="password" class="input span3" placeholder="<%= T('Password') %>"/>
+            <button class="btn btn-primary" type="submit"><%= T('Sign in') %></button>
             <div>
-              <span class="small"><input name="remember_me" value="1" type="checkbox"/> Remember me</span>
+              <span class="small"><input name="remember_me" value="1" type="checkbox"/> <%= T('Remember me') %></span>
               <span class="small">&middot;</span>
-              <a href="#reset_password" class="small">Forgot password?</a>
+              <a href="#reset_password" class="small"><%= T('Forgot password?') %></a>
             </div>
           </form>
         </div>
@@ -24,16 +24,16 @@
       <% if !_.isEmpty(@auth_providers): %>
       <div class="row">
         <div class="span12">
-          <p>--- or ---</p>
+          <p>--- <%= T('or') %> ---</p>
         </div>
       </div>
       
       <div class="row">
         <div class="span12">
-          <p>Sign in using</p>
+          <p><%= T('Sign in using') %></p>
           <ul>
           <% for auth_provider in @auth_providers: %>
-            <li><a href="<%= auth_provider.url %>"><%= auth_provider.name %></a></li>
+            <li><a href="<%= auth_provider.url %>"><%= T(auth_provider.name) %></a></li>
           <% end %>
           </ul>
         </div>
@@ -42,14 +42,14 @@
 
       <div class="row">
         <div class="span12">
-          <p>--- or ---</p>
+          <p>--- <%= T('or') %> ---</p>
         </div>
       </div>
       
       <div class="row">
         <div class="span12">
-          <p>New to <%= Config.product_name %>, join today!</p>
-          <p><a href="#signup" class="btn">Sign up</a>
+          <p><%= T('New to') %> <%= Config.product_name %>, <%= T('join today!') %></p>
+          <p><a href="#signup" class="btn"><%= T('Sign up') %></a>
         </div>
       </div>
       

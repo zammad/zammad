@@ -42,6 +42,7 @@ var Trans = {
   'Zip': 'PLZ',
   'City': 'Stadt',
   'Note': 'Notiz',
+  'note': 'Notiz',
   'New User': 'Neuer Benutzer',
   'new': 'neu',
   'closed': 'geschlossen',
@@ -67,6 +68,19 @@ var Trans = {
   'To': 'An',
   'Customer': 'Kunde',
   'Linked Accounts': 'Verknüpfte Accounts',
+  'Sign in with': 'Anmelden mit',
+  'Username or email': 'Benutzer oder Email',
+  'Remember me': 'An mich erinnern',
+  'Forgot password?': 'Passwort vergessen?',
+  'Sign in using': 'Anmelden über',
+  'New to': 'Neu bei',
+  'join today!': 'werde Teil!',
+  'Sign up': 'Registrieren',
+  'Sign in': 'Anmelden',
+  'Create my account': 'Meinen Account erstellen',
+  'Login successfully! Have a nice day!': 'Anmeldung erfolgreich!',
+  'Wrong Username and Password combination.': 'Benutzername oder Password falsch.',
+  
 }
 var T = function(string) {
   if ( Trans[string] !== undefined ) {

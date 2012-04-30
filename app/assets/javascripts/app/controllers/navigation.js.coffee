@@ -176,7 +176,8 @@ class App.Navigation extends App.Controller
           Config.NavBar['TicketOverview' + item.url] = {
             prio:   item.prio,
             parent: '#ticket/view',
-            name:   T(item.name) + ' (' + item.count + ')',
+            name:   item.name,
+            count:  item.count,
             target: '#ticket/view/' + item.url,
             role:   ['Agent'],
           }

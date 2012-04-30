@@ -96,7 +96,7 @@ class Index extends App.Controller
     Spine.trigger 'notify:removeall'
     Spine.trigger 'notify', {
       type: 'success',
-      msg: 'Login successfully! Have a nice day!', 
+      msg: T('Login successfully! Have a nice day!'),
     }
 
     # redirect to #
@@ -115,12 +115,11 @@ class Index extends App.Controller
     Spine.trigger 'notify:removeall'
     Spine.trigger 'notify', {
       type: 'error',
-      msg: 'Wrong Username and Password combination.', 
+      msg: T('Wrong Username and Password combination.'), 
     }
     
     # rerender login page
     @render(
-      msg: 'Wrong Username and Password combination.', 
       username: @username
     )
 

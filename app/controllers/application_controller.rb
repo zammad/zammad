@@ -168,32 +168,43 @@ class ApplicationController < ActionController::Base
     # do not show password
     user['password'] = ''
  
-    # show linked topics and items
-    user['links'] = []
 
     # TEMP: compat. reasons
     user['preferences'] = {} if user['preferences'] == nil
 
-    topic = {
-      :title => 'Tickets',
-      :items => [
-        {
-          :url   => '',
-          :name  => 'open (' + user['preferences'][:tickets_open].to_s + ')',
-          :title => 'Open Tickets',
-          :class => 'user-tickets',
-          :data  => 'open'
-        },
-        {
-          :url   => '',
-          :name  => 'closed (' + user['preferences'][:tickets_closed].to_s + ')',
-          :title => 'Closed Tickets',
-          :class => 'user-tickets',
-          :data  => 'closed'
-        }
-      ]
-    }
-    user['links'].push topic
+    items = []
+    if user['preferences'][:tickets_open].to_i > 0
+      item = {
+        :url   => '',
+        :name  => 'open',
+        :count => user['preferences'][:tickets_open] || 0,
+        :title => 'Open Tickets',
+        :class => 'user-tickets',
+        :data  => 'open'
+      }
+      items.push item
+    end
+    if user['preferences'][:tickets_closed].to_i > 0
+      item = {
+        :url   => '',
+        :name  => 'closed',
+        :count => user['preferences'][:tickets_closed] || 0,
+        :title => 'Closed Tickets',
+        :class => 'user-tickets',
+        :data  => 'closed'
+      }
+      items.push item
+    end
+
+    # show linked topics and items
+    if items.count > 0
+      topic = {
+        :title => 'Tickets',
+        :items => items,
+      }
+      user['links'] = []
+      user['links'].push topic
+    end
 
     return user
   end

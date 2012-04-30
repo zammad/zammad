@@ -2,7 +2,7 @@ class App.Controller extends Spine.Controller
   
   # add @title methode to set title
   title: (name) ->
-    $('html head title').html( Config.product_name + ' - ' + name )
+    $('html head title').html( Config.product_name + ' - ' + T(name) )
 
   # add @notify methode to create notification
   notify: (data) ->
