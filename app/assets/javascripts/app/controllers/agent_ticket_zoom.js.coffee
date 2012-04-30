@@ -109,15 +109,15 @@ class Index extends App.Controller
     @title 'Ticket Zoom ' + @ticket.number
     
     @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', default: 'new', class: 'span2', item_class: 'keepleft' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', default: '2 normal', class: 'span2', item_class: 'keepleft' },
+      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', translate: true, class: 'span2', item_class: 'keepleft' },
+      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', translate: true, class: 'span2', item_class: 'keepleft' },
       { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', class: 'span2', item_class: 'keepleft'  },
       { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'keepleft' },
     ]
     form_ticket = @formGen( model: { configure_attributes: @configure_attributes_ticket, className: 'create' }, params: @ticket )
     @configure_attributes_article = [
 #      { name: 'from',                     display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
-      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: '' },
+      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', translate: true, class: 'medium', item_class: '' },
       { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
