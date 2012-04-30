@@ -8,10 +8,19 @@ class Ticket::Observer::Notification < ActiveRecord::Observer
 #    puts '@@event_buffer'
 #    puts @@event_buffer.inspect
     @@event_buffer.each { |event|
-      if event[:name] == 'Ticket' && event[:type] == 'create'
-        ticket = Ticket.find( event[:id] )
+      
+      # get current state ob objects
+      if event[:name] == 'Ticket::Article'
+        article = Ticket::Article.find( event[:id] )
+        ticket  = article.ticket
+      else
+        ticket  = Ticket.find( event[:id] )
+        article = ticket.articles[-1]
+      end
 
-        # send new ticket notification to agents
+      # send new ticket notification to agents
+      if event[:name] == 'Ticket' && event[:type] == 'create'
+
         puts 'send new ticket notify to agent'
         send_notify(
           {
@@ -20,21 +29,27 @@ class Ticket::Observer::Notification < ActiveRecord::Observer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-a new Ticket (#{ticket.title}) in Group #{ticket.group.name}
+a new Ticket (#{ticket.title}) in Group #{ticket.group.name}, owned by #{ticket.owner.firstname} #{ticket.owner.lastname}
             
-From: #{ticket.articles[-1].from}
+From: #{article.from}
 <snip>
-#{ticket.articles[-1].body}
+#{article.body}
 </snip>
 
-#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
+#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
 '
           },
           ticket,
-          nil
+          article
         )
+      end
 
-        # send new ticket notification to customers
+      # send new ticket notification to customers
+      if event[:name] == 'Ticket' && event[:type] == 'create'
+        
+        # only for incoming emails
+        next if article.ticket_article_type.name != 'email'
+
         puts 'send new ticket notify to customer'
         send_notify(
           {
@@ -45,7 +60,7 @@ From: #{ticket.articles[-1].from}
 
 You wrote:
 <snip>
-#{ticket.articles[-1].body}
+#{article.body}
 </snip>
 
 Your email will be answered by a human ASAP
@@ -56,14 +71,12 @@ Your Zammad Team
 '
           },
           ticket,
-          nil
+          article
         )
       end
 
       # send follow up notification
       if event[:name] == 'Ticket::Article' && event[:type] == 'create'
-        article = Ticket::Article.find( event[:id] )
-        ticket  = article.ticket
 
         # only send article notifications after init article is created (handled by ticket create event)
         next if ticket.articles.count >= 1
@@ -78,14 +91,14 @@ Your Zammad Team
               :subject   => 'Follow Up (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-a follow Up (#{ticket.title}) in Group #{ticket.group.name}
+a follow Up (#{ticket.title}) in Group #{ticket.group.name}, owned by #{ticket.owner.firstname} #{ticket.owner.lastname}
             
-From: #{ticket.articles[-1].from}
+From: #{article.from}
 <snip>
-#{ticket.articles[-1].body}
+#{article.body}
 </snip>
 
-#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
+#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
 '
             },
             ticket,
@@ -103,14 +116,14 @@ From: #{ticket.articles[-1].from}
               :subject   => 'Updated (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
               
-Updated (#{ticket.title}) in Group #{ticket.group.name}
+Updated (#{ticket.title}) in Group #{ticket.group.name}, owned by #{ticket.owner.firstname} #{ticket.owner.lastname}
             
-From: #{ticket.articles[-1].from}
+From: #{article.from}
 <snip>
-#{ticket.articles[-1].body}
+#{article.body}
 </snip>
 
-#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{ticket.articles[-1].id}
+#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
 '
             },
             ticket,
