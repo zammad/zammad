@@ -4,10 +4,10 @@
   <img class="thumbnail" src="<%- @user.image %>" alt="">
 <% end %>
   <div class="row">
-    <div class="customer-info" title="Name"><%= @user['firstname'] %></div>
+    <div class="customer-info" title="Name"><%= @user['realname'] %></div>
   </div>
 <% for row in @data: %>
-  <% if @user[row.name]: %>
+  <% if @user[row.name] || row.name is 'note': %>
     <div class="row">
       <% if row.tag isnt 'textarea': %>
         <div class="customer-info" title="<%= row.display %>"><%- window.linkify( @user[row.name] ) %></div>

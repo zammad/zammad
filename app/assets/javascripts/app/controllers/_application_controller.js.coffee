@@ -149,8 +149,11 @@ class App.Controller extends Spine.Controller
       else
         list = App[attribute.relation].all()
 
+      # build options list
       list.forEach( (item) =>
-        if item.active
+        
+        # if active or if active doesn't exist
+        if item.active || !( 'active' of item )
           name = '???'
           if item.name
             name = item.name
@@ -162,7 +165,7 @@ class App.Controller extends Spine.Controller
             name = name + item.lastname
            
           attribute.options.push {
-            name: name,
+            name:  name,
             value: item.id,
             note:  item.note,
           }
@@ -267,10 +270,13 @@ class App.Controller extends Spine.Controller
     else
       item = App.view('generic/input')( attribute: attribute )
 
-    return App.view('generic/attribute')(
-      attribute: attribute,
-      item:      item,
-    )
+    if !attribute.display
+      return item
+    else
+      return App.view('generic/attribute')(
+        attribute: attribute,
+        item:      item,
+      )
 
   # get all params of the form
   formParam: (form, errors) ->
@@ -600,26 +606,40 @@ class App.Controller extends Spine.Controller
     
     # users
     if params.type == 'User'
-      for user of params.data
-        
+      for user_id, user of params.data
+
+        # set socal media links
+        if user['accounts']
+          for account of user['accounts']
+            if account == 'twitter'
+              user['accounts'][account]['link'] = 'http://twitter.com/' + user['accounts'][account]['username']
+            if account == 'facebook'
+              user['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + user['accounts'][account]['uid']
+
         # set image url
-        if params.data[user] && !params.data[user]['image']
-          params.data[user]['image'] = 'http://placehold.it/48x48'
+        if user && !user['image']
+          user['image'] = 'http://placehold.it/48x48'
           
         # set realname
-        params.data[user]['realname'] = ''
-        if params.data[user]['firstname']
-          params.data[user]['realname'] = params.data[user]['firstname']
-        if params.data[user]['lastname']
-          if params.data[user]['realname'] isnt ''
-            params.data[user]['realname'] = params.data[user]['realname'] + ' '
-          params.data[user]['realname'] = params.data[user]['realname'] + params.data[user]['lastname']
-            
-        App.User.refresh( params.data[user], options: { clear: true } )
+        user['realname'] = ''
+        if user['firstname']
+          user['realname'] = user['firstname']
+        if user['lastname']
+          if user['realname'] isnt ''
+            user['realname'] = user['realname'] + ' '
+          user['realname'] = user['realname'] + user['lastname']
+
+        # load in collection if needed
+        if !params.collection
+          App.User.refresh( user, options: { clear: true } )
 
     # tickets
     else if params.type == 'Ticket'
       for ticket in params.data
+
+        # set human time
+        ticket.humanTime = @humanTime(ticket.created_at)
+
         # priority
         ticket.ticket_priority = App.TicketPriority.find(ticket.ticket_priority_id)
         
@@ -639,8 +659,9 @@ class App.Controller extends Spine.Controller
           user = App.User.find(ticket.owner_id)
           ticket.owner = user
 
-        # load collection
-        App.Ticket.refresh( ticket, options: { clear: true } )
+        # load in collection if needed
+        if !params.collection
+          App.Ticket.refresh( ticket, options: { clear: true } )
 
     # articles
     else if params.type == 'TicketArticle'
@@ -656,7 +677,9 @@ class App.Controller extends Spine.Controller
         article.article_type = App.TicketArticleType.find( article.ticket_article_type_id )
         article.article_sender = App.TicketArticleSender.find( article.ticket_article_sender_id )
 
-        App.TicketArticle.refresh( article, options: { clear: true } )
+        # load in collection if needed
+        if !params.collection
+          App.TicketArticle.refresh( article, options: { clear: true } )
 
     # history
     else if params.type == 'History'
@@ -676,12 +699,20 @@ class App.Controller extends Spine.Controller
         if histroy.history_object_id
           histroy.object    = App.HistoryObject.find( histroy.history_object_id )
 
-        App.History.refresh( histroy, options: { clear: true } )
+        # load in collection if needed
+        if !params.collection
+          App.History.refresh( histroy, options: { clear: true } )
 
     # all the rest
     else
       for object in params.data
-        App[params.type].refresh( object, options: { clear: true } )
+
+        # load in collection if needed
+        if !params.collection
+          App[params.type].refresh( object, options: { clear: true } )
+
+  ws_send: (data) ->
+    Spine.trigger( 'ws:send', JSON.stringify(data) )
 
 class App.ControllerModal extends App.Controller
   className: 'modal hide fade',

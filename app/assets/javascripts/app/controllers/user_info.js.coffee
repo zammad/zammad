@@ -10,59 +10,49 @@ class App.UserInfo extends App.Controller
     # fetch item on demand
     fetch_needed = 1
     if App.User.exists(@user_id)
-      @user = App.User.find(@user_id)
-      @log 'exists', @user
+      @log 'exists.user...', @user_id
       fetch_needed = 0
-      @render()
+      @render(@user_id)
 
     if fetch_needed
       @reload(@user_id)
 
   reload: (user_id) =>
       App.User.bind 'refresh', =>
-        @log 'loading....', user_id
-        @user = App.User.find(user_id)
-        @render()
+        @log 'loading.user...', user_id
         App.User.unbind 'refresh'
+        @render(user_id)
       App.User.fetch( id: user_id )
     
-  render: ->
+  render: (user_id) ->
 
-    # define links to linked accounts
-    if @user['accounts']
-      for account of @user['accounts']
-        if account == 'twitter'
-          @user['accounts'][account]['link'] = 'http://twitter.com/' + @user['accounts'][account]['username']
-        if account == 'facebook'
-          @user['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + @user['accounts'][account]['uid']
-
-    # set default image url
-    if !@user.image
-      @user.image = 'http://placehold.it/48x48'
+    # load user collection
+    user = App.User.find(user_id)
+    @loadCollection( type: 'User', data: { new: user }, collection: true )
 
     # get display data
     data = []
     for item in App.User.configure_attributes
-      if item.name isnt 'firstname'
-        if item.name isnt 'lastname'
-          if item.info #&& ( @user[item.name] || item.name isnt 'note' )
-            data.push item
+      if item.name isnt 'firstname' && item.name isnt 'lastname'
+        if item.info
+          data.push item
 
     # insert data
     @html App.view('user_info')(
-      user: @user,
+      user: App.User.find(user_id),
       data: data,
     )
     
     @userTicketPopups(
       selector: '.user-tickets',
-      user_id:  @user.id,
+      user_id:  user_id,
     )
 
   update: (e) =>
     
     # update changes
     note = $(e.target).parent().find('[data-type=edit]').val()
-    if @user.note isnt note
-      @user.updateAttributes( note: note )
-      @log 'update', e, note, @user
+    user = App.User.find(@user_id)
+    if user.note isnt note
+      user.updateAttributes( note: note )
+      @log 'update', e, note, user
