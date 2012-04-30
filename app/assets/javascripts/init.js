@@ -79,8 +79,12 @@ var Trans = {
   'Sign in': 'Anmelden',
   'Create my account': 'Meinen Account erstellen',
   'Login successfully! Have a nice day!': 'Anmeldung erfolgreich!',
-  'Wrong Username and Password combination.': 'Benutzername oder Password falsch.',
-  
+  'Last contact': 'Letzter Kontakt',
+  'Last contact (Agent)': 'Letzter Kontakt (Agent)',
+  'Last contact (Customer)': 'Letzter Kontakt (Kunde)',
+  'Close time': 'Schließzeit',
+  'First response': 'Erste Reaktion',
+  '': '',
 }
 var T = function(string) {
   if ( Trans[string] !== undefined ) {
