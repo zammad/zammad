@@ -27,6 +27,8 @@ class App.Notify extends Spine.Controller
       data['type'] = 'alert'
 
     $.noty.closeAll()
+    if data.link
+      data.msg = '<a href="' + data.link + '">' + data.msg + '</a>'
     $('#notify').noty(
       {
         text:     data.msg,

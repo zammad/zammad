@@ -149,7 +149,8 @@ class Index extends App.Controller
           # notify UI
           @notify
             type:    'success',
-            msg:     "Ticket <a href=\"#ticket/zoom/#{r.id}\">#{r.number}</a> created!",
+            msg:     T('Ticket %s created!', r.number),
+            link:    "#ticket/zoom/#{r.id}"
             timeout: 12000,
       
           # create new create screen

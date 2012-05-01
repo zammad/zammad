@@ -399,6 +399,10 @@ class App.Controller extends Spine.Controller
         if row.callback
           object[row.name]['name'] = row.callback(object[row.name]['name'])
  
+        # check if translation is needed
+        if row.translate
+          object[row.name]['name'] = T( object[row.name]['name'] )
+ 
 #    @log 'table', 'header', header, 'overview', data_types, 'objects', objects
     table = App.view('generic/table')(
       header:   header,
@@ -430,8 +434,8 @@ class App.Controller extends Spine.Controller
       { name: 'number',                 link: true },
       { name: 'title',                  link: true },
       { name: 'customer',               class: 'user-data', data: { id: true } },
-      { name: 'ticket_state' },
-      { name: 'ticket_priority' },
+      { name: 'ticket_state',           translate: true },
+      { name: 'ticket_priority',        translate: true },
       { name: 'group' },
       { name: 'owner',                  class: 'user-data', data: { id: true } },
       { name: 'created_at',             callback: @humanTime },
@@ -488,21 +492,21 @@ class App.Controller extends Spine.Controller
     if diff >= 86400
       unit = Math.round( (diff / 86400) )
       if unit > 1
-        return unit + ' days'
+        return unit + ' ' + T('days')
       else
-        return unit + ' day'
+        return unit + ' ' + T('day')
     if diff >= 3600
       unit = Math.round( (diff / 3600) )
       if unit > 1
-        return unit + ' hours'
+        return unit + ' ' + T('hours')
       else
-        return unit + ' hour'
+        return unit + ' ' + T('hour')
     if diff <= 3600
       unit = Math.round( (diff / 60) )
       if unit > 1
-        return unit + ' minutes'
+        return unit + ' ' + T('minutes')
       else
-        return unit + ' minute'
+        return unit + ' ' + T('minute')
 
   userInfo: (data) =>
     # start customer info controller

@@ -141,11 +141,48 @@ class App.Auth extends App.Ajax
       url:  '/signout',
     )
 
+class App.i18n extends App.Ajax
+#  @include App.Ajax
+
+  constructor: ->
+    @set('de')
+    window.T = @translate
+    
+  set: (locale) =>
+    @map = {}
+    @ajax(
+      type:   'GET',
+      url:    '/' + locale + '.json',
+      async:  false,
+      success: (data, status, xhr) =>
+        @map = data
+      error: (xhr, statusText, error) =>
+        console.log 'error', error, statusText, xhr.statusCode
+    )
+
+  translate: (string, args...) =>
+
+    # return translation
+    if @map[string] isnt undefined
+      translated = @map[string]
+    else
+      translated = string
+      
+    # search %s
+    for arg in args
+      translated = translated.replace(/%s/, arg)
+
+    # return translated string
+    return translated
+
 class App.Run extends Spine.Controller
   constructor: ->
     super
     @log 'RUN app'#, @
     @el = $('#app')
+
+    # init of i18n
+    new App.i18n
 
     # start navigation controller
     new App.Navigation( el: @el.find('#navigation') );
