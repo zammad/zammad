@@ -225,6 +225,12 @@ Your #{config.product_name} Team
   private
     def check_geo
 
+      # geo update if no user exists
+      if !self.id
+        self.geo_update
+        return
+      end
+
       location = ['street', 'zip', 'city', 'country']
       
       # check if geo update is needed
