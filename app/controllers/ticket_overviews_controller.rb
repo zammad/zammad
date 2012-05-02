@@ -6,9 +6,23 @@ class TicketOverviewsController < ApplicationController
   def show
 
     # build up attributes hash
-    overview_selected = nil
-    overviews = Overview.all
+    overview_selected     = nil
+    overview_selected_raw = nil
+    overviews             = Overview.all
     overviews.each { |overview|
+
+      # for cleanup reasons, remove me later!
+      overview.condition.each { |item, value |
+        if item == 'owner_id' 
+          overview.condition[item] = 'current_user.id'
+        end
+      }
+      
+      # remember selected view
+      if params[:view] && params[:view] == overview.meta[:url]
+        overview_selected     = overview
+        overview_selected_raw = Marshal.load( Marshal.dump(overview.attributes) )
+      end
 
       # replace 'current_user.id' with current_user.id
       overview.condition.each { |item, value |
@@ -16,13 +30,8 @@ class TicketOverviewsController < ApplicationController
           overview.condition[item] = current_user.id
         end
       }
-      
-      # remember selected view
-      if params[:view] && params[:view] == overview.meta[:url]
-        overview_selected = overview
-      end
     }
-    
+
     # sortby
       # prio
       # state
@@ -108,7 +117,7 @@ class TicketOverviewsController < ApplicationController
 
     # return result
     render :json => {
-      :overview      => overview_selected,
+      :overview      => overview_selected_raw,
       :tickets       => tickets,
       :tickets_count => tickets_count,
       :users         => users,
