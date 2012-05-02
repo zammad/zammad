@@ -159,7 +159,14 @@ class Ticket < ActiveRecord::Base
           self.message_id = '<' + DateTime.current.to_s(:number) + '.' + self.ticket_id.to_s + '.' + rand(999999).to_s() + '@' + fqdn + '>'
 
           # set sender
-          self.from = Setting.get('system_sender')
+          if Setting.get('ticket_define_email_from') == 'AgentNameSystemAddressName'
+            seperator = Setting.get('ticket_define_email_from_seperator')
+            sender    = User.find(self.created_by_id)
+            system_sender = Setting.get('system_sender')
+            self.from = "#{sender.firstname} #{sender.lastname} #{seperator} #{system_sender}"
+          else
+            self.from = Setting.get('system_sender')
+          end
         end
       end
       def attachment_check
@@ -182,6 +189,7 @@ class Ticket < ActiveRecord::Base
       end
 
       def communicate
+
         # if sender is customer, do not communication
         sender = Ticket::Article::Sender.where( :id => self.ticket_article_sender_id ).first
         return 1 if sender == nil || sender['name'] == 'Customer'
