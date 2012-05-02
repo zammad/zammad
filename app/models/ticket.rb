@@ -241,6 +241,7 @@ class Ticket < ActiveRecord::Base
               :in_reply_to => self.in_reply_to,
               :from        => self.from,
               :to          => self.to,
+              :cc          => self.cc,
               :subject     => subject,
               :body        => self.body,
               :attachments => self.attachments
