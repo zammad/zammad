@@ -29,8 +29,11 @@ class Ticket::Observer::Notification < ActiveRecord::Observer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-a new Ticket (#{ticket.title}) in Group #{ticket.group.name}, owned by #{ticket.owner.firstname} #{ticket.owner.lastname}
-            
+a new Ticket (#{ticket.title}) via #{article.ticket_article_type.name}.
+
+Group: #{ticket.group.name}
+Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+
 From: #{article.from}
 <snip>
 #{article.body}
@@ -79,7 +82,7 @@ Your Zammad Team
       if event[:name] == 'Ticket::Article' && event[:type] == 'create'
 
         # only send article notifications after init article is created (handled by ticket create event)
-        next if ticket.articles.count >= 1
+        next if ticket.articles.count.to_i <= 1
 
         puts 'send new ticket::article notify'
 
@@ -91,8 +94,11 @@ Your Zammad Team
               :subject   => 'Follow Up (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-a follow Up (#{ticket.title}) in Group #{ticket.group.name}, owned by #{ticket.owner.firstname} #{ticket.owner.lastname}
-            
+a follow Up (#{ticket.title}) via #{article.ticket_article_type.name}.
+
+Group: #{ticket.group.name}
+Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+
 From: #{article.from}
 <snip>
 #{article.body}
@@ -116,8 +122,11 @@ From: #{article.from}
               :subject   => 'Updated (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
               
-Updated (#{ticket.title}) in Group #{ticket.group.name}, owned by #{ticket.owner.firstname} #{ticket.owner.lastname}
-            
+updated (#{ticket.title}) via #{article.ticket_article_type.name}.
+
+Group: #{ticket.group.name}
+Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+
 From: #{article.from}
 <snip>
 #{article.body}
