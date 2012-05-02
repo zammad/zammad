@@ -1,12 +1,14 @@
 <div class="page-header">
   <div class="row">
-    <div class="span8">
+    <div class="span12">
       <h1><%= @ticket.title %> <small><%= @ticket.number %></small></h1>
     </div>
-    <div class="span4 keepright">
-      <%= @ticket.group.name %>
-      <%= @ticket.ticket_state.name %>
-      <%= @ticket.ticket_priority.name %>
+  </div>
+  <div class="row">
+    <div class="span12">
+      <%= @ticket.group.name %> -
+      <%= T(@ticket.ticket_state.name) %> -
+      <%= T(@ticket.ticket_priority.name) %> -
       <%= @ticket.humanTime %>
     </div>
   </div>
