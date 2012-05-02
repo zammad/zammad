@@ -42,6 +42,7 @@ class History < ActiveRecord::Base
     stream = History.select("distinct(histories.o_id), created_by_id, history_attribute_id, history_type_id, history_object_id, value_from, value_to").
       where( :history_object_id => History::Object.where( :name => 'Ticket').first.id ).
       where( :history_type_id => History::Type.where( :name => ['viewed']) ).
+      where( :created_by_id => user.id ).
       order('created_at DESC, id DESC').
       limit(10)
     datas = []
