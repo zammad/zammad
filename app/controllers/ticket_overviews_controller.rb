@@ -13,7 +13,7 @@ class TicketOverviewsController < ApplicationController
 
       # for cleanup reasons, remove me later!
       overview.condition.each { |item, value |
-        if item == 'owner_id' 
+        if item == 'owner_id' && overview.condition[item] != 1
           overview.condition[item] = 'current_user.id'
         end
       }
