@@ -63,7 +63,7 @@ module NotificationFactory
       {
 #        :in_reply_to => self.in_reply_to,
         :from       => sender,
-        :to         => data[:recipient].email,
+        :to         => data[:recipient][:email],
         :subject    => data[:subject],
         :body       => data[:body], 
       },
