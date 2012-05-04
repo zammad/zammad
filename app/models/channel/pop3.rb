@@ -16,7 +16,7 @@ class Channel::POP3 < Channel::EmailParser
       puts " - message #{count.to_s}/#{count_all.to_s}"
 
       # delete email from server after article was created
-      if parse(channel, m.pop)
+      if process(channel, m.pop)
         m.delete
       end
     end

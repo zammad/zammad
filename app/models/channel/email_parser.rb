@@ -1,24 +1,79 @@
 require 'mail'
-
+require 'iconv'
 class Channel::EmailParser
-
-  def parse (channel, msg)
+  def conv (charset, string)
+    if charset == 'US-ASCII' then
+      charset = 'LATIN1'
+    end
+    Iconv.conv("UTF8", charset, string)
+  end
+  
+  def parse (msg)
+    data = {}
     mail = Mail.new( msg )
-    from_email        = Mail::Address.new( mail[:from].value ).address
-    from_display_name = Mail::Address.new( mail[:from].value ).display_name
+
+    # headers
+    data[:from_email]        = Mail::Address.new( mail[:from].value ).address
+    data[:from_display_name] = Mail::Address.new( mail[:from].value ).display_name
+    ['from', 'to', 'cc', 'subject'].each {|key|
+      data[key.to_sym] = mail[key] ? conv( mail[key].charset || 'LATIN1', mail[key].to_s) : nil
+    }
+
+    # message id
+    data[:message_id] = mail['message_id'] ? mail['message_id'].to_s : nil
+
+    # body
+   #   plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
+  #    html_part = message.html_part ? message.html_part.body.decoded : nil
+    data[:plain_part] = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
+    data[:plain_part] = conv( mail.body.charset || 'LATIN1', data[:plain_part] )
+
+    # attachments
+    if mail.attachments
+      data[:attachments] = []
+      mail.attachments.each do |attachment|
+        
+        # get file preferences
+        headers = {}
+        attachment.header.fields.each do |f|
+          headers[f.name] = f.value
+        end
+        headers_store = {}
+        headers_store['Mime-Type'] = attachment.mime_type
+        if attachment.charset
+          headers_store['Charset'] = attachment.charset
+        end
+        ['Content-ID', 'Content-Type'].each do |item|
+          if headers[item]
+            headers_store[item] = headers[item]
+          end
+        end
+        attachment = {
+          :data        => attachment.body.decoded,
+          :filename    => attachment.filename,
+          :preferences => headers_store          
+        }
+        data[:attachments].push attachment
+      end
+    end
+    return data
+  end
+
+  def process(channel, msg)
+    mail = parse( msg )
 
     # use transaction
     ActiveRecord::Base.transaction do
 
-      user = User.where( :email => from_email ).first
+      user = User.where( :email => mail[:from_email] ).first
       if !user then
         puts 'create user...'
         roles = Role.where( :name => 'Customer' )
         user = User.create(
-          :login          => from_email,
-          :firstname      => from_display_name,
+          :login          => mail[:from_email],
+          :firstname      => mail[:from_display_name],
           :lastname       => '',
-          :email          => from_email,
+          :email          => mail[:from_email],
           :password       => '',
           :active         => true,
           :roles          => roles,
@@ -29,16 +84,9 @@ class Channel::EmailParser
       # set current user
       UserInfo.current_user_id = user.id
   
-      def conv (charset, string)
-        if charset == 'US-ASCII' then
-          charset = 'LATIN1'
-        end
-        Iconv.conv("UTF8", charset, string)
-      end
-
       # get ticket# from subject
-      ticket = Ticket.number_check( mail[:subject].value )
-      
+      ticket = Ticket.number_check( mail[:subject] )
+
       # set ticket state to open if not new
       if ticket
         ticket_state      = Ticket::State.find( ticket.ticket_state_id )
@@ -54,7 +102,7 @@ class Channel::EmailParser
         ticket = Ticket.create(
           :group_id           => channel[:group_id],
           :customer_id        => user.id,
-          :title              => conv(mail['subject'].charset || 'LATIN1', mail['subject'].to_s),
+          :title              => mail[:subject],
           :ticket_state_id    => Ticket::State.where(:name => 'new').first.id,
           :ticket_priority_id => Ticket::Priority.where(:name => '2 normal').first.id,
           :created_by_id      => user.id
@@ -62,19 +110,17 @@ class Channel::EmailParser
       end
   
       # import mail
-      plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
-  #    html_part = message.html_part ? message.html_part.body.decoded : nil
       article = Ticket::Article.create(
         :created_by_id            => user.id,
         :ticket_id                => ticket.id, 
         :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'email').first.id,
         :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer').first.id,
-        :body                     => conv(mail.body.charset || 'LATIN1', plain_part), 
-        :from                     => mail['from']       ? conv(mail['from'].charset    || 'LATIN1', mail['from'].to_s) : nil,
-        :to                       => mail['to']         ? conv(mail['to'].charset      || 'LATIN1', mail['to'].to_s) : nil,
-        :cc                       => mail['cc']         ? conv(mail['cc'].charset      || 'LATIN1', mail['cc'].to_s) : nil,
-        :subject                  => mail['subject']    ? conv(mail['subject'].charset || 'LATIN1', mail['subject'].to_s) : nil,
-        :message_id               => mail['message_id'] ? mail['message_id'].to_s : nil,
+        :body                     => mail[:plain_part], 
+        :from                     => mail[:from],
+        :to                       => mail[:to],
+        :cc                       => mail[:cc],
+        :subject                  => mail[:subject],
+        :message_id               => mail[:message_id],
         :internal                 => false 
       )
 
@@ -88,35 +134,18 @@ class Channel::EmailParser
       )
 
       # store attachments
-      if mail.attachments
-        mail.attachments.each do |attachment|
-          
-          # get file preferences
-          headers = {}
-          attachment.header.fields.each do |f|
-            headers[f.name] = f.value
-          end
-          headers_store = {}
-          headers_store['Mime-Type'] = attachment.mime_type
-          if attachment.charset
-            headers_store['Charset'] = attachment.charset
-          end
-          ['Content-ID', 'Content-Type'].each do |item|
-            if headers[item]
-              headers_store[item] = headers[item]
-            end
-          end
-          
-          # store file
+      if mail[:attachments]
+        mail[:attachments].each do |attachment|
           Store.add(
             :object      => 'Ticket::Article',
             :o_id        => article.id,
-            :data        => attachment.body.decoded,
-            :filename    => attachment.filename,
-            :preferences => headers_store
+            :data        => attachment[:data],
+            :filename    => attachment[:filename],
+            :preferences => attachment[:preferences]
           )
         end
       end
+      return ticket, article, user
     end
 
     # execute ticket events      

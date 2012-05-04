@@ -6,7 +6,7 @@ class Channel::IMAP < Channel::EmailParser
   def fetch (channel)
     puts "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]})"
 
-    imap = Net::IMAP.new(channel[:options][:host], 993, true )
+    imap = Net::IMAP.new(channel[:options][:host], 993, true, nil, false )
     imap.authenticate('LOGIN', channel[:options][:user], channel[:options][:password])
     imap.select('INBOX')
     count     = 0
@@ -18,7 +18,7 @@ class Channel::IMAP < Channel::EmailParser
 #      puts msg.to_s
 
       # delete email from server after article was created      
-      if parse(channel, msg)
+      if process(channel, msg)
         imap.store(message_id, "+FLAGS", [:Deleted])
       end
     end
