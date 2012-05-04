@@ -2,10 +2,14 @@ require 'mail'
 require 'iconv'
 class Channel::EmailParser
   def conv (charset, string)
-    if charset == 'US-ASCII' then
+    if charset == 'US-ASCII' || charset == 'ASCII-8BIT'
       charset = 'LATIN1'
     end
-    Iconv.conv("UTF8", charset, string)
+    return string if charset.downcase == 'utf8' || charset.downcase == 'utf-8'
+#    puts '-------' + charset
+#    puts string
+#    string.encode("UTF-8")
+    Iconv.conv( 'UTF8', charset, string )
   end
   
   def parse (msg)
@@ -16,17 +20,22 @@ class Channel::EmailParser
     data[:from_email]        = Mail::Address.new( mail[:from].value ).address
     data[:from_display_name] = Mail::Address.new( mail[:from].value ).display_name
     ['from', 'to', 'cc', 'subject'].each {|key|
-      data[key.to_sym] = mail[key] ? conv( mail[key].charset || 'LATIN1', mail[key].to_s) : nil
+      data[key.to_sym] = mail[key] ? mail[key].to_s : nil
     }
 
     # message id
     data[:message_id] = mail['message_id'] ? mail['message_id'].to_s : nil
 
     # body
-   #   plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
-  #    html_part = message.html_part ? message.html_part.body.decoded : nil
-    data[:plain_part] = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
-    data[:plain_part] = conv( mail.body.charset || 'LATIN1', data[:plain_part] )
+#    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
+#    html_part = message.html_part ? message.html_part.body.decoded : nil
+    if mail.multipart?
+      data[:plain_part] = mail.text_part.body.decoded
+      data[:plain_part] = conv( mail.text_part.charset || 'LATIN1', data[:plain_part] )
+    else
+      data[:plain_part] = mail.body.decoded
+      data[:plain_part] = conv( mail.body.charset || 'LATIN1', data[:plain_part] )
+    end
 
     # attachments
     if mail.attachments
@@ -100,7 +109,7 @@ class Channel::EmailParser
       # create new ticket
       if !ticket then
         ticket = Ticket.create(
-          :group_id           => channel[:group_id],
+          :group_id           => channel[:group_id] || 1,
           :customer_id        => user.id,
           :title              => mail[:subject],
           :ticket_state_id    => Ticket::State.where(:name => 'new').first.id,

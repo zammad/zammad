@@ -14,6 +14,17 @@ class EmailParserTest < ActiveSupport::TestCase
           :subject            => 'CI Daten für PublicView ',
         },
       },
+      {
+        :data     => IO.read('test/fixtures/mail2.box'),
+        :body_md5 => '25a1ff722497271965b55e52659784a6',
+        :params   => {
+          :from               => 'Martin Edenhofer <martin@example.com>',
+          :from_email         => 'martin@example.com',
+          :from_display_name  => 'Martin Edenhofer',
+          :subject            => 'aaäöüßad asd',
+          :plain_part         => "äöüß ad asd\r\n\r\n-Martin\r\n\r\n--\r\nOld programmers never die. They just branch to a new address.",
+        },
+      },
     ]
 
     files.each { |file|
@@ -21,11 +32,17 @@ class EmailParserTest < ActiveSupport::TestCase
       parser = Channel::EmailParser.new
       data = parser.parse( file[:data] )
       
-      # create md5 of body
+      # check body
       md5 = Digest::MD5.hexdigest( data[:plain_part] )
-      assert_equal( file[:body_md5], md5 )      
+      assert_equal( file[:body_md5], md5 )
+      
+      # check params
       file[:params].each { |key, value|
-        assert_equal( file[:params][key.to_sym], data[key.to_sym] )      
+        if key.to_s == 'plain_part'
+          assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[key.to_sym].to_s ) )
+        else
+          assert_equal( file[:params][key.to_sym], data[key.to_sym] )
+        end
       }
     }
   end
