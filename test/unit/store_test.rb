@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'test_helper'
  
 class StoreTest < ActiveSupport::TestCase
@@ -44,7 +45,7 @@ class StoreTest < ActiveSupport::TestCase
       assert_equal( md5, md5_new )
 
       # filename check
-      assert_equal( file[:filename], attachments[0].filename )      
+      assert_equal( file[:filename], attachments[0].filename )
 
       # delete attachments
       success = Store.remove(
