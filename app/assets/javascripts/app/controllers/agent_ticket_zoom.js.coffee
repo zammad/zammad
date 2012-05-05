@@ -82,9 +82,9 @@ class Index extends App.Controller
         if article_lines.length > preview
           preview_mode = true
           if article_lines[preview] is ''
-            article_lines.splice( preview-1, 0, "----SEEMORE----" )
-          else
             article_lines.splice( preview, 0, "----SEEMORE----" )
+          else
+            article_lines.splice( preview + 1, 0, "----SEEMORE----" )
           article['html'] = article_lines.join("\n")
         article['html'] = window.linkify( article['html'] )
         notify = "<a href=\"#\" class=\"show_toogle\">" + T('See more') + "</a>"
