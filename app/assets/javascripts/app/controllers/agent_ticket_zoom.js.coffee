@@ -9,6 +9,7 @@ class Index extends App.Controller
     'click [data-type=internal]':             'public_internal',
     'click [data-type=history]':              'history_view',
     'change [name="ticket_article_type_id"]': 'form_update',
+    'click .show_toogle':                     'show_toogle',
 
   constructor: (params) ->
     super
@@ -66,7 +67,16 @@ class Index extends App.Controller
     if !@articles
       @articles = []
       for article_id in @ticket.article_ids
-        @articles.push App.TicketArticle.find(article_id)
+        article = App.TicketArticle.find(article_id)
+        
+        # build html body
+        article['html'] = window.linkify( article.body.trim() )
+        notify = "<a href=\"#\" style=\"color:blue\" class=\"show_toogle\">" + T('See more') + "</a>"
+        article['html'] = article['html'].replace /--/m, (match) ->
+          notify + '<div class="hide">' + match
+        article['html'] = article['html'] + '</div>'
+
+        @articles.push article
 
     # check attachments
     for article in @articles
@@ -156,6 +166,11 @@ class Index extends App.Controller
       },
       debug: false
     )
+
+  show_toogle: (e) ->
+    e.preventDefault()
+    $(e.target).hide()
+    $(e.target).next('div').show()
 
   history_view: (e) ->
     e.preventDefault()

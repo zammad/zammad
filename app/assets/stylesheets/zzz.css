@@ -108,7 +108,7 @@ footer {
 }
 
 .ticket-answer .avatar {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .ticket-answer .span8 {
   width: 558px;
@@ -156,6 +156,12 @@ footer {
 
 .article .span8 {
   width: 602px;
+}
+
+.show_toogle {
+  font-size: 10px;
+  line-height: 12px;
+  color: #999999;
 }
 
 .well-muted {

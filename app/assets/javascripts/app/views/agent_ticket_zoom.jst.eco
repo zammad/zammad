@@ -53,7 +53,7 @@
           </div>
         <% end %>
         <hr/>
-        <div style="white-space:pre-wrap;"><%- window.linkify( article.body.trim() ) %></div>
+        <div style="white-space:pre-wrap;" class="article-content"><%- article.html %></div>
       </div>
     </div>
 <% end %>
