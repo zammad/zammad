@@ -72,6 +72,7 @@ class Index extends App.Controller
         # build html body
         article['html'] = article.body.trim()
         article['html'].replace(/\n\n/m, "\n");
+        article['html'].replace(/\n\r\n\r/m, "\n");
         article['html'] = window.linkify( article['html'] )
         notify = "<a href=\"#\" style=\"color:blue\" class=\"show_toogle\">" + T('See more') + "</a>"
         @article_changed = false
