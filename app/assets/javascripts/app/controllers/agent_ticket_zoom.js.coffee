@@ -70,17 +70,36 @@ class Index extends App.Controller
         article = App.TicketArticle.find(article_id)
         
         # build html body
+        # cleanup body
         article['html'] = article.body.trim()
-        article['html'].replace(/\n\n/m, "\n");
-        article['html'].replace(/\n\r\n\r/m, "\n");
+        article['html'].replace(/\n\r/g, "\n");
+        article['html'].replace(/\n\n/mg, "\n");
+        
+        # if body has more then x lines / else search for signature
+        preview       = 15
+        preview_mode  = false
+        article_lines = article['html'].split(/\n/)
+        if article_lines.length > preview
+          preview_mode = true
+          article_lines.splice( preview+1, 1, "----SEEMORE----" )
+          article['html'] = article_lines.join("\n")
         article['html'] = window.linkify( article['html'] )
         notify = "<a href=\"#\" style=\"color:blue\" class=\"show_toogle\">" + T('See more') + "</a>"
-        @article_changed = false
-        article['html'] = article['html'].replace /^(--|__)/m, (match) =>
-          @article_changed = true
-          notify + '<div class="hide">' + match
-        if @article_changed
+
+        # preview mode
+        if preview_mode
+          article['html'] = article['html'].replace /^----SEEMORE----/m, (match) =>
+            notify + '<div class="hide">'
           article['html'] = article['html'] + '</div>'
+          
+        # hide signatures and so on
+        else
+          @article_changed = false
+          article['html'] = article['html'].replace /^(--|__)/m, (match) =>
+            @article_changed = true
+            notify + '<div class="hide">' + match
+          if @article_changed
+            article['html'] = article['html'] + '</div>'
 
         @articles.push article
 
