@@ -76,8 +76,8 @@ class Index extends App.Controller
         notify = "<a href=\"#\" style=\"color:blue\" class=\"show_toogle\">" + T('See more') + "</a>"
         @article_changed = false
         article['html'] = article['html'].replace /^(--|__)/m, (match) =>
-          notify + '<div class="hide">' + match
           @article_changed = true
+          notify + '<div class="hide">' + match
         if @article_changed
           article['html'] = article['html'] + '</div>'
 
