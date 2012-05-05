@@ -25,6 +25,16 @@ class EmailParserTest < ActiveSupport::TestCase
           :plain_part         => "äöüß ad asd\r\n\r\n-Martin\r\n\r\n--\r\nOld programmers never die. They just branch to a new address.",
         },
       },
+      {
+        :data     => IO.read('test/fixtures/mail3.box'),
+        :body_md5 => '0914848466334919eb33ad4de79d6189',
+        :params   => {
+          :from               => '"Günther John | Example GmbH" <k.guenther@example.com>',
+          :from_email         => 'k.guenther@example.com',
+          :from_display_name  => 'Günther John | Example GmbH',
+          :subject            => 'Ticket Templates',
+        },
+      },
     ]
 
     files.each { |file|
@@ -35,7 +45,7 @@ class EmailParserTest < ActiveSupport::TestCase
       # check body
       md5 = Digest::MD5.hexdigest( data[:plain_part] )
       assert_equal( file[:body_md5], md5 )
-      
+      puts data[:from]
       # check params
       file[:params].each { |key, value|
         if key.to_s == 'plain_part'
