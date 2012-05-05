@@ -73,7 +73,7 @@ class Index extends App.Controller
         # cleanup body
         article['html'] = article.body.trim()
         article['html'].replace(/\n\r/g, "\n");
-        article['html'].replace(/\n\n/mg, "\n");
+        article['html'].replace(/\n\n\n/g, "\n\n");
         
         # if body has more then x lines / else search for signature
         preview       = 15
@@ -81,7 +81,10 @@ class Index extends App.Controller
         article_lines = article['html'].split(/\n/)
         if article_lines.length > preview
           preview_mode = true
-          article_lines.splice( preview, 0, "----SEEMORE----" )
+          if article_lines[preview] is ''
+            article_lines.splice( preview-1, 0, "----SEEMORE----" )
+          else
+            article_lines.splice( preview, 0, "----SEEMORE----" )
           article['html'] = article_lines.join("\n")
         article['html'] = window.linkify( article['html'] )
         notify = "<a href=\"#\" class=\"show_toogle\">" + T('See more') + "</a>"
