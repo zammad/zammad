@@ -32,7 +32,6 @@ class Channel::EmailParser
 
     # compat headers
     data[:message_id] = data['message-id'.to_sym]
-    puts data.inspect
 
     # body
 #    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
