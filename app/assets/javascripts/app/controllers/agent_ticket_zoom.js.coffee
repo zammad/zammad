@@ -81,14 +81,14 @@ class Index extends App.Controller
         article_lines = article['html'].split(/\n/)
         if article_lines.length > preview
           preview_mode = true
-          article_lines.splice( preview+1, 1, "----SEEMORE----" )
+          article_lines.splice( preview, 0, "----SEEMORE----" )
           article['html'] = article_lines.join("\n")
         article['html'] = window.linkify( article['html'] )
-        notify = "<a href=\"#\" style=\"color:blue\" class=\"show_toogle\">" + T('See more') + "</a>"
+        notify = "<a href=\"#\" class=\"show_toogle\">" + T('See more') + "</a>"
 
         # preview mode
         if preview_mode
-          article['html'] = article['html'].replace /^----SEEMORE----/m, (match) =>
+          article['html'] = article['html'].replace /^----SEEMORE----\n/m, (match) =>
             notify + '<div class="hide">'
           article['html'] = article['html'] + '</div>'
           
