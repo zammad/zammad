@@ -70,11 +70,16 @@ class Index extends App.Controller
         article = App.TicketArticle.find(article_id)
         
         # build html body
-        article['html'] = window.linkify( article.body.trim() )
+        article['html'] = article.body.trim()
+        article['html'].replace(/\n\n/m, "\n");
+        article['html'] = window.linkify( article['html'] )
         notify = "<a href=\"#\" style=\"color:blue\" class=\"show_toogle\">" + T('See more') + "</a>"
-        article['html'] = article['html'].replace /--/m, (match) ->
+        @article_changed = false
+        article['html'] = article['html'].replace /^(--|__)/m, (match) =>
           notify + '<div class="hide">' + match
-        article['html'] = article['html'] + '</div>'
+          @article_changed = true
+        if @article_changed
+          article['html'] = article['html'] + '</div>'
 
         @articles.push article
 
