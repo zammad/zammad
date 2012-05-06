@@ -65,5 +65,9 @@ module Zammad
 
     # Use a different cache store in production
     config.cache_store = :file_store, 'tmp/cache/file_store'
+
+    # Enable threaded mode
+    config.threadsafe!
+
   end
 end
