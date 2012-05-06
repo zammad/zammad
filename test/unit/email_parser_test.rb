@@ -45,7 +45,7 @@ class EmailParserTest < ActiveSupport::TestCase
       # check body
       md5 = Digest::MD5.hexdigest( data[:plain_part] )
       assert_equal( file[:body_md5], md5 )
-      puts data[:from]
+
       # check params
       file[:params].each { |key, value|
         if key.to_s == 'plain_part'

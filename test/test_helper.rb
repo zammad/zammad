@@ -9,5 +9,8 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  # load seeds
+  load "#{Rails.root}/db/seeds.rb" 
+
   # Add more helper methods to be used by all tests here...
 end

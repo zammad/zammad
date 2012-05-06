@@ -78,18 +78,39 @@ class Channel::EmailParser
   def process(channel, msg)
     mail = parse( msg )
 
+    # check if trust x-headers
+    if !channel[:trusted]
+      mail.each {|key, value|
+        if key =~ /^x-zammad/i
+          mail.delete(key)
+        end
+      }
+    end
+
+    # check ignore header
+    return true if mail[ 'x-zammad-ignore'.to_sym ] == 'true' || mail[ 'x-zammad-ignore'.to_sym ] == true
+
+    ticket  = nil
+    article = nil
+    user    = nil
+
     # use transaction
     ActiveRecord::Base.transaction do
 
-      user = User.where( :email => mail[:from_email] ).first
-      if !user then
+      if mail[ 'x-zammad-customer-login'.to_sym ]
+        user = User.where( :login => mail[ 'x-zammad-customer-login'.to_sym ] ).first
+      end
+      if !user
+        user = User.where( :email => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] ).first
+      end
+      if !user
         puts 'create user...'
         roles = Role.where( :name => 'Customer' )
         user = User.create(
-          :login          => mail[:from_email],
-          :firstname      => mail[:from_display_name],
-          :lastname       => '',
-          :email          => mail[:from_email],
+          :login          => mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+          :firstname      => mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
+          :lastname       => mail[ 'x-zammad-customer-lastname'.to_sym ],
+          :email          => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
           :password       => '',
           :active         => true,
           :roles          => roles,
@@ -114,31 +135,73 @@ class Channel::EmailParser
       end
 
       # create new ticket
-      if !ticket then
-        ticket = Ticket.create(
+      if !ticket
+
+        # set attributes
+        ticket_attributes = {
           :group_id           => channel[:group_id] || 1,
           :customer_id        => user.id,
           :title              => mail[:subject],
-          :ticket_state_id    => Ticket::State.where(:name => 'new').first.id,
-          :ticket_priority_id => Ticket::Priority.where(:name => '2 normal').first.id,
-          :created_by_id      => user.id
-        )
+          :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
+          :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+          :created_by_id      => user.id,
+        }
+
+        # x-headers lookup
+        map = [
+          [ 'x-zammad-group',    Group,            'group_id',           'name'  ],
+          [ 'x-zammad-state',    Ticket::State,    'ticket_state_id',    'name'  ],
+          [ 'x-zammad-priority', Ticket::Priority, 'ticket_priority_id', 'name'  ],
+          [ 'x-zammad-owner',    User,             'owner_id',           'login' ],
+        ]
+        map.each { |item|
+          if mail[ item[0].to_sym ]
+            if item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first
+              ticket_attributes[ item[2].to_sym ] = item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first.id
+            end
+          end
+        }
+
+        # create ticket
+        ticket = Ticket.create( ticket_attributes )
       end
   
       # import mail
-      article = Ticket::Article.create(
+  
+      # set attributes
+      internal = false
+      if mail[ 'X-Zammad-Article-Visability'.to_sym ] && mail[ 'X-Zammad-Article-Visability'.to_sym ] == 'internal'
+        internal = true
+      end
+      article_attributes = {
         :created_by_id            => user.id,
         :ticket_id                => ticket.id, 
-        :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'email').first.id,
-        :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer').first.id,
+        :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
+        :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
         :body                     => mail[:plain_part], 
         :from                     => mail[:from],
         :to                       => mail[:to],
         :cc                       => mail[:cc],
         :subject                  => mail[:subject],
         :message_id               => mail[:message_id],
-        :internal                 => false 
-      )
+        :internal                 => internal,
+      }
+
+      # x-headers lookup
+      map = [
+        [ 'x-zammad-article-type',    Ticket::Article::Type,   'ticket_article_type_id',   'name' ],
+        [ 'x-zammad-article-sender',  Ticket::Article::Sender, 'ticket_article_sender_id', 'name' ],
+      ]
+      map.each { |item|
+        if mail[ item[0].to_sym ]
+          if item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first
+            article_attributes[ item[2].to_sym ] = item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first.id
+          end
+        end
+      }
+
+      # create article
+      article = Ticket::Article.create(article_attributes)
 
       # store mail plain
       Store.add(
@@ -161,10 +224,12 @@ class Channel::EmailParser
           )
         end
       end
-      return ticket, article, user
     end
 
     # execute ticket events      
     Ticket::Observer::Notification.transaction
+
+    # return new objects
+    return ticket, article, user
   end
 end
