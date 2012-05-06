@@ -113,7 +113,7 @@ Setting.create(
     ],
   },
   :state       => {
-    :value   => 'http',
+    :value => 'http',
   },
   :frontend    => true
 )
