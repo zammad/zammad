@@ -61,6 +61,7 @@ class App.Ajax
     processData: false
     headers: {'X-Requested-With': 'XMLHttpRequest'}
     cache: false
+    async: true
 
   ajax: (params, defaults) ->
     $.ajax($.extend({}, @defaults, defaults, params))
@@ -203,26 +204,26 @@ class App.Run extends Spine.Controller
       window.Session['UISeletion'] = @getSelected() + ''
     )
 
-    @ws = new WebSocket("ws://localhost:3001/");
+#    @ws = new WebSocket("ws://localhost:3001/");
   
     # Set event handlers.
-    @ws.onopen = ->
-      console.log("onopen")
+#    @ws.onopen = ->
+#      console.log("onopen")
 
-    @ws.onmessage = (e) ->
+#    @ws.onmessage = (e) ->
       # e.data contains received string.
-      console.log("onmessage: " + e.data)
-      eval e.data
+#      console.log("onmessage: " + e.data)
+#      eval e.data
 
-    Spine.bind 'ws:send', (data) =>
-      @log 'ws:send', data
-      @ws.send(data);
+#    Spine.bind 'ws:send', (data) =>
+#      @log 'ws:send', data
+#      @ws.send(data);
 
-    @ws.onclose = ->
-      console.log("onclose")
+#    @ws.onclose = ->
+#      console.log("onclose")
 
-    @ws.onerror = ->
-      console.log("onerror")
+#    @ws.onerror = ->
+#      console.log("onerror")
       
   getSelected: ->
     text = '';
