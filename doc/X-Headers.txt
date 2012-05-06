@@ -1,0 +1,40 @@
+X-Zammad-Priority: (1 low|2 normal|3 high)
+------------------------------------------
+Set priority of ticket.
+
+X-Zammad-Group: [one system group]
+----------------------------------
+Presort of group (highest sort priority).
+
+X-Zammad-Owner: [login of agent]
+--------------------------------
+Assigne ticket to agent.
+
+X-Zammad-Ignore: [yes|true]
+-------------------------
+Ignore this email.
+
+X-Zammad-State: (new|open|...)
+--------------------------------------------
+Set state of ticket! Be careful!
+
+X-Zammad-Article-Sender: (Agent|System|Customer)
+-------------------------------------------------
+Info about the sender.
+
+X-Zammad-Article-Type: (email|phone|fax|sms|webrequest|note)
+------------------------------------------------------------
+Article type. 
+
+X-Zammad-Article-Visability: (internal|external)
+------------------------------------------------
+Article visability.
+
+X-Zammad-Customer-Email: [email address]
+----------------------------------------
+Set customer via explicit email.
+
+X-Zammad-Customer-Login: [login]
+--------------------------------
+Set customer via explicit login.
+
