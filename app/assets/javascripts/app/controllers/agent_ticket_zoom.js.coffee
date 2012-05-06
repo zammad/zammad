@@ -307,7 +307,7 @@ class Index extends App.Controller
     # add quoted text if needed
     if window.Session['UISeletion']
       body = @el.find('[name="body"]').val() || ''
-      selection = window.Session['UISeletion']
+      selection = window.Session['UISeletion'].trim()
       selection = selection.replace /^(.*)$/mg, (match) =>
         '> ' + match  
       body = body + selection
