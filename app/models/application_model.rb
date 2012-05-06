@@ -15,7 +15,7 @@ class ApplicationModel < ActiveRecord::Base
   def self.cache_set(data_id, data)
 #    puts 'cache_set', data_id
     key = self.to_s + '::' + data_id.to_s
-    Rails.cache.write( key.to_s, data)
+    Rails.cache.write( key.to_s, data )
   end
   def self.cache_get(data_id)
 #    puts 'cache_get', data_id
