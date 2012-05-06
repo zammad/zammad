@@ -91,14 +91,14 @@ class Index extends App.Controller
 
         # preview mode
         if preview_mode
-          article['html'] = article['html'].replace /^----SEEMORE----\n/m, (match) =>
+          article['html'] = article['html'].replace /^\n----SEEMORE----\n/m, (match) =>
             notify + '<div class="hide">'
           article['html'] = article['html'] + '</div>'
           
         # hide signatures and so on
         else
           @article_changed = false
-          article['html'] = article['html'].replace /^(--|__)/m, (match) =>
+          article['html'] = article['html'].replace /^\n(--|__)/m, (match) =>
             @article_changed = true
             notify + '<div class="hide">' + match
           if @article_changed
@@ -172,6 +172,8 @@ class Index extends App.Controller
       form_ticket:  form_ticket,
       form_article: form_article,
     )
+
+    @el.find('textarea').elastic()
 
     @userPopups()
     
@@ -301,6 +303,18 @@ class Index extends App.Controller
     else if article_type.name is 'email'
       @el.find('[name="to"]').val(article.from)
 #    @log 'reply ', article, @el.find('[name="to"]')
+
+    # add quoted text if needed
+    if window.Session['UISeletion']
+      body = @el.find('[name="body"]').val() || ''
+      selection = window.Session['UISeletion']
+      selection = selection.replace /^(.*)$/mg, (match) =>
+        '> ' + match  
+      body = body + selection
+      @el.find('[name="body"]').val(body)
+
+      # update textarea size
+      @el.find('[name="body"]').trigger('change')
 
   update: (e) =>
     e.preventDefault()

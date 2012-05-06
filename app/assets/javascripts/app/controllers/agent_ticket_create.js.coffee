@@ -75,7 +75,13 @@ class Index extends App.Controller
       head: 'New Ticket',
       form: @formGen( model: { configure_attributes: configure_attributes, className: 'create' } ),
     )
-    
+
+    # add elastic to textarea
+    @el.find('textarea').elastic()
+
+    # update textarea size
+    @el.find('textarea').trigger('change')
+
     # start customer info controller
     if defaults['customer_id']
       $('#create_customer_id').val( defaults['customer_id'] )

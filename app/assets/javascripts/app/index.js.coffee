@@ -18,6 +18,7 @@
 #= require ./lib/jquery.noty.js
 #= require ./lib/waypoints.js
 #= require ./lib/fileuploader.js
+#= require ./lib/jquery.elastic.source.js
 
 #not_used= require_tree ./lib
 #= require_self
@@ -197,6 +198,11 @@ class App.Run extends Spine.Controller
     # start content
     new App.Content( el: @el.find('#content') );
 
+    # bind to fill selected text into
+    $(@el).bind('mouseup', =>
+      window.Session['UISeletion'] = @getSelected() + ''
+    )
+
     @ws = new WebSocket("ws://localhost:3001/");
   
     # Set event handlers.
@@ -217,6 +223,16 @@ class App.Run extends Spine.Controller
 
     @ws.onerror = ->
       console.log("onerror")
+      
+  getSelected: ->
+    text = '';
+    if window.getSelection
+      text = window.getSelection()
+    else if document.getSelection
+      text = document.getSelection()
+    else if document.selection
+      text = document.selection.createRange().text
+    text
 
 class App.Content extends Spine.Controller
   className: 'container'
