@@ -7,7 +7,7 @@ module OmniAuth
       def initialize(app, *args, &block)
 
         # database lookup
-        puts 'GoogleOauth2Database -> initialize'
+#        puts 'GoogleOauth2Database -> initialize'
         config = Setting.get('auth_google_oauth2_credentials') || {}
         args[0] = config['client_id']
         args[1] = config['client_secret']
