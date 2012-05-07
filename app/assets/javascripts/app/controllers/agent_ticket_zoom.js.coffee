@@ -82,23 +82,26 @@ class Index extends App.Controller
         if article_lines.length > preview
           preview_mode = true
           if article_lines[preview] is ''
-            article_lines.splice( preview, 0, "----SEEMORE----" )
+            article_lines.splice( preview, 0, '----SEEMORE----' )
           else
-            article_lines.splice( preview + 1, 0, "----SEEMORE----" )
+            article_lines.splice( preview + 1, 0, '----SEEMORE----' )
           article['html'] = article_lines.join("\n")
         article['html'] = window.linkify( article['html'] )
-        notify = "<a href=\"#\" class=\"show_toogle\">" + T('See more') + "</a>"
+        notify = '<a href="#" class="show_toogle">' + T('See more') + '</a>'
 
         # preview mode
         if preview_mode
-          article['html'] = article['html'].replace /^\n----SEEMORE----\n/m, (match) =>
+          @article_changed = false
+          article['html'] = article['html'].replace /^\n{0,10}----SEEMORE----\n/m, (match) =>
+            @article_changed = true
             notify + '<div class="hide">'
-          article['html'] = article['html'] + '</div>'
+          if @article_changed
+            article['html'] = article['html'] + '</div>'
           
         # hide signatures and so on
         else
           @article_changed = false
-          article['html'] = article['html'].replace /^\n(--|__)/m, (match) =>
+          article['html'] = article['html'].replace /^\n{0,10}(--|__)/m, (match) =>
             @article_changed = true
             notify + '<div class="hide">' + match
           if @article_changed
