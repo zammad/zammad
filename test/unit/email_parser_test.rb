@@ -35,6 +35,70 @@ class EmailParserTest < ActiveSupport::TestCase
           :subject            => 'Ticket Templates',
         },
       },
+      {
+        :data     => IO.read('test/fixtures/mail4.box'),
+        :body_md5 => '2f2c3a5c233dbd9658ab37d39469b7d0',
+        :params   => {
+          :from               => '"Günther Katja | Example GmbH" <k.guenther@example.com>',
+          :from_email         => 'k.guenther@example.com',
+          :from_display_name  => 'Günther Katja | Example GmbH',
+          :subject            => 'AW: Ticket Templates [Ticket#11168]',
+          :plain_part         => "Hallo Katja,
+
+super! Ich freu mich!
+
+Wir würden gerne die Präsentation/Einführung in die Ticket Templates per Screensharing oder zumindest per Telefon machen.
+
+Mögliche Termine:
+o Do, 10.05.2012 15:00-16:00
+o Fr,  11.05.2012 13:00-14:00
+o Di,  15.05.2012 17:00-18:00
+
+Über Feedback würde ich mich freuen!
+
+PS: Zur besseren Übersicht habe ich ein Ticket erstellt. :) Im Footer sind unsere geschäftlichen Kontaktdaten (falls diese irgendwann einmal benötigt werden sollten), mehr dazu in ein paar Tagen.
+
+Liebe Grüße!
+
+ -Martin
+",
+        },
+      },
+      {
+        :data     => IO.read('test/fixtures/mail5.box'),
+        :body_md5 => '51364a306362f513f53f2bbea7820f37',
+        :params   => {
+          :from               => 'marc.smith@example.com (Marc Smith)',
+          :from_email         => 'marc.smith@example.com',
+          :from_display_name  => 'Marc Smith',
+          :subject            => 'Re: XXXX Betatest Ticket Templates [Ticket#11162]',
+        },
+      },
+      {
+        :data     => IO.read('test/fixtures/mail6.box'),
+        :body_md5 => '1fc492b8d762d82f861dbb70b7cf7610',
+        :params   => {
+          :from               => '"Hans BÄKOSchönland" <me@bogen.net>',
+          :from_email         => 'me@bogen.net',
+          :from_display_name  => 'Hans BÄKOSchönland',
+          :subject            => 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких',
+          :plain_part         => "this is a test [1]Compare Cable, DSL or Satellite plans: As low as $2.95. 
+
+Test1:8
+
+Test2:&amp;
+
+Test3:&ni;
+
+Test4:&amp;
+
+Test5:=
+
+
+[1] http://localhost/8HMZENUS/2737??PS=
+"
+        },
+      },
     ]
 
     files.each { |file|

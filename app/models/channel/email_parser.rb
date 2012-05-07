@@ -2,7 +2,7 @@ require 'mail'
 require 'iconv'
 class Channel::EmailParser
   def conv (charset, string)
-    if charset == 'US-ASCII' || charset == 'ASCII-8BIT'
+    if !charset || charset == 'US-ASCII' || charset == 'ASCII-8BIT'
       charset = 'LATIN1'
     end
     return string if charset.downcase == 'utf8' || charset.downcase == 'utf-8'
@@ -25,7 +25,8 @@ class Channel::EmailParser
     data[:from_email]        = Mail::Address.new( mail[:from].value ).address
     data[:from_local]        = Mail::Address.new( mail[:from].value ).local
     data[:from_domain]       = Mail::Address.new( mail[:from].value ).domain
-    data[:from_display_name] = Mail::Address.new( mail[:from].value ).display_name
+    data[:from_display_name] = Mail::Address.new( mail[:from].value ).display_name ||
+      ( Mail::Address.new( mail[:from].value ).comments && Mail::Address.new( mail[:from].value ).comments[0] )
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] = Mail::Field.new( 'X-From', data[:from_display_name] ).to_s
@@ -36,17 +37,50 @@ class Channel::EmailParser
     # body
 #    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
 #    html_part = message.html_part ? message.html_part.body.decoded : nil
+    data[:attachments] = []
     if mail.multipart?
       data[:plain_part] = mail.text_part.body.decoded
-      data[:plain_part] = conv( mail.text_part.charset || 'LATIN1', data[:plain_part] )
+      data[:plain_part] = conv( mail.text_part.charset, data[:plain_part] )
     else
-      data[:plain_part] = mail.body.decoded
-      data[:plain_part] = conv( mail.body.charset || 'LATIN1', data[:plain_part] )
+
+      # text part
+      if !mail.mime_type || mail.mime_type.to_s ==  '' || mail.mime_type.to_s.downcase == 'text/plain'
+        data[:plain_part] = mail.body.decoded
+        data[:plain_part] = conv( mail.charset, data[:plain_part] )
+      else
+
+        # html part
+        filename = '-no name-'
+        if mail.mime_type.to_s.downcase == 'text/html'
+          filename = 'html-email'
+          data[:plain_part] = mail.body.decoded
+          data[:plain_part] = conv( mail.charset, data[:plain_part] )
+          data[:plain_part] = html2ascii( data[:plain_part] )
+
+        # any other attachments
+        else
+          data[:plain_part] = 'no visible content'
+        end
+
+        # add body as attachment
+        headers_store = {}
+        if mail.mime_type
+          headers_store['Mime-Type'] = mail.mime_type
+        end
+        if mail.charset
+          headers_store['Charset'] = mail.charset
+        end
+        attachment = {
+          :data        => mail.body.decoded,
+          :filename    => mail.filename || filename,
+          :preferences => headers_store          
+        }
+        data[:attachments].push attachment
+      end
     end
 
     # attachments
     if mail.attachments
-      data[:attachments] = []
       mail.attachments.each do |attachment|
         
         # get file preferences
@@ -231,5 +265,58 @@ class Channel::EmailParser
 
     # return new objects
     return ticket, article, user
+  end
+  
+  def html2ascii(string)
+
+    # find <a href=....> and replace it with [x]
+    link_list = ''
+    counter   = 0
+    string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) { |item|
+      link = $2
+      counter   = counter + 1
+      link_list += "[#{counter}] #{link}\n"
+      "[#{counter}]"
+    }
+
+    # remove empty lines
+    string.gsub!( /^\s*/m, '' )
+
+    # fix some bad stuff from opera and others
+    string.gsub!( /(\n\r|\r\r\n|\r\n)/s, "\n" )
+
+    # strip all other tags
+    string.gsub!( /\<.+?\>/s, '' )
+
+    # encode html entities like "&#8211;"
+    string.gsub!( /(&\#(\d+);?)/x ) { |item|
+      $2.chr
+    }
+
+    # encode html entities like "&#3d;"
+    string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) { |item|
+      chr_orig = $1
+      hex      = $2.hex
+      if hex
+        chr = hex.chr
+        if chr
+          chr
+        else
+          chr_orig
+        end
+      else
+        chr_orig
+      end
+    }
+
+    # remove empty lines
+    string.gsub!( /^\s*\n\s*\n/m, "\n" )
+
+    # add extracted links
+    if link_list
+      string += "\n\n" + link_list
+    end
+
+    return string
   end
 end

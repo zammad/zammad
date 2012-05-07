@@ -1,0 +1,38 @@
+From k.guenther@example.com  Mon May  7 15:08:10 2012
+Return-Path: <k.guenther@example.com>
+X-Original-To: support@example.com
+Delivered-To: box@samba.example.com
+X-Greylist: delayed 355 seconds by postgrey-1.32 at samba; Mon, 07 May 2012 15:08:09 BST
+Received: from smtprelay05.example.com (smtprelay05.example.com [8.6.3.9])
+	by samba.example.com (Postfix) with ESMTP id 011F9500D3D
+	for <support@example.com>; Mon,  7 May 2012 15:08:09 +0100 (BST)
+Received: from [1.1.0.7] (helo=exchange.df.eu)
+	by smtprelay05.example.com with esmtps (TLSv1:RC4-MD5:128)
+	(Exim 4.68)
+	(envelope-from <k.guenther@example.com>)
+	id 1SROW2-0007tk-QP
+	for support@example.com; Mon, 07 May 2012 16:02:18 +0200
+Received: from ECCR04PUBLIC.exchange.local ([1.1.2.4]) by
+ efe04.exchange.local ([1.1.0.7]) with mapi; Mon, 7 May 2012 15:58:33 +0200
+From: =?utf-8?B?R8O8bnRoZXIgS2F0amEgfCBFeGFtcGxlIEdtYkg=?=
+	<k.guenther@example.com>
+To: Martin Edenhofer via Znuny Team <support@example.com>
+Date: Mon, 7 May 2012 15:58:32 +0200
+Subject: AW: Ticket Templates [Ticket#11168]
+Thread-Topic: Ticket Templates [Ticket#11168]
+Thread-Index: Ac0sGqTnvktNHx1lQoaTDcVI7lUxJQAPqvXA
+Message-ID: <F799DA4E63A20B4EBE9D5A412196D71D3CADBEA04E@ECCR04PUBLIC.exchange.local>
+References: <F799DA4E63A20B4EBE9D5A412196D71D3CADBE9DF6@ECCR04PUBLIC.exchange.local>
+ <20120507062840.265.107538@portal.example.com>
+In-Reply-To: <20120507062840.265.107538@portal.example.com>
+Accept-Language: de-DE
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+acceptlanguage: de-DE
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+
+SGFsbG8gS2F0amEsCgpzdXBlciEgSWNoIGZyZXUgbWljaCEKCldpciB3w7xyZGVuIGdlcm5lIGRpZSBQcsOkc2VudGF0aW9uL0VpbmbDvGhydW5nIGluIGRpZSBUaWNrZXQgVGVtcGxhdGVzIHBlciBTY3JlZW5zaGFyaW5nIG9kZXIgenVtaW5kZXN0IHBlciBUZWxlZm9uIG1hY2hlbi4KCk3DtmdsaWNoZSBUZXJtaW5lOgpvIERvLCAxMC4wNS4yMDEyIDE1OjAwLTE2OjAwCm8gRnIsICAxMS4wNS4yMDEyIDEzOjAwLTE0OjAwCm8gRGksICAxNS4wNS4yMDEyIDE3OjAwLTE4OjAwCgrDnGJlciBGZWVkYmFjayB3w7xyZGUgaWNoIG1pY2ggZnJldWVuIQoKUFM6IFp1ciBiZXNzZXJlbiDDnGJlcnNpY2h0IGhhYmUgaWNoIGVpbiBUaWNrZXQgZXJzdGVsbHQuIDopIEltIEZvb3RlciBzaW5kIHVuc2VyZSBnZXNjaMOkZnRsaWNoZW4gS29udGFrdGRhdGVuIChmYWxscyBkaWVzZSBpcmdlbmR3YW5uIGVpbm1hbCBiZW7DtnRpZ3Qgd2VyZGVuIHNvbGx0ZW4pLCBtZWhyIGRhenUgaW4gZWluIHBhYXIgVGFnZW4uCgpMaWViZSBHcsO8w59lIQoKIC1NYXJ0aW4KCgo
+

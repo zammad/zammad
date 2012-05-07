@@ -1,0 +1,32 @@
+From me@bogen.net  Sat Sep 13 16:50:43 2003
+Return-Path: <me@bogen.net>
+Received: from airoma.example (law10-f30.law10.airoma.example [4.4.4.4]) by esanta.edenhofer.de (Postfix) with ESMTP id 2307484296 for <demo@exampel.com>; Sat, 13 Sep 2003 16:50:43 +0200 (CEST)
+Received: from mail pickup service by airoma.example with Mc SMTPSVC; Sat, 13 Sep 2003 07:37:26 -0700
+Received: from 11.11.11.11 by lw10fd.law10.com with HTTP; Sat, 13 Sep 2003 14:37:26 GMT
+X-Originating-Ip: [5.5.5.5]
+X-Originating-Email: [me@example.com]
+From: =?Windows-1252?Q?Hans_B=C4KO?= =?iso-8859-15?q?Sch=F6nland?= <me@bogen.net>
+To: =?iso-8859-2?Q?Namedy=F1ski?= (hans@example.com)
+Subject: utf8: =?UTF-8?Q?=E4=BD=BF=E3=81=A3=E3=81=A6?= / ISO-8859-1: =?iso-8859-1?Q?Priorit=E4t=22_?= / cp-1251: =?windows-1251?B?0eXw4+XpINPj6+j26uj1?= 
+Date: Sat, 13 Sep 2003 10:37:26 -0400
+MIME-Version: 1.0
+Content-Type: text/html; charset="iso-8859-15"; format=flowed
+Message-Id: <Law10-F30dRmhKuTqtA00018823@coolair.example>
+X-Originalarrivaltime: 13 Sep 2003 14:37:26.0630 (UTC) FILETIME=[8D57B860:01C37A04]
+
+<html><div style='background-color:'><P>this is a test</P></div><br clear=all><hr> <a href="http://localhost/8HMZENUS/2737??PS=">Compare Cable, DSL or Satellite plans: As low as $2.95. </a>
+
+<br>
+
+<br>
+Test1:&#8211;
+<br>
+Test2:&amp;
+<br>
+Test3:&ni;
+<br>
+Test4:&amp;
+<br>
+Test5:&#x3d;
+
+</html>
