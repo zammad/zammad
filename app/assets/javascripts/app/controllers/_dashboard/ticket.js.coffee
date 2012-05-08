@@ -13,8 +13,8 @@ class App.DashboardTicket extends App.Controller
     @start_page    = 1
     @navupdate '#'
 
-    # refresh list ever 60 sec.
-    @interval( @fetch, 60000, 'dashboard_ticket_overview_' + @view )
+    # refresh list ever 40 sec.
+    @interval( @fetch, 400000, 'dashboard_ticket_overview_' + @view )
 
   fetch: =>
 
@@ -63,7 +63,8 @@ class App.DashboardTicket extends App.Controller
     @loadCollection( type: 'Ticket', data: data.tickets )
 
     # set cache
-    window.LastRefresh[ @key ] = data
+    if @start_page is 1
+      window.LastRefresh[ @key ] = data
 
     @render( data )
 

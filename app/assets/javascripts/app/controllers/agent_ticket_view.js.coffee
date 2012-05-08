@@ -18,7 +18,7 @@ class Index extends App.Controller
 
     # set title
     @title ''
-    @navupdate '#ticket_view'
+    @navupdate '#ticket/view/' + @view
 
     @tickets       = []
     @tickets_count = 0
@@ -26,10 +26,23 @@ class Index extends App.Controller
     @meta          = {}
     @bulk          = {}
 
-#    @render()
-    @fetch()
+    # set controller to active
+    Config['ActiveController'] = '#ticket_overview_' + @view
 
-  fetch: ->
+    # refresh list ever 40 sec.
+    @interval( @fetch, 400000, 'ticket_overview_' + @view )
+
+  fetch: =>
+
+    # set new key
+    @key = @view
+
+    # use cache of first page
+    if window.LastRefresh[ @key ] && @start_page is 1
+      @overview      = window.LastRefresh[ @key ].overview
+      @tickets_count = window.LastRefresh[ @key ].tickets_count
+      @tickets       = window.LastRefresh[ @key ].tickets
+      @render()
 
     # get data
     if @req
@@ -44,50 +57,60 @@ class Index extends App.Controller
         start_page: @start_page,
       }
       processData: true,
-      success: (data, status, xhr) =>
-
-        # get meta data
-        @overview = data.overview
-        App.Overview.refresh( @overview, options: { clear: true } )
-
-        App.Overview.unbind('local:rerender')
-        App.Overview.bind 'local:rerender', (record) =>
-          @log 'rerender...', record
-          @render()
-
-        App.Overview.unbind('local:refetch')
-        App.Overview.bind 'local:refetch', (record) =>
-          @log 'refetch...', record
-          @fetch()
-
-        # set page title
-        @title @overview.meta.name
-
-        # load user collection
-        @loadCollection( type: 'User', data: data.users )
-
-        # load ticket collection
-        @loadCollection( type: 'Ticket', data: data.tickets )
-
-        # remember ticket order
-        @tickets = @tickets.concat( data.tickets )
-
-        # remember ticket count
-        @tickets_count = data.tickets_count
-
-
-        # remeber bulk attributes
-        @bulk = data.bulk
-
-        # render page
-        @render()
+      success: @load
     )
+
+  load: (data) =>
+    
+    # get meta data
+    @overview = data.overview
+    App.Overview.refresh( @overview, options: { clear: true } )
+
+    App.Overview.unbind('local:rerender')
+    App.Overview.bind 'local:rerender', (record) =>
+      @log 'rerender...', record
+      @render()
+
+    App.Overview.unbind('local:refetch')
+    App.Overview.bind 'local:refetch', (record) =>
+      @log 'refetch...', record
+      @fetch()
+
+    # set page title
+    @title @overview.meta.name
+
+    # load user collection
+    @loadCollection( type: 'User', data: data.users )
+
+    # load ticket collection
+    @loadCollection( type: 'Ticket', data: data.tickets )
+
+    # remember ticket order
+    if @start_page is 1
+      @tickets = data.tickets
+    else
+      @tickets = @tickets.concat( data.tickets )
+
+    # remember ticket count
+    @tickets_count = data.tickets_count
+
+    # remeber bulk attributes
+    @bulk = data.bulk
+
+    # set cache
+    if @start_page is 1
+      window.LastRefresh[ @key ] = data
+
+    # render page
+    @render()
         
     # refresh/load default collections
 #    for key, value of data.default_collections
 #      App[key].refresh( value, options: { clear: true } )
 
   render: ->
+
+    return if Config['ActiveController'] isnt '#ticket_overview_' + @view
 
     # get total pages
     pages_total =  parseInt( ( @tickets_count / @overview.view[@view_mode].per_page ) + 0.99999 ) || 1
