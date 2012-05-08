@@ -35,7 +35,7 @@ class Index extends App.Controller
   fetch: =>
 
     # set new key
-    @key = @view
+    @key = '#ticket/view/' + @view
 
     # use cache of first page
     if window.LastRefresh[ @key ] && @start_page is 1
