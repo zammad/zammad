@@ -3,13 +3,22 @@ $ = jQuery.sub()
 class App.DashboardRss extends App.Controller
   constructor: ->
     super
-#    @log 'aaaa', @el
     
-    @items = []
     
+    # refresh list ever 600 sec.
+    @interval( @fetch, 6000000, 'dashboard_rss' )
+
+  fetch: =>
+
+    # use cache of first page
+    if window.LastRefresh[ 'dashboard_rss' ]
+      @render( window.LastRefresh[ 'dashboard_rss' ] )
+
     # get data
+    if @req
+      @req.abort()
     @ajax = new App.Ajax
-    @ajax.ajax(
+    @req = @ajax.ajax(
       type:  'GET',
       url:   '/rss_fetch',
       data:  {
@@ -17,15 +26,21 @@ class App.DashboardRss extends App.Controller
         url:   @url,
       }
       processData: true,
-      success: (data, status, xhr) =>
-        @items = data.items || []
-        @render()
+      success: @load
     )
 
-  render: ->
+  load: (data) =>
+    items = data.items || []
+    
+    # set cache
+    window.LastRefresh[ 'dashboard_rss' ] = items
+    
+    @render(items)
+
+  render: (items) ->
     html = App.view('dashboard/rss')(
       head:  @head,
-      items: @items
+      items: items
     )
     html = $(html)
     @html html

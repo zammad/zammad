@@ -10,10 +10,10 @@ class App.Navigation extends App.Controller
     @render()
     
     sync_ticket_overview = =>
-      @sync(@ticket_overview, 30000,'interval_id_ticket_overview')
+      @interval( @ticket_overview, 30000, 'nav_ticket_overview' )
 
     sync_recent_viewed = =>
-      @sync(@recent_viewed, 40000, 'interval_id_recent_viewed')
+      @interval( @recent_viewed, 40000, 'nav_recent_viewed' )
     
     Spine.bind 'navupdate', (data) =>
       @update(arguments[0])
@@ -29,8 +29,6 @@ class App.Navigation extends App.Controller
     
     # rerender if new overview data is there
     @delay( sync_ticket_overview, 800 )
-    @delay( sync_ticket_overview, 2000 )
-    
     @delay( sync_recent_viewed, 1000 )
     
   render: (user) ->
@@ -128,24 +126,6 @@ class App.Navigation extends App.Controller
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
 #      @el.find("[href*=\"#{url}\"]").parents('li').addClass('active')
 
-  sync: (action, interval, interval_id) =>
-    
-    # check global var
-    if !@intervalID
-      @intervalID = {}
-
-    action()
-
-    # auto save
-    every = (ms, cb) -> setInterval cb, ms
-
-    # clear auto save
-    clearInterval(@intervalID[interval_id]) if @intervalID[interval_id]
-
-    # request new data
-    @intervalID[interval_id] = every interval, () =>
-      action()
-
   # get data
   ticket_overview: =>
 
@@ -158,34 +138,40 @@ class App.Navigation extends App.Controller
     if !window.Session['id']
       return
 
-    @ajax = new App.Ajax
-    @ajax.ajax(
-      type:  'GET',
-      url:   '/ticket_overviews',
-      data:  {},
-      processData: true,
-      success: (data, status, xhr) =>
+    # only of lod request is already done
 
-        # remove old views
-        for key of Config.NavBar
-          if Config.NavBar[key].parent is '#ticket/view'
-            delete Config.NavBar[key]
+    if !@req_overview
+      @ajax = new App.Ajax
+#      @req_overview.abort()
+      @req_overview = @ajax.ajax(
+        type:  'GET',
+        url:   '/ticket_overviews',
+        data:  {},
+        processData: true,
+        success: (data, status, xhr) =>
+  
+          # remove old views
+          for key of Config.NavBar
+            if Config.NavBar[key].parent is '#ticket/view'
+              delete Config.NavBar[key]
+  
+          # add new views
+          for item in data
+            Config.NavBar['TicketOverview' + item.url] = {
+              prio:   item.prio,
+              parent: '#ticket/view',
+              name:   item.name,
+              count:  item.count,
+              target: '#ticket/view/' + item.url,
+              role:   ['Agent'],
+            }
+  
+          # rebuild navbar
+          Spine.trigger 'navrebuild', window.Session
 
-        # add new views
-        for item in data
-          Config.NavBar['TicketOverview' + item.url] = {
-            prio:   item.prio,
-            parent: '#ticket/view',
-            name:   item.name,
-            count:  item.count,
-            target: '#ticket/view/' + item.url,
-            role:   ['Agent'],
-          }
-
-        # rebuild navbar
-        Spine.trigger 'navrebuild', window.Session
-    )
-
+          # reset ajax call
+          @req_overview = undefined
+      )
 
   # get data
   recent_viewed: =>
@@ -199,51 +185,56 @@ class App.Navigation extends App.Controller
     if !window.Session['id']
       return
 
-    @ajax = new App.Ajax
-    @ajax.ajax(
-      type:  'GET',
-      url:   '/recent_viewed',
-      data:  {
-        limit: 5,
-      }
-      processData: true,
-      success: (data, status, xhr) =>
+    # only of lod request is already done
+    if !@req_recent_viewed
+      @ajax = new App.Ajax
+      @req_recent_viewed = @ajax.ajax(
+        type:  'GET',
+        url:   '/recent_viewed',
+        data:  {
+          limit: 5,
+        }
+        processData: true,
+        success: (data, status, xhr) =>
+  
+          items = data.recent_viewed
+  
+          # load user collection
+          @loadCollection( type: 'User', data: data.users )
+  
+          # load ticket collection
+          @loadCollection( type: 'Ticket', data: data.tickets )
+  
+          # remove old views
+          for key of Config.NavBarRight
+            if Config.NavBarRight[key].parent is '#current_user'
+              part = Config.NavBarRight[key].target.split '::'
+              if part is 'RecendViewed'
+                delete Config.NavBarRight[key]
+  
+          # add new views
+          prio = 5000
+          for item in items
+            divider   = false
+            navheader = false
+            if prio is 5000
+              divider   = true
+              navheader = 'Recent Viewed'
+            ticket = App.Ticket.find(item.o_id)
+            prio++
+            Config.NavBarRight['RecendViewed::' + ticket.id] = {
+              prio:      prio,
+              parent:    '#current_user',
+              name:      item.history_object.name + ' (' + ticket.title + ')',
+              target:    '#ticket/zoom/' + ticket.id,
+              role:      ['Agent'],
+              divider:   divider,
+              navheader: navheader
+            }
+  
+          # rebuild navbar
+          Spine.trigger 'navrebuild', window.Session
 
-        items = data.recent_viewed
-
-        # load user collection
-        @loadCollection( type: 'User', data: data.users )
-
-        # load ticket collection
-        @loadCollection( type: 'Ticket', data: data.tickets )
-
-        # remove old views
-        for key of Config.NavBarRight
-          if Config.NavBarRight[key].parent is '#current_user'
-            part = Config.NavBarRight[key].target.split '::'
-            if part is 'RecendViewed'
-              delete Config.NavBarRight[key]
-
-        # add new views
-        prio = 5000
-        for item in items
-          divider   = false
-          navheader = false
-          if prio is 5000
-            divider   = true
-            navheader = 'Recent Viewed'
-          ticket = App.Ticket.find(item.o_id)
-          prio++
-          Config.NavBarRight['RecendViewed::' + ticket.id] = {
-            prio:      prio,
-            parent:    '#current_user',
-            name:      item.history_object.name + ' (' + ticket.title + ')',
-            target:    '#ticket/zoom/' + ticket.id,
-            role:      ['Agent'],
-            divider:   divider,
-            navheader: navheader
-          }
-
-        # rebuild navbar
-        Spine.trigger 'navrebuild', window.Session
-    )
+          # reset ajax call
+          @req_recent_viewed = undefined
+      )

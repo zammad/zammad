@@ -11,8 +11,10 @@ class App.DashboardRecentViewed extends App.Controller
     @items = []
     
     # get data
+    if @req
+      @req.abort()
     @ajax = new App.Ajax
-    @ajax.ajax(
+    @req = @ajax.ajax(
       type:  'GET',
       url:   '/recent_viewed',
       data:  {

@@ -539,7 +539,29 @@ class App.Controller extends Spine.Controller
   
     return newInstance
 
+  interval: (action, interval, interval_id) =>
+    
+    # check global var
+    if !@intervalID
+      @intervalID = {}
+
+    action()
+
+    # auto save
+    every = (ms, cb) -> setInterval cb, ms
+
+    # clear auto save
+    clearInterval( @intervalID[interval_id] ) if @intervalID[interval_id]
+
+    # request new data
+    @intervalID[interval_id] = every interval, () =>
+      action()
+
   userPopups: (position = 'right') ->
+
+    # remove old popovers
+    $('.popover-inner').parent().remove()
+
     # show user popup    
     $('.user-data').popover(
       delay: { show: 500, hide: 1200 },
@@ -570,6 +592,10 @@ class App.Controller extends Spine.Controller
     )
 
   userTicketPopups: (data) ->
+
+    # remove old popovers
+    $('.popover-inner').parent().remove()
+
     # get data
     @tickets = {}
     ajax = new App.Ajax

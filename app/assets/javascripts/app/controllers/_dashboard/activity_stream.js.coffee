@@ -6,46 +6,58 @@ class App.DashboardActivityStream extends App.Controller
 
   constructor: ->
     super
-#    @log 'aaaa', @el
-    
     @items = []
     
+    # refresh list ever 140 sec.
+    @interval( @fetch, 140000, 'dashboard_activity_stream' )
+    
+  fetch: =>
+    
+    # use cache of first page
+    if window.LastRefresh[ 'dashboard_activity_stream' ]
+      @render( window.LastRefresh[ 'dashboard_activity_stream' ] )
+    
     # get data
+    if @req
+      @req.abort()
     @ajax = new App.Ajax
-    @ajax.ajax(
+    @req = @ajax.ajax(
       type:  'GET',
       url:   '/activity_stream',
       data:  {
         limit: @limit,
       }
       processData: true,
-#      data: JSON.stringify( view: @view ),
-      success: (data, status, xhr) =>
-        @items = data.activity_stream
-
-        # load user collection
-        @loadCollection( type: 'User', data: data.users )
-
-        # load ticket collection
-        @loadCollection( type: 'Ticket', data: data.tickets )
-
-        @render()
+      success: @load
     )
-
     
-  render: ->
+  load: (data) =>
+    items = data.activity_stream
+
+    # load user collection
+    @loadCollection( type: 'User', data: data.users )
+
+    # load ticket collection
+    @loadCollection( type: 'Ticket', data: data.tickets )
+
+    # set cache
+    window.LastRefresh[ 'dashboard_activity_stream' ] = items
+
+    @render(items)
+
+  render: (items) ->
 
     # load user data
-    for item in @items
+    for item in items
       item.created_by = App.User.find(item.created_by_id)
   
     # load ticket data
-    for item in @items
+    for item in items
       item.ticket = App.Ticket.find(item.o_id)
   
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',
-      items: @items
+      items: items
     )
     html = $(html)
     

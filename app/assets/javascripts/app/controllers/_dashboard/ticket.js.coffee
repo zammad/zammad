@@ -13,13 +13,23 @@ class App.DashboardTicket extends App.Controller
     @start_page    = 1
     @navupdate '#'
 
-    @fetch()
+    # refresh list ever 60 sec.
+    @interval( @fetch, 60000, 'dashboard_ticket_overview_' + @view )
 
-  fetch: ->
+  fetch: =>
+
+    # set new key
+    @key = @view
+
+    # use cache of first page
+    if window.LastRefresh[ @key ] && @start_page is 1
+      @render( window.LastRefresh[ @key ] )
 
     # get data
+    if @req
+      @req.abort()
     @ajax = new App.Ajax
-    @ajax.ajax(
+    @req = @ajax.ajax(
       type:  'GET',
       url:   '/ticket_overviews',
       data:  {
@@ -28,36 +38,40 @@ class App.DashboardTicket extends App.Controller
         start_page: @start_page,
       }
       processData: true,
-#      data: JSON.stringify( view: @view ),
-      success: (data, status, xhr) =>
-
-        # get meta data
-        @overview = data.overview
-        App.Overview.refresh( @overview, options: { clear: true } )
-
-        App.Overview.unbind('local:rerender')
-        App.Overview.bind 'local:rerender', (record) =>
-          @log 'rerender...', record
-          @render()
-
-        App.Overview.unbind('local:refetch')
-        App.Overview.bind 'local:refetch', (record) =>
-          @log 'refetch...', record
-          @fetch()
-
-        # load user collection
-        @loadCollection( type: 'User', data: data.users )
-
-        # load ticket collection
-        @loadCollection( type: 'Ticket', data: data.tickets )
-
-        @tickets       = data.tickets
-        @tickets_count = data.tickets_count
-
-        @render()
+      success: @load
     )
 
-  render: ->
+  load: (data) =>
+
+    # get meta data
+    App.Overview.refresh( data.overview, options: { clear: true } )
+
+    App.Overview.unbind('local:rerender')
+    App.Overview.bind 'local:rerender', (record) =>
+      @log 'rerender...', record
+      @render(data)
+
+    App.Overview.unbind('local:refetch')
+    App.Overview.bind 'local:refetch', (record) =>
+      @log 'refetch...', record
+      @fetch()
+
+    # load user collection
+    @loadCollection( type: 'User', data: data.users )
+
+    # load ticket collection
+    @loadCollection( type: 'Ticket', data: data.tickets )
+
+    # set cache
+    window.LastRefresh[ @key ] = data
+
+    @render( data )
+
+  render: (data) ->
+    
+    @overview      = data.overview
+    @tickets_count = data.tickets_count
+    @tickets       = data.tickets
     
     pages_total =  parseInt( ( @tickets_count / @overview.view.d.per_page ) + 0.99999 ) || 1
     html = App.view('dashboard/ticket')(
@@ -80,7 +94,7 @@ class App.DashboardTicket extends App.Controller
 
     if _.isEmpty(@tickets)
       table = ''
-#      table = '-none-'
+      table = '-none-'
 
     # append content table
     html.find('.table-overview').append(table)

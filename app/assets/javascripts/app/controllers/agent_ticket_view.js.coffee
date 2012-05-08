@@ -31,10 +31,11 @@ class Index extends App.Controller
 
   fetch: ->
 
-
     # get data
+    if @req
+      @req.abort()
     @ajax = new App.Ajax
-    @ajax.ajax(
+    @req = @ajax.ajax(
       type:  'GET',
       url:   '/ticket_overviews',
       data:  {
