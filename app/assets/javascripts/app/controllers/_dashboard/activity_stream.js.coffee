@@ -9,7 +9,7 @@ class App.DashboardActivityStream extends App.Controller
     @items = []
     
     # refresh list ever 140 sec.
-    @interval( @fetch, 140000, 'dashboard_activity_stream' )
+    @interval( @fetch, 1400000, 'dashboard_activity_stream' )
     
   fetch: =>
     

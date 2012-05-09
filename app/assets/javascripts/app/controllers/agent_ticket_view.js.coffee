@@ -76,9 +76,6 @@ class Index extends App.Controller
       @log 'refetch...', record
       @fetch()
 
-    # set page title
-    @title @overview.meta.name
-
     # load user collection
     @loadCollection( type: 'User', data: data.users )
 
@@ -112,6 +109,9 @@ class Index extends App.Controller
 
     return if Config['ActiveController'] isnt '#ticket_overview_' + @view
 
+    # set page title
+    @title @overview.meta.name
+    
     # get total pages
     pages_total =  parseInt( ( @tickets_count / @overview.view[@view_mode].per_page ) + 0.99999 ) || 1
 
