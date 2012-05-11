@@ -4,7 +4,7 @@ class TicketOverviewsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def show
-
+#sleep 2
     # build up attributes hash
     overview_selected     = nil
     overview_selected_raw = nil
@@ -246,9 +246,15 @@ class TicketOverviewsController < ApplicationController
 #    puts params.inspect
 
     # store file
-    content_type = request.content_type
-    if content_type == 'application/octet-stream'
-      content_type = MIME::Types.type_for(params[:qqfile]).first.content_type
+#    content_type = request.content_type
+    content_type = request[:content_type]
+    puts 'content_type: ' + content_type.inspect
+    if !content_type || content_type == 'application/octet-stream'
+      if MIME::Types.type_for(params[:qqfile]).first
+        content_type = MIME::Types.type_for(params[:qqfile]).first.content_type
+      else
+        content_type = 'application/octet-stream'
+      end
     end
     headers_store = {
       'Content-Type' => content_type
