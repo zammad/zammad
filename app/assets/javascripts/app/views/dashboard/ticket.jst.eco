@@ -1,10 +1,10 @@
 <div class="row">
   <div class="span9">
     <div class="row">
-      <div class="span5">
-      <h2><%= T(@overview.meta.name) %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h2>
+      <div class="span6">
+      <h2><%- T(@overview.meta.name) %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h2>
       </div>
-      <div class="span4">
+      <div class="span3">
         <div class="pagination">
           <ul>
             <li>

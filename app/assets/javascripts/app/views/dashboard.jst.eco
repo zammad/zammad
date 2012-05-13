@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= @head %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h1>
+  <h1><%- T(@head) %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h1>
 </div>
 
 <div class="row">

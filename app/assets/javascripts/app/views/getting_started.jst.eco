@@ -1,38 +1,38 @@
 <div class="hero-unit">
 
-  <h1>Getting started!<small></small></h1>
+  <h1><%- T('Getting started!') %><small></small></h1>
 
   <div class="container">
     <div class="row">
       <div class="span12">
         <ol>
-          <li>Create Admin</li>
-          <li>Invite Agents</li>
-          <li>Configure Channels</li>
+          <li><%- T('Create Admin') %></li>
+          <li><%- T('Invite Agents') %></li>
+          <li><%- T('Configure Channels') %></li>
         </ol>
       </div>  
     </div>  
     <div class="row">
     <% if @master_user: %>
       <div class="span6 master_user">
-        <h2>Master Agent</h2>
+        <h2>M<%- T('Master Agent') %></h2>
         <form class="form-stacked">
           <%- @form_master %>
-          <button class="btn btn-primary submit">Next...</button>          
+          <button class="btn btn-primary submit"><%- T('Next...') %></button>          
         </form>
       </div>
     <% end %>
       <div class="span6 agent_user hide">
-        <h2>Invite Agents</h2>
+        <h2><%- T('Invite Agents') %></h2>
         <form class="form-stacked">
           <%- @form_agent %>
-          <button class="btn btn-primary submit">Send Invitation</button>          
+          <button class="btn btn-primary submit"><%- T('Send Invitation') %></button>          
         </form>
       </div>
       <div class="span6">
-        <h2>Tour</h2>
+        <h2><%- T('Tour') %></h2>
         <p>
-          Learn all about ...
+          <%- T('Learn all about ...') %>
         </p>
       </div>
     </div>

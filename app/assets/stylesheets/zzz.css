@@ -189,6 +189,23 @@ footer {
   padding-right: 10px;
 }
 
+.translation {
+  border: 1px dotted #F92;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.translation:hover {
+}
+
+.translation .icon-edit {
+  display: none;
+}
+
+.translation:hover .icon-edit {
+  display: inline-block;
+}
+
 /*
  * noty changes
  */

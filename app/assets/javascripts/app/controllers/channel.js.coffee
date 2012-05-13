@@ -13,6 +13,7 @@ class Index extends App.ControllerLevel2
   ] 
   page: {
     title:     'Channels',
+    head:      'Channels',
     sub_title: 'Management'
     nav:       '#channels',
   }

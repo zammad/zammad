@@ -148,7 +148,8 @@ class App.i18n extends App.Ajax
 
   constructor: ->
     @set('de')
-    window.T = @translate
+    window.T = @translate_content
+    window.Ti = @translate_inline
     
   set: (locale) =>
     @map = {}
@@ -162,20 +163,46 @@ class App.i18n extends App.Ajax
         console.log 'error', error, statusText, xhr.statusCode
     )
 
+  translate_inline: (string, args...) =>
+    @translate(string, args...)
+
+  translate_content: (string, args...) =>
+    translated = @translate(string, args...)
+#    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + '<span class="icon-edit"></span>'
+    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
+#    if !@_translated
+#       replace += '<span class="missing">XX</span>'
+    replace += '</span>'
+
   translate: (string, args...) =>
+
+    # return '' on undefined
+    return '' if string is undefined
 
     # return translation
     if @map[string] isnt undefined
+      @_translated = true
       translated = @map[string]
     else
+      @_translated = false
       translated = string
       
     # search %s
     for arg in args
       translated = translated.replace(/%s/, arg)
 
+    # escape
+    translated = @escape(translated)
+
     # return translated string
     return translated
+
+  escape: (string) ->
+    string = ('' + string)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\x22/g, '&quot;')
 
 class App.Run extends Spine.Controller
   constructor: ->
@@ -203,6 +230,26 @@ class App.Run extends Spine.Controller
     $(@el).bind('mouseup', =>
       window.Session['UISeletion'] = @getSelected() + ''
     )
+
+#    $('.translation [contenteditable]')
+    $('.translation')
+      .live 'focus', ->
+        $this = $(this)
+        $this.data 'before', $this.html()
+        console.log('11111before', $this.html())
+        return $this
+      .live 'blur keyup paste', ->
+#      .live 'blur', ->
+        $this = $(this)
+        if $this.data('before') isnt $this.html()
+            $this.data 'before', $this.html()
+            $this.trigger('change')
+            console.log('111changed', $this.html(), $this.attr('data-text') )
+            a = $this.html()
+            a = ('' + a)
+              .replace(/<.+?>/g, '')
+            $this.html(a)
+        return $this
 
 #    @ws = new WebSocket("ws://localhost:3001/");
   

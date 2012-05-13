@@ -1,13 +1,13 @@
 <form class="form-horizontal">
   <div class="modal-header">
     <a href="#" class="close">&times;</a>
-    <h3><%= T(@head) %></h3>
+    <h3><%- T(@head) %></h3>
   </div>
   <div class="modal-body">
     <%- @form %>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary submit"><%= T('Submit') %></button>
-    <button class="btn cancel"><%= T('Cancel') %></button>
+    <button class="btn btn-primary submit"><%- T('Submit') %></button>
+    <button class="btn cancel"><%- T('Cancel') %></button>
   </div>
 </form>

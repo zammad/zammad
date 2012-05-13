@@ -19,6 +19,7 @@ class Index extends App.ControllerLevel2
       ]
       @page = {
         title:     'System',
+        head:      'System',
         sub_title: 'Settings'
         nav:       '#settings/system',
       }
@@ -32,6 +33,7 @@ class Index extends App.ControllerLevel2
       ] 
       @page = {
         title:     'Security',
+        head:      'Security',
         sub_title: 'Settings'
         nav:       '#settings/security',
       }
@@ -45,6 +47,7 @@ class Index extends App.ControllerLevel2
       ] 
       @page = {
         title:     'Ticket',
+        head:      'Ticket',
         sub_title: 'Settings'
         nav:       '#settings/ticket',
       }

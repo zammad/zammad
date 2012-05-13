@@ -1,8 +1,8 @@
 <div class="control-group <%= @attribute.item_class %>">
-  <label class="control-label" for="<%= @attribute.id %>"><%= T(@attribute.display) %><% if !@attribute.null: %> *<% end %></label>
+  <label class="control-label" for="<%= @attribute.id %>"><%- T(@attribute.display) %><% if !@attribute.null: %> *<% end %></label>
   <div class="controls">    
     <%- @item %>
     <span class="help-inline"></span>
-    <span class="help-block"><%= T(@attribute.help) %> <%- @attribute.link %></span>
+    <span class="help-block"><% if @attribute.help: %><%- T(@attribute.help) + ' ' %><% end %><%- @attribute.link %></span>
   </div>
 </div>

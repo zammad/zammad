@@ -7,9 +7,9 @@
   <div class="row">
     <div class="span12">
       <%= @ticket.group.name %> -
-      <%= T(@ticket.ticket_state.name) %> -
-      <%= T(@ticket.ticket_priority.name) %> -
-      <%= @ticket.humanTime %>
+      <%- T(@ticket.ticket_state.name) %> -
+      <%- T(@ticket.ticket_priority.name) %> -
+      <%- @ticket.humanTime %>
     </div>
   </div>
 </div>
@@ -26,24 +26,24 @@
       <div class="span8 well-muted article-message <% if article.internal is true: %> internal<% end %>">
         <% if article.from: %>
           <div>
-          <strong title="<%= T('From') %>: <%= article.from %>"><%= article.from %></strong>
+          <strong title="<%- Ti('From') %>: <%= article.from %>"><%= article.from %></strong>
           <% if article.actions: %>
             <% for action in article.actions: %>
               -
               <a href="#" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%= action.name %></a>
             <% end %>
           <% end %>
-          - <%= article.humanTime %> ago
+          - <%- article.humanTime %> <%- T('ago') %>
           </div>
         <% end %>
         <% if article.to: %>
-          <div title="<%= T('To') %>: <%= article.to %>"><%= article.to %></div>
+          <div title="<%- Ti('To') %>: <%= article.to %>"><%= article.to %></div>
         <% end %>
         <% if article.cc: %>
-          <div title="<%= T('Cc') %>: <%= article.cc %>"><%= article.cc %></div>
+          <div title="<%- Ti('Cc') %>: <%= article.cc %>"><%= article.cc %></div>
         <% end %>
         <% if article.subject: %>
-          <div title="<%= T('Subject') %>: <%= article.subject %>"><%= article.subject %></div>
+          <div title="<%- Ti('Subject') %>: <%= article.subject %>"><%= article.subject %></div>
         <% end %>
         <% if article.attachments: %>
           <div>
@@ -71,7 +71,7 @@
 
             <div class="keepleft" id="file-uploader"></div>
             &nbsp;
-            <button type="submit" class="btn btn-primary submit"><%= T('Submit') %></button>
+            <button type="submit" class="btn btn-primary submit"><%- T('Submit') %></button>
         </form>
       </div>
     </div>
@@ -85,8 +85,8 @@
       <div class="well">
         <h3>Actions</h3>
         <ul>
-          <li><a href="#" data-type="history">History</a></li>
-          <li><a href="#" data-type="merge">Merge</a></li>
+          <li><a href="#" data-type="history"><%- T('History') %></a></li>
+          <li><a href="#" data-type="merge"><%- T('Merge') %></a></li>
         </ul>
       </div>
     </div>

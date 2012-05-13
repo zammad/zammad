@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= T(@page.head) %> <small><%= T(@page.sub_head) %></small></h1>
+  <h1><%- T(@page.head) %> <small><%- T(@page.sub_head) %></small></h1>
 </div>
 
 <div class="row">
@@ -7,7 +7,7 @@
     <ul class="nav nav-tabs nav-stacked">
     <% if @menus: %>
       <% for menu in @menus: %>
-        <li class="<%= menu['class'] %>"><a href="<%= @page.nav %>/<%= menu.target %>" data-toggle="tabnav" data-target="<%= menu['target'] %>" ><%= T(menu.name) %></a></li>
+        <li class="<%= menu['class'] %>"><a href="<%= @page.nav %>/<%= menu.target %>" data-toggle="tabnav" data-target="<%= menu['target'] %>" ><%- T(menu.name) %></a></li>
       <% end %>
     <% end %>
     </ul>

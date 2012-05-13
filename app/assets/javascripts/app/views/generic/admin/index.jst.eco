@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= T(@head) %> <small><%= T('Management') %></small></h1>
+  <h1><%- T(@head) %> <small><%- T('Management') %></small></h1>
 </div>
 
 <div class="row">
@@ -23,12 +23,12 @@
     </ul>
 
     <% for note in @notes: %>
-      <p><%= T(note) %></p>
+      <p><%- T(note) %></p>
     <% end %>
 
     <% if @buttons: %>
     <% for button in @buttons: %>
-      <p><a data-type="<%= button['data-type'] %>" class="btn <%= button['class'] %>"><%= T(button.name) %></a></p>
+      <p><a data-type="<%= button['data-type'] %>" class="btn <%= button['class'] %>"><%- T(button.name) %></a></p>
     <% end %>
     <% end %>
     

@@ -2,7 +2,7 @@ class App.Controller extends Spine.Controller
   
   # add @title methode to set title
   title: (name) ->
-    $('html head title').html( Config.product_name + ' - ' + T(name) )
+    $('html head title').html( Config.product_name + ' - ' + Ti(name) )
 
   # add @notify methode to create notification
   notify: (data) ->
@@ -166,7 +166,7 @@ class App.Controller extends Spine.Controller
 
           name_new = name
           if attribute.translate
-            name_new = T(name)
+            name_new = Ti(name)
           attribute.options.push {
             name:  name_new,
             value: item.id,
@@ -398,10 +398,6 @@ class App.Controller extends Spine.Controller
         # execute callback on content
         if row.callback
           object[row.name]['name'] = row.callback(object[row.name]['name'])
- 
-        # check if translation is needed
-        if row.translate
-          object[row.name]['name'] = T( object[row.name]['name'] )
  
 #    @log 'table', 'header', header, 'overview', data_types, 'objects', objects
     table = App.view('generic/table')(

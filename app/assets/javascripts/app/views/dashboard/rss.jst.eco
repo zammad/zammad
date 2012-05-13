@@ -1,6 +1,6 @@
 <div class="row">
   <div class="span3">
-    <h2><%= T(@head) %></h2>
+    <h2><%- T(@head) %></h2>
     <ul>
     <% for item in @items: %>
       <li><a href="<%= item.link %>" title="<%= item.summary %>" target="_blank"><%= item.title %>"</a></li>

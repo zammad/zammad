@@ -1,11 +1,11 @@
 <div class="well">
-  <h3>Templates</h3>
+  <h3><%- T('Templates') %></h3>
   <%- @form %>
-  <!--<button type="submit" class="btn" data-type="template_edit">Edit</button>-->
-  <button type="submit" class="btn" data-type="template_delete">Delete</button>
-  <button type="submit" class="btn" data-type="template_select">Apply</button>
+  <!--<button type="submit" class="btn" data-type="template_edit"><%- T('Edit') %></button>-->
+  <button type="submit" class="btn" data-type="template_delete"><%- T('Delete') %></button>
+  <button type="submit" class="btn" data-type="template_select"><%- T('Apply') %></button>
   <hr/>
-    <label class="" for="template_name">Save as Template</label>
+    <label class="" for="template_name"><%- T('Save as Template') %></label>
     <input type="text" name="template_name" id="template_name" class="span2" value="<%= @template.name %>"/>
-    <button type="submit" class="btn" data-type="template_save">Save</button>
+    <button type="submit" class="btn" data-type="template_save"><%- T('Save') %></button>
 </div>
