@@ -130,18 +130,18 @@ class SessionsController < ApplicationController
       
       # auto population of default collections
       default_collection = {}
-      default_collection['Role']                = Role.all
-      default_collection['Group']               = Group.all
-      default_collection['Organization']        = Organization.all
-      default_collection['TicketStateType']     = Ticket::StateType.all
-      default_collection['TicketState']         = Ticket::State.all
-      default_collection['TicketPriority']      = Ticket::Priority.all
-      default_collection['TicketArticleType']   = Ticket::Article::Type.all
-      default_collection['TicketArticleSender'] = Ticket::Article::Sender.all
-      default_collection['Network']             = Network.all
-      default_collection['NetworkCategory']     = Network::Category.all
-      default_collection['NetworkCategoryType'] = Network::Category::Type.all
-      default_collection['NetworkPrivacy']      = Network::Privacy.all
+      default_collection['Role']          = Role.all
+      default_collection['Group']         = Group.all
+      default_collection['Organization']  = Organization.all
+      
+      # load routes from external files
+      dir = File.expand_path('../', __FILE__)
+      files = Dir.glob( "#{dir}/sessions/collection_*.rb" )
+      for file in files
+        require file
+        ExtraCollection.add(default_collection)
+      end
+      
       return default_collection  
     end
 end
