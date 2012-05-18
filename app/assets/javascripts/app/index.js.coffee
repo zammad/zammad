@@ -147,18 +147,73 @@ class App.i18n extends App.Ajax
 #  @include App.Ajax
 
   constructor: ->
-    @set('de')
+    @locale = 'de'
+    @set( @locale )
     window.T = @translate_content
     window.Ti = @translate_inline
-    
+
+#    $('.translation [contenteditable]')
+    $('body')
+      .delegate '.translation', 'focus', (e) =>
+        $this = $(e.target)
+        $this.data 'before', $this.html()
+#        console.log('11111current', $this.html())
+        return $this
+#      .delegate '.translation', 'blur keyup paste', (e) =>
+      .delegate '.translation', 'blur', (e) =>
+        $this = $(e.target)
+        source = $this.attr('data-text')
+
+        # get new translation
+        translation_new = $this.html()
+        translation_new = ('' + translation_new)
+          .replace(/<.+?>/g, '')
+          
+        # set new translation
+        $this.html(translation_new)
+        
+        # update translation
+        return if $this.data('before') is translation_new
+        console.log 'Translation Update', translation_new, $this.data 'before'
+        $this.data 'before', translation_new
+
+        # update runtime translation map
+        @map[ source ] = translation_new
+
+        # replace rest in page
+        $(".translation[data-text='#{source}']").html( translation_new )
+
+        # update permanent translation map
+        translation = App.Translation.findByAttribute( 'source', source )
+        if translation
+          translation.updateAttribute( 'target', translation_new )
+        else
+          translation = new App.Translation
+          translation.load(
+            locale: @locale,
+            source: source,
+            target: translation_new,
+          )
+          translation.save()
+
+        return $this
+
   set: (locale) =>
     @map = {}
     @ajax(
       type:   'GET',
-      url:    '/' + locale + '.json',
+      url:    '/translations/lang/' + locale,
       async:  false,
       success: (data, status, xhr) =>
-        @map = data
+
+        # load translation collection
+        for object in data
+
+          @map[ object[1] ] = object[2]
+
+          # load in collection if needed
+          App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale }, options: { clear: true } )
+
       error: (xhr, statusText, error) =>
         console.log 'error', error, statusText, xhr.statusCode
     )
@@ -230,26 +285,6 @@ class App.Run extends Spine.Controller
     $(@el).bind('mouseup', =>
       window.Session['UISeletion'] = @getSelected() + ''
     )
-
-#    $('.translation [contenteditable]')
-    $('.translation')
-      .live 'focus', ->
-        $this = $(this)
-        $this.data 'before', $this.html()
-        console.log('11111before', $this.html())
-        return $this
-      .live 'blur keyup paste', ->
-#      .live 'blur', ->
-        $this = $(this)
-        if $this.data('before') isnt $this.html()
-            $this.data 'before', $this.html()
-            $this.trigger('change')
-            console.log('111changed', $this.html(), $this.attr('data-text') )
-            a = $this.html()
-            a = ('' + a)
-              .replace(/<.+?>/g, '')
-            $this.html(a)
-        return $this
 
 #    @ws = new WebSocket("ws://localhost:3001/");
   
