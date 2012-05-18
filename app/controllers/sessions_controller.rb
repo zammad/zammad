@@ -134,11 +134,11 @@ class SessionsController < ApplicationController
       default_collection['Group']         = Group.all
       default_collection['Organization']  = Organization.all
       
-      # load routes from external files
+      # load collections to deliver from external files
       dir = File.expand_path('../', __FILE__)
       files = Dir.glob( "#{dir}/sessions/collection_*.rb" )
       for file in files
-        require file
+        load file
         ExtraCollection.add(default_collection)
       end
       

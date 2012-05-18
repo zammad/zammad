@@ -398,6 +398,15 @@ class App.Controller extends Spine.Controller
         # execute callback on content
         if row.callback
           object[row.name]['name'] = row.callback(object[row.name]['name'])
+
+        # lookup relation
+        if !object[row.name]['name']
+          rowWithoutId = row.name + '_id'
+          for attribute in attributes
+            if rowWithoutId is attribute.name
+              if attribute.relation && App[attribute.relation]
+                record = App[attribute.relation].find( object[rowWithoutId] )
+                object[row.name]['name'] = record.name
  
 #    @log 'table', 'header', header, 'overview', data_types, 'objects', objects
     table = App.view('generic/table')(
