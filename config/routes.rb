@@ -8,57 +8,6 @@ Zammad::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'init#index'
 
-  # omniauth
-  match '/auth/:provider/callback', :to => 'sessions#create_omniauth'
-
-  # base objects
-  resources :settings,            :only => [:create, :show, :index, :update]
-  resources :users,               :only => [:create, :show, :index, :update]
-  match '/users/password_reset',        :to => 'users#password_reset_send'
-  match '/users/password_reset_verify', :to => 'users#password_reset_verify'
-  resources :groups,              :only => [:create, :show, :index, :update]
-  resources :roles,               :only => [:create, :show, :index, :update]
-  resources :organizations,       :only => [:create, :show, :index, :update]
-  resources :templates
-
-  # overviews
-  resources :overviews
-
-  # notes
-  resources :notes
-
-  # tickets
-  resources :channels,            :only => [:create, :show, :index, :update, :destroy]
-  resources :ticket_articles,     :only => [:create, :show, :index, :update]
-  resources :ticket_priorities,   :only => [:create, :show, :index, :update]
-  resources :ticket_states,       :only => [:create, :show, :index, :update]
-  resources :tickets,             :only => [:create, :show, :index, :update]
-  match '/ticket_full/:id',       :to => 'ticket_overviews#ticket_full'
-  match '/ticket_attachment/:id', :to => 'ticket_overviews#ticket_attachment'
-  match '/ticket_attachment_new', :to => 'ticket_overviews#ticket_attachment_new'
-  match '/ticket_history/:id',    :to => 'ticket_overviews#ticket_history'
-  match '/ticket_customer',       :to => 'ticket_overviews#ticket_customer'
-  match '/ticket_overviews',      :to => 'ticket_overviews#show'
-  match '/activity_stream',       :to => 'ticket_overviews#activity_stream'
-  match '/recent_viewed',         :to => 'ticket_overviews#recent_viewed'
-  match '/ticket_create',         :to => 'ticket_overviews#ticket_create'
-  match '/user_search',           :to => 'ticket_overviews#user_search'
-
-  # networks
-  resources :networks,            :only => [:create, :show, :index, :update, :destroy]
-
-  # getting_started
-  match '/getting_started',       :to => 'getting_started#index'
-
-  # getting_started
-  match '/rss_fetch',             :to => 'rss#fetch'
-
-  # sessions
-  resources :sessions,            :only => [:create, :destroy, :show]
-  match '/signin',                :to => 'sessions#create'
-  match '/signshow',              :to => 'sessions#show'
-  match '/signout',               :to => 'sessions#destroy'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -115,4 +64,12 @@ Zammad::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  # load routes from external files
+  dir = File.expand_path('../', __FILE__)
+  files = Dir.glob( "#{dir}/routes/*.rb" )
+  for file in files
+    require file
+    ExtraRoutes.add(self)
+  end
 end
