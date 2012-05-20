@@ -203,7 +203,10 @@ class Index extends App.Controller
   show_toogle: (e) ->
     e.preventDefault()
     $(e.target).hide()
-    $(e.target).next('div').show()
+    if $(e.target).next('div')[0]
+      $(e.target).next('div').show()
+    else
+      $(e.target).parent().next('div').show()
 
   history_view: (e) ->
     e.preventDefault()
