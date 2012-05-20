@@ -209,6 +209,7 @@ class App.i18n extends App.Ajax
         # load translation collection
         for object in data
 
+          # set runtime lookup table
           @map[ object[1] ] = object[2]
 
           # load in collection if needed
@@ -224,10 +225,13 @@ class App.i18n extends App.Ajax
   translate_content: (string, args...) =>
     translated = @translate(string, args...)
 #    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + '<span class="icon-edit"></span>'
-    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
-#    if !@_translated
-#       replace += '<span class="missing">XX</span>'
-    replace += '</span>'
+    if window.Config['Translation']
+      replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
+  #    if !@_translated
+  #       replace += '<span class="missing">XX</span>'
+      replace += '</span>'
+    else
+      translated
 
   translate: (string, args...) =>
 
