@@ -12,7 +12,7 @@ class App.ControllerGenericNew extends App.ControllerModal
   render: ->
     @html App.view('generic/admin/new')(
       form: @formGen( model: @genericObject ),
-      head: 'New ' + @pageData.object
+      head: @pageData.object
     )
     @modalShow()
     
@@ -66,7 +66,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
   render: ->
     @html App.view('generic/admin/edit')(
       form: @formGen( model: @genericObject, params: @item ),
-      head: 'Edit ' + @pageData.object
+      head: @pageData.object
     )
     @modalShow()
 
