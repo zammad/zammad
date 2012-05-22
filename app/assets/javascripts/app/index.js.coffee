@@ -2,9 +2,9 @@
 #= require ./lib/jquery-1.7.2.min.js
 #= require ./lib/ui/jquery-ui-1.8.18.custom.min.js
 
-#= require ./lib/spine/spine.coffee
-#= require ./lib/spine/ajax.coffee
-#= require ./lib/spine/route.coffee
+#= require ./lib/spine/spine.js
+#= require ./lib/spine/ajax.js
+#= require ./lib/spine/route.js
 
 #= require ./lib/bootstrap-dropdown.js
 #= require ./lib/bootstrap-tooltip.js
