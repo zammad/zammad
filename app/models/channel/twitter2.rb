@@ -3,15 +3,19 @@ require 'twitter'
 class Channel::Twitter2
   include UserInfo
 
-  def fetch (channel)
-
-    puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
+  def connect(channel)
     @client = Twitter::Client.new(
       :consumer_key       => channel[:options][:consumer_key],
       :consumer_secret    => channel[:options][:consumer_secret],
       :oauth_token        => channel[:options][:oauth_token],
       :oauth_token_secret => channel[:options][:oauth_token_secret]
     )
+  end
+
+  def fetch (channel)
+
+    puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
+    @client = connect(channel)
     
     # search results
     if channel[:options][:search]
@@ -67,7 +71,7 @@ class Channel::Twitter2
     
     # do sender lockup if needed
     sender = nil
-    
+
     # status (full user data is included)
     if tweet['user']
       sender = tweet['user']
@@ -78,9 +82,17 @@ class Channel::Twitter2
 
     # search (no user data is included, do extra lookup)
     elsif tweet['from_user_id']
-      sender = @client.user(tweet.from_user_id)
+      begin
+
+        # reconnect for #<Twitter::Error::NotFound: Sorry, that page does not exist> workaround
+        @client = connect(channel)
+        sender = @client.user(tweet.from_user_id)
+      rescue Exception => e
+        puts "Exception: twitter: " + e.inspect
+        return
+      end
     end
-    
+
     # check if parent exists
     user = nil, ticket = nil, article = nil
     if tweet['in_reply_to_status_id']
