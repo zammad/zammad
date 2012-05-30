@@ -15,7 +15,7 @@
     <div class="row">
     <% if @master_user: %>
       <div class="span6 master_user">
-        <h2>M<%- T('Master Agent') %></h2>
+        <h2><%- T('Master Agent') %></h2>
         <form class="form-stacked">
           <%- @form_master %>
           <button class="btn btn-primary submit"><%- T('Next...') %></button>          
