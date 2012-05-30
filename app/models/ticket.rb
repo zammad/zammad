@@ -111,6 +111,9 @@ class Ticket < ActiveRecord::Base
       end
     end
 
+  class Number
+  end
+
   class Flag < ActiveRecord::Base
   end
 
