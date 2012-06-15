@@ -41,12 +41,14 @@ class Channel::EmailParser
 #    html_part = message.html_part ? message.html_part.body.decoded : nil
     data[:attachments] = []
     if mail.multipart?
+      
+      # text attachment
       if mail.text_part
         data[:plain_part] = mail.text_part.body.decoded
         data[:plain_part] = conv( mail.text_part.charset, data[:plain_part] )
+        
+      # html attachment
       else
-
-       # html part
         filename = '-no name-'
         if mail.html_part.body
           filename = 'html-email'
@@ -68,7 +70,7 @@ class Channel::EmailParser
           headers_store['Charset'] = mail.html_part.charset
         end
         attachment = {
-          :data        => mail.html_part.body,
+          :data        => mail.html_part.body.to_s,
           :filename    => mail.html_part.filename || filename,
           :preferences => headers_store          
         }
