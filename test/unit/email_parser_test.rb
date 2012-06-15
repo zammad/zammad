@@ -99,6 +99,42 @@ Test5:=
 "
         },
       },
+      {
+        :data     => IO.read('test/fixtures/mail7.box'),
+        :body_md5 => '775a69acf8ba0495712a3953f2ecff6a',
+        :params   => {
+          :from               => 'Eike.Ehringer@example.com',
+          :from_email         => 'Eike.Ehringer@example.com',
+          :from_display_name  => nil,
+          :subject            => 'AW:Installation [Ticket#11392]',
+          :plain_part         => "Hallo.
+Jetzt muss ich dir noch kurzfristig absagen für morgen.
+Lass uns evtl morgen Tel.
+
+Mfg eike 
+
+Martin Edenhofer via Znuny Team --- Installation [Ticket#11392] --- 
+Von:&quot;Martin Edenhofer via Znuny Team&quot; &lt;support@example.com&gt;Aneike.xx@xx-corpxx.comDatum:Mi., 13.06.2012 14:30BetreffInstallation [Ticket#11392]
+Hi Eike,
+anbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.
+a) Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.
+b) Installation von &quot;mysqld&quot; und &quot;perl-DBD-MySQL&quot;.
+Das wäre es zur Vorbereitung!
+Bei Fragen nur zu!
+-Martin
+--
+Martin Edenhofer
+Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany
+P: +49 (0) 30 60 98 54 18-0
+F: +49 (0) 30 60 98 54 18-8
+W: http://example.com 
+Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg
+Managing Director: Martin Edenhofer
+
+
+",
+        },
+      },
     ]
 
     files.each { |file|

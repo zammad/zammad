@@ -1,0 +1,108 @@
+From Eike.Ehringer@example.com  Thu Jun 14 17:42:55 2012
+Return-Path: <Eike.Ehringer@example.com>
+X-Original-To: support@example.com
+Delivered-To: box@samba.edenhofer.de
+X-Greylist: delayed 360 seconds by postgrey-1.32 at samba; Thu, 14 Jun 2012 17:42:55 BST
+Received: from mailout64.xx.de (mailout64.xx.de [1.134.45.44])
+        by samba.edenhofer.de (Postfix) with ESMTP id 42872500D3D
+        for <support@example.com>; Thu, 14 Jun 2012 17:42:55 +0100 (BST)
+Received: from [1.64.70.33] (HELO kdin65.xx.de)
+  by mailout64.xx.de (CommuniGate Pro SMTP 5.2.13 _community_)
+  with ESMTP id 34935681 for support@example.com; Thu, 14 Jun 2012 18:37:00 +0200
+Received: from sbas141a.vs.de.xx.de ([1.215.251.127])
+        by kdin65.xx.de (8.14.2/8.14.2/retarus.custom) with ESMTP id q5EGaw6c006002
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+        for <support@example.com>; Thu, 14 Jun 2012 18:36:59 +0200
+Received: from sbas141a.cw01.xx.com (sbas141a.vs.de.xx.de [1.92.186.140])
+        by sbas141a.vs.de.xx.de (8.13.8/8.13.8) with ESMTP id q5EGawKW028486
+        for <support@example.com>; Thu, 14 Jun 2012 18:36:58 +0200
+Received: from sbas703a.cw01.xx.com ([1.92.186.29])
+          by sbas141a.cw01.xx.com (Lotus Domino Release 8.5.3FP1)
+          with ESMTP id 2012061418365728-403048 ;
+          Thu, 14 Jun 2012 18:36:57 +0200 
+To: "Martin Edenhofer via Znuny Team" <support@example.com>
+In-Reply-To: <20120613122802.489.352153@portal.example.com>
+Importance: Normal
+Date: Thu, 14 Jun 2012 18:36:54 +0200
+Subject: AW:Installation [Ticket#11392]
+From: Eike.Ehringer@example.com
+Message-ID: <OFC125756E.007812A5-ONC1257A1D.005B44FE@example.com>
+X-MIMETrack: Itemize by Notes Server on rbld1502/srvc15/srvc/cagtv(Release 8.5.3 HF667|May
+ 14, 2012) at 06/14/2012 06:36:54 PM,
+        Serialize by Router on vshb001/srvc7/srvc/cag(Release 8.5.3FP1|March 07, 2012) at
+ 14.06.2012 18:36:57,
+        Itemize by SMTP Server on vshb102/srvcMX/srvc/cag(Release 8.5.3FP1|March 07, 2012) at
+ 06/14/2012 06:36:57 PM,
+        Serialize by Router on vshb102/srvcMX/srvc/cag(Release 8.5.3FP1|March 07, 2012) at
+ 06/14/2012 06:36:58 PM,
+        Serialize complete at 06/14/2012 06:36:58 PM
+MIME-Version: 1.0
+X-TNEFEvaluated: 1
+Content-Type: multipart/mixed;
+        boundary="==IFJRGLKFGIR26824UHRUHIHD"
+X-AutoFooter: AFMA Version 2.0.11 (sbas141a)
+X-RMX-ID: 20120614-183659-q5EGaw6c006002-0@kdin65
+X-RMX-TRACE: 2012-06-14 18:37:00 RmxMSO@kdin65/mailcc65 [0.1s] 20120614-183659-q5EGaw6c006002-0@kdin65 0:00:01
+X-RMX-TRACE: 2012-06-14 18:36:59 KdIn@kdin65/mailcc64 [0.5s] 20120614-183659-q5EGaw6c006002-0@kdin65 0:00:00
+Status: RO
+X-Status: 
+X-Keywords:                 
+X-UID: 154
+
+
+--==IFJRGLKFGIR26824UHRUHIHD
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+
+<FONT face=3D=22arial=22>Hallo.<br>Jetzt muss ich dir noch kurzfristig absa=
+gen f=C3=BCr morgen.<br>Lass uns evtl morgen Tel.<br><br>Mfg eike </FONT><b=
+r><br><div class=3D=22domino-section=22><div class=3D=22domino-section-head=
+=22><span class=3D=22domino-section-title=22><font color=3D=22=23424282=22>=
+Martin Edenhofer via Znuny Team --- Installation =5BTicket=2311392=5D --- <=
+/font></span></div><div class=3D=22domino-section-body=22><br><table width=
+=3D=22100%=22 border=3D=220=22 cellspacing=3D=220=22 cellpadding=3D=220=22>=
+<tr valign=3D=22top=22><td width=3D=221%=22 style=3D=22width: 96px;=22><fon=
+t size=3D=222=22 color=3D=22=235F5F5F=22>Von:</font></td><td width=3D=22100=
+%=22 style=3D=22width: auto;=22><font size=3D=222=22>&quot;Martin Edenhofer=
+ via Znuny Team&quot; &lt;support=40example.com&gt;</font></td></tr><tr valig=
+n=3D=22top=22><td width=3D=221%=22 style=3D=22width: 96px;=22><font size=3D=
+=222=22 color=3D=22=235F5F5F=22>An</font></td><td width=3D=22100%=22 style=
+=3D=22width: auto;=22><font size=3D=222=22>eike.xx=40xx-corp=
+xx.com</font></td></tr><tr valign=3D=22top=22><td width=3D=221%=22 sty=
+le=3D=22width: 96px;=22><font size=3D=222=22 color=3D=22=235F5F5F=22>Datum:=
+</font></td><td width=3D=22100%=22 style=3D=22width: auto;=22><font size=3D=
+=222=22>Mi., 13.06.2012 14:30</font></td></tr><tr valign=3D=22top=22><td wi=
+dth=3D=221%=22 style=3D=22width: 96px;=22><font size=3D=222=22 color=3D=22=
+=235F5F5F=22>Betreff</font></td><td width=3D=22100%=22 style=3D=22width: au=
+to;=22><font size=3D=222=22>Installation =5BTicket=2311392=5D</font></td></=
+tr></table><hr width=3D=22100%=22 size=3D=222=22 align=3D=22left=22 noshade=
+ style=3D=22color:=238091A5; =22><br><pre>Hi Eike,
+
+anbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.
+
+a) Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0=
+.13-01.noarch.rpm (dieses RPM ist RHEL kompatible) und dessen Abh=C3=A4ngig=
+keiten.
+
+b) Installation von &quot;mysqld&quot; und &quot;perl-DBD-MySQL&quot;.
+
+Das w=C3=A4re es zur Vorbereitung=21
+
+Bei Fragen nur zu=21
+
+ -Martin
+
+--
+Martin Edenhofer
+
+Znuny GmbH // Marienstra=C3=9Fe 11 // 10117 Berlin // Germany
+
+P: +49 (0) 30 60 98 54 18-0
+F: +49 (0) 30 60 98 54 18-8
+W: http://example.com=20
+
+Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg
+Managing Director: Martin Edenhofer
+
+</pre>
+--==IFJRGLKFGIR26824UHRUHIHD--

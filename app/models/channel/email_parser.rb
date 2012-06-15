@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'mail'
 require 'iconv'
 class Channel::EmailParser
@@ -39,8 +41,39 @@ class Channel::EmailParser
 #    html_part = message.html_part ? message.html_part.body.decoded : nil
     data[:attachments] = []
     if mail.multipart?
-      data[:plain_part] = mail.text_part.body.decoded
-      data[:plain_part] = conv( mail.text_part.charset, data[:plain_part] )
+      if mail.text_part
+        data[:plain_part] = mail.text_part.body.decoded
+        data[:plain_part] = conv( mail.text_part.charset, data[:plain_part] )
+      else
+
+       # html part
+        filename = '-no name-'
+        if mail.html_part.body
+          filename = 'html-email'
+          data[:plain_part] = mail.html_part.body.to_s
+          data[:plain_part] = conv( mail.html_part.charset.to_s, data[:plain_part] )
+          data[:plain_part] = html2ascii( data[:plain_part] )
+
+        # any other attachments
+        else
+          data[:plain_part] = 'no visible content'
+        end
+
+        # add body as attachment
+        headers_store = {}
+        if mail.mime_type
+          headers_store['Mime-Type'] = mail.html_part.mime_type
+        end
+        if mail.charset
+          headers_store['Charset'] = mail.html_part.charset
+        end
+        attachment = {
+          :data        => mail.html_part.body,
+          :filename    => mail.html_part.filename || filename,
+          :preferences => headers_store          
+        }
+        data[:attachments].push attachment
+      end
     else
 
       # text part
@@ -283,10 +316,13 @@ class Channel::EmailParser
     string.gsub!( /^\s*/m, '' )
 
     # fix some bad stuff from opera and others
-    string.gsub!( /(\n\r|\r\r\n|\r\n)/s, "\n" )
+    string.gsub!( /(\n\r|\r\r\n|\r\n)/, "\n" )
 
     # strip all other tags
-    string.gsub!( /\<.+?\>/s, '' )
+    string.gsub!( /\<(br|br\/|br\s\/)\>/, "\n" )
+
+    # strip all other tags
+    string.gsub!( /\<.+?\>/, '' )
 
     # encode html entities like "&#8211;"
     string.gsub!( /(&\#(\d+);?)/x ) { |item|
