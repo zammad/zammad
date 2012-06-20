@@ -15,10 +15,10 @@ class Channel::Twitter2
   def fetch (channel)
 
     puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
-    @client = connect(channel)
     
     # search results
     if channel[:options][:search]
+      @client = connect(channel)
       channel[:options][:search].each { |search|
         puts " - searching for #{search[:item]}"
         tweets = @client.search( search[:item] )
@@ -29,6 +29,7 @@ class Channel::Twitter2
 
     # mentions
     if channel[:options][:mentions]
+      @client = connect(channel)
       puts " - searching for mentions"
       tweets = @client.mentions
       @article_type = 'twitter status'
@@ -37,6 +38,7 @@ class Channel::Twitter2
     
     # direct messages
     if channel[:options][:direct_messages]
+      @client = connect(channel)
       puts " - searching for direct_messages"
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
@@ -105,6 +107,7 @@ class Channel::Twitter2
     # create stuff
     user = fetch_user_create(tweet, sender)
     if !ticket
+      puts 'create new ticket...'
       ticket = fetch_ticket_create(user, tweet, sender, channel, group)
     end
     article = fetch_article_create(user, ticket, tweet, sender)
@@ -136,6 +139,7 @@ class Channel::Twitter2
         :roles          => roles,
         :created_by_id  => 1 
       )
+      puts 'autentication create...'
       authentication = Authorization.create(
         :uid      => sender.id,
         :username => sender.screen_name,
@@ -164,27 +168,43 @@ class Channel::Twitter2
         return article.ticket
       end
     end
-    
+
     # find if record already exists
     article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
     if article
       return article.ticket
     end
-    
+
     ticket = nil
     if @article_type == 'twitter direct-message'
       ticket = Ticket.where( :customer_id => user.id ).first
     end
     if !ticket
+      group = Group.where( :name => group ).first
+      group_id = 1
+      if group
+        group_id = group.id
+      end
+      state = Ticket::State.where( :name => 'new' ).first
+      state_id = 1
+      if state
+        state_id = state.id
+      end
+      priority = Ticket::Priority.where( :name => '2 normal' ).first
+      priority_id = 1
+      if priority
+        priority_id = priority.id
+      end
       ticket = Ticket.create(
-        :group_id           => Group.where( :name => group ).first.id,
+        :group_id           => group_id,
         :customer_id        => user.id,
         :title              => tweet.text[0,40],
-        :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
-        :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+        :ticket_state_id    => state_id,
+        :ticket_priority_id => priority_id,
         :created_by_id      => user.id
       )
     end
+
     return ticket
   end
   
