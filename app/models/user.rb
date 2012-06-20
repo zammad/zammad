@@ -232,9 +232,12 @@ Your #{config.product_name} Team
       end
 
       location = ['street', 'zip', 'city', 'country']
-      
+
+      # get current user data      
+      current = User.where( :id => self.id ).first
+      return if !current
+
       # check if geo update is needed
-      current = User.find( self.id )
       current_location = {}
       location.each { |item|
         current_location[item] = current[item]
