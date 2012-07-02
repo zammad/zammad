@@ -1,9 +1,6 @@
 $ = jQuery.sub()
 
 class App.Navigation extends App.Controller
-  events:
-    'focusin [data-type=edit]':     'edit_in'
-
   constructor: ->
     super
     @log 'nav...'
