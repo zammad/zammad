@@ -4,7 +4,7 @@ class Index extends App.Controller
   events:
     'click .submit':                          'update',
     'click [data-type=reply]':                'reply',
-    'click [data-type=reply-all]':            'replyall',
+#    'click [data-type=reply-all]':            'replyall',
     'click [data-type=public]':               'public_internal',
     'click [data-type=internal]':             'public_internal',
     'click [data-type=history]':              'history_view',

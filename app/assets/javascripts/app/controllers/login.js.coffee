@@ -3,7 +3,6 @@ $ = jQuery.sub()
 class Index extends App.Controller
   events:
     'submit #login': 'login',
-    'click #register': 'register'
     
   constructor: ->
     super
