@@ -288,6 +288,26 @@ class TicketOverviewsController < ApplicationController
     )
   end
 
+  # GET /ticket_article_plain/1
+  def ticket_article_plain
+    
+    # permissin check
+    list = Store.list(
+      :object => 'Ticket::Article::Mail',
+      :o_id   => params[:id],
+    )
+    # find file
+    if list
+      file = Store.find(list.first)
+      send_data(
+        file.store_file.data,
+        :filename    => file.filename,
+        :type        => 'message/rfc822',
+        :disposition => 'inline'
+      )
+    end
+  end
+
   # GET /ticket_customer
   # GET /tickets_customer
   def ticket_customer

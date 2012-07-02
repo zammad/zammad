@@ -250,6 +250,15 @@ class Ticket < ActiveRecord::Base
               :attachments => self.attachments
             }
           )
+          
+          # store mail plain
+          Store.add(
+            :object      => 'Ticket::Article::Mail',
+            :o_id        => self.id,
+            :data        => message.to_s,
+            :filename    => "ticket-#{ticket.number}-#{self.id}.eml",
+            :preferences => {}
+          )
         end
       end
 

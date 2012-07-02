@@ -277,7 +277,7 @@ class Channel::EmailParser
         :object      => 'Ticket::Article::Mail',
         :o_id        => article.id,
         :data        => msg,
-        :filename    => 'plain.msg',
+        :filename    => "ticket-#{ticket.number}-#{article.id}.eml",
         :preferences => {}
       )
 
