@@ -6,7 +6,7 @@ class EmailParserTest < ActiveSupport::TestCase
     files = [
       {
         :data     => IO.read('test/fixtures/mail1.box'),
-        :body_md5 => 'fb6ed5070ffbb821b67b15b83239e1db',
+        :body_md5 => 'b57d21dcac6b05e1aa67af51a9e4c1ec',
         :params   => {
           :from               => 'John.Smith@example.com',
           :from_email         => 'John.Smith@example.com',
@@ -16,18 +16,18 @@ class EmailParserTest < ActiveSupport::TestCase
       },
       {
         :data     => IO.read('test/fixtures/mail2.box'),
-        :body_md5 => '25a1ff722497271965b55e52659784a6',
+        :body_md5 => '548917e0bff0806f9b27c09bbf23bb38',
         :params   => {
           :from               => 'Martin Edenhofer <martin@example.com>',
           :from_email         => 'martin@example.com',
           :from_display_name  => 'Martin Edenhofer',
           :subject            => 'aaäöüßad asd',
-          :plain_part         => "äöüß ad asd\r\n\r\n-Martin\r\n\r\n--\r\nOld programmers never die. They just branch to a new address.",
+          :plain_part_md5     => "äöüß ad asd\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.",
         },
       },
       {
         :data     => IO.read('test/fixtures/mail3.box'),
-        :body_md5 => '0914848466334919eb33ad4de79d6189',
+        :body_md5 => '218971f005cddf7a1b70a980507f589d',
         :params   => {
           :from               => '"Günther John | Example GmbH" <k.guenther@example.com>',
           :from_email         => 'k.guenther@example.com',
@@ -43,7 +43,7 @@ class EmailParserTest < ActiveSupport::TestCase
           :from_email         => 'k.guenther@example.com',
           :from_display_name  => 'Günther Katja | Example GmbH',
           :subject            => 'AW: Ticket Templates [Ticket#11168]',
-          :plain_part         => "Hallo Katja,
+          :plain_part_md5     => "Hallo Katja,
 
 super! Ich freu mich!
 
@@ -107,7 +107,7 @@ Test5:=
           :from_email         => 'Eike.Ehringer@example.com',
           :from_display_name  => nil,
           :subject            => 'AW:Installation [Ticket#11392]',
-          :plain_part         => "Hallo.
+          :plain_part_md5     => "Hallo.
 Jetzt muss ich dir noch kurzfristig absagen für morgen.
 Lass uns evtl morgen Tel.
 
@@ -135,6 +135,66 @@ Managing Director: Martin Edenhofer
 ",
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail8.box'),
+        :body_md5     => 'b506a6aa5f76e608c982d15a449ee163',
+        :attachments  => [
+          {
+            :md5      => '635e03d2ddde520b925262c8ffd03234',
+            :filename => 'message.html',            
+          },
+        ],
+        :params   => {
+          :from               => 'Franz.Schaefer@example.com',
+          :from_email         => 'Franz.Schaefer@example.com',
+          :from_display_name  => nil,
+          :subject            => 'could not rename: ZZZAAuto',
+          :plain_part_md5     => "Gravierend?
+
+Mit freundlichen Grüßen
+
+Franz Schäfer
+Manager Information Systems
+
+Telefon 
++49 000 000 8565
+franz.schaefer@example.com
+
+Example Stoff GmbH
+Fakultaet
+Düsseldorfer Landstraße 395
+D-00000 Hof
+www.example.com
+
+
+Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), 
+Oliver Bauer, Heiko Bauer, Boudewijn Bauer
+Sitz der Gesellschaft / Registered Office: Hof
+Registergericht / Commercial Register of the Local Court: HRB 0000 AG 
+Hof",
+        },
+      },
+      {
+        :data         => IO.read('test/fixtures/mail9.box'),
+        :body_md5     => 'd2f0a663dd0e371e9f0c3d5688441a6f',
+        :attachments  => [
+          {
+            :md5      => '9964263c167ab47f8ec59c48e57cb905',
+            :filename => 'message.html',
+          },
+          {
+            :md5      => 'ddbdf67aa2f5c60c294008a54d57082b',
+            :filename => 'super-seven.jpg',
+          },
+        ],
+        :params   => {
+          :from               => 'Martin Edenhofer <martin@example.de>',
+          :from_email         => 'martin@example.de',
+          :from_display_name  => 'Martin Edenhofer',
+          :subject            => 'Attchment Test',
+          :plain_part         => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address."
+        },
+      },
     ]
 
     files.each { |file|
@@ -148,12 +208,37 @@ Managing Director: Martin Edenhofer
 
       # check params
       file[:params].each { |key, value|
-        if key.to_s == 'plain_part'
-          assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[key.to_sym].to_s ) )
+        if key.to_s == 'plain_part_md5'
+#          puts 'md5'
+#          puts '++' + data[:plain_part].to_s + '++'
+#          puts '++' + file[:params][key.to_sym].to_s + '++'
+          assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[:plain_part].to_s ) )
         else
           assert_equal( file[:params][key.to_sym], data[key.to_sym] )
         end
       }
+
+      # check attachments
+      if file[:attachments]
+        attachment_count_config = file[:attachments].length 
+        attachment_count_email = 0
+        file[:attachments].each { |attachment|
+          attachment_count_email += 1
+          found = false
+          data[:attachments].each { |attachment_parser|
+            next if found
+            file_md5 = Digest::MD5.hexdigest( attachment_parser[:data] )
+            if attachment[:md5] == file_md5
+              found = true
+              assert_equal( attachment[:filename], attachment_parser[:filename] )
+            end
+          }
+          if !found
+            assert( false, "Attachment not found! MD5: #{attachment[:md5]} - #{attachment[:filename].to_s}" )
+          end
+        }
+        assert_equal( attachment_count_config, attachment_count_email )
+      end
     }
   end
 end

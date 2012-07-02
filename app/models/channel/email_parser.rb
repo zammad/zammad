@@ -40,14 +40,16 @@ class Channel::EmailParser
 #    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
 #    html_part = message.html_part ? message.html_part.body.decoded : nil
     data[:attachments] = []
+    
+    # multi part email
     if mail.multipart?
       
-      # text attachment
+      # text attachment/body exists
       if mail.text_part
         data[:plain_part] = mail.text_part.body.decoded
         data[:plain_part] = conv( mail.text_part.charset, data[:plain_part] )
         
-      # html attachment
+      # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
         if mail.html_part.body
@@ -60,9 +62,14 @@ class Channel::EmailParser
         else
           data[:plain_part] = 'no visible content'
         end
+      end
 
-        # add body as attachment
-        headers_store = {}
+      # add html attachment/body as real attachment
+      if mail.html_part
+        filename = 'message.html'
+        headers_store = {
+          'content-alternative' => true,
+        }
         if mail.mime_type
           headers_store['Mime-Type'] = mail.html_part.mime_type
         end
@@ -76,15 +83,51 @@ class Channel::EmailParser
         }
         data[:attachments].push attachment
       end
+      
+      # get attachments
+      if mail.has_attachments?
+        mail.attachments.each { |file|
+
+          # get file preferences
+          headers_store = {}
+          file.header.fields.each { |field|
+            headers_store[field.name.to_s] = field.value.to_s
+          }
+          filename = nil
+          if file.header[:content_disposition].filename
+            filename = file.header[:content_disposition].filename
+          end
+          if file.header[:content_type].string
+            headers_store['Mime-Type'] = file.header[:content_type].string
+          end
+          if file.header.charset
+            headers_store['Charset'] = file.header.charset
+          end
+          
+          # remove not needed header
+          headers_store.delete('Content-Transfer-Encoding')
+          headers_store.delete('Content-Disposition')
+
+          attach = {
+            :data        => file.body.to_s,
+            :filename    => filename,
+            :preferences => headers_store          
+          }
+    
+          data[:attachments].push attach
+        }
+      end
+
+    # not multipart email
     else
 
       # text part
       if !mail.mime_type || mail.mime_type.to_s ==  '' || mail.mime_type.to_s.downcase == 'text/plain'
         data[:plain_part] = mail.body.decoded
         data[:plain_part] = conv( mail.charset, data[:plain_part] )
-      else
 
-        # html part
+      # html part
+      else
         filename = '-no name-'
         if mail.mime_type.to_s.downcase == 'text/html'
           filename = 'html-email'
@@ -98,7 +141,9 @@ class Channel::EmailParser
         end
 
         # add body as attachment
-        headers_store = {}
+        headers_store = {
+          'content-alternative' => true,
+        }
         if mail.mime_type
           headers_store['Mime-Type'] = mail.mime_type
         end
@@ -114,33 +159,10 @@ class Channel::EmailParser
       end
     end
 
-    # attachments
-    if mail.attachments
-      mail.attachments.each do |attachment|
-        
-        # get file preferences
-        headers = {}
-        attachment.header.fields.each do |f|
-          headers[f.name] = f.value
-        end
-        headers_store = {}
-        headers_store['Mime-Type'] = attachment.mime_type
-        if attachment.charset
-          headers_store['Charset'] = attachment.charset
-        end
-        ['Content-ID', 'Content-Type'].each do |item|
-          if headers[item]
-            headers_store[item] = headers[item]
-          end
-        end
-        attachment = {
-          :data        => attachment.body.decoded,
-          :filename    => attachment.filename,
-          :preferences => headers_store          
-        }
-        data[:attachments].push attachment
-      end
-    end
+    # strip not wanted chars
+    data[:plain_part].gsub!( /\r\n/, "\n" )
+    data[:plain_part].gsub!( /\r/, "\n" )
+
     return data
   end
 

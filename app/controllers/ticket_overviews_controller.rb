@@ -283,7 +283,7 @@ class TicketOverviewsController < ApplicationController
     send_data(
       file.store_file.data,
       :filename    => file.filename,
-      :type        => file.preferences['Mime-Type'] || file.preferences['Content-Type'],
+      :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
       :disposition => 'inline'
     )
   end
