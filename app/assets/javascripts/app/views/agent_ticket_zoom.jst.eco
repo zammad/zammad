@@ -22,7 +22,7 @@
       <div class="avatar span1 thumbnails">
         <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
         <ul>
-          <li style="font-size: 10px;"><% if article.article_type.name is 'email': %><a href="/ticket_article_plain/<%= article.id %>"><%- T('Plain') %></a><% end %></li>
+          <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="/ticket_article_plain/<%= article.id %>"><%- T('Plain') %></a></li><% end %>
         </ul>
       </div>
       <div class="span8 well-muted article-message <% if article.internal is true: %> internal<% end %>">
