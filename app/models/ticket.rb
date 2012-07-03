@@ -39,6 +39,37 @@ class Ticket < ActiveRecord::Base
     User.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
   end
 
+  def merge_to(data)
+    
+    # update articles
+    Ticket::Article.where( :ticket_id => self.id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
+    
+    # update history
+    
+    # create new merge article
+    Ticket::Article.create(
+      :created_by_id            => data[:created_by_id],
+      :ticket_id                => self.id, 
+      :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'note' ).first.id,
+      :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
+      :body                     => 'merged',
+      :internal                 => false
+    )
+
+    # add history to both
+
+    # link tickets
+
+    # set state to 'merged'
+    self.ticket_state_id = Ticket::State.where( :name => 'merged' ).first.id
+
+    # rest owner
+    self.owner_id = User.where(:login => '-').first.id
+
+    # save ticket
+    self.save
+  end
+
 #  def self.agent
 #    Role.where( :name => ['Agent'], :active => true ).first.users.where( :active => true ).uniq()
 #  end
@@ -145,6 +176,12 @@ class Ticket < ActiveRecord::Base
         
         type = Ticket::Article::Type.where( :id => self.ticket_article_type_id ).first
         ticket = Ticket.find(self.ticket_id)
+
+        # set from if not given
+        if !self.from
+          user = User.find(self.created_by_id)
+          self.from = "#{user.firstname} #{user.lastname}"
+        end
 
         # set email attributes
         if type['name'] == 'email'
