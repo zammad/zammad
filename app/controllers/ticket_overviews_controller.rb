@@ -399,6 +399,54 @@ class TicketOverviewsController < ApplicationController
     }
   end
   
+  # GET /ticket_merge/1/1
+  def ticket_merge
+    
+    # check master ticket
+    ticket_master = Ticket.where( :number => params[:master_ticket_number] ).first
+    if !ticket_master
+      render :json => {
+        :result  => 'faild',
+        :message => 'No such master ticket number!',
+      }
+      return
+    end
+
+    # check slave ticket
+    ticket_slave = Ticket.where( :id => params[:slave_ticket_id] ).first
+    if !ticket_slave
+      render :json => {
+        :result  => 'faild',
+        :message => 'No such slave ticket!',
+      }
+      return
+    end
+
+    # check diffetent ticket ids
+    if ticket_slave.id == ticket_master.id
+      render :json => {
+        :result  => 'faild',
+        :message => 'Can\'t merge ticket with it self!',
+      }
+      return
+    end
+      
+    # merge ticket
+    success = ticket_slave.merge_to(
+      {
+        :ticket_id     => ticket_master.id,
+        :created_by_id => current_user.id,
+       }
+     )
+
+    # return result
+    render :json => {
+      :result        => 'success',
+      :master_ticket => ticket_master.attributes,
+      :slave_ticket  => ticket_slave.attributes,
+    }
+  end
+  
   # GET /activity_stream
   # GET /activity_stream.json
   def activity_stream

@@ -7,7 +7,8 @@ class Index extends App.Controller
 #    'click [data-type=reply-all]':            'replyall',
     'click [data-type=public]':               'public_internal',
     'click [data-type=internal]':             'public_internal',
-    'click [data-type=history]':              'history_view',
+    'click [data-type=history]':              'history_dialog',
+    'click [data-type=merge]':                'merge_dialog',
     'change [name="ticket_article_type_id"]': 'form_update',
     'click .show_toogle':                     'show_toogle',
 
@@ -26,6 +27,7 @@ class Index extends App.Controller
     @fetch(@ticket_id)
 
   fetch: (ticket_id) ->
+
     # get data
     @ajax = new App.Ajax
     @ajax.ajax(
@@ -208,9 +210,13 @@ class Index extends App.Controller
     else
       $(e.target).parent().next('div').show()
 
-  history_view: (e) ->
+  history_dialog: (e) ->
     e.preventDefault()
-    new History( ticket_id: @ticket_id )
+    new App.TicketHistory( ticket_id: @ticket_id )
+
+  merge_dialog: (e) ->
+    e.preventDefault()
+    new App.TicketMerge( ticket_id: @ticket_id )
 
   public_internal: (e) ->
     e.preventDefault()
@@ -369,76 +375,6 @@ class Index extends App.Controller
 #    @validateForm( form: e.target, errors: errors )
     return false
 
-
-class History extends App.ControllerModal
-  constructor: ->
-    super
-    @fetch(@ticket_id)
-
-  fetch: (@ticket_id) ->
-    # get data
-    @ajax = new App.Ajax
-    @ajax.ajax(
-      type:  'GET',
-      url:   '/ticket_history/' + ticket_id,
-      data:  {
-#        view: @view
-      }
-#      processData: true,
-      success: (data, status, xhr) =>
-        # remember ticket
-        @ticket = data.ticket
-
-        # load user collection
-        @loadCollection( type: 'User', data: data.users )
-
-        # load ticket collection
-        @loadCollection( type: 'Ticket', data: [data.ticket] )
-
-        # load history_type collections
-        @loadCollection( type: 'HistoryType', data: data.history_types )
-
-        # load history_object collections
-        @loadCollection( type: 'HistoryObject', data: data.history_objects )
-
-        # load history_attributes collections
-        @loadCollection( type: 'HistoryAttribute', data: data.history_attributes )
-
-        # load history collections
-        App.History.deleteAll()
-        @loadCollection( type: 'History', data: data.history )
-
-        # render page
-        @render()
-    )
-
-  render: ->
-
-
-    # create table/overview
-    table = @table(
-      overview_extended: [
-        { name: 'type', },
-        { name: 'attribute', },
-        { name: 'value_from', },
-        { name: 'value_to', },
-        { name: 'created_by', class: 'user-data', data: { id: 1 } },
-        { name: 'created_at', callback: @humanTime },
-      ],
-      model: App.History,
-      objects: App.History.all(),
-    )
-
-
-    @html App.view('agent_ticket_history')(
-#      head: 'New User',
-#      form: @formGen( model: App.User, required: 'quick' ),
-    )
-    @el.find('.table_history').append(table)
-
-    @modalShow()
-    
-    @userPopups()
 
 Config.Routes['ticket/zoom/:ticket_id'] = Index
 Config.Routes['ticket/zoom/:ticket_id/:article_id'] = Index
