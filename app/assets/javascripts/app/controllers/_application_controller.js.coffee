@@ -801,3 +801,7 @@ class App.ControllerModal extends App.Controller
     if e
       e.preventDefault()
     @el.modal('hide')
+    
+  submit: (e) =>
+    e.preventDefault()
+    @log 'You need to implement your own "submit" method!'
