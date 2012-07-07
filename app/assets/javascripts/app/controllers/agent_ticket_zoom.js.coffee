@@ -141,11 +141,18 @@ class Index extends App.Controller
           actions.push {
             name: 'reply',
             type: 'reply',
+            href: '#',
           }
           actions.push {
             name: 'reply all',
             type: 'reply-all',
+            href: '#',
           }
+          actions.push {
+            name: 'split',
+            type: 'split',
+            href: '#ticket_create/' + article.ticket_id + '/' + article.id,
+          }          
       article.actions = actions
 
     # set title

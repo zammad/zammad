@@ -7,7 +7,7 @@ class Index extends App.Controller
     'click .submit':       'submit',
     'click .cancel':       'cancel',
 
-  constructor: ->
+  constructor: (params) ->
     super
 
     # check authentication
@@ -15,8 +15,7 @@ class Index extends App.Controller
     
     # set title
     @title 'New Ticket'
-#    @render()
-    @fetch()
+    @fetch(params)
     @navupdate '#ticket_create'
 
     @edit_form = undefined
@@ -25,18 +24,19 @@ class Index extends App.Controller
     Spine.bind 'ticket_create_rerender', (defaults) =>
       @log 'rerender', defaults
       @render(defaults)
-    
-  fetch: () ->
-    # get data
-    @ajax = new App.Ajax
+
+  # get data / in case also ticket data for split
+  fetch: (params) ->
     if @req
       @req.abort()
+    @ajax = new App.Ajax
     @req = @ajax.ajax(
       type:  'GET',
       url:   '/ticket_create',
       data:  {
-#        view: @view
-      }
+        ticket_id: params.ticket_id,
+        article_id: params.article_id,
+      },
       processData: true,
       success: (data, status, xhr) =>
         
@@ -47,7 +47,30 @@ class Index extends App.Controller
         @loadCollection( type: 'User', data: data.users )
 
         # render page
-        @render()
+        if !params.ticket_id && !params.article_id
+          @render()
+        else
+
+          # load user collection
+          @loadCollection( type: 'User', data: data.users )
+  
+          # load ticket collection
+          @loadCollection( type: 'Ticket', data: [data.ticket] )
+  
+          # load article collections
+          @loadCollection( type: 'TicketArticle', data: data.articles || [] )
+  
+          # render page
+          t = App.Ticket.find(params.ticket_id).attributes()
+          a = App.TicketArticle.find(params.article_id)
+          
+          # reset owner
+          t.owner_id = 0
+          t.customer_id_autocompletion = a.from
+          t.subject = a.subject || t.title
+          t.body = a.body
+          @log '11111', t
+          @render( options: t )
     )
 
   render: (template = {}) ->
@@ -60,8 +83,12 @@ class Index extends App.Controller
       defaults['ticket_priority_id'] = App.TicketPriority.findByAttribute( 'name', '2 normal' )
 
     # remember customers
-    defaults['customer_id'] = $('#create_customer_id').val()
-    defaults['customer_id_autocompletion'] = $('#create_customer_id_autocompletion').val()
+    if $('#create_customer_id').val()
+      defaults['customer_id'] = $('#create_customer_id').val()
+      defaults['customer_id_autocompletion'] = $('#create_customer_id_autocompletion').val()
+    else
+#      defaults['customer_id'] = '2'
+#      defaults['customer_id_autocompletion'] = '12312313'
 
     # generate form    
     configure_attributes = [
@@ -213,7 +240,6 @@ class UserNew extends App.ControllerModal
     ui = @
     user.save(
       success: ->
-        console.log('-------', @, ui)
         ui.modalHide()
         realname = @.firstname + ' ' + @.lastname
         $('#create_customer_id').val(@.id)
@@ -226,3 +252,4 @@ class UserNew extends App.ControllerModal
     )
 
 Config.Routes['ticket_create'] = Index
+Config.Routes['ticket_create/:ticket_id/:article_id'] = Index

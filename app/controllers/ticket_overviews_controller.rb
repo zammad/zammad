@@ -158,10 +158,50 @@ class TicketOverviewsController < ApplicationController
       ticket_priority_ids.push priority.id
     }
 
+    # split data
+    ticket = nil
+    articles = nil
+    if params[:ticket_id] && params[:article_id]
+      ticket = Ticket.find( params[:ticket_id] )
+      
+      # get related users
+      users = {}
+      if !users[ticket.owner_id]
+        users[ticket.owner_id] = user_data_full(ticket.owner_id)
+      end
+      if !users[ticket.customer_id]
+        users[ticket.customer_id] = user_data_full(ticket.customer_id)
+      end
+      if !users[ticket.created_by_id]
+        users[ticket.created_by_id] = user_data_full(ticket.created_by_id)
+      end
+  
+      owner_ids = []
+      ticket.agent_of_group.each { |user|
+        owner_ids.push user.id
+        if !users[user.id]
+          users[user.id] = user_data_full(user.id)
+        end
+      }
+  
+      # get related articles
+      ticket[:article_ids] = [ params[:article_id] ]
+        
+      article = Ticket::Article.find( params[:article_id] )
+        
+      # add attachment list to article
+      article['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => article.id )
+        
+      # load users
+      if !users[article.created_by_id]
+        users[article.created_by_id] = user_data_full(article.created_by_id)
+      end
+    end
+
     # return result
     render :json => {
-#          :ticket   => ticket,
-#          :articles => articles,
+      :ticket   => ticket,
+      :articles => [ article ],
       :users    => users,
       :edit_form => {
         :owner_id => {
