@@ -8,7 +8,6 @@ class App.TicketMerge extends App.ControllerModal
 #      head: 'New User',
 #      form: @formGen( model: App.User, required: 'quick' ),
     )
-    @log '123123123'
     @modalShow()
 
   submit: (e) =>
