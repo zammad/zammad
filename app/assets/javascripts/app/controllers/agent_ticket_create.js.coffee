@@ -150,25 +150,26 @@ class Index extends App.Controller
 
       # disable form
       @formDisable(e)
-
+      ui = @
       object.save(
-        success: (r) =>
+        success: ->
 
           # notify UI
-          @notify
+          ui.notify
             type:    'success',
-            msg:     T('Ticket %s created!', r.number),
-            link:    "#ticket/zoom/#{r.id}"
+            msg:     T('Ticket %s created!', @.number),
+            link:    "#ticket/zoom/#{@.id}"
             timeout: 12000,
       
           # create new create screen
-          @render()
+          ui.render()
           
           # scroll to top
-          @scrollTo()
+          ui.scrollTo()
 
-        error: =>
-          @log 'save failed!'
+        error: ->
+          ui.log 'save failed!'
+          ui.formEnable(e)
       )
 
 
@@ -209,17 +210,19 @@ class UserNew extends App.ControllerModal
       return
 
     # save user
+    ui = @
     user.save(
-      success: (r) =>
-        @modalHide()
-        realname = r.firstname + ' ' + r.lastname
-        $('#create_customer_id').val(r.id)
+      success: ->
+        console.log('-------', @, ui)
+        ui.modalHide()
+        realname = @.firstname + ' ' + @.lastname
+        $('#create_customer_id').val(@.id)
         $('#create_customer_id_autocompletion').val(realname)
 
         # start customer info controller
-        @userInfo( user_id: r.id )
-      error: =>
-        @modalHide()
+        ui.userInfo( user_id: @.id )
+      error: ->
+        ui.modalHide()
     )
 
 Config.Routes['ticket_create'] = Index
