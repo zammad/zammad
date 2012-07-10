@@ -9,10 +9,6 @@ class App.TicketHistory extends App.ControllerModal
     @ajax.ajax(
       type:  'GET',
       url:   '/ticket_history/' + ticket_id,
-      data:  {
-#        view: @view
-      }
-#      processData: true,
       success: (data, status, xhr) =>
         # remember ticket
         @ticket = data.ticket
@@ -42,12 +38,11 @@ class App.TicketHistory extends App.ControllerModal
 
   render: ->
 
-
     # create table/overview
     table = @table(
       overview_extended: [
-        { name: 'type', },
-        { name: 'attribute', },
+        { name: 'history_type', },
+        { name: 'history_attribute', },
         { name: 'value_from', },
         { name: 'value_to', },
         { name: 'created_by', class: 'user-data', data: { id: 1 } },
@@ -57,11 +52,7 @@ class App.TicketHistory extends App.ControllerModal
       objects: App.History.all(),
     )
 
-
-    @html App.view('agent_ticket_history')(
-#      head: 'New User',
-#      form: @formGen( model: App.User, required: 'quick' ),
-    )
+    @html App.view('agent_ticket_history')()
     @el.find('.table_history').append(table)
 
     @modalShow()

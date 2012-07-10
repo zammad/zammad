@@ -16,6 +16,20 @@ class User < ApplicationModel
 
   store                   :preferences
 
+  def fullname
+    fullname = ''
+    if self.firstname
+      fullname = fullname + self.firstname
+    end
+    if self.lastname
+      if fullname != ''
+        fullname = fullname + ' '
+      end
+      fullname = fullname + self.lastname
+    end
+    return fullname
+  end
+
   def self.authenticate( username, password )
     
     # do not authenticate with nothing

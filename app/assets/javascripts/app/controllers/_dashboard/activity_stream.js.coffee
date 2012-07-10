@@ -40,6 +40,9 @@ class App.DashboardActivityStream extends App.Controller
     # load ticket collection
     @loadCollection( type: 'Ticket', data: data.tickets )
 
+    # load article collection
+    @loadCollection( type: 'TicketArticle', data: data.articles )
+
     # set cache
     window.LastRefresh[ 'dashboard_activity_stream' ] = items
 
@@ -49,11 +52,19 @@ class App.DashboardActivityStream extends App.Controller
 
     # load user data
     for item in items
-      item.created_by = App.User.find(item.created_by_id)
+      item.created_by = App.User.find( item.created_by_id )
   
     # load ticket data
     for item in items
-      item.ticket = App.Ticket.find(item.o_id)
+      item.data = {}
+      if item.history_object is 'Ticket'
+        item.data.title = App.Ticket.find( item.o_id ).title
+      if item.history_object is 'Ticket::Article'
+        article = App.TicketArticle.find( item.o_id )
+        item.history_object = 'Article'
+        item.sub_o_id = article.id
+        item.o_id = article.ticket_id
+        item.data.title = article.subject
   
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',
@@ -69,5 +80,9 @@ class App.DashboardActivityStream extends App.Controller
   zoom: (e) =>
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
-    @log 'goto zoom!'
-    @navigate 'ticket/zoom/' + id
+    subid = $(e.target).parents('[data-subid]').data('subid')
+    @log 'goto zoom!', id, subid
+    if subid
+      @navigate 'ticket/zoom/' + id + '/' + subid
+    else
+      @navigate 'ticket/zoom/' + id

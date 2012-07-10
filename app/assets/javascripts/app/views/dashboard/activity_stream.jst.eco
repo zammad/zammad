@@ -4,7 +4,7 @@
     <dl>
     <% for item in @items: %>
       <dt><span class="user-data" data-id="<%= item.created_by_id %>">"<%= item.created_by.realname %>"</span></dt>
-      <dd><%- T(item.history_type.name) %> <span data-id="<%= item.o_id %>"><a data-type="edit" href="#"><%= item.history_object.name %> (<%= item.ticket.title %>)</a></span>.</dd>
+      <dd><%- T(item.history_type) %> <span data-id="<%= item.o_id %>" data-subid="<%= item.sub_o_id %>"><a data-type="edit" href="#"><%= item.history_object %><% if item.data.title: %> (<%= item.data.title %>)<% end %></a></span>.</dd>
     <% end %>
     </dl>
   </div>

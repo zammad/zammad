@@ -5,29 +5,20 @@ class HistoryObserver < ActiveRecord::Observer
   def after_create(record)
     puts 'HISTORY OBSERVER CREATE !!!!' + record.class.name
     puts record.inspect
-      
-    history_type = History::Type.where( :name => 'created' ).first
-    if !history_type || !history_type.id
-      history_type = History::Type.create(
-        :name   => 'created'
-      )
+    related_o_id = nil
+    related_history_object_id = nil
+    if record.class.name == 'Ticket::Article'
+      related_o_id = record.ticket_id
+      related_history_object = 'Ticket'
     end
-    history_object = History::Object.where( :name => record.class.name ).first
-    if !history_object || !history_object.id
-      history_object = History::Object.create(
-        :name   => record.class.name
-      )
-    end
-    
-    History.create(
-      :o_id                        => record.id,
-      :history_type_id             => history_type.id,
-      :history_object_id           => history_object.id,
-      :created_by_id               => current_user_id || record.created_by_id || 1
+    History.history_create(
+      :o_id                   => record.id,
+      :history_type           => 'created',
+      :history_object         => record.class.name,
+      :related_o_id           => related_o_id,
+      :related_history_object => related_history_object,
+      :created_by_id          => current_user_id || record.created_by_id || 1
     )
-#      :name => record.class.name,
-#      :type => 'create',
-#      :data => record
   end
 
   def before_update(record)
@@ -53,61 +44,50 @@ class HistoryObserver < ActiveRecord::Observer
     puts 'CURRENT USER ID'
     puts current_user_id
 
-    history_type = History::Type.where( :name => 'updated' ).first
-    if !history_type || !history_type.id
-      history_type = History::Type.create(
-        :name   => 'updated'
-      )
-    end
-    history_object = History::Object.where( :name => record.class.name ).first
-    if !history_object || !history_object.id
-      history_object = History::Object.create(
-        :name   => record.class.name
-      )
-    end
-    
     map = {
       :group_id => {
-        :attribute        => 'Group',
-
         :lookup_object => Group,
         :lookup_name   => 'name',
       },
-      :title => {
-        :attribute        => 'Title',
-      },
-      :number => {
-        :attribute        => 'Number',
-      },
       :owner_id => {
-        :attribute        => 'Owner',
-
-        :lookup_object    => User,
-        :lookup_name      => ['firstname', 'lastname'],
+        :lookup_object  => User,
+        :lookup_method  => 'fullname',
       },
       :ticket_state_id => {
-        :attribute        => 'State',
-        
-        :lookup_object    => Ticket::State,
-        :lookup_name      => 'name',
+        :lookup_object  => Ticket::State,
+        :lookup_name    => 'name',
       },
       :ticket_priority_id => {
-        :attribute        => 'Priority',
-
-        :lookup_object    => Ticket::Priority,
-        :lookup_name      => 'name',
+        :lookup_object  => Ticket::Priority,
+        :lookup_name    => 'name',
       }
     }
     
     diff.each do |key, value_ids|
-      puts "#{key} is #{value_ids}"
       
+      # do not log created_at and updated_at attributes
+      next if key.to_s == 'created_at'
+      next if key.to_s == 'updated_at'
+
+      puts "#{key} is #{value_ids.inspect}"
+
+      # check if diff are ids, if yes do lookup
+      if value_ids[0].to_s == value_ids[1].to_s
+        puts 'NEXT!!'
+        next
+      end
+
       # check if diff are ids, if yes do lookup
       value = []
       if map[key.to_sym] && map[key.to_sym][:lookup_object]
         value[0] = ''
         value[1] = ''
-        if map[key.to_sym][:lookup_name].class == Array
+
+        # name base
+        if map[key.to_sym][:lookup_name]
+          if map[key.to_sym][:lookup_name].class != Array
+            map[key.to_sym][:lookup_name] = [ map[key.to_sym][:lookup_name] ]
+          end
           map[key.to_sym][:lookup_name].each do |item|
             if value[0] != ''
               value[0] = value[0] + ' '
@@ -118,9 +98,12 @@ class HistoryObserver < ActiveRecord::Observer
             end
             value[1] = value[1] + map[key.to_sym][:lookup_object].find(value_ids[1])[item.to_sym].to_s
           end
-        else
-          value[0] = map[key.to_sym][:lookup_object].find(value_ids[0])[map[key.to_sym][:lookup_name]]
-          value[1] = map[key.to_sym][:lookup_object].find(value_ids[1])[map[key.to_sym][:lookup_name]]
+        end
+
+        # method base
+        if map[key.to_sym][:lookup_method]
+          value[0] = map[key.to_sym][:lookup_object].find( value_ids[0] ).send( map[key.to_sym][:lookup_method] )
+          value[1] = map[key.to_sym][:lookup_object].find( value_ids[1] ).send( map[key.to_sym][:lookup_method] )
         end
 
       # if not, fill diff data to value, empty value_ids
@@ -128,33 +111,25 @@ class HistoryObserver < ActiveRecord::Observer
         value = value_ids
         value_ids = []
       end
-      
-      attribute_name = ''
-      if map[key.to_sym] && map[key.to_sym][:attribute].to_s
-        attribute_name = map[key.to_sym][:attribute].to_s
-      else
-        attribute_name = key
+
+      # get attribute name
+      attribute_name = key.to_s
+      if attribute_name.scan(/^(.*)_id$/).first
+        attribute_name = attribute_name.scan(/^(.*)_id$/).first.first
       end
 puts 'LLLLLLLLLLLLLLLLLLLLLLLL' + attribute_name.to_s
-      attribute = History::Attribute.where( :name => attribute_name.to_s ).first
-      if !attribute || !attribute.object_id
-        attribute = History::Attribute.create(
-          :name   => attribute_name
-        )
-      end
 #        puts '9999999'
-#        puts current.object_id
 #        puts current.id
-      History.create(
-        :o_id                        => current.id,
-        :history_type_id             => history_type.id,
-        :history_object_id           => history_object.id,
-        :history_attribute_id        => attribute.id,
-        :value_from                  => value[0],
-        :value_to                    => value[1],
-        :id_from                     => value_ids[0],
-        :id_to                       => value_ids[1],
-        :created_by_id               => current_user_id || 1 || self['created_by_id'] || 1
+      History.history_create(
+        :o_id               => current.id,
+        :history_type       => 'updated',
+        :history_object     => record.class.name,
+        :history_attribute  => attribute_name,
+        :value_from         => value[0],
+        :value_to           => value[1],
+        :id_from            => value_ids[0],
+        :id_to              => value_ids[1],
+        :created_by_id      => current_user_id || 1 || self['created_by_id'] || 1
       )
 
     end

@@ -2,15 +2,17 @@ class CreateHistory < ActiveRecord::Migration
   def up
     
     create_table :histories do |t|
-      t.references :history_type,               :null => false
-      t.references :history_object,             :null => false
-      t.references :history_attribute,          :null => true
-      t.column :o_id,           :integer,       :null => false
-      t.column :id_to,          :integer,       :null => true
-      t.column :id_from,        :integer,       :null => true
-      t.column :value_from,     :string,        :limit => 250,  :null => true
-      t.column :value_to,       :string,        :limit => 250,  :null => true
-      t.column :created_by_id,  :integer,       :null => false
+      t.references :history_type,                       :null => false
+      t.references :history_object,                     :null => false
+      t.references :history_attribute,                  :null => true
+      t.column :o_id,                       :integer,   :null => false
+      t.column :related_o_id,               :integer,   :null => true
+      t.column :related_history_object_id,  :integer,   :null => true
+      t.column :id_to,                      :integer,   :null => true
+      t.column :id_from,                    :integer,   :null => true
+      t.column :value_from,                 :string,    :limit => 250,  :null => true
+      t.column :value_to,                   :string,    :limit => 250,  :null => true
+      t.column :created_by_id,              :integer,   :null => false
       t.timestamps
     end
     add_index :histories, [:o_id]
