@@ -24,6 +24,7 @@ class Index extends App.Controller
     @edit_form = undefined
 #    @render()
     @ticket_id = params.ticket_id
+    @article_id = params.article_id
     @fetch(@ticket_id)
 
   fetch: (ticket_id) ->
@@ -195,6 +196,14 @@ class Index extends App.Controller
       user_id: @ticket.customer_id,
       ticket:  @ticket,
     )
+
+    # scrall to article if given
+    if @article_id
+      offset = document.getElementById( 'article-' + @article_id ).offsetTop
+      offset = offset - 45
+      scrollTo = ->
+        @scrollTo( 0, offset )
+      @delay( scrollTo, 100 )
 
     @delay(@u, 200)
     

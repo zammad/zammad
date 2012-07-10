@@ -18,7 +18,7 @@
   <div class="span9">
 
 <% for article in @articles: %>
-    <div class="row article" data-id="<%= article.id %>">
+    <div class="row article" data-id="<%= article.id %>" id="article-<%= article.id %>">
       <div class="avatar span1 thumbnails">
         <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
         <ul>
