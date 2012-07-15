@@ -2,6 +2,16 @@ body {
   padding-top:60px;
 }
 
+.spinner {
+  float: left;
+  background:url("/assets/spinner.gif") no-repeat;
+  background-position: center center;
+  padding: 12px;
+  width: 10px;
+  height: 14px;
+  display: none;
+}
+
 /*
 #content > *:not(.active) {
   display: none !important;

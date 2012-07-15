@@ -27,6 +27,7 @@
         <form class="navbar-search pull-left">
           <input class="search-query" type="search" value="" placeholder="<%- Ti('Search') %>"/>
         </form>
+        <div class="spinner"/>
 <% if @user: %>
         <ul class="nav pull-right">
         <% for item in @navbar_right: %>
