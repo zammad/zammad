@@ -186,14 +186,14 @@ class CreateTicket < ActiveRecord::Migration
     add_index :link_objects, [:name],   :unique => true
 
     create_table :links do |t|
-      t.references :link_types,               :null => false
-      t.column :link_object_source_id,        :integer,               :null => false
-      t.column :link_object_source_value,     :integer,               :null => false
-      t.column :link_object_target_id,        :integer,               :null => false
-      t.column :link_object_target_value,     :integer,               :null => false
+      t.references :link_types,                           :null => false
+      t.column :source_object_id, :integer,               :null => false
+      t.column :source_key,       :string,  :limit => 50, :null => false
+      t.column :target_object_id, :integer,               :null => false
+      t.column :target_key,       :string,  :limit => 50, :null => false
       t.timestamps
     end
-    add_index :links, [:link_object_source_id, :link_object_source_value, :link_object_target_id, :link_object_target_value, :link_types_id], :unique => true, :name => 'links_uniq_total'
+    add_index :links, [:source_object_id, :source_key, :target_object_id, :target_key, :link_types_id], :unique => true, :name => 'links_uniq_total'
   end
 
   def self.down
