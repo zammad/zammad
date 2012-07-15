@@ -30,8 +30,8 @@ class Index extends App.Controller
     params = @formParam(e.target)
 
     # get data
-    ajax = new App.Ajax
-    ajax.ajax(
+    App.Com.ajax(
+      id:   'password_reset',
       type: 'POST',
       url:  '/users/password_reset',
       data: JSON.stringify(params),
@@ -63,10 +63,10 @@ class Verify extends App.Controller
     @navupdate '#reset_password_verify'
 
     # get data
-    ajax = new App.Ajax
     params = {}
     params['token'] = @token
-    ajax.ajax(
+    App.Com.ajax(
+      id:   'passwort_reset_verify',
       type: 'POST',
       url:  '/users/password_reset_verify',
       data: JSON.stringify(params),
@@ -96,8 +96,8 @@ class Verify extends App.Controller
     params['token'] = @token
 
     # get data
-    ajax = new App.Ajax
-    ajax.ajax(
+    App.Com.ajax(
+      id:   'password_reset_verify',
       type: 'POST',
       url:  '/users/password_reset_verify',
       data: JSON.stringify(params),

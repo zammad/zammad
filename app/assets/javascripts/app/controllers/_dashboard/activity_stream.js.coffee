@@ -18,10 +18,8 @@ class App.DashboardActivityStream extends App.Controller
       @render( window.LastRefresh[ 'dashboard_activity_stream' ] )
     
     # get data
-    if @req
-      @req.abort()
-    @ajax = new App.Ajax
-    @req = @ajax.ajax(
+    App.Com.ajax(
+      id:    'dashoard_activity_stream',
       type:  'GET',
       url:   '/activity_stream',
       data:  {

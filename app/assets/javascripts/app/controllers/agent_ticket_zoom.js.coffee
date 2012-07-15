@@ -30,8 +30,8 @@ class Index extends App.Controller
   fetch: (ticket_id) ->
 
     # get data
-    @ajax = new App.Ajax
-    @ajax.ajax(
+    App.Com.ajax(
+      id:    'ticket_zoom',
       type:  'GET',
       url:   '/ticket_full/' + ticket_id,
       data:  {

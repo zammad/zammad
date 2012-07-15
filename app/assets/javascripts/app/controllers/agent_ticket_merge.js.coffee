@@ -16,8 +16,8 @@ class App.TicketMerge extends App.ControllerModal
     params = @formParam(e.target)
     
     # merge tickets
-    @ajax = new App.Ajax
-    @ajax.ajax(
+    App.Com.ajax(
+      id:    'ticket_merge',
       type:  'GET',
       url:   '/ticket_merge/' + @ticket_id + '/' + params['master_ticket_number'],
       data:  {

@@ -604,8 +604,7 @@ class App.Controller extends Spine.Controller
 
     # get data
     @tickets = {}
-    ajax = new App.Ajax
-    ajax.ajax(
+    App.Com.ajax(
       type:  'GET',
       url:   '/ticket_customer',
       data:  {

@@ -27,10 +27,8 @@ class Index extends App.Controller
 
   # get data / in case also ticket data for split
   fetch: (params) ->
-    if @req
-      @req.abort()
-    @ajax = new App.Ajax
-    @req = @ajax.ajax(
+    App.Com.ajax(
+      id:    'ticket_create',
       type:  'GET',
       url:   '/ticket_create',
       data:  {

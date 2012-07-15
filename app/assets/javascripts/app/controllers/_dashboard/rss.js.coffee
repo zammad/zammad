@@ -15,10 +15,8 @@ class App.DashboardRss extends App.Controller
       @render( window.LastRefresh[ 'dashboard_rss' ] )
 
     # get data
-    if @req
-      @req.abort()
-    @ajax = new App.Ajax
-    @req = @ajax.ajax(
+    App.Com.ajax(
+      id:    'dashboard_rss',
       type:  'GET',
       url:   '/rss_fetch',
       data:  {

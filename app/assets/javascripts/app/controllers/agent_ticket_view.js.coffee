@@ -45,10 +45,8 @@ class Index extends App.Controller
       @render()
 
     # get data
-    if @req
-      @req.abort()
-    @ajax = new App.Ajax
-    @req = @ajax.ajax(
+    App.Com.ajax(
+      id:    'ticket_overview',
       type:  'GET',
       url:   '/ticket_overviews',
       data:  {

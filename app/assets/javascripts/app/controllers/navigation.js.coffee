@@ -138,9 +138,8 @@ class App.Navigation extends App.Controller
     # only of lod request is already done
 
     if !@req_overview
-      @ajax = new App.Ajax
-#      @req_overview.abort()
-      @req_overview = @ajax.ajax(
+      @req_overview = App.Com.ajax(
+        id:    'navbar_ticket_overviews',
         type:  'GET',
         url:   '/ticket_overviews',
         data:  {},
@@ -184,8 +183,8 @@ class App.Navigation extends App.Controller
 
     # only of lod request is already done
     if !@req_recent_viewed
-      @ajax = new App.Ajax
-      @req_recent_viewed = @ajax.ajax(
+      @req_recent_viewed = App.Com.ajax(
+        id:    'navbar_recent_viewed',
         type:  'GET',
         url:   '/recent_viewed',
         data:  {
