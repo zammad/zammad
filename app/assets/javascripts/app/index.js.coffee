@@ -54,7 +54,17 @@ Config2.set( 'a', 123)
 console.log '1112222', Config2.get( 'a')
 ###
 
-class App.Ajax
+class App.Com
+  _instance = undefined # Must be declared here to force the closure on the class
+  @ajax: (args) -> # Must be a static method
+    if _instance == undefined
+      _instance ?= new _Singleton
+
+    _instance.ajax(args)
+    _instance
+
+# The actual Singleton class
+class _Singleton
   defaults:
     contentType: 'application/json'
     dataType: 'json'
@@ -63,16 +73,27 @@ class App.Ajax
     cache: false
     async: true
 
+  queue_list: {}
+  pending: false
+
+  constructor: (@args) ->
+
   ajax: (params, defaults) ->
-    $.ajax($.extend({}, @defaults, defaults, params))
+    if params['id']
+      if @queue_list[ params['id'] ]
+        @queue_list[ params['id'] ].abort()
+      @queue_list[ params['id'] ] = $.ajax($.extend({}, @defaults, defaults, params))
+    else
+      $.ajax($.extend({}, @defaults, defaults, params))
 
-class App.Auth extends App.Ajax
-  constructor: ->
-    console.log 'auth'
+    console.log('AJAX', params['url'] )
 
-  login: (params) ->
+class App.Auth
+
+  @login: (params) ->
     console.log 'login(...)', params
-    @ajax(
+    App.Com.ajax(
+      id:     'login',
 #      params,
       type:   'POST',
       url:     '/signin',
@@ -81,9 +102,10 @@ class App.Auth extends App.Ajax
       error:   params.error,
     )
 
-  loginCheck: ->
+  @loginCheck: ->
     console.log 'loginCheck(...)'
-    @ajax(
+    App.Com.ajax(
+      id:    'login_check',
       async: false,
       type:  'GET',
       url:   '/signshow',
@@ -133,18 +155,17 @@ class App.Auth extends App.Ajax
        
         # empty session
         window.Session = {}
-
     )
 
-  logout: ->
+  @logout: ->
     console.log 'logout(...)'
-    @ajax(
+    App.Com.ajax(
+      id:   'logout',
       type: 'DELETE',
       url:  '/signout',
     )
 
-class App.i18n extends App.Ajax
-#  @include App.Ajax
+class App.i18n
 
   constructor: ->
     @locale = 'de'
@@ -200,7 +221,8 @@ class App.i18n extends App.Ajax
 
   set: (locale) =>
     @map = {}
-    @ajax(
+    App.Com.ajax(
+      id:    'i18n-set-' + locale,
       type:   'GET',
       url:    '/translations/lang/' + locale,
       async:  false,
@@ -276,8 +298,7 @@ class App.Run extends Spine.Controller
     new App.Navigation( el: @el.find('#navigation') );
 
     # check if session already exists/try to get session data from server
-    auth = new App.Auth
-    auth.loginCheck()
+    App.Auth.loginCheck()
 
     # start notify controller
     new App.Notify( el: @el.find('#notify') );
