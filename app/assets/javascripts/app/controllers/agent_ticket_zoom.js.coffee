@@ -333,9 +333,9 @@ class Index extends App.Controller
 #    @log 'reply ', article, @el.find('[name="to"]')
 
     # add quoted text if needed
-    if window.Session['UISeletion']
+    if window.Session['UISelection']
       body = @el.find('[name="body"]').val() || ''
-      selection = window.Session['UISeletion'].trim()
+      selection = window.Session['UISelection'].trim()
       selection = selection.replace /^(.*)$/mg, (match) =>
         '> ' + match  
       body = body + selection
