@@ -90,8 +90,7 @@ class Index extends App.Controller
 
         if @master_user
           @master_user = false
-          auth = new App.Auth
-          auth.login(
+          App.Auth.login(
             data: {
               username: @params.login,
               password: @params.password,
@@ -113,8 +112,7 @@ class Index extends App.Controller
     @log 'login:success', data
 
     # login check
-    auth = new App.Auth
-    auth.loginCheck()
+    App.Auth.loginCheck()
   
     # add notify
     Spine.trigger 'notify:removeall'

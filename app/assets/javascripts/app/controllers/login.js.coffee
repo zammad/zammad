@@ -60,8 +60,7 @@ class Index extends App.Controller
     @username = params['username']
     
     # session create with login/password
-    auth = new App.Auth
-    auth.login(
+    App.Auth.login(
       data:    params,
       success: @success
       error:   @error,

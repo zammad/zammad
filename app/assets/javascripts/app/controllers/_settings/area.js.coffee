@@ -65,6 +65,5 @@ class App.SettingsAreaItem extends App.Controller
       success: =>
 
         # login check
-        auth = new App.Auth
-        auth.loginCheck()
+        App.Auth.loginCheck()
     )

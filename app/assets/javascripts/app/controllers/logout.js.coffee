@@ -10,8 +10,7 @@ class Index extends Spine.Controller
   signout: ->
     
     # remove remote session
-    auth = new App.Auth
-    auth.logout()
+    App.Auth.logout()
 
     # remoce local session
     @log 'Session', window.Session

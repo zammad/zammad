@@ -61,8 +61,7 @@ class Index extends App.Controller
     # save user
     user.save(
       success: (r) =>
-        auth = new App.Auth
-        auth.login(
+        App.Auth.login(
           data: {
             username: @params.login,
             password: @params.password,
@@ -77,8 +76,7 @@ class Index extends App.Controller
   success: (data, status, xhr) =>
 
     # login check
-    auth = new App.Auth
-    auth.loginCheck()
+    App.Auth.loginCheck()
 
     # add notify
     Spine.trigger 'notify:removeall'
