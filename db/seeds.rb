@@ -1102,10 +1102,10 @@ user = User.create(
   :created_by_id => 1
 )
 user_community = User.create(
-  :login         => 'nicol.braun@zammad.org',
-  :firstname     => 'Nicol',
+  :login         => 'nicole.braun@zammad.org',
+  :firstname     => 'Nicole',
   :lastname      => 'Braun',
-  :email         => 'nicol.braun@zammad.org',
+  :email         => 'nicole.braun@zammad.org',
   :password      => '',
   :active        => true,
   :roles         => roles,
@@ -1156,15 +1156,15 @@ Ticket::Article::Sender.create( :name => 'System' )
 
 ticket = Ticket.create(
   :group_id           => Group.where( :name => 'Users' ).first.id,
-  :customer_id        => User.where( :login => 'nicol.braun@zammad.org' ).first.id,
+  :customer_id        => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
   :owner_id           => User.where( :login => '-' ).first.id,
   :title              => 'Welcome to Zammad!',
   :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
   :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
-  :created_by_id      => User.where( :login => 'nicol.braun@zammad.org' ).first.id
+  :created_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id
 )
 Ticket::Article.create(
-  :created_by_id            => User.where( :login => 'nicol.braun@zammad.org' ).first.id,
+  :created_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
   :ticket_id                => ticket.id, 
   :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
   :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
@@ -1539,6 +1539,7 @@ Translation.create( :locale => 'de', :source => "open", :target => "offen" )
 Translation.create( :locale => 'de', :source => "pending", :target => "warten" )
 Translation.create( :locale => 'de', :source => "Activity Stream", :target => "Aktivitäts-Stream" )
 Translation.create( :locale => 'de', :source => "updated", :target => "aktuallisierte" )
+Translation.create( :locale => 'de', :source => "created", :target => "erstellte" )
 Translation.create( :locale => 'de', :source => "My assigned Tickets", :target => "Meine zugewisenen Tickets" )
 Translation.create( :locale => 'de', :source => "Unassigned Tickets", :target => "Nicht zugewisene/freie Tickets" )
 Translation.create( :locale => 'de', :source => "All Tickets", :target => "Alle Tickets" )
