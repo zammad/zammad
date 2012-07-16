@@ -46,7 +46,7 @@ class Index extends App.Controller
 
     # get data
     App.Com.ajax(
-      id:    'ticket_overview',
+      id:    'ticket_overview_' + @start_page,
       type:  'GET',
       url:   '/ticket_overviews',
       data:  {
