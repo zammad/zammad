@@ -7,8 +7,8 @@ $.fn.item = ->
   Note.find(elementID)
 
 class Index extends App.Controller
-  events:
-    'focusin [data-type=edit]':     'edit_in'
+#  events:
+#    'focusin [data-type=edit]':     'edit_in'
 
   constructor: ->
     super
