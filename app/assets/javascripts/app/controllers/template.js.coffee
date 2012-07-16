@@ -87,10 +87,11 @@ class App.TemplateUI extends App.Controller
     if errors
       @log 'error new', errors
     else
+      ui = @
       template.save(
-        success: (r) =>
-          @template_id = r.id
-          @render()
+        success: ->
+          ui.template_id = @.id
+          ui.render()
 
         error: =>
           @log 'save failed!'
