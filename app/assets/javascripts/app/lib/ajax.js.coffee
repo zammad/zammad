@@ -24,21 +24,26 @@ class _Singleton
 
   constructor: (@args) ->
 
+    # bindings
+    $('body').bind( 'ajaxSend', =>
+      @_show_spinner()
+    ).bind( 'ajaxComplete', =>
+      @_hide_spinner()
+    )
+
   ajax: (params, defaults) ->
     data = $.extend({}, @defaults, defaults, params)
-    @count++
-    @_show_spinner()
-#    console.log( 'START', @count )
     if params['id']
       if @queue_list[ params['id'] ]
         @queue_list[ params['id'] ].abort()
-      @queue_list[ params['id'] ] = $.ajax( data ).always( @_hide_spinner )
+      @queue_list[ params['id'] ] = $.ajax( data )
     else
-      $.ajax( data ).always( @_hide_spinner )
+      $.ajax( data )
 
     console.log('AJAX', params['url'] )
 
   _show_spinner: =>
+    @count++
     $('.spinner').show()
 
   _hide_spinner: =>
