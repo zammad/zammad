@@ -17,7 +17,14 @@
 # Ignore .project files
 /.project
 
-db/schema.rb
 Gemfile.lock
 
+# Ignore mac stuff
 .DS_Store
+
+# Ignore .swp files
+.*.swp
+
+# Ignore local changes to schema.rb (e. g. through extentions)
+db/schema.rb
+
