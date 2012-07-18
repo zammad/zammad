@@ -22,8 +22,8 @@
       <div class="avatar span1 thumbnails">
         <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
         <ul>
-          <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="/ticket_article_plain/<%= article.id %>"><%- T('Plain') %></a></li><% end %>
           <li style="font-size: 10px;"><%- T(article.article_type.name) %></li>
+          <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="/ticket_article_plain/<%= article.id %>"><%- T('raw') %></a></li><% end %>
         </ul>
       </div>
       <div class="span8 well-muted article-message <% if article.internal is true: %> internal<% end %>">
@@ -33,7 +33,7 @@
           <% if article.actions: %>
             <% for action in article.actions: %>
               -
-              <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%= action.name %></a>
+              <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%= T(action.name) %></a>
             <% end %>
           <% end %>
           - <%- article.humanTime %> <%- T('ago') %>
@@ -86,7 +86,7 @@
 
     <div class="row">
       <div class="well">
-        <h3>Actions</h3>
+        <h3><%- T('Actions') %></h3>
         <ul>
           <li><a href="#" data-type="history"><%- T('History') %></a></li>
           <li><a href="#" data-type="merge"><%- T('Merge') %></a></li>
