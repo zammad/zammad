@@ -2,7 +2,6 @@ class TicketOverviewsController < ApplicationController
   before_filter :authentication_check
 
   # GET /tickets
-  # GET /tickets.json
   def show
 #sleep 2
     # build up attributes hash
@@ -130,8 +129,7 @@ class TicketOverviewsController < ApplicationController
   end
 
 
-  # GET /ticket_create
-  # GET /ticket_create/1.json
+  # GET /ticket_create/1
   def ticket_create
 
     # get related users
@@ -221,7 +219,6 @@ class TicketOverviewsController < ApplicationController
   end
 
   # GET /ticket_full/1
-  # GET /ticket_full/1.json
   def ticket_full
     ticket = Ticket.find(params[:id])
 
@@ -406,7 +403,6 @@ class TicketOverviewsController < ApplicationController
   end
 
   # GET /ticket_history/1
-  # GET /tickets_history/1.json
   def ticket_history
     
     # get ticket data
@@ -489,85 +485,8 @@ class TicketOverviewsController < ApplicationController
       :slave_ticket  => ticket_slave.attributes,
     }
   end
-  
-  # GET /activity_stream
-  # GET /activity_stream.json
-  def activity_stream
-    activity_stream = History.activity_stream(current_user, params[:limit])
-
-    # get related users
-    users = {}
-    tickets = []
-    articles = []
-    activity_stream.each {|item|
-
-      # load article ids
-      if item['history_object'] == 'Ticket'
-        tickets.push Ticket.find( item['o_id'] ).attributes
-      end
-      if item['history_object'] == 'Ticket::Article'
-        article = Ticket::Article.find( item['o_id'] ).attributes
-        if !article['subject'] || article['subject'] == ''
-          article['subject'] = Ticket.find( article['ticket_id'] ).title
-        end
-        articles.push article
-      end
-      if item['history_object'] == 'User'
-        users[ item['o_id'] ] = user_data_full( item['o_id'] )
-      end
-          
-      # load users
-      if !users[ item['created_by_id'] ]
-        users[ item['created_by_id'] ] = user_data_full( item['created_by_id'] )
-      end
-    }
-
-    # return result
-    render :json => {
-      :activity_stream => activity_stream,
-      :tickets         => tickets,
-      :articles        => articles,
-      :users           => users,
-    }
-  end
-  
-  # GET /recent_viewed
-  # GET /recent_viewed.json
-  def recent_viewed
-    recent_viewed = History.recent_viewed(current_user)
-
-    # get related users
-    users = {}
-    tickets = []
-    recent_viewed.each {|item|
-
-      # load article ids
-#      if item.history_object == 'Ticket'
-        tickets.push Ticket.find( item['o_id'] ).attributes
-#      end
-#      if item.history_object 'Ticket::Article'
-#        tickets.push Ticket::Article.find(item.o_id)
-#      end
-#      if item.history_object 'User'
-#        tickets.push User.find(item.o_id)
-#      end
-          
-      # load users
-      if !users[ item['created_by_id'] ]
-        users[ item['created_by_id'] ] = user_data_full( item['created_by_id'] )
-      end
-    }
-
-    # return result
-    render :json => {
-      :recent_viewed => recent_viewed,
-      :tickets       => tickets,
-      :users         => users,
-    }
-  end
-  
+    
   # GET /user_search
-  # GET /user_search.json
   def user_search
     
     # get params

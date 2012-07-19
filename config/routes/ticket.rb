@@ -14,12 +14,13 @@ module ExtraRoutes
     map.match '/ticket_history/:id',    :to => 'ticket_overviews#ticket_history'
     map.match '/ticket_customer',       :to => 'ticket_overviews#ticket_customer'
     map.match '/ticket_overviews',      :to => 'ticket_overviews#show'
-    map.match '/activity_stream',       :to => 'ticket_overviews#activity_stream'
-    map.match '/recent_viewed',         :to => 'ticket_overviews#recent_viewed'
     map.match '/ticket_create',         :to => 'ticket_overviews#ticket_create'
     map.match '/user_search',           :to => 'ticket_overviews#user_search'
 
     map.match '/ticket_merge/:slave_ticket_id/:master_ticket_number', :to => 'ticket_overviews#ticket_merge'
+
+    map.match '/activity_stream',       :to => 'activity#activity_stream'
+    map.match '/recent_viewed',         :to => 'recent_viewed#recent_viewed'
 
   end
   module_function :add
