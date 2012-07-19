@@ -40,7 +40,7 @@ class _Singleton
     else
       $.ajax( data )
 
-    console.log('AJAX', params['url'] )
+#    console.log('AJAX', params['url'] )
 
   _show_spinner: =>
     @count++
