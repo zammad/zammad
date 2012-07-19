@@ -9,6 +9,7 @@ class Index extends App.Controller
     'click [data-type=internal]':             'public_internal',
     'click [data-type=history]':              'history_dialog',
     'click [data-type=merge]':                'merge_dialog',
+    'click [data-type=customer]':             'customer_dialog',
     'change [name="ticket_article_type_id"]': 'form_update',
     'click .show_toogle':                     'show_toogle',
 
@@ -233,6 +234,10 @@ class Index extends App.Controller
   merge_dialog: (e) ->
     e.preventDefault()
     new App.TicketMerge( ticket_id: @ticket_id )
+
+  customer_dialog: (e) ->
+    e.preventDefault()
+    new App.TicketCustomer( ticket_id: @ticket_id, zoom: @ )
 
   public_internal: (e) ->
     e.preventDefault()
