@@ -444,7 +444,7 @@ class Router extends App.Controller
     @key = '#ticket/view/' + @view
 
     # get data
-    if window.LastRefresh[ @key ] && @start_page is 1
+    if window.LastRefresh[ @key ]
       @tickets_count = window.LastRefresh[ @key ].tickets_count
       @tickets       = window.LastRefresh[ @key ].tickets
       @redirect()
