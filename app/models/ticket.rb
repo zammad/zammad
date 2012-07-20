@@ -1,5 +1,6 @@
 class Ticket < ActiveRecord::Base
-  before_create :number_generate, :check_defaults
+  before_create   :number_generate, :check_defaults
+  before_destroy  :destroy_dependencies
   
   belongs_to    :group
   has_many      :articles
@@ -140,6 +141,14 @@ class Ticket < ActiveRecord::Base
       if !self.owner_id then
         self.owner_id = 1
       end
+    end
+    def destroy_dependencies
+      
+      # delete history
+      History.history_destroy( 'Ticket', self.id )
+
+      # delete articles
+      self.articles.destroy_all
     end
 
   class Number
