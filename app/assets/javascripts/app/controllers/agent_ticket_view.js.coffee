@@ -29,6 +29,9 @@ class Index extends App.Controller
     # set controller to active
     Config['ActiveController'] = '#ticket_overview_' + @view
 
+    # set last overview
+    Config['LastOverview'] = @view
+
     # refresh list ever 40 sec.
     @interval( @fetch, 400000, 'ticket_overview_' + @view )
 
@@ -281,6 +284,10 @@ class Index extends App.Controller
   zoom: (e) =>
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
+    position = $(e.target).parents('[data-position]').data('position')
+    Config['LastOverviewPosition'] = position
+    Config['LastOverviewTotal']    = @tickets_count
+
     @navigate 'ticket/zoom/' + id
 
   settings: (e) =>
@@ -429,4 +436,48 @@ class Settings extends App.ControllerModal
     )
     @modalHide()
 
+class Router extends App.Controller
+  constructor: ->
+    super
+
+    # set new key
+    @key = '#ticket/view/' + @view
+
+    # get data
+    App.Com.ajax(
+      type:  'GET',
+      url:   '/ticket_overviews',
+      data:  {
+        view:       @view,
+        view_mode:  's',
+        start_page: 1,
+      }
+      processData: true,
+      success: @load
+    )
+
+  load: (data) =>
+
+    @tickets = data.tickets
+    @tickets_count = data.tickets_count
+
+    Config['LastOverview']         = @view
+    Config['LastOverviewPosition'] = @position
+    Config['LastOverviewTotal']    = @tickets_count
+
+    # redirect
+    if @direction == 'next'
+      if @tickets[ @position ] && @tickets[ @position ]
+        Config['LastOverviewPosition']++
+        @navigate 'ticket/zoom/' + @tickets[ @position ].id
+      else
+        @navigate 'ticket/zoom/' + @tickets[ @position - 1 ].id
+    else
+      if @tickets[ @position - 2 ] && @tickets[ @position - 2 ].id
+        Config['LastOverviewPosition']--
+        @navigate 'ticket/zoom/' + @tickets[ @position - 2 ].id
+      else
+        @navigate 'ticket/zoom/' + @tickets[ @position - 1 ].id
+
+Config.Routes['ticket/view/:view/:position/:direction'] = Router
 Config.Routes['ticket/view/:view'] = Index
