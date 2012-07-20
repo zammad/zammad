@@ -444,23 +444,29 @@ class Router extends App.Controller
     @key = '#ticket/view/' + @view
 
     # get data
-    App.Com.ajax(
-      type:  'GET',
-      url:   '/ticket_overviews',
-      data:  {
-        view:       @view,
-        view_mode:  's',
-        start_page: 1,
-      }
-      processData: true,
-      success: @load
-    )
+    if window.LastRefresh[ @key ] && @start_page is 1
+      @tickets_count = window.LastRefresh[ @key ].tickets_count
+      @tickets       = window.LastRefresh[ @key ].tickets
+      @redirect()
+    else
+      App.Com.ajax(
+        type:  'GET',
+        url:   '/ticket_overviews',
+        data:  {
+          view:       @view,
+          view_mode:  's',
+          start_page: 1,
+        }
+        processData: true,
+        success: @load
+      )
 
   load: (data) =>
-
-    @tickets = data.tickets
+    @tickets       = data.tickets
     @tickets_count = data.tickets_count
+    @redirect()
 
+  redirect: =>
     Config['LastOverview']         = @view
     Config['LastOverviewPosition'] = @position
     Config['LastOverviewTotal']    = @tickets_count
