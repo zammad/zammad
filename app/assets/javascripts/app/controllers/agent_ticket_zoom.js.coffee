@@ -185,6 +185,7 @@ class Index extends App.Controller
       articles:     @articles,
       form_ticket:  form_ticket,
       form_article: form_article,
+      nav:          @nav,
     )
 
     @el.find('textarea').elastic()
@@ -398,4 +399,5 @@ class Index extends App.Controller
 
 
 Config.Routes['ticket/zoom/:ticket_id'] = Index
+Config.Routes['ticket/zoom/:ticket_id/nav/:nav'] = Index
 Config.Routes['ticket/zoom/:ticket_id/:article_id'] = Index

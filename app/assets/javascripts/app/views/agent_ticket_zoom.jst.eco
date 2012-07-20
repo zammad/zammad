@@ -4,7 +4,7 @@
       <h1><%= @ticket.title %> <small><%= @ticket.number %></small></h1>
     </div>
     <div class="span2">
-      <% if window.Config['LastOverview']: %>
+      <% if window.Config['LastOverview'] && @nav: %>
       <div class="pagination">
         <span class="count"><%= Config['LastOverviewPosition'] %>/<%= Config['LastOverviewTotal'] %></span>
         <% base_url ="#ticket/view/#{Config['LastOverview']}/#{Config['LastOverviewPosition']}/" %>

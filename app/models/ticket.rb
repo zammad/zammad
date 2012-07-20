@@ -202,6 +202,25 @@ class Ticket < ActiveRecord::Base
       return result
     end
 
+    # get result list
+    if data[:array]
+      tickets = Ticket.select( 'id' ).
+        where( :group_id => group_ids ).
+        where( overview_selected.condition ).
+        order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
+        limit( 4_000 )
+
+      tickets_count = Ticket.where( :group_id => group_ids ).
+        where( overview_selected.condition ).
+        count() 
+
+      return {
+        :tickets       => tickets,
+        :tickets_count => tickets_count,
+        :overview      => overview_selected_raw,
+      }
+    end
+
     # get tickets for overview
     data[:start_page] ||= 1
     tickets = Ticket.where( :group_id => group_ids ).

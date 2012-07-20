@@ -15,6 +15,26 @@ class TicketOverviewsController < ApplicationController
     end
 
     # get real overview data
+    if params[:array]
+      overview = Ticket.overview(
+        :view            => params[:view],
+        :current_user_id => current_user.id,
+        :array           => true,
+      ) 
+      tickets = []
+      overview[:tickets].each {|ticket|
+        data = { :id => ticket.id }
+        tickets.push data
+      }
+
+      # return result
+      render :json => {
+        :overview      => overview[:overview],
+        :tickets       => tickets,
+        :tickets_count => overview[:tickets_count],
+      }
+      return      
+    end
     overview = Ticket.overview(
       :view            => params[:view],
       :view_mode       => params[:view_mode],

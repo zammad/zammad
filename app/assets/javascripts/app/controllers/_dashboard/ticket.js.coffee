@@ -105,8 +105,14 @@ class App.DashboardTicket extends App.Controller
   zoom: (e) =>
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
-    @log 'goto zoom!'
-    @navigate 'ticket/zoom/' + id
+    position = $(e.target).parents('[data-position]').data('position')
+
+    Config['LastOverview']         = @view
+    Config['LastOverviewPosition'] = position
+    Config['LastOverviewTotal']    = @tickets_count
+
+    @log 'goto zoom!', id, position
+    @navigate 'ticket/zoom/' + id + '/nav/true'
 
   settings: (e) =>
     e.preventDefault()
