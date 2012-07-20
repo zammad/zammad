@@ -1,7 +1,19 @@
 <div class="page-header">
   <div class="row">
-    <div class="span12">
+    <div class="span10">
       <h1><%= @ticket.title %> <small><%= @ticket.number %></small></h1>
+    </div>
+    <div class="span2">
+      <% if window.Config['LastOverview']: %>
+      <div class="pagination">
+        <span class="count"><%= Config['LastOverviewPosition'] %>/<%= Config['LastOverviewTotal'] %></span>
+        <% base_url ="#ticket/view/#{Config['LastOverview']}/#{Config['LastOverviewPosition']}/" %>
+        <ul>
+          <li class="<% if Config['LastOverviewPosition'] <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- T('previous Ticket in Overview') %>">«</a></li>
+          <li class="<% if Config['LastOverviewPosition'] is Config['LastOverviewTotal']: %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- T('next Ticket in Overview') %>">»</a></li>
+        </ul>
+      </div>
+      <% end %>
     </div>
   </div>
   <div class="row">

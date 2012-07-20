@@ -13,8 +13,10 @@
     </tr>
   </thead>
   <tbody>
+<% position = 0 %>
 <% for object in @objects: %>
-  <tr class="item" data-id="<%= object.id %>">
+  <% position++ %>
+  <tr class="item" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
     <td>
         <input type="checkbox" value="<%= object.id %>" name="bulk"/>

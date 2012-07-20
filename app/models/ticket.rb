@@ -123,6 +123,105 @@ class Ticket < ActiveRecord::Base
     return subject
   end
 
+
+#  Ticket.overview(
+#    :view            => 'some_view_url',
+#    :current_user_id => 123,
+#  )
+  def self.overview (data)
+
+    # build up attributes hash
+    overview_selected     = nil
+    overview_selected_raw = nil
+    overviews             = Overview.all
+    overviews.each { |overview|
+
+      # for cleanup reasons, remove me later!
+      overview.condition.each { |item, value |
+        if item == 'owner_id' && overview.condition[item] != 1
+          overview.condition[item] = 'current_user.id'
+        end
+      }
+      
+      # remember selected view
+      if data[:view] && data[:view] == overview.meta[:url]
+        overview_selected     = overview
+        overview_selected_raw = Marshal.load( Marshal.dump(overview.attributes) )
+      end
+
+      # replace 'current_user.id' with current_user.id
+      overview.condition.each { |item, value |
+        if value == 'current_user.id'
+          overview.condition[item] = data[:current_user_id]
+        end
+      }
+    }
+
+    # sortby
+      # prio
+      # state
+      # group
+      # customer
+    
+    # order
+      # asc
+      # desc
+      
+    # groupby
+      # prio
+      # state
+      # group
+      # customer    
+
+#    all = attributes[:myopenassigned]
+#    all.merge( { :group_id => groups } )
+
+#    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
+    # get only tickets with permissions
+    group_ids = Group.select( 'groups.id' ).joins(:users).
+      where( 'groups_users.user_id = ?', [ data[:current_user_id] ] ).
+      where( 'groups.active = ?', true ).
+      map( &:id )
+
+    # overview meta for navbar
+    if !overview_selected
+
+      # loop each overview
+      result = []
+      overviews.each { |overview|
+
+        # get count
+        count = Ticket.where( :group_id => group_ids ).where( overview.condition ).count()
+        
+        # get meta info
+        all = overview.meta
+        
+        # push to result data
+        result.push all.merge( { :count => count } )
+      }
+      return result
+    end
+
+    # get tickets for overview
+    data[:start_page] ||= 1
+    tickets = Ticket.where( :group_id => group_ids ).
+      where( overview_selected.condition ).
+      order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
+      limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] ).
+      offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
+
+    tickets_count = Ticket.where( :group_id => group_ids ).
+      where( overview_selected.condition ).
+      count()
+
+    return {
+      :tickets       => tickets,
+      :tickets_count => tickets_count,
+      :overview      => overview_selected_raw,
+    }
+
+  end
+
   private
     def number_generate
       Ticket.new.number_adapter = Setting.get('ticket_number')

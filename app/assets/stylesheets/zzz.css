@@ -44,6 +44,13 @@ body {
   line-height: 26px;
 }
 
+.pagination .count {
+  padding: 6px 6px;
+  float: left;
+  color: #999;
+}
+
+
 /* replace music icon with attachment */
 .icon-attachment {
   background-position: -24px 0;

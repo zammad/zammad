@@ -4,103 +4,37 @@ class TicketOverviewsController < ApplicationController
   # GET /tickets
   def show
 #sleep 2
-    # build up attributes hash
-    overview_selected     = nil
-    overview_selected_raw = nil
-    overviews             = Overview.all
-    overviews.each { |overview|
 
-      # for cleanup reasons, remove me later!
-      overview.condition.each { |item, value |
-        if item == 'owner_id' && overview.condition[item] != 1
-          overview.condition[item] = 'current_user.id'
-        end
-      }
-      
-      # remember selected view
-      if params[:view] && params[:view] == overview.meta[:url]
-        overview_selected     = overview
-        overview_selected_raw = Marshal.load( Marshal.dump(overview.attributes) )
-      end
-
-      # replace 'current_user.id' with current_user.id
-      overview.condition.each { |item, value |
-        if value == 'current_user.id'
-          overview.condition[item] = current_user.id
-        end
-      }
-    }
-
-    # sortby
-      # prio
-      # state
-      # group
-      # customer
-    
-    # order
-      # asc
-      # desc
-      
-    # groupby
-      # prio
-      # state
-      # group
-      # customer    
-
-#    all = attributes[:myopenassigned]
-#    all.merge( { :group_id => groups } )
-
-#    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
-    # get only tickets with permissions
-    group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', [current_user.id] ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
-
-    # overview meta for navbar
-    if !overview_selected
-
-      # loop each overview
-      result = []
-      overviews.each { |overview|
-
-        # get count
-        count = Ticket.where( :group_id => group_ids ).where( overview.condition ).count()
-        
-        # get meta info
-        all = overview.meta
-        
-        # push to result data
-        result.push all.merge( { :count => count } )
-      }
-
+    # get navbar overview data
+    if !params[:view]
+      result = Ticket.overview(
+        :current_user_id => current_user.id,
+      )
       render :json => result
       return
     end
 
-    # get tickets for overview
-    params[:start_page] ||= 1
-    tickets = Ticket.where( :group_id => group_ids ).
-      where( overview_selected.condition ).
-      order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
-      limit( overview_selected.view[ params[:view_mode].to_sym ][:per_page] ).
-      offset( overview_selected.view[ params[:view_mode].to_sym ][:per_page].to_i * ( params[:start_page].to_i - 1 ) )
-
-    tickets_count = Ticket.where( :group_id => group_ids ).
-      where( overview_selected.condition ).
-      count()
-
+    # get real overview data
+    overview = Ticket.overview(
+      :view            => params[:view],
+      :view_mode       => params[:view_mode],
+      :current_user_id => current_user.id,
+      :start_page      => params[:start_page],
+    )
+ 
     # get related users
     users = {}
-    tickets.each {|ticket|
-      if !users[ticket.owner_id]
-        users[ticket.owner_id] = user_data_full(ticket.owner_id)
+    tickets = []
+    overview[:tickets].each {|ticket|
+      tickets.push ticket.attributes
+      if !users[ ticket.owner_id ]
+        users[ ticket.owner_id ] = user_data_full( ticket.owner_id )
       end
-      if !users[ticket.customer_id]
-        users[ticket.customer_id] = user_data_full(ticket.customer_id)
+      if !users[ ticket.customer_id ]
+        users[ ticket.customer_id ] = user_data_full( ticket.customer_id )
       end
-      if !users[ticket.created_by_id]
-        users[ticket.created_by_id] = user_data_full(ticket.created_by_id)
+      if !users[ ticket.created_by_id ]
+        users[ ticket.created_by_id ] = user_data_full( ticket.created_by_id )
       end
     }
 
@@ -109,21 +43,21 @@ class TicketOverviewsController < ApplicationController
     bulk_owner_ids = []
     bulk_owners.each { |user|
       bulk_owner_ids.push user.id
-      if !users[user.id]
-        users[user.id] = user_data_full(user.id)
+      if !users[ user.id ]
+        users[ user.id ] = user_data_full( user.id )
       end
     }
 
     # return result
     render :json => {
-      :overview      => overview_selected_raw,
+      :overview      => overview[:overview],
       :tickets       => tickets,
-      :tickets_count => tickets_count,
+      :tickets_count => overview[:tickets_count],
       :users         => users,
       :bulk          => {
         :owner_id => {
           :id => bulk_owner_ids,
-        }
+        },
       },
     }
   end
