@@ -34,6 +34,9 @@ class App.Auth
           # empty session
           window.Session = {}
 
+          # update websocked auth info
+          App.WebSocket.auth()
+
           # rebuild navbar with new navbar items
           Spine.trigger 'navrebuild'
 
@@ -50,6 +53,9 @@ class App.Auth
         # store user data
         for key, value of data.session
           window.Session[key] = value
+
+        # update websocked auth info
+        App.WebSocket.auth()
     
         # refresh/load default collections
         for key, value of data.default_collections
@@ -61,12 +67,14 @@ class App.Auth
         # rebuild navbar with updated ticket count of overviews
         Spine.trigger 'navupdate_remote'
 
-
       error: (xhr, statusText, error) =>
         console.log 'loginCheck:error'#, error, statusText, xhr.statusCode
-       
+
         # empty session
         window.Session = {}
+
+        # update websocked auth info
+        App.WebSocket.auth()
     )
 
   @logout: ->
@@ -75,4 +83,13 @@ class App.Auth
       id:   'logout',
       type: 'DELETE',
       url:  '/signout',
+      success: =>
+
+        # update websocked auth info
+        App.WebSocket.auth()
+
+      error: (xhr, statusText, error) =>
+
+        # update websocked auth info
+        App.WebSocket.auth()
     )

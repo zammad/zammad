@@ -123,7 +123,6 @@ class Ticket < ActiveRecord::Base
     return subject
   end
 
-
 #  Ticket.overview(
 #    :view            => 'some_view_url',
 #    :current_user_id => 123,
@@ -142,7 +141,7 @@ class Ticket < ActiveRecord::Base
           overview.condition[item] = 'current_user.id'
         end
       }
-      
+
       # remember selected view
       if data[:view] && data[:view] == overview.meta[:url]
         overview_selected     = overview
@@ -192,10 +191,10 @@ class Ticket < ActiveRecord::Base
 
         # get count
         count = Ticket.where( :group_id => group_ids ).where( overview.condition ).count()
-        
+
         # get meta info
         all = overview.meta
-        
+
         # push to result data
         result.push all.merge( { :count => count } )
       }
@@ -261,7 +260,7 @@ class Ticket < ActiveRecord::Base
       end
     end
     def destroy_dependencies
-      
+
       # delete history
       History.history_destroy( 'Ticket', self.id )
 
@@ -293,14 +292,14 @@ class Ticket < ActiveRecord::Base
     belongs_to    :ticket_article_type,   :class_name => 'Ticket::Article::Type'
     belongs_to    :ticket_article_sender, :class_name => 'Ticket::Article::Sender'
     belongs_to    :created_by,            :class_name => 'User'
-    
+
     private
       def fillup
-        
+
         # if sender is customer, do not change anything
         sender = Ticket::Article::Sender.where( :id => self.ticket_article_sender_id ).first
         return if sender == nil || sender['name'] == 'Customer'
-        
+
         type = Ticket::Article::Type.where( :id => self.ticket_article_type_id ).first
         ticket = Ticket.find(self.ticket_id)
 
@@ -337,10 +336,10 @@ class Ticket < ActiveRecord::Base
         end
       end
       def attachment_check
-        
+
         # do nothing if no attachment exists
         return 1 if self['attachments'] == nil
-        
+
         # store attachments
         article_store = []
         self.attachments.each do |attachment|
@@ -363,9 +362,9 @@ class Ticket < ActiveRecord::Base
 
         type = Ticket::Article::Type.where( :id => self.ticket_article_type_id ).first
         ticket = Ticket.find(self.ticket_id)
-        
+
         # if sender is agent or system
-        
+
         # create tweet
         if type['name'] == 'twitter direct-message' || type['name'] == 'twitter status'
           a = Channel::Twitter2.new
@@ -381,7 +380,7 @@ class Ticket < ActiveRecord::Base
           self.message_id = message.id
           self.save
         end
-        
+
         # post facebook comment
         if type['name'] == 'facebook'
           a = Channel::Facebook.new
@@ -393,13 +392,13 @@ class Ticket < ActiveRecord::Base
             }
           )
         end
-        
+
         # send email
         if type['name'] == 'email'
-          
+
           # build subject
           subject = ticket.subject_build(self.subject)
-          
+
           # send email
           a = Channel::IMAP.new
           message = a.send(
@@ -414,7 +413,7 @@ class Ticket < ActiveRecord::Base
               :attachments => self.attachments
             }
           )
-          
+
           # store mail plain
           Store.add(
             :object      => 'Ticket::Article::Mail',
@@ -428,10 +427,10 @@ class Ticket < ActiveRecord::Base
 
     class Flag < ActiveRecord::Base
     end
-  
+
     class Sender < ActiveRecord::Base
     end
-  
+
     class Type < ActiveRecord::Base
     end
   end

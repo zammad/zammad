@@ -2,7 +2,8 @@ class App.Controller extends Spine.Controller
   
   # add @title methode to set title
   title: (name) ->
-    $('html head title').html( Config.product_name + ' - ' + Ti(name) )
+#    $('html head title').html( Config.product_name + ' - ' + Ti(name) )
+    document.title = Config.product_name + ' - ' + Ti(name)
 
   # add @notify methode to create notification
   notify: (data) ->
@@ -545,6 +546,13 @@ class App.Controller extends Spine.Controller
   
     return newInstance
 
+  clearInterval: (interval_id) =>
+    # check global var
+    if !@intervalID
+      @intervalID = {}
+
+    clearInterval( @intervalID[interval_id] ) if @intervalID[interval_id]
+
   interval: (action, interval, interval_id) =>
     
     # check global var
@@ -778,11 +786,14 @@ class App.ControllerModal extends App.Controller
     super(options)
 
   modalShow: (params) =>
-    @el.modal({
+    defaults = {
       backdrop: true,
       keyboard: true,
-      show: true
-    })
+      show: true,
+    }
+    data = $.extend({}, defaults, params)
+    @el.modal(data)
+
     @el.bind('hidden', =>
 
       # navigate back to home page
@@ -805,3 +816,17 @@ class App.ControllerModal extends App.Controller
   submit: (e) =>
     e.preventDefault()
     @log 'You need to implement your own "submit" method!'
+
+class App.ErrorModal extends App.ControllerModal
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('error')(
+      message: @message
+    )
+    @modalShow(
+      backdrop: false,
+      keyboard: false,
+    )

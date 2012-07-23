@@ -142,14 +142,14 @@ Your #{config.product_name} Team
   end
 
   def self.password_reset_via_token(token,password)
-    
+
     # check token
     token = Token.check( :action => 'PasswordReset', :name => token )
     return if !token
-    
+
     # reset password
     token.user.update_attributes( :password => password )
-    
+
     # delete token
     token.delete
     token.save
@@ -176,7 +176,7 @@ Your #{config.product_name} Team
         :username => authorization[:username]
       }
     end
-  
+
     # set roles
     roles = []
     user.roles.select('id, name').where( :active => true ).each { |role|
@@ -205,6 +205,54 @@ Your #{config.product_name} Team
     cache_set(user.id, data)
 
     return data
+  end
+  
+  def self.user_data_full (user_id)
+
+    # get user
+    user = User.find_fulldata(user_id)
+
+    # do not show password
+    user['password'] = ''
+
+    # TEMP: compat. reasons
+    user['preferences'] = {} if user['preferences'] == nil
+
+    items = []
+    if user['preferences'][:tickets_open].to_i > 0
+      item = {
+        :url   => '',
+        :name  => 'open',
+        :count => user['preferences'][:tickets_open] || 0,
+        :title => 'Open Tickets',
+        :class => 'user-tickets',
+        :data  => 'open'
+      }
+      items.push item
+    end
+    if user['preferences'][:tickets_closed].to_i > 0
+      item = {
+        :url   => '',
+        :name  => 'closed',
+        :count => user['preferences'][:tickets_closed] || 0,
+        :title => 'Closed Tickets',
+        :class => 'user-tickets',
+        :data  => 'closed'
+      }
+      items.push item
+    end
+
+    # show linked topics and items
+    if items.count > 0
+      topic = {
+        :title => 'Tickets',
+        :items => items,
+      }
+      user['links'] = []
+      user['links'].push topic
+    end
+
+    return user
   end
 
   # update all users geo data

@@ -1,0 +1,17 @@
+<div class="modal-header">
+<!--
+  <a href="#" class="close">&times;</a>
+-->
+  <h3><%- T('Error') %></h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal">
+    <p><%= @message %>
+  </form>
+</div>
+<div class="modal-footer">
+<!--
+  <button class="btn btn-primary submit"><%- T('Submit') %></button>
+  <button class="btn cancel"><%- T('Cancel') %></button>
+-->
+</div>

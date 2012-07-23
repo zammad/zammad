@@ -9,25 +9,29 @@ class App.DashboardActivityStream extends App.Controller
     @items = []
     
     # refresh list ever 140 sec.
-    @interval( @fetch, 1400000, 'dashboard_activity_stream' )
-    
+#    @interval( @fetch, 1400000, 'dashboard_activity_stream' )
+    @fetch()
+    Spine.bind 'activity_stream_rebuild', (data) =>
+      @log 'a_stream', data
+      @fetch()
+
   fetch: =>
     
     # use cache of first page
-    if window.LastRefresh[ 'dashboard_activity_stream' ]
-      @render( window.LastRefresh[ 'dashboard_activity_stream' ] )
+    if window.LastRefresh[ 'activity_stream' ]
+      @load( window.LastRefresh[ 'activity_stream' ] )
     
-    # get data
-    App.Com.ajax(
-      id:    'dashoard_activity_stream',
-      type:  'GET',
-      url:   '/activity_stream',
-      data:  {
-        limit: @limit,
-      }
-      processData: true,
-      success: @load
-    )
+#    # get data
+#    App.Com.ajax(
+#      id:    'dashoard_activity_stream',
+#      type:  'GET',
+#      url:   '/activity_stream',
+#      data:  {
+#        limit: @limit,
+#      }
+#      processData: true,
+#      success: @load
+#    )
     
   load: (data) =>
     items = data.activity_stream

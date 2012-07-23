@@ -58,3 +58,6 @@ gem 'simple-rss'
 # To use debugger
 # gem 'ruby-debug'
 
+# event machine
+gem 'eventmachine'
+gem 'em-websocket'

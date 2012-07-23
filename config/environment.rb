@@ -13,8 +13,11 @@ require 'google_oauth2_database'
 # load notification factory (replace all tags)
 require 'notification_factory'
 
-# load gmaps lookup
+# load lib
 require 'gmaps'
+require 'rss'
+
+require 'web_socket'
 
 # Initialize the rails application
 Zammad::Application.initialize!

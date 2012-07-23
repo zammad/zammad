@@ -3,7 +3,7 @@ $ = jQuery.sub()
 class Index extends App.Controller
   events:
     'submit #login': 'login',
-    
+
   constructor: ->
     super
     @title 'Sign in'
@@ -37,12 +37,12 @@ class Index extends App.Controller
     for key, provider of auth_provider_all
       if Config[provider.config] is true || Config[provider.config] is "true"
         auth_providers.push provider
-    
+
     @html App.view('login')(
       item:           data,
       auth_providers: auth_providers,
     )
-    
+
     # set focus
     if !$(@el).find('[name="username"]').val()
       $(@el).find('[name="username"]').focus()
@@ -55,17 +55,17 @@ class Index extends App.Controller
   login: (e) ->
     e.preventDefault()
     params = @formParam(e.target)
-    
+
     # remember username
     @username = params['username']
-    
+
     # session create with login/password
     App.Auth.login(
       data:    params,
       success: @success
       error:   @error,
     )
- 
+
   success: (data, status, xhr) =>
     @log 'login:success', data
 
@@ -85,10 +85,14 @@ class Index extends App.Controller
     for key, value of data.default_collections
       App[key].refresh( value, options: { clear: true } )
 
+    # rebuild navbar with user data
     Spine.trigger 'navrebuild', data.session
 
-    # rebuild navbar with updated ticket count of overviews
-    Spine.trigger 'navupdate_remote'
+    # update websocked auth info
+    App.WebSocket.auth()
+
+    # rebuild navbar with ticket overview counter
+    App.WebSocket.send( event: 'navupdate_ticket_overview' )
 
     # add notify
     Spine.trigger 'notify:removeall'
@@ -100,7 +104,7 @@ class Index extends App.Controller
     # redirect to #
     if window.Config['requested_url'] isnt ''
       @navigate window.Config['requested_url']
-      
+
       # reset
       window.Config['requested_url'] = ''
     else
@@ -108,14 +112,14 @@ class Index extends App.Controller
 
   error: (xhr, statusText, error) =>
     console.log 'login:error'
-    
+
     # add notify
     Spine.trigger 'notify:removeall'
     Spine.trigger 'notify', {
       type: 'error',
       msg: T('Wrong Username and Password combination.'), 
     }
-    
+
     # rerender login page
     @render(
       username: @username

@@ -11,6 +11,7 @@
 #= require ./lib/bootstrap-popover.js
 #= require ./lib/bootstrap-modal.js
 #= require ./lib/bootstrap-tab.js
+#= require ./lib/bootstrap-transition.js
 
 #= require ./lib/underscore.coffee
 #= require ./lib/ba-linkify.js
@@ -23,6 +24,7 @@
 #not_used= require_tree ./lib
 #= require_self
 #= require ./lib/ajax.js.coffee
+#= require ./lib/websocket.js.coffee
 #= require ./lib/auth.js.coffee
 #= require ./lib/i18n.js.coffee
 #= require_tree ./models
@@ -57,12 +59,14 @@ Config2.set( 'a', 123)
 console.log '1112222', Config2.get( 'a')
 ###
 
-
 class App.Run extends Spine.Controller
   constructor: ->
     super
-    @log 'RUN app'#, @
+    @log 'RUN app'
     @el = $('#app')
+
+    # create web socket connection
+    App.WebSocket.connect()
 
     # init of i18n
     new App.i18n
@@ -84,27 +88,6 @@ class App.Run extends Spine.Controller
       window.Session['UISelection'] = @getSelected() + ''
     )
 
-#    @ws = new WebSocket("ws://localhost:3001/");
-  
-    # Set event handlers.
-#    @ws.onopen = ->
-#      console.log("onopen")
-
-#    @ws.onmessage = (e) ->
-      # e.data contains received string.
-#      console.log("onmessage: " + e.data)
-#      eval e.data
-
-#    Spine.bind 'ws:send', (data) =>
-#      @log 'ws:send', data
-#      @ws.send(data);
-
-#    @ws.onclose = ->
-#      console.log("onclose")
-
-#    @ws.onerror = ->
-#      console.log("onerror")
-      
   getSelected: ->
     text = '';
     if window.getSelection
@@ -125,24 +108,35 @@ class App.Content extends Spine.Controller
     for route, callback of Config.Routes
       do (route, callback) =>
         @route(route, (params) ->
+
+          # remember current controller
           Config['ActiveController'] = route
-          Spine.trigger( 'ws:send', JSON.stringify( { action: 'active_controller', controller: route, params: params } ) )
+
+          # send current controller
+          params_only = {}
+          for i of params
+            if typeof params[i] isnt 'object'
+              params_only[i] = params[i]
+          App.WebSocket.send(
+            action:     'active_controller',
+            controller: route,
+            params:     params_only,
+          )
 
           # unbind in controller area
           @el.unbind()
           @el.undelegate()
- 
+
           # remove waypoints
           $('footer').waypoint('remove')
- 
+
           params.el = @el
-          params.auth = @auth
           new callback( params )
 
           # scroll to top
 #          window.scrollTo(0,0)
         )
 
-    Spine.Route.setup()    
+    Spine.Route.setup()
 
 window.App = App

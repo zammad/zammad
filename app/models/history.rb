@@ -136,14 +136,65 @@ class History < ActiveRecord::Base
     end
     return datas
   end
+  def self.activity_stream_fulldata(user, limit = 10)
+    activity_stream = History.activity_stream( user, limit )
+
+    # get related users
+    users = {}
+    tickets = []
+    articles = []
+    activity_stream.each {|item|
+
+      # load article ids
+      if item['history_object'] == 'Ticket'
+        ticket = Ticket.find( item['o_id'] ).attributes
+        tickets.push ticket
+
+        # load users
+        if !users[ ticket['owner_id'] ]
+          users[ ticket['owner_id'] ] = User.user_data_full( ticket['owner_id'] )
+        end
+        if !users[ ticket['customer_id'] ]
+          users[ ticket['customer_id'] ] = User.user_data_full( ticket['customer_id'] )
+        end
+      end
+      if item['history_object'] == 'Ticket::Article'
+        article = Ticket::Article.find( item['o_id'] ).attributes
+        if !article['subject'] || article['subject'] == ''
+          article['subject'] = Ticket.find( article['ticket_id'] ).title
+        end
+        articles.push article
+
+        # load users
+        if !users[ article['created_by_id'] ]
+          users[ article['created_by_id'] ] = User.user_data_full( article['created_by_id'] )
+        end
+      end
+      if item['history_object'] == 'User'
+        users[ item['o_id'] ] = User.user_data_full( item['o_id'] )
+      end
+          
+      # load users
+      if !users[ item['created_by_id'] ]
+        users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )
+      end
+    }
+
+    return {
+      :activity_stream => activity_stream,
+      :tickets         => tickets,
+      :articles        => articles,
+      :users           => users,
+    }
+  end
 
   def self.recent_viewed(user)
 #    g = Group.where( :active => true ).joins(:users).where( 'users.id' => user.id )
-    stream = History.select("distinct(histories.o_id), created_by_id, history_attribute_id, history_type_id, history_object_id, value_from, value_to").
+    stream = History.select("distinct(o_id), created_by_id, history_type_id, history_object_id, created_at").
       where( :history_object_id => History::Object.where( :name => 'Ticket').first.id ).
-      where( :history_type_id => History::Type.where( :name => ['viewed']) ).
+      where( :history_type_id => History::Type.where( :name => ['viewed'] ) ).
       where( :created_by_id => user.id ).
-      order('created_at DESC, id DESC').
+      order('created_at DESC, id ASC').
       limit(10)
     datas = []
     stream.each do |item|
@@ -153,7 +204,47 @@ class History < ActiveRecord::Base
       datas.push data
 #      item['history_attribute'] = item.history_attribute
     end
+#    puts 'pppppppppp'
+#    puts datas.inspect
     return datas
+  end
+  
+  def self.recent_viewed_fulldata(user)
+    recent_viewed = History.recent_viewed(user)
+
+    # get related users
+    users = {}
+    tickets = []
+    recent_viewed.each {|item|
+
+      # load article ids
+#      if item.history_object == 'Ticket'
+        ticket = Ticket.find( item['o_id'] ).attributes
+        tickets.push ticket
+#      end
+#      if item.history_object 'Ticket::Article'
+#        tickets.push Ticket::Article.find(item.o_id)
+#      end
+#      if item.history_object 'User'
+#        tickets.push User.find(item.o_id)
+#      end
+          
+      # load users
+      if !users[ ticket['owner_id'] ]
+        users[ ticket['owner_id'] ] = User.user_data_full( ticket['owner_id'] )
+      end
+      if !users[ ticket['created_by_id'] ]
+        users[ ticket['created_by_id'] ] = User.user_data_full( ticket['created_by_id'] )
+      end
+      if !users[ item['created_by_id'] ]
+        users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )
+      end
+    }
+    return {
+      :recent_viewed => recent_viewed,
+      :tickets       => tickets,
+      :users         => users,
+    }
   end
   
   private

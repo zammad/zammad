@@ -271,7 +271,7 @@ class Index extends App.Controller
             @tickets = []
 
             # rebuild navbar with updated ticket count of overviews
-            Spine.trigger 'navupdate_remote'
+            App.WebSocket.send( event: 'navupdate_ticket_overview' )
             
             # fetch overview data again
             @fetch()

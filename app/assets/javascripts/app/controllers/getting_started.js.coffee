@@ -9,13 +9,12 @@ class Index extends App.Controller
 
   constructor: ->
     super
-    
+
     # set title
     @title 'Get Started'
     @navupdate '#get_started'
- 
+
     @master_user = 0
- 
 #    @render()
     @fetch()
 
@@ -43,7 +42,7 @@ class Index extends App.Controller
     )
 
   render: ->
-    
+
     # check authentication, redirect to login if master user already exists
     if !@master_user && !@authenticate()
       @navigate '#login'
@@ -59,7 +58,7 @@ class Index extends App.Controller
   submit: (e) ->
     e.preventDefault()
     @params = @formParam(e.target)
-    
+
     # if no login is given, use emails as fallback
     if !@params.login && @params.email
       @params.login = @params.email
@@ -102,28 +101,24 @@ class Index extends App.Controller
 
           # rerender page    
           @render()
-          
 #      error: =>
 #        @modalHide()
     )
-
 
   relogin: (data, status, xhr) =>
     @log 'login:success', data
 
     # login check
     App.Auth.loginCheck()
-  
+
     # add notify
     Spine.trigger 'notify:removeall'
 #      @notify
 #        type: 'success',
 #        msg: 'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
-      
+
     @el.find('.master_user').fadeOut('slow', =>
       @el.find('.agent_user').fadeIn()
     )
 
-
-    
 Config.Routes['getting_started'] = Index

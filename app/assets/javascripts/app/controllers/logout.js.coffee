@@ -4,11 +4,10 @@ class Index extends Spine.Controller
 
   constructor: ->
     super
-
     @signout()
-  
+
   signout: ->
-    
+
     # remove remote session
     App.Auth.logout()
 
@@ -17,7 +16,7 @@ class Index extends Spine.Controller
     window.Session = {}
     @log 'Session', window.Session
     Spine.trigger 'navrebuild'
-    
+
     # redirect to login 
     @navigate 'login'
 
