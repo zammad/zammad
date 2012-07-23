@@ -5,7 +5,7 @@ class GettingStartedController < ApplicationController
     # check if first user already exists
     master_user = 0
     count = User.all.count()
-    if count >= 2
+    if count == 1
       master_user = 1
     end
 

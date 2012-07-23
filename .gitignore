@@ -17,7 +17,6 @@
 # Ignore .project files
 /.project
 
-<<<<<<< HEAD
 Gemfile.lock
 
 # Ignore mac stuff
@@ -29,6 +28,3 @@ Gemfile.lock
 # Ignore local changes to schema.rb (e. g. through extentions)
 db/schema.rb
 
-=======
-db/schema.rb
->>>>>>> Revert "Created initial object link model"
