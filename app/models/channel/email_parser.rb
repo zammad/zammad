@@ -380,3 +380,41 @@ class Channel::EmailParser
     return string
   end
 end
+
+# workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
+module Mail
+  module Encodings
+    def Encodings.value_decode(str)
+      # Optimization: If there's no encoded-words in the string, just return it
+      return str unless str.index("=?")
+
+      str = str.gsub(/\?=(\s*)=\?/, '?==?') # Remove whitespaces between 'encoded-word's
+
+      # Split on white-space boundaries with capture, so we capture the white-space as well
+      str.split(/([ \t])/).map do |text|
+        if text.index('=?') .nil?
+          text
+        else
+          # Join QP encoded-words that are adjacent to avoid decoding partial chars
+#          text.gsub!(/\?\=\=\?.+?\?[Qq]\?/m, '') if text =~ /\?==\?/
+
+          # Search for occurences of quoted strings or plain strings
+          text.scan(/(                                  # Group around entire regex to include it in matches
+                       \=\?[^?]+\?([QB])\?[^?]+?\?\=  # Quoted String with subgroup for encoding method
+                       |                                # or
+                       .+?(?=\=\?|$)                    # Plain String
+                     )/xmi).map do |matches|
+            string, method = *matches
+            if    method == 'b' || method == 'B'
+              b_value_decode(string)
+            elsif method == 'q' || method == 'Q'
+              q_value_decode(string)
+            else
+              string
+            end
+          end
+        end
+      end.join("")
+    end
+  end
+end
