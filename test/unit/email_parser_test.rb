@@ -191,7 +191,7 @@ Hof",
           :from               => 'Martin Edenhofer <martin@example.de>',
           :from_email         => 'martin@example.de',
           :from_display_name  => 'Martin Edenhofer',
-          :subject            => 'Attchment Test',
+          :subject            => 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
           :plain_part         => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address."
         },
       },

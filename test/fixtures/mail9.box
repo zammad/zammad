@@ -6,7 +6,8 @@ Received: from me.home (93-82-123-230.adsl.highway.telekom.at [93.82.123.230])
 	for <me@example.de>; Mon,  2 Jul 2012 16:14:33 +0100 (BST)
 From: Martin Edenhofer <martin@example.de>
 Content-Type: multipart/alternative; boundary="Apple-Mail=_A3A84DDB-B242-4521-AD6F-24FAEC28042F"
-Subject: Attchment Test
+Subject: =?utf-8?B?QVc6IE9UUlMgLyBBbmZyYWdlIE9UUlMgRWluZsO8aHJ1bmcvUHLDpHNlbnRh?=
+ =?utf-8?Q?tion_[Ticket#11545]?=
 Date: Mon, 2 Jul 2012 17:14:37 +0200
 Message-Id: <4C4ECFBF-BA12-46D9-A407-8E873F20DEF3@example.de>
 To: me@example.de
