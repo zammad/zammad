@@ -8,7 +8,7 @@ class Channel::EmailBuild
     # set organization
     organization = Setting.get('organization')
     if organization then;
-      mail['organization'] = organization.to_s
+      mail['Organization'] = organization.to_s
     end
     
     # notification
