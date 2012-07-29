@@ -66,20 +66,22 @@ module Session
         next if !user_session[:id]
         user = User.find( user_session[:id] )
 
-        # overviews
-        result = Ticket.overview(
+        # overview meta data
+        overview = Ticket.overview(
           :current_user_id => user.id,
         )
-        if state_client_ids[client_id][:overview] != result
-          state_client_ids[client_id][:overview] = result
+        if state_client_ids[client_id][:overview] != overview
+          state_client_ids[client_id][:overview] = overview
 
           # send update to browser  
           Session.transaction( client_id, {
-            :action => 'load',
-            :data   => result,
+            :data   => overview,
             :event  => 'navupdate_ticket_overview',
           })
         end
+
+        # ticket overview lists
+#        list = Ticket.overview_list()
 
         # recent viewed
         recent_viewed = History.recent_viewed(user)
@@ -91,7 +93,6 @@ module Session
 
           # send update to browser  
           Session.transaction( client_id, {
-            :action => 'load',
             :data   => recent_viewed,
             :event  => 'update_recent_viewed',
           })
@@ -110,6 +111,23 @@ module Session
             :collection => 'activity_stream', 
             :data       => activity_stream,
           })
+
+        # ticket create
+        ticket_create_attributes = Ticket.create_attributes(
+          :current_user_id => user.id,
+        )
+        if state_client_ids[client_id][:ticket_create_attributes] != ticket_create_attributes
+          state_client_ids[client_id][:ticket_create_attributes] = ticket_create_attributes
+
+          # send update to browser  
+          Session.transaction( client_id, {
+            :data       => ticket_create_attributes,
+            :collection => 'ticket_create_attributes',
+          })
+        end
+
+        # system settings
+
         end
 
         # rss view

@@ -16,6 +16,7 @@ require 'notification_factory'
 # load lib
 require 'gmaps'
 require 'rss'
+require 'cache'
 
 require 'web_socket'
 

@@ -31,24 +31,24 @@ class User < ApplicationModel
   end
 
   def self.authenticate( username, password )
-    
+
     # do not authenticate with nothing
     return if !username || username == ''
     return if !password || password == '' 
-    
+
     # try to find user based on login
     user = User.where( :login => username, :active => true ).first
-    
+
     # try second lookup with email
     if !user
       user = User.where( :email => username, :active => true ).first
     end
-    
+
     # no user found
     if !user
       return nil
     end
-    
+
     # auth ok
     if user.password == password
       return user
@@ -158,7 +158,8 @@ Your #{config.product_name} Team
 
   def self.find_fulldata(user_id)
 
-    return cache_get(user_id) if cache_get(user_id)
+    cache = self.cache_get(user_id)
+    return cache if cache
 
     # get user
     user = User.find(user_id)
@@ -180,29 +181,31 @@ Your #{config.product_name} Team
     # set roles
     roles = []
     user.roles.select('id, name').where( :active => true ).each { |role|
-      roles.push role
+      roles.push role.attributes
     }
     data['roles'] = roles
     data['role_ids'] = user.role_ids
 
     groups = []
     user.groups.select('id, name').where( :active => true ).each { |group|
-      groups.push group
+      groups.push group.attributes
     }
     data['groups'] = groups
     data['group_ids'] = user.group_ids
 
     organization = user.organization
-    data['organization'] = organization
+    if organization
+      data['organization'] = organization.attributes
+    end
 
     organizations = []
     user.organizations.select('id, name').where( :active => true ).each { |organization|
-      organizations.push organization
+      organizations.push organization.attributes
     }
     data['organizations'] = organizations
     data['organization_ids'] = user.organization_ids
 
-    cache_set(user.id, data)
+    self.cache_set(user.id, data)
 
     return data
   end

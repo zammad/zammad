@@ -240,6 +240,43 @@ class Ticket < ActiveRecord::Base
 
   end
 
+
+#  Ticket.create_attributes(
+#    :current_user_id => 123,
+#  )
+  def self.create_attributes (data)
+
+    # get groups
+    ticket_group_ids = []
+    Group.where( :active => true ).each { |group|
+      ticket_group_ids.push group.id
+    }
+
+    # get related users
+    users = {}
+    ticket_owner_ids = []
+    Ticket.agents.each { |user|
+      ticket_owner_ids.push user.id
+      if !users[user.id]
+        users[user.id] = User.user_data_full(user.id)
+      end
+    }
+
+    # get states
+    ticket_state_ids = []
+    Ticket::State.where( :active => true ).each { |state|
+      ticket_state_ids.push state.id
+    }
+
+    # get priorities
+    ticket_priority_ids = []
+    Ticket::Priority.where( :active => true ).each { |priority|
+      ticket_priority_ids.push priority.id
+    }
+
+    return users, ticket_owner_ids, ticket_group_ids, ticket_state_ids, ticket_priority_ids
+  end
+
   private
     def number_generate
       Ticket.new.number_adapter = Setting.get('ticket_number')

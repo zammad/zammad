@@ -27,49 +27,57 @@ class Index extends App.Controller
 
   # get data / in case also ticket data for split
   fetch: (params) ->
-    App.Com.ajax(
-      id:    'ticket_create',
-      type:  'GET',
-      url:   '/ticket_create',
-      data:  {
-        ticket_id: params.ticket_id,
-        article_id: params.article_id,
-      },
-      processData: true,
-      success: (data, status, xhr) =>
-        
-        # get edit form attributes
-        @edit_form = data.edit_form
 
-        # load user collection
-        @loadCollection( type: 'User', data: data.users )
+    # use cache
+    if window.LastRefresh[ 'ticket_create_attributes' ] && !params.ticket_id && !params.article_id
 
-        # render page
-        if !params.ticket_id && !params.article_id
-          @render()
-        else
+      # get edit form attributes
+      @edit_form = window.LastRefresh[ 'ticket_create_attributes' ].edit_form
+
+      # load user collection
+      @loadCollection( type: 'User', data: window.LastRefresh[ 'ticket_create_attributes' ].users )
+
+      @render()
+    else
+      App.Com.ajax(
+        id:    'ticket_create',
+        type:  'GET',
+        url:   '/ticket_create',
+        data:  {
+          ticket_id: params.ticket_id,
+          article_id: params.article_id,
+        },
+        processData: true,
+        success: (data, status, xhr) =>
+
+          # cache request
+          window.LastRefresh[ 'ticket_create_attributes' ] = data
+
+          # get edit form attributes
+          @edit_form = data.edit_form
 
           # load user collection
           @loadCollection( type: 'User', data: data.users )
-  
+
           # load ticket collection
-          @loadCollection( type: 'Ticket', data: [data.ticket] )
-  
-          # load article collections
-          @loadCollection( type: 'TicketArticle', data: data.articles || [] )
-  
-          # render page
-          t = App.Ticket.find(params.ticket_id).attributes()
-          a = App.TicketArticle.find(params.article_id)
-          
-          # reset owner
-          t.owner_id = 0
-          t.customer_id_autocompletion = a.from
-          t.subject = a.subject || t.title
-          t.body = a.body
-          @log '11111', t
+          if data.ticket && data.articles
+            @loadCollection( type: 'Ticket', data: [data.ticket] )
+
+            # load article collections
+            @loadCollection( type: 'TicketArticle', data: data.articles || [] )
+
+            # render page
+            t = App.Ticket.find(params.ticket_id).attributes()
+            a = App.TicketArticle.find(params.article_id)
+            
+            # reset owner
+            t.owner_id = 0
+            t.customer_id_autocompletion = a.from
+            t.subject = a.subject || t.title
+            t.body = a.body
+            @log '11111', t
           @render( options: t )
-    )
+      )
 
   render: (template = {}) ->
 
