@@ -1,14 +1,18 @@
-class Ticket < ActiveRecord::Base
+class Ticket < ApplicationModel
   before_create   :number_generate, :check_defaults
   before_destroy  :destroy_dependencies
   
   belongs_to    :group
-  has_many      :articles
+  has_many      :articles,                                          :after_add => :cache_update, :after_remove => :cache_update
   belongs_to    :ticket_state,    :class_name => 'Ticket::State'
   belongs_to    :ticket_priority, :class_name => 'Ticket::Priority'
   belongs_to    :owner,           :class_name => 'User'
   belongs_to    :customer,        :class_name => 'User'
   belongs_to    :created_by,      :class_name => 'User'
+
+  after_create  :cache_delete
+  after_update  :cache_delete
+  after_destroy :cache_delete
 
   @@number_adapter = nil
 
@@ -207,7 +211,7 @@ class Ticket < ActiveRecord::Base
         where( :group_id => group_ids ).
         where( overview_selected.condition ).
         order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
-        limit( 4_000 )
+        limit( 500 )
 
       tickets_count = Ticket.where( :group_id => group_ids ).
         where( overview_selected.condition ).
@@ -240,6 +244,15 @@ class Ticket < ActiveRecord::Base
 
   end
 
+#  data = Ticket.full_data(123)
+  def self.full_data(ticket_id)
+    cache = self.cache_get(ticket_id)
+    return cache if cache
+
+    ticket = Ticket.find(ticket_id).attributes
+    self.cache_set( ticket_id, ticket )
+    return ticket
+  end
 
 #  Ticket.create_attributes(
 #    :current_user_id => 123,
@@ -308,27 +321,40 @@ class Ticket < ActiveRecord::Base
   class Number
   end
 
-  class Flag < ActiveRecord::Base
+  class Flag < ApplicationModel
   end
 
-  class Priority < ActiveRecord::Base
+  class Priority < ApplicationModel
     self.table_name = 'ticket_priorities'
+    after_create  :cache_delete
+    after_update  :cache_delete
+    after_destroy :cache_delete
   end
 
-  class StateType < ActiveRecord::Base
+  class StateType < ApplicationModel
+    after_create  :cache_delete
+    after_update  :cache_delete
+    after_destroy :cache_delete
   end
 
-  class State < ActiveRecord::Base
+  class State < ApplicationModel
     belongs_to :ticket_state_type, :class_name => 'Ticket::StateType'
+    after_create  :cache_delete
+    after_update  :cache_delete
+    after_destroy :cache_delete
   end
 
-  class Article < ActiveRecord::Base
+  class Article < ApplicationModel
     before_create :fillup
     after_create  :attachment_check, :communicate
     belongs_to    :ticket
     belongs_to    :ticket_article_type,   :class_name => 'Ticket::Article::Type'
     belongs_to    :ticket_article_sender, :class_name => 'Ticket::Article::Sender'
     belongs_to    :created_by,            :class_name => 'User'
+
+    after_create  :cache_delete
+    after_update  :cache_delete
+    after_destroy :cache_delete
 
     private
       def fillup
@@ -462,13 +488,13 @@ class Ticket < ActiveRecord::Base
         end
       end
 
-    class Flag < ActiveRecord::Base
+    class Flag < ApplicationModel
     end
 
-    class Sender < ActiveRecord::Base
+    class Sender < ApplicationModel
     end
 
-    class Type < ActiveRecord::Base
+    class Type < ApplicationModel
     end
   end
 

@@ -40,21 +40,23 @@ class TicketOverviewsController < ApplicationController
       :view_mode       => params[:view_mode],
       :current_user_id => current_user.id,
       :start_page      => params[:start_page],
+      :array           => true,
     )
  
     # get related users
     users = {}
     tickets = []
     overview[:tickets].each {|ticket|
-      tickets.push ticket.attributes
-      if !users[ ticket.owner_id ]
-        users[ ticket.owner_id ] = User.user_data_full( ticket.owner_id )
+      data = Ticket.full_data(ticket.id)
+      tickets.push data
+      if !users[ data['owner_id'] ]
+        users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
       end
-      if !users[ ticket.customer_id ]
-        users[ ticket.customer_id ] = User.user_data_full( ticket.customer_id )
+      if !users[ data['customer_id'] ]
+        users[ data['customer_id'] ] = User.user_data_full( data['customer_id'] )
       end
-      if !users[ ticket.created_by_id ]
-        users[ ticket.created_by_id ] = User.user_data_full( ticket.created_by_id )
+      if !users[ data['created_by_id'] ]
+        users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
       end
     }
 
