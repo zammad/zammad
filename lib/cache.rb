@@ -5,7 +5,7 @@ module Cache
   end
   def self.write( key, data, params = {} )
     if !params[:expires_in]
-      params[:expires_in] = 48.hours
+      params[:expires_in] = 24.hours
     end
     puts 'Cache.write: ' + key.to_s
     Rails.cache.write( key.to_s, data, params)
@@ -13,5 +13,9 @@ module Cache
   def self.get( key )
     puts 'Cache.get: ' + key.to_s
     Rails.cache.read( key.to_s )
+  end
+  def self.clear
+    puts 'Cache.clear...'
+    Rails.cache.clear
   end
 end

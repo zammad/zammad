@@ -48,13 +48,13 @@ class TicketOverviewsController < ApplicationController
     overview[:tickets].each {|ticket|
       tickets.push ticket.attributes
       if !users[ ticket.owner_id ]
-        users[ ticket.owner_id ] = user_data_full( ticket.owner_id )
+        users[ ticket.owner_id ] = User.user_data_full( ticket.owner_id )
       end
       if !users[ ticket.customer_id ]
-        users[ ticket.customer_id ] = user_data_full( ticket.customer_id )
+        users[ ticket.customer_id ] = User.user_data_full( ticket.customer_id )
       end
       if !users[ ticket.created_by_id ]
-        users[ ticket.created_by_id ] = user_data_full( ticket.created_by_id )
+        users[ ticket.created_by_id ] = User.user_data_full( ticket.created_by_id )
       end
     }
 
@@ -64,7 +64,7 @@ class TicketOverviewsController < ApplicationController
     bulk_owners.each { |user|
       bulk_owner_ids.push user.id
       if !users[ user.id ]
-        users[ user.id ] = user_data_full( user.id )
+        users[ user.id ] = User.user_data_full( user.id )
       end
     }
 
@@ -100,20 +100,20 @@ class TicketOverviewsController < ApplicationController
       # get related users
       users = {}
       if !users[ticket.owner_id]
-        users[ticket.owner_id] = user_data_full(ticket.owner_id)
+        users[ticket.owner_id] = User.user_data_full(ticket.owner_id)
       end
       if !users[ticket.customer_id]
-        users[ticket.customer_id] = user_data_full(ticket.customer_id)
+        users[ticket.customer_id] = User.user_data_full(ticket.customer_id)
       end
       if !users[ticket.created_by_id]
-        users[ticket.created_by_id] = user_data_full(ticket.created_by_id)
+        users[ticket.created_by_id] = User.user_data_full(ticket.created_by_id)
       end
   
       owner_ids = []
       ticket.agent_of_group.each { |user|
         owner_ids.push user.id
         if !users[user.id]
-          users[user.id] = user_data_full(user.id)
+          users[user.id] = User.user_data_full(user.id)
         end
       }
   
@@ -127,7 +127,7 @@ class TicketOverviewsController < ApplicationController
         
       # load users
       if !users[article.created_by_id]
-        users[article.created_by_id] = user_data_full(article.created_by_id)
+        users[article.created_by_id] = User.user_data_full(article.created_by_id)
       end
     end
 
@@ -160,20 +160,20 @@ class TicketOverviewsController < ApplicationController
     # get related users
     users = {}
     if !users[ticket.owner_id]
-      users[ticket.owner_id] = user_data_full(ticket.owner_id)
+      users[ticket.owner_id] = User.user_data_full(ticket.owner_id)
     end
     if !users[ticket.customer_id]
-      users[ticket.customer_id] = user_data_full(ticket.customer_id)
+      users[ticket.customer_id] = User.user_data_full(ticket.customer_id)
     end
     if !users[ticket.created_by_id]
-      users[ticket.created_by_id] = user_data_full(ticket.created_by_id)
+      users[ticket.created_by_id] = User.user_data_full(ticket.created_by_id)
     end
 
     owner_ids = []
     ticket.agent_of_group.each { |user|
       owner_ids.push user.id
       if !users[user.id]
-        users[user.id] = user_data_full(user.id)
+        users[user.id] = User.user_data_full(user.id)
       end
     }
 
@@ -192,7 +192,7 @@ class TicketOverviewsController < ApplicationController
       
       # load users
       if !users[article.created_by_id]
-        users[article.created_by_id] = user_data_full(article.created_by_id)
+        users[article.created_by_id] = User.user_data_full(article.created_by_id)
       end
     }
 
@@ -349,7 +349,7 @@ class TicketOverviewsController < ApplicationController
     # get related users
     users = {}
     history.each do |item|
-      users[ item['created_by_id'] ] = user_data_full( item['created_by_id'] )
+      users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )
       if item['history_object'] == 'Ticket::Article'
         item['type'] = 'Article ' + item['type'].to_s
       else

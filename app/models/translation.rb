@@ -1,4 +1,4 @@
-class Translation < ApplicationModel
+class Translation < ActiveRecord::Base
   before_create :set_initial
 
   private

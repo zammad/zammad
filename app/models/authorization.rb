@@ -1,5 +1,5 @@
 class Authorization < ApplicationModel
-  belongs_to              :user
+  belongs_to              :user,    :after_add => :cache_update, :after_remove => :cache_update
   validates_presence_of   :user_id, :uid, :provider
   validates_uniqueness_of :uid,     :scope => :provider
   

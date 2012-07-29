@@ -18,11 +18,11 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
-   
+
   # If this is a preflight OPTIONS request, then short-circuit the
   # request, return only the necessary headers and return an empty
   # text/plain.
-  
+
   def cors_preflight_check
     if request.method == 'OPTIONS'
       headers['Access-Control-Allow-Origin']      = '*'
@@ -34,8 +34,7 @@ class ApplicationController < ActionController::Base
       return false
     end
   end
-   
-   
+
   private
 
   # execute events      
@@ -81,7 +80,7 @@ class ApplicationController < ActionController::Base
         current_user_set(userdata)
         return true
       end
-      
+
       # return auth not ok
       render(
         :json   => {
@@ -141,7 +140,7 @@ class ApplicationController < ActionController::Base
         :name   => object.class.name
       )
     end
-    
+
     History.create(
       :o_id                        => object.id,
       :history_type_id             => history_type.id,
@@ -158,10 +157,6 @@ class ApplicationController < ActionController::Base
       config[setting.name] = Setting.get(setting.name)
     }
     return config
-  end
-
-  def user_data_full (user_id)
-    user = User.user_data_full(user_id)
   end
 
 end

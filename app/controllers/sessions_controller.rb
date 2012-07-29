@@ -75,7 +75,7 @@ class SessionsController < ApplicationController
 
     # Save the user ID in the session so it can be used in
     # subsequent requests
-    user = user_data_full( user_id )
+    user = User.user_data_full( user_id )
 
     # auto population of default collections
     default_collection = default_collections()
