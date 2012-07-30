@@ -101,17 +101,7 @@ puts 'push overview ' + overview.meta[:url].to_s
             users = {}
             tickets = []
             overview_data[:tickets].each {|ticket|
-              data = Ticket.full_data(ticket.id)
-              tickets.push data
-              if !users[ data['owner_id'] ]
-                users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
-              end
-              if !users[ data['customer_id'] ]
-                users[ data['customer_id'] ] = User.user_data_full( data['customer_id'] )
-              end
-              if !users[ data['created_by_id'] ]
-                users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
-              end
+              self.jobs_ticket( ticket.id, state_client_ids[client_id], tickets, users )
             }
 
             # send update to browser  
@@ -129,70 +119,197 @@ puts 'push overview ' + overview.meta[:url].to_s
         }
 
         # recent viewed
-        recent_viewed = History.recent_viewed(user)
-        if state_client_ids[client_id][:recent_viewed] != recent_viewed
-          state_client_ids[client_id][:recent_viewed] = recent_viewed
-
-          # tickets and users 
-          recent_viewed = History.recent_viewed_fulldata(user)
-
-          # send update to browser  
-          Session.transaction( client_id, {
-            :data   => recent_viewed,
-            :event  => 'update_recent_viewed',
-          })
-        end
+        self.jobs_recent_viewed(
+          user,
+          client_id,
+          state_client_ids[client_id],
+        )
 
         # activity stream
-        activity_stream = History.activity_stream(user)
-        if state_client_ids[client_id][:activity_stream] != activity_stream
-          state_client_ids[client_id][:activity_stream] = activity_stream
-
-          activity_stream = History.activity_stream_fulldata(user)
-
-          # send update to browser  
-          Session.transaction( client_id, {
-            :event      => 'activity_stream_rebuild',
-            :collection => 'activity_stream', 
-            :data       => activity_stream,
-          })
-        end
+        self.jobs_activity_stream(
+          user,
+          client_id,
+          state_client_ids[client_id],
+        )
 
         # ticket create
-        ticket_create_attributes = Ticket.create_attributes(
-          :current_user_id => user.id,
+        self.jobs_create_attributes(
+          user,
+          client_id,
+          state_client_ids[client_id],
         )
-        if state_client_ids[client_id][:ticket_create_attributes] != ticket_create_attributes
-          state_client_ids[client_id][:ticket_create_attributes] = ticket_create_attributes
-
-          # send update to browser  
-          Session.transaction( client_id, {
-            :data       => ticket_create_attributes,
-            :collection => 'ticket_create_attributes',
-          })
-        end
 
         # system settings
 
 
-
         # rss view
-        rss_items = RSS.fetch( 'http://www.heise.de/newsticker/heise-atom.xml', 8 )
-        if state_client_ids[client_id][:rss_items] != rss_items
-          state_client_ids[client_id][:rss_items] = rss_items
-
-          # send update to browser  
-          Session.transaction( client_id, {
-            :event      => 'rss_rebuild',
-            :collection => 'dashboard_rss',
-            :data       => {
-              head:  'Heise ATOM',
-              items: rss_items,
-            },
-          })
-        end
+        self.jobs_rss(
+          user,
+          client_id,
+          state_client_ids[client_id],
+          'http://www.heise.de/newsticker/heise-atom.xml'
+        )
         sleep 1
       }
+    end
+  end
+
+  def self.jobs_ticket(ticket_id, client_state, tickets, users)
+
+    puts 'check :overview'
+
+    if !client_state['tickets']
+      client_state['tickets'] = {}
+    end
+
+    # add ticket if needed
+    data = Ticket.full_data(ticket_id)
+    if client_state['tickets'][ticket_id] != data
+      client_state['tickets'][ticket_id] = data
+      tickets.push data
+    end
+
+    # add users if needed
+    self.jobs_user( data['owner_id'], client_state, users )
+    self.jobs_user( data['customer_id'], client_state, users )
+    self.jobs_user( data['created_by_id'], client_state, users )
+  end
+
+  def self.jobs_user(user_id, client_state, users)
+
+    if !client_state['users']
+      client_state['users'] = {}
+    end
+
+    # get user
+    user = User.user_data_full( user_id )
+
+    # user is already on client and not changed
+    return if client_state['users'][ user_id ] == user
+
+    puts 'push user ... ' + user['login']
+    # user not on client or different
+    users[ user_id ] = user
+    client_state['users'][ user_id ] = user
+  end
+
+  # rss view
+  def self.jobs_rss(user_id, client_id, client_state, url)
+
+    # name space
+    if !client_state[:rss_items]
+      client_state[:rss_items] = {}
+    end
+
+    # only fetch every 5 minutes
+    return if client_state[:rss_items][:last_run] && Time.new - client_state[:rss_items][:last_run] < 5.minutes
+
+    # remember last run
+    client_state[:rss_items][:last_run] = Time.new
+
+    puts 'check :rss'
+    # fetch rss
+    rss_items = RSS.fetch( url, 8 )
+    if client_state[:rss_items][:data] != rss_items
+      client_state[:rss_items][:data] = rss_items
+
+      # send update to browser  
+      Session.transaction( client_id, {
+        :event      => 'rss_rebuild',
+        :collection => 'dashboard_rss',
+        :data       => {
+          head:  'Heise ATOM',
+          items: rss_items,
+        },
+      })
+    end
+  end
+
+  def self.jobs_recent_viewed(user, client_id, client_state)
+
+    # name space
+    if !client_state[:recent_viewed]
+      client_state[:recent_viewed] = {}
+    end
+
+    # only fetch every x seconds
+    return if client_state[:recent_viewed][:last_run] && Time.new - client_state[:recent_viewed][:last_run] < 10.seconds
+
+    # remember last run
+    client_state[:recent_viewed][:last_run] = Time.new
+
+    puts 'check :recent_viewed'
+    recent_viewed = History.recent_viewed(user)
+    if client_state[:recent_viewed][:data] != recent_viewed
+      client_state[:recent_viewed][:data] = recent_viewed
+
+      # tickets and users 
+      recent_viewed = History.recent_viewed_fulldata(user)
+
+      # send update to browser  
+      Session.transaction( client_id, {
+        :data   => recent_viewed,
+        :event  => 'update_recent_viewed',
+      })
+    end
+  end
+
+  def self.jobs_activity_stream(user, client_id, client_state)
+
+    # name space
+    if !client_state[:activity_stream]
+      client_state[:activity_stream] = {}
+    end
+
+    # only fetch every x seconds
+    return if client_state[:activity_stream][:last_run] && Time.new - client_state[:activity_stream][:last_run] < 20.seconds
+
+    # remember last run
+    client_state[:activity_stream][:last_run] = Time.new
+
+    puts 'check :activity_stream'
+
+    activity_stream = History.activity_stream(user)
+    if client_state[:activity_stream][:data] != activity_stream
+      client_state[:activity_stream][:data] = activity_stream
+
+      activity_stream = History.activity_stream_fulldata(user)
+
+      # send update to browser  
+      Session.transaction( client_id, {
+        :event      => 'activity_stream_rebuild',
+        :collection => 'activity_stream', 
+        :data       => activity_stream,
+      })
+    end
+  end
+
+  def self.jobs_create_attributes(user, client_id, client_state)
+
+    # name space
+    if !client_state[:create_attributes]
+      client_state[:create_attributes] = {}
+    end
+
+    # only fetch every x seconds
+    return if client_state[:create_attributes][:last_run] && Time.new - client_state[:create_attributes][:last_run] < 15.seconds
+
+    # remember last run
+    client_state[:create_attributes][:last_run] = Time.new
+
+    puts 'check :create_attributes'
+    ticket_create_attributes = Ticket.create_attributes(
+      :current_user_id => user.id,
+    )
+
+    if client_state[:create_attributes][:data] != ticket_create_attributes
+      client_state[:create_attributes][:data] = ticket_create_attributes
+
+      # send update to browser  
+      Session.transaction( client_id, {
+        :data       => ticket_create_attributes,
+        :collection => 'ticket_create_attributes',
+      })
     end
   end
 
