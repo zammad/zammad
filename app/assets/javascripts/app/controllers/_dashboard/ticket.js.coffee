@@ -72,11 +72,12 @@ class App.DashboardTicket extends App.Controller
     @render( data )
 
   render: (data) ->
-    
+
     @overview      = data.overview
     @tickets_count = data.tickets_count
     @tickets       = data.tickets
-    
+    @ticket_list   = data.ticket_list
+
     pages_total =  parseInt( ( @tickets_count / @overview.view.d.per_page ) + 0.99999 ) || 1
     html = App.view('dashboard/ticket')(
       overview:    @overview,
@@ -93,8 +94,8 @@ class App.DashboardTicket extends App.Controller
     i = start
     while i < end
       i = i + 1
-      if @tickets[ i - 1 ]
-        @tickets_in_table.push @tickets[ i - 1 ]
+      if @ticket_list[ i - 1 ]
+        @tickets_in_table.push App.Ticket.find( @ticket_list[ i - 1 ] )
 
     shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d.overview )
     table = @table(
@@ -104,7 +105,7 @@ class App.DashboardTicket extends App.Controller
       checkbox:          false,
     )
 
-    if _.isEmpty(@tickets)
+    if _.isEmpty(@ticket_list)
       table = ''
       table = '-none-'
 

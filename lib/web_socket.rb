@@ -100,7 +100,9 @@ module Session
 puts 'push overview ' + overview.meta[:url].to_s
             users = {}
             tickets = []
+            ticket_list = []
             overview_data[:tickets].each {|ticket|
+              ticket_list.push ticket.id
               self.jobs_ticket( ticket.id, state_client_ids[client_id], tickets, users )
             }
 
@@ -108,6 +110,7 @@ puts 'push overview ' + overview.meta[:url].to_s
             Session.transaction( client_id, {
               :data   => {
                 :overview      => overview_data[:overview],
+                :ticket_list   => ticket_list,
                 :tickets       => tickets,
                 :tickets_count => overview_data[:tickets_count],
                 :users         => users,

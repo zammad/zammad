@@ -48,6 +48,7 @@ class Index extends App.Controller
       @overview      = cache.overview
       @tickets_count = cache.tickets_count
       @tickets       = cache.tickets
+      @ticket_list   = cache.ticket_list
       @load(cache)
 
     # get data
@@ -86,14 +87,9 @@ class Index extends App.Controller
     # load ticket collection
     @loadCollection( type: 'Ticket', data: data.tickets )
 
-    # remember ticket order
-    if @start_page is 1
-      @tickets = data.tickets
-    else
-      @tickets = @tickets.concat( data.tickets )
-
-    # remember ticket count
-    @tickets_count = data.tickets_count
+    @ticket_list_show = []
+    for ticket_id in @ticket_list
+      @ticket_list_show.push App.Ticket.find(ticket_id)
 
     # remeber bulk attributes
     @bulk = data.bulk
@@ -163,7 +159,7 @@ class Index extends App.Controller
       table = @table(
         overview_extended: shown_all_attributes,
         model:             App.Ticket,
-        objects:           @tickets,
+        objects:           @ticket_list_show,
         checkbox:          true,
       )
     
