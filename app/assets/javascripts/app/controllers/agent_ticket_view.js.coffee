@@ -20,9 +20,6 @@ class Index extends App.Controller
     @title ''
     @navupdate '#ticket/view/' + @view
 
-    @tickets       = []
-    @tickets_count = 0
-    @start_page    = 1
     @meta          = {}
     @bulk          = {}
 
@@ -47,7 +44,6 @@ class Index extends App.Controller
     if cache
       @overview      = cache.overview
       @tickets_count = cache.tickets_count
-      @tickets       = cache.tickets
       @ticket_list   = cache.ticket_list
       @load(cache)
 
@@ -66,7 +62,7 @@ class Index extends App.Controller
 #    )
 
   load: (data) =>
-    
+
     # get meta data
     @overview = data.overview
     App.Overview.refresh( @overview, options: { clear: true } )
@@ -81,12 +77,6 @@ class Index extends App.Controller
       @log 'refetch...', record
       @fetch()
 
-    # load user collection
-    @loadCollection( type: 'User', data: data.users )
-
-    # load ticket collection
-    @loadCollection( type: 'Ticket', data: data.tickets )
-
     @ticket_list_show = []
     for ticket_id in @ticket_list
       @ticket_list_show.push App.Ticket.find(ticket_id)
@@ -99,10 +89,6 @@ class Index extends App.Controller
 
     # render page
     @render()
-        
-    # refresh/load default collections
-#    for key, value of data.default_collections
-#      App[key].refresh( value, options: { clear: true } )
 
   render: ->
 
@@ -110,7 +96,7 @@ class Index extends App.Controller
 
     # set page title
     @title @overview.meta.name
-    
+
     # get total pages
     pages_total =  parseInt( ( @tickets_count / @overview.view[@view_mode].per_page ) + 0.99999 ) || 1
 
@@ -138,13 +124,13 @@ class Index extends App.Controller
 #    html.find('li').removeClass('active')
 #    html.find("[data-id=\"#{@start_page}\"]").parents('li').addClass('active')
     @html html
-    
+
     # create table/overview
     table = ''
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
         overview: @overview,
-        objects:  @tickets,
+        objects:  @ticket_list_show,
         checkbox: true
       )
       table = $(table)
@@ -162,13 +148,13 @@ class Index extends App.Controller
         objects:           @ticket_list_show,
         checkbox:          true,
       )
-    
+
     # append content table
     @el.find('.table-overview').append(table)
-    
+
     # start user popups
     @userPopups()
-    
+
     # start bulk action observ
     @el.find('.bulk-action').append( @bulk_form() )
 
@@ -183,15 +169,6 @@ class Index extends App.Controller
         # show
         @el.find('.bulk-action').removeClass('hide')
     )
-
-    # set waypoint if not already at the end
-    if @start_page < pages_total
-      a = =>
-#        alert('You have scrolled to an entry.')
-        @start_page = @start_page + 1
-        @fetch()
-
-#      $('footer').waypoint( a, { offset: '150%', triggerOnce: true } )
 
   page: (e) =>
     e.preventDefault()
@@ -268,8 +245,6 @@ class Index extends App.Controller
 
           # refresh view after all tickets are proceeded
           if @bulk_count_index == @bulk_count
-
-            @tickets = []
 
             # rebuild navbar with updated ticket count of overviews
             App.WebSocket.send( event: 'navupdate_ticket_overview' )
@@ -448,7 +423,7 @@ class Router extends App.Controller
     cache = App.Store.get( @key )
     if cache
       @tickets_count = cache.tickets_count
-      @tickets       = cache.tickets
+      @ticket_list   = cache.ticket_list
       @redirect()
     else
       App.Com.ajax(
@@ -463,9 +438,9 @@ class Router extends App.Controller
       )
 
   load: (data) =>
-    @tickets       = data.tickets
+    @ticket_list   = data.ticket_list
     @tickets_count = data.tickets_count
-    App.Store.write( data )
+#    App.Store.write( data )
     @redirect()
 
   redirect: =>
@@ -475,17 +450,17 @@ class Router extends App.Controller
 
     # redirect
     if @direction == 'next'
-      if @tickets[ @position ] && @tickets[ @position ]
+      if @ticket_list[ @position ] && @ticket_list[ @position ]
         Config['LastOverviewPosition']++
-        @navigate 'ticket/zoom/' + @tickets[ @position ].id + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_list[ @position ] + '/nav/true'
       else
-        @navigate 'ticket/zoom/' + @tickets[ @position - 1 ].id + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
     else
-      if @tickets[ @position - 2 ] && @tickets[ @position - 2 ].id + '/nav/true'
+      if @ticket_list[ @position - 2 ] && @ticket_list[ @position - 2 ] + '/nav/true'
         Config['LastOverviewPosition']--
-        @navigate 'ticket/zoom/' + @tickets[ @position - 2 ].id + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_list[ @position - 2 ] + '/nav/true'
       else
-        @navigate 'ticket/zoom/' + @tickets[ @position - 1 ].id + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
 
 Config.Routes['ticket/view/:view/:position/:direction'] = Router
 Config.Routes['ticket/view/:view'] = Index

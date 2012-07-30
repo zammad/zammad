@@ -16,7 +16,7 @@ class App.WebSocket
     _instance.auth(args)
 
 # The actual Singleton class
-class _Singleton extends Spine.Controller
+class _Singleton
   queue: []
 
   constructor: (@args) ->
@@ -90,8 +90,13 @@ class _Singleton extends Spine.Controller
 
         # fire event
         if item['event']
-          console.log( "ws:onmessage event:" + item['event'] )
-          Spine.trigger( item['event'], item['data'] )
+          if typeof item['event'] is 'object'
+            for event in item['event']
+              console.log( "ws:onmessage event:" + event )
+              Spine.trigger( event, item['data'] )
+          else
+            console.log( "ws:onmessage event:" + item['event'] )
+            Spine.trigger( item['event'], item['data'] )
 
     # bind to send messages
     Spine.bind 'ws:send', (data) =>

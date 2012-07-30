@@ -8,8 +8,6 @@ class App.DashboardTicket extends App.Controller
 
   constructor: ->
     super
-    @tickets       = []
-    @tickets_count = 0
     @start_page    = 1
     @navupdate '#'
 
@@ -61,13 +59,7 @@ class App.DashboardTicket extends App.Controller
       @log 'refetch...', record
       @fetch()
 
-    # load user collection
-    @loadCollection( type: 'User', data: data.users )
-
-    # load ticket collection
-    @loadCollection( type: 'Ticket', data: data.tickets )
-
-    App.Store.write( @key, data )
+#    App.Store.write( @key, data )
 
     @render( data )
 
@@ -75,7 +67,6 @@ class App.DashboardTicket extends App.Controller
 
     @overview      = data.overview
     @tickets_count = data.tickets_count
-    @tickets       = data.tickets
     @ticket_list   = data.ticket_list
 
     pages_total =  parseInt( ( @tickets_count / @overview.view.d.per_page ) + 0.99999 ) || 1

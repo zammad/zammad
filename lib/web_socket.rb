@@ -111,11 +111,13 @@ puts 'push overview ' + overview.meta[:url].to_s
               :data   => {
                 :overview      => overview_data[:overview],
                 :ticket_list   => ticket_list,
-                :tickets       => tickets,
                 :tickets_count => overview_data[:tickets_count],
-                :users         => users,
+                :collections    => {
+                  :User   => users,
+                  :Ticket => tickets,
+                }
               },
-              :event      => 'ticket_overview_rebuild',
+              :event      => [ 'loadCollection', 'ticket_overview_rebuild' ],
               :collection => 'ticket_overview_' + overview.meta[:url].to_s,
             })
           end
