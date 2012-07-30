@@ -9,8 +9,9 @@ class App.DashboardRss extends App.Controller
       @load(data)
 
     # use cache of first page
-    if window.LastRefresh[ 'dashboard_rss' ]
-      @load( window.LastRefresh[ 'dashboard_rss' ] )
+    cache = App.Store.get( 'dashboard_rss' )
+    if cache
+      @load( cache )
 
   load: (data) =>
     items = data.items || []

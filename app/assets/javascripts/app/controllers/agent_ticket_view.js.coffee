@@ -29,34 +29,40 @@ class Index extends App.Controller
     # set controller to active
     Config['ActiveController'] = '#ticket_overview_' + @view
 
-    # refresh list ever 40 sec.
-    @interval( @fetch, 400000, 'ticket_overview_' + @view )
+    # bind new events
+    Spine.bind 'ticket_overview_rebuild', (data) =>
+      @log 'ticket_overview_rebuild', data
+      @fetch()
+
+    # render
+    @fetch()
 
   fetch: =>
 
     # set new key
-    @key = '#ticket/view/' + @view
+    @key = 'ticket_overview_' + @view
 
     # use cache of first page
-    if window.LastRefresh[ @key ] && @start_page is 1
-      @overview      = window.LastRefresh[ @key ].overview
-      @tickets_count = window.LastRefresh[ @key ].tickets_count
-      @tickets       = window.LastRefresh[ @key ].tickets
-      @render()
+    cache = App.Store.get( @key )
+    if cache
+      @overview      = cache.overview
+      @tickets_count = cache.tickets_count
+      @tickets       = cache.tickets
+      @load(cache)
 
     # get data
-    App.Com.ajax(
-      id:    'ticket_overview_' + @start_page,
-      type:  'GET',
-      url:   '/ticket_overviews',
-      data:  {
-        view:       @view,
-        view_mode:  @view_mode,
-        start_page: @start_page,
-      }
-      processData: true,
-      success: @load
-    )
+#    App.Com.ajax(
+#      id:    'ticket_overview_' + @start_page,
+#      type:  'GET',
+#      url:   '/ticket_overviews',
+#      data:  {
+#        view:       @view,
+#        view_mode:  @view_mode,
+#        start_page: @start_page,
+#      }
+#      processData: true,
+#      success: @load
+#    )
 
   load: (data) =>
     
@@ -93,8 +99,7 @@ class Index extends App.Controller
     @bulk = data.bulk
 
     # set cache
-    if @start_page is 1
-      window.LastRefresh[ @key ] = data
+#    App.Store.write( @key, data )
 
     # render page
     @render()
@@ -189,8 +194,8 @@ class Index extends App.Controller
 #        alert('You have scrolled to an entry.')
         @start_page = @start_page + 1
         @fetch()
-      
-      $('footer').waypoint( a, { offset: '150%', triggerOnce: true } )
+
+#      $('footer').waypoint( a, { offset: '150%', triggerOnce: true } )
 
   page: (e) =>
     e.preventDefault()
@@ -282,7 +287,7 @@ class Index extends App.Controller
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
     position = $(e.target).parents('[data-position]').data('position')
-    
+
     # set last overview
     Config['LastOverview']         = @view
     Config['LastOverviewPosition'] = position
@@ -444,9 +449,10 @@ class Router extends App.Controller
     @key = '#ticket/view/array/' + @view
 
     # get data
-    if window.LastRefresh[ @key ]
-      @tickets_count = window.LastRefresh[ @key ].tickets_count
-      @tickets       = window.LastRefresh[ @key ].tickets
+    cache = App.Store.get( @key )
+    if cache
+      @tickets_count = cache.tickets_count
+      @tickets       = cache.tickets
       @redirect()
     else
       App.Com.ajax(
@@ -463,9 +469,7 @@ class Router extends App.Controller
   load: (data) =>
     @tickets       = data.tickets
     @tickets_count = data.tickets_count
-    window.LastRefresh[ @key ] = {}
-    window.LastRefresh[ @key ]['tickets_count'] = @tickets_count
-    window.LastRefresh[ @key ]['tickets']      = @tickets
+    App.Store.write( data )
     @redirect()
 
   redirect: =>

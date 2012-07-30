@@ -81,7 +81,52 @@ module Session
         end
 
         # ticket overview lists
-#        list = Ticket.overview_list()
+        overviews = Ticket.overview_list(
+          :current_user_id => user.id,
+        )
+        if !state_client_ids[client_id][:overview_data]
+          state_client_ids[client_id][:overview_data] = {}
+        end
+        overviews.each { |overview|
+          overview_data = Ticket.overview(
+            :view            => overview.meta[:url],
+#            :view_mode       => params[:view_mode],
+            :current_user_id => user.id,
+            :array           => true,
+          )
+          
+          if state_client_ids[client_id][:overview_data][ overview.meta[:url] ] != overview_data
+            state_client_ids[client_id][:overview_data][ overview.meta[:url] ] = overview_data
+puts 'push overview ' + overview.meta[:url].to_s
+            users = {}
+            tickets = []
+            overview_data[:tickets].each {|ticket|
+              data = Ticket.full_data(ticket.id)
+              tickets.push data
+              if !users[ data['owner_id'] ]
+                users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
+              end
+              if !users[ data['customer_id'] ]
+                users[ data['customer_id'] ] = User.user_data_full( data['customer_id'] )
+              end
+              if !users[ data['created_by_id'] ]
+                users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
+              end
+            }
+
+            # send update to browser  
+            Session.transaction( client_id, {
+              :data   => {
+                :overview      => overview_data[:overview],
+                :tickets       => tickets,
+                :tickets_count => overview_data[:tickets_count],
+                :users         => users,
+              },
+              :event      => 'ticket_overview_rebuild',
+              :collection => 'ticket_overview_' + overview.meta[:url].to_s,
+            })
+          end
+        }
 
         # recent viewed
         recent_viewed = History.recent_viewed(user)
@@ -111,6 +156,7 @@ module Session
             :collection => 'activity_stream', 
             :data       => activity_stream,
           })
+        end
 
         # ticket create
         ticket_create_attributes = Ticket.create_attributes(
@@ -128,7 +174,7 @@ module Session
 
         # system settings
 
-        end
+
 
         # rss view
         rss_items = RSS.fetch( 'http://www.heise.de/newsticker/heise-atom.xml', 8 )

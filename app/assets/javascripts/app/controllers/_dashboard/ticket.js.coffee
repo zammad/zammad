@@ -13,31 +13,38 @@ class App.DashboardTicket extends App.Controller
     @start_page    = 1
     @navupdate '#'
 
-    # refresh list ever 40 sec.
-    @interval( @fetch, 400000, 'dashboard_ticket_overview_' + @view )
+    # bind new events
+    Spine.bind 'ticket_overview_rebuild', (data) =>
+      @log 'ticket_overview_rebuild', data
+      @fetch()
+
+    # render
+    @fetch()
 
   fetch: =>
 
     # set new key
-    @key = '#dashboard_ticket_overview_' + @view
+    @key = 'ticket_overview_' + @view
 
     # use cache of first page
-    if window.LastRefresh[ @key ] && @start_page is 1
-      @render( window.LastRefresh[ @key ] )
+    cache = App.Store.get( @key )
+    if cache
+#      @render( cache )
+      @load( cache )
 
     # get data
-    App.Com.ajax(
-      id:    'dashboard_ticket_' + @key,
-      type:  'GET',
-      url:   '/ticket_overviews',
-      data:  {
-        view:       @view,
-        view_mode:  'd',
-        start_page: @start_page,
-      }
-      processData: true,
-      success: @load
-    )
+#    App.Com.ajax(
+#      id:    'dashboard_ticket_' + @key,
+#      type:  'GET',
+#      url:   '/ticket_overviews',
+#      data:  {
+#        view:       @view,
+#        view_mode:  'd',
+#        start_page: @start_page,
+#      }
+#      processData: true,
+#      success: @load
+#    )
 
   load: (data) =>
 
@@ -60,9 +67,7 @@ class App.DashboardTicket extends App.Controller
     # load ticket collection
     @loadCollection( type: 'Ticket', data: data.tickets )
 
-    # set cache
-    if @start_page is 1
-      window.LastRefresh[ @key ] = data
+    App.Store.write( @key, data )
 
     @render( data )
 
@@ -82,12 +87,20 @@ class App.DashboardTicket extends App.Controller
     html.find('li').removeClass('active')
     html.find(".page [data-id=\"#{@start_page}\"]").parents('li').addClass('active')
 
+    @tickets_in_table = []
+    start = ( @start_page-1 ) * 5
+    end = ( @start_page ) * 5
+    i = start
+    while i < end
+      i = i + 1
+      if @tickets[ i - 1 ]
+        @tickets_in_table.push @tickets[ i - 1 ]
 
     shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d.overview )
     table = @table(
       overview_extended: shown_all_attributes,
       model:             App.Ticket,
-      objects:           @tickets,
+      objects:           @tickets_in_table,
       checkbox:          false,
     )
 

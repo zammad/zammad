@@ -7,7 +7,7 @@ class App.DashboardActivityStream extends App.Controller
   constructor: ->
     super
     @items = []
-    
+
     # refresh list ever 140 sec.
 #    @interval( @fetch, 1400000, 'dashboard_activity_stream' )
     @fetch()
@@ -16,11 +16,12 @@ class App.DashboardActivityStream extends App.Controller
       @fetch()
 
   fetch: =>
-    
+
     # use cache of first page
-    if window.LastRefresh[ 'activity_stream' ]
-      @load( window.LastRefresh[ 'activity_stream' ] )
-    
+    cache = App.Store.get( 'activity_stream' )
+    if cache
+      @load( cache )
+
 #    # get data
 #    App.Com.ajax(
 #      id:    'dashoard_activity_stream',
@@ -44,9 +45,6 @@ class App.DashboardActivityStream extends App.Controller
 
     # load article collection
     @loadCollection( type: 'TicketArticle', data: data.articles )
-
-    # set cache
-    window.LastRefresh[ 'dashboard_activity_stream' ] = items
 
     @render(items)
 

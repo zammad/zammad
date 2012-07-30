@@ -86,7 +86,7 @@ class _Singleton extends Spine.Controller
         # fill collection
         if item['collection']
           console.log( "ws:onmessage collection:" + item['collection'] )
-          window.LastRefresh[ item['collection'] ] = item['data']
+          App.Store.write( item['collection'], item['data'] )
 
         # fire event
         if item['event']

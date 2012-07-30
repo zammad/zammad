@@ -29,13 +29,15 @@ class Index extends App.Controller
   fetch: (params) ->
 
     # use cache
-    if window.LastRefresh[ 'ticket_create_attributes' ] && !params.ticket_id && !params.article_id
+    cache = App.Store.get( 'ticket_create_attributes' )
+
+    if cache && !params.ticket_id && !params.article_id
 
       # get edit form attributes
-      @edit_form = window.LastRefresh[ 'ticket_create_attributes' ].edit_form
+      @edit_form = cache.edit_form
 
       # load user collection
-      @loadCollection( type: 'User', data: window.LastRefresh[ 'ticket_create_attributes' ].users )
+      @loadCollection( type: 'User', data: cache.users )
 
       @render()
     else
@@ -51,7 +53,7 @@ class Index extends App.Controller
         success: (data, status, xhr) =>
 
           # cache request
-          window.LastRefresh[ 'ticket_create_attributes' ] = data
+          App.Store.write( 'ticket_create_attributes', data )
 
           # get edit form attributes
           @edit_form = data.edit_form
