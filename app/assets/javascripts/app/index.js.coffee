@@ -27,6 +27,7 @@
 #= require ./lib/websocket.js.coffee
 #= require ./lib/auth.js.coffee
 #= require ./lib/i18n.js.coffee
+#= require ./lib/store.js.coffee
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
