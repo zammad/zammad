@@ -23,9 +23,13 @@ class Index extends App.Controller
     @navupdate '#'
 
     @edit_form = undefined
-#    @render()
     @ticket_id = params.ticket_id
     @article_id = params.article_id
+
+    @key = 'ticket::' + @ticket_id
+    cache = App.Store.get( @key )
+    if cache
+      @load(cache)
     @fetch(@ticket_id)
 
   fetch: (ticket_id) ->
@@ -40,25 +44,29 @@ class Index extends App.Controller
       }
       processData: true,
       success: (data, status, xhr) =>
-        # reset old indexes
-        @ticket = undefined
-        @articles = undefined
-        
-        # get edit form attributes
-        @edit_form = data.edit_form
-
-        # load user collection
-        @loadCollection( type: 'User', data: data.users )
-
-        # load ticket collection
-        @loadCollection( type: 'Ticket', data: [data.ticket] )
-
-        # load article collections
-        @loadCollection( type: 'TicketArticle', data: data.articles || [] )
-
-        # render page
-        @render()
+        @load(data)
+        App.Store.write( @key, data )
     )
+
+  load: (data) =>
+    # reset old indexes
+    @ticket = undefined
+    @articles = undefined
+    
+    # get edit form attributes
+    @edit_form = data.edit_form
+
+    # load user collection
+    @loadCollection( type: 'User', data: data.users )
+
+    # load ticket collection
+    @loadCollection( type: 'Ticket', data: [data.ticket] )
+
+    # load article collections
+    @loadCollection( type: 'TicketArticle', data: data.articles || [] )
+
+    # render page
+    @render()
 
   render: =>
 
