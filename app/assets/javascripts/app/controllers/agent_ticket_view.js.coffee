@@ -446,7 +446,7 @@ class Router extends App.Controller
     super
 
     # set new key
-    @key = '#ticket/view/array/' + @view
+    @key = 'ticket_overview_' + @view
 
     # get data
     cache = App.Store.get( @key )
