@@ -16,7 +16,7 @@ class App.WebSocket
     _instance.auth(args)
 
 # The actual Singleton class
-class _Singleton
+class _Singleton extends Spine.Controller
   queue: []
 
   constructor: (@args) ->
