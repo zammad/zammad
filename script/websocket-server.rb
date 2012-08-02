@@ -15,6 +15,7 @@ options = {
   :k => '/path/to/server.key',
   :c => '/path/to/server.crt',
 }
+tls_options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: websocket-server.rb [options]"
 
@@ -28,10 +29,10 @@ OptionParser.new do |opts|
     options[:s] = s
   end
   opts.on("-k", "--private-key [OPT]", "/path/to/server.key for secure connections") do |k|
-    options[:k] = k
+    tls_options[:private_key_file] = k
   end
   opts.on("-c", "--certificate [OPT]", "/path/to/server.crt for secure connections") do |c|
-    options[:c] = c
+    tls_options[:cert_chain_file] = c
   end
 end.parse!
 
@@ -40,10 +41,7 @@ puts "Starting websocket server on #{ options[:b] }:#{ options[:p] } (secure:#{ 
 
 @clients = {}
 EventMachine.run {
-  EventMachine::WebSocket.start( :host => options[:b], :port => options[:p], :secure => options[:s], :tls_options => {
-      :private_key_file => options[:p],
-      :cert_chain_file  => options[:c],
-  }) do |ws|
+  EventMachine::WebSocket.start( :host => options[:b], :port => options[:p], :secure => options[:s], :tls_options => tls_options ) do |ws|
 
     # register client connection
     ws.onopen {

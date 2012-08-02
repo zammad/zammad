@@ -57,7 +57,11 @@ class _Singleton extends Spine.Controller
       )
       return
 
-    @ws = new window.WebSocket( "ws://" + window.location.hostname + ":6042/" )
+    protocol = 'ws://'
+    if window.location.protocol is 'https:'
+      protocol = 'wss://'
+
+    @ws = new window.WebSocket( protocol + window.location.hostname + ":6042/" )
 
     # Set event handlers.
     @ws.onopen = =>
