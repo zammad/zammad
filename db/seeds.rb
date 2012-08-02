@@ -104,7 +104,7 @@ Setting.create(
       {
         :display  => '',
         :null     => true,
-        :name     => 'storage', 
+        :name     => 'http_type', 
         :tag      => 'select',
         :options  => {
           'https' => 'https',
@@ -1234,8 +1234,45 @@ Overview.create(
   },
   :meta => {
     :url  => 'all_unassigned',
-    :name => 'Unassigned Tickets',
+    :name => 'Unassigned & Open Tickets',
     :prio => 1001,
+  },
+  :view => {
+    :d => {
+      :overview => [
+        'title', 'customer', 'ticket_state', 'group', 'created_at'
+      ],
+      :per_page => 5,
+    },
+    :s => {
+      :overview => [
+        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
+      ],
+      :per_page => 30,
+    },
+    :m => {
+      :overview => [
+        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
+      ],
+      :per_page => 20,
+    },
+    :view_mode_default => 's',
+  }
+)
+
+Overview.create(
+  :name => 'all_open',
+  :condition => {
+    :ticket_state_id => [1,2,3],
+  },
+  :order => {
+    :by        => 'created_at',
+    :direction => 'ASC',
+  },
+  :meta => {
+    :url  => 'all_open',
+    :name => 'All Open Tickets',
+    :prio => 1002,
   },
   :view => {
     :d => {
@@ -1272,7 +1309,7 @@ Overview.create(
   :meta => {
     :url  => 'all_escalated',
     :name => 'Escalated Tickets',
-    :prio => 1002,
+    :prio => 1010,
   },
   :view => {
     :d => {
@@ -1310,7 +1347,7 @@ Overview.create(
   :meta => {
     :url  => 'my_pending_reached',
     :name => 'My pending reached Tickets',
-    :prio => 1003,
+    :prio => 1020,
   },
   :view => {
     :d => {
@@ -1546,6 +1583,7 @@ Translation.create( :locale => 'de', :source => "updated", :target => "aktuallis
 Translation.create( :locale => 'de', :source => "created", :target => "erstellte" )
 Translation.create( :locale => 'de', :source => "My assigned Tickets", :target => "Meine zugewisenen Tickets" )
 Translation.create( :locale => 'de', :source => "Unassigned Tickets", :target => "Nicht zugewisene/freie Tickets" )
+Translation.create( :locale => 'de', :source => "Unassigned & Open Tickets", :target => "Nicht zugewisene & offene Tickets" )
 Translation.create( :locale => 'de', :source => "All Tickets", :target => "Alle Tickets" )
 Translation.create( :locale => 'de', :source => "Escalated Tickets", :target => "Eskallierte Tickets" )
 Translation.create( :locale => 'de', :source => "My pending reached Tickets", :target => "Meine warten erreicht Tickets" )
@@ -1615,4 +1653,5 @@ Translation.create( :locale => 'de', :source => "chat", :target => "Chat" )
 Translation.create( :locale => 'de', :source => "sms", :target => "SMS" )
 Translation.create( :locale => 'de', :source => "twitter status", :target => "Twitter Status Meldung" )
 Translation.create( :locale => 'de', :source => "twitter direct-message", :target => "Twitter Direkt-Nachricht" )
+Translation.create( :locale => 'de', :source => "All Open Tickets", :target => "Alle offenen Tickets" )
 #Translation.create( :locale => 'de', :source => "", :target => "" )
