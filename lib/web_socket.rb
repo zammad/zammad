@@ -72,7 +72,7 @@ module Session
         end
 
         # check user cache
-        if self.jobs_user_needed( state_user_ids[ user.id ], :overview, 1.seconds )
+        if self.jobs_user_needed( state_user_ids[ user.id ], :overview, 2.seconds )
           puts "fetch for user_id #{ user.id } :overview..."
           # overview meta data
           overview = Ticket.overview(
@@ -105,7 +105,7 @@ module Session
 
           # check user cache
           cache_key = ( 'overview_data_' + overview.meta[:url] ).to_sym
-          if self.jobs_user_needed( state_user_ids[ user.id ], cache_key, 1.seconds )
+          if self.jobs_user_needed( state_user_ids[ user.id ], cache_key, 2.seconds )
             puts "fetch for user_id #{ user.id } #{ cache_key.to_s }..."
               overview_data = Ticket.overview(
                 :view            => overview.meta[:url],
@@ -181,7 +181,7 @@ puts 'push overview ' + overview.meta[:url].to_s
           state_client_ids[client_id],
           'http://www.heise.de/newsticker/heise-atom.xml'
         )
-        sleep 1
+        sleep 0.5
       }
     end
   end
@@ -380,18 +380,18 @@ puts 'push overview ' + overview.meta[:url].to_s
     end
 
     # run needed on initial
-    if !item[:last_run]
+    if !item[key][:last_run]
 
       # set new last run
-      item[:last_run] = Time.new
+      item[key][:last_run] = Time.new
       return true
     end
 
     # run needed if ttl is over
-    if Time.new - item[:last_run] > ttl
+    if Time.new - item[key][:last_run] > ttl
 
       # set new last run
-      item[:last_run] = Time.new
+      item[key][:last_run] = Time.new
       return true
     end
 
