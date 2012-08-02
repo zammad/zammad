@@ -82,9 +82,9 @@ EventMachine.run {
   end
 
   EventMachine.add_periodic_timer(0.4) {
-#    puts "loop"
+    puts "loop"
     @clients.each { |client_id, client|
-#      puts 'checking client...' + client_id.to_s
+      puts 'checking client...' + client_id.to_s
       begin
         queue = Session.queue( client_id )
         if queue && queue[0]

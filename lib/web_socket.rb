@@ -52,6 +52,7 @@ module Session
 
   def self.jobs
     state_client_ids = {}
+    state_user_ids = {}
     while true
       client_ids = self.sessions
       client_ids.each { |client_id|
@@ -66,10 +67,23 @@ module Session
         next if !user_session[:id]
         user = User.find( user_session[:id] )
 
-        # overview meta data
-        overview = Ticket.overview(
-          :current_user_id => user.id,
-        )
+        if !state_user_ids[ user.id ]
+            state_user_ids[ user.id ] = {}
+        end
+
+        # check user cache
+        if self.jobs_user_needed( state_user_ids[ user.id ], :overview, 1.seconds )
+          puts "fetch for user_id #{ user.id } :overview..."
+          # overview meta data
+          overview = Ticket.overview(
+            :current_user_id => user.id,
+          )
+          self.jobs_user_data_set( state_user_ids[ user.id ], :overview, overview )
+        else
+          puts "use user_id #{ user.id } cache for :overview..."
+          overview = self.jobs_user_data_get( state_user_ids[ user.id ], :overview )
+        end
+
         if state_client_ids[client_id][:overview] != overview
           state_client_ids[client_id][:overview] = overview
 
@@ -88,15 +102,25 @@ module Session
           state_client_ids[client_id][:overview_data] = {}
         end
         overviews.each { |overview|
-          overview_data = Ticket.overview(
-            :view            => overview.meta[:url],
-#            :view_mode       => params[:view_mode],
-            :current_user_id => user.id,
-            :array           => true,
-          )
-          
-          if state_client_ids[client_id][:overview_data][ overview.meta[:url] ] != overview_data
-            state_client_ids[client_id][:overview_data][ overview.meta[:url] ] = overview_data
+
+          # check user cache
+          cache_key = ( 'overview_data_' + overview.meta[:url] ).to_sym
+          if self.jobs_user_needed( state_user_ids[ user.id ], cache_key, 1.seconds )
+            puts "fetch for user_id #{ user.id } #{ cache_key.to_s }..."
+              overview_data = Ticket.overview(
+                :view            => overview.meta[:url],
+    #            :view_mode       => params[:view_mode],
+                :current_user_id => user.id,
+                :array           => true,
+              )
+              self.jobs_user_data_set( state_user_ids[ user.id ], cache_key, overview_data )
+          else
+            puts "use user_id #{ user.id } cache for #{ cache_key.to_s }..."
+            overview_data = self.jobs_user_data_get( state_user_ids[ user.id ], cache_key )
+          end
+
+          if state_client_ids[client_id][ cache_key ] != overview_data
+            state_client_ids[client_id][ cache_key ] = overview_data
 puts 'push overview ' + overview.meta[:url].to_s
             users = {}
             tickets = []
@@ -127,7 +151,8 @@ puts 'push overview ' + overview.meta[:url].to_s
         self.jobs_recent_viewed(
           user,
           client_id,
-          state_client_ids[client_id],
+          state_client_ids[ client_id ],
+          state_user_ids[ user.id ],
         )
 
         # activity stream
@@ -135,6 +160,7 @@ puts 'push overview ' + overview.meta[:url].to_s
           user,
           client_id,
           state_client_ids[client_id],
+          state_user_ids[ user.id ],
         )
 
         # ticket create
@@ -142,6 +168,7 @@ puts 'push overview ' + overview.meta[:url].to_s
           user,
           client_id,
           state_client_ids[client_id],
+          state_user_ids[ user.id ],
         )
 
         # system settings
@@ -230,7 +257,7 @@ puts 'push overview ' + overview.meta[:url].to_s
     end
   end
 
-  def self.jobs_recent_viewed(user, client_id, client_state)
+  def self.jobs_recent_viewed(user, client_id, client_state, state_user )
 
     # name space
     if !client_state[:recent_viewed]
@@ -238,13 +265,24 @@ puts 'push overview ' + overview.meta[:url].to_s
     end
 
     # only fetch every x seconds
-    return if client_state[:recent_viewed][:last_run] && Time.new - client_state[:recent_viewed][:last_run] < 10.seconds
+    return if client_state[:recent_viewed][:last_run] && Time.new - client_state[:recent_viewed][:last_run] < 4.seconds
 
     # remember last run
     client_state[:recent_viewed][:last_run] = Time.new
 
     puts 'check :recent_viewed'
-    recent_viewed = History.recent_viewed(user)
+
+    # fetch data
+    if self.jobs_user_needed( state_user, :recent_viewed, 10.seconds )
+      puts "fetch for user_id #{ user.id } :recent_viewed..."
+
+      recent_viewed = History.recent_viewed(user)
+      self.jobs_user_data_set( state_user, :recent_viewed, recent_viewed )
+    else
+      puts "use user_id #{ user.id } cache for :recent_viewed..."
+      recent_viewed = self.jobs_user_data_get( state_user, :recent_viewed )
+    end
+    
     if client_state[:recent_viewed][:data] != recent_viewed
       client_state[:recent_viewed][:data] = recent_viewed
 
@@ -259,7 +297,7 @@ puts 'push overview ' + overview.meta[:url].to_s
     end
   end
 
-  def self.jobs_activity_stream(user, client_id, client_state)
+  def self.jobs_activity_stream(user, client_id, client_state, state_user)
 
     # name space
     if !client_state[:activity_stream]
@@ -267,14 +305,23 @@ puts 'push overview ' + overview.meta[:url].to_s
     end
 
     # only fetch every x seconds
-    return if client_state[:activity_stream][:last_run] && Time.new - client_state[:activity_stream][:last_run] < 20.seconds
+    return if client_state[:activity_stream][:last_run] && Time.new - client_state[:activity_stream][:last_run] < 8.seconds
 
     # remember last run
     client_state[:activity_stream][:last_run] = Time.new
 
     puts 'check :activity_stream'
 
-    activity_stream = History.activity_stream(user)
+    if self.jobs_user_needed( state_user, :activity_stream, 3.seconds )
+      puts "fetch for user_id #{ user.id } :activity_stream..."
+
+      activity_stream = History.activity_stream(user)
+      self.jobs_user_data_set( state_user, :activity_stream, activity_stream )
+    else
+      puts "use user_id #{ user.id } cache for :activity_stream..."
+      activity_stream = self.jobs_user_data_get( state_user, :activity_stream )
+    end
+
     if client_state[:activity_stream][:data] != activity_stream
       client_state[:activity_stream][:data] = activity_stream
 
@@ -289,7 +336,7 @@ puts 'push overview ' + overview.meta[:url].to_s
     end
   end
 
-  def self.jobs_create_attributes(user, client_id, client_state)
+  def self.jobs_create_attributes(user, client_id, client_state, state_user)
 
     # name space
     if !client_state[:create_attributes]
@@ -297,15 +344,23 @@ puts 'push overview ' + overview.meta[:url].to_s
     end
 
     # only fetch every x seconds
-    return if client_state[:create_attributes][:last_run] && Time.new - client_state[:create_attributes][:last_run] < 15.seconds
+    return if client_state[:create_attributes][:last_run] && Time.new - client_state[:create_attributes][:last_run] < 12.seconds
 
     # remember last run
     client_state[:create_attributes][:last_run] = Time.new
 
     puts 'check :create_attributes'
-    ticket_create_attributes = Ticket.create_attributes(
-      :current_user_id => user.id,
-    )
+    if self.jobs_user_needed( state_user, :create_attributes, 26.seconds )
+      puts "fetch for user_id #{ user.id } :create_attributes..."
+
+      ticket_create_attributes = Ticket.create_attributes(
+        :current_user_id => user.id,
+      )
+      self.jobs_user_data_set( state_user, :create_attributes, ticket_create_attributes )
+    else
+      puts "use user_id #{ user.id } cache for :create_attributes..."
+      ticket_create_attributes = self.jobs_user_data_get( state_user, :create_attributes )
+    end
 
     if client_state[:create_attributes][:data] != ticket_create_attributes
       client_state[:create_attributes][:data] = ticket_create_attributes
@@ -317,6 +372,42 @@ puts 'push overview ' + overview.meta[:url].to_s
       })
     end
   end
+
+  def self.jobs_user_needed( item, key, ttl )
+
+    if !item[key]
+      item[key] = {}
+    end
+
+    # run needed on initial
+    if !item[:last_run]
+
+      # set new last run
+      item[:last_run] = Time.new
+      return true
+    end
+
+    # run needed if ttl is over
+    if Time.new - item[:last_run] > ttl
+
+      # set new last run
+      item[:last_run] = Time.new
+      return true
+    end
+
+    # no new run needed
+    return false
+  end
+
+  def self.jobs_user_data_get( item, key )
+    return item[key][:data]
+  end
+
+  def self.jobs_user_data_set( item, key, data )
+    item[key][:data] = data
+    return true
+  end
+
 
   def self.sessions
     path = @path + '/'
