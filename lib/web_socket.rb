@@ -33,31 +33,25 @@ module Session
   end
 
   def self.transaction( client_id, data )
-    filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s
-    if File::exists?( filename )
-      filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s + '-1'
-      if File::exists?( filename )
-        filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s + '-2'
-        if File::exists?( filename )
-          filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s + '-3'
-          if File::exists?( filename )
-            filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s + '-4'
-            if File::exists?( filename )
-              filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s + '-5'
-              if File::exists?( filename )
-                filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s + '-6'
-                if File::exists?( filename )
-                  filename = @path + '/' + client_id.to_s + '/transaction-' + Time.new().to_i.to_s + '-7'
-                end
-              end
-            end
+    path = @path + '/' + client_id.to_s + '/'
+    filename = 'transaction-' + Time.new().to_i.to_s + '-' + rand(999999).to_s
+    if File::exists?( path + filename )
+      filename = filename + '-1'
+      if File::exists?( path + filename )
+        filename = filename + '-1'
+        if File::exists?( path + filename )
+          filename = filename + '-1'
+          if File::exists?( path + filename )
+            filename = filename  + '-' + rand(999999).to_s
           end
         end
       end
     end
-    File.open( filename, 'w' ) { |file|
+    return false if !File.directory? path
+    File.open( path + 'a-' + filename, 'w' ) { |file|
       file.puts data.to_json
     }
+    FileUtils.mv( path + 'a-' + filename, path + filename)
     return true
   end
 
@@ -114,22 +108,25 @@ module Session
     data = []
     Dir.foreach( path ) do |entry|
       if /^transaction/.match( entry )
-        data.push Session.queue_file( path + entry )
+        data.push Session.queue_file( path, entry )
       end
     end
     return data
   end
 
-  def self.queue_file( filename )
+  def self.queue_file( path, filename )
+    file_old = path + filename
+    file_new = path + 'a-' + filename
+    FileUtils.mv( file_old, file_new )
     data = nil
-    File.open( filename, 'r' ) { |file|
-      all = ''
+    all = ''
+    File.open( file_new, 'r' ) { |file|
       while line = file.gets  
         all = all + line  
       end
-      data = JSON.parse( all )
     }
-    File.delete( filename )
+    File.delete( file_new )
+    data = JSON.parse( all )
     return data
   end
 
