@@ -221,12 +221,17 @@ class Ticket < ApplicationModel
         order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
         limit( 500 )
 
+      ticket_ids = []
+      tickets.each { |ticket|
+        ticket_ids.push ticket.id
+      }
+
       tickets_count = Ticket.where( :group_id => group_ids ).
         where( overview_selected.condition ).
         count() 
 
       return {
-        :tickets       => tickets,
+        :tickets       => ticket_ids,
         :tickets_count => tickets_count,
         :overview      => overview_selected_raw,
       }

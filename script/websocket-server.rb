@@ -81,20 +81,25 @@ EventMachine.run {
     }
   end
 
-  EventMachine.add_periodic_timer(0.4) {
+  EventMachine.add_periodic_timer(0.2) {
     puts "loop"
     @clients.each { |client_id, client|
-      puts 'checking client...' + client_id.to_s
+      log 'checking waiting data...', client_id
       begin
         queue = Session.queue( client_id )
         if queue && queue[0]
-          puts "send to #{client_id} " + queue.inspect
+#          log "send " + queue.inspect, client_id
+          log "send data to client", client_id
           client[:websocket].send( queue.to_json )
         end
-      rescue
-        puts 'problem'
+      rescue => e
+        log 'problem:' + e.inspect, client_id
       end
     }
   }
+  
+  def log( data, client_id )
+    puts "#{Time.now}:client(#{ client_id }) #{ data }"
+  end
 
 }
