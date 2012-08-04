@@ -7,6 +7,10 @@ class App.WebSocket
       _instance ?= new _Singleton
     _instance
 
+  @close: (args) -> # Must be a static method
+    if _instance isnt undefined
+      _instance.close()
+
   @send: (args) -> # Must be a static method
     @connect()
     _instance.send(args)
@@ -48,6 +52,24 @@ class _Singleton extends Spine.Controller
   close: =>
     @ws.close()
 
+  ping: =>
+    console.log 'send websockend ping'
+    @send( { action: 'ping' } )
+
+    # check if ping is back within 30 sec.
+    if @check_id
+      clearTimeout(@check_id)
+    check = =>
+      console.log 'no websockend ping response, reconnect...'
+      @close()
+    @check_id = @delay check, 60000
+
+  pong: ->
+    console.log 'received websockend ping'
+
+    # test again after 10 sec.
+    @delay @ping, 30000
+
   connect: =>
 #    console.log '------------ws connect....--------------'
 
@@ -80,12 +102,19 @@ class _Singleton extends Spine.Controller
         @send(item)
       @queue = []
 
-    @ws.onmessage = (e) ->
+      # send ping to check connection
+      @delay @ping, 30000
+
+    @ws.onmessage = (e) =>
       pipe = JSON.parse( e.data )
       console.log( "ws:onmessage", pipe )
 
       # go through all blocks
       for item in pipe
+
+        # reset reconnect loop
+        if item['action'] is 'pong'
+          @pong()
 
         # fill collection
         if item['collection']

@@ -59,10 +59,12 @@ EventMachine.run {
     ws.onclose {
       client_id = ws.object_id
       puts 'Client ' + client_id.to_s + ' disconnected'
-      
+
+      # removed from current client list
       if @clients.include? client_id
         @clients.delete client_id
       end
+
       Session.destory( client_id )
     }
 
@@ -77,7 +79,12 @@ EventMachine.run {
       if data['action'] == 'login'
         @clients[client_id][:session] = data['session']
         Session.create( client_id, data['session'] )
-      end 
+
+      # ping
+      elsif data['action'] == 'ping'
+        @clients[client_id][:last_ping] = Time.now
+        ws.send( '[{"action":"pong"}]' )
+      end
     }
   end
 
