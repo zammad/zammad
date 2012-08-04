@@ -69,12 +69,19 @@ module Session
         next if !user
 
         # start user thread
+        start_user_thread = false
         if !@@user_threads[user.id]
+          start_user_thread = true
           @@user_threads[user.id] = Thread.new {
             UserState.new(user.id)
             @@user_threads[user.id] = nil
 #            raise "Exception from thread"
           }
+        end
+
+        # wait with client thread unil user thread has done some little work
+        if start_user_thread
+          sleep 0.4
         end
 
         # start client thread
