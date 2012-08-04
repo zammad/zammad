@@ -82,7 +82,7 @@ class _Singleton extends Spine.Controller
 
     @ws.onmessage = (e) ->
       pipe = JSON.parse( e.data )
-#      console.log( "ws:onmessage", pipe )
+      console.log( "ws:onmessage", pipe )
 
       # go through all blocks
       for item in pipe

@@ -307,7 +307,7 @@ class UserState
         end
       end
       self.log "---/user-"
-      sleep 1.2
+      sleep 1
     end
   end
 
