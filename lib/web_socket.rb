@@ -253,7 +253,6 @@ class UserState
         self.log 'fetch ticket_create_attributes - ' + cache_key
         if ticket_create_attributes != ticket_create_attributes_cache
           self.log 'fetch ticket_create_attributes changed - ' + cache_key
-
           CacheIn.set( cache_key, ticket_create_attributes, { :expires_in => 2.minutes } )
         end
       end
@@ -267,9 +266,8 @@ class UserState
         if recent_viewed != recent_viewed_cache
           self.log 'fetch recent_viewed changed - ' + cache_key
 
-          CacheIn.set( cache_key, recent_viewed, { :expires_in => 5.seconds } )
-
           recent_viewed_full = History.recent_viewed_fulldata(user)
+          CacheIn.set( cache_key, recent_viewed, { :expires_in => 5.seconds } )
           CacheIn.set( cache_key + '_push', recent_viewed_full )
         end
       end
@@ -283,9 +281,8 @@ class UserState
         if activity_stream != activity_stream_cache
           self.log 'fetch activity_stream changed - ' + cache_key
 
-          CacheIn.set( cache_key, activity_stream, { :expires_in => 1.minutes } )
-
           activity_stream_full = History.activity_stream_fulldata( user )
+          CacheIn.set( cache_key, activity_stream, { :expires_in => 0.75.minutes } )
           CacheIn.set( cache_key + '_push', activity_stream_full )
         end
       end
