@@ -325,6 +325,8 @@ class ClientState
   end
   
   def fetch
+    
+    loop_count = 0
     while true
 
       # get connection user
@@ -334,6 +336,7 @@ class ClientState
       user = User.find( user_session[:id] )
       return if !user
 
+      loop_count += 1
       self.log "---client - looking for data of user #{user.id}"
 
       # remember last run
@@ -448,8 +451,13 @@ class ClientState
         })
       end
       self.log "---/client-"
-#      sleep 1
-      sleep 1
+
+      # start faster in the beginnig
+      if loop_count < 20
+        sleep 0.4
+      else
+        sleep 1
+      end
     end
   end
 
