@@ -56,19 +56,19 @@ class _Singleton extends Spine.Controller
     console.log 'send websockend ping'
     @send( { action: 'ping' } )
 
-    # check if ping is back within 30 sec.
+    # check if ping is back within 2 min
     if @check_id
       clearTimeout(@check_id)
     check = =>
       console.log 'no websockend ping response, reconnect...'
       @close()
-    @check_id = @delay check, 60000
+    @check_id = @delay check, 120000
 
   pong: ->
     console.log 'received websockend ping'
 
-    # test again after 10 sec.
-    @delay @ping, 30000
+    # test again after 1 min
+    @delay @ping, 60000
 
   connect: =>
 #    console.log '------------ws connect....--------------'
@@ -103,7 +103,7 @@ class _Singleton extends Spine.Controller
       @queue = []
 
       # send ping to check connection
-      @delay @ping, 30000
+      @delay @ping, 60000
 
     @ws.onmessage = (e) =>
       pipe = JSON.parse( e.data )
