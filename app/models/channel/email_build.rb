@@ -10,14 +10,17 @@ class Channel::EmailBuild
     if organization then;
       mail['Organization'] = organization.to_s
     end
-    
+
     # notification
     if notification
       attr['X-Loop']         = 'yes'
       attr['Precedence']     = 'bulk'
       attr['Auto-Submitted'] = 'auto-generated'
     end
-    
+
+    attr['X-Powered-BY'] = 'OTRS - Open Ticket Request System (http://otrs.org/)'
+    attr['X-Mailer'] = 'OTRS Mail Service (3.0.12)'
+
     # set headers
     attr.each do |key, v|
       if key.to_s != 'attachments' && key.to_s != 'body'
