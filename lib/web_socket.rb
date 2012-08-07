@@ -61,6 +61,9 @@ module Session
       client_ids = self.sessions
       client_ids.each { |client_id|
 
+        # connection already open
+        next if @@client_threads[client_id]
+
         # get current user  
         user_session = Session.get( client_id )
         next if !user_session
@@ -81,7 +84,7 @@ module Session
 
         # wait with client thread unil user thread has done some little work
         if start_user_thread
-          sleep 0.4
+          sleep 0.5
         end
 
         # start client thread
@@ -484,7 +487,7 @@ class ClientState
 
       # start faster in the beginnig
       if loop_count < 20
-        sleep 0.4
+        sleep 0.6
       else
         sleep 1
       end
