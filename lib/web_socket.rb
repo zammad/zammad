@@ -92,10 +92,10 @@ module Session
 #            raise "Exception from thread"
           }
         end
-
-        # system settings
-        sleep 0.3
       }
+
+      # system settings
+      sleep 0.4
     end
   end
 
@@ -146,8 +146,10 @@ end
 
 module CacheIn
   @@data = {}
+  @@data_time = {}
   @@expires_in = {}
   @@expires_in_ttl = {}
+
   def self.set( key, value, params = {} )
 #    puts 'CacheIn.set:' + key + '-' + value.inspect
     if params[:expires_in]
@@ -155,25 +157,42 @@ module CacheIn
       @@expires_in_ttl[key] = params[:expires_in]
     end
     @@data[ key ] = value
+    @@data_time[ key ] = Time.now
   end
-  def self.expired( key )
+
+  def self.expired( key, params = {} )
+
+    # expire if value never was set
+    return true if !@@data.include? key
+
+    # set re_expire
+    if params[:re_expire]
+      if @@expires_in[key]
+        @@expires_in[key] = Time.now + @@expires_in_ttl[key]
+      end
+      return false
+    end
+
+    # check if expired
     if @@expires_in[key]
       return true if @@expires_in[key] < Time.now
       return false
     end
-    return true
+
+    # return false if key was set without expires_in
+    return false
   end
+
+  def self.get_time( key, params = {} )
+    data = self.get( key, params )
+    if data
+      return @@data_time[key]
+    end
+  end
+
   def self.get( key, params = {} )
 #    puts 'CacheIn.get:' + key + '-' + @@data[ key ].inspect
-    if !params[:re_expire]
-      if @@expires_in[key]
-        return if self.expired(key)
-      end
-    else
-      if @@expires_in[key]
-        @@expires_in[key] = Time.now + @@expires_in_ttl[key]
-      end
-    end
+    return if self.expired( key, params )
     @@data[ key ]
   end
 end
@@ -344,9 +363,11 @@ class ClientState
 
       # overview
       cache_key = 'user_' + user.id.to_s + '_overview'
-      overview = CacheIn.get( cache_key )
-      if overview && @data[:overview] != overview
-        @data[:overview] = overview
+      overview_time = CacheIn.get_time( cache_key )
+      if overview_time && @data[:overview_time] != overview_time
+        @data[:overview_time] = overview_time
+        overview = CacheIn.get( cache_key )
+
         self.log "push overview for user #{user.id}"
 
         # send update to browser
@@ -363,9 +384,10 @@ class ClientState
       overviews.each { |overview|
         cache_key = 'user_' + user.id.to_s + '_overview_data_' + overview.meta[:url]
 
-        overview_data = CacheIn.get( cache_key )
-        if overview_data && @data[cache_key] != overview_data
-          @data[cache_key] = overview_data
+        overview_data_time = CacheIn.get_time( cache_key )
+        if overview_data_time && @data[cache_key] != overview_data_time
+          @data[cache_key] = overview_data_time
+          overview_data = CacheIn.get( cache_key )
           self.log "push overview_data for user #{user.id}"
 
           users = {}
@@ -392,9 +414,10 @@ class ClientState
 
       # ticket_create_attributes
       cache_key = 'user_' + user.id.to_s + '_ticket_create_attributes'
-      ticket_create_attributes = CacheIn.get( cache_key )
-      if ticket_create_attributes && @data[:ticket_create_attributes] != ticket_create_attributes
-        @data[:ticket_create_attributes] = ticket_create_attributes
+      ticket_create_attributes_time = CacheIn.get_time( cache_key )
+      if ticket_create_attributes_time && @data[:ticket_create_attributes_time] != ticket_create_attributes_time
+        @data[:ticket_create_attributes_time] = ticket_create_attributes_time
+        ticket_create_attributes = CacheIn.get( cache_key )
         self.log "push ticket_create_attributes for user #{user.id}"
 
         # send update to browser
@@ -406,9 +429,10 @@ class ClientState
 
       # recent viewed
       cache_key = 'user_' + user.id.to_s + '_recent_viewed'
-      recent_viewed = CacheIn.get( cache_key )
-      if recent_viewed && @data[:recent_viewed] != recent_viewed
-        @data[:recent_viewed] = recent_viewed
+      recent_viewed_time = CacheIn.get_time( cache_key )
+      if recent_viewed_time && @data[:recent_viewed_time] != recent_viewed_time
+        @data[:recent_viewed_time] = recent_viewed_time
+        recent_viewed = CacheIn.get( cache_key )
         self.log "push recent_viewed for user #{user.id}"
 
         # send update to browser
@@ -421,9 +445,10 @@ class ClientState
 
       # activity stream
       cache_key = 'user_' + user.id.to_s + '_activity_stream'
-      activity_stream = CacheIn.get( cache_key )
-      if activity_stream && @data[:activity_stream] != activity_stream
-        @data[:activity_stream] = activity_stream
+      activity_stream_time = CacheIn.get_time( cache_key )
+      if activity_stream_time && @data[:activity_stream_time] != activity_stream_time
+        @data[:activity_stream_time] = activity_stream_time
+        activity_stream = CacheIn.get( cache_key )
         self.log "push activity_stream for user #{user.id}"
 
         # send update to browser
@@ -437,9 +462,10 @@ class ClientState
 
       # rss
       cache_key = 'user_' + user.id.to_s + '_rss'
-      rss_items = CacheIn.get( cache_key )
-      if rss_items && @data[:rss] != rss_items
-        @data[:rss] = rss_items
+      rss_items_time = CacheIn.get_time( cache_key )
+      if rss_items_time && @data[:rss_time] != rss_items_time
+        @data[:rss_time] = rss_items_time
+        rss_items = CacheIn.get( cache_key )
         self.log "push rss for user #{user.id}"
 
         # send update to browser
