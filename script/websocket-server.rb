@@ -54,8 +54,9 @@ EventMachine.run {
 
       if !@clients.include? client_id
         @clients[client_id] = {
-          :websocket => ws,
-          :last_ping => Time.new
+          :websocket   => ws,
+          :last_ping   => Time.new,
+          :error_count => 0,
         }
       end
     }
@@ -85,6 +86,9 @@ EventMachine.run {
         next
       end
 
+      # check if connection already exists
+      next if !@clients[client_id]
+
       # get session
       if data['action'] == 'login'
         @clients[client_id][:session] = data['session']
@@ -102,14 +106,14 @@ EventMachine.run {
   EventMachine.add_periodic_timer(120) {
     log 'notice', "check unused idle connections..."
     @clients.each { |client_id, client|
-      if ( @clients[client_id][:last_ping] + ( 60 * 4 ) ) < Time.now
+      if ( client[:last_ping] + ( 60 * 4 ) ) < Time.now
         log 'notice', "closing idle connection", client_id
 
         # remember to not use this connection anymore
-        @clients[client_id][:disconnect] = true
+        client[:disconnect] = true
 
         # try to close regular
-        @clients[client_id][:websocket].close_websocket
+        client[:websocket].close_websocket
 
         # delete sesstion from client list
         sleep 1
@@ -129,7 +133,7 @@ EventMachine.run {
     next if @clients.size == 0
     log 'debug', "checking for data..."
     @clients.each { |client_id, client|
-      next if @clients[client_id][:disconnect]
+      next if client[:disconnect]
       log 'debug', 'checking for data...', client_id
       begin
         queue = Session.queue( client_id )
@@ -143,8 +147,11 @@ EventMachine.run {
         log 'error', 'problem:' + e.inspect, client_id
 
         # disconnect client
-        if @clients.include? client_id
-          @clients.delete client_id
+        client[:error_count] += 1
+        if client[:error_count] > 100
+          if @clients.include? client_id
+            @clients.delete client_id
+          end
         end
       end
     }
