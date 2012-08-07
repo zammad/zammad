@@ -178,8 +178,16 @@ From: #{article.from}
     end
 
     # send notifications
+    recipient_list = ''
+    notification_subject = ''
     recipients.each do |user|
       next if !user.email || user.email == ''
+
+      # add recipient_list
+      if recipient_list != ''
+        recipient_list += ','
+      end
+      recipient_list += user.email.to_s
 
       # prepare subject & body
       notification = {}
@@ -193,6 +201,7 @@ From: #{article.from}
           }
         )
       }
+      notification_subject = notification[:subject]
 
       # rebuild subject
       notification[:subject] = ticket.subject_build( notification[:subject] )
@@ -202,6 +211,18 @@ From: #{article.from}
         :recipient => user,
         :subject   => notification[:subject],
         :body      => notification[:body]
+      )
+    end
+
+    # add history record
+    if recipient_list != ''
+      History.history_create(
+        :o_id                   => ticket.id,
+        :history_type           => 'notification',
+        :history_object         => 'Ticket',
+        :value_from             => notification_subject,
+        :value_to               => recipient_list,
+        :created_by_id          => ticket.created_by_id || 1
       )
     end
   end
