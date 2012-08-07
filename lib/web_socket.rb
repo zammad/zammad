@@ -165,6 +165,9 @@ module CacheIn
     # expire if value never was set
     return true if !@@data.include? key
 
+    # ignore_expire
+    return false if params[:ignore_expire]
+
     # set re_expire
     if params[:re_expire]
       if @@expires_in[key]
@@ -188,6 +191,7 @@ module CacheIn
     if data
       return @@data_time[key]
     end
+    return nil
   end
 
   def self.get( key, params = {} )
@@ -363,10 +367,10 @@ class ClientState
 
       # overview
       cache_key = 'user_' + user.id.to_s + '_overview'
-      overview_time = CacheIn.get_time( cache_key )
+      overview_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if overview_time && @data[:overview_time] != overview_time
         @data[:overview_time] = overview_time
-        overview = CacheIn.get( cache_key )
+        overview = CacheIn.get( cache_key, { :ignore_expire => true } )
 
         self.log "push overview for user #{user.id}"
 
@@ -384,10 +388,10 @@ class ClientState
       overviews.each { |overview|
         cache_key = 'user_' + user.id.to_s + '_overview_data_' + overview.meta[:url]
 
-        overview_data_time = CacheIn.get_time( cache_key )
+        overview_data_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
         if overview_data_time && @data[cache_key] != overview_data_time
           @data[cache_key] = overview_data_time
-          overview_data = CacheIn.get( cache_key )
+          overview_data = CacheIn.get( cache_key, { :ignore_expire => true } )
           self.log "push overview_data for user #{user.id}"
 
           users = {}
@@ -414,10 +418,10 @@ class ClientState
 
       # ticket_create_attributes
       cache_key = 'user_' + user.id.to_s + '_ticket_create_attributes'
-      ticket_create_attributes_time = CacheIn.get_time( cache_key )
+      ticket_create_attributes_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if ticket_create_attributes_time && @data[:ticket_create_attributes_time] != ticket_create_attributes_time
         @data[:ticket_create_attributes_time] = ticket_create_attributes_time
-        ticket_create_attributes = CacheIn.get( cache_key )
+        ticket_create_attributes = CacheIn.get( cache_key, { :ignore_expire => true } )
         self.log "push ticket_create_attributes for user #{user.id}"
 
         # send update to browser
@@ -429,14 +433,14 @@ class ClientState
 
       # recent viewed
       cache_key = 'user_' + user.id.to_s + '_recent_viewed'
-      recent_viewed_time = CacheIn.get_time( cache_key )
+      recent_viewed_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if recent_viewed_time && @data[:recent_viewed_time] != recent_viewed_time
         @data[:recent_viewed_time] = recent_viewed_time
-        recent_viewed = CacheIn.get( cache_key )
+        recent_viewed = CacheIn.get( cache_key, { :ignore_expire => true } )
         self.log "push recent_viewed for user #{user.id}"
 
         # send update to browser
-        r = CacheIn.get( cache_key + '_push' )
+        r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
         self.transaction({
           :event      => 'update_recent_viewed',
           :data       => r,
@@ -445,14 +449,14 @@ class ClientState
 
       # activity stream
       cache_key = 'user_' + user.id.to_s + '_activity_stream'
-      activity_stream_time = CacheIn.get_time( cache_key )
+      activity_stream_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if activity_stream_time && @data[:activity_stream_time] != activity_stream_time
         @data[:activity_stream_time] = activity_stream_time
-        activity_stream = CacheIn.get( cache_key )
+        activity_stream = CacheIn.get( cache_key, { :ignore_expire => true } )
         self.log "push activity_stream for user #{user.id}"
 
         # send update to browser
-        r = CacheIn.get( cache_key + '_push' )
+        r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
         self.transaction({
           :event      => 'activity_stream_rebuild',
           :collection => 'activity_stream', 
@@ -462,14 +466,14 @@ class ClientState
 
       # rss
       cache_key = 'user_' + user.id.to_s + '_rss'
-      rss_items_time = CacheIn.get_time( cache_key )
+      rss_items_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if rss_items_time && @data[:rss_time] != rss_items_time
         @data[:rss_time] = rss_items_time
-        rss_items = CacheIn.get( cache_key )
+        rss_items = CacheIn.get( cache_key, { :ignore_expire => true } )
         self.log "push rss for user #{user.id}"
 
         # send update to browser
-        r = CacheIn.get( cache_key + '_push' )
+        r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
         self.transaction({
           :event      => 'rss_rebuild',
           :collection => 'dashboard_rss',
