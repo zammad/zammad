@@ -3,8 +3,32 @@
   <h3><%- T('History') %></h3>
 </div>
 <div class="modal-body">
-  <form class="form-horizontal"></form>
-  <div class="table_history"></div>
+
+<% open = false %>
+<% for object in @objects: %>
+  <% if lasttime isnt object['created_at']: %>
+    <% if open: %>
+      </ul>
+      <hr>
+    <% end %>
+    <% open = true %>
+    <% lasttime = object['created_at'] %>
+    <span class="user-data" data-id="<%= object['created_by']['id'] %>"><%= object['created_by']['realname'] %></span> - <%= object['created_at'] %> - <%= object['humanTime'] %>
+    <ul>
+  <% end %>
+    <li><%= object['history_type'] %> <%= object['history_object'] %> <% if object['history_attribute']: %>"<%= object['history_attribute'] %>"<% end %>
+    <% if object['value_from']: %>
+        <%- T('from') %> "<%= object['value_from'] %>"
+    <% end %>
+    <% if object['value_to']: %>
+        <%- T('to') %> "<%= object['value_to'] %>"
+    <% end %>
+    </li>
+<% end %>
+<% if open: %>
+  </ul>
+<% end %>
+
 </div>
 <div class="modal-footer">
 </div>
