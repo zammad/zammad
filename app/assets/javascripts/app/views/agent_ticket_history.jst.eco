@@ -6,22 +6,38 @@
 
 <% open = false %>
 <% for object in @objects: %>
-  <% if lasttime isnt object['created_at']: %>
+  <% object['history_object_display'] = object['history_object'] %>
+  <% if object['history_object'] is 'Ticket::Article': %>
+    <% object['history_object_display'] = 'Article' %>
+  <% end %>
+  <% if lasttime isnt object['created_at'] || last_user isnt object['created_by_id']: %>
     <% if open: %>
       </ul>
       <hr>
     <% end %>
     <% open = true %>
+    <% last_user = object['created_by_id'] %>
     <% lasttime = object['created_at'] %>
     <span class="user-data" data-id="<%= object['created_by']['id'] %>"><%= object['created_by']['realname'] %></span> - <%= object['created_at'] %> - <%= object['humanTime'] %>
     <ul>
   <% end %>
-    <li><%= object['history_type'] %> <%= object['history_object'] %> <% if object['history_attribute']: %>"<%= object['history_attribute'] %>"<% end %>
-    <% if object['value_from']: %>
-        <%- T('from') %> "<%= object['value_from'] %>"
-    <% end %>
-    <% if object['value_to']: %>
-        <%- T('to') %> "<%= object['value_to'] %>"
+    <li>
+    <% if ( object['history_type'] is 'notification' || object['history_type'] is 'email' ): %>
+      <%= object['history_type'] %>
+      <% if object['value_from']: %>
+        "<%= object['value_from'] %>" <%- T('sent to') %> 
+      <% end %>
+      <% if object['value_to']: %>
+        "<%= object['value_to'] %>"
+      <% end %>
+    <% else: %>
+      <%= object['history_type'] %> <%= object['history_object_display'] %> <% if object['history_attribute']: %>"<%= object['history_attribute'] %>"<% end %>
+      <% if object['value_from']: %>
+          <%- T('from') %> "<%= object['value_from'] %>"
+      <% end %>
+      <% if object['value_to']: %>
+          <%- T('to') %> "<%= object['value_to'] %>"
+      <% end %>
     <% end %>
     </li>
 <% end %>

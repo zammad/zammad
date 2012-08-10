@@ -69,7 +69,7 @@ class History < ActiveRecord::Base
     if !related_history_object
       history = History.where( :history_object_id => History::Object.where( :name => requested_object ) ).
         where( :o_id => requested_object_id ).
-        where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification'] ) ).
+        where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification', 'email'] ) ).
         order('created_at ASC, id ASC')
     else
       history = History.where(
@@ -78,7 +78,7 @@ class History < ActiveRecord::Base
           requested_object_id,
           History::Object.where( :name => related_history_object ).first.id,
           requested_object_id,
-          History::Type.where( :name => ['created', 'updated', 'notification'] )
+          History::Type.where( :name => ['created', 'updated', 'notification', 'email'] )
         ).
         order('created_at ASC, id ASC')
     end

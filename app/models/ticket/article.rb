@@ -15,7 +15,8 @@ class Ticket::Article < ApplicationModel
 
       # if sender is customer, do not change anything
       sender = Ticket::Article::Sender.where( :id => self.ticket_article_sender_id ).first
-      return if sender == nil || sender['name'] == 'Customer'
+      return if sender == nil
+      return if sender['name'] == 'Customer'
 
       type = Ticket::Article::Type.where( :id => self.ticket_article_type_id ).first
       ticket = Ticket.find(self.ticket_id)
@@ -139,6 +140,30 @@ class Ticket::Article < ApplicationModel
           :filename    => "ticket-#{ticket.number}-#{self.id}.eml",
           :preferences => {}
         )
+
+        # add history record
+        recipient_list = ''
+        [:to, :cc].each { |key|
+          if self[key] && self[key] != ''
+            if recipient_list != ''
+              recipient_list += ','
+            end
+            recipient_list += self[key]
+          end
+        }
+        if recipient_list != ''
+          History.history_create(
+            :o_id                   => self.id,
+            :history_type           => 'email',
+            :history_object         => 'Ticket::Article',
+            :related_o_id           => ticket.id,
+            :related_history_object => 'Ticket',
+            :value_from             => self.subject,
+            :value_to               => recipient_list,
+            :created_by_id          => self.created_by_id,
+          )
+        end
+
       end
     end
 
