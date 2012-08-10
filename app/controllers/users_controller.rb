@@ -6,14 +6,14 @@ class UsersController < ApplicationController
     @users = User.all
     @users_all = []
     @users.each {|user|
-      @users_all.push user_data_full( user.id )
+      @users_all.push User.user_data_full( user.id )
     }
     render :json => @users_all
   end
 
   # GET /users/1
   def show
-    @user = user_data_full( params[:id] )
+    @user = User.user_data_full( params[:id] )
     render :json => @user
   end
 
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
       # if it's a signup, add user to customer role
       if @user.created_by_id == 1
-        
+
         # check if it's first user
         count     = User.all.count()
         group_ids = []
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
           Group.all().each { |group|
             group_ids.push group.id
           }
-          
+
         # everybody else will go as customer per default
         else
           role_ids.push Role.where( :name => 'Customer' ).first.id
@@ -56,10 +56,10 @@ class UsersController < ApplicationController
           @user.group_ids = params[:group_ids]
         end
       end
-      
+
       # send inviteation if needed
       if params[:invite]
-        
+
 #          logger.debug('IIIIIIIIIIIIIIIIIIIIIIIIIIIIII')
 #          exit '123'
       end
@@ -83,8 +83,8 @@ class UsersController < ApplicationController
       if params[:organization_ids]
         @user.organization_ids = params[:organization_ids]
       end
-      
-      @user = user_data_full( params[:id] )
+
+      @user = User.user_data_full( params[:id] )
       render :json => @user, :status => :ok
     else
       render :json => @user.errors, :status => :unprocessable_entity
