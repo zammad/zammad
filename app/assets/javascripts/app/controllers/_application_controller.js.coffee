@@ -52,7 +52,7 @@ class App.Controller extends Spine.Controller
     for attribute in attributes
 
       if !attribute.readonly && ( !data.required || data.required && attribute[data.required] )
-  
+
         # set autofocus
         if autofocus is 1
           attribute.autofocus = 'autofocus'
@@ -69,18 +69,24 @@ class App.Controller extends Spine.Controller
           attribute.multiple = 'multiple'
         else
           attribute.multiple = ''
-  
+
         # set autocapitalize option
         if attribute.autocapitalize is undefined || attribute.autocapitalize
           attribute.autocapitalize = ''
         else
           attribute.autocapitalize = 'autocapitalize="off"'
-  
+
+        # set autocomplete option
+        if attribute.autocomplete is undefined
+          attribute.autocomplete = ''
+        else
+          attribute.autocomplete = 'autocomplete="' + attribute.autocomplete + '"'
+
         # set value
         if data.params
           if attribute.name of data.params
             attribute.value = data.params[attribute.name]
-            
+
         # set default value
         else
           if 'default' of attribute
@@ -92,21 +98,21 @@ class App.Controller extends Spine.Controller
         # add item
         item = $( @formGenItem(attribute, data.model.className) )
         item.appendTo(fieldset)
-        
+
         # if password, add confirm password item
         if attribute.type is 'password'
-          
+
           attribute.display = attribute.display + ' (confirm)'
           attribute.name = attribute.name + '_confirm';
-  
+
           item = $( @formGenItem(attribute, data.model.className) )
           item.appendTo(fieldset)
 
     # return form
     return form.html()
-    
+
   formGenItem: (attribute, classname) ->
-    
+
     # create item id
     attribute.id = classname + '_' + attribute.name        
 
@@ -144,7 +150,7 @@ class App.Controller extends Spine.Controller
 
             # check all filter values as array
             for value in filter[key]
-              
+
               # if it's matching, use it for selection
               if record[key] is value
                 list.push record
@@ -153,7 +159,7 @@ class App.Controller extends Spine.Controller
 
       # build options list
       list.forEach( (item) =>
-        
+
         # if active or if active doesn't exist
         if item.active || !( 'active' of item )
           name = '???'
@@ -180,7 +186,7 @@ class App.Controller extends Spine.Controller
     if attribute.options
       for record in attribute.options
         if typeof attribute.value is 'string' || typeof attribute.value is 'number' || typeof attribute.value is 'boolean'
-          
+
           # if name or value is matching
           if record.value.toString() is attribute.value.toString() || record.name.toString() is attribute.value.toString()
             record.selected = 'selected'
@@ -201,7 +207,7 @@ class App.Controller extends Spine.Controller
           { name: 'active', value: true } 
           { name: 'inactive', value: false } 
         ]
-      
+
       # update boolean types
       for record in attribute.options
         record.value = '{boolean}::' + record.value
@@ -210,7 +216,7 @@ class App.Controller extends Spine.Controller
       for record in attribute.options
         if record.value is '{boolean}::' + attribute.value
           record.selected = 'selected'
-          
+
       # return item
       item = App.view('generic/select')( attribute: attribute )
 
@@ -221,19 +227,19 @@ class App.Controller extends Spine.Controller
     # checkbox
     else if attribute.tag is 'checkbox'
       item = App.view('generic/checkbox')( attribute: attribute )
-      
+
     # radio
     else if attribute.tag is 'radio'
       item = App.view('generic/radio')( attribute: attribute )
-      
+
     # textarea
     else if attribute.tag is 'textarea'
       item = App.view('generic/textarea')( attribute: attribute )
-      
+
     # autocompletion
     else if attribute.tag is 'autocompletion'
       item = App.view('generic/autocompletion')( attribute: attribute )
-      
+
       a = ->
 #        if attribute.relation && App[attribute.relation]
 #          @log '1312312333333333333', App[attribute.relation]
@@ -286,7 +292,7 @@ class App.Controller extends Spine.Controller
   # get all params of the form
   formParam: (form, errors) ->
     param = {}
-    
+
     # find form based on sub elements
     if $(form).children()[0]
       form = $(form).children().parents('form')
@@ -294,13 +300,13 @@ class App.Controller extends Spine.Controller
     # find form based on parents next <form>
     else if $(form).parents('form')[0]
       form = $(form).parents('form')
-        
+
     # find form based on parents next <form>, not really good!
     else if $(form).parents().find('form')[0]
       form = $(form).parents().find('form')
     else
       @log 'ERROR, no form found!', form
-      
+
     for key in form.serializeArray()
       if param[key.name]
         if typeof param[key.name] is 'string'
@@ -379,7 +385,7 @@ class App.Controller extends Spine.Controller
             object[row.name] = {
               name: '-',
             }
-            
+
           # if no content exists, try firstname/lastname
           if !object[row.name]['name']
             if object[row.name]['firstname'] || object[row.name]['lastname']
@@ -396,7 +402,7 @@ class App.Controller extends Spine.Controller
           object[row.name] = {
             name: '????',
           }
-          
+
         # execute callback on content
         if row.callback
           object[row.name]['name'] = row.callback(object[row.name]['name'])

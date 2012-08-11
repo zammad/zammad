@@ -14,7 +14,7 @@ class App.User extends App.Model
     { name: 'street',           display: 'Street',        tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'xlarge', signup: false, quick: true, info: true },
     { name: 'zip',              display: 'Zip',           tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'xlarge', signup: false, quick: true, info: true },
     { name: 'city',             display: 'City',          tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'xlarge', signup: false, quick: true, info: true },
-    { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, class:  'xlarge', signup: true,  quick: false, },
+    { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', class: 'xlarge', signup: true,  quick: false, },
     { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', class: 'xlarge' },
     { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, class: 'xlarge', quick: true, info: true },
     { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role', class: 'xlarge' },
