@@ -64,12 +64,19 @@ class Ticket < ApplicationModel
     # add history to both
 
     # link tickets
+    Link.add(
+      :link_type                => 'parent',
+      :link_object_source       => 'Ticket',
+      :link_object_source_value => data[:ticket_id],
+      :link_object_target       => 'Ticket',
+      :link_object_target_value => self.id
+    )
 
     # set state to 'merged'
     self.ticket_state_id = Ticket::State.where( :name => 'merged' ).first.id
 
     # rest owner
-    self.owner_id = User.where(:login => '-').first.id
+    self.owner_id = User.where( :login => '-' ).first.id
 
     # save ticket
     self.save

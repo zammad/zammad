@@ -207,6 +207,13 @@ class Index extends App.Controller
       ticket:  @ticket,
     )
 
+    # start link info controller
+    new App.LinkInfo(
+      el:           @el.find('#link_info'),
+      object_type:  'Ticket',
+      object:        @ticket,
+    )
+
     # scrall to article if given
     if @article_id
       offset = document.getElementById( 'article-' + @article_id ).offsetTop

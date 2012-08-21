@@ -1,0 +1,13 @@
+<div class="well">
+  <h3><%- T('Linked Objects') %></h3>
+
+  <% for type of @links: %>
+    <strong><%- T( type ) %></strong>
+    <ul>
+      <% for item in @links[type]: %>
+      <li><a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>">T:<%= item.number %></a></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+</div>

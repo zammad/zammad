@@ -106,17 +106,9 @@
         </ul>
       </div>
     </div>
-<!--
-    <div class="row">
-      <div class="well">
-        <h3>Linked Objects</h3>
-        <ul>
-          <li><a href="#" data-type="history">T:12312313</a></li>
-          <li><a href="#" data-type="history">F:12313123</a></li>
-        </ul>
-      </div>
-    </div>
--->
+
+    <div class="row" id="link_info"></div>
+
   </div>
 
 </div>

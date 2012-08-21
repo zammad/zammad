@@ -103,6 +103,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :to,             :string, :limit => 3000,    :null => true
       t.column :cc,             :string, :limit => 3000,    :null => true
       t.column :subject,        :string, :limit => 3000,    :null => true
+#      t.column :reply_to,       :string, :limit => 3000,    :null => true
       t.column :message_id,     :string, :limit => 3000,    :null => true
       t.column :message_id_md5, :string, :limit => 32,      :null => true
       t.column :in_reply_to,    :string, :limit => 3000,    :null => true
@@ -186,7 +187,7 @@ class CreateTicket < ActiveRecord::Migration
     add_index :link_objects, [:name],   :unique => true
 
     create_table :links do |t|
-      t.references :link_types,               :null => false
+      t.references :link_type,                                        :null => false
       t.column :link_object_source_id,        :integer,               :null => false
       t.column :link_object_source_value,     :integer,               :null => false
       t.column :link_object_target_id,        :integer,               :null => false

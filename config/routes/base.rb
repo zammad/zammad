@@ -20,13 +20,18 @@ module ExtraRoutes
 
     # templates
     map.resources :templates
-  
+
+    # links
+    map.match '/links',                       :to => 'links#index'
+    map.match '/links/add',                   :to => 'links#add'
+    map.match '/links/delete',                :to => 'links#delete'
+
     # overviews
     map.resources :overviews
-  
+
     # getting_started
     map.match '/getting_started',             :to => 'getting_started#index'
-  
+
     # rss
     map.match '/rss_fetch',                   :to => 'rss#fetch'
   end
