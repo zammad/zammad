@@ -18,7 +18,7 @@ class Index extends App.Controller
 
     # set title
     @title ''
-    @navupdate '#ticket/view/' + @view
+    @navupdate '#ticket_view/' + @view
 
     @meta          = {}
     @bulk          = {}
@@ -462,5 +462,5 @@ class Router extends App.Controller
       else
         @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
 
-Config.Routes['ticket/view/:view/:position/:direction'] = Router
-Config.Routes['ticket/view/:view'] = Index
+Config.Routes['ticket_view/:view/:position/:direction'] = Router
+Config.Routes['ticket_view/:view'] = Index

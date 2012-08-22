@@ -49,11 +49,9 @@ Config.NavBar['SettingObject']   = { prio: 1700, parent: '#settings', name: 'Obj
 Config.NavBar['Packages']   = { prio: 1800, parent: '#settings', name: 'Packages', target: '#packages', role: ['Admin'] }
 
 
-Config.NavBar['TicketOverview'] = { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent'] }
-#Config.NavBar[''] = { prio: 1000, parent: '#ticket/view', name: 'My assigned Tickets (51)', target: '#ticket/view/my_assigned', role: ['Agent'] }
-#Config.NavBar[''] = { prio: 1000, parent: '#ticket/view', name: 'Unassigned Tickets (133)', target: '#ticket/view/all_unassigned', role: ['Agent'] }
-#Config.NavBar[''] = { prio: 1000, parent: '#ticket/view', name: 'Escalated Tickets (0)', target: '#ticket/view/all_escalated', role: ['Agent'] }
-#Config.NavBar[''] = { prio: 1000, parent: '#ticket/view', name: 'My Pending reached Tickets (2)', target: '#ticket/view/my_pending_reached', role: ['Agent'] }
+Config.NavBar['TicketOverview'] = { prio: 1000, parent: '', name: 'Overviews', target: '#ticket_view', role: ['Agent'] }
+#Config.NavBar[''] = { prio: 1000, parent: '#ticket_view', name: 'My assigned Tickets (51)', target: '#ticket_view/my_assigned', role: ['Agent'] }
+#Config.NavBar[''] = { prio: 1000, parent: '#ticket_view', name: 'Unassigned Tickets (133)', target: '#ticket_view/all_unassigned', role: ['Agent'] }
 
 
 #Config.NavBar['Network'] = { prio: 1500, parent: '', name: 'Networking', target: '#network', role: ['Anybody', 'Customer', 'Agent'] }

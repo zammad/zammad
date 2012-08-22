@@ -7,7 +7,7 @@
       <% if window.Config['LastOverview'] && @nav: %>
       <div class="pagination">
         <span class="count"><%= Config['LastOverviewPosition'] %>/<%= Config['LastOverviewTotal'] %></span>
-        <% base_url ="#ticket/view/#{Config['LastOverview']}/#{Config['LastOverviewPosition']}/" %>
+        <% base_url ="#ticket_view/#{Config['LastOverview']}/#{Config['LastOverviewPosition']}/" %>
         <ul>
           <li class="<% if Config['LastOverviewPosition'] <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- T('previous Ticket in Overview') %>">«</a></li>
           <li class="<% if Config['LastOverviewPosition'] is Config['LastOverviewTotal']: %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- T('next Ticket in Overview') %>">»</a></li>

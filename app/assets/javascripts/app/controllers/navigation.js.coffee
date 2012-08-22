@@ -136,17 +136,17 @@ class App.Navigation extends App.Controller
 
     # remove old views
     for key of Config.NavBar
-      if Config.NavBar[key].parent is '#ticket/view'
+      if Config.NavBar[key].parent is '#ticket_view'
         delete Config.NavBar[key]
 
     # add new views
     for item in data
       Config.NavBar['TicketOverview' + item.url] = {
         prio:   item.prio,
-        parent: '#ticket/view',
+        parent: '#ticket_view',
         name:   item.name,
         count:  item.count,
-        target: '#ticket/view/' + item.url,
+        target: '#ticket_view/' + item.url,
         role:   ['Agent'],
       }
 

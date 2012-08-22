@@ -1,5 +1,6 @@
 body {
-  padding-top:60px;
+  padding-top:50px;
+  font-size: 13px;
 }
 
 .spinner {
@@ -21,6 +22,10 @@ body {
 [class^="icon-"],
 [class*=" icon-"] {
   background-image: url("../assets/glyphicons-halflings.png");
+}
+
+.navbar .nav > li > a {
+  padding: 10px 12px 10px;
 }
 
 /*
@@ -50,6 +55,9 @@ body {
   color: #999;
 }
 
+.page-header {
+  margin: 20px 0 20px
+}
 
 /* replace music icon with attachment */
 .icon-attachment {

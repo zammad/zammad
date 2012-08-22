@@ -1,6 +1,6 @@
 #s#= require json2
-#= require ./lib/jquery-1.7.2.min.js
-#= require ./lib/ui/jquery-ui-1.8.18.custom.min.js
+#= require ./lib/jquery-1.8.0.min.js
+#= require ./lib/ui/jquery-ui-1.8.23.custom.min.js
 
 #= require ./lib/spine/spine.js
 #= require ./lib/spine/ajax.js
