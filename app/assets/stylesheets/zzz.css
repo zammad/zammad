@@ -53,6 +53,8 @@ body {
   padding: 6px 6px;
   float: left;
   color: #999;
+  border: none;
+  line-height: 17px;
 }
 
 .page-header {
