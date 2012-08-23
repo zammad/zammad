@@ -40,12 +40,14 @@ class LinksController < ApplicationController
   # POST /links/add
   def add
 #    @template.created_by_id = current_user.id
+    # lookup object id
+    object_id = Ticket.where( :number => params[:link_object_target_number] ).first.id
     link = Link.add(
       :link_type                => params[:link_type],
       :link_object_source       => params[:link_object_source],
       :link_object_source_value => params[:link_object_source_value],
       :link_object_target       => params[:link_object_target],
-      :link_object_target_value => params[:link_object_target_value]
+      :link_object_target_value => object_id
     )
 
     if link
@@ -55,14 +57,14 @@ class LinksController < ApplicationController
     end
   end
 
-  # DELETE /links/delete
-  def delete
-    @template = Template.find(params[:id])
+  # DELETE /links/remove
+  def remove
+    link = Link.remove(params)
 
-    if @template.update_attributes(params[:template])
-      render :json => @template, :status => :ok
+    if link
+      render :json => link, :status => :created
     else
-      render :json => @template.errors, :status => :unprocessable_entity
+      render :json => link.errors, :status => :unprocessable_entity
     end
   end
 

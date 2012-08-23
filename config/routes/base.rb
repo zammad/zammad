@@ -24,7 +24,7 @@ module ExtraRoutes
     # links
     map.match '/links',                       :to => 'links#index'
     map.match '/links/add',                   :to => 'links#add'
-    map.match '/links/delete',                :to => 'links#delete'
+    map.match '/links/remove',                :to => 'links#remove'
 
     # overviews
     map.resources :overviews

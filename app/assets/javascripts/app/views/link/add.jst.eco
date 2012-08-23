@@ -1,0 +1,30 @@
+<form class="form-horizontal">
+<div class="modal-header">
+  <a href="#" class="close">&times;</a>
+  <h3><%- T('Link') %></h3>
+</div>
+<div class="modal-body">
+  <%- T('Link Ticket#') %>
+  <input type="text" name="ticket_number" value="" class="span2" required/>
+  <%- T('as') %>
+  <select name="link_type" class="span2" required>
+    <option value="">-</option>
+    <option value="normal"><%- T('normal') %></option>
+    <option value="child"><%- T('child') %></option>
+    <option value="parent"><%- T('parent') %></option>
+  </select>
+  <%- T('with') %>
+  <%- T(@link_object) %>
+  <%= @object.number %>.
+<!--
+  <ul>
+    <li>Ticket#</li>
+    <li>Recent Views Tickets</li>
+    <li>Recent Customer Tickets</li>
+  </ul>
+-->
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary"><%- T('Submit') %></button>
+</div>
+</form>

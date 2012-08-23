@@ -2,15 +2,18 @@ $ = jQuery.sub()
 
 class App.LinkInfo extends App.Controller
   events:
-    'focusout [data-type=edit]': 'update',
+    'click [data-type=add]': 'add',
+    'click [data-type=remove]': 'remove',
 
   constructor: ->
     super
+    @fetch()
 
+  fetch: () =>
     # fetch item on demand
     # get data
     App.Com.ajax(
-      id:    'links_' + @object_id + '_' + @object,
+      id:    'links_' + @object.id + '_' + @object_type,
       type:  'GET',
       url:   '/links',
       data:  {
@@ -30,7 +33,7 @@ class App.LinkInfo extends App.Controller
         @render()
     )
 
-  render: () ->
+  render: () =>
 
     list = {}
     for item in @links
@@ -40,10 +43,8 @@ class App.LinkInfo extends App.Controller
       if item['link_object'] is 'Ticket'
         list[ item['link_type'] ].push App.Ticket.find( item['link_object_value'] )
 
-    return if _.isEmpty( @links )
-
     # insert data
-    @html App.view('link_info')(
+    @html App.view('link/info')(
       links: list,
     )
     
@@ -52,11 +53,72 @@ class App.LinkInfo extends App.Controller
 #      user_id:  user_id,
 #    )
 
-  update: (e) =>
-    
-    # update changes
-    note = $(e.target).parent().find('[data-type=edit]').val()
-    user = App.User.find(@user_id)
-    if user.note isnt note
-      user.updateAttributes( note: note )
-      @log 'update', e, note, user
+  remove: (e) =>
+    e.preventDefault()
+    link_type   = $(e.target).data('link-type')
+    link_object_source = $(e.target).data('object')
+    link_object_source_value = $(e.target).data('object-id')
+    link_object_target = @object_type
+    link_object_target_value = @object.id
+
+    # get data
+    App.Com.ajax(
+      id:    'links_remove_' + @object.id + '_' + @object_type,
+      type:  'GET',
+      url:   '/links/remove',
+      data:  {
+        link_type:                 link_type,
+        link_object_source:        link_object_source,
+        link_object_source_value:  link_object_source_value,
+        link_object_target:        link_object_target,
+        link_object_target_value:  link_object_target_value,
+      }
+      processData: true,
+      success: (data, status, xhr) =>
+        @fetch()
+    )
+
+  add: (e) =>
+    e.preventDefault()
+    new App.LinkAdd(
+      link_object:    @object_type,
+      link_object_id: @object.id,
+      object:         @object,
+      parent:         @,
+    )
+
+class App.LinkAdd extends App.ControllerModal
+  constructor: ->
+    super
+    @render()
+
+  render: =>
+    @html App.view('link/add')(
+      link_object:    @link_object,
+      link_object_id: @link_object_id,
+      object:         @object,
+    )
+    @modalShow()
+
+  submit: (e) =>
+    e.preventDefault()
+    params = @formParam(e.target)
+    @log 'link', params
+
+    # get data
+    App.Com.ajax(
+      id:    'links_add_' + @object.id + '_' + @object_type,
+      type:  'GET',
+      url:   '/links/add',
+      data:  {
+        link_type:                params['link_type'],
+        link_object_source:       'Ticket',
+        link_object_source_value: @object.id,
+        link_object_target:       'Ticket',
+        link_object_target_number: params['ticket_number'],
+      }
+      processData: true,
+      success: (data, status, xhr) =>
+        @modalHide()
+        @parent.fetch()
+    )
