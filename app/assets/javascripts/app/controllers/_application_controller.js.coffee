@@ -560,7 +560,7 @@ class App.Controller extends Spine.Controller
     clearInterval( @intervalID[interval_id] ) if @intervalID[interval_id]
 
   interval: (action, interval, interval_id) =>
-    
+
     # check global var
     if !@intervalID
       @intervalID = {}
@@ -587,12 +587,12 @@ class App.Controller extends Spine.Controller
       delay: { show: 500, hide: 1200 },
 #      placement: 'bottom',
       placement: position,
-      title: (e) =>
-        user_id = $(e).data('id')
+      title: ->
+        user_id = $(@).data('id')
         user = App.User.find(user_id)
         (user.firstname || '') + ' ' +  (user.lastname || '')
-      content: (e) =>
-        user_id = $(e).data('id')
+      content: ->
+        user_id = $(@).data('id')
         user = App.User.find(user_id)
 
         # get display data
@@ -608,7 +608,7 @@ class App.Controller extends Spine.Controller
         App.view('user_info_small')(
           user: user,
           data: data,
-        )    
+        )
     )
 
   userTicketPopups: (data) ->
@@ -617,7 +617,7 @@ class App.Controller extends Spine.Controller
     $('.popover-inner').parent().remove()
 
     # get data
-    @tickets = {}
+    tickets = {}
     App.Com.ajax(
       type:  'GET',
       url:   '/ticket_customer',
@@ -626,36 +626,37 @@ class App.Controller extends Spine.Controller
       }
       processData: true,
       success: (data, status, xhr) =>
-        @tickets = data.tickets
+        tickets = data.tickets
     )
 
     if !data.position
       data.position = 'left'
-      
-    # show user popup    
+
+    # show user popup
+    controller = @
     $(data.selector).popover(
       delay: { show: 500, hide: 5200 },
       placement: data.position,
-      title: (e) =>
-        $(e).find('[title="*"]').val()
-        
-      content: (e) =>
-        type = $(e).filter('[data-type]').data('type')
-        data = @tickets[type] || []
+      title: ->
+        $(@).find('[title="*"]').val()
+
+      content: ->
+        type = $(@).filter('[data-type]').data('type')
+        data = tickets[type] || []
 
         for ticket in data
-          
+
           # set human time
-          ticket.humanTime = @humanTime(ticket.created_at)
+          ticket.humanTime = controller.humanTime(ticket.created_at)
 
         # insert data
         App.view('user_ticket_info_small')(
           tickets: data,
-        )    
+        )
     )
 
   loadCollection: (params) ->
-    
+
     # users
     if params.type == 'User'
       for user_id, user of params.data

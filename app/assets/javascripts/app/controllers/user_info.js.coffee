@@ -42,14 +42,14 @@ class App.UserInfo extends App.Controller
       user: App.User.find(user_id),
       data: data,
     )
-    
+
     @userTicketPopups(
       selector: '.user-tickets',
       user_id:  user_id,
     )
 
   update: (e) =>
-    
+
     # update changes
     note = $(e.target).parent().find('[data-type=edit]').val()
     user = App.User.find(@user_id)
