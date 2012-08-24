@@ -24,6 +24,10 @@ body {
   background-image: url("../assets/glyphicons-halflings.png");
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 10px;
+}
+
 .navbar .nav > li > a {
   padding: 10px 12px 10px;
 }
@@ -207,6 +211,10 @@ footer {
   background-color: #f2dede;
   border-color: #eed3d7;
   border: 1px solid #fbeed5;
+}
+
+.merged, .merge:hover {
+  text-decoration: line-through;
 }
 
 .customer-info {

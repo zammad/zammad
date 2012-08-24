@@ -39,7 +39,7 @@ class LinksController < ApplicationController
 
   # POST /links/add
   def add
-#    @template.created_by_id = current_user.id
+
     # lookup object id
     object_id = Ticket.where( :number => params[:link_object_target_number] ).first.id
     link = Link.add(

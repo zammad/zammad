@@ -3,6 +3,7 @@ $ = jQuery.sub()
 class App.LinkInfo extends App.Controller
   events:
     'click [data-type=add]': 'add',
+    'click [data-type=edit]': 'edit',
     'click [data-type=remove]': 'remove',
 
   constructor: ->
@@ -41,7 +42,10 @@ class App.LinkInfo extends App.Controller
         list[ item['link_type'] ] = []
         
       if item['link_object'] is 'Ticket'
-        list[ item['link_type'] ].push App.Ticket.find( item['link_object_value'] )
+        ticket = App.Ticket.find( item['link_object_value'] )
+        if ticket.ticket_state.name is 'merged'
+          ticket.css = 'merged'
+        list[ item['link_type'] ].push ticket
 
     # insert data
     @html App.view('link/info')(
@@ -52,6 +56,13 @@ class App.LinkInfo extends App.Controller
 #      selector: '.user-tickets',
 #      user_id:  user_id,
 #    )
+
+  edit: (e) =>
+    e.preventDefault()
+    if $(e.target).parent().parent().find('[data-type=remove]').is('.hide')
+      $(e.target).parent().parent().find('[data-type=remove]').removeClass('hide')
+    else
+      $(e.target).parent().parent().find('[data-type=remove]').addClass('hide')
 
   remove: (e) =>
     e.preventDefault()

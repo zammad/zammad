@@ -5,11 +5,14 @@
     <strong><%- T( type ) %></strong>
     <ul>
       <% for item in @links[type]: %>
-      <li><a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>">T:<%= item.number %> <%= item.title %></a> <a href="" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove" class="icon-remove" title="<%- T('remove') %>"></a></li>
+      <li><a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>" class="<%= item.css %>">T:<%= item.number %> <%= item.title %></a> <a href="" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove" class="icon-remove hide" title="<%- T('remove') %>"></a></li>
       <% end %>
     </ul>
   <% end %>
 
-  <div><a href="" data-type="add" class="icon-plus" title="<%- T('add') %>"></a></div>
+  <div>
+    <a href="" data-type="edit" class="icon-edit" title="<%- T('edit') %>"></a>
+    <a href="" data-type="add" class="icon-plus" title="<%- T('add') %>"></a>
+  </div>
 
 </div>
