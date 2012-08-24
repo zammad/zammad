@@ -11,7 +11,9 @@
   <% end %>
 
   <div>
+    <% if !_.isEmpty(@links): %>
     <a href="" data-type="edit" class="icon-edit" title="<%- T('edit') %>"></a>
+    <% end %>
     <a href="" data-type="add" class="icon-plus" title="<%- T('add') %>"></a>
   </div>
 

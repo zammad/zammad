@@ -59,7 +59,7 @@ class App.LinkInfo extends App.Controller
 
   edit: (e) =>
     e.preventDefault()
-    if $(e.target).parent().parent().find('[data-type=remove]').is('.hide')
+    if $(e.target).parent().parent().find('[data-type=remove]').hasClass('hide')
       $(e.target).parent().parent().find('[data-type=remove]').removeClass('hide')
     else
       $(e.target).parent().parent().find('[data-type=remove]').addClass('hide')
@@ -123,10 +123,10 @@ class App.LinkAdd extends App.ControllerModal
       url:   '/links/add',
       data:  {
         link_type:                params['link_type'],
-        link_object_source:       'Ticket',
-        link_object_source_value: @object.id,
         link_object_target:       'Ticket',
-        link_object_target_number: params['ticket_number'],
+        link_object_target_value: @object.id,
+        link_object_source:       'Ticket',
+        link_object_source_number: params['ticket_number'],
       }
       processData: true,
       success: (data, status, xhr) =>

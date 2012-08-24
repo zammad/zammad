@@ -41,13 +41,13 @@ class LinksController < ApplicationController
   def add
 
     # lookup object id
-    object_id = Ticket.where( :number => params[:link_object_target_number] ).first.id
+    object_id = Ticket.where( :number => params[:link_object_source_number] ).first.id
     link = Link.add(
       :link_type                => params[:link_type],
-      :link_object_source       => params[:link_object_source],
-      :link_object_source_value => params[:link_object_source_value],
       :link_object_target       => params[:link_object_target],
-      :link_object_target_value => object_id
+      :link_object_target_value => params[:link_object_target_value],
+      :link_object_source       => params[:link_object_source],
+      :link_object_source_value => object_id
     )
 
     if link

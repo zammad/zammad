@@ -4,7 +4,8 @@
   <h3><%- T('Link') %></h3>
 </div>
 <div class="modal-body">
-  <%- T('Link Ticket#') %>
+  <%- T('Link') %>
+  <%- T(@link_object) %>
   <input type="text" name="ticket_number" value="" class="span2" required/>
   <%- T('as') %>
   <select name="link_type" class="span2" required>
@@ -13,8 +14,8 @@
     <option value="child"><%- T('child') %></option>
     <option value="parent"><%- T('parent') %></option>
   </select>
-  <%- T('with') %>
-  <%- T(@link_object) %>
+  <%- T('of') %>
+  Ticket#
   <%= @object.number %>.
 <!--
   <ul>
