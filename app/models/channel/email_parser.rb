@@ -219,6 +219,12 @@ class Channel::EmailParser
       if ticket
         ticket_state      = Ticket::State.find( ticket.ticket_state_id )
         ticket_state_type = Ticket::StateType.find( ticket_state.ticket_state_type_id )
+
+        # if tickte is merged, find linked ticket
+        if ticket_state_type.name == 'merged'
+
+        end
+
         if ticket_state_type.name != 'new'
           ticket.ticket_state = Ticket::State.where( :name => 'open' ).first
           ticket.save
@@ -232,7 +238,7 @@ class Channel::EmailParser
         ticket_attributes = {
           :group_id           => channel[:group_id] || 1,
           :customer_id        => user.id,
-          :title              => mail[:subject],
+          :title              => mail[:subject] || '',
           :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
           :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
           :created_by_id      => user.id,
