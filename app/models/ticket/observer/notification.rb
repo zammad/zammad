@@ -8,8 +8,8 @@ class Ticket::Observer::Notification < ActiveRecord::Observer
 #    puts '@@event_buffer'
 #    puts @@event_buffer.inspect
     @@event_buffer.each { |event|
-      
-      # get current state ob objects
+
+      # get current state of objects
       if event[:name] == 'Ticket::Article'
         article = Ticket::Article.find( event[:id] )
         ticket  = article.ticket
@@ -49,7 +49,7 @@ From: #{article.from}
 
       # send new ticket notification to customers
       if event[:name] == 'Ticket' && event[:type] == 'create'
-        
+
         # only for incoming emails
         next if article.ticket_article_type.name != 'email'
 
@@ -222,7 +222,7 @@ From: #{article.from}
         :history_object         => 'Ticket',
         :value_from             => notification_subject,
         :value_to               => recipient_list,
-        :created_by_id          => ticket.created_by_id || 1
+        :created_by_id          => article.created_by_id || 1
       )
     end
   end
