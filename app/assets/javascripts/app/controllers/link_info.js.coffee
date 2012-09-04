@@ -40,7 +40,7 @@ class App.LinkInfo extends App.Controller
     for item in @links
       if !list[ item['link_type'] ]
         list[ item['link_type'] ] = []
-        
+
       if item['link_object'] is 'Ticket'
         ticket = App.Ticket.find( item['link_object_value'] )
         if ticket.ticket_state.name is 'merged'
@@ -51,18 +51,27 @@ class App.LinkInfo extends App.Controller
     @html App.view('link/info')(
       links: list,
     )
-    
+
+    # show edit mode once enabled
+    if @edit_mode
+      @el.find('[data-type=remove]').removeClass('hide')
+      @el.find('[data-type=add]').removeClass('hide')
+
 #    @ticketPopups(
 #      selector: '.user-tickets',
 #      user_id:  user_id,
 #    )
 
+  # enable/disable edit mode
   edit: (e) =>
     e.preventDefault()
-    if $(e.target).parent().parent().find('[data-type=remove]').hasClass('hide')
+    @edit_mode = true
+    if $(e.target).parent().parent().find('[data-type=add]').hasClass('hide')
       $(e.target).parent().parent().find('[data-type=remove]').removeClass('hide')
+      $(e.target).parent().parent().find('[data-type=add]').removeClass('hide')
     else
       $(e.target).parent().parent().find('[data-type=remove]').addClass('hide')
+      $(e.target).parent().parent().find('[data-type=add]').addClass('hide')
 
   remove: (e) =>
     e.preventDefault()
