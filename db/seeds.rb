@@ -1707,5 +1707,7 @@ Translation.create( :locale => 'de', :source => "normal", :target => "Normal" )
 Translation.create( :locale => 'de', :source => "Linked Objects", :target => "Verknüpfte Objekte" )
 Translation.create( :locale => 'de', :source => "Links", :target => "Verknüpftungen" )
 Translation.create( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern" )
-Assignment Timout
+Translation.create( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets" )
+Translation.create( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung" )
+
 #Translation.create( :locale => 'de', :source => "", :target => "" )
