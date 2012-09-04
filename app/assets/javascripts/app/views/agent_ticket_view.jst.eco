@@ -1,7 +1,7 @@
 <div class="page-header">
   <div class="row">
     <div class="span9">
-      <h1><%- T(@overview.meta.name) %> <small><a href="#" data-type="settings" class="icon-edit"></a></small></h1>
+      <h1><%- T(@overview.meta.name) %> <% if @edit: %><small><a href="#" data-type="settings" class="icon-edit"></a></small><% end %></h1>
     </div>
     <div class="span3">
       <div class="pagination keepright">

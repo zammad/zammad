@@ -1149,6 +1149,7 @@ Ticket::Article::Type.create( :name => 'twitter status', :communication => true 
 Ticket::Article::Type.create( :name => 'twitter direct-message', :communication => true )
 Ticket::Article::Type.create( :name => 'facebook', :communication => true )
 Ticket::Article::Type.create( :name => 'note', :communication => false )
+Ticket::Article::Type.create( :name => 'web', :communication => true )
 
 Ticket::Article::Sender.create( :name => 'Agent' )
 Ticket::Article::Sender.create( :name => 'Customer' )
@@ -1184,8 +1185,10 @@ The Zammad.org Project
   :internal                 => false
 )
 
+overview_role = Role.where( :name => 'Agent' ).first
 Overview.create(
-  :name => 'my_assigned',
+  :name      => 'my_assigned',
+  :role_id   => overview_role.id,
   :condition => {
     :ticket_state_id => [ 1,2,3 ],
     :owner_id        => 'current_user.id',
@@ -1223,7 +1226,8 @@ Overview.create(
 )
 
 Overview.create(
-  :name => 'all_unassigned',
+  :name      => 'all_unassigned',
+  :role_id   => overview_role.id,
   :condition => {
     :ticket_state_id => [1,2,3],
     :owner_id        => 1,
@@ -1261,7 +1265,8 @@ Overview.create(
 )
 
 Overview.create(
-  :name => 'all_open',
+  :name      => 'all_open',
+  :role_id   => overview_role.id,
   :condition => {
     :ticket_state_id => [1,2,3],
   },
@@ -1298,7 +1303,8 @@ Overview.create(
 )
 
 Overview.create(
-  :name => 'all_escalated',
+  :name      => 'all_escalated',
+  :role_id   => overview_role.id,
   :condition => {
     :ticket_state_id => [1,2,3],
   },
@@ -1335,7 +1341,8 @@ Overview.create(
 )
 
 Overview.create(
-  :name => 'my_pending_reached',
+  :name      => 'my_pending_reached',
+  :role_id   => overview_role.id,
   :condition => {
     :ticket_state_id => [3],
     :owner_id        => 'current_user.id',        
@@ -1373,7 +1380,8 @@ Overview.create(
 )
 
 Overview.create(
-  :name => 'all',
+  :name      => 'all',
+  :role_id   => overview_role.id,
   :condition => {
 #          :ticket_state_id => [3],
 #          :owner_id        => current_user.id,        
@@ -1403,6 +1411,45 @@ Overview.create(
     :m => {
       :overview => [
         'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
+      ],
+      :per_page => 20,
+    },
+    :view_mode_default => 's',
+  }
+)
+
+overview_role = Role.where( :name => 'Customer' ).first
+Overview.create(
+  :name      => 'My Tickets',
+  :role_id   => overview_role.id,
+  :condition => {
+    :customer_id => 'current_user.id',
+  },
+  :order => {
+    :by        => 'created_at',
+    :direction => 'ASC',
+  },
+  :meta => {
+    :url  => 'my_tickets',
+    :name => 'My Tickets',
+    :prio => 1000,
+  },
+  :view => {
+    :d => {
+      :overview => [
+        'title', 'customer', 'ticket_state', 'created_at'
+      ],
+      :per_page => 5,
+    },
+    :s => {
+      :overview => [
+        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
+      ],
+      :per_page => 30,
+    },
+    :m => {
+      :overview => [
+        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
       ],
       :per_page => 20,
     },
@@ -1658,5 +1705,7 @@ Translation.create( :locale => 'de', :source => "child", :target => "Kind" )
 Translation.create( :locale => 'de', :source => "parent", :target => "Eltern" )
 Translation.create( :locale => 'de', :source => "normal", :target => "Normal" )
 Translation.create( :locale => 'de', :source => "Linked Objects", :target => "Verknüpfte Objekte" )
+Translation.create( :locale => 'de', :source => "Links", :target => "Verknüpftungen" )
 Translation.create( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern" )
+Assignment Timout
 #Translation.create( :locale => 'de', :source => "", :target => "" )

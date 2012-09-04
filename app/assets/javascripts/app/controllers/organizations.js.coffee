@@ -58,7 +58,7 @@ Config.NavBar['TicketOverview'] = { prio: 1000, parent: '', name: 'Overviews', t
 #Config.NavBar[''] = { prio: 1600, parent: '', name: 'anybody+agent', target: '#aa', role: ['Anybody', 'Agent'] }
 #Config.NavBar[''] = { prio: 1600, parent: '', name: 'Anybody', target: '#anybody', role: ['Anybody'] }
 Config.NavBar['CustomerTicketNew'] = { prio: 1600, parent: '', name: 'New Ticket', target: '#customer_ticket_new', role: ['Customer'] }
-Config.NavBar['CustomerTickets'] = { prio: 1700, parent: '', name: 'My Tickets', target: '#customer_tickets', role: ['Customer'] }
+Config.NavBar['CustomerTickets'] = { prio: 1700, parent: '', name: 'My Tickets', target: '#ticket_view/my_tickets', role: ['Customer'] }
 
 Config.NavBarRight['TicketNew'] = { prio: 8000, parent: '', name: 'New', target: '#ticket_create', role: ['Agent'] }
 Config.NavBarRight['User'] = {

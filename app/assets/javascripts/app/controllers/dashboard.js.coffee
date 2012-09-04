@@ -8,6 +8,11 @@ class Index extends App.Controller
     # check authentication
     return if !@authenticate()
 
+    # check role
+    if @isRole('Customer')
+      @navigate '#ticket_view/my_tickets'
+      return
+
     # set title
     @title 'Dashboard'
     @navupdate '#/'

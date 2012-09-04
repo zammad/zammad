@@ -234,7 +234,7 @@ class UserState
       cache_key = @cache_key + '_overview'
       if CacheIn.expired(cache_key)
         overview = Ticket.overview(
-          :current_user_id => user.id,
+          :current_user => user,
         )
         overview_cache = CacheIn.get( cache_key, { :re_expire => true } )
         self.log 'fetch overview - ' + cache_key
@@ -249,16 +249,16 @@ class UserState
 
       # overview lists
       overviews = Ticket.overview_list(
-        :current_user_id => user.id,
+        :current_user => user,
       )
       overviews.each { |overview|
         cache_key = @cache_key + '_overview_data_' + overview.meta[:url]
         if CacheIn.expired(cache_key)
           overview_data = Ticket.overview(
-            :view            => overview.meta[:url],
-#            :view_mode       => params[:view_mode],
-            :current_user_id => user.id,
-            :array           => true,
+            :view         => overview.meta[:url],
+#            :view_mode    => params[:view_mode],
+            :current_user => user,
+            :array        => true,
           )
           overview_data_cache = CacheIn.get( cache_key, { :re_expire => true } )
           self.log 'fetch overview_data - ' + cache_key
@@ -386,7 +386,7 @@ class ClientState
 
       # overview_data
       overviews = Ticket.overview_list(
-        :current_user_id => user.id,
+        :current_user => user,
       )
       overviews.each { |overview|
         cache_key = 'user_' + user.id.to_s + '_overview_data_' + overview.meta[:url]

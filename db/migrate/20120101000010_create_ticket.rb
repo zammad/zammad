@@ -135,6 +135,7 @@ class CreateTicket < ActiveRecord::Migration
 
     create_table :overviews do |t|
       t.references :user,                                         :null => true
+      t.references :role,                                         :null => false
       t.column :name,                   :string,  :limit => 250,  :null => false
       t.column :meta,                   :string,  :limit => 1000, :null => false
       t.column :condition,              :string,  :limit => 2500, :null => false

@@ -30,6 +30,13 @@ class User < ApplicationModel
     return fullname
   end
 
+  def is_role( role_name )
+    self.roles.each { |role|
+      return role if role.name == role_name
+    }
+    return false
+  end
+
   def self.authenticate( username, password )
 
     # do not authenticate with nothing

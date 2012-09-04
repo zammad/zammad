@@ -129,9 +129,17 @@ class ApplicationController < ActionController::Base
 
   def is_role( role_name )
     return false if !current_user
-    current_user.roles.each { |role|
-      return true if role.name == role_name
-    }
+    return true if current_user.is_role( role_name )
+    return false
+  end
+
+  def ticket_permission(ticket)
+    return true if ticket.permission( :current_user => current_user )
+
+    render(
+      :json => {},
+      :status => :unauthorized
+    )
     return false
   end
 

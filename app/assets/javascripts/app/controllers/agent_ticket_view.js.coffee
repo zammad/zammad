@@ -20,8 +20,8 @@ class Index extends App.Controller
     @title ''
     @navupdate '#ticket_view/' + @view
 
-    @meta          = {}
-    @bulk          = {}
+    @meta = {}
+    @bulk = {}
 
     # set controller to active
     Config['ActiveController'] = '#ticket_overview_' + @view
@@ -126,19 +126,24 @@ class Index extends App.Controller
     @html html
 
     # create table/overview
+    checkbox = true
+    edit = true
+    if @isRole('Customer')
+      checkbox = false
+      edit = false
     table = ''
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
         overview: @overview,
         objects:  @ticket_list_show,
-        checkbox: true
+        checkbox: checkbox,
       )
       table = $(table)
       table.delegate('[name="bulk_all"]', 'click', (e) ->
         if $(e.target).attr('checked')
-          $(e.target).parents().find('[name="bulk"]').attr('checked', true);
+          $(e.target).parents().find('[name="bulk"]').attr('checked', true)
         else
-          $(e.target).parents().find('[name="bulk"]').attr('checked', false);       
+          $(e.target).parents().find('[name="bulk"]').attr('checked', false)
       )
     else
       shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.s.overview )
@@ -146,7 +151,8 @@ class Index extends App.Controller
         overview_extended: shown_all_attributes,
         model:             App.Ticket,
         objects:           @ticket_list_show,
-        checkbox:          true,
+        checkbox:          checkbox,
+        edit:              edit,
       )
 
     # append content table
@@ -209,7 +215,6 @@ class Index extends App.Controller
     # render init page
     html = App.view('agent_ticket_view/bulk')(
       meta:        @overview.meta,
-      checkbox:    true
       form_ticket: form_ticket,
 #      form_article: form_article,
     )

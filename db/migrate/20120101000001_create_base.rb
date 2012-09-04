@@ -42,11 +42,25 @@ class CreateBase < ActiveRecord::Migration
     add_index :users, [:source]
     add_index :users, [:created_by_id]
 
+    create_table :signatures do |t|
+      t.column :name,           :string, :limit => 100,  :null => false
+      t.column :body,           :string, :limit => 5000, :null => true
+      t.column :active,         :boolean,                :null => false, :default => true
+      t.column :note,           :string, :limit => 250,  :null => true
+      t.column :created_by_id,  :integer,                :null => false
+      t.timestamps
+    end
+    add_index :signatures, [:name], :unique => true
+
     create_table :groups do |t|
-      t.column :name,           :string, :limit => 100, :null => false
-      t.column :active,         :boolean,               :null => false, :default => true
-      t.column :note,           :string, :limit => 250, :null => true
-      t.column :created_by_id,  :integer,               :null => false
+      t.references :signature,                                 :null => false
+      t.column :name,                 :string,  :limit => 100, :null => false
+      t.column :assignment_timeout,   :integer,                :null => true
+      t.column :follow_up_possible,   :string,  :limit => 100, :default => 'yes', :null => true
+      t.column :follow_up_assignment, :boolean, :default => 1
+      t.column :active,               :boolean,                :null => false, :default => true
+      t.column :note,                 :string,  :limit => 250, :null => true
+      t.column :created_by_id,        :integer,                :null => false
       t.timestamps
     end
     add_index :groups, [:name], :unique => true

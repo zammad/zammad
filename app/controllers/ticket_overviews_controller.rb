@@ -8,7 +8,7 @@ class TicketOverviewsController < ApplicationController
     # get navbar overview data
     if !params[:view]
       result = Ticket.overview(
-        :current_user_id => current_user.id,
+        :current_user => current_user,
       )
       render :json => result
       return
@@ -17,9 +17,9 @@ class TicketOverviewsController < ApplicationController
     # get real overview data
     if params[:array]
       overview = Ticket.overview(
-        :view            => params[:view],
-        :current_user_id => current_user.id,
-        :array           => true,
+        :view         => params[:view],
+        :current_user => current_user,
+        :array        => true,
       ) 
       tickets = []
       overview[:tickets].each {|ticket|
@@ -157,7 +157,10 @@ class TicketOverviewsController < ApplicationController
 
   # GET /ticket_full/1
   def ticket_full
+
+    # permission check
     ticket = Ticket.find(params[:id])
+    return if !ticket_permission(ticket)
 
     # get related users
     users = {}
@@ -258,9 +261,11 @@ class TicketOverviewsController < ApplicationController
   
   # GET /ticket_attachment/1
   def ticket_attachment
-    
+
     # permissin check
-    
+    ticket = Ticket.find( params[:ticket_id] )
+    return if !ticket_permission(ticket)
+
     # find file
     file = Store.find(params[:id])
     send_data(
@@ -273,12 +278,16 @@ class TicketOverviewsController < ApplicationController
 
   # GET /ticket_article_plain/1
   def ticket_article_plain
-    
+
     # permissin check
+    article = Ticket::Article.find( params[:id] )
+    return if !ticket_permission( article.ticket )
+
     list = Store.list(
       :object => 'Ticket::Article::Mail',
       :o_id   => params[:id],
     )
+
     # find file
     if list
       file = Store.find(list.first)
@@ -350,10 +359,13 @@ class TicketOverviewsController < ApplicationController
 
   # GET /ticket_history/1
   def ticket_history
-    
+
     # get ticket data
     ticket = Ticket.find(params[:id])
-    
+
+    # permissin check
+    return if !ticket_permission(ticket)
+
     # get history of ticket
     history = History.history_list( 'Ticket', params[:id], 'Ticket::Article' )
 
@@ -386,7 +398,7 @@ class TicketOverviewsController < ApplicationController
   
   # GET /ticket_merge/1/1
   def ticket_merge
-    
+
     # check master ticket
     ticket_master = Ticket.where( :number => params[:master_ticket_number] ).first
     if !ticket_master
@@ -397,6 +409,9 @@ class TicketOverviewsController < ApplicationController
       return
     end
 
+    # permissin check
+    return if !ticket_permission(ticket_master)
+
     # check slave ticket
     ticket_slave = Ticket.where( :id => params[:slave_ticket_id] ).first
     if !ticket_slave
@@ -406,6 +421,9 @@ class TicketOverviewsController < ApplicationController
       }
       return
     end
+
+    # permissin check
+    return if !ticket_permission(ticket_slave)
 
     # check diffetent ticket ids
     if ticket_slave.id == ticket_master.id

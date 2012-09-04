@@ -134,24 +134,55 @@ class Ticket < ApplicationModel
     return subject
   end
 
+#  ticket.permission(
+#    :current_user => 123
+#  )
+  def permission (data)
+
+    # check customer
+    if data[:current_user].is_role('Customer')
+      return true if self.customer_id == data[:current_user].id
+      return false
+    end
+
+    # check agent
+    return true if self.owner_id == data[:current_user].id
+    data[:current_user].groups.each {|group|
+      return true if self.group.id == group.id
+    }
+    return false
+  end
 
 #  Ticket.overview_list(
-#    :current_user_id => 123,
+#    :current_user => 123,
 #  )
   def self.overview_list (data)
-    Overview.all
+    # get user role
+    if data[:current_user].is_role('Customer')
+      role = data[:current_user].is_role( 'Customer' )
+    else
+      role = data[:current_user].is_role( 'Agent' )
+    end
+    Overview.where( :role_id => role.id )
   end
 
 #  Ticket.overview(
-#    :view            => 'some_view_url',
-#    :current_user_id => 123,
+#    :view         => 'some_view_url',
+#    :current_user => OBJECT,
 #  )
   def self.overview (data)
+
+    # get user role
+    if data[:current_user].is_role('Customer')
+      role = data[:current_user].is_role( 'Customer' )
+    else
+      role = data[:current_user].is_role( 'Agent' )
+    end
 
     # build up attributes hash
     overview_selected     = nil
     overview_selected_raw = nil
-    overviews             = Overview.all
+    overviews             = Overview.where( :role_id => role.id )
     overviews.each { |overview|
 
       # for cleanup reasons, remove me later!
@@ -170,7 +201,7 @@ class Ticket < ApplicationModel
       # replace 'current_user.id' with current_user.id
       overview.condition.each { |item, value |
         if value == 'current_user.id'
-          overview.condition[item] = data[:current_user_id]
+          overview.condition[item] = data[:current_user].id
         end
       }
     }
@@ -196,10 +227,16 @@ class Ticket < ApplicationModel
 
 #    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
     # get only tickets with permissions
-    group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', [ data[:current_user_id] ] ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
+    if data[:current_user].is_role('Customer')
+      group_ids = Group.select( 'groups.id' ).
+        where( 'groups.active = ?', true ).
+        map( &:id )
+    else
+      group_ids = Group.select( 'groups.id' ).joins(:users).
+        where( 'groups_users.user_id = ?', [ data[:current_user].id ] ).
+        where( 'groups.active = ?', true ).
+        map( &:id )
+    end
 
     # overview meta for navbar
     if !overview_selected
@@ -235,7 +272,7 @@ class Ticket < ApplicationModel
 
       tickets_count = Ticket.where( :group_id => group_ids ).
         where( overview_selected.condition ).
-        count() 
+        count()
 
       return {
         :tickets       => ticket_ids,

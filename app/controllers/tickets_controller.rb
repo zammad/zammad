@@ -12,6 +12,9 @@ class TicketsController < ApplicationController
   def show
     @ticket = Ticket.find(params[:id])
 
+    # permissin check
+    return if !ticket_permission(@ticket)
+
     render :json => @ticket
   end
 
@@ -62,6 +65,9 @@ class TicketsController < ApplicationController
   def update
     @ticket = Ticket.find(params[:id])
 
+    # permissin check
+    return if !ticket_permission(@ticket)
+
     if @ticket.update_attributes(params[:ticket])
       render :json => @ticket, :status => :ok
     else
@@ -72,6 +78,10 @@ class TicketsController < ApplicationController
   # DELETE /tickets/1
   def destroy
     @ticket = Ticket.find(params[:id])
+
+    # permissin check
+    return if !ticket_permission(@ticket)
+
     @ticket.destroy
 
     head :ok
