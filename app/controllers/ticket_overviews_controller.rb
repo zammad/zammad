@@ -179,32 +179,41 @@ class TicketOverviewsController < ApplicationController
       end
     }
 
+    # log object as viewed
+    log_view(ticket)
+
     # get related articles
+    ticket = ticket.attributes
     ticket[:article_ids] = []
-    articles = ticket.articles || []
-    
+    articles = Ticket::Article.where( :ticket_id => params[:id] )
+
     # get related users
+    articles_used = []
     articles.each {|article|
-      
+
+      # ignore internal article if customer is requesting
+      next if article.internal == true && is_role('Customer')
+      article_tmp = article.attributes
+
       # load article ids
-      ticket[:article_ids].push article.id
+      ticket[:article_ids].push article_tmp['id']
       
       # add attachment list to article
-      article['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => article.id )
-      
+      article_tmp['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => article.id )
+
+      # remember article
+      articles_used.push article_tmp
+
       # load users
       if !users[article.created_by_id]
         users[article.created_by_id] = User.user_data_full(article.created_by_id)
       end
     }
 
-    # log object as viewed
-    log_view(ticket)
-
     # return result
     render :json => {
       :ticket   => ticket,
-      :articles => articles,
+      :articles => articles_used,
       :users    => users,
       :edit_form => {
         :owner_id => {
