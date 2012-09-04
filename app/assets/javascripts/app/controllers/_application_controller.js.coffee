@@ -20,6 +20,12 @@ class App.Controller extends Spine.Controller
 
     @delay( a, 0 )
 
+  isRole: (name) ->
+    return false if !window.Session.roles
+    for role in window.Session.roles
+      return true if role.name is name
+    return false
+
 #  # extend delegateEvents to unbind and undelegate
 #  delegateEvents: ->
 #    
