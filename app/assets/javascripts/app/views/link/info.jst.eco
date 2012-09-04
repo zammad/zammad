@@ -1,6 +1,5 @@
 <div class="well">
-  <h3><%- T('Linked Objects') %></h3>
-
+  <h3><%- T('Links') %> <a href="" data-type="edit" class="icon-edit" title="<%- T('edit') %>"></a></h3>
   <% for type of @links: %>
     <strong><%- T( type ) %></strong>
     <ul>
@@ -9,12 +8,7 @@
       <% end %>
     </ul>
   <% end %>
-
   <div>
-    <% if !_.isEmpty(@links): %>
-    <a href="" data-type="edit" class="icon-edit" title="<%- T('edit') %>"></a>
-    <% end %>
-    <a href="" data-type="add" class="icon-plus" title="<%- T('add') %>"></a>
+    <a href="" data-type="add" class="icon-plus hide" title="<%- T('add') %>"></a>
   </div>
-
 </div>
