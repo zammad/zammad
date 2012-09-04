@@ -7,9 +7,6 @@ class Index extends App.Controller
 #    'click [data-type=reply-all]':            'replyall',
     'click [data-type=public]':               'public_internal',
     'click [data-type=internal]':             'public_internal',
-    'click [data-type=history]':              'history_dialog',
-    'click [data-type=merge]':                'merge_dialog',
-    'click [data-type=customer]':             'customer_dialog',
     'change [name="ticket_article_type_id"]': 'form_update',
     'click .show_toogle':                     'show_toogle',
 
@@ -70,8 +67,7 @@ class Index extends App.Controller
 
   render: =>
 
-    if !App.Ticket.exists(@ticket_id)
-      return
+    return if !App.Ticket.exists(@ticket_id)
 
     # get data
     if !@ticket
@@ -80,103 +76,27 @@ class Index extends App.Controller
       @articles = []
       for article_id in @ticket.article_ids
         article = App.TicketArticle.find(article_id)
-        
-        # build html body
-        # cleanup body
-        article['html'] = article.body.trim()
-        article['html'].replace(/\n\r/g, "\n");
-        article['html'].replace(/\n\n\n/g, "\n\n");
-        
-        # if body has more then x lines / else search for signature
-        preview       = 15
-        preview_mode  = false
-        article_lines = article['html'].split(/\n/)
-        if article_lines.length > preview
-          preview_mode = true
-          if article_lines[preview] is ''
-            article_lines.splice( preview, 0, '----SEEMORE----' )
-          else
-            article_lines.splice( preview + 1, 0, '----SEEMORE----' )
-          article['html'] = article_lines.join("\n")
-        article['html'] = window.linkify( article['html'] )
-        notify = '<a href="#" class="show_toogle">' + T('See more') + '</a>'
-
-        # preview mode
-        if preview_mode
-          @article_changed = false
-          article['html'] = article['html'].replace /^\n{0,10}----SEEMORE----\n/m, (match) =>
-            @article_changed = true
-            notify + '<div class="hide">'
-          if @article_changed
-            article['html'] = article['html'] + '</div>'
-          
-        # hide signatures and so on
-        else
-          @article_changed = false
-          article['html'] = article['html'].replace /^\n{0,10}(--|__)/m, (match) =>
-            @article_changed = true
-            notify + '<div class="hide">' + match
-          if @article_changed
-            article['html'] = article['html'] + '</div>'
-
         @articles.push article
 
-    # check attachments
+    # rework articles
     for article in @articles
-      if article.attachments
-        for attachment in article.attachments
-          attachment.size = @humanFileSize(attachment.size)
-
-    # define actions
-    for article in @articles
-      actions = []
-      if article.internal is true
-        actions = [
-          {
-            name: 'set to public',
-            type: 'public',
-          }
-        ]
-      else
-        actions = [
-          {
-            name: 'set to internal',
-            type: 'internal',
-          }
-        ]      
-      if article.article_type.name is 'note'
-#        actions.push []
-      else
-        if article.article_sender.name is 'Customer'
-          actions.push {
-            name: 'reply',
-            type: 'reply',
-            href: '#',
-          }
-          actions.push {
-            name: 'reply all',
-            type: 'reply-all',
-            href: '#',
-          }
-          actions.push {
-            name: 'split',
-            type: 'split',
-            href: '#ticket_create/' + article.ticket_id + '/' + article.id,
-          }          
-      article.actions = actions
+      new Article( article: article )
 
     # set title
     @title 'Ticket Zoom ' + @ticket.number
-    
     @configure_attributes_ticket = [
       { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', translate: true, class: 'span2', item_class: 'keepleft' },
       { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', translate: true, class: 'span2', item_class: 'keepleft' },
       { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', class: 'span2', item_class: 'keepleft'  },
       { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'keepleft' },
     ]
-    form_ticket = @formGen( model: { configure_attributes: @configure_attributes_ticket, className: 'create' }, params: @ticket )
+    if @isRole('Customer')
+      @configure_attributes_ticket = [
+        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', translate: true, class: 'span2', item_class: 'keepleft' },
+        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', translate: true, class: 'span2', item_class: 'keepleft' },
+      ]
+
     @configure_attributes_article = [
-#      { name: 'from',                     display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
       { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', translate: true, class: 'medium', item_class: '' },
       { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
@@ -184,10 +104,19 @@ class Index extends App.Controller
       { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 5,  limit: 100, null: true, class: 'span7', item_class: ''  },
       { name: 'internal',                 display: 'Visability',  tag: 'select',   default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '' },
-#      { name: 'ticket_article_sender_id', display: 'Sender',   tag: 'select',   multiple: false, null: true, relation: 'TicketArticleSender', default: '', class: 'medium' },
     ]
+    if @isRole('Customer')
+      @configure_attributes_article = [
+        { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+        { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+        { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+        { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+        { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 5,  limit: 100, null: true, class: 'span7', item_class: ''  },
+      ]
+
+    form_ticket = @formGen( model: { configure_attributes: @configure_attributes_ticket, className: 'create' }, params: @ticket )
     form_article = @formGen( model: { configure_attributes: @configure_attributes_article } )
-      
+
     @html App.view('agent_ticket_zoom')(
       ticket:       @ticket,
       articles:     @articles,
@@ -198,21 +127,11 @@ class Index extends App.Controller
 
     @el.find('textarea').elastic()
 
+    # enable user popups
     @userPopups()
-    
-    # start customer info controller
-    new App.UserInfo(
-      el:      @el.find('#customer_info'),
-      user_id: @ticket.customer_id,
-      ticket:  @ticket,
-    )
 
-    # start link info controller
-    new App.LinkInfo(
-      el:           @el.find('#link_info'),
-      object_type:  'Ticket',
-      object:        @ticket,
-    )
+    # show ticket action row
+    @ticket_action_row()
 
     # scrall to article if given
     if @article_id
@@ -223,7 +142,7 @@ class Index extends App.Controller
       @delay( scrollTo, 100 )
 
     @delay(@u, 200)
-    
+
   u: =>
     uploader = new qq.FileUploader(
       element: document.getElementById('file-uploader'),
@@ -235,6 +154,32 @@ class Index extends App.Controller
       debug: false
     )
 
+  ticket_action_row: =>
+
+    # start customer info controller
+    if !@isRole('Customer')
+      new App.UserInfo(
+        el:      @el.find('#customer_info'),
+        user_id: @ticket.customer_id,
+        ticket:  @ticket,
+      )
+
+    # start action controller
+    if !@isRole('Customer')
+      new TicketActionRow(
+        el:      @el.find('#action_info'),
+        ticket:  @ticket,
+        zoom:    @,
+      )
+
+    # start link info controller
+    if !@isRole('Customer')
+      new App.LinkInfo(
+        el:           @el.find('#link_info'),
+        object_type:  'Ticket',
+        object:        @ticket,
+      )
+
   show_toogle: (e) ->
     e.preventDefault()
     $(e.target).hide()
@@ -242,18 +187,6 @@ class Index extends App.Controller
       $(e.target).next('div').show()
     else
       $(e.target).parent().next('div').show()
-
-  history_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketHistory( ticket_id: @ticket_id )
-
-  merge_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketMerge( ticket_id: @ticket_id )
-
-  customer_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketCustomer( ticket_id: @ticket_id, zoom: @ )
 
   public_internal: (e) ->
     e.preventDefault()
@@ -376,8 +309,9 @@ class Index extends App.Controller
       ticket_update[item.name] = params[item.name]
       
     # check owner assignment
-    if !ticket_update['owner_id']
-      ticket_update['owner_id'] = 1
+    if !@isRole('Customer')
+      if !ticket_update['owner_id']
+        ticket_update['owner_id'] = 1
 
     @ticket.load( ticket_update )
     @log 'update ticket', ticket_update, @ticket
@@ -393,25 +327,161 @@ class Index extends App.Controller
           article = new App.TicketArticle
           params.from = window.Session['firstname'] + ' ' + window.Session['lastname'] 
           params.ticket_id = @ticket.id
-          
+          if !params['internal']
+            params['internal'] = false
+
           # find sender_id
-          sender = App.TicketArticleSender.findByAttribute("name", "Agent")
+          if @isRole('Customer')
+            sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+            type   = App.TicketArticleType.findByAttribute( 'name', 'web' )
+            params['ticket_article_type_id'] = type.id
+          else
+            sender = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
           params.ticket_article_sender_id = sender.id
           @log 'updateAttributes', params, sender, sender.id
           article.load(params)
+          errors = article.validate()
+          if errors
+            @log 'error new article', errors
           article.save(
             success: (r) =>
               @fetch(@ticket.id)
+            error: (r) =>
+              @log 'error', r
           )
         else
           @fetch(@ticket.id)
     )
-    
+
 #    errors = article.validate()
 #    @log 'error new', errors
 #    @validateForm( form: e.target, errors: errors )
     return false
 
+class Article extends App.Controller
+  constructor: ->
+    super
+
+    # define actions
+    @actionRow()
+
+    # check attachments
+    @attachments()
+
+    # html rework
+    @preview()
+
+  preview: ->
+
+    # build html body
+    # cleanup body
+    @article['html'] = @article.body.trim()
+    @article['html'].replace(/\n\r/g, "\n")
+    @article['html'].replace(/\n\n\n/g, "\n\n")
+
+    # if body has more then x lines / else search for signature
+    preview       = 15
+    preview_mode  = false
+    article_lines = @article['html'].split(/\n/)
+    if article_lines.length > preview
+      preview_mode = true
+      if article_lines[preview] is ''
+        article_lines.splice( preview, 0, '----SEEMORE----' )
+      else
+        article_lines.splice( preview + 1, 0, '----SEEMORE----' )
+      @article['html'] = article_lines.join("\n")
+    @article['html'] = window.linkify( @article['html'] )
+    notify = '<a href="#" class="show_toogle">' + T('See more') + '</a>'
+
+    # preview mode
+    if preview_mode
+      @article_changed = false
+      @article['html'] = @article['html'].replace /^\n{0,10}----SEEMORE----\n/m, (match) =>
+        @article_changed = true
+        notify + '<div class="hide">'
+      if @article_changed
+        @article['html'] = @article['html'] + '</div>'
+      
+    # hide signatures and so on
+    else
+      @article_changed = false
+      @article['html'] = @article['html'].replace /^\n{0,10}(--|__)/m, (match) =>
+        @article_changed = true
+        notify + '<div class="hide">' + match
+      if @article_changed
+        @article['html'] = @article['html'] + '</div>'
+
+
+  actionRow: ->
+    if @isRole('Customer')
+      @article.actions = []
+      return
+
+    actions = []
+    if @article.internal is true
+      actions = [
+        {
+          name: 'set to public',
+          type: 'public',
+        }
+      ]
+    else
+      actions = [
+        {
+          name: 'set to internal',
+          type: 'internal',
+        }
+      ]
+    if @article.article_type.name is 'note'
+#        actions.push []
+    else
+      if @article.article_sender.name is 'Customer'
+        actions.push {
+          name: 'reply',
+          type: 'reply',
+          href: '#',
+        }
+        actions.push {
+          name: 'reply all',
+          type: 'reply-all',
+          href: '#',
+        }
+        actions.push {
+          name: 'split',
+          type: 'split',
+          href: '#ticket_create/' + @article.ticket_id + '/' + @article.id,
+        }
+    @article.actions = actions
+
+  attachments: ->
+    if @article.attachments
+      for attachment in @article.attachments
+        attachment.size = @humanFileSize(attachment.size)
+
+class TicketActionRow extends App.Controller
+  events:
+    'click [data-type=history]':              'history_dialog',
+    'click [data-type=merge]':                'merge_dialog',
+    'click [data-type=customer]':             'customer_dialog',
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('ticket_action')()
+
+  history_dialog: (e) ->
+    e.preventDefault()
+    new App.TicketHistory( ticket_id: @ticket.id )
+
+  merge_dialog: (e) ->
+    e.preventDefault()
+    new App.TicketMerge( ticket_id: @ticket.id )
+
+  customer_dialog: (e) ->
+    e.preventDefault()
+    new App.TicketCustomer( ticket_id: @ticket.id, zoom: @zoom )
 
 Config.Routes['ticket/zoom/:ticket_id'] = Index
 Config.Routes['ticket/zoom/:ticket_id/nav/:nav'] = Index
