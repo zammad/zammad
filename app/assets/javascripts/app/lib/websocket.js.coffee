@@ -90,6 +90,9 @@ class _Singleton extends Spine.Controller
       console.log( "onopen" )
 
       # close error message if exists
+      if @error_delay
+        clearTimeout(@error_delay)
+        @error_delay = undefined
       if @error
         @error.modalHide()
         @error = undefined
@@ -107,7 +110,7 @@ class _Singleton extends Spine.Controller
 
     @ws.onmessage = (e) =>
       pipe = JSON.parse( e.data )
-      console.log( "ws:onmessage", pipe )
+      console.log( 'ws:onmessage', pipe )
 
       # go through all blocks
       for item in pipe
@@ -136,17 +139,19 @@ class _Singleton extends Spine.Controller
       @send(data)
 
     @ws.onclose = (e) =>
-      console.log( "onclose", e )
+      console.log( 'onclose', e )
 
-      # show error message
+      # show error message, first try to reconnect
       if !@error
-        @error = new App.ErrorModal(
-          message: 'No connection to websocket, trying to reconnect...'
-        )
+        message = =>
+          @error = new App.ErrorModal(
+            message: 'No connection to websocket, trying to reconnect...'
+          )
+        @error_delay = @delay message, 7000
 
-      # try reconnect after 5 sec.
-      @delay @connect, 5000
+      # try reconnect after 4.5 sec.
+      @delay @connect, 4500
 
     @ws.onerror = ->
-      console.log( "onerror" )
+      console.log( 'onerror' )
 
