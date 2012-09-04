@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include UserInfo
 #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
-  helper_method :current_user, :authentication_check, :config_frontend, :user_data_full
+  helper_method :current_user, :authentication_check, :config_frontend, :user_data_full, :is_role
 
   before_filter :set_user
   before_filter :cors_preflight_check
@@ -125,6 +125,14 @@ class ApplicationController < ActionController::Base
   def set_user
     return if !current_user
     UserInfo.current_user_id = current_user.id
+  end
+
+  def is_role( role_name )
+    return false if !current_user
+    current_user.roles.each { |role|
+      return true if role.name == role_name
+    }
+    return false
   end
 
   def log_view (object)
