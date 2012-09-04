@@ -95,20 +95,8 @@
 
   <div class="span3">
     <div class="row" id="customer_info"></div>
-
-    <div class="row">
-      <div class="well">
-        <h3><%- T('Actions') %></h3>
-        <ul>
-          <li><a href="#" data-type="history"><%- T('History') %></a></li>
-          <li><a href="#" data-type="merge"><%- T('Merge') %></a></li>
-          <li><a href="#" data-type="customer"><%- T('Change Customer') %></a></li>
-        </ul>
-      </div>
-    </div>
-
+    <div class="row" id="action_info"></div>
     <div class="row" id="link_info"></div>
-
   </div>
 
 </div>
