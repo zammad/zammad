@@ -188,6 +188,21 @@ class App.Controller extends Spine.Controller
           }
       )
 
+      # sort attribute.options
+      options_tmp = []
+      for i in attribute.options
+        options_tmp.push i['name'].toLowerCase()
+      options_tmp = options_tmp.sort()
+
+      options_new = []
+      options_new_used = {}
+      for i in options_tmp
+        for ii, vv in attribute.options
+          if !options_new_used[ ii['value'] ] && i.toString().toLowerCase() is ii['name'].toString().toLowerCase()
+            options_new_used[ ii['value'] ] = 1
+            options_new.push ii
+      attribute.options = options_new
+
     # finde selected/checked item of list
     if attribute.options
       for record in attribute.options
@@ -480,9 +495,9 @@ class App.Controller extends Spine.Controller
 
     # show new errors
     for key, msg of data.errors
-      $(data.form).parents().find('[name*="' + key + '"]').parents('div .control-group').addClass('error')      
-      $(data.form).parents().find('[name*="' + key + '"]').parent().find('.help-inline').html(msg);
-    
+      $(data.form).parents().find('[name*="' + key + '"]').parents('div .control-group').addClass('error')
+      $(data.form).parents().find('[name*="' + key + '"]').parent().find('.help-inline').html(msg)
+
     # set autofocus
     $(data.form).parents().find('.error').find('input, textarea').first().focus()
 
@@ -550,12 +565,12 @@ class App.Controller extends Spine.Controller
   clone = (obj) ->
     if not obj? or typeof obj isnt 'object'
       return obj
-  
+
     newInstance = new obj.constructor()
-  
+
     for key of obj
       newInstance[key] = clone obj[key]
-  
+
     return newInstance
 
   clearInterval: (interval_id) =>
