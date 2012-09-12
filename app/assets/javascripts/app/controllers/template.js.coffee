@@ -29,7 +29,6 @@ class App.TemplateUI extends App.Controller
     @configure_attributes = [
       { name: 'template_id', display: '', tag: 'select', multiple: false, null: true, nulloption: true, relation: 'Template', class: 'span2', default: @template_id  },
     ]
-    form = @formGen( model: { configure_attributes: @configure_attributes, className: '' } )
 
     template = {}
     if @template_id
@@ -37,10 +36,13 @@ class App.TemplateUI extends App.Controller
 
     # insert data
     @html App.view('template')(
-      form:     form,
       template: template,
     )
-
+    new App.ControllerForm(
+      el: @el.find('#form-template'),
+      model: { configure_attributes: @configure_attributes, className: '' },
+      autofocus: false,
+    )
 
   delete: (e) =>
     e.preventDefault()

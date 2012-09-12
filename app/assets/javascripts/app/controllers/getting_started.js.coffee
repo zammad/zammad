@@ -48,10 +48,23 @@ class Index extends App.Controller
       @navigate '#login'
 
     @html App.view('getting_started')(
-      form_agent:  @formGen( model: App.User, required: 'invite_agent' ),
-      form_master: @formGen( model: App.User, required: 'signup' ),
       master_user: @master_user,
     )
+
+    new App.ControllerForm(
+      el: @el.find('#form-master'),
+      model: App.User,
+      required: 'signup',
+      autofocus: true,
+    )
+    new App.ControllerForm(
+      el: @el.find('#form-agent'),
+      model: App.User,
+      required: 'invite_agent',
+      autofocus: true,
+    )
+
+
     if !@master_user
       @el.find('.agent_user').removeClass('hide')
 
@@ -67,7 +80,7 @@ class Index extends App.Controller
     @params.invite = true
 
     # find agent role
-    role = App.Role.findByAttribute("name", "Agent")
+    role = App.Role.findByAttribute('name', 'Agent')
     if role
       @params.role_ids = role.id
     else
@@ -80,7 +93,7 @@ class Index extends App.Controller
     errors = user.validate()
     if errors
       @log 'error new', errors
-      @validateForm( form: e.target, errors: errors )
+      @formValidate( form: e.target, errors: errors )
       return false
 
     # save user
@@ -99,7 +112,7 @@ class Index extends App.Controller
           )
         else
 
-          # rerender page    
+          # rerender page
           @render()
 #      error: =>
 #        @modalHide()

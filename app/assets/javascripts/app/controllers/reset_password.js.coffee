@@ -2,27 +2,31 @@ $ = jQuery.sub()
 
 class Index extends App.Controller
   className: 'container'
-  
+
   events:
     'submit form': 'submit',
     'click .submit': 'submit',
 
   constructor: ->
     super
-    
+
     # set title
     @title 'Reset Password'
     @navupdate '#reset_password'
 
     @render()
-    
+
   render: ->
    configure_attributes = [
       { name: 'username', display: 'Enter your username or email address:', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4',  },
     ]
 
-    @html App.view('reset_password')(
-      form: @formGen( model: { configure_attributes: configure_attributes } ),
+    @html App.view('reset_password')()
+
+    new App.ControllerForm(
+      el: @el.find('#form-password'),
+      model: { configure_attributes: configure_attributes },
+      autofocus: true,
     )
 
   submit: (e) ->
@@ -80,10 +84,14 @@ class Verify extends App.Controller
       { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input span4',  },
     ]
 
-    @html App.view('reset_password_change')(
-      form: @formGen( model: { configure_attributes: configure_attributes } ),
+    @html App.view('reset_password_change')()
+
+    new App.ControllerForm(
+      el: @el.find('#form-password-change'),
+      model: { configure_attributes: configure_attributes },
+      autofocus: true,
     )
-    
+
   render_failed: ->
     @html App.view('generic/hero_message')(
       head:    'Failed!',

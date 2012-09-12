@@ -355,7 +355,7 @@ class Index extends App.Controller
 
 #    errors = article.validate()
 #    @log 'error new', errors
-#    @validateForm( form: e.target, errors: errors )
+#    @formValidate( form: e.target, errors: errors )
     return false
 
 class Article extends App.Controller

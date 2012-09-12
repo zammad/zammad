@@ -10,12 +10,18 @@ class App.ControllerGenericNew extends App.ControllerModal
     @render()
   
   render: ->
-    @html App.view('generic/admin/new')(
-      form: @formGen( model: @genericObject ),
-      head: @pageData.object
+
+    @html App.view('generic/admin/new')( head: @pageData.object )
+
+    new App.ControllerForm(
+      el:         @el.find('#object_new'),
+      model:      @genericObject,
+      params:     @item,
+      autofocus:  true,
     )
+
     @modalShow()
-    
+
   submit: (e) ->
     @log 'submit'
     e.preventDefault()
@@ -34,7 +40,7 @@ class App.ControllerGenericNew extends App.ControllerModal
     errors = object.validate( form: true )
     if errors
       @log 'error new', errors
-      @validateForm( form: e.target, errors: errors )
+      @formValidate( form: e.target, errors: errors )
       return false
 
     # save object
@@ -64,10 +70,15 @@ class App.ControllerGenericEdit extends App.ControllerModal
       @genericObject.fetch( id: params.id) 
     
   render: ->
-    @html App.view('generic/admin/edit')(
-      form: @formGen( model: @genericObject, params: @item ),
-      head: @pageData.object
+    @html App.view('generic/admin/edit')( head: @pageData.object )
+
+    new App.ControllerForm(
+      el:         @el.find('#object_edit'),
+      model:      @genericObject,
+      params:     @item,
+      autofocus:  true,
     )
+
     @modalShow()
 
   submit: (e) ->
@@ -79,7 +90,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
     errors = @item.validate( form: true )
     if errors
       @log 'error new', errors
-      @validateForm( form: e.target, errors: errors )
+      @formValidate( form: e.target, errors: errors )
       return false
 
     @log 'save....'
@@ -105,7 +116,6 @@ class App.ControllerGenericIndex extends App.Controller
     # set controller to active
     Config['ActiveController'] = @pageData.navupdate
 
-
     # set title
     @title @pageData.title
 
@@ -121,25 +131,27 @@ class App.ControllerGenericIndex extends App.Controller
 #        @navigate @pageData.navupdate
 #        alert('relogin')
         @navigate 'login'
-    
+
     # execute fetch, if needed
     if !@genericObject.count() || true
 #    if !@genericObject.count()
 
       # prerender without content    
       @render()
-      
+
       # fetch all
+#      @log 'oooo', @genericObject.model
+#      @genericObject.deleteAll()
       @genericObject.fetch()
     else
       @render()
 
   render: =>
-    
+
     return if Config['ActiveController'] isnt @pageData.navupdate
-    
+
     objects = @genericObject.all()
-    
+
     # remove ignored items from collection
     if @ignoreObjectIDs
       objects = _.filter(objects, (item) ->
@@ -169,11 +181,11 @@ class App.ControllerGenericIndex extends App.Controller
       pageData: @pageData,
       genericObject: @genericObject
     )
-    
+
   destroy: (e) ->
     item = $(e.target).item(@genericObject)
     item.destroy() if confirm('Sure?')
-    
+
   new: (e) ->
     e.preventDefault()
     new App.ControllerGenericNew(
@@ -184,7 +196,7 @@ class App.ControllerGenericIndex extends App.Controller
 class App.ControllerLevel2 extends App.Controller
   events:
     'click [data-toggle="tabnav"]': 'toggle',
-    
+
   constructor: ->
     super
 
@@ -200,10 +212,10 @@ class App.ControllerLevel2 extends App.Controller
       type:     @type,
       target:   @target,
     )
-    
+
     if !@target
       @target = @menu[0]['target']
-    
+
     for menu in @menu
       @el.find('.nav-tab-content').append('<div class="tabbable" id="' + menu.target + '"></div>')
       if menu.controller && ( @toggleable is true || ( @toggleable is false && menu.target is @target ) )
@@ -214,7 +226,7 @@ class App.ControllerLevel2 extends App.Controller
     @el.find('.tabbable').addClass('hide')
     @el.find( '#' + @target ).removeClass('hide')
     @el.find('[data-toggle="tabnav"][href*="/' + @target + '"]').parent().addClass('active')
-    
+
   toggle: (e) ->
     return true if @toggleable is false
     e.preventDefault()

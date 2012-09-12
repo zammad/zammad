@@ -94,9 +94,16 @@ class Index extends App.Controller
 #      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['ticket_state_id'],    translate: true, class: 'medium' },
 #      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['ticket_priority_id'], translate: true, class: 'medium' },
     ]
-    @html App.view('agent_ticket_create')(
-      head: 'New Ticket',
-      form: @formGen( model: { configure_attributes: configure_attributes, className: 'create' } ),
+    @html App.view('agent_ticket_create')( head: 'New Ticket' )
+
+    new App.ControllerForm(
+      el: @el.find('#form_create'),
+      model: {
+        configure_attributes: configure_attributes,
+        className:            'create',
+      },
+      autofocus: true,
+      form_data: @edit_form,
     )
 
     # add elastic to textarea
@@ -107,12 +114,13 @@ class Index extends App.Controller
 
   cancel: ->
     @render()
-    
+
   submit: (e) ->
     e.preventDefault()
-        
+
     # get params
     params = @formParam(e.target)
+    @log 'paramssss', params
 
     # set customer id
     params.customer_id = Session['id']
@@ -132,7 +140,7 @@ class Index extends App.Controller
     # create ticket
     object = new App.Ticket
     @log 'updateAttributes', params
-    
+
     # find sender_id
     sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
     type   = App.TicketArticleType.findByAttribute( 'name', 'web' )
@@ -159,7 +167,7 @@ class Index extends App.Controller
     # show errors in form
     if errors
       @log 'error new', errors
-      @validateForm( form: e.target, errors: errors )
+      @formValidate( form: e.target, errors: errors )
       
     # save ticket, create article
     else 

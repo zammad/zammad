@@ -22,11 +22,13 @@ class App.WebSocket
 # The actual Singleton class
 class _Singleton extends Spine.Controller
   queue: []
+  supported: true
 
   constructor: (@args) ->
     @connect()
 
   send: (data) =>
+    return if !@supported
     console.log 'ws:send trying', data, @ws, @ws.readyState
 
     # A value of 0 indicates that the connection has not yet been established.
@@ -41,6 +43,7 @@ class _Singleton extends Spine.Controller
       @ws.send(string)
 
   auth: (data) =>
+    return if !@supported
 
     # logon websocket
     data = {
@@ -50,9 +53,13 @@ class _Singleton extends Spine.Controller
     @send(data)
 
   close: =>
+    return if !@supported
+
     @ws.close()
 
   ping: =>
+    return if !@supported
+
     console.log 'send websockend ping'
     @send( { action: 'ping' } )
 
@@ -65,6 +72,8 @@ class _Singleton extends Spine.Controller
     @check_id = @delay check, 120000
 
   pong: ->
+    return if !@supported
+
     console.log 'received websockend ping'
 
     # test again after 1 min
@@ -77,6 +86,7 @@ class _Singleton extends Spine.Controller
       @error = new App.ErrorModal(
         message: 'Sorry, no websocket support!'
       )
+      @supported = false
       return
 
     protocol = 'ws://'

@@ -1,5 +1,9 @@
 $ = jQuery.sub()
 
+# create dumy function till i18n is loaded
+window.T = (text) ->
+  return text
+
 class App.i18n
 
   constructor: ->

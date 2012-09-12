@@ -39,18 +39,22 @@ class App.SettingsAreaItem extends App.Controller
 
     # form
     @configure_attributes = @setting.options['form']
-    form = @formGen( model: { configure_attributes: @configure_attributes, className: '' }, autofocus: false )
 
     # item
     @html App.view('settings/item')(
       setting: @setting,
-      form:    form,
-      )
-    
+    )
+
+    new App.ControllerForm(
+      el: @el.find('#form-item'),
+      model: { configure_attributes: @configure_attributes, className: '' },
+      autofocus: false,
+    )
+
   update: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    @log 'submit', @setting, params, e.target
+    @log 'submit', @setting, params, e.target, typeof @setting.state.value
     if typeof @setting.state.value is 'object'
       state = {
         value: params

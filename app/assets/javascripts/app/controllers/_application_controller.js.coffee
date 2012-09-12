@@ -26,338 +26,18 @@ class App.Controller extends Spine.Controller
       return true if role.name is name
     return false
 
-#  # extend delegateEvents to unbind and undelegate
-#  delegateEvents: ->
-#    
-#    # here unbind and undelegate while @el
-#    @el.unbind()
-#    @el.undelegate()
-#    
-#    for key, method of @events
-#      unless typeof(method) is 'function'
-#        method = @proxy(@[method])
-#
-#      match      = key.match(@eventSplitter)
-#      eventName  = match[1]
-#      selector   = match[2]
-#
-#      if selector is ''
-#        @el.bind(eventName, method)
-#      else
-#        @el.delegate(selector, eventName, method)
-
-  formGen: (data) ->
-    form = $('<form>')
-    fieldset = $('<fieldset>')
-    fieldset.appendTo(form)
-    autofocus = 1;
-    if data.autofocus isnt undefined
-      autofocus = data.autofocus
-
-    attributes = clone( data.model.configure_attributes || [] )
-    for attribute in attributes
-
-      if !attribute.readonly && ( !data.required || data.required && attribute[data.required] )
-
-        # set autofocus
-        if autofocus is 1
-          attribute.autofocus = 'autofocus'
-          autofocus = 0
-          
-        # set required option
-        if !attribute.null
-          attribute.required = 'required'
-        else
-          attribute.required = ''
-
-        # set multible option
-        if attribute.multiple
-          attribute.multiple = 'multiple'
-        else
-          attribute.multiple = ''
-
-        # set autocapitalize option
-        if attribute.autocapitalize is undefined || attribute.autocapitalize
-          attribute.autocapitalize = ''
-        else
-          attribute.autocapitalize = 'autocapitalize="off"'
-
-        # set autocomplete option
-        if attribute.autocomplete is undefined
-          attribute.autocomplete = ''
-        else
-          attribute.autocomplete = 'autocomplete="' + attribute.autocomplete + '"'
-
-        # set value
-        if data.params
-          if attribute.name of data.params
-            attribute.value = data.params[attribute.name]
-
-        # set default value
-        else
-          if 'default' of attribute
-#            @log 'default', attribute.default
-            attribute.value = attribute.default
-          else
-            attribute.value = ''
-        
-        # add item
-        item = $( @formGenItem(attribute, data.model.className) )
-        item.appendTo(fieldset)
-
-        # if password, add confirm password item
-        if attribute.type is 'password'
-
-          attribute.display = attribute.display + ' (confirm)'
-          attribute.name = attribute.name + '_confirm';
-
-          item = $( @formGenItem(attribute, data.model.className) )
-          item.appendTo(fieldset)
-
-    # return form
-    return form.html()
-
-  formGenItem: (attribute, classname) ->
-
-    # create item id
-    attribute.id = classname + '_' + attribute.name        
-
-    # build options list based on config
-    selection = []
-    if attribute.options
-      if attribute.nulloption
-        attribute.options[''] = '-'
-      for key of attribute.options
-        selection.push {
-          name:  attribute.options[key],
-          value: key,
-        }
-
-    # build options list based on relation
-    attribute.options = selection || []
-    if attribute.relation && App[attribute.relation]
-      attribute.options = []
-      if attribute.nulloption
-        attribute.options[''] = '-'
-        attribute.options.push {
-          name:  '-',
-          value: '',
-        }
-
-      list = []
-      if attribute.filter && attribute.filter[attribute.name]
-        filter = attribute.filter[attribute.name]
-
-        # check all records
-        for record in App[attribute.relation].all()
-
-          # check all filter attributes
-          for key of filter
-
-            # check all filter values as array
-            for value in filter[key]
-
-              # if it's matching, use it for selection
-              if record[key] is value
-                list.push record
-      else
-        list = App[attribute.relation].all()
-
-      # build options list
-      list.forEach( (item) =>
-
-        # if active or if active doesn't exist
-        if item.active || !( 'active' of item )
-          name = '???'
-          if item.name
-            name = item.name
-          else if item.firstname
-            name = item.firstname
-            if item.lastname
-              if name
-               name = name + ' '
-            name = name + item.lastname
-
-          name_new = name
-          if attribute.translate
-            name_new = Ti(name)
-          attribute.options.push {
-            name:  name_new,
-            value: item.id,
-            note:  item.note,
-          }
-      )
-
-      # sort attribute.options
-      options_tmp = []
-      for i in attribute.options
-        options_tmp.push i['name'].toLowerCase()
-      options_tmp = options_tmp.sort()
-
-      options_new = []
-      options_new_used = {}
-      for i in options_tmp
-        for ii, vv in attribute.options
-          if !options_new_used[ ii['value'] ] && i.toString().toLowerCase() is ii['name'].toString().toLowerCase()
-            options_new_used[ ii['value'] ] = 1
-            options_new.push ii
-      attribute.options = options_new
-
-    # finde selected/checked item of list
-    if attribute.options
-      for record in attribute.options
-        if typeof attribute.value is 'string' || typeof attribute.value is 'number' || typeof attribute.value is 'boolean'
-
-          # if name or value is matching
-          if record.value.toString() is attribute.value.toString() || record.name.toString() is attribute.value.toString()
-            record.selected = 'selected'
-            record.checked = 'checked'
-#          if record.name.toString() is attribute.value.toString()
-#            record.selected = 'selected'
-#            record.checked = 'checked'
-        if ( attribute.value && record.value && _.include(attribute.value, record.value) ) || ( attribute.value && record.name && _.include(attribute.value, record.name) )
-          record.selected = 'selected'
-          record.checked = 'checked'
-
-    # boolean
-    if attribute.tag is 'boolean'
-      
-      # build options list
-      if _.isEmpty(attribute.options)
-        attribute.options = [
-          { name: 'active', value: true } 
-          { name: 'inactive', value: false } 
-        ]
-
-      # update boolean types
-      for record in attribute.options
-        record.value = '{boolean}::' + record.value
-
-      # finde selected item of list
-      for record in attribute.options
-        if record.value is '{boolean}::' + attribute.value
-          record.selected = 'selected'
-
-      # return item
-      item = App.view('generic/select')( attribute: attribute )
-
-    # select
-    else if attribute.tag is 'select'
-      item = App.view('generic/select')( attribute: attribute )
-
-    # checkbox
-    else if attribute.tag is 'checkbox'
-      item = App.view('generic/checkbox')( attribute: attribute )
-
-    # radio
-    else if attribute.tag is 'radio'
-      item = App.view('generic/radio')( attribute: attribute )
-
-    # textarea
-    else if attribute.tag is 'textarea'
-      item = App.view('generic/textarea')( attribute: attribute )
-
-    # autocompletion
-    else if attribute.tag is 'autocompletion'
-      item = App.view('generic/autocompletion')( attribute: attribute )
-
-      a = ->
-#        if attribute.relation && App[attribute.relation]
-#          @log '1312312333333333333', App[attribute.relation]
-#        @log '1231231231', '#' + attribute.id + '_autocompletion'
-        @local_attribute = '#' + attribute.id
-        @local_attribute_full = '#' + attribute.id + '_autocompletion'
-        @callback = attribute.callback
-
-        b = (event, key) =>
-#          @log 'zzzz', event, item, key, @local_attribute
-          $(@local_attribute).val(key)
-          if @callback
-            @callback( user_id: key )
-        ###
-        $(@local_attribute_full).tagsInput(
-          autocomplete_url: '/user_search',
-          height: '30px',
-          width: '530px',
-          auto: {
-            source: '/user_search',
-            minLength: 2,
-            select: ( event, ui ) =>
-              @log 'selected', event, ui
-              b(event, ui.item.id)
-          }
-        )
-        ###        
-        $(@local_attribute_full).autocomplete(
-          source: '/user_search',
-          minLength: 2,
-          select: ( event, ui ) =>
-            @log 'selected', event, ui
-            b(event, ui.item.id)
-        )
-
-      @delay(a, 800)
-
-    # input
-    else
-      item = App.view('generic/input')( attribute: attribute )
-
-    if !attribute.display
-      return item
-    else
-      return App.view('generic/attribute')(
-        attribute: attribute,
-        item:      item,
-      )
-
   # get all params of the form
-  formParam: (form, errors) ->
-    param = {}
-
-    # find form based on sub elements
-    if $(form).children()[0]
-      form = $(form).children().parents('form')
-
-    # find form based on parents next <form>
-    else if $(form).parents('form')[0]
-      form = $(form).parents('form')
-
-    # find form based on parents next <form>, not really good!
-    else if $(form).parents().find('form')[0]
-      form = $(form).parents().find('form')
-    else
-      @log 'ERROR, no form found!', form
-
-    for key in form.serializeArray()
-      if param[key.name]
-        if typeof param[key.name] is 'string'
-          param[key.name] = [ param[key.name], key.value]
-        else
-          param[key.name].push key.value
-      else
-
-        # check boolean
-        boolean = key.value.split '::'
-        if boolean[0] is '{boolean}'
-          if boolean[1] is 'true'
-            key.value = true
-          else
-            key.value = false
-
-        param[key.name] = key.value
-
-    @log 'formParam', form, param
-    return param
+  formParam: (form) ->
+    App.ControllerForm.params(form)
 
   formDisable: (form) ->
-    @log 'disable...', $(form.target).parent()
-    $(form.target).parent().find('[type="submit"]').attr('disabled', true)
-    $(form.target).parent().find('[type="reset"]').attr('disabled', true)
+    App.ControllerForm.disable(form)
 
   formEnable: (form) ->
-    @log 'enable...', $(form).parent()
-    $(form).parent().find('[type="submit"]').attr('disabled', false)
-    $(form).parent().find('[type="reset"]').attr('disabled', false)
+    App.ControllerForm.enable(form)
+
+  formValidate: (data) ->
+    App.ControllerForm.validate(data)
 
   table: (data) ->
     overview = data.overview || data.model.configure_overview || []
@@ -396,7 +76,7 @@ class App.Controller extends Spine.Controller
       data_types = data.overview_extended
 
     # generate content data
-    objects = clone( data.objects )
+    objects = _.clone( data.objects )
     for object in objects
       for row in data_types
         
@@ -487,24 +167,6 @@ class App.Controller extends Spine.Controller
           break
     return shown_all_attributes
 
-  validateForm: (data) ->
-
-    # remove all errors
-    $(data.form).parents().find('.error').removeClass('error')
-    $(data.form).parents().find('.help-inline').html('')
-
-    # show new errors
-    for key, msg of data.errors
-      $(data.form).parents().find('[name*="' + key + '"]').parents('div .control-group').addClass('error')
-      $(data.form).parents().find('[name*="' + key + '"]').parent().find('.help-inline').html(msg)
-
-    # set autofocus
-    $(data.form).parents().find('.error').find('input, textarea').first().focus()
-
-#    # enable form again
-#    if $(data.form).parents().find('.error').html()
-#      @formEnable(data.form)
-
 #  redirectToLogin: (data) ->
 #
 
@@ -561,17 +223,6 @@ class App.Controller extends Spine.Controller
     # redirect to login  
     @navigate '#login'
     return false
-
-  clone = (obj) ->
-    if not obj? or typeof obj isnt 'object'
-      return obj
-
-    newInstance = new obj.constructor()
-
-    for key of obj
-      newInstance[key] = clone obj[key]
-
-    return newInstance
 
   clearInterval: (interval_id) =>
     # check global var

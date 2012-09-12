@@ -53,11 +53,13 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
       { name: 'group_id', display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: false, relation: 'Group', class: 'span4', default: data['group_id']  },
       { name: 'active',   display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: data['active'] },
     ]
-    form = @formGen( model: { configure_attributes: configure_attributes, className: '' } )
-
     @html App.view('generic/admin/new')(
-      form: form,
       head: 'New Channel'
+    )
+    new App.ControllerForm(
+      el: @el.find('#object_new'),
+      model: { configure_attributes: configure_attributes, className: '' },
+      autofocus: true,
     )
     @modalShow()
 
@@ -90,7 +92,7 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
     # show errors in form
     if errors
       @log 'error new', errors
-      @validateForm( form: e.target, errors: errors )
+      @formValidate( form: e.target, errors: errors )
       return false
 
     # save object
@@ -175,10 +177,16 @@ class App.ChannelEmailOutbound extends App.Controller
             adapter_used = channel.adapter
             channel_used = channel
 
+    @html App.view('channel/email_outbound')()
+
     configure_attributes = [
       { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , class: 'span4', default: adapter_used },
     ]
-    form_adapter = @formGen( model: { configure_attributes: configure_attributes, className: '' } )
+    new App.ControllerForm(
+      el: @el.find('#form-email-adapter'),
+      model: { configure_attributes: configure_attributes, className: '' },
+      autofocus: true,
+    )
 
     if adapter_used is 'SMTP'
       configure_attributes = [
@@ -187,14 +195,12 @@ class App.ChannelEmailOutbound extends App.Controller
         { name: 'password', display: 'Password', tag: 'input',    type: 'password', limit: 120, null: true, class: 'span4', autocapitalize: false, default: (channel_used['options']&&channel_used['options']['password']) },
         { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: (channel_used['options']&&channel_used['options']['ssl']) },
       ]
-      form_adapter_settings = @formGen( model: { configure_attributes: configure_attributes, className: '' } )
+      new App.ControllerForm(
+        el: @el.find('#form-email-adapter-settings'),
+        model: { configure_attributes: configure_attributes, className: '' },
+        autofocus: true,
+      )
 
-    html = App.view('channel/email_outbound')(
-      form_adapter:          form_adapter,
-      form_adapter_settings: form_adapter_settings,
-    )
-    html = $(html)
-    @html html
 
   toggle: (e) =>
 

@@ -4,10 +4,7 @@ class App.TicketMerge extends App.ControllerModal
     @render()
 
   render: -> 
-    @html App.view('agent_ticket_merge')(
-#      head: 'New User',
-#      form: @formGen( model: App.User, required: 'quick' ),
-    )
+    @html App.view('agent_ticket_merge')()
     @modalShow()
 
   submit: (e) =>

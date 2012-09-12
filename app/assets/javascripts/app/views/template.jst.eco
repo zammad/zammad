@@ -1,6 +1,6 @@
 <div class="well">
   <h3><%- T('Templates') %></h3>
-  <%- @form %>
+  <div id="form-template"></div>
   <!--<button type="submit" class="btn" data-type="template_edit"><%- T('Edit') %></button>-->
   <button type="submit" class="btn" data-type="template_delete"><%- T('Delete') %></button>
   <button type="submit" class="btn" data-type="template_select"><%- T('Apply') %></button>

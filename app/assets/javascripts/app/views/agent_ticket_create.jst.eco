@@ -1,11 +1,9 @@
 <div class="page-header">
   <h1><%- T('New Ticket') %> <small></small></h1>
 </div>
-
 <form class="form-horizontal">
   <div class="row">
-    <div class="span9">
-      <%- @form %>
+    <div class="span9" id="form_create">
       <!--
         <legend>Example form legend</legend>
       -->

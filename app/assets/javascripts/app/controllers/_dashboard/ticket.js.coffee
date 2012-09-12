@@ -222,16 +222,19 @@ class Settings extends App.ControllerModal
         class:      'medium',
       },
     ]
-    form = @formGen( model: { configure_attributes: @configure_attributes_article } )
 
-    @el.find('.setting').append(form)
+    new App.ControllerForm(
+      el: @el.find('#form-setting'),
+      model: { configure_attributes: @configure_attributes_article },
+      autofocus: false,
+    )
 
     @modalShow()
 
   submit: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    
+
     # check if refetch is needed
     @reload_needed = 0
     if @overview.view['d']['per_page'] isnt params['per_page']

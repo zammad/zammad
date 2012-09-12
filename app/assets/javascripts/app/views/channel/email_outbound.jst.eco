@@ -1,5 +1,5 @@
 <form class="form-horizontal" id="mail_adapter">
-  <%- @form_adapter %>
-  <%- @form_adapter_settings %>
+  <div id="form-email-adapter"></div>
+  <div id="form-email-adapter-settings"></div>
   <button data-type="" type="submit" class="btn">submit</botton>
 </form>

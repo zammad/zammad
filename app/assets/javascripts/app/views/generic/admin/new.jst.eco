@@ -3,9 +3,7 @@
     <a href="#" class="close">&times;</a>
     <h3><%- T('Neu') %>: <%- T(@head) %></h3>
   </div>
-  <div class="modal-body">
-    <%- @form %>
-  </div>
+  <div class="modal-body" id="object_new"></div>
   <div class="modal-footer">
     <button class="btn btn-primary submit"><%- T('Submit') %></button>
     <button class="btn cancel"><%- T('Cancel') %></button>
