@@ -79,14 +79,11 @@
       </div>
       <div class="span8 well-muted article-message">
         <form class="form-stacked keepleft">
-
-            <%- @form_ticket %>
-
-            <%- @form_article %>
-
-            <div class="keepleft" id="file-uploader"></div>
-            &nbsp;
-            <button type="submit" class="btn btn-primary submit"><%- T('Submit') %></button>
+          <div id="form-ticket-update"></div>
+          <div id="form-article-update"></div>
+          <div class="keepleft" id="file-uploader"></div>
+          &nbsp;
+          <button type="submit" class="btn btn-primary submit"><%- T('Submit') %></button>
         </form>
       </div>
     </div>

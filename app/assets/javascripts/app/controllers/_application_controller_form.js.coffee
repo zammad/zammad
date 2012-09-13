@@ -284,7 +284,7 @@ class App.ControllerForm extends App.Controller
             for item in ui.model.configure_attributes
               if item.name is toChangeAttribute
                 item.display = false
-                item['filter'][toChangeAttribute]['id'] = newListAttributes
+                item['filter'][toChangeAttribute] = newListAttributes
                 if params[changedAttribute]
                   item.default = params[toChangeAttribute]
                 if !item.default
@@ -362,15 +362,12 @@ class App.ControllerForm extends App.Controller
       for record in App[attribute.relation].all()
 
         # check all filter attributes
-        for key of filter
+        for key in filter
 
           # check all filter values as array
-          if filter[key]
-            for value in filter[key]
-  
-              # if it's matching, use it for selection
-              if record[key] is value
-                list.push record
+          # if it's matching, use it for selection
+          if record['id'] is key
+            list.push record
     else
       list = App[attribute.relation].all()
 

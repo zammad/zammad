@@ -85,15 +85,15 @@ class Index extends App.Controller
     # set title
     @title 'Ticket Zoom ' + @ticket.number
     @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', translate: true, class: 'span2', item_class: 'keepleft' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', translate: true, class: 'span2', item_class: 'keepleft' },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', class: 'span2', item_class: 'keepleft'  },
+      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'keepleft' },
+      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'keepleft' },
+      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'keepleft'  },
       { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'keepleft' },
     ]
     if @isRole('Customer')
       @configure_attributes_ticket = [
-        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', translate: true, class: 'span2', item_class: 'keepleft' },
-        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', translate: true, class: 'span2', item_class: 'keepleft' },
+        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'keepleft' },
+        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'keepleft' },
       ]
 
     @configure_attributes_article = [
@@ -114,15 +114,28 @@ class Index extends App.Controller
         { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 5,  limit: 100, null: true, class: 'span7', item_class: ''  },
       ]
 
-    form_ticket = @formGen( model: { configure_attributes: @configure_attributes_ticket, className: 'create' }, params: @ticket )
-    form_article = @formGen( model: { configure_attributes: @configure_attributes_article } )
-
     @html App.view('agent_ticket_zoom')(
       ticket:       @ticket,
       articles:     @articles,
-      form_ticket:  form_ticket,
-      form_article: form_article,
       nav:          @nav,
+    )
+
+    new App.ControllerForm(
+      el: @el.find('#form-ticket-update'),
+      model: {
+        configure_attributes: @configure_attributes_ticket,
+        className:            'create',
+      },
+      params: @ticket
+      form_data: @edit_form,
+    )
+
+    new App.ControllerForm(
+      el: @el.find('#form-article-update'),
+      model: {
+        configure_attributes: @configure_attributes_article,
+      },
+      form_data: @edit_form,
     )
 
     @el.find('textarea').elastic()

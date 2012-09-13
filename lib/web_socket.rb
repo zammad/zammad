@@ -396,12 +396,34 @@ class ClientState
           @data[cache_key] = overview_data_time
           overview_data = CacheIn.get( cache_key, { :ignore_expire => true } )
           self.log "push overview_data for user #{user.id}"
-
           users = {}
           tickets = []
           overview_data[:tickets].each {|ticket_id|
             self.ticket( ticket_id, tickets, users )
           }
+
+    # get groups
+    group_ids = []
+    Group.where( :active => true ).each { |group|
+      group_ids.push group.id
+    }
+    agents = {}
+    Ticket.agents.each { |user|
+      agents[ user.id ] = 1
+    }
+    groups_users = {}
+    groups_users[''] = []
+    group_ids.each {|group_id|
+        groups_users[ group_id ] = []
+        Group.find(group_id).users.each {|user|
+            next if !agents[ user.id ]
+            groups_users[ group_id ].push user.id
+            if !users[user.id]
+              users[user.id] = User.user_data_full(user.id)
+            end
+        }
+    }
+
           # send update to browser
           self.transaction({
             :data   => {
@@ -411,7 +433,11 @@ class ClientState
               :collections    => {
                 :User   => users,
                 :Ticket => tickets,
-              }
+              },
+              :bulk => {
+                :group_id__owner_id => groups_users,
+                :owner_id           => [],
+              },
             },
             :event      => [ 'loadCollection', 'ticket_overview_rebuild' ],
             :collection => 'ticket_overview_' + overview.meta[:url].to_s,
@@ -424,13 +450,23 @@ class ClientState
       ticket_create_attributes_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if ticket_create_attributes_time && @data[:ticket_create_attributes_time] != ticket_create_attributes_time
         @data[:ticket_create_attributes_time] = ticket_create_attributes_time
-        ticket_create_attributes = CacheIn.get( cache_key, { :ignore_expire => true } )
+        create_attributes = CacheIn.get( cache_key, { :ignore_expire => true } )
+        users = {}
+        create_attributes[:owner_id].each {|user_id|
+          if !users[user_id]
+            users[user_id] = User.user_data_full(user_id)
+          end
+        }
+        data = {
+          :users     => users,
+          :edit_form => create_attributes,
+        }
         self.log "push ticket_create_attributes for user #{user.id}"
 
         # send update to browser
         self.transaction({
           :collection => 'ticket_create_attributes',
-          :data       => ticket_create_attributes,
+          :data       => data,
         })
       end
 

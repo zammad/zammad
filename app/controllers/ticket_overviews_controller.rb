@@ -60,14 +60,25 @@ class TicketOverviewsController < ApplicationController
       end
     }
 
-    # get data for bulk action
-    bulk_owners = Role.where( :name => ['Agent'] ).first.users.select(:id).where( :active => true ).uniq()
-    bulk_owner_ids = []
-    bulk_owners.each { |user|
-      bulk_owner_ids.push user.id
-      if !users[ user.id ]
-        users[ user.id ] = User.user_data_full( user.id )
-      end
+    # get groups
+    group_ids = []
+    Group.where( :active => true ).each { |group|
+      group_ids.push group.id
+    }
+    agents = {}
+    Ticket.agents.each { |user|
+      agents[ user.id ] = 1
+    }
+    groups_users = {}
+    group_ids.each {|group_id|
+        groups_users[ group_id ] = []
+        Group.find(group_id).users.each {|user|
+            next if !agents[ user.id ]
+            groups_users[ group_id ].push user.id
+            if !users[user.id]
+              users[user.id] = User.user_data_full(user.id)
+            end
+        }
     }
 
     # return result
@@ -77,9 +88,7 @@ class TicketOverviewsController < ApplicationController
       :tickets_count => overview[:tickets_count],
       :users         => users,
       :bulk          => {
-        :owner_id => {
-          :id => bulk_owner_ids,
-        },
+        :group_id__owner_id => groups_users,
       },
     }
   end
@@ -89,18 +98,18 @@ class TicketOverviewsController < ApplicationController
   def ticket_create
 
     # get attributes
-    (users, ticket_owner_ids, ticket_group_ids, ticket_state_ids, ticket_priority_ids) = Ticket.create_attributes(
+    create_attributes = Ticket.create_attributes(
         :current_user_id => current_user.id,
     )
 
     # split data
     ticket = nil
     articles = nil
+    users = {}
     if params[:ticket_id] && params[:article_id]
       ticket = Ticket.find( params[:ticket_id] )
-      
+
       # get related users
-      users = {}
       if !users[ticket.owner_id]
         users[ticket.owner_id] = User.user_data_full(ticket.owner_id)
       end
@@ -110,7 +119,7 @@ class TicketOverviewsController < ApplicationController
       if !users[ticket.created_by_id]
         users[ticket.created_by_id] = User.user_data_full(ticket.created_by_id)
       end
-  
+
       owner_ids = []
       ticket.agent_of_group.each { |user|
         owner_ids.push user.id
@@ -121,37 +130,30 @@ class TicketOverviewsController < ApplicationController
   
       # get related articles
       ticket[:article_ids] = [ params[:article_id] ]
-        
+
       article = Ticket::Article.find( params[:article_id] )
-        
+
       # add attachment list to article
       article['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => article.id )
-        
+
       # load users
       if !users[article.created_by_id]
         users[article.created_by_id] = User.user_data_full(article.created_by_id)
       end
     end
 
+    create_attributes[:owner_id].each {|user_id|
+      if !users[user_id]
+        users[user_id] = User.user_data_full(user_id)
+      end
+    }
+
     # return result
     render :json => {
-      :ticket   => ticket,
-      :articles => [ article ],
-      :users    => users,
-      :edit_form => {
-        :owner_id => {
-          :id => ticket_owner_ids
-        },
-        :group_id => {
-          :id => ticket_group_ids
-        },
-        :ticket_state_id => {
-          :id => ticket_state_ids
-        },
-        :ticket_priority_id => {
-          :id => ticket_priority_ids
-        }
-      }
+      :ticket    => ticket,
+      :articles  => [ article ],
+      :users     => users,
+      :edit_form => create_attributes,
     }
   end
 
@@ -213,15 +215,35 @@ class TicketOverviewsController < ApplicationController
       end
     }
 
+    # get groups
+    group_ids = []
+    Group.where( :active => true ).each { |group|
+      group_ids.push group.id
+    }
+    agents = {}
+    Ticket.agents.each { |user|
+      agents[ user.id ] = 1
+    }
+    groups_users = {}
+    group_ids.each {|group_id|
+        groups_users[ group_id ] = []
+        Group.find(group_id).users.each {|user|
+            next if !agents[ user.id ]
+            groups_users[ group_id ].push user.id
+            if !users[user.id]
+              users[user.id] = User.user_data_full(user.id)
+            end
+        }
+    }
+
     # return result
     render :json => {
       :ticket   => ticket,
       :articles => articles_used,
       :users    => users,
       :edit_form => {
-        :owner_id => {
-          :id => owner_ids
-        }
+        :group_id__owner_id => groups_users,
+        :owner_id           => owner_ids,
       }
     }
   end

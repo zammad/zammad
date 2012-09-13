@@ -193,32 +193,22 @@ class Index extends App.Controller
 
   bulk_form: =>
     @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', nulloption: true, default: '', class: 'span2', item_class: 'keepleft' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', nulloption: true, default: '', class: 'span2', item_class: 'keepleft' },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', nulloption: true, class: 'span2', item_class: 'keepleft'  },
+      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, nulloption: true, default: '', class: 'span2', item_class: 'keepleft' },
+      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, nulloption: true, default: '', class: 'span2', item_class: 'keepleft' },
+      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: 'span2', item_class: 'keepleft'  },
       { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: 'span2', item_class: 'keepleft' },
     ]
-    form_ticket = @formGen( model: { configure_attributes: @configure_attributes_ticket, className: 'create' } )
-    @configure_attributes_article = [
-#      { name: 'from',                     display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
-      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 4,  limit: 100, null: true, class: 'span7',  },
-      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'keepleft' },
-      { name: 'internal',                 display: 'Visability',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'keepleft' },
-#      { name: 'ticket_article_sender_id', display: 'Sender',   tag: 'select',   multiple: false, null: true, relation: 'TicketArticleSender', default: '', class: 'medium' },
-    ]
-    form_article = @formGen( model: { configure_attributes: @configure_attributes_article } )
-    
+
     # render init page
-    html = App.view('agent_ticket_view/bulk')(
-      meta:        @overview.meta,
-      form_ticket: form_ticket,
-#      form_article: form_article,
+    html = $( App.view('agent_ticket_view/bulk')() )
+    new App.ControllerForm(
+      el: html.find('#form-ticket-bulk'),
+      model: {
+        configure_attributes: @configure_attributes_ticket,
+        className:            'create',
+      },
+      form_data: @bulk,
     )
-    html = $(html)
 #    html.delegate('.bulk-action-form', 'submit', (e) =>
     html.bind('submit', (e) =>
       e.preventDefault()
