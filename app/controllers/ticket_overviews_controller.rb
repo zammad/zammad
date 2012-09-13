@@ -286,7 +286,27 @@ class TicketOverviewsController < ApplicationController
 
     # permissin check
     ticket = Ticket.find( params[:ticket_id] )
-    return if !ticket_permission(ticket)
+    if !ticket_permission(ticket)
+      render( :json => 'No such ticket.', :status => :unauthorized )
+      return
+    end
+    article = Ticket::Article.find( params[:article_id] )
+    if ticket.id != article.ticket_id
+      render( :json => 'No access, article_id/ticket_id is not matching.', :status => :unauthorized )
+      return
+    end
+
+    list = Store.list( :object => 'Ticket::Article', :o_id => params[:article_id] ) || []
+    access = false
+    list.each {|item|
+      if item.id.to_i == params[:id].to_i
+        access = true
+      end
+    }
+    if !access
+      render( :json => 'Requested file id is not linked with article_id.', :status => :unauthorized )
+      return
+    end
 
     # find file
     file = Store.find(params[:id])
