@@ -1,5 +1,5 @@
 #s#= require json2
-#= require ./lib/jquery-1.8.0.min.js
+#= require ./lib/jquery-1.8.1.min.js
 #= require ./lib/ui/jquery-ui-1.8.23.custom.min.js
 
 #= require ./lib/spine/spine.js
