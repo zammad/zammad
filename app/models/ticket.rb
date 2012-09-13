@@ -317,19 +317,29 @@ class Ticket < ApplicationModel
   def self.create_attributes (data)
 
     # get groups
-    ticket_group_ids = []
+    group_ids = []
     Group.where( :active => true ).each { |group|
-      ticket_group_ids.push group.id
+      group_ids.push group.id
     }
 
     # get related users
-    users = {}
-    ticket_owner_ids = []
+#    users = {}
+    user_ids = []
+    agents = {}
     Ticket.agents.each { |user|
-      ticket_owner_ids.push user.id
-      if !users[user.id]
-        users[user.id] = User.user_data_full(user.id)
-      end
+      agents[ user.id ] = 1
+      user_ids.push user.id
+    }
+    groups_users = {}
+    group_ids.each {|group_id|
+        groups_users[ group_id ] = []
+        Group.find(group_id).users.each {|user|
+            next if !agents[ user.id ]
+            groups_users[ group_id ].push user.id
+#            if !users[user.id]
+#              users[user.id] = User.user_data_full(user.id)
+#            end
+        }
     }
 
     # get states
@@ -344,7 +354,14 @@ class Ticket < ApplicationModel
       ticket_priority_ids.push priority.id
     }
 
-    return users, ticket_owner_ids, ticket_group_ids, ticket_state_ids, ticket_priority_ids
+    return {
+#      :users              => users,
+      :owner_id           => user_ids,
+      :group_id__owner_id => groups_users,
+      :group_id           => group_ids,
+      :ticket_state_id    => ticket_state_ids,
+      :ticket_priority_id => ticket_priority_ids,
+    }
   end
 
   private
