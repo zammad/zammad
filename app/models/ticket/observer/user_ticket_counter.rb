@@ -14,7 +14,7 @@ class Ticket::Observer::UserTicketCounter < ActiveRecord::Observer
   def user_ticket_counter_update(record)
     return if !record.customer_id
 
-    ticket_state_list_open   = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending remidner', 'pending action']) )
+    ticket_state_list_open   = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending reminder', 'pending action']) )
     ticket_state_list_closed = Ticket::State.where( :ticket_state_type_id => Ticket::StateType.where(:name => ['closed'] ) )
 
     tickets_open   = Ticket.where( :customer_id => record.customer_id, :ticket_state_id => ticket_state_list_open ).count()
