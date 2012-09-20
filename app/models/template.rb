@@ -1,3 +1,3 @@
-class Template < ActiveRecord::Base
+class Template < ApplicationModel
   store :options
 end

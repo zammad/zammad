@@ -35,7 +35,7 @@ class Index extends App.Controller
     App.Com.ajax(
       id:    'ticket_zoom',
       type:  'GET',
-      url:   '/ticket_full/' + ticket_id,
+      url:   '/api/ticket_full/' + ticket_id,
       data:  {
         view: @view
       }
@@ -159,7 +159,7 @@ class Index extends App.Controller
   u: =>
     uploader = new qq.FileUploader(
       element: document.getElementById('file-uploader'),
-      action: 'ticket_attachment_new',
+      action: '/api/ticket_attachment_new',
       params: {
         form:    'TicketZoom',
         form_id: @ticket.id,

@@ -1,48 +1,149 @@
 class GroupsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /groups
+=begin
+
+Format:
+JSON
+
+Example:
+{
+  "id":1,
+  "name":"some group",
+  "assignment_timeout": null,
+  "follow_up_assignment": true,
+  "follow_up_possible": "yes",
+  "note":"",
+  "active":true,
+  "updated_at":"2012-09-14T17:51:53Z",
+  "created_at":"2012-09-14T17:51:53Z",
+  "created_by_id":2,
+}
+  
+=end
+
+=begin
+
+Resource:
+GET /api/groups.json
+
+Response:
+[
+  {
+    "id": 1,
+    "name": "some_name1",
+    ...
+  },
+  {
+    "id": 2,
+    "name": "some_name2",
+    ...
+  }
+]
+
+Test:
+curl http://localhost/api/groups.json -v -u #{login}:#{password}
+
+=end
+
   def index
-    @groups = Group.all
-
-    render :json => @groups
+    model_index_render(Group, params)
   end
 
-  # GET /groups/1
+=begin
+
+Resource:
+GET /api/groups/#{id}.json
+
+Response:
+{
+  "id": 1,
+  "name": "name_1",
+  ...
+}
+
+Test:
+curl http://localhost/api/groups/#{id}.json -v -u #{login}:#{password}
+ 
+=end
+
   def show
-    @group = Group.find(params[:id])
-
-    render :json => @group
+    model_show_render(Group, params)
   end
 
-  # POST /groups
+=begin
+
+Resource:
+POST /api/groups.json
+
+Payload:
+{
+  "name": "some name",
+  "assignment_timeout": null,
+  "follow_up_assignment": true,
+  "follow_up_possible": "yes",
+  "note":"",
+  "active":true,
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def create
-    @group = Group.new(params[:group])
-    @group.created_by_id = current_user.id
-
-    if @group.save
-      render :json => @group, :status => :created
-    else
-      render :json => @group.errors, :status => :unprocessable_entity
-    end
+    model_create_render(Group, params)
   end
 
-  # PUT /groups/1
+=begin
+
+Resource:
+PUT /api/groups/{id}.json
+
+Payload:
+{
+  "name": "some name",
+  "assignment_timeout": null,
+  "follow_up_assignment": true,
+  "follow_up_possible": "yes",
+  "note":"",
+  "active":true,
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def update
-    @group = Group.find(params[:id])
-
-    if @group.update_attributes(params[:group])
-      render :json => @group, :status => :ok
-    else
-      render :json => @group.errors, :status => :unprocessable_entity
-    end
+    model_update_render(Group, params)
   end
 
-  # DELETE /groups/1
-  def destroy
-    @group = Group.find(params[:id])
-    @group.destroy
+=begin
 
-    head :ok
+Resource:
+
+Response:
+
+Test:
+ 
+=end
+
+  def destroy
+    model_destory_render(Group, params)
   end
 end

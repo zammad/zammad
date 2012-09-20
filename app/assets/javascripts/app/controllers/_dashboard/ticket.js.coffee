@@ -11,18 +11,16 @@ class App.DashboardTicket extends App.Controller
     @start_page    = 1
     @navupdate '#'
 
+    # set new key
+    @key = 'ticket_overview_' + @view
+
     # bind new events
-    Spine.bind 'ticket_overview_rebuild', (data) =>
-      @log 'ticket_overview_rebuild', data
-      @fetch()
+    @reBind('ticket_overview_rebuild', @fetch )
 
     # render
     @fetch()
 
   fetch: =>
-
-    # set new key
-    @key = 'ticket_overview_' + @view
 
     # use cache of first page
     cache = App.Store.get( @key )
@@ -34,7 +32,7 @@ class App.DashboardTicket extends App.Controller
 #    App.Com.ajax(
 #      id:    'dashboard_ticket_' + @key,
 #      type:  'GET',
-#      url:   '/ticket_overviews',
+#      url:   '/api/ticket_overviews',
 #      data:  {
 #        view:       @view,
 #        view_mode:  'd',

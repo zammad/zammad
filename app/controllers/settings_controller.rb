@@ -3,45 +3,26 @@ class SettingsController < ApplicationController
 
   # GET /settings
   def index
-    @settings = Setting.all
-
-    render :json => @settings
+    model_index_render(Setting, params)
   end
 
   # GET /settings/1
   def show
-    @setting = Setting.find(params[:id])
-
-    render :json => @setting
+    model_show_render(Setting, params)
   end
 
   # POST /settings
   def create
-    @setting = Setting.new(params[:setting])
-
-    if @setting.save
-      render :json => @setting, :status => :created
-    else
-      render :json => @setting.errors, :status => :unprocessable_entity
-    end
+    model_create_render(Setting, params)
   end
 
   # PUT /settings/1
   def update
-    @setting = Setting.find(params[:id])
-
-    if @setting.update_attributes(params[:setting])
-      render :json => @setting, :status => :ok
-    else
-      render :json => @setting.errors, :status => :unprocessable_entity
-    end
+    model_update_render(Setting, params)
   end
 
   # DELETE /settings/1
   def destroy
-    @setting = Setting.find(params[:id])
-    @setting.destroy
-
-    head :ok
+    model_destory_render(Setting, params)
   end
 end

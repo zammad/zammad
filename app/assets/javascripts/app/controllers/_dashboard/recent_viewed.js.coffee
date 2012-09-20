@@ -7,14 +7,14 @@ class App.DashboardRecentViewed extends App.Controller
   constructor: ->
     super
 #    @log 'aaaa', @el
-    
+
     @items = []
-    
+
     # get data
     App.Com.ajax(
       id:    'dashboard_recent_viewed',
       type:  'GET',
-      url:   '/recent_viewed',
+      url:   '/api/recent_viewed',
       data:  {
         limit: 5,
       }
@@ -32,7 +32,6 @@ class App.DashboardRecentViewed extends App.Controller
         @render()
     )
 
-    
   render: ->
 
     # load user data
@@ -44,13 +43,13 @@ class App.DashboardRecentViewed extends App.Controller
     for item in @items
 #      @log 'load', item.o_id
       item.ticket = App.Ticket.find(item.o_id)
-  
+
     html = App.view('dashboard/recent_viewed')(
       head: 'Recent Viewed',
       items: @items
     )
     html = $(html)
-    
+
     @html html
 
     # start user popups

@@ -1,10 +1,5 @@
-class Channel < ActiveRecord::Base
+class Channel < ApplicationModel
   store :options
-
-  def self.send2
-    # find outbound
-    
-  end
 
   def self.fetch
     channels = Channel.where( 'active = ? AND area LIKE ?', true, '%::Inbound' )

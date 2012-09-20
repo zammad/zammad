@@ -20,6 +20,12 @@ class App.Controller extends Spine.Controller
 
     @delay( a, 0 )
 
+  reBind: (name, callback) =>
+    Spine.one name, (data) =>
+      @log 'rebind', name, data
+      callback(data)
+      @reBind(name, callback)
+
   isRole: (name) ->
     return false if !window.Session.roles
     for role in window.Session.roles
@@ -292,7 +298,7 @@ class App.Controller extends Spine.Controller
     tickets = {}
     App.Com.ajax(
       type:  'GET',
-      url:   '/ticket_customer',
+      url:   '/api/ticket_customer',
       data:  {
         customer_id: data.user_id,
       }
@@ -329,6 +335,20 @@ class App.Controller extends Spine.Controller
 
   loadCollection: (params) ->
 
+    # remember in store if not already requested
+    if !params.localStorage
+      if params.type == 'User'
+        for user_id, user of params.data
+          data = {}
+          data[params.type] = {}
+          data[params.type][ user_id ] = user
+          App.Store.write( 'collection::' + params.type + '::' + user_id, { type: params.type, localStorage: true, collections: data  }  )
+      else
+        for object in params.data
+          data = {}
+          data[params.type] = [ object ]
+          App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, collections: data }  )
+
     # users
     if params.type == 'User'
       for user_id, user of params.data
@@ -344,7 +364,7 @@ class App.Controller extends Spine.Controller
         # set image url
         if user && !user['image']
           user['image'] = 'http://placehold.it/48x48'
-          
+
         # set realname
         user['realname'] = ''
         if user['firstname']
@@ -367,18 +387,18 @@ class App.Controller extends Spine.Controller
 
         # priority
         ticket.ticket_priority = App.TicketPriority.find(ticket.ticket_priority_id)
-        
+
         # state
         ticket.ticket_state = App.TicketState.find(ticket.ticket_state_id)
-        
+
         # group
         ticket.group = App.Group.find(ticket.group_id)
-        
+
         # customer
         if ticket.customer_id and App.User.exists(ticket.customer_id)
           user = App.User.find(ticket.customer_id)
           ticket.customer = user
-          
+
         # owner
         if ticket.owner_id and App.User.exists(ticket.owner_id)
           user = App.User.find(ticket.owner_id)
@@ -391,13 +411,13 @@ class App.Controller extends Spine.Controller
     # articles
     else if params.type == 'TicketArticle'
       for article in params.data
-        
+
         # add user
         article.created_by = App.User.find(article.created_by_id)
-        
+
         # set human time
         article.humanTime = @humanTime(article.created_at)
-  
+
         # add possible actions
         article.article_type = App.TicketArticleType.find( article.ticket_article_type_id )
         article.article_sender = App.TicketArticleSender.find( article.ticket_article_sender_id )
@@ -409,13 +429,13 @@ class App.Controller extends Spine.Controller
     # history
     else if params.type == 'History'
       for histroy in params.data
-        
+
         # add user
         histroy.created_by = App.User.find(histroy.created_by_id)
-        
+
         # set human time
         histroy.humanTime = @humanTime(histroy.created_at)
-  
+
         # add possible actions
         if histroy.history_attribute_id
           histroy.attribute = App.HistoryAttribute.find( histroy.history_attribute_id )

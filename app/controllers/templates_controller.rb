@@ -1,48 +1,142 @@
 class TemplatesController < ApplicationController
   before_filter :authentication_check
 
-  # GET /templates
+=begin
+
+Format:
+JSON
+
+Example:
+{
+  "id":1,
+  "name":"some template",
+  "user_id": null,
+  "options":{"a":1,"b":2},
+  "updated_at":"2012-09-14T17:51:53Z",
+  "created_at":"2012-09-14T17:51:53Z",
+  "updated_by_id":2.
+  "created_by_id":2,
+}
+  
+=end
+
+=begin
+
+Resource:
+GET /api/templates.json
+
+Response:
+[
+  {
+    "id": 1,
+    "name": "some_name1",
+    ...
+  },
+  {
+    "id": 2,
+    "name": "some_name2",
+    ...
+  }
+]
+
+Test:
+curl http://localhost/api/templates.json -v -u #{login}:#{password}
+
+=end
+
   def index
-    @templates = Template.all
-
-    render :json => @templates
+    model_index_render(Template, params)
   end
 
-  # GET /templates/1
+=begin
+
+Resource:
+GET /api/templates/#{id}.json
+
+Response:
+{
+  "id": 1,
+  "name": "name_1",
+  ...
+}
+
+Test:
+curl http://localhost/api/templates/#{id}.json -v -u #{login}:#{password}
+ 
+=end
+
   def show
-    @template = Template.find(params[:id])
-
-    render :json => @template
+    model_show_render(Template, params)
   end
 
-  # POST /templates
+=begin
+
+Resource:
+POST /api/templates.json
+
+Payload:
+{
+  "name": "some name",
+  "options":{"a":1,"b":2},
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def create
-    @template = Template.new(params[:template])
-    @template.created_by_id = current_user.id
-
-    if @template.save
-      render :json => @template, :status => :created
-    else
-      render :json => @template.errors, :status => :unprocessable_entity
-    end
+    model_create_render(Template, params)
   end
 
-  # PUT /templates/1
+=begin
+
+Resource:
+PUT /api/templates/{id}.json
+
+Payload:
+{
+  "name": "some name",
+  "options":{"a":1,"b":2},
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def update
-    @template = Template.find(params[:id])
-
-    if @template.update_attributes(params[:template])
-      render :json => @template, :status => :ok
-    else
-      render :json => @template.errors, :status => :unprocessable_entity
-    end
+    model_update_render(Template, params)
   end
 
-  # DELETE /templates/1
-  def destroy
-    @template = Template.find(params[:id])
-    @template.destroy
+=begin
 
-    head :ok
+Resource:
+DELETE /api/templates/{id}.json
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+
+=end
+
+  def destroy
+    model_destory_render(Template, params)
   end
 end

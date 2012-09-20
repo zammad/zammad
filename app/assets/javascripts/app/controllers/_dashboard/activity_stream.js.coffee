@@ -11,9 +11,8 @@ class App.DashboardActivityStream extends App.Controller
     # refresh list ever 140 sec.
 #    @interval( @fetch, 1400000, 'dashboard_activity_stream' )
     @fetch()
-    Spine.bind 'activity_stream_rebuild', (data) =>
-      @log 'a_stream', data
-      @fetch()
+
+    @reBind( 'activity_stream_rebuild', @load )
 
   fetch: =>
 
@@ -26,7 +25,7 @@ class App.DashboardActivityStream extends App.Controller
 #    App.Com.ajax(
 #      id:    'dashoard_activity_stream',
 #      type:  'GET',
-#      url:   '/activity_stream',
+#      url:   '/api/activity_stream',
 #      data:  {
 #        limit: @limit,
 #      }

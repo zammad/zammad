@@ -4,11 +4,14 @@ class App.DashboardRss extends App.Controller
   constructor: ->
     super
 
-    # refresh list ever 600 sec.
-    Spine.bind 'rss_rebuild', (data) =>
-      @load(data)
 
-    # use cache of first page
+    # bind to new events
+    @reBind( 'rss_rebuild', @load )
+
+    # refresh list ever 600 sec.
+    @fetch()
+
+  fetch: =>
     cache = App.Store.get( 'dashboard_rss' )
     if cache
       @load( cache )

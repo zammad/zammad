@@ -35,7 +35,7 @@
         <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
         <ul>
           <li style="font-size: 10px;"><%- T(article.article_type.name) %></li>
-          <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="/ticket_article_plain/<%= article.id %>"><%- T('raw') %></a></li><% end %>
+          <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="/api/ticket_article_plain/<%= article.id %>"><%- T('raw') %></a></li><% end %>
         </ul>
       </div>
       <div class="span8 well-muted article-message <% if article.internal is true: %> internal<% end %>">
@@ -63,7 +63,7 @@
         <% if article.attachments: %>
           <div>
           <% for attachment in article.attachments: %>
-            <a href="ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment" class="" title="<%= attachment.size %>"><%= attachment.filename %></a>
+            <a href="/api/ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment" class="" title="<%= attachment.size %>"><%= attachment.filename %></a>
           <% end %>
           </div>
         <% end %>

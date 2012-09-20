@@ -1,4 +1,4 @@
-class Setting < ActiveRecord::Base
+class Setting < ApplicationModel
   store         :options
   store         :state
   store         :state_initial

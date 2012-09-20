@@ -639,7 +639,7 @@ Setting.create(
     ],
   },
   :state       => {
-    :value => '50',
+    :value => '70',
   },
   :frontend    => false
 )
@@ -1057,18 +1057,21 @@ Role.create(
   :id             => 1,
   :name           => 'Admin',
   :note           => 'To configure your system.',
+  :updated_by_id  => 1,
   :created_by_id  => 1
 )
 Role.create(
   :id             => 2,
   :name           => 'Agent',
   :note           => 'To work on Tickets.',
+  :updated_by_id  => 1,
   :created_by_id  => 1
 )
 Role.create(
   :id             => 3,
   :name           => 'Customer',
   :note           => 'People who create Tickets ask for help.',
+  :updated_by_id  => 1,
   :created_by_id  => 1
 )
 
@@ -1076,12 +1079,14 @@ Group.create(
   :id             => 1,
   :name           => 'Users',
   :note           => 'Standard Group/Pool for Tickets.',
+  :updated_by_id  => 1,
   :created_by_id  => 1
 )
 Group.create(
   :id             => 2,
   :name           => 'Twitter',
   :note           => 'All Tweets.',
+  :updated_by_id  => 1,
   :created_by_id  => 1
 )
 
@@ -1099,6 +1104,7 @@ user = User.create(
   :roles         => roles,
   :groups        => groups,
   :organizations => organizations,
+  :updated_by_id => 1,
   :created_by_id => 1
 )
 user_community = User.create(
@@ -1111,6 +1117,7 @@ user_community = User.create(
   :roles         => roles,
 #  :groups        => groups,
   :organizations => organizations,
+  :updated_by_id => 1,
   :created_by_id => 1
 )
 
@@ -1121,39 +1128,39 @@ Link::Object.create( :name => 'Question/Answer' )
 Link::Object.create( :name => 'Idea' )
 Link::Object.create( :name => 'Bug' )
 
-Ticket::StateType.create( :name => 'new' )
-Ticket::StateType.create( :name => 'open' )
-Ticket::StateType.create( :name => 'pending reminder' )
-Ticket::StateType.create( :name => 'pending action' )
-Ticket::StateType.create( :name => 'closed' )
-Ticket::StateType.create( :name => 'merged' )
-Ticket::StateType.create( :name => 'removed' )
+Ticket::StateType.create( :name => 'new', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create( :name => 'open', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create( :name => 'pending reminder', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create( :name => 'pending action', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create( :name => 'closed', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create( :name => 'merged', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create( :name => 'removed', :updated_by_id  => 1, :created_by_id => 1 )
 
-Ticket::State.create( :name => 'new', :ticket_state_type_id => Ticket::StateType.where(:name => 'new').first.id )
-Ticket::State.create( :name => 'open', :ticket_state_type_id => Ticket::StateType.where(:name => 'open').first.id )
-Ticket::State.create( :name => 'pending', :ticket_state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id  )
-Ticket::State.create( :name => 'closed', :ticket_state_type_id  => Ticket::StateType.where(:name => 'closed').first.id  )
-Ticket::State.create( :name => 'merged', :ticket_state_type_id  => Ticket::StateType.where(:name => 'merged').first.id  )
-Ticket::State.create( :name => 'removed', :ticket_state_type_id  => Ticket::StateType.where(:name => 'removed').first.id  )
+Ticket::State.create( :name => 'new', :ticket_state_type_id => Ticket::StateType.where(:name => 'new').first.id, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::State.create( :name => 'open', :ticket_state_type_id => Ticket::StateType.where(:name => 'open').first.id, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::State.create( :name => 'pending', :ticket_state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create( :name => 'closed', :ticket_state_type_id  => Ticket::StateType.where(:name => 'closed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create( :name => 'merged', :ticket_state_type_id  => Ticket::StateType.where(:name => 'merged').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create( :name => 'removed', :ticket_state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
 
-Ticket::Priority.create( :name => '1 low' )
-Ticket::Priority.create( :name => '2 normal' )
-Ticket::Priority.create( :name => '3 high' )
+Ticket::Priority.create( :name => '1 low', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Priority.create( :name => '2 normal', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Priority.create( :name => '3 high', :updated_by_id  => 1, :created_by_id => 1 )
 
-Ticket::Article::Type.create( :name => 'email', :communication => true )
-Ticket::Article::Type.create( :name => 'sms', :communication => true )
-Ticket::Article::Type.create( :name => 'chat', :communication => true )
-Ticket::Article::Type.create( :name => 'fax', :communication => true )
-Ticket::Article::Type.create( :name => 'phone', :communication => true )
-Ticket::Article::Type.create( :name => 'twitter status', :communication => true )
-Ticket::Article::Type.create( :name => 'twitter direct-message', :communication => true )
-Ticket::Article::Type.create( :name => 'facebook', :communication => true )
-Ticket::Article::Type.create( :name => 'note', :communication => false )
-Ticket::Article::Type.create( :name => 'web', :communication => true )
+Ticket::Article::Type.create( :name => 'email', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'sms', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'chat', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'fax', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'phone', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'twitter status', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'twitter direct-message', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'facebook', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'note', :communication => false, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create( :name => 'web', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
 
-Ticket::Article::Sender.create( :name => 'Agent' )
-Ticket::Article::Sender.create( :name => 'Customer' )
-Ticket::Article::Sender.create( :name => 'System' )
+Ticket::Article::Sender.create( :name => 'Agent', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Sender.create( :name => 'Customer', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Sender.create( :name => 'System', :updated_by_id  => 1, :created_by_id => 1 )
 
 ticket = Ticket.create(
   :group_id           => Group.where( :name => 'Users' ).first.id,
@@ -1162,10 +1169,10 @@ ticket = Ticket.create(
   :title              => 'Welcome to Zammad!',
   :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
   :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+  :updated_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
   :created_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id
 )
 Ticket::Article.create(
-  :created_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
   :ticket_id                => ticket.id, 
   :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
   :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
@@ -1182,7 +1189,9 @@ Regards,
 
 The Zammad.org Project
 ',
-  :internal                 => false
+  :internal                 => false,
+  :updated_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
+  :created_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id
 )
 
 overview_role = Role.where( :name => 'Agent' ).first
@@ -1222,7 +1231,9 @@ Overview.create(
       :per_page => 20,
     },
     :view_mode_default => 's',
-  }
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
 )
 
 Overview.create(
@@ -1261,7 +1272,9 @@ Overview.create(
       :per_page => 20,
     },
     :view_mode_default => 's',
-  }
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
 )
 
 Overview.create(
@@ -1299,7 +1312,9 @@ Overview.create(
       :per_page => 20,
     },
     :view_mode_default => 's',
-  }
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
 )
 
 Overview.create(
@@ -1337,7 +1352,9 @@ Overview.create(
       :per_page => 20,
     },
     :view_mode_default => 's',
-  }
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
 )
 
 Overview.create(
@@ -1376,7 +1393,9 @@ Overview.create(
       :per_page => 20,
     },
     :view_mode_default => 's',
-  }
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
 )
 
 Overview.create(
@@ -1415,7 +1434,9 @@ Overview.create(
       :per_page => 20,
     },
     :view_mode_default => 's',
-  }
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
 )
 
 overview_role = Role.where( :name => 'Customer' ).first
@@ -1454,7 +1475,9 @@ Overview.create(
       :per_page => 20,
     },
     :view_mode_default => 's',
-  }
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
 )
 
 Channel.create(
@@ -1468,40 +1491,56 @@ Channel.create(
   },
   :group_id       => 1,
   :active         => false,
-  :created_by_id  => User.where( :login => '-' ).first.id
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 Channel.create(
   :adapter        => 'Sendmail',
   :area           => 'Email::Outbound',
   :options        => {},
   :active         => true,
-  :created_by_id  => User.where( :login => '-' ).first.id
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 
 network = Network.create(
-  :name   => 'base'
+  :name   => 'base',
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 
 Network::Category::Type.create(
-  :name   => 'Announcement'
+  :name   => 'Announcement',
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 Network::Category::Type.create(
-  :name => 'Idea'
+  :name => 'Idea',
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 Network::Category::Type.create(
-  :name => 'Question'
+  :name => 'Question',
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 Network::Category::Type.create(
-  :name => 'Bug Report'
+  :name => 'Bug Report',
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 
 Network::Privacy.create(
   :name => 'logged in',
-  :key  => 'loggedIn'
+  :key  => 'loggedIn',
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 Network::Privacy.create(
   :name => 'logged in and moderator',
-  :key  => 'loggedInModerator'
+  :key  => 'loggedInModerator',
+  :updated_by_id  => 1,
+  :created_by_id  => 1,
 )
 Network::Category.create(
   :name                     => 'Announcements',
@@ -1509,7 +1548,9 @@ Network::Category.create(
   :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Announcement').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in and moderator').first.id,
-  :allow_comments           => true
+  :allow_comments           => true,
+  :updated_by_id            => 1,
+  :created_by_id            => 1,
 )
 Network::Category.create(
   :name                     => 'Questions',
@@ -1517,7 +1558,9 @@ Network::Category.create(
   :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Question').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id
-#  :network_categories_moderator_user_ids => User.where(:login => '-').first.id
+#  :network_categories_moderator_user_ids => User.where(:login => '-').first.id,
+  :updated_by_id            => 1,
+  :created_by_id            => 1,
 )
 Network::Category.create(
   :name                     => 'Ideas',
@@ -1533,7 +1576,9 @@ Network::Category.create(
   :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Bug Report').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
-  :allow_comments           => true
+  :allow_comments           => true,
+  :updated_by_id            => 1,
+  :created_by_id            => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Announcement',
@@ -1544,170 +1589,177 @@ item = Network::Item.create(
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :created_by_id    => User.where(:login => '-').first.id
+  :updated_by_id    => 1,
+  :created_by_id    => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Question?',
   :body                 => 'Some questions....',
   :network_category_id  => Network::Category.where(:name => 'Questions').first.id,
-  :created_by_id        => User.where(:login => '-').first.id
+  :updated_by_id        => 1,
+  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :created_by_id    => User.where(:login => '-').first.id
+  :updated_by_id    => 1,
+  :created_by_id    => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Idea',
   :body                 => 'Some idea....',
   :network_category_id  => Network::Category.where(:name => 'Ideas').first.id,
-  :created_by_id        => User.where(:login => '-').first.id
+  :updated_by_id        => 1,
+  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :created_by_id    => User.where(:login => '-').first.id
+  :updated_by_id    => 1,
+  :created_by_id    => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Bug Report',
   :body                 => 'Some bug....',
   :network_category_id  => Network::Category.where(:name => 'Bug Reports').first.id,
-  :created_by_id        => User.where(:login => '-').first.id
+  :updated_by_id        => 1,
+  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :created_by_id    => User.where(:login => '-').first.id
+  :updated_by_id    => 1,
+  :created_by_id    => 1,
 )
 
-Translation.create( :locale => 'de', :source => "New", :target => "Neu" )
-Translation.create( :locale => 'de', :source => "Create", :target => "Erstellen" )
-Translation.create( :locale => 'de', :source => "Cancel", :target => "Abbrechen" )
-Translation.create( :locale => 'de', :source => "Submit", :target => "Übermitteln" )
-Translation.create( :locale => 'de', :source => "Sign out", :target => "Abmelden" )
-Translation.create( :locale => 'de', :source => "Profile", :target => "Profil" )
-Translation.create( :locale => 'de', :source => "Settings", :target => "Einstellungen" )
-Translation.create( :locale => 'de', :source => "Overviews", :target => "Übersichten" )
-Translation.create( :locale => 'de', :source => "Manage", :target => "Verwalten" )
-Translation.create( :locale => 'de', :source => "Users", :target => "Benutzer" )
-Translation.create( :locale => 'de', :source => "Groups", :target => "Gruppen" )
-Translation.create( :locale => 'de', :source => "Group", :target => "Gruppe" )
-Translation.create( :locale => 'de', :source => "Organizations", :target => "Organisationen" )
-Translation.create( :locale => 'de', :source => "Organization", :target => "Organisation" )
-Translation.create( :locale => 'de', :source => "Recent Viewed", :target => "Zuletzt angesehen" )
-Translation.create( :locale => 'de', :source => "Security", :target => "Sicherheit" )
-Translation.create( :locale => 'de', :source => "From", :target => "Von" )
-Translation.create( :locale => 'de', :source => "Title", :target => "Titel" )
-Translation.create( :locale => 'de', :source => "Customer", :target => "Kunde" )
-Translation.create( :locale => 'de', :source => "State", :target => "Status" )
-Translation.create( :locale => 'de', :source => "Created", :target => "Erstellt" )
-Translation.create( :locale => 'de', :source => "Attributes", :target => "Attribute" )
-Translation.create( :locale => 'de', :source => "Direction", :target => "Richtung" )
-Translation.create( :locale => 'de', :source => "Owner", :target => "Besitzer" )
-Translation.create( :locale => 'de', :source => "Subject", :target => "Betreff" )
-Translation.create( :locale => 'de', :source => "Priority", :target => "Priorität" )
-Translation.create( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "Wähle den Kunden eine Tickets oder erstell einen neuen." )
-Translation.create( :locale => 'de', :source => "New Ticket", :target => "Neues Ticket" )
-Translation.create( :locale => 'de', :source => "Firstname", :target => "Vorname" )
-Translation.create( :locale => 'de', :source => "Lastname", :target => "Nachname" )
-Translation.create( :locale => 'de', :source => "Phone", :target => "Telefon" )
-Translation.create( :locale => 'de', :source => "Street", :target => "Straße" )
-Translation.create( :locale => 'de', :source => "Zip", :target => "PLZ" )
-Translation.create( :locale => 'de', :source => "City", :target => "Stadt" )
-Translation.create( :locale => 'de', :source => "Note", :target => "Notiz" )
-Translation.create( :locale => 'de', :source => "note", :target => "Notiz" )
-Translation.create( :locale => 'de', :source => "New User", :target => "Neuer Benutzer" )
-Translation.create( :locale => 'de', :source => "Merge", :target => "Zusammenfügen" )
-Translation.create( :locale => 'de', :source => "History", :target => "Historie" )
-Translation.create( :locale => 'de', :source => "new", :target => "neu" )
-Translation.create( :locale => 'de', :source => "closed", :target => "geschlossen" )
-Translation.create( :locale => 'de', :source => "open", :target => "offen" )
-Translation.create( :locale => 'de', :source => "pending", :target => "warten" )
-Translation.create( :locale => 'de', :source => "merged", :target => "zusammengefügt" )
-Translation.create( :locale => 'de', :source => "removed", :target => "zurück gezogen" )
-Translation.create( :locale => 'de', :source => "Activity Stream", :target => "Aktivitäts-Stream" )
-Translation.create( :locale => 'de', :source => "updated", :target => "aktuallisierte" )
-Translation.create( :locale => 'de', :source => "created", :target => "erstellte" )
-Translation.create( :locale => 'de', :source => "My assigned Tickets", :target => "Meine zugewisenen Tickets" )
-Translation.create( :locale => 'de', :source => "Unassigned Tickets", :target => "Nicht zugewisene/freie Tickets" )
-Translation.create( :locale => 'de', :source => "Unassigned & Open Tickets", :target => "Nicht zugewisene & offene Tickets" )
-Translation.create( :locale => 'de', :source => "All Tickets", :target => "Alle Tickets" )
-Translation.create( :locale => 'de', :source => "Escalated Tickets", :target => "Eskallierte Tickets" )
-Translation.create( :locale => 'de', :source => "My pending reached Tickets", :target => "Meine warten erreicht Tickets" )
-Translation.create( :locale => 'de', :source => "Password", :target => "Passwort" )
-Translation.create( :locale => 'de', :source => "Password (confirm)", :target => "Passwort (bestätigen)" )
-Translation.create( :locale => 'de', :source => "Roles", :target => "Rollen" )
-Translation.create( :locale => 'de', :source => "Active", :target => "Aktiv" )
-Translation.create( :locale => 'de', :source => "Edit", :target => "Bearbeiten" )
-Translation.create( :locale => 'de', :source => "Base", :target => "Basis" )
-Translation.create( :locale => 'de', :source => "Number", :target => "Nummer" )
-Translation.create( :locale => 'de', :source => "Sender Format", :target => "Absender Format" )
-Translation.create( :locale => 'de', :source => "Authentication", :target => "Authorisierung" )
-Translation.create( :locale => 'de', :source => "Product Name", :target => "Produkt Name" )
-Translation.create( :locale => 'de', :source => "To", :target => "An" )
-Translation.create( :locale => 'de', :source => "Customer", :target => "Kunde" )
-Translation.create( :locale => 'de', :source => "Linked Accounts", :target => "Verknüpfte Accounts" )
-Translation.create( :locale => 'de', :source => "Sign in with", :target => "Anmelden mit" )
-Translation.create( :locale => 'de', :source => "Username or email", :target => "Benutzer oder Email" )
-Translation.create( :locale => 'de', :source => "Remember me", :target => "An mich erinnern" )
-Translation.create( :locale => 'de', :source => "Forgot password?", :target => "Passwort vergessen?" )
-Translation.create( :locale => 'de', :source => "Sign in using", :target => "Anmelden über" )
-Translation.create( :locale => 'de', :source => "New to", :target => "Neu bei" )
-Translation.create( :locale => 'de', :source => "join today!", :target => "werde Teil!" )
-Translation.create( :locale => 'de', :source => "Sign up", :target => "Registrieren" )
-Translation.create( :locale => 'de', :source => "Sign in", :target => "Anmelden" )
-Translation.create( :locale => 'de', :source => "Create my account", :target => "Meinen Account erstellen" )
-Translation.create( :locale => 'de', :source => "Login successfully! Have a nice day!", :target => "Anmeldung erfolgreich!" )
-Translation.create( :locale => 'de', :source => "Last contact", :target => "Letzter Kontakt" )
-Translation.create( :locale => 'de', :source => "Last contact (Agent)", :target => "Letzter Kontakt (Agent)" )
-Translation.create( :locale => 'de', :source => "Last contact (Customer)", :target => "Letzter Kontakt (Kunde)" )
-Translation.create( :locale => 'de', :source => "Close time", :target => "Schließzeit" )
-Translation.create( :locale => 'de', :source => "First response", :target => "Erste Reaktion" )
-Translation.create( :locale => 'de', :source => "Ticket %s created!", :target => "Ticket %s erstellt!" )
-Translation.create( :locale => 'de', :source => "day", :target => "Tag" )
-Translation.create( :locale => 'de', :source => "days", :target => "Tage" )
-Translation.create( :locale => 'de', :source => "hour", :target => "Stunde" )
-Translation.create( :locale => 'de', :source => "hours", :target => "Stunden" )
-Translation.create( :locale => 'de', :source => "minute", :target => "Minute" )
-Translation.create( :locale => 'de', :source => "minutes", :target => "Minuten" )
-Translation.create( :locale => 'de', :source => "See more", :target => "mehr anzeigen" )
-Translation.create( :locale => 'de', :source => "Search", :target => "Suche" )
-Translation.create( :locale => 'de', :source => "Forgot your password?", :target => "Passwort vergessen?" )
-Translation.create( :locale => 'de', :source => "Templates", :target => "Vorlagen" )
-Translation.create( :locale => 'de', :source => "Delete", :target => "Löschen" )
-Translation.create( :locale => 'de', :source => "Apply", :target => "Übernehmen" )
-Translation.create( :locale => 'de', :source => "Save as Template", :target => "Als Template speichern" )
-Translation.create( :locale => 'de', :source => "Save", :target => "Speichern" )
-Translation.create( :locale => 'de', :source => "Open Tickets", :target => "Offene Ticket" )
-Translation.create( :locale => 'de', :source => "Closed Tickets", :target => "Geschlossene Ticket" )
-Translation.create( :locale => 'de', :source => "set to internal", :target => "auf intern setzen" )
-Translation.create( :locale => 'de', :source => "set to public", :target => "auf öffentlich setzen" )
-Translation.create( :locale => 'de', :source => "split", :target => "teilen" )
-Translation.create( :locale => 'de', :source => "Type", :target => "Typ" )
-Translation.create( :locale => 'de', :source => "raw", :target => "unverarbeitet" )
-Translation.create( :locale => 'de', :source => "1 low", :target => "1 niedrig" )
-Translation.create( :locale => 'de', :source => "2 normal", :target => "2 normal" )
-Translation.create( :locale => 'de', :source => "3 high", :target => "3 hoch" )
-Translation.create( :locale => 'de', :source => "public", :target => "öffentlich" )
-Translation.create( :locale => 'de', :source => "internal", :target => "intern" )
-Translation.create( :locale => 'de', :source => "Attach files", :target => "Dateien anhängen" )
-Translation.create( :locale => 'de', :source => "Visability", :target => "Sichtbarkeit" )
-Translation.create( :locale => 'de', :source => "Actions", :target => "Aktionen" )
-Translation.create( :locale => 'de', :source => "email", :target => "E-Mail" )
-Translation.create( :locale => 'de', :source => "phone", :target => "Telefon" )
-Translation.create( :locale => 'de', :source => "fax", :target => "Fax" )
-Translation.create( :locale => 'de', :source => "chat", :target => "Chat" )
-Translation.create( :locale => 'de', :source => "sms", :target => "SMS" )
-Translation.create( :locale => 'de', :source => "twitter status", :target => "Twitter Status Meldung" )
-Translation.create( :locale => 'de', :source => "twitter direct-message", :target => "Twitter Direkt-Nachricht" )
-Translation.create( :locale => 'de', :source => "All Open Tickets", :target => "Alle offenen Tickets" )
-Translation.create( :locale => 'de', :source => "child", :target => "Kind" )
-Translation.create( :locale => 'de', :source => "parent", :target => "Eltern" )
-Translation.create( :locale => 'de', :source => "normal", :target => "Normal" )
-Translation.create( :locale => 'de', :source => "Linked Objects", :target => "Verknüpfte Objekte" )
-Translation.create( :locale => 'de', :source => "Links", :target => "Verknüpftungen" )
-Translation.create( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern" )
-Translation.create( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets" )
-Translation.create( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung" )
+Translation.create( :locale => 'de', :source => "New", :target => "Neu", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Create", :target => "Erstellen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Cancel", :target => "Abbrechen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Submit", :target => "Übermitteln", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Sign out", :target => "Abmelden", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Profile", :target => "Profil", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Settings", :target => "Einstellungen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Overviews", :target => "Übersichten", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Manage", :target => "Verwalten", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Users", :target => "Benutzer", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Groups", :target => "Gruppen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Group", :target => "Gruppe", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Organizations", :target => "Organisationen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Organization", :target => "Organisation", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Recent Viewed", :target => "Zuletzt angesehen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Security", :target => "Sicherheit", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "From", :target => "Von", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Title", :target => "Titel", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Customer", :target => "Kunde", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "State", :target => "Status", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Created", :target => "Erstellt", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Attributes", :target => "Attribute", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Direction", :target => "Richtung", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Owner", :target => "Besitzer", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Subject", :target => "Betreff", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Priority", :target => "Priorität", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "Wähle den Kunden eine Tickets oder erstell einen neuen.", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "New Ticket", :target => "Neues Ticket", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Firstname", :target => "Vorname", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Lastname", :target => "Nachname", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Phone", :target => "Telefon", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Street", :target => "Straße", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Zip", :target => "PLZ", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "City", :target => "Stadt", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Note", :target => "Notiz", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "note", :target => "Notiz", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "New User", :target => "Neuer Benutzer", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Merge", :target => "Zusammenfügen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "History", :target => "Historie", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "new", :target => "neu", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "closed", :target => "geschlossen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "open", :target => "offen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "pending", :target => "warten", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "merged", :target => "zusammengefügt", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "removed", :target => "zurück gezogen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Activity Stream", :target => "Aktivitäts-Stream", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "updated", :target => "aktuallisierte", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "created", :target => "erstellte", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "My assigned Tickets", :target => "Meine zugewisenen Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Unassigned Tickets", :target => "Nicht zugewisene/freie Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Unassigned & Open Tickets", :target => "Nicht zugewisene & offene Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "All Tickets", :target => "Alle Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Escalated Tickets", :target => "Eskallierte Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "My pending reached Tickets", :target => "Meine warten erreicht Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Password", :target => "Passwort", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Password (confirm)", :target => "Passwort (bestätigen)", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Roles", :target => "Rollen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Active", :target => "Aktiv", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Edit", :target => "Bearbeiten", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Base", :target => "Basis", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Number", :target => "Nummer", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Sender Format", :target => "Absender Format", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Authentication", :target => "Authorisierung", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Product Name", :target => "Produkt Name", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "To", :target => "An", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Customer", :target => "Kunde", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Linked Accounts", :target => "Verknüpfte Accounts", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Sign in with", :target => "Anmelden mit", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Username or email", :target => "Benutzer oder Email", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Remember me", :target => "An mich erinnern", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Forgot password?", :target => "Passwort vergessen?", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Sign in using", :target => "Anmelden über", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "New to", :target => "Neu bei", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "join today!", :target => "werde Teil!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Sign up", :target => "Registrieren", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Sign in", :target => "Anmelden", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Create my account", :target => "Meinen Account erstellen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Login successfully! Have a nice day!", :target => "Anmeldung erfolgreich!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Last contact", :target => "Letzter Kontakt", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Last contact (Agent)", :target => "Letzter Kontakt (Agent)", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Last contact (Customer)", :target => "Letzter Kontakt (Kunde)", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Close time", :target => "Schließzeit", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "First response", :target => "Erste Reaktion", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Ticket %s created!", :target => "Ticket %s erstellt!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "days", :target => "Tage", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "hour", :target => "Stunde", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "hours", :target => "Stunden", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "minute", :target => "Minute", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "minutes", :target => "Minuten", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "See more", :target => "mehr anzeigen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Search", :target => "Suche", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Forgot your password?", :target => "Passwort vergessen?", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Templates", :target => "Vorlagen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Delete", :target => "Löschen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Apply", :target => "Übernehmen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Save as Template", :target => "Als Template speichern", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Save", :target => "Speichern", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Open Tickets", :target => "Offene Ticket", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Closed Tickets", :target => "Geschlossene Ticket", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "set to internal", :target => "auf intern setzen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "set to public", :target => "auf öffentlich setzen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "split", :target => "teilen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Type", :target => "Typ", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "raw", :target => "unverarbeitet", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "1 low", :target => "1 niedrig", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "2 normal", :target => "2 normal", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "3 high", :target => "3 hoch", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "public", :target => "öffentlich", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "internal", :target => "intern", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Attach files", :target => "Dateien anhängen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Visability", :target => "Sichtbarkeit", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Actions", :target => "Aktionen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "email", :target => "E-Mail", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "phone", :target => "Telefon", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "fax", :target => "Fax", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "chat", :target => "Chat", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "sms", :target => "SMS", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "twitter status", :target => "Twitter Status Meldung", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "twitter direct-message", :target => "Twitter Direkt-Nachricht", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "All Open Tickets", :target => "Alle offenen Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "child", :target => "Kind", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "parent", :target => "Eltern", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "normal", :target => "Normal", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Linked Objects", :target => "Verknüpfte Objekte", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Links", :target => "Verknüpftungen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create( :locale => 'de', :source => "", :target => "" )

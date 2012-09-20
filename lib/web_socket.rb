@@ -402,27 +402,27 @@ class ClientState
             self.ticket( ticket_id, tickets, users )
           }
 
-    # get groups
-    group_ids = []
-    Group.where( :active => true ).each { |group|
-      group_ids.push group.id
-    }
-    agents = {}
-    Ticket.agents.each { |user|
-      agents[ user.id ] = 1
-    }
-    groups_users = {}
-    groups_users[''] = []
-    group_ids.each {|group_id|
-        groups_users[ group_id ] = []
-        Group.find(group_id).users.each {|user|
-            next if !agents[ user.id ]
-            groups_users[ group_id ].push user.id
-            if !users[user.id]
-              users[user.id] = User.user_data_full(user.id)
-            end
-        }
-    }
+          # get groups
+          group_ids = []
+          Group.where( :active => true ).each { |group|
+            group_ids.push group.id
+          }
+          agents = {}
+          Ticket.agents.each { |user|
+            agents[ user.id ] = 1
+          }
+          groups_users = {}
+          groups_users[''] = []
+          group_ids.each {|group_id|
+              groups_users[ group_id ] = []
+              Group.find(group_id).users.each {|user|
+                  next if !agents[ user.id ]
+                  groups_users[ group_id ].push user.id
+                  if !users[user.id]
+                    users[user.id] = User.user_data_full(user.id)
+                  end
+              }
+          }
 
           # send update to browser
           self.transaction({

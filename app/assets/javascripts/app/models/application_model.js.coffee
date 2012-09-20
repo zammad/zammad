@@ -1,32 +1,33 @@
 class App.Model extends Spine.Model
-  
-  validate: (data = {}) ->
-#    console.log 'vali', @
-#    console.log 'vali', params, '@', @
-#    console.log 'validate', params, @configure_attributes, @, App.User.configure_attributes
-    # check if @constructor.configure_attributes is used
-    return if !@constructor.configure_attributes
+
+  @validate: ( data = {} ) ->
+    return if !data['model'].configure_attributes
 
     errors = {}
-    for attribute in @constructor.configure_attributes
+    for attribute in data['model'].configure_attributes
       if !attribute.readonly 
         
         # check required
-        if 'null' of attribute && !attribute[null] && !@[attribute.name]
+        if 'null' of attribute && !attribute[null] && !data['params'][attribute.name]
           errors[attribute.name] = 'is required'
 
         # check confirm password
-        if data.form && attribute.type is 'password' && @[attribute.name]
+        if attribute.type is 'password' && data['params'][attribute.name] && "#{attribute.name}_confirm" of data['params']
 
           # get confirm password
-          if @[attribute.name] isnt @["#{attribute.name}_confirm"]
-            console.log 'aaa', @[attribute.name], @["#{attribute.name}_confirm"], attribute[null]
+          if data['params'][attribute.name] isnt data['params']["#{attribute.name}_confirm"]
+            console.log 'aaa', data['params'][attribute.name], data['params']["#{attribute.name}_confirm"], attribute[null]
             errors[attribute.name] = 'didn\'t match'
             errors["#{attribute.name}_confirm"] = ''
 
     # return error object
-    for key, msg of errors
-#      console.log 'e', errors
-      return errors
-      
+    return errors if !_.isEmpty(errors)
+
+    # return no errors
     return
+
+  validate: ->
+    App.Model.validate(
+      model: @constructor,
+      params: @,
+    )

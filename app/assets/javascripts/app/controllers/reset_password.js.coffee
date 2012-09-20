@@ -6,6 +6,7 @@ class Index extends App.Controller
   events:
     'submit form': 'submit',
     'click .submit': 'submit',
+    'click .retry': 'rerender',
 
   constructor: ->
     super
@@ -29,6 +30,10 @@ class Index extends App.Controller
       autofocus: true,
     )
 
+  rerender: (e) ->
+    e.preventDefault()
+    @render()
+
   submit: (e) ->
     e.preventDefault()
     params = @formParam(e.target)
@@ -40,13 +45,20 @@ class Index extends App.Controller
       url:  '/users/password_reset',
       data: JSON.stringify(params),
       processData: true,
-      success: @success
+      success: @success,
+      error: @error,
     )
   
   success: (data, status, xhr) =>
     @html App.view('generic/hero_message')(
       head:    'We\'ve sent password reset instructions to your email address',
-      message: 'If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try <a href="#reset_password">resending your request</a>.'
+      message: 'If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try <a href="#" class="retry">resending your request</a>.'
+    );
+
+  error: (data, status, xhr) =>
+    @html App.view('generic/hero_message')(
+      head:    'Problem',
+      message: 'Username or email address invalid, please go back and try <a href="#" class="retry">again</a>.'
     );
 
 Config.Routes['reset_password'] = Index

@@ -3,6 +3,10 @@ body {
   font-size: 13px;
 }
 
+label, input, button, select, textarea {
+  font-size: 13px;
+}
+
 .spinner {
   float: left;
   background:url("/assets/spinner.gif") no-repeat;
@@ -25,9 +29,21 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 
+h1 {
+  font-size: 34px;
+  line-height: 38px;
+}
+h2 {
+  font-size: 28px;
+  line-height: 36px;
+}
+h3 {
+  font-size: 22px;
+  line-height: 34px;
+}
 .navbar .nav > li > a {
   padding: 10px 12px 10px;
 }
@@ -64,6 +80,12 @@ h1, h2, h3, h4, h5, h6 {
 .page-header {
   margin: 20px 0 20px
 }
+
+.form-horizontal .help-inline, .form-horizontal .help-block {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
 
 /* replace music icon with attachment */
 .icon-attachment {

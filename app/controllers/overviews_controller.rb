@@ -1,77 +1,156 @@
 class OverviewsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /overviews
-  # GET /overviews.json
+=begin
+
+Format:
+JSON
+
+Example:
+{
+  "id":1,
+  "name":"some overview",
+  "meta":{"m_a":1,"m_b":2},
+  "condition":{"c_a":1,"c_b":2},
+  "order":{"o_a":1,"o_b":2},
+  "view":{"v_a":1,"v_b":2},
+  "user_id": null,
+  "role_id": null,
+  "updated_at":"2012-09-14T17:51:53Z",
+  "created_at":"2012-09-14T17:51:53Z",
+  "updated_by_id":2.
+  "created_by_id":2,
+}
+  
+=end
+
+=begin
+
+Resource:
+GET /api/overviews.json
+
+Response:
+[
+  {
+    "id": 1,
+    "name": "some_name1",
+    ...
+  },
+  {
+    "id": 2,
+    "name": "some_name2",
+    ...
+  }
+]
+
+Test:
+curl http://localhost/api/overviews.json -v -u #{login}:#{password}
+
+=end
+
   def index
-    @overviews = Overview.all
-
-    respond_to do |format|
-      format.json { render :json => @overviews }
-    end
+    model_index_render(Overview, params)
   end
 
-  # GET /overviews/1
-  # GET /overviews/1.json
+=begin
+
+Resource:
+GET /api/overviews/#{id}.json
+
+Response:
+{
+  "id": 1,
+  "name": "name_1",
+  ...
+}
+
+Test:
+curl http://localhost/api/overviews/#{id}.json -v -u #{login}:#{password}
+ 
+=end
+
   def show
-    @overview = Overview.find(params[:id])
-
-    respond_to do |format|
-      format.json { render :json => @overview }
-    end
+    model_show_render(Overview, params)
   end
 
-  # GET /overviews/new
-  # GET /overviews/new.json
-  def new
-    @overview = Overview.new
+=begin
 
-    respond_to do |format|
-      format.json { render :json => @overview }
-    end
-  end
+Resource:
+POST /api/overviews.json
 
-  # GET /overviews/1/edit
-  def edit
-    @overview = Overview.find(params[:id])
-  end
+Payload:
+{
+  "name":"some overview",
+  "meta":{"m_a":1,"m_b":2},
+  "condition":{"c_a":1,"c_b":2},
+  "order":{"o_a":1,"o_b":2},
+  "view":{"v_a":1,"v_b":2},
+  "user_id": null,
+  "role_id": null,
+}
 
-  # POST /overviews
-  # POST /overviews.json
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/overviews.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def create
-    @overview = Overview.new(params[:overview])
-
-    respond_to do |format|
-      if @overview.save
-        format.json { render :json => @overview, :status => :created }
-      else
-        format.json { render :json => @overview.errors, :status => :unprocessable_entity }
-      end
-    end
+    model_create_render(Overview, params)
   end
 
-  # PUT /overviews/1
-  # PUT /overviews/1.json
+=begin
+
+Resource:
+PUT /api/overviews/{id}.json
+
+Payload:
+{
+  "name":"some overview",
+  "meta":{"m_a":1,"m_b":2},
+  "condition":{"c_a":1,"c_b":2},
+  "order":{"o_a":1,"o_b":2},
+  "view":{"v_a":1,"v_b":2},
+  "user_id": null,
+  "role_id": null,
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/overviews.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def update
-    @overview = Overview.find(params[:id])
-
-    respond_to do |format|
-      if @overview.update_attributes(params[:overview])
-        format.json { render :json => @overview, :status => :ok }
-      else
-        format.json { render :json => @overview.errors, :status => :unprocessable_entity }
-      end
-    end
+    model_update_render(Overview, params)
   end
 
-  # DELETE /overviews/1
-  # DELETE /overviews/1.json
-  def destroy
-    @overview = Overview.find(params[:id])
-    @overview.destroy
+=begin
 
-    respond_to do |format|
-      format.json { head :ok }
-    end
+Resource:
+DELETE /api/overviews/{id}.json
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/overviews.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+
+=end
+
+  def destroy
+    model_destory_render(Overview, params)
   end
 end

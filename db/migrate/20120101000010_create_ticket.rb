@@ -1,25 +1,31 @@
 class CreateTicket < ActiveRecord::Migration
   def up
     create_table :ticket_state_types do |t|
-      t.column :name,  :string, :limit => 250, :null => false
-      t.column :note,  :string, :limit => 250, :null => true
+      t.column :name,                 :string, :limit => 250, :null => false
+      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :ticket_state_types, [:name], :unique => true
 
     create_table :ticket_states do |t|
       t.references :ticket_state_type, :null => false
-      t.column :name,       :string, :limit => 250, :null => false
-      t.column :note,       :string, :limit => 250, :null => true
-      t.column :active,     :boolean,               :null => false, :default => true
+      t.column :name,                 :string, :limit => 250, :null => false
+      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :active,               :boolean,               :null => false, :default => true
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :ticket_states, [:name], :unique => true
 
     create_table :ticket_priorities do |t|
-      t.column :name,   :string, :limit => 250, :null => false
-      t.column :note,   :string, :limit => 250, :null => true
-      t.column :active, :boolean,               :null => false, :default => true
+      t.column :name,                 :string, :limit => 250, :null => false
+      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :active,               :boolean,               :null => false, :default => true
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :ticket_priorities, [:name], :unique => true
@@ -38,6 +44,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :last_contact_agent,    :timestamp,              :null => true
       t.column :last_contact_customer, :timestamp,              :null => true
       t.column :close_time,            :timestamp,              :null => true
+      t.column :updated_by_id,         :integer,               :null => false
       t.column :created_by_id,         :integer,                :null => false
       t.timestamps
     end
@@ -80,17 +87,21 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_time_accounting, [:created_by_id]
 
     create_table :ticket_article_types do |t|
-      t.column :name,          :string, :limit => 250,  :null => false
-      t.column :note,          :string, :limit => 250,  :null => true
-      t.column :communication, :boolean,                :null => false
-      t.column :active,        :boolean,                :null => false, :default => true
+      t.column :name,                 :string, :limit => 250, :null => false
+      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :communication,        :boolean,               :null => false
+      t.column :active,               :boolean,               :null => false, :default => true
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :ticket_article_types, [:name], :unique => true
 
     create_table :ticket_article_senders do |t|
-      t.column :name,  :string, :limit => 250, :null => false
-      t.column :note,  :string, :limit => 250, :null => true
+      t.column :name,                 :string, :limit => 250, :null => false
+      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :ticket_article_senders, [:name], :unique => true
@@ -99,18 +110,19 @@ class CreateTicket < ActiveRecord::Migration
       t.references :ticket,                                 :null => false
       t.references :ticket_article_type,                    :null => false
       t.references :ticket_article_sender,                  :null => false
-      t.column :from,           :string, :limit => 3000,    :null => true
-      t.column :to,             :string, :limit => 3000,    :null => true
-      t.column :cc,             :string, :limit => 3000,    :null => true
-      t.column :subject,        :string, :limit => 3000,    :null => true
-#      t.column :reply_to,       :string, :limit => 3000,    :null => true
-      t.column :message_id,     :string, :limit => 3000,    :null => true
-      t.column :message_id_md5, :string, :limit => 32,      :null => true
-      t.column :in_reply_to,    :string, :limit => 3000,    :null => true
-      t.column :references,     :string, :limit => 3200,    :null => true
-      t.column :body,           :text,                      :null => true
-      t.column :internal,       :boolean,                   :null => false, :default => false
-      t.column :created_by_id,  :integer,                   :null => false
+      t.column :from,                 :string, :limit => 3000,    :null => true
+      t.column :to,                   :string, :limit => 3000,    :null => true
+      t.column :cc,                   :string, :limit => 3000,    :null => true
+      t.column :subject,              :string, :limit => 3000,    :null => true
+#      t.column :reply_to,             :string, :limit => 3000,    :null => true
+      t.column :message_id,           :string, :limit => 3000,    :null => true
+      t.column :message_id_md5,       :string, :limit => 32,      :null => true
+      t.column :in_reply_to,          :string, :limit => 3000,    :null => true
+      t.column :references,           :string, :limit => 3200,    :null => true
+      t.column :body,                 :text,                      :null => true
+      t.column :internal,             :boolean,                   :null => false, :default => false
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,                   :null => false
       t.timestamps
     end
     add_index :ticket_articles, [:ticket_id]
@@ -134,13 +146,15 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_article_flags, [:created_by_id]
 
     create_table :overviews do |t|
-      t.references :user,                                         :null => true
-      t.references :role,                                         :null => false
-      t.column :name,                   :string,  :limit => 250,  :null => false
-      t.column :meta,                   :string,  :limit => 1000, :null => false
-      t.column :condition,              :string,  :limit => 2500, :null => false
-      t.column :order,                  :string,  :limit => 2500, :null => false
-      t.column :view,                   :string,  :limit => 1000, :null => false
+      t.references :user,                                      :null => true
+      t.references :role,                                      :null => false
+      t.column :name,                :string,  :limit => 250,  :null => false
+      t.column :meta,                :string,  :limit => 1000, :null => false
+      t.column :condition,           :string,  :limit => 2500, :null => false
+      t.column :order,               :string,  :limit => 2500, :null => false
+      t.column :view,                :string,  :limit => 1000, :null => false
+      t.column :updated_by_id,       :integer,                 :null => false
+      t.column :created_by_id,       :integer,                 :null => false
       t.timestamps
     end
     add_index :overviews, [:user_id]

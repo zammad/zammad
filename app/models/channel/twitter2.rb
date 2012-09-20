@@ -15,10 +15,10 @@ class Channel::Twitter2
   def fetch (channel)
 
     puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
-    
+    @client = connect(channel)
+
     # search results
     if channel[:options][:search]
-      @client = connect(channel)
       channel[:options][:search].each { |search|
         puts " - searching for #{search[:item]}"
         tweets = @client.search( search[:item] )
@@ -29,7 +29,6 @@ class Channel::Twitter2
 
     # mentions
     if channel[:options][:mentions]
-      @client = connect(channel)
       puts " - searching for mentions"
       tweets = @client.mentions
       @article_type = 'twitter status'
@@ -38,7 +37,6 @@ class Channel::Twitter2
     
     # direct messages
     if channel[:options][:direct_messages]
-      @client = connect(channel)
       puts " - searching for direct_messages"
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
@@ -49,8 +47,21 @@ class Channel::Twitter2
 
   def fetch_loop(tweets, channel, group)
 
+    # get all tweets
+    all_tweets = []
+    result_class = tweets.class
+    if result_class.to_s == 'Array'
+        all_tweets = tweets
+    elsif result_class.to_s == 'Twitter::SearchResults'
+        tweets.results.map do |tweet|
+            all_tweets.push tweet
+        end
+    else
+        puts 'UNKNOWN: ' + result_class.to_s
+    end
+
     # find tweets
-    tweets.each do |tweet|
+    all_tweets.each do |tweet|
       
       # check if tweet is already imported
       article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
@@ -87,7 +98,7 @@ class Channel::Twitter2
       begin
 
         # reconnect for #<Twitter::Error::NotFound: Sorry, that page does not exist> workaround
-        @client = connect(channel)
+#        @client = connect(channel)
         sender = @client.user(tweet.from_user_id)
       rescue Exception => e
         puts "Exception: twitter: " + e.inspect

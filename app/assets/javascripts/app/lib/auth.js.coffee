@@ -6,12 +6,19 @@ class App.Auth
     console.log 'login(...)', params
     App.Com.ajax(
       id:     'login',
-#      params,
       type:   'POST',
       url:     '/signin',
       data:    JSON.stringify(params.data),
-      success: params.success,
-      error:   params.error,
+      success: (data, status, xhr) =>
+
+        # clear store
+        App.Store.clear('all')
+
+        # execute callback
+        params.success(data, status, xhr)
+
+      error: (xhr, statusText, error) =>
+        params.error(xhr, statusText, error)
     )
 
   @loginCheck: ->
@@ -56,14 +63,15 @@ class App.Auth
 
         # update websocked auth info
         App.WebSocket.auth()
-    
+
         # refresh/load default collections
+        controller = new App.Controller
         for key, value of data.default_collections
-          App[key].refresh( value, options: { clear: true } )
+          controller.loadCollection( type: key, data: value )
 
         # rebuild navbar with new navbar items
         Spine.trigger 'navrebuild', data.session
-    
+
         # rebuild navbar with updated ticket count of overviews
         Spine.trigger 'navupdate_remote'
 
@@ -72,6 +80,9 @@ class App.Auth
 
         # empty session
         window.Session = {}
+
+        # clear store
+        App.Store.clear('all')
 
         # update websocked auth info
         App.WebSocket.auth()
@@ -87,6 +98,9 @@ class App.Auth
 
         # update websocked auth info
         App.WebSocket.auth()
+
+        # clear store
+        App.Store.clear('all')
 
       error: (xhr, statusText, error) =>
 

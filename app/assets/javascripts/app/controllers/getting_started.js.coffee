@@ -24,7 +24,7 @@ class Index extends App.Controller
     App.Com.ajax(
       id:    'getting_started',
       type:  'GET',
-      url:   '/getting_started',
+      url:   '/api/getting_started',
       data:  {
 #        view:       @view,
       }

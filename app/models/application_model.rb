@@ -1,6 +1,24 @@
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
 
+  def self.param_cleanup(params)
+    data = {}
+    self.new.attributes.each {|item|
+      if params.has_key?(item[0])
+#        puts 'use ' + item[0].to_s + '-' + params[item[0]].to_s
+        data[item[0].to_sym] = params[item[0]]
+      end
+    }
+
+    # we do want to set this via database
+    data.delete( :updated_at )
+    data.delete( :created_at )
+    data.delete( :updated_by_id )
+    data.delete( :created_by_id )
+
+    data
+  end
+
   def cache_update(o)
 #    puts 'u ' + self.class.to_s
     if self.respond_to?('cache_delete') then self.cache_delete end

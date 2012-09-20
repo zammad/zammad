@@ -1,55 +1,140 @@
 class RolesController < ApplicationController
   before_filter :authentication_check
 
-  # GET /roles
+=begin
+
+Format:
+JSON
+
+Example:
+{
+  "id":1,
+  "name":"some role",
+  "note":"some note",
+  "updated_at":"2012-09-14T17:51:53Z",
+  "created_at":"2012-09-14T17:51:53Z",
+  "updated_by_id":2,
+  "created_by_id":2,
+}
+  
+=end
+
+=begin
+
+Resource:
+GET /api/roles.json
+
+Response:
+[
+  {
+    "id": 1,
+    "name": "some_name1",
+    ...
+  },
+  {
+    "id": 2,
+    "name": "some_name2",
+    ...
+  }
+]
+
+Test:
+curl http://localhost/api/roles.json -v -u #{login}:#{password}
+
+=end
+
   def index
-    @roles = Role.all
-
-    render :json => @roles
+    model_index_render(Role, params)
   end
 
-  # GET /roles/1
+=begin
+
+Resource:
+GET /api/roles/#{id}.json
+
+Response:
+{
+  "id": 1,
+  "name": "name_1",
+  ...
+}
+
+Test:
+curl http://localhost/api/roles/#{id}.json -v -u #{login}:#{password}
+ 
+=end
+
   def show
-    @role = Role.find(params[:id])
-
-    render :json => @role
+    model_show_render(Role, params)
   end
 
-  # GET /roles/new
-  def new
-    @role = Role.new
+=begin
 
-    render :json => @role
-  end
+Resource:
+POST /api/roles.json
 
-  # POST /roles
+Payload:
+{
+  "name": "some name",
+  "note": "",
+  "active":true,
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/roles.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def create
-    @role = Role.new(params[:role])
-    @role.created_by_id = current_user.id
-
-    if @role.save
-      render :json => @role, :status => :created
-    else
-      render :json => @role.errors, :status => :unprocessable_entity
-    end
+    model_create_render(Role, params)
   end
 
-  # PUT /roles/1
+=begin
+
+Resource:
+PUT /api/roles/{id}.json
+
+Payload:
+{
+  "name": "some name",
+  "note": "",
+  "active":true,
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/roles.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+
+=end
+
   def update
-    @role = Role.find(params[:id])
-
-    if @role.update_attributes(params[:role])
-      render :json => @role, :status => :ok
-    else
-      render :json => @role.errors, :status => :unprocessable_entity
-    end
+    model_update_render(Role, params)
   end
 
-  # DELETE /roles/1
-  def destroy
-    @role = Role.find(params[:id])
-    @role.destroy
+=begin
 
-    head :ok
+Resource:
+
+Response:
+
+Test:
+ 
+=end
+
+  def destroy
+    model_destory_render(Role, params)
   end
 end

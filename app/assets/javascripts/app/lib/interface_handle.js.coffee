@@ -11,12 +11,6 @@ class App.Run extends App.Controller
     # init of i18n
     new App.i18n
 
-    # start navigation controller
-    new App.Navigation( el: @el.find('#navigation') );
-
-    # check if session already exists/try to get session data from server
-    App.Auth.loginCheck()
-
     # bind new events
     Spine.bind 'loadCollection', (data) =>
 
@@ -25,7 +19,16 @@ class App.Run extends App.Controller
         for key of data.collections
 
           @log 'loadCollection', key, data.collections[key]
-          @loadCollection( type: key, data: data.collections[key] )
+          @loadCollection( localStorage: data.localStorage, type: key, data: data.collections[key] )
+
+    # load collections
+    App.Store.load()
+
+    # start navigation controller
+    new App.Navigation( el: @el.find('#navigation') );
+
+    # check if session already exists/try to get session data from server
+    App.Auth.loginCheck()
 
     # start notify controller
     new App.Notify( el: @el.find('#notify') );

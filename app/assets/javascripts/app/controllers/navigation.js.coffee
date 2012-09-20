@@ -13,15 +13,26 @@ class App.Navigation extends App.Controller
     # rebuild nav bar with given user data
     Spine.bind 'navrebuild', (user) =>
       @log 'navbarrebuild', user
+
+      if !_.isEmpty( user )
+        cache = App.Store.get( 'navupdate_ticket_overview' )
+        @ticket_overview_build( cache ) if cache
+
+      if !_.isEmpty( user )
+        cache = App.Store.get( 'update_recent_viewed' )
+        @recent_viewed_build( cache ) if cache
+
       @render(user)
 
     # rebuild ticket overview data
     Spine.bind 'navupdate_ticket_overview', (data) =>
       @ticket_overview_build(data)
+      @render( window.Session )
 
     # rebuild recent viewd data
     Spine.bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
+      @render( window.Session )
 
   render: (user) ->
     nav_left  = @getItems( navbar: Config.NavBar )
@@ -134,6 +145,8 @@ class App.Navigation extends App.Controller
 
   ticket_overview_build: (data) =>
 
+    App.Store.write( 'navupdate_ticket_overview', data )
+
     # remove old views
     for key of Config.NavBar
       if Config.NavBar[key].parent is '#ticket_view'
@@ -150,10 +163,9 @@ class App.Navigation extends App.Controller
         role:   ['Agent'],
       }
 
-    # rebuild navbar
-    Spine.trigger 'navrebuild', window.Session
-
   recent_viewed_build: (data) =>
+
+    App.Store.write( 'update_recent_viewed', data )
 
     items = data.recent_viewed
 
@@ -189,6 +201,3 @@ class App.Navigation extends App.Controller
         divider:   divider,
         navheader: navheader
       }
-
-    # rebuild navbar
-    Spine.trigger 'navrebuild', window.Session

@@ -2,25 +2,39 @@ module ExtraRoutes
   def add(map)
 
     # tickets
-    map.resources :channels,                :only => [:create, :show, :index, :update, :destroy]
-    map.resources :ticket_articles,         :only => [:create, :show, :index, :update]
-    map.resources :ticket_priorities,       :only => [:create, :show, :index, :update]
-    map.resources :ticket_states,           :only => [:create, :show, :index, :update]
-    map.resources :tickets,                 :only => [:create, :show, :index, :update]
-    map.match '/ticket_full/:id',           :to => 'ticket_overviews#ticket_full'
-    map.match '/ticket_attachment/:ticket_id/:article_id/:id', :to => 'ticket_overviews#ticket_attachment'
-    map.match '/ticket_attachment_new',     :to => 'ticket_overviews#ticket_attachment_new'
-    map.match '/ticket_article_plain/:id',  :to => 'ticket_overviews#ticket_article_plain'
-    map.match '/ticket_history/:id',        :to => 'ticket_overviews#ticket_history'
-    map.match '/ticket_customer',           :to => 'ticket_overviews#ticket_customer'
-    map.match '/ticket_overviews',          :to => 'ticket_overviews#show'
-    map.match '/ticket_create',             :to => 'ticket_overviews#ticket_create'
-    map.match '/user_search',               :to => 'ticket_overviews#user_search'
+    map.match '/api/tickets',                                       :to => 'tickets#index',             :via => :get
+    map.match '/api/tickets/:id',                                   :to => 'tickets#show',              :via => :get
+    map.match '/api/tickets',                                       :to => 'tickets#create',            :via => :post
+    map.match '/api/tickets/:id',                                   :to => 'tickets#update',            :via => :put
+    map.match '/api/ticket_create',                                 :to => 'tickets#ticket_create',     :via => :get
+    map.match '/api/ticket_full/:id',                               :to => 'tickets#ticket_full',       :via => :get
+    map.match '/api/ticket_history/:id',                            :to => 'tickets#ticket_history',    :via => :get
+    map.match '/api/ticket_customer',                               :to => 'tickets#ticket_customer',   :via => :get
+    map.match '/api/ticket_merge/:slave_ticket_id/:master_ticket_number', :to => 'tickets#ticket_merge'
 
-    map.match '/ticket_merge/:slave_ticket_id/:master_ticket_number', :to => 'ticket_overviews#ticket_merge'
+    # ticket overviews
+    map.match '/api/ticket_overviews',                                  :to => 'ticket_overviews#show', :via => :get
 
-    map.match '/activity_stream',           :to => 'activity#activity_stream'
-    map.match '/recent_viewed',             :to => 'recent_viewed#recent_viewed'
+    # ticket priority
+    map.match '/api/ticket_priorities',                             :to => 'ticket_priorities#index',   :via => :get
+    map.match '/api/ticket_priorities/:id',                         :to => 'ticket_priorities#show',    :via => :get
+    map.match '/api/ticket_priorities',                             :to => 'ticket_priorities#create',  :via => :post
+    map.match '/api/ticket_priorities/:id',                         :to => 'ticket_priorities#update',  :via => :put
+
+    # ticket state
+    map.match '/api/ticket_states',                                 :to => 'ticket_states#index',       :via => :get
+    map.match '/api/ticket_states/:id',                             :to => 'ticket_states#show',        :via => :get
+    map.match '/api/ticket_states',                                 :to => 'ticket_states#create',      :via => :post
+    map.match '/api/ticket_states/:id',                             :to => 'ticket_states#update',      :via => :put
+
+    # ticket articles
+    map.match '/api/ticket_articles',                               :to => 'ticket_articles#index',     :via => :get
+    map.match '/api/ticket_articles/:id',                           :to => 'ticket_articles#show',      :via => :get
+    map.match '/api/ticket_articles',                               :to => 'ticket_articles#create',    :via => :post
+    map.match '/api/ticket_articles/:id',                           :to => 'ticket_articles#update',    :via => :put
+    map.match '/api/ticket_attachment/:ticket_id/:article_id/:id',  :to => 'ticket_articles#attachment'
+    map.match '/api/ticket_attachment_new',                         :to => 'ticket_articles#attachment_new'
+    map.match '/api/ticket_article_plain/:id',                      :to => 'ticket_articles#article_plain',  :via => :get
 
   end
   module_function :add

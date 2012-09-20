@@ -37,7 +37,7 @@ class App.ControllerGenericNew extends App.ControllerModal
     object.load(params)
     
     # validate
-    errors = object.validate( form: true )
+    errors = object.validate()
     if errors
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )
@@ -87,7 +87,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @item.load(params)
     
     # validate
-    errors = @item.validate( form: true )
+    errors = @item.validate()
     if errors
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )

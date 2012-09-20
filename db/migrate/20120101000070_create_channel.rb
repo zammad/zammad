@@ -7,12 +7,13 @@ class CreateChannel < ActiveRecord::Migration
       t.column :area,           :string, :limit => 100,   :null => false
       t.column :options,        :string, :limit => 2000,  :null => true
       t.column :active,         :boolean,                 :null => false, :default => true
+      t.column :updated_by_id,  :integer,                 :null => false
       t.column :created_by_id,  :integer,                 :null => false
       t.timestamps
     end
     add_index :channels, [:area]
     add_index :channels, [:adapter]
-    
+
   end
 
   def down

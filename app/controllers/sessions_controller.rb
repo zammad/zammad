@@ -100,7 +100,7 @@ class SessionsController < ApplicationController
 
     render :json => { }
   end
-    
+
   def create_omniauth
     auth = request.env['omniauth.auth']
 
@@ -127,13 +127,13 @@ class SessionsController < ApplicationController
   
   private
     def default_collections
-      
+
       # auto population of default collections
       default_collection = {}
       default_collection['Role']          = Role.all
       default_collection['Group']         = Group.all
       default_collection['Organization']  = Organization.all
-      
+
       # load collections to deliver from external files
       dir = File.expand_path('../', __FILE__)
       files = Dir.glob( "#{dir}/sessions/collection_*.rb" )
@@ -141,7 +141,7 @@ class SessionsController < ApplicationController
         load file
         ExtraCollection.add(default_collection)
       end
-      
+
       return default_collection  
     end
 end

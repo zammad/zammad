@@ -204,11 +204,11 @@ class App.ControllerForm extends App.Controller
             @callback( params )
         ###
         $(@local_attribute_full).tagsInput(
-          autocomplete_url: '/user_search',
+          autocomplete_url: '/users/search',
           height: '30px',
           width: '530px',
           auto: {
-            source: '/user_search',
+            source: '/users/search',
             minLength: 2,
             select: ( event, ui ) =>
               @log 'selected', event, ui
@@ -218,7 +218,7 @@ class App.ControllerForm extends App.Controller
         ###
         @log '111111', @local_attribute_full, item
         $(@local_attribute_full).autocomplete(
-          source: '/user_search',
+          source: '/api/users/search',
           minLength: 2,
           select: ( event, ui ) =>
             @log 'selected', event, ui
@@ -312,7 +312,7 @@ class App.ControllerForm extends App.Controller
 
     options_by_name = []
     for i in attribute.options
-      options_by_name.push i['name'].toLowerCase()
+      options_by_name.push i['name'].toString().toLowerCase()
     options_by_name = options_by_name.sort()
 
     options_new = []
@@ -422,6 +422,11 @@ class App.ControllerForm extends App.Controller
         record.selected = 'selected'
         record.checked = 'checked'
 
+  validate: (params) ->
+    App.Model.validate(
+      model: @model,
+      params: params,
+    )
 
   # get all params of the form
   @params: (form) ->

@@ -26,18 +26,16 @@ class Index extends App.Controller
     # set controller to active
     Config['ActiveController'] = '#ticket_overview_' + @view
 
+    # set new key
+    @key = 'ticket_overview_' + @view
+
     # bind new events
-    Spine.bind 'ticket_overview_rebuild', (data) =>
-      @log 'ticket_overview_rebuild', data
-      @fetch()
+    @reBind( 'ticket_overview_rebuild', @fetch )
 
     # render
     @fetch()
 
   fetch: =>
-
-    # set new key
-    @key = 'ticket_overview_' + @view
 
     # use cache of first page
     cache = App.Store.get( @key )
@@ -51,7 +49,7 @@ class Index extends App.Controller
 #    App.Com.ajax(
 #      id:    'ticket_overview_' + @start_page,
 #      type:  'GET',
-#      url:   '/ticket_overviews',
+#      url:   '/api/ticket_overviews',
 #      data:  {
 #        view:       @view,
 #        view_mode:  @view_mode,
@@ -423,7 +421,7 @@ class Router extends App.Controller
     else
       App.Com.ajax(
         type:  'GET',
-        url:   '/ticket_overviews',
+        url:   '/api/ticket_overviews',
         data:  {
           view:  @view,
           array: true,

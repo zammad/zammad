@@ -1,10 +1,11 @@
 class CreateTemplate < ActiveRecord::Migration
   def up
     create_table :templates do |t|
-      t.references :user,                                         :null => true
-      t.column :name,                   :string,  :limit => 250,  :null => false
-      t.column :options,                :string,  :limit => 2500, :null => false
-      t.column :created_by_id,          :integer,                 :null => false
+      t.references :user,                                       :null => true
+      t.column :name,                 :string,  :limit => 250,  :null => false
+      t.column :options,              :string,  :limit => 2500, :null => false
+      t.column :updated_by_id,        :integer,                 :null => false
+      t.column :created_by_id,        :integer,                 :null => false
       t.timestamps
     end
     add_index :templates, [:user_id]

@@ -30,6 +30,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :note,           :string, :limit => 250, :null => true
       t.column :source,         :string, :limit => 200, :null => true
       t.column :preferences,    :string, :limit => 4000,:null => true
+      t.column :updated_by_id,  :integer,               :null => false
       t.column :created_by_id,  :integer,               :null => false
       t.timestamps
     end
@@ -47,6 +48,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :body,           :string, :limit => 5000, :null => true
       t.column :active,         :boolean,                :null => false, :default => true
       t.column :note,           :string, :limit => 250,  :null => true
+      t.column :updated_by_id,  :integer,                :null => false
       t.column :created_by_id,  :integer,                :null => false
       t.timestamps
     end
@@ -60,26 +62,29 @@ class CreateBase < ActiveRecord::Migration
       t.column :follow_up_assignment, :boolean, :default => 1
       t.column :active,               :boolean,                :null => false, :default => true
       t.column :note,                 :string,  :limit => 250, :null => true
+      t.column :updated_by_id,        :integer,                :null => false
       t.column :created_by_id,        :integer,                :null => false
       t.timestamps
     end
     add_index :groups, [:name], :unique => true
 
     create_table :roles do |t|
-      t.column :name,           :string, :limit => 100, :null => false
-      t.column :active,         :boolean,               :null => false, :default => true
-      t.column :note,           :string, :limit => 250, :null => true
-      t.column :created_by_id,  :integer,               :null => false
+      t.column :name,                 :string, :limit => 100, :null => false
+      t.column :active,               :boolean,               :null => false, :default => true
+      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :roles, [:name], :unique => true
 
     create_table :organizations do |t|
-      t.column :name,           :string, :limit => 100, :null => false
-      t.column :shared,         :boolean,               :null => false, :default => true
-      t.column :active,         :boolean,               :null => false, :default => true
-      t.column :note,           :string, :limit => 250, :null => true
-      t.column :created_by_id,  :integer,               :null => false
+      t.column :name,                 :string, :limit => 100, :null => false
+      t.column :shared,               :boolean,               :null => false, :default => true
+      t.column :active,               :boolean,               :null => false, :default => true
+      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :updated_by_id,        :integer,               :null => false
+      t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :organizations, [:name], :unique => true

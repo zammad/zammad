@@ -1,4 +1,4 @@
-class Overview < ActiveRecord::Base
+class Overview < ApplicationModel
   store     :condition
   store     :order
   store     :meta

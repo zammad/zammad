@@ -21,6 +21,10 @@ class App.ChannelEmail extends App.ControllerTabs
         controller: App.ChannelEmailOutbound,
       },
       {
+        name:   'Sigantures',
+        target: 'c-signature',
+      },
+      {
         name:   'Adresses',
         target: 'c-address',
       },
@@ -31,79 +35,12 @@ class App.ChannelEmail extends App.ControllerTabs
       {
         name:       'Settings',
         target:     'c-setting',
-        controller: App.SettingsArea, params: { area: 'Email::Base' },
+        controller: App.SettingsArea,
+        params:     { area: 'Email::Base' },
       },
     ]
 
     @render()
-    
-class App.ChannelEmailInboundEdit extends App.ControllerModal
-  constructor: ->
-    super
-    @render(@object)
-
-  render: (data = {}) ->
-
-    configure_attributes = [
-      { name: 'adapter',  display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } , class: 'span4', default: data['adapter'] },
-      { name: 'host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['host']) },
-      { name: 'user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['user']) },
-      { name: 'password', display: 'Password', tag: 'input',    type: 'password', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['password']) },
-      { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: (data['options']&&data['options']['ssl']) },
-      { name: 'group_id', display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: false, relation: 'Group', class: 'span4', default: data['group_id']  },
-      { name: 'active',   display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: data['active'] },
-    ]
-    @html App.view('generic/admin/new')(
-      head: 'New Channel'
-    )
-    new App.ControllerForm(
-      el: @el.find('#object_new'),
-      model: { configure_attributes: configure_attributes, className: '' },
-      autofocus: true,
-    )
-    @modalShow()
-
-  submit: (e) =>
-    e.preventDefault()
-        
-    # get params
-    params = @formParam(e.target)
-
-    object = @object || new App.Channel
-    object.load(
-      area:    'Email::Inbound',
-      adapter:  params['adapter'],
-      group_id: params['group_id'],
-      options: {
-        host:     params['host'],
-        user:     params['user'],
-        password: params['password'],
-        ssl:      params['ssl'],
-      },
-      host:     params['host'],
-      user:     params['user'],
-      password: params['password'],
-      active:   params['active'],
-    )
-
-    # validate form
-    errors = object.validate()
-    
-    # show errors in form
-    if errors
-      @log 'error new', errors
-      @formValidate( form: e.target, errors: errors )
-      return false
-
-    # save object
-    object.save(
-      success: =>
-        @modalHide()
-      error: =>
-        @log 'errors'
-        @modalHide()
-    )
-
 
 class App.ChannelEmailInbound extends App.Controller
   events:
@@ -147,6 +84,69 @@ class App.ChannelEmailInbound extends App.Controller
     new App.ChannelEmailInboundEdit( object: item )
 
 
+class App.ChannelEmailInboundEdit extends App.ControllerModal
+  constructor: ->
+    super
+    @render(@object)
+
+  render: (data = {}) ->
+
+    configure_attributes = [
+      { name: 'adapter',  display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } , class: 'span4', default: data['adapter'] },
+      { name: 'host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['host']) },
+      { name: 'user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['user']) },
+      { name: 'password', display: 'Password', tag: 'input',    type: 'password', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['password']) },
+      { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: (data['options']&&data['options']['ssl']) },
+      { name: 'group_id', display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: false, relation: 'Group', class: 'span4', default: data['group_id']  },
+      { name: 'active',   display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: data['active'] },
+    ]
+    @html App.view('generic/admin/new')(
+      head: 'New Channel'
+    )
+    @form = new App.ControllerForm(
+      el: @el.find('#object_new'),
+      model: { configure_attributes: configure_attributes, className: '' },
+      autofocus: true,
+    )
+    @modalShow()
+
+  submit: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+
+    object = @object || new App.Channel
+    object.load(
+      area:    'Email::Inbound',
+      adapter:  params['adapter'],
+      group_id: params['group_id'],
+      options: {
+        host:     params['host'],
+        user:     params['user'],
+        password: params['password'],
+        ssl:      params['ssl'],
+      },
+    )
+
+    # validate form
+    errors = @form.validate( params )
+
+    # show errors in form
+    if errors
+      @log 'error new', errors
+      @formValidate( form: e.target, errors: errors )
+      return false
+
+    # save object
+    object.save(
+      success: =>
+        @modalHide()
+      error: =>
+        @log 'errors'
+        @modalHide()
+    )
+
 class App.ChannelEmailOutbound extends App.Controller
   events:
     'change #_adapter':     'toggle'
@@ -159,15 +159,17 @@ class App.ChannelEmailOutbound extends App.Controller
     App.Channel.fetch()
 
   render: =>
+
+    @html App.view('channel/email_outbound')()
+
+    # get current Email::Outbound channel
     channels     = App.Channel.all()
-    data         = []
     adapters     = {}
     adapter_used = undefined
     channel_used = undefined
     for channel in channels
       if channel.area is 'Email::Outbound'
 
-        data.push channel
         adapters[channel.adapter] = channel.adapter
         if @adapter_used
           if @adapter_used is channel.adapter
@@ -177,16 +179,15 @@ class App.ChannelEmailOutbound extends App.Controller
             adapter_used = channel.adapter
             channel_used = channel
 
-    @html App.view('channel/email_outbound')()
-
-    configure_attributes = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , class: 'span4', default: adapter_used },
-    ]
-    new App.ControllerForm(
-      el: @el.find('#form-email-adapter'),
-      model: { configure_attributes: configure_attributes, className: '' },
-      autofocus: true,
-    )
+    if adapter_used is 'Sendmail'
+      configure_attributes = [
+        { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , class: 'span4', default: adapter_used },
+      ]
+      @form = new App.ControllerForm(
+        el: @el.find('#form-email-adapter'),
+        model: { configure_attributes: configure_attributes, className: '' },
+        autofocus: true,
+      )
 
     if adapter_used is 'SMTP'
       configure_attributes = [
@@ -195,25 +196,30 @@ class App.ChannelEmailOutbound extends App.Controller
         { name: 'password', display: 'Password', tag: 'input',    type: 'password', limit: 120, null: true, class: 'span4', autocapitalize: false, default: (channel_used['options']&&channel_used['options']['password']) },
         { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: (channel_used['options']&&channel_used['options']['ssl']) },
       ]
-      new App.ControllerForm(
+      @form = new App.ControllerForm(
         el: @el.find('#form-email-adapter-settings'),
         model: { configure_attributes: configure_attributes, className: '' },
         autofocus: true,
       )
-
 
   toggle: (e) =>
 
     # get params
     params = @formParam(e.target)
 
+    # set selected adapter
     @adapter_used = params['adapter']
 
+    # render page with new selected adapter
     @render()
-    
+
   update: (e) =>
     e.preventDefault()
     params   = @formParam(e.target)
+
+#    errors = @form.validate( params )
+
+    # update Email::Outbound adapter
     channels = App.Channel.all()
     for channel in channels
       if channel.area is 'Email::Outbound' && channel.adapter is params['adapter']
@@ -227,11 +233,11 @@ class App.ChannelEmailOutbound extends App.Controller
           active: true,
         )
 
-    # set all other to inactive
+    # set all other Email::Outbound adapters to inactive
     channels = App.Channel.all()
     for channel in channels
       if channel.area is 'Email::Outbound' && channel.adapter isnt params['adapter']
         channel.updateAttributes( active: false )
 
-    # rerender
+    # rerender page
     @render()

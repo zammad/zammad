@@ -1,6 +1,8 @@
 class App.Group extends App.Model
-  @configure 'Group', 'name', 'note', 'active'
+  @configure 'Group', 'name', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'note', 'active'
   @extend Spine.Model.Ajax
+  @url: '/api/groups'
+
   @configure_attributes = [
     { name: 'name',                 display: 'Name',              tag: 'input', type: 'text', limit: 100, 'null': false, 'class': 'span4' },
     { name: 'assignment_timeout',   display: 'Assignment Timout', tag: 'input', note: 'Assignment timout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.', type: 'text', limit: 100, 'null': false, 'class': 'span4' },

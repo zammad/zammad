@@ -2,7 +2,7 @@ class User < ApplicationModel
   include Gmaps
 
   before_create           :check_name, :check_email, :check_image, :check_geo
-  before_update           :check_password, :check_geo
+  before_update           :check_password, :check_image, :check_geo
   after_create            :cache_delete
   after_update            :cache_delete
   after_destroy           :cache_delete
@@ -52,9 +52,7 @@ class User < ApplicationModel
     end
 
     # no user found
-    if !user
-      return nil
-    end
+    return nil if !user
 
     # auth ok
     if user.password == password
@@ -97,6 +95,7 @@ class User < ApplicationModel
     end
 
     # check if email address exists
+    return if !user
     return if !user.email
 
     # generate token
@@ -140,9 +139,8 @@ Your #{config.product_name} Team
     return true
   end
 
+  # check token
   def self.password_reset_check(token)
-
-    # check token
     token = Token.check( :action => 'PasswordReset', :name => token )
     return if !token
     return true

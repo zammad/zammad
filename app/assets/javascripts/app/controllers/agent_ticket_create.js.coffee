@@ -44,7 +44,7 @@ class Index extends App.Controller
       App.Com.ajax(
         id:    'ticket_create',
         type:  'GET',
-        url:   '/ticket_create',
+        url:   '/api/ticket_create',
         data:  {
           ticket_id: params.ticket_id,
           article_id: params.article_id,

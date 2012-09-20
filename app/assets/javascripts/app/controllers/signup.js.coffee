@@ -40,13 +40,6 @@ class Index extends App.Controller
     @log 'submit'
     e.preventDefault()
     @params = @formParam(e.target)
-    ###
-    for num in [1..199]
-      user = new App.User
-      params.login = 'login_c' + num
-      user.updateAttributes(params)
-    return false
-    ###
 
     # if no login is given, use emails as fallback
     if !@params.login && @params.email

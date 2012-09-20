@@ -20,45 +20,26 @@ class TranslationsController < ApplicationController
 
   # GET /translations
   def index
-    @translations = Translation.all
-
-    render :json => @translations
+    model_index_render(Translation, params)
   end
 
   # GET /translations/1
   def show
-    @translation = Translation.find(params[:id])
-
-    render :json => @translation
+    model_show_render(Translation, params)
   end
 
   # POST /translations
   def create
-    @translation = Translation.new(params[:translation])
-
-    if @translation.save
-      render :json => @translation, :status => :created
-    else
-      render :json => @translation.errors, :status => :unprocessable_entity
-    end
+    model_create_render(Translation, params)
   end
 
   # PUT /translations/1
   def update
-    @translation = Translation.find(params[:id])
-
-    if @translation.update_attributes(params[:translation])
-      render :json => @translation, :status => :ok
-    else
-      render :json => @translation.errors, :status => :unprocessable_entity
-    end
+    model_update_render(Translation, params)
   end
 
   # DELETE /translations/1
   def destroy
-    @translation = Translation.find(params[:id])
-    @translation.destroy
-
-    head :ok
+    model_destory_render(Translation, params)
   end
 end
