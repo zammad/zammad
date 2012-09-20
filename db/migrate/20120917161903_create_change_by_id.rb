@@ -33,7 +33,6 @@ class CreateChangeById < ActiveRecord::Migration
     add_column :network_item_plus, :updated_by_id,          :integer, :null => true
     add_column :network_category_subscriptions, :updated_by_id,          :integer, :null => true
     add_column :network_item_subscriptions, :updated_by_id,          :integer, :null => true
-    add_column :templates, :created_by_id,          :integer, :null => true
     add_column :templates, :updated_by_id,          :integer, :null => true
     add_column :translations, :created_by_id,          :integer, :null => true
     add_column :translations, :updated_by_id,          :integer, :null => true
