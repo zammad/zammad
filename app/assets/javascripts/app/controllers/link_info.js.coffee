@@ -26,10 +26,10 @@ class App.LinkInfo extends App.Controller
         @links = data.links
 
         # load user collection
-        @loadCollection( type: 'User', data: data.users )
+        App.Collection.load( type: 'User', data: data.users )
 
         # load ticket collection
-        @loadCollection( type: 'Ticket', data: data.tickets )
+        App.Collection.load( type: 'Ticket', data: data.tickets )
 
         @render()
     )
@@ -42,7 +42,7 @@ class App.LinkInfo extends App.Controller
         list[ item['link_type'] ] = []
 
       if item['link_object'] is 'Ticket'
-        ticket = App.Ticket.find( item['link_object_value'] )
+        ticket = App.Collection.find( 'Ticket', item['link_object_value'] )
         if ticket.ticket_state.name is 'merged'
           ticket.css = 'merged'
         list[ item['link_type'] ].push ticket

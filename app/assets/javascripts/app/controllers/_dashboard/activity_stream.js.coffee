@@ -32,18 +32,18 @@ class App.DashboardActivityStream extends App.Controller
 #      processData: true,
 #      success: @load
 #    )
-    
+
   load: (data) =>
     items = data.activity_stream
 
     # load user collection
-    @loadCollection( type: 'User', data: data.users )
+    App.Collection.load( type: 'User', data: data.users )
 
     # load ticket collection
-    @loadCollection( type: 'Ticket', data: data.tickets )
+    App.Collection.load( type: 'Ticket', data: data.tickets )
 
     # load article collection
-    @loadCollection( type: 'TicketArticle', data: data.articles )
+    App.Collection.load( type: 'TicketArticle', data: data.articles )
 
     @render(items)
 
@@ -51,26 +51,26 @@ class App.DashboardActivityStream extends App.Controller
 
     # load user data
     for item in items
-      item.created_by = App.User.find( item.created_by_id )
-  
+      item.created_by = App.Collection.find( 'User', item.created_by_id )
+
     # load ticket data
     for item in items
       item.data = {}
       if item.history_object is 'Ticket'
-        item.data.title = App.Ticket.find( item.o_id ).title
+        item.data.title = App.Collection.find( 'Ticket', item.o_id ).title
       if item.history_object is 'Ticket::Article'
-        article = App.TicketArticle.find( item.o_id )
+        article = App.Collection.find( 'TicketArticle', item.o_id )
         item.history_object = 'Article'
         item.sub_o_id = article.id
         item.o_id = article.ticket_id
         item.data.title = article.subject
-  
+
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',
       items: items
     )
     html = $(html)
-    
+
     @html html
 
     # start user popups

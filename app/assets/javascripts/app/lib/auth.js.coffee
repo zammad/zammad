@@ -65,9 +65,8 @@ class App.Auth
         App.WebSocket.auth()
 
         # refresh/load default collections
-        controller = new App.Controller
         for key, value of data.default_collections
-          controller.loadCollection( type: key, data: value )
+          App.Collection.load( type: key, data: value )
 
         # rebuild navbar with new navbar items
         Spine.trigger 'navrebuild', data.session

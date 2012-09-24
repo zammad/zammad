@@ -54,28 +54,26 @@ class Index extends App.Controller
     @edit_form = data.edit_form
 
     # load user collection
-    @loadCollection( type: 'User', data: data.users )
+    App.Collection.load( type: 'User', data: data.users )
 
     # load ticket collection
-    @loadCollection( type: 'Ticket', data: [data.ticket] )
+    App.Collection.load( type: 'Ticket', data: [data.ticket] )
 
     # load article collections
-    @loadCollection( type: 'TicketArticle', data: data.articles || [] )
+    App.Collection.load( type: 'TicketArticle', data: data.articles )
 
     # render page
     @render()
 
   render: =>
 
-    return if !App.Ticket.exists(@ticket_id)
-
     # get data
     if !@ticket
-      @ticket = App.Ticket.find(@ticket_id)
+      @ticket = App.Collection.find( 'Ticket', @ticket_id )
     if !@articles
       @articles = []
       for article_id in @ticket.article_ids
-        article = App.TicketArticle.find(article_id)
+        article = App.Collection.find( 'TicketArticle', article_id )
         @articles.push article
 
     # rework articles
@@ -145,6 +143,9 @@ class Index extends App.Controller
 
     # show ticket action row
     @ticket_action_row()
+
+    # show frontend times
+    @frontendTimeUpdate()
 
     # scrall to article if given
     if @article_id
@@ -345,11 +346,11 @@ class Index extends App.Controller
 
           # find sender_id
           if @isRole('Customer')
-            sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-            type   = App.TicketArticleType.findByAttribute( 'name', 'web' )
+            sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Customer' )
+            type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', 'web' )
             params['ticket_article_type_id'] = type.id
           else
-            sender = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+            sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Agent' )
           params.ticket_article_sender_id = sender.id
           @log 'updateAttributes', params, sender, sender.id
           article.load(params)

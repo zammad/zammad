@@ -170,10 +170,10 @@ class App.Navigation extends App.Controller
     items = data.recent_viewed
 
     # load user collection
-    @loadCollection( type: 'User', data: data.users )
+    App.Collection.load( type: 'User', data: data.users )
 
     # load ticket collection
-    @loadCollection( type: 'Ticket', data: data.tickets )
+    App.Collection.load( type: 'Ticket', data: data.tickets )
 
     # remove old views
     for key of Config.NavBarRight
@@ -190,7 +190,7 @@ class App.Navigation extends App.Controller
       if prio is 8000
         divider   = true
         navheader = 'Recent Viewed'
-      ticket = App.Ticket.find(item.o_id)
+      ticket = App.Collection.find( 'Ticket', item.o_id )
       prio++
       Config.NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
         prio:      prio,

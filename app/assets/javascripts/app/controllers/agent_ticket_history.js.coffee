@@ -14,23 +14,23 @@ class App.TicketHistory extends App.ControllerModal
         @ticket = data.ticket
 
         # load user collection
-        @loadCollection( type: 'User', data: data.users )
+        App.Collection.load( type: 'User', data: data.users )
 
         # load ticket collection
-        @loadCollection( type: 'Ticket', data: [data.ticket] )
+        App.Collection.load( type: 'Ticket', data: [data.ticket] )
 
         # load history_type collections
-        @loadCollection( type: 'HistoryType', data: data.history_types )
+        App.Collection.load( type: 'HistoryType', data: data.history_types )
 
         # load history_object collections
-        @loadCollection( type: 'HistoryObject', data: data.history_objects )
+        App.Collection.load( type: 'HistoryObject', data: data.history_objects )
 
         # load history_attributes collections
-        @loadCollection( type: 'HistoryAttribute', data: data.history_attributes )
+        App.Collection.load( type: 'HistoryAttribute', data: data.history_attributes )
 
         # load history collections
-        App.History.deleteAll()
-        @loadCollection( type: 'History', data: data.history )
+        App.Collection.deleteAll( 'History' )
+        App.Collection.load( type: 'History', data: data.history )
 
         # render page
         @render()
@@ -39,7 +39,7 @@ class App.TicketHistory extends App.ControllerModal
   render: ->
 
     @html App.view('agent_ticket_history')(
-      objects: App.History.all(),
+      objects: App.Collection.all( 'History' ),
     )
 
     @modalShow()

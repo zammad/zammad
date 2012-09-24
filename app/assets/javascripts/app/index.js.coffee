@@ -13,7 +13,7 @@
 #= require ./lib/bootstrap-tab.js
 #= require ./lib/bootstrap-transition.js
 
-#= require ./lib/underscore.coffee
+#= require ./lib/underscore-1.3.3.js
 #= require ./lib/ba-linkify.js
 #= require ./lib/jquery.tagsinput.js
 #= require ./lib/jquery.noty.js
@@ -28,6 +28,7 @@
 #= require ./lib/auth.js.coffee
 #= require ./lib/i18n.js.coffee
 #= require ./lib/store.js.coffee
+#= require ./lib/collection.js.coffee
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views

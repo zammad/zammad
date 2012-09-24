@@ -84,7 +84,7 @@ class App.DashboardTicket extends App.Controller
     while i < end
       i = i + 1
       if @ticket_list[ i - 1 ]
-        @tickets_in_table.push App.Ticket.find( @ticket_list[ i - 1 ] )
+        @tickets_in_table.push App.Collection.find( 'Ticket', @ticket_list[ i - 1 ] )
 
     shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d.overview )
     table = @table(
@@ -101,6 +101,9 @@ class App.DashboardTicket extends App.Controller
     # append content table
     html.find('.table-overview').append(table)
     @html html
+
+    # show frontend times
+    @frontendTimeUpdate()
 
     # start user popups
     @userPopups()

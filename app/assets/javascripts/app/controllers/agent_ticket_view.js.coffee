@@ -77,7 +77,7 @@ class Index extends App.Controller
 
     @ticket_list_show = []
     for ticket_id in @ticket_list
-      @ticket_list_show.push App.Ticket.find(ticket_id)
+      @ticket_list_show.push App.Collection.find( 'Ticket', ticket_id )
 
     # remeber bulk attributes
     @bulk = data.bulk
@@ -158,6 +158,9 @@ class Index extends App.Controller
 
     # start user popups
     @userPopups()
+
+    # show frontend times
+    @frontendTimeUpdate()
 
     # start bulk action observ
     @el.find('.bulk-action').append( @bulk_form() )

@@ -9,9 +9,9 @@ class App.TicketMerge extends App.ControllerModal
 
   submit: (e) =>
     e.preventDefault()
-    
+
     params = @formParam(e.target)
-    
+
     # merge tickets
     App.Com.ajax(
       id:    'ticket_merge',
@@ -22,15 +22,18 @@ class App.TicketMerge extends App.ControllerModal
       }
       processData: true,
       success: (data, status, xhr) =>
-      
-        if data['result'] is 'success'
-          @loadCollection( type: 'Ticket', data: [data.master_ticket] )
-          @loadCollection( type: 'Ticket', data: [data.slave_ticket] )
 
+        if data['result'] is 'success'
+
+          # update collection
+          App.Collection.load( type: 'Ticket', data: [data.master_ticket] )
+          App.Collection.load( type: 'Ticket', data: [data.slave_ticket] )
+
+          # hide dialog
           @modalHide()
 
           # view ticket
-          @log 'nav...', App.Ticket.find( data.master_ticket['id'] )
+          @log 'nav...', App.Collection.find( 'Ticket', data.master_ticket['id'] )
           @navigate '#ticket/zoom/' + data.master_ticket['id']
 
           # notify UI

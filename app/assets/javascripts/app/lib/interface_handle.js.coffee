@@ -5,36 +5,26 @@ class App.Run extends App.Controller
     @log 'RUN app'
     @el = $('#app')
 
+    # init collections
+    App.Collection.init()
+
     # create web socket connection
     App.WebSocket.connect()
 
     # init of i18n
     new App.i18n
 
-    # bind new events
-    Spine.bind 'loadCollection', (data) =>
-
-      # load collections
-      if data.collections
-        for key of data.collections
-
-          @log 'loadCollection', key, data.collections[key]
-          @loadCollection( localStorage: data.localStorage, type: key, data: data.collections[key] )
-
-    # load collections
-    App.Store.load()
-
     # start navigation controller
-    new App.Navigation( el: @el.find('#navigation') );
+    new App.Navigation( el: @el.find('#navigation') )
 
     # check if session already exists/try to get session data from server
     App.Auth.loginCheck()
 
     # start notify controller
-    new App.Notify( el: @el.find('#notify') );
+    new App.Notify( el: @el.find('#notify') )
     
     # start content
-    new App.Content( el: @el.find('#content') );
+    new App.Content( el: @el.find('#content') )
 
     # bind to fill selected text into
     $(@el).bind('mouseup', =>

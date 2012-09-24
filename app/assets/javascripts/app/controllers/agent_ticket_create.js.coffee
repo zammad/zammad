@@ -37,7 +37,7 @@ class Index extends App.Controller
       @edit_form = cache.edit_form
 
       # load user collection
-      @loadCollection( type: 'User', data: cache.users )
+      App.Collection.load( type: 'User', data: cache.users )
 
       @render()
     else
@@ -59,19 +59,19 @@ class Index extends App.Controller
           @edit_form = data.edit_form
 
           # load user collection
-          @loadCollection( type: 'User', data: data.users )
+          App.Collection.load( type: 'User', data: data.users )
 
           # load ticket collection
           if data.ticket && data.articles
-            @loadCollection( type: 'Ticket', data: [data.ticket] )
+            App.Collection.load( type: 'Ticket', data: [data.ticket] )
 
             # load article collections
-            @loadCollection( type: 'TicketArticle', data: data.articles || [] )
+            App.Collection.load( type: 'TicketArticle', data: data.articles || [] )
 
             # render page
-            t = App.Ticket.find(params.ticket_id).attributes()
-            a = App.TicketArticle.find(params.article_id)
-            
+            t = App.Collection.find( 'Ticket', params.ticket_id ).attributes()
+            a = App.Collection.find( 'TicketArticle', params.article_id )
+
             # reset owner
             t.owner_id = 0
             t.customer_id_autocompletion = a.from
@@ -86,9 +86,9 @@ class Index extends App.Controller
     # set defaults
     defaults = template['options'] || {}
     if !( 'ticket_state_id' of defaults )
-      defaults['ticket_state_id'] = App.TicketState.findByAttribute( 'name', 'new' ).id
+      defaults['ticket_state_id'] = App.Collection.findByAttribute( 'TicketState', 'name', 'new' ).id
     if !( 'ticket_priority_id' of defaults )
-      defaults['ticket_priority_id'] = App.TicketPriority.findByAttribute( 'name', '2 normal' ).id
+      defaults['ticket_priority_id'] = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' ).id
 
     # remember customers
     if $('#create_customer_id').val()
@@ -163,10 +163,10 @@ class Index extends App.Controller
     @log 'updateAttributes', params
 
     # find sender_id
-    sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-    type   = App.TicketArticleType.findByAttribute( 'name', 'phone' )
+    sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Customer' )
+    type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', 'phone' )
     if params.group_id
-      group  = App.Group.find(params.group_id)
+      group  = App.Collection.find( 'Group', params.group_id )
 
     # create article
     params['article'] = {
@@ -248,7 +248,7 @@ class UserNew extends App.ControllerModal
     user = new App.User
 
     # find role_id
-    role = App.Role.findByAttribute( 'name', 'Customer' )
+    role = App.Collection.findByAttribute( 'Role', 'name', 'Customer' )
     params.role_ids = role.id
     @log 'updateAttributes', params
     user.load(params)

@@ -21,7 +21,7 @@
       <%= @ticket.group.name %> -
       <%- T(@ticket.ticket_state.name) %> -
       <%- T(@ticket.ticket_priority.name) %> -
-      <%- @ticket.humanTime %>
+      <span class="humanTimeFromNow" data-time="<%- @ticket.created_at %>">?</span>
     </div>
   </div>
 </div>
@@ -48,7 +48,7 @@
               <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%= T(action.name) %></a>
             <% end %>
           <% end %>
-          - <%- article.humanTime %> <%- T('ago') %>
+          - <span class="humanTimeFromNow" data-time="<%- article.created_at %>">?</span>
           </div>
         <% end %>
         <% if article.to: %>

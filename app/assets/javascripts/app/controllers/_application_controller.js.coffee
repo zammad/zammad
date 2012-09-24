@@ -85,7 +85,7 @@ class App.Controller extends Spine.Controller
     objects = _.clone( data.objects )
     for object in objects
       for row in data_types
-        
+
         # check if data is a object
         if typeof object[row.name] is 'object'
           if !object[row.name]
@@ -95,8 +95,8 @@ class App.Controller extends Spine.Controller
 
           # if no content exists, try firstname/lastname
           if !object[row.name]['name']
-            if object[row.name]['firstname'] || object[row.name]['lastname']
-              object[row.name]['name'] = (object[row.name]['firstname'] || '') + ' ' + (object[row.name]['lastname'] || '')
+            if object[row.name]['realname']
+              object[row.name]['name'] = object[row.name]['realname']
 
         # if it isnt a object, create one
         else if typeof object[row.name] isnt 'object'
@@ -112,7 +112,7 @@ class App.Controller extends Spine.Controller
 
         # execute callback on content
         if row.callback
-          object[row.name]['name'] = row.callback(object[row.name]['name'])
+          object[row.name]['name'] = row.callback( object[row.name]['name'] )
 
         # lookup relation
         if !object[row.name]['name']
@@ -120,7 +120,7 @@ class App.Controller extends Spine.Controller
           for attribute in attributes
             if rowWithoutId is attribute.name
               if attribute.relation && App[attribute.relation]
-                record = App[attribute.relation].find( object[rowWithoutId] )
+                record = App.Collection.find( attribute.relation, object[rowWithoutId] )
                 object[row.name]['name'] = record.name
  
 #    @log 'table', 'header', header, 'overview', data_types, 'objects', objects
@@ -158,12 +158,12 @@ class App.Controller extends Spine.Controller
       { name: 'ticket_priority',        translate: true },
       { name: 'group' },
       { name: 'owner',                  class: 'user-data', data: { id: true } },
-      { name: 'created_at',             callback: @humanTime },
-      { name: 'last_contact',           callback: @humanTime },
-      { name: 'last_contact_agent',     callback: @humanTime },
-      { name: 'last_contact_customer',  callback: @humanTime },
-      { name: 'first_response',         callback: @humanTime },
-      { name: 'close_time',             callback: @humanTime },
+      { name: 'created_at',             callback: @frontendTime },
+      { name: 'last_contact',           callback: @frontendTime },
+      { name: 'last_contact_agent',     callback: @frontendTime },
+      { name: 'last_contact_customer',  callback: @frontendTime },
+      { name: 'first_response',         callback: @frontendTime },
+      { name: 'close_time',             callback: @frontendTime },
     ]
     shown_all_attributes = []
     for all_attribute in all_attributes
@@ -190,25 +190,38 @@ class App.Controller extends Spine.Controller
   humanTime: (time) =>
     current = new Date()
     created = new Date(time)
-    diff = (current - created) / 1000
+    string = ''
+    diff = ( current - created ) / 1000
     if diff >= 86400
-      unit = Math.round( (diff / 86400) )
-      if unit > 1
-        return unit + ' ' + T('days')
-      else
-        return unit + ' ' + T('day')
+      unit = Math.round( ( diff / 86400 ) )
+#      if unit > 1
+#        return unit + ' ' + T('days')
+#      else
+#        return unit + ' ' + T('day')
+      string = unit + ' ' + T('d')
     if diff >= 3600
-      unit = Math.round( (diff / 3600) )
-      if unit > 1
-        return unit + ' ' + T('hours')
+      unit = Math.round( ( diff / 3600 ) % 24 )
+#      if unit > 1
+#        return unit + ' ' + T('hours')
+#      else
+#        return unit + ' ' + T('hour')
+      if string isnt ''
+        string = string + ' ' + unit + ' ' + T('h')
+        return string
       else
-        return unit + ' ' + T('hour')
-    if diff <= 3600
-      unit = Math.round( (diff / 60) )
-      if unit > 1
-        return unit + ' ' + T('minutes')
+        string = unit + ' ' + T('h')
+    if diff <= 86400
+      unit = Math.round( ( diff / 60 ) % 60 )
+#      if unit > 1
+#        return unit + ' ' + T('minutes')
+#      else
+#        return unit + ' ' + T('minute')
+      if string isnt ''
+        string = string + ' ' + unit + ' ' + T('m')
+        return string
       else
-        return unit + ' ' + T('minute')
+        string = unit + ' ' + T('m')
+    return string
 
   userInfo: (data) =>
     # start customer info controller
@@ -230,6 +243,21 @@ class App.Controller extends Spine.Controller
     @navigate '#login'
     return false
 
+  frontendTime: (timestamp) ->
+    '<span class="humanTimeFromNow" data-time="' + timestamp + '">?</span>'
+
+  frontendTimeUpdate: ->
+    update = =>
+      ui = @
+      $('.humanTimeFromNow').each( ->
+#        console.log('rewrite frontendTimeUpdate', this)
+        timestamp = $(this).data('time')
+        time = ui.humanTime( timestamp )
+        $(this).attr( 'title', Ts(timestamp) )
+        $(this).text( time )
+      )
+    @interval( update, 30000, 'frontendTimeUpdate' )
+
   clearInterval: (interval_id) =>
     # check global var
     if !@intervalID
@@ -237,13 +265,13 @@ class App.Controller extends Spine.Controller
 
     clearInterval( @intervalID[interval_id] ) if @intervalID[interval_id]
 
-  interval: (action, interval, interval_id) =>
+  interval: (callback, interval, interval_id) =>
 
     # check global var
     if !@intervalID
       @intervalID = {}
 
-    action()
+    callback()
 
     # auto save
     every = (ms, cb) -> setInterval cb, ms
@@ -253,7 +281,7 @@ class App.Controller extends Spine.Controller
 
     # request new data
     @intervalID[interval_id] = every interval, () =>
-      action()
+      callback()
 
   userPopups: (position = 'right') ->
 
@@ -267,11 +295,11 @@ class App.Controller extends Spine.Controller
       placement: position,
       title: ->
         user_id = $(@).data('id')
-        user = App.User.find(user_id)
-        (user.firstname || '') + ' ' +  (user.lastname || '')
+        user = App.Collection.find( 'User', user_id )
+        user.realname
       content: ->
         user_id = $(@).data('id')
-        user = App.User.find(user_id)
+        user = App.Collection.find( 'User', user_id )
 
         # get display data
         data = []
@@ -322,9 +350,8 @@ class App.Controller extends Spine.Controller
         type = $(@).filter('[data-type]').data('type')
         data = tickets[type] || []
 
+        # set human time
         for ticket in data
-
-          # set human time
           ticket.humanTime = controller.humanTime(ticket.created_at)
 
         # insert data
@@ -332,129 +359,6 @@ class App.Controller extends Spine.Controller
           tickets: data,
         )
     )
-
-  loadCollection: (params) ->
-
-    # remember in store if not already requested
-    if !params.localStorage
-      if params.type == 'User'
-        for user_id, user of params.data
-          data = {}
-          data[params.type] = {}
-          data[params.type][ user_id ] = user
-          App.Store.write( 'collection::' + params.type + '::' + user_id, { type: params.type, localStorage: true, collections: data  }  )
-      else
-        for object in params.data
-          data = {}
-          data[params.type] = [ object ]
-          App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, collections: data }  )
-
-    # users
-    if params.type == 'User'
-      for user_id, user of params.data
-
-        # set socal media links
-        if user['accounts']
-          for account of user['accounts']
-            if account == 'twitter'
-              user['accounts'][account]['link'] = 'http://twitter.com/' + user['accounts'][account]['username']
-            if account == 'facebook'
-              user['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + user['accounts'][account]['uid']
-
-        # set image url
-        if user && !user['image']
-          user['image'] = 'http://placehold.it/48x48'
-
-        # set realname
-        user['realname'] = ''
-        if user['firstname']
-          user['realname'] = user['firstname']
-        if user['lastname']
-          if user['realname'] isnt ''
-            user['realname'] = user['realname'] + ' '
-          user['realname'] = user['realname'] + user['lastname']
-
-        # load in collection if needed
-        if !params.collection
-          App.User.refresh( user, options: { clear: true } )
-
-    # tickets
-    else if params.type == 'Ticket'
-      for ticket in params.data
-
-        # set human time
-        ticket.humanTime = @humanTime(ticket.created_at)
-
-        # priority
-        ticket.ticket_priority = App.TicketPriority.find(ticket.ticket_priority_id)
-
-        # state
-        ticket.ticket_state = App.TicketState.find(ticket.ticket_state_id)
-
-        # group
-        ticket.group = App.Group.find(ticket.group_id)
-
-        # customer
-        if ticket.customer_id and App.User.exists(ticket.customer_id)
-          user = App.User.find(ticket.customer_id)
-          ticket.customer = user
-
-        # owner
-        if ticket.owner_id and App.User.exists(ticket.owner_id)
-          user = App.User.find(ticket.owner_id)
-          ticket.owner = user
-
-        # load in collection if needed
-        if !params.collection
-          App.Ticket.refresh( ticket, options: { clear: true } )
-
-    # articles
-    else if params.type == 'TicketArticle'
-      for article in params.data
-
-        # add user
-        article.created_by = App.User.find(article.created_by_id)
-
-        # set human time
-        article.humanTime = @humanTime(article.created_at)
-
-        # add possible actions
-        article.article_type = App.TicketArticleType.find( article.ticket_article_type_id )
-        article.article_sender = App.TicketArticleSender.find( article.ticket_article_sender_id )
-
-        # load in collection if needed
-        if !params.collection
-          App.TicketArticle.refresh( article, options: { clear: true } )
-
-    # history
-    else if params.type == 'History'
-      for histroy in params.data
-
-        # add user
-        histroy.created_by = App.User.find(histroy.created_by_id)
-
-        # set human time
-        histroy.humanTime = @humanTime(histroy.created_at)
-
-        # add possible actions
-        if histroy.history_attribute_id
-          histroy.attribute = App.HistoryAttribute.find( histroy.history_attribute_id )
-        if histroy.history_type_id
-          histroy.type      = App.HistoryType.find( histroy.history_type_id )
-        if histroy.history_object_id
-          histroy.object    = App.HistoryObject.find( histroy.history_object_id )
-
-        # load in collection if needed
-        if !params.collection
-          App.History.refresh( histroy, options: { clear: true } )
-
-    # all the rest
-    else
-      for object in params.data
-
-        # load in collection if needed
-        if !params.collection
-          App[params.type].refresh( object, options: { clear: true } )
 
   ws_send: (data) ->
     Spine.trigger( 'ws:send', JSON.stringify(data) )

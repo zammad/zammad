@@ -35,7 +35,7 @@ class Index extends App.Controller
         @master_user = data.master_user
 
         # load group collection
-        @loadCollection( type: 'Group', data: data.groups )
+        App.Collection.load( type: 'Group', data: data.groups )
 
         # render page
         @render()
@@ -80,7 +80,7 @@ class Index extends App.Controller
     @params.invite = true
 
     # find agent role
-    role = App.Role.findByAttribute('name', 'Agent')
+    role = App.Collection.findByAttribute( 'Role', 'name', 'Agent' )
     if role
       @params.role_ids = role.id
     else

@@ -24,10 +24,10 @@ class App.DashboardRecentViewed extends App.Controller
         @items = data.recent_viewed
 
         # load user collection
-        @loadCollection( type: 'User', data: data.users )
+        App.Collection.load( type: 'User', data: data.users )
 
         # load ticket collection
-        @loadCollection( type: 'Ticket', data: data.tickets )
+        App.Collection.load( type: 'Ticket', data: data.tickets )
 
         @render()
     )
@@ -36,13 +36,11 @@ class App.DashboardRecentViewed extends App.Controller
 
     # load user data
     for item in @items
-#      @log 'load', item.created_by_id
-      item.created_by = App.User.find(item.created_by_id)
-  
+      item.created_by = App.Collection.find( 'User', item.created_by_id )
+
     # load ticket data
     for item in @items
-#      @log 'load', item.o_id
-      item.ticket = App.Ticket.find(item.o_id)
+      item.ticket = App.Collection.find( 'User', item.o_id )
 
     html = App.view('dashboard/recent_viewed')(
       head: 'Recent Viewed',

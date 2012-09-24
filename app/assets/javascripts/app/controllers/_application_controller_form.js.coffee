@@ -418,7 +418,8 @@ class App.ControllerForm extends App.Controller
 #          if record.name.toString() is attribute.value.toString()
 #            record.selected = 'selected'
 #            record.checked = 'checked'
-      if ( attribute.value && record.value && _.include(attribute.value, record.value) ) || ( attribute.value && record.name && _.include(attribute.value, record.name) )
+
+      else if ( attribute.value && record.value && _.include(attribute.value, record.value) ) || ( attribute.value && record.name && _.include(attribute.value, record.name) )
         record.selected = 'selected'
         record.checked = 'checked'
 

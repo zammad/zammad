@@ -11,7 +11,7 @@ class App.TemplateUI extends App.Controller
 
     # fetch item on demand
     fetch_needed = 1
-    if App.Template.count() > 0
+    if App.Collection.count( 'Template' ) > 0
       fetch_needed = 0
       @render()
 
@@ -23,7 +23,7 @@ class App.TemplateUI extends App.Controller
         @log 'loading....'
         @render()
         App.Template.unbind 'refresh'
-      App.Template.fetch()
+      App.Collection.fetch( 'Template' )
 
   render: =>
     @configure_attributes = [
@@ -32,7 +32,7 @@ class App.TemplateUI extends App.Controller
 
     template = {}
     if @template_id
-      template = App.Template.find(@template_id)
+      template = App.Collection.find( 'Template', @template_id )
 
     # insert data
     @html App.view('template')(
@@ -49,7 +49,7 @@ class App.TemplateUI extends App.Controller
 
     # get params
     params = @formParam(e.target)
-    template = App.Template.find( params['template_id'] )
+    template = App.Collection.find( 'Template', params['template_id'] )
     if confirm('Sure?')
       template.destroy() 
       @template_id = undefined
@@ -61,7 +61,7 @@ class App.TemplateUI extends App.Controller
     # get params
     params = @formParam(e.target)
 
-    template = App.Template.find( params['template_id'] )
+    template = App.Collection.find( 'Template', params['template_id'] )
     Spine.trigger 'ticket_create_rerender', template.attributes()
 
   create: (e) =>
@@ -72,7 +72,7 @@ class App.TemplateUI extends App.Controller
     name = params['template_name']
 #    delete params['template_name']
     
-    template = App.Template.findByAttribute( 'name', name )
+    template = App.Collection.findByAttribute( 'Template', 'name', name )
     if !template
       template = new App.Template
 
