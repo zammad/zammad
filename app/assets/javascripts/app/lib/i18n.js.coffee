@@ -8,9 +8,11 @@ class App.i18n
 
   constructor: ->
     @locale = 'de'
+    @timestampFormat = 'yyyy-mm-dd HH:MM'
     @set( @locale )
     window.T = @translate_content
     window.Ti = @translate_inline
+    window.Ts = @timestamp
 
 #    $('.translation [contenteditable]')
     $('body')
@@ -28,10 +30,10 @@ class App.i18n
         translation_new = $this.html()
         translation_new = ('' + translation_new)
           .replace(/<.+?>/g, '')
-          
+
         # set new translation
         $this.html(translation_new)
-        
+
         # update translation
         return if $this.data('before') is translation_new
         console.log 'Translation Update', translation_new, $this.data 'before'
@@ -44,7 +46,7 @@ class App.i18n
         $(".translation[data-text='#{source}']").html( translation_new )
 
         # update permanent translation map
-        translation = App.Translation.findByAttribute( 'source', source )
+        translation = App.Collection.findByAttribute( 'Translation', 'source', source )
         if translation
           translation.updateAttribute( 'target', translation_new )
         else
@@ -58,7 +60,7 @@ class App.i18n
 
         return $this
 
-  set: (locale) =>
+  set: (locale) ->
     @map = {}
     App.Com.ajax(
       id:    'i18n-set-' + locale,
@@ -67,8 +69,12 @@ class App.i18n
       async:  false,
       success: (data, status, xhr) =>
 
+        # set timestamp format
+        if data.timestampFormat
+          @timestampFormat = data.timestampFormat
+
         # load translation collection
-        for object in data
+        for object in data.list
 
           # set runtime lookup table
           @map[ object[1] ] = object[2]
@@ -123,3 +129,27 @@ class App.i18n
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/\x22/g, '&quot;')
+
+  timestamp: (time) =>
+    s = (num, digits) ->
+      while num.toString().length < digits
+        num = "0" + num
+      return num
+
+    timeObject = new Date(time)
+    d = timeObject.getDate()
+    m = timeObject.getMonth() + 1
+    y = timeObject.getFullYear()
+    S = timeObject.getSeconds()
+    M = timeObject.getMinutes()
+    H = timeObject.getHours()
+    format = @timestampFormat
+    format = format.replace /dd/, s( d, 2 )
+    format = format.replace /d/, d
+    format = format.replace /mm/, s( m, 2 )
+    format = format.replace /m/, m
+    format = format.replace /yyyy/, y
+    format = format.replace /SS/, s( S, 2 )
+    format = format.replace /MM/, s( M, 2 )
+    format = format.replace /HH/, s( H, 2 )
+    return format

@@ -15,7 +15,10 @@ class TranslationsController < ApplicationController
       list.push data
     }
 
-    render :json => list
+    render :json => {
+      :list            => list,
+      :timestampFormat => 'dd.mm.yyyy HH:MM',
+    }
   end
 
   # GET /translations
