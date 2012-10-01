@@ -76,23 +76,27 @@ class _Singleton
 
     return if _.isEmpty( params.data )
 
+    localStorage = params.localStorage
+
     if _.isArray( params.data )
       for object in params.data
 #        console.log( 'load ARRAY', object)
-        App[params.type].refresh( object, options: { clear: true } )
+        if !localStorage || localStorage && !App[ params.type ].exists( object['id'] )
+          App[ params.type ].refresh( object, options: { clear: true } )
 
         # remember in store if not already requested from local storage
-        if !params.localStorage
+        if !localStorage
           App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, data: [ object ] } )
       return
 
 #    if _.isObject( params.data )
     for key, object of params.data
 #      console.log( 'load OB', object)
-      App[params.type].refresh( object, options: { clear: true } )
+      if !localStorage || localStorage && !App[ params.type ].exists( object['id'] )
+        App[ params.type ].refresh( object, options: { clear: true } )
 
       # remember in store if not already requested from local storage
-      if !params.localStorage
+      if !localStorage
         App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, data: [ object ] } )
 
   find: ( type, id, callback ) ->
