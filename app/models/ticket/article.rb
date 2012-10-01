@@ -29,27 +29,28 @@ class Ticket::Article < ApplicationModel
 
       # set email attributes
       if type['name'] == 'email'
-        
+
         # set subject if empty
         if !self.subject || self.subject == ''
           self.subject = ticket.title
         end
-        
+
         # clean subject
         self.subject = ticket.subject_clean(self.subject)
-        
+
         # generate message id
         fqdn = Setting.get('fqdn')
         self.message_id = '<' + DateTime.current.to_s(:number) + '.' + self.ticket_id.to_s + '.' + rand(999999).to_s() + '@' + fqdn + '>'
 
         # set sender
+        email_address = ticket.group.email_address
+        system_sender = "#{email_address.realname} <#{email_address.email}>"
         if Setting.get('ticket_define_email_from') == 'AgentNameSystemAddressName'
           seperator = Setting.get('ticket_define_email_from_seperator')
           sender    = User.find(self.created_by_id)
-          system_sender = Setting.get('system_sender')
           self.from = "#{sender.firstname} #{sender.lastname} #{seperator} #{system_sender}"
         else
-          self.from = Setting.get('system_sender')
+          self.from = system_sender
         end
       end
     end
@@ -76,7 +77,8 @@ class Ticket::Article < ApplicationModel
 
       # if sender is customer, do not communication
       sender = Ticket::Article::Sender.where( :id => self.ticket_article_sender_id ).first
-      return 1 if sender == nil || sender['name'] == 'Customer'
+      return 1 if sender == nil
+      return 1 if sender['name'] == 'Customer'
 
       type = Ticket::Article::Type.where( :id => self.ticket_article_type_id ).first
       ticket = Ticket.find(self.ticket_id)

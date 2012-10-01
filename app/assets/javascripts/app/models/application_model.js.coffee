@@ -1,5 +1,18 @@
 class App.Model extends Spine.Model
 
+  displayName: ->
+    return @name if @name
+    if @realname
+      return "#{@realname} <#{@email}>"
+    if @firstname
+      name = @firstname
+      if @lastname
+        if name
+         name = name + ' '
+      name = name + @lastname
+      return name
+    return '???'
+
   @validate: ( data = {} ) ->
     return if !data['model'].configure_attributes
 

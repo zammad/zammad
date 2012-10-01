@@ -78,7 +78,7 @@ class _Singleton
 
     if _.isArray( params.data )
       for object in params.data
-        console.log( 'load ARRAY', object)
+#        console.log( 'load ARRAY', object)
         App[params.type].refresh( object, options: { clear: true } )
 
         # remember in store if not already requested from local storage
@@ -88,7 +88,7 @@ class _Singleton
 
 #    if _.isObject( params.data )
     for key, object of params.data
-      console.log( 'load OB', object)
+#      console.log( 'load OB', object)
       App[params.type].refresh( object, options: { clear: true } )
 
       # remember in store if not already requested from local storage
@@ -100,7 +100,7 @@ class _Singleton
     console.log( 'find', type, id )
 #    if App[type].exists( id ) && !callback
     if App[type].exists( id )
-      console.log( 'find exists', type, id )
+#      console.log( 'find exists', type, id )
       data = App[type].find( id )
       if callback
         callback( data )

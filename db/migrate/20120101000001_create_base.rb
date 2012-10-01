@@ -54,8 +54,20 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :signatures, [:name], :unique => true
 
+    create_table :email_addresses do |t|
+      t.column :realname,       :string, :limit => 250,  :null => false
+      t.column :email,          :string, :limit => 250,  :null => false
+      t.column :active,         :boolean,                :null => false, :default => true
+      t.column :note,           :string, :limit => 250,  :null => true
+      t.column :updated_by_id,  :integer,                :null => false
+      t.column :created_by_id,  :integer,                :null => false
+      t.timestamps
+    end
+    add_index :email_addresses, [:email], :unique => true
+
     create_table :groups do |t|
-      t.references :signature,                                 :null => false
+      t.references :signature,                                 :null => true
+      t.references :email_address,                             :null => true
       t.column :name,                 :string,  :limit => 100, :null => false
       t.column :assignment_timeout,   :integer,                :null => true
       t.column :follow_up_possible,   :string,  :limit => 100, :default => 'yes', :null => true

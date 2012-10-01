@@ -987,26 +987,6 @@ Setting.create(
 )
 
 Setting.create(
-  :title       => 'System Sender',
-  :name        => 'system_sender',
-  :area        => 'Email::Base',
-  :description => 'ONLY TEMP!',
-  :options     => {
-    :form => [
-      {
-        :display  => '',
-        :null     => false,
-        :name     => 'system_sender', 
-        :tag      => 'input',
-      },
-    ],
-  },
-  :state => {
-    :value => 'Zammad Team <zammad@#{config.fqdn}>',
-  },
-  :frontend => false
-)
-Setting.create(
   :title       => 'Block Notifications',
   :name        => 'send_no_auto_response_reg_exp',
   :area        => 'Email::Base',
@@ -1052,6 +1032,13 @@ Setting.create(
   :frontend => true
 )
 
+email_address = EmailAddress.create(
+  :id             => 1,
+  :realname       => 'Zammad',
+  :email          => 'zammad@localhost',
+  :updated_by_id  => 1,
+  :created_by_id  => 1
+)
 
 Role.create(
   :id             => 1,
@@ -1076,11 +1063,12 @@ Role.create(
 )
 
 Group.create(
-  :id             => 1,
-  :name           => 'Users',
-  :note           => 'Standard Group/Pool for Tickets.',
-  :updated_by_id  => 1,
-  :created_by_id  => 1
+  :id               => 1,
+  :name             => 'Users',
+  :email_address_id => email_address.id,
+  :note             => 'Standard Group/Pool for Tickets.',
+  :updated_by_id    => 1,
+  :created_by_id    => 1
 )
 Group.create(
   :id             => 2,

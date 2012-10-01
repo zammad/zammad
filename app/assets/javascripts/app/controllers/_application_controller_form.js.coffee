@@ -382,19 +382,11 @@ class App.ControllerForm extends App.Controller
 
       # if active or if active doesn't exist
       if item.active || !( 'active' of item )
-        name = '???'
-        if item.name
-          name = item.name
-        else if item.firstname
-          name = item.firstname
-          if item.lastname
-            if name
-             name = name + ' '
-          name = name + item.lastname
-
-        name_new = name
+        name_new = '?'
+        if item.displayName
+          name_new = item.displayName()
         if attribute.translate
-          name_new = Ti(name)
+          name_new = Ti(name_new)
         attribute.options.push {
           name:  name_new,
           value: item.id,
