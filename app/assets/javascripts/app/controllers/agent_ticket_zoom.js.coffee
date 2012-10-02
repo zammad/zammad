@@ -408,11 +408,11 @@ class Article extends App.Controller
     # build html body
     # cleanup body
     @article['html'] = @article.body.trim()
-    @article['html'].replace(/\n\r/g, "\n")
-    @article['html'].replace(/\n\n\n/g, "\n\n")
+    @article['html'].replace( /\n\r/g, "\n" )
+    @article['html'].replace( /\n\n\n/g, "\n\n" )
 
     # if body has more then x lines / else search for signature
-    preview       = 15
+    preview       = 10
     preview_mode  = false
     article_lines = @article['html'].split(/\n/)
     if article_lines.length > preview
@@ -433,7 +433,7 @@ class Article extends App.Controller
         notify + '<div class="hide">'
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
-      
+
     # hide signatures and so on
     else
       @article_changed = false
