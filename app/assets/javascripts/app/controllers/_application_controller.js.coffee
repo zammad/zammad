@@ -45,48 +45,85 @@ class App.Controller extends Spine.Controller
   formValidate: (data) ->
     App.ControllerForm.validate(data)
 
+  ###
+
+    table = @table(
+      header:   ['Host', 'User', 'Adapter', 'Active'],
+      overview: ['host', 'user', 'adapter', 'active'],
+      model:    App.Channel,
+      objects:  data,
+    )
+
+    table = @table(
+      overview_extended: [
+        { name: 'number',                 link: true },
+        { name: 'title',                  link: true },
+        { name: 'customer',               class: 'user-data', data: { id: true } },
+        { name: 'ticket_state',           translate: true },
+        { name: 'ticket_priority',        translate: true },
+        { name: 'group' },
+        { name: 'owner',                  class: 'user-data', data: { id: true } },
+        { name: 'created_at',             callback: @frontendTime },
+        { name: 'last_contact',           callback: @frontendTime },
+        { name: 'last_contact_agent',     callback: @frontendTime },
+        { name: 'last_contact_customer',  callback: @frontendTime },
+        { name: 'first_response',         callback: @frontendTime },
+        { name: 'close_time',             callback: @frontendTime },
+      ],
+      model:    App.Ticket,
+      objects:  tickets,
+    )
+
+  ###
+
   table: (data) ->
-    overview = data.overview || data.model.configure_overview || []
-    attributes = data.attributes || data.model.configure_attributes || []
+    overview   = data.overview || data.model.configure_overview || []
+    attributes = data.attributes || data.model.configure_attributes
+    header     = data.header
 
     # define normal header
-    header = []
-    for row in overview
-      for attribute in attributes
-        if row is attribute.name
-          header.push(attribute.display)
-        else
-          rowWithoutId = row + '_id'
-          if rowWithoutId is attribute.name
-            header.push(attribute.display)
+    if !header
+      header = []
+      for row in overview
+        if attributes
+          for attribute in attributes
+            if row is attribute.name
+              header.push( attribute.display )
+            else
+              rowWithoutId = row + '_id'
+              if rowWithoutId is attribute.name
+                header.push( attribute.display )
 
-    data_types = []
+    dataTypesForCols = []
     for row in overview
-      data_types.push {
+      dataTypesForCols.push {
         name: row,
-        link: 1,
+        link: true,
       }
 
     # extended table format
     if data.overview_extended
-      header = []
-      for row in data.overview_extended
-        for attribute in attributes
-          if row.name is attribute.name
-            header.push(attribute.display)
-          else
-            rowWithoutId = row.name + '_id'
-            if rowWithoutId is attribute.name
-              header.push(attribute.display)
+      if !header
+        header = []
+        for row in data.overview_extended
+          for attribute in attributes
+            if row.name is attribute.name
+              header.push( attribute.display )
+            else
+              rowWithoutId = row.name + '_id'
+              if rowWithoutId is attribute.name
+                header.push( attribute.display )
 
-      data_types = data.overview_extended
+      dataTypesForCols = data.overview_extended
 
     # generate content data
     objects = _.clone( data.objects )
     for object in objects
-      for row in data_types
 
-        # check if data is a object
+      # check if info for each col. is already there
+      for row in dataTypesForCols
+
+        # check if info is a object
         if typeof object[row.name] is 'object'
           if !object[row.name]
             object[row.name] = {
@@ -98,7 +135,7 @@ class App.Controller extends Spine.Controller
             if object[row.name]['realname']
               object[row.name]['name'] = object[row.name]['realname']
 
-        # if it isnt a object, create one
+        # if info isnt a object, create one
         else if typeof object[row.name] isnt 'object'
           object[row.name] = {
             name: object[row.name],
@@ -122,11 +159,11 @@ class App.Controller extends Spine.Controller
               if attribute.relation && App[attribute.relation]
                 record = App.Collection.find( attribute.relation, object[rowWithoutId] )
                 object[row.name]['name'] = record.name
- 
-#    @log 'table', 'header', header, 'overview', data_types, 'objects', objects
+
+    @log 'table', 'header', header, 'overview', dataTypesForCols, 'objects', objects
     table = App.view('generic/table')(
       header:   header,
-      overview: data_types,
+      overview: dataTypesForCols,
       objects:  objects,
       checkbox: data.checkbox,
     )
@@ -137,14 +174,14 @@ class App.Controller extends Spine.Controller
 
     # convert to jquery object
     table = $(table)
-    
+
     # enable checkbox bulk selection
     if data.checkbox
       table.delegate('[name="bulk_all"]', 'click', (e) ->
         if $(e.target).attr('checked')
-          $(e.target).parents().find('[name="bulk"]').attr('checked', true);
+          $(e.target).parents().find('[name="bulk"]').attr( 'checked', true );
         else
-          $(e.target).parents().find('[name="bulk"]').attr('checked', false);       
+          $(e.target).parents().find('[name="bulk"]').attr( 'checked', false );
       )
 
     return table
