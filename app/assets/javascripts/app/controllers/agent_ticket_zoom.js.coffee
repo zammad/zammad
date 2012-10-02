@@ -22,6 +22,8 @@ class Index extends App.Controller
     @edit_form = undefined
     @ticket_id = params.ticket_id
     @article_id = params.article_id
+    @signature = undefined
+    @signature_used = undefined
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
@@ -49,9 +51,12 @@ class Index extends App.Controller
     # reset old indexes
     @ticket = undefined
     @articles = undefined
-    
+
     # get edit form attributes
     @edit_form = data.edit_form
+
+    # get signature
+    @signature = data.signature
 
     # load user collection
     App.Collection.load( type: 'User', data: data.users )
@@ -133,6 +138,9 @@ class Index extends App.Controller
       model: {
         configure_attributes: @configure_attributes_article,
       },
+#      params: {
+#        body: @signature.body,
+#      }
       form_data: @edit_form,
     )
 
@@ -205,13 +213,13 @@ class Index extends App.Controller
   public_internal: (e) ->
     e.preventDefault()
     article_id = $(e.target).parents('[data-id]').data('id')
-    
+
     # storage update
     article = App.TicketArticle.find(article_id)
     internal = true
     if article.internal == true
       internal = false
-  
+
     article.updateAttributes(
       internal: internal
     )
@@ -258,6 +266,16 @@ class Index extends App.Controller
       @el.find('[name="cc"]').parents('.control-group').removeClass('hide')
 #      @el.find('[name="subject"]').parents('.control-group').removeClass('hide')
 
+      # add signature
+      if !@signature_used && @signature && @signature.body
+        @signature_used = true
+        body = @el.find('[name="body"]').val() || ''
+        body = body + "\n" + @signature.body
+        @el.find('[name="body"]').val( body )
+
+        # update textarea size
+        @el.find('[name="body"]').trigger('change')
+
   reply: (e) =>
     e.preventDefault()
     article_id = $(e.target).parents('[data-id]').data('id')
@@ -279,7 +297,7 @@ class Index extends App.Controller
     @el.find('[name="cc"]').val('')
     @el.find('[name="subject"]').val('')
     @el.find('[name="in_reply_to"]').val('')
-    
+
     if article.message_id
       @el.find('[name="in_reply_to"]').val(article.message_id)
 
@@ -289,9 +307,9 @@ class Index extends App.Controller
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       @log 'c', customer
       @el.find('[name="body"]').val('@' + to)
-      
+
     else if article_type.name is 'twitter direct-message'
-    
+
       # show to
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       @el.find('[name="to"]').val(to)
@@ -306,7 +324,7 @@ class Index extends App.Controller
       selection = window.Session['UISelection'].trim()
       selection = selection.replace /^(.*)$/mg, (match) =>
         '> ' + match  
-      body = body + selection
+      body = selection + "\n" + body
       @el.find('[name="body"]').val(body)
 
       # update textarea size

@@ -24,7 +24,7 @@ end
 module NotificationFactory
   def self.build(data)
     data[:string].gsub!( /\#\{(.+?)\}/ ) { |s|
-    
+
       # use quoted text
       callback = $1
       callback.gsub!( /\.body$/ ) { |item|
@@ -55,7 +55,7 @@ module NotificationFactory
     }
     return data[:string]
   end
-  
+
   def self.send(data)
     sender = Setting.get('notification_sender')
     a = Channel::IMAP.new

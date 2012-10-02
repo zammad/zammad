@@ -34,13 +34,13 @@ class TicketsController < ApplicationController
       render :json => @ticket.errors, :status => :unprocessable_entity
       return
     end
-    
+
     # create article if given
     if params[:article]
       @article = Ticket::Article.new(params[:article])
       @article.created_by_id = params[:article][:created_by_id] || current_user.id
       @article.ticket_id     = @ticket.id
-    
+
       # find attachments in upload cache
       @article['attachments'] = Store.list(
         :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
@@ -87,18 +87,16 @@ class TicketsController < ApplicationController
     head :ok
   end
 
-
-
   # GET /ticket_customer
   # GET /tickets_customer
   def ticket_customer
-    
+
     # get closed/open states
     ticket_state_list_open   = Ticket::State.where(
-      :ticket_state_type_id => Ticket::StateType.where(:name => ['new','open', 'pending remidner', 'pending action'])
+      :ticket_state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action'] )
     )
     ticket_state_list_closed = Ticket::State.where(
-      :ticket_state_type_id => Ticket::StateType.where(:name => ['closed'] )
+      :ticket_state_type_id => Ticket::StateType.where( :name => ['closed'] )
     )
 
     # get tickets
@@ -150,10 +148,10 @@ class TicketsController < ApplicationController
   def ticket_history
 
     # get ticket data
-    ticket = Ticket.find(params[:id])
+    ticket = Ticket.find( params[:id] )
 
     # permissin check
-    return if !ticket_permission(ticket)
+    return if !ticket_permission( ticket )
 
     # get history of ticket
     history = History.history_list( 'Ticket', params[:id], 'Ticket::Article' )
@@ -212,7 +210,7 @@ class TicketsController < ApplicationController
     end
 
     # permissin check
-    return if !ticket_permission(ticket_slave)
+    return if !ticket_permission( ticket_slave )
 
     # check diffetent ticket ids
     if ticket_slave.id == ticket_master.id
@@ -243,31 +241,43 @@ class TicketsController < ApplicationController
   def ticket_full
 
     # permission check
-    ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket = Ticket.find( params[:id] )
+    return if !ticket_permission( ticket )
 
     # get related users
     users = {}
     if !users[ticket.owner_id]
-      users[ticket.owner_id] = User.user_data_full(ticket.owner_id)
+      users[ticket.owner_id] = User.user_data_full( ticket.owner_id )
     end
     if !users[ticket.customer_id]
-      users[ticket.customer_id] = User.user_data_full(ticket.customer_id)
+      users[ticket.customer_id] = User.user_data_full( ticket.customer_id )
     end
     if !users[ticket.created_by_id]
-      users[ticket.created_by_id] = User.user_data_full(ticket.created_by_id)
+      users[ticket.created_by_id] = User.user_data_full( ticket.created_by_id )
     end
 
     owner_ids = []
     ticket.agent_of_group.each { |user|
       owner_ids.push user.id
       if !users[user.id]
-        users[user.id] = User.user_data_full(user.id)
+        users[user.id] = User.user_data_full( user.id )
       end
     }
 
     # log object as viewed
-    log_view(ticket)
+    log_view( ticket )
+
+    # get signature
+    signature = ticket.group.signature.attributes
+
+    # replace tags
+    signature['body'] = NotificationFactory.build(
+      :string  => signature['body'],
+      :objects => {
+        :ticket   => ticket,
+        :user     => current_user,
+      }
+    )
 
     # get related articles
     ticket = ticket.attributes
@@ -293,7 +303,7 @@ class TicketsController < ApplicationController
 
       # load users
       if !users[article.created_by_id]
-        users[article.created_by_id] = User.user_data_full(article.created_by_id)
+        users[article.created_by_id] = User.user_data_full( article.created_by_id )
       end
     }
 
@@ -313,16 +323,17 @@ class TicketsController < ApplicationController
             next if !agents[ user.id ]
             groups_users[ group_id ].push user.id
             if !users[user.id]
-              users[user.id] = User.user_data_full(user.id)
+              users[user.id] = User.user_data_full( user.id )
             end
         }
     }
 
     # return result
     render :json => {
-      :ticket   => ticket,
-      :articles => articles_used,
-      :users    => users,
+      :ticket    => ticket,
+      :articles  => articles_used,
+      :signature => signature,
+      :users     => users,
       :edit_form => {
         :group_id__owner_id => groups_users,
         :owner_id           => owner_ids,
@@ -347,20 +358,20 @@ class TicketsController < ApplicationController
 
       # get related users
       if !users[ticket.owner_id]
-        users[ticket.owner_id] = User.user_data_full(ticket.owner_id)
+        users[ticket.owner_id] = User.user_data_full( ticket.owner_id )
       end
       if !users[ticket.customer_id]
-        users[ticket.customer_id] = User.user_data_full(ticket.customer_id)
+        users[ticket.customer_id] = User.user_data_full( ticket.customer_id )
       end
       if !users[ticket.created_by_id]
-        users[ticket.created_by_id] = User.user_data_full(ticket.created_by_id)
+        users[ticket.created_by_id] = User.user_data_full( ticket.created_by_id )
       end
 
       owner_ids = []
       ticket.agent_of_group.each { |user|
         owner_ids.push user.id
         if !users[user.id]
-          users[user.id] = User.user_data_full(user.id)
+          users[user.id] = User.user_data_full( user.id )
         end
       }
   
@@ -374,13 +385,13 @@ class TicketsController < ApplicationController
 
       # load users
       if !users[article.created_by_id]
-        users[article.created_by_id] = User.user_data_full(article.created_by_id)
+        users[article.created_by_id] = User.user_data_full( article.created_by_id )
       end
     end
 
     create_attributes[:owner_id].each {|user_id|
       if !users[user_id]
-        users[user_id] = User.user_data_full(user_id)
+        users[user_id] = User.user_data_full( user_id )
       end
     }
 
