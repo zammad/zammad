@@ -268,16 +268,19 @@ class TicketsController < ApplicationController
     log_view( ticket )
 
     # get signature
-    signature = ticket.group.signature.attributes
+    signature = {}
+    if ticket.group.signature
+      signature = ticket.group.signature.attributes
 
-    # replace tags
-    signature['body'] = NotificationFactory.build(
-      :string  => signature['body'],
-      :objects => {
-        :ticket   => ticket,
-        :user     => current_user,
-      }
-    )
+      # replace tags
+      signature['body'] = NotificationFactory.build(
+        :string  => signature['body'],
+        :objects => {
+          :ticket   => ticket,
+          :user     => current_user,
+        }
+      )
+    end
 
     # get related articles
     ticket = ticket.attributes
