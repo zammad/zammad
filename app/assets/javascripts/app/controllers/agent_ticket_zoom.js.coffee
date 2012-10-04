@@ -156,7 +156,7 @@ class Index extends App.Controller
     @frontendTimeUpdate()
 
     # scrall to article if given
-    if @article_id
+    if @article_id && document.getElementById( 'article-' + @article_id )
       offset = document.getElementById( 'article-' + @article_id ).offsetTop
       offset = offset - 45
       scrollTo = ->
