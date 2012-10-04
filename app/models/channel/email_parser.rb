@@ -25,11 +25,44 @@ class Channel::EmailParser
     :from_domain        => 'example.com',
     :from_display_name  => 'Some Name',
     :message_id         => 'some_message_id@example.com',
-    :body               => 'message body',
+    :to                 => 'Some System <system@example.com>',
+    :cc                 => 'Somebody <somebody@example.com>',
+    :subject            => 'some message subject',
+    :body               => 'some message body',
     :attachments        => [
-      
+      {
+        :data        => 'binary of attachment',
+        :filename    => 'file_name_of_attachment.txt',
+        :preferences => {
+          :content-alternative => true,
+          :Mime-Type           => 'text/plain',
+          :Charset             => 'iso-8859-1',
+        },
+      },
     ],
-    
+
+    # ignore email header
+    :x-zammad-ignore => 'false',
+
+    # customer headers
+    :x-zammad-customer-login     => '',
+    :x-zammad-customer-email     => '',
+    :x-zammad-customer-firstname => '',
+    :x-zammad-customer-lastname  => '',
+
+    # ticket headers
+    :x-zammad-group    => 'some_group',
+    :x-zammad-state    => 'some_state',
+    :x-zammad-priority => 'some_priority',
+    :x-zammad-owner    => 'some_owner_login',
+
+    # article headers
+    :x-zammad-article-visability => 'true',
+    :x-zammad-article-type       => 'agent',
+    :x-zammad-article-sender     => 'customer',
+
+    # all other email headers
+    :some-header => 'some_value',
   }
 
 =end
@@ -197,6 +230,9 @@ class Channel::EmailParser
       }
     end
 
+    # process postmaster filter
+
+
     # check ignore header
     return true if mail[ 'x-zammad-ignore'.to_sym ] == 'true' || mail[ 'x-zammad-ignore'.to_sym ] == true
 
@@ -227,10 +263,10 @@ class Channel::EmailParser
           :created_by_id  => 1 
         )
       end
-      
+
       # set current user
       UserInfo.current_user_id = user.id
-  
+
       # get ticket# from subject
       ticket = Ticket.number_check( mail[:subject] )
 
