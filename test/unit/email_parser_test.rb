@@ -22,7 +22,7 @@ class EmailParserTest < ActiveSupport::TestCase
           :from_email         => 'martin@example.com',
           :from_display_name  => 'Martin Edenhofer',
           :subject            => 'aaäöüßad asd',
-          :plain_part_md5     => "äöüß ad asd\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.",
+          :body_md5     => "äöüß ad asd\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.",
         },
       },
       {
@@ -43,7 +43,7 @@ class EmailParserTest < ActiveSupport::TestCase
           :from_email         => 'k.guenther@example.com',
           :from_display_name  => 'Günther Katja | Example GmbH',
           :subject            => 'AW: Ticket Templates [Ticket#11168]',
-          :plain_part_md5     => "Hallo Katja,
+          :body_md5     => "Hallo Katja,
 
 super! Ich freu mich!
 
@@ -82,7 +82,7 @@ Liebe Grüße!
           :from_email         => 'me@bogen.net',
           :from_display_name  => 'Hans BÄKOSchönland',
           :subject            => 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких',
-          :plain_part         => "this is a test [1]Compare Cable, DSL or Satellite plans: As low as $2.95. 
+          :body         => "this is a test [1]Compare Cable, DSL or Satellite plans: As low as $2.95. 
 
 Test1:8
 
@@ -107,7 +107,7 @@ Test5:=
           :from_email         => 'Eike.Ehringer@example.com',
           :from_display_name  => nil,
           :subject            => 'AW:Installation [Ticket#11392]',
-          :plain_part_md5     => "Hallo.
+          :body_md5     => "Hallo.
 Jetzt muss ich dir noch kurzfristig absagen für morgen.
 Lass uns evtl morgen Tel.
 
@@ -149,7 +149,7 @@ Managing Director: Martin Edenhofer
           :from_email         => 'Franz.Schaefer@example.com',
           :from_display_name  => nil,
           :subject            => 'could not rename: ZZZAAuto',
-          :plain_part_md5     => "Gravierend?
+          :body_md5     => "Gravierend?
 
 Mit freundlichen Grüßen
 
@@ -192,7 +192,7 @@ Hof",
           :from_email         => 'martin@example.de',
           :from_display_name  => 'Martin Edenhofer',
           :subject            => 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
-          :plain_part         => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address."
+          :body         => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address."
         },
       },
     ]
@@ -203,16 +203,16 @@ Hof",
       data = parser.parse( file[:data] )
       
       # check body
-      md5 = Digest::MD5.hexdigest( data[:plain_part] )
+      md5 = Digest::MD5.hexdigest( data[:body] )
       assert_equal( file[:body_md5], md5 )
 
       # check params
       file[:params].each { |key, value|
-        if key.to_s == 'plain_part_md5'
+        if key.to_s == 'body_md5'
 #          puts 'md5'
-#          puts '++' + data[:plain_part].to_s + '++'
+#          puts '++' + data[:body].to_s + '++'
 #          puts '++' + file[:params][key.to_sym].to_s + '++'
-          assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[:plain_part].to_s ) )
+          assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[:body].to_s ) )
         else
           assert_equal( file[:params][key.to_sym], data[key.to_sym] )
         end

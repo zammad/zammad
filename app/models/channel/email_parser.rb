@@ -13,7 +13,27 @@ class Channel::EmailParser
 #    string.encode("UTF-8")
     Iconv.conv( 'UTF8', charset, string )
   end
-  
+
+=begin
+
+  mail = parse( msg_as_string )
+
+  mail = {
+    :from               => 'Some Name <some@example.com>',
+    :from_email         => 'some@example.com',
+    :from_local         => 'some',
+    :from_domain        => 'example.com',
+    :from_display_name  => 'Some Name',
+    :message_id         => 'some_message_id@example.com',
+    :body               => 'message body',
+    :attachments        => [
+      
+    ],
+    
+  }
+
+=end
+
   def parse (msg)
     data = {}
     mail = Mail.new( msg )
@@ -46,21 +66,21 @@ class Channel::EmailParser
       
       # text attachment/body exists
       if mail.text_part
-        data[:plain_part] = mail.text_part.body.decoded
-        data[:plain_part] = conv( mail.text_part.charset, data[:plain_part] )
+        data[:body] = mail.text_part.body.decoded
+        data[:body] = conv( mail.text_part.charset, data[:body] )
         
       # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
         if mail.html_part.body
           filename = 'html-email'
-          data[:plain_part] = mail.html_part.body.to_s
-          data[:plain_part] = conv( mail.html_part.charset.to_s, data[:plain_part] )
-          data[:plain_part] = html2ascii( data[:plain_part] )
+          data[:body] = mail.html_part.body.to_s
+          data[:body] = conv( mail.html_part.charset.to_s, data[:body] )
+          data[:body] = html2ascii( data[:body] )
 
         # any other attachments
         else
-          data[:plain_part] = 'no visible content'
+          data[:body] = 'no visible content'
         end
       end
 
@@ -79,11 +99,11 @@ class Channel::EmailParser
         attachment = {
           :data        => mail.html_part.body.to_s,
           :filename    => mail.html_part.filename || filename,
-          :preferences => headers_store          
+          :preferences => headers_store
         }
         data[:attachments].push attachment
       end
-      
+
       # get attachments
       if mail.has_attachments?
         mail.attachments.each { |file|
@@ -103,7 +123,7 @@ class Channel::EmailParser
           if file.header.charset
             headers_store['Charset'] = file.header.charset
           end
-          
+
           # remove not needed header
           headers_store.delete('Content-Transfer-Encoding')
           headers_store.delete('Content-Disposition')
@@ -111,9 +131,8 @@ class Channel::EmailParser
           attach = {
             :data        => file.body.to_s,
             :filename    => filename,
-            :preferences => headers_store          
+            :preferences => headers_store,
           }
-    
           data[:attachments].push attach
         }
       end
@@ -123,21 +142,21 @@ class Channel::EmailParser
 
       # text part
       if !mail.mime_type || mail.mime_type.to_s ==  '' || mail.mime_type.to_s.downcase == 'text/plain'
-        data[:plain_part] = mail.body.decoded
-        data[:plain_part] = conv( mail.charset, data[:plain_part] )
+        data[:body] = mail.body.decoded
+        data[:body] = conv( mail.charset, data[:body] )
 
       # html part
       else
         filename = '-no name-'
         if mail.mime_type.to_s.downcase == 'text/html'
           filename = 'html-email'
-          data[:plain_part] = mail.body.decoded
-          data[:plain_part] = conv( mail.charset, data[:plain_part] )
-          data[:plain_part] = html2ascii( data[:plain_part] )
+          data[:body] = mail.body.decoded
+          data[:body] = conv( mail.charset, data[:body] )
+          data[:body] = html2ascii( data[:body] )
 
         # any other attachments
         else
-          data[:plain_part] = 'no visible content'
+          data[:body] = 'no visible content'
         end
 
         # add body as attachment
@@ -160,8 +179,8 @@ class Channel::EmailParser
     end
 
     # strip not wanted chars
-    data[:plain_part].gsub!( /\r\n/, "\n" )
-    data[:plain_part].gsub!( /\r/, "\n" )
+    data[:body].gsub!( /\r\n/, "\n" )
+    data[:body].gsub!( /\r/, "\n" )
 
     return data
   end
@@ -262,9 +281,9 @@ class Channel::EmailParser
         # create ticket
         ticket = Ticket.create( ticket_attributes )
       end
-  
+
       # import mail
-  
+
       # set attributes
       internal = false
       if mail[ 'X-Zammad-Article-Visability'.to_sym ] && mail[ 'X-Zammad-Article-Visability'.to_sym ] == 'internal'
@@ -275,7 +294,7 @@ class Channel::EmailParser
         :ticket_id                => ticket.id, 
         :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
         :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-        :body                     => mail[:plain_part], 
+        :body                     => mail[:body], 
         :from                     => mail[:from],
         :to                       => mail[:to],
         :cc                       => mail[:cc],
