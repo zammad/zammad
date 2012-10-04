@@ -1545,7 +1545,7 @@ Network::Category.create(
   :network_id               => network.id,
   :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Question').first.id,
-  :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id
+  :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
 #  :network_categories_moderator_user_ids => User.where(:login => '-').first.id,
   :updated_by_id            => 1,
   :created_by_id            => 1,
