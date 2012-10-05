@@ -154,7 +154,7 @@ class App.ControllerGenericIndex extends App.Controller
 
     # remove ignored items from collection
     if @ignoreObjectIDs
-      objects = _.filter(objects, (item) ->
+      objects = _.filter( objects, (item) ->
         return if item.id is 1
         return item
       )
