@@ -62,7 +62,7 @@ class Channel::Twitter2
 
     # find tweets
     all_tweets.each do |tweet|
-      
+
       # check if tweet is already imported
       article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
 
@@ -72,16 +72,16 @@ class Channel::Twitter2
       # use transaction
       ActiveRecord::Base.transaction do
         puts 'import tweet'
-        fetch_import(tweet, channel, group)
+        fetch_import( tweet, channel, group )
       end
-      
+
       # execute ticket events      
       Ticket::Observer::Notification.transaction
     end
   end
-  
+
   def fetch_import(tweet, channel, group)
-    
+
     # do sender lockup if needed
     sender = nil
 
@@ -160,10 +160,10 @@ class Channel::Twitter2
     else
       puts 'user exists'#, user.inspect
     end
-    
+
     # set current user
     UserInfo.current_user_id = user.id
-    
+
     return user 
   end
   
@@ -218,7 +218,7 @@ class Channel::Twitter2
 
     return ticket
   end
-  
+
   def fetch_article_create(user,ticket,tweet, sender)
 
     # find if record already exists
@@ -241,8 +241,8 @@ class Channel::Twitter2
     article = Ticket::Article.create(
       :created_by_id            => user.id,
       :ticket_id                => ticket.id,
-      :ticket_article_type_id   => Ticket::Article::Type.where(:name => @article_type).first.id,
-      :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer').first.id,
+      :ticket_article_type_id   => Ticket::Article::Type.where( :name => @article_type ).first.id,
+      :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
       :body                     => tweet.text,
       :from                     => sender.name,
       :to                       => to,
