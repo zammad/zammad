@@ -57,7 +57,7 @@ class Channel::EmailParser
     :x-zammad-owner    => 'some_owner_login',
 
     # article headers
-    :x-zammad-article-visability => 'true',
+    :x-zammad-article-visability => 'internal',
     :x-zammad-article-type       => 'agent',
     :x-zammad-article-sender     => 'customer',
 
@@ -93,15 +93,15 @@ class Channel::EmailParser
 #    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
 #    html_part = message.html_part ? message.html_part.body.decoded : nil
     data[:attachments] = []
-    
+
     # multi part email
     if mail.multipart?
-      
+
       # text attachment/body exists
       if mail.text_part
         data[:body] = mail.text_part.body.decoded
         data[:body] = conv( mail.text_part.charset, data[:body] )
-        
+
       # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
@@ -221,17 +221,22 @@ class Channel::EmailParser
   def process(channel, msg)
     mail = parse( msg )
 
-    # check if trust x-headers
-    if !channel[:trusted]
-      mail.each {|key, value|
-        if key =~ /^x-zammad/i
-          mail.delete(key)
-        end
-      }
-    end
+    # run postmaster pre filter
+    filters = {
+      '0010' => Channel::Filter::Trusted,
+      '1000' => Channel::Filter::Database,
+    }
 
-    # process postmaster filter
-
+    # filter( channel, mail )
+    filters.each {|prio, backend|
+      begin
+        backend.run( channel, mail )
+      rescue Exception => e
+        puts "can't run postmaster pre filter #{backend}"
+        puts e.inspect
+        return false
+      end
+    }
 
     # check ignore header
     return true if mail[ 'x-zammad-ignore'.to_sym ] == 'true' || mail[ 'x-zammad-ignore'.to_sym ] == true
@@ -306,13 +311,7 @@ class Channel::EmailParser
           [ 'x-zammad-priority', Ticket::Priority, 'ticket_priority_id', 'name'  ],
           [ 'x-zammad-owner',    User,             'owner_id',           'login' ],
         ]
-        map.each { |item|
-          if mail[ item[0].to_sym ]
-            if item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first
-              ticket_attributes[ item[2].to_sym ] = item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first.id
-            end
-          end
-        }
+        object_lookup( ticket_attributes, map, mail )
 
         # create ticket
         ticket = Ticket.create( ticket_attributes )
@@ -344,13 +343,7 @@ class Channel::EmailParser
         [ 'x-zammad-article-type',    Ticket::Article::Type,   'ticket_article_type_id',   'name' ],
         [ 'x-zammad-article-sender',  Ticket::Article::Sender, 'ticket_article_sender_id', 'name' ],
       ]
-      map.each { |item|
-        if mail[ item[0].to_sym ]
-          if item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first
-            article_attributes[ item[2].to_sym ] = item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first.id
-          end
-        end
-      }
+      object_lookup( article_attributes, map, mail )
 
       # create article
       article = Ticket::Article.create(article_attributes)
@@ -381,10 +374,35 @@ class Channel::EmailParser
     # execute ticket events      
     Ticket::Observer::Notification.transaction
 
+    # run postmaster post filter
+    filters = {
+#      '0010' => Channel::Filter::Trusted,
+    }
+
+    # filter( channel, mail )
+    filters.each {|prio, backend|
+      begin
+        backend.run( channel, mail, ticket, article, user )
+      rescue Exception => e
+        puts "can't run postmaster post filter #{backend}"
+        puts e.inspect
+      end
+    }
+
     # return new objects
     return ticket, article, user
   end
   
+  def object_lookup( attributes, map, mail )
+    map.each { |item|
+      if mail[ item[0].to_sym ]
+        if item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first
+          attributes[ item[2].to_sym ] = item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first.id
+        end
+      end
+    }
+  end
+
   def html2ascii(string)
 
     # find <a href=....> and replace it with [x]
