@@ -101,7 +101,7 @@ class _Singleton
 
   find: ( type, id, callback ) ->
 
-    console.log( 'find', type, id )
+#    console.log( 'find', type, id )
 #    if App[type].exists( id ) && !callback
     if App[type].exists( id )
 #      console.log( 'find exists', type, id )
@@ -211,7 +211,12 @@ class _Singleton
     App[params.type].refresh( object, options: { clear: true } )
 
   all: (type) ->
-    App[type].all()
+    all = App[type].all()
+    all_complied = []
+    for item in all
+      item_new = @find( type, item.id )
+      all_complied.push item_new
+    return all_complied
 
   deleteAll: (type) ->
     App[type].deleteAll()

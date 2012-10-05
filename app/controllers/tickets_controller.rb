@@ -158,6 +158,8 @@ class TicketsController < ApplicationController
 
     # get related users
     users = {}
+    users[ ticket.owner_id ] = User.user_data_full( ticket.owner_id )
+    users[ ticket.customer_id ] = User.user_data_full( ticket.customer_id )
     history.each do |item|
       users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )
       if item['history_object'] == 'Ticket::Article'

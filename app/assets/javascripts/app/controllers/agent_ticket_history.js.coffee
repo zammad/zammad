@@ -43,4 +43,9 @@ class App.TicketHistory extends App.ControllerModal
     )
 
     @modalShow()
+
+    # enable user popups
     @userPopups()
+
+    # show frontend times
+    @delay( @frontendTimeUpdate, 200 )
