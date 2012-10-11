@@ -263,13 +263,13 @@ class UserNew extends App.ControllerModal
     ui = @
     user.save(
       success: ->
-        ui.modalHide()
-        realname = @.firstname + ' ' + @.lastname
-        $('#create_customer_id').val(@.id)
-        $('#create_customer_id_autocompletion').val(realname)
-
+        realname = @displayName()
+        $('#create_customer_id').val( @id )
+        $('#create_customer_id_autocompletion').val( realname )
+  
         # start customer info controller
-        ui.userInfo( user_id: @.id )
+        ui.userInfo( user_id: @id )
+        ui.modalHide()
       error: ->
         ui.modalHide()
     )

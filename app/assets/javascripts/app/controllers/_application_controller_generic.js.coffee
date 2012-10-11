@@ -17,6 +17,7 @@ class App.ControllerGenericNew extends App.ControllerModal
       el:         @el.find('#object_new'),
       model:      @genericObject,
       params:     @item,
+      required:   @required,
       autofocus:  true,
     )
 
@@ -46,6 +47,8 @@ class App.ControllerGenericNew extends App.ControllerModal
     # save object
     object.save(
       success: =>
+        if @callback
+          @callback(@item)
         @modalHide()
       error: =>
         @log 'errors'
