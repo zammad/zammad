@@ -2,7 +2,8 @@ $ = jQuery.sub()
 
 class App.UserInfo extends App.Controller
   events:
-    'focusout [data-type=edit]': 'update',
+    'focusout [data-type=update]': 'update',
+    'click [data-type=edit]': 'edit'
 
   constructor: ->
     super
@@ -28,11 +29,24 @@ class App.UserInfo extends App.Controller
       user_id:  user.id,
     )
 
+  # update changes
   update: (e) =>
-
-    # update changes
-    note = $(e.target).parent().find('[data-type=edit]').val()
+    note = $(e.target).parent().find('[data-type=update]').val()
     user = App.Collection.find( 'User', @user_id )
     if user.note isnt note
       user.updateAttributes( note: note )
       @log 'update', e, note, user
+
+  edit: (e) =>
+    e.preventDefault()
+    new App.ControllerGenericEdit(
+      id: @user_id,
+      genericObject: App.User,
+      required: 'quick',
+      pageData: {
+        title: 'Users',
+        object: 'User',
+        objects: 'Users',
+      },
+      callback: @render
+    )

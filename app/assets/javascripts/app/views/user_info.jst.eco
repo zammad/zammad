@@ -1,10 +1,10 @@
 <div class="well">
-  <h3><%- T('Customer') %></h3>
+  <h3><%- T('Customer') %> <small><a href="#" data-type="edit" class="icon-edit"></a></small></h3>
 <% if @user.image: %>
   <img class="thumbnail" src="<%- @user.image %>" alt="">
 <% end %>
   <div class="row">
-    <div class="customer-info" title="<%- Ti('Name') %>"><%= @user['realname'] %></div>
+    <div class="customer-info" title="<%- Ti('Name') %>"><%= @user.displayName() %></div>
   </div>
 <% for row in @data: %>
   <% if @user[row.name] || row.name is 'note': %>
@@ -14,7 +14,7 @@
       <% else: %>
         <div class="customer-info" title="<%- Ti(row.display) %>">
           <strong><%- T(row.display) %></strong><br/>
-          <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type=edit><%= @user[row.name] %></textarea>
+          <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update"><%= @user[row.name] %></textarea>
        </div>
       <% end %>
     </div>

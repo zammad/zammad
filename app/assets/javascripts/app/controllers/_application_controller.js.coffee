@@ -422,7 +422,7 @@ class App.ControllerModal extends App.Controller
 #        @callback.success = options.success
 #      if options.error
 #        @callback.error = options.error
-   
+
     super(options)
 
   modalShow: (params) =>
@@ -443,7 +443,7 @@ class App.ControllerModal extends App.Controller
       # navigate back
       if params && params.navigateBack
         window.history.back()
-      
+
       # remove modal from dom
       $('.modal').remove();
     )
@@ -452,7 +452,7 @@ class App.ControllerModal extends App.Controller
     if e
       e.preventDefault()
     @el.modal('hide')
-    
+
   submit: (e) =>
     e.preventDefault()
     @log 'You need to implement your own "submit" method!'

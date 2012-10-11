@@ -68,7 +68,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
         @render()
         @genericObject.unbind 'refresh'
       @genericObject.fetch( id: params.id) 
-    
+
   render: ->
     @html App.view('generic/admin/edit')( head: @pageData.object )
 
@@ -76,6 +76,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
       el:         @el.find('#object_edit'),
       model:      @genericObject,
       params:     @item,
+      required:   @required,
       autofocus:  true,
     )
 
@@ -85,7 +86,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
     e.preventDefault()
     params = @formParam(e.target) 
     @item.load(params)
-    
+
     # validate
     errors = @item.validate()
     if errors
@@ -97,6 +98,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
     # save object
     @item.save(
       success: =>
+        @log 'lll', @callback(@item), @required
         @modalHide()
       error: =>
         @log 'errors'
