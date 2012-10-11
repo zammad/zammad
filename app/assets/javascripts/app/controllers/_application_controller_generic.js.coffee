@@ -98,11 +98,11 @@ class App.ControllerGenericEdit extends App.ControllerModal
     # save object
     @item.save(
       success: =>
-        @log 'lll', @callback(@item), @required
+        if @callback
+          @callback(@item)
         @modalHide()
       error: =>
         @log 'errors'
-
         @modalHide()
     )
 

@@ -1,5 +1,5 @@
 <div class="well">
-  <h3><%- T('Customer') %> <small><a href="#" data-type="edit" class="icon-edit"></a></small></h3>
+  <h3><%- T('Customer') %> <a href="#" data-type="edit" class="icon-edit"></a></h3>
 <% if @user.image: %>
   <img class="thumbnail" src="<%- @user.image %>" alt="">
 <% end %>
