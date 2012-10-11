@@ -21,18 +21,19 @@ class App.ChannelEmail extends App.ControllerTabs
         controller: App.ChannelEmailOutbound,
       },
       {
-        name:       'Sigantures',
-        target:     'c-signature',
-        controller: App.ChannelEmailSignature,
-      },
-      {
         name:       'Adresses',
         target:     'c-address',
         controller: App.ChannelEmailAddress,
       },
       {
-        name:   'Filter',
-        target: 'c-filter',
+        name:       'Sigantures',
+        target:     'c-signature',
+        controller: App.ChannelEmailSignature,
+      },
+      {
+        name:       'Filter',
+        target:     'c-filter',
+        controller: App.ChannelEmailFilter,
       },
       {
         name:       'Settings',
@@ -43,6 +44,97 @@ class App.ChannelEmail extends App.ControllerTabs
     ]
 
     @render()
+
+class App.ChannelEmailFilter extends App.Controller
+  events:
+    'click [data-type=new]':  'new'
+    'click [data-type=edit]': 'edit'
+
+  constructor: ->
+    super
+
+    App.PostmasterFilter.bind 'refresh change', @render
+    App.PostmasterFilter.fetch()
+
+  render: =>
+    data = App.PostmasterFilter.all()
+
+    html = $('<div></div>')
+
+    table = @table(
+      model:    App.PostmasterFilter,
+      objects:  data,
+    )
+
+    html.append( table )
+    html.append( '<a data-type="new" class="btn">' + T('New') + '</a>' )
+    @html html
+
+  new: (e) =>
+    e.preventDefault()
+    new App.ChannelEmailFilterEdit()
+
+  edit: (e) =>
+    e.preventDefault()
+    item = $(e.target).item( App.PostmasterFilter )
+    new App.ChannelEmailFilterEdit( object: item )
+
+class App.ChannelEmailFilterEdit extends App.ControllerModal
+  constructor: ->
+    super
+    @render(@object)
+
+  render: (data = {}) ->
+    if @object
+      @html App.view('generic/admin/edit')(
+        head: 'Postmaster Filter'
+      )
+      @form = new App.ControllerForm(
+        el:        @el.find('#object_edit'),
+        model:     App.PostmasterFilter,
+        params:    @object,
+        autofocus: true,
+      )
+    else
+      @html App.view('generic/admin/new')(
+        head: 'Postmaster Filter'
+      )
+      @form = new App.ControllerForm(
+        el:        @el.find('#object_new'),
+        model:     App.PostmasterFilter,
+        autofocus: true,
+      )
+    @modalShow()
+
+  submit: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+    params['channel'] = 'email'
+
+    object = @object || new App.PostmasterFilter
+    object.load(params)
+
+    # validate form
+    errors = @form.validate( params )
+    @log '11111', params, errors
+#    return false
+    # show errors in form
+    if errors
+      @log 'error new', errors
+      @formValidate( form: e.target, errors: errors )
+      return false
+
+    # save object
+    object.save(
+      success: =>
+        @modalHide()
+      error: =>
+        @log 'errors'
+        @modalHide()
+    )
+
 
 class App.ChannelEmailAddress extends App.Controller
   events:

@@ -4,25 +4,20 @@ module Channel::Filter::Database
   def self.run( channel, mail )
 
     # process postmaster filter
-    filters = [
-      {
-        :name  => 'some name',
-        :match => {
-          'from' => 'martin',
-        },
-        :set => {
-          'x-zammad-priority' => '3 high',
-        }
-      },
-    ]
-
+    filters = PostmasterFilter.where( :active => true, :channel => 'email' )
     filters.each {|filter|
+      puts " proccess filter #{filter.name} ..."
       match = true
+      loop = false
       filter[:match].each {|key, value|
+        loop = true
         begin
-          if match && mail[ key.to_sym ].scan(/#{value}/i)
+          scan = mail[ key.downcase.to_sym ].scan(/#{value}/i)
+          if match && scan[0]
+            puts "  matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
             match = true
           else
+            puts "  is not matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
             match = false
           end
         rescue Exception => e
@@ -31,9 +26,10 @@ module Channel::Filter::Database
           puts e.inspect
         end
       }
-      if match
-        filter[:set].each {|key, value|
-          mail[ key.to_sym ] = value
+      if loop && match
+        filter[:perform].each {|key, value|
+          puts "  perform '#{ key.downcase }' = '#{value}'"
+          mail[ key.downcase.to_sym ] = value
         }
       end
     }

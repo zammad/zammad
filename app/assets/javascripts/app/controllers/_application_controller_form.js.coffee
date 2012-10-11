@@ -85,7 +85,6 @@ class App.ControllerForm extends App.Controller
   ###
 
   formGenItem: (attribute_config, classname, form ) ->
-
     attribute = _.clone( attribute_config )
 
     # create item id
@@ -146,9 +145,8 @@ class App.ControllerForm extends App.Controller
     # finde selected/checked item of list
     @_selectedOptions( attribute )
 
-    # boolean
     if attribute.tag is 'boolean'
-      
+
       # build options list
       if _.isEmpty(attribute.options)
         attribute.options = [
@@ -172,6 +170,96 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'select'
       item = $( App.view('generic/select')( attribute: attribute ) )
 
+    # select
+    else if attribute.tag is 'input_select'
+      item = $('<div class="input_select"></div>')
+
+      # select shown attributes
+      loopData = {}
+      if @params && @params[ attribute.name ]
+        loopData = @params[ attribute.name ]
+      loopData[''] = ''
+
+      # show each attribote
+      counter = 0
+      for key of loopData
+        counter =+ 1
+        @log 'kkk', key, loopData[ key ]
+
+        # clone to keep it untouched for next loop
+        select = _.clone( attribute )
+        input  = _.clone( attribute )
+
+        # set field ids - not needed in this case
+        select.id = ''
+        input.id  = ''
+
+        # rename to be able to identify this option later
+        select.name = '{input_select}::' + select.name
+        input.name  = '{input_select}::' + input.name
+
+        # set sub attributes
+        for keysub of attribute.select
+          select[keysub] = attribute.select[keysub]
+        for keysub of attribute.input
+          input[keysub] = attribute.input[keysub]
+
+        # set hide for + options
+        itemClass = ''
+        if key is ''
+          itemClass = 'hide'
+          select['nulloption'] = true
+
+        # set selected value
+        select.value = key
+        input.value  = loopData[ key ]
+
+        # build options list based on config
+        @_getConfigOptionList( select )
+
+        # build options list based on relation
+        @_getRelationOptionList( select )
+
+        # add null selection if needed
+        @_addNullOption( select )
+
+        # sort attribute.options
+        @_sortOptions( select )
+
+        # finde selected/checked item of list
+        @_selectedOptions( select )
+
+        pearItem = $("<div class=" + itemClass + "></div>")
+        pearItem.append $( App.view('generic/select')( attribute: select ) )
+        pearItem.append $( App.view('generic/input')( attribute: input ) )
+        itemRemote = $('<a href="#" class="input_select_remove icon-minus"></a>')
+        itemRemote.bind('click', (e) ->
+          e.preventDefault()
+          $(@).parent().remove()
+        )
+        pearItem.append( itemRemote )
+        item.append( pearItem )
+
+        if key is ''
+          itemAdd = $('<div class="add"><a href="#" class="icon-plus"></a></div>')
+          itemAdd.bind('click', (e) ->
+            e.preventDefault()
+
+            # copy
+            newElement = $(@).prev().clone()
+            newElement.removeClass('hide')
+
+            # bind on remove
+            newElement.find('.input_select_remove').bind('click', (e) ->
+              e.preventDefault()
+              $(@).parent().remove()
+            )
+
+            # prepend
+            $(@).parent().find('.add').before( newElement )
+          )
+          item.append( itemAdd )
+
     # checkbox
     else if attribute.tag is 'checkbox'
       item = $( App.view('generic/checkbox')( attribute: attribute ) )
@@ -192,7 +280,7 @@ class App.ControllerForm extends App.Controller
         @local_attribute = '#' + attribute.id
         @local_attribute_full = '#' + attribute.id + '_autocompletion'
         @callback = attribute.callback
-  
+
         b = (event, key) =>
 
           # set html form attribute
@@ -224,9 +312,7 @@ class App.ControllerForm extends App.Controller
             @log 'selected', event, ui
             b(event, ui.item.id)
         )
-
       @delay(a, 600)
-
 
     # input
     else
@@ -439,7 +525,8 @@ class App.ControllerForm extends App.Controller
     else
       console.log 'ERROR, no form found!', form
 
-    for key in form.serializeArray()
+    array = form.serializeArray()
+    for key in array
       if param[key.name]
         if typeof param[key.name] is 'string'
           param[key.name] = [ param[key.name], key.value]
@@ -448,16 +535,40 @@ class App.ControllerForm extends App.Controller
       else
 
         # check boolean
-        boolean = key.value.split '::'
-        if boolean[0] is '{boolean}'
-          if boolean[1] is 'true'
+        attributeType = key.value.split '::'
+        if attributeType[0] is '{boolean}'
+          if attributeType[1] is 'true'
             key.value = true
           else
             key.value = false
+#        else if attributeType[0] is '{boolean}'
 
         param[key.name] = key.value
 
-#    console.log 'formParam', form, param
+    # check {input_select}
+    inputSelectObject = {}
+    for key of param
+      attributeType = key.split '::'
+      name = attributeType[1]
+      console.log 'split', key, attributeType, param[ name ]
+      if attributeType[0] is '{input_select}' && !param[ name ]
+
+        # array need to be converted
+        inputSelectData = param[ key ]
+        inputSelectObject[ name ] = {}
+        for x in [0..inputSelectData.length] by 2
+          console.log 'for by 111', x, inputSelectData, inputSelectData[x], inputSelectData[ x + 1 ]
+          if inputSelectData[ x ]
+            inputSelectObject[ name ][ inputSelectData[x] ] = inputSelectData[ x + 1 ]
+
+        # remove {input_select} items
+        delete param[ key ]
+
+    # set new {input_select} items
+    for key of inputSelectObject
+      param[ key ] = inputSelectObject[ key ]
+
+    console.log 'formParam', form, param
     return param
 
 
