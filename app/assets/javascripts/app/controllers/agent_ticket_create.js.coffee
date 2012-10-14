@@ -191,7 +191,7 @@ class Index extends App.Controller
       @formValidate( form: e.target, errors: errors )
 
     # save ticket, create article
-    else 
+    else
 
       # disable form
       @formDisable(e)
@@ -208,7 +208,7 @@ class Index extends App.Controller
 
           # create new create screen
           ui.render()
-          
+
           # scroll to top
           ui.scrollTo()
 
