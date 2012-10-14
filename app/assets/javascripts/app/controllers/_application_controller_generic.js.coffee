@@ -27,22 +27,19 @@ class App.ControllerGenericNew extends App.ControllerModal
     @log 'submit'
     e.preventDefault()
     params = @formParam(e.target)
-    ###
-    for num in [1..199]
-      user = new User
-      params.login = 'login_c' + num
-      user.updateAttributes(params)
-    return false
-    ###
+
     object = new @genericObject
     object.load(params)
-    
+
     # validate
     errors = object.validate()
     if errors
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )
       return false
+
+    # disable form
+    @formDisable(e)
 
     # save object
     object.save(
@@ -97,7 +94,9 @@ class App.ControllerGenericEdit extends App.ControllerModal
       @formValidate( form: e.target, errors: errors )
       return false
 
-    @log 'save....'
+    # disable form
+    @formDisable(e)
+
     # save object
     @item.save(
       success: =>

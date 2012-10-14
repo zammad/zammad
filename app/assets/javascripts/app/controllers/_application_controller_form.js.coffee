@@ -574,12 +574,14 @@ class App.ControllerForm extends App.Controller
 
   @disable: (form) ->
     console.log 'disable...', $(form.target).parent()
+    $(form.target).parent().find('button').attr('disabled', true)
     $(form.target).parent().find('[type="submit"]').attr('disabled', true)
     $(form.target).parent().find('[type="reset"]').attr('disabled', true)
 
 
   @enable: (form) ->
     console.log 'enable...', $(form).parent()
+    $(form).parent().find('button').attr('disabled', false)
     $(form).parent().find('[type="submit"]').attr('disabled', false)
     $(form).parent().find('[type="reset"]').attr('disabled', false)
 
