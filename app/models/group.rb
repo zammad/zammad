@@ -5,4 +5,5 @@ class Group < ApplicationModel
   after_create            :cache_delete
   after_update            :cache_delete
   after_destroy           :cache_delete
+  validates               :name, :presence => true
 end

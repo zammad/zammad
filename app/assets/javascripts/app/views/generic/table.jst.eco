@@ -16,18 +16,24 @@
 <% position = 0 %>
 <% for object in @objects: %>
   <% position++ %>
-  <tr class="item" data-id="<%= object.id %>" data-position="<%= position %>" >
+  <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
     <td>
         <input type="checkbox" value="<%= object.id %>" name="bulk"/>
     </td>
     <% end %>
   <% for row in @overview: %>
+  <% displayName = '' %>
+  <% if typeof object[row.name] is 'object': %>
+  <%   displayName = object[row.name].displayNameLong() %>
+  <% else: %>
+  <%   displayName = object[row.name] %>
+  <% end %>
     <td>
       <% if row.link: %>
-        <a href="#" data-type="edit"><%= object[row.name]['name'] %></a>
+        <a href="#" data-type="edit"><%= displayName %></a>
       <% else: %>
-        <span <% if row.class: %>class="<%= row.class %>"<% end %> <% if row.data && row.data.id: %>data-id="<%= object[row.name]['id'] %>"<% end %>><% if row.translate: %><%- T(object[row.name]['name']) %><% else if row.callback: %><%- object[row.name]['name'] %><% else: %><%= object[row.name]['name'] %><% end %></span>
+        <span <% if row.class: %>class="<%= row.class %>"<% end %> <% if row.data && row.data.id: %>data-id="<%= object[row.name].id %>"<% end %>><% if row.translate: %><%- T(displayName) %><% else if row.callback: %><%- displayName %><% else: %><%= displayName %><% end %></span>
       <% end %>
     </td>
   <% end %>

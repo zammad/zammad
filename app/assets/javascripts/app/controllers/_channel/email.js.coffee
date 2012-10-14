@@ -126,6 +126,9 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
       @formValidate( form: e.target, errors: errors )
       return false
 
+    # disable form
+    @formDisable(e)
+
     # save object
     object.save(
       success: =>
@@ -214,6 +217,9 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )
       return false
+
+    # disable form
+    @formDisable(e)
 
     # save object
     object.save(
@@ -304,6 +310,9 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
       @formValidate( form: e.target, errors: errors )
       return false
 
+    # disable form
+    @formDisable(e)
+
     # save object
     object.save(
       success: =>
@@ -326,7 +335,7 @@ class App.ChannelEmailInbound extends App.Controller
 
   render: =>
     channels = App.Channel.all()
-    
+    @log 'llllll', channels
     html = $('<div></div>')
     data = []
     for channel in channels
@@ -334,6 +343,7 @@ class App.ChannelEmailInbound extends App.Controller
         channel.host = channel.options['host']
         channel.user = channel.options['user']
         data.push channel
+    @log 'llllll222', data
 
     table = @table(
       header:   ['Host', 'User', 'Adapter', 'Active'],
@@ -374,7 +384,7 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
     ]
     if @object
       @html App.view('generic/admin/edit')(
-        head: 'Channel'
+        head: 'Email Channel'
       )
       @form = new App.ControllerForm(
         el: @el.find('#object_edit'),
@@ -383,7 +393,7 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
       )
     else
       @html App.view('generic/admin/new')(
-        head: 'Channel'
+        head: 'Email Channel'
       )
       @form = new App.ControllerForm(
         el: @el.find('#object_new'),
@@ -409,6 +419,7 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
         password: params['password'],
         ssl:      params['ssl'],
       },
+      active: params['active'],
     )
 
     # validate form
@@ -419,6 +430,9 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )
       return false
+
+    # disable form
+    @formDisable(e)
 
     # save object
     object.save(

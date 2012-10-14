@@ -3,4 +3,6 @@ class EmailAddress < ApplicationModel
   after_create            :cache_delete
   after_update            :cache_delete
   after_destroy           :cache_delete
+  validates               :realname, :presence => true
+  validates               :email,    :presence => true
 end

@@ -1,10 +1,11 @@
 require 'digest/md5'
 
 class Store < ActiveRecord::Base
-  store      :preferences
-  belongs_to :store_object,           :class_name => 'Store::Object'
-  belongs_to :store_file,             :class_name => 'Store::File'
-  
+  store       :preferences
+  belongs_to  :store_object,          :class_name => 'Store::Object'
+  belongs_to  :store_file,            :class_name => 'Store::File'
+  validates   :filename,              :presence => true
+
   def self.add(data)
     data = data.stringify_keys
 
@@ -71,10 +72,12 @@ class Store < ActiveRecord::Base
 
   
   class Object < ActiveRecord::Base
+    validates :name, :presence => true
   end
 
   class File < ActiveRecord::Base
     before_validation :add_md5
+    validates         :name, :presence => true
 
     private
       def add_md5

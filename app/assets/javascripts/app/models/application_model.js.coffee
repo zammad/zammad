@@ -13,16 +13,35 @@ class App.Model extends Spine.Model
       return name
     return '???'
 
+  displayNameLong: ->
+    return @name if @name
+    if @firstname
+      name = @firstname
+      if @lastname
+        if name
+         name = name + ' '
+      name = name + @lastname
+      if @note
+        name = "#{name} (#{@note})"
+      return name
+    return '???'
+
   @validate: ( data = {} ) ->
     return if !data['model'].configure_attributes
 
+    # check attributes/each attribute of object
     errors = {}
     for attribute in data['model'].configure_attributes
-      if !attribute.readonly 
-        
-        # check required
-        if 'null' of attribute && !attribute[null] && !data['params'][attribute.name]
-          errors[attribute.name] = 'is required'
+
+      # only if attribute is not read only
+      if !attribute.readonly
+
+        # check required // if null is defined && null is false
+        if 'null' of attribute && !attribute[null] 
+
+          # key exists not in hash || value is '' || value is undefined 
+          if !( attribute.name of data['params'] ) || data['params'][attribute.name] is '' || data['params'][attribute.name] is undefined
+            errors[attribute.name] = 'is required'
 
         # check confirm password
         if attribute.type is 'password' && data['params'][attribute.name] && "#{attribute.name}_confirm" of data['params']

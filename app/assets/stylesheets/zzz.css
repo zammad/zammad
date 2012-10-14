@@ -239,6 +239,14 @@ footer {
   text-decoration: line-through;
 }
 
+.not-active {
+  text-decoration: line-through;
+}
+.not-active a {
+  color: #bbb;
+}
+
+
 .customer-info {
   width:86%;
   padding-top: 5px;

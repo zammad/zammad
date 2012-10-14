@@ -10,5 +10,7 @@ class App.Organization extends App.Model
     { name: 'active',     display: 'Active',              tag: 'boolean',   note: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
   ]
   @configure_overview = [
-    'name', 'shared',
+    'name',
+    'shared',
+    'active',
   ]

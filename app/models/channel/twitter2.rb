@@ -251,7 +251,7 @@ class Channel::Twitter2
     )
 
   end
-  
+
   def send(attr, notification = false)
 #    logger.debug('tweeeeettttt!!!!!!')
     channel = Channel.where( :area => 'Twitter::Inbound', :active => true ).first
@@ -272,7 +272,7 @@ class Channel::Twitter2
 #      puts dm.inspect
       return dm      
     end
-      
+
     if atts[:type] == 'twitter status'
       message = client.update(
         atts[:body].to_s,

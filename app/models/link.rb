@@ -173,7 +173,9 @@ class Link < ActiveRecord::Base
 end
 
 class Link::Type < ActiveRecord::Base
+  validates :name, :presence => true
 end
 
 class Link::Object < ActiveRecord::Base
+  validates :name, :presence => true
 end

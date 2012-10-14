@@ -403,12 +403,14 @@ class Ticket < ApplicationModel
     after_create  :cache_delete
     after_update  :cache_delete
     after_destroy :cache_delete
+    validates     :name, :presence => true
   end
 
   class StateType < ApplicationModel
     after_create  :cache_delete
     after_update  :cache_delete
     after_destroy :cache_delete
+    validates     :name, :presence => true
   end
 
   class State < ApplicationModel
@@ -416,5 +418,6 @@ class Ticket < ApplicationModel
     after_create  :cache_delete
     after_update  :cache_delete
     after_destroy :cache_delete
+    validates     :name, :presence => true
   end
 end

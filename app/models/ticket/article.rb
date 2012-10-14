@@ -173,8 +173,11 @@ class Ticket::Article < ApplicationModel
   end
 
   class Sender < ApplicationModel
+    validates   :name, :presence => true
+
   end
 
   class Type < ApplicationModel
+    validates   :name, :presence => true
   end
 end

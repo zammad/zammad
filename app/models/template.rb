@@ -1,3 +1,4 @@
 class Template < ApplicationModel
-  store :options
+  store       :options
+  validates   :name, :presence => true
 end

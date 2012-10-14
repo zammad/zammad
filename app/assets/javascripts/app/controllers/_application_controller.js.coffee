@@ -78,7 +78,7 @@ class App.Controller extends Spine.Controller
 
   table: (data) ->
     overview   = data.overview || data.model.configure_overview || []
-    attributes = data.attributes || data.model.configure_attributes
+    attributes = data.attributes || data.model.configure_attributes || {}
     header     = data.header
 
     # define normal header
@@ -123,42 +123,18 @@ class App.Controller extends Spine.Controller
       # check if info for each col. is already there
       for row in dataTypesForCols
 
-        # check if info is a object
-        if typeof object[row.name] is 'object'
-          if !object[row.name]
-            object[row.name] = {
-              name: '-',
-            }
-
-          # if no content exists, try firstname/lastname
-          if !object[row.name]['name']
-            if object[row.name]['realname']
-              object[row.name]['name'] = object[row.name]['realname']
-
-        # if info isnt a object, create one
-        else if typeof object[row.name] isnt 'object'
-          object[row.name] = {
-            name: object[row.name],
-          }
-
-        # fallback if it's something else
-        else
-          object[row.name] = {
-            name: '????',
-          }
-
         # execute callback on content
         if row.callback
-          object[row.name]['name'] = row.callback( object[row.name]['name'] )
+          object[row.name] = row.callback( object[row.name] )
 
         # lookup relation
-        if !object[row.name]['name']
+        if !object[row.name]
           rowWithoutId = row.name + '_id'
           for attribute in attributes
             if rowWithoutId is attribute.name
               if attribute.relation && App[attribute.relation]
                 record = App.Collection.find( attribute.relation, object[rowWithoutId] )
-                object[row.name]['name'] = record.name
+                object[row.name] = record.name
 
     @log 'table', 'header', header, 'overview', dataTypesForCols, 'objects', objects
     table = App.view('generic/table')(

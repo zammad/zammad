@@ -3,4 +3,5 @@ class Overview < ApplicationModel
   store     :order
   store     :meta
   store     :view
+  validates :name, :presence => true
 end
