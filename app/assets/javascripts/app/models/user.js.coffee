@@ -26,5 +26,5 @@ class App.User extends App.Model
   ]
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
-    'login', 'firstname', 'lastname', 'active',
+    'login', 'firstname', 'lastname',
   ]

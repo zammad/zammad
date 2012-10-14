@@ -118,8 +118,7 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
 
     # validate form
     errors = @form.validate( params )
-    @log '11111', params, errors
-#    return false
+
     # show errors in form
     if errors
       @log 'error new', errors
@@ -335,7 +334,7 @@ class App.ChannelEmailInbound extends App.Controller
 
   render: =>
     channels = App.Channel.all()
-    @log 'llllll', channels
+    
     html = $('<div></div>')
     data = []
     for channel in channels
@@ -343,7 +342,6 @@ class App.ChannelEmailInbound extends App.Controller
         channel.host = channel.options['host']
         channel.user = channel.options['user']
         data.push channel
-    @log 'llllll222', data
 
     table = @table(
       header:   ['Host', 'User', 'Adapter', 'Active'],

@@ -82,17 +82,24 @@ class App.Controller extends Spine.Controller
     header     = data.header
 
     # define normal header
-    if !header
+    if header
+      header_new = []
+      for key in header
+        header_new.push {
+          display: key
+        }
+      header = header_new
+    else if !data.overview_extended
       header = []
       for row in overview
         if attributes
           for attribute in attributes
             if row is attribute.name
-              header.push( attribute.display )
+              header.push attribute
             else
               rowWithoutId = row + '_id'
               if rowWithoutId is attribute.name
-                header.push( attribute.display )
+                header.push  attribute
 
     dataTypesForCols = []
     for row in overview
@@ -103,16 +110,18 @@ class App.Controller extends Spine.Controller
 
     # extended table format
     if data.overview_extended
+      @log 'ggggggg', data.overview_extended
       if !header
+        @log 'ggggggg222', data.overview_extended
         header = []
         for row in data.overview_extended
           for attribute in attributes
             if row.name is attribute.name
-              header.push( attribute.display )
+              header.push attribute
             else
               rowWithoutId = row.name + '_id'
               if rowWithoutId is attribute.name
-                header.push( attribute.display )
+                header.push attribute
 
       dataTypesForCols = data.overview_extended
 
@@ -164,12 +173,12 @@ class App.Controller extends Spine.Controller
 
   ticketTableAttributes: (attributes) =>
     all_attributes = [
-      { name: 'number',                 link: true },
-      { name: 'title',                  link: true },
+      { name: 'number',                 link: true, title: 'title' },
+      { name: 'title',                  link: true, title: 'title' },
       { name: 'customer',               class: 'user-data', data: { id: true } },
-      { name: 'ticket_state',           translate: true },
-      { name: 'ticket_priority',        translate: true },
-      { name: 'group' },
+      { name: 'ticket_state',           translate: true, title: true },
+      { name: 'ticket_priority',        translate: true, title: true },
+      { name: 'group',                  title: 'group' },
       { name: 'owner',                  class: 'user-data', data: { id: true } },
       { name: 'created_at',             callback: @frontendTime },
       { name: 'last_contact',           callback: @frontendTime },

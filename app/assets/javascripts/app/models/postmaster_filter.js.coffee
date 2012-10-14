@@ -13,5 +13,5 @@ class App.PostmasterFilter extends App.Model
     { name: 'active',       display: 'Active',            tag: 'boolean', type: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
   ]
   @configure_overview = [
-    'name', 'active'
+    'name',
   ]

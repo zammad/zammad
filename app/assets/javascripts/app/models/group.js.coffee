@@ -16,5 +16,4 @@ class App.Group extends App.Model
   ]
   @configure_overview = [
     'name',
-    'active'
   ]

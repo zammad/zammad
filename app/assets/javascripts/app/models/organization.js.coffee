@@ -12,5 +12,4 @@ class App.Organization extends App.Model
   @configure_overview = [
     'name',
     'shared',
-    'active',
   ]

@@ -17,6 +17,16 @@ label, input, button, select, textarea {
   display: none;
 }
 
+table {
+  table-layout: fixed;
+  
+}
+table th, table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /*
 #content > *:not(.active) {
   display: none !important;
