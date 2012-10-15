@@ -77,7 +77,6 @@ class Store < ActiveRecord::Base
 
   class File < ActiveRecord::Base
     before_validation :add_md5
-    validates         :name, :presence => true
 
     private
       def add_md5
