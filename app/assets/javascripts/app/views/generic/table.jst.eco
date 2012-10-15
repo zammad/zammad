@@ -23,22 +23,23 @@
     </td>
     <% end %>
     <% for row in @overview: %>
-      <% displayName = '' %>
       <% if typeof object[row.name] is 'object': %>
       <%   displayName = object[row.name].displayNameLong() %>
       <% else: %>
       <%   displayName = object[row.name] %>
       <% end %>
       <% if row.translate: %><%  displayName = T(displayName) %><% end %>
-      <% displayNameTitle = displayName %>
-      <% if row.title && object[row.title]: %>
-        <% if typeof object[row.title] is 'object': %>
-        <%   displayNameTitle = object[row.title].displayNameLong() %>
-        <% else: %>
-        <%   displayNameTitle = object[row.title] %>
+      <% if row.title: %>
+        <% displayNameTitle = displayName %>
+        <% if object[row.title]: %>
+          <% if typeof object[row.title] is 'object': %>
+          <%   displayNameTitle = object[row.title].displayNameLong() %>
+          <% else: %>
+          <%   displayNameTitle = object[row.title] %>
+          <% end %>
         <% end %>
       <% end %>
-      <td <% if row.title: %>title="<%= displayNameTitle %>"<% end %>>
+    <td <% if row.title: %>title="<%= displayNameTitle %>"<% end %>>
       <% if row.link: %><a href="#" data-type="edit"><% else: %><span <% if row.class: %>class="<%= row.class %>"<% end %> <% if row.data && row.data.id: %>data-id="<%= object[row.name].id %>"<% end %>><% end %>
       <% if row.translate || row.callback: %><%- displayName %><% else: %><%= displayName %><% end %>
       <% if row.link: %></a><% else: %></span><% end %>
