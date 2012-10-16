@@ -110,9 +110,7 @@ class App.Controller extends Spine.Controller
 
     # extended table format
     if data.overview_extended
-      @log 'ggggggg', data.overview_extended
       if !header
-        @log 'ggggggg222', data.overview_extended
         header = []
         for row in data.overview_extended
           for attribute in attributes
