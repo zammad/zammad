@@ -40,6 +40,7 @@ class App extends Spine.Controller
 
       # define print name helper
       params.P = ( item ) ->
+        return item if !item
         if typeof item is 'object'
           if item.displayNameLong
             item.displayNameLong()

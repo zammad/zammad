@@ -9,7 +9,7 @@ class App.Model extends Spine.Model
       if @lastname
         if name
          name = name + ' '
-      name = name + @lastname
+        name = name + @lastname
       return name
     return '???'
 
@@ -20,7 +20,7 @@ class App.Model extends Spine.Model
       if @lastname
         if name
          name = name + ' '
-      name = name + @lastname
+        name = name + @lastname
       if @organization
         if typeof @organization is 'object'
           name = "#{name} (#{@organization.name})"
