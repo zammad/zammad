@@ -67,7 +67,7 @@ class App.ChannelEmailFilter extends App.Controller
     )
 
     html.append( table )
-    html.append( '<a data-type="new" class="btn">' + T('New') + '</a>' )
+    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 
   new: (e) =>
@@ -160,7 +160,7 @@ class App.ChannelEmailAddress extends App.Controller
     )
 
     html.append( table )
-    html.append( '<a data-type="new" class="btn">' + T('New') + '</a>' )
+    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 
   new: (e) =>
@@ -251,7 +251,7 @@ class App.ChannelEmailSignature extends App.Controller
     )
 
     html.append( table )
-    html.append( '<a data-type="new" class="btn">' + T('New') + '</a>' )
+    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 
   new: (e) =>
@@ -351,7 +351,7 @@ class App.ChannelEmailInbound extends App.Controller
     )
 
     html.append( table )
-    html.append( '<a data-type="new" class="btn">' + T('New') + '</a>' )
+    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 
   new: (e) =>

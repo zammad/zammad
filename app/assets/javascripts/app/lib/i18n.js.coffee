@@ -1,18 +1,32 @@
 $ = jQuery.sub()
 
-# create dumy function till i18n is loaded
-window.T = (text) ->
-  return text
-
 class App.i18n
+  _instance = undefined
+
+  @init: ->
+    _instance ?= new _Singleton
+
+  @translateContent: ( string, args... ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.translate_content( string, args )
+
+  @translateInline: ( string, args... ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.translate_inline( string, args )
+
+  @translateTimestamp: ( args ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.timestamp( args )
+
+class _Singleton
 
   constructor: ->
     @locale = 'de'
     @timestampFormat = 'yyyy-mm-dd HH:MM'
     @set( @locale )
-    window.T = @translate_content
-    window.Ti = @translate_inline
-    window.Ts = @timestamp
 
 #    $('.translation [contenteditable]')
     $('body')
@@ -60,7 +74,7 @@ class App.i18n
 
         return $this
 
-  set: (locale) ->
+  set: ( locale ) ->
     @map = {}
     App.Com.ajax(
       id:    'i18n-set-' + locale,
@@ -86,11 +100,11 @@ class App.i18n
         console.log 'error', error, statusText, xhr.statusCode
     )
 
-  translate_inline: (string, args...) =>
-    @translate(string, args...)
+  translate_inline: ( string, args... ) =>
+    @translate( string, args... )
 
-  translate_content: (string, args...) =>
-    translated = @translate(string, args...)
+  translate_content: ( string, args... ) =>
+    translated = @translate( string, args... )
 #    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + '<span class="icon-edit"></span>'
     if window.Config['Translation']
       replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
@@ -100,7 +114,7 @@ class App.i18n
     else
       translated
 
-  translate: (string, args...) =>
+  translate: ( string, args... ) =>
 
     # return '' on undefined
     return '' if string is undefined
@@ -112,7 +126,7 @@ class App.i18n
     else
       @_translated = false
       translated = string
-      
+
     # search %s
     for arg in args
       translated = translated.replace(/%s/, arg)
@@ -123,15 +137,15 @@ class App.i18n
     # return translated string
     return translated
 
-  escape: (string) ->
-    string = ('' + string)
+  escape: ( string ) ->
+    string = ( '' + string )
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/\x22/g, '&quot;')
 
-  timestamp: (time) =>
-    s = (num, digits) ->
+  timestamp: ( time ) =>
+    s = ( num, digits ) ->
       while num.toString().length < digits
         num = "0" + num
       return num

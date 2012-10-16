@@ -39,7 +39,7 @@ class App.TicketMerge extends App.ControllerModal
           # notify UI
           @notify
             type:    'success',
-            msg:     T( 'Ticket %s merged!', data.slave_ticket['number'] ),
+            msg:     App.i18n.translateContent( 'Ticket %s merged!', data.slave_ticket['number'] ),
             timeout: 6000,
 
         else
@@ -47,7 +47,7 @@ class App.TicketMerge extends App.ControllerModal
           # notify UI
           @notify
             type:    'error',
-            msg:     T( data['message'] ),
+            msg:     App.i18n.translateContent( data['message'] ),
             timeout: 6000,
 #      error: =>
     )

@@ -202,8 +202,8 @@ class Index extends App.Controller
           # notify UI
           ui.notify
             type:    'success',
-            msg:     T('Ticket %s created!', @.number),
-            link:    "#ticket/zoom/#{@.id}"
+            msg:     App.i18n.translateContent( 'Ticket %s created!', @number ),
+            link:    "#ticket/zoom/#{@id}"
             timeout: 12000,
 
           # create new create screen
@@ -263,13 +263,18 @@ class UserNew extends App.ControllerModal
     ui = @
     user.save(
       success: ->
-        realname = @displayName()
-        $('#create_customer_id').val( @id )
-        $('#create_customer_id_autocompletion').val( realname )
-  
-        # start customer info controller
-        ui.userInfo( user_id: @id )
-        ui.modalHide()
+
+        # force to reload object
+        callbackReload = (user) ->
+          realname = user.displayName()
+          $('#create_customer_id').val( user.id )
+          $('#create_customer_id_autocompletion').val( realname )
+
+          # start customer info controller
+          ui.userInfo( user_id: user.id )
+          ui.modalHide()
+        App.Collection.find( 'User', @id, callbackReload , true )
+
       error: ->
         ui.modalHide()
     )

@@ -1,5 +1,5 @@
 <div class="hero-unit">
-  <h2><%- T(@head) %> <small><%- T(@head_small) %></small></h2>
+  <h2><%- @T( @head ) %> <small><%- @T( @head_small ) %></small></h2>
   <div class="container">
     <p>
       <%- @message %>

@@ -42,14 +42,20 @@ class App.ControllerGenericNew extends App.ControllerModal
     @formDisable(e)
 
     # save object
+    ui = @
     object.save(
-      success: =>
-        if @callback
-          @callback(@item)
-        @modalHide()
+      success: ->
+
+        # force to reload object
+        callbackReload = (user) ->
+          if ui.callback
+            ui.callback( user )
+          ui.modalHide()
+        App.Collection.find( ui.pageData.object, @id, callbackReload , true )
+
       error: =>
-        @log 'errors'
-        @modalHide()
+        ui.log 'errors'
+        ui.modalHide()
     )
 
 class App.ControllerGenericEdit extends App.ControllerModal
@@ -98,14 +104,20 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @formDisable(e)
 
     # save object
+    ui = @
     @item.save(
-      success: =>
-        if @callback
-          @callback(@item)
-        @modalHide()
+      success: ->
+
+        # force to reload object
+        callbackReload = (user) ->
+          if ui.callback
+            ui.callback( user )
+          ui.modalHide()
+        App.Collection.find( ui.pageData.object, @id, callbackReload , true )
+
       error: =>
-        @log 'errors'
-        @modalHide()
+        ui.log 'errors'
+        ui.modalHide()
     )
 
 class App.ControllerGenericIndex extends App.Controller

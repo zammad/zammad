@@ -1,11 +1,11 @@
 <form class="form-horizontal">
 <div class="modal-header">
   <a href="#" class="close">&times;</a>
-  <h3><%- T('Merge') %></h3>
+  <h3><%- @T( 'Merge' ) %></h3>
 </div>
 <div class="modal-body">
   <div class="table_history"></div>
-  <%- T('Merge to Ticket#') %>:
+  <%- @T( 'Merge to Ticket#' ) %>:
   <input type="text" name="master_ticket_number" value=""/>
 <!--
   <ul>
@@ -16,6 +16,6 @@
 -->
 </div>
 <div class="modal-footer">
-  <button type="submit" class="btn btn-primary"><%- T('Submit') %></button>
+  <button type="submit" class="btn btn-primary"><%- @T( 'Submit' ) %></button>
 </div>
 </form>

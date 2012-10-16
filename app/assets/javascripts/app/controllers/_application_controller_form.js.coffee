@@ -472,7 +472,7 @@ class App.ControllerForm extends App.Controller
         if item.displayName
           name_new = item.displayName()
         if attribute.translate
-          name_new = Ti(name_new)
+          name_new = App.i18n.translateInline(name_new)
         attribute.options.push {
           name:  name_new,
           value: item.id,

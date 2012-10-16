@@ -21,6 +21,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :phone,          :string, :limit => 100, :null => true
       t.column :fax,            :string, :limit => 100, :null => true
       t.column :mobile,         :string, :limit => 100, :null => true
+      t.column :department,     :string, :limit => 200, :null => true
       t.column :street,         :string, :limit => 120, :null => true
       t.column :zip,            :string, :limit => 100, :null => true
       t.column :city,           :string, :limit => 100, :null => true
@@ -37,6 +38,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :users, [:login], :unique => true
     add_index :users, [:email]
 #    add_index :users, [:email], :unique => true
+    add_index :users, [:department]
     add_index :users, [:phone]
     add_index :users, [:fax]
     add_index :users, [:mobile]

@@ -36,6 +36,34 @@
 
 class App extends Spine.Controller
   @view: (name) ->
-    JST["app/views/#{name}"]
+    template = ( params = {} ) =>
+
+      # define print name helper
+      params.P = ( item ) ->
+        if typeof item is 'object'
+          if item.displayNameLong
+            item.displayNameLong()
+          else if item.displayName
+            item.displayName()
+          else
+            item.name
+        else
+          item
+
+      # define translation helper
+      params.T = ( item ) ->
+        App.i18n.translateContent( item )
+
+      # define translation inline helper
+      params.Ti = ( item ) ->
+        App.i18n.translateInline( item )
+
+      # define linkify helper
+      params.L = ( item ) ->
+        window.linkify( item )
+
+      # define template
+      JST["app/views/#{name}"](params)
+    template
 
 window.App = App

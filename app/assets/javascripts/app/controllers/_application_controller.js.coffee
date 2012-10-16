@@ -2,8 +2,8 @@ class App.Controller extends Spine.Controller
   
   # add @title methode to set title
   title: (name) ->
-#    $('html head title').html( Config.product_name + ' - ' + Ti(name) )
-    document.title = Config.product_name + ' - ' + Ti(name)
+#    $('html head title').html( Config.product_name + ' - ' + App.i18n.translateInline(name) )
+    document.title = Config.product_name + ' - ' + App.i18n.translateInline(name)
 
   # add @notify methode to create notification
   notify: (data) ->
@@ -217,32 +217,32 @@ class App.Controller extends Spine.Controller
     if diff >= 86400
       unit = Math.round( ( diff / 86400 ) )
 #      if unit > 1
-#        return unit + ' ' + T('days')
+#        return unit + ' ' + App.i18n.translateContent('days')
 #      else
-#        return unit + ' ' + T('day')
-      string = unit + ' ' + T('d')
+#        return unit + ' ' + App.i18n.translateContent('day')
+      string = unit + ' ' + App.i18n.translateInline('d')
     if diff >= 3600
       unit = Math.round( ( diff / 3600 ) % 24 )
 #      if unit > 1
-#        return unit + ' ' + T('hours')
+#        return unit + ' ' + App.i18n.translateContent('hours')
 #      else
-#        return unit + ' ' + T('hour')
+#        return unit + ' ' + App.i18n.translateContent('hour')
       if string isnt ''
-        string = string + ' ' + unit + ' ' + T('h')
+        string = string + ' ' + unit + ' ' + App.i18n.translateInline('h')
         return string
       else
-        string = unit + ' ' + T('h')
+        string = unit + ' ' + App.i18n.translateInline('h')
     if diff <= 86400
       unit = Math.round( ( diff / 60 ) % 60 )
 #      if unit > 1
-#        return unit + ' ' + T('minutes')
+#        return unit + ' ' + App.i18n.translateContent('minutes')
 #      else
-#        return unit + ' ' + T('minute')
+#        return unit + ' ' + App.i18n.translateContent('minute')
       if string isnt ''
-        string = string + ' ' + unit + ' ' + T('m')
+        string = string + ' ' + unit + ' ' + App.i18n.translateInline('m')
         return string
       else
-        string = unit + ' ' + T('m')
+        string = unit + ' ' + App.i18n.translateInline('m')
     return string
 
   userInfo: (data) =>
@@ -254,7 +254,7 @@ class App.Controller extends Spine.Controller
 
   authenticate: ->
     console.log 'authenticate', window.Session
-    
+
     # return rtue if session exists
     return true if window.Session['id']
 
@@ -275,7 +275,7 @@ class App.Controller extends Spine.Controller
 #        console.log('rewrite frontendTimeUpdate', this)
         timestamp = $(this).data('time')
         time = ui.humanTime( timestamp )
-        $(this).attr( 'title', Ts(timestamp) )
+        $(this).attr( 'title', App.i18n.translateTimestamp(timestamp) )
         $(this).text( time )
       )
     @interval( update, 30000, 'frontendTimeUpdate' )
@@ -318,19 +318,29 @@ class App.Controller extends Spine.Controller
       title: ->
         user_id = $(@).data('id')
         user = App.Collection.find( 'User', user_id )
-        user.realname
+        user.displayName()
       content: ->
         user_id = $(@).data('id')
         user = App.Collection.find( 'User', user_id )
 
         # get display data
         data = []
-        for item in App.User.configure_attributes
+        for item2 in App.User.configure_attributes
+          item = _.clone( item2 )
+
+          # check if value for _id exists
+          itemNameValue = item.name
+          itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
+          if itemNameValueNew of user
+            item.name = itemNameValueNew
+
+          # add to show if value exists
           if user[item.name]
-            if item.name isnt 'firstname'
-              if item.name isnt 'lastname'
-                if item.info #&& ( @user[item.name] || item.name isnt 'note' )
-                  data.push item
+
+            # do not show firstname and lastname / already show via diplayName()
+            if item.name isnt 'firstname' && item.name isnt 'lastname'
+              if item.info #&& ( @user[item.name] || item.name isnt 'note' )
+                data.push item
 
         # insert data
         App.view('user_info_small')(

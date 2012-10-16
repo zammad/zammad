@@ -1,20 +1,20 @@
 <form class="form-horizontal">
 <div class="modal-header">
   <a href="#" class="close">&times;</a>
-  <h3><%- T('Link') %></h3>
+  <h3><%- @T( 'Link' ) %></h3>
 </div>
 <div class="modal-body">
-  <%- T('Link') %>
-  <%- T(@link_object) %>
+  <%- @T( 'Link' ) %>
+  <%- @T( @link_object ) %>
   <input type="text" name="ticket_number" value="" class="span2" required/>
-  <%- T('as') %>
+  <%- @T( 'as' ) %>
   <select name="link_type" class="span2" required>
     <option value="">-</option>
-    <option value="normal"><%- T('normal') %></option>
-    <option value="child"><%- T('child') %></option>
-    <option value="parent"><%- T('parent') %></option>
+    <option value="normal"><%- @T( 'normal' ) %></option>
+    <option value="child"><%- @T( 'child' ) %></option>
+    <option value="parent"><%- @T( 'parent' ) %></option>
   </select>
-  <%- T('of') %>
+  <%- @T( 'of' ) %>
   Ticket#
   <%= @object.number %>.
 <!--
@@ -26,6 +26,6 @@
 -->
 </div>
 <div class="modal-footer">
-  <button type="submit" class="btn btn-primary"><%- T('Submit') %></button>
+  <button type="submit" class="btn btn-primary"><%- @T( 'Submit' ) %></button>
 </div>
 </form>

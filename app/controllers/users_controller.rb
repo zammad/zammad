@@ -161,7 +161,8 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
 #          logger.debug('IIIIIIIIIIIIIIIIIIIIIIIIIIIIII')
 #          exit '123'
       end
-      render :json => user, :status => :created
+      user_new = User.user_data_full( user.id )
+      render :json => user_new, :status => :created
     rescue Exception => e
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
@@ -206,8 +207,8 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
       if params[:organization_ids]
         user.organization_ids = params[:organization_ids]
       end
-      user = User.user_data_full( params[:id] )
-      render :json => user, :status => :ok
+      user_new = User.user_data_full( params[:id] )
+      render :json => user_new, :status => :ok
     rescue Exception => e
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end

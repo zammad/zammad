@@ -13,10 +13,22 @@ class App.UserInfo extends App.Controller
 
     # get display data
     data = []
-    for item in App.User.configure_attributes
-      if item.name isnt 'firstname' && item.name isnt 'lastname'
-        if item.info
-          data.push item
+    for item2 in App.User.configure_attributes
+      item = _.clone( item2 )
+
+      # check if value for _id exists
+      itemNameValue = item.name
+      itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
+      if itemNameValueNew of user
+        item.name = itemNameValueNew
+
+      # add to show if value exists
+      if user[item.name]
+
+        # do not show firstname and lastname / already show via diplayName()
+        if item.name isnt 'firstname' && item.name isnt 'lastname'
+          if item.info
+            data.push item
 
     # insert data
     @html App.view('user_info')(

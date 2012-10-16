@@ -21,8 +21,13 @@ class App.Model extends Spine.Model
         if name
          name = name + ' '
       name = name + @lastname
-      if @note
-        name = "#{name} (#{@note})"
+      if @organization
+        if typeof @organization is 'object'
+          name = "#{name} (#{@organization.name})"
+        else
+          name = "#{name} (#{@organization})"
+      else if @department
+        name = "#{name} (#{@department})"
       return name
     return '???'
 

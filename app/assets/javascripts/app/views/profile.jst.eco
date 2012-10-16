@@ -1,11 +1,11 @@
 <div class="page-header">
-  <h1><%- T('Profile') %><small></small></h1>
+  <h1><%- @T( 'Profile' ) %><small></small></h1>
 </div>
 
 <ul>
-  <li><%- T('Password') %></li>
-  <li><%- T('Link Accounts') %></li>
-  <li><%- T('Notifications') %></li>
+  <li><%- @T( 'Password' ) %></li>
+  <li><%- @T( 'Link Accounts' ) %></li>
+  <li><%- @T( 'Notifications' ) %></li>
   <li></li>
 </ul>
 

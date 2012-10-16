@@ -5,7 +5,7 @@
       <th style="width: 10px"><input type="checkbox" value="" name="bulk_all"/></th>
     <% end %>
 <% for row in @header: %>
-      <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- T(row.display) %></th>
+      <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- @T( row.display ) %></th>
 <% end %>
 <!--
       <th>Destory</th>
@@ -19,24 +19,16 @@
   <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
     <td>
-        <input type="checkbox" value="<%= object.id %>" name="bulk"/>
+      <input type="checkbox" value="<%= object.id %>" name="bulk"/>
     </td>
     <% end %>
     <% for row in @overview: %>
-      <% if typeof object[row.name] is 'object': %>
-      <%   displayName = object[row.name].displayNameLong() %>
-      <% else: %>
-      <%   displayName = object[row.name] %>
-      <% end %>
-      <% if row.translate: %><%  displayName = T(displayName) %><% end %>
+      <% displayName = @P( object[row.name] ) %>
+      <% if row.translate: %><%  displayName = @T( displayName ) %><% end %>
       <% if row.title: %>
         <% displayNameTitle = displayName %>
         <% if object[row.title]: %>
-          <% if typeof object[row.title] is 'object': %>
-          <%   displayNameTitle = object[row.title].displayNameLong() %>
-          <% else: %>
-          <%   displayNameTitle = object[row.title] %>
-          <% end %>
+          <% displayNameTitle = @P( object[row.title] ) %>
         <% end %>
       <% end %>
     <td <% if row.title: %>title="<%= displayNameTitle %>"<% end %>>

@@ -423,7 +423,7 @@ class Article extends App.Controller
         article_lines.splice( preview + 1, 0, '----SEEMORE----' )
       @article['html'] = article_lines.join("\n")
     @article['html'] = window.linkify( @article['html'] )
-    notify = '<a href="#" class="show_toogle">' + T('See more') + '</a>'
+    notify = '<a href="#" class="show_toogle">' + App.i18n.translateContent('See more') + '</a>'
 
     # preview mode
     if preview_mode

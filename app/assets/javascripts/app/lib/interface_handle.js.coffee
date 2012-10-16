@@ -12,7 +12,7 @@ class App.Run extends App.Controller
     App.WebSocket.connect()
 
     # init of i18n
-    new App.i18n
+    App.i18n.init()
 
     # start navigation controller
     new App.Navigation( el: @el.find('#navigation') )

@@ -6,26 +6,26 @@
           <% for item in @navbar_left: %>
             <% if item.child: %>
             <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
-              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- T(item.name) %> <b class="caret"></b></a>
+              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <% for item in item.child: %>
                   <% if item.divider: %>
                   <li class="divider"></li>
                   <% end %>
                   <% if item.navheader: %>
-                  <li class="nav-header"><%- T(item.navheader) %></li>
+                  <li class="nav-header"><%- @T( item.navheader ) %></li>
                   <% end %>
-                  <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- T(item.name) %><% if item['count'] isnt undefined: %> <span class="count">(<%= item['count'] %>)</span><% end %></a></li>
+                  <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %> <span class="count">(<%= item['count'] %>)</span><% end %></a></li>
                 <% end %>
               </ul>
             </li>
             <% else: %>
-            <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- T(item.name) %></a></li>
+            <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
             <% end %>
           <% end %>
         </ul>
         <form class="navbar-search pull-left">
-          <input class="search-query" type="search" value="" placeholder="<%- Ti('Search') %>"/>
+          <input class="search-query" type="search" value="" placeholder="<%- @Ti( 'Search' ) %>"/>
         </form>
         <div class="spinner"/>
 <% if @user: %>
@@ -33,27 +33,27 @@
         <% for item in @navbar_right: %>
           <% if item.child: %>
             <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
-              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- T(item.name) %> <b class="caret"></b></a>
+              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <% for item in item.child: %>
                   <% if item.divider: %>
                   <li class="divider"></li>
                   <% end %>
                   <% if item.navheader: %>
-                  <li class="nav-header"><%- T(item.navheader) %></li>
+                  <li class="nav-header"><%- @T( item.navheader ) %></li>
                   <% end %>
-                  <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- T(item.name) %><% if item['count'] isnt undefined: %> <span class="count">(<%= item['count'] %>)</span><% end %></a></li>
+                  <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %> <span class="count">(<%= item['count'] %>)</span><% end %></a></li>
                 <% end %>
               </ul>
             </li>
             <% else: %>
-            <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- T(item.name) %></a></li>
+            <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
             <% end %>
           <% end %>
         </ul>
 <% else: %>
         <ul class="nav pull-right">
-          <li><a href="#login"><%- T('Sign in') %></a></li>
+          <li><a href="#login"><%- @T( 'Sign in' ) %></a></li>
         </ul>
 <% end %>
     </div>

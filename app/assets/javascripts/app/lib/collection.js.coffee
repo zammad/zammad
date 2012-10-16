@@ -9,10 +9,10 @@ class App.Collection
       _instance ?= new _Singleton
     _instance.load( args )
 
-  @find: ( type, id, callback ) ->
+  @find: ( type, id, callback, force ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.find( type, id, callback )
+    _instance.find( type, id, callback, force )
 
   @get: ( args ) ->
     if _instance == undefined
@@ -99,17 +99,20 @@ class _Singleton
       if !localStorage
         App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, data: [ object ] } )
 
-  find: ( type, id, callback ) ->
+  find: ( type, id, callback, force ) ->
 
-#    console.log( 'find', type, id )
+#    console.log( 'find', type, id, force )
 #    if App[type].exists( id ) && !callback
-    if App[type].exists( id )
+    if !force && App[type].exists( id )
 #      console.log( 'find exists', type, id )
       data = App[type].find( id )
       if callback
         callback( data )
     else
-      console.log( 'find not loaded!', type, id )
+      if force
+        console.log( 'find forced to load!', type, id )
+      else
+        console.log( 'find not loaded!', type, id )
       if callback
         App[type].bind 'refresh', ->
           console.log 'loaded..' + type +  '..', id
@@ -135,15 +138,6 @@ class _Singleton
       # set image url
       if data && !data['image']
         data['image'] = 'http://placehold.it/48x48'
-
-      # set realname
-      data['realname'] = ''
-      if data['firstname']
-        data['realname'] = data['firstname']
-      if data['lastname']
-        if data['realname'] isnt ''
-          data['realname'] = data['realname'] + ' '
-        data['realname'] = data['realname'] + data['lastname']
 
       return data
 

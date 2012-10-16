@@ -1,9 +1,9 @@
 <div class="control-group <%= @attribute.item_class %>">
-  <label class="control-label" for="<%= @attribute.id %>"><%- T(@attribute.display) %><% if !@attribute.null: %> *<% end %>
+  <label class="control-label" for="<%= @attribute.id %>"><%- @T( @attribute.display ) %><% if !@attribute.null: %> *<% end %>
   </label>
   <div class="controls">    
-    <%- @item %><% if @attribute.note: %><span class="icon-question-sign" title="<%- T(@attribute.note) + ' ' %>"></span><% end %>
+    <%- @item %><% if @attribute.note: %><span class="icon-question-sign" title="<%- @Ti( @attribute.note ) + ' ' %>"></span><% end %>
     <span class="help-inline"></span>
-    <span class="help-block"><% if @attribute.help: %><%- T(@attribute.help) + ' ' %><% end %><%- @attribute.link %></span>
+    <span class="help-block"><% if @attribute.help: %><%- @T( @attribute.help ) + ' ' %><% end %><%- @attribute.link %></span>
   </div>
 </div>

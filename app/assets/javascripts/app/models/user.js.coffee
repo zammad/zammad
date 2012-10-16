@@ -1,5 +1,5 @@
 class App.User extends App.Model
-  @configure 'User', 'login', 'firstname', 'lastname', 'email', 'web', 'password', 'phone', 'fax', 'mobile', 'street', 'zip', 'city', 'country', 'organization_id', 'note', 'role_ids', 'group_ids', 'active', 'invite'
+  @configure 'User', 'login', 'firstname', 'lastname', 'email', 'web', 'password', 'phone', 'fax', 'mobile', 'street', 'zip', 'city', 'country', 'organization_id', 'department', 'note', 'role_ids', 'group_ids', 'active', 'invite'
   @extend Spine.Model.Ajax
   @url: '/api/users'
 
@@ -13,11 +13,12 @@ class App.User extends App.Model
     { name: 'phone',            display: 'Phone',         tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
     { name: 'mobile',           display: 'Mobile',        tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
     { name: 'fax',              display: 'Fax',           tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
+    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', class: 'span4', signup: false, quick: true, info: true },
+    { name: 'department',       display: 'Department',    tag: 'input',    type: 'text',    limit: 200, null: true,  class: 'span4', signup: false, quick: true, info: true },
     { name: 'street',           display: 'Street',        tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
     { name: 'zip',              display: 'Zip',           tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
     { name: 'city',             display: 'City',          tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
     { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', class: 'span4', signup: true,  quick: false, },
-    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', class: 'span4' },
     { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, class: 'span4', quick: true, info: true },
     { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role', class: 'span4' },
     { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', class: 'span4', invite_agent: true },

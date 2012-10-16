@@ -9,8 +9,8 @@
         <span class="count"><%= Config['LastOverviewPosition'] %>/<%= Config['LastOverviewTotal'] %></span>
         <% base_url ="#ticket_view/#{Config['LastOverview']}/#{Config['LastOverviewPosition']}/" %>
         <ul>
-          <li class="<% if Config['LastOverviewPosition'] <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- T('previous Ticket in Overview') %>">«</a></li>
-          <li class="<% if Config['LastOverviewPosition'] is Config['LastOverviewTotal']: %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- T('next Ticket in Overview') %>">»</a></li>
+          <li class="<% if Config['LastOverviewPosition'] <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
+          <li class="<% if Config['LastOverviewPosition'] is Config['LastOverviewTotal']: %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
         </ul>
       </div>
       <% end %>
@@ -19,8 +19,8 @@
   <div class="row">
     <div class="span12">
       <%= @ticket.group.name %> -
-      <%- T(@ticket.ticket_state.name) %> -
-      <%- T(@ticket.ticket_priority.name) %> -
+      <%- @T( @ticket.ticket_state.name ) %> -
+      <%- @T( @ticket.ticket_priority.name ) %> -
       <span class="humanTimeFromNow" data-time="<%- @ticket.created_at %>">?</span>
     </div>
   </div>
@@ -34,31 +34,31 @@
       <div class="avatar span1 thumbnails">
         <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
         <ul>
-          <li style="font-size: 10px;"><%- T(article.article_type.name) %></li>
-          <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="/api/ticket_article_plain/<%= article.id %>"><%- T('raw') %></a></li><% end %>
+          <li style="font-size: 10px;"><%- @T(article.article_type.name) %></li>
+          <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="/api/ticket_article_plain/<%= article.id %>"><%- @T( 'raw' ) %></a></li><% end %>
         </ul>
       </div>
       <div class="span8 well-muted article-message <% if article.internal is true: %> internal<% end %>">
         <% if article.from: %>
           <div>
-          <strong title="<%- Ti('From') %>: <%= article.from %>"><%= article.from %></strong>
+          <strong title="<%- @Ti( 'From' ) %>: <%= article.from %>"><%= article.from %></strong>
           <% if article.actions: %>
             <% for action in article.actions: %>
               -
-              <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%= T(action.name) %></a>
+              <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%- @T( action.name ) %></a>
             <% end %>
           <% end %>
           - <span class="humanTimeFromNow" data-time="<%- article.created_at %>">?</span>
           </div>
         <% end %>
         <% if article.to: %>
-          <div title="<%- Ti('To') %>: <%= article.to %>"><%= article.to %></div>
+          <div title="<%- @Ti( 'To' ) %>: <%= article.to %>"><%= article.to %></div>
         <% end %>
         <% if article.cc: %>
-          <div title="<%- Ti('Cc') %>: <%= article.cc %>"><%= article.cc %></div>
+          <div title="<%- @Ti( 'Cc' ) %>: <%= article.cc %>"><%= article.cc %></div>
         <% end %>
         <% if article.subject: %>
-          <div title="<%- Ti('Subject') %>: <%= article.subject %>"><%= article.subject %></div>
+          <div title="<%- @Ti( 'Subject' ) %>: <%= article.subject %>"><%= article.subject %></div>
         <% end %>
         <% if article.attachments: %>
           <div>
@@ -83,7 +83,7 @@
           <div id="form-article-update"></div>
           <div class="keepleft" id="file-uploader"></div>
           &nbsp;
-          <button type="submit" class="btn btn-primary submit"><%- T('Submit') %></button>
+          <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
         </form>
       </div>
     </div>
