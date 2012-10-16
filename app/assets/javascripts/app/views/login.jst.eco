@@ -9,7 +9,7 @@
           <p><%- @T( 'Sign in with' ) %></p>
           <form id="login" class="form-search">
             <input name="username" type="text" class="input span3" placeholder="<%- @Ti( 'Username or email' ) %>" value="<%= @item.username %>" autocapitalize="off"/>
-            <input name="password" type="password" class="input span3" placeholder="<%- œTi( 'Password' ) %>"/>
+            <input name="password" type="password" class="input span3" placeholder="<%- @Ti( 'Password' ) %>"/>
             <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
             <div>
               <span class="small"><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></span>
