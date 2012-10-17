@@ -32,8 +32,13 @@ class App.TicketCustomer extends App.ControllerModal
       customer_id: params['customer_id']
     )
 
-    # close modal
-    @modalHide()
+    callback = =>
 
-    # reload zoom view
-    @zoom.render()
+      # close modal
+      @modalHide()
+  
+      # reload zoom view
+      @zoom.render()
+
+    # load user if not already exists
+    App.Collection.find( 'User', params['customer_id'], callback )
