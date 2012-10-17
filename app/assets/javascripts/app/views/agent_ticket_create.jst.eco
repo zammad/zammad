@@ -3,14 +3,10 @@
 </div>
 <form class="form-horizontal">
   <div class="row">
-    <div class="span9" id="form_create">
-      <!--
-        <legend>Example form legend</legend>
-      -->
-    </div>
+    <div class="span9" id="form_create"></div>
     <div class="span3">
-      <div class="span3" id="customer_info"></div>
-      <div class="span3" id="ticket_template"></div>
+      <div id="customer_info"></div>
+      <div id="ticket_template"></div>
     </div>
   </div>
   <div class="form-actions">
