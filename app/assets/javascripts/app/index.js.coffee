@@ -39,17 +39,23 @@ class App extends Spine.Controller
     template = ( params = {} ) =>
 
       # define print name helper
-      params.P = ( item ) ->
+      params.P = ( item, row = {} ) ->
         return item if !item
+
+        # if date is a object, get name of the object
         if typeof item is 'object'
           if item.displayNameLong
-            item.displayNameLong()
+            return item.displayNameLong()
           else if item.displayName
-            item.displayName()
-          else
-            item.name
-        else
-          item
+            return item.displayName()
+          return item.name
+
+        # execute callback on content
+        if row.callback
+          return row.callback( item )
+
+        # return raw data
+        item
 
       # define translation helper
       params.T = ( item ) ->

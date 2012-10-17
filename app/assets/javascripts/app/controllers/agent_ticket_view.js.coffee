@@ -4,7 +4,7 @@ class Index extends App.Controller
   events:
     'click [data-type=edit]':      'zoom'
     'click [data-type=settings]':  'settings'
-    'click [data-type=view-mode]': 'view_mode'
+    'click [data-type=viewmode]':  'viewmode'
     'click [data-type=page]':      'page'
 
   constructor: ->
@@ -13,8 +13,8 @@ class Index extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    @log 'view:', @view
     @view_mode = localStorage.getItem( "mode:#{@view}" ) || 's'
+    @log 'view:', @view, @view_mode
 
     # set title
     @title ''
@@ -99,6 +99,10 @@ class Index extends App.Controller
     pages_total =  parseInt( ( @tickets_count / @overview.view[@view_mode].per_page ) + 0.99999 ) || 1
 
     # render init page
+    edit = true
+    if @isRole('Customer')
+      checkbox = false
+      edit = false
     view_modes = [
       {
         name:  'S',
@@ -117,6 +121,7 @@ class Index extends App.Controller
       pages_total: pages_total,
       start_page:  @start_page,
       checkbox:    true,
+      edit:        edit,
     )
     html = $(html)
 #    html.find('li').removeClass('active')
@@ -125,10 +130,6 @@ class Index extends App.Controller
 
     # create table/overview
     checkbox = true
-    edit = true
-    if @isRole('Customer')
-      checkbox = false
-      edit = false
     table = ''
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
@@ -150,7 +151,6 @@ class Index extends App.Controller
         model:             App.Ticket,
         objects:           @ticket_list_show,
         checkbox:          checkbox,
-        edit:              edit,
       )
 
     # append content table
@@ -183,12 +183,12 @@ class Index extends App.Controller
     @start_page = id
     @fetch()
 
-  view_mode: (e) =>
+  viewmode: (e) =>
     e.preventDefault()
     @start_page    = 1
-    id = $(e.target).data('mode')
-    @view_mode = id
-    localStorage.setItem( "mode:#{@view}", id )
+    mode = $(e.target).data('mode')
+    @view_mode = mode
+    localStorage.setItem( "mode:#{@view}", mode )
     @fetch()
     @render()
 
@@ -373,9 +373,12 @@ class Settings extends App.ControllerModal
 #        item_class: 'keepleft',
 #      },
     ]
-    form = @formGen( model: { configure_attributes: @configure_attributes_article } )
 
-    @el.find('.setting').append(form)
+    new App.ControllerForm(
+      el: @el.find('#form-setting'),
+      model: { configure_attributes: @configure_attributes_article },
+      autofocus: false,
+    )
 
     @modalShow()
 

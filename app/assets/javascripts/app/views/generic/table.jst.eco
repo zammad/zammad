@@ -23,12 +23,12 @@
     </td>
     <% end %>
     <% for row in @overview: %>
-      <% displayName = @P( object[row.name] ) %>
+      <% displayName = @P( object[row.name], row ) %>
       <% if row.translate: %><%  displayName = @T( displayName ) %><% end %>
       <% if row.title: %>
         <% displayNameTitle = displayName %>
         <% if object[row.title]: %>
-          <% displayNameTitle = @P( object[row.title] ) %>
+          <% displayNameTitle = @P( object[row.title], row ) %>
         <% end %>
       <% end %>
     <td <% if row.title: %>title="<%= displayNameTitle %>"<% end %>>

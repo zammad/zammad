@@ -124,15 +124,10 @@ class App.Controller extends Spine.Controller
       dataTypesForCols = data.overview_extended
 
     # generate content data
-    objects = _.clone( data.objects )
-    for object in objects
+    for object in data.objects
 
       # check if info for each col. is already there
       for row in dataTypesForCols
-
-        # execute callback on content
-        if row.callback
-          object[row.name] = row.callback( object[row.name] )
 
         # lookup relation
         if !object[row.name]
@@ -143,11 +138,11 @@ class App.Controller extends Spine.Controller
                 record = App.Collection.find( attribute.relation, object[rowWithoutId] )
                 object[row.name] = record.name
 
-    @log 'table', 'header', header, 'overview', dataTypesForCols, 'objects', objects
+    @log 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
     table = App.view('generic/table')(
       header:   header,
       overview: dataTypesForCols,
-      objects:  objects,
+      objects:  data.objects,
       checkbox: data.checkbox,
     )
 #    @log 'ttt', $(table).find('span')

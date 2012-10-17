@@ -1,27 +1,45 @@
 <div>
-  <input type="checkbox" value="" name="bulk_all"/>
-<% for ticket in @objects: %>
-  <div class="row" data-id="<%= ticket.id %>">
+  <div class="row">
     <div class="span1">
-      <table>
-        <tr>
-          <td>
-            <input type="checkbox" value="<%= ticket.id %>" name="bulk" class="keepleft"/>
-          </td>
-          <td>
-            <img class="thumbnail user-data" data-id="<%= ticket.customer_id %>" src="<%= ticket.customer.image %>" alt="">
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="span11">
-      <h3><a href="#" data-type="edit"><%= ticket.title %></a> <small><%= ticket.number %></small></h3>
-      <b>State:</b> <%= ticket.ticket_state.name %>
-      <b>Priority:</b> <%= ticket.ticket_priority.name %>
-      <b>Group:</b> <%= ticket.group.name %>
-      <b>Owner:</b> <%= ticket.owner.displayName() %>
+      <input type="checkbox" value="" name="bulk_all"/>
     </div>
   </div>
-  <hr/>
+  <table class="table table-striped table-hover">
+<% for ticket in @objects: %>
+  <tr data-id="<%= ticket.id %>">
+    <td class="" style="width: 10px;">
+      <input type="checkbox" value="<%= ticket.id %>" name="bulk" class="keepleft"/>
+    </td>
+    <td class="span1">
+      <img class="thumbnail user-data" data-id="<%= ticket.customer_id %>" src="<%= ticket.customer.image %>" alt="">
+    </td>
+    <td class="span10">
+      <h3><a href="#" data-type="edit"><%= ticket.title %></a> <small><%= ticket.number %> <span class="humanTimeFromNow" data-time="<%= ticket.created_at %>">?</span></small></h3>
+      <div class="row">
+        <div class="span2">
+          <b><%- @T( 'State' ) %></b> <%- @T( ticket.ticket_state.name ) %>
+        </div>
+        <div class="span2">
+          <b><%- @T( 'Group' ) %></b> <%= ticket.group.name %>
+        </div>
+        <div class="span2">
+          <b><%- @T( 'Customer' ) %></b> <%= ticket.customer.displayName() %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span2">
+          <b><%- @T( 'Priority' ) %></b> <%- @T( ticket.ticket_priority.name ) %>
+        </div>
+        <div class="span2">
+          <b><%- @T( 'Owner' ) %></b> <%= ticket.owner.displayName() %>
+        </div>
+        <div class="span2">
+          <b><%- @T( 'Organization' ) %></b> <%= ticket.customer.organization.name %>
+        </div>
+      </div>
+    </div>
+    </td>
+  </tr>
 <% end %>
+  </table>
 </div>

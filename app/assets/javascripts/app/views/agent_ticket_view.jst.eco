@@ -8,7 +8,7 @@
         <ul>
           <% for item in @view_modes: %>
             <li class="<%= item.class %>">
-              <a href="#" data-type="view-mode" data-mode="<%= item.type %>"><%= item.name %></a>
+              <a href="#" data-type="viewmode" data-mode="<%= item.type %>"><%= item.name %></a>
             </li>
           <% end %>
         </ul>
