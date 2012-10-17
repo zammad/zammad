@@ -34,7 +34,7 @@
           <b><%- @T( 'Owner' ) %></b> <%= ticket.owner.displayName() %>
         </div>
         <div class="span2">
-          <b><%- @T( 'Organization' ) %></b> <%= ticket.customer.organization.name %>
+          <b><%- @T( 'Organization' ) %></b> <%= @P( ticket.customer.organization ) %>
         </div>
       </div>
     </div>
