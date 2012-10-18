@@ -317,7 +317,7 @@ Your #{config.product_name} Team
       location.each { |item|
         current_location[item] = current[item]
       }
-      
+
       # get full address
       next_location = {}
       location.each { |item|
@@ -356,7 +356,7 @@ Your #{config.product_name} Team
     end
 
     def check_password
-      
+
       # set old password again
       if self.password == '' || !self.password
 
