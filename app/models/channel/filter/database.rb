@@ -12,7 +12,10 @@ module Channel::Filter::Database
       filter[:match].each {|key, value|
         loop = true
         begin
-          scan = mail[ key.downcase.to_sym ].scan(/#{value}/i)
+          scan = []
+          if mail
+            scan = mail[ key.downcase.to_sym ].scan(/#{value}/i)
+          end
           if match && scan[0]
             puts "  matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
             match = true
