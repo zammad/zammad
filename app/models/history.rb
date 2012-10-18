@@ -115,7 +115,7 @@ class History < ActiveRecord::Base
     return list
   end
   
-  def self.activity_stream(user, limit = 10)
+  def self.activity_stream( user, limit = 10 )
 #    g = Group.where( :active => true ).joins(:users).where( 'users.id' => user.id )
 #    stream = History.select("distinct(histories.o_id), created_by_id, history_attribute_id, history_type_id, history_object_id, value_from, value_to").
 #      where( :history_type_id   => History::Type.where( :name => ['created', 'updated']) ).
@@ -136,7 +136,7 @@ class History < ActiveRecord::Base
     end
     return datas
   end
-  def self.activity_stream_fulldata(user, limit = 10)
+  def self.activity_stream_fulldata( user, limit = 10 )
     activity_stream = History.activity_stream( user, limit )
 
     # get related users
@@ -209,7 +209,7 @@ class History < ActiveRecord::Base
     return datas
   end
   
-  def self.recent_viewed_fulldata( user, limit )
+  def self.recent_viewed_fulldata( user, limit = 10 )
     recent_viewed = History.recent_viewed( user, limit )
 
     # get related users
