@@ -88,7 +88,7 @@ class User < ApplicationModel
 
     # try to find user based on login
     user = User.where( :login => username, :active => true ).first
-    
+
     # try second lookup with email
     if !user
       user = User.where( :email => username, :active => true ).first
@@ -290,6 +290,11 @@ Your #{config.product_name} Team
       self.preferences['lat'] = latlng[0]
       self.preferences['lng'] = latlng[1]
     end
+  end
+
+  def update_last_login
+    self.last_login = Time.now
+    self.save
   end
 
   private

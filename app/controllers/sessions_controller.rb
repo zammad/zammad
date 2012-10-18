@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   # "Create" a login, aka "log the user in"
   def create
 
+    # authenticate user
     user = User.authenticate( params[:username], params[:password] )
 
     # auth failed
@@ -13,9 +14,12 @@ class SessionsController < ApplicationController
       render :json => { :error => 'login failed' }, :status => :unprocessable_entity
       return
     end
-    
+
+    # remember last login date
+    user.update_last_login()
+
     user = User.find_fulldata(user.id)
-    
+
     # auto population of default collections
     default_collection = default_collections()
     
@@ -118,21 +122,21 @@ class SessionsController < ApplicationController
       authorization = Authorization.create_from_hash(auth, current_user)
     end
 
+    # remember last login date
+    authorization.user.update_last_login()
+
     # Log the authorizing user in.
     session[:user_id] = authorization.user.id
 
     # redirect to app
     redirect_to '/app#'
   end
-  
+
   private
     def default_collections
 
-      # auto population of default collections
+      # auto population collections, store all here
       default_collection = {}
-      default_collection['Role']          = Role.all
-      default_collection['Group']         = Group.all
-      default_collection['Organization']  = Organization.all
 
       # load collections to deliver from external files
       dir = File.expand_path('../', __FILE__)
@@ -142,6 +146,6 @@ class SessionsController < ApplicationController
         ExtraCollection.add(default_collection)
       end
 
-      return default_collection  
+      return default_collection
     end
 end

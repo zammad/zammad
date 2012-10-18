@@ -84,6 +84,9 @@ class ApplicationController < ActionController::Base
       # return auth ok
       if message == ''
 
+        # remember last login
+        userdata.update_last_login
+
         # set basic auth user to current user
         current_user_set(userdata)
         return {
