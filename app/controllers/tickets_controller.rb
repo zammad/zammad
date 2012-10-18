@@ -193,7 +193,7 @@ class TicketsController < ApplicationController
       :ticket_state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action', 'closed'] )
     )
     ticket = Ticket.find( params[:ticket_id] )
-    ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states ).limit(6)
+    ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states ).where( 'id != ?', [ ticket.id ] ) .limit(6)
 
     # get related users
     users = {}
@@ -212,7 +212,7 @@ class TicketsController < ApplicationController
       end
     }
 
-    recent_viewed = History.recent_viewed_fulldata( current_user, 6 )
+    recent_viewed = History.recent_viewed_fulldata( current_user, 8 )
 
     # return result
     render :json => {

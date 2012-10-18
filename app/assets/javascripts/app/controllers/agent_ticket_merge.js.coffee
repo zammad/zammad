@@ -33,8 +33,9 @@ class App.TicketMerge extends App.ControllerModal
 
     list = []
     for t in data.customer.tickets
-      ticketItem = App.Collection.find( 'Ticket', t.id )
-      list.push ticketItem
+      if t.id isnt @ticket_id
+        ticketItem = App.Collection.find( 'Ticket', t.id )
+        list.push ticketItem
     new App.ControllerTable(
       el:                @el.find('#ticket-merge-customer-tickets'),
       overview_extended: [
@@ -59,8 +60,9 @@ class App.TicketMerge extends App.ControllerModal
 
     list = []
     for t in data.recent.tickets
-      ticketItem = App.Collection.find( 'Ticket', t.id )
-      list.push ticketItem
+      if t.id isnt @ticket_id
+        ticketItem = App.Collection.find( 'Ticket', t.id )
+        list.push ticketItem
     new App.ControllerTable(
       el:                @el.find('#ticket-merge-recent-tickets'),
       overview_extended: [

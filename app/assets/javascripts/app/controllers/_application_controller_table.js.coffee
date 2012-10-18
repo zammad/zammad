@@ -49,8 +49,7 @@ class App.ControllerTable extends App.Controller
 
     # check if table is empty
     if _.isEmpty(data.objects)
-      table = ''
-      table = '-none-'
+      table = '<span>-' + App.i18n.translateContent( 'none' ) + '-</span>'
       return $(table)
 
     # define normal header
