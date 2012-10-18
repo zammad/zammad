@@ -14,6 +14,8 @@ class App.ControllerTable extends App.Controller
       overview: ['host', 'user', 'adapter', 'active'],
       model:    App.Channel,
       objects:  data,
+      checkbox: false,
+      radio:    false,
     )
 
     new App.ControllerTable(
@@ -34,6 +36,8 @@ class App.ControllerTable extends App.Controller
       ],
       model:    App.Ticket,
       objects:  tickets,
+      checkbox: false,
+      radio:    false,
     )
 
   ###
@@ -43,6 +47,7 @@ class App.ControllerTable extends App.Controller
     attributes = data.attributes || data.model.configure_attributes || {}
     header     = data.header
 
+    # check if table is empty
     if _.isEmpty(data.objects)
       table = ''
       table = '-none-'
@@ -111,11 +116,8 @@ class App.ControllerTable extends App.Controller
       overview: dataTypesForCols,
       objects:  data.objects,
       checkbox: data.checkbox,
+      radio:    data.radio,
     )
-#    @log 'ttt', $(table).find('span')
-#    $(table).find('span').bind('click', ->
-#      console.log('----------click---------')
-#    )
 
     # convert to jquery object
     table = $(table)

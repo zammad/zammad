@@ -4,19 +4,14 @@
   <h3><%- @T( 'Merge' ) %></h3>
 </div>
 <div class="modal-body">
-  <div class="table_history"></div>
   <h4><%- @T( 'Merge to Ticket#' ) %></h4>
   <input type="text" name="master_ticket_number" value=""/>
-  
+  <hr>
   <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
   <div id="ticket-merge-customer-tickets"></div>
-<!--
-  <ul>
-    <li>Ticket#</li>
-    <li>Recent Views Tickets</li>
-    <li>Recent Customer Tickets</li>
-  </ul>
--->
+  <hr>
+  <h4><%- @T( 'Recent Views Tickets' ) %></h4>
+  <div id="ticket-merge-recent-tickets"></div>
 </div>
 <div class="modal-footer">
   <button type="submit" class="btn btn-primary"><%- @T( 'Submit' ) %></button>

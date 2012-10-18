@@ -1,5 +1,5 @@
 class App.Controller extends Spine.Controller
-  
+
   # add @title methode to set title
   title: (name) ->
 #    $('html head title').html( Config.product_name + ' - ' + App.i18n.translateInline(name) )

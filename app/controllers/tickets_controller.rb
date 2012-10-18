@@ -185,6 +185,45 @@ class TicketsController < ApplicationController
     }
   end
 
+  # GET /ticket_merge_list/1
+  def ticket_merge_list
+
+    # get closed/open states
+    ticket_states   = Ticket::State.where(
+      :ticket_state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action', 'closed'] )
+    )
+    ticket = Ticket.find( params[:ticket_id] )
+    ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states ).limit(6)
+
+    # get related users
+    users = {}
+    tickets = []
+    ticket_list.each {|ticket|
+      data = Ticket.full_data(ticket.id)
+      tickets.push data
+      if !users[ data['owner_id'] ]
+        users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
+      end
+      if !users[ data['customer_id'] ]
+        users[ data['customer_id'] ] = User.user_data_full( data['customer_id'] )
+      end
+      if !users[ data['created_by_id'] ]
+        users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
+      end
+    }
+
+    recent_viewed = History.recent_viewed_fulldata( current_user, 6 )
+
+    # return result
+    render :json => {
+      :customer => {
+        :tickets       => tickets,
+        :users         => users,
+      },
+      :recent => recent_viewed
+    }
+  end
+
   # GET /ticket_merge/1/1
   def ticket_merge
 

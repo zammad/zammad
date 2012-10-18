@@ -4,6 +4,9 @@
     <% if @checkbox: %>
       <th style="width: 10px"><input type="checkbox" value="" name="bulk_all"/></th>
     <% end %>
+    <% if @radio: %>
+      <th style="width: 10px"></th>
+    <% end %>
 <% for row in @header: %>
       <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- @T( row.display ) %></th>
 <% end %>
@@ -18,9 +21,10 @@
   <% position++ %>
   <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
-    <td>
-      <input type="checkbox" value="<%= object.id %>" name="bulk"/>
-    </td>
+    <td><input type="checkbox" value="<%= object.id %>" name="bulk"/></td>
+    <% end %>
+    <% if @radio: %>
+    <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
     <% end %>
     <% for row in @overview: %>
       <% displayName = @P( object[row.name], row ) %>

@@ -188,14 +188,14 @@ class History < ActiveRecord::Base
     }
   end
 
-  def self.recent_viewed(user)
+  def self.recent_viewed( user, limit = 10 )
 #    g = Group.where( :active => true ).joins(:users).where( 'users.id' => user.id )
     stream = History.select("distinct(o_id), created_by_id, history_type_id, history_object_id, created_at").
       where( :history_object_id => History::Object.where( :name => 'Ticket').first.id ).
       where( :history_type_id => History::Type.where( :name => ['viewed'] ) ).
       where( :created_by_id => user.id ).
       order('created_at DESC, id ASC').
-      limit(10)
+      limit(limit)
     datas = []
     stream.each do |item|
       data = item.attributes
@@ -209,8 +209,8 @@ class History < ActiveRecord::Base
     return datas
   end
   
-  def self.recent_viewed_fulldata(user)
-    recent_viewed = History.recent_viewed(user)
+  def self.recent_viewed_fulldata( user, limit )
+    recent_viewed = History.recent_viewed( user, limit )
 
     # get related users
     users = {}

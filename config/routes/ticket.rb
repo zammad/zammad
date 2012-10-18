@@ -10,6 +10,7 @@ module ExtraRoutes
     map.match '/api/ticket_full/:id',                               :to => 'tickets#ticket_full',       :via => :get
     map.match '/api/ticket_history/:id',                            :to => 'tickets#ticket_history',    :via => :get
     map.match '/api/ticket_customer',                               :to => 'tickets#ticket_customer',   :via => :get
+    map.match '/api/ticket_merge_list/:ticket_id',                  :to => 'tickets#ticket_merge_list', :via => :get
     map.match '/api/ticket_merge/:slave_ticket_id/:master_ticket_number', :to => 'tickets#ticket_merge'
 
     # ticket overviews
