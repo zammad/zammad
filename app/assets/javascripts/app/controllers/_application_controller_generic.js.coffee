@@ -183,11 +183,11 @@ class App.ControllerGenericIndex extends App.Controller
     )
 
     # append content table
-    table = @table(
+    new App.ControllerTable(
+      el:      @el.find('.table-overview'),
       model:   @genericObject,
       objects: objects,
     )
-    @el.find('.table-overview').append(table)
 
   edit: (e) =>
     e.preventDefault()

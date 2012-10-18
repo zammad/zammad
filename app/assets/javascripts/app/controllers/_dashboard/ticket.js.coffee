@@ -87,19 +87,14 @@ class App.DashboardTicket extends App.Controller
         @tickets_in_table.push App.Collection.find( 'Ticket', @ticket_list[ i - 1 ] )
 
     shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d.overview )
-    table = @table(
+    new App.ControllerTable(
+      el:                html.find('.table-overview'),
       overview_extended: shown_all_attributes,
       model:             App.Ticket,
       objects:           @tickets_in_table,
       checkbox:          false,
     )
 
-    if _.isEmpty(@ticket_list)
-      table = ''
-      table = '-none-'
-
-    # append content table
-    html.find('.table-overview').append(table)
     @html html
 
     # show frontend times

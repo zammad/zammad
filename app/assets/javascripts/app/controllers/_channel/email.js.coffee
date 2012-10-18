@@ -61,12 +61,12 @@ class App.ChannelEmailFilter extends App.Controller
 
     html = $('<div></div>')
 
-    table = @table(
+    new App.ControllerTable(
+      el:       html,
       model:    App.PostmasterFilter,
       objects:  data,
     )
 
-    html.append( table )
     html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 
@@ -154,12 +154,12 @@ class App.ChannelEmailAddress extends App.Controller
 
     html = $('<div></div>')
 
-    table = @table(
+    new App.ControllerTable(
+      el:       html,
       model:    App.EmailAddress,
       objects:  data,
     )
 
-    html.append( table )
     html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 
@@ -245,12 +245,12 @@ class App.ChannelEmailSignature extends App.Controller
 
     html = $('<div></div>')
 
-    table = @table(
+    new App.ControllerTable(
+      el:       html,
       model:    App.Signature,
       objects:  data,
     )
 
-    html.append( table )
     html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 
@@ -334,8 +334,7 @@ class App.ChannelEmailInbound extends App.Controller
 
   render: =>
     channels = App.Channel.all()
-    
-    html = $('<div></div>')
+
     data = []
     for channel in channels
       if channel.area is 'Email::Inbound'
@@ -343,14 +342,15 @@ class App.ChannelEmailInbound extends App.Controller
         channel.user = channel.options['user']
         data.push channel
 
-    table = @table(
-      header:   ['Host', 'User', 'Adapter', 'Active'],
+    html = $('<div></div>')
+
+    new App.ControllerTable(
+      el:       html,      header:   ['Host', 'User', 'Adapter', 'Active'],
       overview: ['host', 'user', 'adapter', 'active'],
       model:    App.Channel,
       objects:  data,
     )
 
-    html.append( table )
     html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
     @html html
 

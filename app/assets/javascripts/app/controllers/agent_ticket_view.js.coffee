@@ -144,17 +144,16 @@ class Index extends App.Controller
         else
           $(e.target).parents().find('[name="bulk"]').attr('checked', false)
       )
+      @el.find('.table-overview').append(table)
     else
       shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.s.overview )
-      table = @table(
+      new App.ControllerTable(
+        el:                @el.find('.table-overview'),
         overview_extended: shown_all_attributes,
         model:             App.Ticket,
         objects:           @ticket_list_show,
         checkbox:          checkbox,
       )
-
-    # append content table
-    @el.find('.table-overview').append(table)
 
     # start user popups
     @userPopups()

@@ -5,8 +5,11 @@
 </div>
 <div class="modal-body">
   <div class="table_history"></div>
-  <%- @T( 'Merge to Ticket#' ) %>:
+  <h4><%- @T( 'Merge to Ticket#' ) %></h4>
   <input type="text" name="master_ticket_number" value=""/>
+  
+  <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
+  <div id="ticket-merge-customer-tickets"></div>
 <!--
   <ul>
     <li>Ticket#</li>
