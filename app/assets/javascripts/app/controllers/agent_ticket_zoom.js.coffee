@@ -9,6 +9,7 @@ class Index extends App.Controller
     'click [data-type=internal]':             'public_internal',
     'change [name="ticket_article_type_id"]': 'form_update',
     'click .show_toogle':                     'show_toogle',
+    'blur  .title_update':                    'title_update',
 
   constructor: (params) ->
     super
@@ -330,6 +331,17 @@ class Index extends App.Controller
       # update textarea size
       @el.find('[name="body"]').trigger('change')
 
+  title_update: (e) =>
+    $this = $(e.target)
+    title = $this.html()
+    title = ('' + title)
+      .replace(/<.+?>/g, '')
+    if title is '-'
+      title = ''
+    @ticket.title = title
+    @ticket.load( title: title )
+    @ticket.save()
+
   update: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
@@ -345,11 +357,21 @@ class Index extends App.Controller
       if !ticket_update['owner_id']
         ticket_update['owner_id'] = 1
 
+    # check if title exists
+    if !ticket_update['title'] && !@ticket.title
+      alert( App.i18n.translateContent('Title needed') )
+      return
+
     @ticket.load( ticket_update )
     @log 'update ticket', ticket_update, @ticket
-    
+
     # disable form
     @formDisable(e)
+
+    errors = @ticket.validate()
+    @log 'errors', errors
+    if errors
+      @formEnable(e)
 
     @ticket.save(
       success: (r) =>

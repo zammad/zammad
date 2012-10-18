@@ -40,6 +40,8 @@ class App extends Spine.Controller
 
       # define print name helper
       params.P = ( item, row = {} ) ->
+        return '-' if item is undefined
+        return '-' if item is ''
         return item if !item
 
         # if date is a object, get name of the object
