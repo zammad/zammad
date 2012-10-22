@@ -71,7 +71,7 @@ class App.TemplateUI extends App.Controller
     params = @formParam(e.target)
     name = params['template_name']
 #    delete params['template_name']
-    
+
     template = App.Collection.findByAttribute( 'Template', 'name', name )
     if !template
       template = new App.Template
@@ -84,7 +84,7 @@ class App.TemplateUI extends App.Controller
 
     # validate form
     errors = template.validate()
-    
+
     # show errors in form
     if errors
       @log 'error new', errors

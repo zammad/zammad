@@ -10,7 +10,8 @@ class Index extends App.Controller
     new App.ControllerGenericIndex(
       el: @el,
       id: @id,
-      genericObject: App.User,
+      genericObject: 'User',
+      defaultSortBy: 'login',
       ignoreObjectIDs: [1], 
       pageData: {
         title: 'Users',

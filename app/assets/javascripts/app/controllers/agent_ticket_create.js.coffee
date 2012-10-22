@@ -138,6 +138,11 @@ class Index extends App.Controller
       template_id: template['id'],
     )
 
+    # show text module UI
+    new App.TextModuleUI(
+      el: @el.find('#text_module'),
+    )
+
   localUserInfo: (params) =>
     @userInfo( user_id: params.customer_id )
 

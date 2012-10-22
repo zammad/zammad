@@ -8,27 +8,25 @@ class App.ControllerGenericNew extends App.ControllerModal
   constructor: (params) ->
     super
     @render()
-  
+
   render: ->
 
     @html App.view('generic/admin/new')( head: @pageData.object )
-
     new App.ControllerForm(
       el:         @el.find('#object_new'),
-      model:      @genericObject,
+      model:      App[ @genericObject ],
       params:     @item,
       required:   @required,
       autofocus:  true,
     )
-
     @modalShow()
 
   submit: (e) ->
     @log 'submit'
     e.preventDefault()
-    params = @formParam(e.target)
+    params = @formParam( e.target )
 
-    object = new @genericObject
+    object = new App[ @genericObject ]
     object.load(params)
 
     # validate
@@ -53,7 +51,7 @@ class App.ControllerGenericNew extends App.ControllerModal
           ui.modalHide()
         App.Collection.find( ui.pageData.object, @id, callbackReload , true )
 
-      error: =>
+      error: ->
         ui.log 'errors'
         ui.modalHide()
     )
@@ -64,28 +62,27 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @log 'ControllerGenericEditWindow', params
 
     # fetch item on demand
-    if @genericObject.exists(params.id)
-      @item = @genericObject.find(params.id)
+    if App[ @genericObject ].exists( params.id )
+      @item = App[ @genericObject ].find( params.id )
       @render()
     else
-      @genericObject.bind 'refresh', =>
+      App[ @genericObject ].bind 'refresh', =>
         @log 'changed....'
-        @item = @genericObject.find(params.id)
+        @item = App[ @genericObject ].find( params.id )
         @render()
-        @genericObject.unbind 'refresh'
-      @genericObject.fetch( id: params.id) 
+        App[ @genericObject ].unbind 'refresh'
+      App[ @genericObject ].fetch( id: params.id ) 
 
   render: ->
-    @html App.view('generic/admin/edit')( head: @pageData.object )
 
+    @html App.view('generic/admin/edit')( head: @pageData.object )
     new App.ControllerForm(
       el:         @el.find('#object_edit'),
-      model:      @genericObject,
+      model:      App[ @genericObject ],
       params:     @item,
       required:   @required,
       autofocus:  true,
     )
-
     @modalShow()
 
   submit: (e) ->
@@ -139,8 +136,8 @@ class App.ControllerGenericIndex extends App.Controller
     @navupdate @pageData.navupdate
 
     # bind render after a change is done
-    @genericObject.bind 'refresh change', @render
-    @genericObject.bind 'ajaxError', (rec, msg) =>
+    App[ @genericObject ].bind 'refresh change', @render
+    App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
       @log 'ajax notice', msg.status
       if msg.status is 401
         @log 'ajax error', rec, msg, msg.status
@@ -149,16 +146,16 @@ class App.ControllerGenericIndex extends App.Controller
         @navigate 'login'
 
     # execute fetch, if needed
-    if !@genericObject.count() || true
-#    if !@genericObject.count()
+    if !App[ @genericObject ].count() || true
+#    if !App[ @genericObject ].count()
 
       # prerender without content    
       @render()
 
       # fetch all
-#      @log 'oooo', @genericObject.model
-#      @genericObject.deleteAll()
-      @genericObject.fetch()
+#      @log 'oooo', App[ @genericObject ].model
+#      App[ @genericObject ].deleteAll()
+      App[ @genericObject ].fetch()
     else
       @render()
 
@@ -166,7 +163,10 @@ class App.ControllerGenericIndex extends App.Controller
 
     return if Config['ActiveController'] isnt @pageData.navupdate
 
-    objects = @genericObject.all()
+    objects = App.Collection.all( 
+      type:   @genericObject,
+      sortBy: @defaultSortBy || 'name',
+    )
 
     # remove ignored items from collection
     if @ignoreObjectIDs
@@ -185,21 +185,21 @@ class App.ControllerGenericIndex extends App.Controller
     # append content table
     new App.ControllerTable(
       el:      @el.find('.table-overview'),
-      model:   @genericObject,
+      model:   App[ @genericObject ],
       objects: objects,
     )
 
   edit: (e) =>
     e.preventDefault()
-    item = $(e.target).item(@genericObject)
+    item = $(e.target).item( App[ @genericObject ] )
     new App.ControllerGenericEdit(
-      id: item.id,
-      pageData: @pageData,
+      id:            item.id,
+      pageData:      @pageData,
       genericObject: @genericObject
     )
 
   destroy: (e) ->
-    item = $(e.target).item(@genericObject)
+    item = $(e.target).item( App[ @genericObject ] )
     item.destroy() if confirm('Sure?')
 
   new: (e) ->
@@ -221,7 +221,7 @@ class App.ControllerLevel2 extends App.Controller
     # set title
     @title @page.title
     @navupdate @page.nav
-    
+
     @html App.view('generic/admin_level2/index')(
       page:     @page,
       menus:    @menu,

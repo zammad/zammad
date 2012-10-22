@@ -91,9 +91,10 @@
   </div>
 
   <div class="span3">
-    <div class="row" id="customer_info"></div>
-    <div class="row" id="action_info"></div>
-    <div class="row" id="link_info"></div>
+    <div id="customer_info"></div>
+    <div id="action_info"></div>
+    <div id="link_info"></div>
+    <div id="text_module"></div>
   </div>
 
 </div>

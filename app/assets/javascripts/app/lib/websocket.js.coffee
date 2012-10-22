@@ -29,7 +29,7 @@ class _Singleton extends Spine.Controller
 
   send: (data) =>
     return if !@supported
-    console.log 'ws:send trying', data, @ws, @ws.readyState
+#    console.log 'ws:send trying', data, @ws, @ws.readyState
 
     # A value of 0 indicates that the connection has not yet been established.
     # A value of 1 indicates that the connection is established and communication is possible.
@@ -38,7 +38,7 @@ class _Singleton extends Spine.Controller
     if @ws.readyState is 0
       @queue.push data
     else
-      console.log( 'ws:send', data )
+#      console.log( 'ws:send', data )
       string = JSON.stringify( data )
       @ws.send(string)
 
@@ -60,7 +60,7 @@ class _Singleton extends Spine.Controller
   ping: =>
     return if !@supported
 
-    console.log 'send websockend ping'
+#    console.log 'send websockend ping'
     @send( { action: 'ping' } )
 
     # check if ping is back within 2 min
@@ -73,8 +73,7 @@ class _Singleton extends Spine.Controller
 
   pong: ->
     return if !@supported
-
-    console.log 'received websockend ping'
+#    console.log 'received websockend ping'
 
     # test again after 1 min
     @delay @ping, 60000
@@ -111,7 +110,7 @@ class _Singleton extends Spine.Controller
 
       # empty queue
       for item in @queue
-        console.log( 'ws:send queue', item )
+#        console.log( 'ws:send queue', item )
         @send(item)
       @queue = []
 

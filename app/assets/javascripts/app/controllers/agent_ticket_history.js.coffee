@@ -39,7 +39,7 @@ class App.TicketHistory extends App.ControllerModal
   render: ->
 
     @html App.view('agent_ticket_history')(
-      objects: App.Collection.all( 'History' ),
+      objects: App.Collection.all( type: 'History' ),
     )
 
     @modalShow()

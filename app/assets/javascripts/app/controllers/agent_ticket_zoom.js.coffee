@@ -203,6 +203,12 @@ class Index extends App.Controller
         object:        @ticket,
       )
 
+    # show text module UI
+    if !@isRole('Customer')
+      new App.TextModuleUI(
+        el: @el.find('#text_module'),
+      )
+
   show_toogle: (e) ->
     e.preventDefault()
     $(e.target).hide()
@@ -320,12 +326,12 @@ class Index extends App.Controller
 #    @log 'reply ', article, @el.find('[name="to"]')
 
     # add quoted text if needed
-    if window.Session['UISelection']
+    selectedText = App.ClipBoard.getSelected()
+    if selectedText
       body = @el.find('[name="body"]').val() || ''
-      selection = window.Session['UISelection'].trim()
-      selection = selection.replace /^(.*)$/mg, (match) =>
+      selectedText = selectedText.replace /^(.*)$/mg, (match) =>
         '> ' + match  
-      body = selection + "\n" + body
+      body = selectedText + "\n" + body
       @el.find('[name="body"]').val(body)
 
       # update textarea size

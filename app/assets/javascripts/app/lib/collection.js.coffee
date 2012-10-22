@@ -202,14 +202,24 @@ class _Singleton
 
   get: (params) ->
     console.log('get')
-    App[params.type].refresh( object, options: { clear: true } )
+    App[ params.type ].refresh( object, options: { clear: true } )
 
-  all: (type) ->
-    all = App[type].all()
+  all: (params) ->
+    all = App[ params.type ].all()
     all_complied = []
     for item in all
-      item_new = @find( type, item.id )
+      item_new = @find( params.type, item.id )
       all_complied.push item_new
+
+    if params.filter
+      all_complied = @_filter( all_complied, params.filter )
+
+    if params.filterExtended
+      all_complied = @_filterExtended( all_complied, params.filterExtended )
+
+    if params.sortBy
+      all_complied = @_sortBy( all_complied, params.sortBy )
+
     return all_complied
 
   deleteAll: (type) ->
@@ -223,3 +233,40 @@ class _Singleton
 
   fetch: ( type ) ->
     App[type].fetch()
+
+  _sortBy: ( collection, attribute ) ->
+    _.sortBy( collection, (item) -> return item[ attribute ].toLowerCase() )
+
+  _filter: ( collection, filter ) ->
+    for key, value of filter
+      collection = _.filter( collection, (item) ->
+        if item[ key ] is value
+          return item
+      )
+    return collection
+
+  _filterExtended: ( collection, filters ) ->
+    collection = _.filter( collection, (item) ->
+
+      # check all filters
+      for filter in filters
+
+        # all conditions need match
+        matchInner = undefined
+        for key, value of filter
+
+          if matchInner isnt false
+            reg = new RegExp( value, 'i' )
+            if item[ key ] isnt undefined && item[ key ] isnt null && item[ key ].match( reg )
+              matchInner = true
+            else
+              matchInner = false
+
+        # if all matched, add item to new collection
+        if matchInner is true
+          return item
+
+      return
+    )
+    return collection
+

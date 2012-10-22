@@ -24,6 +24,7 @@
 #not_used= require_tree ./lib
 #= require_self
 #= require ./lib/ajax.js.coffee
+#= require ./lib/clipboard.js.coffee
 #= require ./lib/websocket.js.coffee
 #= require ./lib/auth.js.coffee
 #= require ./lib/i18n.js.coffee

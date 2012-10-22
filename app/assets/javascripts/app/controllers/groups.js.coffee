@@ -10,7 +10,7 @@ class Index extends App.Controller
     new App.ControllerGenericIndex(
       el: @el,
       id: @id,
-      genericObject: App.Group,
+      genericObject: 'Group',
       pageData: {
         title: 'Groups',
         home: 'groups',

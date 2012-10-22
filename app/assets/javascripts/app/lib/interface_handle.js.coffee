@@ -22,24 +22,12 @@ class App.Run extends App.Controller
 
     # start notify controller
     new App.Notify( el: @el.find('#notify') )
-    
+
     # start content
     new App.Content( el: @el.find('#content') )
 
     # bind to fill selected text into
-    $(@el).bind('mouseup', =>
-      window.Session['UISelection'] = @getSelected() + ''
-    )
-
-  getSelected: ->
-    text = '';
-    if window.getSelection
-      text = window.getSelection()
-    else if document.getSelection
-      text = document.getSelection()
-    else if document.selection
-      text = document.selection.createRange().text
-    text
+    App.ClipBoard.bind( @el )
 
 class App.Content extends Spine.Controller
   className: 'container'

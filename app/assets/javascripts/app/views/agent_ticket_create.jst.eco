@@ -7,6 +7,7 @@
     <div class="span3">
       <div id="customer_info"></div>
       <div id="ticket_template"></div>
+      <div id="text_module"></div>
     </div>
   </div>
   <div class="form-actions">
