@@ -193,7 +193,10 @@ class TicketsController < ApplicationController
       :ticket_state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action', 'closed'] )
     )
     ticket = Ticket.find( params[:ticket_id] )
-    ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states ).where( 'id != ?', [ ticket.id ] ) .limit(6)
+    ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states )
+      .where( 'id != ?', [ ticket.id ] )
+      .order('created_at DESC')
+      .limit(6)
 
     # get related users
     users = {}
