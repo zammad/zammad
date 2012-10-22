@@ -35,6 +35,9 @@ class App.TextModuleUI extends App.Controller
     # define elements to observe
     inputElement = $('textarea')
 
+    # set first text element to active
+    ui.area = $(inputElement[0])
+
     # remember active text element
     inputElement.bind('focusin', ->
       ui.area = $(@)
