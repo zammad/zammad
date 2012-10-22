@@ -53,7 +53,7 @@ class App.UserInfo extends App.Controller
     e.preventDefault()
     new App.ControllerGenericEdit(
       id: @user_id,
-      genericObject: App.User,
+      genericObject: 'User',
       required: 'quick',
       pageData: {
         title: 'Users',
