@@ -19,12 +19,16 @@ label, input, button, select, textarea {
 
 table {
   table-layout: fixed;
-  
 }
 table th, table td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.max-size-scroll {
+  max-height: 240px;
+  overflow-y: scroll;
 }
 
 /*
@@ -270,6 +274,17 @@ footer {
   padding-top: 5px;
   padding-left: 20px;
   padding-right: 10px;
+}
+
+.inline-edit {
+  padding: 4px;
+}
+.inline-edit:hover {
+  padding: 3px;
+  border: 1px dotted #F92;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 
 .translation {

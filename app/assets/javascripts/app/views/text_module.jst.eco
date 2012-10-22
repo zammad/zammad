@@ -1,20 +1,25 @@
-<div class="well">
+<div class="well hide">
+<!--
   <h3><%- @T( 'Text Modules' ) %></h3>
   <%- @T( 'Search' ) %>
   <br>
+-->
   <input type="text" name="" id="text-module-search" class="span2" value="<%= @search %>" autocomplete="off"/>
+  <a href="#" class="close">&times;</a>
   <br>
-  <div id="form-text-module"></div>
+  <div id="form-text-module" class="max-size-scroll"></div>
   <!--<button type="submit" class="btn" data-type="text_module_edit"><%- @T( 'Edit' ) %></button>-->
 <!--
   <button type="submit" class="btn" data-type="text_module_delete"><%- @T( 'Delete' ) %></button>
 -->
+<!--
   <%- @T( 'Preview ') %>
   <br>
   <textarea id="text-module-preview-content" class="span2"></textarea>
+-->
   <hr>
   <form>
-    <label class="" for="text_module_name"><%- @T( 'Save as Text Module' ) %></label>
+    <label class="" for="text_module_name"><%- @T( 'Save as' ) %></label>
     <input type="text" name="name" id="text_module_name" class="span2" value=""/>
     <button type="submit" class="btn" data-type="save"><%- @T( 'Save' ) %></button>
   </form>

@@ -84,6 +84,7 @@ class _Singleton
       'shift' : 16,
       'ctrl' : 17,
       'alt' : 18,
+      'space' : 32,
       'pause_break' : '19',
       'caps_lock' : '20',
       'escape' : '27',

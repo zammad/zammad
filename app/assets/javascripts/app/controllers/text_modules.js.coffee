@@ -5,6 +5,7 @@ class App.TextModuleUI extends App.Controller
     'click [data-type=save]':   'create',
     'click [data-type=text_module_delete]': 'delete',
     'click [data-type=edit]':               'select',
+    'click .close':                         'close',
     'dblclick [data-type=edit]':            'paste',
 
   constructor: ->
@@ -36,17 +37,36 @@ class App.TextModuleUI extends App.Controller
     inputElement = $('textarea')
 
     # set first text element to active
-    ui.area = $(inputElement[0])
+    ui.area = $( inputElement[0] )
 
     # remember active text element
     inputElement.bind('focusin', ->
+      @uiWidget = ui
       ui.area = $(@)
+      update = =>
+
+        left = @uiWidget.area.offset().left
+        top  = @uiWidget.area.offset().top
+        width = @uiWidget.area.width()
+        console.log 'TEXTAREA', left, top, width
+        @uiWidget.el.offset( left: left + width + 20, top: top )
+        @uiWidget.el.find('.well').removeClass('hide')
+
+        topWindow = $(window).scrollTop() + 50
+        if top < topWindow
+          @uiWidget.el.offset( top: topWindow )
+      ui.interval( update, 150, 'text_module_box' )
+    )
+    inputElement.bind('focusout', ->
+      ui.clearInterval( 'text_module_box' )
     )
 
     inputElement.bind('keydown', (e) ->
 
       # lisen if crtl is pressed
       if ui.Capture
+
+        # lookup key
         key = App.ClipBoard.keycode( e.keyCode )
 
         # remove one char
@@ -64,8 +84,14 @@ class App.TextModuleUI extends App.Controller
             ui.renderTable()
 
         # add char to search selection
-        else
-          ui.CaptureList = ui.CaptureList + key
+        else if key is 'space' || key.length is 1
+          if key is 'space'
+            ui.CaptureList = ui.CaptureList + ' '
+          else
+            ui.CaptureList = ui.CaptureList + key
+
+          # prevent default key action
+          e.preventDefault()
 
         console.log 'CTRL+', ui.CaptureList
         ui.el.find('#text-module-search').val( ui.CaptureList )
@@ -115,11 +141,30 @@ class App.TextModuleUI extends App.Controller
     @el.find('#form-text-module').html('')
     new App.ControllerTable(
       el: @el.find('#form-text-module'),
-#      header:   ['Name'],
+      header:   [],
       overview: ['name'],
       model:    App.TextModule,
       objects:  objects,
 #      radio:    true,
+    )
+
+    # remove old popovers
+#    @el.find('.popover-inner').parent().remove()
+    $('.popover').remove()
+
+    # show user popup    
+    @el.find('#form-text-module').find('.item').popover(
+      delay: { show: 500, hide: 1200 },
+#      placement: 'top',
+      placement: 'right',
+      title: ->
+        id = $(@).data('id')
+        text_module = App.Collection.find( 'TextModule', id )
+        text_module.name
+      content: ->
+        id = $(@).data('id')
+        text_module = App.Collection.find( 'TextModule', id )
+        text_module.content
     )
 
   paste: (e) =>
@@ -180,6 +225,11 @@ class App.TextModuleUI extends App.Controller
         error: ->
           ui.log 'save failed!'
       )
+
+  close: (e) =>
+    e.preventDefault()
+    @el.find('.well').addClass('hide')
+    @clearInterval( 'text_module_box' )
 
   _insert: (contentNew, ui) ->
     position = ui.area.prop('selectionStart')

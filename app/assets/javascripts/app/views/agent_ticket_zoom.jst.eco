@@ -1,7 +1,7 @@
 <div class="page-header">
   <div class="row">
     <div class="span10">
-      <h1><span contenteditable="true" class="title_update"><%= @P( @ticket.title ) %></span> <small><%= @ticket.number %></small></h1>
+      <h1><span contenteditable="true" class="title_update inline-edit"><%= @P( @ticket.title ) %></span> <small><%= @ticket.number %></small></h1>
     </div>
     <div class="span2">
       <% if window.Config['LastOverview'] && @nav: %>
