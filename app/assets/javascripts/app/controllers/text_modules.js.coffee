@@ -171,7 +171,7 @@ class App.TextModuleUI extends App.Controller
       ui = @
       text_module.save(
         success: ->
-          ui.render()
+          ui.renderTable()
           ui.log 'save success!'
 
         error: ->
