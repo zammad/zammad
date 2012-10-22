@@ -2,8 +2,7 @@ $ = jQuery.sub()
 
 class App.TextModuleUI extends App.Controller
   events:
-    'click [data-type=text_module_save]':   'create',
-    'click [data-type=text_module_select]': 'select',
+    'click [data-type=save]':   'create',
     'click [data-type=text_module_delete]': 'delete',
     'click [data-type=edit]':               'select',
     'dblclick [data-type=edit]':            'paste',
@@ -30,77 +29,69 @@ class App.TextModuleUI extends App.Controller
   render: =>
 
     ui = @
-    a = $('textarea')
+    ui.Capture = false
+    ui.CaptureList = ''
+
+    # define elements to observe
+    inputElement = $('textarea')
 
     # remember active text element
-    a.bind('focusin', ->
+    inputElement.bind('focusin', ->
       ui.area = $(@)
     )
 
-    ui.C = false
-    ui.CList = ''
-    a.bind('keydown', (e) ->
+    inputElement.bind('keydown', (e) ->
 
       # lisen if crtl is pressed
-      if ui.C
+      if ui.Capture
         key = App.ClipBoard.keycode( e.keyCode )
 
         # remove one char
         if key is 'backspace'
-          ui.CList = ui.CList.slice( 0, -1 )
+          ui.CaptureList = ui.CaptureList.slice( 0, -1 )
 
         # take over
         else if key is 'enter'
-#          ui.CList = ui.CList.slice(0, -1)
-          objects = ui.objectSearch( ui.CList )
+          objects = ui.objectSearch( ui.CaptureList )
           if objects[0]
             ui._insert( objects[0].content, ui )
 
             # reset search
-            ui.CList = ''
+            ui.CaptureList = ''
             ui.renderTable()
 
         # add char to search selection
         else
-          ui.CList = ui.CList + key
+          ui.CaptureList = ui.CaptureList + key
 
-        console.log 'CTRL+', ui.CList
-        ui.el.find('#text-module-search').val( ui.CList )
-        ui.renderTable( ui.CList )
+        console.log 'CTRL+', ui.CaptureList
+        ui.el.find('#text-module-search').val( ui.CaptureList )
+        ui.renderTable( ui.CaptureList )
 
       # start current search process
       if e.ctrlKey
-        ui.C = true
+        ui.Capture = true
     )
 
     # start current search process
     # do code to test other keys
-    a.bind('keyup', (e) ->
+    inputElement.bind('keyup', (e) ->
       if e.keyCode == 17
-        console.log 'CTRL UP - pressed ', ui.CList
-        ui.CList = ''
-        ui.C = false
+        console.log 'CTRL UP - pressed ', ui.CaptureList
+        ui.el.find('#text-module-search').val( '' )
+        ui.CaptureList = ''
+        ui.Capture = false
         ui.renderTable()
     )
 
-    @configure_attributes = [
-      { name: 'text_module_id', display: '', tag: 'select', multiple: false, null: true, nulloption: true, relation: 'TextModule', class: 'span2', default: @text_module_id  },
-    ]
-
-    text_module = {}
-    if @text_module_id
-      text_module = App.Collection.find( 'TextModule', @text_module_id )
-
     # insert data
     @html App.view('text_module')(
-      text_module: text_module,
       search: @search,
     )
 
     # rerender if search phrase has changed
     @el.find('#text-module-search').unbind('keyup').bind('keyup', =>
-      search = $('#text-module-search').val();
-      console.log 'SEARCH', search
+      search = $('#text-module-search').val()
       @renderTable( search )
     )
 
@@ -108,12 +99,11 @@ class App.TextModuleUI extends App.Controller
 
   objectSearch: (search) =>
     objects = App.Collection.all(
-      type: 'TextModule',
+      type:   'TextModule',
       sortBy: 'name',
       filter: { active: true },
       filterExtended: [ { name: search }, { content: search }, { keywords: search } ],
     )
-
 
   renderTable: (search) =>
 
@@ -143,7 +133,6 @@ class App.TextModuleUI extends App.Controller
     text_module = App.Collection.find( 'TextModule', params['text_module_id'] )
     if confirm('Sure?')
       text_module.destroy() 
-      @text_module_id = undefined
       @render()
 
   select: (e) =>
@@ -151,13 +140,14 @@ class App.TextModuleUI extends App.Controller
     id = $(e.target).parents('tr').data('id')
     text_module = App.Collection.find( 'TextModule', id )
     @el.find('#text-module-preview-content').val( text_module.content )
+    @el.find('#text_module_name').val( text_module.name )
 
   create: (e) =>
     e.preventDefault()
 
     # get params
     params = @formParam(e.target)
-    name = params['text_module_name']
+    name = params['name']
 #    delete params['text_module_name']
 
     text_module = App.Collection.findByAttribute( 'TextModule', 'name', name )
@@ -165,11 +155,11 @@ class App.TextModuleUI extends App.Controller
       text_module = new App.TextModule
 
     content = App.ClipBoard.getSelectedLast()
-    if content
-      text_module.load(
-        name:    params['text_module_name']
-        content: content
-      )
+    text_module.load(
+      name:    params['name'],
+      content: content,
+      active:  true,
+    )
 
     # validate form
     errors = text_module.validate()
@@ -181,7 +171,6 @@ class App.TextModuleUI extends App.Controller
       ui = @
       text_module.save(
         success: ->
-          ui.text_module_id = @.id
           ui.render()
           ui.log 'save success!'
 

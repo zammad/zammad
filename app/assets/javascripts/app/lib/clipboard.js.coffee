@@ -29,9 +29,25 @@ class _Singleton
   # bind to fill selected text into
   bind: (el) ->
     $(el).bind('mouseup', =>
+
+      # check selection on mouse up
       @selection = @_getSelected()
       if @selection
         @selectionLast = @selection
+    )
+    $(el).bind('keyup', (e) =>
+
+      # check selection on sonder key
+      if e.keyCode == 91
+        @selection = @_getSelected()
+        if @selection
+          @selectionLast = @selection
+
+      # check selection of arrow keys
+      if e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40
+        @selection = @_getSelected()
+        if @selection
+          @selectionLast = @selection
     )
 
   # get cross browser selected string

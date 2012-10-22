@@ -8,13 +8,14 @@
   <!--<button type="submit" class="btn" data-type="text_module_edit"><%- @T( 'Edit' ) %></button>-->
 <!--
   <button type="submit" class="btn" data-type="text_module_delete"><%- @T( 'Delete' ) %></button>
-  <button type="submit" class="btn" data-type="text_module_select"><%- @T( 'Apply' ) %></button>
 -->
   <%- @T( 'Preview ') %>
   <br>
   <textarea id="text-module-preview-content" class="span2"></textarea>
   <hr>
-  <label class="" for="text_module_name"><%- @T( 'Save as Text Module' ) %></label>
-  <input type="text" name="text_module_name" id="text_module_name" class="span2" value="<%= @text_module.name %>"/>
-  <button type="submit" class="btn" data-type="text_module_save"><%- @T( 'Save' ) %></button>
+  <form>
+    <label class="" for="text_module_name"><%- @T( 'Save as Text Module' ) %></label>
+    <input type="text" name="name" id="text_module_name" class="span2" value=""/>
+    <button type="submit" class="btn" data-type="save"><%- @T( 'Save' ) %></button>
+  </form>
 </div>
