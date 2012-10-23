@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
     user = User.find_fulldata(user.id)
 
     # auto population of default collections
-    default_collection = default_collections()
+    default_collection = SessionHelper::default_collections()
     
     # set session user_id
     session[:user_id] = user['id']
@@ -82,7 +82,7 @@ class SessionsController < ApplicationController
     user = User.user_data_full( user_id )
 
     # auto population of default collections
-    default_collection = default_collections()
+    default_collection = SessionHelper::default_collections()
 
     # return current session
     render :json => {
@@ -112,7 +112,7 @@ class SessionsController < ApplicationController
       logger.info("AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT")
 
       # redirect to app
-      redirect_to '/app#'
+      redirect_to '/app'
     end
 
     # Create a new user or add an auth to existing user, depending on
@@ -129,23 +129,7 @@ class SessionsController < ApplicationController
     session[:user_id] = authorization.user.id
 
     # redirect to app
-    redirect_to '/app#'
+    redirect_to '/app'
   end
 
-  private
-    def default_collections
-
-      # auto population collections, store all here
-      default_collection = {}
-
-      # load collections to deliver from external files
-      dir = File.expand_path('../', __FILE__)
-      files = Dir.glob( "#{dir}/sessions/collection_*.rb" )
-      for file in files
-        load file
-        ExtraCollection.add(default_collection)
-      end
-
-      return default_collection
-    end
 end

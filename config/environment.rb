@@ -1,6 +1,9 @@
 # Load the rails application
 require File.expand_path('../application', __FILE__)
 
+# load session helper
+require 'session_helper'
+
 # load module used to get current user for active recorde observer
 require 'user_info'
 

@@ -1,5 +1,5 @@
 module ExtraCollection
-  def add(collections)
+  def session(collections)
 
     # all base stuff
     collections['Role']          = Role.all
@@ -7,5 +7,13 @@ module ExtraCollection
     collections['Organization']  = Organization.all
 
   end
-  module_function :add
+  def push(collections)
+
+    # all base stuff
+    collections['Role']          = Role.all
+    collections['Group']         = Group.all
+    collections['Organization']  = Organization.all
+
+  end
+  module_function :session, :push
 end

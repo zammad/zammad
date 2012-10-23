@@ -210,7 +210,7 @@ class UserState
     @user_id = user_id
     @data = {}
     @cache_key = 'user_' + user_id.to_s
-    self.log "---user started user state"
+    self.log 'notify', "---user started user state"
 
     CacheIn.set( 'last_run_' + user_id.to_s , true, { :expires_in => 20.seconds } )
 
@@ -225,11 +225,11 @@ class UserState
 
       # check if user is still with min one open connection
       if !CacheIn.get( 'last_run_' + user.id.to_s )
-        self.log "---user - closeing thread - no open user connection"
+        self.log 'notify', "---user - closeing thread - no open user connection"
         return
       end
 
-      self.log "---user - fetch user data"
+      self.log 'notice', "---user - fetch user data"
       # overview
       cache_key = @cache_key + '_overview'
       if CacheIn.expired(cache_key)
@@ -237,9 +237,9 @@ class UserState
           :current_user => user,
         )
         overview_cache = CacheIn.get( cache_key, { :re_expire => true } )
-        self.log 'fetch overview - ' + cache_key
+        self.log 'notice', 'fetch overview - ' + cache_key
         if overview != overview_cache
-          self.log 'fetch overview changed - ' + cache_key
+          self.log 'notify', 'fetch overview changed - ' + cache_key
 #          puts overview.inspect
 #          puts '------'
 #          puts overview_cache.inspect
@@ -261,9 +261,9 @@ class UserState
             :array        => true,
           )
           overview_data_cache = CacheIn.get( cache_key, { :re_expire => true } )
-          self.log 'fetch overview_data - ' + cache_key
+          self.log 'notice', 'fetch overview_data - ' + cache_key
           if overview_data != overview_data_cache
-            self.log 'fetch overview_data changed - ' + cache_key
+            self.log 'notify', 'fetch overview_data changed - ' + cache_key
             CacheIn.set( cache_key, overview_data, { :expires_in => 5.seconds } )
           end
         end
@@ -276,9 +276,9 @@ class UserState
           :current_user_id => user.id,
         )
         ticket_create_attributes_cache = CacheIn.get( cache_key, { :re_expire => true } )
-        self.log 'fetch ticket_create_attributes - ' + cache_key
+        self.log 'notice', 'fetch ticket_create_attributes - ' + cache_key
         if ticket_create_attributes != ticket_create_attributes_cache
-          self.log 'fetch ticket_create_attributes changed - ' + cache_key
+          self.log 'notify', 'fetch ticket_create_attributes changed - ' + cache_key
           CacheIn.set( cache_key, ticket_create_attributes, { :expires_in => 2.minutes } )
         end
       end
@@ -288,9 +288,9 @@ class UserState
       if CacheIn.expired(cache_key)
         recent_viewed = History.recent_viewed(user)
         recent_viewed_cache = CacheIn.get( cache_key, { :re_expire => true } )
-        self.log 'fetch recent_viewed - ' + cache_key
+        self.log 'notice', 'fetch recent_viewed - ' + cache_key
         if recent_viewed != recent_viewed_cache
-          self.log 'fetch recent_viewed changed - ' + cache_key
+          self.log 'notify', 'fetch recent_viewed changed - ' + cache_key
 
           recent_viewed_full = History.recent_viewed_fulldata(user)
           CacheIn.set( cache_key, recent_viewed, { :expires_in => 5.seconds } )
@@ -303,9 +303,9 @@ class UserState
       if CacheIn.expired(cache_key)
         activity_stream = History.activity_stream( user )
         activity_stream_cache = CacheIn.get( cache_key, { :re_expire => true } )
-        self.log 'fetch activity_stream - ' + cache_key
+        self.log 'notice', 'fetch activity_stream - ' + cache_key
         if activity_stream != activity_stream_cache
-          self.log 'fetch activity_stream changed - ' + cache_key
+          self.log 'notify', 'fetch activity_stream changed - ' + cache_key
 
           activity_stream_full = History.activity_stream_fulldata( user )
           CacheIn.set( cache_key, activity_stream, { :expires_in => 0.75.minutes } )
@@ -319,9 +319,9 @@ class UserState
         url = 'http://www.heise.de/newsticker/heise-atom.xml'
         rss_items = RSS.fetch( url, 8 )
         rss_items_cache = CacheIn.get( cache_key, { :re_expire => true } )
-        self.log 'fetch rss - ' + cache_key
+        self.log 'notice', 'fetch rss - ' + cache_key
         if rss_items != rss_items_cache
-          self.log 'fetch rss changed - ' + cache_key
+          self.log 'notify', 'fetch rss changed - ' + cache_key
           CacheIn.set( cache_key, rss_items, { :expires_in => 2.minutes } )
           CacheIn.set( cache_key + '_push', {
             head:  'Heise ATOM',
@@ -329,12 +329,46 @@ class UserState
           })
         end
       end
-      self.log "---/user-"
+
+      # auto population of default collections
+      self.log 'notice', "---user - fetch push_collection data"
+
+      # get available collections
+      cache_key = @cache_key + '_push_collections'
+      collections = CacheIn.get( cache_key )
+      if !collections
+        collections = {}
+        push_collection = SessionHelper::push_collections()
+        push_collection.each { | key, value |
+          collections[ key ] = true
+        }
+        CacheIn.set( cache_key, collections )
+      end
+
+      # check all collections to push
+      push_collection = {}
+      collections.each { | key, v |
+        cache_key = @cache_key + '_push_collections_' + key
+        if CacheIn.expired(cache_key)
+          if push_collection.empty?
+            push_collection = SessionHelper::push_collections()
+          end
+          push_collection_cache = CacheIn.get( cache_key, { :re_expire => true } )
+          self.log 'notice', "---user - fetch push_collection data " + cache_key
+          if !push_collection[key] || !push_collection_cache || push_collection[key] != push_collection_cache || !push_collection[ key ].zip( push_collection_cache ).all? { |x, y| x.attributes == y.attributes }
+            self.log 'notify', 'fetch push_collection changed - ' + cache_key
+            CacheIn.set( cache_key, push_collection[key], { :expires_in => 1.minutes } )
+          end
+        end
+      }
+
+      self.log 'notice', "---/user-"
       sleep 1
     end
   end
 
-  def log( data )
+  def log( level, data )
+    return if level == 'notice'
     puts "#{Time.now}:user_id(#{ @user_id }) #{ data }"
   end
 end
@@ -343,11 +377,12 @@ end
 class ClientState
   def initialize( client_id )
     @client_id = client_id
+    @cache_key = ''
     @data = {}
     @pushed = {}
-    self.log "---client start ws connection---"
+    self.log 'notify', "---client start ws connection---"
     self.fetch
-    self.log "---client exiting ws connection---"
+    self.log 'notify', "---client exiting ws connection---"
   end
   
   def fetch
@@ -362,20 +397,23 @@ class ClientState
       user = User.find( user_session[:id] )
       return if !user
 
+      # set cache key
+      @cache_key = 'user_' + user.id.to_s
+
       loop_count += 1
-      self.log "---client - looking for data of user #{user.id}"
+      self.log 'notice', "---client - looking for data of user #{user.id}"
 
       # remember last run
       CacheIn.set( 'last_run_' + user.id.to_s , true, { :expires_in => 20.seconds } )
 
       # overview
-      cache_key = 'user_' + user.id.to_s + '_overview'
+      cache_key = @cache_key + '_overview'
       overview_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if overview_time && @data[:overview_time] != overview_time
         @data[:overview_time] = overview_time
         overview = CacheIn.get( cache_key, { :ignore_expire => true } )
 
-        self.log "push overview for user #{user.id}"
+        self.log 'notify', "push overview for user #{user.id}"
 
         # send update to browser
         self.transaction({
@@ -389,13 +427,13 @@ class ClientState
         :current_user => user,
       )
       overviews.each { |overview|
-        cache_key = 'user_' + user.id.to_s + '_overview_data_' + overview.meta[:url]
+        cache_key = @cache_key + '_overview_data_' + overview.meta[:url]
 
         overview_data_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
         if overview_data_time && @data[cache_key] != overview_data_time
           @data[cache_key] = overview_data_time
           overview_data = CacheIn.get( cache_key, { :ignore_expire => true } )
-          self.log "push overview_data for user #{user.id}"
+          self.log 'notify', "push overview_data for user #{user.id}"
           users = {}
           tickets = []
           overview_data[:tickets].each {|ticket_id|
@@ -446,7 +484,7 @@ class ClientState
       }
 
       # ticket_create_attributes
-      cache_key = 'user_' + user.id.to_s + '_ticket_create_attributes'
+      cache_key = @cache_key + '_ticket_create_attributes'
       ticket_create_attributes_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if ticket_create_attributes_time && @data[:ticket_create_attributes_time] != ticket_create_attributes_time
         @data[:ticket_create_attributes_time] = ticket_create_attributes_time
@@ -461,7 +499,7 @@ class ClientState
           :users     => users,
           :edit_form => create_attributes,
         }
-        self.log "push ticket_create_attributes for user #{user.id}"
+        self.log 'notify', "push ticket_create_attributes for user #{user.id}"
 
         # send update to browser
         self.transaction({
@@ -471,12 +509,12 @@ class ClientState
       end
 
       # recent viewed
-      cache_key = 'user_' + user.id.to_s + '_recent_viewed'
+      cache_key = @cache_key + '_recent_viewed'
       recent_viewed_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if recent_viewed_time && @data[:recent_viewed_time] != recent_viewed_time
         @data[:recent_viewed_time] = recent_viewed_time
         recent_viewed = CacheIn.get( cache_key, { :ignore_expire => true } )
-        self.log "push recent_viewed for user #{user.id}"
+        self.log 'notify', "push recent_viewed for user #{user.id}"
 
         # send update to browser
         r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
@@ -487,12 +525,12 @@ class ClientState
       end
 
       # activity stream
-      cache_key = 'user_' + user.id.to_s + '_activity_stream'
+      cache_key = @cache_key + '_activity_stream'
       activity_stream_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if activity_stream_time && @data[:activity_stream_time] != activity_stream_time
         @data[:activity_stream_time] = activity_stream_time
         activity_stream = CacheIn.get( cache_key, { :ignore_expire => true } )
-        self.log "push activity_stream for user #{user.id}"
+        self.log 'notify', "push activity_stream for user #{user.id}"
 
         # send update to browser
         r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
@@ -504,12 +542,12 @@ class ClientState
       end
 
       # rss
-      cache_key = 'user_' + user.id.to_s + '_rss'
+      cache_key = @cache_key + '_rss'
       rss_items_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
       if rss_items_time && @data[:rss_time] != rss_items_time
         @data[:rss_time] = rss_items_time
         rss_items = CacheIn.get( cache_key, { :ignore_expire => true } )
-        self.log "push rss for user #{user.id}"
+        self.log 'notify', "push rss for user #{user.id}"
 
         # send update to browser
         r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
@@ -519,7 +557,33 @@ class ClientState
           :data       => r,
         })
       end
-      self.log "---/client-"
+
+      # push_collections
+      cache_key = @cache_key + '_push_collections'
+      collections = CacheIn.get( cache_key ) || {}
+      collections.each { | key, v |
+        collection_cache_key = @cache_key + '_push_collections_' + key
+        collection_time = CacheIn.get_time( collection_cache_key, { :ignore_expire => true } )
+        if collection_time && @data[ collection_cache_key + '_time' ] != collection_time
+
+          @data[ collection_cache_key + '_time' ] = collection_time
+          push_collections = CacheIn.get( collection_cache_key, { :ignore_expire => true } )
+
+          self.log 'notify', "push push_collections #{key} for user #{user.id}"
+
+          # send update to browser
+          data = {}
+          data['collections'] = {}
+          data['collections'][key] = push_collections
+          self.transaction({
+            :event  => 'loadCollection',
+            :data   => data,
+          })
+
+        end
+      }
+
+      self.log 'notice', "---/client-"
 
       # start faster in the beginnig
       if loop_count < 20
@@ -561,7 +625,7 @@ class ClientState
     @pushed[:users][user_id] = user
 
     # user not on client or different
-    self.log 'push user ... ' + user['login']
+    self.log 'notice', 'push user ... ' + user['login']
     users[ user_id ] = user
   end
 
@@ -570,7 +634,8 @@ class ClientState
     Session.transaction( @client_id, data )
   end
 
-  def log( data )
+  def log( level, data )
+    return if level == 'notice'
     puts "#{Time.now}:client(#{ @client_id }) #{ data }"
   end
 end
