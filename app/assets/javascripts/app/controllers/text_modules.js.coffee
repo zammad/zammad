@@ -42,22 +42,27 @@ class App.TextModuleUI extends App.Controller
     # remember active text element
     inputElement.bind('focusin', ->
       @uiWidget = ui
+      @uiWidget.el.find('.well').removeClass('hide')
       ui.area = $(@)
-      update = =>
 
-        left = @uiWidget.area.offset().left
-        top  = @uiWidget.area.offset().top
+      # set window to new possition
+      update = =>
+        left  = @uiWidget.area.offset().left
+        top   = @uiWidget.area.offset().top
         width = @uiWidget.area.width()
-        console.log 'TEXTAREA', left, top, width
-        @uiWidget.el.offset( left: left + width + 20, top: top )
-        @uiWidget.el.find('.well').removeClass('hide')
 
         topWindow = $(window).scrollTop() + 50
         if top < topWindow
           @uiWidget.el.offset( top: topWindow )
+        else
+          @uiWidget.el.offset( left: left + width + 20, top: top )
+
+      # update window possition every x ms
       ui.interval( update, 150, 'text_module_box' )
     )
     inputElement.bind('focusout', ->
+
+      # clear update window possition
       ui.clearInterval( 'text_module_box' )
     )
 
@@ -71,10 +76,18 @@ class App.TextModuleUI extends App.Controller
 
         # remove one char
         if key is 'backspace'
+
+          # prevent default key action
+          e.preventDefault()
+
           ui.CaptureList = ui.CaptureList.slice( 0, -1 )
 
         # take over
         else if key is 'enter'
+
+          # prevent default key action
+          e.preventDefault()
+
           objects = ui.objectSearch( ui.CaptureList )
           if objects[0]
             ui._insert( objects[0].content, ui )
@@ -83,12 +96,17 @@ class App.TextModuleUI extends App.Controller
             ui.CaptureList = ''
             ui.renderTable()
 
+        # add space to search selection
+        else if key is 'space'
+
+          # prevent default key action
+          e.preventDefault()
+
+          ui.CaptureList = ui.CaptureList + ' '
+
         # add char to search selection
-        else if key is 'space' || key.length is 1
-          if key is 'space'
-            ui.CaptureList = ui.CaptureList + ' '
-          else
-            ui.CaptureList = ui.CaptureList + key
+        else if key.length is 1
+          ui.CaptureList = ui.CaptureList + key
 
           # prevent default key action
           e.preventDefault()
@@ -106,10 +124,10 @@ class App.TextModuleUI extends App.Controller
     # do code to test other keys
     inputElement.bind('keyup', (e) ->
       if e.keyCode == 17
-        console.log 'CTRL UP - pressed ', ui.CaptureList
-        ui.el.find('#text-module-search').val( '' )
         ui.CaptureList = ''
+        console.log 'CTRL UP - pressed ', ui.CaptureList
         ui.Capture = false
+        ui.el.find('#text-module-search').val( '' )
         ui.renderTable()
     )
 
@@ -237,6 +255,17 @@ class App.TextModuleUI extends App.Controller
     start = content.substr( 0, position )
     end   = content.substr( position, content.length )
 
+    contentNew = contentNew.replace( /<%=\s{0,2}(.+?)\s{0,2}%>/g, ( all, key ) ->
+      key = key.replace( /@/g, 'ui.data.' )
+      varString = "#{key}" + ''
+      try
+        key = eval (varString)
+      catch error
+        console.log( "tag replacement: " + error )
+        key = ''
+      return key
+    )
+
     # check if \n is needed
     startEnd = start.substr( start.length-2, 2 )
 
@@ -248,7 +277,7 @@ class App.TextModuleUI extends App.Controller
     ui.area.val(content)
 
     # update cursor position
-    currentPosition = (position + contentNew.length + startDiver.length )
+    currentPosition = ( position + contentNew.length + startDiver.length + 1 )
     ui.area.prop('selectionStart', currentPosition )
     ui.area.prop('selectionEnd', currentPosition )
 

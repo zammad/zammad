@@ -206,7 +206,10 @@ class Index extends App.Controller
     # show text module UI
     if !@isRole('Customer')
       new App.TextModuleUI(
-        el: @el.find('#text_module'),
+        el:   @el.find('#text_module'),
+        data: {
+          ticket: @ticket,
+        },
       )
 
   show_toogle: (e) ->
