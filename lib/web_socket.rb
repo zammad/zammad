@@ -433,7 +433,7 @@ class ClientState
         if overview_data_time && @data[cache_key] != overview_data_time
           @data[cache_key] = overview_data_time
           overview_data = CacheIn.get( cache_key, { :ignore_expire => true } )
-          self.log 'notify', "push overview_data for user #{user.id}"
+          self.log 'notify', "push overview_data #{overview.meta[:url]} for user #{user.id}"
           users = {}
           tickets = []
           overview_data[:tickets].each {|ticket_id|
