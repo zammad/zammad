@@ -149,7 +149,7 @@ class App.TextModuleUI extends App.Controller
       type:   'TextModule',
       sortBy: 'name',
       filter: { active: true },
-      filterExtended: [ { name: search }, { content: search }, { keywords: search } ],
+      filterExtended: [ { name: "^#{search}" }, { content: search }, { keywords: search } ],
     )
 
   renderTable: (search) =>
@@ -237,6 +237,7 @@ class App.TextModuleUI extends App.Controller
       ui = @
       text_module.save(
         success: ->
+          ui.el.find('#text_module_name').val('')
           ui.renderTable()
           ui.log 'save success!'
 
