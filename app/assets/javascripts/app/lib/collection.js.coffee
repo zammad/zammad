@@ -89,15 +89,15 @@ class _Singleton
   reset: (params) ->
     console.log( 'reset', params )
 
+    # empty in-memory
+    App[ params.type ].refresh( [], { clear: true } )
+
     # remove permanent storage
     list = App.Store.list()
     for key in list
       parts = key.split('::')
       if parts[0] is 'collection' && parts[1] is params.type
         App.Store.delete(key)
-
-    # empty in-memory
-    App[ params.type ].refresh( [], { clear: true } )
 
     # load with new data
     @load(params)
