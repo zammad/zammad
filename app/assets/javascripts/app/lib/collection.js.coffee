@@ -235,7 +235,10 @@ class _Singleton
     App[type].fetch()
 
   _sortBy: ( collection, attribute ) ->
-    _.sortBy( collection, (item) -> return item[ attribute ].toLowerCase() )
+    _.sortBy( collection, (item) ->
+      return '' if item[ attribute ] is undefined || item[ attribute ] is null
+      return item[ attribute ].toLowerCase()
+    )
 
   _filter: ( collection, filter ) ->
     for key, value of filter

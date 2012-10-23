@@ -49,7 +49,7 @@ class App.ControllerGenericNew extends App.ControllerModal
           if ui.callback
             ui.callback( user )
           ui.modalHide()
-        App.Collection.find( ui.pageData.object, @id, callbackReload , true )
+        App.Collection.find( ui['genericObject'], @id, callbackReload , true )
 
       error: ->
         ui.log 'errors'
@@ -110,7 +110,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
           if ui.callback
             ui.callback( user )
           ui.modalHide()
-        App.Collection.find( ui.pageData.object, @id, callbackReload , true )
+        App.Collection.find( ui['genericObject'], @id, callbackReload , true )
 
       error: =>
         ui.log 'errors'
