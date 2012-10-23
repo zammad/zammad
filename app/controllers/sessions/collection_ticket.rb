@@ -1,5 +1,5 @@
 module ExtraCollection
-  def session(collections)
+  def session( collections, user )
 
     # all ticket stuff
     collections['TicketStateType']     = Ticket::StateType.all
@@ -15,7 +15,7 @@ module ExtraCollection
     collections['EmailAddress']        = EmailAddress.all
 
   end
-  def push(collections)
+  def push( collections, user )
 
     # all ticket stuff
     collections['TicketStateType']     = Ticket::StateType.all

@@ -9,6 +9,11 @@ class App.Collection
       _instance ?= new _Singleton
     _instance.load( args )
 
+  @reset: ( args ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.reset( args )
+
   @find: ( type, id, callback, force ) ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -58,6 +63,16 @@ class _Singleton
           console.log 'loadCollection:trigger', type, data.collections[type]
           @load( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
+    # add trigger - bind new events
+    Spine.bind 'restCollection', (data) =>
+
+      # load collections
+      if data.collections
+        for type of data.collections
+
+          console.log 'restCollection:trigger', type, data.collections[type]
+          @reset( localStorage: data.localStorage, type: type, data: data.collections[type] )
+
     # find collections to load
     @_loadCollectionAll()
 
@@ -70,6 +85,22 @@ class _Singleton
         if data && data.localStorage
           console.log('load INIT', data)
           @load( data )
+
+  reset: (params) ->
+    console.log( 'reset', params )
+
+    # remove permanent storage
+    list = App.Store.list()
+    for key in list
+      parts = key.split('::')
+      if parts[0] is 'collection' && parts[1] is params.type
+        App.Store.delete(key)
+
+    # empty in-memory
+    App[ params.type ].refresh( [], { clear: true } )
+
+    # load with new data
+    @load(params)
 
   load: (params) ->
     console.log( 'load', params )

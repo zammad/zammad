@@ -1,5 +1,5 @@
 module ExtraCollection
-  def session(collections)
+  def session( collections, user )
 
     # all base stuff
     collections['Role']          = Role.all
@@ -7,7 +7,7 @@ module ExtraCollection
     collections['Organization']  = Organization.all
 
   end
-  def push(collections)
+  def push( collections, user )
 
     # all base stuff
     collections['Role']          = Role.all

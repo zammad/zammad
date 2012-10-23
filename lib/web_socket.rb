@@ -338,7 +338,7 @@ class UserState
       collections = CacheIn.get( cache_key )
       if !collections
         collections = {}
-        push_collection = SessionHelper::push_collections()
+        push_collection = SessionHelper::push_collections(user)
         push_collection.each { | key, value |
           collections[ key ] = true
         }
@@ -351,7 +351,7 @@ class UserState
         cache_key = @cache_key + '_push_collections_' + key
         if CacheIn.expired(cache_key)
           if push_collection.empty?
-            push_collection = SessionHelper::push_collections()
+            push_collection = SessionHelper::push_collections(user)
           end
           push_collection_cache = CacheIn.get( cache_key, { :re_expire => true } )
           self.log 'notice', "---user - fetch push_collection data " + cache_key
@@ -576,7 +576,7 @@ class ClientState
           data['collections'] = {}
           data['collections'][key] = push_collections
           self.transaction({
-            :event  => 'loadCollection',
+            :event  => 'restCollection',
             :data   => data,
           })
 

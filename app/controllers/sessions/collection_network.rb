@@ -1,5 +1,5 @@
 module ExtraCollection
-  def session(collections)
+  def session( collections, user )
 
     collections['Network']             = Network.all
     collections['NetworkCategory']     = Network::Category.all
@@ -7,7 +7,7 @@ module ExtraCollection
     collections['NetworkPrivacy']      = Network::Privacy.all
 
   end
-  def push(collections)
+  def push( collections, user )
 
     collections['Network']             = Network.all
     collections['NetworkCategory']     = Network::Category.all

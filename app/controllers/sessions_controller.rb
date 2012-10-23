@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
     user = User.find_fulldata(user.id)
 
     # auto population of default collections
-    default_collection = SessionHelper::default_collections()
+    default_collection = SessionHelper::default_collections(user)
     
     # set session user_id
     session[:user_id] = user['id']
@@ -82,7 +82,7 @@ class SessionsController < ApplicationController
     user = User.user_data_full( user_id )
 
     # auto population of default collections
-    default_collection = SessionHelper::default_collections()
+    default_collection = SessionHelper::default_collections(user)
 
     # return current session
     render :json => {
