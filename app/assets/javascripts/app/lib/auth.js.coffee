@@ -66,7 +66,7 @@ class App.Auth
 
         # refresh/load default collections
         for key, value of data.default_collections
-          App.Collection.rest( type: key, data: value )
+          App.Collection.reset( type: key, data: value )
 
         # rebuild navbar with new navbar items
         Spine.trigger 'navrebuild', data.session
