@@ -576,7 +576,7 @@ class ClientState
           data['collections'] = {}
           data['collections'][key] = push_collections
           self.transaction({
-            :event  => 'restCollection',
+            :event  => 'resetCollection',
             :data   => data,
           })
 

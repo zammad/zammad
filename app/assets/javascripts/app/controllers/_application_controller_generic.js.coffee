@@ -59,19 +59,8 @@ class App.ControllerGenericNew extends App.ControllerModal
 class App.ControllerGenericEdit extends App.ControllerModal
   constructor: (params) ->
     super
-    @log 'ControllerGenericEditWindow', params
-
-    # fetch item on demand
-    if App[ @genericObject ].exists( params.id )
-      @item = App[ @genericObject ].find( params.id )
-      @render()
-    else
-      App[ @genericObject ].bind 'refresh', =>
-        @log 'changed....'
-        @item = App[ @genericObject ].find( params.id )
-        @render()
-        App[ @genericObject ].unbind 'refresh'
-      App[ @genericObject ].fetch( id: params.id ) 
+    @item = App[ @genericObject ].find( params.id )
+    @render()
 
   render: ->
 
@@ -126,9 +115,6 @@ class App.ControllerGenericIndex extends App.Controller
   constructor: ->
     super
 
-    # set controller to active
-    Config['ActiveController'] = @pageData.navupdate
-
     # set title
     @title @pageData.title
 
@@ -136,7 +122,17 @@ class App.ControllerGenericIndex extends App.Controller
     @navupdate @pageData.navupdate
 
     # bind render after a change is done
-    App[ @genericObject ].bind 'refresh change', @render
+    App.Collection.observe(
+      level:       'page',
+      collections: [
+        {
+          collection: @genericObject,
+          event:      'refresh change',
+          callback:   @render,
+        },
+      ],
+    )
+
     App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
       @log 'ajax notice', msg.status
       if msg.status is 401
@@ -145,23 +141,13 @@ class App.ControllerGenericIndex extends App.Controller
 #        alert('relogin')
         @navigate 'login'
 
-    # execute fetch, if needed
-    if !App[ @genericObject ].count() || true
-#    if !App[ @genericObject ].count()
+    # execute fetch
+    @render()
 
-      # prerender without content    
-      @render()
-
-      # fetch all
-#      @log 'oooo', App[ @genericObject ].model
-#      App[ @genericObject ].deleteAll()
-      App[ @genericObject ].fetch()
-    else
-      @render()
+    # fetch all
+    App[ @genericObject ].fetch()
 
   render: =>
-
-    return if Config['ActiveController'] isnt @pageData.navupdate
 
     objects = App.Collection.all( 
       type:   @genericObject,

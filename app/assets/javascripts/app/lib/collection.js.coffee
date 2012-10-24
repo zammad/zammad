@@ -49,6 +49,16 @@ class App.Collection
       _instance ?= new _Singleton
     _instance.fetch( type )
 
+  @observe: (args) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.observe(args)
+
+  @observeCleanUpLevel: (level) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.observeCleanUpLevel(level)
+
 class _Singleton
 
   constructor: (@args) ->
@@ -64,13 +74,13 @@ class _Singleton
           @load( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # add trigger - bind new events
-    Spine.bind 'restCollection', (data) =>
+    Spine.bind 'resetCollection', (data) =>
 
       # load collections
       if data.collections
         for type of data.collections
 
-          console.log 'restCollection:trigger', type, data.collections[type]
+          console.log 'resetCollection:trigger', type, data.collections[type]
           @reset( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # find collections to load
@@ -109,22 +119,22 @@ class _Singleton
 
     localStorage = params.localStorage
 
+    # load full array once
     if _.isArray( params.data )
-      for object in params.data
-#        console.log( 'load ARRAY', object)
-        if !localStorage || localStorage && !App[ params.type ].exists( object['id'] )
-          App[ params.type ].refresh( object, options: { clear: true } )
+      console.log( 'load ARRAY', params.data)
+      App[ params.type ].refresh( params.data )
 
-        # remember in store if not already requested from local storage
-        if !localStorage
+      # remember in store if not already requested from local storage
+      if !localStorage
+        for object in params.data
           App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, data: [ object ] } )
       return
 
+    # load data from object
 #    if _.isObject( params.data )
     for key, object of params.data
 #      console.log( 'load OB', object)
-      if !localStorage || localStorage && !App[ params.type ].exists( object['id'] )
-        App[ params.type ].refresh( object, options: { clear: true } )
+      App[ params.type ].refresh( object )
 
       # remember in store if not already requested from local storage
       if !localStorage
@@ -145,11 +155,15 @@ class _Singleton
       else
         console.log( 'find not loaded!', type, id )
       if callback
-        App[type].bind 'refresh', ->
+
+        # execute callback if record got loaded
+        App[type].one 'refresh', ->
           console.log 'loaded..' + type +  '..', id
-          App[type].unbind 'refresh'
+
           data = App.Collection.find( type, id )
           callback( data )
+
+        # fetch object
         console.log 'loading..' + type +  '..', id
         App[type].fetch( id: id )
         return true
@@ -303,4 +317,28 @@ class _Singleton
       return
     )
     return collection
+
+  observeCleanUpLevel: (level) ->
+    return if !@observeCurrent
+    return if !@observeCurrent[level]
+    @_observeUnbind( @observeCurrent[level] )
+
+  observe: (data) ->
+    if !@observeCurrent
+      @observeCurrent = {}
+
+    if @observeCurrent[ data.level ]
+      @_observeUnbind( @observeCurrent[ data.level ] )
+
+    @observeCurrent[ data.level ] = data.collections
+    for observe in data.collections
+      events = observe.event.split(' ')
+      for event in events
+        App[ observe.collection ].bind( event, observe.callback )
+
+  _observeUnbind: (observers) ->
+    for observe in observers
+      events = observe.event.split(' ')
+      for event in events
+        App[ observe.collection ].unbind( event, observe.callback )
 

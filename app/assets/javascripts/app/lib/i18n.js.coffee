@@ -94,7 +94,7 @@ class _Singleton
           @map[ object[1] ] = object[2]
 
           # load in collection if needed
-          App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale }, options: { clear: true } )
+          App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale } )
 
       error: (xhr, statusText, error) =>
         console.log 'error', error, statusText, xhr.statusCode

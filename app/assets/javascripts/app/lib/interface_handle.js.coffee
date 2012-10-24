@@ -40,8 +40,8 @@ class App.Content extends Spine.Controller
       do (route, callback) =>
         @route(route, (params) ->
 
-          # remember current controller
-          Config['ActiveController'] = route
+          # remove observers for page
+          App.Collection.observeCleanUpLevel('page')
 
           # send current controller
           params_only = {}

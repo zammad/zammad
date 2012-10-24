@@ -30,6 +30,12 @@ module ExtraCollection
     # all email addresses
     collections['EmailAddress']        = EmailAddress.all
 
+    # all templates
+    collections['Template']            = Template.all
+
+    # all text modules
+    collections['TextModule']          = TextModule.all
+
   end
 
   module_function :session, :push
