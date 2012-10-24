@@ -195,13 +195,33 @@ Hof",
           :body         => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address."
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail10.box'),
+        :body_md5     => '8d6ea42f7f36a790e67f50e3a5f27063',
+        :attachments  => [
+          {
+            :md5      => '08b0c83fd155db23f22bed845715225d',
+            :filename => 'message.html',
+          },
+          {
+            :md5      => 'a618d671348735744d4c9a4005b56799',
+            :filename => 'image001.jpg',
+          },
+        ],
+        :params   => {
+          :from               => 'Smith Sepp <smith@example.com>',
+          :from_email         => 'smith@example.com',
+          :from_display_name  => 'Smith Sepp',
+          :subject            => 'Gruß aus Oberalteich',
+#          :body         => "Herzliche Grüße aus Oberalteich sendet Herrn Smith\n\n \n\nSepp Smith  - Dipl.Ing. agr. (FH)\n\nGeschäftsführer der example Straubing-Bogen\n\nKlosterhof 1 | 94327 Bogen-Oberalteich\n\nTel: 09422-505601 | Fax: 09422-505620\n\nInternet: http://example-straubing-bogen.de <http://example-straubing-bogen.de/> \n\nFacebook: http://facebook.de/examplesrbog <http://facebook.de/examplesrbog> \n\n   -  European Foundation für Quality Management\n\n"
+        },
+      },
     ]
 
     files.each { |file|
- 
       parser = Channel::EmailParser.new
       data = parser.parse( file[:data] )
-      
+
       # check body
       md5 = Digest::MD5.hexdigest( data[:body] )
       assert_equal( file[:body_md5], md5 )

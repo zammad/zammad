@@ -146,14 +146,25 @@ class Channel::EmailParser
           file.header.fields.each { |field|
             headers_store[field.name.to_s] = field.value.to_s
           }
+
+          # get filename from content-disposition
           filename = nil
-          if file.header[:content_disposition].filename
+          if file.header[:content_disposition] && file.header[:content_disposition].filename
             filename = file.header[:content_disposition].filename
           end
-          if file.header[:content_type].string
+
+          # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
+          if !filename
+            filename = file.header[:content_location].to_s
+          end
+
+          # get mime type
+          if file.header[:content_type] && file.header[:content_type].string
             headers_store['Mime-Type'] = file.header[:content_type].string
           end
-          if file.header.charset
+
+          # get charset
+          if file.header && file.header.charset
             headers_store['Charset'] = file.header.charset
           end
 
@@ -166,6 +177,7 @@ class Channel::EmailParser
             :filename    => filename,
             :preferences => headers_store,
           }
+
           data[:attachments].push attach
         }
       end
@@ -205,7 +217,7 @@ class Channel::EmailParser
         attachment = {
           :data        => mail.body.decoded,
           :filename    => mail.filename || filename,
-          :preferences => headers_store          
+          :preferences => headers_store
         }
         data[:attachments].push attachment
       end
