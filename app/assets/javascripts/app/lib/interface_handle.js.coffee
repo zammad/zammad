@@ -46,21 +46,22 @@ class App.Content extends Spine.Controller
           # remove events for page
           App.Event.unbindLevel('page')
 
+          # unbind in controller area
+          @el.unbind()
+          @el.undelegate()
+
           # send current controller
           params_only = {}
           for i of params
             if typeof params[i] isnt 'object'
               params_only[i] = params[i]
 
+          # tell server what we are calling right now
           App.WebSocket.send(
             action:     'active_controller',
             controller: route,
             params:     params_only,
           )
-
-          # unbind in controller area
-#          @el.unbind()
-#          @el.undelegate()
 
           # remove waypoints
           $('footer').waypoint('remove')

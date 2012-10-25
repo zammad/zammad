@@ -24,6 +24,11 @@ class App.Event
       _instance ?= new _Singleton
     _instance.unbindLevel(level)
 
+  @_allBindings: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance._allBindings()
+
 class _Singleton
 
   constructor: ->
@@ -80,3 +85,6 @@ class _Singleton
     eventList = events.split(' ')
     for event in eventList
       Spine.trigger event, data
+
+  _allBindings: ->
+    @eventCurrent
