@@ -30,6 +30,7 @@
 #= require ./lib/i18n.js.coffee
 #= require ./lib/store.js.coffee
 #= require ./lib/collection.js.coffee
+#= require ./lib/event.js.coffee
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views

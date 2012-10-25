@@ -20,12 +20,6 @@ class App.Controller extends Spine.Controller
 
     @delay( a, 0 )
 
-  reBind: (name, callback) =>
-    Spine.one name, (data) =>
-      @log 'rebind', name, data
-      callback(data)
-      @reBind(name, callback)
-
   isRole: (name) ->
     return false if !window.Session.roles
     for role in window.Session.roles

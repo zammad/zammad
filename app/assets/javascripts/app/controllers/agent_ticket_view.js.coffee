@@ -23,14 +23,15 @@ class Index extends App.Controller
     @meta = {}
     @bulk = {}
 
-    # set controller to active
-    Config['ActiveController'] = '#ticket_overview_' + @view
-
     # set new key
     @key = 'ticket_overview_' + @view
 
-    # bind new events
-    @reBind( 'ticket_overview_rebuild', @fetch )
+    # bind to rebuild view event
+    App.Event.bind(
+      level:   'page'
+      event:   'ticket_overview_rebuild'
+      callback: @fetch
+    )
 
     # render
     @fetch()
@@ -44,20 +45,6 @@ class Index extends App.Controller
       @tickets_count = cache.tickets_count
       @ticket_list   = cache.ticket_list
       @load(cache)
-
-    # get data
-#    App.Com.ajax(
-#      id:    'ticket_overview_' + @start_page,
-#      type:  'GET',
-#      url:   '/api/ticket_overviews',
-#      data:  {
-#        view:       @view,
-#        view_mode:  @view_mode,
-#        start_page: @start_page,
-#      }
-#      processData: true,
-#      success: @load
-#    )
 
   load: (data) =>
 
@@ -75,6 +62,19 @@ class Index extends App.Controller
       @log 'refetch...', record
       @fetch()
 
+#    # bind render after a change is done
+#    App.Collection.observe(
+#      level:       'page',
+#      collections: [
+#        {
+#          collection: @genericObject,
+#          event:      'refresh change',
+#          callback:   @render,
+#        },
+#      ],
+#    )
+
+
     @ticket_list_show = []
     for ticket_id in @ticket_list
       @ticket_list_show.push App.Collection.find( 'Ticket', ticket_id )
@@ -89,8 +89,6 @@ class Index extends App.Controller
     @render()
 
   render: ->
-
-    return if Config['ActiveController'] isnt '#ticket_overview_' + @view
 
     # set page title
     @title @overview.meta.name

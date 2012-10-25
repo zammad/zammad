@@ -12,7 +12,12 @@ class App.DashboardActivityStream extends App.Controller
 #    @interval( @fetch, 1400000, 'dashboard_activity_stream' )
     @fetch()
 
-    @reBind( 'activity_stream_rebuild', @load )
+    # bind to rebuild view event
+    App.Event.bind(
+      level:   'page'
+      event:   'activity_stream_rebuild'
+      callback: @load
+    )
 
   fetch: =>
 

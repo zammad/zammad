@@ -334,11 +334,13 @@ class _Singleton
     for observe in data.collections
       events = observe.event.split(' ')
       for event in events
-        App[ observe.collection ].bind( event, observe.callback )
+        if App[ observe.collection ]
+          App[ observe.collection ].bind( event, observe.callback )
 
   _observeUnbind: (observers) ->
     for observe in observers
       events = observe.event.split(' ')
       for event in events
-        App[ observe.collection ].unbind( event, observe.callback )
+        if App[ observe.collection ]
+          App[ observe.collection ].unbind( event, observe.callback )
 

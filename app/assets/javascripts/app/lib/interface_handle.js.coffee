@@ -43,11 +43,15 @@ class App.Content extends Spine.Controller
           # remove observers for page
           App.Collection.observeCleanUpLevel('page')
 
+          # remove events for page
+          App.Event.cleanUpLevel('page')
+
           # send current controller
           params_only = {}
           for i of params
             if typeof params[i] isnt 'object'
               params_only[i] = params[i]
+
           App.WebSocket.send(
             action:     'active_controller',
             controller: route,
