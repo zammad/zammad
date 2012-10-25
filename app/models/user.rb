@@ -332,10 +332,32 @@ Your #{config.product_name} Team
     end
 
     def check_name
-      if self.firstname && (!self.lastname || self.lastname == '')
+
+      if !self.firstname.empty? && self.lastname.empty?
+
+        # Lastname, Firstname
+        scan = self.firstname.scan(/, /)
+        if scan[0]
+          name = self.firstname.split(', ', 2)
+          self.lastname  = name[0]
+          self.firstname = name[1]
+          return
+        end
+
+        # Firstname Lastname
         name = self.firstname.split(' ', 2)
         self.firstname = name[0]
         self.lastname  = name[1]
+        return
+
+      # -no name- firstname.lastname@example.com
+      elsif self.firstname.empty? && self.lastname.empty? && !self.email.empty?
+        scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
+        if scan[0]
+          self.firstname = scan[0][0].capitalize
+          self.lastname  = scan[0][1].capitalize
+        end
+
       end
     end
 
