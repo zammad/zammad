@@ -1,1 +1,0 @@
-/Users/me/src/notes/app/assets/javascripts/app/controllers/notes.js.coffee
