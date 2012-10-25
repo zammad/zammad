@@ -13,11 +13,7 @@ class App.DashboardActivityStream extends App.Controller
     @fetch()
 
     # bind to rebuild view event
-    App.Event.bind(
-      level:   'page'
-      event:   'activity_stream_rebuild'
-      callback: @load
-    )
+    App.Event.bind( 'activity_stream_rebuild', @load, 'page' )
 
   fetch: =>
 

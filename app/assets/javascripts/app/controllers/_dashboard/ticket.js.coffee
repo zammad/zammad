@@ -15,11 +15,7 @@ class App.DashboardTicket extends App.Controller
     @key = 'ticket_overview_' + @view
 
     # bind to rebuild view event
-    App.Event.bind(
-      level:   'page'
-      event:   'ticket_overview_rebuild'
-      callback: @fetch
-    )
+    App.Event.bind( 'ticket_overview_rebuild', @fetch, 'page' )
 
     # render
     @fetch()

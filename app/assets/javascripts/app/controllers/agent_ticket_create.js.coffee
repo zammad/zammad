@@ -21,7 +21,7 @@ class Index extends App.Controller
     @edit_form = undefined
 
     # lisen if view need to be rerendert
-    Spine.bind 'ticket_create_rerender', (defaults) =>
+    App.Event.bind 'ticket_create_rerender', (defaults) =>
       @log 'rerender', defaults
       @render(defaults)
 

@@ -7,11 +7,11 @@ class App.Navigation extends App.Controller
     @render()
 
     # update selected item
-    Spine.bind 'navupdate', (data) =>
+    App.Event.bind 'navupdate', (data) =>
       @update(arguments[0])
 
     # rebuild nav bar with given user data
-    Spine.bind 'navrebuild', (user) =>
+    App.Event.bind 'navrebuild', (user) =>
       @log 'navbarrebuild', user
 
       if !_.isEmpty( user )
@@ -25,12 +25,12 @@ class App.Navigation extends App.Controller
       @render(user)
 
     # rebuild ticket overview data
-    Spine.bind 'navupdate_ticket_overview', (data) =>
+    App.Event.bind 'navupdate_ticket_overview', (data) =>
       @ticket_overview_build(data)
       @render( window.Session )
 
     # rebuild recent viewd data
-    Spine.bind 'update_recent_viewed', (data) =>
+    App.Event.bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
       @render( window.Session )
 

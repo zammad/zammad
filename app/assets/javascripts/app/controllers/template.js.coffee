@@ -62,7 +62,7 @@ class App.TemplateUI extends App.Controller
     params = @formParam(e.target)
 
     template = App.Collection.find( 'Template', params['template_id'] )
-    Spine.trigger 'ticket_create_rerender', template.attributes()
+    App.Event.trigger 'ticket_create_rerender', template.attributes()
 
   create: (e) =>
     e.preventDefault()

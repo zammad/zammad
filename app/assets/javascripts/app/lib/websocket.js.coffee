@@ -138,13 +138,13 @@ class _Singleton extends Spine.Controller
           if typeof item['event'] is 'object'
             for event in item['event']
               console.log( "ws:onmessage event:" + event )
-              Spine.trigger( event, item['data'] )
+              App.Event.trigger( event, item['data'] )
           else
             console.log( "ws:onmessage event:" + item['event'] )
-            Spine.trigger( item['event'], item['data'] )
+            App.Event.trigger( item['event'], item['data'] )
 
     # bind to send messages
-    Spine.bind 'ws:send', (data) =>
+    App.Event.bind 'ws:send', (data) =>
       @send(data)
 
     @ws.onclose = (e) =>

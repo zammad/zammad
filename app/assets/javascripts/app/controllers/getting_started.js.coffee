@@ -125,7 +125,7 @@ class Index extends App.Controller
     App.Auth.loginCheck()
 
     # add notify
-    Spine.trigger 'notify:removeall'
+    App.Event.trigger 'notify:removeall'
 #      @notify
 #        type: 'success',
 #        msg: 'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'

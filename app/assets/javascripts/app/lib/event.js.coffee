@@ -4,81 +4,79 @@ class App.Event
   @init: ->
     _instance = new _Singleton
 
-  @bind: (args) ->
+  @bind: ( events, callback, level ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.bind(args)
+    _instance.bind( events, callback, level )
 
-  @unbind: (args) ->
+  @unbind: ( events, callback, level ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.unbind(args)
+    _instance.unbind( events, callback, level )
 
-
-  @cleanUpLevel: (level) ->
+  @trigger: ( events, data ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.cleanUpLevel(level)
+    _instance.trigger( events, data )
+
+  @unbindLevel: (level) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.unbindLevel(level)
 
 class _Singleton
 
-  constructor: (args) ->
-    super
+  constructor: ->
     @eventCurrent = {}
 
-  cleanUpLevel: (level) ->
+  unbindLevel: (level) ->
     return if !@eventCurrent[level]
-    for event of @eventCurrent[level]
-      @_unbind( level, event )
+    for item in @eventCurrent[level]
+      @unbind( item.event, item.callback, level )
+    @eventCurrent[level] = []
 
-  bind: (data) ->
+  bind: ( events, callback, level ) ->
 
-    if !data.level
-      Spine.bind( data.event, data.callback )
-      return
+    if !level
+      level = '_all'
 
-    if !@eventCurrent[ data.level ]
-      @eventCurrent[ data.level ] = {}
+    if !@eventCurrent[level]
+      @eventCurrent[level] = []
 
-    # for all events
-    events = data.event.split(' ')
-    for event in events
-
-      # unbind
-      @_unbind( data.level, event )
-
-    for event in events
+    # level boundary events
+    eventList = events.split(' ')
+    for event in eventList
 
       # remember all events
-      @eventCurrent[ data.level ][ event ] = data
+      @eventCurrent[ level ].push {
+        event:    event,
+        callback: callback,
+      }
 
       # bind
-      Spine.bind( event, data.callback )
+      Spine.bind( event, callback )
 
-  _unbind: ( level, event ) ->
-    console.log '_unbind', level, event
-    return if !@eventCurrent[level]
+  unbind: ( events, callback, level ) ->
 
-    data = @eventCurrent[ level ][ event ]
-    return if !data
+    if !level
+      level = '_all'
 
-    Spine.unbind( event, data.callback )
+    if !@eventCurrent[level]
+      @eventCurrent[level] = []
 
-    @eventCurrent[ level ][ event ] = undefined
+    eventList = events.split(' ')
+    for event in eventList
 
-  unbind: (data) ->
+      # remove from
+      @eventCurrent[level] = _.filter( @eventCurrent[level], (item) ->
+        if callback
+          return item if item.event isnt event && item.callback isnt callback
+        else
+          return item if item.event isnt event
+      )
+      Spine.unbind( event, callback )
 
-    if !data.level
-      Spine.unbind( data.event, data.callback )
-      return
-
-    if !@eventCurrent[ data.level ]
-      @eventCurrent[ data.level ] = {}
-
-    # for all events
-    events = data.event.split(' ')
-    for event in events
-
-      # unbind
-      @_unbind( data.level, event )
-
+  trigger: ( events, data ) ->
+    eventList = events.split(' ')
+    for event in eventList
+      Spine.trigger event, data

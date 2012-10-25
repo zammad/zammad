@@ -5,11 +5,7 @@ class App.DashboardRss extends App.Controller
     super
 
     # bind to rebuild view event
-    App.Event.bind(
-      level:   'page'
-      event:   'rss_rebuild'
-      callback: @load
-    )
+    App.Event.bind( 'rss_rebuild', @load, 'page' )
 
     # refresh list ever 600 sec.
     @fetch()

@@ -77,7 +77,7 @@ class Index extends App.Controller
     App.Auth.loginCheck()
 
     # add notify
-    Spine.trigger 'notify:removeall'
+    App.Event.trigger 'notify:removeall'
     @notify
       type: 'success',
       msg: 'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
@@ -88,8 +88,8 @@ class Index extends App.Controller
   error: (xhr, statusText, error) =>
 
     # add notify
-    Spine.trigger 'notify:removeall'
-    Spine.trigger 'notify', {
+    App.Event.trigger 'notify:removeall'
+    App.Event.trigger 'notify', {
       type: 'warning',
       msg: 'Wrong Username and Password combination.', 
     }

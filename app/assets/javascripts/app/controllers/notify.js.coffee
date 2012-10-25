@@ -9,10 +9,10 @@ class App.Notify extends Spine.Controller
   constructor: ->
     super
     
-    Spine.bind 'notify', (data) =>
+    App.Event.bind 'notify', (data) =>
       @render(data)
 
-    Spine.bind 'notify:removeall', =>
+    App.Event.bind 'notify:removeall', =>
       @log 'notify:removeall', @
       @destroyAll()
 

@@ -86,7 +86,7 @@ class Index extends App.Controller
       App[key].refresh( value, options: { clear: true } )
 
     # rebuild navbar with user data
-    Spine.trigger 'navrebuild', data.session
+    App.Event.trigger 'navrebuild', data.session
 
     # update websocked auth info
     App.WebSocket.auth()
@@ -95,8 +95,8 @@ class Index extends App.Controller
     App.WebSocket.send( event: 'navupdate_ticket_overview' )
 
     # add notify
-    Spine.trigger 'notify:removeall'
-    Spine.trigger 'notify', {
+    App.Event.trigger 'notify:removeall'
+    App.Event.trigger 'notify', {
       type: 'success',
       msg: App.i18n.translateContent('Login successfully! Have a nice day!'),
     }
@@ -114,8 +114,8 @@ class Index extends App.Controller
     console.log 'login:error'
 
     # add notify
-    Spine.trigger 'notify:removeall'
-    Spine.trigger 'notify', {
+    App.Event.trigger 'notify:removeall'
+    App.Event.trigger 'notify', {
       type: 'error',
       msg: App.i18n.translateContent('Wrong Username and Password combination.'), 
     }

@@ -45,7 +45,7 @@ class App.Auth
           App.WebSocket.auth()
 
           # rebuild navbar with new navbar items
-          Spine.trigger 'navrebuild'
+          App.Event.trigger 'navrebuild'
 
           return false;
 
@@ -69,10 +69,10 @@ class App.Auth
           App.Collection.reset( type: key, data: value )
 
         # rebuild navbar with new navbar items
-        Spine.trigger 'navrebuild', data.session
+        App.Event.trigger 'navrebuild', data.session
 
         # rebuild navbar with updated ticket count of overviews
-        Spine.trigger 'navupdate_remote'
+        App.Event.trigger 'navupdate_remote'
 
       error: (xhr, statusText, error) =>
         console.log 'loginCheck:error'#, error, statusText, xhr.statusCode

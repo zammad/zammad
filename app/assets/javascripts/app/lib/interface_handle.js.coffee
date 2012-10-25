@@ -34,17 +34,17 @@ class App.Content extends Spine.Controller
 
   constructor: ->
     super
-    @log 'RUN content'#, @
+    @log 'RUN content'
 
     for route, callback of Config.Routes
       do (route, callback) =>
         @route(route, (params) ->
 
           # remove observers for page
-          App.Collection.observeCleanUpLevel('page')
+          App.Collection.observeUnbindLevel('page')
 
           # remove events for page
-          App.Event.cleanUpLevel('page')
+          App.Event.unbindLevel('page')
 
           # send current controller
           params_only = {}
@@ -59,8 +59,8 @@ class App.Content extends Spine.Controller
           )
 
           # unbind in controller area
-          @el.unbind()
-          @el.undelegate()
+#          @el.unbind()
+#          @el.undelegate()
 
           # remove waypoints
           $('footer').waypoint('remove')

@@ -7,11 +7,11 @@ class App.Controller extends Spine.Controller
 
   # add @notify methode to create notification
   notify: (data) ->
-    Spine.trigger 'notify', data
+    App.Event.trigger 'notify', data
 
   # add @navupdate methode to update navigation
   navupdate: (url) ->
-    Spine.trigger 'navupdate', url
+    App.Event.trigger 'navupdate', url
 
   scrollTo: ( x = 0, y = 0 ) ->
     a = ->
@@ -261,7 +261,7 @@ class App.Controller extends Spine.Controller
     )
 
   ws_send: (data) ->
-    Spine.trigger( 'ws:send', JSON.stringify(data) )
+    App.Event.trigger( 'ws:send', JSON.stringify(data) )
 
 class App.ControllerModal extends App.Controller
   className: 'modal hide fade',

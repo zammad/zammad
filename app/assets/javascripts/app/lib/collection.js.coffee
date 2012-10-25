@@ -54,17 +54,17 @@ class App.Collection
       _instance ?= new _Singleton
     _instance.observe(args)
 
-  @observeCleanUpLevel: (level) ->
+  @observeUnbindLevel: (level) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.observeCleanUpLevel(level)
+    _instance.observeUnbindLevel(level)
 
 class _Singleton
 
   constructor: (@args) ->
 
     # add trigger - bind new events
-    Spine.bind 'loadCollection', (data) =>
+    App.Event.bind 'loadCollection', (data) =>
 
       # load collections
       if data.collections
@@ -74,7 +74,7 @@ class _Singleton
           @load( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # add trigger - bind new events
-    Spine.bind 'resetCollection', (data) =>
+    App.Event.bind 'resetCollection', (data) =>
 
       # load collections
       if data.collections
@@ -318,7 +318,7 @@ class _Singleton
     )
     return collection
 
-  observeCleanUpLevel: (level) ->
+  observeUnbindLevel: (level) ->
     return if !@observeCurrent
     return if !@observeCurrent[level]
     @_observeUnbind( @observeCurrent[level] )
