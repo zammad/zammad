@@ -98,6 +98,14 @@ EventMachine.run {
       elsif data['action'] == 'ping'
         @clients[client_id][:last_ping] = Time.now
         @clients[client_id][:websocket].send( '[{"action":"pong"}]' )
+
+      # broadcast
+      elsif data['action'] == 'broadcast'
+        @clients.each { |local_client_id, local_client|
+          if local_client_id != client_id
+            local_client[:websocket].send( "[#{msg}]" )
+          end
+        }
       end
     }
   end
