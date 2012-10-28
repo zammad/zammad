@@ -59,6 +59,11 @@ class App.Collection
       _instance ?= new _Singleton
     _instance.observeUnbindLevel(level)
 
+  @_observeStats: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance._observeStats()
+
 class _Singleton
 
   constructor: (@args) ->
@@ -121,7 +126,7 @@ class _Singleton
 
     # load full array once
     if _.isArray( params.data )
-      console.log( 'load ARRAY', params.data)
+#      console.log( 'load ARRAY', params.data)
       App[ params.type ].refresh( params.data )
 
       # remember in store if not already requested from local storage
@@ -265,6 +270,9 @@ class _Singleton
     if params.sortBy
       all_complied = @_sortBy( all_complied, params.sortBy )
 
+    if params.order
+      all_complied = @_order( all_complied, params.order )
+
     return all_complied
 
   deleteAll: (type) ->
@@ -284,6 +292,11 @@ class _Singleton
       return '' if item[ attribute ] is undefined || item[ attribute ] is null
       return item[ attribute ].toLowerCase()
     )
+
+  _order: ( collection, attribute ) ->
+    if attribute is 'DESC'
+      return collection.reverse()
+    return collection
 
   _filter: ( collection, filter ) ->
     for key, value of filter
@@ -321,16 +334,18 @@ class _Singleton
   observeUnbindLevel: (level) ->
     return if !@observeCurrent
     return if !@observeCurrent[level]
-    @_observeUnbind( @observeCurrent[level] )
+    for observers in @observeCurrent[level]
+      @_observeUnbind( observers )
+    @observeCurrent[level] = []
 
   observe: (data) ->
     if !@observeCurrent
       @observeCurrent = {}
 
-    if @observeCurrent[ data.level ]
-      @_observeUnbind( @observeCurrent[ data.level ] )
+    if !@observeCurrent[ data.level ]
+      @observeCurrent[ data.level ] = []
 
-    @observeCurrent[ data.level ] = data.collections
+    @observeCurrent[ data.level ].push data.collections
     for observe in data.collections
       events = observe.event.split(' ')
       for event in events
@@ -344,3 +359,5 @@ class _Singleton
         if App[ observe.collection ]
           App[ observe.collection ].unbind( event, observe.callback )
 
+  _observeStats: ->
+    @observeCurrent
