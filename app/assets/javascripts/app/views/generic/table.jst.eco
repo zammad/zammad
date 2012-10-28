@@ -2,10 +2,10 @@
   <thead>
     <tr>
     <% if @checkbox: %>
-      <th style="width: 10px"><input type="checkbox" value="" name="bulk_all"/></th>
+      <th style="width: 22px"><input type="checkbox" value="" name="bulk_all"/></th>
     <% end %>
     <% if @radio: %>
-      <th style="width: 10px"></th>
+      <th style="width: 22px"></th>
     <% end %>
 <% for row in @header: %>
       <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- @T( row.display ) %></th>
