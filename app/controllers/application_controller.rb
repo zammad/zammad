@@ -244,7 +244,7 @@ class ApplicationController < ActionController::Base
     begin
       generic_object = object.find( params[:id] )
       generic_object.destroy
-      head :ok
+      render :json => {}, :status => :ok
     rescue Exception => e
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
