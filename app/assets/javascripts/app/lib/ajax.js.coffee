@@ -31,6 +31,15 @@ class _Singleton
       @_hide_spinner()
     )
 
+    # show error messages
+    $('body').bind( 'ajaxError', (e,jqxhr, settings, exception) ->
+      new App.ErrorModal(
+        message: 'StatusCode: ' + jqxhr.status
+        detail:  jqxhr.responseText
+        close:   true
+      )
+    )
+
   ajax: (params, defaults) ->
     data = $.extend({}, @defaults, defaults, params)
     if params['id']
