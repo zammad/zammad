@@ -276,7 +276,7 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'autocompletion'
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )
 
-      a = ->
+      a = =>
         @local_attribute = '#' + attribute.id
         @local_attribute_full = '#' + attribute.id + '_autocompletion'
         @callback = attribute.callback
@@ -312,7 +312,7 @@ class App.ControllerForm extends App.Controller
             @log 'selected', event, ui
             b(event, ui.item.id)
         )
-      @delay(a, 600)
+      @delay( a, 600 )
 
     # input
     else

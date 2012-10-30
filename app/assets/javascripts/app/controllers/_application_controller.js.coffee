@@ -148,18 +148,43 @@ class App.Controller extends Spine.Controller
       )
     @interval( update, 30000, 'frontendTimeUpdate' )
 
+
+  clearDelay: (delay_id) =>
+    # check global var
+    if !@_delayID
+      @_delayID = {}
+
+    clearTimeout( @_delayID[delay_id] ) if @_delayID[delay_id]
+
+  delay: (callback, timeout, delay_id) =>
+
+    # check global var
+    if !@_delayID
+      @_delayID = {}
+
+    # clear auto save
+    @clearDelay( @_delayID[delay_id] )
+
+    # request new data
+    call = =>
+      callback()
+    if delay_id
+      @_delayID[delay_id] = setTimeout( call, timeout )
+    else
+      setTimeout( call, timeout )
+
   clearInterval: (interval_id) =>
     # check global var
-    if !@intervalID
-      @intervalID = {}
+    if !@_intervalID
+      @_intervalID = {}
 
-    clearInterval( @intervalID[interval_id] ) if @intervalID[interval_id]
+    clearInterval( @_intervalID[interval_id] ) if @_intervalID[interval_id]
 
   interval: (callback, interval, interval_id) =>
 
     # check global var
-    if !@intervalID
-      @intervalID = {}
+    if !@_intervalID
+      @_intervalID = {}
 
     callback()
 
@@ -167,10 +192,10 @@ class App.Controller extends Spine.Controller
     every = (ms, cb) -> setInterval cb, ms
 
     # clear auto save
-    clearInterval( @intervalID[interval_id] ) if @intervalID[interval_id]
+    @clearInterval( @_intervalID[interval_id] )
 
     # request new data
-    @intervalID[interval_id] = every interval, () =>
+    @_intervalID[interval_id] = every interval, () =>
       callback()
 
   userPopups: (position = 'right') ->
@@ -328,6 +353,8 @@ class App.ErrorModal extends App.ControllerModal
   render: ->
     @html App.view('error')(
       message: @message
+      detail:  @detail
+      close:   @close
     )
     @modalShow(
       backdrop: false,
