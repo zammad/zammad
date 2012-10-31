@@ -29,9 +29,14 @@ class App.ControllerForm extends App.Controller
         # if password, add confirm password item
         if attribute.type is 'password'
 
+          # get existing value, if exists
+          if @params
+            if attribute.name of @params
+              attribute.value = @params[attribute.name]
+
+          # rename display and name to _confirm
           attribute.display = attribute.display + ' (confirm)'
           attribute.name = attribute.name + '_confirm';
-
           item = @formGenItem( attribute, @model.className, fieldset )
           item.appendTo(fieldset)
 
