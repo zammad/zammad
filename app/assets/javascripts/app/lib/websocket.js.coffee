@@ -20,7 +20,7 @@ class App.WebSocket
     _instance.auth(args)
 
 # The actual Singleton class
-class _Singleton extends Spine.Controller
+class _Singleton extends App.Controller
   queue: []
   supported: true
 
@@ -64,12 +64,11 @@ class _Singleton extends Spine.Controller
     @send( { action: 'ping' } )
 
     # check if ping is back within 2 min
-    if @check_id
-      clearTimeout(@check_id)
+    @clearDelay('websocket-ping-check')
     check = =>
       console.log 'no websockend ping response, reconnect...'
       @close()
-    @check_id = @delay check, 120000
+    @delay check, 120000, 'websocket-ping-check'
 
   pong: ->
     return if !@supported
@@ -96,12 +95,10 @@ class _Singleton extends Spine.Controller
 
     # Set event handlers.
     @ws.onopen = =>
-      console.log( "onopen" )
+      console.log( 'onopen' )
 
-      # close error message if exists
-      if @error_delay
-        clearTimeout(@error_delay)
-        @error_delay = undefined
+      # close error message show up (because try so connect again) if exists
+      @clearDelay('websocket-no-connection-try-reconnect')
       if @error
         @error.modalHide()
         @error = undefined
@@ -156,7 +153,7 @@ class _Singleton extends Spine.Controller
           @error = new App.ErrorModal(
             message: 'No connection to websocket, trying to reconnect...'
           )
-        @error_delay = @delay message, 7000
+        @delay message, 7000, 'websocket-no-connection-try-reconnect'
 
       # try reconnect after 4.5 sec.
       @delay @connect, 4500

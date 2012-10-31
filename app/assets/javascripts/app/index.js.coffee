@@ -23,6 +23,9 @@
 
 #not_used= require_tree ./lib
 #= require_self
+#= require_tree ./models
+#= require_tree ./controllers
+#= require_tree ./views
 #= require ./lib/ajax.js.coffee
 #= require ./lib/clipboard.js.coffee
 #= require ./lib/websocket.js.coffee
@@ -31,9 +34,6 @@
 #= require ./lib/store.js.coffee
 #= require ./lib/collection.js.coffee
 #= require ./lib/event.js.coffee
-#= require_tree ./models
-#= require_tree ./controllers
-#= require_tree ./views
 #= require ./lib/interface_handle.js.coffee
 
 class App extends Spine.Controller
