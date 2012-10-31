@@ -34,7 +34,7 @@ class _Singleton
     # show error messages
     $('body').bind( 'ajaxError', ( e, jqxhr, settings, exception ) ->
       status = jqxhr.status
-      detail  = jqxhr.responseText
+      detail = jqxhr.responseText
       if !status && !detail
         detail = 'General communication error, maybe internet is not available!'
       new App.ErrorModal(
