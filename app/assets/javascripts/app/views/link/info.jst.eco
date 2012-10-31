@@ -1,5 +1,5 @@
 <div class="well">
-  <h3><%- @T( 'Links' ) %> <a href="" data-type="edit" class="icon-edit" title="<%- @Ti( 'edit' ) %>"></a></h3>
+  <h2><%- @T( 'Links' ) %> <a href="" data-type="edit" class="icon-edit" title="<%- @Ti( 'edit' ) %>"></a></h2>
   <% for type of @links: %>
     <strong><%- @T( type ) %></strong>
     <ul>
