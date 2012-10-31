@@ -25,6 +25,12 @@ class _Singleton extends App.Controller
   supported: true
 
   constructor: (@args) ->
+
+    # bind to send messages
+    App.Event.bind 'ws:send', (data) =>
+      @send(data)
+
+    # inital connect
     @connect()
 
   send: (data) =>
@@ -139,10 +145,6 @@ class _Singleton extends App.Controller
           else
             console.log( "ws:onmessage event:" + item['event'] )
             App.Event.trigger( item['event'], item['data'] )
-
-    # bind to send messages
-    App.Event.bind 'ws:send', (data) =>
-      @send(data)
 
     @ws.onclose = (e) =>
       console.log( 'onclose', e )
