@@ -504,11 +504,11 @@ class Article extends App.Controller
           type: 'reply',
           href: '#',
         }
-        actions.push {
-          name: 'reply all',
-          type: 'reply-all',
-          href: '#',
-        }
+#        actions.push {
+#          name: 'reply all',
+#          type: 'reply-all',
+#          href: '#',
+#        }
         actions.push {
           name: 'split',
           type: 'split',

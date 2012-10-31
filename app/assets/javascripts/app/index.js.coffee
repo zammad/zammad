@@ -1,4 +1,3 @@
-#s#= require json2
 #= require ./lib/core/jquery-1.8.1.min.js
 #= require ./lib/core/jquery-ui-1.8.23.custom.min.js
 #= require ./lib/core/underscore-1.3.3.js
