@@ -37,6 +37,16 @@ class _Singleton
       detail = jqxhr.responseText
       if !status && !detail
         detail = 'General communication error, maybe internet is not available!'
+
+      # do not show any error message on wrong login
+      return if status is 422
+
+      # show human readable message
+      if status is 401
+        status = 'Access denied.'
+        detail = ''
+
+      # show error message
       new App.ErrorModal(
         message: 'StatusCode: ' + status
         detail:  detail
