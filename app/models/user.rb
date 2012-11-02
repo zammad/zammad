@@ -333,7 +333,7 @@ Your #{config.product_name} Team
 
     def check_name
 
-      if !self.firstname.empty? && self.lastname.empty?
+      if ( self.firstname && !self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? )
 
         # Lastname, Firstname
         scan = self.firstname.scan(/, /)
@@ -351,7 +351,7 @@ Your #{config.product_name} Team
         return
 
       # -no name- firstname.lastname@example.com
-      elsif self.firstname.empty? && self.lastname.empty? && !self.email.empty?
+      elsif ( !self.firstname || self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? ) && ( self.email && !self.email.empty? )
         scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
         if scan[0]
           self.firstname = scan[0][0].capitalize

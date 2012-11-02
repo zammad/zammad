@@ -36,6 +36,21 @@ class UserTest < ActiveSupport::TestCase
       },
       {
         :create => {
+          :firstname     => 'Firstname Lastname',
+          :lastname      => nil,
+          :email         => 'some@example.com',
+          :login         => 'some@example.com',
+          :created_by_id => 1,
+        },
+        :create_verify => {
+          :firstname => 'Firstname',
+          :lastname  => 'Lastname',
+          :email     => 'some@example.com',
+          :login     => 'some@example.com',
+        },
+      },
+      {
+        :create => {
           :firstname     => 'Lastname, Firstname',
           :lastname      => '',
           :email         => 'some@example.com',
@@ -68,6 +83,21 @@ class UserTest < ActiveSupport::TestCase
         :create => {
           :firstname     => '',
           :lastname      => '',
+          :email         => 'FIRSTNAME.lastname@example.com',
+          :login         => 'login',
+          :created_by_id => 1,
+        },
+        :create_verify => {
+          :firstname => 'Firstname',
+          :lastname  => 'Lastname',
+          :email     => 'firstname.lastname@example.com',
+          :login     => 'login',
+        },
+      },
+      {
+        :create => {
+          :firstname     => nil,
+          :lastname      => nil,
           :email         => 'FIRSTNAME.lastname@example.com',
           :login         => 'login',
           :created_by_id => 1,
