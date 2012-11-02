@@ -2,7 +2,7 @@ $ = jQuery.sub()
 
 class App.TextModuleUI extends App.Controller
   events:
-    'click [data-type=save]':   'create',
+    'click [data-type=save]':               'create',
     'click [data-type=text_module_delete]': 'delete',
     'click [data-type=edit]':               'select',
     'click .close':                         'close',
