@@ -44,6 +44,7 @@ puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#
 #puts options.inspect
 
 @clients = {}
+@spool   = []
 EventMachine.run {
   EventMachine::WebSocket.start( :host => @options[:b], :port => @options[:p], :secure => @options[:s], :tls_options => tls_options ) do |ws|
 
@@ -89,6 +90,27 @@ EventMachine.run {
       # check if connection already exists
       next if !@clients[client_id]
 
+      # spool messages for new connects
+      if data['spool']
+        meta = {
+          :msg       => msg,
+          :timestamp => Time.now.to_i,
+        }
+        @spool.push meta
+      end
+
+      # get spool messages
+      if data['action'] == 'spool'
+        @spool.each { |message|
+          puts message.inspect
+          puts data['timestamp']
+          if !data['timestamp'] || data['timestamp'] < message[:timestamp]
+            puts "send spool msg to #{client_id} #{ message[:msg] }"
+            @clients[client_id][:websocket].send( "[#{ message[:msg] }]" )
+          end
+        }
+      end
+
       # get session
       if data['action'] == 'login'
         @clients[client_id][:session] = data['session']
@@ -103,6 +125,7 @@ EventMachine.run {
       elsif data['action'] == 'broadcast'
         @clients.each { |local_client_id, local_client|
           if local_client_id != client_id
+            puts "send broadcast to #{local_client_id} #{msg}"
             local_client[:websocket].send( "[#{msg}]" )
           end
         }
@@ -137,7 +160,7 @@ EventMachine.run {
     }
   }
 
-  EventMachine.add_periodic_timer(0.2) {
+  EventMachine.add_periodic_timer(0.4) {
     next if @clients.size == 0
     log 'debug', "checking for data..."
     @clients.each { |client_id, client|
@@ -164,7 +187,7 @@ EventMachine.run {
       end
     }
   }
-  
+
   def log( level, data, client_id = '-' )
     if !@options[:d]
       return if level == 'debug'

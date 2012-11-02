@@ -86,7 +86,7 @@ class Index extends App.Controller
       App[key].refresh( value, options: { clear: true } )
 
     # rebuild navbar with user data
-    App.Event.trigger 'navrebuild', data.session
+    App.Event.trigger 'ajax:auth', data.session
 
     # update websocked auth info
     App.WebSocket.auth()

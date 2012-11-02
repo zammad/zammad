@@ -45,7 +45,7 @@ class App.Auth
           App.WebSocket.auth()
 
           # rebuild navbar with new navbar items
-          App.Event.trigger 'navrebuild'
+          App.Event.trigger 'ajax:auth'
 
           return false;
 
@@ -69,10 +69,7 @@ class App.Auth
           App.Collection.reset( type: key, data: value )
 
         # rebuild navbar with new navbar items
-        App.Event.trigger 'navrebuild', data.session
-
-        # rebuild navbar with updated ticket count of overviews
-        App.Event.trigger 'navupdate_remote'
+        App.Event.trigger 'ajax:auth', data.session
 
       error: (xhr, statusText, error) =>
         console.log 'loginCheck:error'#, error, statusText, xhr.statusCode

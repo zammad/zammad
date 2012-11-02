@@ -12,6 +12,14 @@ module Session
       user = { :id => session['id'] }  
       file.puts Marshal.dump(user)
     }
+
+    # send update to browser
+    if session['id']
+      self.transaction( client_id, {
+        :event  => 'ws:login',
+        :data   => { :success => true },
+      })
+    end
   end
 
   def self.get( client_id )

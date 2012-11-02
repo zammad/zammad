@@ -19,16 +19,26 @@ class App.WebSocket
     @connect()
     _instance.auth(args)
 
+  @_spool: ->
+    _instance.spool()
+
 # The actual Singleton class
 class _Singleton extends App.Controller
   queue: []
-  supported: true
+  supported:             true
+  lastSpoolMessage:      undefined
+  connectionEstablished: false
 
   constructor: (@args) ->
 
     # bind to send messages
     App.Event.bind 'ws:send', (data) =>
       @send(data)
+
+    # get spool messages after successful ws login
+    App.Event.bind( 'ws:login', (data) =>
+      @spool()
+    )
 
     # inital connect
     @connect()
@@ -57,6 +67,23 @@ class _Singleton extends App.Controller
       session: window.Session
     }
     @send(data)
+
+  spool: =>
+
+    # build data to send to server
+    data =
+      action: 'spool'
+    if @lastSpoolMessage
+      data['timestamp'] = @lastSpoolMessage
+    @log 'spool', data
+    # ask for spool messages
+    App.Event.trigger(
+      'ws:send'
+      data
+    )
+
+    # set timestamp to get spool messages later
+    @lastSpoolMessage = Math.round( +new Date()/1000 )
 
   close: =>
     return if !@supported
@@ -103,6 +130,8 @@ class _Singleton extends App.Controller
     @ws.onopen = =>
       console.log( 'onopen' )
 
+      @connectionEstablished = true
+
       # close error message show up (because try so connect again) if exists
       @clearDelay('websocket-no-connection-try-reconnect')
       if @error
@@ -148,6 +177,11 @@ class _Singleton extends App.Controller
 
     @ws.onclose = (e) =>
       console.log( 'onclose', e )
+
+      # set timestamp to get spool messages later
+      if @connectionEstablished
+        @lastSpoolMessage = Math.round( +new Date()/1000 )
+        @connectionEstablished = false
 
       # show error message, first try to reconnect
       if !@error

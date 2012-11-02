@@ -11,8 +11,8 @@ class App.Navigation extends App.Controller
       @update(arguments[0])
 
     # rebuild nav bar with given user data
-    App.Event.bind 'navrebuild', (user) =>
-      @log 'navbarrebuild', user
+    App.Event.bind 'ajax:auth', (user) =>
+      @log 'navbar rebuild', user
 
       if !_.isEmpty( user )
         cache = App.Store.get( 'navupdate_ticket_overview' )

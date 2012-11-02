@@ -15,7 +15,7 @@ class Index extends Spine.Controller
     @log 'Session', window.Session
     window.Session = {}
     @log 'Session', window.Session
-    App.Event.trigger 'navrebuild'
+    App.Event.trigger 'ajax:auth'
 
     # redirect to login 
     @navigate 'login'
