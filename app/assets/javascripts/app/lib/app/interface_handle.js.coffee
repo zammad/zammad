@@ -26,6 +26,9 @@ class App.Run extends App.Controller
     # start content
     new App.Content( el: @el.find('#content') )
 
+    # start chat
+    new App.ChatWidget( el: @el.find('#chat') )
+
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
 
