@@ -1,0 +1,13 @@
+<div class="well well-demand span3">
+  <h3><%- @T('Chat') %><a href="#" class="close">&times;</a></h3>
+  <div id="chat_content">
+    <div id="chat_log_container" class="max-size-scroll">
+      <% for message in @messages: %>
+        <div><%= message.nick %>: <%- @L( message.message ) %></div>
+      <% end %>
+    </div>
+    <form id="chat_form">
+      <input name="chat_message" type="text" value="" class="span3"/>
+    </form>
+  </div>
+</div>
