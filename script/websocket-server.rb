@@ -102,8 +102,6 @@ EventMachine.run {
       # get spool messages
       if data['action'] == 'spool'
         @spool.each { |message|
-          puts message.inspect
-          puts data['timestamp']
           if !data['timestamp'] || data['timestamp'] < message[:timestamp]
             puts "send spool msg to #{client_id} #{ message[:msg] }"
             @clients[client_id][:websocket].send( "[#{ message[:msg] }]" )

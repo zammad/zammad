@@ -75,8 +75,8 @@ class App.ControllerTable extends App.Controller
     dataTypesForCols = []
     for row in overview
       dataTypesForCols.push {
-        name: row,
-        link: true,
+        name: row
+        link: true
       }
 
     # extended table format
@@ -111,11 +111,12 @@ class App.ControllerTable extends App.Controller
 
     @log 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
     table = App.view('generic/table')(
-      header:   header,
-      overview: dataTypesForCols,
-      objects:  data.objects,
-      checkbox: data.checkbox,
-      radio:    data.radio,
+      header:   header
+      overview: dataTypesForCols
+      objects:  data.objects
+      checkbox: data.checkbox
+      radio:    data.radio
+      groupBy:  data.groupBy
     )
 
     # convert to jquery object

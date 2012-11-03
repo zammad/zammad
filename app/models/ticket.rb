@@ -262,7 +262,7 @@ class Ticket < ApplicationModel
       tickets = Ticket.select( 'id' ).
         where( :group_id => group_ids ).
         where( overview_selected.condition ).
-        order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
+        order( 'group_id, ' + overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
         limit( 500 )
 
       ticket_ids = []

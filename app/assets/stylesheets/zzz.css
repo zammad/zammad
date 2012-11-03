@@ -58,6 +58,10 @@ h3 {
   font-size: 18px;
   line-height: 26px;
 }
+h4 {
+  font-size: 14px;
+  line-height: 20px;
+}
 .navbar .nav > li > a {
   padding: 10px 12px 10px;
 }

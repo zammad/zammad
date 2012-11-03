@@ -140,13 +140,17 @@ class Index extends App.Controller
       )
       @el.find('.table-overview').append(table)
     else
-      shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.s.overview )
+      shown_all_attributes = @ticketTableAttributes( App.Overview.find( @overview.id ).view.s.overview )
       new App.ControllerTable(
         el:                @el.find('.table-overview'),
         overview_extended: shown_all_attributes,
         model:             App.Ticket,
         objects:           @ticket_list_show,
         checkbox:          checkbox,
+        groupBy:
+          display: 'roup'
+          data:    'group',
+          data_id: 'group_id',
       )
 
     # start user popups

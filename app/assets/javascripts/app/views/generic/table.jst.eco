@@ -17,7 +17,14 @@
   </thead>
   <tbody>
 <% position = 0 %>
+<% groupLast = '' %>
 <% for object in @objects: %>
+  <% if @groupBy: %>
+  <%   if groupLast isnt object[@groupBy.data_id]: %>
+  <tr class=""><td colspan="<%= @overview.length + 1 %>"><b><%- @P( object[@groupBy.data] ) %></b></td></tr>
+  <%     groupLast = object[@groupBy.data_id] %>
+  <%   end %>
+  <% end %>
   <% position++ %>
   <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>

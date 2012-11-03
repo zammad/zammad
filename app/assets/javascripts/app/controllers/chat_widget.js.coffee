@@ -16,7 +16,7 @@ class App.ChatWidget extends App.Controller
     App.Event.bind 'ajax:auth', (user) =>
       if !user
         @messageLog = []
-        @el.html()
+        @el.html('')
       else
         @start()
 
@@ -24,10 +24,10 @@ class App.ChatWidget extends App.Controller
       @start()
 
   start: =>
-    @focus = false
+    @focus   = false
+    @isShown = false
 
     @render()
-    @hide()
     @interval @position, 200, 'chat-widget'
 
     App.Event.bind(
@@ -77,9 +77,11 @@ class App.ChatWidget extends App.Controller
       )
 
   show: =>
+    @isShown = true
     @el.find('#chat_content').removeClass('hide')
 
   hide: =>
+    @isShown = false
     @el.find('#chat_content').addClass('hide')
 
   focusIn: =>
@@ -104,6 +106,10 @@ class App.ChatWidget extends App.Controller
     document.getElementById('chat_log_container').scrollTop = 10000
     if @focus
       @el.find('[name=chat_message]').focus()
+    if @isShown
+      @show()
+    else
+      @hide()
 
   position: =>
     chatHeigth     = $(@el).find('div').height()
@@ -115,8 +121,8 @@ class App.ChatWidget extends App.Controller
     scrollPositonY = window.pageYOffset
     scrollPositonX = window.pageXOffset
 
-    heigth = windowHeigth + scrollPositonY - chatHeigth - 10
-    width  = windowWidth - chatWidth - 50
+    heigth = windowHeigth + scrollPositonY - chatHeigth - 15
+    width  = windowWidth - chatWidth - 55
 
     @el.offset( left: width, top: heigth )
     @el.css( width: '200px' )
