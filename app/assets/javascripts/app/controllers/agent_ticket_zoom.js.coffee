@@ -2,14 +2,14 @@ $ = jQuery.sub()
 
 class Index extends App.Controller
   events:
-    'click .submit':                          'update',
-    'click [data-type=reply]':                'reply',
-#    'click [data-type=reply-all]':            'replyall',
-    'click [data-type=public]':               'public_internal',
-    'click [data-type=internal]':             'public_internal',
-    'change [name="ticket_article_type_id"]': 'form_update',
-    'click .show_toogle':                     'show_toogle',
-    'blur  .title_update':                    'title_update',
+    'click .submit':                          'update'
+    'click [data-type=reply]':                'reply'
+#    'click [data-type=reply-all]':            'replyall'
+    'click [data-type=public]':               'public_internal'
+    'click [data-type=internal]':             'public_internal'
+    'change [name="ticket_article_type_id"]': 'form_update'
+    'click .show_toogle':                     'show_toogle'
+    'blur  .title_update':                    'title_update'
 
   constructor: (params) ->
     super
@@ -20,10 +20,10 @@ class Index extends App.Controller
 
     @navupdate '#'
 
-    @edit_form = undefined
-    @ticket_id = params.ticket_id
-    @article_id = params.article_id
-    @signature = undefined
+    @edit_form      = undefined
+    @ticket_id      = params.ticket_id
+    @article_id     = params.article_id
+    @signature      = undefined
     @signature_used = undefined
 
     @key = 'ticket::' + @ticket_id
@@ -36,13 +36,12 @@ class Index extends App.Controller
 
     # get data
     App.Com.ajax(
-      id:    'ticket_zoom',
-      type:  'GET',
-      url:   '/api/ticket_full/' + ticket_id,
-      data:  {
+      id:    'ticket_zoom'
+      type:  'GET'
+      url:   '/api/ticket_full/' + ticket_id
+      data:
         view: @view
-      }
-      processData: true,
+      processData: true
       success: (data, status, xhr) =>
         @load(data)
         App.Store.write( @key, data )
@@ -119,30 +118,25 @@ class Index extends App.Controller
       ]
 
     @html App.view('agent_ticket_zoom')(
-      ticket:       @ticket,
-      articles:     @articles,
-      nav:          @nav,
+      ticket:   @ticket
+      articles: @articles
+      nav:      @nav
     )
 
     new App.ControllerForm(
-      el: @el.find('#form-ticket-update'),
-      model: {
-        configure_attributes: @configure_attributes_ticket,
-        className:            'create',
-      },
-      params: @ticket
-      form_data: @edit_form,
+      el:        @el.find('#form-ticket-update')
+      model:
+        configure_attributes: @configure_attributes_ticket
+        className:            'create'
+      params:    @ticket
+      form_data: @edit_form
     )
 
     new App.ControllerForm(
-      el: @el.find('#form-article-update'),
-      model: {
-        configure_attributes: @configure_attributes_article,
-      },
-#      params: {
-#        body: @signature.body,
-#      }
-      form_data: @edit_form,
+      el:        @el.find('#form-article-update')
+      model:
+        configure_attributes: @configure_attributes_article
+      form_data: @edit_form
     )
 
     @el.find('textarea').elastic()
@@ -168,13 +162,12 @@ class Index extends App.Controller
 
   u: =>
     uploader = new qq.FileUploader(
-      element: document.getElementById('file-uploader'),
-      action: '/api/ticket_attachment_new',
-      params: {
-        form:    'TicketZoom',
-        form_id: @ticket.id,
-      },
-      debug: false
+      element: document.getElementById('file-uploader')
+      action:  '/api/ticket_attachment_new'
+      params:
+        form:    'TicketZoom'
+        form_id: @ticket.id
+      debug:   false
     )
 
   ticket_action_row: =>
@@ -182,34 +175,33 @@ class Index extends App.Controller
     # start customer info controller
     if !@isRole('Customer')
       new App.UserInfo(
-        el:      @el.find('#customer_info'),
-        user_id: @ticket.customer_id,
-        ticket:  @ticket,
+        el:      @el.find('#customer_info')
+        user_id: @ticket.customer_id
+        ticket:  @ticket
       )
 
     # start action controller
     if !@isRole('Customer')
       new TicketActionRow(
-        el:      @el.find('#action_info'),
-        ticket:  @ticket,
-        zoom:    @,
+        el:      @el.find('#action_info')
+        ticket:  @ticket
+        zoom:    @
       )
 
     # start link info controller
     if !@isRole('Customer')
       new App.LinkInfo(
-        el:           @el.find('#link_info'),
-        object_type:  'Ticket',
-        object:        @ticket,
+        el:           @el.find('#link_info')
+        object_type:  'Ticket'
+        object:        @ticket
       )
 
     # show text module UI
     if !@isRole('Customer')
       new App.TextModuleUI(
-        el:   @el.find('#text_module'),
-        data: {
-          ticket: @ticket,
-        },
+        el:   @el.find('#text_module')
+        data:
+          ticket: @ticket
       )
 
   show_toogle: (e) ->
@@ -484,15 +476,15 @@ class Article extends App.Controller
     if @article.internal is true
       actions = [
         {
-          name: 'set to public',
-          type: 'public',
+          name: 'set to public'
+          type: 'public'
         }
       ]
     else
       actions = [
         {
-          name: 'set to internal',
-          type: 'internal',
+          name: 'set to internal'
+          type: 'internal'
         }
       ]
     if @article.article_type.name is 'note'
@@ -500,19 +492,19 @@ class Article extends App.Controller
     else
       if @article.article_sender.name is 'Customer'
         actions.push {
-          name: 'reply',
-          type: 'reply',
-          href: '#',
+          name: 'reply'
+          type: 'reply'
+          href: '#'
         }
 #        actions.push {
-#          name: 'reply all',
-#          type: 'reply-all',
-#          href: '#',
+#          name: 'reply all'
+#          type: 'reply-all'
+#          href: '#'
 #        }
         actions.push {
-          name: 'split',
-          type: 'split',
-          href: '#ticket_create/' + @article.ticket_id + '/' + @article.id,
+          name: 'split'
+          type: 'split'
+          href: '#ticket_create/' + @article.ticket_id + '/' + @article.id
         }
     @article.actions = actions
 
@@ -523,9 +515,9 @@ class Article extends App.Controller
 
 class TicketActionRow extends App.Controller
   events:
-    'click [data-type=history]':              'history_dialog',
-    'click [data-type=merge]':                'merge_dialog',
-    'click [data-type=customer]':             'customer_dialog',
+    'click [data-type=history]':  'history_dialog'
+    'click [data-type=merge]':    'merge_dialog'
+    'click [data-type=customer]': 'customer_dialog'
 
   constructor: ->
     super

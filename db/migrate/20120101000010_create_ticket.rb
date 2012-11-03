@@ -152,6 +152,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :meta,                :string,  :limit => 1000, :null => false
       t.column :condition,           :string,  :limit => 2500, :null => false
       t.column :order,               :string,  :limit => 2500, :null => false
+      t.column :group_by,            :string,  :limit => 250,  :null => true
       t.column :view,                :string,  :limit => 1000, :null => false
       t.column :updated_by_id,       :integer,                 :null => false
       t.column :created_by_id,       :integer,                 :null => false

@@ -259,10 +259,14 @@ class Ticket < ApplicationModel
 
     # get result list
     if data[:array]
+      order_by = overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s
+      if overview_selected.group_by && !overview_selected.group_by.empty?
+        order_by = overview_selected.group_by + '_id, ' + order_by
+      end
       tickets = Ticket.select( 'id' ).
         where( :group_id => group_ids ).
         where( overview_selected.condition ).
-        order( 'group_id, ' + overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
+        order( order_by ).
         limit( 500 )
 
       ticket_ids = []

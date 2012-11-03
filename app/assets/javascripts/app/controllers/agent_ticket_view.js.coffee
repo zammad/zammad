@@ -46,7 +46,7 @@ class Index extends App.Controller
 
     # get meta data
     @overview = data.overview
-    App.Overview.refresh( @overview, options: { clear: true } )
+    App.Overview.refresh( @overview, { clear: true } )
 
     App.Overview.unbind('local:rerender')
     App.Overview.bind 'local:rerender', (record) =>
@@ -86,6 +86,8 @@ class Index extends App.Controller
 
   render: ->
 
+    @selected = @bulkGetSelected()
+
     # set page title
     @title @overview.meta.name
 
@@ -99,23 +101,23 @@ class Index extends App.Controller
       edit = false
     view_modes = [
       {
-        name:  'S',
-        type:  's',
-        class: 'active' if @view_mode is 's',
+        name:  'S'
+        type:  's'
+        class: 'active' if @view_mode is 's'
       },
       {
-        name: 'M',
-        type: 'm',
-        class: 'active' if @view_mode is 'm',
+        name: 'M'
+        type: 'm'
+        class: 'active' if @view_mode is 'm'
       }
     ]
     html = App.view('agent_ticket_view')(
-      overview:    @overview,
-      view_modes:  view_modes,
-      pages_total: pages_total,
-      start_page:  @start_page,
-      checkbox:    true,
-      edit:        edit,
+      overview:    @overview
+      view_modes:  view_modes
+      pages_total: pages_total
+      start_page:  @start_page
+      checkbox:    true
+      edit:        edit
     )
     html = $(html)
 #    html.find('li').removeClass('active')
@@ -127,9 +129,9 @@ class Index extends App.Controller
     table = ''
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
-        overview: @overview,
-        objects:  @ticket_list_show,
-        checkbox: checkbox,
+        overview: @overview
+        objects:  @ticket_list_show
+        checkbox: checkbox
       )
       table = $(table)
       table.delegate('[name="bulk_all"]', 'click', (e) ->
@@ -141,17 +143,29 @@ class Index extends App.Controller
       @el.find('.table-overview').append(table)
     else
       shown_all_attributes = @ticketTableAttributes( App.Overview.find( @overview.id ).view.s.overview )
+      groupBy = undefined
+      if @overview.group_by
+        group_by =
+          name: @overview.group_by
+          id:   @overview.group_by + '_id'
+
+        # remove group by attribute from show attributes list
+        shown_all_attributes = _.filter(
+          shown_all_attributes
+          (item) =>
+            return item if item.name isnt @overview.group_by
+            return
+        )
       new App.ControllerTable(
-        el:                @el.find('.table-overview'),
-        overview_extended: shown_all_attributes,
-        model:             App.Ticket,
-        objects:           @ticket_list_show,
-        checkbox:          checkbox,
-        groupBy:
-          display: 'roup'
-          data:    'group',
-          data_id: 'group_id',
+        el:                @el.find('.table-overview')
+        overview_extended: shown_all_attributes
+        model:             App.Ticket
+        objects:           @ticket_list_show
+        checkbox:          checkbox
+        groupBy:           group_by
       )
+
+    @bulkSetSelected( @selected )
 
     # start user popups
     @userPopups()
@@ -161,6 +175,8 @@ class Index extends App.Controller
 
     # start bulk action observ
     @el.find('.bulk-action').append( @bulk_form() )
+    if @el.find('.table-overview').find('[name="bulk"]:checked').length isnt 0
+        @el.find('.bulk-action').removeClass('hide')
 
     # show/hide bulk action    
     @el.find('.table-overview').delegate('[name="bulk"], [name="bulk_all"]', 'click', (e) =>
@@ -213,6 +229,22 @@ class Index extends App.Controller
       @bulk_submit(e)
     )
     return html
+
+  bulkGetSelected: ->
+    @ticketIDs = []
+    @el.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
+      ticket_id = $(element).val()
+      @ticketIDs.push ticket_id
+    )
+    @ticketIDs
+
+  bulkSetSelected: (ticketIDs) ->
+    @el.find('.table-overview').find('[name="bulk"]').each( (index, element) =>
+      ticket_id = $(element).val()
+      for ticket_id_selected in ticketIDs
+        if ticket_id_selected is ticket_id
+          $(element).attr( 'checked', true )
+    )
 
   bulk_submit: (e) =>
     @bulk_count = @el.find('.table-overview').find('[name="bulk"]:checked').length
@@ -282,81 +314,92 @@ class Settings extends App.ControllerModal
 #      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'keepleft' },
 #      { name: 'internal',                 display: 'Visability',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'keepleft' },
       {
-        name:     'per_page',
-        display:  'Items per page',
-        tag:      'select',
-        multiple: false,
-        null:     false,
-        default: @overview.view[@view_mode].per_page,
-        options: {
-          15: 15,
-          20: 20,
-          25: 25,
-          30: 30,
-          35: 35,
-        },
-        class: 'medium',
-#        item_class: 'keepleft',
+        name:     'per_page'
+        display:  'Items per page'
+        tag:      'select'
+        multiple: false
+        null:     false
+        default: @overview.view[@view_mode].per_page
+        options:
+          15: 15
+          20: 20
+          25: 25
+          30: 30
+          35: 35
+        class: 'medium'
+#        item_class: 'keepleft'
       },
       { 
-        name:    'attributes',
-        display: 'Attributes',
-        tag:     'checkbox',
-        default: @overview.view[@view_mode].overview,
-        null:    false,
-        options: {
-#          true:  'internal',
-#          false: 'public',
-          number:                 'Number',
-          title:                  'Title',
-          customer:               'Customer',
-          ticket_state:           'State',
-          ticket_priority:        'Priority',
-          group:                  'Group',
-          owner:                  'Owner',
-          created_at:             'Alter',
-          last_contact:           'Last Contact',
-          last_contact_agent:     'Last Contact Agent',
-          last_contact_customer:  'Last Contact Customer',
-          first_response:         'First Response',
-          close_time:             'Close Time',
-        },
-        class:      'medium',
+        name:    'attributes'
+        display: 'Attributes'
+        tag:     'checkbox'
+        default: @overview.view[@view_mode].overview
+        null:    false
+        options:
+#          true:  'internal'
+#          false: 'public'
+          number:                 'Number'
+          title:                  'Title'
+          customer:               'Customer'
+          ticket_state:           'State'
+          ticket_priority:        'Priority'
+          group:                  'Group'
+          owner:                  'Owner'
+          created_at:             'Alter'
+          last_contact:           'Last Contact'
+          last_contact_agent:     'Last Contact Agent'
+          last_contact_customer:  'Last Contact Customer'
+          first_response:         'First Response'
+          close_time:             'Close Time'
+        class:      'medium'
       },
       { 
-        name:    'order_by',
-        display: 'Order',
-        tag:     'select',
-        default: @overview.order.by,
-        null:    false,
-        options: {
-          number:                 'Number',
-          title:                  'Title',
-          customer:               'Customer',
-          ticket_state:           'State',
-          ticket_priority:        'Priority',
-          group:                  'Group',
-          owner:                  'Owner',
-          created_at:             'Alter',
-          last_contact:           'Last Contact',
-          last_contact_agent:     'Last Contact Agent',
-          last_contact_customer:  'Last Contact Customer',
-          first_response:         'First Response',
-          close_time:             'Close Time',
-        },
-        class:      'medium',
+        name:    'order_by'
+        display: 'Order'
+        tag:     'select'
+        default: @overview.order.by
+        null:    false
+        options:
+          number:                 'Number'
+          title:                  'Title'
+          customer:               'Customer'
+          ticket_state:           'State'
+          ticket_priority:        'Priority'
+          group:                  'Group'
+          owner:                  'Owner'
+          created_at:             'Alter'
+          last_contact:           'Last Contact'
+          last_contact_agent:     'Last Contact Agent'
+          last_contact_customer:  'Last Contact Customer'
+          first_response:         'First Response'
+          close_time:             'Close Time'
+        class:   'medium'
       },
       { 
-        name:    'order_by_direction',
-        display: 'Direction',
-        tag:     'select',
-        default: @overview.order.direction,
-        null:    false,
-        options: {
-          ASC:   'up',
-          DESC:  'down',
-        },
-        class:      'medium',
+        name:    'order_by_direction'
+        display: 'Direction'
+        tag:     'select'
+        default: @overview.order.direction
+        null:    false
+        options:
+          ASC:   'up'
+          DESC:  'down'
+        class:   'medium'
+      },
+      { 
+        name:    'group_by'
+        display: 'Group by'
+        tag:     'select'
+        default: @overview.group_by
+        null:    true
+        nulloption: true
+        options:
+          customer:               'Customer'
+          ticket_state:           'State'
+          ticket_priority:        'Priority'
+          group:                  'Group'
+          owner:                  'Owner'
+        class:   'medium'
       },
 #      {
 #        name: 'condition',
@@ -372,9 +415,9 @@ class Settings extends App.ControllerModal
     ]
 
     new App.ControllerForm(
-      el: @el.find('#form-setting'),
-      model: { configure_attributes: @configure_attributes_article },
-      autofocus: false,
+      el:        @el.find('#form-setting')
+      model:     { configure_attributes: @configure_attributes_article }
+      autofocus: false
     )
 
     @modalShow()
@@ -395,6 +438,10 @@ class Settings extends App.ControllerModal
 
     if @overview.order['direction'] isnt params['order_by_direction']
       @overview.order['direction'] = params['order_by_direction']
+      @reload_needed = 1
+
+    if @overview['group_by'] isnt params['group_by']
+      @overview['group_by'] = params['group_by']
       @reload_needed = 1
 
     @overview.view[@view_mode]['overview'] = params['attributes']
@@ -423,14 +470,13 @@ class Router extends App.Controller
       @redirect()
     else
       App.Com.ajax(
-        type:  'GET',
-        url:   '/api/ticket_overviews',
-        data:  {
-          view:  @view,
-          array: true,
-        }
-        processData: true,
-        success: @load
+        type:       'GET'
+        url:        '/api/ticket_overviews'
+        data:
+          view:      @view
+          array:     true
+        processData: true
+        success:     @load
       )
 
   load: (data) =>

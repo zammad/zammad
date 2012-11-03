@@ -136,7 +136,7 @@ class App.Controller extends Spine.Controller
   frontendTime: (timestamp) ->
     '<span class="humanTimeFromNow" data-time="' + timestamp + '">?</span>'
 
-  frontendTimeUpdate: ->
+  frontendTimeUpdate: =>
     update = =>
       ui = @
       $('.humanTimeFromNow').each( ->
