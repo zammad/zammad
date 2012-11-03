@@ -639,7 +639,7 @@ Setting.create(
     ],
   },
   :state       => {
-    :value => '70',
+    :value => '110',
   },
   :frontend    => false
 )
