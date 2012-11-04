@@ -93,8 +93,9 @@ EventMachine.run {
       # spool messages for new connects
       if data['spool']
         meta = {
-          :msg       => msg,
-          :timestamp => Time.now.to_i,
+          :msg        => msg,
+          :msg_object => data,
+          :timestamp  => Time.now.to_i,
         }
         @spool.push meta
       end
@@ -102,9 +103,25 @@ EventMachine.run {
       # get spool messages
       if data['action'] == 'spool'
         @spool.each { |message|
+
+          # only send not already now messages
           if !data['timestamp'] || data['timestamp'] < message[:timestamp]
-            puts "send spool msg to #{client_id} #{ message[:msg] }"
-            @clients[client_id][:websocket].send( "[#{ message[:msg] }]" )
+
+            # spool to recipient list
+            if message[:msg_object]['recipient'] && message[:msg_object]['recipient']['user_id']
+              message[:msg_object]['recipient']['user_id'].each { |user_id|
+                if @clients[client_id][:session]['id'] == user_id
+                  log 'notice', "send spool to (user_id=#{user_id})", client_id
+                  @clients[client_id][:websocket].send( "[#{ message[:msg] }]" )
+                end
+              }
+
+            # spool every client
+            else
+              log 'notice', "send spool", client_id
+              @clients[client_id][:websocket].send( "[#{ message[:msg] }]" )
+            end
+
           end
         }
       end
@@ -121,10 +138,24 @@ EventMachine.run {
 
       # broadcast
       elsif data['action'] == 'broadcast'
+
+        # list all current clients
         @clients.each { |local_client_id, local_client|
           if local_client_id != client_id
-            puts "send broadcast to #{local_client_id} #{msg}"
-            local_client[:websocket].send( "[#{msg}]" )
+
+            # broadcast to recipient list
+            if data['recipient'] && data['recipient']['user_id']
+              data['recipient']['user_id'].each { |user_id|
+                if local_client[:session]['id'] == user_id
+                  log 'notice', "send broadcast to (user_id=#{user_id})", local_client_id
+                  local_client[:websocket].send( "[#{msg}]" )
+                end
+              }
+            # broadcast every client
+            else
+              log 'notice', "send broadcast", local_client_id
+              local_client[:websocket].send( "[#{msg}]" )
+            end
           end
         }
       end
@@ -168,7 +199,7 @@ EventMachine.run {
         queue = Session.queue( client_id )
         if queue && queue[0]
 #          log "send " + queue.inspect, client_id
-          log 'debug', "send data to client", client_id
+          log 'notice', "send data to client", client_id
           client[:websocket].send( queue.to_json )
         end
       rescue => e

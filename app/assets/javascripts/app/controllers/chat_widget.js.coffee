@@ -2,7 +2,7 @@ $ = jQuery.sub()
 
 class App.ChatWidget extends App.Controller
   events:
-    'submit   #chat_form':          'newMessage'
+    'submit   #chat_form':          'submitMessage'
     'focusin  [name=chat_message]': 'focusIn'
     'focusout [name=chat_message]': 'focusOut'
     'click    .close':              'toggle'
@@ -24,15 +24,22 @@ class App.ChatWidget extends App.Controller
       @start()
 
   start: =>
-    @focus   = false
-    @isShown = false
+    @focus      = false
+    @isShown    = false
+    @newMessage = false
 
     @render()
+    @hide()
     @interval @position, 200, 'chat-widget'
 
     App.Event.bind(
       'chat:message'
       (e) =>
+
+        # show new message info
+        @newMessage = true
+
+        # remember messages
         @messageLog.push e
 
         # chump max message count
@@ -46,43 +53,72 @@ class App.ChatWidget extends App.Controller
     App.Event.bind(
       'chat:window_toggle'
       (e) =>
-        if e.user_id is Session['id']
-          if e.show
-            @show()
-          else
-            @hide()
+        if e.show
+          @show()
+        else
+          @hide()
+    )
+
+    App.Event.bind(
+      'chat:message_new'
+      (e) =>
+        @el.find('div.well').removeClass('alert-success')
     )
 
   toggle: (e) =>
     e.preventDefault()
-    if @el.find('#chat_content').hasClass('hide')
+    if !@el.find('#chat_content').is(':visible')
       @show()
       App.Event.trigger(
         'ws:send'
           action: 'broadcast'
           event:  'chat:window_toggle'
+          recipient:
+            user_id: [ Session['id'] ]
           data:
-            user_id: Session['id']
             show:    true
       )
     else
       @hide()
       App.Event.trigger(
         'ws:send'
-          action: 'broadcast'
-          event:  'chat:window_toggle'
+          action:    'broadcast'
+          event:     'chat:window_toggle'
+          recipient:
+            user_id: [ Session['id'] ]
           data:
-            user_id: Session['id']
             show:    false
       )
+    @newMessage = false
 
   show: =>
     @isShown = true
-    @el.find('#chat_content').removeClass('hide')
+    if @newMessage
+      @el.find('div.well').addClass('alert-success')
+      @delay( =>
+          @el.find('div.well').removeClass('alert-success')
+          @log 'DELAY rm'
+
+          App.Event.trigger(
+            'ws:send'
+              action: 'broadcast'
+              recipient:
+                user_id: [ Session['id'] ]
+              event:  'chat:message_new'
+              spool:  true
+              data:
+                show:    true
+          )
+
+        2000
+        'chat-message-new'
+      )
+    @el.find('#chat_content').show(100)
+    @newMessage = false
 
   hide: =>
     @isShown = false
-    @el.find('#chat_content').addClass('hide')
+    @el.find('#chat_content').hide(100)
 
   focusIn: =>
     @focus = true
@@ -100,16 +136,26 @@ class App.ChatWidget extends App.Controller
         message.nick = 'me'
 
     # insert data
+    shown = false
+    if @isShown
+      shown = true
     @html App.view('chat_widget')(
       messages: @messageLog
+      isShown:  shown
     )
     document.getElementById('chat_log_container').scrollTop = 10000
+
+    # focus in input box
     if @focus
       @el.find('[name=chat_message]').focus()
+
+    # show or not show window
     if @isShown
       @show()
     else
       @hide()
+      if @newMessage
+        @el.find('div.well').addClass('alert-success')
 
   position: =>
     chatHeigth     = $(@el).find('div').height()
@@ -127,7 +173,7 @@ class App.ChatWidget extends App.Controller
     @el.offset( left: width, top: heigth )
     @el.css( width: '200px' )
 
-  newMessage: (e) ->
+  submitMessage: (e) ->
     e.preventDefault()
     message = $(e.target).find('[name=chat_message]').val()
     if message
@@ -138,6 +184,7 @@ class App.ChatWidget extends App.Controller
       @messageLog.push msg
 
       $(e.target).find('[name=chat_message]').val('')
+
       App.Event.trigger(
         'ws:send'
           action: 'broadcast'
