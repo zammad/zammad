@@ -58,7 +58,7 @@ class App.TextModuleUI extends App.Controller
           @uiWidget.el.offset( left: left + width + 20, top: top )
 
       # update window possition every x ms
-      ui.interval( update, 150, 'text_module_box' )
+      ui.interval( update, 100, 'text_module_box' )
     )
     inputElement.bind('focusout', ->
 

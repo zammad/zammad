@@ -30,7 +30,6 @@ class App.ChatWidget extends App.Controller
 
     @render()
     @hide()
-    @interval @position, 200, 'chat-widget'
 
     App.Event.bind(
       'chat:message'
@@ -62,6 +61,9 @@ class App.ChatWidget extends App.Controller
     App.Event.bind(
       'chat:message_new'
       (e) =>
+
+        # show new message info
+        @newMessage = false
         @el.find('div.well').removeClass('alert-success')
     )
 
@@ -156,22 +158,6 @@ class App.ChatWidget extends App.Controller
       @hide()
       if @newMessage
         @el.find('div.well').addClass('alert-success')
-
-  position: =>
-    chatHeigth     = $(@el).find('div').height()
-    chatWidth      = $(@el).find('div').width()
-    documentHeigth = $(document).height()
-    documentWidth  = $(document).width()
-    windowHeigth   = $(window).height()
-    windowWidth    = $(window).width()
-    scrollPositonY = window.pageYOffset
-    scrollPositonX = window.pageXOffset
-
-    heigth = windowHeigth + scrollPositonY - chatHeigth - 15
-    width  = windowWidth - chatWidth - 55
-
-    @el.offset( left: width, top: heigth )
-    @el.css( width: '200px' )
 
   submitMessage: (e) ->
     e.preventDefault()

@@ -1,4 +1,4 @@
-<div class="well well-demand span3">
+<div class="well well-chat span3">
   <h4><%- @T('Chat') %><a href="#" class="close">&times;</a></h4>
   <div id="chat_content" <% if !@isShown: %>class="hide"<% end %>>
     <div id="chat_log_container" class="max-size-scroll">
