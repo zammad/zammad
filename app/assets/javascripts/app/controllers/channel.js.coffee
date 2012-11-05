@@ -26,6 +26,7 @@ class Index extends App.ControllerLevel2
     # render page
     @render()
 
-Config.Routes['channels/:target'] = Index
-Config.Routes['channels'] = Index
+App.Config.set( 'channels/:target', Index, 'Routes' )
+App.Config.set( 'channels', Index, 'Routes' )
 
+App.Config.set( 'Channels', { prio: 2500, parent: '#admin', name: 'Channels', target: '#channels', role: ['Admin'] }, 'NavBar' )

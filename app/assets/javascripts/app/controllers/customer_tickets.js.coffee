@@ -26,6 +26,6 @@ class Index extends App.Controller
 #      form: @formGen( model: { configure_attributes: configure_attributes, className: 'create' } ),
     )
 
+App.Config.set( 'customer_tickets', Index, 'Routes' )
 
-
-Config.Routes['customer_tickets'] = Index
+App.Config.set( 'CustomerTickets', { prio: 1700, parent: '', name: 'My Tickets', target: '#ticket_view/my_tickets', role: ['Customer'] }, 'NavBar' )

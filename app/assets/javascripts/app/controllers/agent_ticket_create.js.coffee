@@ -284,5 +284,8 @@ class UserNew extends App.ControllerModal
         ui.modalHide()
     )
 
-Config.Routes['ticket_create'] = Index
-Config.Routes['ticket_create/:ticket_id/:article_id'] = Index
+App.Config.set( 'ticket_create', Index, 'Routes' )
+App.Config.set( 'ticket_create/:ticket_id/:article_id', Index, 'Routes' )
+
+App.Config.set( 'TicketNew', { prio: 8000, parent: '', name: 'New', target: '#ticket_create', role: ['Agent'] }, 'NavBarRight' )
+

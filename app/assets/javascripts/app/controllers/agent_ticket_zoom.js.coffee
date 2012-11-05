@@ -538,6 +538,6 @@ class TicketActionRow extends App.Controller
     e.preventDefault()
     new App.TicketCustomer( ticket_id: @ticket.id, zoom: @zoom )
 
-Config.Routes['ticket/zoom/:ticket_id'] = Index
-Config.Routes['ticket/zoom/:ticket_id/nav/:nav'] = Index
-Config.Routes['ticket/zoom/:ticket_id/:article_id'] = Index
+App.Config.set( 'ticket/zoom/:ticket_id', Index, 'Routes' )
+App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', Index, 'Routes' )
+App.Config.set( 'ticket/zoom/:ticket_id/:article_id', Index, 'Routes' )

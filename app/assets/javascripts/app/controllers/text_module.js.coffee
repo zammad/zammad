@@ -26,6 +26,6 @@ class Index extends App.Controller
       },
     )
 
-Config.Routes['text_modules'] = Index
-Config.NavBar['AdminTextModule'] = { prio: 2300, parent: '#admin', name: 'Text Modules', target: '#text_modules', role: ['Admin'] }
+App.Config.set( 'text_modules', Index, 'Routes' )
+App.Config.set( 'AdminTextModule', { prio: 2300, parent: '#admin', name: 'Text Modules', target: '#text_modules', role: ['Admin'] }, 'NavBar' )
 

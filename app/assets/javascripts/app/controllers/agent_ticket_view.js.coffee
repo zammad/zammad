@@ -285,9 +285,9 @@ class Index extends App.Controller
     position = $(e.target).parents('[data-position]').data('position')
 
     # set last overview
-    Config['LastOverview']         = @view
-    Config['LastOverviewPosition'] = position
-    Config['LastOverviewTotal']    = @tickets_count
+    @Config.set('LastOverview', @view )
+    @Config.set('LastOverviewPosition', position )
+    @Config.set('LastOverviewTotal', @tickets_count )
 
     @navigate 'ticket/zoom/' + id + '/nav/true'
 
@@ -486,23 +486,30 @@ class Router extends App.Controller
     @redirect()
 
   redirect: =>
-    Config['LastOverview']         = @view
-    Config['LastOverviewPosition'] = @position
-    Config['LastOverviewTotal']    = @tickets_count
+    @Config.set('LastOverview', @view )
+    @position = parseInt( @position )
+    @Config.set('LastOverviewPosition', @position )
+    @Config.set('LastOverviewTotal', @tickets_count )
 
     # redirect
     if @direction == 'next'
       if @ticket_list[ @position ] && @ticket_list[ @position ]
-        Config['LastOverviewPosition']++
+        position = @position + 1
+        @Config.set( 'LastOverviewPosition', position )
         @navigate 'ticket/zoom/' + @ticket_list[ @position ] + '/nav/true'
       else
         @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
     else
       if @ticket_list[ @position - 2 ] && @ticket_list[ @position - 2 ] + '/nav/true'
-        Config['LastOverviewPosition']--
+        position = @position - 1
+        @Config.set( 'LastOverviewPosition', position )
         @navigate 'ticket/zoom/' + @ticket_list[ @position - 2 ] + '/nav/true'
       else
         @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
 
-Config.Routes['ticket_view/:view/:position/:direction'] = Router
-Config.Routes['ticket_view/:view'] = Index
+App.Config.set( 'ticket_view/:view', Index, 'Routes' )
+App.Config.set( 'ticket_view/:view/:position/:direction', Router, 'Routes' )
+
+App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket_view', role: ['Agent'] }, 'NavBar' )
+#App.Config.set( '', { prio: 1000, parent: '#ticket_view', name: 'My assigned Tickets (51)', target: '#ticket_view/my_assigned', role: ['Agent'] }
+#App.Config.set( '', { prio: 1000, parent: '#ticket_view', name: 'Unassigned Tickets (133)', target: '#ticket_view/all_unassigned', role: ['Agent'] }

@@ -32,14 +32,15 @@ class App.Run extends App.Controller
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
 
-class App.Content extends Spine.Controller
+class App.Content extends App.Controller
   className: 'container'
 
   constructor: ->
     super
     @log 'RUN content'
 
-    for route, callback of Config.Routes
+    Routes = @Config.get( 'Routes' )
+    for route, callback of Routes
       do (route, callback) =>
         @route(route, (params) ->
 

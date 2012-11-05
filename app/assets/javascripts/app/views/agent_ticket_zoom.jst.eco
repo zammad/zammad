@@ -4,13 +4,13 @@
       <h1><span contenteditable="true" class="title_update inline-edit"><%= @P( @ticket.title ) %></span> <small><%= @ticket.number %></small></h1>
     </div>
     <div class="span2">
-      <% if window.Config['LastOverview'] && @nav: %>
+      <% if @C( 'LastOverview' ) && @nav: %>
       <div class="pagination">
-        <span class="count"><%= Config['LastOverviewPosition'] %>/<%= Config['LastOverviewTotal'] %></span>
-        <% base_url ="#ticket_view/#{Config['LastOverview']}/#{Config['LastOverviewPosition']}/" %>
+        <span class="count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
+        <% base_url ="#ticket_view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
         <ul>
-          <li class="<% if Config['LastOverviewPosition'] <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
-          <li class="<% if Config['LastOverviewPosition'] is Config['LastOverviewTotal']: %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
+          <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
+          <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
         </ul>
       </div>
       <% end %>

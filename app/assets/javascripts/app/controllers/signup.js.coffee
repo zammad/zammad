@@ -100,4 +100,4 @@ class Index extends App.Controller
       username: @username
     )
 
-Config.Routes['signup'] = Index
+App.Config.set( 'signup', Index, 'Routes' )

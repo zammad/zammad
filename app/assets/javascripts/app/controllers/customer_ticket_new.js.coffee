@@ -186,4 +186,7 @@ class Index extends App.Controller
           ui.formEnable(e)
       )
 
-Config.Routes['customer_ticket_new'] = Index
+App.Config.set( 'customer_ticket_new', Index, 'Routes' )
+
+App.Config.set( 'CustomerTicketNew', { prio: 1600, parent: '', name: 'New Ticket', target: '#customer_ticket_new', role: ['Customer'] }, 'NavBar' )
+

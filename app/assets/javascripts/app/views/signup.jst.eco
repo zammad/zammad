@@ -1,5 +1,5 @@
 <div class="hero-unit">
-  <h1><%- @T( 'Join' ) %> <%= Config.product_name %><small></small></h1>
+  <h1><%- @T( 'Join' ) %> <%= @C( 'product_name' ) %><small></small></h1>
   <div class="container">
     <form class="form-horizontal">
       <p id="form-signup"></p>

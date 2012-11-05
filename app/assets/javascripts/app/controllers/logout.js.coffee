@@ -20,4 +20,6 @@ class Index extends Spine.Controller
     # redirect to login 
     @navigate 'login'
 
-Config.Routes['logout'] = Index
+App.Config.set( 'logout', Index, 'Routes' )
+
+App.Config.set( 'Logout', { prio: 1800, parent: '#current_user', name: 'Sign out', target: '#logout', divider: true, role: [ 'Agent', 'Customer' ] }, 'NavBarRight' )

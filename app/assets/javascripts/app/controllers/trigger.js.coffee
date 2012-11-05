@@ -19,16 +19,7 @@ class Index extends App.Controller
     @html App.view('trigger')(
       head: 'some header'
     )
-Config.Routes['trigger'] = Index
 
-#class App.Triggers extends App.Router
-#  routes:
-#    'triggers/web':      New
-#    'triggers/email':    New
-#    'triggers/twitter':  New
-#    'triggers/facebook': New
-#    'triggers/new':      New
-#    'triggers/:id/edit': Edit
-#    'triggers':          Index
-#
-#Config.Controller.push App.Triggers
+App.Config.set( 'trigger', Index, 'Routes' )
+
+App.Config.set( 'Trigger', { prio: 3000, parent: '#admin', name: 'Trigger', target: '#trigger', role: ['Admin'] }, 'NavBar' )

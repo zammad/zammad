@@ -35,8 +35,8 @@ class App.Navigation extends App.Controller
       @render( window.Session )
 
   render: (user) ->
-    nav_left  = @getItems( navbar: Config.NavBar )
-    nav_right = @getItems( navbar: Config.NavBarRight )
+    nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )
+    nav_right = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 
     # get open tabs to repopen on rerender
     open_tab = {}
@@ -148,13 +148,14 @@ class App.Navigation extends App.Controller
     App.Store.write( 'navupdate_ticket_overview', data )
 
     # remove old views
-    for key of Config.NavBar
-      if Config.NavBar[key].parent is '#ticket_view'
-        delete Config.NavBar[key]
+    NavBar = @Config.get( 'NavBar' ) || {}
+    for key of NavBar
+      if NavBar[key].parent is '#ticket_view'
+        delete NavBar[key]
 
     # add new views
     for item in data
-      Config.NavBar['TicketOverview' + item.url] = {
+      NavBar['TicketOverview' + item.url] = {
         prio:   item.prio,
         parent: '#ticket_view',
         name:   item.name,
@@ -162,6 +163,8 @@ class App.Navigation extends App.Controller
         target: '#ticket_view/' + item.url,
         role:   ['Agent'],
       }
+
+    @Config.set( 'NavBar', NavBar )
 
   recent_viewed_build: (data) =>
 
@@ -176,11 +179,12 @@ class App.Navigation extends App.Controller
     App.Collection.load( type: 'Ticket', data: data.tickets )
 
     # remove old views
-    for key of Config.NavBarRight
-      if Config.NavBarRight[key].parent is '#current_user'
+    NavBarRight = @Config.get( 'NavBarRight' ) || {}
+    for key of NavBarRight
+      if NavBarRight[key].parent is '#current_user'
         part = key.split '::'
         if part[0] is 'RecendViewed'
-          delete Config.NavBarRight[key]
+          delete NavBarRight[key]
 
     # add new views
     prio = 8000
@@ -192,7 +196,7 @@ class App.Navigation extends App.Controller
         navheader = 'Recent Viewed'
       ticket = App.Collection.find( 'Ticket', item.o_id )
       prio++
-      Config.NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
+      NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
         prio:      prio,
         parent:    '#current_user',
         name:      item.history_object.name + ' (' + ticket.title + ')',
@@ -201,3 +205,5 @@ class App.Navigation extends App.Controller
         divider:   divider,
         navheader: navheader
       }
+
+    @Config.set( 'NavBarRight', NavBarRight )

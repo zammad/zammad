@@ -134,4 +134,4 @@ class Index extends App.Controller
       @el.find('.agent_user').fadeIn()
     )
 
-Config.Routes['getting_started'] = Index
+App.Config.set( 'getting_started', Index, 'Routes' )

@@ -29,12 +29,6 @@ class Index extends App.Controller
       }
     )
 
-Config.Routes['users'] = Index
+App.Config.set( 'users', Index, 'Routes' )
 
-#class App.Users extends App.Router
-#  routes:
-#    'users/new':      New
-#    'users/:id/edit': Edit
-#    'users':          Index
-#
-#Config.Controller.push App.Users
+App.Config.set( 'User', { prio: 1000, parent: '#admin', name: 'Users', target: '#users', role: ['Admin'] }, 'NavBar' )

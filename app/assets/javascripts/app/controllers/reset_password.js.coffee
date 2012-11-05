@@ -61,8 +61,7 @@ class Index extends App.Controller
       message: 'Username or email address invalid, please go back and try <a href="#" class="retry">again</a>.'
     );
 
-Config.Routes['reset_password'] = Index
-
+App.Config.set( 'reset_password', Index, 'Routes' )
 
 class Verify extends App.Controller
   className: 'container'
@@ -138,4 +137,4 @@ class Verify extends App.Controller
       message: 'Ask your admin!',
     );
 
-Config.Routes['reset_password_verify/:token'] = Verify
+App.Config.set( 'reset_password_verify/:token', Verify, 'Routes' )

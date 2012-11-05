@@ -24,9 +24,6 @@ class Index extends App.Controller
   render: ->
     @html App.view('profile')()
 
-Config.Routes['profile'] = Index
+App.Config.set( 'profile', Index, 'Routes' )
 
-#class App.Profile extends App.Router
-#  routes:
-#    'profile': Index
-#Config.Controller.push App.Profile
+App.Config.set( 'Profile', { prio: 1700, parent: '#current_user', name: 'Profile', target: '#profile', role: [ 'Agent', 'Customer' ] }, 'NavBarRight' )

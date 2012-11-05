@@ -36,7 +36,7 @@ class App.Auth
   
           # update config
           for key, value of data.config
-            window.Config[key] = value
+            App.Config.set( key, value )
 
           # empty session
           window.Session = {}
@@ -55,7 +55,7 @@ class App.Auth
 
         # update config
         for key, value of data.config
-          window.Config[key] = value
+          App.Config.set( key, value )
 
         # store user data
         for key, value of data.session

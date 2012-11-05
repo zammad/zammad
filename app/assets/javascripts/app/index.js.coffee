@@ -16,14 +16,12 @@
 #= require ./lib/bootstrap/bootstrap-transition.js
 
 #= require_tree ./lib/base
-
-#not_used= require_tree ./lib
 #= require_self
+#= require_tree ./lib/app_init
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
-
-#= require_tree ./lib/app
+#= require_tree ./lib/app_post
 
 class App extends Spine.Controller
   @view: (name) ->
@@ -61,6 +59,10 @@ class App extends Spine.Controller
       # define linkify helper
       params.L = ( item ) ->
         window.linkify( item )
+
+      # define config helper
+      params.C = ( key ) ->
+        App.Config.get( key )
 
       # define template
       JST["app/views/#{name}"](params)

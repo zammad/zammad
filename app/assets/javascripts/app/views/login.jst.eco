@@ -47,7 +47,7 @@
 
       <div class="row">
         <div class="span12">
-          <p><%- @T( 'New to' ) %> <%= Config.product_name %>, <%- @T( 'join today!' ) %></p>
+          <p><%- @T( 'New to' ) %> <%= @C( 'product_name' ) %>, <%- @T( 'join today!' ) %></p>
           <p><a href="#signup" class="btn"><%- @T( 'Sign up' ) %></a>
         </div>
       </div>

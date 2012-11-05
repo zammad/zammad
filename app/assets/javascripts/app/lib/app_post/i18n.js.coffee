@@ -106,7 +106,7 @@ class _Singleton
   translate_content: ( string, args... ) =>
     translated = @translate( string, args... )
 #    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + '<span class="icon-edit"></span>'
-    if window.Config['Translation']
+    if App.Config.get( 'Translation' )
       replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
   #    if !@_translated
   #       replace += '<span class="missing">XX</span>'

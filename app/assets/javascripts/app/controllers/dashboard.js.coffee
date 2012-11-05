@@ -81,5 +81,5 @@ class Index extends App.Controller
           new plugin.controller( params )
 
 
-Config.Routes[''] = Index
-Config.Routes['/'] = Index
+App.Config.set( '', Index, 'Routes' )
+App.Config.set( '/', Index, 'Routes' )

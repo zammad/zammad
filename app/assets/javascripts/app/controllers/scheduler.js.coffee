@@ -19,5 +19,7 @@ class Index extends App.Controller
     @html App.view('scheduler')(
       head: 'some header'
     )
-Config.Routes['scheduler'] = Index
 
+App.Config.set( 'scheduler', Index, 'Routes' )
+
+App.Config.set( 'Scheduler', { prio: 3500, parent: '#admin', name: 'Scheduler', target: '#scheduler', role: ['Admin'] }, 'NavBar' )

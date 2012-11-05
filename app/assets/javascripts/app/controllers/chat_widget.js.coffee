@@ -118,6 +118,13 @@ class App.ChatWidget extends App.Controller
     @el.find('#chat_content').show(100)
     @newMessage = false
 
+    # hide
+    @delay( =>
+        @hide()
+      60000
+      'chat-window-hide'
+    )
+
   hide: =>
     @isShown = false
     @el.find('#chat_content').hide(100)
@@ -125,11 +132,19 @@ class App.ChatWidget extends App.Controller
   focusIn: =>
     @focus = true
     @clearDelay 'chat-message-focusout'
+    @clearDelay 'chat-window-hide'
 
   focusOut: =>
     a = =>
       @focus = false
     @delay a, 200, 'chat-message-focusout'
+
+    # hide
+    @delay( =>
+        @hide()
+      60000
+      'chat-window-hide'
+    )
 
   render: ->
 

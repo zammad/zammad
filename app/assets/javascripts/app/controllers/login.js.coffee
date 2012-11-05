@@ -35,7 +35,7 @@ class Index extends App.Controller
     }
     auth_providers = []
     for key, provider of auth_provider_all
-      if Config[provider.config] is true || Config[provider.config] is "true"
+      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is "true"
         auth_providers.push provider
 
     @html App.view('login')(
@@ -75,7 +75,7 @@ class Index extends App.Controller
 
     # update config
     for key, value of data.config
-      window.Config[key] = value
+      App.Config.set( key, value )
 
     # store user data
     for key, value of data.session
@@ -102,11 +102,11 @@ class Index extends App.Controller
     }
 
     # redirect to #
-    if window.Config['requested_url'] isnt ''
-      @navigate window.Config['requested_url']
+    if @Config.get( 'requested_url' ) isnt ''
+      @navigate @Config.get( 'requested_url' )
 
       # reset
-      window.Config['requested_url'] = ''
+      @Config.set( 'requested_url', '' )
     else
       @navigate '#/'
 
@@ -125,4 +125,4 @@ class Index extends App.Controller
       username: @username
     )
 
-Config.Routes['login'] = Index
+App.Config.set( 'login', Index, 'Routes' )

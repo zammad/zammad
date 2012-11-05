@@ -1,7 +1,7 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="#/"><%- Config.product_name %></a>
+      <a class="brand" href="#/"><%- @C( 'product_name' ) %></a>
         <ul class="nav">
           <% for item in @navbar_left: %>
             <% if item.child: %>

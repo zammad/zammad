@@ -67,5 +67,9 @@ class Index extends App.Controller
     item.destroy() if confirm('Sure?')
     @render()
 
+App.Config.set( 'network', Index, 'Routes' )
 
-Config.Routes['network'] = Index
+#App.Config.set( 'Network', { prio: 1500, parent: '', name: 'Networking', target: '#network', role: ['Anybody', 'Customer', 'Agent'] }, 'NavBar' ), 'NavBar' )
+#App.Config.set( '', { prio: 1600, parent: '', name: 'anybody+agent', target: '#aa', role: ['Anybody', 'Agent'] }
+#App.Config.set( '', { prio: 1600, parent: '', name: 'Anybody', target: '#anybody', role: ['Anybody'] }
+

@@ -1,9 +1,12 @@
 class App.Controller extends Spine.Controller
+  constructor: ->
+    super
+    @Config = App.Config
 
   # add @title methode to set title
   title: (name) ->
-#    $('html head title').html( Config.product_name + ' - ' + App.i18n.translateInline(name) )
-    document.title = Config.product_name + ' - ' + App.i18n.translateInline(name)
+#    $('html head title').html( @Config.get(product_name) + ' - ' + App.i18n.translateInline(name) )
+    document.title = @Config.get('product_name') + ' - ' + App.i18n.translateInline(name)
 
   # add @notify methode to create notification
   notify: (data) ->
@@ -127,7 +130,7 @@ class App.Controller extends Spine.Controller
     return true if window.Session['id']
 
     # remember requested url
-    window.Config['requested_url'] = window.location.hash
+    @Config.set( 'requested_url', window.location.hash )
 
     # redirect to login  
     @navigate '#login'
