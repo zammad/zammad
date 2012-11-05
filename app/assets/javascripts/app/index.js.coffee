@@ -47,6 +47,10 @@ class App extends Spine.Controller
       params.C = ( key ) ->
         App.Config.get( key )
 
+      # define session helper
+      params.S = ( key ) ->
+        App.Session.get( key )
+
       # define template
       JST["app/views/#{name}"](params)
     template

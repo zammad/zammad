@@ -75,7 +75,7 @@
 
     <div class="row article">
       <div class="avatar span1 thumbnails">
-        <img class="thumbnail user-data" data-id="<%= window.Session['id'] %>"" src="<%- window.Session['image'] %>" alt="">
+        <img class="thumbnail user-data" data-id="<%= @S('id') %>"" src="<%- @S('image') %>" alt="">
       </div>
       <div class="span8 well-muted article-message">
         <form class="form-stacked keepleft">
