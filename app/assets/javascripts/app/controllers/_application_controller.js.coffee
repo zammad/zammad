@@ -24,8 +24,9 @@ class App.Controller extends Spine.Controller
     @delay( a, 0 )
 
   isRole: (name) ->
-    return false if !window.Session.roles
-    for role in window.Session.roles
+    roles = App.Session.get( 'roles' )
+    return false if !roles
+    for role in roles
       return true if role.name is name
     return false
 
@@ -124,10 +125,10 @@ class App.Controller extends Spine.Controller
     )
 
   authenticate: ->
-    console.log 'authenticate', window.Session
+    console.log 'authenticate', App.Session.all()
 
     # return rtue if session exists
-    return true if window.Session['id']
+    return true if App.Session.get( 'id' )
 
     # remember requested url
     @Config.set( 'requested_url', window.location.hash )

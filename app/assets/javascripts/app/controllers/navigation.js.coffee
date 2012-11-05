@@ -27,12 +27,12 @@ class App.Navigation extends App.Controller
     # rebuild ticket overview data
     App.Event.bind 'navupdate_ticket_overview', (data) =>
       @ticket_overview_build(data)
-      @render( window.Session )
+      @render( App.Session.all() )
 
     # rebuild recent viewd data
     App.Event.bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
-      @render( window.Session )
+      @render( App.Session.all() )
 
   render: (user) ->
     nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )
@@ -66,6 +66,8 @@ class App.Navigation extends App.Controller
     level1 = []
     dropdown = {}
 
+    roles = App.Session.get( 'roles' )
+
     for item in navbar
       if typeof item.callback is 'function'
         data = item.callback() || {}
@@ -73,10 +75,10 @@ class App.Navigation extends App.Controller
           item[key] = value
       if !item.parent
         match = 0
-        if !window.Session['roles']
-          match = _.include(item.role, 'Anybody')
-        if window.Session['roles']
-          window.Session['roles'].forEach( (role) =>
+        if !roles
+          match = _.include( item.role, 'Anybody' )
+        if roles
+          roles.forEach( (role) =>
             if !match
               match = _.include(item.role, role.name)
           )
@@ -92,10 +94,10 @@ class App.Navigation extends App.Controller
         for itemSub in navbar
           if itemSub.parent is item.parent
             match = 0
-            if !window.Session['roles']
-              match = _.include(itemSub.role, 'Anybody')
-            if window.Session['roles']
-              window.Session['roles'].forEach( (role) =>
+            if !roles
+              match = _.include( itemSub.role, 'Anybody' )
+            if roles
+              roles.forEach( (role) =>
                 if !match
                   match = _.include(itemSub.role, role.name)
               )

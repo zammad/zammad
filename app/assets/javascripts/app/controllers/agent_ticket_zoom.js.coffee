@@ -380,7 +380,7 @@ class Index extends App.Controller
         # create article
         if params['body']
           article = new App.TicketArticle
-          params.from = window.Session['firstname'] + ' ' + window.Session['lastname'] 
+          params.from = App.Session.get( 'firstname' ) + ' ' + App.Session.get( 'lastname' )
           params.ticket_id = @ticket.id
           if !params['internal']
             params['internal'] = false

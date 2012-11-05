@@ -4,7 +4,7 @@ class App.Config
   @init: ->
     _instance ?= new _Singleton
 
-  @get: ( key, group ) ->
+  @get: ( key ) ->
     if _instance == undefined
       _instance ?= new _Singleton
     _instance.get( key )

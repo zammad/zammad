@@ -62,10 +62,9 @@ class _Singleton extends App.Controller
     return if !@supported
 
     # logon websocket
-    data = {
-      action: 'login',
-      session: window.Session
-    }
+    data =
+      action: 'login'
+      session: App.Session.all()
     @send(data)
 
   spool: =>

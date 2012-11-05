@@ -123,7 +123,7 @@ class Index extends App.Controller
     @log 'paramssss', params
 
     # set customer id
-    params.customer_id = Session['id']
+    params.customer_id = App.Session.get('id')
 
     # set prio
     priority = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' )
@@ -149,13 +149,13 @@ class Index extends App.Controller
 
     # create article
     params['article'] = {
-      from:                     "#{Session['firstname']} #{Session['lastname']}",
+      from:                     "#{ App.Session.get('firstname') } #{ App.Session.get('lastname') }",
       to:                       (group && group.name) || '',
       subject:                  params.subject,
       body:                     params.body,
       ticket_article_type_id:   type.id,
       ticket_article_sender_id: sender.id,
-      created_by_id:            Session['id'],
+      created_by_id:            App.Session.get('id'),
     }
 #          console.log('params', params)
     

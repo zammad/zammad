@@ -79,7 +79,7 @@ class Index extends App.Controller
 
     # store user data
     for key, value of data.session
-      window.Session[key] = value
+      App.Session.set( key, value )
 
     # refresh default collections
     for key, value of data.default_collections

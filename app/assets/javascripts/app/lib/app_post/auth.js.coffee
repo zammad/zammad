@@ -39,7 +39,7 @@ class App.Auth
             App.Config.set( key, value )
 
           # empty session
-          window.Session = {}
+          App.Session.init()
 
           # update websocked auth info
           App.WebSocket.auth()
@@ -59,7 +59,7 @@ class App.Auth
 
         # store user data
         for key, value of data.session
-          window.Session[key] = value
+          App.Session.set( key, value )
 
         # update websocked auth info
         App.WebSocket.auth()
@@ -75,7 +75,7 @@ class App.Auth
         console.log 'loginCheck:error'#, error, statusText, xhr.statusCode
 
         # empty session
-        window.Session = {}
+        App.Session.init()
 
         # clear store
         App.Store.clear('all')

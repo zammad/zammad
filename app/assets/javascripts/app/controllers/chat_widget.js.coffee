@@ -20,7 +20,7 @@ class App.ChatWidget extends App.Controller
       else
         @start()
 
-    if !_.isEmpty( Session )
+    if !_.isEmpty( App.Session.all() )
       @start()
 
   start: =>
@@ -76,20 +76,20 @@ class App.ChatWidget extends App.Controller
           action: 'broadcast'
           event:  'chat:window_toggle'
           recipient:
-            user_id: [ Session['id'] ]
+            user_id: [ App.Session.get('id') ]
           data:
-            show:    true
+            show: true
       )
     else
       @hide()
       App.Event.trigger(
         'ws:send'
-          action:    'broadcast'
-          event:     'chat:window_toggle'
+          action: 'broadcast'
+          event:  'chat:window_toggle'
           recipient:
-            user_id: [ Session['id'] ]
+            user_id: [ App.Session.get('id') ]
           data:
-            show:    false
+            show: false
       )
     @newMessage = false
 
@@ -105,11 +105,11 @@ class App.ChatWidget extends App.Controller
             'ws:send'
               action: 'broadcast'
               recipient:
-                user_id: [ Session['id'] ]
+                user_id: [ App.Session.get('id') ]
               event:  'chat:message_new'
               spool:  true
               data:
-                show:    true
+                show: true
           )
 
         2000
@@ -149,7 +149,7 @@ class App.ChatWidget extends App.Controller
   render: ->
 
     for message in @messageLog
-      if message.nick is Session['login']
+      if message.nick is App.Session.get('login')
         message.nick = 'me'
 
     # insert data
@@ -180,8 +180,8 @@ class App.ChatWidget extends App.Controller
     if message
       msg =
         message: message
-        user_id: Session['id']
-        nick:    Session['login']
+        user_id: App.Session.get( 'id' )
+        nick:    App.Session.get( 'login' )
       @messageLog.push msg
 
       $(e.target).find('[name=chat_message]').val('')

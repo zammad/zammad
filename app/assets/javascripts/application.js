@@ -5,6 +5,23 @@
 // the compiled file.
 //
 
-//= require init.js
-//= require app
-//not_used#= require_tree .
+//= require ./app/lib/core/jquery-1.8.1.min.js
+//= require ./app/lib/core/jquery-ui-1.8.23.custom.min.js
+//= require ./app/lib/core/underscore-1.3.3.js
+
+//not_used= require_tree ./app/lib/spine
+//= require ./app/lib/spine/spine.js
+//= require ./app/lib/spine/ajax.js
+//= require ./app/lib/spine/route.js
+
+//not_used= require_tree ./app/lib/bootstrap
+//= require ./app/lib/bootstrap/bootstrap-dropdown.js
+//= require ./app/lib/bootstrap/bootstrap-tooltip.js
+//= require ./app/lib/bootstrap/bootstrap-popover.js
+//= require ./app/lib/bootstrap/bootstrap-modal.js
+//= require ./app/lib/bootstrap/bootstrap-tab.js
+//= require ./app/lib/bootstrap/bootstrap-transition.js
+
+//= require_tree ./app/lib/base
+
+//= require ./app/index.js.coffee

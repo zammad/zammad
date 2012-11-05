@@ -1,21 +1,4 @@
-#= require ./lib/core/jquery-1.8.1.min.js
-#= require ./lib/core/jquery-ui-1.8.23.custom.min.js
-#= require ./lib/core/underscore-1.3.3.js
 
-#not_used= require_tree ./lib/spine
-#= require ./lib/spine/spine.js
-#= require ./lib/spine/ajax.js
-#= require ./lib/spine/route.js
-
-#not_used= require_tree ./lib/bootstrap
-#= require ./lib/bootstrap/bootstrap-dropdown.js
-#= require ./lib/bootstrap/bootstrap-tooltip.js
-#= require ./lib/bootstrap/bootstrap-popover.js
-#= require ./lib/bootstrap/bootstrap-modal.js
-#= require ./lib/bootstrap/bootstrap-tab.js
-#= require ./lib/bootstrap/bootstrap-transition.js
-
-#= require_tree ./lib/base
 #= require_self
 #= require_tree ./lib/app_init
 #= require_tree ./models

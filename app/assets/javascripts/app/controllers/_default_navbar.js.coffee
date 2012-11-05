@@ -3,7 +3,7 @@ App.Config.set( 'User', {
   parent: '',
   callback: ->
     item = {}
-    item['name'] = window.Session['login']
+    item['name'] = App.Session.get( 'login' )
     return item
   target: '#current_user',
   role:   [ 'Agent', 'Customer' ]
