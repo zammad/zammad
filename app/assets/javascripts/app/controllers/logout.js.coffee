@@ -1,6 +1,6 @@
 $ = jQuery.sub()
 
-class Index extends Spine.Controller
+class Index extends App.Controller
 
   constructor: ->
     super
@@ -12,7 +12,7 @@ class Index extends Spine.Controller
     App.Auth.logout()
 
     # remoce local session
-    App.Session.init()
+    @Session.init()
     App.Event.trigger 'ajax:auth'
 
     # redirect to login 

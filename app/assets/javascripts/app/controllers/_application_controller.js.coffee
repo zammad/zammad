@@ -1,7 +1,8 @@
 class App.Controller extends Spine.Controller
   constructor: ->
     super
-    @Config = App.Config
+    @Config  = App.Config
+    @Session = App.Session
 
   # add @title methode to set title
   title: (name) ->
@@ -16,15 +17,15 @@ class App.Controller extends Spine.Controller
   navupdate: (url) ->
     App.Event.trigger 'navupdate', url
 
-  scrollTo: ( x = 0, y = 0 ) ->
+  scrollTo: ( x = 0, y = 0, delay = 0 ) ->
     a = ->
       console.log('scollTo', x, y )
       window.scrollTo( x, y )
 
-    @delay( a, 0 )
+    @delay( a, delay )
 
   isRole: (name) ->
-    roles = App.Session.get( 'roles' )
+    roles = @Session.get( 'roles' )
     return false if !roles
     for role in roles
       return true if role.name is name
@@ -125,10 +126,10 @@ class App.Controller extends Spine.Controller
     )
 
   authenticate: ->
-    console.log 'authenticate', App.Session.all()
+    console.log 'authenticate', @Session.all()
 
     # return rtue if session exists
-    return true if App.Session.get( 'id' )
+    return true if @Session.get( 'id' )
 
     # remember requested url
     @Config.set( 'requested_url', window.location.hash )

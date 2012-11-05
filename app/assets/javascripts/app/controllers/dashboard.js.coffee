@@ -66,7 +66,7 @@ class Index extends App.Controller
     @render()
 
   render: ->
-    
+
     @html App.view('dashboard')(
       head: 'Dashboard'
     )

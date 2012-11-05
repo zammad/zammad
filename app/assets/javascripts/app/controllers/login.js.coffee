@@ -79,7 +79,7 @@ class Index extends App.Controller
 
     # store user data
     for key, value of data.session
-      App.Session.set( key, value )
+      @Session.set( key, value )
 
     # refresh default collections
     for key, value of data.default_collections

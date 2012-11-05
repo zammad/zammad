@@ -73,8 +73,8 @@ class App.Content extends App.Controller
           params.el = @el
           new callback( params )
 
-          # scroll to top
-#          window.scrollTo(0,0)
+          # scroll to top / remember last screen position
+#          @scrollTo( 0, 0, 100 )
         )
 
     Spine.Route.setup()
