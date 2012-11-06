@@ -210,7 +210,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :link_object_target_value,     :integer,               :null => false
       t.timestamps
     end
-    add_index :links, [:link_object_source_id, :link_object_source_value, :link_object_target_id, :link_object_target_value, :link_types_id], :unique => true, :name => 'links_uniq_total'
+    add_index :links, [:link_object_source_id, :link_object_source_value, :link_object_target_id, :link_object_target_value, :link_type_id], :unique => true, :name => 'links_uniq_total'
   end
 
   def self.down

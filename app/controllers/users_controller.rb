@@ -116,10 +116,10 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
 
   def create
     user = User.new( User.param_cleanup(params) )
+    user.updated_by_id = (current_user && current_user.id) || 1
     user.created_by_id = (current_user && current_user.id) || 1
     
     begin
-      user.save
 
       # if it's a signup, add user to customer role
       if user.created_by_id == 1
@@ -154,6 +154,8 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
           user.group_ids = params[:group_ids]
         end
       end
+
+      user.save
 
       # send inviteation if needed
       if params[:invite]

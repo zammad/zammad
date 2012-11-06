@@ -1556,7 +1556,9 @@ Network::Category.create(
   :allow_comments           => true,
   :network_category_type_id => Network::Category::Type.where(:name => 'Idea').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
-  :allow_comments           => true
+  :allow_comments           => true,
+  :updated_by_id            => 1,
+  :created_by_id            => 1,
 )
 Network::Category.create(
   :name                     => 'Bug Reports',
@@ -1572,7 +1574,8 @@ item = Network::Item.create(
   :title                => 'Example Announcement',
   :body                 => 'Some announcement....',
   :network_category_id  => Network::Category.where(:name => 'Announcements').first.id,
-  :created_by_id        => User.where(:login => '-').first.id
+  :updated_by_id        => 1,
+  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,

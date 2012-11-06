@@ -7,7 +7,7 @@ class App.ControllerForm extends App.Controller
     @form = @formGen()
 #    @log 'form', @form
     if @el
-      @el.append( @form )
+      @el.prepend( @form )
 
   html: =>
     @form.html()
