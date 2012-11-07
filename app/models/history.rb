@@ -118,8 +118,8 @@ class History < ActiveRecord::Base
     datas = []
     stream.each do |item|
       data = item.attributes
-      data['history_object'] = self.history_object_lookup_id( data['history_object_id'] )
-      data['history_type']   = self.history_type_lookup_id( data['history_type_id'] )
+      data['history_object'] = self.history_object_lookup_id( data['history_object_id'] ).name
+      data['history_type']   = self.history_type_lookup_id( data['history_type_id'] ).name
       data.delete('history_object_id')
       data.delete('history_type_id')
       datas.push data
@@ -205,8 +205,8 @@ class History < ActiveRecord::Base
     datas = []
     stream.each do |item|
       data = item.attributes
-      data['history_object'] = self.history_object_lookup_id( data['history_object_id'] )
-      data['history_type']   = self.history_type_lookup_id( data['history_type_id'] )
+      data['history_object'] = self.history_object_lookup_id( data['history_object_id'] ).name
+      data['history_type']   = self.history_type_lookup_id( data['history_type_id'] ).name
       datas.push data
 #      item['history_attribute'] = item.history_attribute
     end
