@@ -3,8 +3,8 @@ class HistoryObserver < ActiveRecord::Observer
   observe :ticket, :user, 'ticket::_article'
 
   def after_create(record)
-    puts 'HISTORY OBSERVER CREATE !!!!' + record.class.name
-    puts record.inspect
+    puts 'HISTORY OBSERVER, object created !!!!' + record.class.name
+#    puts record.inspect
     related_o_id = nil
     related_history_object_id = nil
     if record.class.name == 'Ticket::Article'
@@ -30,7 +30,7 @@ class HistoryObserver < ActiveRecord::Observer
       return
     end
   
-    puts 'HISTORY OBSERVER UPDATE!!!!' + record.class.name
+    puts 'HISTORY OBSERVER object will be updated!!!!' + record.class.name
 #    puts 'current'
 #    puts current.inspect
 #    puts 'record'
@@ -39,10 +39,8 @@ class HistoryObserver < ActiveRecord::Observer
     diff = differences_from?(current, record)
     puts 'DIFF'
     puts diff.inspect
-    puts 'CURRENT O_ID'
-    puts current.id
-    puts 'CURRENT USER ID'
-    puts current_user_id
+    puts 'CURRENT O_ID ' + current.id.to_s
+    puts 'CURRENT USER ID ' + current_user_id.to_s
 
     map = {
       :group_id => {
