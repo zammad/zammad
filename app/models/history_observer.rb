@@ -31,10 +31,10 @@ class HistoryObserver < ActiveRecord::Observer
     end
   
     puts 'HISTORY OBSERVER UPDATE!!!!' + record.class.name
-    puts 'current'
-    puts current.inspect
-    puts 'record'
-    puts record.inspect
+#    puts 'current'
+#    puts current.inspect
+#    puts 'record'
+#    puts record.inspect
     
     diff = differences_from?(current, record)
     puts 'DIFF'
@@ -117,7 +117,7 @@ class HistoryObserver < ActiveRecord::Observer
       if attribute_name.scan(/^(.*)_id$/).first
         attribute_name = attribute_name.scan(/^(.*)_id$/).first.first
       end
-puts 'LLLLLLLLLLLLLLLLLLLLLLLL' + attribute_name.to_s
+#puts 'LLLLLLLLLLLLLLLLLLLLLLLL' + attribute_name.to_s
 #        puts '9999999'
 #        puts current.id
       History.history_create(
