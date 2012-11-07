@@ -759,7 +759,7 @@ Setting.create(
   :state => {
     :value => {
       :checksum => false,
-      :file     => '/tmp/counter.log',
+      :file     => 'tmp/counter.log',
       :min_size => 5,
     },
   },
@@ -793,7 +793,7 @@ Setting.create(
   :state => {
     :value => {
       :checksum => false,
-      :file     => '/tmp/counter.log',
+      :file     => 'tmp/counter.log',
     }
   },
   :frontend => false

@@ -10,7 +10,7 @@ module Ticket::Number::Date
     date = t.strftime("%Y-%m-%d")
 
     # read counter
-    file_name = config[:file] || '/tmp/counter.log'
+    file_name = Rails.root.to_s + '/' + config[:file]
     contents = ""
     begin
       file = File.open(file_name)

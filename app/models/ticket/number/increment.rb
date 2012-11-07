@@ -8,7 +8,7 @@ module Ticket::Number::Increment
 
     # read counter
     min_digs  = config[:min_size] || 4;
-    file_name = config[:file] || '/tmp/counter.log'
+    file_name = Rails.root.to_s + '/' + config[:file]
     contents = ""
     begin
       file = File.open( file_name )
