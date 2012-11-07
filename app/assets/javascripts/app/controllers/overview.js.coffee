@@ -26,6 +26,6 @@ class Index extends App.Controller
       },
     )
 
-App.Config.set( 'text_modules', Index, 'Routes' )
-App.Config.set( 'TextModule', { prio: 2300, parent: '#admin', name: 'Text Modules', target: '#text_modules', role: ['Admin'] }, 'NavBar' )
+App.Config.set( 'overviews', Index, 'Routes' )
+App.Config.set( 'Overview', { prio: 2300, parent: '#admin', name: 'Overviews', target: '#overviews', role: ['Admin'] }, 'NavBar' )
 
