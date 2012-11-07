@@ -10,6 +10,7 @@ class UserTest < ActiveSupport::TestCase
           :lastname      => 'Lastname',
           :email         => 'some@example.com',
           :login         => 'some@example.com',
+          :updated_by_id => 1,
           :created_by_id => 1,
         },
         :create_verify => {
@@ -25,6 +26,7 @@ class UserTest < ActiveSupport::TestCase
           :lastname      => '',
           :email         => 'some@example.com',
           :login         => 'some@example.com',
+          :updated_by_id => 1,
           :created_by_id => 1,
         },
         :create_verify => {
@@ -40,6 +42,7 @@ class UserTest < ActiveSupport::TestCase
           :lastname      => nil,
           :email         => 'some@example.com',
           :login         => 'some@example.com',
+          :updated_by_id => 1,
           :created_by_id => 1,
         },
         :create_verify => {
@@ -55,6 +58,7 @@ class UserTest < ActiveSupport::TestCase
           :lastname      => '',
           :email         => 'some@example.com',
           :login         => 'some@example.com',
+          :updated_by_id => 1,
           :created_by_id => 1,
         },
         :create_verify => {
@@ -70,6 +74,7 @@ class UserTest < ActiveSupport::TestCase
           :lastname      => '',
           :email         => 'firstname.lastname@example.com',
           :login         => 'login',
+          :updated_by_id => 1,
           :created_by_id => 1,
         },
         :create_verify => {
@@ -85,6 +90,7 @@ class UserTest < ActiveSupport::TestCase
           :lastname      => '',
           :email         => 'FIRSTNAME.lastname@example.com',
           :login         => 'login',
+          :updated_by_id => 1,
           :created_by_id => 1,
         },
         :create_verify => {
@@ -100,6 +106,7 @@ class UserTest < ActiveSupport::TestCase
           :lastname      => nil,
           :email         => 'FIRSTNAME.lastname@example.com',
           :login         => 'login',
+          :updated_by_id => 1,
           :created_by_id => 1,
         },
         :create_verify => {

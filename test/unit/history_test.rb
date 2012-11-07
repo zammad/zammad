@@ -15,9 +15,11 @@ class HistoryTest < ActiveSupport::TestCase
             :title              => 'Unit Test 1 (äöüß)!',
             :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
             :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
-            :created_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id            
+            :updated_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
+            :created_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
           },
           :article => {
+              :updated_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
               :created_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
               :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
               :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
@@ -39,20 +41,20 @@ class HistoryTest < ActiveSupport::TestCase
             :history_type   => 'created',
           },
           {
-            :history_object => 'Ticket',
-            :history_type => 'updated',
+            :history_object    => 'Ticket',
+            :history_type      => 'updated',
             :history_attribute => 'title',
-            :value_from => 'Unit Test 1 (äöüß)!',
-            :value_to   => 'Unit Test 1 (äöüß) - update!',
+            :value_from        => 'Unit Test 1 (äöüß)!',
+            :value_to          => 'Unit Test 1 (äöüß) - update!',
           },
           {
-            :history_object => 'Ticket',
-            :history_type => 'updated',
+            :history_object    => 'Ticket',
+            :history_type      => 'updated',
             :history_attribute => 'ticket_state',
-            :value_from => 'new',
-            :value_to   => 'open',
-            :id_from => Ticket::State.where( :name => 'new' ).first.id,
-            :id_to   => Ticket::State.where( :name => 'open' ).first.id,
+            :value_from        => 'new',
+            :value_to          => 'open',
+            :id_from           => Ticket::State.where( :name => 'new' ).first.id,
+            :id_to             => Ticket::State.where( :name => 'open' ).first.id,
           },
           {
             :history_object => 'Ticket::Article',
@@ -60,7 +62,7 @@ class HistoryTest < ActiveSupport::TestCase
           },
         ]
       },
-      
+
       # test 2
       {
         :ticket_create => {
@@ -71,10 +73,12 @@ class HistoryTest < ActiveSupport::TestCase
             :title              => 'Unit Test 2 (äöüß)!',
             :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
             :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
-            :created_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id            
+            :updated_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
+            :created_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
           },
           :article => {
               :created_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
+              :updated_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
               :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
               :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
               :from                     => 'Unit Test <unittest@example.com>',
@@ -92,23 +96,23 @@ class HistoryTest < ActiveSupport::TestCase
         :history_check => [
           {
             :history_object => 'Ticket',
-            :history_type => 'created',
+            :history_type   => 'created',
           },
           {
-            :history_object => 'Ticket',
-            :history_type => 'updated',
+            :history_object    => 'Ticket',
+            :history_type      => 'updated',
             :history_attribute => 'title',
-            :value_from => 'Unit Test 2 (äöüß)!',
-            :value_to   => 'Unit Test 2 (äöüß) - update!',
+            :value_from        => 'Unit Test 2 (äöüß)!',
+            :value_to          => 'Unit Test 2 (äöüß) - update!',
           },
           {
-            :history_object => 'Ticket',
-            :history_type => 'updated',
+            :history_object    => 'Ticket',
+            :history_type      => 'updated',
             :history_attribute => 'owner',
-            :value_from => '-',
-            :value_to   => 'Nicole Braun',
-            :id_from => User.where( :login => '-' ).first.id,
-            :id_to   => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
+            :value_from        => '-',
+            :value_to          => 'Nicole Braun',
+            :id_from           => User.where( :login => '-' ).first.id,
+            :id_to             => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
           },
           {
             :history_object => 'Ticket::Article',
@@ -128,7 +132,6 @@ class HistoryTest < ActiveSupport::TestCase
         ticket = Ticket.create( test[:ticket_create][:ticket])
         test[:ticket_create][:article][:ticket_id] = ticket.id
         article = Ticket::Article.create( test[:ticket_create][:article] )
-      
 
         assert_equal( ticket.class.to_s, 'Ticket' )
         assert_equal( article.class.to_s, 'Ticket::Article' )
