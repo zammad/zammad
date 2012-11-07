@@ -277,7 +277,8 @@ class Channel::EmailParser
           :password       => '',
           :active         => true,
           :roles          => roles,
-          :created_by_id  => 1 
+          :updated_by_id  => 1,
+          :created_by_id  => 1,
         )
       end
 
@@ -313,6 +314,7 @@ class Channel::EmailParser
           :title              => mail[:subject] || '',
           :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
           :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+          :updated_by_id      => user.id,
           :created_by_id      => user.id,
         }
 
@@ -338,6 +340,7 @@ class Channel::EmailParser
       end
       article_attributes = {
         :created_by_id            => user.id,
+        :updated_by_id            => user.id,
         :ticket_id                => ticket.id, 
         :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
         :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
