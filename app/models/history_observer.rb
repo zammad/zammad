@@ -3,7 +3,7 @@ class HistoryObserver < ActiveRecord::Observer
   observe :ticket, :user, 'ticket::_article'
 
   def after_create(record)
-    puts "HISTORY OBSERVER, object created #{ record.class.name }(#{ record.id })"
+    puts "HISTORY OBSERVER, object created #{ record.class.name }.find(#{ record.id })"
 #    puts record.inspect
     related_o_id = nil
     related_history_object_id = nil
@@ -30,7 +30,7 @@ class HistoryObserver < ActiveRecord::Observer
       return
     end
   
-    puts "HISTORY OBSERVER object will be updated #{ record.class.name.to_s}(#{ current.id.to_s })"
+    puts "HISTORY OBSERVER, object will be updated #{ record.class.name.to_s}.find(#{ current.id.to_s })"
 #    puts 'current'
 #    puts current.inspect
 #    puts 'record'
