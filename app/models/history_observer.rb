@@ -3,7 +3,7 @@ class HistoryObserver < ActiveRecord::Observer
   observe :ticket, :user, 'ticket::_article'
 
   def after_create(record)
-    puts 'HISTORY OBSERVER, object created !!!!' + record.class.name
+    puts "HISTORY OBSERVER, object created #{ record.class.name }(#{ record.id })"
 #    puts record.inspect
     related_o_id = nil
     related_history_object_id = nil
@@ -22,7 +22,7 @@ class HistoryObserver < ActiveRecord::Observer
   end
 
   def before_update(record)
-    puts 'before_update'
+#    puts 'before_update'
     current = record.class.find(record.id)
 
     # do not send anything if nothing has changed
@@ -30,17 +30,16 @@ class HistoryObserver < ActiveRecord::Observer
       return
     end
   
-    puts 'HISTORY OBSERVER object will be updated!!!!' + record.class.name
+    puts "HISTORY OBSERVER object will be updated #{ record.class.name.to_s}(#{ current.id.to_s })"
 #    puts 'current'
 #    puts current.inspect
 #    puts 'record'
 #    puts record.inspect
-    
+
     diff = differences_from?(current, record)
-    puts 'DIFF'
-    puts diff.inspect
-    puts 'CURRENT O_ID ' + current.id.to_s
-    puts 'CURRENT USER ID ' + current_user_id.to_s
+    puts ' DIFF'
+    puts ' ' + diff.inspect
+    puts ' CURRENT USER ID ' + current_user_id.to_s
 
     map = {
       :group_id => {
@@ -62,12 +61,12 @@ class HistoryObserver < ActiveRecord::Observer
     }
     
     diff.each do |key, value_ids|
-      
+
       # do not log created_at and updated_at attributes
       next if key.to_s == 'created_at'
       next if key.to_s == 'updated_at'
 
-      puts "#{key} is #{value_ids.inspect}"
+      puts " CHANGED: #{key} is #{value_ids.inspect}"
 
       # check if diff are ids, if yes do lookup
       if value_ids[0].to_s == value_ids[1].to_s
@@ -131,7 +130,7 @@ class HistoryObserver < ActiveRecord::Observer
       )
 
     end
-    
+
 #      :name => record.class.name,
 #      :type => 'update',
 #      :data => record
@@ -144,8 +143,8 @@ class HistoryObserver < ActiveRecord::Observer
     one.attributes.each_pair do |key, value|
       if one[key] != other[key]
         h[key.to_sym] = [ one[key], other[key] ]
-      end  
-    end    
+      end
+    end
     h
-  end  
+  end
 end
