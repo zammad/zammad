@@ -386,7 +386,7 @@ class Channel::EmailParser
       end
     end
 
-    # execute ticket events      
+    # execute ticket events
     Ticket::Observer::Notification.transaction
 
     # run postmaster post filter
@@ -407,12 +407,13 @@ class Channel::EmailParser
     # return new objects
     return ticket, article, user
   end
-  
+
   def object_lookup( attributes, map, mail )
     map.each { |item|
       if mail[ item[0].to_sym ]
-        if item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first
-          attributes[ item[2].to_sym ] = item[1].where( "lower(#{item[3]}) = ?", mail[ item[0].to_sym ].downcase ).first.id
+        new_object = item[1].where( "lower(#{item[3]}) = ?", mail[ item[0].to_sym ].downcase ).first
+        if new_object
+          attributes[ item[2].to_sym ] = new_object.id
         end
       end
     }
