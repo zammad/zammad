@@ -18,7 +18,7 @@ class Ticket::Observer::LastContact < ActiveRecord::Observer
         record.ticket.last_contact_agent == nil ||
         record.ticket.last_contact_agent.to_i > record.ticket.last_contact_customer.to_i
         record.ticket.last_contact_customer = Time.now
-        
+
         # set last_contact
         record.ticket.last_contact = Time.now
 
@@ -29,7 +29,7 @@ class Ticket::Observer::LastContact < ActiveRecord::Observer
 
     # if sender is not agent
     if record.ticket_article_sender.name == 'Agent'
-      
+
       # set last_contact_agent
       record.ticket.last_contact_agent = Time.now
 
