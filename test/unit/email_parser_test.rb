@@ -6,7 +6,7 @@ class EmailParserTest < ActiveSupport::TestCase
     files = [
       {
         :data     => IO.read('test/fixtures/mail1.box'),
-        :body_md5 => 'b57d21dcac6b05e1aa67af51a9e4c1ec',
+        :body_md5 => 'd62c8530fc8fd35bcff0b599db95a170',
         :params   => {
           :from               => 'John.Smith@example.com',
           :from_email         => 'John.Smith@example.com',
@@ -141,7 +141,7 @@ Managing Director: Martin Edenhofer
         :attachments  => [
           {
             :md5      => '635e03d2ddde520b925262c8ffd03234',
-            :filename => 'message.html',            
+            :filename => 'message.html',
           },
         ],
         :params   => {
