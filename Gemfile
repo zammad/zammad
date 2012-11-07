@@ -22,10 +22,10 @@ gem 'jquery-rails'
 # Optional support for eco templates
 gem 'eco'
 
-gem 'omniauth'  
-gem 'omniauth-twitter'  
-gem 'omniauth-facebook'  
-gem 'omniauth-linkedin'  
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 
 gem 'twitter'
