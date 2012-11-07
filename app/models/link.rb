@@ -10,7 +10,7 @@ class Link < ActiveRecord::Base
 
 =begin
 
-  Link.list(
+  links = Link.list(
     :link_object       => 'Ticket',
     :link_object_value => 1
   )

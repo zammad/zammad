@@ -45,12 +45,12 @@ class Ticket < ApplicationModel
   end
 
   def merge_to(data)
-    
+
     # update articles
     Ticket::Article.where( :ticket_id => self.id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
-    
+
     # update history
-    
+
     # create new merge article
     Ticket::Article.create(
       :created_by_id            => data[:created_by_id],

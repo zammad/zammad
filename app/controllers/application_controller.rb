@@ -171,25 +171,7 @@ class ApplicationController < ActionController::Base
   end
 
   def log_view (object)
-    history_type = History::Type.where( :name => 'viewed' ).first
-    if !history_type || !history_type.id
-      history_type = History::Type.create(
-        :name   => 'viewed'
-      )
-    end
-    history_object = History::Object.where( :name => object.class.name ).first
-    if !history_object || !history_object.id
-      history_object = History::Object.create(
-        :name   => object.class.name
-      )
-    end
-
-    History.create(
-      :o_id                        => object.id,
-      :history_type_id             => history_type.id,
-      :history_object_id           => history_object.id,
-      :created_by_id               => current_user.id
-    )
+    History.log_view( object, current_user )
   end
 
   def config_frontend
