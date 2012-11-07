@@ -412,7 +412,7 @@ class Channel::EmailParser
     map.each { |item|
       if mail[ item[0].to_sym ]
         if item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first
-          attributes[ item[2].to_sym ] = item[1].where( item[3].to_sym => mail[ item[0].to_sym ] ).first.id
+          attributes[ item[2].to_sym ] = item[1].where( "lower(#{item[3]}) = ?", mail[ item[0].to_sym ].downcase ).first.id
         end
       end
     }
