@@ -169,7 +169,6 @@ form {
 }
 
 footer {
-//  margin-top: 17px;
   padding-top: 17px;
   border-top: 1px solid #EEE;
 }
@@ -185,6 +184,18 @@ footer {
 .keepright {
   float: right;
 }
+
+.can-move {
+  cursor: move;
+}
+
+.can-move-plcaeholder {
+    border: 1px dashed #DDD;
+    background: #EEE;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 
 .ticket-answer .avatar {
   margin-left: 10px;

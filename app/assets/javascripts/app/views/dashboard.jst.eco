@@ -13,9 +13,9 @@
       </div>
     </div>
 -->
-    <div class="main-overviews"></div>
+    <div class="main-overviews" id="sortable"></div>
   </div>
   <div class="span3">
-    <div class="side-overviews"></div>
+    <div class="side-overviews" id="sortable-sidebar"></div>
   </div>
 </div>

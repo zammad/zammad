@@ -80,6 +80,15 @@ class Index extends App.Controller
           params.el = @el.find( '#' + target )
           new plugin.controller( params )
 
+    dndOptions =
+      placeholder:          'can-move-plcaeholder'
+      tolerance:            'pointer'
+      distance:             15
+      opacity:              0.6
+      forcePlaceholderSize: true
+
+    @el.find( '#sortable' ).sortable( dndOptions )
+    @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
 App.Config.set( '', Index, 'Routes' )
 App.Config.set( '/', Index, 'Routes' )
