@@ -61,3 +61,6 @@ gem 'mysql2'
 # event machine
 gem 'eventmachine'
 gem 'em-websocket'
+
+# code coverage
+gem 'simplecov'
