@@ -64,3 +64,4 @@ gem 'em-websocket'
 
 # code coverage
 gem 'simplecov'
+gem 'simplecov-rcov'
