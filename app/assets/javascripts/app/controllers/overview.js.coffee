@@ -10,18 +10,18 @@ class Index extends App.Controller
     new App.ControllerGenericIndex(
       el: @el,
       id: @id,
-      genericObject: 'TextModule',
+      genericObject: 'Overview',
       pageData: {
-        title: 'TextModules',
-        home: 'text_modules',
-        object: 'TextModule',
-        objects: 'TextModules',
-        navupdate: '#text_modules',
+        title: 'Overviews',
+        home: 'overviews',
+        object: 'Overview',
+        objects: 'Overviews',
+        navupdate: '#overviews',
         notes: [
-          'TextModules are ...'
+          'Overview are ...'
         ],
         buttons: [
-          { name: 'New TextModule', 'data-type': 'new', class: 'primary' },
+          { name: 'New Overview', 'data-type': 'new', class: 'primary' },
         ],
       },
     )

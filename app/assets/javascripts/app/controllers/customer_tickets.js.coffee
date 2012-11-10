@@ -28,4 +28,4 @@ class Index extends App.Controller
 
 App.Config.set( 'customer_tickets', Index, 'Routes' )
 
-App.Config.set( 'CustomerTickets', { prio: 1700, parent: '', name: 'My Tickets', target: '#ticket_view/my_tickets', role: ['Customer'] }, 'NavBar' )
+#App.Config.set( 'CustomerTickets', { prio: 1700, parent: '', name: 'My Tickets', target: '#ticket_view/my_tickets', role: ['Customer'] }, 'NavBar' )

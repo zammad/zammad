@@ -62,7 +62,7 @@ class App.Navigation extends App.Controller
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)
-    
+
     level1 = []
     dropdown = {}
 
@@ -75,17 +75,19 @@ class App.Navigation extends App.Controller
           item[key] = value
       if !item.parent
         match = 0
-        if !roles
+        if !item.role
+          match = 1
+        if !roles && item.role
           match = _.include( item.role, 'Anybody' )
         if roles
           roles.forEach( (role) =>
             if !match
               match = _.include(item.role, role.name)
           )
-          
+
         if match
           level1.push item
-            
+
     for item in navbar
       if item.parent && !dropdown[ item.parent ]
         dropdown[ item.parent ] = []
@@ -94,23 +96,25 @@ class App.Navigation extends App.Controller
         for itemSub in navbar
           if itemSub.parent is item.parent
             match = 0
+            if !itemSub.role
+              match = 1
             if !roles
               match = _.include( itemSub.role, 'Anybody' )
             if roles
               roles.forEach( (role) =>
                 if !match
-                  match = _.include(itemSub.role, role.name)
+                  match = _.include( itemSub.role, role.name )
               )
-              
+
             if match
               dropdown[ item.parent ].push itemSub
 
         # find parent
         for itemLevel1 in level1
           if itemLevel1.target is item.parent
-            sub = @getOrder(dropdown[ item.parent ])
+            sub = @getOrder( dropdown[ item.parent ] )
             itemLevel1.child = sub
-            
+
     nav = @getOrder(level1)
     return nav
 
@@ -131,16 +135,16 @@ class App.Navigation extends App.Controller
     for num in inorder
       inordervalue.push newlist[ num ]
     return inordervalue
-  
+
   sortit: (a,b) ->  
     return(a-b)
-    
+
   addPrioCount: (newlist, item) ->
      if newlist[ item['prio'] ]
         item['prio']++
         if newlist[ item['prio'] ]
           @addPrioCount newlist, item
-    
+
   update: (url) =>
     @el.find('li').removeClass('active')
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
@@ -163,7 +167,7 @@ class App.Navigation extends App.Controller
         name:   item.name,
         count:  item.count,
         target: '#ticket_view/' + item.url,
-        role:   ['Agent'],
+#        role:   ['Agent', 'Customer'],
       }
 
     @Config.set( 'NavBar', NavBar )
@@ -203,7 +207,7 @@ class App.Navigation extends App.Controller
         parent:    '#current_user',
         name:      item.history_object.name + ' (' + ticket.title + ')',
         target:    '#ticket/zoom/' + ticket.id,
-        role:      ['Agent'],
+#        role:      ['Agent', 'Customer'],
         divider:   divider,
         navheader: navheader
       }

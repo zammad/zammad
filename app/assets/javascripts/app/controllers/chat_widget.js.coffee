@@ -18,10 +18,20 @@ class App.ChatWidget extends App.Controller
         @messageLog = []
         @el.html('')
       else
+        if !@access()
+          @messageLog = []
+          @el.html('')
+          return
         @start()
 
-    if !_.isEmpty( @Session.all() )
+    if @access()
       @start()
+
+  access: ->
+    return false if _.isEmpty( @Session.all() )
+    return true if @isRole('Agent')
+    return true if @isRole('Admin')
+    return false
 
   start: =>
     @focus      = false

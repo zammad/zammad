@@ -21,6 +21,7 @@ class TicketsController < ApplicationController
   # POST /tickets
   def create
     @ticket = Ticket.new(params[:ticket])
+    @ticket.updated_by_id = current_user.id
     @ticket.created_by_id = current_user.id
 
     # check if article is given
@@ -39,6 +40,7 @@ class TicketsController < ApplicationController
     if params[:article]
       @article = Ticket::Article.new(params[:article])
       @article.created_by_id = params[:article][:created_by_id] || current_user.id
+      @article.updated_by_id = params[:article][:updated_by_id] || current_user.id
       @article.ticket_id     = @ticket.id
 
       # find attachments in upload cache

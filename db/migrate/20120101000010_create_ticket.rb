@@ -148,14 +148,15 @@ class CreateTicket < ActiveRecord::Migration
     create_table :overviews do |t|
       t.references :user,                                      :null => true
       t.references :role,                                      :null => false
-      t.column :name,                :string,  :limit => 250,  :null => false
-      t.column :meta,                :string,  :limit => 1000, :null => false
-      t.column :condition,           :string,  :limit => 2500, :null => false
-      t.column :order,               :string,  :limit => 2500, :null => false
-      t.column :group_by,            :string,  :limit => 250,  :null => true
-      t.column :view,                :string,  :limit => 1000, :null => false
-      t.column :updated_by_id,       :integer,                 :null => false
-      t.column :created_by_id,       :integer,                 :null => false
+      t.column :name,                 :string,  :limit => 250,  :null => false
+      t.column :meta,                 :string,  :limit => 1000, :null => false
+      t.column :condition,            :string,  :limit => 2500, :null => false
+      t.column :order,                :string,  :limit => 2500, :null => false
+      t.column :group_by,             :string,  :limit => 250,  :null => true
+      t.column :view,                 :string,  :limit => 1000, :null => false
+      t.column :active,               :boolean,                 :null => false, :default => true
+      t.column :updated_by_id,        :integer,                 :null => false
+      t.column :created_by_id,        :integer,                 :null => false
       t.timestamps
     end
     add_index :overviews, [:user_id]

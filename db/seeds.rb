@@ -1429,7 +1429,7 @@ Overview.create(
 
 overview_role = Role.where( :name => 'Customer' ).first
 Overview.create(
-  :name      => 'My Tickets',
+  :name      => 'my_tickets',
   :role_id   => overview_role.id,
   :condition => {
     :customer_id => 'current_user.id',
