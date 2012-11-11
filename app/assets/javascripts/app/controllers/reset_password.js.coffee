@@ -4,9 +4,9 @@ class Index extends App.Controller
   className: 'container'
 
   events:
-    'submit form': 'submit',
-    'click .submit': 'submit',
-    'click .retry': 'rerender',
+    'submit form': 'submit'
+    'click .submit': 'submit'
+    'click .retry': 'rerender'
 
   constructor: ->
     super
@@ -25,9 +25,9 @@ class Index extends App.Controller
     @html App.view('reset_password')()
 
     new App.ControllerForm(
-      el: @el.find('#form-password'),
-      model: { configure_attributes: configure_attributes },
-      autofocus: true,
+      el:        @el.find('#form-password')
+      model:     { configure_attributes: configure_attributes }
+      autofocus: true
     )
 
   rerender: (e) ->
@@ -40,26 +40,26 @@ class Index extends App.Controller
 
     # get data
     App.Com.ajax(
-      id:   'password_reset',
-      type: 'POST',
-      url:  '/api/users/password_reset',
-      data: JSON.stringify(params),
-      processData: true,
-      success: @success,
-      error: @error,
+      id:   'password_reset'
+      type: 'POST'
+      url:  '/api/users/password_reset'
+      data: JSON.stringify(params)
+      processData: true
+      success: @success
+      error:   @error
     )
-  
+
   success: (data, status, xhr) =>
     @html App.view('generic/hero_message')(
-      head:    'We\'ve sent password reset instructions to your email address',
+      head:    'We\'ve sent password reset instructions to your email address'
       message: 'If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try <a href="#" class="retry">resending your request</a>.'
-    );
+    )
 
   error: (data, status, xhr) =>
     @html App.view('generic/hero_message')(
-      head:    'Problem',
+      head:    'Problem'
       message: 'Username or email address invalid, please go back and try <a href="#" class="retry">again</a>.'
-    );
+    )
 
 App.Config.set( 'reset_password', Index, 'Routes' )
 
@@ -67,8 +67,8 @@ class Verify extends App.Controller
   className: 'container'
 
   events:
-    'submit form': 'submit',
-    'click .submit': 'submit',
+    'submit form': 'submit'
+    'click .submit': 'submit'
 
   constructor: ->
     super
@@ -81,11 +81,11 @@ class Verify extends App.Controller
     params = {}
     params['token'] = @token
     App.Com.ajax(
-      id:   'password_reset_verify',
-      type: 'POST',
-      url:  '/api/users/password_reset_verify',
-      data: JSON.stringify(params),
-      processData: true,
+      id:   'password_reset_verify'
+      type: 'POST'
+      url:  '/api/users/password_reset_verify'
+      data: JSON.stringify(params)
+      processData: true
       success: @render_success
       error:   @render_failed
     )
@@ -98,16 +98,16 @@ class Verify extends App.Controller
     @html App.view('reset_password_change')()
 
     new App.ControllerForm(
-      el: @el.find('#form-password-change'),
-      model: { configure_attributes: configure_attributes },
-      autofocus: true,
+      el:        @el.find('#form-password-change')
+      model:     { configure_attributes: configure_attributes }
+      autofocus: true
     )
 
   render_failed: ->
     @html App.view('generic/hero_message')(
-      head:    'Failed!',
+      head:    'Failed!'
       message: 'Token is not valid!'
-    );
+    )
 
   submit: (e) ->
     e.preventDefault()
@@ -116,25 +116,25 @@ class Verify extends App.Controller
 
     # get data
     App.Com.ajax(
-      id:   'password_reset_verify',
-      type: 'POST',
-      url:  '/api/users/password_reset_verify',
-      data: JSON.stringify(params),
-      processData: true,
+      id:   'password_reset_verify'
+      type: 'POST'
+      url:  '/api/users/password_reset_verify'
+      data: JSON.stringify(params)
+      processData: true
       success: @render_changed_success
       error:   @render_changed_failed
     )
 
   render_changed_success: (data, status, xhr) =>
     @html App.view('generic/hero_message')(
-      head:    'Woo hoo! Your password has been changed!',
-      message: 'Please try to login!',
-    );
+      head:    'Woo hoo! Your password has been changed!'
+      message: 'Please try to login!'
+    )
 
-  render_changed_failed: ->
+  render_changed_failed: =>
     @html App.view('generic/hero_message')(
-      head:    'Failed!',
-      message: 'Ask your admin!',
-    );
+      head:    'Failed!'
+      message: 'Ask your admin!'
+    )
 
 App.Config.set( 'password_reset_verify/:token', Verify, 'Routes' )
