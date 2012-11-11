@@ -90,7 +90,7 @@ class Verify extends App.Controller
       error:   @render_failed
     )
 
-  render_success: ->
+  render_success: =>
    configure_attributes = [
       { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input span4',  },
     ]
@@ -103,7 +103,7 @@ class Verify extends App.Controller
       autofocus: true
     )
 
-  render_failed: ->
+  render_failed: =>
     @html App.view('generic/hero_message')(
       head:    'Failed!'
       message: 'Token is not valid!'
