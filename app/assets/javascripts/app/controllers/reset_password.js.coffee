@@ -65,14 +65,14 @@ App.Config.set( 'reset_password', Index, 'Routes' )
 
 class Verify extends App.Controller
   className: 'container'
-  
+
   events:
     'submit form': 'submit',
     'click .submit': 'submit',
 
   constructor: ->
     super
-    
+
     # set title
     @title 'Reset Password'
     @navupdate '#reset_password_verify'
@@ -137,4 +137,4 @@ class Verify extends App.Controller
       message: 'Ask your admin!',
     );
 
-App.Config.set( 'reset_password_verify/:token', Verify, 'Routes' )
+App.Config.set( 'password_reset_verify/:token', Verify, 'Routes' )
