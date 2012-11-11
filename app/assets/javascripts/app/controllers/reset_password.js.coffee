@@ -81,7 +81,7 @@ class Verify extends App.Controller
     params = {}
     params['token'] = @token
     App.Com.ajax(
-      id:   'passwort_reset_verify',
+      id:   'password_reset_verify',
       type: 'POST',
       url:  '/api/users/password_reset_verify',
       data: JSON.stringify(params),
