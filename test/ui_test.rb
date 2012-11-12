@@ -22,6 +22,7 @@ class ExampleTest < Test::Unit::TestCase
     end
 
     def test_login_failed
+       puts "Page title is #{browser.title}"
        element_username = browser.find_element :name => "username"
        element_username.send_keys "roy@kaldung.de"
        element_password = browser.find_element :name => "password"
@@ -32,6 +33,7 @@ class ExampleTest < Test::Unit::TestCase
     end
 
     def test_login_passed
+       puts "Page title is #{browser.title}"
        element_username = browser.find_element :name => "username"
        element_username.send_keys "roy@kaldung.com"
        element_password = browser.find_element :name => "password"
@@ -42,9 +44,9 @@ class ExampleTest < Test::Unit::TestCase
     end
 
     def test_page_search
-	browser.get "http://www.google.com"
-        puts "Page title is #{browser.title}"
-        assert_equal "Google", browser.title
+       browser.get "http://www.google.com"
+       puts "Page title is #{browser.title}"
+       assert_equal "Google", browser.title
     end
 end
 
