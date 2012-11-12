@@ -135,11 +135,11 @@ class Index extends App.Controller
 
     # set prio
     priority = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' )
-    params.ticket_state_id = priority.id
+    params.ticket_priority_id = priority.id
 
     # set state
     state = App.Collection.findByAttribute( 'TicketState', 'name', 'new' )
-    params.ticket_priority_id = state.id
+    params.ticket_state_id = state.id
 
     # fillup params
     if !params.title
