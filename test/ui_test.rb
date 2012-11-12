@@ -28,8 +28,7 @@ class ExampleTest < Test::Unit::TestCase
        element_username.send_keys "roy@kaldung.de"
        element_password = browser.find_element :name => "password"
        element_password.send_keys "123456"
-       element_form = browser.find_element :id => "login"
-       element_form.submit
+       element_password.submit
        assert_equal browser.current_url, "https://portal.znuny.com/#login"
     end
 
@@ -40,8 +39,7 @@ class ExampleTest < Test::Unit::TestCase
        element_username.send_keys "roy@kaldung.com"
        element_password = browser.find_element :name => "password"
        element_password.send_keys "090504"
-       element_form = browser.find_element :id => "login"
-       element_form.submit
+       element_password.submit
        assert_equal browser.current_url, "https://portal.znuny.com/#ticket_view/my_tickets"
     end
 end
