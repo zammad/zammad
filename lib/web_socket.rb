@@ -224,7 +224,7 @@ class UserState
 
     self.fetch
   end
-  
+
   def fetch
     user = User.find( @user_id )
     return if !user
@@ -350,7 +350,7 @@ class UserState
         push_collection.each { | key, value |
           collections[ key ] = true
         }
-        CacheIn.set( cache_key, collections )
+        CacheIn.set( cache_key, collections, { :expires_in => 2.minutes } )
       end
 
       # check all collections to push
@@ -392,9 +392,9 @@ class ClientState
     self.fetch
     self.log 'notify', "---client exiting ws connection---"
   end
-  
+
   def fetch
-    
+
     loop_count = 0
     while true
 
