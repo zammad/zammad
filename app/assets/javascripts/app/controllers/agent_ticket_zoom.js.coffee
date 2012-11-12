@@ -337,6 +337,8 @@ class Index extends App.Controller
     title = $this.html()
     title = ('' + title)
       .replace(/<.+?>/g, '')
+    title = ('' + title)
+      .replace(/&nbsp;/g, ' ')
     if title is '-'
       title = ''
     @ticket.title = title
