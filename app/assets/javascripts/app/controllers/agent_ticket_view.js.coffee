@@ -95,7 +95,8 @@ class Index extends App.Controller
     pages_total =  parseInt( ( @tickets_count / @overview.view[@view_mode].per_page ) + 0.99999 ) || 1
 
     # render init page
-    edit = true
+    checkbox = true
+    edit     = true
     if @isRole('Customer')
       checkbox = false
       edit     = false
