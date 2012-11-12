@@ -21,7 +21,8 @@ class App.i18n
       _instance ?= new _Singleton
     _instance.timestamp( args )
 
-class _Singleton
+class _Singleton extends Spine.Module
+  @include App.Log
 
   constructor: ->
     @locale = 'de'
@@ -133,6 +134,8 @@ class _Singleton
 
     # escape
     translated = @escape(translated)
+
+    @log 'i18n', 'debug', 'translate', string, args, translated
 
     # return translated string
     return translated

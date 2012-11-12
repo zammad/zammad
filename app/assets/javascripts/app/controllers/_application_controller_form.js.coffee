@@ -155,6 +155,9 @@ class App.ControllerForm extends App.Controller
     # finde selected/checked item of list
     @_selectedOptions( attribute )
 
+    # filter attributes
+    @_filterOption( attribute )
+
     if attribute.tag is 'boolean'
 
       # build options list
@@ -459,7 +462,7 @@ class App.ControllerForm extends App.Controller
         App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-function'
 
         all = App[attribute.relation].all()
-        list = attribute.filter( all )
+        list = attribute.filter( all, 'collection' )
 
       # data based filter
       else if attribute.filter[ attribute.name ]
@@ -511,6 +514,15 @@ class App.ControllerForm extends App.Controller
         }
     )
 
+  # execute filter
+  _filterOption: (attribute) ->
+    return if !attribute.filter
+    return if !attribute.options
+
+    return if typeof attribute.filter isnt 'function'
+    App.Log.log 'ControllerForm', 'debug', '_filterOption:filter-function'
+
+    attribute.options = attribute.filter( attribute.options, attribute )
 
   # set selected attributes
   _selectedOptions: (attribute) ->

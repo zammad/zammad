@@ -8,12 +8,14 @@ module ExtraCollection
     collections['TicketArticleType']   = Ticket::Article::Type.all
     collections['TicketArticleSender'] = Ticket::Article::Sender.all
 
-    # all signatures
-    collections['Signature']           = Signature.all
-
-    # all email addresses
-    collections['EmailAddress']        = EmailAddress.all
-
+    if !user.is_role('Customer')
+  
+      # all signatures
+      collections['Signature']           = Signature.all
+  
+      # all email addresses
+      collections['EmailAddress']        = EmailAddress.all
+    end
   end
   def push( collections, user )
 
@@ -24,18 +26,20 @@ module ExtraCollection
     collections['TicketArticleType']   = Ticket::Article::Type.all
     collections['TicketArticleSender'] = Ticket::Article::Sender.all
 
-    # all signatures
-    collections['Signature']           = Signature.all
+    if !user.is_role('Customer')
 
-    # all email addresses
-    collections['EmailAddress']        = EmailAddress.all
-
-    # all templates
-    collections['Template']            = Template.all
-
-    # all text modules
-    collections['TextModule']          = TextModule.all
-
+      # all signatures
+      collections['Signature']           = Signature.all
+  
+      # all email addresses
+      collections['EmailAddress']        = EmailAddress.all
+  
+      # all templates
+      collections['Template']            = Template.all
+  
+      # all text modules
+      collections['TextModule']          = TextModule.all
+    end
   end
 
   module_function :session, :push

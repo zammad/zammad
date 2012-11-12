@@ -18,12 +18,11 @@ class SessionsController < ApplicationController
     # remember last login date
     user.update_last_login()
 
-    user = User.find_fulldata(user.id)
-
     # auto population of default collections
     default_collection = SessionHelper::default_collections(user)
-    
+
     # set session user_id
+    user = User.find_fulldata(user.id)
     session[:user_id] = user['id']
 
     # check logon session
@@ -82,7 +81,7 @@ class SessionsController < ApplicationController
     user = User.user_data_full( user_id )
 
     # auto population of default collections
-    default_collection = SessionHelper::default_collections(user)
+    default_collection = SessionHelper::default_collections( User.find(user_id) )
 
     # return current session
     render :json => {

@@ -163,6 +163,11 @@ class ApplicationController < ActionController::Base
   def ticket_permission(ticket)
     return true if ticket.permission( :current_user => current_user )
 
+    response_access_deny
+    return false
+  end
+
+  def response_access_deny
     render(
       :json => {},
       :status => :unauthorized
@@ -197,11 +202,14 @@ class ApplicationController < ActionController::Base
 
       # save object
       generic_object.save
-      render :json => generic_object, :status => :created
+      model_create_render_item(generic_object)
     rescue Exception => e
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
+  end
+  def model_create_render_item (generic_object)
+    render :json => generic_object, :status => :created
   end
 
   def model_update_render (object, params)
@@ -215,42 +223,54 @@ class ApplicationController < ActionController::Base
 
       # save object
       generic_object.update_attributes( object.param_cleanup(params) )
-      render :json => generic_object, :status => :ok
+      model_update_render_item(generic_object)
     rescue Exception => e  
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
+  end
+  def model_update_render_item (generic_object)
+    render :json => generic_object, :status => :ok
   end
 
   def model_destory_render (object, params)
     begin
       generic_object = object.find( params[:id] )
       generic_object.destroy
-      render :json => {}, :status => :ok
+      model_destory_render_item()
     rescue Exception => e
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
+  end
+  def model_destory_render_item ()
+    render :json => {}, :status => :ok
   end
 
   def model_show_render (object, params)
     begin
       generic_object = object.find( params[:id] )
-      render :json => generic_object, :status => :ok
+      model_show_render_item(generic_object)
     rescue Exception => e
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
+  def model_show_render_item (generic_object)
+    render :json => generic_object, :status => :ok
+  end
 
   def model_index_render (object, params)
     begin
       generic_object = object.all
-      render :json => generic_object, :status => :ok
+      model_index_render_result( generic_object )
     rescue Exception => e
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
+  end
+  def model_index_render_result (generic_objects)
+    render :json => generic_objects, :status => :ok
   end
 
 end

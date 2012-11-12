@@ -1,6 +1,6 @@
 <form class="form-horizontal">
   <div class="modal-header">
-    <a href="#" class="close" title="<%- @T( 'close' ) -%>">&times;</a>
+    <a href="#" class="close" title="<%- @Ti( 'close' ) %>">&times;</a>
     <h2><%- @T( 'Edit' ) %>: <%- @T( @head ) %></h2>
   </div>
   <div class="modal-body" id="object_edit"></div>
