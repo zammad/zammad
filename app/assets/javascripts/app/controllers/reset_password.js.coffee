@@ -4,9 +4,9 @@ class Index extends App.Controller
   className: 'container'
 
   events:
-    'submit form': 'submit'
+    'submit form':   'submit'
     'click .submit': 'submit'
-    'click .retry': 'rerender'
+    'click .retry':  'rerender'
 
   constructor: ->
     super
@@ -17,26 +17,27 @@ class Index extends App.Controller
 
     @render()
 
-  render: ->
+  render: (params) ->
    configure_attributes = [
-      { name: 'username', display: 'Enter your username or email address:', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4',  },
+      { name: 'username', display: 'Enter your username or email address', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4',  },
     ]
 
-    @html App.view('reset_password')()
+    @html App.view('reset_password')(params)
 
-    new App.ControllerForm(
-      el:        @el.find('#form-password')
+    @form = new App.ControllerForm(
+      el:        @el.find('#form-password-item')
       model:     { configure_attributes: configure_attributes }
       autofocus: true
     )
 
   rerender: (e) ->
     e.preventDefault()
-    @render()
+    @el.find('#form-password').show()
 
   submit: (e) ->
     e.preventDefault()
     params = @formParam(e.target)
+    @formDisable(e)
 
     # get data
     App.Com.ajax(
@@ -50,16 +51,15 @@ class Index extends App.Controller
     )
 
   success: (data, status, xhr) =>
-    @html App.view('generic/hero_message')(
-      head:    'We\'ve sent password reset instructions to your email address'
-      message: 'If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try <a href="#" class="retry">resending your request</a>.'
-    )
+    @render( sent: true )
+    @el.find('#form-password').hide()
 
   error: (data, status, xhr) =>
-    @html App.view('generic/hero_message')(
-      head:    'Problem'
-      message: 'Username or email address invalid, please go back and try <a href="#" class="retry">again</a>.'
+    @notify(
+      type: 'error'
+      msg:  App.i18n.translateContent( 'Username or email address invalid, please try again.' )
     )
+    @formEnable( @el.find('#form-password') )
 
 App.Config.set( 'reset_password', Index, 'Routes' )
 
