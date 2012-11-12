@@ -16,6 +16,11 @@ class ExampleTest < Test::Unit::TestCase
         browser.quit
     end
 
+    def test_first_page
+        browser.get "http://portal.znuny.com/"
+        puts browser.url
+    end
+
     def test_page_search
 	browser.get "http://www.google.com"
         puts "Page title is #{browser.title}"
