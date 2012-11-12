@@ -103,6 +103,9 @@ class _Singleton extends Spine.Module
           @load( data )
 
   reset: (params) ->
+    if !App[ params.type ]
+      @log 'Collection', 'error', 'reset', 'no such collection', params
+      return
     @log 'Collection', 'debug', 'reset', params
 
     # empty in-memory
@@ -252,10 +255,18 @@ class _Singleton extends Spine.Module
       return data
 
   get: (params) ->
+    if !App[ params.type ]
+      @log 'Collection', 'error', 'get', 'no such collection', params
+      return
+
     @log 'Collection', 'debug', 'get', params
     App[ params.type ].refresh( object, options: { clear: true } )
 
   all: (params) ->
+    if !App[ params.type ]
+      @log 'Collection', 'error', 'all', 'no such collection', params
+      return
+
     all = App[ params.type ].all()
     all_complied = []
     for item in all
@@ -280,12 +291,25 @@ class _Singleton extends Spine.Module
     App[type].deleteAll()
 
   findByAttribute: ( type, key, value ) ->
-    App[type].findByAttribute( key, value )
+    if !App[type]
+      @log 'Collection', 'error', 'findByAttribute', 'no such collection', type, key, value
+      return
+    item = App[type].findByAttribute( key, value )
+    if !item
+      @log 'Collection', 'error', 'findByAttribute', 'no such item in collection', type, key, value
+      return
+    item
 
   count: ( type ) ->
+    if !App[type]
+      @log 'Collection', 'error', 'count', 'no such collection', type, key, value
+      return
     App[type].count()
 
   fetch: ( type ) ->
+    if !App[type]
+      @log 'Collection', 'error', 'fetch', 'no such collection', type, key, value
+      return
     App[type].fetch()
 
   _sortBy: ( collection, attribute ) ->
