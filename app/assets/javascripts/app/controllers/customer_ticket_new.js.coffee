@@ -121,7 +121,7 @@ class Index extends App.Controller
     @el.find('textarea').trigger('change')
 
   cancel: ->
-    @render()
+    @navigate '#'
 
   submit: (e) ->
     e.preventDefault()

@@ -151,7 +151,7 @@ class Index extends App.Controller
     new UserNew()
 
   cancel: ->
-    @render()
+    @navigate '#'
 
   submit: (e) ->
     e.preventDefault()
