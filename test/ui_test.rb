@@ -22,6 +22,7 @@ class ExampleTest < Test::Unit::TestCase
     end
 
     def test_login_failed
+       browser.get "http://portal.znuny.com/"
        puts "Page title is #{browser.title}"
        element_username = browser.find_element :name => "username"
        element_username.send_keys "roy@kaldung.de"
@@ -33,6 +34,7 @@ class ExampleTest < Test::Unit::TestCase
     end
 
     def test_login_passed
+       browser.get "http://portal.znuny.com/"
        puts "Page title is #{browser.title}"
        element_username = browser.find_element :name => "username"
        element_username.send_keys "roy@kaldung.com"
@@ -41,12 +43,6 @@ class ExampleTest < Test::Unit::TestCase
        element_form = browser.find_element :id => "login"
        element_form.submit
        assert_equal browser.current_url, "https://portal.znuny.com/#ticket_view/my_tickets"
-    end
-
-    def test_page_search
-       browser.get "http://www.google.com"
-       puts "Page title is #{browser.title}"
-       assert_equal "Google", browser.title
     end
 end
 
