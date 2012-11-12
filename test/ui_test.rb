@@ -2,8 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'test/unit'
-gem 'selenium-client', ">=1.2.8"
-require 'selenium/client'
+require 'selenium-webdriver'
 
 class ExampleTest < Test::Unit::TestCase
     attr_reader :browser
