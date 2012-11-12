@@ -9,7 +9,7 @@ class ExampleTest < Test::Unit::TestCase
     attr_reader :browser
 
     def setup
-      browser = Selenium::WebDriver.for :chrome
+      @browser = Selenium::WebDriver.for :chrome
     end
 
     def teardown
