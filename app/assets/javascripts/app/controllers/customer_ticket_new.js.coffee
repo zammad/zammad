@@ -71,7 +71,7 @@ class Index extends App.Controller
             t.customer_id_autocompletion = a.from
             t.subject = a.subject || t.title
             t.body = a.body
-            @log '11111', t
+            @log 'CustomerTicketCreate', 'notice', 'created', t
           @render( options: t )
       )
 
@@ -128,7 +128,7 @@ class Index extends App.Controller
 
     # get params
     params = @formParam(e.target)
-    @log 'paramssss', params
+    @log 'CustomerTicketCreate', 'notice', 'params', params
 
     # set customer id
     params.customer_id = @Session.get('id')
@@ -147,7 +147,7 @@ class Index extends App.Controller
 
     # create ticket
     object = new App.Ticket
-    @log 'updateAttributes', params
+    @log 'CustomerTicketCreate', 'notice', 'updateAttributes', params
 
     # find sender_id
     sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Customer' )
@@ -174,7 +174,8 @@ class Index extends App.Controller
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      @log 'CustomerTicketCreate', 'error', 'can not create', errors
+
       @formValidate( form: e.target, errors: errors )
 
     # save ticket, create article
@@ -190,7 +191,7 @@ class Index extends App.Controller
           ui.navigate '#ticket/zoom/' + this.id
 
         error: ->
-          ui.log 'save failed!'
+          ui.log 'CustomerTicketCreate', 'error', 'can not create'
           ui.formEnable(e)
       )
 
