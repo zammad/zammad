@@ -204,9 +204,8 @@ class App.Navigation extends App.Controller
       NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
         prio:      prio,
         parent:    '#current_user',
-        name:      item.history_object.name + ' (' + ticket.title + ')',
+        name:      item.history_object + ' (' + ticket.title + ')',
         target:    '#ticket/zoom/' + ticket.id,
-#        role:      ['Agent', 'Customer'],
         divider:   divider,
         navheader: navheader
       }
