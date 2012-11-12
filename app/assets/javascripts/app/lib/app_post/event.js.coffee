@@ -29,7 +29,8 @@ class App.Event
       _instance ?= new _Singleton
     _instance._allBindings()
 
-class _Singleton
+class _Singleton extends Spine.Module
+  @include App.Log
 
   constructor: ->
     @eventCurrent = {}
@@ -59,6 +60,7 @@ class _Singleton
       }
 
       # bind
+      @log 'Event', 'debug', 'bind', event, callback
       Spine.bind( event, callback )
 
   unbind: ( events, callback, level ) ->
@@ -79,11 +81,13 @@ class _Singleton
         else
           return item if item.event isnt event
       )
+      @log 'Event', 'debug', 'unbind', event, callback
       Spine.unbind( event, callback )
 
   trigger: ( events, data ) ->
     eventList = events.split(' ')
     for event in eventList
+      @log 'Event', 'debug', 'trigger', event, data
       Spine.trigger event, data
 
   _allBindings: ->

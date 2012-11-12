@@ -111,6 +111,8 @@ class Index extends App.Controller
         class: 'active' if @view_mode is 'm'
       }
     ]
+    if @isRole('Customer')
+      view_modes = []
     html = App.view('agent_ticket_view')(
       overview:    @overview
       view_modes:  view_modes

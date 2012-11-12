@@ -13,6 +13,8 @@ class App.ControllerForm extends App.Controller
     @form.html()
 
   formGen: ->
+    App.Log.log 'ControllerForm', 'debug', 'formGen', @model.configure_attributes
+
     fieldset = $('<fieldset>')
 
     for attribute_clean in @model.configure_attributes
@@ -135,6 +137,9 @@ class App.ControllerForm extends App.Controller
       else
         attribute.value = ''
 
+    App.Log.log 'ControllerForm', 'debug', 'formGenItem-before', attribute
+
+
     # build options list based on config
     @_getConfigOptionList( attribute )
 
@@ -189,7 +194,7 @@ class App.ControllerForm extends App.Controller
       counter = 0
       for key of loopData
         counter =+ 1
-        @log 'kkk', key, loopData[ key ]
+#        @log 'kkk', key, loopData[ key ]
 
         # clone to keep it untouched for next loop
         select = _.clone( attribute )
@@ -309,12 +314,12 @@ class App.ControllerForm extends App.Controller
           }
         )
         ###
-        @log '111111', @local_attribute_full, item
+#        @log '111111', @local_attribute_full, item
         $(@local_attribute_full).autocomplete(
           source: '/api/users/search',
           minLength: 2,
           select: ( event, ui ) =>
-            @log 'selected', event, ui
+#            @log 'selected', event, ui
             b(event, ui.item.id)
         )
       @delay( a, 600 )
@@ -324,7 +329,7 @@ class App.ControllerForm extends App.Controller
       item = $( App.view('generic/input')( attribute: attribute ) )
 
     if attribute.onchange
-      @log 'on change', attribute.name
+#      @log 'on change', attribute.name
       if typeof attribute.onchange is 'function'
         attribute.onchange(attribute)
       else
@@ -332,13 +337,13 @@ class App.ControllerForm extends App.Controller
           a = i.split(/__/)
           if a[1]
             if a[0] is attribute.name
-              @log 'aaa', i, a[0], attribute.id
+#              @log 'aaa', i, a[0], attribute.id
               @attribute = attribute
               @classname = classname
               @attributes_clean = attributes_clean
               @change = a
               b = =>
-                console.log 'aaa', @attribute
+#                console.log 'aaa', @attribute
                 attribute = @attribute
                 change = @change
                 classname = @classname
@@ -446,21 +451,42 @@ class App.ControllerForm extends App.Controller
     attribute.options = []
 
     list = []
-    if attribute.filter && attribute.filter[attribute.name]
-      filter = attribute.filter[attribute.name]
+    if attribute.filter
+      App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter', attribute.filter
 
-      # check all records
-      for record in App[attribute.relation].all()
+      # function based filter
+      if typeof attribute.filter is 'function'
+        App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-function'
 
-        # check all filter attributes
-        for key in filter
+        all = App[attribute.relation].all()
+        list = attribute.filter( all )
 
-          # check all filter values as array
-          # if it's matching, use it for selection
-          if record['id'] is key
-            list.push record
+      # data based filter
+      else if attribute.filter[ attribute.name ]
+        filter = attribute.filter[ attribute.name ]
+
+        App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-data', filter
+
+        # check all records
+        for record in App[attribute.relation].all()
+
+          # check all filter attributes
+          for key in filter
+
+            # check all filter values as array
+            # if it's matching, use it for selection
+            if record['id'] is key
+              list.push record
+
+      # no data filter matched
+      else
+        App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-data no filter matched'
+        list = App[attribute.relation].all()
     else
+      App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-no filter defined'
       list = App[attribute.relation].all()
+
+    App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList', attribute, list
 
     # build options list
     @_buildOptionList( list, attribute )
@@ -528,7 +554,7 @@ class App.ControllerForm extends App.Controller
     else if $(form).parents().find('form')[0]
       form = $(form).parents().find('form')
     else
-      console.log 'ERROR, no form found!', form
+      App.Log.log 'ControllerForm', 'error', 'no form found!', form
 
     array = form.serializeArray()
     for key in array
@@ -555,7 +581,7 @@ class App.ControllerForm extends App.Controller
     for key of param
       attributeType = key.split '::'
       name = attributeType[1]
-      console.log 'split', key, attributeType, param[ name ]
+#      console.log 'split', key, attributeType, param[ name ]
       if attributeType[0] is '{input_select}' && !param[ name ]
 
         # array need to be converted
@@ -573,19 +599,19 @@ class App.ControllerForm extends App.Controller
     for key of inputSelectObject
       param[ key ] = inputSelectObject[ key ]
 
-    console.log 'formParam', form, param
+    App.Log.log 'ControllerForm', 'notice', 'formParam', form, param
     return param
 
 
   @disable: (form) ->
-    console.log 'disable...', $(form.target).parent()
+    App.Log.log 'ControllerForm', 'notice', 'disable...', $(form.target).parent()
     $(form.target).parent().find('button').attr('disabled', true)
     $(form.target).parent().find('[type="submit"]').attr('disabled', true)
     $(form.target).parent().find('[type="reset"]').attr('disabled', true)
 
 
   @enable: (form) ->
-    console.log 'enable...', $(form).parent()
+    App.Log.log 'ControllerForm', 'notice', 'enable...', $(form).parent()
     $(form).parent().find('button').attr('disabled', false)
     $(form).parent().find('[type="submit"]').attr('disabled', false)
     $(form).parent().find('[type="reset"]').attr('disabled', false)

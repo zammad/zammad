@@ -24,6 +24,8 @@ class App.WebSocket
 
 # The actual Singleton class
 class _Singleton extends App.Controller
+  @include App.Log
+
   queue: []
   supported:             true
   lastSpoolMessage:      undefined
@@ -74,7 +76,9 @@ class _Singleton extends App.Controller
       action: 'spool'
     if @lastSpoolMessage
       data['timestamp'] = @lastSpoolMessage
-    @log 'spool', data
+
+    @log 'Event', 'debug', 'spool', data
+
     # ask for spool messages
     App.Event.trigger(
       'ws:send'
@@ -92,25 +96,24 @@ class _Singleton extends App.Controller
   ping: =>
     return if !@supported
 
-#    console.log 'send websockend ping'
+    @log 'Event', 'debug', 'send websockend ping'
     @send( { action: 'ping' } )
 
     # check if ping is back within 2 min
     @clearDelay('websocket-ping-check')
     check = =>
-      console.log 'no websockend ping response, reconnect...'
+      @log 'Event', 'notice', 'no websockend ping response, reconnect...'
       @close()
     @delay check, 120000, 'websocket-ping-check'
 
   pong: ->
     return if !@supported
-#    console.log 'received websockend ping'
+    @log 'Event', 'debug', 'received websockend ping'
 
     # test again after 1 min
     @delay @ping, 60000
 
   connect: =>
-#    console.log '------------ws connect....--------------'
 
     if !window.WebSocket
       @error = new App.ErrorModal(
@@ -127,7 +130,7 @@ class _Singleton extends App.Controller
 
     # Set event handlers.
     @ws.onopen = =>
-      console.log( 'onopen' )
+      @log 'Event', 'notice', 'new websocked connection open'
 
       @connectionEstablished = true
 
@@ -141,7 +144,7 @@ class _Singleton extends App.Controller
 
       # empty queue
       for item in @queue
-#        console.log( 'ws:send queue', item )
+        @log 'Event', 'debug', 'empty ws queue', item
         @send(item)
       @queue = []
 
@@ -150,7 +153,7 @@ class _Singleton extends App.Controller
 
     @ws.onmessage = (e) =>
       pipe = JSON.parse( e.data )
-      console.log( 'ws:onmessage', pipe )
+      @log 'Event', 'debug', 'ws:onmessage', pipe
 
       # go through all blocks
       for item in pipe
@@ -161,21 +164,21 @@ class _Singleton extends App.Controller
 
         # fill collection
         if item['collection']
-          console.log( "ws:onmessage collection:" + item['collection'] )
+          @log 'Event', 'debug', "ws:onmessage collection:" + item['collection']
           App.Store.write( item['collection'], item['data'] )
 
         # fire event
         if item['event']
           if typeof item['event'] is 'object'
             for event in item['event']
-              console.log( "ws:onmessage event:" + event )
+              @log 'Event', 'debug', "ws:onmessage event:" + event
               App.Event.trigger( event, item['data'] )
           else
-            console.log( "ws:onmessage event:" + item['event'] )
+            @log 'Event', 'debug', "ws:onmessage event:" + item['event']
             App.Event.trigger( item['event'], item['data'] )
 
     @ws.onclose = (e) =>
-      console.log( 'onclose', e )
+      @log 'Event', 'debug', "ws:onclose", e
 
       # set timestamp to get spool messages later
       if @connectionEstablished
@@ -193,6 +196,6 @@ class _Singleton extends App.Controller
       # try reconnect after 4.5 sec.
       @delay @connect, 4500
 
-    @ws.onerror = ->
-      console.log( 'onerror' )
+    @ws.onerror = (e) =>
+      @log 'Event', 'debug', "ws:onerror", e
 

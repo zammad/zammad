@@ -2,7 +2,6 @@
 class App.Run extends App.Controller
   constructor: ->
     super
-    @log 'RUN app'
     @el = $('#app')
 
     # init collections
@@ -37,12 +36,13 @@ class App.Content extends App.Controller
 
   constructor: ->
     super
-    @log 'RUN content'
 
     Routes = @Config.get( 'Routes' )
     for route, callback of Routes
       do (route, callback) =>
         @route(route, (params) ->
+
+          @log 'Content', 'notice', 'execute page controller', route, params
 
           # remove observers for page
           App.Collection.observeUnbindLevel('page')

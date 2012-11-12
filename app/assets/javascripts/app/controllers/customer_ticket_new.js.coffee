@@ -84,10 +84,18 @@ class Index extends App.Controller
     if !( 'ticket_priority_id' of defaults )
       defaults['ticket_priority_id'] = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' )
 
+    groupFilter = (collection) =>
+      _.filter(
+        collection
+        (item) ->
+          return item if item.name is 'Support'
+          return item if item.name is 'Sales'
+      )
+
     # generate form    
     configure_attributes = [
 #      { name: 'customer_id',        display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @userInfo },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
+      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, filter: groupFilter, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
 #      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
       { name: 'subject',            display: 'Subject',  tag: 'input',    type: 'text', limit: 100, null: false, default: defaults['subject'], class: 'span7', },
       { name: 'body',               display: 'Text',     tag: 'textarea', rows: 10,                  null: false, default: defaults['body'],    class: 'span7', },
@@ -158,17 +166,17 @@ class Index extends App.Controller
       created_by_id:            @Session.get('id'),
     }
 #          console.log('params', params)
-    
+
     object.load(params)
 
     # validate form
     errors = object.validate()
-    
+
     # show errors in form
     if errors
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )
-      
+
     # save ticket, create article
     else 
 

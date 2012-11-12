@@ -3,7 +3,7 @@ $ = jQuery.sub()
 class App.Auth
 
   @login: (params) ->
-    console.log 'login(...)', params
+    App.Log.log 'Auth', 'notice', 'login', params
     App.Com.ajax(
       id:     'login',
       type:   'POST',
@@ -22,14 +22,14 @@ class App.Auth
     )
 
   @loginCheck: ->
-    console.log 'loginCheck(...)'
+    App.Log.log 'Auth', 'notice', 'loginCheck'
     App.Com.ajax(
       id:    'login_check',
       async: false,
       type:  'GET',
       url:   '/signshow',
       success: (data, status, xhr) =>
-        console.log 'logincheck:success', data
+        App.Log.log 'Auth', 'notice', 'logincheck:success', data
 
         # if session is not valid
         if data.error
@@ -72,7 +72,7 @@ class App.Auth
         App.Event.trigger 'ajax:auth', data.session
 
       error: (xhr, statusText, error) =>
-        console.log 'loginCheck:error'#, error, statusText, xhr.statusCode
+        App.Log.log 'Auth', 'notice', 'logincheck:error'
 
         # empty session
         App.Session.init()
@@ -85,7 +85,7 @@ class App.Auth
     )
 
   @logout: ->
-    console.log 'logout(...)'
+    App.Log.log 'Auth', 'notice', 'logout'
     App.Com.ajax(
       id:   'logout',
       type: 'DELETE',

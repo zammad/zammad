@@ -1,4 +1,6 @@
 class App.Controller extends Spine.Controller
+  @include App.Log
+
   constructor: ->
     super
     @Config  = App.Config
@@ -126,7 +128,6 @@ class App.Controller extends Spine.Controller
     )
 
   authenticate: ->
-    console.log 'authenticate', @Session.all()
 
     # return rtue if session exists
     return true if @Session.get( 'id' )

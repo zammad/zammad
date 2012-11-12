@@ -3,7 +3,6 @@ $ = jQuery.sub()
 class App.Navigation extends App.Controller
   constructor: ->
     super
-    @log 'nav...'
     @render()
 
     # update selected item
@@ -12,7 +11,7 @@ class App.Navigation extends App.Controller
 
     # rebuild nav bar with given user data
     App.Event.bind 'ajax:auth', (user) =>
-      @log 'navbar rebuild', user
+      @log 'Navigation', 'notice', 'navbar rebuild', user
 
       if !_.isEmpty( user )
         cache = App.Store.get( 'navupdate_ticket_overview' )

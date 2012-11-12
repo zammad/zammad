@@ -64,7 +64,8 @@ class App.Collection
       _instance ?= new _Singleton
     _instance._observeStats()
 
-class _Singleton
+class _Singleton extends Spine.Module
+  @include App.Log
 
   constructor: (@args) ->
 
@@ -75,7 +76,7 @@ class _Singleton
       if data.collections
         for type of data.collections
 
-          console.log 'loadCollection:trigger', type, data.collections[type]
+          @log 'Collection', 'debug', 'loadCollection:trigger', type, data.collections[type]
           @load( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # add trigger - bind new events
@@ -85,7 +86,7 @@ class _Singleton
       if data.collections
         for type of data.collections
 
-          console.log 'resetCollection:trigger', type, data.collections[type]
+          @log 'Collection', 'debug', 'resetCollection:trigger', type, data.collections[type]
           @reset( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # find collections to load
@@ -98,11 +99,11 @@ class _Singleton
       if parts[0] is 'collection'
         data = App.Store.get( key )
         if data && data.localStorage
-          console.log('load INIT', data)
+          @log 'Collection', 'debug', 'load INIT', data
           @load( data )
 
   reset: (params) ->
-    console.log( 'reset', params )
+    @log 'Collection', 'debug', 'reset', params
 
     # empty in-memory
     App[ params.type ].refresh( [], { clear: true } )
@@ -118,7 +119,7 @@ class _Singleton
     @load(params)
 
   load: (params) ->
-    console.log( 'load', params )
+    @log 'Collection', 'debug', 'load', params
 
     return if _.isEmpty( params.data )
 
@@ -156,9 +157,9 @@ class _Singleton
         callback( data )
     else
       if force
-        console.log( 'find forced to load!', type, id )
+        @log 'Collection', 'debug', 'find forced to load!', type, id
       else
-        console.log( 'find not loaded!', type, id )
+        @log 'Collection', 'debug', 'find not loaded!', type, id
       if callback
 
         # execute callback if record got loaded
@@ -251,7 +252,7 @@ class _Singleton
       return data
 
   get: (params) ->
-    console.log('get')
+    @log 'Collection', 'debug', 'get', params
     App[ params.type ].refresh( object, options: { clear: true } )
 
   all: (params) ->

@@ -20,17 +20,22 @@ class App.Session
       _instance ?= new _Singleton
     _instance.all()
 
-class _Singleton
+class _Singleton extends Spine.Module
+  @include App.Log
+
   constructor: ->
     @clear()
+#    @log = App.LogModule
 
   clear: ->
     @data = {}
 
   get: ( key ) ->
+    @log 'Session', 'debug', key, @data[key]
     return @data[key]
 
   set: ( key, value ) ->
+    @log 'Session', 'debug', 'set', key, value
     @data[key] = value
 
   all: ->
