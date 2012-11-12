@@ -131,6 +131,12 @@ h4 {
 /*
  * 
  */
+.hero-unit p {
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 22px;
+}
+
 .hero-unit .small {
   font-size: 12px;
   line-height: 20px;
