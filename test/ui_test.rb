@@ -9,21 +9,15 @@ class ExampleTest < Test::Unit::TestCase
     attr_reader :browser
 
     def setup
-      @browser = Selenium::Client::Driver.new \
-          :host => "localhost",
-          :port => 4444,
-          :browser => "*firefox",
-          :url => "http://kaldung.com",
-          :timeout_in_seconds => 60
-      browser.start_new_browser_session
+      browser = Selenium::WebDriver.for :firefox 
     end
 
     def teardown
-        browser.close_current_browser_session
+        browser.quit
     end
 
     def test_page_search
-        browser.open "/"
+	browser.navigate_to "http://www.google.com"
         assert_equal "Google", browser.title
     end
 end
