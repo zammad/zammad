@@ -1,8 +1,8 @@
 class User < ApplicationModel
   include Gmaps
 
-  before_create           :check_name, :check_email, :check_image, :check_geo
-  before_update           :check_password, :check_image, :check_geo
+  before_create           :check_name, :check_email, :check_login, :check_image, :check_geo
+  before_update           :check_password, :check_image, :check_geo, :check_email, :check_login
   after_create            :cache_delete
   after_update            :cache_delete
   after_destroy           :cache_delete
@@ -364,6 +364,12 @@ Your #{config.product_name} Team
     def check_email
       if self.email
         self.email = self.email.downcase
+      end
+    end
+
+    def check_login
+      if self.login
+        self.login = self.login.downcase
       end
     end
 
