@@ -1752,5 +1752,10 @@ Translation.create( :locale => 'de', :source => "Links", :target => "Verknüpftu
 Translation.create( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "We've sent password reset instructions to your email address.", :target => "Wir haben Ihnen die Anleitung zum zurücksetzesn Ihres Passworts an Ihre E-Mail-Adresse gesendet." )
+Translation.create( :locale => 'de', :source => "Enter your username or email address", :target => "Bitte geben Sie Ihren Benutzernamen oder E-Mail-Adresse ein" )
+Translation.create( :locale => 'de', :source => "Choose your new password.", :target => "Wählen Sie Ihr neues Passwort." )
+Translation.create( :locale => 'de', :source => "Woo hoo! Your password has been changed!", :target => "Vielen Dank, Ihr Passwort wurde geändert!" )
+Translation.create( :locale => 'de', :source => "Please try to login!", :target => "Bitte melden Sie sich nun an!" )
 
 #Translation.create( :locale => 'de', :source => "", :target => "" )
