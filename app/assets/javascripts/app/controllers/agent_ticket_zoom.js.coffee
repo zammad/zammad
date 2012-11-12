@@ -235,7 +235,6 @@ class Index extends App.Controller
 
   form_update: (e) ->
     ticket_article_type_id = $(e.target).find('option:selected').val()
-    @log 'eeee', e, ticket_article_type_id
     article_type = App.TicketArticleType.find( ticket_article_type_id )
     @form_update_execute(article_type)
 
@@ -285,8 +284,6 @@ class Index extends App.Controller
     article_type = App.TicketArticleType.find( article.ticket_article_type_id )
     customer = App.User.find( article.created_by_id )
 
-    @log 'reply', e, article_type
-
     # update form
     @form_update_execute(article_type)
 
@@ -307,7 +304,6 @@ class Index extends App.Controller
 
       # set to in body
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
-      @log 'c', customer
       @el.find('[name="body"]').val('@' + to)
 
     else if article_type.name is 'twitter direct-message'
@@ -348,7 +344,7 @@ class Index extends App.Controller
   update: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    @log 'update', params, @ticket
+    @log 'TicketZoom', 'notice', 'update', params, @ticket
 
     # update ticket
     ticket_update = {}
@@ -366,14 +362,14 @@ class Index extends App.Controller
       return
 
     @ticket.load( ticket_update )
-    @log 'update ticket', ticket_update, @ticket
+    @log 'TicketZoom', 'notice', 'update ticket', ticket_update, @ticket
 
     # disable form
     @formDisable(e)
 
     errors = @ticket.validate()
-    @log 'errors', errors
     if errors
+      @log 'TicketZoom', 'error', 'update', errors
       @formEnable(e)
 
     @ticket.save(
@@ -395,16 +391,16 @@ class Index extends App.Controller
           else
             sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Agent' )
           params.ticket_article_sender_id = sender.id
-          @log 'updateAttributes', params, sender, sender.id
+          @log 'TicketZoom', 'notice', 'update article', params, sender
           article.load(params)
           errors = article.validate()
           if errors
-            @log 'error new article', errors
+            @log 'TicketZoom', 'error', 'update article', errors
           article.save(
             success: (r) =>
               @fetch(@ticket.id)
             error: (r) =>
-              @log 'error', r
+              @log 'TicketZoom', 'error', 'update article', r
           )
         else
           @fetch(@ticket.id)
