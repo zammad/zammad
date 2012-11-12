@@ -16,12 +16,16 @@
     </tr>
   </thead>
   <tbody>
+<% length = @header.length %>
+<% if @checkbox || @radio: %>
+<%   length++ %>
+<% end %>
 <% position = 0 %>
 <% groupLast = '' %>
 <% for object in @objects: %>
   <% if @groupBy: %>
   <%   if groupLast isnt object[@groupBy.id]: %>
-  <tr class=""><td colspan="<%= @overview.length + 1 %>"><b><%- @P( object[@groupBy.name] ) %></b></td></tr>
+  <tr class=""><td colspan="<%= length %>"><b><%- @P( object[@groupBy.name] ) %></b></td></tr>
   <%     groupLast = object[@groupBy.id] %>
   <%   end %>
   <% end %>
