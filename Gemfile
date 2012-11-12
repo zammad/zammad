@@ -65,3 +65,7 @@ gem 'em-websocket'
 # code coverage
 gem 'simplecov'
 gem 'simplecov-rcov'
+
+# UI tests w/ Selenium
+gem 'selenium-webdriver'
+
