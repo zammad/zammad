@@ -18,7 +18,9 @@ class ExampleTest < Test::Unit::TestCase
 
     def test_first_page
         browser.get "http://portal.znuny.com/"
-        puts browser.url
+        puts browser.current_url
+	assert_equal browser.current_url, "https://portal.znuny.com/#login"
+        
     end
 
     def test_page_search
