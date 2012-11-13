@@ -1760,5 +1760,6 @@ Translation.create( :locale => 'de', :source => "Please try to login!", :target 
 Translation.create( :locale => 'de', :source => "Username or email address invalid, please try again.", :target => "Benutzername oder E-Mail-Addresse ungültig, bitte erneut versuchen.", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.", :target => "Wir hanben die Andorderung per E-Mail an Sie versendet, bitte Überprüfen Sie Ihr Email-Postfach (auch die Junk E-Mails) ggf. starten Sie eine Andorderung erneut.", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create( :locale => 'de', :source => "again", :target => "erneut", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "none", :target => "keine", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
