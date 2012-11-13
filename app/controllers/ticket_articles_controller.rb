@@ -10,7 +10,7 @@ class TicketArticlesController < ApplicationController
 
   # GET /articles/1
   def show
-    @article = Ticket::Article.find(params[:id])
+    @article = Ticket::Article.find( params[:id] )
 
     render :json => @article
   end
@@ -19,7 +19,8 @@ class TicketArticlesController < ApplicationController
   def create
     @article = Ticket::Article.new(params[:ticket_article])
     @article.created_by_id = current_user.id
-    
+    @article.updated_by_id = current_user.id
+
     # find attachments in upload cache
     @article['attachments'] = Store.list(
       :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
@@ -33,7 +34,7 @@ class TicketArticlesController < ApplicationController
         :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
         :o_id   => @article.ticket_id
       )
-      
+
       render :json => @article, :status => :created
     else
       render :json => @article.errors, :status => :unprocessable_entity
@@ -42,7 +43,8 @@ class TicketArticlesController < ApplicationController
 
   # PUT /articles/1
   def update
-    @article = Ticket::Article.find(params[:id])
+    @article = Ticket::Article.find( params[:id] )
+    params[:ticket_article][:updated_by_id] = current_user.id
 
     if @article.update_attributes(params[:ticket_article])
       render :json => @article, :status => :ok
@@ -53,7 +55,7 @@ class TicketArticlesController < ApplicationController
 
   # DELETE /articles/1
   def destroy
-    @article = Ticket::Article.find(params[:id])
+    @article = Ticket::Article.find( params[:id] )
     @article.destroy
 
     head :ok

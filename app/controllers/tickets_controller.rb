@@ -10,7 +10,7 @@ class TicketsController < ApplicationController
 
   # GET /tickets/1
   def show
-    @ticket = Ticket.find(params[:id])
+    @ticket = Ticket.find( params[:id] )
 
     # permissin check
     return if !ticket_permission(@ticket)
@@ -20,7 +20,7 @@ class TicketsController < ApplicationController
 
   # POST /tickets
   def create
-    @ticket = Ticket.new(params[:ticket])
+    @ticket = Ticket.new( params[:ticket] )
     @ticket.updated_by_id = current_user.id
     @ticket.created_by_id = current_user.id
 
@@ -70,7 +70,9 @@ class TicketsController < ApplicationController
     # permissin check
     return if !ticket_permission(@ticket)
 
-    if @ticket.update_attributes(params[:ticket])
+    params[:ticket][:updated_by_id] = current_user.id
+
+    if @ticket.update_attributes( params[:ticket] )
       render :json => @ticket, :status => :ok
     else
       render :json => @ticket.errors, :status => :unprocessable_entity
@@ -79,7 +81,7 @@ class TicketsController < ApplicationController
 
   # DELETE /tickets/1
   def destroy
-    @ticket = Ticket.find(params[:id])
+    @ticket = Ticket.find( params[:id] )
 
     # permissin check
     return if !ticket_permission(@ticket)

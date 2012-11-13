@@ -34,6 +34,7 @@ class CreateTicket < ActiveRecord::Migration
       t.references :group,                                      :null => false
       t.references :ticket_priority,                            :null => false
       t.references :ticket_state,                               :null => false
+      t.references :organization,                               :null => true
       t.column :number,                :string,  :limit => 60,  :null => false
       t.column :title,                 :string,  :limit => 250, :null => false
       t.column :owner_id,              :integer,                :null => false
@@ -44,7 +45,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :last_contact_agent,    :timestamp,              :null => true
       t.column :last_contact_customer, :timestamp,              :null => true
       t.column :close_time,            :timestamp,              :null => true
-      t.column :updated_by_id,         :integer,               :null => false
+      t.column :updated_by_id,         :integer,                :null => false
       t.column :created_by_id,         :integer,                :null => false
       t.timestamps
     end
@@ -153,6 +154,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :condition,            :string,  :limit => 2500, :null => false
       t.column :order,                :string,  :limit => 2500, :null => false
       t.column :group_by,             :string,  :limit => 250,  :null => true
+      t.column :organization_shared,  :boolean,                 :null => false, :default => false
       t.column :view,                 :string,  :limit => 1000, :null => false
       t.column :active,               :boolean,                 :null => false, :default => true
       t.column :updated_by_id,        :integer,                 :null => false

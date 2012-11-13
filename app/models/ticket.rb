@@ -1,9 +1,11 @@
 class Ticket < ApplicationModel
   before_create   :number_generate, :check_defaults
+  before_update   :check_defaults
   before_destroy  :destroy_dependencies
   
   belongs_to    :group
   has_many      :articles,                                          :after_add => :cache_update, :after_remove => :cache_update
+  belongs_to    :organization
   belongs_to    :ticket_state,    :class_name => 'Ticket::State'
   belongs_to    :ticket_priority, :class_name => 'Ticket::Priority'
   belongs_to    :owner,           :class_name => 'User'
@@ -141,7 +143,16 @@ class Ticket < ApplicationModel
 
     # check customer
     if data[:current_user].is_role('Customer')
+
+      # access ok if its own ticket
       return true if self.customer_id == data[:current_user].id
+
+      # access ok if its organization ticket
+      if data[:current_user].organization_id && self.organization_id
+        return true if self.organization_id == data[:current_user].organization_id
+      end
+
+      # no access
       return false
     end
 
@@ -157,13 +168,22 @@ class Ticket < ApplicationModel
 #    :current_user => 123,
 #  )
   def self.overview_list (data)
-    # get user role
+
+    # get customer overviews
     if data[:current_user].is_role('Customer')
       role = data[:current_user].is_role( 'Customer' )
-    else
-      role = data[:current_user].is_role( 'Agent' )
+      if data[:current_user].organization_id && data[:current_user].organization.shared
+        overviews = Overview.where( :role_id => role.id )
+      else
+        overviews = Overview.where( :role_id => role.id, :organization_shared => false )
+      end
+      return overviews
     end
-    Overview.where( :role_id => role.id )
+
+    # get agent overviews
+    role = data[:current_user].is_role( 'Agent' )
+    overviews = Overview.where( :role_id => role.id )
+    return overviews
   end
 
 #  Ticket.overview(
@@ -172,25 +192,13 @@ class Ticket < ApplicationModel
 #  )
   def self.overview (data)
 
-    # get user role
-    if data[:current_user].is_role('Customer')
-      role = data[:current_user].is_role( 'Customer' )
-    else
-      role = data[:current_user].is_role( 'Agent' )
-    end
+    overviews = self.overview_list(data)
 
     # build up attributes hash
     overview_selected     = nil
     overview_selected_raw = nil
-    overviews             = Overview.where( :role_id => role.id )
-    overviews.each { |overview|
 
-      # for cleanup reasons, remove me later!
-      overview.condition.each { |item, value |
-        if item == 'owner_id' && overview.condition[item] != 1
-          overview.condition[item] = 'current_user.id'
-        end
-      }
+    overviews.each { |overview|
 
       # remember selected view
       if data[:view] && data[:view] == overview.meta[:url]
@@ -198,10 +206,13 @@ class Ticket < ApplicationModel
         overview_selected_raw = Marshal.load( Marshal.dump(overview.attributes) )
       end
 
-      # replace 'current_user.id' with current_user.id
+      # replace e.g. 'current_user.id' with current_user.id
       overview.condition.each { |item, value |
-        if value == 'current_user.id'
-          overview.condition[item] = data[:current_user].id
+        if value && value.class.to_s == 'String'
+          parts = value.split( '.', 2 )
+          if parts[0] && parts[1] && parts[0] == 'current_user'
+            overview.condition[item] = data[:current_user][parts[1].to_sym]
+          end
         end
       }
     }
@@ -211,11 +222,11 @@ class Ticket < ApplicationModel
       # state
       # group
       # customer
-    
+
     # order
       # asc
       # desc
-      
+
     # groupby
       # prio
       # state
@@ -383,9 +394,17 @@ class Ticket < ApplicationModel
       end
     end
     def check_defaults
-      if !self.owner_id then
+      if !self.owner_id
         self.owner_id = 1
       end
+#      if self.customer_id && ( !self.organization_id || self.organization_id.empty? )
+      if self.customer_id
+        customer = User.find( self.customer_id )
+        if  self.organization_id != customer.organization_id
+          self.organization_id = customer.organization_id
+        end
+      end
+
     end
     def destroy_dependencies
 

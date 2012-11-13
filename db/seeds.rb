@@ -1436,12 +1436,52 @@ Overview.create(
   },
   :order => {
     :by        => 'created_at',
-    :direction => 'ASC',
+    :direction => 'DESC',
   },
   :meta => {
     :url  => 'my_tickets',
     :name => 'My Tickets',
     :prio => 1000,
+  },
+  :view => {
+    :d => {
+      :overview => [
+        'title', 'customer', 'ticket_state', 'created_at'
+      ],
+      :per_page => 5,
+    },
+    :s => {
+      :overview => [
+        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
+      ],
+      :per_page => 30,
+    },
+    :m => {
+      :overview => [
+        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
+      ],
+      :per_page => 20,
+    },
+    :view_mode_default => 's',
+  },
+  :updated_by_id => 1,
+  :created_by_id => 1
+)
+Overview.create(
+  :name                => 'my_organization_tickets',
+  :role_id             => overview_role.id,
+  :organization_shared => true,
+  :condition => {
+    :organization_id => 'current_user.organization_id',
+  },
+  :order => {
+    :by        => 'created_at',
+    :direction => 'DESC',
+  },
+  :meta => {
+    :url  => 'my_organization_tickets',
+    :name => 'My Organization Tickets',
+    :prio => 1100,
   },
   :view => {
     :d => {
@@ -1751,6 +1791,8 @@ Translation.create( :locale => 'de', :source => "Linked Objects", :target => "Ve
 Translation.create( :locale => 'de', :source => "Links", :target => "Verknüpftungen", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "My Organization Tickets", :target => "Meine Organisations Tickets", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "My Organization", :target => "Meine Organisation", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "We've sent password reset instructions to your email address.", :target => "Wir haben Ihnen die Anleitung zum zurücksetzesn Ihres Passworts an Ihre E-Mail-Adresse gesendet.", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create( :locale => 'de', :source => "Enter your username or email address", :target => "Bitte geben Sie Ihren Benutzernamen oder E-Mail-Adresse ein", :updated_by_id => 1, :created_by_id => 1 )
