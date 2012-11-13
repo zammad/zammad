@@ -28,7 +28,6 @@ class ExampleTest < Test::Unit::TestCase
        element_password = browser.find_element :name => "password"
        element_password.send_keys "123456"
        element_password.submit
-       browser.wait_for_page_load "3000"
        assert_equal browser.current_url, "https://portal.znuny.com/#login"
     end
 
@@ -39,7 +38,6 @@ class ExampleTest < Test::Unit::TestCase
        element_password = browser.find_element :name => "password"
        element_password.send_keys "090504"
        element_password.submit
-       browser.wait_for_page_load "3000"
        assert_equal browser.current_url, "https://portal.znuny.com/#ticket_view/my_tickets"
     end
 end
