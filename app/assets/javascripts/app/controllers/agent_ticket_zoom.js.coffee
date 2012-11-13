@@ -335,6 +335,9 @@ class Index extends App.Controller
       .replace(/<.+?>/g, '')
     title = ('' + title)
       .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
     if title is '-'
       title = ''
     @ticket.title = title
