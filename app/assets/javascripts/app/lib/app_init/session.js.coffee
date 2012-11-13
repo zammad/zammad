@@ -25,7 +25,6 @@ class _Singleton extends Spine.Module
 
   constructor: ->
     @clear()
-#    @log = App.LogModule
 
   clear: ->
     @data = {}
