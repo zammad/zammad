@@ -1492,7 +1492,7 @@ Overview.create(
     },
     :s => {
       :overview => [
-        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
+        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'created_at'
       ],
       :per_page => 30,
     },
