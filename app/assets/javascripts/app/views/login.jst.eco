@@ -7,7 +7,7 @@
       <div class="row">
         <div class="span12">
           <p><%- @T( 'Sign in with' ) %></p>
-          <form id="login" class="form-search">
+          <form id="login" class="form-search" method="post">
             <input name="username" type="text" class="input span3" placeholder="<%- @Ti( 'Username or email' ) %>" value="<%= @item.username %>" autocapitalize="off"/>
             <input name="password" type="password" class="input span3" placeholder="<%- @Ti( 'Password' ) %>"/>
             <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>

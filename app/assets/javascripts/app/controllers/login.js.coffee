@@ -54,6 +54,7 @@ class Index extends App.Controller
 
   login: (e) ->
     e.preventDefault()
+    @formDisable(e)
     params = @formParam(e.target)
 
     # remember username

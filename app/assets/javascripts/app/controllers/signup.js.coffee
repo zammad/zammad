@@ -27,18 +27,18 @@ class Index extends App.Controller
     @html App.view('signup')()
 
     new App.ControllerForm(
-      el: @el.find('#form-signup'),
-      model: App.User,
-      required: 'signup',
-      autofocus: true,
+      el:        @el.find('#form-signup')
+      model:     App.User
+      required:  'signup'
+      autofocus: true
     )
 
   cancel: ->
     @navigate 'login'
 
   submit: (e) ->
-    @log 'submit'
     e.preventDefault()
+    @formDisable(e)
     @params = @formParam(e.target)
 
     # if no login is given, use emails as fallback
@@ -54,18 +54,18 @@ class Index extends App.Controller
     if errors
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )
+      @formEnable(e)
       return false
 
     # save user
     user.save(
       success: (r) =>
         App.Auth.login(
-          data: {
-            username: @params.login,
-            password: @params.password,
-          },
+          data:
+            username: @params.login
+            password: @params.password
           success: @success
-          error: @error,
+          error: @error
         )
 #      error: =>
 #        @modalHide()
@@ -90,13 +90,13 @@ class Index extends App.Controller
     # add notify
     App.Event.trigger 'notify:removeall'
     App.Event.trigger 'notify', {
-      type: 'warning',
-      msg: 'Wrong Username and Password combination.', 
+      type: 'warning'
+      msg:  'Wrong Username and Password combination.'
     }
 
     # rerender login page
     @render(
-      msg: 'Wrong Username and Password combination.', 
+      msg: 'Wrong Username and Password combination.'
       username: @username
     )
 

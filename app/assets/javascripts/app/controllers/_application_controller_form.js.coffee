@@ -623,10 +623,10 @@ class App.ControllerForm extends App.Controller
 
 
   @enable: (form) ->
-    App.Log.log 'ControllerForm', 'notice', 'enable...', $(form).parent()
-    $(form).parent().find('button').attr('disabled', false)
-    $(form).parent().find('[type="submit"]').attr('disabled', false)
-    $(form).parent().find('[type="reset"]').attr('disabled', false)
+    App.Log.log 'ControllerForm', 'notice', 'enable...', $(form.target).parent()
+    $(form.target).parent().find('button').attr('disabled', false)
+    $(form.target).parent().find('[type="submit"]').attr('disabled', false)
+    $(form.target).parent().find('[type="reset"]').attr('disabled', false)
 
   @validate: (data) ->
 
