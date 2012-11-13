@@ -86,6 +86,11 @@ class Index extends App.Controller
 
   render: ->
 
+    # if customer and no ticket exists, show the following message only
+    if !@ticket_list_show[0] && @isRole('Customer')
+      @html App.view('customer_not_ticket_exists')()
+      return
+
     @selected = @bulkGetSelected()
 
     # set page title

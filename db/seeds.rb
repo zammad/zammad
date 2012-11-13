@@ -1761,5 +1761,11 @@ Translation.create( :locale => 'de', :source => "Username or email address inval
 Translation.create( :locale => 'de', :source => "If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.", :target => "Wir hanben die Andorderung per E-Mail an Sie versendet, bitte Überprüfen Sie Ihr Email-Postfach (auch die Junk E-Mails) ggf. starten Sie eine Andorderung erneut.", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create( :locale => 'de', :source => "again", :target => "erneut", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "none", :target => "keine", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Welcome!", :target => "Willkommen!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Please click the button below to create your first one.", :target => "Klicken Sie die Schaltfläche unten um das erste zu erstellen.", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Create your first Ticket", :target => "Erstellen Sie Ihr erstes Ticket", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "You have not created a Ticket yet.", :target => "Sie haben noch kein Ticket erstellt.", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "The way to communicate with us is this thing called \"Ticket\".", :target => "Der Weg um mit uns zu kommunizieren ist das sogenannte \"Ticket\".", :updated_by_id => 1, :created_by_id => 1  )
+
 
 #Translation.create( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
