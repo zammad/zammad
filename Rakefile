@@ -4,4 +4,6 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+# used to generate ci reports, see ci_reporter documentation
+require 'ci/reporter/rake/rspec'
 Zammad::Application.load_tasks
