@@ -3,7 +3,5 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
-
-# used to generate ci reports, see ci_reporter documentation
-require 'ci/reporter/rake/rspec'
+require 'metric_fu'
 Zammad::Application.load_tasks
