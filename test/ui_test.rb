@@ -28,6 +28,8 @@ class ExampleTest < Test::Unit::TestCase
        element_password = browser.find_element :name => "password"
        element_password.send_keys "123456"
        element_password.submit
+       wait = Selenium::WebDriver::Wait.new(:timeout => 10) # seconds
+       wait.until { driver.find_element(:id => "app") }
        assert_equal browser.current_url, "https://portal.znuny.com/#login"
     end
 
@@ -38,6 +40,8 @@ class ExampleTest < Test::Unit::TestCase
        element_password = browser.find_element :name => "password"
        element_password.send_keys "090504"
        element_password.submit
+       wait = Selenium::WebDriver::Wait.new(:timeout => 10) # seconds
+       wait.until { driver.find_element(:id => "app") }
        assert_equal browser.current_url, "https://portal.znuny.com/#ticket_view/my_tickets"
     end
 end
