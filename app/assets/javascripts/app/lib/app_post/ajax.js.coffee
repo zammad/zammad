@@ -38,6 +38,9 @@ class _Singleton
       if !status && !detail
         detail = 'General communication error, maybe internet is not available!'
 
+      # do not show aborded requests
+      return if status is 0
+
       # do not show any error message on wrong login
       return if status is 422
 
