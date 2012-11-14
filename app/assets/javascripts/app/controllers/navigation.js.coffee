@@ -93,6 +93,10 @@ class App.Navigation extends App.Controller
 
             for ticket_raw in data.tickets
               ticket = App.Collection.find( 'Ticket', ticket_raw.id )
+
+              # set human time
+              ticket.humanTime = @humanTime(ticket.created_at)
+
               @tickets.push ticket
             @render(user)
       )
@@ -131,7 +135,7 @@ class App.Navigation extends App.Controller
       @term = @el.find('#global-search').val()
       return if !@term
       return if @term is search
-      @delay( searchFunction, 200, 'search' )
+      @delay( searchFunction, 220, 'search' )
     )
 
   getItems: (data) ->

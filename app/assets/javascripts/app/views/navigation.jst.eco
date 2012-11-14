@@ -29,7 +29,7 @@
             </form>
             <ul class="dropdown-menu">
               <% for ticket in @tickets: %>
-              <li><a href="#ticket/zoom/<%= ticket.id %>"><%= ticket.title %> - Ticket#<%= ticket.number %></a></li>
+              <li><a href="#ticket/zoom/<%= ticket.id %>">Ticket <%= ticket.number %> - <%- ticket.humanTime %> - <%= @P( ticket.group)  %><br><%= ticket.title %></a></li>
               <% end %>
             </ul>
           </li>
