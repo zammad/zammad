@@ -33,6 +33,7 @@ a new Ticket (#{ticket.title}) via #{article.ticket_article_type.name}.
 
 Group: #{ticket.group.name}
 Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+State: #{ticket.ticket_state.name}
 
 From: #{article.from}
 <snip>
@@ -98,6 +99,7 @@ a follow Up (#{ticket.title}) via #{article.ticket_article_type.name}.
 
 Group: #{ticket.group.name}
 Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+State: #{ticket.ticket_state.name}
 
 From: #{article.from}
 <snip>
@@ -126,6 +128,7 @@ updated (#{ticket.title}) via #{article.ticket_article_type.name}.
 
 Group: #{ticket.group.name}
 Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+State: #{ticket.ticket_state.name}
 
 From: #{article.from}
 <snip>
