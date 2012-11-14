@@ -462,13 +462,23 @@ class TicketsController < ApplicationController
     query = params[:term]
     limit = params[:limit] || 15
 
+    conditions = []
+    if current_user.is_role('Agent')
+      group_ids = Group.select( 'groups.id' ).joins(:users).
+        where( 'groups_users.user_id = ?', current_user.id ).
+        where( 'groups.active = ?', true ).
+        map( &:id )
+      conditions = [ 'group_id IN (?)', group_ids ]
+    else
+      if !current_user.organization || !current_user.organization.shared
+        conditions = [ 'customer_id = ?', current_user.id ]
+      else
+        conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.shared ]
+      end
+    end
+
     # do query
-    tickets_all = Ticket.find(
-      :all,
-      :limit      => limit,
-      :conditions => ['title LIKE ? OR number LIKE ?', "%#{query}%", "%#{query}%" ],
-      :order      => 'created_at'
-    )
+    tickets_all = Ticket.where(conditions).where( '( title LIKE ? OR number LIKE ? )', "%#{query}%", "%#{query}%" ).limit(limit).order(:created_at)
 
     # build result list
     tickets = []
