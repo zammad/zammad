@@ -470,10 +470,10 @@ class TicketsController < ApplicationController
         map( &:id )
       conditions = [ 'group_id IN (?)', group_ids ]
     else
-      if !current_user.organization || !current_user.organization.shared
+      if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
         conditions = [ 'customer_id = ?', current_user.id ]
       else
-        conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.shared ]
+        conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
       end
     end
 
