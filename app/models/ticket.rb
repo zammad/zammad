@@ -4,7 +4,7 @@ class Ticket < ApplicationModel
   before_destroy  :destroy_dependencies
   
   belongs_to    :group
-  has_many      :ticket_articles, :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
+  has_many      :articles,        :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
   belongs_to    :organization
   belongs_to    :ticket_state,    :class_name => 'Ticket::State'
   belongs_to    :ticket_priority, :class_name => 'Ticket::Priority'

@@ -478,11 +478,12 @@ class TicketsController < ApplicationController
     end
 
     # do query
-    tickets_all = Ticket.where(conditions).
+    tickets_all = Ticket.select('DISTINCT(tickets.id)').
+      where(conditions).
       where( '( title LIKE ? OR number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
-      joins(:ticket_articles).
+      joins(:articles).
       limit(limit).
-      order(:created_at)
+      order('tickets.created_at DESC')
 
     # build result list
     tickets = []
@@ -490,9 +491,9 @@ class TicketsController < ApplicationController
     tickets_all.each do |ticket|
       ticket_tmp = Ticket.full_data(ticket.id)
       tickets.push ticket_tmp
-      users[ ticket['owner_id'] ] = User.user_data_full( ticket['owner_id'] )
-      users[ ticket['customer_id'] ] = User.user_data_full( ticket['customer_id'] )
-      users[ ticket['created_by_id'] ] = User.user_data_full( ticket['created_by_id'] )
+      users[ ticket['owner_id'] ] = User.user_data_full( ticket_tmp['owner_id'] )
+      users[ ticket['customer_id'] ] = User.user_data_full( ticket_tmp['customer_id'] )
+      users[ ticket['created_by_id'] ] = User.user_data_full( ticket_tmp['created_by_id'] )
     end
 
     # return result
