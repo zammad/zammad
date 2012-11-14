@@ -50,13 +50,88 @@ class App.Navigation extends App.Controller
       href = $(d).attr('href')
       active_tab[href] = true
     )
-    
+
+    search = @el.find('#global-search').val()
     @html App.view('navigation')(
-      navbar_left:  nav_left,
-      navbar_right: nav_right,
-      open_tab:     open_tab,
-      active_tab:   active_tab,
-      user:         user,
+      navbar_left:  nav_left
+      navbar_right: nav_right
+      open_tab:     open_tab
+      active_tab:   active_tab
+      user:         user
+      tickets:      @tickets || []
+      search:       search
+    )
+
+    # set focus to search box
+    if @searchFocus
+      @searchFocusSet = true
+      App.ClipBoard.setPosition( 'global-search', search.length )
+
+    else
+      @searchFocusSet = false
+
+    searchFunction = =>
+      App.Com.ajax(
+        id:    'ticket_search'
+        type:  'GET'
+        url:   '/api/tickets/search'
+        data:
+          term: @term
+        processData: true,
+        success: (data, status, xhr) =>
+          console.log data
+
+          # load user collection
+          if data.users
+            App.Collection.load( type: 'User', data: data.users )
+
+          # load ticket collection
+          if data.tickets
+            App.Collection.load( type: 'Ticket', data: data.tickets )
+
+            @tickets = []
+
+            for ticket_raw in data.tickets
+              ticket = App.Collection.find( 'Ticket', ticket_raw.id )
+              @tickets.push ticket
+            @render(user)
+      )
+
+    # observer search box
+    @el.find('#global-search').bind( 'focusin', (e) =>
+
+      # remember to set search box
+      @searchFocus = true
+
+      # check if search is needed
+      @term = @el.find('#global-search').val()
+      return if @searchFocusSet
+      return if !@term
+      @delay( searchFunction, 200, 'search' )
+    )
+
+    # remove search result
+    @el.find('#global-search').bind( 'focusout', (e) =>
+      @delay(
+        =>
+          @searchFocus = false
+          @tickets = []
+          @render(user)
+        320
+      )
+    )
+
+    # prevent submit of search box
+    @el.find('#global-search').parent().bind( 'submit', (e) =>
+      e.preventDefault()
+    )
+
+    # start search
+    @el.find('#global-search').bind( 'keyup', (e) =>
+      @term = @el.find('#global-search').val()
+      return if !@term
+      return if @term is search
+      @delay( searchFunction, 200, 'search' )
     )
 
   getItems: (data) ->

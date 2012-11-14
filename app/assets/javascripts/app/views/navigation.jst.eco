@@ -23,10 +23,17 @@
             <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
             <% end %>
           <% end %>
+          <li class="dropdown <% if @tickets[0] : %>open<% end %>">
+            <form class="navbar-search">
+              <input id="global-search" class="search-query" type="search" value="<%= @search %>" placeholder="<%- @Ti( 'Search' ) %>" autocomplete="off"/>
+            </form>
+            <ul class="dropdown-menu">
+              <% for ticket in @tickets: %>
+              <li><a href="#ticket/zoom/<%= ticket.id %>"><%= ticket.title %> - Ticket#<%= ticket.number %></a></li>
+              <% end %>
+            </ul>
+          </li>
         </ul>
-        <form class="navbar-search pull-left">
-          <input class="search-query" type="search" value="" placeholder="<%- @Ti( 'Search' ) %>"/>
-        </form>
         <div class="spinner"/>
 <% if @user: %>
         <ul class="nav pull-right">

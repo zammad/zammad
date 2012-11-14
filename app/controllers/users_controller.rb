@@ -216,14 +216,14 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
     end
   end
 
-  # DELETE /users/1
+  # DELETE /api/users/1
   def destroy
     model_destory_render(User, params)
   end
 
-  # GET /user/search
+  # GET /api/users/search
   def search
-    
+
     # get params
     query = params[:term]
     limit = params[:limit] || 18
@@ -235,7 +235,7 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
       :conditions => ['firstname LIKE ? or lastname LIKE ? or email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"],
       :order      => 'firstname'
     )
-    
+
     # build result list
     users = []
     user_all.each do |user|

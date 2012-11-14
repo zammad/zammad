@@ -455,4 +455,38 @@ class TicketsController < ApplicationController
     }
   end
 
+  # GET /api/tickets/search
+  def search
+    
+    # get params
+    query = params[:term]
+    limit = params[:limit] || 15
+
+    # do query
+    tickets_all = Ticket.find(
+      :all,
+      :limit      => limit,
+      :conditions => ['title LIKE ? OR number LIKE ?', "%#{query}%", "%#{query}%" ],
+      :order      => 'created_at'
+    )
+
+    # build result list
+    tickets = []
+    users = {}
+    tickets_all.each do |ticket|
+      ticket_tmp = Ticket.full_data(ticket.id)
+      tickets.push ticket_tmp
+      users[ ticket['owner_id'] ] = User.user_data_full( ticket['owner_id'] )
+      users[ ticket['customer_id'] ] = User.user_data_full( ticket['customer_id'] )
+      users[ ticket['created_by_id'] ] = User.user_data_full( ticket['created_by_id'] )
+    end
+
+    # return result
+    render :json => {
+      :tickets => tickets,
+      :users   => users,
+    }
+  end
+
+
 end

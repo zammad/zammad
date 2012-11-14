@@ -16,6 +16,16 @@ class App.ClipBoard
       _instance ?= new _Singleton
     _instance.getSelectedLast()
 
+  @getPosition: (el) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.getPosition(el)
+
+  @setPosition: ( el, pos ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.setPosition( el, pos )
+
   @keycode: (code) ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -70,6 +80,38 @@ class _Singleton
   # get latest selection
   getSelectedLast: ->
     @selectionLast
+
+  getPosition: (el) ->
+    pos = 0
+    el = document.getElementById(el)
+
+    # IE Support
+    if document.selection
+      el.focus()
+      Sel = document.selection.createRange()
+      Sel.moveStart( 'character', -el.value.length )
+      pos = Sel.text.length
+
+    # Firefox support
+    else if (el.selectionStart || el.selectionStart == '0')
+      pos = el.selectionStart
+    return pos
+
+  setPosition: (el, pos) ->
+    el = document.getElementById(el)
+
+    # IE Support
+    if el.setSelectionRange
+      el.focus()
+      el.setSelectionRange( pos, pos )
+
+    # Firefox support
+    else if el.createTextRange
+      range = el.createTextRange()
+      range.collapse(true)
+      range.moveEnd( 'character', pos )
+      range.moveStart('character', pos)
+      range.select()
 
   keycode: (code) ->
     for key, value of @keycodesTable()

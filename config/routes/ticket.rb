@@ -2,6 +2,7 @@ module ExtraRoutes
   def add(map)
 
     # tickets
+    map.match '/api/tickets/search',                                :to => 'tickets#search',            :via => [:get, :post]
     map.match '/api/tickets',                                       :to => 'tickets#index',             :via => :get
     map.match '/api/tickets/:id',                                   :to => 'tickets#show',              :via => :get
     map.match '/api/tickets',                                       :to => 'tickets#create',            :via => :post
