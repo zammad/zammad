@@ -478,7 +478,11 @@ class TicketsController < ApplicationController
     end
 
     # do query
-    tickets_all = Ticket.where(conditions).where( '( title LIKE ? OR number LIKE ? )', "%#{query}%", "%#{query}%" ).limit(limit).order(:created_at)
+    tickets_all = Ticket.where(conditions).
+      where( '( title LIKE ? OR number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
+      joins(:ticket_articles).
+      limit(limit).
+      order(:created_at)
 
     # build result list
     tickets = []
