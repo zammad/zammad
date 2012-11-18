@@ -75,6 +75,8 @@ class Tag < ApplicationModel
 
     def self.tag_item_lookup( name )
 
+      name = name.downcase
+
       # use cache
       return @@cache_item[ name ] if @@cache_item[ name ]
 

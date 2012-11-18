@@ -59,7 +59,7 @@ class TagTest < ActiveSupport::TestCase
       # test 4
       {
         :tag_add => {
-          :item          => 'tagöäüß2',
+          :item          => 'Tagöäüß2',
           :object        => 'Object2',
           :o_id          => 123,
           :created_by_id => 1
