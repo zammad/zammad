@@ -1,20 +1,14 @@
-module OmniAuth
-  module Strategies
+class GoogleOauth2Database < OmniAuth::Strategies::GoogleOauth2
+  option :name, 'google_oauth2'
 
-    class GoogleOauth2Database < OmniAuth::Strategies::GoogleOauth2
-      option :name, 'google_oauth2'
+  def initialize(app, *args, &block)
 
-      def initialize(app, *args, &block)
-
-        # database lookup
+    # database lookup
 #        puts 'GoogleOauth2Database -> initialize'
-        config = Setting.get('auth_google_oauth2_credentials') || {}
-        args[0] = config['client_id']
-        args[1] = config['client_secret']
-        super
-      end
-
-    end
-
+    config = Setting.get('auth_google_oauth2_credentials') || {}
+    args[0] = config['client_id']
+    args[1] = config['client_secret']
+    super
   end
+
 end

@@ -16,7 +16,7 @@ module Zammad
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -25,12 +25,13 @@ module Zammad
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers = 
-      :history_observer,
-      'ticket::_observer::_first_response',
-      'ticket::_observer::_last_contact',
-      'ticket::_observer::_close_time',
-      'ticket::_observer::_user_ticket_counter',
-      'ticket::_observer::_notification'
+      'observer::_history',
+      'observer::_ticket::_first_response',
+      'observer::_ticket::_last_contact',
+      'observer::_ticket::_close_time',
+      'observer::_ticket::_user_ticket_counter',
+      'observer::_ticket::_notification',
+      'observer::_tag::_ticket_history'
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
