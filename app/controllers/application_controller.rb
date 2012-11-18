@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
 
   # execute events      
   def trigger_events
-    Ticket::Observer::Notification.transaction
+    Observer::Ticket::Notification.transaction
   end
 
   # Finds the User with the ID stored in the session with the key
