@@ -35,7 +35,7 @@ class App.TemplateUI extends App.Controller
       template = App.Collection.find( 'Template', @template_id )
 
     # insert data
-    @html App.view('template')(
+    @html App.view('template_widget')(
       template: template,
     )
     new App.ControllerForm(

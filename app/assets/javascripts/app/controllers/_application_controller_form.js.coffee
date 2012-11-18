@@ -285,6 +285,36 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'textarea'
       item = $( App.view('generic/textarea')( attribute: attribute ) )
 
+    # tag
+    else if attribute.tag is 'tag'
+      item = $( App.view('generic/input')( attribute: attribute ) )
+      a = =>
+        siteUpdate = (reorder) =>
+          container = document.getElementById( attribute.id + "_tagsinput" )
+          if reorder
+            $('#' + attribute.id + "_tagsinput" ).height( 20 )
+          height = container.scrollHeight
+          $('#' + attribute.id + "_tagsinput" ).height( height - 16 )
+
+        onAddTag = =>
+          siteUpdate()
+
+        onRemoveTag = =>
+          siteUpdate(true)
+
+        w = $('#' + attribute.id).width()
+        h = $('#' + attribute.id).height()
+        $('#' + attribute.id).tagsInput(
+          width: w + 'px'
+#          height: (h + 30 )+ 'px'
+          onAddTag:    onAddTag
+          onRemoveTag: onRemoveTag
+        )
+        siteUpdate(true)
+
+      @delay( a, 600 )
+
+
     # autocompletion
     else if attribute.tag is 'autocompletion'
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )

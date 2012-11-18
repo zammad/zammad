@@ -132,7 +132,7 @@ class App.TextModuleUI extends App.Controller
     )
 
     # insert data
-    @html App.view('text_module')(
+    @html App.view('text_module_widget')(
       search: @search,
     )
 

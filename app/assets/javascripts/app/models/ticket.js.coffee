@@ -1,5 +1,5 @@
 class App.Ticket extends App.Model
-  @configure 'Ticket', 'number', 'title', 'group_id', 'owner_id', 'customer_id', 'ticket_state_id', 'ticket_priority_id', 'article'
+  @configure 'Ticket', 'number', 'title', 'group_id', 'owner_id', 'customer_id', 'ticket_state_id', 'ticket_priority_id', 'article', 'tags'
   @extend Spine.Model.Ajax
   @url: '/api/tickets'
   @configure_attributes = [

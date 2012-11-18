@@ -5,8 +5,9 @@
  *= require_self
  *= require ./bootstrap.css
  *= require ./fileuploader.css
- *= require ./ui-lightness/jquery-ui-1.8.18.custom.css
+ *= require ./ui-lightness/jquery-ui-1.8.23.custom.css
  *= require ./jquery.noty.css
+ *= require ./jquery.tagsinput.css
  *= require ./noty_theme_twitter.css
  *= require ./zzz.css
  *

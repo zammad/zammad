@@ -93,6 +93,7 @@
   <div class="span3">
     <div id="customer_info"></div>
     <div id="action_info"></div>
+    <div id="tag_info"></div>
     <div id="link_info"></div>
     <div id="text_module"></div>
   </div>

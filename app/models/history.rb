@@ -58,7 +58,7 @@ class History < ActiveRecord::Base
       history_object = self.history_object_lookup( requested_object )
       history = History.where( :history_object_id => history_object.id ).
         where( :o_id => requested_object_id ).
-        where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification', 'email'] ) ).
+        where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] ) ).
         order('created_at ASC, id ASC')
     else
       history_object_requested = self.history_object_lookup( requested_object )
@@ -69,7 +69,7 @@ class History < ActiveRecord::Base
           requested_object_id,
           history_object_related.id,
           requested_object_id,
-          History::Type.where( :name => ['created', 'updated', 'notification', 'email'] )
+          History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] )
         ).
         order('created_at ASC, id ASC')
     end

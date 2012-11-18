@@ -188,6 +188,14 @@ class Index extends App.Controller
         zoom:    @
       )
 
+    # start tag controller
+    if !@isRole('Customer')
+      new App.TagWidget(
+        el:           @el.find('#tag_info')
+        object_type:  'Ticket'
+        object:        @ticket
+      )
+
     # start link info controller
     if !@isRole('Customer')
       new App.LinkInfo(

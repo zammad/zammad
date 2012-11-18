@@ -36,6 +36,19 @@ class TicketsController < ApplicationController
       return
     end
 
+    # create tags if given
+    if params[:tags] && !params[:tags].empty?
+      tags = params[:tags].split /,/
+      tags.each {|tag|
+        Tag.tag_add(
+          :object        => 'Ticket',
+          :o_id          => @ticket.id,
+          :item          => tag,
+          :created_by_id => current_user.id,
+        )
+      }
+    end
+
     # create article if given
     if params[:article]
       @article = Ticket::Article.new(params[:article])
