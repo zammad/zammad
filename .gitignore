@@ -25,6 +25,9 @@ Gemfile.lock
 # Ignore .swp files
 .*.swp
 
+# Ignore coverage stuff
+/coverage/*
+
 # Ignore local changes to schema.rb (e. g. through extentions)
 db/schema.rb
 

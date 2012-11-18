@@ -24,12 +24,12 @@ class Ticket < ApplicationModel
 
   def number_adapter=(adapter_name)  
     return @@number_adapter if @@number_adapter
-    case adapter_name  
+    case adapter_name
     when Symbol, String  
-      require "ticket/number/#{adapter_name.to_s.downcase}"  
+      require "ticket/number/#{adapter_name.to_s.downcase}"
       @@number_adapter = Ticket::Number.const_get("#{adapter_name.to_s.capitalize}")
     else  
-      raise "Missing number_adapter #{adapter_name}"  
+      raise "Missing number_adapter '#{adapter_name}'"
     end  
   end  
   
