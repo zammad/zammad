@@ -1,4 +1,6 @@
-class HistoryObserver < ActiveRecord::Observer
+require 'history'
+
+class Observer::History < ActiveRecord::Observer
   include UserInfo
   observe :ticket, :user, 'ticket::_article'
 

@@ -76,7 +76,7 @@ class Channel::Twitter2
       end
 
       # execute ticket events      
-      Ticket::Observer::Notification.transaction
+      Observer::Ticket::Notification.transaction
     end
   end
 

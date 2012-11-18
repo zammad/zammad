@@ -141,7 +141,7 @@ class HistoryTest < ActiveSupport::TestCase
       end
  
       # execute ticket events      
-      Ticket::Observer::Notification.transaction
+      Observer::Ticket::Notification.transaction
 
       # remember ticket
       tickets.push ticket

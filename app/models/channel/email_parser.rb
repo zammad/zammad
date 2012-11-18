@@ -387,7 +387,7 @@ class Channel::EmailParser
     end
 
     # execute ticket events
-    Ticket::Observer::Notification.transaction
+    Observer::Ticket::Notification.transaction
 
     # run postmaster post filter
     filters = {
