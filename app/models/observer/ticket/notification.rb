@@ -1,3 +1,5 @@
+require 'notification_factory'
+
 class Observer::Ticket::Notification < ActiveRecord::Observer
   observe :ticket, 'ticket::_article'
 
