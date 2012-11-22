@@ -2,7 +2,6 @@ class TwitterDatabase < OmniAuth::Strategies::Twitter
   option :name, 'twitter'
 
   def initialize(app, *args, &block)
-    require 'Setting'
 
     # database lookup
 #        puts 'TwitterDatabase -> initialize'
