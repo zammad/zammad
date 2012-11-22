@@ -1039,6 +1039,20 @@ email_address = EmailAddress.create(
   :updated_by_id  => 1,
   :created_by_id  => 1
 )
+signature = Signature.create(
+  :name => 'default',
+  :body => '
+  #{user.firstname} #{user.lastname}
+
+--
+ Super Support - Waterford Business Park
+ 5201 Blue Lagoon Drive - 8th Floor & 9th Floor - Miami, 33126 USA
+ Email: hot@example.com - Web: http://www.example.com/
+--
+)',
+  :updated_by_id  => 1,
+  :created_by_id  => 1
+)
 
 Role.create(
   :id             => 1,
@@ -1066,6 +1080,7 @@ Group.create(
   :id               => 1,
   :name             => 'Users',
   :email_address_id => email_address.id,
+  :signature_id     => signature.id,
   :note             => 'Standard Group/Pool for Tickets.',
   :updated_by_id    => 1,
   :created_by_id    => 1
