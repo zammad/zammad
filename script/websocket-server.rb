@@ -4,7 +4,7 @@ require 'eventmachine'
 require 'em-websocket'
 require 'json'
 require 'fileutils'
-require 'web_socket'
+require 'session'
 require 'optparse'
 
 # Look for -o with argument, and -I and -D boolean arguments
