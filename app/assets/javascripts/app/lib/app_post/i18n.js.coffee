@@ -21,15 +21,18 @@ class App.i18n
       _instance ?= new _Singleton
     _instance.timestamp( args )
 
+  @set: ( args ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.set( args )
+
 class _Singleton extends Spine.Module
   @include App.Log
 
   constructor: ->
-    @locale = 'de'
-    @timestampFormat = 'yyyy-mm-dd HH:MM'
-    @set( @locale )
+    @map = {}
 
-#    $('.translation [contenteditable]')
+    # observe if text has been translated
     $('body')
       .delegate '.translation', 'focus', (e) =>
         $this = $(e.target)
@@ -76,6 +79,8 @@ class _Singleton extends Spine.Module
         return $this
 
   set: ( locale ) ->
+    @locale = locale
+    @timestampFormat = 'yyyy-mm-dd HH:MM'
     @map = {}
     App.Com.ajax(
       id:    'i18n-set-' + locale,

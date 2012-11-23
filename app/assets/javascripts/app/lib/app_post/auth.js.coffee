@@ -24,10 +24,10 @@ class App.Auth
   @loginCheck: ->
     App.Log.log 'Auth', 'notice', 'loginCheck'
     App.Com.ajax(
-      id:    'login_check',
-      async: false,
-      type:  'GET',
-      url:   '/signshow',
+      id:    'login_check'
+      async: false
+      type:  'GET'
+      url:   '/signshow'
       success: (data, status, xhr) =>
         App.Log.log 'Auth', 'notice', 'logincheck:success', data
 
@@ -87,9 +87,9 @@ class App.Auth
   @logout: ->
     App.Log.log 'Auth', 'notice', 'logout'
     App.Com.ajax(
-      id:   'logout',
-      type: 'DELETE',
-      url:  '/signout',
+      id:   'logout'
+      type: 'DELETE'
+      url:  '/signout'
       success: =>
 
         # update websocked auth info

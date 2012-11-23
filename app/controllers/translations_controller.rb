@@ -15,9 +15,15 @@ class TranslationsController < ApplicationController
       list.push data
     }
 
+    timestamp_map_default = 'yyyy-mm-dd HH:MM'
+    timestamp_map = {
+      :de => 'dd.mm.yyyy HH:MM',
+    }
+    timestamp = timestamp_map[ params[:locale].to_sym ] || timestamp_map_default
+
     render :json => {
       :list            => list,
-      :timestampFormat => 'dd.mm.yyyy HH:MM',
+      :timestampFormat => timestamp,
     }
   end
 

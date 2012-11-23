@@ -1824,6 +1824,8 @@ Translation.create( :locale => 'de', :source => "Create your first Ticket", :tar
 Translation.create( :locale => 'de', :source => "You have not created a Ticket yet.", :target => "Sie haben noch kein Ticket erstellt.", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "The way to communicate with us is this thing called \"Ticket\".", :target => "Der Weg um mit uns zu kommunizieren ist das sogenannte \"Ticket\".", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "or", :target => "oder", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "yes", :target => "ja", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "no", :target => "nein", :updated_by_id => 1, :created_by_id => 1  )
 
 
 #Translation.create( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
