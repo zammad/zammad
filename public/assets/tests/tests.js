@@ -1,5 +1,5 @@
 
-// AJAX
+// ajax
 App.Com.ajax({
   type:  'GET',
   url:   '/assets/tests/ajax-test.json',
@@ -62,13 +62,13 @@ App.Com.ajax({
 // ajax parallel
 App.Com.ajax({
   type:  'GET',
-  url:   '/test/wait/2',
+  url:   '/test/wait/3',
   success: function (data) {
     test( "ajax - parallel - ajax get 200 1/2", function() {
 
       // check queue
-      ok( window.testAjax, 'ajax - parallel - check queue' );
-      window.testAjax = undefined;
+      ok( window.testAjaxQ, 'ajax - parallel - check queue' );
+      window.testAjaxQ = undefined;
       equal( data.success, true, "ajax - parallel - content parsable and ok!" );
       equal( data.success2, undefined, "ajax - parallel - content parsable and ok!" );
     });
@@ -85,8 +85,8 @@ App.Com.ajax({
   success: function (data) {
     test( "ajax - parallel - ajax get 200 2/2", function() {
       // check queue
-      ok( !window.testAjax, 'ajax - parallel - check queue' )
-      window.testAjax = true;
+      ok( !window.testAjaxQ, 'ajax - parallel - check queue' )
+      window.testAjaxQ = true;
 
       equal( data.success, true, "content parsable and ok!" );
       equal( data.success2, undefined, "content parsable and ok!" );
