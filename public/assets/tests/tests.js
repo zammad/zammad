@@ -62,7 +62,7 @@ App.Com.ajax({
 // ajax parallel
 App.Com.ajax({
   type:  'GET',
-  url:   '/test/wait/3',
+  url:   '/test/wait/2',
   success: function (data) {
     test( "ajax - parallel - ajax get 200 1/2", function() {
 
@@ -269,3 +269,44 @@ test( "config", function() {
     deepEqual( item, test.value, 'group set/get tests' );
   });
 });
+
+
+// auth
+App.Auth.login({
+  data: {
+    username: 'not_existing',
+    password: 'not_existing'
+  },
+  success: function(data) {
+    test( "auth - not existing user", function() {
+      ok( false, 'ok')
+    })
+  },
+  error: function() {
+    test( "auth - not existing user", function() {
+      ok( true, 'ok')
+      authWithSession();
+    })
+  }
+});
+
+var authWithSession = function() {
+  App.Auth.login({
+    data: {
+      username: 'nicole.braun@zammad.org',
+      password: 'test'
+    },
+    success: function(data) {
+      test( "auth - existing user", function() {
+        ok( true, 'authenticated')
+        var user = App.Session.get('login');
+        equal( 'nicole.braun@zammad.org', user, 'session login')
+      })
+    },
+    error: function() {
+      test( "auth - existing user", function() {
+        ok( false, 'not authenticated')
+      })
+    }
+  });
+}

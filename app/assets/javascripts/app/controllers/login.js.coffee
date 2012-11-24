@@ -70,28 +70,6 @@ class Index extends App.Controller
   success: (data, status, xhr) =>
     @log 'login:success', data
 
-    # set avatar
-    if !data.session.image
-      data.session.image = 'http://placehold.it/48x48'
-
-    # update config
-    for key, value of data.config
-      App.Config.set( key, value )
-
-    # store user data
-    for key, value of data.session
-      @Session.set( key, value )
-
-    # refresh default collections
-    for key, value of data.default_collections
-      App[key].refresh( value, options: { clear: true } )
-
-    # rebuild navbar with user data
-    App.Event.trigger 'ajax:auth', data.session
-
-    # update websocked auth info
-    App.WebSocket.auth()
-
     # rebuild navbar with ticket overview counter
     App.WebSocket.send( event: 'navupdate_ticket_overview' )
 
