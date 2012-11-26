@@ -19,10 +19,15 @@ class _Singleton
     cache: false
     async: true
 
-  queue_list: {}
+  current_request: {}
+  queue_list: []
+  queue_running: false
   count: 0
 
   constructor: (@args) ->
+
+    # run queue
+    @_run()
 
     # bindings
     $('body').bind( 'ajaxSend', =>
@@ -57,16 +62,28 @@ class _Singleton
       )
     )
 
-  ajax: (params, defaults) ->
-    data = $.extend({}, @defaults, defaults, params)
+  ajax: (params) ->
+    data = $.extend({}, @defaults, params )
     if params['id']
-      if @queue_list[ params['id'] ]
-        @queue_list[ params['id'] ].abort()
-      @queue_list[ params['id'] ] = $.ajax( data )
+      if @current_request[ params['id'] ]
+        @current_request[ params['id'] ].abort()
+      @current_request[ params['id'] ] = $.ajax( data )
     else
-      $.ajax( data )
+      if params['queue']
+        @queue_list.push data
+        if !@queue_running
+          @_run()
+      else
+        $.ajax(data)
 
-#    console.log('AJAX', params['url'] )
+  _run: =>
+    if @queue_list && @queue_list[0]
+      @queue_running = true
+      request = @queue_list.shift()
+      request.complete = =>
+        @queue_running = false
+        @_run()
+      $.ajax( request )
 
   _show_spinner: =>
     @count++
