@@ -14,6 +14,7 @@ class App.Auth
         # clear store
         App.Store.clear('all')
 
+        # set login (config, session, ...)
         @_login(data)
 
         # execute callback
@@ -32,6 +33,8 @@ class App.Auth
       type:  'GET'
       url:   '/signshow'
       success: (data, status, xhr) =>
+
+        # set login (config, session, ...)
         @_login(data)
 
       error: (xhr, statusText, error) =>
@@ -45,6 +48,8 @@ class App.Auth
       type: 'DELETE'
       url:  '/signout'
       success: =>
+
+        # set logout (config, session, ...)
         @_logout()
 
       error: (xhr, statusText, error) =>
