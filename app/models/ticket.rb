@@ -217,6 +217,10 @@ class Ticket < ApplicationModel
       }
     }
 
+    if data[:view] && !overview_selected
+      return
+    end
+
     # sortby
       # prio
       # state
@@ -290,7 +294,7 @@ class Ticket < ApplicationModel
         count()
 
       return {
-        :tickets       => ticket_ids,
+        :ticket_list   => ticket_ids,
         :tickets_count => tickets_count,
         :overview      => overview_selected_raw,
       }

@@ -8,7 +8,7 @@ class App.DashboardTicket extends App.Controller
 
   constructor: ->
     super
-    @start_page    = 1
+    @start_page = 1
     @navupdate '#'
 
     # set new key
@@ -25,24 +25,36 @@ class App.DashboardTicket extends App.Controller
     # use cache of first page
     cache = App.Store.get( @key )
     if cache
-#      @render( cache )
       @load( cache )
 
-    # get data
-#    App.Com.ajax(
-#      id:    'dashboard_ticket_' + @key,
-#      type:  'GET',
-#      url:   '/api/ticket_overviews',
-#      data:  {
-#        view:       @view,
-#        view_mode:  'd',
-#        start_page: @start_page,
-#      }
-#      processData: true,
-#      success: @load
-#    )
+    # init fetch via ajax, all other updates on time via websockets
+    else
+      App.Com.ajax(
+        id:    'dashboard_ticket_' + @key,
+        type:  'GET',
+        url:   '/api/ticket_overviews',
+        data:  {
+          view:       @view,
+          view_mode:  'd',
+          start_page: @start_page,
+        }
+        processData: true,
+        success: (data) =>
+          data.ajax = true
+          @load(data)
+      )
 
   load: (data) =>
+
+    if data.ajax
+      data.ajax = false
+      App.Store.write( @key, data )
+
+      # load user collection
+      App.Collection.load( type: 'User', data: data.collections.users )
+  
+      # load ticket collection
+      App.Collection.load( type: 'Ticket', data: data.collections.tickets )
 
     # get meta data
     App.Overview.refresh( data.overview, options: { clear: true } )
@@ -57,11 +69,12 @@ class App.DashboardTicket extends App.Controller
       @log 'refetch...', record
       @fetch()
 
-#    App.Store.write( @key, data )
-
     @render( data )
 
   render: (data) ->
+    return if !data
+    return if !data.ticket_list
+    return if !data.overview
 
     @overview      = data.overview
     @tickets_count = data.tickets_count

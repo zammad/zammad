@@ -11,19 +11,42 @@ class App.DashboardRss extends App.Controller
     @fetch()
 
   fetch: =>
+
+    # get data from cache
     cache = App.Store.get( 'dashboard_rss' )
     if cache
-      @load( cache )
+      @render( cache )
 
-  load: (data) =>
-    items = data.items || []
-    @head = data.head || '?'
-    @render(items)
+    # init fetch via ajax, all other updates on time via websockets
+    else
+      App.Com.ajax(
+        id:    'dashboard_rss'
+        type:  'GET'
+        url:   '/api/rss_fetch'
+        data:  {
+          limit: 8
+          url:   'http://www.heise.de/newsticker/heise-atom.xml'
+        }
+        processData: true
+        success: (data) =>
+          if data.message
+            @render(
+              head:    'Heise ATOM'
+              message: data.message
+            )
+          else
+            App.Store.write( 'dashboard_rss', data )
+            @render(data)
+        error: =>
+          @render(
+            head:    'Heise ATOM'
+            message: 'Unable to fetch rss!'
+          )
+      )
 
-  render: (items) ->
-    html = App.view('dashboard/rss')(
-      head:  @head,
-      items: items
+  render: (data) ->
+    @html App.view('dashboard/rss')(
+      head:  data.head,
+      items: data.item || []
+      message: data.message
     )
-    html = $(html)
-    @html html

@@ -37,12 +37,42 @@ class Index extends App.Controller
     # use cache of first page
     cache = App.Store.get( @key )
     if cache
-      @overview      = cache.overview
-      @tickets_count = cache.tickets_count
-      @ticket_list   = cache.ticket_list
       @load(cache)
 
+    # init fetch via ajax, all other updates on time via websockets
+    else
+      App.Com.ajax(
+        id:    'ticket_overview_' + @key,
+        type:  'GET',
+        url:   '/api/ticket_overviews',
+        data:  {
+          view:       @view,
+          view_mode:  @view_mode,
+        }
+        processData: true,
+        success: (data) =>
+          data.ajax = true
+          @load(data)
+        )
+
   load: (data) =>
+    return if !data
+    return if !data.ticket_list
+    return if !data.overview
+
+    @overview      = data.overview
+    @tickets_count = data.tickets_count
+    @ticket_list   = data.ticket_list
+
+    if data.ajax
+      data.ajax = false
+      App.Store.write( @key, data )
+
+      # load user collection
+      App.Collection.load( type: 'User', data: data.collections.users )
+  
+      # load ticket collection
+      App.Collection.load( type: 'Ticket', data: data.collections.tickets )
 
     # get meta data
     @overview = data.overview

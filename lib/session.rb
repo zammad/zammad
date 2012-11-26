@@ -40,6 +40,16 @@ module Session
     return session_list
   end
 
+  def self.touch( client_id )
+    data = self.get(client_id)
+    path = @path + '/' + client_id.to_s
+    data[:meta][:last_ping] = Time.new.to_i.to_s
+    File.open( path + '/session', 'w' ) { |file|
+      file.puts Marshal.dump(data)
+    }
+    return true
+  end
+
   def self.get( client_id )
     session_file = @path + '/' + client_id.to_s + '/session'
     data = nil
@@ -105,6 +115,7 @@ module Session
           @@user_threads[user.id] = Thread.new {
             UserState.new(user.id)
             @@user_threads[user.id] = nil
+            puts "close user(#{user.id}) thread"
 #            raise "Exception from thread"
           }
         end
@@ -119,13 +130,14 @@ module Session
           @@client_threads[client_id] = Thread.new {
             ClientState.new(client_id)
             @@client_threads[client_id] = nil
+            puts "close client(#{client_id}) thread"
 #            raise "Exception from thread"
           }
         end
       }
 
       # system settings
-      sleep 0.4
+      sleep 0.5
     end
   end
 
@@ -464,7 +476,7 @@ class ClientState
           self.log 'notify', "push overview_data #{overview.meta[:url]} for user #{user.id}"
           users = {}
           tickets = []
-          overview_data[:tickets].each {|ticket_id|
+          overview_data[:ticket_list].each {|ticket_id|
             self.ticket( ticket_id, tickets, users )
           }
 
@@ -494,7 +506,7 @@ class ClientState
           self.send({
             :data   => {
               :overview      => overview_data[:overview],
-              :ticket_list   => overview_data[:tickets],
+              :ticket_list   => overview_data[:ticket_list],
               :tickets_count => overview_data[:tickets_count],
               :collections    => {
                 :User   => users,

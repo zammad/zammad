@@ -22,8 +22,8 @@ class TicketOverviewsController < ApplicationController
         :array        => true,
       ) 
       tickets = []
-      overview[:tickets].each {|ticket|
-        data = { :id => ticket.id }
+      overview[:tickets].each {|ticket_id|
+        data = { :id => ticket_id }
         tickets.push data
       }
 
@@ -33,21 +33,24 @@ class TicketOverviewsController < ApplicationController
         :tickets       => tickets,
         :tickets_count => overview[:tickets_count],
       }
-      return      
+      return
     end
     overview = Ticket.overview(
-      :view            => params[:view],
-      :view_mode       => params[:view_mode],
-      :current_user_id => current_user.id,
-      :start_page      => params[:start_page],
-      :array           => true,
+      :view         => params[:view],
+#      :view_mode    => params[:view_mode],
+      :current_user => User.find( current_user.id ),
+      :array        => true,
     )
- 
+    if !overview
+      render :json => { :error => "No such view #{ params[:view] }!" }, :status => :unprocessable_entity
+      return
+    end
+
     # get related users
     users = {}
     tickets = []
-    overview[:tickets].each {|ticket|
-      data = Ticket.full_data(ticket.id)
+    overview[:ticket_list].each {|ticket_id|
+      data = Ticket.full_data(ticket_id)
       tickets.push data
       if !users[ data['owner_id'] ]
         users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
@@ -84,11 +87,14 @@ class TicketOverviewsController < ApplicationController
     # return result
     render :json => {
       :overview      => overview[:overview],
-      :tickets       => tickets,
+      :ticket_list   => overview[:ticket_list],
       :tickets_count => overview[:tickets_count],
-      :users         => users,
       :bulk          => {
         :group_id__owner_id => groups_users,
+      },
+      :collections    => {
+        :users   => users,
+        :tickets => tickets,
       },
     }
   end

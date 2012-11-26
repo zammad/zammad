@@ -5,9 +5,7 @@ class App.Com
   @ajax: (args) -> # Must be a static method
     if _instance == undefined
       _instance ?= new _Singleton
-
     _instance.ajax(args)
-    _instance
 
 # The actual Singleton class
 class _Singleton

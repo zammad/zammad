@@ -29,6 +29,7 @@ module RSS
     rescue Exception => e
       puts "can't fetch #{url}"
       puts e.inspect
+      return
     end
 
     return items

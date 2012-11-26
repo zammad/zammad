@@ -8,8 +8,6 @@ class App.DashboardActivityStream extends App.Controller
     super
     @items = []
 
-    # refresh list ever 140 sec.
-#    @interval( @fetch, 1400000, 'dashboard_activity_stream' )
     @fetch()
 
     # bind to rebuild view event
@@ -22,17 +20,20 @@ class App.DashboardActivityStream extends App.Controller
     if cache
       @load( cache )
 
-#    # get data
-#    App.Com.ajax(
-#      id:    'dashoard_activity_stream',
-#      type:  'GET',
-#      url:   '/api/activity_stream',
-#      data:  {
-#        limit: @limit,
-#      }
-#      processData: true,
-#      success: @load
-#    )
+    # init fetch via ajax, all other updates on time via websockets
+    else
+      App.Com.ajax(
+        id:    'dashoard_activity_stream'
+        type:  'GET'
+        url:   '/api/activity_stream'
+        data:  {
+          limit: 8
+        }
+        processData: true
+        success: (data) =>
+          App.Store.write( 'activity_stream', data )
+          @load(data)
+      )
 
   load: (data) =>
     items = data.activity_stream
