@@ -31,6 +31,7 @@ class _Singleton extends Spine.Module
 
   constructor: ->
     @map = {}
+    @timestampFormat = 'yyyy-mm-dd HH:MM'
 
     # observe if text has been translated
     $('body')
@@ -80,7 +81,6 @@ class _Singleton extends Spine.Module
 
   set: ( locale ) ->
     @locale = locale
-    @timestampFormat = 'yyyy-mm-dd HH:MM'
     @map = {}
     App.Com.ajax(
       id:    'i18n-set-' + locale,
