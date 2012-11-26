@@ -5,21 +5,39 @@ module Session
   @@user_threads = {}
   @@client_threads = {}
 
-  def self.create( client_id, session )
+  def self.create( client_id, session, meta )
     path = @path + '/' + client_id.to_s
     FileUtils.mkpath path
+    meta[:last_ping] = Time.new.to_i.to_s
     File.open( path + '/session', 'w' ) { |file|
-      user = { :id => session['id'] }  
-      file.puts Marshal.dump(user)
+      data = {
+        :user => {
+          :id => session['id'],
+        },
+        :meta => meta,
+      }
+#      puts 'CREATE' + Marshal.dump(data)
+      file.puts Marshal.dump(data)
     }
 
     # send update to browser
     if session['id']
-      self.transaction( client_id, {
+      self.send( client_id, {
         :event  => 'ws:login',
         :data   => { :success => true },
       })
     end
+  end
+
+  def self.list
+    client_ids = self.sessions
+    session_list = {}
+    client_ids.each { |client_id|
+      data = self.get(client_id)
+      next if !data
+      session_list[client_id] = data
+    }
+    return session_list
   end
 
   def self.get( client_id )
@@ -40,9 +58,9 @@ module Session
     return data
   end
 
-  def self.transaction( client_id, data )
+  def self.send( client_id, data )
     path = @path + '/' + client_id.to_s + '/'
-    filename = 'transaction-' + Time.new().to_i.to_s + '-' + rand(999999).to_s
+    filename = 'send-' + Time.new().to_i.to_s + '-' + rand(999999).to_s
     if File::exists?( path + filename )
       filename = filename + '-1'
       if File::exists?( path + filename )
@@ -73,10 +91,11 @@ module Session
         next if @@client_threads[client_id]
 
         # get current user  
-        user_session = Session.get( client_id )
-        next if !user_session
-        next if !user_session[:id]
-        user = User.find( user_session[:id] )
+        session_data = Session.get( client_id )
+        next if !session_data
+        next if !session_data[:user]
+        next if !session_data[:user][:id]
+        user = User.find( session_data[:user][:id] )
         next if !user
 
         # start user thread
@@ -125,7 +144,7 @@ module Session
     path = @path + '/' + client_id.to_s + '/'
     data = []
     Dir.foreach( path ) do |entry|
-      if /^transaction/.match( entry )
+      if /^send/.match( entry )
         data.push Session.queue_file( path, entry )
       end
     end
@@ -399,10 +418,11 @@ class ClientState
     while true
 
       # get connection user
-      user_session = Session.get( @client_id )
-      return if !user_session
-      return if !user_session[:id]
-      user = User.find( user_session[:id] )
+      session_data = Session.get( @client_id )
+      return if !session_data
+      return if !session_data[:user]
+      return if !session_data[:user][:id]
+      user = User.find( session_data[:user][:id] )
       return if !user
 
       # set cache key
@@ -424,7 +444,7 @@ class ClientState
         self.log 'notify', "push overview for user #{user.id}"
 
         # send update to browser
-        self.transaction({
+        self.send({
           :event  => 'navupdate_ticket_overview',
           :data   => overview,
         })
@@ -471,7 +491,7 @@ class ClientState
           }
 
           # send update to browser
-          self.transaction({
+          self.send({
             :data   => {
               :overview      => overview_data[:overview],
               :ticket_list   => overview_data[:tickets],
@@ -510,7 +530,7 @@ class ClientState
         self.log 'notify', "push ticket_create_attributes for user #{user.id}"
 
         # send update to browser
-        self.transaction({
+        self.send({
           :collection => 'ticket_create_attributes',
           :data       => data,
         })
@@ -526,7 +546,7 @@ class ClientState
 
         # send update to browser
         r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
-        self.transaction({
+        self.send({
           :event      => 'update_recent_viewed',
           :data       => r,
         })
@@ -542,7 +562,7 @@ class ClientState
 
         # send update to browser
         r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
-        self.transaction({
+        self.send({
           :event      => 'activity_stream_rebuild',
           :collection => 'activity_stream', 
           :data       => r,
@@ -559,7 +579,7 @@ class ClientState
 
         # send update to browser
         r = CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
-        self.transaction({
+        self.send({
           :event      => 'rss_rebuild',
           :collection => 'dashboard_rss',
           :data       => r,
@@ -583,7 +603,7 @@ class ClientState
           data = {}
           data['collections'] = {}
           data['collections'][key] = push_collections
-          self.transaction({
+          self.send({
             :event  => 'resetCollection',
             :data   => data,
           })
@@ -638,8 +658,8 @@ class ClientState
   end
 
   # send update to browser
-  def transaction( data )
-    Session.transaction( @client_id, data )
+  def send( data )
+    Session.send( @client_id, data )
   end
 
   def log( level, data )

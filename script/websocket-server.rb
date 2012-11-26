@@ -129,7 +129,7 @@ EventMachine.run {
       # get session
       if data['action'] == 'login'
         @clients[client_id][:session] = data['session']
-        Session.create( client_id, data['session'] )
+        Session.create( client_id, data['session'], { :type => 'websocket' } )
 
       # remember ping, send pong back
       elsif data['action'] == 'ping'
@@ -165,9 +165,13 @@ EventMachine.run {
   # check open unused connections, kick all connection without activitie in the last 5 minutes
   EventMachine.add_periodic_timer(120) {
     log 'notice', "check unused idle connections..."
+
+    idle_time_in_min = 4
+
+    # web sockets
     @clients.each { |client_id, client|
-      if ( client[:last_ping] + ( 60 * 4 ) ) < Time.now
-        log 'notice', "closing idle connection", client_id
+      if ( client[:last_ping] + ( 60 * idle_time_in_min ) ) < Time.now
+        log 'notice', "closing idle websocket connection", client_id
 
         # remember to not use this connection anymore
         client[:disconnect] = true
@@ -180,18 +184,44 @@ EventMachine.run {
         @clients.delete(client_id)
       end
     }
+
+    # ajax
+    clients = Session.list
+    clients.each { |client_id, client|
+      next if client[:meta][:type] == 'websocket'
+      if ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
+        log 'notice', "closing idle ajax connection", client_id
+        Session.destory( client_id )
+      end
+    }
   }
 
   EventMachine.add_periodic_timer(20) {
-    log 'notice', "Status: clients: #{ @clients.size }"
+
+    # websocket
+    log 'notice', "Status: websocket clients: #{ @clients.size }"
     @clients.each { |client_id, client|
       log 'notice', 'working...', client_id
     }
+
+    # ajax
+    client_list = Session.list
+    clients = 0
+    client_list.each {|client_id, client|
+      next if client[:meta][:type] == 'websocket'
+      clients = clients + 1
+    }
+    log 'notice', "Status: ajax clients: #{ clients }"
+    client_list.each {|client_id, client|
+      next if client[:meta][:type] == 'websocket'
+      log 'notice', 'working...', client_id
+    }
+
   }
 
   EventMachine.add_periodic_timer(0.4) {
     next if @clients.size == 0
-    log 'debug', "checking for data..."
+    log 'debug', "checking for data to send..."
     @clients.each { |client_id, client|
       next if client[:disconnect]
       log 'debug', 'checking for data...', client_id
