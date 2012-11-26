@@ -51,7 +51,7 @@ class LongPollingController < ApplicationController
     # check queue queue to send
     client_id = client_id_check
     begin
-      count = 60
+      count = 28
       while true
         count = count - 1
         queue = Session.queue( client_id )
