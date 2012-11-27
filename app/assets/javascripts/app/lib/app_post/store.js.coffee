@@ -58,7 +58,7 @@ class _Singleton
 
   # delete item
   delete: (key) ->
-    @store.delete key
+    delete @store[key]
     return if !@support
     localStorage.removeItem( key )
 
