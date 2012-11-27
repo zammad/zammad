@@ -182,7 +182,7 @@ class _Singleton extends App.Controller
           # use fallback if no connection was possible
           if !@connectionWasEstablished
             @backend = 'ajax'
-            @log 'WebSocket', 'notice', 'No connection to websocket, use use ajax long polling as fallback'
+            @log 'WebSocket', 'notice', 'No connection to websocket, use ajax long polling as fallback'
             @_ajaxInit()
             return
 
