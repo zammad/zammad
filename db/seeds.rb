@@ -748,18 +748,11 @@ Setting.create(
           20 => 20,
         },
       },
-      {
-        :display  => 'Logfile',
-        :null     => false,
-        :name     => 'file', 
-        :tag      => 'input',
-      },
     ],
   },
   :state => {
     :value => {
       :checksum => false,
-      :file     => 'tmp/counter.log',
       :min_size => 5,
     },
   },
@@ -782,18 +775,11 @@ Setting.create(
           false => 'no',
         },
       },
-      {
-        :display  => 'Logfile',
-        :null     => false,
-        :name     => 'file', 
-        :tag      => 'input',
-      },
     ],
   },
   :state => {
     :value => {
       :checksum => false,
-      :file     => 'tmp/counter.log',
     }
   },
   :frontend => false

@@ -386,7 +386,7 @@ class Ticket < ApplicationModel
   private
     def number_generate
       Ticket.new.number_adapter = Setting.get('ticket_number')
-      (1..15_000).each do |i|
+      (1..25_000).each do |i|
         number = @@number_adapter.number_generate_item()
         ticket = Ticket.where( :number => number ).first
         if ticket != nil

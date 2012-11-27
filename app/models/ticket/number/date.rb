@@ -2,44 +2,37 @@ module Ticket::Number::Date
   extend self  
 
   def number_generate_item
-    
+
     # get config
     config = Setting.get('ticket_number_date')
-    
+
     t = Time.now
     date = t.strftime("%Y-%m-%d")
 
     # read counter
-    file_name = Rails.root.to_s + '/' + config[:file]
-    contents = ""
-    begin
-      file = File.open(file_name)
-      file.each {|line|
-        contents << line
-      }
-      file.close
-    rescue
-      contents = '0'
-    end
-    
-    # increase counter
-    counter, date_file = contents.to_s.split(';')
+    counter_increment = nil
+    Ticket::Counter.transaction do
+      counter = Ticket::Counter.where( :generator => 'Date' ).lock(true).first
+      if !counter
+        counter = Ticket::Counter.new( :generator => 'Date', :content => '0' )
+      end
 
-    if date_file == date
-      counter = counter.to_i + 1
-    else
-      counter = 1
-    end
-    contents = counter.to_s + ';' + date
+      # increase counter
+      counter_increment, date_file = counter.content.to_s.split(';')
+      if date_file == date
+        counter_increment = counter_increment.to_i + 1
+      else
+        counter_increment = 1
+      end
 
-    # write counter
-    file = File.open(file_name, 'w')
-    file.write(contents)
-    file.close
+      # store new counter value
+      counter.content = counter_increment.to_s + ';' + date
+      counter.save
+    end
 
     system_id = Setting.get('system_id') || ''
-    number = t.strftime("%Y%m%d") + system_id.to_s + sprintf( "%04d", counter)
-    
+    number = t.strftime("%Y%m%d") + system_id.to_s + sprintf( "%04d", counter_increment)
+
     # calculate a checksum
     # The algorithm to calculate the checksum is derived from the one
     # Deutsche Bundesbahn (german railway company) uses for calculation
@@ -55,9 +48,9 @@ module Ticket::Number::Date
       (1..number.length).each do |i|
         digit = number.to_s[i, 1]
         chksum = chksum + ( mult * digit.to_i )
-        mult += 1;
+        mult += 1
         if mult == 3
-          mult = 1;
+          mult = 1
         end
       end
       chksum %= 10

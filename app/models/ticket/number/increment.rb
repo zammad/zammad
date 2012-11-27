@@ -8,27 +8,21 @@ module Ticket::Number::Increment
 
     # read counter
     min_digs  = config[:min_size] || 4;
-    file_name = Rails.root.to_s + '/' + config[:file]
-    contents = ""
-    begin
-      file = File.open( file_name )
-      file.each {|line|
-        contents << line
-      }
-      file.close
-    rescue
-      contents = '0'
+    counter_increment = nil
+    Ticket::Counter.transaction do
+      counter = Ticket::Counter.where( :generator => 'Increment' ).lock(true).first
+      if !counter
+        counter = Ticket::Counter.new( :generator => 'Increment', :content => '0' )
+      end
+      counter_increment = counter.content.to_i
+
+      # increase counter
+      counter_increment += 1
+
+      # store new counter value
+      counter.content = counter_increment.to_s
+      counter.save
     end
-
-    # increase counter
-    counter, date_file = contents.to_s.split(';')
-    counter = counter.to_i + 1
-    contents = counter.to_s + ';'
-
-    # write counter
-    file = File.open( file_name, 'w' )
-    file.write(contents)
-    file.close
 
     # fill up number counter
     if config[:checksum]
@@ -36,12 +30,12 @@ module Ticket::Number::Increment
     end
     fillup = Setting.get('system_id') || '1'
     ( 1..100 ).each do |i|
-      if ( fillup.length.to_i + counter.to_s.length.to_i ) < min_digs.to_i
+      if ( fillup.length.to_i + counter_increment.to_s.length.to_i ) < min_digs.to_i
         fillup = fillup + '0'
       end
     end
-    number = fillup.to_s + counter.to_s
-    
+    number = fillup.to_s + counter_increment.to_s
+
     # calculate a checksum
     # The algorithm to calculate the checksum is derived from the one
     # Deutsche Bundesbahn (german railway company) uses for calculation
@@ -57,9 +51,9 @@ module Ticket::Number::Increment
       (1..number.length).each do |i|
         digit = number.to_s[i, 1]
         chksum = chksum + ( mult * digit.to_i )
-        mult += 1;
+        mult += 1
         if mult == 3
-          mult = 1;
+          mult = 1
         end
       end
       chksum %= 10
@@ -79,11 +73,11 @@ module Ticket::Number::Increment
     ticket_hook         = Setting.get('ticket_hook')
     ticket_hook_divider = Setting.get('ticket_hook_divider') || ''
     ticket              = nil
-    
+
     # probe format
-    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,50})/i then
+    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,48})/i then
       ticket = Ticket.where( :number => $1 ).first
-    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i then
+    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i then
       ticket = Ticket.where( :number => $1 ).first
     end
     return ticket
