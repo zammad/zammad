@@ -140,21 +140,31 @@ EventMachine.run {
       elsif data['action'] == 'broadcast'
 
         # list all current clients
-        @clients.each { |local_client_id, local_client|
+        client_list = Session.list
+        client_list.each {|local_client_id, local_client|
           if local_client_id != client_id
 
             # broadcast to recipient list
             if data['recipient'] && data['recipient']['user_id']
               data['recipient']['user_id'].each { |user_id|
-                if local_client[:session]['id'] == user_id
+                if local_client[:user][:id] == user_id
                   log 'notice', "send broadcast to (user_id=#{user_id})", local_client_id
-                  local_client[:websocket].send( "[#{msg}]" )
+                  if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
+                    @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
+                  else
+                    Session.send( local_client_id, data )
+                  end
                 end
               }
+
             # broadcast every client
             else
               log 'notice', "send broadcast", local_client_id
-              local_client[:websocket].send( "[#{msg}]" )
+              if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
+                @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
+              else
+                Session.send( local_client_id, data )
+              end
             end
           end
         }
@@ -162,7 +172,7 @@ EventMachine.run {
     }
   end
 
-  # check open unused connections, kick all connection without activitie in the last 5 minutes
+  # check open unused connections, kick all connection without activitie in the last 2 minutes
   EventMachine.add_periodic_timer(120) {
     log 'notice', "check unused idle connections..."
 

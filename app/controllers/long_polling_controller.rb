@@ -29,6 +29,28 @@ class LongPollingController < ApplicationController
         user = User.user_data_full( user_id )
       end
       Session.create( client_id, user, { :type => 'ajax' } )
+
+    # broadcast
+    elsif params['data']['action'] == 'broadcast'
+
+      # list all current clients
+      client_list = Session.list
+      client_list.each {|local_client_id, local_client|
+        if local_client_id != client_id
+
+          # broadcast to recipient list
+          if params['data']['recipient'] && params['data']['recipient']['user_id']
+            params['data']['recipient']['user_id'].each { |user_id|
+              if local_client[:user][:id] == user_id
+                Session.send( local_client_id, params['data'] )
+              end
+            }
+          # broadcast every client
+          else
+            Session.send( local_client_id, params['data'] )
+          end
+        end
+      }
     end
 
     if new_connection
