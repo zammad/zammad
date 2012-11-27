@@ -92,3 +92,6 @@ class _Singleton
     if @count == 0
       $('.spinner').hide()
 
+    else if App.WebSocket.channel() is 'ajax'
+      if @count == 1
+        $('.spinner').hide()

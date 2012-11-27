@@ -7,20 +7,29 @@ class App.WebSocket
       _instance ?= new _Singleton
     _instance
 
-  @close: (args) -> # Must be a static method
-    if _instance isnt undefined
-      _instance.close(args)
+  @close: (args) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.close(args)
 
-  @send: (args) -> # Must be a static method
-    @connect()
+  @send: (args) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
     _instance.send(args)
 
-  @auth: (args) -> # Must be a static method
-    @connect()
+  @auth: (args) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
     _instance.auth(args)
 
+  @channel: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.channel()
+
   @_spool: ->
-    @connect()
+    if _instance == undefined
+      _instance ?= new _Singleton
     _instance.spool()
 
 # The actual Singleton class
@@ -48,6 +57,9 @@ class _Singleton extends App.Controller
 
     # inital connect
     @connect()
+
+  channel: ->
+    @backend
 
   send: (data) =>
     if @backend is 'ajax'
