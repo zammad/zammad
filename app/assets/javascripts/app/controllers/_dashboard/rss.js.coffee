@@ -15,6 +15,7 @@ class App.DashboardRss extends App.Controller
     # get data from cache
     cache = App.Store.get( 'dashboard_rss' )
     if cache
+      cache.head = 'Heise ATOM'
       @render( cache )
 
     # init fetch via ajax, all other updates on time via websockets
@@ -36,6 +37,7 @@ class App.DashboardRss extends App.Controller
             )
           else
             App.Store.write( 'dashboard_rss', data )
+            data.head = 'Heise ATOM'
             @render(data)
         error: =>
           @render(
@@ -47,6 +49,6 @@ class App.DashboardRss extends App.Controller
   render: (data) ->
     @html App.view('dashboard/rss')(
       head:  data.head,
-      items: data.item || []
+      items: data.items || []
       message: data.message
     )
