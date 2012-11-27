@@ -79,7 +79,6 @@ class App.Navigation extends App.Controller
           term: @term
         processData: true,
         success: (data, status, xhr) =>
-          console.log data
 
           # load user collection
           if data.users

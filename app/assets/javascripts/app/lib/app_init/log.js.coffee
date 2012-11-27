@@ -1,9 +1,6 @@
 class App.Log
   _instance = undefined
 
-#  @sub: (module) ->
-#  @module: (name) ->
-
   @log: ( module, level, args... ) ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -17,7 +14,6 @@ class App.Log
 
 class _Singleton
   constructor: ->
-    console.log 'NNNNNNNEEEWWW LOG!!!'
     @config = {}
 #      Session: true
 #      ControllerForm: true
@@ -30,5 +26,5 @@ class _Singleton
 
 
   _log: ( module, level, args ) ->
-    console.log "App.#{module}(#{level})", args
+    window.console.log "App.#{module}(#{level})", args
 

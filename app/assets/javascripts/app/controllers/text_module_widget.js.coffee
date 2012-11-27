@@ -111,7 +111,7 @@ class App.TextModuleUI extends App.Controller
           # prevent default key action
           e.preventDefault()
 
-        console.log 'CTRL+', ui.CaptureList
+#        console.log 'CTRL+', ui.CaptureList
         ui.el.find('#text-module-search').val( ui.CaptureList )
         ui.renderTable( ui.CaptureList )
 
@@ -125,7 +125,7 @@ class App.TextModuleUI extends App.Controller
     inputElement.bind('keyup', (e) ->
       if e.keyCode == 17
         ui.CaptureList = ''
-        console.log 'CTRL UP - pressed ', ui.CaptureList
+#        console.log 'CTRL UP - pressed ', ui.CaptureList
         ui.Capture = false
         ui.el.find('#text-module-search').val( '' )
         ui.renderTable()
@@ -262,7 +262,7 @@ class App.TextModuleUI extends App.Controller
       try
         key = eval (varString)
       catch error
-        console.log( "tag replacement: " + error )
+#        console.log( "tag replacement: " + error )
         key = ''
       return key
     )

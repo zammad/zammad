@@ -38,7 +38,6 @@ class _Singleton extends Spine.Module
       .delegate '.translation', 'focus', (e) =>
         $this = $(e.target)
         $this.data 'before', $this.html()
-#        console.log('11111current', $this.html())
         return $this
 #      .delegate '.translation', 'blur keyup paste', (e) =>
       .delegate '.translation', 'blur', (e) =>
@@ -55,7 +54,7 @@ class _Singleton extends Spine.Module
 
         # update translation
         return if $this.data('before') is translation_new
-        console.log 'Translation Update', translation_new, $this.data 'before'
+        @log 'i18n', 'debug', 'translate Update', translation_new, $this.data, 'before'
         $this.data 'before', translation_new
 
         # update runtime translation map
@@ -101,9 +100,6 @@ class _Singleton extends Spine.Module
 
           # load in collection if needed
           App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale } )
-
-      error: (xhr, statusText, error) =>
-        console.log 'error', error, statusText, xhr.statusCode
     )
 
   translate_inline: ( string, args... ) =>

@@ -53,7 +53,6 @@ class App.Model extends Spine.Model
 
           # get confirm password
           if data['params'][attribute.name] isnt data['params']["#{attribute.name}_confirm"]
-            console.log 'aaa', data['params'][attribute.name], data['params']["#{attribute.name}_confirm"], attribute[null]
             errors[attribute.name] = 'didn\'t match'
             errors["#{attribute.name}_confirm"] = ''
 

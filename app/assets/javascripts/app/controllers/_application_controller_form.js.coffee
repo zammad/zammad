@@ -630,7 +630,7 @@ class App.ControllerForm extends App.Controller
         inputSelectData = param[ key ]
         inputSelectObject[ name ] = {}
         for x in [0..inputSelectData.length] by 2
-          console.log 'for by 111', x, inputSelectData, inputSelectData[x], inputSelectData[ x + 1 ]
+#          console.log 'for by 111', x, inputSelectData, inputSelectData[x], inputSelectData[ x + 1 ]
           if inputSelectData[ x ]
             inputSelectObject[ name ][ inputSelectData[x] ] = inputSelectData[ x + 1 ]
 

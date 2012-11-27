@@ -63,7 +63,6 @@ class _Singleton extends App.Controller
       if @ws.readyState is 0
         @queue.push data
       else
-#        console.log( 'ws:send', data )
         string = JSON.stringify( data )
         @ws.send(string)
 
@@ -229,7 +228,6 @@ class _Singleton extends App.Controller
 
     # stop init request if new one is started
     if @_ajaxInitWorking
-      console.log '@_ajaxInitWorking', @_ajaxInitWorking
       @_ajaxInitWorking.abort()
 
     # call init request

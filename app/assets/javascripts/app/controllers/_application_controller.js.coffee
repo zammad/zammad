@@ -21,7 +21,6 @@ class App.Controller extends Spine.Controller
 
   scrollTo: ( x = 0, y = 0, delay = 0 ) ->
     a = ->
-      console.log('scollTo', x, y )
       window.scrollTo( x, y )
 
     @delay( a, delay )

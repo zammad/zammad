@@ -90,7 +90,6 @@ class Index extends App.Controller
       @navigate '#/'
 
   error: (xhr, statusText, error) =>
-    console.log 'login:error'
 
     # add notify
     App.Event.trigger 'notify:removeall'

@@ -130,7 +130,6 @@ class _Singleton extends Spine.Module
 
     # load full array once
     if _.isArray( params.data )
-#      console.log( 'load ARRAY', params.data)
       App[ params.type ].refresh( params.data )
 
       # remember in store if not already requested from local storage
@@ -142,7 +141,6 @@ class _Singleton extends Spine.Module
     # load data from object
 #    if _.isObject( params.data )
     for key, object of params.data
-#      console.log( 'load OB', object)
       App[ params.type ].refresh( object )
 
       # remember in store if not already requested from local storage
@@ -151,10 +149,8 @@ class _Singleton extends Spine.Module
 
   find: ( type, id, callback, force ) ->
 
-#    console.log( 'find', type, id, force )
 #    if App[type].exists( id ) && !callback
     if !force && App[type].exists( id )
-#      console.log( 'find exists', type, id )
       data = App[type].find( id )
       if callback
         callback( data )
@@ -167,13 +163,11 @@ class _Singleton extends Spine.Module
 
         # execute callback if record got loaded
         App[type].one 'refresh', ->
-          console.log 'loaded..' + type +  '..', id
-
           data = App.Collection.find( type, id )
           callback( data )
 
         # fetch object
-        console.log 'loading..' + type +  '..', id
+        @log 'Collection', 'debug', 'loading..' + type +  '..', id
         App[type].fetch( id: id )
         return true
       return false
