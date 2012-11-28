@@ -17,7 +17,7 @@ class Ticket < ApplicationModel
   after_destroy :cache_delete
 
   def self.number_check (string)
-    number_adapter.number_check_item(string)
+    self.number_adapter.number_check_item(string)
   end
 
   def agent_of_group
@@ -365,28 +365,28 @@ class Ticket < ApplicationModel
     }
   end
 
-  private
+  def self.number_adapter
 
-    def number_adapter
-
-      # load backend based on config
-      adapter_name = Setting.get('ticket_number')
-      adapter = nil
-      case adapter_name
-      when Symbol, String
-        require "ticket/number/#{adapter_name.to_s.downcase}"
-        adapter = Ticket::Number.const_get("#{adapter_name.to_s.capitalize}")
-      else  
-        raise "Missing number_adapter '#{adapter_name}'"
-      end
-      return adapter
+    # load backend based on config
+    adapter_name = Setting.get('ticket_number')
+    adapter = nil
+    case adapter_name
+    when Symbol, String
+      require "ticket/number/#{adapter_name.to_s.downcase}"
+      adapter = Ticket::Number.const_get("#{adapter_name.to_s.capitalize}")
+    else  
+      raise "Missing number_adapter '#{adapter_name}'"
     end
+    return adapter
+  end
+
+  private
 
     def number_generate
 
       # generate number
       (1..25_000).each do |i|
-        number = number_adapter.number_generate_item()
+        number = Ticket.number_adapter.number_generate_item()
         ticket = Ticket.where( :number => number ).first
         if ticket != nil
           number = number_adapter.number_generate_item()
