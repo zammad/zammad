@@ -389,7 +389,7 @@ class Ticket < ApplicationModel
         number = Ticket.number_adapter.number_generate_item()
         ticket = Ticket.where( :number => number ).first
         if ticket != nil
-          number = number_adapter.number_generate_item()
+          number = Ticket.number_adapter.number_generate_item()
         else
           self.number = number
           return number
