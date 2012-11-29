@@ -157,10 +157,9 @@ class App.Navigation extends App.Controller
         if !roles && item.role
           match = _.include( item.role, 'Anybody' )
         if roles
-          roles.forEach( (role) =>
+          for role in roles
             if !match
-              match = _.include(item.role, role.name)
-          )
+              match = _.include( item.role, role.name )
 
         if match
           level1.push item
@@ -178,10 +177,9 @@ class App.Navigation extends App.Controller
             if !roles
               match = _.include( itemSub.role, 'Anybody' )
             if roles
-              roles.forEach( (role) =>
+              for role in roles
                 if !match
                   match = _.include( itemSub.role, role.name )
-              )
 
             if match
               dropdown[ item.parent ].push itemSub

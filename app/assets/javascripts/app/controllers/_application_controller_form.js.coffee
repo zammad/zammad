@@ -528,7 +528,7 @@ class App.ControllerForm extends App.Controller
   # build options list
   _buildOptionList: (list, attribute) ->
 
-    list.forEach( (item) =>
+    for item in list
 
       # if active or if active doesn't exist
       if item.active || !( 'active' of item )
@@ -542,7 +542,6 @@ class App.ControllerForm extends App.Controller
           value: item.id,
           note:  item.note,
         }
-    )
 
   # execute filter
   _filterOption: (attribute) ->
