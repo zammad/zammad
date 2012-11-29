@@ -439,7 +439,8 @@ class Article extends App.Controller
 
     # build html body
     # cleanup body
-    @article['html'] = @article.body.trim()
+#    @article['html'] = @article.body.trim()
+    @article['html'] = $.trim( @article.body.trim() )
     @article['html'].replace( /\n\r/g, "\n" )
     @article['html'].replace( /\n\n\n/g, "\n\n" )
 

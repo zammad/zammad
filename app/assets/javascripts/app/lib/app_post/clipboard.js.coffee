@@ -70,7 +70,8 @@ class _Singleton
     else if document.selection
       text = document.selection.createRange().text
     if text
-      text = text.toString().trim()
+#      text = text.toString().trim()
+      text = $.trim( text.toString() )
     text
 
   # get current selection
