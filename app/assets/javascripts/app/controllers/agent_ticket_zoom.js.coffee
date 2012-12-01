@@ -319,7 +319,7 @@ class Index extends App.Controller
       # show to
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       @el.find('[name="to"]').val(to)
-    
+
     else if article_type.name is 'email'
       @el.find('[name="to"]').val(article.from)
 #    @log 'reply ', article, @el.find('[name="to"]')
@@ -356,12 +356,13 @@ class Index extends App.Controller
     e.preventDefault()
     params = @formParam(e.target)
     @log 'TicketZoom', 'notice', 'update', params, @ticket
+    article_type = App.TicketArticleType.find( params['ticket_article_type_id'] )
 
     # update ticket
     ticket_update = {}
     for item in @configure_attributes_ticket
       ticket_update[item.name] = params[item.name]
-      
+
     # check owner assignment
     if !@isRole('Customer')
       if !ticket_update['owner_id']
@@ -371,6 +372,26 @@ class Index extends App.Controller
     if !ticket_update['title'] && !@ticket.title
       alert( App.i18n.translateContent('Title needed') )
       return
+
+    if article_type.name is 'email'
+
+      # check if recipient exists
+      if !params['to'] && !params['cc']
+        alert( App.i18n.translateContent('Need recipient in "To" or "Cc".') )
+        return
+
+      # check if message exists
+      if !params['body']
+        alert( App.i18n.translateContent('Text needed') )
+        return
+
+
+    # check attachment
+    if params['body']
+      attachmentTranslated = App.i18n.translateContent('Attachment')
+      attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
+      if params['body'].match(/attachment/i) || params['body'].match( attachmentTranslatedRegExp )
+        return if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
 
     @ticket.load( ticket_update )
     @log 'TicketZoom', 'notice', 'update ticket', ticket_update, @ticket

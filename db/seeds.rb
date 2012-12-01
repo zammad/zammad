@@ -786,52 +786,6 @@ Setting.create(
 )
 
 Setting.create(
-  :title       => 'Sender Format',
-  :name        => 'ticket_define_email_from',
-  :area        => 'Ticket::SenderFormat',
-  :description => 'Defines how the From field from the emails (sent from answers and email tickets) should look like.',
-  :options     => {
-    :form => [
-      {
-        :display   => '',
-        :null      => true,
-        :name      => 'ticket_define_email_from', 
-        :tag       => 'select',
-        :options   => {
-          :SystemAddressName          => 'System Address Display Name',
-          :AgentNameSystemAddressName => 'Agent Name + FromSeparator + System Address Display Name',
-        },
-      },
-    ],
-  },
-  :state => {
-    :value => 'SystemAddressName',
-  },
-  :frontend => false
-)
-
-Setting.create(
-  :title       => 'Sender Format Seperator',
-  :name        => 'ticket_define_email_from_seperator',
-  :area        => 'Ticket::SenderFormat',
-  :description => 'Defines the separator between the agents real name and the given queue email address.',
-  :options     => {
-    :form => [
-      {
-        :display  => '',
-        :null     => false,
-        :name     => 'ticket_define_email_from_seperator', 
-        :tag      => 'input',
-      },
-    ],
-  },
-  :state => {
-    :value => 'via',
-  },
-  :frontend => false
-)
-
-Setting.create(
   :title       => 'Enable Ticket creation',
   :name        => 'customer_ticket_create',
   :area        => 'CustomerWeb::Base',
@@ -879,6 +833,52 @@ Setting.create(
     :value => true,
   },
   :frontend    => true
+)
+
+Setting.create(
+  :title       => 'Sender Format',
+  :name        => 'ticket_define_email_from',
+  :area        => 'Email::Base',
+  :description => 'Defines how the From field from the emails (sent from answers and email tickets) should look like.',
+  :options     => {
+    :form => [
+      {
+        :display   => '',
+        :null      => true,
+        :name      => 'ticket_define_email_from', 
+        :tag       => 'select',
+        :options   => {
+          :SystemAddressName          => 'System Address Display Name',
+          :AgentNameSystemAddressName => 'Agent Name + FromSeparator + System Address Display Name',
+        },
+      },
+    ],
+  },
+  :state => {
+    :value => 'SystemAddressName',
+  },
+  :frontend => false
+)
+
+Setting.create(
+  :title       => 'Sender Format Seperator',
+  :name        => 'ticket_define_email_from_seperator',
+  :area        => 'Email::Base',
+  :description => 'Defines the separator between the agents real name and the given group email address.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => false,
+        :name     => 'ticket_define_email_from_seperator', 
+        :tag      => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => 'via',
+  },
+  :frontend => false
 )
 
 Setting.create(
@@ -1812,6 +1812,7 @@ Translation.create( :locale => 'de', :source => "The way to communicate with us 
 Translation.create( :locale => 'de', :source => "or", :target => "oder", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "yes", :target => "ja", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "no", :target => "nein", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Attachment", :target => "Anhang", :updated_by_id => 1, :created_by_id => 1  )
 
 
 #Translation.create( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )

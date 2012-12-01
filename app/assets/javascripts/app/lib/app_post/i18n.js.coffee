@@ -32,7 +32,7 @@ class _Singleton extends Spine.Module
   constructor: ->
     @map = {}
     @timestampFormat = 'yyyy-mm-dd HH:MM'
-
+    @set('de')
     # observe if text has been translated
     $('body')
       .delegate '.translation', 'focus', (e) =>
