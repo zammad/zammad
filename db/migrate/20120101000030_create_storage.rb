@@ -3,7 +3,7 @@ class CreateStorage < ActiveRecord::Migration
     create_table :stores do |t|
       t.references :store_object,               :null => false
       t.references :store_file,                 :null => false
-      t.column :o_id,           :integer,       :null => false
+      t.column :o_id,           :integer,       :limit => 8,    :null => false
       t.column :preferences,    :string,        :limit => 2500, :null => true
       t.column :size,           :string,        :limit => 50,   :null => true
       t.column :filename,       :string,        :limit => 250,  :null => false

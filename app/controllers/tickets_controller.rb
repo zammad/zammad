@@ -51,26 +51,32 @@ class TicketsController < ApplicationController
 
     # create article if given
     if params[:article]
-      @article = Ticket::Article.new(params[:article])
+      form_id  = params[:article][:form_id]
+      params[:article].delete(:form_id)
+      @article = Ticket::Article.new( params[:article] )
       @article.created_by_id = params[:article][:created_by_id] || current_user.id
       @article.updated_by_id = params[:article][:updated_by_id] || current_user.id
       @article.ticket_id     = @ticket.id
 
       # find attachments in upload cache
-      @article['attachments'] = Store.list(
-        :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
-        :o_id => @article.ticket_id
-      )
+      if form_id
+        @article['attachments'] = Store.list(
+          :object => 'UploadCache',
+          :o_id   => form_id,
+        )
+      end
       if !@article.save
         render :json => @article.errors, :status => :unprocessable_entity
         return
       end
-      
+
       # remove attachments from upload cache
-      Store.remove(
-        :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
-        :o_id   => @article.ticket_id
-      )
+      if params[:form_id]
+        Store.remove(
+          :object => 'UploadCache',
+          :o_id   => form_id,
+        )
+      end
     end
 
     render :json => @ticket, :status => :created

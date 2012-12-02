@@ -1,5 +1,5 @@
 class App.TicketArticle extends App.Model
-  @configure 'TicketArticle', 'from', 'to', 'cc', 'subject', 'body', 'ticket_id', 'ticket_article_type_id', 'ticket_article_sender_id', 'internal', 'in_reply_to'
+  @configure 'TicketArticle', 'from', 'to', 'cc', 'subject', 'body', 'ticket_id', 'ticket_article_type_id', 'ticket_article_sender_id', 'internal', 'in_reply_to', 'form_id'
   @extend Spine.Model.Ajax
   @url: '/api/ticket_articles'
   @configure_attributes = [

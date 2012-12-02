@@ -81,8 +81,6 @@
         <form class="form-stacked keepleft">
           <div id="form-ticket-update"></div>
           <div id="form-article-update"></div>
-          <div class="keepleft" id="file-uploader"></div>
-          &nbsp;
           <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
         </form>
       </div>

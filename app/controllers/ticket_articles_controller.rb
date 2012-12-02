@@ -17,22 +17,26 @@ class TicketArticlesController < ApplicationController
 
   # POST /articles
   def create
-    @article = Ticket::Article.new(params[:ticket_article])
+    form_id  = params[:ticket_article][:form_id]
+    params[:ticket_article].delete(:form_id)
+    @article = Ticket::Article.new( params[:ticket_article] )
     @article.created_by_id = current_user.id
     @article.updated_by_id = current_user.id
 
     # find attachments in upload cache
-    @article['attachments'] = Store.list(
-      :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
-      :o_id => @article.ticket_id
-    )
+    if form_id
+      @article['attachments'] = Store.list(
+        :object => 'UploadCache',
+        :o_id   => form_id,
+      )
+    end
 
     if @article.save
 
       # remove attachments from upload cache
       Store.remove(
-        :object => 'UploadCache::TicketZoom::' + current_user.id.to_s,
-        :o_id   => @article.ticket_id
+        :object => 'UploadCache',
+        :o_id   => form_id,
       )
 
       render :json => @article, :status => :created
@@ -61,12 +65,8 @@ class TicketArticlesController < ApplicationController
     head :ok
   end
 
-
-
   # POST /ticket_attachment/new
   def attachment_new
-#    puts '-------'
-#    puts params.inspect
 
     # store file
 #    content_type = request.content_type
@@ -83,7 +83,7 @@ class TicketArticlesController < ApplicationController
       'Content-Type' => content_type
     }
     Store.add(
-      :object      => 'UploadCache::' + params[:form] + '::' + current_user.id.to_s,
+      :object      => 'UploadCache',
       :o_id        => params[:form_id],
       :data        => request.body.read,
       :filename    => params[:qqfile],
@@ -95,7 +95,7 @@ class TicketArticlesController < ApplicationController
       :success  => true,
     }
   end
-  
+
   # GET /ticket_attachment/1
   def attachment
 

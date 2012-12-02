@@ -17,19 +17,19 @@ class Store < ActiveRecord::Base
       )
     end
     data['store_object_id'] = store_object.id
-   
+
     # check if record already exists
 #    store = Store.where( :store_object_id => store_object.id, :o_id => data['o_id'],  ).first
 #    if store != nil
 #      return store
 #    end
-    
+
     # check real store
     md5 = Digest::MD5.hexdigest( data['data'] )
     data['size'] = data['data'].to_s.to_blob.bytesize
 
     file = Store::File.where( :md5 => md5 ).first
-    
+
     # store attachment
     if file == nil
       file = Store::File.create(
@@ -37,7 +37,7 @@ class Store < ActiveRecord::Base
         :md5  => md5
       )
     end
-    
+
     data['store_file_id'] = file.id
     data['created_by_id'] = 1
 
@@ -50,11 +50,10 @@ class Store < ActiveRecord::Base
 
     return store
   end
-  
+
   def self.list(data)
     # search
-    stores = Store.where( :store_object_id => Store::Object.where( :name => data[:object] ) ).
-      where( :o_id => data[:o_id] ).
+    stores = Store.where( :store_object_id => Store::Object.where( :name => data[:object] ), :o_id => data[:o_id].to_i ).
       order('created_at ASC, id ASC')
     return stores
   end
@@ -67,10 +66,9 @@ class Store < ActiveRecord::Base
     stores.each do |store|
       store.destroy
     end
-    return 1
+    return true
   end
 
-  
   class Object < ActiveRecord::Base
     validates :name, :presence => true
   end

@@ -20,6 +20,7 @@ class Index extends App.Controller
 
     @navupdate '#'
 
+    @form_id        = App.ControllerForm.formId()
     @edit_form      = undefined
     @ticket_id      = params.ticket_id
     @article_id     = params.article_id
@@ -105,7 +106,7 @@ class Index extends App.Controller
       { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 5,  limit: 100, null: true, class: 'span7', item_class: ''  },
+      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true  },
       { name: 'internal',                 display: 'Visability',  tag: 'select',   default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '' },
     ]
     if @isRole('Customer')
@@ -114,7 +115,7 @@ class Index extends App.Controller
         { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
         { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
         { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-        { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 5,  limit: 100, null: true, class: 'span7', item_class: ''  },
+        { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true  },
       ]
 
     @html App.view('agent_ticket_zoom')(
@@ -125,6 +126,7 @@ class Index extends App.Controller
 
     new App.ControllerForm(
       el:        @el.find('#form-ticket-update')
+      form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_ticket
         className:            'create'
@@ -134,6 +136,7 @@ class Index extends App.Controller
 
     new App.ControllerForm(
       el:        @el.find('#form-article-update')
+      form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_article
       form_data: @edit_form
@@ -157,18 +160,6 @@ class Index extends App.Controller
       scrollTo = ->
         @scrollTo( 0, offset )
       @delay( scrollTo, 100 )
-
-    @delay(@u, 200)
-
-  u: =>
-    uploader = new qq.FileUploader(
-      element: document.getElementById('file-uploader')
-      action:  '/api/ticket_attachment_new'
-      params:
-        form:    'TicketZoom'
-        form_id: @ticket.id
-      debug:   false
-    )
 
   ticket_action_row: =>
 
@@ -410,8 +401,10 @@ class Index extends App.Controller
         # create article
         if params['body']
           article = new App.TicketArticle
-          params.from = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
+          params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
           params.ticket_id = @ticket.id
+          params.form_id   = @form_id
+
           if !params['internal']
             params['internal'] = false
 

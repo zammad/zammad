@@ -284,6 +284,20 @@ class App.ControllerForm extends App.Controller
     # textarea
     else if attribute.tag is 'textarea'
       item = $( App.view('generic/textarea')( attribute: attribute ) )
+      if attribute.upload
+        fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+        item.after('<div class="' + attribute.class + '" id="' + fileUploaderId + '"></div>')
+
+        # add file uploader
+        u = =>
+          uploader = new qq.FileUploader(
+            element: document.getElementById(fileUploaderId)
+            action:  '/api/ticket_attachment_new'
+            debug:   false
+            params:
+              form_id: @form_id
+          )
+        @delay( u, 200 )
 
     # tag
     else if attribute.tag is 'tag'
@@ -643,6 +657,9 @@ class App.ControllerForm extends App.Controller
     App.Log.log 'ControllerForm', 'notice', 'formParam', form, param
     return param
 
+  @formId: ->
+    formId = new Date().getTime() + Math.floor( Math.random() * 99999 )
+    formId.toString().substr formId.toString().length-9, 9
 
   @disable: (form) ->
     App.Log.log 'ControllerForm', 'notice', 'disable...', $(form.target).parent()

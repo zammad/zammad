@@ -7,6 +7,27 @@ label, input, button, select, textarea {
   font-size: 13px;
 }
 
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  margin-bottom: 1px;
+}
+
+
 .spinner {
   float: left;
   background:url("/assets/spinner.gif") no-repeat;
@@ -350,4 +371,13 @@ footer {
   line-height: 14px;
   text-shadow: 0 1px 0 #fff;
   opacity: 0.9;
+}
+
+.qq-upload-list {
+  margin: 5px 10px 0px;
+  padding: 0;
+  list-style: disc;
+}
+.qq-upload-icon {
+  margin: 0px 20px;
 }
