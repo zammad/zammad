@@ -146,6 +146,12 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_article_flags, [:ticket_articles_id]
     add_index :ticket_article_flags, [:created_by_id]
 
+    create_table :ticket_counters do |t|
+      t.column :content,              :string, :limit => 100, :null => false
+      t.column :generator,            :string, :limit => 100, :null => false
+    end
+    add_index :ticket_counters, [:generator], :unique => true
+
     create_table :overviews do |t|
       t.references :user,                                      :null => true
       t.references :role,                                      :null => false
@@ -223,6 +229,7 @@ class CreateTicket < ActiveRecord::Migration
     drop_table :link_types
     drop_table :link_objects
     drop_table :overviews
+    drop_table :ticket_counters
     drop_table :ticket_time_accounting
     drop_table :ticket_article_flags
     drop_table :ticket_articles
