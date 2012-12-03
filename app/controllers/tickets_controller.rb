@@ -499,10 +499,10 @@ class TicketsController < ApplicationController
     # do query
     tickets_all = Ticket.select('DISTINCT(tickets.id)').
       where(conditions).
-      where( '( title LIKE ? OR number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
+      where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
       joins(:articles).
       limit(limit).
-      order('tickets.created_at DESC')
+      order('`tickets`.`created_at` DESC')
 
     # build result list
     tickets = []
