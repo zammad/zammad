@@ -1,6 +1,7 @@
 <div class="modal-header">
   <a href="#" class="close">&times;</a>
   <h2><%- @T( 'History' ) %></h2>
+  <a href="#" data-type="sortorder" id="sortorder" class="<%= @state %>"><%- @T( 'Change order' ) %></a>
 </div>
 <div class="modal-body">
 

@@ -1,4 +1,9 @@
 class App.TicketHistory extends App.ControllerModal
+  
+  events:
+    'click [data-type=sortorder]': 'sortorder',
+    'click .close': 'close',
+
   constructor: ->
     super
     @fetch(@ticket_id)
@@ -49,3 +54,33 @@ class App.TicketHistory extends App.ControllerModal
 
     # show frontend times
     @delay( @frontendTimeUpdate, 200 )
+
+  sortorder: ->
+    isSorted = @el.find('.sorted')
+    @log 'is sorted?', isSorted
+    if isSorted.length
+      @sortstate = 'notsorted'
+      @html App.view('agent_ticket_history')(
+        objects: App.Collection.all( type: 'History' ),
+        state: @sortstate
+      )
+    else
+      @sortstate = 'sorted'
+      @html App.view('agent_ticket_history')(
+        objects: App.Collection.all( type: 'History' ).reverse(),
+        state: @sortstate
+      )
+
+
+    @modalShow()
+
+    # enable user popups
+    @userPopups()
+
+    # show frontend times
+    @delay( @frontendTimeUpdate, 200 )
+
+  close: ->
+    # close modal
+    @modalHide()
+
