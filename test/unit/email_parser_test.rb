@@ -216,6 +216,44 @@ Hof",
 #          :body         => "Herzliche Grüße aus Oberalteich sendet Herrn Smith\n\n \n\nSepp Smith  - Dipl.Ing. agr. (FH)\n\nGeschäftsführer der example Straubing-Bogen\n\nKlosterhof 1 | 94327 Bogen-Oberalteich\n\nTel: 09422-505601 | Fax: 09422-505620\n\nInternet: http://example-straubing-bogen.de <http://example-straubing-bogen.de/> \n\nFacebook: http://facebook.de/examplesrbog <http://facebook.de/examplesrbog> \n\n   -  European Foundation für Quality Management\n\n"
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail11.box'),
+        :body_md5     => 'cf8b26d9fc4ce9abb19a36ce3a130c79',
+        :attachments  => [
+          {
+            :md5      => '08660cd33ce8c64b95bcf0207ff6c4d6',
+            :filename => 'message.html',
+          },
+        ],
+        :params   => {
+          :from               => 'CYLEX Newsletter <carina.merkant@cylex.de>',
+          :from_email         => 'carina.merkant@cylex.de',
+          :from_display_name  => 'CYLEX Newsletter',
+          :subject            => 'Eine schöne Adventszeit für ZNUNY GMBH - ENTERPRISE SERVICES FÜR OTRS',
+          :to                 => 'enjoy_us@znuny.com',
+        },
+      },
+      {
+        :data         => IO.read('test/fixtures/mail12.box'),
+        :body_md5     => 'c89a6ba15143aa23c090bf5fe5cd39dd',
+        :attachments  => [
+          {
+            :md5      => 'a928e4665c3e59ea27d57d67ef15ecc5',
+            :filename => 'message.html',
+          },
+          {
+            :md5      => 'b6e70f587c4b1810facbb20bb5ec69ef',
+            :filename => 'image002.png',
+          },
+        ],
+        :params   => {
+          :from               => 'Alex.Smith@example.com',
+          :from_email         => 'Alex.Smith@example.com',
+          :from_display_name  => nil,
+          :subject            => 'AW: Agenda [Ticket#11995]',
+          :to                 => 'example@znuny.com',
+        },
+      },
     ]
 
     files.each { |file|
@@ -248,6 +286,7 @@ Hof",
           data[:attachments].each { |attachment_parser|
             next if found
             file_md5 = Digest::MD5.hexdigest( attachment_parser[:data] )
+#            puts 'Attachment:' + attachment_parser.inspect + '-' + file_md5
             if attachment[:md5] == file_md5
               found = true
               assert_equal( attachment[:filename], attachment_parser[:filename] )

@@ -149,8 +149,15 @@ class Channel::EmailParser
 
           # get filename from content-disposition
           filename = nil
-          if file.header[:content_disposition] && file.header[:content_disposition].filename
+
+          # workaround for: NoMethodError: undefined method `filename' for #<Mail::UnstructuredField:0x007ff109e80678>
+          begin
             filename = file.header[:content_disposition].filename
+          rescue
+            result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
+            if result && result[0] && result[0][1]
+              filename = result[0][1]
+            end
           end
 
           # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
