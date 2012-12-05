@@ -1,17 +1,41 @@
 # encoding: utf-8
 
 require 'mail'
-require 'iconv'
+#require 'iconv'
 class Channel::EmailParser
   def conv (charset, string)
+
+    # if no charset is given, use LATIN1 as default
     if !charset || charset == 'US-ASCII' || charset == 'ASCII-8BIT'
       charset = 'LATIN1'
     end
-    return string if charset.downcase == 'utf8' || charset.downcase == 'utf-8'
+
+    # return if string is false
+    return string if !string
+
+    # validate already existing utf8 strings
+    if charset.downcase == 'utf8' || charset.downcase == 'utf-8'
+      begin
+
+        # return if encoding is valid
+        utf8 = string.force_encoding('UTF-8')
+        return utf8 if utf8.valid_encoding?
+
+        # try to encode from Windows-1252 to utf8
+        string.encode!( 'UTF-8', 'Windows-1252' )
+
+      rescue EncodingError => e
+        puts "Bad encoding: #{new_value.inspect}"
+        string.encode!( 'UTF-8', invalid: :replace, undef: :replace, replace: '?' )
+      end
+      return string
+    end
 #    puts '-------' + charset
 #    puts string
-#    string.encode("UTF-8")
-    Iconv.conv( 'UTF8', charset, string )
+
+    # convert string
+    string.encode!( 'UTF-8', charset.upcase )
+#    Iconv.conv( 'UTF8', charset, string )
   end
 
 =begin
@@ -73,7 +97,7 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-      data[field.name.downcase.to_sym] = field.to_s
+      data[field.name.downcase.to_sym] = conv( 'utf8', field.to_s )
     }
 
     # set extra headers

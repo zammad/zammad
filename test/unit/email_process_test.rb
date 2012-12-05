@@ -34,10 +34,30 @@ Some Text',
         :result => {
           0 => {
             :ticket_priority       => '3 high',
+            :title                 => 'some subject',
           },
           1 => {
             :ticket_article_sender => 'System',
             :ticket_article_type   => 'phone',
+          },
+        },
+      },
+      {
+        :data => "From: me@example.com
+To: customer@example.com
+Subject: äöü some subject
+
+Some Textäöü".encode("ISO-8859-1"),
+        :success => true,
+        :result => {
+          0 => {
+            :ticket_priority       => '2 normal',
+            :title                 => 'äöü some subject',
+          },
+          1 => {
+            :body                  => 'Some Textäöü',
+            :ticket_article_sender => 'Customer',
+            :ticket_article_type   => 'email',
           },
         },
       },
@@ -52,7 +72,11 @@ Some Text',
           [ 0, 1, 2 ].each { |level|
             if file[:result][level]
               file[:result][level].each { |key, value|
-                assert_equal( result[level].send(key).name, value.to_s)
+                if result[level].send(key).respond_to?('name')
+                  assert_equal( result[level].send(key).name, value.to_s)
+                else
+                  assert_equal( result[level].send(key), value.to_s)
+                end
               }
             end
           }
