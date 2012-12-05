@@ -31,7 +31,7 @@ module Encode
 #    puts '-------' + charset
 #    puts string
     # convert string
-    string.encode!( 'UTF-8', charset.upcase )
+    string.encode!( 'UTF-8', charset )
 #    Iconv.conv( 'UTF8', charset, string )
   end
 end
