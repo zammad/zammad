@@ -1,42 +1,8 @@
 # encoding: utf-8
 
 require 'mail'
-#require 'iconv'
+
 class Channel::EmailParser
-  def conv (charset, string)
-
-    # if no charset is given, use LATIN1 as default
-    if !charset || charset == 'US-ASCII' || charset == 'ASCII-8BIT'
-      charset = 'LATIN1'
-    end
-
-    # return if string is false
-    return string if !string
-
-    # validate already existing utf8 strings
-    if charset.downcase == 'utf8' || charset.downcase == 'utf-8'
-      begin
-
-        # return if encoding is valid
-        utf8 = string.force_encoding('UTF-8')
-        return utf8 if utf8.valid_encoding?
-
-        # try to encode from Windows-1252 to utf8
-        string.encode!( 'UTF-8', 'Windows-1252' )
-
-      rescue EncodingError => e
-        puts "Bad encoding: #{new_value.inspect}"
-        string.encode!( 'UTF-8', invalid: :replace, undef: :replace, replace: '?' )
-      end
-      return string
-    end
-#    puts '-------' + charset
-#    puts string
-
-    # convert string
-    string.encode!( 'UTF-8', charset.upcase )
-#    Iconv.conv( 'UTF8', charset, string )
-  end
 
 =begin
 
@@ -97,7 +63,7 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-      data[field.name.downcase.to_sym] = conv( 'utf8', field.to_s )
+      data[field.name.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
     }
 
     # set extra headers
@@ -124,7 +90,7 @@ class Channel::EmailParser
       # text attachment/body exists
       if mail.text_part
         data[:body] = mail.text_part.body.decoded
-        data[:body] = conv( mail.text_part.charset, data[:body] )
+        data[:body] = Encode.conv( mail.text_part.charset, data[:body] )
 
       # html attachment/body may exists and will be converted to text
       else
@@ -132,7 +98,7 @@ class Channel::EmailParser
         if mail.html_part.body
           filename = 'html-email'
           data[:body] = mail.html_part.body.to_s
-          data[:body] = conv( mail.html_part.charset.to_s, data[:body] )
+          data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
           data[:body] = html2ascii( data[:body] )
 
         # any other attachments
@@ -219,7 +185,7 @@ class Channel::EmailParser
       # text part
       if !mail.mime_type || mail.mime_type.to_s ==  '' || mail.mime_type.to_s.downcase == 'text/plain'
         data[:body] = mail.body.decoded
-        data[:body] = conv( mail.charset, data[:body] )
+        data[:body] = Encode.conv( mail.charset, data[:body] )
 
       # html part
       else
@@ -227,7 +193,7 @@ class Channel::EmailParser
         if mail.mime_type.to_s.downcase == 'text/html'
           filename = 'html-email'
           data[:body] = mail.body.decoded
-          data[:body] = conv( mail.charset, data[:body] )
+          data[:body] = Encode.conv( mail.charset, data[:body] )
           data[:body] = html2ascii( data[:body] )
 
         # any other attachments

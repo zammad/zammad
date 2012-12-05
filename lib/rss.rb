@@ -16,8 +16,8 @@ module RSS
       rss.items.each { |item|
         record = {
           :id        => item.id,
-          :title     => item.title,
-          :summary   => item.summary,
+          :title     => Encode.conv( 'utf8', item.title ),
+          :summary   => Encode.conv( 'utf8', item.summary ),
           :link      => item.link,
           :published => item.published
         }
