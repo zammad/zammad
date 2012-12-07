@@ -5,7 +5,7 @@
     </div>
     <div class="span2">
       <% if @C( 'LastOverview' ) && @nav: %>
-      <div class="pagination">
+      <div class="pagination pagination-small">
         <span class="count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
         <% base_url ="#ticket_view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
         <ul>

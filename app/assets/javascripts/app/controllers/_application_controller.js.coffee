@@ -210,9 +210,11 @@ class App.Controller extends Spine.Controller
 
     # show user popup    
     $('.user-data').popover(
-      delay: { show: 500, hide: 1200 },
-#      placement: 'bottom',
-      placement: position,
+      trigger: 'hover'
+      html:    true
+      delay:   { show: 500, hide: 1200 }
+#      placement: 'bottom'
+      placement: position
       title: ->
         user_id = $(@).data('id')
         user = App.Collection.find( 'User', user_id )
@@ -271,8 +273,10 @@ class App.Controller extends Spine.Controller
     # show user popup
     controller = @
     $(data.selector).popover(
-      delay: { show: 500, hide: 5200 },
-      placement: data.position,
+      trigger: 'hover'
+      html:    true
+      delay:   { show: 500, hide: 5200 }
+      placement: data.position
       title: ->
         $(@).find('[title="*"]').val()
 

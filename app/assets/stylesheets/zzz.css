@@ -101,7 +101,6 @@ h4 {
   padding-top: 2px;
   margin: 0px 4px;
   height: 30px;
-  float: right;
 }
 
 .pagination .count {
@@ -110,11 +109,6 @@ h4 {
   color: #999;
   border: none;
   line-height: 17px;
-}
-
-.pagination ul > li > a, .pagination ul > li > span {
-  line-height: 26px;
-  padding: 0 10px;
 }
 
 .page-header {
@@ -216,7 +210,7 @@ footer {
   cursor: move;
 }
 
-.can-move-plcaeholder {
+.can-move-placeholder {
     border: 1px dashed #DDD;
     background: #EEE;
     margin-top: 5px;

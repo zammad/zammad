@@ -4,7 +4,7 @@
       <h1><%- @T( @overview.meta.name ) %> <% if @edit: %><small><a href="#" data-type="settings" class="icon-edit"></a></small><% end %></h1>
     </div>
     <div class="span3">
-      <div class="pagination keepright">
+      <div class="pagination pagination-small keepright">
         <ul>
           <% for item in @view_modes: %>
             <li class="<%= item.class %>">

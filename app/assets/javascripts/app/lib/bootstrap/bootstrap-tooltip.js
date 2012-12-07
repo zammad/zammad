@@ -1,5 +1,5 @@
 /* ===========================================================
- * bootstrap-tooltip.js v2.0.4
+ * bootstrap-tooltip.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#tooltips
  * Inspired by the original jQuery.tipsy by Jason Frame
  * ===========================================================
@@ -44,11 +44,13 @@
       this.options = this.getOptions(options)
       this.enabled = true
 
-      if (this.options.trigger != 'manual') {
-        eventIn  = this.options.trigger == 'hover' ? 'mouseenter' : 'focus'
+      if (this.options.trigger == 'click') {
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+      } else if (this.options.trigger != 'manual') {
+        eventIn = this.options.trigger == 'hover' ? 'mouseenter' : 'focus'
         eventOut = this.options.trigger == 'hover' ? 'mouseleave' : 'blur'
-        this.$element.on(eventIn, this.options.selector, $.proxy(this.enter, this))
-        this.$element.on(eventOut, this.options.selector, $.proxy(this.leave, this))
+        this.$element.on(eventIn + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
       }
 
       this.options.selector ?
@@ -117,9 +119,9 @@
         inside = /in/.test(placement)
 
         $tip
-          .remove()
+          .detach()
           .css({ top: 0, left: 0, display: 'block' })
-          .appendTo(inside ? this.$element : document.body)
+          .insertAfter(this.$element)
 
         pos = this.getPosition(inside)
 
@@ -142,26 +144,17 @@
         }
 
         $tip
-          .css(tp)
+          .offset(tp)
           .addClass(placement)
           .addClass('in')
       }
-    }
-
-  , isHTML: function(text) {
-      // html string detection logic adapted from jQuery
-      return typeof text != 'string'
-        || ( text.charAt(0) === "<"
-          && text.charAt( text.length - 1 ) === ">"
-          && text.length >= 3
-        ) || /^(?:[^<]*<[\w\W]+>[^>]*$)/.exec(text)
     }
 
   , setContent: function () {
       var $tip = this.tip()
         , title = this.getTitle()
 
-      $tip.find('.tooltip-inner')[this.isHTML(title) ? 'html' : 'text'](title)
+      $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title)
       $tip.removeClass('fade in top bottom left right')
     }
 
@@ -173,18 +166,20 @@
 
       function removeWithAnimation() {
         var timeout = setTimeout(function () {
-          $tip.off($.support.transition.end).remove()
+          $tip.off($.support.transition.end).detach()
         }, 500)
 
         $tip.one($.support.transition.end, function () {
           clearTimeout(timeout)
-          $tip.remove()
+          $tip.detach()
         })
       }
 
       $.support.transition && this.$tip.hasClass('fade') ?
         removeWithAnimation() :
-        $tip.remove()
+        $tip.detach()
+
+      return this
     }
 
   , fixTitle: function () {
@@ -240,8 +235,13 @@
       this.enabled = !this.enabled
     }
 
-  , toggle: function () {
-      this[this.tip().hasClass('in') ? 'hide' : 'show']()
+  , toggle: function (e) {
+      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
+      self[self.tip().hasClass('in') ? 'hide' : 'show']()
+    }
+
+  , destroy: function () {
+      this.hide().$element.off('.' + this.type).removeData(this.type)
     }
 
   }
@@ -270,6 +270,7 @@
   , trigger: 'hover'
   , title: ''
   , delay: 0
+  , html: false
   }
 
 }(window.jQuery);

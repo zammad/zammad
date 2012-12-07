@@ -172,9 +172,11 @@ class App.TextModuleUI extends App.Controller
 
     # show user popup    
     @el.find('#form-text-module').find('.item').popover(
-      delay: { show: 500, hide: 1200 },
-#      placement: 'top',
-      placement: 'right',
+      trigger: 'hover'
+      html:    true
+      delay:   { show: 500, hide: 1200 }
+#      placement: 'top'
+      placement: 'right'
       title: ->
         id = $(@).data('id')
         text_module = App.Collection.find( 'TextModule', id )
