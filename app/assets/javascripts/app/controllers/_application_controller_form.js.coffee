@@ -297,7 +297,7 @@ class App.ControllerForm extends App.Controller
             params:
               form_id: @form_id
           )
-        @delay( u, 200 )
+        @delay( u, 100 )
 
     # tag
     else if attribute.tag is 'tag'
@@ -326,7 +326,7 @@ class App.ControllerForm extends App.Controller
         )
         siteUpdate(true)
 
-      @delay( a, 600 )
+      @delay( a, 100 )
 
 
     # autocompletion
@@ -369,7 +369,7 @@ class App.ControllerForm extends App.Controller
 #            @log 'selected', event, ui
             b(event, ui.item.id)
         )
-      @delay( a, 600 )
+      @delay( a, 100 )
 
     # input
     else
@@ -403,7 +403,7 @@ class App.ControllerForm extends App.Controller
                   item = $( ui.formGenItem(attribute, classname, attributes_clean) )
                   ui.log item, classname
                 )
-              @delay(b, 800)
+              @delay(b, 100)
 #            if attribute.onchange[]
 
     ui = @

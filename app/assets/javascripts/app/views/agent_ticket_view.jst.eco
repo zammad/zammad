@@ -4,7 +4,7 @@
       <h1><%- @T( @overview.meta.name ) %> <% if @edit: %><small><a href="#" data-type="settings" class="icon-edit"></a></small><% end %></h1>
     </div>
     <div class="span3">
-      <div class="pagination pagination-small keepright">
+      <div class="pagination pagination-small pagination-right">
         <ul>
           <% for item in @view_modes: %>
             <li class="<%= item.class %>">
@@ -17,7 +17,7 @@
   </div>
 </div>
 <!--
-  <div class="pagination keepleft">
+  <div class="pagination pull-left">
     <ul>
       <% if @start_page != 1: %>
         <li><a href="#" data-id="<%= @start_page - 1 %>" data-type="page">«</a></li>

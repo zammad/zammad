@@ -21,6 +21,7 @@
 //= require ./app/lib/bootstrap/bootstrap-modal.js
 //= require ./app/lib/bootstrap/bootstrap-tab.js
 //= require ./app/lib/bootstrap/bootstrap-transition.js
+//= require ./app/lib/bootstrap/bootstrap-button.js
 
 //= require_tree ./app/lib/base
 

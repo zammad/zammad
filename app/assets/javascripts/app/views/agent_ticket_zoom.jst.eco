@@ -5,7 +5,7 @@
     </div>
     <div class="span2">
       <% if @C( 'LastOverview' ) && @nav: %>
-      <div class="pagination pagination-small">
+      <div class="pagination pagination-small pagination-right">
         <span class="count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
         <% base_url ="#ticket_view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
         <ul>
@@ -78,7 +78,7 @@
         <img class="thumbnail user-data" data-id="<%= @S('id') %>"" src="<%- @S('image') %>" alt="">
       </div>
       <div class="span8 well-muted article-message">
-        <form class="form-stacked keepleft">
+        <form class="form-stacked pull-left">
           <div id="form-ticket-update"></div>
           <div id="form-article-update"></div>
           <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>

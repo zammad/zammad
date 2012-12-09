@@ -198,14 +198,6 @@ footer {
   width: 160px;
 }
 
-.keepleft {
-  float: left;
-}
-
-.keepright {
-  float: right;
-}
-
 .can-move {
   cursor: move;
 }

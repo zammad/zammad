@@ -1,4 +1,4 @@
-<form class="form-stacked keepleft update-box bulk-action-form">
+<form class="form-stacked pull-left update-box bulk-action-form">
   <div id="form-ticket-bulk"></div>
   <input type="submit" class="btn primary submit" value="update">
 </form>

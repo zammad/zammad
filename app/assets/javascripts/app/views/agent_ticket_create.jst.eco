@@ -1,5 +1,15 @@
 <div class="page-header">
-  <h1><%- @T( 'New Ticket' ) %> <small></small></h1>
+  <div class="row">
+    <div class="span9">
+      <h1 class="pull-left"><%- @T( 'New Ticket' ) %> <small></small></h1>
+    </div>
+    <div class="span3">
+      <div class="btn-group pull-right" data-toggle="buttons-radio">
+        <button type="button" class="btn article-type-phone active"><i class="icon-headphones"></i></button>
+        <button type="button" class="btn article-type-email"><i class="icon-envelope"></i></button>
+      </div>
+    </div>
+  </div>
 </div>
 <form class="form-horizontal">
   <div class="row">
