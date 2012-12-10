@@ -52,6 +52,7 @@ class Index extends App.Controller
     # scroll to top
     @scrollTo()
 
+
   login: (e) ->
     e.preventDefault()
     @formDisable(e)
@@ -101,6 +102,12 @@ class Index extends App.Controller
     # rerender login page
     @render(
       username: @username
+    )
+
+    # login shake
+    @delay(
+      => @shake( @el.find('#login') ),
+      1500
     )
 
 App.Config.set( 'login', Index, 'Routes' )

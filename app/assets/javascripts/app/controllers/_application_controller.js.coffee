@@ -25,6 +25,26 @@ class App.Controller extends Spine.Controller
 
     @delay( a, delay )
 
+  shake: (element) ->
+
+    # this part is from wordpress 3, thanks to open source
+    shakeMe = (element, position, positionEnd) ->
+      positionStart = position.shift()
+      element.css( 'left', positionStart + 'px' )
+      if position.length > 0
+        setTimeout( ->
+            shakeMe( element, position, positionEnd )
+        , positionEnd)
+      else
+        try
+          element.css( 'position', 'static' )
+        catch e
+
+    position = [ 15, 30, 15, 0, -15, -30, -15, 0 ]
+    position = position.concat( position.concat( position ) )
+    element.css( 'position', 'relative' ) 
+    shakeMe( element, position, 20 ) 
+
   isRole: (name) ->
     roles = @Session.get( 'roles' )
     return false if !roles
