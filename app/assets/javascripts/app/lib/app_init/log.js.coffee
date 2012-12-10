@@ -27,5 +27,6 @@ class _Singleton
 
   _log: ( module, level, args ) ->
     return if !console
+    return if !console.log
     console.log "App.#{module}(#{level})", args
 
