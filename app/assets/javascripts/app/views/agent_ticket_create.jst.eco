@@ -5,13 +5,14 @@
     </div>
     <div class="span3">
       <div class="btn-group pull-right" data-toggle="buttons-radio">
-        <button type="button" class="btn article-type-phone active"><i class="icon-headphones"></i></button>
-        <button type="button" class="btn article-type-email"><i class="icon-envelope"></i></button>
+        <button type="button" class="btn article-type" data-type="phone"><i class="icon-headphones"></i></button>
+        <button type="button" class="btn article-type" data-type="email"><i class="icon-envelope"></i></button>
       </div>
     </div>
   </div>
 </div>
 <form class="form-horizontal">
+  <input type="hidden" value="" name="article_type"/>
   <div class="row">
     <div class="span9" id="form_create"></div>
     <div class="span3">

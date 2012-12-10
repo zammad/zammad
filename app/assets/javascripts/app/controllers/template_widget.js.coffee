@@ -66,7 +66,7 @@ class App.TemplateUI extends App.Controller
 
   create: (e) =>
     e.preventDefault()
-    
+
     # get params
     params = @formParam(e.target)
     name = params['template_name']

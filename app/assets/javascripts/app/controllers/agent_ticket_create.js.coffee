@@ -2,10 +2,11 @@ $ = jQuery.sub()
 
 class Index extends App.Controller
   events:
-    'click .customer_new': 'user_new'
-    'submit form':         'submit',
-    'click .submit':       'submit',
-    'click .cancel':       'cancel',
+    'click .customer_new': 'userNew'
+    'submit form':         'submit'
+    'click .submit':       'submit'
+    'click .cancel':       'cancel'
+    'click .article-type': 'articleTypeSelect'
 
   constructor: (params) ->
     super
@@ -16,14 +17,19 @@ class Index extends App.Controller
     # set title
     @title 'New Ticket'
     @form_id = App.ControllerForm.formId()
-    @fetch(params)
     @navupdate '#ticket_create'
 
     @edit_form = undefined
+    @article_type = 'phone'
+    @article_type_map =
+      'phone': 'Customer'
+      'email': 'Agent'
+
+    @fetch(params)
 
     # lisen if view need to be rerendert
     App.Event.bind 'ticket_create_rerender', (defaults) =>
-      @log 'rerender', defaults
+      @log 'AgentTicketPhone', 'error', defaults
       @render(defaults)
 
   # get data / in case also ticket data for split
@@ -43,14 +49,13 @@ class Index extends App.Controller
       @render()
     else
       App.Com.ajax(
-        id:    'ticket_create',
-        type:  'GET',
-        url:   '/api/ticket_create',
-        data:  {
-          ticket_id: params.ticket_id,
-          article_id: params.article_id,
-        },
-        processData: true,
+        id:    'ticket_create'
+        type:  'GET'
+        url:   '/api/ticket_create'
+        data:
+          ticket_id: params.ticket_id
+          article_id: params.article_id
+        processData: true
         success: (data, status, xhr) =>
 
           # cache request
@@ -122,6 +127,12 @@ class Index extends App.Controller
       form_data: @edit_form
     )
 
+    # send chanel type
+    if defaults['article_type']
+      @articleTypeSet( defaults['article_type'] )
+    else
+      @articleTypeSet( @article_type )
+
     # add elastic to textarea
     @el.find('textarea').elastic()
 
@@ -148,7 +159,22 @@ class Index extends App.Controller
   localUserInfo: (params) =>
     @userInfo( user_id: params.customer_id )
 
-  user_new: (e) =>
+  articleTypeSet: (name) =>
+    console.log 'SET', name
+    @el.find('.article-type').removeClass('active')
+    @el.find('.article-type[data-type="' + name + '"]').addClass('active')
+    @el.find('[name="article_type"]').val(name)
+
+  articleTypeSelect: (e) =>
+    console.log 'SELECT', e
+    e.preventDefault()
+    article_type = $(e.target).parent().data('type')
+    if !article_type
+      article_type = $(e.target).data('type')
+    @articleTypeSet( article_type )
+    @article_type = article_type
+
+  userNew: (e) =>
     e.preventDefault()
     new UserNew()
 
@@ -167,24 +193,35 @@ class Index extends App.Controller
 
     # create ticket
     object = new App.Ticket
-    @log 'updateAttributes', params
+    @log 'updateAttributes', params, @article_type, @article_type_map[@article_type]
 
     # find sender_id
-    sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Customer' )
-    type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', 'phone' )
+    sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', @article_type_map[@article_type] )
+    type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', @article_type )
     if params.group_id
       group  = App.Collection.find( 'Group', params.group_id )
 
     # create article
-    params['article'] = {
-      from:                     params.customer_id_autocompletion
-      to:                       (group && group.name) || ''
-      subject:                  params.subject
-      body:                     params.body
-      ticket_article_type_id:   type.id
-      ticket_article_sender_id: sender.id
-      form_id:                  @form_id
-    }
+    if sender.name is 'Customer'
+      params['article'] = {
+        to:                       (group && group.name) || ''
+        from:                     params.customer_id_autocompletion
+        subject:                  params.subject
+        body:                     params.body
+        ticket_article_type_id:   type.id
+        ticket_article_sender_id: sender.id
+        form_id:                  @form_id
+      }
+    else
+      params['article'] = {
+        from:                     (group && group.name) || ''
+        to:                       params.customer_id_autocompletion
+        subject:                  params.subject
+        body:                     params.body
+        ticket_article_type_id:   type.id
+        ticket_article_sender_id: sender.id
+        form_id:                  @form_id
+      }
 
     object.load(params)
 

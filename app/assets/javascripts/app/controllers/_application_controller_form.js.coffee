@@ -290,14 +290,24 @@ class App.ControllerForm extends App.Controller
 
         # add file uploader
         u = =>
-          uploader = new qq.FileUploader(
-            element: document.getElementById(fileUploaderId)
-            action:  '/api/ticket_attachment_new'
-            debug:   false
-            params:
-              form_id: @form_id
+          @el.find('#' + fileUploaderId ).fineUploader(
+            request:
+              endpoint: '/api/ticket_attachment_new'
+              params:
+                form_id: @form_id
+            text:
+              uploadButton: '<i class="icon-attachment"></i>'
+            template: '<div class="qq-uploader">' +
+                        '<pre class="btn qq-upload-icon qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
+                        '<div class="btn qq-upload-icon qq-upload-button pull-right" style="">{uploadButtonText}</div>' +
+                        '<ul class="qq-upload-list span5" style="margin-top: 10px;"></ul>' +
+                      '</div>',
+            classes:
+              success: ''
+              fail:    ''
+            debug: false
           )
-        @delay( u, 100 )
+        @delay( u, 80 )
 
     # tag
     else if attribute.tag is 'tag'
@@ -316,6 +326,7 @@ class App.ControllerForm extends App.Controller
         onRemoveTag = =>
           siteUpdate(true)
 
+        $('#' + attribute.id + '_tagsinput').remove()
         w = $('#' + attribute.id).width()
         h = $('#' + attribute.id).height()
         $('#' + attribute.id).tagsInput(
@@ -326,7 +337,7 @@ class App.ControllerForm extends App.Controller
         )
         siteUpdate(true)
 
-      @delay( a, 100 )
+      @delay( a, 80 )
 
 
     # autocompletion
@@ -369,7 +380,7 @@ class App.ControllerForm extends App.Controller
 #            @log 'selected', event, ui
             b(event, ui.item.id)
         )
-      @delay( a, 100 )
+      @delay( a, 80 )
 
     # input
     else

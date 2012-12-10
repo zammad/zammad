@@ -359,11 +359,28 @@ footer {
   opacity: 0.9;
 }
 
+.qq-upload-icon {
+  margin: 6px 20px 0px 0px;
+  height: 18px;
+}
+
+.qq-upload-button {
+    display: block;
+    /*or inline-block*/
+    width: 40px;
+    padding: 7px 0;
+    text-align: center;
+}
+
 .qq-upload-list {
+  text-align: left;
   margin: 5px 10px 0px;
   padding: 0;
   list-style: disc;
 }
-.qq-upload-icon {
-  margin: 0px 20px;
+
+.qq-upload-list li {
+  font-size: 14px;
+  padding: 5px;
+  background-color: transparent;
 }
