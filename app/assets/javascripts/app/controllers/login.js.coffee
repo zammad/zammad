@@ -108,7 +108,7 @@ class Index extends App.Controller
     # login shake
     @delay(
       => @shake( @el.find('#login') ),
-      1500
+      700
     )
 
 App.Config.set( 'login', Index, 'Routes' )
