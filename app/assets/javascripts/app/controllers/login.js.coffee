@@ -52,9 +52,10 @@ class Index extends App.Controller
     # scroll to top
     @scrollTo()
 
-
   login: (e) ->
     e.preventDefault()
+    e.stopPropagation()
+
     @formDisable(e)
     params = @formParam(e.target)
 
