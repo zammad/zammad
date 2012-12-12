@@ -1,0 +1,66 @@
+From thomas.smith@example.com  Wed Dec 12 07:49:21 2012
+Return-Path: <thomas.smith@example.com>
+X-Original-To: q1@znuny.com
+Delivered-To: box@samba.edenhofer.de
+Received: from mail1.bemta14.example.com (mail1.bemta14.example.com [193.109.254.98])
+	by samba.edenhofer.de (Postfix) with ESMTPS id 1E65A500B14
+	for <q1@znuny.com>; Wed, 12 Dec 2012 07:49:20 +0000 (GMT)
+Received: from [85.158.140.211:44059] by server-11.bemta-14.example.com id 3E/35-02659-10738C05; Wed, 12 Dec 2012 07:49:21 +0000
+X-Env-Sender: thomas.smith@example.com
+X-Msg-Ref: server-2.tower-194.example.com!1355298561!4693518!1
+X-Originating-IP: [195.200.34.58]
+X-StarScan-Received:
+X-StarScan-Version: 6.6.1.8; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 32366 invoked from network); 12 Dec 2012 07:49:21 -0000
+Received: from mail12.example.com (HELO mail12.example.com) (195.200.34.58)
+  by server-2.tower-194.example.com with DHE-RSA-AES256-SHA encrypted SMTP; 12 Dec 2012 07:49:21 -0000
+Received: from mail-int-01-s1.noc.example.com (unknown [10.253.25.50])
+	by mail12.example.com (Postfix) with ESMTP id 47EF0365BB
+	for <q1@znuny.com>; Wed, 12 Dec 2012 08:49:21 +0100 (MET)
+Received: from mail-sgw-02.noc.example.com (unknown [10.253.25.4])
+	by mail-int-01-s1.noc.example.com (Postfix) with ESMTP id 1C8435E005
+	for <q1@znuny.com>; Wed, 12 Dec 2012 08:49:21 +0100 (MET)
+Received: from mail-sgw-02.noc.example.com (localhost [127.0.0.1])
+	by mail-sgw-02.noc.example.com (Postfix) with ESMTP id 15BBF9A6060
+	for <q1@znuny.com>; Wed, 12 Dec 2012 08:49:21 +0100 (CET)
+Received: from mail-int-02.noc.example.com (unknown [10.253.25.51])
+	by mail-sgw-02.noc.example.com (Postfix) with ESMTP id 0A6639A6056
+	for <q1@znuny.com>; Wed, 12 Dec 2012 08:49:21 +0100 (CET)
+Received: from xcsmtp1a.noc.example.com (unknown [10.253.25.31])
+	by mail-int-02.noc.example.com (Postfix) with ESMTP id C3BEB459C1
+	for <q1@znuny.com>; Wed, 12 Dec 2012 08:49:20 +0100 (MET)
+In-Reply-To: <20121212074433.2132.457157@portal.znuny.com>
+References: <20121211120033.55B04459C4@mail-int-02.noc.example.com> <20121212074433.2132.457157@portal.znuny.com>
+Subject: Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]
+X-KeepSent: 24B3E2B5:9341DC06-C1257AD2:002AF5E7;
+ type=4; name=$KeepSent
+To: q1@znuny.com
+From: thomas.smith@example.com
+Date: Wed, 12 Dec 2012 08:49:19 +0100
+MIME-Version: 1.0
+Content-type: multipart/alternative; 
+	Boundary="0__=4EBBF041DFB973778f9e8a93df938690918c4EBBF041DFB97377"
+Content-Disposition: inline
+Message-ID: <20121212074920.C3BEB459C1@mail-int-02.noc.example.com>
+X-TBoneOriginalTo: q1@znuny.com
+X-TBoneOriginalFrom: thomas.smith@example.com
+X-TBoneDomainSigned: false
+X-Keywords:                 
+X-UID: 803
+Status: RO
+Content-Length: 370
+Lines: 11
+
+--0__=4EBBF041DFB973778f9e8a93df938690918c4EBBF041DFB97377
+Content-type: text/plain; charset=US-ASCII
+
+JA
+--0__=4EBBF041DFB973778f9e8a93df938690918c4EBBF041DFB97377
+Content-type: text/html; charset=US-ASCII
+Content-Disposition: inline
+
+<html><body>
+<p><font size="2" face="sans-serif">JA</font></body></html>
+--0__=4EBBF041DFB973778f9e8a93df938690918c4EBBF041DFB97377--
+

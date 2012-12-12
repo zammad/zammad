@@ -254,6 +254,23 @@ Hof",
           :to                 => 'example@znuny.com',
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail13.box'),
+        :body_md5     => '58806e006b14b04a535784a5462d09b0',
+        :attachments  => [
+          {
+            :md5      => '29cc1679f8a44c72be6be7c1da4278ac',
+            :filename => 'message.html',
+          },
+        ],
+        :params   => {
+          :from               => 'thomas.smith@example.com',
+          :from_email         => 'thomas.smith@example.com',
+          :from_display_name  => nil,
+          :subject            => 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]',
+          :to                 => 'q1@znuny.com',
+        },
+      },
     ]
 
     files.each { |file|

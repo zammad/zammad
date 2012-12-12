@@ -7,7 +7,7 @@ module Encode
 
     # if no charset is given, use LATIN1 as default
     if !charset || charset == 'US-ASCII' || charset == 'ASCII-8BIT'
-      charset = 'LATIN1'
+      charset = 'ISO-8859-15'
     end
 
     # validate already existing utf8 strings
