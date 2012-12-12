@@ -380,7 +380,7 @@ class App.ControllerForm extends App.Controller
 #            @log 'selected', event, ui
             b(event, ui.item.id)
         )
-      @delay( a, 80 )
+      @delay( a, 180 )
 
     # input
     else
