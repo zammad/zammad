@@ -447,48 +447,54 @@ class ClientState
       CacheIn.set( 'last_run_' + user.id.to_s , true, { :expires_in => 20.seconds } )
 
       # verify already pushed data
-      if @pushed[:users]
-        users = {}
-        @pushed[:users].each {|user_id, user_o|
-          self.user( user_id, users )
-        }
-        if !users.empty?
-          users.each {|user_id, user_data|
-            self.log 'notify', "push update of already pushed user id #{user_id}"
+      if !CacheIn.get( 'pushed_users' + @client_id.to_s )
+        CacheIn.set( 'pushed_users' + @client_id.to_s , true, { :expires_in => 15.seconds } )
+        if @pushed[:users]
+          users = {}
+          @pushed[:users].each {|user_id, user_o|
+            self.user( user_id, users )
           }
-          # send update to browser
-          self.send({
-            :data   => {
-              :collections => {
-                :User   => users,
+          if !users.empty?
+            users.each {|user_id, user_data|
+              self.log 'notify', "push update of already pushed user id #{user_id}"
+            }
+            # send update to browser
+            self.send({
+              :data   => {
+                :collections => {
+                  :User   => users,
+                },
               },
-            },
-            :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
-          });
+              :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
+            });
+          end
         end
       end
 
       # verify already pushed data
-      if @pushed[:tickets]
-        tickets = []
-        users = {}
-        @pushed[:tickets].each {|ticket_id, ticket_data|
-          self.ticket( ticket_id, tickets, users )
-        }
-        if !tickets.empty?
-          tickets.each {|ticket_id|
-            self.log 'notify', "push update of already pushed ticket id #{ticket_id}"
+      if !CacheIn.get( 'pushed_tickets' + @client_id.to_s )
+        CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 15.seconds } )
+        if @pushed[:tickets]
+          tickets = []
+          users = {}
+          @pushed[:tickets].each {|ticket_id, ticket_data|
+            self.ticket( ticket_id, tickets, users )
           }
-          # send update to browser
-          self.send({
-            :data   => {
-              :collections => {
-                :Ticket => tickets,
-                :User   => users,
+          if !tickets.empty?
+            tickets.each {|ticket|
+              self.log 'notify', "push update of already pushed ticket id #{ticket['id']}"
+            }
+            # send update to browser
+            self.send({
+              :data   => {
+                :collections => {
+                  :Ticket => tickets,
+                  :User   => users,
+                },
               },
-            },
-            :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
-          });
+              :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
+            });
+          end
         end
       end
 
