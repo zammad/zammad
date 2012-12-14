@@ -162,8 +162,13 @@ class _Singleton extends Spine.Module
       if callback
 
         # execute callback if record got loaded
+        col = @
         App[type].one 'refresh', ->
           data = App.Collection.find( type, id )
+
+          # load update to local storage
+          col.load( localStorage: true, type: type, data: data )
+
           callback( data )
 
         # fetch object
