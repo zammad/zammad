@@ -130,7 +130,8 @@ class _Singleton extends Spine.Module
 
     # load full array once
     if _.isArray( params.data )
-      App[ params.type ].refresh( params.data )
+      if !params.refresh
+        App[ params.type ].refresh( params.data )
 
       # remember in store if not already requested from local storage
       if !localStorage
@@ -141,7 +142,8 @@ class _Singleton extends Spine.Module
     # load data from object
 #    if _.isObject( params.data )
     for key, object of params.data
-      App[ params.type ].refresh( object )
+      if !params.refresh
+        App[ params.type ].refresh( object )
 
       # remember in store if not already requested from local storage
       if !localStorage
@@ -152,9 +154,13 @@ class _Singleton extends Spine.Module
 #    if App[type].exists( id ) && !callback
     if !force && App[type].exists( id )
       data = App[type].find( id )
+      data = @_fillUp( type, data )
       if callback
         callback( data )
+      console.log 'find', type, data
+      return data
     else
+      console.log 'find not exists', type, data
       if force
         @log 'Collection', 'debug', 'find forced to load!', type, id
       else
@@ -163,11 +169,11 @@ class _Singleton extends Spine.Module
 
         # execute callback if record got loaded
         col = @
-        App[type].one 'refresh', ->
+        App[type].one 'refresh', (record) ->
           data = App.Collection.find( type, id )
 
           # load update to local storage
-          col.load( localStorage: true, type: type, data: data )
+          col.load( localStorage: false, type: type, data: record, refresh: true )
 
           callback( data )
 
@@ -176,6 +182,8 @@ class _Singleton extends Spine.Module
         App[type].fetch( id: id )
         return true
       return false
+
+  _fillUp: ( type, data ) ->
 
    # users
     if type == 'User'
@@ -189,8 +197,8 @@ class _Singleton extends Spine.Module
             data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
 
       # set image url
-      if data && !data['image']
-        data['image'] = 'http://placehold.it/48x48'
+      if data && !data.image
+        data.image = 'http://placehold.it/48x48'
 
       return data
 
