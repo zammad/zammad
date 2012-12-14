@@ -173,7 +173,7 @@ class _Singleton extends Spine.Module
           data = App.Collection.find( type, id )
 
           # load update to local storage
-          col.load( localStorage: false, type: type, data: record, refresh: true )
+          col.load( localStorage: false, type: type, data: [ data ], refresh: true )
 
           callback( data )
 
