@@ -140,10 +140,13 @@ class App.Controller extends Spine.Controller
     return string
 
   userInfo: (data) =>
+    el = data.el || $('#customer_info')
+    el.unbind()
+
     # start customer info controller
     new App.UserInfo(
-      el:      data.el || $('#customer_info'),
-      user_id: data.user_id,
+      el:      el
+      user_id: data.user_id
     )
 
   authenticate: ->

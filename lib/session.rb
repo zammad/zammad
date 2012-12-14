@@ -446,6 +446,52 @@ class ClientState
       # remember last run
       CacheIn.set( 'last_run_' + user.id.to_s , true, { :expires_in => 20.seconds } )
 
+      # verify already pushed data
+      if @pushed[:users]
+        users = {}
+        @pushed[:users].each {|user_id, user_o|
+          self.user( user_id, users )
+        }
+        if !users.empty?
+          users.each {|user_id, user_data|
+            self.log 'notify', "push update of already pushed user id #{user_id}"
+          }
+          # send update to browser
+          self.send({
+            :data   => {
+              :collections => {
+                :User   => users,
+              },
+            },
+            :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
+          });
+        end
+      end
+
+      # verify already pushed data
+      if @pushed[:tickets]
+        tickets = []
+        users = {}
+        @pushed[:tickets].each {|ticket_id, ticket_data|
+          self.ticket( ticket_id, tickets, users )
+        }
+        if !tickets.empty?
+          tickets.each {|ticket_id|
+            self.log 'notify', "push update of already pushed ticket id #{ticket_id}"
+          }
+          # send update to browser
+          self.send({
+            :data   => {
+              :collections => {
+                :Ticket => tickets,
+                :User   => users,
+              },
+            },
+            :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
+          });
+        end
+      end
+
       # overview
       cache_key = @cache_key + '_overview'
       overview_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
@@ -640,8 +686,8 @@ class ClientState
       @pushed[:tickets] = {}
     end
     ticket = Ticket.full_data(ticket_id)
-    if @pushed[:tickets][ticket_id] != ticket
-      @pushed[:tickets][ticket_id] = ticket
+    if @pushed[:tickets][ticket_id] != ticket['updated_at']
+      @pushed[:tickets][ticket_id] = ticket['updated_at']
       tickets.push ticket
     end
 
@@ -661,8 +707,8 @@ class ClientState
     user = User.user_data_full( user_id )
 
     # user is already on client and not changed
-    return if @pushed[:users][ user_id ] == user
-    @pushed[:users][user_id] = user
+    return if @pushed[:users][ user_id ] == user['updated_at']
+    @pushed[:users][user_id] = user['updated_at']
 
     # user not on client or different
     self.log 'notice', 'push user ... ' + user['login']

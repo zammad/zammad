@@ -157,10 +157,8 @@ class _Singleton extends Spine.Module
       data = @_fillUp( type, data )
       if callback
         callback( data )
-      console.log 'find', type, data
       return data
     else
-      console.log 'find not exists', type, data
       if force
         @log 'Collection', 'debug', 'find forced to load!', type, id
       else
@@ -173,7 +171,11 @@ class _Singleton extends Spine.Module
           data = App.Collection.find( type, id )
 
           # load update to local storage
-          col.load( localStorage: false, type: type, data: [ data ], refresh: true )
+          clone = {}
+          for key, value of data
+            if typeof value isnt 'function'
+              clone[key] = value
+          col.load( localStorage: false, type: type, data: [ clone ], refresh: true )
 
           callback( data )
 
