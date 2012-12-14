@@ -142,7 +142,7 @@ EventMachine.run {
         # list all current clients
         client_list = Session.list
         client_list.each {|local_client_id, local_client|
-          if local_client_id != client_id
+          if local_client_id.to_s != client_id.to_s
 
             # broadcast to recipient list
             if data['recipient'] && data['recipient']['user_id']
