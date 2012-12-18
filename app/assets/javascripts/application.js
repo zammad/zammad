@@ -14,6 +14,9 @@
 //= require ./app/lib/spine/ajax.js
 //= require ./app/lib/spine/route.js
 
+//= require ./app/lib/flot/jquery.flot.js
+//= require ./app/lib/flot/jquery.flot.selection.js
+
 //not_used= require_tree ./app/lib/bootstrap
 //= require ./app/lib/bootstrap/bootstrap-dropdown.js
 //= require ./app/lib/bootstrap/bootstrap-tooltip.js
@@ -22,6 +25,7 @@
 //= require ./app/lib/bootstrap/bootstrap-tab.js
 //= require ./app/lib/bootstrap/bootstrap-transition.js
 //= require ./app/lib/bootstrap/bootstrap-button.js
+//= require ./app/lib/bootstrap/bootstrap-collapse.js
 
 //= require_tree ./app/lib/base
 
