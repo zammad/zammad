@@ -1433,6 +1433,7 @@ Overview.create(
   :name      => 'my_tickets',
   :role_id   => overview_role.id,
   :condition => {
+    :ticket_state_id => [ 1,2,3,4,6 ],
     :customer_id => 'current_user.id',
   },
   :order => {
@@ -1473,6 +1474,7 @@ Overview.create(
   :role_id             => overview_role.id,
   :organization_shared => true,
   :condition => {
+    :ticket_state_id => [ 1,2,3,4,6 ],
     :organization_id => 'current_user.organization_id',
   },
   :order => {
@@ -1813,6 +1815,9 @@ Translation.create( :locale => 'de', :source => "or", :target => "oder", :update
 Translation.create( :locale => 'de', :source => "yes", :target => "ja", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "no", :target => "nein", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create( :locale => 'de', :source => "Attachment", :target => "Anhang", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Year", :target => "Jahr", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Month", :target => "Monat", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1 )
 
 
 #Translation.create( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
