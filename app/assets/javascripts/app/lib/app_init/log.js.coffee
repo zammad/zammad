@@ -11,10 +11,10 @@ class App.Log
       _instance ?= new _Singleton
     _instance.log( module, level, args )
 
-
 class _Singleton
   constructor: ->
     @config = {}
+#    @config['Collection'] = true
 #      Session: true
 #      ControllerForm: true
 
@@ -24,9 +24,9 @@ class _Singleton
     else if @config[ module ]
       @_log( module, level, args )
 
-
   _log: ( module, level, args ) ->
-    return if !console
-    return if !console.log
+    return if !'console' in window
+    return if !'log' in console
+    return if !typeof console.log isnt 'function'
     console.log "App.#{module}(#{level})", args
 
