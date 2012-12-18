@@ -448,7 +448,7 @@ class ClientState
 
       # verify already pushed data
       if !CacheIn.get( 'pushed_users' + @client_id.to_s )
-        CacheIn.set( 'pushed_users' + @client_id.to_s , true, { :expires_in => 15.seconds } )
+        CacheIn.set( 'pushed_users' + @client_id.to_s , true, { :expires_in => 20.seconds } )
         if @pushed[:users]
           users = {}
           @pushed[:users].each {|user_id, user_o|
@@ -473,7 +473,7 @@ class ClientState
 
       # verify already pushed data
       if !CacheIn.get( 'pushed_tickets' + @client_id.to_s )
-        CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 15.seconds } )
+        CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 20.seconds } )
         if @pushed[:tickets]
           tickets = []
           users = {}
