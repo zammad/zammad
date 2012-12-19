@@ -115,7 +115,11 @@ class Index extends App.Controller
       { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['ticket_state_id'],    translate: true, class: 'medium' },
       { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['ticket_priority_id'], translate: true, class: 'medium' },
     ]
-    @html App.view('agent_ticket_create')( head: 'New Ticket' )
+    @html App.view('agent_ticket_create')(
+      head:  'New Ticket'
+      agent: @isRole('Agent')
+      admin: @isRole('Admin')
+    )
 
     new App.ControllerForm(
       el: @el.find('#form_create')

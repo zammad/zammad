@@ -1,13 +1,15 @@
 <div class="page-header">
   <div class="row">
     <div class="span9">
-      <h1 class="pull-left"><%- @T( 'New Ticket' ) %> <small></small></h1>
+      <h1 class="pull-left"><%- @T( 'New Ticket' ) %> <% if @admin: %><small><a href="#" data-type="settings" class="icon-edit"></a></small><% end %></h1>
     </div>
     <div class="span3">
+      <% if @agent: %>
       <div class="btn-group pull-right" data-toggle="buttons-radio">
         <button type="button" class="btn article-type" data-type="phone"><i class="icon-headphones"></i></button>
         <button type="button" class="btn article-type" data-type="email"><i class="icon-envelope"></i></button>
       </div>
+      <% end %>
     </div>
   </div>
 </div>
