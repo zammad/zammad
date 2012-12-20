@@ -25,8 +25,5 @@ class _Singleton
       @_log( module, level, args )
 
   _log: ( module, level, args ) ->
-    return if !'console' in window
-    return if !'log' in console
-    return if !typeof console.log isnt 'function'
     console.log "App.#{module}(#{level})", args
 

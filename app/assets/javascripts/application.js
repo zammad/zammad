@@ -30,3 +30,11 @@
 //= require_tree ./app/lib/base
 
 //= require ./app/index.js.coffee
+
+// IE8 workaround for missing console.log
+if (!window.console) {
+  window.console = {}
+}
+if (!console.log) {
+  console.log = function(){}
+}
