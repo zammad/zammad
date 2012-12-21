@@ -23,7 +23,7 @@ module Encode
 
       rescue EncodingError => e
         puts "Bad encoding: #{string.inspect}"
-        string.encode!( 'UTF-8', invalid: :replace, undef: :replace, replace: '?' )
+        string = string.encode!( 'UTF-8', invalid: :replace, undef: :replace, replace: '?' )
       end
       return string
     end

@@ -1818,6 +1818,10 @@ Translation.create( :locale => 'de', :source => "Attachment", :target => "Anhang
 Translation.create( :locale => 'de', :source => "Year", :target => "Jahr", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create( :locale => 'de', :source => "Month", :target => "Monat", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create( :locale => 'de', :source => "Day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Closed", :target => "Geschlossen", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Re-Open", :target => "Wiedereröffnet", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "First Solution", :target => "Erstlösung", :updated_by_id => 1, :created_by_id => 1 )
 
 
 #Translation.create( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
