@@ -4,6 +4,9 @@ class Observer::Ticket::FirstResponse < ActiveRecord::Observer
   def after_create(record)
 #    puts 'check first response'
 
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     # if article in internal
     return true if record.internal
 
@@ -22,4 +25,4 @@ class Observer::Ticket::FirstResponse < ActiveRecord::Observer
     # save ticket
     record.ticket.save
   end
-end  
+end

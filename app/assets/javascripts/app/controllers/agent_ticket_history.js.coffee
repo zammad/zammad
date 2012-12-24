@@ -1,5 +1,4 @@
 class App.TicketHistory extends App.ControllerModal
-  
   events:
     'click [data-type=sortorder]': 'sortorder',
     'click .close': 'close',

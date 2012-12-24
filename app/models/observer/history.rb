@@ -28,9 +28,7 @@ class Observer::History < ActiveRecord::Observer
     current = record.class.find(record.id)
 
     # do not send anything if nothing has changed
-    if current.attributes == record.attributes
-      return
-    end
+    return if current.attributes == record.attributes
   
     puts "HISTORY OBSERVER, object will be updated #{ record.class.name.to_s}.find(#{ current.id.to_s })"
 #    puts 'current'
@@ -61,12 +59,19 @@ class Observer::History < ActiveRecord::Observer
         :lookup_name    => 'name',
       }
     }
-    
+
+    ignore_attributes = {
+      :created_at               => true,
+      :updated_at               => true,
+      :article_count            => true,
+      :create_article_type_id   => true,
+      :create_article_sender_id => true,
+    }
+
     diff.each do |key, value_ids|
 
       # do not log created_at and updated_at attributes
-      next if key.to_s == 'created_at'
-      next if key.to_s == 'updated_at'
+      next if ignore_attributes[key.to_sym] == true
 
       puts " CHANGED: #{key} is #{value_ids.inspect}"
 

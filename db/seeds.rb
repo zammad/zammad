@@ -1018,6 +1018,31 @@ Setting.create(
   :frontend => true
 )
 
+Setting.create(
+  :title       => 'Import Mode',
+  :name        => 'import_mode',
+  :area        => 'System::Import',
+  :description => 'Set system in import mode (disable some triggers).',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'import_mode', 
+        :tag      => 'boolean',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state => {
+    :value => false,
+  },
+  :frontend => true
+)
+
 email_address = EmailAddress.create(
   :id             => 1,
   :realname       => 'Zammad',
@@ -1034,8 +1059,7 @@ signature = Signature.create(
  Super Support - Waterford Business Park
  5201 Blue Lagoon Drive - 8th Floor & 9th Floor - Miami, 33126 USA
  Email: hot@example.com - Web: http://www.example.com/
---
-)',
+--',
   :updated_by_id  => 1,
   :created_by_id  => 1
 )

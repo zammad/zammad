@@ -4,13 +4,15 @@ class Ticket < ApplicationModel
   before_destroy  :destroy_dependencies
   
   belongs_to    :group
-  has_many      :articles,        :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
+  has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
   belongs_to    :organization
-  belongs_to    :ticket_state,    :class_name => 'Ticket::State'
-  belongs_to    :ticket_priority, :class_name => 'Ticket::Priority'
-  belongs_to    :owner,           :class_name => 'User'
-  belongs_to    :customer,        :class_name => 'User'
-  belongs_to    :created_by,      :class_name => 'User'
+  belongs_to    :ticket_state,          :class_name => 'Ticket::State'
+  belongs_to    :ticket_priority,       :class_name => 'Ticket::Priority'
+  belongs_to    :owner,                 :class_name => 'User'
+  belongs_to    :customer,              :class_name => 'User'
+  belongs_to    :created_by,            :class_name => 'User'
+  belongs_to    :create_article_type,   :class_name => 'Ticket::Article::Type'
+  belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
 
   after_create  :cache_delete
   after_update  :cache_delete

@@ -4,6 +4,9 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
   def after_update(record)
 #    puts 'check close time'
 
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     # check if close_time is already set
     return true if record.close_time
 

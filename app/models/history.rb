@@ -31,7 +31,8 @@ class History < ActiveRecord::Base
     end
 
     # create history
-    History.create(
+    record = {
+      :id                          => data[:id],
       :o_id                        => data[:o_id],
       :history_type_id             => history_type.id,
       :history_object_id           => history_object.id,
@@ -42,9 +43,20 @@ class History < ActiveRecord::Base
       :value_to                    => data[:value_to],
       :id_from                     => data[:id_from],
       :id_to                       => data[:id_to],
+      :created_at                  => data[:created_at],
       :created_by_id               => data[:created_by_id]
-    )
-    
+    }
+    history_record = nil
+    if data[:id]
+      history_record = History.where( :id => data[:id] ).first
+    end
+    if history_record
+      history_record.update_attributes(record)
+    else
+      record_new = History.create(record)
+      record_new.id = record[:id]
+      record_new.save
+    end
   end
 
   def self.history_destroy( requested_object, requested_object_id )

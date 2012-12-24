@@ -31,6 +31,15 @@ class Setting < ApplicationModel
     return config
   end
 
+  def self.set(name, value)
+    setting = Setting.where( :name => name ).first
+    if !setting
+      raise "Can't find config setting '#{name}'"
+    end
+    setting.state = { :value => value }
+    setting.save
+  end
+
   def self.get(name)
     self.load
     return Thread.current[:settings_config][name]

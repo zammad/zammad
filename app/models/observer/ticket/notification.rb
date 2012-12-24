@@ -6,7 +6,10 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
   @@event_buffer = []
 
   def self.transaction
-    
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
 #    puts '@@event_buffer'
 #    puts @@event_buffer.inspect
     @@event_buffer.each { |event|
@@ -233,6 +236,10 @@ From: #{article.from}
   end
 
   def after_create(record)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
 #    puts 'CREATED!!!!'
 #    puts record.inspect
     e = {
@@ -245,6 +252,10 @@ From: #{article.from}
   end
 
   def before_update(record)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     puts 'before_update'
     current = record.class.find(record.id)
 
@@ -267,6 +278,10 @@ From: #{article.from}
   end
 
   def after_update(record)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
 #    puts 'after_update'
 #    puts record.inspect
 #    puts '-----'

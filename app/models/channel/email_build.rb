@@ -19,7 +19,7 @@ class Channel::EmailBuild
     end
 
     attr['X-Powered-BY'] = 'OTRS - Open Ticket Request System (http://otrs.org/)'
-    attr['X-Mailer'] = 'OTRS Mail Service (3.0.12)'
+    attr['X-Mailer'] = 'OTRS Mail Service (3.x)'
 
     # set headers
     attr.each do |key, v|

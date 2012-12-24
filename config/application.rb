@@ -17,6 +17,7 @@ module Zammad
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+#    config.autoload_paths += %W(#{config.root}/lib)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -30,6 +31,13 @@ module Zammad
       'observer::_ticket::_last_contact',
       'observer::_ticket::_close_time',
       'observer::_ticket::_user_ticket_counter',
+      'observer::_ticket::_article_counter',
+      'observer::_ticket::_article_sender_type',
+      'observer::_ticket::_article::_fillup_from_general',
+      'observer::_ticket::_article::_fillup_from_email',
+      'observer::_ticket::_article::_communicate_email',
+      'observer::_ticket::_article::_communicate_facebook',
+      'observer::_ticket::_article::_communicate_twitter',
       'observer::_ticket::_notification',
       'observer::_tag::_ticket_history'
 
