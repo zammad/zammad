@@ -48,6 +48,9 @@ puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#
 EventMachine.run {
   EventMachine::WebSocket.start( :host => @options[:b], :port => @options[:p], :secure => @options[:s], :tls_options => tls_options ) do |ws|
 
+    # check unused connections
+    check_unused_connections
+
     # register client connection
     ws.onopen {
       client_id = ws.object_id
@@ -174,36 +177,7 @@ EventMachine.run {
 
   # check open unused connections, kick all connection without activitie in the last 2 minutes
   EventMachine.add_periodic_timer(120) {
-    log 'notice', "check unused idle connections..."
-
-    idle_time_in_min = 4
-
-    # web sockets
-    @clients.each { |client_id, client|
-      if ( client[:last_ping] + ( 60 * idle_time_in_min ) ) < Time.now
-        log 'notice', "closing idle websocket connection", client_id
-
-        # remember to not use this connection anymore
-        client[:disconnect] = true
-
-        # try to close regular
-        client[:websocket].close_websocket
-
-        # delete sesstion from client list
-        sleep 1
-        @clients.delete(client_id)
-      end
-    }
-
-    # ajax
-    clients = Session.list
-    clients.each { |client_id, client|
-      next if client[:meta][:type] == 'websocket'
-      if ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
-        log 'notice', "closing idle ajax connection", client_id
-        Session.destory( client_id )
-      end
-    }
+    check_unused_connections
   }
 
   EventMachine.add_periodic_timer(20) {
@@ -256,6 +230,39 @@ EventMachine.run {
       end
     }
   }
+
+  def check_unused_connections
+    log 'notice', "check unused idle connections..."
+
+    idle_time_in_min = 4
+
+    # web sockets
+    @clients.each { |client_id, client|
+      if ( client[:last_ping] + ( 60 * idle_time_in_min ) ) < Time.now
+        log 'notice', "closing idle websocket connection", client_id
+
+        # remember to not use this connection anymore
+        client[:disconnect] = true
+
+        # try to close regular
+        client[:websocket].close_websocket
+
+        # delete sesstion from client list
+        sleep 1
+        @clients.delete(client_id)
+      end
+    }
+
+    # ajax
+    clients = Session.list
+    clients.each { |client_id, client|
+      next if client[:meta][:type] == 'websocket'
+      if ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
+        log 'notice', "closing idle ajax connection", client_id
+        Session.destory( client_id )
+      end
+    }
+  end
 
   def log( level, data, client_id = '-' )
     if !@options[:d]
