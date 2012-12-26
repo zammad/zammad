@@ -13,6 +13,9 @@ class ActiveSupport::TestCase
   SimpleCov.start
   fixtures :all
 
+  # disable transactions
+  self.use_transactional_fixtures = false
+
   # load seeds
   load "#{Rails.root}/db/seeds.rb" 
 
