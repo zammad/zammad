@@ -17,8 +17,8 @@ class TicketExtend < ActiveRecord::Migration
     tickets = Ticket.all
     tickets.each {|t|
       t.article_count = t.articles.count
-      t.create_ticket_article_type_id = t.articles.first.ticket_article_type.id
-      t.create_ticket_article_sender_id = t.articles.first.ticket_article_sender.id
+      t.create_article_type_id = t.articles.first.ticket_article_type.id
+      t.create_article_sender_id = t.articles.first.ticket_article_sender.id
       t.save
     }
   end
