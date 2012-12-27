@@ -9,7 +9,7 @@ class TagsCreate < ActiveRecord::Migration
     end
     add_index :tags, [:o_id]
     add_index :tags, [:tag_object_id]
-    
+
     create_table :tag_objects do |t|
       t.column :name,         :string, :limit => 250,   :null => false
       t.timestamps
