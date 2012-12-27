@@ -9,6 +9,13 @@ class Package < ApplicationModel
   end
 
   def self.build(package)
+    build_date = REXML::Element.new("build_date")
+    build_date.text = Time.now.utc.iso8601
+    build_host = REXML::Element.new("build_host")
+    build_host.text = Socket.gethostname
+
+    package.root.insert_after( '//zpm/description', build_date )
+    package.root.insert_after( '//zpm/description', build_host )
     package.elements.each('zpm/filelist/file') do |element|
       location = element.attributes['location']
       content = self._read_file(location)
