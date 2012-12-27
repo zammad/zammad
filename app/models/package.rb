@@ -26,7 +26,7 @@ class Package < ApplicationModel
   end
 
   def self.install_file(file)
-    xml = self._read_file(file)
+    xml = self._read_file( file, true )
     package = self._parse(xml)
     self.install(package)
   end
