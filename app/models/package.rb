@@ -5,7 +5,7 @@ class Package < ApplicationModel
   def self.build(data)
 
     if data[:file]
-      xml     = self._read_file( data[:file], true )
+      xml     = self._read_file( data[:file], data[:root] || true )
       package = self._parse(xml)
     elsif data[:string]
       package = self._parse( data[:string] )
@@ -20,7 +20,7 @@ class Package < ApplicationModel
     package.root.insert_after( '//zpm/description', build_host )
     package.elements.each('zpm/filelist/file') do |element|
       location = element.attributes['location']
-      content = self._read_file(location)
+      content = self._read_file( location, data[:root] )
       base64  = Base64.encode64(content)
       element.text = base64
     end
@@ -165,10 +165,12 @@ class Package < ApplicationModel
   end
 
   def self._read_file(file, fullpath = false)
-    if !fullpath
+    if fullpath == false
       location = @@root + '/' + file
-    else
+    elsif fullpath == true
       location = file
+    else
+      location = fullpath + '/' + file
     end
 
     begin
