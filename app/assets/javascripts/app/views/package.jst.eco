@@ -4,11 +4,18 @@
 
 <div class="row">
   <div class="span3">
+<!--
     <ul class="nav nav-tabs nav-stacked">
       <li class=""><a data-type="" ><%- @T( 'Installed' ) %></a></li>
-      <li class=""><a data-type="" ><%- @T( 'Upload' ) %></a></li>
+      <li class=""><a data-type="" ><%- @T( 'Store' ) %></a></li>
     </ul>
-
+-->
+    <p>
+      <form action="/api/packages" method="post" enctype="multipart/form-data">
+        <input type="file" name="file_upload"/>
+        <button class="btn btn-primary" type="submit"><%- @T('Install Package') %></button>
+      </form>
+    </p>
   </div>
 
   <div class="span9">
@@ -24,12 +31,12 @@
       </thead>
       <tbody>
       <% for item in @packages: %>
-        <tr>
+        <tr data-id="<%= item.id %>">
           <td><%= item.name %></td>
           <td><%= item.version %></td>
           <td><a href="<%- item.url %>" target="_blank"><%= item.vendor %></a></td>
           <td><%- @T(item.state) %></td>
-          <td><% for action in item.action: %><a href="#"><%- @T(action) %></a><br/><% end %></td>
+          <td><% for action in item.action: %><a href="#" class="action" data-type="<%= action %>"><%- @T(action) %></a><br/><% end %></td>
         </tr>
       <% end %>
       </tbody>
