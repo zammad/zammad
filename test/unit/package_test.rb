@@ -159,7 +159,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
     tests.each { |test|
       if test[:action] == 'install'
         begin
-          success = Package.install_string( test[:zpm] )
+          success = Package.install( :string => test[:zpm] )
         rescue => e
           puts 'ERROR: ' + e.inspect
           success = false
@@ -172,13 +172,13 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
       elsif test[:action] == 'uninstall'
         if test[:zpm]
           begin
-            success = Package.uninstall_string( test[:zpm] )
+            success = Package.uninstall( :string => test[:zpm] )
           rescue
             success = false
           end
         else
           begin
-            success = Package.uninstall_name( test[:name], test[:version] )
+            success = Package.uninstall( :name => test[:name], :version => test[:version] )
           rescue
             success = false
           end

@@ -2,13 +2,15 @@ require 'rexml/document'
 class Package < ApplicationModel
   @@root = Rails.root.to_s
 
-  def self.build_file(file)
-    xml = self._read_file(file, true)
-    package = self._parse(xml)
-    self.build(package)
-  end
+  def self.build(data)
 
-  def self.build(package)
+    if data[:file]
+      xml     = self._read_file( data[:file], true )
+      package = self._parse(xml)
+    elsif data[:string]
+      package = self._parse( data[:string] )
+    end
+
     build_date = REXML::Element.new("build_date")
     build_date.text = Time.now.utc.iso8601
     build_host = REXML::Element.new("build_host")
@@ -25,21 +27,16 @@ class Package < ApplicationModel
     return package.to_s
   end
 
-  def self.install_file(file)
-    xml = self._read_file( file, true )
-    package = self._parse(xml)
-    self.install(package)
-  end
-
-  def self.install_string(xml)
-    package = self._parse(xml)
-    self.install(package)
-  end
-
-  def self.install(package)
+  def self.install(data)
+    if data[:file]
+      xml     = self._read_file( data[:file], true )
+      package = self._parse(xml)
+    elsif data[:string]
+      package = self._parse( data[:string] )
+    end
 
     # package meta data
-    data = {
+    meta = {
       :name           => package.elements["zpm/name"].text,
       :version        => package.elements["zpm/version"].text,
       :vendor         => package.elements["zpm/vendor"].text,
@@ -49,36 +46,40 @@ class Package < ApplicationModel
     }
 
     # verify if package can get installed
-    package_db = Package.where( :name => data[:name] ).first
+    package_db = Package.where( :name => meta[:name] ).first
     if package_db
-      if Gem::Version.new( package_db.version ) == Gem::Version.new( data[:version] )
-        raise "Package '#{data[:name]}' already installed!"
+      if Gem::Version.new( package_db.version ) == Gem::Version.new( meta[:version] )
+        raise "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
       end
-      if Gem::Version.new( package_db.version ) > Gem::Version.new( data[:version] )
-        raise "Newer version (#{package_db.version}) of package '#{data[:name]}-#{data[:version]}' already installed!"
+      if Gem::Version.new( package_db.version ) > Gem::Version.new( meta[:version] )
+        raise "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
       end
 
       # uninstall old package
-      self.uninstall_name( package_db.name, package_db.version, false )
+      self.uninstall({
+        :name               => package_db.name,
+        :version            => package_db.version,
+        :migration_not_down => true,
+      })
     end
 
     # store package
-    record = Package.create( data )
+    record = Package.create( meta )
     Store.add(
       :object      => 'Package',
       :o_id        => record.id,
       :data        => package.to_s,
-      :filename    => data[:name] + '-' + data[:version] + '.zpm',
+      :filename    => meta[:name] + '-' + meta[:version] + '.zpm',
       :preferences => {},
     )
 
     # write files
     package.elements.each('zpm/filelist/file') do |element|
-      location = element.attributes['location']
+      location   = element.attributes['location']
       permission = element.attributes['permission'] || '644'
-      base64 = element.text
-      content  = Base64.decode64(base64)
-      content = self._write_file(location, permission, content)
+      base64     = element.text
+      content    = Base64.decode64(base64)
+      content    = self._write_file(location, permission, content)
     end
 
     # update package state
@@ -86,51 +87,47 @@ class Package < ApplicationModel
     record.save
 
     # up migrations
-    Package::Migration.migrate( data[:name] )
+    Package::Migration.migrate( meta[:name] )
 
     # prebuild assets
 
     return true
   end
 
-  def self.uninstall_name( name, version, migration_down = true )
-    file = self._get_bin( name, version )
-    package = self._parse(file)
-    self.uninstall( package, migration_down )
-  end
+  def self.uninstall( data )
 
-  def self.uninstall_string(xml)
-    package = self._parse(xml)
-    self.uninstall(package)
-  end
-
-  def self.uninstall( package, migration_down = true )
+    if data[:string]
+      package = self._parse( data[:string] )
+    else
+      file    = self._get_bin( data[:name], data[:version] )
+      package = self._parse(file)
+    end
 
     # package meta data
-    data = {
+    meta = {
       :name           => package.elements["zpm/name"].text,
       :version        => package.elements["zpm/version"].text,
     }
 
     # down migrations
-    if migration_down
-      Package::Migration.migrate( data[:name], 'reverse' )
+    if !data[:migration_not_down]
+      Package::Migration.migrate( meta[:name], 'reverse' )
     end
 
     package.elements.each('zpm/filelist/file') do |element|
-      location = element.attributes['location']
+      location   = element.attributes['location']
       permission = element.attributes['permission'] || '644'
-      base64 = element.text
-      content  = Base64.decode64(base64)
-      content = self._delete_file(location, permission, content)
+      base64     = element.text
+      content    = Base64.decode64(base64)
+      content    = self._delete_file(location, permission, content)
     end
 
     # prebuild assets
 
     # delete package
     record = Package.where(
-      :name     => data[:name],
-      :version  => data[:version],
+      :name     => meta[:name],
+      :version  => meta[:version],
     ).first
     record.destroy
 
@@ -240,7 +237,7 @@ class Package < ApplicationModel
   class Migration < ApplicationModel
     @@root = Rails.root.to_s
 
-    def self.migrate(package, direction = 'normal')
+    def self.migrate( package, direction = 'normal' )
       location = @@root + '/db/addon/' + package.underscore
 
       return true if !File.exists?( location )
