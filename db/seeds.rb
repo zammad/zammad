@@ -1846,6 +1846,13 @@ Translation.create( :locale => 'de', :source => "Closed", :target => "Geschlosse
 Translation.create( :locale => 'de', :source => "Re-Open", :target => "Wiedereröffnet", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create( :locale => 'de', :source => "Day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create( :locale => 'de', :source => "First Solution", :target => "Erstlösung", :updated_by_id => 1, :created_by_id => 1 )
+Translation.create( :locale => 'de', :source => "Vendor", :target => "Hersteller", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "Action", :target => "Aktion", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "uninstall", :target => "deinstallieren", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "install", :target => "installieren", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "reinstall", :target => "erneut installieren", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "deactivate", :target => "deaktivieren", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create( :locale => 'de', :source => "activate", :target => "aktivieren", :updated_by_id => 1, :created_by_id => 1  )
 
 
 #Translation.create( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )

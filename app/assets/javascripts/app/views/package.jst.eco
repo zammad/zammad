@@ -18,6 +18,7 @@
           <th><%- @T('Name') %></th>
           <th><%- @T('Version') %></th>
           <th><%- @T('Vendor') %></th>
+          <th><%- @T('State') %></th>
           <th><%- @T('Action') %></th>
         </tr>
       </thead>
@@ -27,7 +28,8 @@
           <td><%= item.name %></td>
           <td><%= item.version %></td>
           <td><a href="<%- item.url %>" target="_blank"><%= item.vendor %></a></td>
-          <td>-</td>
+          <td><%- @T(item.state) %></td>
+          <td><% for action in item.action: %><a href="#"><%- @T(action) %></a><br/><% end %></td>
         </tr>
       <% end %>
       </tbody>

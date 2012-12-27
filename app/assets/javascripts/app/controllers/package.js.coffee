@@ -6,6 +6,9 @@ class Index extends App.Controller
     # check authentication
     return if !@authenticate()
 
+    # set title
+    @title 'Packages'
+
     App.Com.ajax(
       id:    'packages',
       type:  'GET',
@@ -17,6 +20,15 @@ class Index extends App.Controller
 
 
   render: (data) ->
+
+    for item in data.packages
+      item.action = []
+      if item.state == 'installed'
+        item.action = ['uninstall', 'deactivate']
+      else if item.state == 'uninstalled'
+        item.action = ['install']
+      else if item.state == 'deactivate'
+        item.action = ['uninstall', 'activate']
 
     @html App.view('package')(
       head:     'Dashboard'
