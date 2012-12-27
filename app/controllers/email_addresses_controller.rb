@@ -95,6 +95,7 @@ curl http://localhost/api/email_addresses.json -v -u #{login}:#{password} -H "Co
 =end
 
   def create
+    return if is_not_role('Admin')
     model_create_render(EmailAddress, params)
   end
 
@@ -125,6 +126,7 @@ curl http://localhost/api/email_addresses.json -v -u #{login}:#{password} -H "Co
 =end
 
   def update
+    return if is_not_role('Admin')
     model_update_render(EmailAddress, params)
   end
 
@@ -139,6 +141,7 @@ Test:
 =end
 
   def destroy
+    return if is_not_role('Admin')
     model_destory_render(EmailAddress, params)
   end
 end

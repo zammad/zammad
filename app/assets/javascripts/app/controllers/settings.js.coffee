@@ -62,4 +62,3 @@ App.Config.set( 'System', { prio: 1400, parent: '#settings', name: 'System', tar
 App.Config.set( 'Security', { prio: 1500, parent: '#settings', name: 'Security', target: '#settings/security', role: ['Admin'] }, 'NavBar' )
 App.Config.set( 'Ticket', { prio: 1600, parent: '#settings', name: 'Ticket', target: '#settings/ticket', role: ['Admin'] }, 'NavBar' )
 App.Config.set( 'Object', { prio: 1700, parent: '#settings', name: 'Objects', target: '#settings/objects', role: ['Admin'] }, 'NavBar' )
-App.Config.set( 'Packages', { prio: 1800, parent: '#settings', name: 'Packages', target: '#packages', role: ['Admin'] }, 'NavBar' )

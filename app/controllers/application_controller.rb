@@ -167,6 +167,12 @@ class ApplicationController < ActionController::Base
     return false
   end
 
+  def is_not_role( role_name )
+    return false if is_role( role_name )
+    response_access_deny()
+    return true
+  end
+
   def response_access_deny
     render(
       :json => {},

@@ -39,4 +39,15 @@ class ApplicationModel < ActiveRecord::Base
     key = self.to_s + '::' + data_id.to_s
     Cache.get( key.to_s )
   end
+
+  def self.create_if_not_exists(data)
+    if data[:name]
+      record = self.where( :name => data[:name] ).first
+      return record if record
+    elsif data[:locale] && data[:source]
+      record = self.where( :locale => data[:locale], :source => data[:source] ).first
+      return record if record
+    end
+    self.create(data)
+  end
 end

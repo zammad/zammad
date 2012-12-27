@@ -13,16 +13,19 @@ class TicketStatesController < ApplicationController
 
   # POST /ticket_states
   def create
+    return if is_not_role('Admin')
     model_create_render(Ticket::State, params)
   end
 
   # PUT /ticket_states/1
   def update
+    return if is_not_role('Admin')
     model_update_render(Ticket::State, params)
   end
 
   # DELETE /ticket_states/1
   def destroy
+    return if is_not_role('Admin')
     model_destory_render(Ticket::State, params)
   end
 end

@@ -94,6 +94,7 @@ curl http://localhost/api/signatures.json -v -u #{login}:#{password} -H "Content
 =end
 
   def create
+    return if is_not_role('Admin')
     model_create_render(Signature, params)
   end
 
@@ -122,6 +123,7 @@ curl http://localhost/api/signatures.json -v -u #{login}:#{password} -H "Content
 =end
 
   def update
+    return if is_not_role('Admin')
     model_update_render(Signature, params)
   end
 
@@ -136,6 +138,7 @@ Test:
 =end
 
   def destroy
+    return if is_not_role('Admin')
     model_destory_render(Signature, params)
   end
 end

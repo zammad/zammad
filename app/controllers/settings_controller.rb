@@ -13,16 +13,19 @@ class SettingsController < ApplicationController
 
   # POST /settings
   def create
+    return if is_not_role('Admin')
     model_create_render(Setting, params)
   end
 
   # PUT /settings/1
   def update
+    return if is_not_role('Admin')
     model_update_render(Setting, params)
   end
 
   # DELETE /settings/1
   def destroy
+    return if is_not_role('Admin')
     model_destory_render(Setting, params)
   end
 end

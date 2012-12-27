@@ -1,7 +1,7 @@
 class TicketOverviewsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /tickets
+  # GET /api/tickets
   def show
 #sleep 2
 
