@@ -1,1 +1,0 @@
-/Users/me/src/report/app/assets/javascripts/app/controllers/report.js.coffee

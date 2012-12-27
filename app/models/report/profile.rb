@@ -1,1 +1,0 @@
-/Users/me/src/report/app/models/report/profile.rb
