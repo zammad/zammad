@@ -243,7 +243,7 @@ class Package < ApplicationModel
       location = @@root + '/db/addon/' + package.underscore
 
       return true if !File.exists?( location )
-      migrations_done = Package::Migration.where( :name => package )
+      migrations_done = Package::Migration.where( :name => package.underscore )
 
       # get existing migrations
       migrations_existing = []
@@ -275,26 +275,26 @@ class Package < ApplicationModel
 
         # down
         if direction == 'reverse'
-          done = Package::Migration.where( :name => package, :version => version ).first
+          done = Package::Migration.where( :name => package.underscore, :version => version ).first
           next if !done
           puts "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).down
-          record = Package::Migration.where( :name => package, :version => version ).first
+          record = Package::Migration.where( :name => package.underscore, :version => version ).first
           if record
             record.destroy
           end
 
         # up
         else
-          done = Package::Migration.where( :name => package, :version => version ).first
+          done = Package::Migration.where( :name => package.underscore, :version => version ).first
           next if done
           puts "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).up
-          Package::Migration.create( :name => package, :version => version )
+          Package::Migration.create( :name => package.underscore, :version => version )
         end
       }
     end
