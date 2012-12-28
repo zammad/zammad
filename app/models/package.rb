@@ -275,26 +275,26 @@ class Package < ApplicationModel
 
         # down
         if direction == 'reverse'
-          done = Package::Migration.where( :name => name, :version => version ).first
+          done = Package::Migration.where( :name => package, :version => version ).first
           next if !done
           puts "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).down
-          record = Package::Migration.where( :name => name, :version => version ).first
+          record = Package::Migration.where( :name => package, :version => version ).first
           if record
             record.destroy
           end
 
         # up
         else
-          done = Package::Migration.where( :name => name, :version => version ).first
+          done = Package::Migration.where( :name => package, :version => version ).first
           next if done
           puts "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).up
-          Package::Migration.create( :name => name, :version => version )
+          Package::Migration.create( :name => package, :version => version )
         end
       }
     end
