@@ -24,6 +24,14 @@ class Package < ApplicationModel
       base64  = Base64.encode64(content)
       element.text = base64
     end
+    if data[:output]
+      location = data[:output] + '/' + package.elements["zpm/name"].text + '-' + package.elements["zpm/version"].text + '.zpm'
+      puts "NOTICE: writting package to '#{location}'"
+      file = File.new( location, 'wb' )
+      file.write( package.to_s ) 
+      file.close
+      return true
+    end
     return package.to_s
   end
 
