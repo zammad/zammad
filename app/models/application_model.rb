@@ -50,4 +50,21 @@ class ApplicationModel < ActiveRecord::Base
     end
     self.create(data)
   end
+
+  def self.create_or_update(data)
+    if data[:name]
+      record = self.where( :name => data[:name] ).first
+      if record
+        puts 'update ' + data[:name].to_s
+        record.update_attributes( :data => data[:data] )
+      else
+        puts 'create ' + data[:name].to_s
+        record = self.new( data )
+        record.save
+      end
+      return record
+    else
+      raise "Need name for create_or_update()"
+    end
+  end
 end
