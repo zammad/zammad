@@ -55,10 +55,8 @@ class ApplicationModel < ActiveRecord::Base
     if data[:name]
       record = self.where( :name => data[:name] ).first
       if record
-        puts 'update ' + data[:name].to_s
         record.update_attributes( :data => data[:data] )
       else
-        puts 'create ' + data[:name].to_s
         record = self.new( data )
         record.save
       end
