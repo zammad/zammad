@@ -116,10 +116,10 @@ class TicketsController < ApplicationController
 
     # get closed/open states
     ticket_state_list_open   = Ticket::State.where(
-      :ticket_state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action'] )
+      :state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action'] )
     )
     ticket_state_list_closed = Ticket::State.where(
-      :ticket_state_type_id => Ticket::StateType.where( :name => ['closed'] )
+      :state_type_id => Ticket::StateType.where( :name => ['closed'] )
     )
 
     # get tickets
@@ -213,7 +213,7 @@ class TicketsController < ApplicationController
 
     # get closed/open states
     ticket_states   = Ticket::State.where(
-      :ticket_state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action', 'closed'] )
+      :state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action', 'closed'] )
     )
     ticket = Ticket.find( params[:ticket_id] )
     ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states )

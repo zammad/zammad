@@ -289,7 +289,7 @@ class Channel::EmailParser
       # set ticket state to open if not new
       if ticket
         ticket_state      = Ticket::State.find( ticket.ticket_state_id )
-        ticket_state_type = Ticket::StateType.find( ticket_state.ticket_state_type_id )
+        ticket_state_type = Ticket::StateType.find( ticket_state.state_type_id )
 
         # if tickte is merged, find linked ticket
         if ticket_state_type.name == 'merged'

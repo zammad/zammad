@@ -418,11 +418,12 @@ class Ticket < ApplicationModel
   end
 
   class StateType < ApplicationModel
+    has_many      :states,            :class_name => 'Ticket::State'
     validates     :name, :presence => true
   end
 
   class State < ApplicationModel
-    belongs_to    :ticket_state_type, :class_name => 'Ticket::StateType'
+    belongs_to    :state_type,        :class_name => 'Ticket::StateType'
     validates     :name, :presence => true
   end
 end
