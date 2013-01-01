@@ -1149,12 +1149,12 @@ Ticket::StateType.create( :name => 'closed', :updated_by_id  => 1, :created_by_i
 Ticket::StateType.create( :name => 'merged', :updated_by_id  => 1, :created_by_id => 1 )
 Ticket::StateType.create( :name => 'removed', :updated_by_id  => 1, :created_by_id => 1 )
 
-Ticket::State.create( :name => 'new', :ticket_state_type_id => Ticket::StateType.where(:name => 'new').first.id, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::State.create( :name => 'open', :ticket_state_type_id => Ticket::StateType.where(:name => 'open').first.id, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::State.create( :name => 'pending', :ticket_state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create( :name => 'closed', :ticket_state_type_id  => Ticket::StateType.where(:name => 'closed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create( :name => 'merged', :ticket_state_type_id  => Ticket::StateType.where(:name => 'merged').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create( :name => 'removed', :ticket_state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create( :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::State.create( :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::State.create( :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create( :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create( :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create( :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
 
 Ticket::Priority.create( :name => '1 low', :updated_by_id  => 1, :created_by_id => 1 )
 Ticket::Priority.create( :name => '2 normal', :updated_by_id  => 1, :created_by_id => 1 )
