@@ -3,9 +3,6 @@ class User < ApplicationModel
 
   before_create           :check_name, :check_email, :check_login, :check_image, :check_geo
   before_update           :check_password, :check_image, :check_geo, :check_email, :check_login
-  after_create            :cache_delete
-  after_update            :cache_delete
-  after_destroy           :cache_delete
 
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
   has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update

@@ -16,10 +16,10 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
       # get current state of objects
       if event[:name] == 'Ticket::Article'
-        article = Ticket::Article.find( event[:id] )
+        article = Ticket::Article.lookup( :id => event[:id] )
         ticket  = article.ticket
       else
-        ticket  = Ticket.find( event[:id] )
+        ticket  = Ticket.lookup( :id => event[:id] )
         article = ticket.articles[-1]
       end
 

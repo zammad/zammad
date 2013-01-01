@@ -225,7 +225,7 @@ class TicketsController < ApplicationController
     users = {}
     tickets = []
     ticket_list.each {|ticket|
-      data = Ticket.full_data(ticket.id)
+      data = Ticket.lookup( :id => ticket.id )
       tickets.push data
       if !users[ data['owner_id'] ]
         users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
@@ -508,7 +508,7 @@ class TicketsController < ApplicationController
     tickets = []
     users = {}
     tickets_all.each do |ticket|
-      ticket_tmp = Ticket.full_data(ticket.id)
+      ticket_tmp = Ticket.lookup( :id => ticket.id )
       tickets.push ticket_tmp
       users[ ticket['owner_id'] ] = User.user_data_full( ticket_tmp['owner_id'] )
       users[ ticket['customer_id'] ] = User.user_data_full( ticket_tmp['customer_id'] )

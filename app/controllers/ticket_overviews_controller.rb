@@ -50,7 +50,7 @@ class TicketOverviewsController < ApplicationController
     users = {}
     tickets = []
     overview[:ticket_list].each {|ticket_id|
-      data = Ticket.full_data(ticket_id)
+      data = Ticket.lookup( :id => ticket_id )
       tickets.push data
       if !users[ data['owner_id'] ]
         users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )

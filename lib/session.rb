@@ -434,7 +434,7 @@ class ClientState
       return if !session_data
       return if !session_data[:user]
       return if !session_data[:user][:id]
-      user = User.find( session_data[:user][:id] )
+      user = User.lookup( :id => session_data[:user][:id] )
       return if !user
 
       # set cache key
@@ -691,7 +691,7 @@ class ClientState
     if !@pushed[:tickets]
       @pushed[:tickets] = {}
     end
-    ticket = Ticket.full_data(ticket_id)
+    ticket = Ticket.lookup( :id => ticket_id )
     if @pushed[:tickets][ticket_id] != ticket['updated_at']
       @pushed[:tickets][ticket_id] = ticket['updated_at']
       tickets.push ticket

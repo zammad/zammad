@@ -2,7 +2,7 @@ class Ticket < ApplicationModel
   before_create   :number_generate, :check_defaults
   before_update   :check_defaults
   before_destroy  :destroy_dependencies
-  
+
   belongs_to    :group
   has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
   belongs_to    :organization
@@ -14,16 +14,12 @@ class Ticket < ApplicationModel
   belongs_to    :create_article_type,   :class_name => 'Ticket::Article::Type'
   belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
 
-  after_create  :cache_delete
-  after_update  :cache_delete
-  after_destroy :cache_delete
-
   def self.number_check (string)
     self.number_adapter.number_check_item(string)
   end
 
   def agent_of_group
-    Group.find(self.group_id).users.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
+    Group.find( self.group_id ).users.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
   end
 
   def self.agents
@@ -41,8 +37,8 @@ class Ticket < ApplicationModel
     Ticket::Article.create(
       :created_by_id            => data[:created_by_id],
       :ticket_id                => self.id, 
-      :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'note' ).first.id,
-      :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
+      :ticket_article_type_id   => Ticket::Article::Type.lookup( :name => 'note' ).id,
+      :ticket_article_sender_id => Ticket::Article::Sender.lookup( :name => 'Agent' ).id,
       :body                     => 'merged',
       :internal                 => false
     )
@@ -59,7 +55,7 @@ class Ticket < ApplicationModel
     )
 
     # set state to 'merged'
-    self.ticket_state_id = Ticket::State.where( :name => 'merged' ).first.id
+    self.ticket_state_id = Ticket::State.lookup( :name => 'merged' ).id
 
     # rest owner
     self.owner_id = User.where( :login => '-' ).first.id
@@ -304,16 +300,6 @@ class Ticket < ApplicationModel
 
   end
 
-#  data = Ticket.full_data(123)
-  def self.full_data(ticket_id)
-    cache = self.cache_get(ticket_id)
-    return cache if cache
-
-    ticket = Ticket.find(ticket_id).attributes
-    self.cache_set( ticket_id, ticket )
-    return ticket
-  end
-
 #  Ticket.create_attributes(
 #    :current_user_id => 123,
 #  )
@@ -428,24 +414,15 @@ class Ticket < ApplicationModel
 
   class Priority < ApplicationModel
     self.table_name = 'ticket_priorities'
-    after_create  :cache_delete
-    after_update  :cache_delete
-    after_destroy :cache_delete
     validates     :name, :presence => true
   end
 
   class StateType < ApplicationModel
-    after_create  :cache_delete
-    after_update  :cache_delete
-    after_destroy :cache_delete
     validates     :name, :presence => true
   end
 
   class State < ApplicationModel
-    belongs_to :ticket_state_type, :class_name => 'Ticket::StateType'
-    after_create  :cache_delete
-    after_update  :cache_delete
-    after_destroy :cache_delete
+    belongs_to    :ticket_state_type, :class_name => 'Ticket::StateType'
     validates     :name, :presence => true
   end
 end

@@ -3,10 +3,6 @@ class Authorization < ApplicationModel
   validates_presence_of   :user_id, :uid, :provider
   validates_uniqueness_of :uid,     :scope => :provider
   
-  after_create            :cache_delete
-  after_update            :cache_delete
-  after_destroy           :cache_delete
-  
   def self.find_from_hash(hash)
     auth = Authorization.where( :provider => hash['provider'], :uid => hash['uid'] ).first
     if auth

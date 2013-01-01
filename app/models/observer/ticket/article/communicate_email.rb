@@ -7,16 +7,16 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # if sender is customer, do not communication
-    sender = Ticket::Article::Sender.where( :id => record.ticket_article_sender_id ).first
+    sender = Ticket::Article::Sender.lookup( :id => record.ticket_article_sender_id )
     return 1 if sender == nil
     return 1 if sender['name'] == 'Customer'
 
     # only apply on emails
-    type = Ticket::Article::Type.where( :id => record.ticket_article_type_id ).first
+    type = Ticket::Article::Type.lookup( :id => record.ticket_article_type_id )
     return if type['name'] != 'email'
 
     # build subject
-    ticket = Ticket.find(record.ticket_id)
+    ticket = Ticket.lookup( record.ticket_id )
     subject = ticket.subject_build( record.subject )
 
     # send email

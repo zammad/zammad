@@ -5,10 +5,6 @@ class Ticket::Article < ApplicationModel
   belongs_to    :ticket_article_sender, :class_name => 'Ticket::Article::Sender'
   belongs_to    :created_by,            :class_name => 'User'
 
-  after_create  :cache_delete
-  after_update  :cache_delete
-  after_destroy :cache_delete
-
   private
     def attachment_check
 

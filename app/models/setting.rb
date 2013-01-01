@@ -3,9 +3,6 @@ class Setting < ApplicationModel
   store         :state
   store         :state_initial
   before_create :set_initial
-  after_create  :delete_cache
-  after_update  :delete_cache
-  after_destroy :delete_cache
 
   def self.load
 

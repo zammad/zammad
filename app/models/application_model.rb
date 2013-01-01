@@ -3,6 +3,10 @@ require 'cache'
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
 
+  after_create  :cache_delete
+  after_update  :cache_delete
+  after_destroy :cache_delete
+
   def self.param_cleanup(params)
     data = {}
     self.new.attributes.each {|item|
@@ -38,6 +42,28 @@ class ApplicationModel < ActiveRecord::Base
   def self.cache_get(data_id)
     key = self.to_s + '::' + data_id.to_s
     Cache.get( key.to_s )
+  end
+
+  def self.lookup(data)
+    if data[:id]
+#      puts "GET- + #{self.to_s}.#{data[:id].to_s}"
+      cache = self.cache_get( data[:id] )
+      return cache if cache
+
+#      puts "Fillup- + #{self.to_s}.#{data[:id].to_s}"
+      record = self.where( :id => data[:id] ).first
+      self.cache_set( data[:id], record )
+      return record
+    elsif data[:name]
+      cache = self.cache_get( data[:name] )
+      return cache if cache
+
+      record = self.where( :name => data[:name] ).first
+      self.cache_set( data[:name], record )
+      return record
+    else
+      raise "Need name or id for lookup()"
+    end
   end
 
   def self.create_if_not_exists(data)

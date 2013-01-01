@@ -15,7 +15,7 @@ class LinksController < ApplicationController
     links.each { |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
-        data = Ticket.full_data( item['link_object_value'] )
+        data = Ticket.lookup( :id => item['link_object_value'] )
         tickets.push data
         if !users[ data['owner_id'] ]
           users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )

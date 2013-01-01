@@ -7,16 +7,16 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # if sender is customer, do not change anything
-    sender = Ticket::Article::Sender.where( :id => record.ticket_article_sender_id ).first
+    sender = Ticket::Article::Sender.lookup( :id => record.ticket_article_sender_id )
     return if sender == nil
     return if sender['name'] == 'Customer'
 
     # set email attributes
-    type = Ticket::Article::Type.where( :id => record.ticket_article_type_id ).first
+    type = Ticket::Article::Type.lookup( :id => record.ticket_article_type_id )
     return if type['name'] != 'email'
 
     # set subject if empty
-    ticket = Ticket.find( record.ticket_id )
+    ticket = Ticket.lookup( :id => record.ticket_id )
     if !record.subject || record.subject == ''
       record.subject = ticket.title
     end

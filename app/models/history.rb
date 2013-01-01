@@ -1,4 +1,4 @@
-class History < ActiveRecord::Base
+class History < ApplicationModel
   self.table_name = 'histories'
   belongs_to :history_type,             :class_name => 'History::Type'
   belongs_to :history_object,           :class_name => 'History::Object'
@@ -349,13 +349,13 @@ class History < ActiveRecord::Base
       return history_attribute
     end
 
-  class Object < ActiveRecord::Base
+  class Object < ApplicationModel
   end
 
-  class Type < ActiveRecord::Base
+  class Type < ApplicationModel
   end
 
-  class Attribute < ActiveRecord::Base
+  class Attribute < ApplicationModel
   end
 
 end
