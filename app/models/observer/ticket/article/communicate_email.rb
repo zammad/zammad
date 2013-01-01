@@ -16,7 +16,7 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
     return if type['name'] != 'email'
 
     # build subject
-    ticket = Ticket.lookup( record.ticket_id )
+    ticket = Ticket.lookup( :id => record.ticket_id )
     subject = ticket.subject_build( record.subject )
 
     # send email
