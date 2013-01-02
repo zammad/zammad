@@ -19,7 +19,12 @@ class CreateHistory < ActiveRecord::Migration
     add_index :histories, [:created_by_id]
     add_index :histories, [:created_at]
     add_index :histories, [:history_object_id]
+    add_index :histories, [:history_attribute_id]
     add_index :histories, [:history_type_id]
+    add_index :histories, [:id_to]
+    add_index :histories, [:id_from]
+    add_index :histories, [:value_from]
+    add_index :histories, [:value_to]
 
     create_table :history_types do |t|
       t.column :name,         :string, :limit => 250,   :null => false
