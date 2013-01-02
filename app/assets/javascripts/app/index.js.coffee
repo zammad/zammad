@@ -32,12 +32,12 @@ class App extends Spine.Controller
         item
 
       # define translation helper
-      params.T = ( item ) ->
-        App.i18n.translateContent( item )
+      params.T = ( item, args... ) ->
+        App.i18n.translateContent( item, args )
 
       # define translation inline helper
-      params.Ti = ( item ) ->
-        App.i18n.translateInline( item )
+      params.Ti = ( item, args...  ) ->
+        App.i18n.translateInline( item, args )
 
       # define linkify helper
       params.L = ( item ) ->
