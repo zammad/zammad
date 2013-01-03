@@ -16,4 +16,6 @@ class App.Ticket extends App.Model
       { name: 'last_contact_customer', display: 'Last contact (Customer)', tag: 'time', null: true, style: 'width: 12%' },
       { name: 'first_response',        display: 'First response',          tag: 'time', null: true, style: 'width: 12%' },
       { name: 'close_time',            display: 'Close time',              tag: 'time', null: true, style: 'width: 12%' },
+      { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
+
     ]

@@ -80,6 +80,7 @@ class App.Controller extends Spine.Controller
       { name: 'last_contact_customer',  callback: @frontendTime },
       { name: 'first_response',         callback: @frontendTime },
       { name: 'close_time',             callback: @frontendTime },
+      { name: 'article_count',          title: 'group'},
     ]
     shown_all_attributes = []
     for all_attribute in all_attributes
