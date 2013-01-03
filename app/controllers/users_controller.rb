@@ -166,7 +166,7 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
         # send mail
         data = {}
         data[:subject] = 'Invitation to #{config.product_name} at #{config.fqdn}'
-        data[:body]    = 'Hi {user.firstname},
+        data[:body]    = 'Hi #{user.firstname},
 
 I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - a customer support / ticket system platform.
 
