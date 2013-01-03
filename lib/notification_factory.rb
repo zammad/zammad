@@ -59,6 +59,7 @@ module NotificationFactory
   def self.send(data)
     sender = Setting.get('notification_sender')
     a = Channel::IMAP.new
+    puts "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]}"
     message = a.send(
       {
 #        :in_reply_to => self.in_reply_to,

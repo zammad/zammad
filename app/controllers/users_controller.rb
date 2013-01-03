@@ -160,9 +160,47 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
       # send inviteation if needed
       if params[:invite]
 
-#          logger.debug('IIIIIIIIIIIIIIIIIIIIIIIIIIIIII')
-#          exit '123'
+        # generate token
+        token = Token.create( :action => 'PasswordReset', :user_id => user.id )
+
+        # send mail
+        data = {}
+        data[:subject] = 'Invitation to #{config.product_name} at #{config.fqdn}'
+        data[:body]    = 'Hi {user.firstname},
+
+I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name}.
+
+Click on the following link and set your password:
+
+#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
+
+Enjoy,
+
+  #{current_user.firstname} #{current_user.lastname}
+
+  Your #{config.product_name} Team
+'
+    
+        # prepare subject & body
+        [:subject, :body].each { |key|
+          data[key.to_sym] = NotificationFactory.build(
+            :string  => data[key.to_sym],
+            :objects => {
+              :token        => token,
+              :user         => user,
+              :current_user => current_user,
+            }
+          )
+        }
+    
+        # send notification
+        NotificationFactory.send(
+          :recipient => user,
+          :subject   => data[:subject],
+          :body      => data[:body]
+        )
       end
+
       user_new = User.user_data_full( user.id )
       render :json => user_new, :status => :created
     rescue Exception => e
