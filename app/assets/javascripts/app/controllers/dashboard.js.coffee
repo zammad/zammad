@@ -81,6 +81,7 @@ class Index extends App.Controller
           new plugin.controller( params )
 
     dndOptions =
+      handle:               'h2.can-move'
       placeholder:          'can-move-plcaeholder'
       tolerance:            'pointer'
       distance:             15
