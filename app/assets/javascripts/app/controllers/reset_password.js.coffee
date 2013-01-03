@@ -140,7 +140,7 @@ class Verify extends App.Controller
         App.Event.trigger 'notify:removeall'
         @notify
           type: 'success',
-          msg: 'Password reset successfull.'
+          msg: 'Woo hoo! Your password has been changed!'
 
         # redirect to #
         @navigate '#'
@@ -152,13 +152,6 @@ class Verify extends App.Controller
         @notify
           type: 'error',
           msg: 'Something went wrong. Please contact your administrator.'
-    )
-
-
-
-    @html App.view('generic/hero_message')(
-      head:    'Woo hoo! Your password has been changed!'
-      message: 'Please try to login!'
     )
 
   render_changed_failed: =>
