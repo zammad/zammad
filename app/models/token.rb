@@ -11,15 +11,15 @@ class Token < ActiveRecord::Base
     
     # check if token is still valid
     if token.created_at < 1.day.ago
-      
+
       # delete token
       token.delete
       token.save
       return
     end
-    
+
     # return token if valid
-    return token
+    return token.user
   end
 
   private

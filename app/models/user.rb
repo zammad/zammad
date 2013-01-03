@@ -145,24 +145,22 @@ Your #{config.product_name} Team
 
   # check token
   def self.password_reset_check(token)
-    token = Token.check( :action => 'PasswordReset', :name => token )
-    return if !token
-    return true
+    user = Token.check( :action => 'PasswordReset', :name => token )
+    return user
   end
 
   def self.password_reset_via_token(token,password)
 
     # check token
-    token = Token.check( :action => 'PasswordReset', :name => token )
-    return if !token
+    user = Token.check( :action => 'PasswordReset', :name => token )
+    return if !user
 
     # reset password
-    token.user.update_attributes( :password => password )
+    user.update_attributes( :password => password )
 
     # delete token
-    token.delete
-    token.save
-    return true
+    Token.where( :action => 'PasswordReset', :name => token ).first.destroy
+    return user
   end
 
   def self.find_fulldata(user_id)

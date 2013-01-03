@@ -341,12 +341,12 @@ curl http://localhost/api/users/password_reset_verify.json -v -u #{login}:#{pass
 
   def password_reset_verify
     if params[:password]
-      success = User.password_reset_via_token( params[:token], params[:password] )
+      user = User.password_reset_via_token( params[:token], params[:password] )
     else
-      success = User.password_reset_check( params[:token] )
+      user = User.password_reset_check( params[:token] )
     end
-    if success
-      render :json => { :message => 'ok' }, :status => :ok
+    if user
+      render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
     else
       render :json => { :message => 'failed' }, :status => :unprocessable_entity
     end

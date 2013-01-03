@@ -113,6 +113,7 @@ class Verify extends App.Controller
     e.preventDefault()
     params = @formParam(e.target)
     params['token'] = @token
+    @password = params['password']
 
     # get data
     App.Com.ajax(
@@ -126,6 +127,35 @@ class Verify extends App.Controller
     )
 
   render_changed_success: (data, status, xhr) =>
+    App.Auth.login(
+      data:
+        username: data.user_login
+        password: @password
+      success: =>
+
+        # login check
+        App.Auth.loginCheck()
+
+        # add notify
+        App.Event.trigger 'notify:removeall'
+        @notify
+          type: 'success',
+          msg: 'Password reset successfull.'
+
+        # redirect to #
+        @navigate '#'
+
+      error: =>
+
+        # add notify
+        App.Event.trigger 'notify:removeall'
+        @notify
+          type: 'error',
+          msg: 'Something went wrong. Please contact your administrator.'
+    )
+
+
+
     @html App.view('generic/hero_message')(
       head:    'Woo hoo! Your password has been changed!'
       message: 'Please try to login!'
