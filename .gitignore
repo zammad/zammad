@@ -17,6 +17,9 @@
 # Ignore .project files
 /.project
 
+# Ignore local database settings
+/config/database.yml
+
 Gemfile.lock
 
 # Ignore mac stuff
