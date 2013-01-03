@@ -6,8 +6,9 @@
 development:
   adapter: sqlite3
   database: db/development.sqlite3
-  pool: 5
   timeout: 5000
+  pool: 50
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -15,11 +16,15 @@ development:
 test:
   adapter: sqlite3
   database: db/test.sqlite3
-  pool: 5
   timeout: 5000
+  pool: 50
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
+  adapter: mysql2
+  database: zammad_prod
+  pool: 50
   timeout: 5000
+  encoding: utf8
+  username: some_user
+  password: some_pass
+  host: 127.0.0.1
