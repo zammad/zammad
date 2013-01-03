@@ -4,10 +4,26 @@ class Channel::IMAP < Channel::EmailParser
   include UserInfo
 
   def fetch (channel)
-    puts "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]})"
+    ssl  = false
+    port = 143
+    if channel[:options][:ssl].to_s == 'true'
+      ssl  = true
+      port = 993
+    end
 
-    imap = Net::IMAP.new(channel[:options][:host], 993, true, nil, false )
-    imap.authenticate('LOGIN', channel[:options][:user], channel[:options][:password])
+    puts "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
+
+    imap = Net::IMAP.new( channel[:options][:host], port, ssl, nil, false )
+
+    # try LOGIN, if not - try plain
+    begin
+      imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
+    rescue Exception => e
+      if e.to_s !~ /unsupported\sauthentication\smechanism/i
+        raise e
+      end
+      imap.login( channel[:options][:user], channel[:options][:password] )
+    end
     imap.select('INBOX')
     count     = 0
     count_all = imap.search(['ALL']).count
