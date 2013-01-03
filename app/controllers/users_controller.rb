@@ -157,8 +157,8 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
 
       user.save
 
-      # send inviteation if needed
-      if params[:invite]
+      # send inviteation if needed / only if session exists
+      if params[:invite] && current_user
 
         # generate token
         token = Token.create( :action => 'PasswordReset', :user_id => user.id )
@@ -168,7 +168,7 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
         data[:subject] = 'Invitation to #{config.product_name} at #{config.fqdn}'
         data[:body]    = 'Hi {user.firstname},
 
-I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name}.
+I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - a customer support / ticket system platform.
 
 Click on the following link and set your password:
 

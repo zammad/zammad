@@ -23,6 +23,7 @@ end
 
 module NotificationFactory
   def self.build(data)
+
     data[:string].gsub!( /\#\{(.+?)\}/ ) { |s|
 
       # use quoted text
@@ -44,14 +45,19 @@ module NotificationFactory
         replace = nil
         if data[:objects][object_name.to_sym]
           replace = "data[:objects]['#{object_name}'.to_sym]#{object_method}"
-        else 
+        else
           replace = $1 + $2
         end
         item = replace
       }
 
       # replace value
-      s = eval callback
+      begin
+        s = eval callback
+      rescue Exception => e
+        Rails.logger.error "can't eval #{callback}"
+        Rails.logger.error e.inspect
+      end
     }
     return data[:string]
   end
@@ -59,7 +65,7 @@ module NotificationFactory
   def self.send(data)
     sender = Setting.get('notification_sender')
     a = Channel::IMAP.new
-    puts "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]}"
+    Rails.logger.info "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]}"
     message = a.send(
       {
 #        :in_reply_to => self.in_reply_to,
