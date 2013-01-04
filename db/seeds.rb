@@ -1861,6 +1861,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "new", :target => 
 Translation.create_if_not_exists( :locale => 'de', :source => "note", :target => "Notiz", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "phone", :target => "Telefon", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "web", :target => "Web", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change order", :target => "Reihenfolge Ãndern", :updated_by_id => 1, :created_by_id => 1  )
 
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
