@@ -1,6 +1,6 @@
 X-Zammad-Priority: (1 low|2 normal|3 high)
 ------------------------------------------
-Set priority of ticket (for wohle list check your database).
+Set priority of ticket (for whole list check your database).
 
 X-Zammad-Group: [one system group]
 ----------------------------------
@@ -16,7 +16,7 @@ Ignore this email.
 
 X-Zammad-State: (new|open|...)
 ------------------------------
-Set state of ticket (for wohle list check your database)! Be careful!
+Set state of ticket (for whole list check your database)! Be careful!
 
 X-Zammad-Article-Sender: (Agent|System|Customer)
 -------------------------------------------------
@@ -24,7 +24,7 @@ Info about the sender.
 
 X-Zammad-Article-Type: (email|phone|fax|sms|webrequest|note|twitter status|direct-message|facebook|...)
 -------------------------------------------------------------------------------------------------------
-Article type (for wohle list check your database).
+Article type (for whole list check your database).
 
 X-Zammad-Article-Visability: (internal|external)
 ------------------------------------------------
