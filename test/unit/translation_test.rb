@@ -7,27 +7,27 @@ class TranslationTest < ActiveSupport::TestCase
 
       # test 1
       {
-        :lang   => 'en',
+        :locale => 'en',
         :string => 'New',
         :result => 'New',
       },
 
       # test 2
       {
-        :lang   => 'de',
+        :locale => 'de',
         :string => 'New',
         :result => 'Neu',
       },
 
       # test 3
       {
-        :lang   => 'de',
+        :locale => 'de',
         :string => 'not translated - lalala',
         :result => 'not translated - lalala',
       },
     ]
     tests.each { |test|
-      result = Translation.translate( test[:lang], test[:string] )
+      result = Translation.translate( test[:locale], test[:string] )
       assert_equal( result, test[:result], "verify result" )
     }
   end

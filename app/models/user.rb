@@ -126,6 +126,7 @@ Your #{config.product_name} Team
     # prepare subject & body
     [:subject, :body].each { |key|
       data[key.to_sym] = NotificationFactory.build(
+        :locale    => user.locale,
         :string  => data[key.to_sym],
         :objects => {
           :token => token,

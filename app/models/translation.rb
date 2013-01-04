@@ -4,12 +4,16 @@ class Translation < ApplicationModel
   def self.translate(locale, string)
 
     # translate string
-    record = Translation.where( :locale => locale, :source => string ).first
-    return record.target if record
+    records = Translation.where( :locale => locale, :source => string )
+    records.each {|record|
+      return record.target if record.source == string
+    }
 
     # fallback lookup in en
-    record = Translation.where( :locale => 'en', :source => string ).first
-    return record.target if record
+    records = Translation.where( :locale => 'en', :source => string )
+    records.each {|record|
+      return record.target if record.source == string
+    }
 
     return string
   end

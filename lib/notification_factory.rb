@@ -59,6 +59,14 @@ module NotificationFactory
         Rails.logger.error e.inspect
       end
     }
+
+    # translate
+    data[:string].gsub!( /i18n\((.+?)\)/ ) { |s|
+      string = $1
+      locale = data[:locale] || 'en'
+      s = Translation.translate( locale, string )
+    }
+
     return data[:string]
   end
 

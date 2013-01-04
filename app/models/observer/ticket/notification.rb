@@ -34,11 +34,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-a new Ticket (#{ticket.title}) via #{article.ticket_article_type.name}.
+a new Ticket (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
 
 Group: #{ticket.group.name}
 Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-State: #{ticket.ticket_state.name}
+State: i18n(#{ticket.ticket_state.name})
 
 From: #{article.from}
 <snip>
@@ -100,11 +100,11 @@ Your Zammad Team
               :subject   => 'Follow Up (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-a follow Up (#{ticket.title}) via #{article.ticket_article_type.name}.
+a follow Up (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
 
 Group: #{ticket.group.name}
 Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-State: #{ticket.ticket_state.name}
+State: i18n(#{ticket.ticket_state.name})
 
 From: #{article.from}
 <snip>
@@ -129,11 +129,11 @@ From: #{article.from}
               :subject   => 'Updated (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
               
-updated (#{ticket.title}) via #{article.ticket_article_type.name}.
+updated (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
 
 Group: #{ticket.group.name}
 Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-State: #{ticket.ticket_state.name}
+State: i18n(#{ticket.ticket_state.name})
 
 From: #{article.from}
 <snip>
@@ -201,6 +201,7 @@ From: #{article.from}
       notification = {}
       [:subject, :body].each { |key|
         notification[key.to_sym] = NotificationFactory.build(
+          :locale  => user.locale,
           :string  => data[key.to_sym],
           :objects => {
             :ticket    => ticket,
