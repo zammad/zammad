@@ -6,7 +6,7 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Product Name',
   :name        => 'product_name',
   :area        => 'System::Base',
@@ -27,7 +27,7 @@ Setting.create(
   :frontend => true
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Organization',
   :name        => 'organization',
   :area        => 'System::Base',
@@ -48,7 +48,7 @@ Setting.create(
   :frontend => true
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'SystemID',
   :name        => 'system_id',
   :area        => 'System::Base',
@@ -74,7 +74,7 @@ Setting.create(
   },
   :frontend => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Fully Qualified Domain Name',
   :name        => 'fqdn',
   :area        => 'System::Base',
@@ -94,7 +94,7 @@ Setting.create(
   },
   :frontend => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'http type',
   :name        => 'http_type',
   :area        => 'System::Base',
@@ -121,7 +121,7 @@ Setting.create(
 
 
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Storage Mechanism',
   :name        => 'storage',
   :area        => 'System::Storage',
@@ -147,7 +147,7 @@ Setting.create(
 )
 
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'New User Accounts',
   :name        => 'user_create_account',
   :area        => 'Security::Authentication',
@@ -171,7 +171,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Lost Password',
   :name        => 'user_lost_password',
   :area        => 'Security::Authentication',
@@ -195,7 +195,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Switch to User',
   :name        => 'switch_to_user',
   :area        => 'Security::Authentication',
@@ -219,7 +219,7 @@ Setting.create(
   },
   :frontend => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Authentication via Database',
   :name        => 'auth_db',
   :area        => 'Security::Authentication',
@@ -243,7 +243,7 @@ Setting.create(
   },
   :frontend => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Authentication via Twitter',
   :name        => 'auth_twitter',
   :area        => 'Security::Authentication',
@@ -267,7 +267,7 @@ Setting.create(
   },
   :frontend => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Twitter App Credentials',
   :name        => 'auth_twitter_credentials',
   :area        => 'Security::Authentication',
@@ -293,7 +293,7 @@ Setting.create(
   },
   :frontend => false
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Authentication via Facebook',
   :name        => 'auth_facebook',
   :area        => 'Security::Authentication',
@@ -318,7 +318,7 @@ Setting.create(
   :frontend => true
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Facebook App Credentials',
   :name        => 'auth_facebook_credentials',
   :area        => 'Security::Authentication',
@@ -345,7 +345,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Authentication via Google',
   :name        => 'auth_google_oauth2',
   :area        => 'Security::Authentication',
@@ -369,7 +369,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Google App Credentials',
   :name        => 'auth_google_oauth2_credentials',
   :area        => 'Security::Authentication',
@@ -396,7 +396,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Authentication via LinkedIn',
   :name        => 'auth_linkedin',
   :area        => 'Security::Authentication',
@@ -420,7 +420,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'LinkedIn App Credentials',
   :name        => 'auth_linkedin_credentials',
   :area        => 'Security::Authentication',
@@ -447,7 +447,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Minimal size',
   :name        => 'password_min_size',
   :area        => 'Security::Password',
@@ -478,7 +478,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => '2 lower and 2 upper characters',
   :name        => 'password_min_2_lower_2_upper_characters',
   :area        => 'Security::Password',
@@ -502,7 +502,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Digit required',
   :name        => 'password_need_digit',
   :area        => 'Security::Password',
@@ -526,7 +526,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Maximal failed logins',
   :name        => 'password_max_login_failed',
   :area        => 'Security::Password',
@@ -558,7 +558,7 @@ Setting.create(
   :frontend    => true
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Hook',
   :name        => 'ticket_hook',
   :area        => 'Ticket::Base',
@@ -578,7 +578,7 @@ Setting.create(
   },
   :frontend    => true
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Hook Divider',
   :name        => 'ticket_hook_divider',
   :area        => 'Ticket::Base::Shadow',
@@ -598,7 +598,7 @@ Setting.create(
   },
   :frontend    => false
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Hook Position',
   :name        => 'ticket_hook_position',
   :area        => 'Ticket::Base',
@@ -623,7 +623,7 @@ Setting.create(
   },
   :frontend    => false
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Subject Size',
   :name        => 'ticket_subject_size',
   :area        => 'Ticket::Base',
@@ -643,7 +643,7 @@ Setting.create(
   },
   :frontend    => false
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Subject Reply',
   :name        => 'ticket_subject_re',
   :area        => 'Ticket::Base',
@@ -674,7 +674,7 @@ Setting.create(
 #  :frontend    => false
 #)
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Number Format',
   :name        => 'ticket_number',
   :area        => 'Ticket::Number',
@@ -703,7 +703,7 @@ Setting.create(
   },
   :frontend => false
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Number Increment',
   :name        => 'ticket_number_increment',
   :area        => 'Ticket::Number',
@@ -758,7 +758,7 @@ Setting.create(
   },
   :frontend => false
 )
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Ticket Number Increment Date',
   :name        => 'ticket_number_date',
   :area        => 'Ticket::Number',
@@ -785,7 +785,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Enable Ticket creation',
   :name        => 'customer_ticket_create',
   :area        => 'CustomerWeb::Base',
@@ -810,7 +810,7 @@ Setting.create(
   :frontend => true
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Enable Ticket View/Update',
   :name        => 'customer_ticket_view',
   :area        => 'CustomerWeb::Base',
@@ -835,7 +835,7 @@ Setting.create(
   :frontend    => true
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Sender Format',
   :name        => 'ticket_define_email_from',
   :area        => 'Email::Base',
@@ -860,7 +860,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Sender Format Seperator',
   :name        => 'ticket_define_email_from_seperator',
   :area        => 'Email::Base',
@@ -881,7 +881,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Max. Email Size',
   :name        => 'postmaster_max_size',
   :area        => 'Email::Base',
@@ -924,7 +924,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Additional follow up detection',
   :name        => 'postmaster_follow_up_search_in',
   :area        => 'Email::Base',
@@ -951,7 +951,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Notification Sender',
   :name        => 'notification_sender',
   :area        => 'Email::Base',
@@ -972,7 +972,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Block Notifications',
   :name        => 'send_no_auto_response_reg_exp',
   :area        => 'Email::Base',
@@ -993,7 +993,7 @@ Setting.create(
   :frontend => false
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Enable Chat',
   :name        => 'chat',
   :area        => 'Chat::Base',
@@ -1018,7 +1018,7 @@ Setting.create(
   :frontend => true
 )
 
-Setting.create(
+Setting.create_if_not_exists(
   :title       => 'Import Mode',
   :name        => 'import_mode',
   :area        => 'System::Import',
@@ -1043,14 +1043,14 @@ Setting.create(
   :frontend => true
 )
 
-email_address = EmailAddress.create(
+email_address = EmailAddress.create_if_not_exists(
   :id             => 1,
   :realname       => 'Zammad',
   :email          => 'zammad@localhost',
   :updated_by_id  => 1,
   :created_by_id  => 1
 )
-signature = Signature.create(
+signature = Signature.create_if_not_exists(
   :name => 'default',
   :body => '
   #{user.firstname} #{user.lastname}
@@ -1064,21 +1064,21 @@ signature = Signature.create(
   :created_by_id  => 1
 )
 
-Role.create(
+Role.create_if_not_exists(
   :id             => 1,
   :name           => 'Admin',
   :note           => 'To configure your system.',
   :updated_by_id  => 1,
   :created_by_id  => 1
 )
-Role.create(
+Role.create_if_not_exists(
   :id             => 2,
   :name           => 'Agent',
   :note           => 'To work on Tickets.',
   :updated_by_id  => 1,
   :created_by_id  => 1
 )
-Role.create(
+Role.create_if_not_exists(
   :id             => 3,
   :name           => 'Customer',
   :note           => 'People who create Tickets ask for help.',
@@ -1086,7 +1086,7 @@ Role.create(
   :created_by_id  => 1
 )
 
-Group.create(
+Group.create_if_not_exists(
   :id               => 1,
   :name             => 'Users',
   :email_address_id => email_address.id,
@@ -1095,7 +1095,7 @@ Group.create(
   :updated_by_id    => 1,
   :created_by_id    => 1
 )
-Group.create(
+Group.create_if_not_exists(
   :id             => 2,
   :name           => 'Twitter',
   :note           => 'All Tweets.',
@@ -1107,7 +1107,7 @@ roles         = Role.where( :name => 'Customer' )
 organizations = Organization.find( :all )
 groups        = Group.find( :all )
 
-user = User.create(
+user = User.create_if_not_exists(
   :login         => '-',
   :firstname     => '-',
   :lastname      => '',
@@ -1120,7 +1120,7 @@ user = User.create(
   :updated_by_id => 1,
   :created_by_id => 1
 )
-user_community = User.create(
+user_community = User.create_if_not_exists(
   :login         => 'nicole.braun@zammad.org',
   :firstname     => 'Nicole',
   :lastname      => 'Braun',
@@ -1134,46 +1134,46 @@ user_community = User.create(
   :created_by_id => 1
 )
 
-Link::Type.create( :name => 'normal' )
-Link::Object.create( :name => 'Ticket' )
-Link::Object.create( :name => 'Announcement' )
-Link::Object.create( :name => 'Question/Answer' )
-Link::Object.create( :name => 'Idea' )
-Link::Object.create( :name => 'Bug' )
+Link::Type.create_if_not_exists( :name => 'normal' )
+Link::Object.create_if_not_exists( :name => 'Ticket' )
+Link::Object.create_if_not_exists( :name => 'Announcement' )
+Link::Object.create_if_not_exists( :name => 'Question/Answer' )
+Link::Object.create_if_not_exists( :name => 'Idea' )
+Link::Object.create_if_not_exists( :name => 'Bug' )
 
-Ticket::StateType.create( :name => 'new', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create( :name => 'open', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create( :name => 'pending reminder', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create( :name => 'pending action', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create( :name => 'closed', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create( :name => 'merged', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create( :name => 'removed', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'new', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'open', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'pending reminder', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'pending action', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'closed', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'merged', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'removed', :updated_by_id  => 1, :created_by_id => 1 )
 
-Ticket::State.create( :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::State.create( :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::State.create( :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create( :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create( :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create( :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create_if_not_exists( :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::State.create_if_not_exists( :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::State.create_if_not_exists( :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create_if_not_exists( :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create_if_not_exists( :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create_if_not_exists( :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
 
-Ticket::Priority.create( :name => '1 low', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Priority.create( :name => '2 normal', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Priority.create( :name => '3 high', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Priority.create_if_not_exists( :name => '1 low', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Priority.create_if_not_exists( :name => '2 normal', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Priority.create_if_not_exists( :name => '3 high', :updated_by_id  => 1, :created_by_id => 1 )
 
-Ticket::Article::Type.create( :name => 'email', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'sms', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'chat', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'fax', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'phone', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'twitter status', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'twitter direct-message', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'facebook', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'note', :communication => false, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create( :name => 'web', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'email', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'sms', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'chat', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'fax', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'phone', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'twitter status', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'twitter direct-message', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'facebook', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'note', :communication => false, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'web', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
 
-Ticket::Article::Sender.create( :name => 'Agent', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Sender.create( :name => 'Customer', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Sender.create( :name => 'System', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Sender.create_if_not_exists( :name => 'Agent', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Sender.create_if_not_exists( :name => 'Customer', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Sender.create_if_not_exists( :name => 'System', :updated_by_id  => 1, :created_by_id => 1 )
 
 ticket = Ticket.create(
   :group_id           => Group.where( :name => 'Users' ).first.id,
@@ -1208,7 +1208,7 @@ The Zammad.org Project
 )
 
 overview_role = Role.where( :name => 'Agent' ).first
-Overview.create(
+Overview.create_if_not_exists(
   :name      => 'my_assigned',
   :role_id   => overview_role.id,
   :condition => {
@@ -1249,7 +1249,7 @@ Overview.create(
   :created_by_id => 1
 )
 
-Overview.create(
+Overview.create_if_not_exists(
   :name      => 'all_unassigned',
   :role_id   => overview_role.id,
   :condition => {
@@ -1290,7 +1290,7 @@ Overview.create(
   :created_by_id => 1
 )
 
-Overview.create(
+Overview.create_if_not_exists(
   :name      => 'all_open',
   :role_id   => overview_role.id,
   :condition => {
@@ -1330,7 +1330,7 @@ Overview.create(
   :created_by_id => 1
 )
 
-Overview.create(
+Overview.create_if_not_exists(
   :name      => 'all_escalated',
   :role_id   => overview_role.id,
   :condition => {
@@ -1370,7 +1370,7 @@ Overview.create(
   :created_by_id => 1
 )
 
-Overview.create(
+Overview.create_if_not_exists(
   :name      => 'my_pending_reached',
   :role_id   => overview_role.id,
   :condition => {
@@ -1411,7 +1411,7 @@ Overview.create(
   :created_by_id => 1
 )
 
-Overview.create(
+Overview.create_if_not_exists(
   :name      => 'all',
   :role_id   => overview_role.id,
   :condition => {
@@ -1453,7 +1453,7 @@ Overview.create(
 )
 
 overview_role = Role.where( :name => 'Customer' ).first
-Overview.create(
+Overview.create_if_not_exists(
   :name      => 'my_tickets',
   :role_id   => overview_role.id,
   :condition => {
@@ -1493,7 +1493,7 @@ Overview.create(
   :updated_by_id => 1,
   :created_by_id => 1
 )
-Overview.create(
+Overview.create_if_not_exists(
   :name                => 'my_organization_tickets',
   :role_id             => overview_role.id,
   :organization_shared => true,
@@ -1535,7 +1535,7 @@ Overview.create(
   :created_by_id => 1
 )
 
-Channel.create(
+Channel.create_if_not_exists(
   :adapter => 'SMTP',
   :area    => 'Email::Outbound',
   :options => {
@@ -1549,7 +1549,7 @@ Channel.create(
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
-Channel.create(
+Channel.create_if_not_exists(
   :adapter        => 'Sendmail',
   :area           => 'Email::Outbound',
   :options        => {},
@@ -1558,46 +1558,46 @@ Channel.create(
   :created_by_id  => 1,
 )
 
-network = Network.create(
+network = Network.create_if_not_exists(
   :name   => 'base',
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
 
-Network::Category::Type.create(
+Network::Category::Type.create_if_not_exists(
   :name   => 'Announcement',
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
-Network::Category::Type.create(
+Network::Category::Type.create_if_not_exists(
   :name => 'Idea',
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
-Network::Category::Type.create(
+Network::Category::Type.create_if_not_exists(
   :name => 'Question',
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
-Network::Category::Type.create(
+Network::Category::Type.create_if_not_exists(
   :name => 'Bug Report',
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
 
-Network::Privacy.create(
+Network::Privacy.create_if_not_exists(
   :name => 'logged in',
   :key  => 'loggedIn',
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
-Network::Privacy.create(
+Network::Privacy.create_if_not_exists(
   :name => 'logged in and moderator',
   :key  => 'loggedInModerator',
   :updated_by_id  => 1,
   :created_by_id  => 1,
 )
-Network::Category.create(
+Network::Category.create_if_not_exists(
   :name                     => 'Announcements',
   :network_id               => network.id,
   :allow_comments           => true,
@@ -1607,7 +1607,7 @@ Network::Category.create(
   :updated_by_id            => 1,
   :created_by_id            => 1,
 )
-Network::Category.create(
+Network::Category.create_if_not_exists(
   :name                     => 'Questions',
   :network_id               => network.id,
   :allow_comments           => true,
@@ -1617,7 +1617,7 @@ Network::Category.create(
   :updated_by_id            => 1,
   :created_by_id            => 1,
 )
-Network::Category.create(
+Network::Category.create_if_not_exists(
   :name                     => 'Ideas',
   :network_id               => network.id,
   :allow_comments           => true,
@@ -1627,7 +1627,7 @@ Network::Category.create(
   :updated_by_id            => 1,
   :created_by_id            => 1,
 )
-Network::Category.create(
+Network::Category.create_if_not_exists(
   :name                     => 'Bug Reports',
   :network_id               => network.id,
   :allow_comments           => true,

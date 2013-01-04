@@ -166,7 +166,7 @@ Your #{config.product_name} Team
 
   def self.find_fulldata(user_id)
 
-    cache = self.cache_get(user_id)
+    cache = self.cache_get(user_id, true)
     return cache if cache
 
     # get user
@@ -213,7 +213,7 @@ Your #{config.product_name} Team
     data['organizations'] = organizations
     data['organization_ids'] = user.organization_ids
 
-    self.cache_set(user.id, data)
+    self.cache_set(user.id, data, true)
 
     return data
   end

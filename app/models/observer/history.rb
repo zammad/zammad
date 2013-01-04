@@ -7,10 +7,13 @@ class Observer::History < ActiveRecord::Observer
   def after_create(record)
     puts "HISTORY OBSERVER, object created #{ record.class.name }.find(#{ record.id })"
 #    puts record.inspect
-    related_o_id = nil
+
+    # if Ticket::Article has changed, remember ticket to be able
+    # to show article changes in ticket history
+    related_o_id              = nil
     related_history_object_id = nil
     if record.class.name == 'Ticket::Article'
-      related_o_id = record.ticket_id
+      related_o_id           = record.ticket_id
       related_history_object = 'Ticket'
     end
     History.history_create(
@@ -124,28 +127,33 @@ class Observer::History < ActiveRecord::Observer
       if attribute_name.scan(/^(.*)_id$/).first
         attribute_name = attribute_name.scan(/^(.*)_id$/).first.first
       end
+
+      # if Ticket::Article has changed, remember ticket to be able
+      # to show article changes in ticket history
+      related_o_id              = nil
+      related_history_object_id = nil
+      if record.class.name == 'Ticket::Article'
+        related_o_id              = record.ticket_id
+        related_history_object_id = 'Ticket'
+      end
       History.history_create(
-        :o_id               => current.id,
-        :history_type       => 'updated',
-        :history_object     => record.class.name,
-        :history_attribute  => attribute_name,
-        :value_from         => value[0],
-        :value_to           => value[1],
-        :id_from            => value_ids[0],
-        :id_to              => value_ids[1],
-        :created_by_id      => current_user_id || 1 || self['created_by_id'] || 1
+        :o_id                   => current.id,
+        :history_type           => 'updated',
+        :history_object         => record.class.name,
+        :history_attribute      => attribute_name,
+        :related_o_id           => related_o_id,
+        :related_history_object => related_history_object_id,
+        :value_from             => value[0],
+        :value_to               => value[1],
+        :id_from                => value_ids[0],
+        :id_to                  => value_ids[1],
+        :created_by_id          => current_user_id || 1 || self['created_by_id'] || 1
       )
 
     end
-
-#      :name => record.class.name,
-#      :type => 'update',
-#      :data => record
   end
 
   def differences_from?(one, other)
-#    puts '1111'+one.inspect
-#    puts '2222'+other.inspect
     h = {}
     one.attributes.each_pair do |key, value|
       if one[key] != other[key]

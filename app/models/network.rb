@@ -1,31 +1,31 @@
-class Network < ActiveRecord::Base
+class Network < ApplicationModel
 #  belongs_to :group
 #  belongs_to :ticket_state, :class_name => 'Ticket::State'
 #  belongs_to :ticket_priority, :class_name => 'Ticket::Priority'
 
-  class Category < ActiveRecord::Base
+  class Category < ApplicationModel
     self.table_name = 'network_categories'
 
-    class Type < ActiveRecord::Base
+    class Type < ApplicationModel
     end
 
-    class Subscription < ActiveRecord::Base
+    class Subscription < ApplicationModel
     end
   end
   
-  class Item < ActiveRecord::Base
-    class Comment < ActiveRecord::Base
+  class Item < ApplicationModel
+    class Comment < ApplicationModel
     end
 
-    class Plus < ActiveRecord::Base
+    class Plus < ApplicationModel
       self.table_name = 'network_item_plus'
     end
 
-    class Subscription < ActiveRecord::Base
+    class Subscription < ApplicationModel
     end
   end
 
-  class Privacy < ActiveRecord::Base
+  class Privacy < ApplicationModel
     self.table_name = 'network_privacies'
   end
 end

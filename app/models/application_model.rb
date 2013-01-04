@@ -34,13 +34,23 @@ class ApplicationModel < ActiveRecord::Base
   def cache_delete
     key = self.class.to_s + '::' + self.id.to_s
     Cache.delete( key.to_s )
+    key = self.class.to_s + ':f:' + self.id.to_s
+    Cache.delete( key.to_s )
   end
-  def self.cache_set(data_id, data)
-    key = self.to_s + '::' + data_id.to_s
+  def self.cache_set(data_id, data, full = false)
+    if !full
+      key = self.to_s + '::' + data_id.to_s
+    else
+      key = self.to_s + ':f:' + data_id.to_s
+    end
     Cache.write( key.to_s, data )
   end
-  def self.cache_get(data_id)
-    key = self.to_s + '::' + data_id.to_s
+  def self.cache_get(data_id, full = false)
+    if !full
+      key = self.to_s + '::' + data_id.to_s
+    else
+      key = self.to_s + ':f:' + data_id.to_s
+    end
     Cache.get( key.to_s )
   end
 
@@ -66,16 +76,36 @@ class ApplicationModel < ActiveRecord::Base
         end
       }
       return
+    elsif data[:login]
+      cache = self.cache_get( data[:login] )
+      return cache if cache
+
+      records = self.where( :login => data[:login] )
+      records.each {|record|
+        if record.login == data[:login]
+          self.cache_set( data[:login], record )
+          return record
+        end
+      }
+      return
     else
-      raise "Need name or id for lookup()"
+      raise "Need name, id or login for lookup()"
     end
   end
 
   def self.create_if_not_exists(data)
-    if data[:name]
+    if data[:id]
+      record = self.where( :id => data[:id] ).first
+      return record if record
+    elsif data[:name]
       records = self.where( :name => data[:name] )
       records.each {|record|
         return record if record.name == data[:name]
+      }
+    elsif data[:login]
+      records = self.where( :login => data[:login] )
+      records.each {|record|
+        return record if record.login == data[:login]
       }
     elsif data[:locale] && data[:source]
       records = self.where( :locale => data[:locale], :source => data[:source] )

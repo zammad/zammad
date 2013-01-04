@@ -1,4 +1,4 @@
-class Link < ActiveRecord::Base
+class Link < ApplicationModel
   belongs_to :link_type,    :class_name => 'Link::Type'
   belongs_to :link_object,  :class_name => 'Link::Object'
 
@@ -172,10 +172,10 @@ class Link < ActiveRecord::Base
 
 end
 
-class Link::Type < ActiveRecord::Base
+class Link::Type < ApplicationModel
   validates :name, :presence => true
 end
 
-class Link::Object < ActiveRecord::Base
+class Link::Object < ApplicationModel
   validates :name, :presence => true
 end
