@@ -60,9 +60,12 @@ class Observer::History < ActiveRecord::Observer
       }
     }
 
+    # TODO: Swop it to config file later
     ignore_attributes = {
       :created_at               => true,
       :updated_at               => true,
+      :created_by_id            => true,
+      :updated_by_id            => true,
       :article_count            => true,
       :create_article_type_id   => true,
       :create_article_sender_id => true,
@@ -121,9 +124,6 @@ class Observer::History < ActiveRecord::Observer
       if attribute_name.scan(/^(.*)_id$/).first
         attribute_name = attribute_name.scan(/^(.*)_id$/).first.first
       end
-#puts 'LLLLLLLLLLLLLLLLLLLLLLLL' + attribute_name.to_s
-#        puts '9999999'
-#        puts current.id
       History.history_create(
         :o_id               => current.id,
         :history_type       => 'updated',
