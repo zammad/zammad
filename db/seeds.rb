@@ -98,7 +98,7 @@ Setting.create(
   :title       => 'http type',
   :name        => 'http_type',
   :area        => 'System::Base',
-  :description => 'Defines the type of protocol, used by ther web server, to serve the application. If https protocol will be used instead of plain http, it must be specified it here. Since this has no affect on the web server\'s settings or behavior, it will not change the method of access to the application and, if it is wrong, it will not prevent you from logging into the application. This setting is used as a variable, #{setting.http_type} which is found in all forms of messaging used by the application, to build links to the tickets within your system.',
+  :description => 'Defines the type of protocol, used by the web server, to serve the application. If https protocol will be used instead of plain http, it must be specified it here. Since this has no affect on the web server\'s settings or behavior, it will not change the method of access to the application and, if it is wrong, it will not prevent you from logging into the application. This setting is used as a variable, #{setting.http_type} which is found in all forms of messaging used by the application, to build links to the tickets within your system.',
   :options     => {
     :form => [
       {
@@ -148,7 +148,7 @@ Setting.create(
 
 
 Setting.create(
-  :title       => 'New User Accouts',
+  :title       => 'New User Accounts',
   :name        => 'user_create_account',
   :area        => 'Security::Authentication',
   :description => 'Enables users to create their own account via web interface.',
@@ -220,7 +220,7 @@ Setting.create(
   :frontend => true
 )
 Setting.create(
-  :title       => 'Autentication via Database',
+  :title       => 'Authentication via Database',
   :name        => 'auth_db',
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via database.',
@@ -244,7 +244,7 @@ Setting.create(
   :frontend => true
 )
 Setting.create(
-  :title       => 'Autentication via Twitter',
+  :title       => 'Authentication via Twitter',
   :name        => 'auth_twitter',
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via twitter. Register your app first at https://dev.twitter.com/apps',
@@ -294,7 +294,7 @@ Setting.create(
   :frontend => false
 )
 Setting.create(
-  :title       => 'Autentication via Facebook',
+  :title       => 'Authentication via Facebook',
   :name        => 'auth_facebook',
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via Facebook. Register your app first at https://developers.facebook.com/apps/',
@@ -346,7 +346,7 @@ Setting.create(
 )
 
 Setting.create(
-  :title       => 'Autentication via Google',
+  :title       => 'Authentication via Google',
   :name        => 'auth_google_oauth2',
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via Google.',
@@ -397,7 +397,7 @@ Setting.create(
 )
 
 Setting.create(
-  :title       => 'Autentication via LinkedIn',
+  :title       => 'Authentication via LinkedIn',
   :name        => 'auth_linkedin',
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via LinkedIn.',
@@ -1693,7 +1693,7 @@ Network::Item::Comment.create(
 Translation.create_if_not_exists( :locale => 'de', :source => "New", :target => "Neu", :updated_by_id => 1, :created_by_id => 1 )
 Translation.create_if_not_exists( :locale => 'de', :source => "Create", :target => "Erstellen", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Cancel", :target => "Abbrechen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Submit", :target => "Ãœbermitteln", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Submit", :target => "œbermitteln", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Sign out", :target => "Abmelden", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Profile", :target => "Profil", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Settings", :target => "Einstellungen", :updated_by_id => 1, :created_by_id => 1  )
@@ -1716,7 +1716,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Direction", :targ
 Translation.create_if_not_exists( :locale => 'de', :source => "Owner", :target => "Besitzer", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Subject", :target => "Betreff", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Priority", :target => "PrioritÃ¤t", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "WÃ¤hle den KundenfÃr das Ticket oder erstell einen neuen.", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "WÃ¤hle den Kundn fÃr das Ticket oder erstell einen neuen.", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "New Ticket", :target => "Neues Ticket", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Firstname", :target => "Vorname", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Lastname", :target => "Nachname", :updated_by_id => 1, :created_by_id => 1  )
