@@ -68,5 +68,5 @@ gem 'simplecov-rcov'
 
 # UI tests w/ Selenium
 #gem 'selenium-webdriver'
-gem 'watir-webdriver'
+#gem 'watir-webdriver'
 
