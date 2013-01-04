@@ -105,6 +105,7 @@ class App.ChatWidget extends App.Controller
 
   show: =>
     @isShown = true
+    @el.find('#chat_toogle').html('&times;');
     if @newMessage
       @el.find('div.well').addClass('alert-success')
       @delay( =>
@@ -138,6 +139,7 @@ class App.ChatWidget extends App.Controller
   hide: =>
     @isShown = false
     @el.find('#chat_content').hide(100)
+    @el.find('#chat_toogle').html('&diams;');
 
   focusIn: =>
     @focus = true
