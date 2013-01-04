@@ -58,9 +58,14 @@ class ApplicationModel < ActiveRecord::Base
       cache = self.cache_get( data[:name] )
       return cache if cache
 
-      record = self.where( :name => data[:name] ).first
-      self.cache_set( data[:name], record )
-      return record
+      records = self.where( :name => data[:name] )
+      records.each {|record|
+        if record.name == data[:name]
+          self.cache_set( data[:name], record )
+          return record
+        end
+      }
+      return
     else
       raise "Need name or id for lookup()"
     end
@@ -68,24 +73,30 @@ class ApplicationModel < ActiveRecord::Base
 
   def self.create_if_not_exists(data)
     if data[:name]
-      record = self.where( :name => data[:name] ).first
-      return record if record
+      records = self.where( :name => data[:name] )
+      records.each {|record|
+        return record if record.name == data[:name]
+      }
     elsif data[:locale] && data[:source]
-      record = self.where( :locale => data[:locale], :source => data[:source] ).first
-      return record if record
+      records = self.where( :locale => data[:locale], :source => data[:source] )
+      records.each {|record|
+        return record if record.source == data[:source]
+      }
     end
     self.create(data)
   end
 
   def self.create_or_update(data)
     if data[:name]
-      record = self.where( :name => data[:name] ).first
-      if record
-        record.update_attributes( :data => data[:data] )
-      else
-        record = self.new( data )
-        record.save
-      end
+      records = self.where( :name => data[:name] )
+      records.each {|record|
+        if record.name == data[:name]
+          record.update_attributes( :data => data[:data] )
+          return record
+        end
+      }
+      record = self.new( data )
+      record.save
       return record
     else
       raise "Need name for create_or_update()"
