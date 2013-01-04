@@ -26,7 +26,7 @@ class App.ChannelEmail extends App.ControllerTabs
         controller: App.ChannelEmailAddress,
       },
       {
-        name:       'Sigantures',
+        name:       'Signatures',
         target:     'c-signature',
         controller: App.ChannelEmailSignature,
       },

@@ -1875,5 +1875,11 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Close Time", :tar
 Translation.create_if_not_exists( :locale => 'de', :source => "First Response", :target => "Erste Reaktion", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "up", :target => "auf", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "down", :target => "ab", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Inbound", :target => "Eingehend", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Outbound", :target => "Ausgehend", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Adresses", :target => "Adressen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Signatures", :target => "Signatur", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Filter", :target => "Filter", :updated_by_id => 1, :created_by_id => 1  )
+
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
