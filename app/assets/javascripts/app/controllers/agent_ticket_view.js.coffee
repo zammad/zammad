@@ -227,6 +227,12 @@ class Index extends App.Controller
         @el.find('.bulk-action').removeClass('hide')
     )
 
+    # deselect bulk_all if one item is uncheck observ
+    @el.find('.table-overview').delegate('[name="bulk"]', 'click', (e) =>
+      if !$(e.target).attr('checked')
+        $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
+    )
+
   page: (e) =>
     e.preventDefault()
     id = $(e.target).data('id')
