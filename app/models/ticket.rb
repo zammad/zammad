@@ -86,12 +86,27 @@ class Ticket < ApplicationModel
       ticket_priority_ids.push priority.id
     }
 
+    ticket_article_type_ids = []
+    if params[:ticket]
+      ticket_article_types = ['note', 'phone']
+      if params[:ticket].group.email_address_id
+        ticket_article_types.push 'email'
+      end
+      ticket_article_types.each {|ticket_article_type_name|
+        ticket_article_type = Ticket::Article::Type.lookup( :name => ticket_article_type_name )
+        if ticket_article_type
+          ticket_article_type_ids.push ticket_article_type.id
+        end
+      }
+    end
+
     return {
-      :ticket_state_id    => ticket_state_ids,
-      :ticket_priority_id => ticket_priority_ids,
-      :owner_id           => owner_ids,
-      :group_id           => group_ids,
-      :group_id__owner_id => groups_users,
+      :ticket_article_type_id => ticket_article_type_ids,
+      :ticket_state_id        => ticket_state_ids,
+      :ticket_priority_id     => ticket_priority_ids,
+      :owner_id               => owner_ids,
+      :group_id               => group_ids,
+      :group_id__owner_id     => groups_users,
     }
   end
 
