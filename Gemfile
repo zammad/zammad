@@ -43,6 +43,7 @@ gem 'simple-rss'
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # e. g. on linux we need a javascript execution
+# gem 'libv8', '~> 3.11.8'
 # gem 'execjs'
 # gem 'therubyracer'
 
