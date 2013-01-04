@@ -434,7 +434,7 @@ class ClientState
       return if !session_data
       return if !session_data[:user]
       return if !session_data[:user][:id]
-      user = User.where( :id => session_data[:user][:id] ).first
+      user = User.lookup( :id => session_data[:user][:id] )
       return if !user
 
       # set cache key

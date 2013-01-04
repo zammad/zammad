@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
     # check http basic auth
     authenticate_with_http_basic do |user, password|
       puts 'http basic auth check'
-      userdata = User.where( :login => user ).first
+      userdata = User.lookup( :login => user )
       message = ''
       if !userdata
         message = 'authentication failed, user'
