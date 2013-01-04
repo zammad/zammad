@@ -17,5 +17,4 @@ class App.Ticket extends App.Model
       { name: 'first_response',        display: 'First response',          tag: 'time', null: true, style: 'width: 12%' },
       { name: 'close_time',            display: 'Close time',              tag: 'time', null: true, style: 'width: 12%' },
       { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
-
     ]

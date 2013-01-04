@@ -92,7 +92,7 @@ class Index extends App.Controller
     # set defaults
     defaults = template['options'] || {}
     if !( 'ticket_state_id' of defaults )
-      defaults['ticket_state_id'] = App.Collection.findByAttribute( 'TicketState', 'name', 'new' ).id
+      defaults['ticket_state_id'] = App.Collection.findByAttribute( 'TicketState', 'name', 'open' ).id
     if !( 'ticket_priority_id' of defaults )
       defaults['ticket_priority_id'] = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' ).id
 

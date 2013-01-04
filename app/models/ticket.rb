@@ -26,6 +26,75 @@ class Ticket < ApplicationModel
     User.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
   end
 
+  def self.attributes_to_change(params)
+    if params[:ticket_id]
+      params[:ticket] = self.find( params[:ticket_id] )
+    end
+    if params[:article_id]
+      params[:article] = self.find( params[:article_id] )
+    end
+
+    # get ticket states
+    ticket_state_ids = []
+    if params[:ticket]
+      ticket_state_type = params[:ticket].ticket_state.state_type
+    end
+    ticket_state_types = ['open', 'closed', 'pending action', 'pending reminder']
+    if ticket_state_type && !ticket_state_types.include?(ticket_state_type.name)
+      ticket_state_ids.push params[:ticket].ticket_state.id
+    end
+    ticket_state_types.each {|type|
+      ticket_state_type = Ticket::StateType.where( :name => type ).first
+      if ticket_state_type
+        ticket_state_type.states.each {|ticket_state|
+          ticket_state_ids.push ticket_state.id
+        }
+      end
+    }
+
+    # get owner
+    owner_ids = []
+    if params[:ticket]
+      params[:ticket].agent_of_group.each { |user|
+        owner_ids.push user.id
+      }
+    end
+ 
+    # get group
+    group_ids = []
+    Group.where( :active => true ).each { |group|
+      group_ids.push group.id
+    }
+
+    # get group / user relations
+    agents = {}
+    Ticket.agents.each { |user|
+      agents[ user.id ] = 1
+    }
+    groups_users = {}
+    group_ids.each {|group_id|
+        groups_users[ group_id ] = []
+        Group.find( group_id ).users.each {|user|
+            next if !agents[ user.id ]
+            groups_users[ group_id ].push user.id
+        }
+    }
+
+    # get priorities
+    ticket_priority_ids = []
+    Ticket::Priority.where( :active => true ).each { |priority|
+      ticket_priority_ids.push priority.id
+    }
+
+    return {
+      :ticket_state_id    => ticket_state_ids,
+      :ticket_priority_id => ticket_priority_ids,
+      :owner_id           => owner_ids,
+      :group_id           => group_ids,
+      :group_id__owner_id => groups_users,
+    }
+  end
+
   def merge_to(data)
 
     # update articles
@@ -298,59 +367,6 @@ class Ticket < ApplicationModel
       :overview      => overview_selected_raw,
     }
 
-  end
-
-#  Ticket.create_attributes(
-#    :current_user_id => 123,
-#  )
-  def self.create_attributes (data)
-
-    # get groups
-    group_ids = []
-    Group.where( :active => true ).each { |group|
-      group_ids.push group.id
-    }
-
-    # get related users
-#    users = {}
-    user_ids = []
-    agents = {}
-    Ticket.agents.each { |user|
-      agents[ user.id ] = 1
-      user_ids.push user.id
-    }
-    groups_users = {}
-    group_ids.each {|group_id|
-        groups_users[ group_id ] = []
-        Group.find(group_id).users.each {|user|
-            next if !agents[ user.id ]
-            groups_users[ group_id ].push user.id
-#            if !users[user.id]
-#              users[user.id] = User.user_data_full(user.id)
-#            end
-        }
-    }
-
-    # get states
-    ticket_state_ids = []
-    Ticket::State.where( :active => true ).each { |state|
-      ticket_state_ids.push state.id
-    }
-
-    # get priorities
-    ticket_priority_ids = []
-    Ticket::Priority.where( :active => true ).each { |priority|
-      ticket_priority_ids.push priority.id
-    }
-
-    return {
-#      :users              => users,
-      :owner_id           => user_ids,
-      :group_id__owner_id => groups_users,
-      :group_id           => group_ids,
-      :ticket_state_id    => ticket_state_ids,
-      :ticket_priority_id => ticket_priority_ids,
-    }
   end
 
   def self.number_adapter

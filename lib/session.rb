@@ -311,7 +311,7 @@ class UserState
       # create_attributes
       cache_key = @cache_key + '_ticket_create_attributes'
       if CacheIn.expired(cache_key)
-        ticket_create_attributes = Ticket.create_attributes(
+        ticket_create_attributes = Ticket.attributes_to_change(
           :current_user_id => user.id,
         )
         ticket_create_attributes_cache = CacheIn.get( cache_key, { :re_expire => true } )

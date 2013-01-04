@@ -323,14 +323,6 @@ class TicketsController < ApplicationController
       users[ticket.created_by_id] = User.user_data_full( ticket.created_by_id )
     end
 
-    owner_ids = []
-    ticket.agent_of_group.each { |user|
-      owner_ids.push user.id
-      if !users[user.id]
-        users[user.id] = User.user_data_full( user.id )
-      end
-    }
-
     # log object as viewed
     log_view( ticket )
 
@@ -348,6 +340,23 @@ class TicketsController < ApplicationController
         }
       )
     end
+
+    # get attributes to update
+    attributes_to_change = Ticket.attributes_to_change( :user => current_user, :ticket => ticket )
+
+    attributes_to_change[:owner_id].each { |user_id|
+      if !users[user_id]
+        users[user_id] = User.user_data_full( user_id )
+      end
+    }
+
+    attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
+      user_ids.each {|user_id|
+        if !users[user_id]
+          users[user_id] = User.user_data_full( user_id )
+        end
+      }
+    }
 
     # get related articles
     ticket = ticket.attributes
@@ -377,52 +386,44 @@ class TicketsController < ApplicationController
       end
     }
 
-    # get groups
-    group_ids = []
-    Group.where( :active => true ).each { |group|
-      group_ids.push group.id
-    }
-    agents = {}
-    Ticket.agents.each { |user|
-      agents[ user.id ] = 1
-    }
-    groups_users = {}
-    group_ids.each {|group_id|
-        groups_users[ group_id ] = []
-        Group.find(group_id).users.each {|user|
-            next if !agents[ user.id ]
-            groups_users[ group_id ].push user.id
-            if !users[user.id]
-              users[user.id] = User.user_data_full( user.id )
-            end
-        }
-    }
-
     # return result
     render :json => {
       :ticket    => ticket,
       :articles  => articles_used,
       :signature => signature,
       :users     => users,
-      :edit_form => {
-        :group_id__owner_id => groups_users,
-        :owner_id           => owner_ids,
-      }
+      :edit_form => attributes_to_change,
     }
   end
 
   # GET /ticket_create/1
   def ticket_create
 
-    # get attributes
-    create_attributes = Ticket.create_attributes(
-        :current_user_id => current_user.id,
+    # get attributes to update
+    attributes_to_change = Ticket.attributes_to_change(
+      :user       => current_user,
+#      :ticket_id  => params[:ticket_id],
+#      :article_id => params[:article_id]
     )
+
+    users = {}
+    attributes_to_change[:owner_id].each { |user_id|
+      if !users[user_id]
+        users[user_id] = User.user_data_full( user_id )
+      end
+    }
+
+    attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
+      user_ids.each {|user_id|
+        if !users[user_id]
+          users[user_id] = User.user_data_full( user_id )
+        end
+      }
+    }
 
     # split data
     ticket = nil
     articles = nil
-    users = {}
     if params[:ticket_id] && params[:article_id]
       ticket = Ticket.find( params[:ticket_id] )
 
@@ -444,7 +445,7 @@ class TicketsController < ApplicationController
           users[user.id] = User.user_data_full( user.id )
         end
       }
-  
+
       # get related articles
       ticket[:article_ids] = [ params[:article_id] ]
 
@@ -459,18 +460,12 @@ class TicketsController < ApplicationController
       end
     end
 
-    create_attributes[:owner_id].each {|user_id|
-      if !users[user_id]
-        users[user_id] = User.user_data_full( user_id )
-      end
-    }
-
     # return result
     render :json => {
       :ticket    => ticket,
       :articles  => [ article ],
       :users     => users,
-      :edit_form => create_attributes,
+      :edit_form => attributes_to_change,
     }
   end
 
@@ -521,6 +516,5 @@ class TicketsController < ApplicationController
       :users   => users,
     }
   end
-
 
 end
