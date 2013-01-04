@@ -9,8 +9,7 @@ class Channel::SMTP < Channel::EmailBuild
     mail.delivery_method :smtp, {
       :openssl_verify_mode  => 'none',
       :address              => channel[:options][:host],
-    #  :port                 => 587,
-      :port                 => 25,
+      :port                 => channel[:options][:port] || 25,
       :domain               => channel[:options][:host],
       :user_name            => channel[:options][:user],
       :password             => channel[:options][:password],

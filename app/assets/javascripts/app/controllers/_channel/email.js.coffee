@@ -490,7 +490,8 @@ class App.ChannelEmailOutbound extends App.Controller
         { name: 'host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (channel_used['options']&&channel_used['options']['host']) },
         { name: 'user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, class: 'span4', autocapitalize: false, default: (channel_used['options']&&channel_used['options']['user']) },
         { name: 'password', display: 'Password', tag: 'input',    type: 'password', limit: 120, null: true, class: 'span4', autocapitalize: false, default: (channel_used['options']&&channel_used['options']['password']) },
-        { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: (channel_used['options']&&channel_used['options']['ssl']) },
+        { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', translate: true, default: (channel_used['options']&&channel_used['options']['ssl']) },
+        { name: 'port',     display: 'Port',     tag: 'input',    type: 'text', limit: 5, null: false, class: 'span1', autocapitalize: false, default: ((channel_used['options']&&channel_used['options']['port']) || 25) },
       ]
       @form = new App.ControllerForm(
         el: @el.find('#form-email-adapter-settings'),
@@ -525,6 +526,7 @@ class App.ChannelEmailOutbound extends App.Controller
             user:     params['user'],
             password: params['password'],
             ssl:      params['ssl'],
+            port:     params['port'],
           },
           active: true,
         )
