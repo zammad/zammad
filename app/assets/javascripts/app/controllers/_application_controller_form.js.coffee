@@ -493,9 +493,12 @@ class App.ControllerForm extends App.Controller
     return if !attribute.options
     selection = attribute.options
     attribute.options = []
-    for key of selection
+    for key, value of selection
+      name_new = value
+      if attribute.translate
+        name_new = App.i18n.translateInline( name_new )
       attribute.options.push {
-        name:  selection[key],
+        name:  name_new,
         value: key,
       }
 

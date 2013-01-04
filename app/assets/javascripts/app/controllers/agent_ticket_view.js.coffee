@@ -378,6 +378,7 @@ class Settings extends App.ControllerModal
         tag:     'checkbox'
         default: @overview.view[@view_mode].overview
         null:    false
+        translate: true
         options:
 #          true:  'internal'
 #          false: 'public'
@@ -388,7 +389,7 @@ class Settings extends App.ControllerModal
           ticket_priority:        'Priority'
           group:                  'Group'
           owner:                  'Owner'
-          created_at:             'Alter'
+          created_at:             'Age'
           last_contact:           'Last Contact'
           last_contact_agent:     'Last Contact Agent'
           last_contact_customer:  'Last Contact Customer'
@@ -403,6 +404,7 @@ class Settings extends App.ControllerModal
         tag:     'select'
         default: @overview.order.by
         null:    false
+        translate: true
         options:
           number:                 'Number'
           title:                  'Title'
@@ -411,7 +413,7 @@ class Settings extends App.ControllerModal
           ticket_priority:        'Priority'
           group:                  'Group'
           owner:                  'Owner'
-          created_at:             'Alter'
+          created_at:             'Age'
           last_contact:           'Last Contact'
           last_contact_agent:     'Last Contact Agent'
           last_contact_customer:  'Last Contact Customer'
@@ -426,6 +428,7 @@ class Settings extends App.ControllerModal
         tag:     'select'
         default: @overview.order.direction
         null:    false
+        translate: true
         options:
           ASC:   'up'
           DESC:  'down'
@@ -438,6 +441,7 @@ class Settings extends App.ControllerModal
         default: @overview.group_by
         null:    true
         nulloption: true
+        translate:  true
         options:
           customer:               'Customer'
           ticket_state:           'State'
