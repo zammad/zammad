@@ -371,14 +371,20 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
 
   render: (data = {}) ->
 
+    if !data['options']
+      data['options']        = {}
+      data['options']['ssl'] = true
+      data['active']         = true
+
     configure_attributes = [
       { name: 'adapter',  display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } , class: 'span4', default: data['adapter'] },
       { name: 'host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['host']) },
       { name: 'user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['user']) },
       { name: 'password', display: 'Password', tag: 'input',    type: 'password', limit: 120, null: false, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['password']) },
-      { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: (data['options']&&data['options']['ssl']) },
+      { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' }, translate: true, class: 'span4', default: (data['options']&&data['options']['ssl']) },
+      { name: 'folder',   display: 'Folder',   tag: 'input',    type: 'text', limit: 120, null: true, class: 'span4', autocapitalize: false, default: (data['options']&&data['options']['folder']) },
       { name: 'group_id', display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: false, relation: 'Group', class: 'span4', default: data['group_id']  },
-      { name: 'active',   display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , class: 'span4', default: data['active'] },
+      { name: 'active',   display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , translate: true, class: 'span4', default: data['active'] },
     ]
     if @object
       @html App.view('generic/admin/edit')(
@@ -416,6 +422,7 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
         user:     params['user'],
         password: params['password'],
         ssl:      params['ssl'],
+        folder:   params['folder'],
       },
       active: params['active'],
     )

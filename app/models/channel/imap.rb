@@ -24,7 +24,11 @@ class Channel::IMAP < Channel::EmailParser
       end
       imap.login( channel[:options][:user], channel[:options][:password] )
     end
-    imap.select('INBOX')
+    if channel[:options][:folder].empty?
+      imap.select('INBOX')
+    else
+      imap.select( channel[:options][:folder] )
+    end
     count     = 0
     count_all = imap.search(['ALL']).count
     imap.search(['ALL']).each do |message_id|

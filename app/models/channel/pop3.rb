@@ -4,10 +4,19 @@ class Channel::POP3 < Channel::EmailParser
   include UserInfo
 
   def fetch (channel)
-    puts "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]})"
+    ssl  = false
+    port = 110
+    if channel[:options][:ssl].to_s == 'true'
+      ssl  = true
+      port = 995
+    end
 
-    pop = Net::POP3.new( channel[:options][:host], 995 )
-    pop.enable_ssl
+    puts "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
+
+    pop = Net::POP3.new( channel[:options][:host], port )
+    if ssl
+      pop.enable_ssl
+    end
     pop.start( channel[:options][:user], channel[:options][:password] ) 
     count     = 0
     count_all = pop.mails.size
