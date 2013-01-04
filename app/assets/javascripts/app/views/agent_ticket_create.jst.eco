@@ -6,8 +6,8 @@
     <div class="span3">
       <% if @agent: %>
       <div class="btn-group pull-right" data-toggle="buttons-radio">
-        <button type="button" class="btn article-type" data-type="phone"><i class="icon-headphones"></i></button>
-        <button type="button" class="btn article-type" data-type="email"><i class="icon-envelope"></i></button>
+        <button type="button" class="btn article-type" data-type="phone"><i class="icon-headphones" title="<%- @T('Create an inbound Ticket') %>"></i></button>
+        <button type="button" class="btn article-type" data-type="email"><i class="icon-envelope" title="<%- @T('Create an outbound Ticket (will send this as email to customer)') %>"></i></button>
       </div>
       <% end %>
     </div>

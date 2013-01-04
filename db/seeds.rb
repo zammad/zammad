@@ -1866,5 +1866,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Items per page", 
 Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact", :target => "Letzter Kontakt", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact Agent", :target => "Letzter Kontakt Agent", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact Customer", :target => "Letzter Kontakt Kunde", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create an inbound Ticket", :target => "Erstelle ein eingehendes Ticket", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create an outbound Ticket (will send this as email to customer)", :target => "Erstelle ein ausgehendes Ticket (wird per E-Mail an den Kunden gesendet)", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
