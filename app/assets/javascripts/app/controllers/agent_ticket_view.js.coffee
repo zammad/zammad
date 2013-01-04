@@ -316,11 +316,15 @@ class Index extends App.Controller
 
             # rebuild navbar with updated ticket count of overviews
             App.WebSocket.send( event: 'navupdate_ticket_overview' )
-            
+
             # fetch overview data again
             @fetch()
       )
     )
+    App.Event.trigger 'notify', {
+      type: 'success',
+      msg: App.i18n.translateContent('Bulk-Action executed!'),
+    }
 
   zoom: (e) =>
     e.preventDefault()
