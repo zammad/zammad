@@ -1,9 +1,6 @@
 module Import::OTRS
-  @@url = 'http://vz109.demo.znuny.com/'
-  @@key = 'KFWUKfasdjuiU3424k212mALGJU3591KFE'
-
   def self.request(part)
-    url = @@url + part
+    url = Setting.get('import_otrs_endpoint') + '/' + part + ';Key=' + Setting.get('import_otrs_endpoint_key')
     puts 'GET:' + url
 #    response = Net::HTTP.get_response( URI.parse(url), { :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE } )
     uri = URI.parse(url)
@@ -26,15 +23,15 @@ module Import::OTRS
   def self.start
     puts 'Start import...'
 
-    # set system in import mode
-    Setting.set('import_mode', true)
+#    # set system in import mode
+#    Setting.set('import_mode', true)
 
     # check if system is in import mode
     if !Setting.get('import_mode')
         raise "System is not in import mode!"
     end
 
-    response = request("/otrs/public.pl?Key=#{@@key};Action=Export")
+    response = request("public.pl?Action=Export")
     return if response.code.to_s != '200'
 
 #self.ticket('156115')
@@ -69,7 +66,7 @@ module Import::OTRS
   end
 
   def self.ticket(ticket_ids)
-    url = "/otrs/public.pl?Key=#{@@key};Action=Export;Type=Ticket;"
+    url = "public.pl?Action=Export;Type=Ticket;"
     ticket_ids.each {|ticket_id|
       url = url + "TicketID=#{CGI::escape ticket_id};"
     }
@@ -396,7 +393,7 @@ module Import::OTRS
   end
 
   def self.ticket_state
-    response = request( "/otrs/public.pl?Key=#{@@key};Action=Export;Type=State" )
+    response = request( "public.pl?Action=Export;Type=State" )
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -451,7 +448,7 @@ module Import::OTRS
     }
   end
   def self.ticket_priority
-    response = request( "/otrs/public.pl?Key=#{@@key};Action=Export;Type=Priority" )
+    response = request( "public.pl?Action=Export;Type=Priority" )
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -494,7 +491,7 @@ module Import::OTRS
     }
   end
   def self.ticket_group
-    response = request( "/otrs/public.pl?Key=#{@@key};Action=Export;Type=Queue" )
+    response = request( "public.pl?Action=Export;Type=Queue" )
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -537,7 +534,7 @@ module Import::OTRS
     }
   end
   def self.user
-    response = request( "/otrs/public.pl?Key=#{@@key};Action=Export;Type=User" )
+    response = request( "public.pl?Action=Export;Type=User" )
     return if response.code.to_s != '200'
     result = json(response)
     map = {
@@ -601,7 +598,7 @@ module Import::OTRS
     while done == false
       sleep 2
       puts "Count=#{count};Offset=#{count}"
-      response = request( "/otrs/public.pl?Key=#{@@key};Action=Export;Type=Customer;Count=100;Offset=#{count}" )
+      response = request( "public.pl?Action=Export;Type=Customer;Count=100;Offset=#{count}" )
       count = count + 3000
       return if response.code.to_s != '200'
       result = json(response)

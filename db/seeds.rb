@@ -1021,7 +1021,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Import Mode',
   :name        => 'import_mode',
-  :area        => 'System::Import',
+  :area        => 'Import::Base',
   :description => 'Set system in import mode (disable some triggers).',
   :options     => {
     :form => [
@@ -1042,6 +1042,48 @@ Setting.create_if_not_exists(
   },
   :frontend => true
 )
+
+Setting.create_if_not_exists(
+  :title       => 'Import Endpoint',
+  :name        => 'import_otrs_endpoint',
+  :area        => 'Import::OTRS',
+  :description => 'Defines OTRS endpoint to import users, ticket, ticket_states and articles.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => false,
+        :name     => 'import_otrs_endpoint', 
+        :tag      => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => 'http://otrs_host/otrs',
+  },
+  :frontend => true
+)
+Setting.create_if_not_exists(
+  :title       => 'Import Key',
+  :name        => 'import_otrs_endpoint_key',
+  :area        => 'Import::OTRS',
+  :description => 'Defines OTRS endpoint auth key.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => false,
+        :name     => 'import_otrs_endpoint_key', 
+        :tag      => 'input',
+      },
+    ],
+  },
+  :state => {
+    :value => '',
+  },
+  :frontend => true
+)
+
 
 email_address = EmailAddress.create_if_not_exists(
   :id             => 1,
