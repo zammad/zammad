@@ -1881,5 +1881,10 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Adresses", :targe
 Translation.create_if_not_exists( :locale => 'de', :source => "Signatures", :target => "Signatur", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Filter", :target => "Filter", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Bulk-Action executed!", :target => "Sammelaktion ausgeführt!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Moved in", :target => "Hinein Verschoben", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Moved out", :target => "Heraus Verschoben", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
+
+# install all packages in auto_install
+Package.auto_install()
