@@ -286,9 +286,18 @@ module Import::OTRS
         from = nil
         to   = nil
         if data =~ /%%(.+?)%%(.+?)%%/
-          from = $1
-          to   = $2
+          from    = $1
+          to      = $2
+          state_from = Ticket::State.lookup( :name => from )
+          state_to   = Ticket::State.lookup( :name => to )
+          if state_from
+            from_id = state_from.id
+          end
+          if state_to
+            to_id = state_to.id
+          end
         end
+        puts "STATE UPDATE (#{history['HistoryID']}): -> #{from}->#{to}"
         History.history_create(
           :id                 => history['HistoryID'],
           :o_id               => history['TicketID'],
@@ -296,31 +305,8 @@ module Import::OTRS
           :history_object     => 'Ticket',
           :history_attribute  => 'ticket_state',
           :value_from         => from,
-          :value_to           => to,
-          :created_at         => history['CreateTime'],
-          :created_by_id      => history['CreateBy']
-        )
-      end
-      if history['HistoryType'] == 'Move'
-        data = history['Name']
-        # "%%Queue1%%5%%Postmaster%%1"
-        from = nil
-        to   = nil
-        if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-          from    = $1
-          from_id = $2
-          to      = $3
-          to_id   = $4
-        end
-        History.history_create(
-          :id                 => history['HistoryID'],
-          :o_id               => history['TicketID'],
-          :history_type       => 'updated',
-          :history_object     => 'Ticket',
-          :history_attribute  => 'group',
-          :value_from         => from,
-          :value_to           => to,
           :id_from            => from_id,
+          :value_to           => to,
           :id_to              => to_id,
           :created_at         => history['CreateTime'],
           :created_by_id      => history['CreateBy']
@@ -439,6 +425,7 @@ module Import::OTRS
       ticket_state_type = Ticket::StateType.where( :name =>  state['TypeName'] ).first
       state_new[:state_type_id] = ticket_state_type.id
       if state_old
+#        puts 'TS: ' + state_new.inspect
         state_old.update_attributes(state_new)
       else
         state = Ticket::State.new(state_new)
