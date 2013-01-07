@@ -5,6 +5,10 @@ class Observer::History < ActiveRecord::Observer
   observe :ticket, :user, 'ticket::_article'
 
   def after_create(record)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     puts "HISTORY OBSERVER, object created #{ record.class.name }.find(#{ record.id })"
 #    puts record.inspect
 
@@ -27,6 +31,10 @@ class Observer::History < ActiveRecord::Observer
   end
 
   def before_update(record)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
 #    puts 'before_update'
     current = record.class.find(record.id)
 
