@@ -35,6 +35,21 @@ class Package < ApplicationModel
     return package.to_s
   end
 
+  def self.auto_install
+    path = @@root + '/auto_install/'
+    return if ! File.exist?( path )
+    data = []
+    Dir.foreach( path ) do |entry|
+      if entry =~ /\.zpm/
+        data.push entry
+      end
+    end
+    data.each {|file|
+      self.install( :file => path + '/' + file )
+    }
+    return data
+  end
+
   def self.install(data)
     if data[:file]
       xml     = self._read_file( data[:file], true )
