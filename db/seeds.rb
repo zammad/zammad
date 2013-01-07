@@ -1925,6 +1925,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Filter", :target 
 Translation.create_if_not_exists( :locale => 'de', :source => "Bulk-Action executed!", :target => "Sammelaktion ausgeführt!", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Moved in", :target => "Hinein Verschoben", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Moved out", :target => "Heraus Verschoben", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Country", :target => "Land", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
 
