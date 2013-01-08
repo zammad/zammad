@@ -1,4 +1,4 @@
-== Welcome to Zammad 
+== Welcome to Zammad
 
 Zammad is a web based open source helpdesk/ticket system with many features
 to manage customer telephone calls and e-mails. It is distributed under the
@@ -6,141 +6,39 @@ GNU AFFERO General Public License (AGPL) and tested on Linux, Solaris, AIX,
 Windows, FreeBSD, OpenBSD and Mac OS 10.x. Do you receive many e-mails and
 want to answer them with a team of agents? You're going to love Zammad!
 
-== Feature List 
-* TBD 1 
+== Feature List
+* TBD 1
 * TBD 2
- 
+
 == Getting Started
 
 1. Install Zammad on your system
-     shell> tar -xzvf zammad-1.0.1.tar.gz
+     root@shell> cd /opt/
+     root@shell> tar -xzvf zammad-1.0.1.tar.gz
+     root@shell> useradd zammad
+     zammad@shell> su - zammad
 
 2. Install all dependencies
-     shell> cd zammad
-     shell> sudo gem install rails
-     shell> sudo bundle install
+     zammad@shell> cd zammad
+     zammad@shell> sudo gem install rails
+     zammad@shell> vi Gemfile # enable libv8, execjs and therubyracer if needed!
+     zammad@shell> sudo bundle install
 
 3. Configure your databases (if needed)
+     zammad@shell> vi config/database.yml
 
 4. Initialize your database
-     shell> rake db:migrate
-     shell> rake db:seed 
+     zammad@shell> export RAILS_ENV=production
+     zammad@shell> rake db:migrate
+     zammad@shell> rake db:seed
 
 5. Change directory to <tt>zammad</tt> (if needed) and start the web server:
-     shell> rails server
+     zammad@shell> rake assets:precompile
+     zammad@shell> rails server
 
-6. Go to http://localhost:3000/app#getting_started and you'll see:
+6. Go to http://localhost:3000/#getting_started and you'll see:
        "Welcome to Zammad!", there you need to create your admin
        user and you need to invite other agents.
 
 * The Getting Started Guide: http://guides.zammd.org/getting_started.html
 
-
-== Description of Contents
-
-The default directory structure of Zammad:
-
-  |-- app
-  |   |-- assets
-  |       |-- images
-  |       |-- javascripts
-  |       `-- stylesheets
-  |   |-- controllers
-  |   |-- helpers
-  |   |-- mailers
-  |   |-- models
-  |   `-- views
-  |       `-- layouts
-  |-- config
-  |   |-- environments
-  |   |-- initializers
-  |   `-- locales
-  |-- db
-  |-- doc
-  |-- lib
-  |   `-- tasks
-  |-- log
-  |-- public
-  |-- script
-  |-- test
-  |   |-- fixtures
-  |   |-- functional
-  |   |-- integration
-  |   |-- performance
-  |   `-- unit
-  |-- tmp
-  |   |-- cache
-  |   |-- pids
-  |   |-- sessions
-  |   `-- sockets
-  `-- vendor
-      |-- assets
-          `-- stylesheets
-      `-- plugins
-
-app
-  Holds all the code that's specific to this particular application.
-
-app/assets
-  Contains subdirectories for images, stylesheets, and JavaScript files.
-
-app/controllers
-  Holds controllers that should be named like weblogs_controller.rb for
-  automated URL mapping. All controllers should descend from
-  ApplicationController which itself descends from ActionController::Base.
-
-app/models
-  Holds models that should be named like post.rb. Models descend from
-  ActiveRecord::Base by default.
-
-app/views
-  Holds the template files for the view that should be named like
-  weblogs/index.html.erb for the WeblogsController#index action. All views use
-  eRuby syntax by default.
-
-app/views/layouts
-  Holds the template files for layouts to be used with views. This models the
-  common header/footer method of wrapping views. In your views, define a layout
-  using the <tt>layout :default</tt> and create a file named default.html.erb.
-  Inside default.html.erb, call <% yield %> to render the view using this
-  layout.
-
-app/helpers
-  Holds view helpers that should be named like weblogs_helper.rb. These are
-  generated for you automatically when using generators for controllers.
-  Helpers can be used to wrap functionality for your views into methods.
-
-config
-  Configuration files for the Rails environment, the routing map, the database,
-  and other dependencies.
-
-db
-  Contains the database schema in schema.rb. db/migrate contains all the
-  sequence of Migrations for your schema.
-
-doc
-  This directory is where your application documentation will be stored when
-  generated using <tt>rake doc:app</tt>
-
-lib
-  Application specific libraries. Basically, any kind of custom code that
-  doesn't belong under controllers, models, or helpers. This directory is in
-  the load path.
-
-public
-  The directory available for the web server. Also contains the dispatchers and the
-  default HTML files. This should be set as the DOCUMENT_ROOT of your web
-  server.
-
-script
-  Helper scripts for automation and generation.
-
-test
-  Unit and functional tests along with fixtures. When using the rails generate
-  command, template test files will be generated for you and placed in this
-  directory.
-
-vendor
-  External libraries that the application depends on. Also includes the plugins
-  subdirectory. If the app has frozen rails, those gems also go here, under
-  vendor/rails/. This directory is in the load path.
