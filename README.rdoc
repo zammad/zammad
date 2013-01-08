@@ -40,5 +40,5 @@ want to answer them with a team of agents? You're going to love Zammad!
        "Welcome to Zammad!", there you need to create your admin
        user and you need to invite other agents.
 
-* The Getting Started Guide: http://guides.zammd.org/getting_started.html
+* The Getting Started Guide: http://guides.zammad.org/getting_started.html
 
