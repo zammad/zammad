@@ -11,6 +11,11 @@ class Index extends App.Controller
   constructor: ->
     super
 
+    # go back if feature is not enabled
+    if !@Config.get('user_create_account')
+      @navigate '#'
+      return
+
     # set title
     @title 'Sign up'
     @navupdate '#signup'

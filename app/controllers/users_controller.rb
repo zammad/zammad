@@ -118,11 +118,17 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
     user = User.new( User.param_cleanup(params) )
     user.updated_by_id = (current_user && current_user.id) || 1
     user.created_by_id = (current_user && current_user.id) || 1
-    
+
     begin
 
       # if it's a signup, add user to customer role
       if user.created_by_id == 1
+
+        # check if feature is enabled
+        if !Setting.get('user_create_account')
+          render :json => { :error => 'Feature not enabled!' }, :status => :unprocessable_entity
+          return
+        end
 
         # check if it's first user
         count     = User.all.count()
@@ -311,6 +317,13 @@ curl http://localhost/api/users/password_reset.json -v -u #{login}:#{password} -
 =end
 
   def password_reset_send
+
+    # check if feature is enabled
+    if !Setting.get('user_lost_password')
+      render :json => { :error => 'Feature not enabled!' }, :status => :unprocessable_entity
+      return
+    end
+
     success = User.password_reset_send( params[:username] )
     if success
       render :json => { :message => 'ok' }, :status => :ok

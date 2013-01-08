@@ -21,6 +21,14 @@ class SessionsController < ApplicationController
     # auto population of default collections
     default_collection = SessionHelper::default_collections(user)
 
+    # remember me - set session cookie to expire later
+    reset_session
+    if params[:remember_me]
+      request.env['rack.session.options'][:expire_after] = 1.year.from_now
+    else
+      request.env['rack.session.options'][:expire_after] = nil
+    end
+
     # set session user_id
     user = User.find_fulldata(user.id)
     session[:user_id] = user['id']
@@ -35,11 +43,6 @@ class SessionsController < ApplicationController
           :user_id => user['id']
         }
       )
-    end
-
-    # remember me - set session cookie to expire later
-    if params[:remember_me]
-      request.env['rack.session.options'][:expire_after] = 1.year.from_now
     end
 
     # return new session data

@@ -13,8 +13,10 @@
             <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
             <div>
               <span class="small"><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></span>
+              <% if @C('user_lost_password'): %>
               <span class="small">&middot;</span>
               <a href="#reset_password" class="small"><%- @T( 'Forgot password?' ) %></a>
+              <% end %>
             </div>
           </form>
         </div>
@@ -39,6 +41,7 @@
       </div>
       <% end %>
 
+      <% if @C('user_create_account'): %>
       <div class="row">
         <div class="span12">
           <p>--- <%- @T( 'or' ) %> ---</p>
@@ -47,10 +50,11 @@
 
       <div class="row">
         <div class="span12">
-          <p><%- @T( 'New to' ) %> <%= @C( 'product_name' ) %>, <%- @T( 'join today!' ) %></p>
+          <p><%- @T( 'New to %s join today!',  @C( 'product_name' ) ) %></p>
           <p><a href="#signup" class="btn"><%- @T( 'Sign up' ) %></a>
         </div>
       </div>
+      <% end %>
 
     </div>
 
