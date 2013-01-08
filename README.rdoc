@@ -42,4 +42,3 @@ want to answer them with a team of agents? You're going to love Zammad!
 
 * The Getting Started Guide: http://guides.zammad.org/getting_started.html
 
-
