@@ -1,7 +1,7 @@
 class App.EmailAddress extends App.Model
   @configure 'EmailAddress', 'realname', 'email', 'note', 'active'
   @extend Spine.Model.Ajax
-  @url: '/api/email_addresses'
+  @url: 'api/email_addresses'
 
   @configure_attributes = [
     { name: 'realname',             display: 'Realname',          tag: 'input', type: 'text', limit: 250, 'null': false, 'class': 'span4' },

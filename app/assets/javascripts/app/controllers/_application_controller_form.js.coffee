@@ -292,7 +292,7 @@ class App.ControllerForm extends App.Controller
         u = =>
           @el.find('#' + fileUploaderId ).fineUploader(
             request:
-              endpoint: '/api/ticket_attachment_new'
+              endpoint: 'api/ticket_attachment_new'
               params:
                 form_id: @form_id
             text:
@@ -374,7 +374,7 @@ class App.ControllerForm extends App.Controller
         ###
 #        @log '111111', @local_attribute_full, item
         $(@local_attribute_full).autocomplete(
-          source: '/api/users/search',
+          source: 'api/users/search',
           minLength: 2,
           select: ( event, ui ) =>
 #            @log 'selected', event, ui

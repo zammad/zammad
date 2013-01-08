@@ -282,7 +282,7 @@ class App.Controller extends Spine.Controller
     tickets = {}
     App.Com.ajax(
       type:  'GET',
-      url:   '/api/ticket_customer',
+      url:   'api/ticket_customer',
       data:  {
         customer_id: data.user_id,
       }

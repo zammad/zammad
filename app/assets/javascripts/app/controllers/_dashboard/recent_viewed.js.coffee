@@ -14,7 +14,7 @@ class App.DashboardRecentViewed extends App.Controller
     App.Com.ajax(
       id:    'dashboard_recent_viewed',
       type:  'GET',
-      url:   '/api/recent_viewed',
+      url:   'api/recent_viewed',
       data:  {
         limit: 5,
       }

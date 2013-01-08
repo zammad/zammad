@@ -245,7 +245,7 @@ class _Singleton extends App.Controller
     # call init request
     @_ajaxInitWorking = App.Com.ajax(
       type:  'POST'
-      url:   '/api/message_send'
+      url:   'api/message_send'
       data:  JSON.stringify({ data: { action: 'login' }  })
       processData: false
       queue: false
@@ -276,7 +276,7 @@ class _Singleton extends App.Controller
       data = @queue.shift()
       App.Com.ajax(
         type:  'POST'
-        url:   '/api/message_send'
+        url:   'api/message_send'
         data:  JSON.stringify({ client_id: @client_id, data: data })
         processData: false
         queue: true
@@ -296,7 +296,7 @@ class _Singleton extends App.Controller
     App.Com.ajax(
       id:    'message_receive',
       type:  'POST'
-      url:   '/api/message_receive'
+      url:   'api/message_receive'
       data:  JSON.stringify({ client_id: @client_id })
       processData: false
       success: (data) =>

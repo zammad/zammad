@@ -1,7 +1,7 @@
 class App.Group extends App.Model
   @configure 'Group', 'name', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'email_address_id', 'signature_id', 'note', 'active'
   @extend Spine.Model.Ajax
-  @url: '/api/groups'
+  @url: 'api/groups'
 
   @configure_attributes = [
     { name: 'name',                 display: 'Name',              tag: 'input', type: 'text', limit: 100, 'null': false, 'class': 'span4' },

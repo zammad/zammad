@@ -32,7 +32,7 @@ class App.DashboardTicket extends App.Controller
       App.Com.ajax(
         id:    'dashboard_ticket_' + @key,
         type:  'GET',
-        url:   '/api/ticket_overviews',
+        url:   'api/ticket_overviews',
         data:  {
           view:       @view,
           view_mode:  'd',

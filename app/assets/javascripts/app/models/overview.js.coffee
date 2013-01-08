@@ -1,7 +1,7 @@
 class App.Overview extends Spine.Model
   @configure 'Overview', 'name', 'meta', 'condition', 'order', 'group_by', 'view', 'user_id', 'group_ids'
   @extend Spine.Model.Ajax
-  @url: '/api/overviews'
+  @url: 'api/overviews'
   @configure_attributes = [
     { name: 'name',       display: 'Name',                tag: 'input',     type: 'text', limit: 100, 'null': false, 'class': 'span4' },
     { name: 'role_id',    display: 'Role',                tag: 'select',   multiple: false, nulloption: true, null: false, relation: 'Role', class: 'span4' },

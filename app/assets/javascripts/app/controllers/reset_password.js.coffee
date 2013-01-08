@@ -48,7 +48,7 @@ class Index extends App.Controller
     App.Com.ajax(
       id:   'password_reset'
       type: 'POST'
-      url:  '/api/users/password_reset'
+      url:  'api/users/password_reset'
       data: JSON.stringify(params)
       processData: true
       success: @success
@@ -88,7 +88,7 @@ class Verify extends App.Controller
     App.Com.ajax(
       id:   'password_reset_verify'
       type: 'POST'
-      url:  '/api/users/password_reset_verify'
+      url:  'api/users/password_reset_verify'
       data: JSON.stringify(params)
       processData: true
       success: @render_success
@@ -124,7 +124,7 @@ class Verify extends App.Controller
     App.Com.ajax(
       id:   'password_reset_verify'
       type: 'POST'
-      url:  '/api/users/password_reset_verify'
+      url:  'api/users/password_reset_verify'
       data: JSON.stringify(params)
       processData: true
       success: @render_changed_success

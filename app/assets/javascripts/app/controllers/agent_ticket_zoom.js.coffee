@@ -39,7 +39,7 @@ class Index extends App.Controller
     App.Com.ajax(
       id:    'ticket_zoom'
       type:  'GET'
-      url:   '/api/ticket_full/' + ticket_id
+      url:   'api/ticket_full/' + ticket_id
       data:
         view: @view
       processData: true

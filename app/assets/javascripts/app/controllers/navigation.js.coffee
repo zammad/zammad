@@ -74,7 +74,7 @@ class App.Navigation extends App.Controller
       App.Com.ajax(
         id:    'ticket_search'
         type:  'GET'
-        url:   '/api/tickets/search'
+        url:   'api/tickets/search'
         data:
           term: @term
         processData: true,

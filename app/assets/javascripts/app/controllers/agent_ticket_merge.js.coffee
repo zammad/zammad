@@ -9,7 +9,7 @@ class App.TicketMerge extends App.ControllerModal
     App.Com.ajax(
       id:    'ticket_merge_list',
       type:  'GET',
-      url:   '/api/ticket_merge_list/' + @ticket_id,
+      url:   'api/ticket_merge_list/' + @ticket_id,
       data:  {
 #        view: @view
       }
@@ -107,7 +107,7 @@ class App.TicketMerge extends App.ControllerModal
     App.Com.ajax(
       id:    'ticket_merge',
       type:  'GET',
-      url:   '/api/ticket_merge/' + @ticket_id + '/' + params['master_ticket_number'],
+      url:   'api/ticket_merge/' + @ticket_id + '/' + params['master_ticket_number'],
       data:  {
 #        view: @view
       }
