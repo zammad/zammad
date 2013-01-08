@@ -24,7 +24,7 @@ class Channel::IMAP < Channel::EmailParser
       end
       imap.login( channel[:options][:user], channel[:options][:password] )
     end
-    if channel[:options][:folder].empty?
+    if !channel[:options][:folder] || channel[:options][:folder].empty?
       imap.select('INBOX')
     else
       imap.select( channel[:options][:folder] )
