@@ -133,30 +133,6 @@ class TicketsController < ApplicationController
       :ticket_state_id => ticket_state_list_closed
     ).limit(15).order('created_at DESC')
 
-#    tickets = Ticket.where(:customer_id => user_id).limit(15).order('created_at DESC')
-#    ticket_items = []
-#    tickets.each do |ticket|
-#      style = ''
-#      ticket_state_type = ticket.ticket_state.ticket_state_type.name
-#      if ticket_state_type == 'closed' || ticket_state_type == 'merged'
-#        style = 'text-decoration: line-through'
-#      end
-#      item = {
-#        :url   => '#ticket/zoom/' + ticket.id.to_s,
-#        :name  => 'T:' + ticket.number.to_s,
-#        :title => ticket.title,
-#        :style => style
-#      }
-#      ticket_items.push item
-#    end
-#    if ticket_items[0]
-#      topic = {
-#        :title => 'Tickets',
-#        :items => ticket_items
-#      }
-#      user['links'].push topic
-#    end
-
     # return result
     render :json => {
       :tickets => {
