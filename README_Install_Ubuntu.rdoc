@@ -5,6 +5,7 @@
 * apt-get install ruby1.9.1-full build-essential apache2-suexec mysql-server libmysqlclient-dev postfix libcurl4-openssl-dev libssl-dev apache2-prefork-dev libapr1-dev libaprutil1-dev
 * update-alternatives --set ruby /usr/bin/ruby1.9.1
 * update-alternatives --set gem /usr/bin/gem1.9.1
+* gem install rails therubyracer passenger 
 
 === Add User
 * useradd zammad -m -d /var/www/zammad -s /bin/bash
@@ -12,7 +13,6 @@
 
 === Apache Config
 * /var/lib/gems/1.9.1/gems/passenger-3.0.19/bin/passenger-install-apache2-module 
-* gem install rails therubyracer passenger 
 * vi /etc/apache2/sites-available/zammad
  <VirtualHost *:80>
     ServerName zammad.inet.h1.mdd
