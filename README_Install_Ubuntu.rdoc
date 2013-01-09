@@ -25,14 +25,9 @@
     <Directory "/var/www/zammad/public/">
         Order allow,deny
         allow from all
-        # This relaxes Apache security settings.
-        AllowOverride all
         # MultiViews must be turned off.
         Options -MultiViews
     </Directory>
-
-    RailsBaseURI /
-    PassengerResolveSymlinksInDocumentRoot on
  </VirtualHost>
 * rm /etc/apache2/sites-enabled/000-default
 * ln -s /etc/apache2/sites-available/zammad /etc/apache2/sites-enabled/zammad
