@@ -12,8 +12,8 @@
 
 === Apache Config
 * /var/lib/gems/1.9.1/gems/passenger-3.0.19/bin/passenger-install-apache2-module 
-* vi /etc/apache2/sites-available/zammad
 * gem install rails therubyracer passenger 
+* vi /etc/apache2/sites-available/zammad
  <VirtualHost *:80>
     ServerName zammad.inet.h1.mdd
     ServerAdmin abauer@magix.net
