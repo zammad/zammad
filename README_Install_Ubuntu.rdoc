@@ -1,17 +1,17 @@
-==Installation on Ubuntu 12.04 Server
+=Installation on Ubuntu 12.04 Server
 
-= Prerequisits
+=== Prerequisits
 * apt-get install ruby1.9.1-full build-essential apache2-suexec mysql-server libmysqlclient-dev postfix 
 * update-alternatives --set ruby /usr/bin/ruby1.9.1
 * update-alternatives --set gem /usr/bin/gem1.9.1
 * gem install rails
 * gem install therubyracer
 
-= Add User
+=== Add User
 * useradd zammad -m -d /var/www/zammad -s /bin/bash
 * echo "export RAILS_ENV=production" >> /var/www/zammad/.bashrc
 
-= Apache Config
+=== Apache Config
 * vi /etc/apache2/sites-available/zammad
 
  <VirtualHost *:80>
@@ -65,25 +65,25 @@
 * ln -s /etc/apache2/mods-available/suexec.load /etc/apache2/mods-enabled/suexec.load
 * service apache2 restart
 
-= Get Zammad
+=== Get Zammad
 * cd /var/www/zammad
 * wget http://zammad.org/zammad-1.0.1.tar.gz
 * tar -xzf zammad-1.0.1.tar.gz
 
-= Edit Gemfile
+=== Edit Gemfile
 * vi Gemfile
   * comment
-     * gem 'sqlite3'
+    * gem 'sqlite3'
   * uncomment
     * gem 'libv8', '~> 3.11.8'
     * gem 'execjs'
     * gem 'therubyracer'
 
-= Install zammad
+=== Install zammad
 * bundle install
 * chown -R zammad:zammad /var/www/zammad
 
-= Create Database
+=== Create Database
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE DATABASE zammad_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'some_pass'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
 * vi config/database.yml
 * su zammad
@@ -91,7 +91,7 @@
 * rake db:migrate
 * rake db:seed
 
-= Start Server
+=== Start Server
 * rake assets:precompile
 * rails server
 
