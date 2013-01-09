@@ -1,14 +1,14 @@
 class TicketsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /tickets
+  # GET /api/tickets
   def index
     @tickets = Ticket.all
 
     render :json => @tickets
   end
 
-  # GET /tickets/1
+  # GET /api/tickets/1
   def show
     @ticket = Ticket.find( params[:id] )
 
@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
     render :json => @ticket
   end
 
-  # POST /tickets
+  # POST /api/tickets
   def create
     @ticket = Ticket.new( params[:ticket] )
     @ticket.updated_by_id = current_user.id
@@ -82,7 +82,7 @@ class TicketsController < ApplicationController
     render :json => @ticket, :status => :created
   end
 
-  # PUT /tickets/1
+  # PUT /api/tickets/1
   def update
     @ticket = Ticket.find(params[:id])
 
@@ -98,7 +98,7 @@ class TicketsController < ApplicationController
     end
   end
 
-  # DELETE /tickets/1
+  # DELETE /api/tickets/1
   def destroy
     @ticket = Ticket.find( params[:id] )
 
@@ -110,8 +110,8 @@ class TicketsController < ApplicationController
     head :ok
   end
 
-  # GET /ticket_customer
-  # GET /tickets_customer
+  # GET /api/ticket_customer
+  # GET /api/tickets_customer
   def ticket_customer
 
     # get closed/open states
@@ -167,7 +167,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /ticket_history/1
+  # GET /api/ticket_history/1
   def ticket_history
 
     # get ticket data
@@ -208,7 +208,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /ticket_merge_list/1
+  # GET /api/ticket_merge_list/1
   def ticket_merge_list
 
     # get closed/open states
