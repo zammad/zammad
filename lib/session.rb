@@ -1,7 +1,7 @@
 require 'json'
 
 module Session
-  @path = '/tmp/websocket'
+  @path = Dir.pwd.to_s + '/tmp/websocket'
   @@user_threads = {}
   @@client_threads = {}
 
@@ -92,6 +92,10 @@ module Session
   end
 
   def self.jobs
+
+    # just make sure that spool path exists
+    FileUtils.mkpath @path
+
     Thread.abort_on_exception = true
     while true
       client_ids = self.sessions
