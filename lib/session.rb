@@ -94,7 +94,9 @@ module Session
   def self.jobs
 
     # just make sure that spool path exists
-    FileUtils.mkpath @path
+    if !File::exists?( @path )
+      FileUtils.mkpath @path
+    end
 
     Thread.abort_on_exception = true
     while true
@@ -147,6 +149,12 @@ module Session
 
   def self.sessions
     path = @path + '/'
+
+    # just make sure that spool path exists
+    if !File::exists?( path )
+      FileUtils.mkpath path
+    end
+
     data = []
     Dir.foreach( path ) do |entry|
       if entry != '.' && entry != '..'
