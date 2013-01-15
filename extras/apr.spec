@@ -1,10 +1,9 @@
-
 %define aprver 1
 
 Summary: Apache Portable Runtime library
 Name: apr
 Version: 1.4.6
-Release: 1%{?dist}.rk
+Release: 1%{?dist}
 License: Apache Software License
 Group: System Environment/Libraries
 URL: http://apr.apache.org/
