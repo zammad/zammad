@@ -33,6 +33,9 @@ OptionParser.new do |opts|
   opts.on("-s", "--secure", "enable secure connections") do |s|
     @options[:s] = s
   end
+  opts.on("-i", "--pid [OPT]", "pid, default is tmp/pids/websocket.pid") do |i|
+    @options[:i] = i
+  end
   opts.on("-k", "--private-key [OPT]", "/path/to/server.key for secure connections") do |k|
     tls_options[:private_key_file] = k
   end
@@ -41,11 +44,11 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s })"
+puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s },pid:#{@options[:i].to_s})"
 #puts options.inspect
 
 # create pid file
-$daemon_pid = File.new( @options[:i],"w" )
+$daemon_pid = File.new( @options[:i].to_s,"w" )
 $daemon_pid.sync = true
 $daemon_pid.puts(Process.pid.to_s)
 $daemon_pid.close
