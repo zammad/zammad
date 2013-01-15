@@ -1,10 +1,9 @@
-
 %define apuver 1
 
 Summary: Apache Portable Runtime Utility library
 Name: apr-util
 Version: 1.5.1
-Release: 1%{?dist}.rk
+Release: 1%{?dist}
 License: Apache Software License
 Group: System Environment/Libraries
 URL: http://apr.apache.org/
