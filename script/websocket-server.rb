@@ -15,6 +15,7 @@ require 'optparse'
   :d => false,
   :k => '/path/to/server.key',
   :c => '/path/to/server.crt',
+  :i => Dir.pwd.to_s + '/tmp/pids/websocket.pid'
 }
 tls_options = {}
 OptionParser.new do |opts|
@@ -42,6 +43,12 @@ end.parse!
 
 puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s })"
 #puts options.inspect
+
+# create pid file
+$daemon_pid = File.new( @options[:i],"w" )
+$daemon_pid.sync = true
+$daemon_pid.puts(Process.pid.to_s)
+$daemon_pid.close
 
 @clients = {}
 @spool   = []
