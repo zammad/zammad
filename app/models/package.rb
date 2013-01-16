@@ -50,6 +50,92 @@ class Package < ApplicationModel
     return data
   end
 
+  def self.unlink_all
+    # link files
+    Dir.glob( @@root + '/**/*' ) do |entry|
+      if File.symlink?( entry)
+        puts "unlink: #{entry}"
+        File.delete( entry )
+      end
+    end
+  end
+
+  # check if zpm is a package source repo 
+  def self._package_base_dir?(package_base_dir)
+    package = false
+    Dir.glob(  package_base_dir + '/*.szpm') do |entry|
+      package = entry.sub( /^.*\/(.+?)\.szpm$/, '\1')
+    end
+    if package == false
+      raise "Can't link package, '#{package_base_dir}' is no package source directory!"
+    end
+    puts package.inspect
+    return package
+  end
+
+  # Package.unlink('/path/to/src/extention')
+  # execute migration down + unlink files
+  def self.unlink(package_base_dir)
+
+    # check if zpm is a package source repo 
+    package = self._package_base_dir?(package_base_dir)
+
+    # migration down
+    Package::Migration.migrate( package, 'reverse' )
+
+    # link files
+    Dir.glob( package_base_dir + '/**/*' ) do |entry|
+      entry = entry.sub( '//', '/' )
+      file = entry
+      file = file.sub( /#{package_base_dir.to_s}/, '' )
+      dest = @@root + '/' + file
+ 
+      if File.symlink?( dest.to_s )
+        puts "Unlink file: #{dest.to_s}"
+        File.delete( dest.to_s )
+      end
+ 
+    end
+  end
+
+  # Package.link('/path/to/src/extention')
+  # link files + execute migration up
+  def self.link(package_base_dir)
+
+    # check if zpm is a package source repo 
+    package = self._package_base_dir?(package_base_dir)
+
+    # link files
+    Dir.glob( package_base_dir + '/**/*' ) do |entry|
+      entry = entry.sub( '//', '/' )
+      file = entry
+      file = file.sub( /#{package_base_dir.to_s}/, '' )
+      dest = @@root + '/' + file
+
+      if File.directory?( entry.to_s )
+        if !File.exists?( dest.to_s )
+          puts "Create dir: #{dest.to_s}"
+          FileUtils.mkdir_p( dest.to_s )
+        end
+      end
+
+      if File.file?( entry.to_s ) && ( File.file?( dest.to_s ) && !File.symlink?( dest.to_s ) )
+        raise "Can't link #{entry.to_s} -> #{dest.to_s}, destination already exists!"
+      end
+
+      if File.file?( entry )
+        if File.symlink?( dest.to_s )
+          File.delete( dest.to_s )
+        end
+        puts "Link file: #{entry.to_s} -> #{dest.to_s}"
+        File.symlink( entry.to_s, dest.to_s )
+      end
+    end
+
+    # migration up
+    Package::Migration.migrate( package )
+  end
+
   def self.install(data)
     if data[:file]
       xml     = self._read_file( data[:file], true )
