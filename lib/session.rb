@@ -2,6 +2,7 @@ require 'json'
 
 module Session
   @path = Dir.pwd.to_s + '/tmp/websocket'
+  @pid  = Dir.pwd.to_s + '/tmp/pids/sessionworker.pid'
   @@user_threads = {}
   @@client_threads = {}
 
@@ -92,6 +93,12 @@ module Session
   end
 
   def self.jobs
+
+    # create pid file
+    $daemon_pid = File.new( @pid.to_s,"w" )
+    $daemon_pid.sync = true
+    $daemon_pid.puts(Process.pid.to_s)
+    $daemon_pid.close
 
     # just make sure that spool path exists
     if !File::exists?( @path )
