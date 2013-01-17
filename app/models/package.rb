@@ -2,6 +2,12 @@ require 'rexml/document'
 class Package < ApplicationModel
   @@root = Rails.root.to_s
 
+  # build package based on .szpm
+  # Package.build(
+  #   :file   => 'package.szpm',
+  #   :root   => '/path/to/src/extention/',
+  #   :output => '/path/to/package_location/'
+  # )
   def self.build(data)
 
     if data[:file]
@@ -35,6 +41,8 @@ class Package < ApplicationModel
     return package.to_s
   end
 
+  # Package.auto_install
+  # install all packages located under auto_install/*.zpm
   def self.auto_install
     path = @@root + '/auto_install/'
     return if ! File.exist?( path )
@@ -50,6 +58,9 @@ class Package < ApplicationModel
     return data
   end
 
+  # Package.unlink_all
+  # remove all linked files in application
+  # note: will not take down package migrations, use Package.unlink instead
   def self.unlink_all
     # link files
     Dir.glob( @@root + '/**/*' ) do |entry|
@@ -136,6 +147,8 @@ class Package < ApplicationModel
     Package::Migration.migrate( package )
   end
 
+  # Package.install( :file => '/path/to/package.zpm' )
+  # Package.install( :string => zpm_as_string )
   def self.install(data)
     if data[:file]
       xml     = self._read_file( data[:file], true )
@@ -203,6 +216,8 @@ class Package < ApplicationModel
     return true
   end
 
+  # Package.uninstall( :name => 'package', :version => '0.1.1' )
+  # Package.uninstall( :string => zpm_as_string )
   def self.uninstall( data )
 
     if data[:string]
