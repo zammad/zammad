@@ -161,6 +161,15 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
         end
       end
 
+      # check if user already exists
+      if user.email
+        exists = User.where( :email => user.email ).first
+        if exists
+          render :json => { :error => 'User already exists!' }, :status => :unprocessable_entity
+          return
+        end
+      end
+
       user.save
 
       # send inviteation if needed / only if session exists
