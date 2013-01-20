@@ -15,7 +15,6 @@ class Index extends App.Controller
     @navupdate '#get_started'
 
     @master_user = 0
-#    @render()
     @fetch()
 
   fetch: ->
@@ -48,22 +47,21 @@ class Index extends App.Controller
       @navigate '#login'
 
     @html App.view('getting_started')(
-      master_user: @master_user,
+      master_user: @master_user
     )
 
     new App.ControllerForm(
-      el: @el.find('#form-master'),
-      model: App.User,
-      required: 'signup',
-      autofocus: true,
+      el:        @el.find('#form-master')
+      model:     App.User
+      required:  'signup'
+      autofocus: true
     )
     new App.ControllerForm(
-      el: @el.find('#form-agent'),
-      model: App.User,
-      required: 'invite_agent',
-      autofocus: true,
+      el:        @el.find('#form-agent')
+      model:     App.User
+      required:  'invite_agent'
+      autofocus: true
     )
-
 
     if !@master_user
       @el.find('.agent_user').removeClass('hide')
@@ -104,17 +102,36 @@ class Index extends App.Controller
           @master_user = false
           App.Auth.login(
             data: {
-              username: @params.login,
-              password: @params.password,
+              username: @params.login
+              password: @params.password
             },
             success: @relogin
 #            error: @error,
           )
+
+          App.Event.trigger 'notify', {
+            type:    'success'
+            msg:     App.i18n.translateContent( 'Welcome to %s!', @Config.get('product_name') )
+            timeout: 2500
+          }
+
         else
+
+          App.Event.trigger 'notify', {
+            type:    'success'
+            msg:     App.i18n.translateContent( 'Invitation sent!' )
+            timeout: 2500
+          }
 
           # rerender page
           @render()
-#      error: =>
+      error: (data) ->
+
+          App.Event.trigger 'notify', {
+            type:    'error'
+            msg:     App.i18n.translateContent( 'Can\'t create user!' )
+            timeout: 2500
+          }
 #        @modalHide()
     )
 
