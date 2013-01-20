@@ -68,6 +68,12 @@ class App.SettingsAreaItem extends App.Controller
     @setting.save(
       success: =>
 
+        App.Event.trigger 'notify', {
+          type:    'success'
+          msg:     App.i18n.translateContent('Update successful!')
+          timeout: 1500
+        }
+
         # login check
         App.Auth.loginCheck()
     )
