@@ -322,8 +322,8 @@ class Index extends App.Controller
       )
     )
     App.Event.trigger 'notify', {
-      type: 'success',
-      msg: App.i18n.translateContent('Bulk-Action executed!'),
+      type: 'success'
+      msg: App.i18n.translateContent('Bulk-Action executed!')
     }
 
   zoom: (e) =>
