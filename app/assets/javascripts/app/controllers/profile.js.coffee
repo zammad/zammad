@@ -1,11 +1,3 @@
-$ = jQuery.sub()
-Note = App.Note
-
-$.fn.item = ->
-  elementID   = $(@).data('id')
-  elementID or= $(@).parents('[data-id]').data('id')
-  Note.find(elementID)
-
 class Index extends App.Controller
 #  events:
 #    'focusin [data-type=edit]':     'edit_in'
@@ -24,6 +16,6 @@ class Index extends App.Controller
   render: ->
     @html App.view('profile')()
 
-App.Config.set( 'profile', Index, 'Routes' )
 
+App.Config.set( 'profile', Index, 'Routes' )
 App.Config.set( 'Profile', { prio: 1700, parent: '#current_user', name: 'Profile', target: '#profile', role: [ 'Agent', 'Customer' ] }, 'NavBarRight' )
