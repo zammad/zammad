@@ -1926,6 +1926,15 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Bulk-Action execu
 Translation.create_if_not_exists( :locale => 'de', :source => "Moved in", :target => "Hinein Verschoben", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Moved out", :target => "Heraus Verschoben", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Country", :target => "Land", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Invitation sent!", :target => "Einladung versendet", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Can't create user", :target => "Benutzer konnte nicht angelegt werden!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Update successful!", :target => "Aktualisierung erfolgreich!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Invite Agents", :target => "Agenten einladen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Getting started!", :target => "Ersten Schritte!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create Admin", :target => "Admin erstellen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Configure Channels", :target => "Kanäle konfigurieren", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Send invitation", :target => "Einladung senden", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Next...", :target => "Weiter...", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
 
