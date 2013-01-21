@@ -619,7 +619,7 @@ Setting.create_if_not_exists(
     ],
   },
   :state       => {
-    :value => 'right',
+    :value => 'left',
   },
   :frontend    => false
 )
