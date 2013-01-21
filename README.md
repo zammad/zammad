@@ -1,3 +1,5 @@
+[![Build Status](http://ci.zammad.org/job/ZammadUnittest-ruby-1.9.3-p362/badge/icon)](http://ci.zammad.org/job/ZammadUnittest-ruby-1.9.3-p362/)
+
 Welcome to Zammad
 =================
 
