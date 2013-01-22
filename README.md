@@ -34,6 +34,7 @@ Getting Started
 3. Configure your databases (if needed)
 
 ```
+     zammad@shell> cp config/database.yml.dist config/database.yml
      zammad@shell> vi config/database.yml
 ````
 
@@ -41,6 +42,7 @@ Getting Started
 
 ```
      zammad@shell> export RAILS_ENV=production
+     zammad@shell> rake db:create
      zammad@shell> rake db:migrate
      zammad@shell> rake db:seed
 ```
@@ -49,7 +51,9 @@ Getting Started
 
 ```
      zammad@shell> rake assets:precompile
-     zammad@shell> rails server
+     zammad@shell> rails server # rails web server
+     zammad@shell> ruby script/websocket-server.rb # non blocking websocket server
+     zammad@shell> rails runner 'Session.jobs' # generate overviews on demand, just send changed data to browser
 ```
 
 6. Go to http://localhost:3000/#getting_started and you'll see:
