@@ -61,6 +61,7 @@
 
 === Create Database
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE DATABASE zammad_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'some_pass'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
+* cp config/database.yml.dist config/database.yml
 * vi config/database.yml
 * su zammad
 * cd ~
