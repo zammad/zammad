@@ -21,6 +21,11 @@ NAME=zammad
 APP_PORT=3000
 WS_PORT=6042
 
+ZAMMAD_CONFIG=/etc/sysconfig/zammad
+# Read config   
+[ -f "$JENKINS_CONFIG" ] && . "$JENKINS_CONFIG"
+
+
 # Load RVM into a shell session *as a function*
 if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
     # First try to load from a user install
