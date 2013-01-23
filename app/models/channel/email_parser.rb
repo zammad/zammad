@@ -129,54 +129,18 @@ class Channel::EmailParser
       end
 
       # get attachments
-      if mail.has_attachments?
-        mail.attachments.each { |file|
-
-          # get file preferences
-          headers_store = {}
-          file.header.fields.each { |field|
-            headers_store[field.name.to_s] = field.value.to_s
-          }
-
-          # get filename from content-disposition
-          filename = nil
-
-          # workaround for: NoMethodError: undefined method `filename' for #<Mail::UnstructuredField:0x007ff109e80678>
-          begin
-            filename = file.header[:content_disposition].filename
-          rescue
-            result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
-            if result && result[0] && result[0][1]
-              filename = result[0][1]
-            end
+      if mail.parts
+        attachment_count_total = 0
+        mail.parts.each { |part|
+          attachment_count_total += 1
+          if mail.text_part && mail.text_part == part
+            # ignore text/plain attachments - already shown in view
+          elsif mail.html_part && mail.html_part == part
+            # ignore text/html - html part, already shown in view
+          else
+            attachs = self._get_attachment( part, data[:attachments] )
+            data[:attachments].concat( attachs )
           end
-
-          # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
-          if !filename
-            filename = file.header[:content_location].to_s
-          end
-
-          # get mime type
-          if file.header[:content_type] && file.header[:content_type].string
-            headers_store['Mime-Type'] = file.header[:content_type].string
-          end
-
-          # get charset
-          if file.header && file.header.charset
-            headers_store['Charset'] = file.header.charset
-          end
-
-          # remove not needed header
-          headers_store.delete('Content-Transfer-Encoding')
-          headers_store.delete('Content-Disposition')
-
-          attach = {
-            :data        => file.body.to_s,
-            :filename    => filename,
-            :preferences => headers_store,
-          }
-
-          data[:attachments].push attach
         }
       end
 
@@ -226,6 +190,78 @@ class Channel::EmailParser
     data[:body].gsub!( /\r/, "\n" )
 
     return data
+  end
+
+  def _get_attachment( file, attachments )
+
+    # check if sub parts are available
+    if !file.parts.empty?
+      a = []
+      file.parts.each {|p|
+        a.concat( self._get_attachment( p, attachments ) )
+      }
+      return a
+    end
+
+    # get file preferences
+    headers_store = {}
+    file.header.fields.each { |field|
+      headers_store[field.name.to_s] = field.value.to_s
+    }
+
+    # get filename from content-disposition
+    filename = nil
+
+    # workaround for: NoMethodError: undefined method `filename' for #<Mail::UnstructuredField:0x007ff109e80678>
+    begin
+      filename = file.header[:content_disposition].filename
+    rescue
+      result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
+      if result && result[0] && result[0][1]
+        filename = result[0][1]
+      end
+    end
+
+    # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
+    if !filename
+      filename = file.header[:content_location].to_s
+    end
+
+    # generate file name
+    if !filename || filename.empty?
+      attachment_count = 0
+      (1..1000).each {|count|
+        filename_exists = false
+        filename = 'file-' + count.to_s
+        attachments.each {|attachment|
+          if attachment[:filename] == filename
+            filename_exists = true
+          end
+        }
+        break if filename_exists == false
+      }
+    end
+
+    # get mime type
+    if file.header[:content_type] && file.header[:content_type].string
+      headers_store['Mime-Type'] = file.header[:content_type].string
+    end
+
+    # get charset
+    if file.header && file.header.charset
+      headers_store['Charset'] = file.header.charset
+    end
+
+    # remove not needed header
+    headers_store.delete('Content-Transfer-Encoding')
+    headers_store.delete('Content-Disposition')
+
+    attach = {
+      :data        => file.body.to_s,
+      :filename    => filename,
+      :preferences => headers_store,
+    }
+    return [attach]
   end
 
   def process(channel, msg)
