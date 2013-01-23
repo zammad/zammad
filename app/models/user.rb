@@ -53,21 +53,43 @@ class User < ApplicationModel
     # no user found
     return nil if !user
 
-    # development systems
-    if !ENV['RAILS_ENV'] || ENV['RAILS_ENV'] == 'development'
-      if password == 'test'
-        return user
-      end
-    end
-
-    # sha auth check
-    if user.password =~ /^\{sha2\}/
-      crypted = Digest::SHA2.hexdigest( password )
-      return user if user.password == "{sha2}#{crypted}"
-    end
-
-    # plain auth check
-    return user if user.password == password
+    # use auth backends
+    config = {
+      :internal => {
+        :adapter => 'internal',
+      },
+      :test => {
+        :adapter => 'test',
+      },
+      :env => {
+        :adapter => 'env',
+      },
+      :ldap => {
+        :adapter    => 'ldap',
+        :host       => 'somehost',
+        :port       => '3333',
+        :base_dn    => 'some base dn',
+        :bind_user  => 'some bind user',
+        :bind_pw    => 'some pw',
+      },
+      :otrs => {
+        :adapter        => 'otrs',
+        :required_group => 'stats',
+        :group_role_map => {
+          'admin' => 'Admin',
+          'stats' => 'Report',
+        },
+        :always_role    => {
+          'Agent' => true,
+        },
+      },
+    }
+    config.each {|key, c|
+      file = "auth/#{c[:adapter]}"
+      require file
+      user_auth = Auth.const_get("#{c[:adapter].to_s.upcase}").check( user, username, password, c )
+      return user_auth if user_auth
+    }
 
     # auth failed
     return false
