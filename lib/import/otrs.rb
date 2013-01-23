@@ -14,10 +14,33 @@ module Import::OTRS
 #    puts 'R:' + response.body.to_s
     return response
   end
+  def self.post(base, data)
+    url = Setting.get('import_otrs_endpoint') + '/' + base
+    data['Key'] = Setting.get('import_otrs_endpoint_key')
+    puts 'POST:' + url
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    if url =~ /https/i
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+    request = Net::HTTP::Post.new(uri.request_uri)
+    request.set_form_data(data)
+    response = http.request(request)
+    return response
+  end
 
   def self.json(response)
     data = Encode.conv( 'utf8', response.body.to_s )
     JSON.parse( data )
+  end
+
+  def self.auth(username, password)
+    response = post( "public.pl", { :Action => 'Export', :Type => 'Auth', :User => username, :Pw => password } )
+    return if response.code.to_s != '200'
+
+    result = json(response)
+    return result
   end
 
   def self.start
