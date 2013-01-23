@@ -5,8 +5,6 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 #gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
 gem 'json'
 
 # Gems used only for assets and not required
@@ -49,6 +47,7 @@ gem 'simple-rss'
 
 # e. g. for mysql you need to load mysql
 gem 'mysql2'
+#gem 'sqlite3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -63,11 +62,18 @@ gem 'mysql2'
 gem 'eventmachine'
 gem 'em-websocket'
 
-# code coverage
-gem 'simplecov'
-gem 'simplecov-rcov'
+# Gems used only for develo//test and not required
+# in production environments by default.
+group :development, :test do
 
-# UI tests w/ Selenium
-#gem 'selenium-webdriver'
-#gem 'watir-webdriver'
+    gem 'sqlite3'
 
+    # code coverage
+    gem 'simplecov'
+    gem 'simplecov-rcov'
+
+    # UI tests w/ Selenium
+    #gem 'selenium-webdriver'
+    gem 'watir-webdriver'
+
+end
