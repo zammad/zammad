@@ -1,21 +1,21 @@
-=Installation on Ubuntu 12.04 Server
+# Installation on Ubuntu 12.04 Server
 
-== With Apache mod_passenger / MySQL
-=== Prerequisits
+## With Apache mod_passenger / MySQL
+### Prerequisits
 * apt-get install ruby1.9.1-full build-essential apache2-suexec mysql-server libmysqlclient-dev postfix libcurl4-openssl-dev libssl-dev apache2-prefork-dev libapr1-dev libaprutil1-dev
 * update-alternatives --set ruby /usr/bin/ruby1.9.1
 * update-alternatives --set gem /usr/bin/gem1.9.1
 * gem install rails therubyracer passenger 
 
-=== Add User
+### Add User
 * useradd zammad -m -d /var/www/zammad -s /bin/bash
 * echo "export RAILS_ENV=production" >> /var/www/zammad/.bashrc
 
-=== Apache Config
+### Apache Config
 * /var/lib/gems/1.9.1/gems/passenger-3.0.19/bin/passenger-install-apache2-module 
 * vi /etc/apache2/sites-available/zammad
-
- <VirtualHost *:80>
+```
+<VirtualHost *:80>
     ServerName zammad.inet.h1.mdd
     ServerAdmin abauer@magix.net
 
@@ -26,10 +26,12 @@
     <Directory "/var/www/zammad/public/">
         Order allow,deny
         allow from all
-        # MultiViews must be turned off.
+        ## MultiViews must be turned off.
         Options -MultiViews
     </Directory>
- </VirtualHost>
+</VirtualHost>
+```
+
 
 * rm /etc/apache2/sites-enabled/000-default
 * ln -s /etc/apache2/sites-available/zammad /etc/apache2/sites-enabled/zammad
@@ -41,12 +43,12 @@
 * service apache2 restart 
 
 
-=== Get Zammad
+### Get Zammad
 * cd /var/www/zammad
 * wget http://zammad.org/zammad-1.0.1.tar.gz
 * tar -xzf zammad-1.0.1.tar.gz
 
-=== Edit Gemfile
+### Edit Gemfile
 * vi Gemfile
   * comment
     * gem 'sqlite3'
@@ -55,13 +57,12 @@
     * gem 'execjs'
     * gem 'therubyracer'
 
-=== Install zammad
+### Install zammad
 * bundle install
 * chown -R zammad:zammad /var/www/zammad
 
-=== Create Database
+### Create Database
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE DATABASE zammad_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'some_pass'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
-* cp config/database.yml.dist config/database.yml
 * vi config/database.yml
 * su zammad
 * cd ~
@@ -74,36 +75,35 @@
 
 
 
+## With Apache mod_proxy / MySQL
 
-
-== With Apache mod_proxy / MySQL
-
-=== Prerequisits
+### Prerequisits
 * apt-get install ruby1.9.1-full build-essential apache2-suexec mysql-server libmysqlclient-dev postfix 
 * update-alternatives --set ruby /usr/bin/ruby1.9.1
 * update-alternatives --set gem /usr/bin/gem1.9.1
 * gem install rails therubyracer
 
-=== Add User
+### Add User
 * useradd zammad -m -d /var/www/zammad -s /bin/bash
 * echo "export RAILS_ENV=production" >> /var/www/zammad/.bashrc
 
-=== Apache Config
+### Apache Config
 * vi /etc/apache2/sites-available/zammad
 
- <VirtualHost *:80>
+```
+<VirtualHost *:80>
     ServerName zammad.example.com
     ServerAdmin yourmail@example.com
 
     SuexecUserGroup "zammad" "zammad"
 
-    # don't loose time with IP address lookups
+    ## don't loose time with IP address lookups
     HostnameLookups Off
 
-    # needed for named virtual hosts
+    ## needed for named virtual hosts
     UseCanonicalName Off
 
-    # configures the footer on server-generated documents
+    ## configures the footer on server-generated documents
     ServerSignature Off
 
     ProxyRequests Off
@@ -132,7 +132,8 @@
         Allow from all
     </Directory>
 
- </VirtualHost>
+</VirtualHost>
+```
 
 * rm /etc/apache2/sites-enabled/000-default
 * ln -s /etc/apache2/sites-available/zammad /etc/apache2/sites-enabled/zammad
@@ -142,12 +143,12 @@
 * ln -s /etc/apache2/mods-available/suexec.load /etc/apache2/mods-enabled/suexec.load
 * service apache2 restart
 
-=== Get Zammad
+### Get Zammad
 * cd /var/www/zammad
 * wget http://zammad.org/zammad-1.0.1.tar.gz
 * tar -xzf zammad-1.0.1.tar.gz
 
-=== Edit Gemfile
+### Edit Gemfile
 * vi Gemfile
   * comment
     * gem 'sqlite3'
@@ -156,11 +157,11 @@
     * gem 'execjs'
     * gem 'therubyracer'
 
-=== Install zammad
+### Install zammad
 * bundle install
 * chown -R zammad:zammad /var/www/zammad
 
-=== Create Database
+### Create Database
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE DATABASE zammad_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'some_pass'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
 * vi config/database.yml
 * su zammad
@@ -168,50 +169,51 @@
 * rake db:migrate
 * rake db:seed
 
-=== Start Server
+### Start Server
 * rake assets:precompile
-* rails server
+* rails server &
 * ruby script/websocket-server.rb &
 * rails runner 'Session.jobs' &
 
 
 
 
-== Testinstallation for Developers via RVM / SQLite
+## Testinstallation for Developers via RVM / SQLite
 
-=== Prerequisits
+### Prerequisits
 * apt-get install apt-get install curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool
 
-==== Add User
+### Add User
 * useradd zammad -m -s /bin/bash
 * echo -e "export RAILS_ENV=development" >> /home/zammad/.bashrc
 * su zammad
 * cd ~
 
-=== Install Ruby & Rails
+### Install Ruby & Rails
 * curl -L https://get.rvm.io | bash -s stable
 * source /home/zammad/.rvm/scripts/rvm
 * echo "source /home/zammad/.rvm/scripts/rvm" >> /home/zammad/.bashrc
 * rvm install ruby
 * gem install rails therubyracer 
 
-=== Get Zammad
+### Get Zammad
 * cd /var/www/zammad
 * wget http://zammad.org/zammad-1.0.1.tar.gz
 * tar -xzf zammad-1.0.1.tar.gz
 
-=== Edit Gemfile
+### Edit Gemfile
 * vi Gemfile
   * uncomment
      * gem 'libv8', '~> 3.11.8'
      * gem 'execjs'
      * gem 'therubyracer'
 
-=== Install zammad
+### Install zammad
 * bundle install
 * rake db:migrate
 * rake db:seed
 * rake assets:precompile
-* rails server
+* rails server &
 * ruby script/websocket-server.rb &
 * rails runner 'Session.jobs' &
+
