@@ -271,6 +271,27 @@ Hof",
           :to                 => 'q1@znuny.com',
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail14.box'),
+        :body_md5     => '548917e0bff0806f9b27c09bbf23bb38',
+        :attachments  => [
+          {
+            :md5      => 'c7d16825111cddb26253365f7c05859c',
+            :filename => 'file-1',
+          },
+          {
+            :md5      => '2f0c4f903ae59cf1b8bacb7bc0094b7a',
+            :filename => 'file-2',
+          },
+        ],
+        :params   => {
+          :from               => '"Müller, Bernd" <Bernd.Mueller@example.com>',
+          :from_email         => 'Bernd.Mueller@example.com',
+          :from_display_name  => "Müller, Bernd",
+          :subject            => 'AW: OTRS [Ticket#118192]',
+          :to                 => '\'Martin Edenhofer via Znuny Sales\' <sales@znuny.com>',
+        },
+      },
     ]
 
     files.each { |file|
