@@ -17,7 +17,7 @@ Getting Started
 
 ```
      root@shell> cd /opt/
-     root@shell> tar -xzvf zammad-1.0.1.tar.gz
+     root@shell> tar -xzf zammad-1.0.1.tar.gz
      root@shell> useradd zammad
      zammad@shell> su - zammad
 ```
@@ -26,17 +26,17 @@ Getting Started
 
 ```
      zammad@shell> cd zammad
-     zammad@shell> sudo gem install rails
+     zammad@shell> gem install rails
      zammad@shell> vi Gemfile # enable libv8, execjs and therubyracer if needed!
      zammad@shell> sudo bundle install
 ```
 
-3. Configure your databases (if needed)
+3. Configure your databases
 
 ```
      zammad@shell> cp config/database.yml.dist config/database.yml
      zammad@shell> vi config/database.yml
-````
+```
 
 4. Initialize your database
 
