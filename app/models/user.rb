@@ -1,7 +1,9 @@
+require 'digest/sha2'
+
 class User < ApplicationModel
   include Gmaps
 
-  before_create           :check_name, :check_email, :check_login, :check_image, :check_geo
+  before_create           :check_name, :check_email, :check_login, :check_image, :check_geo, :check_password
   before_update           :check_password, :check_image, :check_geo, :check_email, :check_login
 
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
@@ -58,10 +60,14 @@ class User < ApplicationModel
       end
     end
 
-    # auth ok
-    if user.password == password
-      return user
+    # sha auth check
+    if user.password =~ /^\{sha2\}/
+      crypted = Digest::SHA2.hexdigest( password )
+      return user if user.password == "{sha2}#{crypted}"
     end
+
+    # plain auth check
+    return user if user.password == password
 
     # auth failed
     return false
@@ -388,12 +394,21 @@ Your #{config.product_name} Team
 
     def check_password
 
-      # set old password again
+      # set old password again if not given
       if self.password == '' || !self.password
 
         # get current record
-        current = User.find(self.id)
-        self.password = current.password
+        if self.id
+          current = User.find(self.id)
+          self.password = current.password
+        end
+
+      # create crypted password if not already crypted
+      else
+        if self.password !~ /^\{sha2\}/
+          crypted = Digest::SHA2.hexdigest( self.password )
+          self.password = "{sha2}#{crypted}"
+        end
       end
     end
 end
