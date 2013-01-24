@@ -1,6 +1,6 @@
 require 'digest/md5'
 
-class Store < ActiveRecord::Base
+class Store < ApplicationModel
   store       :preferences
   belongs_to  :store_object,          :class_name => 'Store::Object'
   belongs_to  :store_file,            :class_name => 'Store::File'
@@ -10,12 +10,7 @@ class Store < ActiveRecord::Base
     data = data.stringify_keys
 
     # lookup store_object.id
-    store_object = Store::Object.where( :name => data['object'] ).first
-    if !store_object || !store_object.id
-      store_object = Store::Object.create(
-        :name   => data['object']
-      )
-    end
+    store_object = Store::Object.create_if_not_exists( :name => data['object'] )
     data['store_object_id'] = store_object.id
 
     # check if record already exists
@@ -26,7 +21,7 @@ class Store < ActiveRecord::Base
 
     # check real store
     md5 = Digest::MD5.hexdigest( data['data'] )
-    data['size'] = data['data'].to_s.to_blob.bytesize
+    data['size'] = data['data'].to_s.bytesize
 
     file = Store::File.where( :md5 => md5 ).first
 
@@ -69,11 +64,11 @@ class Store < ActiveRecord::Base
     return true
   end
 
-  class Object < ActiveRecord::Base
+  class Object < ApplicationModel
     validates :name, :presence => true
   end
 
-  class File < ActiveRecord::Base
+  class File < ApplicationModel
     before_validation :add_md5
 
     private
