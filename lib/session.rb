@@ -1,8 +1,18 @@
 require 'json'
 
 module Session
-  @path = Dir.pwd.to_s + '/tmp/websocket'
-  @pid  = Dir.pwd.to_s + '/tmp/pids/sessionworker.pid'
+
+  # get application root directory
+  @root = Dir.pwd.to_s
+  if !@root
+    @root = Rails.root
+  end
+
+  # get working directories
+  @path = @root + '/tmp/websocket'
+  @pid  = @root + '/tmp/pids/sessionworker.pid'
+
+  # create global vars for threads
   @@user_threads = {}
   @@client_threads = {}
 
