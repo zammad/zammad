@@ -2,7 +2,8 @@ class Setting < ApplicationModel
   store         :options
   store         :state
   store         :state_initial
-  before_create :set_initial
+  before_create :state_check, :set_initial
+  before_update :state_check
   after_create  :delete_cache
   after_update  :delete_cache
 
@@ -50,5 +51,12 @@ class Setting < ApplicationModel
     end
     def set_initial
       self.state_initial = self.state
+    end
+    def state_check
+      if self.state
+        if !self.state.has_key?(:value)
+          self.state = { :value => self.state }
+        end
+      end
     end
 end

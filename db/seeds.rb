@@ -21,9 +21,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'Zammad',
-  },
+  :state    => 'Zammad',
   :frontend => true
 )
 
@@ -42,9 +40,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'Example Inc.',
-  },
+  :state    => 'Example Inc.',
   :frontend => true
 )
 
@@ -69,9 +65,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => '10',
-  },
+  :state    => '10',
   :frontend => true
 )
 Setting.create_if_not_exists(
@@ -89,9 +83,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'zammad.example.com',
-  },
+  :state    => 'zammad.example.com',
   :frontend => true
 )
 Setting.create_if_not_exists(
@@ -113,9 +105,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 'http',
-  },
+  :state       => 'http',
   :frontend    => true
 )
 
@@ -140,9 +130,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 'DB',
-  },
+  :state       => 'DB',
   :frontend    => false
 )
 
@@ -166,9 +154,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => true,
-  },
+  :state       => true,
   :frontend    => true
 )
 Setting.create_if_not_exists(
@@ -190,9 +176,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => true,
-  },
+  :state       => true,
   :frontend    => true
 )
 Setting.create_if_not_exists(
@@ -214,9 +198,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => false,
-  },
+  :state    => false,
   :frontend => true
 )
 Setting.create_if_not_exists(
@@ -238,9 +220,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => true,
-  },
+  :state    => true,
   :frontend => true
 )
 Setting.create_if_not_exists(
@@ -262,9 +242,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => false,
-  },
+  :state    => false,
   :frontend => true
 )
 Setting.create_if_not_exists(
@@ -288,9 +266,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => {}
-  },
+  :state    => {},
   :frontend => false
 )
 Setting.create_if_not_exists(
@@ -312,9 +288,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => false,
-  },
+  :state    => false,
   :frontend => true
 )
 
@@ -339,9 +313,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => {},
-  },
+  :state    => {},
   :frontend => false
 )
 
@@ -364,10 +336,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => false,
-  },
-  :frontend    => true
+  :state    => false,
+  :frontend => true
 )
 Setting.create_if_not_exists(
   :title       => 'Google App Credentials',
@@ -390,9 +360,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => {},
-  },
+  :state    => {},
   :frontend => false
 )
 
@@ -415,10 +383,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => false,
-  },
-  :frontend    => true
+  :state    => false,
+  :frontend => true
 )
 Setting.create_if_not_exists(
   :title       => 'LinkedIn App Credentials',
@@ -441,9 +407,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => {},
-  },
+  :state    => {},
   :frontend => false
 )
 
@@ -473,10 +437,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 6,
-  },
-  :frontend    => true
+  :state    => 6,
+  :frontend => true
 )
 Setting.create_if_not_exists(
   :title       => '2 lower and 2 upper characters',
@@ -497,10 +459,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 0,
-  },
-  :frontend    => true
+  :state    => 0,
+  :frontend => true
 )
 Setting.create_if_not_exists(
   :title       => 'Digit required',
@@ -521,10 +481,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 0,
-  },
-  :frontend    => true
+  :state    => 0,
+  :frontend => true
 )
 Setting.create_if_not_exists(
   :title       => 'Maximal failed logins',
@@ -552,10 +510,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 6,
-  },
-  :frontend    => true
+  :state    => 6,
+  :frontend => true
 )
 
 Setting.create_if_not_exists(
@@ -573,10 +529,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 'Ticket#',
-  },
-  :frontend    => true
+  :state    => 'Ticket#',
+  :frontend => true
 )
 Setting.create_if_not_exists(
   :title       => 'Ticket Hook Divider',
@@ -593,10 +547,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => '',
-  },
-  :frontend    => false
+  :state    => '',
+  :frontend => false
 )
 Setting.create_if_not_exists(
   :title       => 'Ticket Hook Position',
@@ -618,10 +570,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 'left',
-  },
-  :frontend    => false
+  :state    => 'left',
+  :frontend => false
 )
 Setting.create_if_not_exists(
   :title       => 'Ticket Subject Size',
@@ -638,10 +588,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => '110',
-  },
-  :frontend    => false
+  :state    => '110',
+  :frontend => false
 )
 Setting.create_if_not_exists(
   :title       => 'Ticket Subject Reply',
@@ -658,10 +606,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => 'RE',
-  },
-  :frontend    => false
+  :state    => 'RE',
+  :frontend => false
 )
 #Setting.create(
 #  :title       => 'Ticket Subject Forward',
@@ -698,9 +644,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'increment',
-  },
+  :state    => 'increment',
   :frontend => false
 )
 Setting.create_if_not_exists(
@@ -751,10 +695,8 @@ Setting.create_if_not_exists(
     ],
   },
   :state => {
-    :value => {
-      :checksum => false,
-      :min_size => 5,
-    },
+    :checksum => false,
+    :min_size => 5,
   },
   :frontend => false
 )
@@ -778,9 +720,7 @@ Setting.create_if_not_exists(
     ],
   },
   :state => {
-    :value => {
-      :checksum => false,
-    }
+    :checksum => false,
   },
   :frontend => false
 )
@@ -804,9 +744,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => true,
-  },
+  :state    => true,
   :frontend => true
 )
 
@@ -829,10 +767,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state       => {
-    :value => true,
-  },
-  :frontend    => true
+  :state    => true,
+  :frontend => true
 )
 
 Setting.create_if_not_exists(
@@ -854,9 +790,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'SystemAddressName',
-  },
+  :state    => 'SystemAddressName',
   :frontend => false
 )
 
@@ -875,9 +809,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'via',
-  },
+  :state    => 'via',
   :frontend => false
 )
 
@@ -918,9 +850,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 10,
-  },
+  :state    => 10,
   :frontend => false
 )
 
@@ -945,9 +875,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => ['subject'],
-  },
+  :state    => ['subject'],
   :frontend => false
 )
 
@@ -966,9 +894,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'Notification Master <noreply@#{config.fqdn}>',
-  },
+  :state    => 'Notification Master <noreply@#{config.fqdn}>',
   :frontend => false
 )
 
@@ -987,9 +913,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => '(MAILER-DAEMON|postmaster|abuse)@.+?\..+?',
-  },
+  :state    => '(MAILER-DAEMON|postmaster|abuse)@.+?\..+?',
   :frontend => false
 )
 
@@ -1012,9 +936,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => false,
-  },
+  :state    => false,
   :frontend => true
 )
 
@@ -1037,9 +959,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => false,
-  },
+  :state    => false,
   :frontend => true
 )
 
@@ -1058,9 +978,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => 'http://otrs_host/otrs',
-  },
+  :state    => 'http://otrs_host/otrs',
   :frontend => true
 )
 Setting.create_if_not_exists(
@@ -1078,12 +996,9 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state => {
-    :value => '',
-  },
+  :state    => '',
   :frontend => true
 )
-
 
 email_address = EmailAddress.create_if_not_exists(
   :id             => 1,
