@@ -54,7 +54,7 @@ class Setting < ApplicationModel
     end
     def state_check
       if self.state
-        if !self.state.has_key?(:value)
+        if !self.state.respond_to?('has_key?') || !self.state.has_key?(:value)
           self.state = { :value => self.state }
         end
       end
