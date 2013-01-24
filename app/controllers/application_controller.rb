@@ -69,14 +69,15 @@ class ApplicationController < ActionController::Base
 #    puts params.inspect
 
     # check http basic auth
-    authenticate_with_http_basic do |user, password|
+    authenticate_with_http_basic do |username, password|
       puts 'http basic auth check'
-      userdata = User.lookup( :login => user )
+      userdata = User.lookup( :login => username )
       message = ''
       if !userdata
         message = 'authentication failed, user'
       else
-        if password != userdata.password
+        success = User.authenticate( username, password )
+        if !success
           message = 'authentication failed, pw'
         end
       end
