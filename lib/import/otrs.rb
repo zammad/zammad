@@ -1,7 +1,7 @@
 module Import::OTRS
   def self.request(part)
     url = Setting.get('import_otrs_endpoint') + '/' + part + ';Key=' + Setting.get('import_otrs_endpoint_key')
-    puts 'GET:' + url
+    puts 'GET: ' + url
 #    response = Net::HTTP.get_response( URI.parse(url), { :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE } )
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -17,7 +17,7 @@ module Import::OTRS
   def self.post(base, data)
     url = Setting.get('import_otrs_endpoint') + '/' + base
     data['Key'] = Setting.get('import_otrs_endpoint_key')
-    puts 'POST:' + url
+    puts 'POST: ' + url
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if url =~ /https/i
@@ -141,6 +141,7 @@ module Import::OTRS
 
     result.each {|record|
         ticket_new = {
+          :title         => '',
           :created_by_id => 1,
           :updated_by_id => 1,
         }
