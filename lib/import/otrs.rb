@@ -83,11 +83,25 @@ module Import::OTRS
 #    customer
 
     result = JSON.parse( response.body )
-    while true
-      ticket_ids = result.pop(20)
-      return if ticket_ids.empty?
-      self.ticket(ticket_ids)
-    end
+    result = result.reverse
+
+    thread_count = 8
+    threads = {}
+    (1..thread_count).each {|thread|
+      threads[thread] = Thread.new {
+        sleep thread * 3
+        puts "Started import thread# #{thread}..."
+        while true
+          ticket_ids = result.pop(20)
+          return if ticket_ids.empty?
+          self.ticket(ticket_ids)
+        end
+      }
+    }
+    (1..thread_count).each {|thread|
+      threads[thread].join
+    }
+
     return
   end
 
@@ -650,12 +664,14 @@ module Import::OTRS
         done = false
         _set_valid(user)
 
+        role = Role.lookup( :name => 'Customer' )
+
         # get new attributes
         user_new = {
           :created_by_id => 1,
           :updated_by_id => 1,
           :source        => 'OTRS Import',
-          :role_ids      => [3],
+          :role_ids      => [role.id],
         }
         map.each { |key,value|
           if user[key.to_s]
