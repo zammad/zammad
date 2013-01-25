@@ -10,9 +10,15 @@ module Import::OTRS
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
+    begin
+      response = http.request(request)
 #    puts 'R:' + response.body.to_s
-    return response
+      return response
+    rescue Exception => e
+      puts "can't get #{url}"
+      puts e.inspect
+      return
+    end
   end
   def self.post(base, data)
     url = Setting.get('import_otrs_endpoint') + '/' + base
@@ -37,6 +43,7 @@ module Import::OTRS
 
   def self.auth(username, password)
     response = post( "public.pl", { :Action => 'Export', :Type => 'Auth', :User => username, :Pw => password } )
+    return if !response
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -55,6 +62,7 @@ module Import::OTRS
     end
 
     response = request("public.pl?Action=Export")
+    return if !response
     return if response.code.to_s != '200'
 
 #self.ticket('156115')
@@ -76,16 +84,11 @@ module Import::OTRS
 
     result = JSON.parse( response.body )
     while true
-      ticket_ids = result.pop(10)
+      ticket_ids = result.pop(20)
       return if ticket_ids.empty?
       self.ticket(ticket_ids)
     end
     return
-#    result.reverse.each { |ticket_id|
-    result.each { |ticket_id|
-#      sleep 0.1
-      ticket = self.ticket(ticket_id)
-    }
   end
 
   def self.ticket(ticket_ids)
@@ -94,6 +97,7 @@ module Import::OTRS
       url = url + "TicketID=#{CGI::escape ticket_id};"
     }
     response = request( url )
+    return if !response
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -321,7 +325,7 @@ module Import::OTRS
             to_id = state_to.id
           end
         end
-        puts "STATE UPDATE (#{history['HistoryID']}): -> #{from}->#{to}"
+#        puts "STATE UPDATE (#{history['HistoryID']}): -> #{from}->#{to}"
         History.history_create(
           :id                 => history['HistoryID'],
           :o_id               => history['TicketID'],
@@ -404,6 +408,7 @@ module Import::OTRS
 
   def self.ticket_state
     response = request( "public.pl?Action=Export;Type=State" )
+    return if !response
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -460,6 +465,7 @@ module Import::OTRS
   end
   def self.ticket_priority
     response = request( "public.pl?Action=Export;Type=Priority" )
+    return if !response
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -503,6 +509,7 @@ module Import::OTRS
   end
   def self.ticket_group
     response = request( "public.pl?Action=Export;Type=Queue" )
+    return if !response
     return if response.code.to_s != '200'
 
     result = json(response)
@@ -546,6 +553,7 @@ module Import::OTRS
   end
   def self.user
     response = request( "public.pl?Action=Export;Type=User" )
+    return if !response
     return if response.code.to_s != '200'
     result = json(response)
     map = {
@@ -570,12 +578,13 @@ module Import::OTRS
         _set_valid(user)
 #      puts 'USER: ' + user.inspect
 
+        role = Role.lookup( :name => 'Agent' )
         # get new attributes
         user_new = {
           :created_by_id => 1,
           :updated_by_id => 1,
           :source        => 'OTRS Import',
-          :role_ids      => [1,2],
+          :role_ids      => [ role.id ],
         }
         map.each { |key,value|
           if user[key.to_s]
@@ -610,6 +619,7 @@ module Import::OTRS
       sleep 2
       puts "Count=#{count};Offset=#{count}"
       response = request( "public.pl?Action=Export;Type=Customer;Count=100;Offset=#{count}" )
+      return if !response
       count = count + 3000
       return if response.code.to_s != '200'
       result = json(response)
