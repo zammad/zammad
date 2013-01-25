@@ -73,13 +73,16 @@ class User < ApplicationModel
         :bind_pw    => 'some pw',
       },
       :otrs => {
-        :adapter        => 'otrs',
-        :required_group => 'stats',
-        :group_role_map => {
+        :adapter           => 'otrs',
+        :required_group_ro => 'stats',
+        :group_rw_role_map => {
           'admin' => 'Admin',
           'stats' => 'Report',
         },
-        :always_role    => {
+        :group_ro_role_map => {
+          'stats' => 'Report',
+        },
+        :always_role => {
           'Agent' => true,
         },
       },
