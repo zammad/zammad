@@ -53,7 +53,7 @@ class Setting < ApplicationModel
       self.state_initial = self.state
     end
     def state_check
-      if self.state
+      if self.state || self.state == false
         if !self.state.respond_to?('has_key?') || !self.state.has_key?(:value)
           self.state = { :value => self.state }
         end
