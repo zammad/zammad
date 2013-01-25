@@ -402,6 +402,8 @@ class Ticket < ApplicationModel
   private
 
     def number_generate
+      return if self.number
+      return if !self.number.empty?
 
       # generate number
       (1..25_000).each do |i|
