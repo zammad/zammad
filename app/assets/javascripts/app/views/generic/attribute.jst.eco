@@ -2,6 +2,8 @@
   <label class="control-label" for="<%= @attribute.id %>"><%- @T( @attribute.display ) %><% if !@attribute.null: %> *<% end %></label>
   <div class="controls">
     <%- @item %><% if @attribute.note: %><span class="icon-question-sign" title="<%- @Ti( @attribute.note ) + ' ' %>"></span><% end %>
+	<% if @attribute.remove: %><span><a href="#" class="icon-minus"></a></span><% end %>
+	<% if @attribute.add: %><span><a href="#" class="icon-plus"></a></span><% end %>
     <span class="help-inline"></span>
     <span class="help-block"><% if @attribute.help: %><%- @T( @attribute.help ) + ' ' %><% end %><%- @attribute.link %></span>
   </div>
