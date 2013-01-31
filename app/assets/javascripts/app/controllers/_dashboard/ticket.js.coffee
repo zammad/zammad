@@ -79,8 +79,8 @@ class App.DashboardTicket extends App.Controller
     @overview      = data.overview
     @tickets_count = data.tickets_count
     @ticket_list   = data.ticket_list
-
-    pages_total =  parseInt( ( @tickets_count / @overview.view.d.per_page ) + 0.99999 ) || 1
+    # FIXME 10
+    pages_total =  parseInt( ( @tickets_count / 10 ) + 0.99999 ) || 1
     html = App.view('dashboard/ticket')(
       overview:    @overview,
       pages_total: pages_total,
@@ -99,7 +99,7 @@ class App.DashboardTicket extends App.Controller
       if @ticket_list[ i - 1 ]
         @tickets_in_table.push App.Collection.find( 'Ticket', @ticket_list[ i - 1 ] )
 
-    shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d.overview )
+    shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d )
     new App.ControllerTable(
       el:                html.find('.table-overview'),
       overview_extended: shown_all_attributes,
@@ -161,7 +161,7 @@ class Settings extends App.ControllerModal
         tag:      'select',
         multiple: false,
         null:     false,
-        default: @overview.view.d.per_page,
+#        default: @overview.view.d.per_page,
         options: {
           5: 5,
           10: 10,
@@ -175,7 +175,7 @@ class Settings extends App.ControllerModal
         name:    'attributes',
         display: 'Attributes',
         tag:     'checkbox',
-        default: @overview.view.d.overview,
+        default: @overview.view.d,
         null:    false,
         translate:  true
         options: {
@@ -263,7 +263,7 @@ class Settings extends App.ControllerModal
       @overview.order['direction'] = params['order_by_direction']
       @reload_needed = 1
 
-    @overview.view['d']['overview'] = params['attributes']
+    @overview.view['d'] = params['attributes']
 
     @overview.save(
       success: =>

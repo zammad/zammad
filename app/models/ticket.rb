@@ -265,7 +265,7 @@ class Ticket < ApplicationModel
     overviews.each { |overview|
 
       # remember selected view
-      if data[:view] && data[:view] == overview.meta[:url]
+      if data[:view] && data[:view] == overview.link
         overview_selected     = overview
         overview_selected_raw = Marshal.load( Marshal.dump(overview.attributes) )
       end
@@ -328,7 +328,11 @@ class Ticket < ApplicationModel
         count = Ticket.where( :group_id => group_ids ).where( overview.condition ).count()
 
         # get meta info
-        all = overview.meta
+        all = {
+          :name => overview.name,
+          :prio => overview.prio,
+          :link => overview.link,
+        }
 
         # push to result data
         result.push all.merge( { :count => count } )

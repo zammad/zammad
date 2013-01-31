@@ -49,45 +49,73 @@ class App.ControllerForm extends App.Controller
 
   # input text field with max. 100 size
   attribute_config = {
-    name:     'subject',
-    display:  'Subject',
-    tag:      'input',
-    type:     'text',
-    limit:    100,
-    null:     false,
-    default:  defaults['subject'],
+    name:     'subject'
+    display:  'Subject'
+    tag:      'input'
+    type:     'text'
+    limit:    100
+    null:     false
+    default:  defaults['subject']
     class:    'span7'
   }
 
   # colection as relation with auto completion
   attribute_config = {
-    name:           'customer_id',
-    display:        'Customer',
-    tag:            'autocompletion',
+    name:           'customer_id'
+    display:        'Customer'
+    tag:            'autocompletion'
     # auto completion params, endpoints, ui,...
-    type:           'text',
-    limit:          100,
-    null:           false,
-    relation:       'User',
-    autocapitalize: false,
-    help:           'Select the customer of the Ticket or create one.',
-    link:           '<a href="" class="customer_new">&raquo;</a>',
+    type:           'text'
+    limit:          100
+    null:           false
+    relation:       'User'
+    autocapitalize: false
+    help:           'Select the customer of the Ticket or create one.'
+    link:           '<a href="" class="customer_new">&raquo;</a>'
     callback:       @userInfo
-    class:          'span7',
+    class:          'span7'
   }
 
   # colection as relation
   attribute_config = {
-    name:       'ticket_priority_id',
-    display:    'Priority',
-    tag:        'select',
-    multiple:   false,
-    null:       false,
-    relation:   'TicketPriority',
-    default:    defaults['ticket_priority_id'],
-    translate:  true,
+    name:       'ticket_priority_id'
+    display:    'Priority'
+    tag:        'select'
+    multiple:   false
+    null:       false
+    relation:   'TicketPriority'
+    default:    defaults['ticket_priority_id']
+    translate:  true
     class:      'medium'
   }
+
+
+  # colection as options
+  attribute_config = {
+    name:       'ticket_priority_id'
+    display:    'Priority'
+    tag:        'select'
+    multiple:   false
+    null:       false
+    options: [
+      {
+        value:    5
+        name:     'very hight'
+        selected: false
+        disable:  false
+      },
+      {
+        value:    3
+        name:     'normal'
+        selected: true
+        disable:  false
+      },
+    ]
+    default:    3
+    translate:  true
+    class:      'medium'
+  }
+
 
   ###
 
@@ -127,8 +155,14 @@ class App.ControllerForm extends App.Controller
 
     # set value
     if @params
-      if attribute.name of @params
-        attribute.value = @params[attribute.name]
+      
+      # check if we have a references
+      parts = attribute.name.split '::'
+      if parts[0] && parts[1]
+        if @params[ parts[0] ] && @params[ parts[0] ][ parts[1] ]
+          attribute.value = @params[ parts[0] ][ parts[1] ]
+      else
+        attribute.value = @params[ attribute.name ]
 
     # set default value
     else
@@ -138,7 +172,6 @@ class App.ControllerForm extends App.Controller
         attribute.value = ''
 
     App.Log.log 'ControllerForm', 'debug', 'formGenItem-before', attribute
-
 
     # build options list based on config
     @_getConfigOptionList( attribute )
@@ -154,6 +187,9 @@ class App.ControllerForm extends App.Controller
 
     # finde selected/checked item of list
     @_selectedOptions( attribute )
+
+    # disable item of list
+    @_disabledOptions( attribute )
 
     # filter attributes
     @_filterOption( attribute )
@@ -382,6 +418,343 @@ class App.ControllerForm extends App.Controller
         )
       @delay( a, 180 )
 
+    # ticket attribute selection
+    else if attribute.tag is 'ticket_attribute_selection'
+
+      # list of possible attributes
+      item = $(
+        App.view('generic/ticket_attribute_selection')(
+          attribute: attribute
+        )
+      )
+
+      addShownAttribute = ( key, value ) =>
+        console.log( 'addShownAttribute', key, value )
+        if key is 'number'
+          attribute_config = {
+            name:       attribute.name + '::number'
+            display:    'Number'
+            tag:        'input'
+            type:       'text'
+            null:       false
+            value:      value
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'title'
+          attribute_config = {
+            name:       attribute.name + '::title'
+            display:    'Title'
+            tag:        'input'
+            type:       'text'
+            null:       false
+            value:      value
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'group_id'
+          attribute_config = {
+            name:       attribute.name + '::group_id'
+            display:    'Group'
+            tag:        'select'
+            multiple:   true
+            null:       false
+            nulloption: false
+            relation:   'Group'
+            value:      value
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'owner_id' || key is 'customer_id'
+          display = 'Owner'
+          name    = 'owner_id'
+          if key is 'customer_id'
+            display = 'Customer'
+            name    = 'customer_id'            
+          attribute_config = {
+            name:       attribute.name + '::' + name
+            display:    display
+            tag:        'select'
+            multiple:   true
+            null:       false
+            nulloption: false
+            relation:   'User'
+            value:      value || null
+            class:      'medium'
+            remove:     true
+            filter:     ( all, type ) ->
+              return all if type isnt 'collection'
+              all = _.filter( all, (item) ->
+                return if item.id is 1
+                return item
+              )
+              all.unshift( {
+                id: ''
+                name:  '--'
+              } )
+              all.unshift( {
+                id: 1
+                name:  '*** nobody ***'
+              } )
+              all.unshift( {
+                id: 'current_user.id'
+                name:  '*** current user ***'
+              } )
+              all
+          }
+        else if key is 'organization_id'
+          attribute_config = {
+            name:       attribute.name + '::organization_id'
+            display:    'Organization'
+            tag:        'select'
+            multiple:   true
+            null:       false
+            nulloption: false
+            relation:   'Organization'
+            value:      value || null
+            class:      'medium'
+            remove:     true
+            filter:     ( all, type ) ->
+              return all if type isnt 'collection'
+              all.unshift( {
+                id: ''
+                name:  '--'
+              } )
+              all.unshift( {
+                id: 'current_user.organization_id'
+                name:  '*** organization of current user ***'
+              } )
+              all
+          }
+        else if key is 'ticket_state_id'
+          attribute_config = {
+            name:       attribute.name + '::ticket_state_id'
+            display:    'State'
+            tag:        'select'
+            multiple:   true
+            null:       false
+            nulloption: false
+            relation:   'TicketState'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'ticket_priority_id'
+          attribute_config = {
+            name:       attribute.name + '::ticket_priority_id'
+            display:    'Priority'
+            tag:        'select'
+            multiple:   true
+            null:       false
+            nulloption: false
+            relation:   'TicketPriority'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else
+          attribute_config = {
+            name:       attribute.name + '::' + key
+            display:    'FIXME!'
+            tag:        'input'
+            type:       'text'
+            value:      value
+            class:      'medium'
+            remove:     true
+          }
+        itemSub = @formGenItem( attribute_config )
+        itemSub.find('.icon-minus').bind('click', (e) ->
+          e.preventDefault()
+          $(@).parent().parent().parent().remove()
+        )
+#        itemSub.append('<a href=\"#\" class=\"icon-minus\"></a>')
+        item.find('.ticket_attribute_item').append( itemSub )
+        
+
+      # list of shown attributes
+      show = []
+      if attribute.value
+        for key, value of attribute.value
+          addShownAttribute( key, value )
+
+      # list of existing attributes
+      attribute_config = {
+        name:       'ticket_attribute_list'
+        display:    'Add Attribute'
+        tag:        'select'
+        multiple:   false
+        null:       false
+#        nulloption: true
+        options: [
+          {
+            value:    ''
+            name:     '-- Ticket --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'number'
+            name:     'Number'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'title'
+            name:     'Title'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'group_id'
+            name:     'Group'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'ticket_state_id'
+            name:     'State'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'ticket_priority_id'
+            name:     'Priority'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'owner_id'
+            name:     'Owner'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'customer_id'
+            name:     'Customer'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'organization_id'
+            name:     'Organization'
+            selected: true
+            disable:  false
+          },
+          
+#          {
+#            value:    'tag'
+#            name:     'Tag'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'created_before'
+#            name:     'Erstell vor'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'created_after'
+#            name:     'Erstell nach'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'created_between'
+#            name:     'Erstell zwischen'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'closed_before'
+#            name:     'Geschlossen vor'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'closed_after'
+#            name:     'Geschlossen nach'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'closed_between'
+#            name:     'Geschlossen zwischen'
+#            selected: true
+#            disable:  false
+#          },
+          {
+            value:    '-a'
+            name:     '-- ' + App.i18n.translateInline('Article') + ' --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'from'
+            name:     'From'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'to'
+            name:     'To'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'cc'
+            name:     'Cc'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'subject'
+            name:     'Subject'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'body'
+            name:     'Text'
+            selected: true
+            disable:  false
+          },
+#          {
+#            value:    '-c'
+#            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
+#            selected: false
+#            disable:  true
+#          },
+#          {
+#            value:    'customer_user'
+#            name:     'Kunde'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'organization'
+#            name:     'Organization'
+#            selected: true
+#            disable:  false
+#          },
+        ]
+        default:    ''
+        translate:  true
+        class:      'medium'
+        add:        true
+      }
+      list = @formGenItem( attribute_config )
+
+      list.find('.icon-plus').bind('click', (e) ->
+        e.preventDefault()
+
+        value = $(e.target).parents().find('[name=ticket_attribute_list]').val()
+        addShownAttribute( value, '' )
+      )
+      item.find('.ticket_attribute_list').prepend( list )
+
     # input
     else
       item = $( App.view('generic/input')( attribute: attribute ) )
@@ -407,14 +780,14 @@ class App.ControllerForm extends App.Controller
                 classname = @classname
                 attributes_clean = @attributes_clean
                 ui = @
-                $('#' + @attribute.id).bind('change', ->
+                $( '#' + @attribute.id ).bind('change', ->
                   ui.log 'change', @, attribute, change
                   ui.log change[0] + ' has changed - changing ' + change[1]
 
                   item = $( ui.formGenItem(attribute, classname, attributes_clean) )
                   ui.log item, classname
                 )
-              @delay(b, 100)
+              @delay( b, 100 )
 #            if attribute.onchange[]
 
     ui = @
@@ -452,10 +825,12 @@ class App.ControllerForm extends App.Controller
     if !attribute.display
       return item
     else
-      a = $( App.view('generic/attribute')(
-        attribute: attribute,
-        item:      '',
-      ) )
+      a = $(
+        App.view('generic/attribute')(
+          attribute: attribute,
+          item:      '',
+        )
+      )
       a.find('.controls').prepend( item )
       return a
 
@@ -463,6 +838,7 @@ class App.ControllerForm extends App.Controller
   _sortOptions: (attribute) ->
 
     return if !attribute.options
+    return if _.isArray( attribute.options )
 
     options_by_name = []
     for i in attribute.options
@@ -478,30 +854,32 @@ class App.ControllerForm extends App.Controller
           options_new.push ii
     attribute.options = options_new
 
-
   _addNullOption: (attribute) ->
     return if !attribute.options
     return if !attribute.nulloption
-    attribute.options[''] = '-'
-    attribute.options.push {
-      name:  '-',
-      value: '',
-    }
-
+    if _.isArray( attribute.options )
+      attribute.options.unshift( { name: '-', value: '' } )
+    else
+      attribute.options[''] = '-'
 
   _getConfigOptionList: (attribute) ->
     return if !attribute.options
     selection = attribute.options
     attribute.options = []
-    for key, value of selection
-      name_new = value
-      if attribute.translate
-        name_new = App.i18n.translateInline( name_new )
-      attribute.options.push {
-        name:  name_new,
-        value: key,
-      }
-
+    if _.isArray( selection )
+      for row in selection
+        if attribute.translate
+          row.name = App.i18n.translateInline( row.name )
+        attribute.options.push row
+    else
+      for key, value of selection
+        name_new = value
+        if attribute.translate
+          name_new = App.i18n.translateInline( name_new )
+        attribute.options.push {
+          name:  name_new
+          value: key
+        }
 
   _getRelationOptionList: (attribute) ->
 
@@ -519,7 +897,8 @@ class App.ControllerForm extends App.Controller
       if typeof attribute.filter is 'function'
         App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-function'
 
-        all = App[attribute.relation].all()
+        all = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
+
         list = attribute.filter( all, 'collection' )
 
       # data based filter
@@ -529,7 +908,7 @@ class App.ControllerForm extends App.Controller
         App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-data', filter
 
         # check all records
-        for record in App[attribute.relation].all()
+        for record in App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
 
           # check all filter attributes
           for key in filter
@@ -542,16 +921,15 @@ class App.ControllerForm extends App.Controller
       # no data filter matched
       else
         App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-data no filter matched'
-        list = App[attribute.relation].all()
+        list = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
     else
       App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-no filter defined'
-      list = App[attribute.relation].all()
+      list = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
 
     App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList', attribute, list
 
     # build options list
     @_buildOptionList( list, attribute )
-
 
   # build options list
   _buildOptionList: (list, attribute) ->
@@ -563,6 +941,8 @@ class App.ControllerForm extends App.Controller
         name_new = '?'
         if item.displayName
           name_new = item.displayName()
+        else if item.name
+          name_new = item.name
         if attribute.translate
           name_new = App.i18n.translateInline(name_new)
         attribute.options.push {
@@ -586,20 +966,41 @@ class App.ControllerForm extends App.Controller
 
     return if !attribute.options
 
-    for record in attribute.options
-      if typeof attribute.value is 'string' || typeof attribute.value is 'number' || typeof attribute.value is 'boolean'
+    check = (value, record) ->
+      if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
 
         # if name or value is matching
-        if record.value.toString() is attribute.value.toString() || record.name.toString() is attribute.value.toString()
+        if record.value.toString() is value.toString() || record.name.toString() is value.toString()
           record.selected = 'selected'
           record.checked = 'checked'
 #          if record.name.toString() is attribute.value.toString()
 #            record.selected = 'selected'
 #            record.checked = 'checked'
 
-      else if ( attribute.value && record.value && _.include(attribute.value, record.value) ) || ( attribute.value && record.name && _.include(attribute.value, record.name) )
+      else if ( value && record.value && _.include( value, record.value ) ) || ( value && record.name && _.include( value, record.name ) )
         record.selected = 'selected'
         record.checked = 'checked'
+
+    for record in attribute.options
+
+      if _.isArray( attribute.value )
+        for value in attribute.value
+          check( value, record )
+
+      if typeof attribute.value is 'string' || typeof attribute.value is 'number' || typeof attribute.value is 'boolean'
+        check( attribute.value, record )
+
+  # set disabled attributes
+  _disabledOptions: (attribute) ->
+
+    return if !attribute.options
+    return if !_.isArray( attribute.options )
+
+    for record in attribute.options
+      if record.disable is true
+        record.disabled = 'disabled'
+      else
+        record.disabled = ''
 
   validate: (params) ->
     App.Model.validate(
@@ -645,8 +1046,17 @@ class App.ControllerForm extends App.Controller
 
         param[key.name] = key.value
 
-    # check {input_select}
+    # check :: fields
     inputSelectObject = {}
+    for key of param
+      parts = key.split '::'
+      if parts[0] && parts[1]
+        if !inputSelectObject[ parts[0] ]
+          inputSelectObject[ parts[0] ] = {}
+        inputSelectObject[ parts[0] ][ parts[1] ] = param[ key ]
+        delete param[ key ]
+
+    # check {input_select}
     for key of param
       attributeType = key.split '::'
       name = attributeType[1]

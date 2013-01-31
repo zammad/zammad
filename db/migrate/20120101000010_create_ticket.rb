@@ -167,7 +167,8 @@ class CreateTicket < ActiveRecord::Migration
       t.references :user,                                      :null => true
       t.references :role,                                      :null => false
       t.column :name,                 :string,  :limit => 250,  :null => false
-      t.column :meta,                 :string,  :limit => 1000, :null => false
+      t.column :url,                  :string,  :limit => 250,  :null => false
+      t.column :prio,                 :integer,                 :null => false
       t.column :condition,            :string,  :limit => 2500, :null => false
       t.column :order,                :string,  :limit => 2500, :null => false
       t.column :group_by,             :string,  :limit => 250,  :null => true

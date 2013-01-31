@@ -236,12 +236,12 @@ class App.Navigation extends App.Controller
 
     # add new views
     for item in data
-      NavBar['TicketOverview' + item.url] = {
+      NavBar['TicketOverview' + item.link] = {
         prio:   item.prio,
         parent: '#ticket_view',
         name:   item.name,
         count:  item.count,
-        target: '#ticket_view/' + item.url,
+        target: '#ticket_view/' + item.link,
 #        role:   ['Agent', 'Customer'],
       }
 

@@ -124,10 +124,7 @@ class Index extends App.Controller
     @selected = @bulkGetSelected()
 
     # set page title
-    @title @overview.meta.name
-
-    # get total pages
-    pages_total =  parseInt( ( @tickets_count / @overview.view[@view_mode].per_page ) + 0.99999 ) || 1
+    @title @overview.name
 
     # render init page
     checkbox = true
@@ -152,8 +149,6 @@ class Index extends App.Controller
     html = App.view('agent_ticket_view')(
       overview:    @overview
       view_modes:  view_modes
-      pages_total: pages_total
-      start_page:  @start_page
       checkbox:    checkbox
       edit:        edit
     )
@@ -179,7 +174,7 @@ class Index extends App.Controller
       )
       @el.find('.table-overview').append(table)
     else
-      shown_all_attributes = @ticketTableAttributes( App.Overview.find( @overview.id ).view.s.overview )
+      shown_all_attributes = @ticketTableAttributes( App.Overview.find( @overview.id ).view.s )
       groupBy = undefined
       if @overview.group_by
         group_by =
@@ -366,7 +361,7 @@ class Settings extends App.ControllerModal
         tag:      'select'
         multiple: false
         null:     false
-        default: @overview.view[@view_mode].per_page
+#        default: @overview.view[@view_mode].per_page
         options:
           15: 15
           20: 20
@@ -380,7 +375,7 @@ class Settings extends App.ControllerModal
         name:    'attributes'
         display: 'Attributes'
         tag:     'checkbox'
-        default: @overview.view[@view_mode].overview
+        default: @overview.view[@view_mode]
         null:    false
         translate: true
         options:
@@ -481,10 +476,6 @@ class Settings extends App.ControllerModal
 
     # check if refetch is needed
     @reload_needed = 0
-    if @overview.view[@view_mode]['per_page'] isnt params['per_page']
-      @overview.view[@view_mode]['per_page'] = params['per_page']
-      @reload_needed = 1
-
     if @overview.order['by'] isnt params['order_by']
       @overview.order['by'] = params['order_by']
       @reload_needed = 1
@@ -497,7 +488,7 @@ class Settings extends App.ControllerModal
       @overview['group_by'] = params['group_by']
       @reload_needed = 1
 
-    @overview.view[@view_mode]['overview'] = params['attributes']
+    @overview.view[@view_mode] = params['attributes']
 
     @overview.save(
       success: =>
