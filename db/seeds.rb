@@ -1000,6 +1000,7 @@ Setting.create_if_not_exists(
   :frontend => true
 )
 
+
 email_address = EmailAddress.create_if_not_exists(
   :id             => 1,
   :realname       => 'Zammad',
@@ -1166,9 +1167,11 @@ The Zammad.org Project
 
 overview_role = Role.where( :name => 'Agent' ).first
 Overview.create_if_not_exists(
-  :name      => 'my_assigned',
-  :role_id   => overview_role.id,
-  :condition => {
+  :name       => 'My assigned Tickets',
+  :link       => 'my_assigned',
+  :prio       => 1000,
+  :role_id    => overview_role.id,
+  :condition  => {
     :ticket_state_id => [ 1,2,3 ],
     :owner_id        => 'current_user.id',
   },
@@ -1176,30 +1179,10 @@ Overview.create_if_not_exists(
     :by        => 'created_at',
     :direction => 'ASC',
   },
-  :meta => {
-    :url  => 'my_assigned',
-    :name => 'My assigned Tickets',
-    :prio => 1000,
-  },
   :view => {
-    :d => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'group', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
@@ -1207,9 +1190,11 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  :name      => 'all_unassigned',
-  :role_id   => overview_role.id,
-  :condition => {
+  :name       => 'Unassigned & Open Tickets',
+  :link       => 'all_unassigned',
+  :prio       => 1001,
+  :role_id    => overview_role.id,
+  :condition  => {
     :ticket_state_id => [1,2,3],
     :owner_id        => 1,
   },
@@ -1217,30 +1202,10 @@ Overview.create_if_not_exists(
     :by        => 'created_at',
     :direction => 'ASC',
   },
-  :meta => {
-    :url  => 'all_unassigned',
-    :name => 'Unassigned & Open Tickets',
-    :prio => 1001,
-  },
   :view => {
-    :d => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'group', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
@@ -1248,39 +1213,21 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  :name      => 'all_open',
-  :role_id   => overview_role.id,
-  :condition => {
+  :name       => 'All Open Tickets',
+  :link       => 'all_open',
+  :prio       => 1002,
+  :role_id    => overview_role.id,
+  :condition  => {
     :ticket_state_id => [1,2,3],
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
-  :meta => {
-    :url  => 'all_open',
-    :name => 'All Open Tickets',
-    :prio => 1002,
-  },
   :view => {
-    :d => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'group', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
@@ -1288,39 +1235,21 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  :name      => 'all_escalated',
-  :role_id   => overview_role.id,
-  :condition => {
+  :name       => 'Escalated Tickets',
+  :link       => 'all_escalated',
+  :prio       => 1010,
+  :role_id    => overview_role.id,
+  :condition  => {
     :ticket_state_id => [1,2,3],
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
-  :meta => {
-    :url  => 'all_escalated',
-    :name => 'Escalated Tickets',
-    :prio => 1010,
-  },
   :view => {
-    :d => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'group', 'owner', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :d => [ 'title', 'customer', 'ticket_state', 'group', 'owner', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
@@ -1328,9 +1257,11 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  :name      => 'my_pending_reached',
-  :role_id   => overview_role.id,
-  :condition => {
+  :name       => 'My pending reached Tickets',
+  :link       => 'my_pending_reached',
+  :prio       => 1020,
+  :role_id    => overview_role.id,
+  :condition  => {
     :ticket_state_id => [3],
     :owner_id        => 'current_user.id',        
   },
@@ -1338,30 +1269,10 @@ Overview.create_if_not_exists(
     :by        => 'created_at',
     :direction => 'ASC',
   },
-  :meta => {
-    :url  => 'my_pending_reached',
-    :name => 'My pending reached Tickets',
-    :prio => 1020,
-  },
   :view => {
-    :d => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'group', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
@@ -1369,9 +1280,11 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  :name      => 'all',
-  :role_id   => overview_role.id,
-  :condition => {
+  :name       => 'All Tickets',
+  :link       => 'all',
+  :prio       => 9003,
+  :role_id    => overview_role.id,
+  :condition  => {
 #          :ticket_state_id => [3],
 #          :owner_id        => current_user.id,        
   },
@@ -1379,30 +1292,10 @@ Overview.create_if_not_exists(
     :by        => 'created_at',
     :direction => 'ASC',
   },
-  :meta => {
-    :url  => 'all',
-    :name => 'All Tickets',
-    :prio => 9003,
-  },
   :view => {
-    :s => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'group', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :s => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
@@ -1411,9 +1304,11 @@ Overview.create_if_not_exists(
 
 overview_role = Role.where( :name => 'Customer' ).first
 Overview.create_if_not_exists(
-  :name      => 'my_tickets',
-  :role_id   => overview_role.id,
-  :condition => {
+  :name       => 'My Tickets',
+  :link       => 'my_tickets',
+  :prio       => 1000,
+  :role_id    => overview_role.id,
+  :condition  => {
     :ticket_state_id => [ 1,2,3,4,6 ],
     :customer_id => 'current_user.id',
   },
@@ -1421,37 +1316,19 @@ Overview.create_if_not_exists(
     :by        => 'created_at',
     :direction => 'DESC',
   },
-  :meta => {
-    :url  => 'my_tickets',
-    :name => 'My Tickets',
-    :prio => 1000,
-  },
   :view => {
-    :d => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :d => [ 'title', 'customer', 'ticket_state', 'created_at' ],
+    :s => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
+    :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
   :created_by_id => 1
 )
 Overview.create_if_not_exists(
-  :name                => 'my_organization_tickets',
+  :name                => 'My Organization Tickets',
+  :link                => 'my_organization_tickets',
+  :prio                => 1100,
   :role_id             => overview_role.id,
   :organization_shared => true,
   :condition => {
@@ -1462,30 +1339,10 @@ Overview.create_if_not_exists(
     :by        => 'created_at',
     :direction => 'DESC',
   },
-  :meta => {
-    :url  => 'my_organization_tickets',
-    :name => 'My Organization Tickets',
-    :prio => 1100,
-  },
   :view => {
-    :d => {
-      :overview => [
-        'title', 'customer', 'ticket_state', 'created_at'
-      ],
-      :per_page => 5,
-    },
-    :s => {
-      :overview => [
-        'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'created_at'
-      ],
-      :per_page => 30,
-    },
-    :m => {
-      :overview => [
-        'number', 'title', 'ticket_state', 'ticket_priority', 'created_at'
-      ],
-      :per_page => 20,
-    },
+    :d => [ 'title', 'customer', 'ticket_state', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'created_at' ],
+    :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,
@@ -1703,6 +1560,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Escalated Tickets
 Translation.create_if_not_exists( :locale => 'de', :source => "My pending reached Tickets", :target => "Meine warten erreicht Tickets", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Password", :target => "Passwort", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Password (confirm)", :target => "Passwort (bestätigen)", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Role", :target => "Rolle", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Roles", :target => "Rollen", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Active", :target => "Aktiv", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Edit", :target => "Bearbeiten", :updated_by_id => 1, :created_by_id => 1  )
@@ -1760,6 +1618,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "internal", :targe
 Translation.create_if_not_exists( :locale => 'de', :source => "Attach files", :target => "Dateien anhängen", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Visability", :target => "Sichtbarkeit", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Actions", :target => "Aktionen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Email", :target => "E-Mail", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "email", :target => "E-Mail", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "phone", :target => "Telefon", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "fax", :target => "Fax", :updated_by_id => 1, :created_by_id => 1  )
@@ -1828,6 +1687,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Create an inbound
 Translation.create_if_not_exists( :locale => 'de', :source => "Create an outbound Ticket (will send this as email to customer)", :target => "Erstelle ein ausgehendes Ticket (wird per E-Mail an den Kunden gesendet)", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Age", :target => "Alter", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Article Count", :target => "Artikel Anzahl", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Article", :target => "Artikel", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Close Time", :target => "Schließzeit", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "First Response", :target => "Erste Reaktion", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "up", :target => "auf", :updated_by_id => 1, :created_by_id => 1  )
@@ -1850,6 +1710,11 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Create Admin", :t
 Translation.create_if_not_exists( :locale => 'de', :source => "Configure Channels", :target => "Kanäle konfigurieren", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Send invitation", :target => "Einladung senden", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Next...", :target => "Weiter...", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Week", :target => "Woche", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Follow up possible", :target => "Nachfrage möglich", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Assign Follow Ups", :target => "Zuweisung bei Nachfrage", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Signature", :target => "Signatur", :updated_by_id => 1, :created_by_id => 1  )
+
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
 
