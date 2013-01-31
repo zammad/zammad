@@ -384,3 +384,12 @@ footer {
   padding: 5px;
   background-color: transparent;
 }
+
+
+
+.sub_attribute .control-label {
+  width: 60px;
+}
+.sub_attribute .controls {
+  margin-left: 80px;
+}
