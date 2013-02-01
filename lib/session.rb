@@ -4,7 +4,7 @@ module Session
 
   # get application root directory
   @root = Dir.pwd.to_s
-  if !@root
+  if !@root || @root.empty? || @root == '/'
     @root = Rails.root
   end
 
@@ -324,10 +324,10 @@ class UserState
         :current_user => user,
       )
       overviews.each { |overview|
-        cache_key = @cache_key + '_overview_data_' + overview.meta[:url]
+        cache_key = @cache_key + '_overview_data_' + overview.link
         if CacheIn.expired(cache_key)
           overview_data = Ticket.overview(
-            :view         => overview.meta[:url],
+            :view         => overview.link,
 #            :view_mode    => params[:view_mode],
             :current_user => user,
             :array        => true,
@@ -552,13 +552,13 @@ class ClientState
         :current_user => user,
       )
       overviews.each { |overview|
-        cache_key = @cache_key + '_overview_data_' + overview.meta[:url]
+        cache_key = @cache_key + '_overview_data_' + overview.link
 
         overview_data_time = CacheIn.get_time( cache_key, { :ignore_expire => true } )
         if overview_data_time && @data[cache_key] != overview_data_time
           @data[cache_key] = overview_data_time
           overview_data = CacheIn.get( cache_key, { :ignore_expire => true } )
-          self.log 'notify', "push overview_data #{overview.meta[:url]} for user #{user.id}"
+          self.log 'notify', "push overview_data #{overview.link} for user #{user.id}"
           users = {}
           tickets = []
           overview_data[:ticket_list].each {|ticket_id|
@@ -603,7 +603,7 @@ class ClientState
               },
             },
             :event      => [ 'loadCollection', 'ticket_overview_rebuild' ],
-            :collection => 'ticket_overview_' + overview.meta[:url].to_s,
+            :collection => 'ticket_overview_' + overview.link.to_s,
           })
         end
       }
