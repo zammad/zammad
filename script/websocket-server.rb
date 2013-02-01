@@ -58,9 +58,6 @@ $daemon_pid.close
 EventMachine.run {
   EventMachine::WebSocket.start( :host => @options[:b], :port => @options[:p], :secure => @options[:s], :tls_options => tls_options ) do |ws|
 
-    # check unused connections
-    check_unused_connections
-
     # register client connection
     ws.onopen {
       client_id = ws.object_id
@@ -184,6 +181,11 @@ EventMachine.run {
       end
     }
   end
+
+  # check unused connections
+  EventMachine.add_timer(0.5) {
+    check_unused_connections
+  }
 
   # check open unused connections, kick all connection without activitie in the last 2 minutes
   EventMachine.add_periodic_timer(120) {
