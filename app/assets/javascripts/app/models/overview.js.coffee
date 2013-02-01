@@ -1,5 +1,5 @@
 class App.Overview extends Spine.Model
-  @configure 'Overview', 'name', 'link', 'prio', 'condition', 'order', 'group_by', 'view', 'user_id', 'organization_shared', 'role_id', 'order', 'group_by'
+  @configure 'Overview', 'name', 'link', 'prio', 'condition', 'order', 'group_by', 'view', 'user_id', 'organization_shared', 'role_id', 'order', 'group_by', 'active'
   @extend Spine.Model.Ajax
   @url: 'api/overviews'
   @configure_attributes = [
@@ -96,5 +96,4 @@ class App.Overview extends Spine.Model
     'link',
     'role',
     'prio',
-    'active',
   ]

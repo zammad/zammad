@@ -237,16 +237,16 @@ class Ticket < ApplicationModel
     if data[:current_user].is_role('Customer')
       role = data[:current_user].is_role( 'Customer' )
       if data[:current_user].organization_id && data[:current_user].organization.shared
-        overviews = Overview.where( :role_id => role.id )
+        overviews = Overview.where( :role_id => role.id, :active => true )
       else
-        overviews = Overview.where( :role_id => role.id, :organization_shared => false )
+        overviews = Overview.where( :role_id => role.id, :organization_shared => false, :active => true )
       end
       return overviews
     end
 
     # get agent overviews
     role = data[:current_user].is_role( 'Agent' )
-    overviews = Overview.where( :role_id => role.id )
+    overviews = Overview.where( :role_id => role.id, :active => true )
     return overviews
   end
 
