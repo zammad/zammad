@@ -270,6 +270,10 @@ test( "config", function() {
   });
 });
 
+// form
+test( "form", function() {
+
+});
 
 // auth
 App.Auth.login({
