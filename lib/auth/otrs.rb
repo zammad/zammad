@@ -1,6 +1,9 @@
 class Auth::OTRS
   def self.check( user, username, password, config )
 
+    endpoint = Setting.get('import_otrs_endpoint')
+    return false if !endpoint || endpoint.empty?
+
     # connect to OTRS
     result = Import::OTRS.auth( username, password )
     return false if !result
