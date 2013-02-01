@@ -418,6 +418,10 @@ class App.ControllerForm extends App.Controller
         )
       @delay( a, 180 )
 
+    # radio
+    else if attribute.tag is 'working_hour'
+      item = $( App.view('generic/working_hour')( attribute: attribute ) )
+
     # ticket attribute selection
     else if attribute.tag is 'ticket_attribute_selection'
 
@@ -494,7 +498,7 @@ class App.ControllerForm extends App.Controller
               } )
               all.unshift( {
                 id: 1
-                name:  '*** nobody ***'
+                name:  '*** not set ***'
               } )
               all.unshift( {
                 id: 'current_user.id'
@@ -594,18 +598,18 @@ class App.ControllerForm extends App.Controller
             selected: false
             disable:  true
           },
-          {
-            value:    'number'
-            name:     'Number'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'title'
-            name:     'Title'
-            selected: true
-            disable:  false
-          },
+#          {
+#            value:    'number'
+#            name:     'Number'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'title'
+#            name:     'Title'
+#            selected: true
+#            disable:  false
+#          },
           {
             value:    'group_id'
             name:     'Group'
@@ -685,42 +689,42 @@ class App.ControllerForm extends App.Controller
 #            selected: true
 #            disable:  false
 #          },
-          {
-            value:    '-a'
-            name:     '-- ' + App.i18n.translateInline('Article') + ' --'
-            selected: false
-            disable:  true
-          },
-          {
-            value:    'from'
-            name:     'From'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'to'
-            name:     'To'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'cc'
-            name:     'Cc'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'subject'
-            name:     'Subject'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'body'
-            name:     'Text'
-            selected: true
-            disable:  false
-          },
+#          {
+#            value:    '-a'
+#            name:     '-- ' + App.i18n.translateInline('Article') + ' --'
+#            selected: false
+#            disable:  true
+#          },
+#          {
+#            value:    'from'
+#            name:     'From'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'to'
+#            name:     'To'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'cc'
+#            name:     'Cc'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'subject'
+#            name:     'Subject'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'body'
+#            name:     'Text'
+#            selected: true
+#            disable:  false
+#          },
 #          {
 #            value:    '-c'
 #            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'

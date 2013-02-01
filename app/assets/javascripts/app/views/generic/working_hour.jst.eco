@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+<% for hour in [ 0 .. 23 ]: %>
+	  <th><%- hour %></th>
+<% end %>
+    </tr>
+  </thead>
+  <tbody>
+<% for day in ['Mon', '', 'Wed', '', 'Fri', 'Sat', 'Sun']: %>
+    <tr>
+      <td><%- @T(day) %></td>
+<% for hour in [ 0 .. 23 ]: %>
+      <td><input type="checkbox" value="1" name="<%- day %>-<%- hour %>"></td>
+<% end %>
+    </tr>
+<% end %>
+  </tbody>
+</table>
