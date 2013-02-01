@@ -251,6 +251,9 @@ class Package < ApplicationModel
 
     # prebuild assets
 
+    # reload new files
+    Package.reload_classes
+
     # delete package
     record = Package.where(
       :name     => meta[:name],

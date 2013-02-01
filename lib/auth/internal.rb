@@ -1,3 +1,5 @@
+module Auth
+end
 module Auth::INTERNAL
   def self.check( user, username, password, config )
     

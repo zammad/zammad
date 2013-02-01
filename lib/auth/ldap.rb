@@ -1,3 +1,5 @@
+module Auth
+end
 module Auth::LDAP
   def self.check( user, username, password, config )
     

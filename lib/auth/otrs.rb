@@ -1,4 +1,6 @@
-class Auth::OTRS
+module Auth
+end
+module Auth::OTRS
   def self.check( user, username, password, config )
 
     endpoint = Setting.get('import_otrs_endpoint')
