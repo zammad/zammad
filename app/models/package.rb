@@ -208,6 +208,9 @@ class Package < ApplicationModel
     record.state = 'installed'
     record.save
 
+    # reload new files
+    Package.reload_classes
+
     # up migrations
     Package::Migration.migrate( meta[:name] )
 
@@ -256,6 +259,17 @@ class Package < ApplicationModel
     record.destroy
 
     return true
+  end
+
+  # reload .rb files in case they have changed
+  def self.reload_classes
+    ['app', 'lib'].each {|dir|
+      Dir.glob( Rails.root.join( dir + '/**/*') ).each {|entry|
+        if entry =~ /\.rb$/
+          load entry
+        end
+      }
+    }
   end
 
   def self._parse(xml)
@@ -420,6 +434,9 @@ class Package < ApplicationModel
           Kernel.const_get(classname).up
           Package::Migration.create( :name => package.underscore, :version => version )
         end
+
+        # reload new files
+        Package.reload_classes
       }
     end
   end
