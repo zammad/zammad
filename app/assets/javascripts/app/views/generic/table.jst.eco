@@ -10,9 +10,9 @@
 <% for row in @header: %>
       <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- @T( row.display ) %></th>
 <% end %>
-<!--
-      <th>Destory</th>
--->
+<% if @destroy: %>
+      <th class="span2"><%- @T('Destory') %></th>
+<% end %>
     </tr>
   </thead>
   <tbody>
@@ -54,10 +54,12 @@
   <% end %>
 <!--
     <td><%= object.updated_at %></td>
-    <td>    
-      <a data-type="destroy">Destroy</a>
-    </td>
 -->
+<% if @destroy: %>
+    <td>    
+      <a data-type="destroy">x</a>
+    </td>
+<% end %>
   </tr>
 <% end %>
   </tbody>

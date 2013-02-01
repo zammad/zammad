@@ -46,6 +46,7 @@ class App.ControllerTable extends App.Controller
     overview   = data.overview || data.model.configure_overview || []
     attributes = data.attributes || data.model.configure_attributes || {}
     header     = data.header
+    destroy    = data.model.configure_delete
 
     # check if table is empty
     if _.isEmpty(data.objects)
@@ -117,6 +118,7 @@ class App.ControllerTable extends App.Controller
       checkbox: data.checkbox
       radio:    data.radio
       groupBy:  data.groupBy
+      destroy:  destroy
     )
 
     # convert to jquery object
