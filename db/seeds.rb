@@ -1172,8 +1172,8 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    :ticket_state_id => [ 1,2,3 ],
-    :owner_id        => 'current_user.id',
+    'tickets.ticket_state_id' => [ 1,2,3 ],
+    'tickets.owner_id'        => 'current_user.id',
   },
   :order => {
     :by        => 'created_at',
@@ -1195,8 +1195,8 @@ Overview.create_if_not_exists(
   :prio       => 1001,
   :role_id    => overview_role.id,
   :condition  => {
-    :ticket_state_id => [1,2,3],
-    :owner_id        => 1,
+    'tickets.ticket_state_id' => [1,2,3],
+    'tickets.owner_id'        => 1,
   },
   :order => {
     :by        => 'created_at',
@@ -1218,7 +1218,7 @@ Overview.create_if_not_exists(
   :prio       => 1002,
   :role_id    => overview_role.id,
   :condition  => {
-    :ticket_state_id => [1,2,3],
+    'tickets.ticket_state_id' => [1,2,3],
   },
   :order => {
     :by        => 'created_at',
@@ -1240,7 +1240,7 @@ Overview.create_if_not_exists(
   :prio       => 1010,
   :role_id    => overview_role.id,
   :condition  => {
-    :ticket_state_id => [1,2,3],
+    'tickets.ticket_state_id' => [1,2,3],
   },
   :order => {
     :by        => 'created_at',
@@ -1262,8 +1262,8 @@ Overview.create_if_not_exists(
   :prio       => 1020,
   :role_id    => overview_role.id,
   :condition  => {
-    :ticket_state_id => [3],
-    :owner_id        => 'current_user.id',        
+    'tickets.ticket_state_id' => [3],
+    'tickets.owner_id'        => 'current_user.id',        
   },
   :order => {
     :by        => 'created_at',
@@ -1285,8 +1285,8 @@ Overview.create_if_not_exists(
   :prio       => 9003,
   :role_id    => overview_role.id,
   :condition  => {
-#          :ticket_state_id => [3],
-#          :owner_id        => current_user.id,        
+#      'tickets.ticket_state_id' => [3],
+#      'tickets.owner_id'        => current_user.id,        
   },
   :order => {
     :by        => 'created_at',
@@ -1309,8 +1309,8 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    :ticket_state_id => [ 1,2,3,4,6 ],
-    :customer_id => 'current_user.id',
+    'tickets.ticket_state_id' => [ 1,2,3,4,6 ],
+    'tickets.customer_id'     => 'current_user.id',
   },
   :order => {
     :by        => 'created_at',
@@ -1332,8 +1332,8 @@ Overview.create_if_not_exists(
   :role_id             => overview_role.id,
   :organization_shared => true,
   :condition => {
-    :ticket_state_id => [ 1,2,3,4,6 ],
-    :organization_id => 'current_user.organization_id',
+    'tickets.ticket_state_id' => [ 1,2,3,4,6 ],
+    'tickets.organization_id' => 'current_user.organization_id',
   },
   :order => {
     :by        => 'created_at',

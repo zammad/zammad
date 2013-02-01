@@ -434,9 +434,9 @@ class App.ControllerForm extends App.Controller
 
       addShownAttribute = ( key, value ) =>
         console.log( 'addShownAttribute', key, value )
-        if key is 'number'
+        if key is 'tickets.number'
           attribute_config = {
-            name:       attribute.name + '::number'
+            name:       attribute.name + '::tickets.number'
             display:    'Number'
             tag:        'input'
             type:       'text'
@@ -445,9 +445,9 @@ class App.ControllerForm extends App.Controller
             class:      'medium'
             remove:     true
           }
-        else if key is 'title'
+        else if key is 'tickets.title'
           attribute_config = {
-            name:       attribute.name + '::title'
+            name:       attribute.name + '::tickets.title'
             display:    'Title'
             tag:        'input'
             type:       'text'
@@ -456,9 +456,9 @@ class App.ControllerForm extends App.Controller
             class:      'medium'
             remove:     true
           }
-        else if key is 'group_id'
+        else if key is 'tickets.group_id'
           attribute_config = {
-            name:       attribute.name + '::group_id'
+            name:       attribute.name + '::tickets.group_id'
             display:    'Group'
             tag:        'select'
             multiple:   true
@@ -469,14 +469,14 @@ class App.ControllerForm extends App.Controller
             class:      'medium'
             remove:     true
           }
-        else if key is 'owner_id' || key is 'customer_id'
+        else if key is 'tickets.owner_id' || key is 'tickets.customer_id'
           display = 'Owner'
           name    = 'owner_id'
           if key is 'customer_id'
             display = 'Customer'
             name    = 'customer_id'            
           attribute_config = {
-            name:       attribute.name + '::' + name
+            name:       attribute.name + '::tickets.' + name
             display:    display
             tag:        'select'
             multiple:   true
@@ -506,9 +506,9 @@ class App.ControllerForm extends App.Controller
               } )
               all
           }
-        else if key is 'organization_id'
+        else if key is 'tickets.organization_id'
           attribute_config = {
-            name:       attribute.name + '::organization_id'
+            name:       attribute.name + '::tickets.organization_id'
             display:    'Organization'
             tag:        'select'
             multiple:   true
@@ -530,9 +530,9 @@ class App.ControllerForm extends App.Controller
               } )
               all
           }
-        else if key is 'ticket_state_id'
+        else if key is 'tickets.ticket_state_id'
           attribute_config = {
-            name:       attribute.name + '::ticket_state_id'
+            name:       attribute.name + '::tickets.ticket_state_id'
             display:    'State'
             tag:        'select'
             multiple:   true
@@ -544,9 +544,9 @@ class App.ControllerForm extends App.Controller
             class:      'medium'
             remove:     true
           }
-        else if key is 'ticket_priority_id'
+        else if key is 'tickets.ticket_priority_id'
           attribute_config = {
-            name:       attribute.name + '::ticket_priority_id'
+            name:       attribute.name + '::tickets.ticket_priority_id'
             display:    'Priority'
             tag:        'select'
             multiple:   true
@@ -599,49 +599,49 @@ class App.ControllerForm extends App.Controller
             disable:  true
           },
 #          {
-#            value:    'number'
+#            value:    'tickets.number'
 #            name:     'Number'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'title'
+#            value:    'tickets.title'
 #            name:     'Title'
 #            selected: true
 #            disable:  false
 #          },
           {
-            value:    'group_id'
+            value:    'tickets.group_id'
             name:     'Group'
             selected: false
             disable:  false
           },
           {
-            value:    'ticket_state_id'
+            value:    'tickets.ticket_state_id'
             name:     'State'
             selected: false
             disable:  false
           },
           {
-            value:    'ticket_priority_id'
+            value:    'tickets.ticket_priority_id'
             name:     'Priority'
             selected: true
             disable:  false
           },
           {
-            value:    'owner_id'
+            value:    'tickets.owner_id'
             name:     'Owner'
             selected: true
             disable:  false
           },
           {
-            value:    'customer_id'
+            value:    'tickets.customer_id'
             name:     'Customer'
             selected: true
             disable:  false
           },
           {
-            value:    'organization_id'
+            value:    'tickets.organization_id'
             name:     'Organization'
             selected: true
             disable:  false
@@ -654,37 +654,37 @@ class App.ControllerForm extends App.Controller
 #            disable:  false
 #          },
 #          {
-#            value:    'created_before'
+#            value:    'tickets.created_before'
 #            name:     'Erstell vor'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'created_after'
+#            value:    'tickets.created_after'
 #            name:     'Erstell nach'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'created_between'
+#            value:    'tickets.created_between'
 #            name:     'Erstell zwischen'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'closed_before'
+#            value:    'tickets.closed_before'
 #            name:     'Geschlossen vor'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'closed_after'
+#            value:    'tickets.closed_after'
 #            name:     'Geschlossen nach'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'closed_between'
+#            value:    'tickets.closed_between'
 #            name:     'Geschlossen zwischen'
 #            selected: true
 #            disable:  false
@@ -696,31 +696,31 @@ class App.ControllerForm extends App.Controller
 #            disable:  true
 #          },
 #          {
-#            value:    'from'
+#            value:    'ticket_articles.from'
 #            name:     'From'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'to'
+#            value:    'ticket_articles.to'
 #            name:     'To'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'cc'
+#            value:    'ticket_articles.cc'
 #            name:     'Cc'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'subject'
+#            value:    'ticket_articles.subject'
 #            name:     'Subject'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'body'
+#            value:    'ticket_articles.body'
 #            name:     'Text'
 #            selected: true
 #            disable:  false
@@ -732,13 +732,13 @@ class App.ControllerForm extends App.Controller
 #            disable:  true
 #          },
 #          {
-#            value:    'customer_user'
+#            value:    'customers.id'
 #            name:     'Kunde'
 #            selected: true
 #            disable:  false
 #          },
 #          {
-#            value:    'organization'
+#            value:    'organization.id'
 #            name:     'Organization'
 #            selected: true
 #            disable:  false
