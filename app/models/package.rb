@@ -121,6 +121,15 @@ class Package < ApplicationModel
       entry = entry.sub( '//', '/' )
       file = entry
       file = file.sub( /#{package_base_dir.to_s}/, '' )
+      file = file.sub( /^\//, '' )
+
+      # ignore files
+      if file =~ /^README/
+        puts "NOTICE: Ignore #{file}"
+        next
+      end
+
+      # get new file destination
       dest = @@root + '/' + file
 
       if File.directory?( entry.to_s )
