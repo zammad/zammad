@@ -43,15 +43,17 @@ class User < ApplicationModel
     return if !password || password == '' 
 
     # try to find user based on login
-    user = User.where( :login => username, :active => true ).first
+    user = User.where( :login => username.downcase, :active => true ).first
 
     # try second lookup with email
     if !user
-      user = User.where( :email => username, :active => true ).first
+      user = User.where( :email => username.downcase, :active => true ).first
     end
 
-    # no user found
-    return nil if !user
+    # check failed logins
+    if user
+#      return if user.faild_login > 10
+    end
 
     # use auth backends
     config = {
@@ -65,12 +67,22 @@ class User < ApplicationModel
         :adapter => 'env',
       },
       :ldap => {
-        :adapter    => 'ldap',
-        :host       => 'somehost',
-        :port       => '3333',
-        :base_dn    => 'some base dn',
-        :bind_user  => 'some bind user',
-        :bind_pw    => 'some pw',
+        :adapter        => 'ldap',
+        :host           => 'localhost',
+        :port           => 389,
+        :bind_dn        => 'cn=Manager,dc=example,dc=org',
+        :bind_pw        => 'example',
+        :uid            => 'mail',
+        :base           => 'dc=example,dc=org',
+        :always_filter  => '',
+        :always_roles   => ['Admin', 'Agent'],
+        :always_groups  => ['Users'],
+        :sync_params    => {
+          :firstname  => 'givenName',
+          :lastname   => 'sn',
+          :email      => 'mail',
+          :login      => 'mail',
+        },
       },
       :otrs => {
         :adapter           => 'otrs',
@@ -87,15 +99,33 @@ class User < ApplicationModel
         },
       },
     }
+
+    # try to login against configure auth backends
+    user_auth = nil
     config.each {|key, c|
       file = "auth/#{c[:adapter]}"
       require file
-      user_auth = Auth.const_get("#{c[:adapter].to_s.upcase}").check( user, username, password, c )
-      return user_auth if user_auth
+      user_auth = Auth.const_get("#{c[:adapter].to_s.upcase}").check( username, password, c, user )
+
+      # auth ok
+      if user_auth
+
+        # update last login
+        
+
+        # reset login failed
+
+
+        return user_auth
+      end
     }
 
+    # set login failed +1
+
+
     # auth failed
-    return false
+    sleep 1
+    return user_auth
   end
 
   def self.create_from_hash!(hash)
@@ -113,7 +143,8 @@ class User < ApplicationModel
       :note          => hash['info']['description'],
       :source        => hash['provider'],
       :roles         => roles,
-      :created_by_id => 1
+      :updated_by_id => 1,
+      :created_by_id => 1,
     )
 
   end
@@ -122,11 +153,11 @@ class User < ApplicationModel
     return if !username || username == ''
 
     # try to find user based on login
-    user = User.where( :login => username, :active => true ).first
+    user = User.where( :login => username.downcase, :active => true ).first
 
     # try second lookup with email
     if !user
-      user = User.where( :email => username, :active => true ).first
+      user = User.where( :email => username.downcase, :active => true ).first
     end
 
     # check if email address exists

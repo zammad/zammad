@@ -1,7 +1,7 @@
 module Auth
 end
 module Auth::OTRS
-  def self.check( user, username, password, config )
+  def self.check( username, password, config, user )
 
     endpoint = Setting.get('import_otrs_endpoint')
     return false if !endpoint || endpoint.empty?

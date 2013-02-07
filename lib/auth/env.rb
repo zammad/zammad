@@ -1,7 +1,7 @@
 module Auth
 end
 module Auth::ENV
-  def self.check( user, username, password, config )
+  def self.check( username, password, config, user )
 
     # try to find user based on login
     if ENV['REMOTE_USER']

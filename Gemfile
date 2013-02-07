@@ -46,6 +46,8 @@ gem 'simple-rss'
 gem 'mysql2'
 #gem 'sqlite3'
 
+gem 'net-ldap'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

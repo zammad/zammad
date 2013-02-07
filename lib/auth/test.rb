@@ -1,7 +1,7 @@
 module Auth
 end
 module Auth::TEST
-  def self.check( user, username, password, config )
+  def self.check( username, password, config, user )
 
     # development systems
     if !ENV['RAILS_ENV'] || ENV['RAILS_ENV'] == 'development'

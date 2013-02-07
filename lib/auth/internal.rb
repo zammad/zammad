@@ -1,8 +1,11 @@
 module Auth
 end
 module Auth::INTERNAL
-  def self.check( user, username, password, config )
-    
+  def self.check( username, password, config, user )
+
+    # return if no user exists
+    return nil if !user
+
     # sha auth check
     if user.password =~ /^\{sha2\}/
       crypted = Digest::SHA2.hexdigest( password )
