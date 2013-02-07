@@ -23,7 +23,7 @@ module Auth::LDAP
 
     # search user
     filter = "(#{config[:uid]}=#{username})"
-    if config[:always_filter]
+    if config[:always_filter] && !config[:always_filter].empty?
       filter = "(&#{filter}#{config[:always_filter]})"
     end
     user_dn = nil
@@ -34,9 +34,9 @@ module Auth::LDAP
 
       # remember attributes for :sync_params
       entry.each do |attribute, values|
-        user_data[ attribute.to_sym ] = ''
+        user_data[ attribute.downcase.to_sym ] = ''
         values.each do |value|
-          user_data[ attribute.to_sym ] = value
+          user_data[ attribute.downcase.to_sym ] = value
         end
       end
     end
@@ -60,8 +60,8 @@ module Auth::LDAP
         :updated_by_id => 1,
       }
       config[:sync_params].each {| local_data, ldap_data |
-        if user_data[ ldap_data.to_sym ]
-          user_attributes[ local_data.to_sym] = user_data[ ldap_data.to_sym ]
+        if user_data[ ldap_data.downcase.to_sym ]
+          user_attributes[ local_data.downcase.to_sym] = user_data[ ldap_data.downcase.to_sym ]
         end
       }
       if !user

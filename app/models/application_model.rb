@@ -121,7 +121,7 @@ class ApplicationModel < ActiveRecord::Base
       records = self.where( :name => data[:name] )
       records.each {|record|
         if record.name == data[:name]
-          record.update_attributes( :data => data[:data] )
+          record.update_attributes( data )
           return record
         end
       }

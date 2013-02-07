@@ -138,7 +138,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'New User Accounts',
   :name        => 'user_create_account',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::Base',
   :description => 'Enables users to create their own account via web interface.',
   :options     => {
     :form => [
@@ -160,7 +160,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Lost Password',
   :name        => 'user_lost_password',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::Base',
   :description => 'Activates lost password feature for agents, in the agent interface.',
   :options     => {
     :form => [
@@ -182,7 +182,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Switch to User',
   :name        => 'switch_to_user',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::Base',
   :description => 'Allows the administrators to login as other users, via the users administration panel.',
   :options     => {
     :form => [
@@ -202,31 +202,55 @@ Setting.create_if_not_exists(
   :frontend => true
 )
 Setting.create_if_not_exists(
-  :title       => 'Authentication via Database',
-  :name        => 'auth_db',
+  :title       => 'Authentication via OTRS',
+  :name        => 'auth_otrs',
   :area        => 'Security::Authentication',
-  :description => 'Enables user authentication via database.',
-  :options     => {
-    :form => [
-      {
-        :display  => '',
-        :null     => true,
-        :name     => 'auth_db', 
-        :tag      => 'boolean',
-        :options  => {
-          true  => 'yes',
-          false => 'no',
-        },
-      },
-    ],
+  :description => 'Enables user authentication via OTRS.',
+  :state    => {
+    :adapter           => 'otrs',
+    :required_group_ro => 'stats',
+    :group_rw_role_map => {
+      'admin' => 'Admin',
+      'stats' => 'Report',
+    },
+    :group_ro_role_map => {
+      'stats' => 'Report',
+    },
+    :always_role => {
+      'Agent' => true,
+    },
   },
-  :state    => true,
-  :frontend => true
+  :frontend => false
+)
+Setting.create_if_not_exists(
+  :title       => 'Authentication via LDAP',
+  :name        => 'auth_ldap',
+  :area        => 'Security::Authentication',
+  :description => 'Enables user authentication via LDAP.',
+  :state    => {
+    :adapter        => 'ldap',
+    :host           => 'localhost',
+    :port           => 389,
+    :bind_dn        => 'cn=Manager,dc=example,dc=org',
+    :bind_pw        => 'example',
+    :uid            => 'mail',
+    :base           => 'dc=example,dc=org',
+    :always_filter  => '',
+    :always_roles   => ['Admin', 'Agent'],
+    :always_groups  => ['Users'],
+    :sync_params    => {
+      :firstname  => 'sn',
+      :lastname   => 'givenName',
+      :email      => 'mail',
+      :login      => 'mail',
+    },
+  },
+  :frontend => false
 )
 Setting.create_if_not_exists(
   :title       => 'Authentication via Twitter',
   :name        => 'auth_twitter',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'Enables user authentication via twitter. Register your app first at https://dev.twitter.com/apps',
   :options     => {
     :form => [
@@ -248,7 +272,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Twitter App Credentials',
   :name        => 'auth_twitter_credentials',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'App credentials for Twitter.',
   :options     => {
     :form => [
@@ -272,7 +296,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Authentication via Facebook',
   :name        => 'auth_facebook',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'Enables user authentication via Facebook. Register your app first at https://developers.facebook.com/apps/',
   :options     => {
     :form => [
@@ -295,7 +319,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Facebook App Credentials',
   :name        => 'auth_facebook_credentials',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'App credentials for Facebook.',
   :options     => {
     :form => [
@@ -320,7 +344,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Authentication via Google',
   :name        => 'auth_google_oauth2',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'Enables user authentication via Google.',
   :options     => {
     :form => [
@@ -342,7 +366,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Google App Credentials',
   :name        => 'auth_google_oauth2_credentials',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'Enables user authentication via Google.',
   :options     => {
     :form => [
@@ -367,7 +391,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'Authentication via LinkedIn',
   :name        => 'auth_linkedin',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'Enables user authentication via LinkedIn.',
   :options     => {
     :form => [
@@ -389,7 +413,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   :title       => 'LinkedIn App Credentials',
   :name        => 'auth_linkedin_credentials',
-  :area        => 'Security::Authentication',
+  :area        => 'Security::ThirdPartyAuthentication',
   :description => 'Enables user authentication via LinkedIn.',
   :options     => {
     :form => [

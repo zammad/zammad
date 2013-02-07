@@ -27,8 +27,10 @@ class Index extends App.ControllerLevel2
     # security
     if @type is 'security'
       @menu = [
-        { name: 'Authentication', 'target': 'auth',      controller: App.SettingsArea, params: { area: 'Security::Authentication' } },
-        { name: 'Password',       'target': 'password',  controller: App.SettingsArea, params: { area: 'Security::Password' } },
+        { name: 'Base',                     'target': 'base',             controller: App.SettingsArea, params: { area: 'Security::Base' } },
+#        { name: 'Authentication',           'target': 'auth',             controller: App.SettingsArea, params: { area: 'Security::Authentication' } },
+        { name: 'Password',                 'target': 'password',         controller: App.SettingsArea, params: { area: 'Security::Password' } },
+        { name: 'Third-Party Applications', 'target': 'third_party_auth', controller: App.SettingsArea, params: { area: 'Security::ThirdPartyAuthentication' } },
 #        { name: 'Session',        'target': 'session',   controller: '' },
       ] 
       @page = {

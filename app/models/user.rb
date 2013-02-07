@@ -56,56 +56,26 @@ class User < ApplicationModel
     end
 
     # use auth backends
-    config = {
-      :internal => {
+    config = [
+      {
         :adapter => 'internal',
       },
-      :test => {
+      {
         :adapter => 'test',
       },
-      :env => {
-        :adapter => 'env',
-      },
-      :ldap => {
-        :adapter        => 'ldap',
-        :host           => 'localhost',
-        :port           => 389,
-        :bind_dn        => 'cn=Manager,dc=example,dc=org',
-        :bind_pw        => 'example',
-        :uid            => 'mail',
-        :base           => 'dc=example,dc=org',
-        :always_filter  => '',
-        :always_roles   => ['Admin', 'Agent'],
-        :always_groups  => ['Users'],
-        :sync_params    => {
-          :firstname  => 'givenName',
-          :lastname   => 'sn',
-          :email      => 'mail',
-          :login      => 'mail',
-        },
-      },
-      :otrs => {
-        :adapter           => 'otrs',
-        :required_group_ro => 'stats',
-        :group_rw_role_map => {
-          'admin' => 'Admin',
-          'stats' => 'Report',
-        },
-        :group_ro_role_map => {
-          'stats' => 'Report',
-        },
-        :always_role => {
-          'Agent' => true,
-        },
-      },
+    ]
+    Setting.where( :area => 'Security::Authentication' ).each {|setting|
+      if setting.state[:value]
+        config.push setting.state[:value]
+      end
     }
 
     # try to login against configure auth backends
     user_auth = nil
-    config.each {|key, c|
-      file = "auth/#{c[:adapter]}"
+    config.each {|config_item|
+      file = "auth/#{config_item[:adapter]}"
       require file
-      user_auth = Auth.const_get("#{c[:adapter].to_s.upcase}").check( username, password, c, user )
+      user_auth = Auth.const_get("#{config_item[:adapter].to_s.upcase}").check( username, password, config_item, user )
 
       # auth ok
       if user_auth
