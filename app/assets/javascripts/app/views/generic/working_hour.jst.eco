@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-<% for day in ['Mon', '', 'Wed', '', 'Fri', 'Sat', 'Sun']: %>
+<% for day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']: %>
     <tr>
       <td><%- @T(day) %></td>
 <% for hour in [ 0 .. 23 ]: %>
