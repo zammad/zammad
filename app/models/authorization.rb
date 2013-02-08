@@ -13,6 +13,13 @@ class Authorization < ApplicationModel
         :secret   => hash['credentials']['secret']
       )
 
+      # update username of auth entry if empty
+      if !auth.username && hash['info']['nickname']
+        auth.update_attributes(
+          :username    => hash['info']['nickname'],
+        )
+      end
+
       # update image if needed
       if hash['info']['image']
         user = User.find( auth.user_id )
@@ -41,7 +48,7 @@ class Authorization < ApplicationModel
     auth = Authorization.create(
       :user     => user,
       :uid      => hash['uid'],
-      :username => hash['username'],
+      :username => hash['info']['nickname'] || hash['username'],
       :provider => hash['provider'],
       :token    => hash['credentials']['token'],
       :secret   => hash['credentials']['secret']
