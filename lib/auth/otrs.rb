@@ -1,10 +1,11 @@
+require 'import/otrs'
 module Auth
 end
 module Auth::OTRS
   def self.check( username, password, config, user )
 
     endpoint = Setting.get('import_otrs_endpoint')
-    return false if !endpoint || endpoint.empty?
+    return false if !endpoint || endpoint.empty? || endpoint == 'http://otrs_host/otrs'
 
     # connect to OTRS
     result = Import::OTRS.auth( username, password )
