@@ -16,8 +16,13 @@ module Auth::LDAP
     end
 
     # ldap bind
-    if !ldap.bind
-      puts "NOTICE: Can't connect/bind to '#{host}', #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
+    begin
+      if !ldap.bind
+        puts "NOTICE: Can't bind to '#{config[:host]}', #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
+        return
+      end
+    rescue Exception => e
+      puts "NOTICE: Can't connect to '#{config[:host]}', #{e.to_s}"
       return
     end
 
