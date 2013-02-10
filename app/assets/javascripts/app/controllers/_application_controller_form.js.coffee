@@ -37,10 +37,11 @@ class App.ControllerForm extends App.Controller
               attribute.value = @params[attribute.name]
 
           # rename display and name to _confirm
-          attribute.display = attribute.display + ' (confirm)'
-          attribute.name = attribute.name + '_confirm';
-          item = @formGenItem( attribute, @model.className, fieldset )
-          item.appendTo(fieldset)
+          if !attribute.single
+            attribute.display = attribute.display + ' (confirm)'
+            attribute.name = attribute.name + '_confirm';
+            item = @formGenItem( attribute, @model.className, fieldset )
+            item.appendTo(fieldset)
 
     # return form
     return fieldset

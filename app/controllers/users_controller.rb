@@ -375,4 +375,47 @@ curl http://localhost/api/users/password_reset_verify.json -v -u #{login}:#{pass
     end
   end
 
+=begin
+
+Resource:
+POST /api/users/password_change
+
+Payload:
+{
+  "password_old": "some_password_old",
+  "password_new" "some_password_new"
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new" "password_new"}'
+
+=end
+
+  def password_change
+
+    # check old password
+    if !params[:password_old]
+      render :json => { :message => 'Old password needed!' }, :status => :unprocessable_entity
+      return  
+    end
+    user = User.authenticate( current_user.login, params[:password_old] )
+    if !user
+      render :json => { :message => 'Old password is wrong!' }, :status => :unprocessable_entity
+      return  
+    end
+
+    # set new password
+    if !params[:password_new]
+      render :json => { :message => 'New password needed!' }, :status => :unprocessable_entity
+      return  
+    end
+    user.update_attributes( :password => params[:password_new] )
+    render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
+  end
+
 end

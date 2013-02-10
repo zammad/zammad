@@ -512,7 +512,7 @@ Setting.create_if_not_exists(
   :title       => 'Maximal failed logins',
   :name        => 'password_max_login_failed',
   :area        => 'Security::Password',
-  :description => 'Maximal faild logins after account is inactive.',
+  :description => 'Maximal failed logins after account is inactive.',
   :options     => {
     :form => [
       {
@@ -529,12 +529,19 @@ Setting.create_if_not_exists(
           9 => 9,
           10 => 10,
           11 => 11,
-          12 => 12,
+          13 => 13,
+          14 => 14,
+          15 => 15,
+          16 => 16,
+          17 => 17,
+          18 => 18,
+          19 => 19,
+          20 => 20,
         },
       },
     ],
   },
-  :state    => 6,
+  :state    => 10,
   :frontend => true
 )
 
@@ -1738,6 +1745,13 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Week", :target =>
 Translation.create_if_not_exists( :locale => 'de', :source => "Follow up possible", :target => "Nachfrage möglich", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Assign Follow Ups", :target => "Zuweisung bei Nachfrage", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Signature", :target => "Signatur", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change your password.", :target => "Ändern sie Ihr Passwort.", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Current Password", :target => "Aktuelles Passwort", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New Password", :target => "Neues Passwort", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New Password (confirm)", :target => "Neues Passwort (bestätigen)", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Language", :target => "Sprache", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
 
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )

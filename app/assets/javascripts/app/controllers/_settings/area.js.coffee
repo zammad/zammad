@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.SettingsArea extends App.Controller
   constructor: ->
     super
@@ -23,7 +21,7 @@ class App.SettingsArea extends App.Controller
 
 class App.SettingsAreaItem extends App.Controller
   events:
-    'submit form': 'update',
+    'submit form': 'update'
 
   constructor: ->
     super

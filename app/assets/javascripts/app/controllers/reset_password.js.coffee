@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class Index extends App.Controller
   className: 'container'
 
