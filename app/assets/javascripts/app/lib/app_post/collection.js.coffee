@@ -24,10 +24,10 @@ class App.Collection
       _instance ?= new _Singleton
     _instance.get( args )
 
-  @all: ( type ) ->
+  @all: ( args ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.all( type )
+    _instance.all( args )
 
   @deleteAll: ( type ) ->
     if _instance == undefined
