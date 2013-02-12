@@ -11,6 +11,8 @@ class App.Model extends Spine.Model
          name = name + ' '
         name = name + @lastname
       return name
+    if @email
+      return @email
     return '???'
 
   displayNameLong: ->
