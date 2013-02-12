@@ -82,19 +82,21 @@ class User < ApplicationModel
       if user_auth
 
         # remember last login date
-        user.update_last_login
+        user_auth.update_last_login
 
         # reset login failed
-        user.login_failed = 0
-        user.save
+        user_auth.login_failed = 0
+        user_auth.save
 
         return user_auth
       end
     }
 
     # set login failed +1
-    user.login_failed = user.login_failed + 1
-    user.save
+    if !user_auth && user
+      user.login_failed = user.login_failed + 1
+      user.save
+    end
 
     # auth failed
     sleep 1
