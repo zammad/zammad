@@ -1753,6 +1753,8 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Language", :targe
 Translation.create_if_not_exists( :locale => 'de', :source => "Link Accounts", :target => "Verknüpfte Accounts", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Change your language.", :target => "Ändern Sie Ihr Sprache.", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Successfully!", :target => "Erfolgreich!", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Remove", :target => "Entfernen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Add", :target => "Hinzufügen", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
 
