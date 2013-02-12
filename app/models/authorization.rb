@@ -1,8 +1,11 @@
 class Authorization < ApplicationModel
   belongs_to              :user
+  after_create            :delete_user_cache
+  after_update            :delete_user_cache
+  after_destroy           :delete_user_cache
   validates_presence_of   :user_id, :uid, :provider
   validates_uniqueness_of :uid,     :scope => :provider
-  
+
   def self.find_from_hash(hash)
     auth = Authorization.where( :provider => hash['provider'], :uid => hash['uid'] ).first
     if auth
@@ -55,4 +58,10 @@ class Authorization < ApplicationModel
     )
     return auth
   end
+
+  private
+    def delete_user_cache
+      self.user.cache_delete
+    end
+
 end

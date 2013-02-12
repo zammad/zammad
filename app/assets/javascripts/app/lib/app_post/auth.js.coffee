@@ -113,7 +113,7 @@ class App.Auth
   @_logout: (data) ->
     App.Log.log 'Auth', 'notice', '_logout'
 
-    # update websocked auth info
+    # update websocket auth info
     App.WebSocket.auth()
 
     # clear store
@@ -125,8 +125,8 @@ class App.Auth
     # empty session
     App.Session.init()
 
-    # clear store
-    App.Store.clear('all')
-
     # update websocked auth info
     App.WebSocket.auth()
+
+    # clear store
+    App.Store.clear('all')

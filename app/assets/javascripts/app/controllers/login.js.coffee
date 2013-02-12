@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class Index extends App.Controller
   events:
     'submit #login': 'login',
@@ -39,8 +37,8 @@ class Index extends App.Controller
         auth_providers.push provider
 
     @html App.view('login')(
-      item:           data,
-      auth_providers: auth_providers,
+      item:           data
+      auth_providers: auth_providers
     )
 
     # set focus

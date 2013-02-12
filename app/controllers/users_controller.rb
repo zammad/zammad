@@ -454,4 +454,56 @@ curl http://localhost/api/users/preferences.json -v -u #{login}:#{password} -H "
     render :json => { :message => 'ok' }, :status => :ok
   end
 
+=begin
+
+Resource:
+DELETE /api/users/account.json
+
+Payload:
+{
+  "provider": "twitter",
+  "uid": 581482342942
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/users/account.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
+
+=end
+
+  def account_remove
+    if !current_user
+      render :json => { :message => 'No current user!' }, :status => :unprocessable_entity
+      return  
+    end
+
+    # provider + uid to remove
+    if !params[:provider]
+      render :json => { :message => 'provider needed!' }, :status => :unprocessable_entity
+      return  
+    end
+    if !params[:uid]
+      render :json => { :message => 'uid needed!' }, :status => :unprocessable_entity
+      return  
+    end
+
+    # remove from database
+    record = Authorization.where(
+      :user_id  => current_user.id,
+      :provider => params[:provider],
+      :uid      => params[:uid],
+    )
+    if !record.first
+      render :json => { :message => 'No record found!' }, :status => :unprocessable_entity
+      return  
+    end
+    record.destroy_all
+    render :json => { :message => 'ok' }, :status => :ok
+  end
+
+
 end
