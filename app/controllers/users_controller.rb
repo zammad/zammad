@@ -250,6 +250,7 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
 =end
 
   def update
+    return if is_not_role('Admin')
     user = User.find(params[:id])
 
     begin
@@ -383,7 +384,7 @@ POST /api/users/password_change
 Payload:
 {
   "password_old": "some_password_old",
-  "password_new" "some_password_new"
+  "password_new": "some_password_new"
 }
 
 Response:
@@ -392,7 +393,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new" "password_new"}'
+curl http://localhost/api/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
 
 =end
 
@@ -416,6 +417,41 @@ curl http://localhost/api/users/password_change.json -v -u #{login}:#{password} 
     end
     user.update_attributes( :password => params[:password_new] )
     render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
+  end
+
+=begin
+
+Resource:
+PUT /api/users/preferences.json
+
+Payload:
+{
+  "language": "de",
+  "notification": true
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/users/preferences.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
+
+=end
+
+  def preferences
+    if !current_user
+      render :json => { :message => 'No current user!' }, :status => :unprocessable_entity
+      return  
+    end
+    if params[:user]
+      params[:user].each {|key, value|
+        current_user.preferences[key.to_sym] = value
+      }
+    end
+    current_user.save
+    render :json => { :message => 'ok' }, :status => :ok
   end
 
 end

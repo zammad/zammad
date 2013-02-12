@@ -7,7 +7,7 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   def browser_login(data)
-    all_tests = [ 
+    all_tests = [
       {
         :name     => 'login',
         :instance => data[:instance] || Watir::Browser.new,

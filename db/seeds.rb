@@ -1745,14 +1745,14 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Week", :target =>
 Translation.create_if_not_exists( :locale => 'de', :source => "Follow up possible", :target => "Nachfrage möglich", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Assign Follow Ups", :target => "Zuweisung bei Nachfrage", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Signature", :target => "Signatur", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Change your password.", :target => "Ändern sie Ihr Passwort.", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change your password.", :target => "Ändern Sie Ihr Passwort.", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Current Password", :target => "Aktuelles Passwort", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "New Password", :target => "Neues Passwort", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "New Password (confirm)", :target => "Neues Passwort (bestätigen)", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Language", :target => "Sprache", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
-
+Translation.create_if_not_exists( :locale => 'de', :source => "Link Accounts", :target => "Verknüpfte Accounts", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change your language.", :target => "Ändern Sie Ihr Sprache.", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Successfully!", :target => "Erfolgreich!", :updated_by_id => 1, :created_by_id => 1  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
 

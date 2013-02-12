@@ -10,14 +10,11 @@ class App.Run extends App.Controller
     # create web socket connection
     App.WebSocket.connect()
 
-    # init of i18n
-    App.i18n.init()
+    # check if session already exists/try to get session data from server
+    App.Auth.loginCheck()
 
     # start navigation controller
     new App.Navigation( el: @el.find('#navigation') )
-
-    # check if session already exists/try to get session data from server
-    App.Auth.loginCheck()
 
     # start notify controller
     new App.Notify( el: @el.find('#notify') )
@@ -70,8 +67,18 @@ class App.Content extends App.Controller
           # remove waypoints
           $('footer').waypoint('remove')
 
-          params.el = @el
-          new callback( params )
+          # execute controller
+          controller = (params) =>
+            params.el = @el
+            new callback( params )
+          controller( params )
+
+          # rerender view on ui:rerender event
+          App.Event.bind(
+            'ui:rerender', =>
+              controller( params )
+            'page'
+          )
 
           # scroll to top / remember last screen position
 #          @scrollTo( 0, 0, 100 )

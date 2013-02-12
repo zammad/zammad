@@ -1,7 +1,4 @@
-$ = jQuery.sub()
-
 class Index extends App.Controller
-
   constructor: ->
     super
     @signout()
@@ -11,13 +8,12 @@ class Index extends App.Controller
     # remove remote session
     App.Auth.logout()
 
-    # remoce local session
+    # remove local session
     @Session.init()
-    App.Event.trigger 'ajax:auth'
+    App.Event.trigger( 'ui:rerender' )
 
     # redirect to login 
     @navigate 'login'
 
 App.Config.set( 'logout', Index, 'Routes' )
-
 App.Config.set( 'Logout', { prio: 1800, parent: '#current_user', name: 'Sign out', target: '#logout', divider: true, role: [ 'Agent', 'Customer' ] }, 'NavBarRight' )

@@ -1,0 +1,6 @@
+<h2><%- @T( 'Link Accounts' ) %></h2>
+<ul>
+  <li><a href="/auth/twitter">twitter</a></li>
+  <li><a href="/auth/facebook">facebook</a></li>
+  <li><a href="/auth/linked_in">linkedin</a></li>
+</ul>

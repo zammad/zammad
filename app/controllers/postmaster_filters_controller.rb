@@ -52,6 +52,7 @@ curl http://localhost/api/postmaster_filters.json -v -u #{login}:#{password}
 =end
 
   def index
+    return if is_not_role('Admin')
     model_index_render(PostmasterFilter, params)
   end
 
@@ -73,6 +74,7 @@ curl http://localhost/api/postmaster_filters/#{id}.json -v -u #{login}:#{passwor
 =end
 
   def show
+    return if is_not_role('Admin')
     model_show_render(PostmasterFilter, params)
   end
 

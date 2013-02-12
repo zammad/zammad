@@ -3,8 +3,8 @@ $ = jQuery.sub()
 class App.i18n
   _instance = undefined
 
-  @init: ->
-    _instance ?= new _Singleton
+  @init: ( args ) ->
+    _instance ?= new _Singleton( args )
 
   @translateContent: ( string, args... ) ->
     if _instance == undefined
@@ -21,18 +21,23 @@ class App.i18n
       _instance ?= new _Singleton
     _instance.timestamp( args )
 
-  @set: ( args ) ->
+  @get: ->
     if _instance == undefined
       _instance ?= new _Singleton
+    _instance.get()
+
+  @set: ( args ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton( args )
     _instance.set( args )
 
 class _Singleton extends Spine.Module
   @include App.Log
 
-  constructor: ->
+  constructor: ( locale ) ->
     @map = {}
     @timestampFormat = 'yyyy-mm-dd HH:MM'
-    @set('de')
+
     # observe if text has been translated
     $('body')
       .delegate '.translation', 'focus', (e) =>
@@ -78,8 +83,14 @@ class _Singleton extends Spine.Module
 
         return $this
 
+  get: ->
+    @locale
+
   set: ( locale ) ->
+    if locale is 'en-US'
+      locale = 'en'
     @locale = locale
+
     @map = {}
     App.Com.ajax(
       id:    'i18n-set-' + locale,

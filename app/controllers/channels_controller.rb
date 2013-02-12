@@ -92,6 +92,7 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password}
 =end
 
   def index
+    return if is_not_role('Admin')
     model_index_render(Channel, params)
   end
 
@@ -114,6 +115,7 @@ curl http://localhost/api/channels/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
+    return if is_not_role('Admin')
     model_show_render(Channel, params)
   end
 

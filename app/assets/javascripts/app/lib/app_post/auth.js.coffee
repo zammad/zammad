@@ -73,7 +73,8 @@ class App.Auth
       App.WebSocket.auth()
 
       # rebuild navbar with new navbar items
-      App.Event.trigger 'ajax:auth'
+      App.Event.trigger( 'auth' )
+      App.Event.trigger( 'ui:rerender' )
 
       return false;
 
@@ -89,6 +90,14 @@ class App.Auth
     for key, value of data.session
       App.Session.set( key, value )
 
+    # init of i18n
+    preferences = App.Session.get( 'preferences' )
+    if preferences && preferences.locale
+      locale = preferences.locale
+    if !locale
+      locale = window.navigator.userLanguage || window.navigator.language || 'en'
+    App.i18n.set( locale )
+
     # refresh default collections
     for key, value of data.default_collections
       App[key].refresh( value, options: { clear: true } )
@@ -97,7 +106,8 @@ class App.Auth
     App.WebSocket.auth()
 
     # rebuild navbar with user data
-    App.Event.trigger 'ajax:auth', data.session
+    App.Event.trigger( 'auth', data.session )
+    App.Event.trigger( 'ui:rerender' )
 
 
   @_logout: (data) ->

@@ -5,12 +5,16 @@ class App.Navigation extends App.Controller
     super
     @render()
 
+    # rerender view
+    App.Event.bind 'ui:rerender', (data) =>
+      @render()
+
     # update selected item
     App.Event.bind 'navupdate', (data) =>
-      @update(arguments[0])
+      @update( arguments[0] )
 
     # rebuild nav bar with given user data
-    App.Event.bind 'ajax:auth', (user) =>
+    App.Event.bind 'auth', (user) =>
       @log 'Navigation', 'notice', 'navbar rebuild', user
 
       if !_.isEmpty( user )
@@ -21,19 +25,20 @@ class App.Navigation extends App.Controller
         cache = App.Store.get( 'update_recent_viewed' )
         @recent_viewed_build( cache ) if cache
 
-      @render(user)
+      @render()
 
     # rebuild ticket overview data
     App.Event.bind 'navupdate_ticket_overview', (data) =>
       @ticket_overview_build(data)
-      @render( App.Session.all() )
+      @render()
 
-    # rebuild recent viewd data
+    # rebuild recent viewed data
     App.Event.bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
-      @render( App.Session.all() )
+      @render()
 
-  render: (user) ->
+  render: () ->
+    user      = App.Session.all()
     nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )
     nav_right = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 

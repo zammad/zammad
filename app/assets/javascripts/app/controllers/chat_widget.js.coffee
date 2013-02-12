@@ -13,7 +13,7 @@ class App.ChatWidget extends App.Controller
     @messageLog = []
 
     # rebuild chat widget
-    App.Event.bind 'ajax:auth', (user) =>
+    App.Event.bind 'auth', (user) =>
       if !user
         @messageLog = []
         @el.html('')
