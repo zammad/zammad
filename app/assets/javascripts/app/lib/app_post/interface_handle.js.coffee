@@ -75,7 +75,7 @@ class App.Content extends App.Controller
 
           # rerender view on ui:rerender event
           App.Event.bind(
-            'ui:rerender', =>
+            'ui:page:rerender', =>
               controller( params )
             'page'
           )
