@@ -51,8 +51,9 @@ class User < ApplicationModel
     end
 
     # check failed logins
-    if user
-#      return if user.faild_login > 10
+    max_login_failed = Setting.get('password_max_login_failed') || 10
+    if user && user.login_failed > max_login_failed
+      return false
     end
 
     # use auth backends
@@ -80,18 +81,20 @@ class User < ApplicationModel
       # auth ok
       if user_auth
 
-        # update last login
-        
+        # remember last login date
+        user.update_last_login
 
         # reset login failed
-
+        user.login_failed = 0
+        user.save
 
         return user_auth
       end
     }
 
     # set login failed +1
-
+    user.login_failed = user.login_failed + 1
+    user.save
 
     # auth failed
     sleep 1

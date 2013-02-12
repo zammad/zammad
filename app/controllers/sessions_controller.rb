@@ -15,9 +15,6 @@ class SessionsController < ApplicationController
       return
     end
 
-    # remember last login date
-    user.update_last_login()
-
     # auto population of default collections
     default_collection = SessionHelper::default_collections(user)
 
@@ -125,7 +122,7 @@ class SessionsController < ApplicationController
     end
 
     # remember last login date
-    authorization.user.update_last_login()
+    authorization.user.update_last_login
 
     # Log the authorizing user in.
     session[:user_id] = authorization.user.id
