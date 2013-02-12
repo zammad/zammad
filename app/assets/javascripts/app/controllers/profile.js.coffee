@@ -10,7 +10,7 @@ class Index extends App.ControllerLevel2
     @menu = [
       { name: 'Password',       'target': 'password', controller: App.ProfilePassword, params: {} },
       { name: 'Language',       'target': 'language', controller: App.ProfileLanguage, params: {} },
-      { name: 'Link Accounts',  'target': 'accounts', controller: App.ProfileLinkedAccounts, params: { area: 'Ticket::Number' } },
+      { name: 'Link Accounts',  'target': 'accounts', controller: App.ProfileLinkedAccounts, params: {} },
 #      { name: 'Notifications',  'target': 'notify',   controller: App.SettingsArea, params: { area: 'Ticket::Number' } },
     ] 
     @page = {
