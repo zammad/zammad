@@ -113,6 +113,17 @@ class ApplicationController < ActionController::Base
       }
     end
 
+    # check sso
+    if !session[:user_id]
+
+      user = User.sso(params)
+
+      # Log the authorizing user in.
+      if user
+        session[:user_id] = user.id
+      end
+    end
+
     # return auth not ok (no session exists)
     if !session[:user_id]
       message = 'no valid session, user_id'

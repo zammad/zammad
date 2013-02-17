@@ -52,6 +52,15 @@ module Import::OTRS
     return result
   end
 
+  def self.session(session_id)
+    response = post( "public.pl", { :Action => 'Export', :Type => 'SessionCheck', :SessionID => session_id } )
+    return if !response
+    return if response.code.to_s != '200'
+
+    result = json(response)
+    return result
+  end
+
   def self.start
     puts 'Start import...'
 
@@ -257,7 +266,7 @@ module Import::OTRS
                 :email          => email,
                 :password       => '',
                 :active         => true,
-                :roles          => roles,
+                :role_ids       => [roles.id],
                 :updated_by_id  => 1,
                 :created_by_id  => 1,
               )

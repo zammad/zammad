@@ -111,7 +111,7 @@ class SessionsController < ApplicationController
       logger.info("AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT")
 
       # redirect to app
-      redirect_to '/app'
+      redirect_to '/'
     end
 
     # Create a new user or add an auth to existing user, depending on
@@ -128,7 +128,19 @@ class SessionsController < ApplicationController
     session[:user_id] = authorization.user.id
 
     # redirect to app
-    redirect_to '/app'
+    redirect_to '/'
+  end
+
+  def create_sso
+    user = User.sso(params)
+
+    # Log the authorizing user in.
+    if user
+      session[:user_id] = user.id
+    end
+
+    # redirect to app
+    redirect_to '/#'
   end
 
 end

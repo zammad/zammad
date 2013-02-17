@@ -103,6 +103,47 @@ class User < ApplicationModel
     return user_auth
   end
 
+  def self.sso(params)
+
+    # use auth backends
+    config = [
+      {
+        :adapter => 'env',
+      },
+      {
+        :adapter => 'otrs',
+      },
+    ]
+#    Setting.where( :area => 'Security::Authentication' ).each {|setting|
+#      if setting.state[:value]
+#        config.push setting.state[:value]
+#      end
+#    }
+
+    # try to login against configure auth backends
+    user_auth = nil
+    config.each {|config_item|
+      file = "sso/#{config_item[:adapter]}"
+      require file
+      user_auth = SSO.const_get("#{config_item[:adapter].to_s.upcase}").check( params, config_item )
+
+      # auth ok
+      if user_auth
+
+        # remember last login date
+        user_auth.update_last_login
+
+        # reset login failed
+        user_auth.login_failed = 0
+        user_auth.save
+
+        return user_auth
+      end
+    }
+
+    return false
+  end
+
   def self.create_from_hash!(hash)
     url = ''
     if hash['info']['urls'] then

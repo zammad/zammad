@@ -4,6 +4,9 @@ module ExtraRoutes
     # omniauth
     map.match '/auth/:provider/callback', :to => 'sessions#create_omniauth'
 
+    # sso
+    map.match '/auth/sso',                :to => 'sessions#create_sso'
+
     # sessions
     map.match '/signin',                  :to => 'sessions#create'
     map.match '/signshow',                :to => 'sessions#show'
