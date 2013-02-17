@@ -97,16 +97,21 @@ module Import::OTRS
     result = result.reverse
 
     Thread.abort_on_exception = true
-    thread_count = 2
+    thread_count = 4
     threads = {}
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
         sleep thread * 3
-        puts "Started import thread# #{thread}..."
-        while true
+        puts "Started import thread# #{thread} ..."
+        run = true
+        while run
           ticket_ids = result.pop(20)
-          return if ticket_ids.empty?
-          self.ticket(ticket_ids)
+          if !ticket_ids.empty?
+            self.ticket(ticket_ids)
+          else
+            puts "... thread# #{thread}, no more work."
+            run = false
+          end
         end
       }
     }
@@ -115,6 +120,41 @@ module Import::OTRS
     }
 
     return
+  end
+
+  def self.diff
+    puts 'Start diff...'
+
+    # check if system is in import mode
+    if !Setting.get('import_mode')
+        raise "System is not in import mode!"
+    end
+
+    # create states
+    ticket_state
+
+    # create priorities
+    ticket_priority
+
+    # create groups
+    ticket_group
+
+    # create agents
+    user
+
+    self.ticket_diff()
+
+    return
+  end
+
+
+  def self.ticket_diff()
+    url = "public.pl?Action=Export;Type=TicketDiff;Limit=30"
+    response = request( url )
+    return if !response
+    return if response.code.to_s != '200'
+    result = json(response)
+    self._ticket_result(result)
   end
 
   def self.ticket(ticket_ids)
@@ -127,6 +167,10 @@ module Import::OTRS
     return if response.code.to_s != '200'
 
     result = json(response)
+    self._ticket_result(result)
+  end
+  
+  def self._ticket_result(result)
 #    puts result.inspect
     map = {
       :Ticket => {
@@ -605,9 +649,7 @@ module Import::OTRS
 
     result.each { |user|
 #      puts 'USER: ' + user.inspect
-#      if user['UserID'] != 1
         _set_valid(user)
-#      puts 'USER: ' + user.inspect
 
         role = Role.lookup( :name => 'Agent' )
         # get new attributes
@@ -631,6 +673,7 @@ module Import::OTRS
         if user_old
           puts "update User.find(#{user_new[:id]})"
 #          puts 'Update User' + user_new.inspect
+          user_new.delete( :role_ids )
           user_old.update_attributes(user_new)
         else
           puts "add User.find(#{user_new[:id]})"

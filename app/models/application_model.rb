@@ -7,6 +7,11 @@ class ApplicationModel < ActiveRecord::Base
   after_update  :cache_delete
   after_destroy :cache_delete
 
+  # for import other objects, remove 'id'
+  def self.attributes_protected_by_default
+    ['type']
+  end
+
   def self.param_cleanup(params)
     data = {}
     self.new.attributes.each {|item|
