@@ -82,17 +82,13 @@ module Session
   def self.send( client_id, data )
     path = @path + '/' + client_id.to_s + '/'
     filename = 'send-' + Time.new().to_i.to_s + '-' + rand(99999999).to_s
-    if File::exists?( path + filename )
-      filename = filename + '-1'
+    check = true
+    while check
       if File::exists?( path + filename )
-        filename = filename + '-1'
-        if File::exists?( path + filename )
-          filename = filename + '-1'
-          if File::exists?( path + filename )
-            filename = filename  + '-' + rand(99999999).to_s
-          end
-        end
-      end
+        filename = filename  + '-' + rand(99999).to_s
+      else
+        check = false
+      end    
     end
     return false if !File.directory? path
     File.open( path + 'a-' + filename, 'w' ) { |file|
@@ -101,8 +97,8 @@ module Session
       file.flock( File::LOCK_UN )
       file.close
     }
-    
-    FileUtils.mv( path + 'a-' + filename, path + filename)
+#    return false if !File.exists?( path + 'a-' + filename )
+    FileUtils.mv( path + 'a-' + filename, path + filename )
     return true
   end
 

@@ -4,7 +4,7 @@ class User < ApplicationModel
   include Gmaps
 
   before_create           :check_name, :check_email, :check_login, :check_image, :check_geo, :check_password
-  before_update           :check_password, :check_image, :check_geo, :check_email, :check_login
+  before_update           :check_password, :check_image, :check_geo, :check_email, :check_login_update
 
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
   has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update
@@ -449,6 +449,22 @@ Your #{config.product_name} Team
     end
 
     def check_login
+      if self.login
+        self.login = self.login.downcase
+        check = true
+        while check
+          exists = User.where( :login => self.login ).first
+          if exists
+            self.login = self.login + rand(99).to_s
+          else
+            check = false
+          end
+        end
+      end
+    end
+
+    # FIXME: Remove me later 
+    def check_login_update
       if self.login
         self.login = self.login.downcase
       end

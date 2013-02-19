@@ -122,6 +122,13 @@ module Import::OTRS
     return
   end
 
+  def self.diff_loop
+    while true
+      self.diff
+      sleep 30
+    end
+  end
+
   def self.diff
     puts 'Start diff...'
 
