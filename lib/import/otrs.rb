@@ -174,23 +174,25 @@ module Import::OTRS
 #    puts result.inspect
     map = {
       :Ticket => {
-        :Changed                => :updated_at,
-        :Created                => :created_at,
-        :CreateBy               => :created_by_id,
-        :TicketNumber           => :number,
-        :QueueID                => :group_id,
-        :StateID                => :ticket_state_id,
-        :PriorityID             => :ticket_priority_id,
-        :Owner                  => :owner,
-        :CustomerUserID         => :customer,
-        :Title                  => :title,
-        :TicketID               => :id,
-        :FirstResponse          => :first_response,
-#        :FirstResponseInMin     => ?,
-#        :FirstResponseDiffInMin => ?,
-        :Closed                 => :close_time,
-#        :CloseTimeInMin         => ?,
-#        :CloseTimeDiffInMin     => ?,
+        :Changed                          => :updated_at,
+        :Created                          => :created_at,
+        :CreateBy                         => :created_by_id,
+        :TicketNumber                     => :number,
+        :QueueID                          => :group_id,
+        :StateID                          => :ticket_state_id,
+        :PriorityID                       => :ticket_priority_id,
+        :Owner                            => :owner,
+        :CustomerUserID                   => :customer,
+        :Title                            => :title,
+        :TicketID                         => :id,
+        :FirstResponse                    => :first_response,
+        :FirstResponseTimeDestinationDate => :first_response_escal_date,
+        :FirstResponseInMin               => :first_response_in_min,
+        :FirstResponseDiffInMin           => :first_response_diff_in_min,
+        :Closed                           => :close_time,
+        :SoltutionTimeDestinationDate     => :close_time_escal_date,
+        :CloseTimeInMin                   => :close_time_in_min,
+        :CloseTimeDiffInMin               => :close_time_diff_in_min,
       },
       :Article => {
         :SenderType  => :ticket_article_sender,
@@ -224,8 +226,10 @@ module Import::OTRS
           :updated_by_id => 1,
         }
         map[:Ticket].each { |key,value|
-          if record['Ticket'][key.to_s]
+          if record['Ticket'][key.to_s] && record['Ticket'][key.to_s].class == String
             ticket_new[value] = Encode.conv( 'utf8', record['Ticket'][key.to_s] )
+          else
+            ticket_new[value] = record['Ticket'][key.to_s]
           end
         }
 #      puts key.to_s
