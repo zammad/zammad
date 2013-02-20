@@ -9,7 +9,11 @@ class ApplicationModel < ActiveRecord::Base
 
   # for import other objects, remove 'id'
   def self.attributes_protected_by_default
-    ['type']
+    if Setting.get('import_mode')
+      ['type']
+    else
+      ['id','type']
+    end
   end
 
   def self.param_cleanup(params)
