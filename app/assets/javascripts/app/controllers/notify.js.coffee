@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.Notify extends Spine.Controller
   events:
     'click .alert': 'destroy'
@@ -58,3 +56,4 @@ class App.Notify extends Spine.Controller
     $.noty.closeAll()
 #    $(@el).find('.alert').remove();
 
+App.Config.set( 'notify', App.Notify, 'Widgets' )

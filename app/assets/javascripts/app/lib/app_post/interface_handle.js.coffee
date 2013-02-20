@@ -13,18 +13,12 @@ class App.Run extends App.Controller
     # check if session already exists/try to get session data from server
     App.Auth.loginCheck()
 
-    # start navigation controller
-    new App.Navigation( el: @el.find('#navigation') )
-
-    # start notify controller
-    new App.Notify( el: @el.find('#notify') )
-
-    # start content
-    new App.Content( el: @el.find('#content') )
-
-    # start chat
-    if App.ChatWidget
-      new App.ChatWidget( el: @el.find('#chat') )
+    # start widgets
+    widgets = App.Config.get( 'Widgets' )
+    if widgets
+      for key, widget of widgets
+        @el.append('<div id="' + key + '"></div>')
+        new widget( el: @el.find("##{key}") )
 
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
@@ -86,3 +80,5 @@ class App.Content extends App.Controller
         )
 
     Spine.Route.setup()
+
+App.Config.set( 'content', App.Content, 'Widgets' )

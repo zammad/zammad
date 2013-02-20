@@ -207,3 +207,4 @@ class App.ChatWidget extends App.Controller
       )
       @render()
 
+App.Config.set( 'chat', App.ChatWidget, 'Widgets' )

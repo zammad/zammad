@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.Navigation extends App.Controller
   constructor: ->
     super
@@ -292,3 +290,5 @@ class App.Navigation extends App.Controller
       }
 
     @Config.set( 'NavBarRight', NavBarRight )
+
+App.Config.set( 'navigation', App.Navigation, 'Widgets' )
