@@ -28,13 +28,16 @@ class App.SettingsAreaItem extends App.Controller
     @render()
 
   render: =>
+
     # defaults
     directValue = 0
+    directData  = undefined
     for item in @setting.options['form']
       directValue = +1
+      directData  = @setting.state.value[item.name]
 
     if directValue > 1
-      item['default'] = @setting.state.value[item.name]
+      item['default'] = directData
     else
       item['default'] = @setting.state.value
 
@@ -55,10 +58,12 @@ class App.SettingsAreaItem extends App.Controller
   update: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    @log 'submit', @setting, params, e.target, typeof @setting.state.value
+
     directValue = 0
+    directData  = undefined
     for item in @setting.options['form']
       directValue = +1
+      directData  = params[item.name]
 
     if directValue > 1
       state = {
@@ -66,7 +71,7 @@ class App.SettingsAreaItem extends App.Controller
       }
     else
       state = {
-        value: params[@setting.name]
+        value: directData
       }
 
     @setting['state'] = state
