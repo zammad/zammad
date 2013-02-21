@@ -94,6 +94,10 @@ class Index extends App.Controller
       group_ids = App.Config.get('customer_ticket_create_group_ids')
 
       # return all groups if no one is selected
+      return collection if !group_ids
+      return collection if !_.isArray( group_ids ) && group_ids is ''
+      return collection if _.isEmpty( group_ids )
+
       if !_.isArray( group_ids )
          group_ids = [group_ids]
 
