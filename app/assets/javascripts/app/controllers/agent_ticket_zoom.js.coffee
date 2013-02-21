@@ -279,9 +279,9 @@ class Index extends App.Controller
   reply: (e) =>
     e.preventDefault()
     article_id = $(e.target).parents('[data-id]').data('id')
-    article = App.TicketArticle.find( article_id )
-    article_type = App.TicketArticleType.find( article.ticket_article_type_id )
-    customer = App.User.find( article.created_by_id )
+    article = App.Collection.find( 'TicketArticle', article_id )
+    article_type = App.Collection.find( 'TicketArticleType', article.ticket_article_type_id )
+    customer = App.Collection.find( 'User', article.created_by_id )
 
     # update form
     @form_update_execute(article_type)
@@ -347,7 +347,7 @@ class Index extends App.Controller
     e.preventDefault()
     params = @formParam(e.target)
     @log 'TicketZoom', 'notice', 'update', params, @ticket
-    article_type = App.TicketArticleType.find( params['ticket_article_type_id'] )
+    article_type = App.Collection.find( 'TicketArticleType', params['ticket_article_type_id'] )
 
     # update ticket
     ticket_update = {}

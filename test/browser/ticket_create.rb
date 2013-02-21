@@ -23,6 +23,16 @@ class TicketCreate < ActiveSupport::TestCase
             :result  => true,
           },
           {
+            :execute => 'wait',
+            :value   => 2,
+          },
+          {
+            :execute => 'select',
+            :element => :select_list,
+            :name    => 'group_id',
+            :value   => 'Users',
+          },
+          {
             :execute => 'set',
             :element => :text_field,
             :name    => 'subject',
@@ -41,7 +51,7 @@ class TicketCreate < ActiveSupport::TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
           {
             :execute => 'check',
@@ -53,6 +63,44 @@ class TicketCreate < ActiveSupport::TestCase
             :execute => 'check',
             :element => :url,
             :result  => '#ticket/zoom/',
+          },
+
+          # check ticket
+          {
+            :execute      => 'match',
+            :element      => :div,
+            :class        => 'article',
+            :value        => 'some body 123äöü',
+            :match_result => true,
+          },
+
+          # update ticket
+          {
+            :execute => 'check',
+            :element => :text_field,
+            :name    => 'body',
+            :result  => true,
+          },
+          {
+            :execute => 'set',
+            :element => :text_field,
+            :name    => 'body',
+            :value   => 'some body 1234 äöüß',
+          },
+          {
+            :execute => 'click',
+            :element => :button,
+            :type    => 'submit',
+          },
+          {
+            :execute => 'wait',
+            :value   => 5,
+          },
+          {
+            :execute      => 'match',
+            :element      => :body,
+            :value        => 'some body 1234 äöüß',
+            :match_result => true,
           },
         ],
       },

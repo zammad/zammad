@@ -138,6 +138,14 @@ class ActiveSupport::TestCase
         element = instance.send( action[:element], { :type => action[:type] } )
         assert( element.exists?, "(#{test[:name]}) Element #{action[:element]} with type #{action[:type]} doesn't exist" )
       end
+    elsif action[:class]
+      if action[:result] == false
+        element = instance.send( action[:element], { :class => action[:class] } )
+        assert( !element.exists?, "(#{test[:name]}) Element #{action[:element]} with class #{action[:class]} exists" )
+      else
+        element = instance.send( action[:element], { :class => action[:class] } )
+        assert( element.exists?, "(#{test[:name]}) Element #{action[:element]} with class #{action[:class]} doesn't exist" )
+      end
     elsif action[:name]
       if action[:result] == false
         element = instance.send( action[:element], { :name => action[:name] } )
@@ -160,11 +168,15 @@ class ActiveSupport::TestCase
         else
           assert( false, "(#{test[:name]}) url #{instance.url} is not matching #{action[:result]}" )
         end
+    elsif action[:element] == :body
+        element = instance.send( action[:element] )
     else
       assert( false, "(#{test[:name]}) unknow selector for '#{action[:element]}'" )
     end
     if action[:execute] == 'set'
       element.set( action[:value] )
+    elsif action[:execute] == 'select'
+      element.select( action[:value] )
     elsif action[:execute] == 'click'
       element.click
     elsif action[:execute] == 'send_key'

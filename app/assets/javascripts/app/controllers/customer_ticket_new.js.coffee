@@ -85,12 +85,25 @@ class Index extends App.Controller
     if !( 'ticket_priority_id' of defaults )
       defaults['ticket_priority_id'] = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' )
 
-    groupFilter = (collection) =>
+    groupFilter = (collection, type) =>
+
+      # only filter on collections
+      return collection if type isnt 'collection'
+
+      # get configured ids
+      group_ids = App.Config.get('customer_ticket_create_group_ids')
+
+      # return all groups if no one is selected
+      if !_.isArray( group_ids )
+         group_ids = [group_ids]
+
+      # filter selected groups
+      if _.isEmpty( group_ids )
+        return collection
       _.filter(
         collection
         (item) ->
-          return item if item.name is 'Support'
-          return item if item.name is 'Sales'
+          return item if item && _.contains( group_ids, item.id.toString() )
       )
 
     # generate form    

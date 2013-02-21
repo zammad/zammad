@@ -780,6 +780,30 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  :title       => 'Group selection for Ticket creation',
+  :name        => 'customer_ticket_create_group_ids',
+  :area        => 'CustomerWeb::Base',
+  :description => 'Defines groups where customer can create tickets via web interface. "-" means all groups are available.',
+  :options     => {
+    :form => [
+      {
+        :display    => '',
+        :null       => true,
+        :name       => 'group_ids', 
+        :tag        => 'select',
+        :multiple   => true,
+        :null       => false,
+        :nulloption => true,
+        :relation   => 'Group',
+      },
+    ],
+  },
+  :state    => '',
+  :frontend => true
+)
+
+
+Setting.create_if_not_exists(
   :title       => 'Enable Ticket View/Update',
   :name        => 'customer_ticket_view',
   :area        => 'CustomerWeb::Base',
