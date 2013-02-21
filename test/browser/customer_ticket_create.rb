@@ -1,11 +1,11 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class TicketCreate < ActiveSupport::TestCase
-  test 'ticket create' do
+class CustomerTicketCreate < ActiveSupport::TestCase
+  test 'customer ticket create' do
     tests = [
       {
-        :name     => 'phone ticket',
+        :name     => 'customer ticket create',
         :action   => [
           {
             :execute => 'click',
