@@ -11,20 +11,17 @@ class Auth < ActiveSupport::TestCase
         :action   => [
           {
             :execute => 'check',
-            :element => :form,
-            :id      => 'login',
+            :css     => '#login',
             :result  => true,
           },
           {
             :execute => 'check',
-            :element => :button,
-            :type    => 'submit',
+            :css     => '#login button',
             :result  => true,
           },
           {
             :execute => 'click',
-            :element => :button,
-            :type    => 'submit',
+            :css     => '#login button',
           },
           {
             :execute => 'wait',
@@ -32,8 +29,7 @@ class Auth < ActiveSupport::TestCase
           },
           {
             :execute => 'check',
-            :element => :form,
-            :id      => 'login',
+            :css     => '#login',
             :result  => true,
           },
         ],
@@ -47,36 +43,39 @@ class Auth < ActiveSupport::TestCase
           },
           {
             :execute => 'check',
-            :element => :form,
-            :id      => 'login',
+            :css     => '#login',
             :result  => true,
           },
           {
             :execute => 'set',
-            :element => :text_field,
-            :name    => 'username',
+            :css     => 'input[name="username"]',
             :value   => 'nicole.braun@zammad.org',
           },
           {
             :execute => 'set',
-            :element => :text_field,
-            :name    => 'password',
+            :css     => 'input[name="password"]',
             :value   => 'test'
           },
           {
             :execute => 'click',
-            :element => :button,
-            :type    => 'submit',
+            :css     => '#login button',
           },
           {
             :execute => 'wait',
             :value   => 3,
           },
+
+          # check action
           {
             :execute => 'check',
-            :element => :form,
-            :id      => 'login',
+            :css     => '#login',
             :result  => false,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'nicole.braun@zammad.org',
+            :match_result => true,
           },
         ],
       },

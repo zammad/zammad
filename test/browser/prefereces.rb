@@ -9,13 +9,11 @@ class Preferences < ActiveSupport::TestCase
         :action   => [
           {
             :execute => 'click',
-            :element => :link,
-            :href    => '#current_user',
+            :css     => 'a[href="#current_user"]',
           },
           {
             :execute => 'click',
-            :element => :link,
-            :href    => '#profile',
+            :css     => 'a[href="#profile"]',
           },
           {
             :execute => 'wait',
@@ -23,8 +21,7 @@ class Preferences < ActiveSupport::TestCase
           },
           {
             :execute => 'click',
-            :element => :link,
-            :href    => '#profile/language',
+            :css     => 'a[href="#profile/language"]',
           },
           {
             :execute => 'wait',
@@ -32,8 +29,7 @@ class Preferences < ActiveSupport::TestCase
           },
           {
             :execute => 'check',
-            :element => :div,
-            :id      => 'language',
+            :css     => '#language',
             :result  => true,
           },
           {
@@ -42,14 +38,12 @@ class Preferences < ActiveSupport::TestCase
           },
           {
             :execute => 'select',
-            :element => :select_list,
-            :name    => 'locale',
+            :css     => '#language select[name="locale"]',
             :value   => 'Deutsch',
           },
           {
             :execute => 'click',
-            :element => :button,
-            :type    => 'submit',
+            :css     => '#language button',
           },
           {
             :execute => 'wait',
@@ -57,26 +51,23 @@ class Preferences < ActiveSupport::TestCase
           },
           {
             :execute => 'check',
-            :element => :form,
-            :id      => 'login',
+            :css     => '#login',
             :result  => false,
           },
           {
             :execute      => 'match',
-            :element      => :body,
+            :css          => 'body',
             :value        => 'Sprache',
             :match_result => true,
           },
           {
             :execute => 'select',
-            :element => :select_list,
-            :name    => 'locale',
+            :css     => '#language select[name="locale"]',
             :value   => 'English (United States)',
           },
           {
             :execute => 'click',
-            :element => :button,
-            :type    => 'submit',
+            :css     => '#language button',
           },
           {
             :execute => 'wait',
@@ -84,7 +75,7 @@ class Preferences < ActiveSupport::TestCase
           },
           {
             :execute      => 'match',
-            :element      => :body,
+            :css          => 'body',
             :value        => 'Language',
             :match_result => true,
           },

@@ -31,13 +31,11 @@ class App.SettingsAreaItem extends App.Controller
 
     # defaults
     directValue = 0
-    directData  = undefined
     for item in @setting.options['form']
-      directValue = +1
-      directData  = @setting.state.value[item.name]
-
+      directValue += 1
     if directValue > 1
-      item['default'] = directData
+      for item in @setting.options['form']
+        item['default'] = @setting.state.value[item.name]
     else
       item['default'] = @setting.state.value
 
@@ -62,7 +60,7 @@ class App.SettingsAreaItem extends App.Controller
     directValue = 0
     directData  = undefined
     for item in @setting.options['form']
-      directValue = +1
+      directValue += 1
       directData  = params[item.name]
 
     if directValue > 1

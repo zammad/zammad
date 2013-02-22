@@ -9,8 +9,7 @@ class CustomerTicketCreate < ActiveSupport::TestCase
         :action   => [
           {
             :execute => 'click',
-            :element => :link,
-            :href    => '#customer_ticket_new',
+            :css     => 'a[href="#customer_ticket_new"]',
           },
           {
             :execute => 'wait',
@@ -18,8 +17,7 @@ class CustomerTicketCreate < ActiveSupport::TestCase
           },
           {
             :execute => 'check',
-            :element => :div,
-            :id      => 'form_create',
+            :css     => '#form_create',
             :result  => true,
           },
           {
@@ -28,26 +26,22 @@ class CustomerTicketCreate < ActiveSupport::TestCase
           },
           {
             :execute => 'select',
-            :element => :select_list,
-            :name    => 'group_id',
+            :css     => '#form_create select[name="group_id"]',
             :value   => 'Users',
           },
           {
             :execute => 'set',
-            :element => :text_field,
-            :name    => 'subject',
+            :css     => '#form_create input[name="subject"]',
             :value   => 'some subject 123äöü',
           },
           {
             :execute => 'set',
-            :element => :text_field,
-            :name    => 'body',
+            :css     => '#form_create textarea[name="body"]',
             :value   => 'some body 123äöü',
           },
           {
             :execute => 'click',
-            :element => :button,
-            :type    => 'submit',
+            :css     => 'button[type="submit"]',
           },
           {
             :execute => 'wait',
@@ -55,8 +49,7 @@ class CustomerTicketCreate < ActiveSupport::TestCase
           },
           {
             :execute => 'check',
-            :element => :form,
-            :id      => 'login',
+            :css     => '#login',
             :result  => false,
           },
           {
@@ -68,8 +61,7 @@ class CustomerTicketCreate < ActiveSupport::TestCase
           # check ticket
           {
             :execute      => 'match',
-            :element      => :div,
-            :class        => 'article',
+            :css          => 'div.article',
             :value        => 'some body 123äöü',
             :match_result => true,
           },
@@ -77,19 +69,17 @@ class CustomerTicketCreate < ActiveSupport::TestCase
           # update ticket
           {
             :execute => 'check',
-            :element => :text_field,
-            :name    => 'body',
+            :css     => 'textarea[name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :element => :text_field,
-            :name    => 'body',
+            :css     => 'textarea[name="body"]',
             :value   => 'some body 1234 äöüß',
           },
           {
             :execute => 'click',
-            :element => :button,
+            :css     => 'button',
             :type    => 'submit',
           },
           {
@@ -98,7 +88,7 @@ class CustomerTicketCreate < ActiveSupport::TestCase
           },
           {
             :execute      => 'match',
-            :element      => :body,
+            :css          => 'body',
             :value        => 'some body 1234 äöüß',
             :match_result => true,
           },

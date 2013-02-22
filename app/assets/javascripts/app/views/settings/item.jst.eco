@@ -1,4 +1,4 @@
-<form class="">
+<form class="" id="<%= @setting.name %>">
   <h2><%- @T( @setting.title ) %></h2>
   <p><%- @T( @setting.description ) %></p>
   <div id="form-item"></div>
