@@ -14,27 +14,36 @@ class TestCase < Test::Unit::TestCase
       @browsers = []
     end
     if !ENV['REMOTE_URL']
-      browser = Selenium::WebDriver.for :firefox 
+      if !ENV['BROWSER']
+        ENV['BROWSER'] = 'firefox'
+      end
+      browser = Selenium::WebDriver.for( ENV['BROWSER'].to_sym )
       @browsers.push browser
       return browser
     end
-#    return Watir::Browser.new if !ENV['REMOTE_URL']
 
     caps = Selenium::WebDriver::Remote::Capabilities.send( ENV['BROWSER'] )
     caps.platform = ENV['BROWSER_OS'] || 'Windows 2008'
     caps.version  = ENV['BROWSER_VERSION'] || '8'
-    Selenium::WebDriver.for(
+    browser = Selenium::WebDriver.for(
       :remote,
       :url                  => ENV['REMOTE_URL'],
       :desired_capabilities => caps,
     )
-
+    @browsers.push browser
+    return browser
   end
 
   def teardown
     return if !@browsers
+
+    # only shut down browser type once
+    # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
+    shutdown = {}
     @browsers.each{ |browser|
-      browser.close
+      next if shutdown[ browser.browser ]
+      shutdown[ browser.browser ] = true
+      browser.quit
     }
   end
 
