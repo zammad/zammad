@@ -1,13 +1,13 @@
 # encoding: utf-8
 require 'browser_test_helper'
  
-class Auth < ActiveSupport::TestCase
-  test 'authentication' do
+class AuthTest < TestCase
+  def test_authentication
     tests = [
       {
         :name     => 'start',
-        :instance => Watir::Browser.new,
-        :url      => 'http://localhost:3000',
+        :instance => browser_instance,
+        :url      => browser_url,
         :action   => [
           {
             :execute => 'check',

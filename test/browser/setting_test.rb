@@ -1,8 +1,8 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class TestSetting < ActiveSupport::TestCase
-  test 'setting' do
+class SettingTest < TestCase
+  def test_setting
     tests = [
       {
         :name     => 'setting',

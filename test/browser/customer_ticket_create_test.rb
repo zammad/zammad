@@ -1,8 +1,8 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class CustomerTicketCreate < ActiveSupport::TestCase
-  test 'customer ticket create' do
+class CustomerTicketCreateTest < TestCase
+  def test_customer_ticket_create
     tests = [
       {
         :name     => 'customer ticket create',

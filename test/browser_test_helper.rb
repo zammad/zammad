@@ -1,17 +1,50 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-require 'watir-webdriver'
+#require 'watir-webdriver'
+require 'selenium-webdriver'
 
-class ActiveSupport::TestCase
+class TestCase < Test::Unit::TestCase
+  def browser_url
+    ENV['BROWSER_URL'] || 'http://localhost:3000'
+  end
+
+  def browser_instance
+    if !@browsers
+      @browsers = []
+    end
+    if !ENV['REMOTE_URL']
+      browser = Selenium::WebDriver.for :firefox 
+      @browsers.push browser
+      return browser
+    end
+#    return Watir::Browser.new if !ENV['REMOTE_URL']
+
+    caps = Selenium::WebDriver::Remote::Capabilities.send( ENV['BROWSER'] )
+    caps.platform = ENV['BROWSER_OS'] || 'Windows 2008'
+    caps.version  = ENV['BROWSER_VERSION'] || '8'
+    Selenium::WebDriver.for(
+      :remote,
+      :url                  => ENV['REMOTE_URL'],
+      :desired_capabilities => caps,
+    )
+
+  end
+
+  def teardown
+    return if !@browsers
+    @browsers.each{ |browser|
+      browser.close
+    }
+  end
 
   # Add more helper methods to be used by all tests here...
   def browser_login(data)
     all_tests = [
       {
         :name     => 'login',
-        :instance => data[:instance] || Watir::Browser.new,
-        :url      => data[:url] || 'http://localhost:3000',
+        :instance => data[:instance] || browser_instance,
+        :url      => data[:url] || browser_url,
         :action   => [
           {
             :execute => 'wait',
@@ -99,7 +132,7 @@ class ActiveSupport::TestCase
         instance = test[:instance]
       end
       if test[:url]
-        instance.goto( test[:url] )
+        instance.get( test[:url] )
       end
       if test[:action]
         test[:action].each { |action|
@@ -119,32 +152,45 @@ class ActiveSupport::TestCase
   
   def browser_element_action(test, action, instance)
     if action[:css]
-      element = instance.element( { :css => action[:css] } )
+      begin
+        element = instance.find_element( { :css => action[:css] } )
+      rescue
+        element = nil
+      end
       if action[:result] == false
-        assert( !element.exists?, "(#{test[:name]}) Element with css '#{action[:css]}' exists" )
+        assert( !element, "(#{test[:name]}) Element with css '#{action[:css]}' exists" )
       else
-        assert( element.exists?, "(#{test[:name]}) Element with css '#{action[:css]}' doesn't exist" )
+        assert( element, "(#{test[:name]}) Element with css '#{action[:css]}' doesn't exist" )
       end
     elsif action[:element] == :url
-        if instance.url =~ /#{Regexp.quote(action[:result])}/
-          assert( true, "(#{test[:name]}) url #{instance.url} is matching #{action[:result]}" )
+        if instance.current_url =~ /#{Regexp.quote(action[:result])}/
+          assert( true, "(#{test[:name]}) url #{instance.current_url} is matching #{action[:result]}" )
         else
-          assert( false, "(#{test[:name]}) url #{instance.url} is not matching #{action[:result]}" )
+          assert( false, "(#{test[:name]}) url #{instance.current_url} is not matching #{action[:result]}" )
         end
     else
       assert( false, "(#{test[:name]}) unknow selector for '#{action[:element]}'" )
     end
     if action[:execute] == 'set'
-      element.to_subtype.set( action[:value] )
+      element.send_keys( action[:value] )
     elsif action[:execute] == 'select'
-      element.to_subtype.select( action[:value] )
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by(:text, action[:value])
     elsif action[:execute] == 'click'
       element.click
     elsif action[:execute] == 'send_key'
       element.send_keys action[:value]
     elsif action[:execute] == 'match'
       if action[:css] =~ /select/
-        success = element.to_subtype.selected?(action[:value])
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        success  = false
+        if dropdown.selected_options
+          dropdown.selected_options.each {|option|
+            if option.text == action[:value]
+              success = true
+            end
+          }
+        end
         if action[:match_result]
           if success
             assert( true, "(#{test[:name]}) matching '#{action[:value]}' in select list" )
@@ -159,8 +205,8 @@ class ActiveSupport::TestCase
           end
         end
       else
-        if action[:css] =~ /input|textarea/i
-          text = element.to_subtype.value
+        if action[:css] =~ /input/i
+          text = element.attribute('value')
         else
           text = element.text
         end

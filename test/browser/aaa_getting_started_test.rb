@@ -1,68 +1,62 @@
 # encoding: utf-8
 require 'browser_test_helper'
- 
-class Signup < ActiveSupport::TestCase
-  test 'signup' do
-    signup_user_email = 'signup-test-' + rand(999999).to_s + '@example.com'
+
+class AaaGettingStartedTest < TestCase
+  def test_getting_started
     tests = [
       {
         :name     => 'start',
-        :instance => Watir::Browser.new,
-        :url      => 'http://localhost:3000',
+        :instance => browser_instance,
+        :url      => browser_url + '/#getting_started',
         :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#signup"]',
-          },
           {
             :execute => 'wait',
             :value   => 1,
           },
           {
             :execute => 'check',
-            :css     => '#form-signup',
+            :css     => '#form-master',
             :result  => true,
           },
         ],
       },
       {
-        :name     => 'signup',
+        :name     => 'getting started',
         :action   => [
           {
             :execute => 'set',
             :css     => 'input[name="firstname"]',
-            :value   => 'Signup Firstname',
+            :value   => 'Test Master',
           },
           {
             :execute => 'set',
             :css     => 'input[name="lastname"]',
-            :value   => 'Signup Lastname',
+            :value   => 'Agent',
           },
           {
             :execute => 'set',
             :css     => 'input[name="email"]',
-            :value   => signup_user_email,
+            :value   => 'master@example.com',
           },
           {
             :execute => 'set',
+            :element => :text_field,
             :css     => 'input[name="password"]',
-            :value   => 'some-pass',
+            :value   => 'test1234äöüß',
           },
           {
             :execute => 'set',
             :css     => 'input[name="password_confirm"]',
-            :value   => 'some-pass',
+            :value   => 'test1234äöüß',
           },
           {
             :execute => 'click',
-            :css     => 'button.submit',
+            :css     => '#form-master button[type="submit"]',
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
-
-          # check action
           {
             :execute => 'check',
             :css     => '#login',
@@ -70,13 +64,15 @@ class Signup < ActiveSupport::TestCase
           },
           {
             :execute => 'check',
-            :css     => '#form-signup',
-            :result  => false,
+            :element => :url,
+            :result  => '#getting_started',
           },
+
+          # check action
           {
             :execute      => 'match',
             :css          => 'body',
-            :value        => signup_user_email,
+            :value        => 'Invite Agents',
             :match_result => true,
           },
         ],

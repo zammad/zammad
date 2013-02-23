@@ -1,8 +1,8 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class Preferences < ActiveSupport::TestCase
-  test 'preferences' do
+class PreferencesTest < TestCase
+  def test_preferences
     tests = [
       {
         :name     => 'preferences',
