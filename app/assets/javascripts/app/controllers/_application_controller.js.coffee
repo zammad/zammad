@@ -182,22 +182,22 @@ class App.Controller extends Spine.Controller
     # check global var
     if !@_delayID
       @_delayID = {}
-
     clearTimeout( @_delayID[delay_id] ) if @_delayID[delay_id]
 
   delay: (callback, timeout, delay_id) =>
 
-    # check global var
-    if !@_delayID
-      @_delayID = {}
-
     # clear auto save
-    @clearDelay( @_delayID[delay_id] )
+    @clearDelay( delay_id )
 
     # request new data
     call = =>
       callback()
     if delay_id
+
+      # check global var
+      if !@_delayID
+        @_delayID = {}
+
       @_delayID[delay_id] = setTimeout( call, timeout )
     else
       setTimeout( call, timeout )
