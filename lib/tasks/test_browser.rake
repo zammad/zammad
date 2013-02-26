@@ -9,7 +9,7 @@ namespace :test do
     if !args.opts
       args.opts = ''
     end
-    Dir.glob('test/browser/*_test.rb').each { |r|
+    Dir.glob('test/browser/*_test.rb').sort.each { |r|
       sh "#{args.opts} ruby -Itest #{r}" do |ok, res|
         raise "Failed test. " + res.inspect if !ok
       end
