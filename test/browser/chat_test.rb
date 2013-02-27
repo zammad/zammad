@@ -34,7 +34,7 @@ class ChatTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 10,
           },
           {
             :where   => :instance1,
@@ -43,7 +43,7 @@ class ChatTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 6,
           },
           {
             :where   => :instance1,
@@ -64,7 +64,7 @@ class ChatTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 20,
+            :value   => 6,
           },
           {
             :where        => :instance1,
