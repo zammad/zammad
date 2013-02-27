@@ -55,7 +55,7 @@ class AaaGettingStartedTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 4,
           },
           {
             :execute => 'check',
