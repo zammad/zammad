@@ -45,7 +45,7 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 3,
           },
           {
             :execute => 'check',
@@ -84,7 +84,7 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 4,
           },
           {
             :execute      => 'match',

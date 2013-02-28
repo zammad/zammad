@@ -21,7 +21,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute => 'check',
@@ -41,7 +41,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute      => 'match',
@@ -57,7 +57,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
 
           # set no
@@ -72,7 +72,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute      => 'match',
@@ -104,7 +104,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute      => 'match',
@@ -136,7 +136,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute      => 'match',
