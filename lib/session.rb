@@ -97,7 +97,7 @@ module Session
       file.flock( File::LOCK_UN )
       file.close
     }
-#    return false if !File.exists?( path + 'a-' + filename )
+    return false if !File.exists?( path + 'a-' + filename )
     FileUtils.mv( path + 'a-' + filename, path + filename )
     return true
   end
