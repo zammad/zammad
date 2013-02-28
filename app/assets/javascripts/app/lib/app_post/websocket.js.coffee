@@ -41,6 +41,7 @@ class _Singleton extends App.Controller
   lastSpoolMessage:         undefined
   connectionEstablished:    false
   connectionWasEstablished: false
+  tryToConnect:             false
   backend:                  'websocket'
   client_id:                undefined
 
@@ -201,7 +202,9 @@ class _Singleton extends App.Controller
           @error = new App.ErrorModal(
             message: 'No connection to websocket, trying to reconnect...'
           )
-        @delay message, 7000, 'websocket-no-connection-try-reconnect'
+        if !@tryToConnect
+          @delay message, 7000, 'websocket-no-connection-try-reconnect'
+        @tryToConnect = true
 
       # try reconnect after 4.5 sec.
       @delay @connect, 4500
