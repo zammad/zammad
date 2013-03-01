@@ -13,7 +13,7 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 3,
           },
           {
             :execute => 'check',
