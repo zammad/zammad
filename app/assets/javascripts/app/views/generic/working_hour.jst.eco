@@ -1,19 +1,24 @@
-<table>
+<label><%- @T('Days') %></label>
+<table style="width:70%">
   <thead>
     <tr>
-<% for hour in [ 0 .. 23 ]: %>
-	  <th><%- hour %></th>
+<% for day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']: %>
+      <td><%- @T(day) %></td>
 <% end %>
     </tr>
   </thead>
   <tbody>
-<% for day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']: %>
     <tr>
-      <td><%- @T(day) %></td>
-<% for hour in [ 0 .. 23 ]: %>
-      <td><input type="checkbox" value="1" name="<%- day %>-<%- hour %>"></td>
+<% for day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']: %>
+      <td style="padding:2px"><input type="checkbox" name="<%= @attribute.name %>::<%- day %>" value="<%- day %>" <% if @attribute.value[day]: %>checked<% end %> /></td>
 <% end %>
     </tr>
-<% end %>
   </tbody>
 </table>
+
+<div class="">
+<label><%- @T('Hours') %></label>
+<input type="text" class="span2" name="<%= @attribute.name %>::beginning_of_workday" value="<%= @attribute.value['beginning_of_workday'] %>"/>
+-
+<input type="text" class="span2" name="<%= @attribute.name %>::end_of_workday" value="<%= @attribute.value['end_of_workday'] %>"/>
+</div>

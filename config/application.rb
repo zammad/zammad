@@ -40,7 +40,8 @@ module Zammad
       'observer::_ticket::_article::_communicate_twitter',
       'observer::_ticket::_notification',
       'observer::_tag::_ticket_history',
-      'observer::_ticket::_reset_new_state'
+      'observer::_ticket::_reset_new_state',
+      'observer::_ticket::_escalation_calculation'
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

@@ -403,6 +403,81 @@ class Ticket < ApplicationModel
     return adapter
   end
 
+  def escalation_calculation
+
+    # get sla
+    sla_selected = nil
+    Sla.where( :active => true ).each {|sla|
+      if sla.condition
+        puts sla.condition.inspect
+        hit = false
+        if sla.condition['tickets.ticket_priority_id']
+          if sla.condition['tickets.ticket_priority_id'].class == String
+            sla.condition['tickets.ticket_priority_id'] = [ sla.condition['tickets.ticket_priority_id'].to_i ]
+          end
+          if sla.condition['tickets.ticket_priority_id'].include?( self.ticket_priority_id )
+            hit = true
+          else
+            hit = false
+          end
+        end
+        if hit
+          sla_selected = sla
+        end
+      end
+    }
+    return if !sla_selected
+
+    # get calendar settings
+    BusinessTime::Config.beginning_of_workday = sla_selected.data['beginning_of_workday']
+    BusinessTime::Config.end_of_workday       = sla_selected.data['end_of_workday']
+    days = []
+    ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each {|day|
+      if sla_selected.data[day]
+        days.push day.downcase.to_sym
+      end
+    }
+    BusinessTime::Config.work_week = days
+#    puts sla_selected.inspect
+#    puts days.inspect
+
+    # first response
+    if sla_selected.first_response_time
+      created_at = Time.parse(self.created_at.to_s)
+      self.first_response_escal_date = (sla_selected.first_response_time / 60).round.business_hour.after( created_at )
+#      self.first_response_sla_time = 
+#!self.first_response &&
+    end
+
+    if self.first_response && !self.first_response_in_min
+      created_at        = Time.parse(self.created_at.to_s)
+      first_response_at = Time.parse(self.first_response.to_s)
+      diff = created_at.business_time_until(first_response_at) / 60
+      self.first_response_in_min = diff.round
+    end
+
+#    # update time
+#    if sla_selected.close_time
+#      created_at = Time.parse(self.created_at.to_s)
+#      self.close_time_escal_date = (sla_selected.close_time / 60).round.business_hour.after( created_at )
+#    end
+
+    # close time
+    if sla_selected.close_time
+      created_at = Time.parse(self.created_at.to_s)
+      self.close_time_escal_date = (sla_selected.close_time / 60).round.business_hour.after( created_at )
+    end
+
+    if self.close_time && !self.close_time_in_min
+      created_at  = Time.parse(self.created_at.to_s)
+      closed_at   = Time.parse(self.close_time.to_s)
+      diff = created_at.business_time_until(closed_at) / 60
+      self.close_time_in_min = diff.round
+    end
+
+    self.save
+  end
+
   private
 
     def number_generate

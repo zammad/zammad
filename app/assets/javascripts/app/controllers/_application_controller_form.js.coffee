@@ -421,6 +421,8 @@ class App.ControllerForm extends App.Controller
 
     # radio
     else if attribute.tag is 'working_hour'
+      if !attribute.value
+        attribute.value = {}
       item = $( App.view('generic/working_hour')( attribute: attribute ) )
 
     # ticket attribute selection
