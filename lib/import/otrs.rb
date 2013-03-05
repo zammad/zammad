@@ -123,6 +123,7 @@ module Import::OTRS
   end
 
   def self.diff_loop
+    return if !Setting.get('import_mode')
     while true
       self.diff
       sleep 30
