@@ -374,7 +374,9 @@ class Package < ApplicationModel
 
     # install file
     puts "NOTICE: uninstall '#{location}'"
-    File.delete( location )
+    if File.exist?( location )
+      File.delete( location )
+    end
 
     # rename existing file
     backup_location = location + '.save'
