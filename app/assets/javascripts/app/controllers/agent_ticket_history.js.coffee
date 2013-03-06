@@ -55,7 +55,8 @@ class App.TicketHistory extends App.ControllerModal
     # show frontend times
     @delay( @frontendTimeUpdate, 200 )
 
-  sortorder: ->
+  sortorder: (e) ->
+    e.preventDefault()
     isSorted = @el.find('.sorted')
     @log 'is sorted?', isSorted
     if isSorted.length
