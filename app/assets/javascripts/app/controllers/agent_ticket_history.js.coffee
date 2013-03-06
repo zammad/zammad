@@ -1,7 +1,8 @@
 class App.TicketHistory extends App.ControllerModal
   events:
     'click [data-type=sortorder]': 'sortorder',
-    'click .close': 'close',
+    'click .cancel': 'modalHide',
+    'click .close':  'modalHide',
 
   constructor: ->
     super
@@ -78,8 +79,3 @@ class App.TicketHistory extends App.ControllerModal
 
     # show frontend times
     @delay( @frontendTimeUpdate, 200 )
-
-  close: ->
-    # close modal
-    @modalHide()
-
