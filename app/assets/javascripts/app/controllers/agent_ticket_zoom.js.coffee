@@ -31,7 +31,9 @@ class Index extends App.Controller
     cache = App.Store.get( @key )
     if cache
       @load(cache)
-    @fetch(@ticket_id)
+    update = =>
+      @fetch(@ticket_id)
+    @interval( update, 30000, 'zoom_check' )
 
   fetch: (ticket_id) ->
 
@@ -44,6 +46,17 @@ class Index extends App.Controller
         view: @view
       processData: true
       success: (data, status, xhr) =>
+        if _.isEqual( @dataLastCall, data)
+          return
+        if @dataLastCall && $('[name="body"]').val()
+          App.Event.trigger 'notify', {
+            type: 'success'
+            msg: App.i18n.translateContent('Ticket has changed!')
+            timeout: 30000
+          }
+          return
+        @dataLastCall = data
+
         @load(data)
         App.Store.write( @key, data )
     )

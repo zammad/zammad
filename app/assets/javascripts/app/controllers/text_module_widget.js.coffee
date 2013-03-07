@@ -1,6 +1,35 @@
-$ = jQuery.sub()
-
 class App.TextModuleUI extends App.Controller
+  constructor: ->
+    super
+    ui = @
+    values = []
+    all = App.Collection.all( type: 'TextModule' )
+    for item in all
+      if item.active is true
+        contentNew = item.content.replace( /<%=\s{0,2}(.+?)\s{0,2}%>/g, ( all, key ) ->
+          key = key.replace( /@/g, 'ui.data.' )
+          varString = "#{key}" + ''
+          try
+            key = eval (varString)
+          catch error
+    #        console.log( "tag replacement: " + error )
+            key = ''
+          return key
+        )
+        value = { val: contentNew, keywords: item.keywords || item.name }
+        values.push value
+
+    customItemTemplate = "<div><span />&nbsp;<small /></div>"
+    elementFactory = (element, e) ->
+      template = $(customItemTemplate).find('span')
+                          .text(e.val).end()
+                          .find('small')
+                          .text("(" + e.keywords + ")").end()
+      element.append(template)
+    $('textarea').sew({values: values, token: ':', elementFactory: elementFactory })
+
+
+class App.TextModuleUIOld extends App.Controller
   events:
     'click [data-type=save]':               'create',
     'click [data-type=text_module_delete]': 'delete',

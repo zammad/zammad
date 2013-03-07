@@ -9,6 +9,7 @@
  *= require ./jquery.noty.css
  *= require ./jquery.tagsinput.css
  *= require ./noty_theme_twitter.css
+ *= require ./sew.css
  *= require ./zzz.css
  *
  *= require_tree ./custom/
