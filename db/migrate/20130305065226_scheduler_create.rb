@@ -13,7 +13,6 @@ class SchedulerCreate < ActiveRecord::Migration
       t.column :created_by_id,  :integer,                 :null => false
       t.timestamps
     end
-    add_index :schedulers, [:name], :unique => true
     Scheduler.create(
       :name           => 'Check Channels',
       :method         => 'Channel.fetch',
@@ -38,6 +37,7 @@ class SchedulerCreate < ActiveRecord::Migration
       :updated_by_id  => 1,
       :created_by_id  => 1,
     )
+    add_index :schedulers, [:name], :unique => true
   end
 
   def down
