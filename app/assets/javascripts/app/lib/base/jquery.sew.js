@@ -162,7 +162,8 @@
 
 
 		var vals = this.filtered = values.filter($.proxy(function (e) {
-			var exp = new RegExp('\\W*' + this.options.token + e.val + '(\\W|$)');
+//			var exp = new RegExp('\\W*' + this.options.token + e.val + '(\\W|$)');
+      var exp = new RegExp('\\W*' + this.options.token + escapeRegExp(e.val) + '(\\W|$)');
 			if(!this.options.repeat && this.getText().match(exp)) {
 				return false;
 			}

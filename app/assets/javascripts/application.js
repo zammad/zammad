@@ -39,6 +39,9 @@ if (!console.log) {
   console.log = function(){}
 }
 
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}
 
 Date.prototype.getWeek = function() {
   var onejan = new Date(this.getFullYear(),0,1);
