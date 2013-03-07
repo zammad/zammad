@@ -457,7 +457,14 @@ class Ticket < ApplicationModel
       end
     }
 
-    return if !sla_selected
+    # reset escalation if no sla is set
+    if !sla_selected
+      self.escalation_time            = nil
+#      self.first_response_escal_date  = nil
+#      self.close_time_escal_date      = nil
+      self.save
+      return true
+    end
 
     # get calendar settings
     BusinessTime::Config.beginning_of_workday = sla_selected.data['beginning_of_workday']
