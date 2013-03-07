@@ -80,6 +80,7 @@ class App.Controller extends Spine.Controller
       { name: 'last_contact_customer',  callback: @frontendTime },
       { name: 'first_response',         callback: @frontendTime },
       { name: 'close_time',             callback: @frontendTime },
+      { name: 'escalation_time',        callback: @frontendTime, subclass: 'escalation' },
       { name: 'article_count',          },
     ]
     shown_all_attributes = []
@@ -104,40 +105,60 @@ class App.Controller extends Spine.Controller
     return size
 
   # human readable time
-  humanTime: (time) =>
+  humanTime: ( time, escalation ) =>
     current = new Date()
     created = new Date(time)
     string = ''
     diff = ( current - created ) / 1000
+    escalated = ''
+    if escalation
+      if diff > 0
+        escalated = '-'
+      if diff > -60 * 60
+        style = "class=\"label label-important\""
+      else
+        style = "class=\"label label-success\""
+
+    if diff.toString().match('-')
+      diff = diff.toString().replace('-', '')
+      diff = parseFloat(diff)
+
     if diff >= 86400
-      unit = Math.round( ( diff / 86400 ) )
+      unit = Math.floor( ( diff / 86400 ) )
 #      if unit > 1
 #        return unit + ' ' + App.i18n.translateContent('days')
 #      else
 #        return unit + ' ' + App.i18n.translateContent('day')
       string = unit + ' ' + App.i18n.translateInline('d')
     if diff >= 3600
-      unit = Math.round( ( diff / 3600 ) % 24 )
+      unit = Math.floor( ( diff / 3600 ) % 24 )
 #      if unit > 1
 #        return unit + ' ' + App.i18n.translateContent('hours')
 #      else
 #        return unit + ' ' + App.i18n.translateContent('hour')
       if string isnt ''
         string = string + ' ' + unit + ' ' + App.i18n.translateInline('h')
+        if escalation
+          string = "<span #{style}>#{escalated}#{string}</b>"
         return string
       else
         string = unit + ' ' + App.i18n.translateInline('h')
     if diff <= 86400
-      unit = Math.round( ( diff / 60 ) % 60 )
+      unit = Math.floor( ( diff / 60 ) % 60 )
 #      if unit > 1
 #        return unit + ' ' + App.i18n.translateContent('minutes')
 #      else
 #        return unit + ' ' + App.i18n.translateContent('minute')
       if string isnt ''
         string = string + ' ' + unit + ' ' + App.i18n.translateInline('m')
+        if escalation
+          string = "<span #{style}>#{escalated}#{string}</b>"
         return string
       else
         string = unit + ' ' + App.i18n.translateInline('m')
+
+    if escalation
+      string = "<span #{style}>#{escalated}#{string}</b>"
     return string
 
   userInfo: (data) =>
@@ -162,18 +183,20 @@ class App.Controller extends Spine.Controller
     @navigate '#login'
     return false
 
-  frontendTime: (timestamp) ->
-    '<span class="humanTimeFromNow" data-time="' + timestamp + '">?</span>'
+  frontendTime: (timestamp, row = {}) ->
+    if !row['subclass']
+      row['subclass'] = ''
+    "<span class=\"humanTimeFromNow #{row.subclass}\" data-time=\"#{timestamp}\">?</span>"
 
   frontendTimeUpdate: =>
     update = =>
       ui = @
       $('.humanTimeFromNow').each( ->
-#        console.log('rewrite frontendTimeUpdate', this)
+#        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
         timestamp = $(this).data('time')
-        time = ui.humanTime( timestamp )
+        time = ui.humanTime( timestamp, $(this).hasClass('escalation') )
         $(this).attr( 'title', App.i18n.translateTimestamp(timestamp) )
-        $(this).text( time )
+        $(this).html( time )
       )
     @interval( update, 30000, 'frontendTimeUpdate' )
 
@@ -346,7 +369,7 @@ class App.ControllerModal extends App.Controller
 
     super(options)
 
-  modalShow: (params) =>
+  modalShow: (params) ->
     defaults = {
       backdrop: true,
       keyboard: true,
@@ -369,12 +392,12 @@ class App.ControllerModal extends App.Controller
       $('.modal').remove();
     )
 
-  modalHide: (e) =>
+  modalHide: (e) ->
     if e
       e.preventDefault()
     @el.modal('hide')
 
-  submit: (e) =>
+  submit: (e) ->
     e.preventDefault()
     @log 'You need to implement your own "submit" method!'
 

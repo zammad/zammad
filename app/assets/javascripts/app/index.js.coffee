@@ -26,7 +26,7 @@ class App extends Spine.Controller
 
         # execute callback on content
         if row.callback
-          return row.callback( item )
+          return row.callback( item, row )
 
         # return raw data
         item

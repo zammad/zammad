@@ -179,19 +179,20 @@ class Settings extends App.ControllerModal
         null:    false,
         translate:  true
         options: {
-          number:                 'Number',
-          title:                  'Title',
-          customer:               'Customer',
-          ticket_state:           'State',
-          ticket_priority:        'Priority',
-          group:                  'Group',
-          owner:                  'Owner',
-          created_at:             'Age',
-          last_contact:           'Last Contact',
-          last_contact_agent:     'Last Contact Agent',
-          last_contact_customer:  'Last Contact Customer',
-          first_response:         'First Response',
-          close_time:             'Close Time',
+          number:                 'Number'
+          title:                  'Title'
+          customer:               'Customer'
+          ticket_state:           'State'
+          ticket_priority:        'Priority'
+          group:                  'Group'
+          owner:                  'Owner'
+          created_at:             'Age'
+          last_contact:           'Last Contact'
+          last_contact_agent:     'Last Contact Agent'
+          last_contact_customer:  'Last Contact Customer'
+          first_response:         'First Response'
+          close_time:             'Close Time'
+          escalation_time:        'Escalation in'
           article_count:          'Article Count'
         },
         class:      'medium',
@@ -205,19 +206,20 @@ class Settings extends App.ControllerModal
         null:    false,
         translate:  true
         options: {
-          number:                 'Number',
-          title:                  'Title',
-          customer:               'Customer',
-          ticket_state:           'State',
-          ticket_priority:        'Priority',
-          group:                  'Group',
-          owner:                  'Owner',
-          created_at:             'Age',
-          last_contact:           'Last Contact',
-          last_contact_agent:     'Last Contact Agent',
-          last_contact_customer:  'Last Contact Customer',
-          first_response:         'First Response',
-          close_time:             'Close Time',
+          number:                 'Number'
+          title:                  'Title'
+          customer:               'Customer'
+          ticket_state:           'State'
+          ticket_priority:        'Priority'
+          group:                  'Group'
+          owner:                  'Owner'
+          created_at:             'Age'
+          last_contact:           'Last Contact'
+          last_contact_agent:     'Last Contact Agent'
+          last_contact_customer:  'Last Contact Customer'
+          first_response:         'First Response'
+          close_time:             'Close Time'
+          escalation_time:        'Escalation in'
           article_count:          'Article Count'
         },
         class:      'medium',

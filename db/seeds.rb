@@ -1298,13 +1298,13 @@ Overview.create_if_not_exists(
     'tickets.ticket_state_id' => [1,2,3],
   },
   :order => {
-    :by        => 'created_at',
+    :by        => 'escalation_time',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'owner', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'created_at' ],
+    :d => [ 'title', 'customer', 'ticket_state', 'group', 'owner', 'escalation_time' ],
+    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'escalation_time' ],
+    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'escalation_time' ],
     :view_mode_default => 's',
   },
   :updated_by_id => 1,

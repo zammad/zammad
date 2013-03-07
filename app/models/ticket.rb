@@ -403,7 +403,31 @@ class Ticket < ApplicationModel
     return adapter
   end
 
+  def self.escalation_calculation_rebuild
+    ticket_state_list_open   = Ticket::State.where(
+      :state_type_id => Ticket::StateType.where(
+        :name => ['new','open', 'pending reminder', 'pending action']
+      )
+    )
+    tickets = Ticket.where( :ticket_state_id => ticket_state_list_open )
+    tickets.each {|ticket|
+      ticket.escalation_calculation
+    }
+  end
+
   def escalation_calculation
+
+    # set escalation off if ticket is already closed
+    ticket_state      = Ticket::State.lookup( :id => self.ticket_state_id )
+    ticket_state_type = Ticket::StateType.lookup( :id => ticket_state.state_type_id )
+    ignore_escalation = ['removed', 'closed', 'merged', 'pending action']
+    if ignore_escalation.include?(ticket_state_type.name)
+      self.escalation_time            = nil
+#      self.first_response_escal_date  = nil
+#      self.close_time_escal_date      = nil
+      self.save
+      return true
+    end
 
     # get sla
     sla_selected = nil
@@ -411,21 +435,28 @@ class Ticket < ApplicationModel
       if sla.condition
         puts sla.condition.inspect
         hit = false
-        if sla.condition['tickets.ticket_priority_id']
-          if sla.condition['tickets.ticket_priority_id'].class == String
-            sla.condition['tickets.ticket_priority_id'] = [ sla.condition['tickets.ticket_priority_id'].to_i ]
+        map = [
+          [ 'tickets.ticket_priority_id', 'ticket_priority_id' ],
+          [ 'tickets.group_id', 'group_id' ]
+        ]
+        map.each {|item|
+          if sla.condition[ item[0] ]
+            if sla.condition[ item[0] ].class == String
+              sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
+            end
+            if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
+              hit = true
+            else
+              hit = false
+            end
           end
-          if sla.condition['tickets.ticket_priority_id'].include?( self.ticket_priority_id )
-            hit = true
-          else
-            hit = false
-          end
-        end
+        }
         if hit
           sla_selected = sla
         end
       end
     }
+
     return if !sla_selected
 
     # get calendar settings
@@ -441,12 +472,19 @@ class Ticket < ApplicationModel
 #    puts sla_selected.inspect
 #    puts days.inspect
 
+    self.escalation_time            = nil
+    self.first_response_escal_date  = nil
+    self.close_time_escal_date      = nil
+
     # first response
     if sla_selected.first_response_time
       created_at = Time.parse(self.created_at.to_s)
       self.first_response_escal_date = (sla_selected.first_response_time / 60).round.business_hour.after( created_at )
-#      self.first_response_sla_time = 
-#!self.first_response &&
+
+      # set ticket escalation
+      if !self.first_response && (!self.escalation_time || self.escalation_time > self.first_response_escal_date)
+        self.escalation_time = self.first_response_escal_date
+      end
     end
 
     if self.first_response && !self.first_response_in_min
@@ -466,6 +504,11 @@ class Ticket < ApplicationModel
     if sla_selected.close_time
       created_at = Time.parse(self.created_at.to_s)
       self.close_time_escal_date = (sla_selected.close_time / 60).round.business_hour.after( created_at )
+
+      # set ticket escalation
+      if !self.close_time && (!self.escalation_time || self.escalation_time > self.close_time_escal_date)
+        self.escalation_time = self.close_time_escal_date
+      end
     end
 
     if self.close_time && !self.close_time_in_min

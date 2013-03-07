@@ -4,9 +4,9 @@ class App.Sla extends Spine.Model
   @url: 'api/slas'
   @configure_attributes = [
     { name: 'name',                display: 'Name',                tag: 'input',    type: 'text', limit: 100, null: false, 'class': 'span4' },
-    { name: 'first_response_time', display: 'First Resposne Time', tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business hours are counted.' },
-    { name: 'update_time',         display: 'Update Time',         tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business hours are counted.' },
-    { name: 'close_time',          display: 'Solution Time',       tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business hours are counted.' },
+    { name: 'first_response_time', display: 'First Resposne Time', tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
+    { name: 'update_time',         display: 'Update Time',         tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
+    { name: 'close_time',          display: 'Solution Time',       tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
     { name: 'condition',           display: 'Conditions where SLA is used', tag: 'ticket_attribute_selection', null: true, class: 'span4' },
     { 
       name:    'data'

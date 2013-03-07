@@ -394,6 +394,7 @@ class Settings extends App.ControllerModal
           last_contact_customer:  'Last Contact Customer'
           first_response:         'First Response'
           close_time:             'Close Time'
+          escalation_time:        'Escalation in'
           article_count:          'Article Count'
         class:      'medium'
       },
@@ -418,6 +419,7 @@ class Settings extends App.ControllerModal
           last_contact_customer:  'Last Contact Customer'
           first_response:         'First Response'
           close_time:             'Close Time'
+          escalation_time:        'Escalation in'
           article_count:          'Article Count'
         class:   'medium'
       },
