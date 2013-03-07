@@ -1,3 +1,5 @@
+require 'scheduler'
+require 'setting'
 class SchedulerCreate < ActiveRecord::Migration
   def up
     create_table :schedulers do |t|
@@ -14,6 +16,30 @@ class SchedulerCreate < ActiveRecord::Migration
       t.timestamps
     end
     add_index :schedulers, [:name], :unique => true
+    Scheduler.create(
+      :name           => 'Check Channels',
+      :method         => 'Channel.fetch',
+      :period         => 30,
+      :active         => true,
+      :updated_by_id  => 1,
+      :created_by_id  => 1,
+    )
+    Scheduler.create(
+      :name           => 'Import OTRS diff load',
+      :method         => 'Import::OTRS.diff_loop',
+      :period         => 60 * 10,
+      :active         => true,
+      :updated_by_id  => 1,
+      :created_by_id  => 1,
+    )
+    Scheduler.create(
+      :name           => 'Generate Session data',
+      :method         => 'Session.jobs',
+      :period         => 60,
+      :active         => true,
+      :updated_by_id  => 1,
+      :created_by_id  => 1,
+    )
   end
 
   def down
