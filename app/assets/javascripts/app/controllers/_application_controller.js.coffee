@@ -114,8 +114,10 @@ class App.Controller extends Spine.Controller
     if escalation
       if diff > 0
         escalated = '-'
-      if diff > -60 * 60
+      if diff >= 0
         style = "class=\"label label-important\""
+      else if diff > -60 * 60
+        style = "class=\"label label-warning\""
       else
         style = "class=\"label label-success\""
 
