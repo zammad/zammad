@@ -46,6 +46,7 @@ class _Singleton extends App.Controller
   client_id:                undefined
 
   constructor: (@args) ->
+    super
 
     # bind to send messages
     App.Event.bind 'ws:send', (data) =>
