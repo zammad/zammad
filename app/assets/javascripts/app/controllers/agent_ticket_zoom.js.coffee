@@ -35,7 +35,7 @@ class Index extends App.Controller
       @fetch(@ticket_id)
     @interval( update, 30000, 'zoom_check' )
 
-  fetch: (ticket_id) ->
+  fetch: (ticket_id, force) ->
 
     # get data
     App.Com.ajax(
@@ -46,7 +46,7 @@ class Index extends App.Controller
         view: @view
       processData: true
       success: (data, status, xhr) =>
-        if @dataLastCall
+        if @dataLastCall && !force
           return if _.isEqual( @dataLastCall.ticket, data.ticket)
           diff = difference( @dataLastCall.ticket, data.ticket )
           console.log('diff', diff)
@@ -439,12 +439,12 @@ class Index extends App.Controller
             @log 'TicketZoom', 'error', 'update article', errors
           article.save(
             success: (r) =>
-              @fetch(@ticket.id)
+              @fetch( @ticket.id, true )
             error: (r) =>
               @log 'TicketZoom', 'error', 'update article', r
           )
         else
-          @fetch(@ticket.id)
+          @fetch( @ticket.id, true )
     )
 
 #    errors = article.validate()
