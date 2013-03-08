@@ -103,7 +103,6 @@
 		var separator2 = posfix.match(/^\s/) ? '' : ' ';
 
 		var finalFight = val + separator2 + posfix;
-		console.log('222', finalFight)
 		this.setText(finalFight);
 		this.$element.setCursorPosition(val.length + 1);
 	};

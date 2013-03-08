@@ -48,6 +48,8 @@ class Index extends App.Controller
       success: (data, status, xhr) =>
         if @dataLastCall
           return if _.isEqual( @dataLastCall.ticket, data.ticket)
+          diff = difference( @dataLastCall.ticket, data.ticket )
+          console.log('diff', diff)
           if $('[name="body"]').val()
             App.Event.trigger 'notify', {
               type: 'success'

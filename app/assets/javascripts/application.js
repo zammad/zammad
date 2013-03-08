@@ -47,3 +47,20 @@ Date.prototype.getWeek = function() {
   var onejan = new Date(this.getFullYear(),0,1);
   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
+
+function difference(object1, object2) {
+  var changes = {};
+  for ( var name in object1 ) {
+    if ( name in object2 ) {
+      if ( _.isObject( object2[name] ) && !_.isArray( object2[name] ) ) {
+        var diff = difference( object1[name], object2[name] );
+        if ( !_.isEmpty( diff ) ) {
+            changes[name] = diff;
+        }
+      } else if ( !_.isEqual( object1[name], object2[name] ) ) {
+        changes[name] = object2[name];
+      }
+    }
+  }
+  return changes;
+}
