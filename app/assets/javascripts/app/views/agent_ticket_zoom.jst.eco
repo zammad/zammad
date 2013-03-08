@@ -22,7 +22,7 @@
       <%- @T( @ticket.ticket_state.name ) %> -
       <%- @T( @ticket.ticket_priority.name ) %> -
       <span class="humanTimeFromNow" data-time="<%- @ticket.created_at %>">?</span>
-      <% if  @ticket.escalation_time: %>
+      <% if @isCustomer && @ticket.escalation_time: %>
       - <%- @T('Escalation in') %>
       <span class="humanTimeFromNow escalation" data-time="<%- @ticket.escalation_time %>">?</span>
       <% end %>

@@ -46,15 +46,15 @@ class Index extends App.Controller
         view: @view
       processData: true
       success: (data, status, xhr) =>
-        if _.isEqual( @dataLastCall, data)
-          return
-        if @dataLastCall && $('[name="body"]').val()
-          App.Event.trigger 'notify', {
-            type: 'success'
-            msg: App.i18n.translateContent('Ticket has changed!')
-            timeout: 30000
-          }
-          return
+        if @dataLastCall
+          return if _.isEqual( @dataLastCall.ticket, data.ticket)
+          if $('[name="body"]').val()
+            App.Event.trigger 'notify', {
+              type: 'success'
+              msg: App.i18n.translateContent('Ticket has changed!')
+              timeout: 30000
+            }
+            return
         @dataLastCall = data
 
         @load(data)
@@ -132,9 +132,10 @@ class Index extends App.Controller
       ]
 
     @html App.view('agent_ticket_zoom')(
-      ticket:   @ticket
-      articles: @articles
-      nav:      @nav
+      ticket:     @ticket
+      articles:   @articles
+      nav:        @nav
+      isCustomer: @isRole('Customer')
     )
 
     new App.ControllerForm(
