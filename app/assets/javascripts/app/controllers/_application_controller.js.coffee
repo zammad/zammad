@@ -204,53 +204,47 @@ class App.Controller extends Spine.Controller
 
 
   clearDelay: (delay_id) =>
-    # check global var
-    if !@_delayID
-      @_delayID = {}
-    clearTimeout( @_delayID[delay_id] ) if @_delayID[delay_id]
+
+    # get global delay ids
+    current = @Config.get( delay_id, '_delayID' )
+    return if !current
+    clearTimeout( current )
 
   delay: (callback, timeout, delay_id) =>
-
-    # clear auto save
-    @clearDelay( delay_id )
 
     # request new data
     call = =>
       callback()
     if delay_id
 
-      # check global var
-      if !@_delayID
-        @_delayID = {}
+      # clear current delay_id
+      @clearDelay( delay_id )
 
-      @_delayID[delay_id] = setTimeout( call, timeout )
+      new_id = setTimeout( call, timeout )
+      @Config.set( delay_id, new_id, '_delayID' )
     else
       setTimeout( call, timeout )
 
   clearInterval: (interval_id) =>
-    # check global var
-    if !@_intervalID
-      @_intervalID = {}
 
-    clearInterval( @_intervalID[interval_id] ) if @_intervalID[interval_id]
+    # get global interval ids
+    current = @Config.get( interval_id, '_intervalID' )
+    return if !current
+    clearInterval( current )
 
   interval: (callback, interval, interval_id) =>
 
-    # check global var
-    if !@_intervalID
-      @_intervalID = {}
+    # clear current interval
+    @clearInterval( interval_id )
 
     callback()
 
-    # auto save
-    every = (ms, cb) -> setInterval cb, ms
-
-    # clear auto save
-    @clearInterval( @_intervalID[interval_id] )
+    every = (ms, cb) =>
+      setInterval cb, ms
 
     # request new data
-    @_intervalID[interval_id] = every interval, () =>
-      callback()
+    new_id = every( interval, callback )
+    @Config.set( interval_id, new_id, '_intervalID' )
 
   userPopups: (position = 'right') ->
 

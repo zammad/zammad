@@ -26,6 +26,7 @@ class _Singleton
   get: ( key, group ) ->
     if group
       return undefined if !group of @config
+      return undefined if @config[group] is undefined
       return @config[group][key]
     return @config[key]
 
