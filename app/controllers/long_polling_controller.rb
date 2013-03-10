@@ -73,7 +73,9 @@ class LongPollingController < ApplicationController
     # check queue queue to send
     client_id = client_id_check
     begin
-      count = 28
+
+      # set max loop time to 28 sec. because of 30 sec. timeout of mod_proxy
+      count = 14
       while true
         count = count - 1
         queue = Session.queue( client_id )
