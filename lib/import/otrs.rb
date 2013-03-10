@@ -124,6 +124,7 @@ module Import::OTRS
 
   def self.diff_loop
     return if !Setting.get('import_mode')
+    return if Setting.get('import_otrs_endpoint') == 'http://otrs_host/otrs'
     while true
       self.diff
       sleep 30
