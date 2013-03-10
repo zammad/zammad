@@ -300,7 +300,9 @@ class TicketsController < ApplicationController
     end
 
     # log object as viewed
-    log_view( ticket )
+    if !params[:do_not_log]
+      log_view( ticket )
+    end
 
     # get signature
     signature = {}

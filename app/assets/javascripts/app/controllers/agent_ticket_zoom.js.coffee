@@ -26,13 +26,14 @@ class Index extends App.Controller
     @article_id     = params.article_id
     @signature      = undefined
     @signature_used = undefined
+    @doNotLog       = 0
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
     if cache
       @load(cache)
     update = =>
-      @fetch(@ticket_id)
+      @fetch( @ticket_id, false)
     @interval( update, 30000, 'zoom_check' )
 
   fetch: (ticket_id, force) ->
@@ -41,7 +42,7 @@ class Index extends App.Controller
     App.Com.ajax(
       id:    'ticket_zoom'
       type:  'GET'
-      url:   'api/ticket_full/' + ticket_id
+      url:   'api/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
       data:
         view: @view
       processData: true
@@ -62,6 +63,7 @@ class Index extends App.Controller
         @load(data)
         App.Store.write( @key, data )
     )
+    @doNotLog = 1
 
   load: (data) =>
     # reset old indexes
