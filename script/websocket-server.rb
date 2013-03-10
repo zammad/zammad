@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 $LOAD_PATH << './lib'
 require 'rubygems'
 require 'eventmachine'
@@ -6,23 +8,33 @@ require 'json'
 require 'fileutils'
 require 'session'
 require 'optparse'
+require 'daemons'
 
 # Look for -o with argument, and -I and -D boolean arguments
 @options = {
   :p => 6042,
   :b => '0.0.0.0',
   :s => false,
+  :v => false,
   :d => false,
   :k => '/path/to/server.key',
   :c => '/path/to/server.crt',
   :i => Dir.pwd.to_s + '/tmp/pids/websocket.pid'
 }
+
+if ARGV[0] != 'start' && ARGV[0] != 'stop'
+  puts "Usage: websocket-server.rb start|stop [options]"
+  exit;
+end
 tls_options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: websocket-server.rb [options]"
+  opts.banner = "Usage: websocket-server.rb start|stop [options]"
 
-  opts.on("-d", "--debug", "enable debug messages") do |d|
+  opts.on("-d", "--daemon", "start as daemon") do |d|
     @options[:d] = d
+  end
+  opts.on("-v", "--verbose", "enable debug messages") do |d|
+    @options[:v] = d
   end
   opts.on("-p", "--port [OPT]", "port of websocket server") do |p|
     @options[:p] = p
@@ -47,11 +59,26 @@ end.parse!
 puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s },pid:#{@options[:i].to_s})"
 #puts options.inspect
 
-# create pid file
-$daemon_pid = File.new( @options[:i].to_s,"w" )
-$daemon_pid.sync = true
-$daemon_pid.puts(Process.pid.to_s)
-$daemon_pid.close
+if ARGV[0] == 'stop'
+
+  # read pid
+  pid =File.open( @options[:i].to_s  ).read
+  pid.gsub!(/\r|\n/, "")
+
+  # kill
+  Process.kill( 9, pid.to_i )
+  exit
+end
+if ARGV[0] == 'start'  && @options[:d]
+
+  Daemons.daemonize
+
+  # create pid file
+  $daemon_pid = File.new( @options[:i].to_s,"w" )
+  $daemon_pid.sync = true
+  $daemon_pid.puts(Process.pid.to_s)
+  $daemon_pid.close
+end
 
 @clients = {}
 @spool   = []
@@ -277,7 +304,7 @@ EventMachine.run {
   end
 
   def log( level, data, client_id = '-' )
-    if !@options[:d]
+    if !@options[:v]
       return if level == 'debug'
     end
     puts "#{Time.now}:client(#{ client_id }) #{ data }"

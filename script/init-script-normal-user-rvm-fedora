@@ -22,7 +22,7 @@ APP_PORT=3000
 WS_PORT=6042
 
 ZAMMAD_CONFIG=/etc/sysconfig/zammad
-# Read config   
+# Read config
 [ -f "$ZAMMAD_CONFIG" ] && . "$ZAMMAD_CONFIG"
 
 
@@ -38,15 +38,15 @@ else
     exit 1
 fi
 
-rvm use ruby-1.9.3-p286
+rvm use ruby-1.9.3
 
 RUBY=$(which ruby)
 RAILS=$(which rails)
-BUNDLE=$(which rails)
+BUNDLE=$(which bundle)
 
-APP_PIDFILE=$DAEMON_HOME/tmp/pids/server.pid
+APP_PIDFILE=$DAEMON_HOME/tmp/pids/thin.pid
 WS_PIDFILE=$DAEMON_HOME/tmp/pids/websocket.pid
-WORKER_PIDFILE=$DAEMON_HOME/tmp/pids/sessionworker.pid
+SCHEDULER_PIDFILE=$DAEMON_HOME/tmp/pids/scheduler_runner.pid
 
 start() {
 
@@ -55,37 +55,38 @@ start() {
     # precompile assets
     if [ "$RAILS_ENV" = "production" ]; then
         echo -n $"Precompile assets for ${NAME}/${RAILS_ENV}"
-        $BUNDLE exec rake assets:precompile && echo_success || echo_failure
+        $BUNDLE exec rake assets:precompile &> /dev/null && echo_success || echo_failure
         echo
     fi
 
     # start web server
     echo -n $"Starting ${NAME}/${RAILS_ENV} application server on port: ${APP_PORT}"
-    $RAILS server -d -p $APP_PORT --pid $APP_PIDFILE &> /dev/null
+#    $RAILS server -d -p $APP_PORT --pid $APP_PIDFILE &> /dev/null
+    thin start --threaded -d -p $APP_PORT --pid $APP_PIDFILE
     sleep 2
     status -p $APP_PIDFILE &> /dev/null && echo_success || echo_failure
     echo
 
     # start websocket server
     echo -n $"Starting ${NAME}/${RAILS_ENV} web socket server on port: ${WS_PORT}"
-    nohup $RUBY script/websocket-server.rb -p $WS_PORT -i $WS_PIDFILE &> /dev/null &
+    script/websocket-server.rb start -d -p $WS_PORT -i $WS_PIDFILE &> /dev/null &
     sleep 2
     status -p $WS_PIDFILE &> /dev/null && echo_success || echo_failure
     echo
 
-    # start session worker
-    echo -n $"Starting ${NAME}/${RAILS_ENV} session worker"
-    nohup $RAILS runner 'Session.jobs' &> /dev/null &
+    # start scheduler worker
+    echo -n $"Starting ${NAME}/${RAILS_ENV} scheduler worker"
+    script/scheduler.rb start
     sleep 10
-    status -p $WORKER_PIDFILE &> /dev/null && echo_success || echo_failure
+    status -p $SCHEDULER_PIDFILE &> /dev/null && echo_success || echo_failure
     echo
 }
 
 stop() {
-    # stop session worker
-    echo -n $"Shutting down ${NAME}/${RAILS_ENV} session worker"
-    if test -e $WORKER_PIDFILE; then
-        killproc -p $WORKER_PIDFILE
+    # stop scheduler worker
+    echo -n $"Shutting down ${NAME}/${RAILS_ENV} scheduler worker"
+    if test -e $SCHEDULER_PIDFILE; then
+        killproc -p $SCHEDULER_PIDFILE
     fi
     echo
 
@@ -119,7 +120,7 @@ case "$1" in
     status)
         status -p $APP_PIDFILE "${NAME} ${RAILS_ENV} - application server"
         status -p $WS_PIDFILE "${NAME} ${RAILS_ENV} - web socket server"
-        status -p $WORKER_PIDFILE "${NAME} ${RAILS_ENV} - session worker"
+        status -p $SCHEDULER_PIDFILE "${NAME} ${RAILS_ENV} - scheduler worker"
     ;;
 
     *)

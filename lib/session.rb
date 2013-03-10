@@ -104,12 +104,6 @@ module Session
 
   def self.jobs
 
-    # create pid file
-    $daemon_pid = File.new( @pid.to_s,"w" )
-    $daemon_pid.sync = true
-    $daemon_pid.puts(Process.pid.to_s)
-    $daemon_pid.close
-
     # just make sure that spool path exists
     if !File::exists?( @path )
       FileUtils.mkpath @path
@@ -354,13 +348,13 @@ class UserState
       # recent viewed
       cache_key = @cache_key + '_recent_viewed'
       if CacheIn.expired(cache_key)
-        recent_viewed = History.recent_viewed(user)
+        recent_viewed = History.recent_viewed( user )
         recent_viewed_cache = CacheIn.get( cache_key, { :re_expire => true } )
         self.log 'notice', 'fetch recent_viewed - ' + cache_key
         if recent_viewed != recent_viewed_cache
           self.log 'notify', 'fetch recent_viewed changed - ' + cache_key
 
-          recent_viewed_full = History.recent_viewed_fulldata(user)
+          recent_viewed_full = History.recent_viewed_fulldata( user )
           CacheIn.set( cache_key, recent_viewed, { :expires_in => 5.seconds } )
           CacheIn.set( cache_key + '_push', recent_viewed_full )
         end
