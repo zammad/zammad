@@ -3,6 +3,9 @@ require 'cache'
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
 
+  before_create  :cache_delete
+  before_update  :cache_delete_before
+  before_destroy :cache_delete_before
   after_create  :cache_delete
   after_update  :cache_delete
   after_destroy :cache_delete
@@ -40,12 +43,33 @@ class ApplicationModel < ActiveRecord::Base
 #    puts 'g ' + group.class.to_s
     if o.respond_to?('cache_delete') then o.cache_delete end
   end
+  def cache_delete_before
+    old_object = self.class.where( :id => self.id ).first
+    if old_object
+      old_object.cache_delete
+    end
+    self.cache_delete
+  end
+
   def cache_delete
     key = self.class.to_s + '::' + self.id.to_s
     Cache.delete( key.to_s )
     key = self.class.to_s + ':f:' + self.id.to_s
     Cache.delete( key.to_s )
+    if self[:name]
+      key = self.class.to_s + '::' + self.name.to_s
+      Cache.delete( key.to_s )
+      key = self.class.to_s + ':f:' + self.name.to_s
+      Cache.delete( key.to_s )
+    end
+    if self[:login]
+      key = self.class.to_s + '::' + self.login.to_s
+      Cache.delete( key.to_s )
+      key = self.class.to_s + ':f:' + self.login.to_s
+      Cache.delete( key.to_s )
+    end
   end
+
   def self.cache_set(data_id, data, full = false)
     if !full
       key = self.to_s + '::' + data_id.to_s
