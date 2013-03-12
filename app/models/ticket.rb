@@ -501,6 +501,11 @@ class Ticket < ApplicationModel
       self.first_response_in_min = diff.round
     end
 
+    # set time over sla
+    if sla_selected.first_response_time && self.first_response_in_min
+      self.first_response_diff_in_min = sla_selected.first_response_time - self.first_response_in_min
+    end
+
 #    # update time
 #    if sla_selected.close_time
 #      created_at = Time.parse(self.created_at.to_s)
@@ -523,6 +528,11 @@ class Ticket < ApplicationModel
       closed_at   = Time.parse(self.close_time.to_s)
       diff = created_at.business_time_until(closed_at) / 60
       self.close_time_in_min = diff.round
+    end
+
+    # set time over sla
+    if sla_selected.close_time && self.close_time_in_min
+      self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
     end
 
     self.save
