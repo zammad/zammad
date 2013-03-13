@@ -1295,7 +1295,7 @@ Overview.create_if_not_exists(
   :prio       => 1010,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [1,2,3],
+    'tickets.escalation_time' =>{ 'direction' => 'before', 'count'=> 5, 'area' => 'minute' },
   },
   :order => {
     :by        => 'escalation_time',

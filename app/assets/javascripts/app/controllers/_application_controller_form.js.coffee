@@ -419,11 +419,20 @@ class App.ControllerForm extends App.Controller
         )
       @delay( a, 180 )
 
-    # radio
+    # working_hour
     else if attribute.tag is 'working_hour'
       if !attribute.value
         attribute.value = {}
       item = $( App.view('generic/working_hour')( attribute: attribute ) )
+
+    # working_hour
+    else if attribute.tag is 'time_before_last'
+      if !attribute.value
+        attribute.value = {}
+      item = $( App.view('generic/time_before_last')( attribute: attribute ) )
+      item.find( "[name=\"#{attribute.name}::direction\"]").find("option[value=\"#{attribute.value.direction}\"]").attr( 'selected', 'selected' )
+      item.find( "[name=\"#{attribute.name}::count\"]").find("option[value=\"#{attribute.value.count}\"]").attr( 'selected', 'selected' )
+      item.find( "[name=\"#{attribute.name}::area\"]").find("option[value=\"#{attribute.value.area}\"]").attr( 'selected', 'selected' )
 
     # ticket attribute selection
     else if attribute.tag is 'ticket_attribute_selection'
@@ -437,6 +446,9 @@ class App.ControllerForm extends App.Controller
 
       addShownAttribute = ( key, value ) =>
         console.log( 'addShownAttribute', key, value )
+        parts = key.split(/::/)
+        key   = parts[0]
+        type  = parts[1]
         if key is 'tickets.number'
           attribute_config = {
             name:       attribute.name + '::tickets.number'
@@ -561,6 +573,86 @@ class App.ControllerForm extends App.Controller
             class:      'medium'
             remove:     true
           }
+        else if key is 'tickets.created_at' && ( type is '<>' || value.count )
+          attribute_config = {
+            name:       attribute.name + '::tickets.created_at'
+            display:    'Created (before / last)'
+            tag:        'time_before_last'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'tickets.created_at' && ( type is '><' || 0 )
+          attribute_config = {
+            name:       attribute.name + '::tickets.created_at'
+            display:    'Created (between)'
+            tag:        'time_range'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'tickets.close_time' && ( type is '<>' || value.count )
+          attribute_config = {
+            name:       attribute.name + '::tickets.close_time'
+            display:    'Closed (before / last)'
+            tag:        'time_before_last'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'tickets.close_time' && ( type is '><' || 0 )
+          attribute_config = {
+            name:       attribute.name + '::tickets.close_time'
+            display:    'Closed (between)'
+            tag:        'time_range'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'tickets.updated_at' && ( type is '<>' || value.count )
+          attribute_config = {
+            name:       attribute.name + '::tickets.updated_at'
+            display:    'Updated (before / last)'
+            tag:        'time_before_last'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'tickets.updated_at' && ( type is '><' || 0 )
+          attribute_config = {
+            name:       attribute.name + '::tickets.updated_at'
+            display:    'Updated (between)'
+            tag:        'time_range'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'tickets.escalation_time' && ( type is '<>' || value.count )
+          attribute_config = {
+            name:       attribute.name + '::tickets.escalation_time'
+            display:    'Escalation (before / last)'
+            tag:        'time_before_last'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
+        else if key is 'tickets.escalation_time' && ( type is '><' || 0 )
+          attribute_config = {
+            name:       attribute.name + '::tickets.escalation_time'
+            display:    'Escatlation (between)'
+            tag:        'time_range'
+            value:      value
+            translate:  true
+            class:      'medium'
+            remove:     true
+          }
         else
           attribute_config = {
             name:       attribute.name + '::' + key
@@ -646,6 +738,54 @@ class App.ControllerForm extends App.Controller
           {
             value:    'tickets.organization_id'
             name:     'Organization'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.created_at::<>'
+            name:     'Created (before/last)'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.created_at::><'
+            name:     'Created (between)'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.close_time::<>'
+            name:     'Closed (before/last)'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.close_time::><'
+            name:     'Closed (between)'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.updated_at::<>'
+            name:     'Updated (before/last)'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.updated_at::><'
+            name:     'Updated (between)'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.escalation_time::<>'
+            name:     'Escalation (before/last)'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.escalation_time::><'
+            name:     'Escalation (between)'
             selected: true
             disable:  false
           },
@@ -1057,10 +1197,17 @@ class App.ControllerForm extends App.Controller
     inputSelectObject = {}
     for key of param
       parts = key.split '::'
-      if parts[0] && parts[1]
+      if parts[0] && parts[1] && !parts[2]
         if !inputSelectObject[ parts[0] ]
           inputSelectObject[ parts[0] ] = {}
         inputSelectObject[ parts[0] ][ parts[1] ] = param[ key ]
+        delete param[ key ]
+      if parts[0] && parts[1] && parts[2]
+        if !inputSelectObject[ parts[0] ]
+          inputSelectObject[ parts[0] ] = {}
+        if !inputSelectObject[ parts[0] ][ parts[1] ]
+          inputSelectObject[ parts[0] ][ parts[1] ] = {}
+        inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ] = param[ key ]
         delete param[ key ]
 
     # check {input_select}

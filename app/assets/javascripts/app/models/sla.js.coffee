@@ -12,7 +12,7 @@ class App.Sla extends Spine.Model
       name:    'data'
       display: 'Business Times'
       tag:     'working_hour'
-      default: {
+      default:
         Mon: true
         Tue: true
         Wed: true
@@ -20,16 +20,15 @@ class App.Sla extends Spine.Model
         Fri: true
         beginning_of_workday: '8:00'
         end_of_workday: '18:00'
-      }
       null:    true
       nulloption: true
       translate:  true
       options:
-        customer:               'Customer'
-        ticket_state:           'State'
-        ticket_priority:        'Priority'
-        group:                  'Group'
-        owner:                  'Owner'
+        customer:         'Customer'
+        ticket_state:     'State'
+        ticket_priority:  'Priority'
+        group:            'Group'
+        owner:            'Owner'
       class:   'span4'
     },
     { name: 'updated_at',          display: 'Updated',             type: 'time', readonly: 1 },

@@ -325,7 +325,7 @@ class Ticket < ApplicationModel
       overviews.each { |overview|
 
         # get count
-        count = Ticket.where( :group_id => group_ids ).where( overview.condition ).count()
+        count = Ticket.where( :group_id => group_ids ).where( self._condition( overview.condition ) ).count()
 
         # get meta info
         all = {
@@ -348,7 +348,7 @@ class Ticket < ApplicationModel
       end
       tickets = Ticket.select( 'id' ).
         where( :group_id => group_ids ).
-        where( overview_selected.condition ).
+        where( self._condition( overview_selected.condition ) ).
         order( order_by ).
         limit( 500 )
 
@@ -358,7 +358,7 @@ class Ticket < ApplicationModel
       }
 
       tickets_count = Ticket.where( :group_id => group_ids ).
-        where( overview_selected.condition ).
+        where( self._condition( overview_selected.condition ) ).
         count()
 
       return {
@@ -371,13 +371,13 @@ class Ticket < ApplicationModel
     # get tickets for overview
     data[:start_page] ||= 1
     tickets = Ticket.where( :group_id => group_ids ).
-      where( overview_selected.condition ).
-      order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s ).
-      limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] ).
-      offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
+      where( self._condition( overview_selected.condition ) ).
+      order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )#.
+#      limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] ).
+#      offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
 
     tickets_count = Ticket.where( :group_id => group_ids ).
-      where( overview_selected.condition ).
+      where( self._condition( overview_selected.condition ) ).
       count()
 
     return {
@@ -386,6 +386,64 @@ class Ticket < ApplicationModel
       :overview      => overview_selected_raw,
     }
 
+  end
+  def self._condition(condition)
+    sql  = ''
+    bind = [nil]
+    condition.each {|key, value|
+      if sql != ''
+        sql += ' AND '
+      end
+      if value.class == Array
+        sql += " #{key} IN (?)"
+        bind.push value
+      elsif value.class == Hash || value.class == ActiveSupport::HashWithIndifferentAccess
+        time = Time.now
+        if value['area'] == 'minute'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60
+          else
+            time += value['count'].to_i * 60
+          end
+        elsif value['area'] == 'hour'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60
+          else
+            time += value['count'].to_i * 60 * 60
+          end
+        elsif value['area'] == 'day'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60 * 24
+          else
+            time += value['count'].to_i * 60 * 60 * 24
+          end
+        elsif value['area'] == 'month'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60 * 24 * 31
+          else
+            time += value['count'].to_i * 60 * 60 * 24 * 31
+          end
+        elsif value['area'] == 'year'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60 * 24 * 365
+          else
+            time += value['count'].to_i * 60 * 60 * 24 * 365
+          end
+        end
+        if value['direction'] == 'last'
+          sql += " #{key} > ?"
+          bind.push time
+        else
+          sql += " #{key} < ?"
+          bind.push time
+        end
+      else
+        sql += " #{key} = ?"
+        bind.push value
+      end
+    }
+    bind[0] = sql
+    return bind
   end
 
   def self.number_adapter
