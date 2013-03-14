@@ -90,7 +90,7 @@ Setting.create_if_not_exists(
   :title       => 'http type',
   :name        => 'http_type',
   :area        => 'System::Base',
-  :description => 'Defines the type of protocol, used by the web server, to serve the application. If https protocol will be used instead of plain http, it must be specified it here. Since this has no affect on the web server\'s settings or behavior, it will not change the method of access to the application and, if it is wrong, it will not prevent you from logging into the application. This setting is used as a variable, #{setting.http_type} which is found in all forms of messaging used by the application, to build links to the tickets within your system.',
+  :description => 'Defines the type of protocol, used by the web server, to serve the application. If https protocol will be used instead of plain http, it must be specified in here. Since this has no affect on the web server\'s settings or behavior, it will not change the method of access to the application and, if it is wrong, it will not prevent you from logging into the application. This setting is used as a variable, #{setting.http_type} which is found in all forms of messaging used by the application, to build links to the tickets within your system.',
   :options     => {
     :form => [
       {
@@ -115,7 +115,7 @@ Setting.create_if_not_exists(
   :title       => 'Storage Mechanism',
   :name        => 'storage',
   :area        => 'System::Storage',
-  :description => '"Database" stores all attachments in the database (not recommended for storing big). "Filesystem" stores the data on the filesystem; this is faster but the webserver should run under the Zammad user. You can switch between the modules even on a system that is already in production without any loss of data.',
+  :description => '"Database" stores all attachments in the database (not recommended for storing large amounts of data). "Filesystem" stores the data on the filesystem. You can switch between the modules even on a system that is already in production without any loss of data.',
   :options     => {
     :form => [
       {

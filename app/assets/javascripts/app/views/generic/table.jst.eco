@@ -11,7 +11,7 @@
       <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- @T( row.display ) %></th>
 <% end %>
 <% if @destroy: %>
-      <th class="span2"><%- @T('Destory') %></th>
+      <th class="span2"><%- @T('Destroy') %></th>
 <% end %>
     </tr>
   </thead>
