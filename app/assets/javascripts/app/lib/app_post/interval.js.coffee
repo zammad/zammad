@@ -1,4 +1,4 @@
-class App.Delay
+class App.Interval
   _instance = undefined
 
   @set: ( callback, timeout, key, level ) ->
@@ -37,20 +37,18 @@ class _Singleton extends Spine.Module
       key = Math.floor( Math.random() * 99999 )
 
     # setTimeout
-    @log 'Delay', 'debug', 'set', key, timeout, level, callback
-    call = =>
-      @clear( key ) 
-      callback()
-    delay_id = setTimeout( call, timeout )
+    @log 'Interval', 'debug', 'set', key, timeout, level, callback
+    callback()
+    interval_id = setInterval( callback, timeout )
 
-    # remember all delays
+    # remember all interval
     @levelStack[ level ][ key.toString() ] = {
-      delay_id: delay_id
-      timeout:  timeout
-      level:    level
+      interval_id: interval_id
+      timeout:     timeout
+      level:       level
     }
 
-    return delay_id
+    return interval_id
 
   clear: ( key, level ) ->
 
@@ -60,12 +58,12 @@ class _Singleton extends Spine.Module
     if !@levelStack[ level ]
       @levelStack[ level ] = {}
 
-    # get global delay ids
+    # get global interval ids
     data = @levelStack[ level ][ key.toString() ]
     return if !data
 
-    @log 'Delay', 'debug', 'clear', data
-    clearTimeout( data['delay_id'] )
+    @log 'Interval', 'debug', 'clear', data
+    clearInterval( data['interval_id'] )
 
   clearLevel: (level) ->
     return if !@levelStack[ level ]

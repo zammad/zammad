@@ -99,6 +99,146 @@ App.Com.ajax({
   }
 });
 
+// delay
+App.Delay.set( function() {
+    test( "delay - test 1 - 1/2", function() {
+
+      // check
+      ok( !window.testDelay1, 'delay - test 1 - 1/2' );
+      window.testDelay1 = true;
+    });
+  },
+  1000,
+  'delay-test1',
+  'level'
+);
+App.Delay.set( function() {
+    test( "delay - test 1 - 2/2", function() {
+
+      // check
+      ok( window.testDelay1, 'delay - test 1 - 2/2' );
+      window.testDelay1 = 1;
+    });
+  },
+  2000,
+  'delay-test1',
+  'level'
+);
+
+App.Delay.set( function() {
+    test( "delay - test 2 - 1/3", function() {
+
+      // check
+      ok( !window.testDelay2, 'delay - test 2 - 1/3' );
+      window.testDelay2 = 1;
+    });
+  },
+  2000
+);
+App.Delay.set( function() {
+    test( "delay - test 2 - 2/3", function() {
+
+      // check
+      ok( !window.testDelay2, 'delay - test 2 - 2/3' );
+    });
+  },
+  1000
+);
+App.Delay.set( function() {
+    test( "delay - test 2 - 3/3", function() {
+
+      // check
+      ok( window.testDelay2, 'delay - test 2 - 3/3' );
+    });
+  },
+  3000
+);
+
+window.testDelay3 = 1;
+App.Delay.set( function() {
+    test( "delay - test 3 - 1/1", function() {
+
+      // check
+      ok( false, 'delay - test 3 - 1/1' );
+    });
+  },
+  1000,
+  'delay3'
+);
+App.Delay.clear('delay3')
+
+App.Delay.set( function() {
+    test( "delay - test 4 - 1/1", function() {
+
+      // check
+      ok( false, 'delay - test 4 - 1/1' );
+    });
+  },
+  1000,
+  undefined,
+  'Page'
+);
+App.Delay.clearLevel('Page')
+
+
+// interval 1
+window.testInterval1 = 1
+App.Interval.set( function() {
+    window.testInterval1 += 1;
+  },
+  500,
+  'interval-test1'
+);
+App.Delay.set( function() {
+    test( "interval - test 1 - 1/1", function() {
+
+      // check
+      equal( window.testInterval1, 6, 'interval - test 1' );
+      App.Interval.clear('interval-test1')
+    });
+  },
+  2500
+);
+App.Delay.set( function() {
+    test( "interval - test 1 - 1/1", function() {
+
+      // check
+      equal( window.testInterval1, 6, 'interval - test after clear' );
+    });
+  },
+  3500
+);
+
+
+// interval 2
+window.testInterval2 = 1
+App.Interval.set( function() {
+    window.testInterval2 += 1;
+  },
+  500,
+  undefined,
+  'page'
+);
+App.Delay.set( function() {
+    test( "interval - test 2 - 1/1", function() {
+
+      // check
+      equal( window.testInterval2, 6, 'interval - test 2' );
+      App.Interval.clearLevel('page')
+    });
+  },
+  2500
+);
+App.Delay.set( function() {
+    test( "interval - test 2 - 1/1", function() {
+
+      // check
+      equal( window.testInterval2, 6, 'interval - test 2 - after clear' );
+    });
+  },
+  3500
+);
+
 
 // i18n
 test( "i18n", function() {
@@ -271,9 +411,11 @@ test( "config", function() {
 });
 
 // form
+/*
 test( "form", function() {
 
 });
+*/
 
 // auth
 App.Auth.login({

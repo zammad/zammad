@@ -53,7 +53,7 @@ class App.TicketHistory extends App.ControllerModal
     @userPopups()
 
     # show frontend times
-    @delay( @frontendTimeUpdate, 200 )
+    @delay( @frontendTimeUpdate, 200, 'ui-time-update' )
 
   sortorder: (e) ->
     e.preventDefault()
@@ -79,4 +79,4 @@ class App.TicketHistory extends App.ControllerModal
     @userPopups()
 
     # show frontend times
-    @delay( @frontendTimeUpdate, 200 )
+    @delay( @frontendTimeUpdate, 200, 'ui-time-update' )

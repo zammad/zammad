@@ -34,7 +34,7 @@ class Index extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false)
-    @interval( update, 30000, 'zoom_check' )
+    @interval( update, 30000, 'zoom_check', 'page' )
 
   fetch: (ticket_id, force) ->
 
@@ -177,7 +177,7 @@ class Index extends App.Controller
       offset = offset - 45
       scrollTo = ->
         @scrollTo( 0, offset )
-      @delay( scrollTo, 100 )
+      @delay( scrollTo, 100, undefined, 'page' )
 
   ticket_action_row: =>
 

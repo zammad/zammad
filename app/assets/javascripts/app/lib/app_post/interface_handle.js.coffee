@@ -42,6 +42,12 @@ class App.Content extends App.Controller
           # remove events for page
           App.Event.unbindLevel('page')
 
+          # remove delay for page
+          App.Delay.clearLevel('page')
+
+          # remove interval for page
+          App.Interval.clearLevel('page')
+
           # unbind in controller area
           @el.unbind()
           @el.undelegate()

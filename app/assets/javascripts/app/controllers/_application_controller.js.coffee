@@ -203,48 +203,17 @@ class App.Controller extends Spine.Controller
     @interval( update, 30000, 'frontendTimeUpdate' )
 
 
-  clearDelay: (delay_id) =>
+  clearDelay: (delay_id, level) =>
+    App.Delay.clear(delay_id, level)
 
-    # get global delay ids
-    current = @Config.get( delay_id, '_delayID' )
-    return if !current
-    clearTimeout( current )
+  delay: (callback, timeout, delay_id, level) =>
+    App.Delay.set(callback, timeout, delay_id, level)
 
-  delay: (callback, timeout, delay_id) =>
+  clearInterval: (interval_id, level) =>
+    App.Interval.clear(interval_id, level)
 
-    # request new data
-    call = =>
-      callback()
-    if delay_id
-
-      # clear current delay_id
-      @clearDelay( delay_id )
-
-      new_id = setTimeout( call, timeout )
-      @Config.set( delay_id, new_id, '_delayID' )
-    else
-      setTimeout( call, timeout )
-
-  clearInterval: (interval_id) =>
-
-    # get global interval ids
-    current = @Config.get( interval_id, '_intervalID' )
-    return if !current
-    clearInterval( current )
-
-  interval: (callback, interval, interval_id) =>
-
-    # clear current interval
-    @clearInterval( interval_id )
-
-    callback()
-
-    every = (ms, cb) =>
-      setInterval cb, ms
-
-    # request new data
-    new_id = every( interval, callback )
-    @Config.set( interval_id, new_id, '_intervalID' )
+  interval: (callback, interval, interval_id, level) =>
+    App.Interval.set(callback, interval, interval_id, level)
 
   userPopups: (position = 'right') ->
 
