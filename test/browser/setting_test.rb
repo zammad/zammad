@@ -41,7 +41,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 4,
           },
           {
             :execute      => 'match',
