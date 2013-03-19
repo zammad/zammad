@@ -3,7 +3,7 @@ require 'setting'
 class SettingUpdate < ActiveRecord::Migration
   def up
     count = User.all.count()
-    if count <= 2
+    if count > 2
       Setting.create_or_update(
         :title       => 'System Init Done',
         :name        => 'system_init_done',
