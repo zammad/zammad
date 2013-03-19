@@ -47,7 +47,7 @@ class PreferencesTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 6,
           },
           {
             :execute => 'check',
