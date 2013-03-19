@@ -130,7 +130,7 @@ class _Singleton extends Spine.Module
 
     # load full array once
     if _.isArray( params.data )
-      if !params.refresh
+      if !params.refresh && App[ params.type ]
         App[ params.type ].refresh( params.data )
 
       # remember in store if not already requested from local storage
@@ -142,7 +142,7 @@ class _Singleton extends Spine.Module
     # load data from object
 #    if _.isObject( params.data )
     for key, object of params.data
-      if !params.refresh
+      if !params.refresh && App[ params.type ]
         App[ params.type ].refresh( object )
 
       # remember in store if not already requested from local storage
