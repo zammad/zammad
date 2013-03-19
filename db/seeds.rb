@@ -1027,6 +1027,28 @@ Setting.create_if_not_exists(
   :state    => false,
   :frontend => true
 )
+Setting.create_if_not_exists(
+  :title       => 'Ignore Escalation/SLA Information',
+  :name        => 'import_igonre_sla',
+  :area        => 'Import::Base',
+  :description => 'Ignore Escalation/SLA Information form import system.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'import_igonre_sla', 
+        :tag      => 'boolean',
+        :options  => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state    => false,
+  :frontend => true
+)
 
 Setting.create_if_not_exists(
   :title       => 'Import Endpoint',
