@@ -996,6 +996,16 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  :title       => 'Default Screen',
+  :name        => 'default_controller',
+  :area        => 'Core',
+  :description => 'Defines the default controller.',
+  :options     => {},
+  :state       => '#dashboard',
+  :frontend    => true
+)
+
+Setting.create_if_not_exists(
   :title       => 'Import Mode',
   :name        => 'import_mode',
   :area        => 'Import::Base',

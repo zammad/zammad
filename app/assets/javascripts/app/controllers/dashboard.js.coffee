@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class Index extends App.Controller
 
   constructor: ->
@@ -8,14 +6,13 @@ class Index extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    # check role
     if @isRole('Customer')
-      @navigate '#ticket_view/my_tickets'
+      @navigate '#'
       return
 
     # set title
     @title 'Dashboard'
-    @navupdate '#/'
+    @navupdate '#dashboard'
 
     @plugins = {
       main: {
@@ -91,5 +88,4 @@ class Index extends App.Controller
     @el.find( '#sortable' ).sortable( dndOptions )
     @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
-App.Config.set( '', Index, 'Routes' )
-App.Config.set( '/', Index, 'Routes' )
+App.Config.set( 'dashboard', Index, 'Routes' )

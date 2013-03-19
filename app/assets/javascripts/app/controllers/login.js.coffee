@@ -4,6 +4,12 @@ class Index extends App.Controller
 
   constructor: ->
     super
+
+    # navigate to # if sesstion if exists
+    if @Session.get( 'id' )
+      @navigate '#'
+      return
+
     @title 'Sign in'
     @render()
     @navupdate '#login'

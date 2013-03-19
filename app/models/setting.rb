@@ -7,10 +7,12 @@ class Setting < ApplicationModel
   after_create  :delete_cache
   after_update  :delete_cache
 
+  @@current = {}
+
   def self.load
 
     # check if config is already generated
-    return Thread.current[:settings_config] if Thread.current[:settings_config]
+    return @@current[:settings_config] if @@current[:settings_config]
 
     # read all config settings
     config = {}
@@ -27,7 +29,7 @@ class Setting < ApplicationModel
     }
 
     # store for class requests
-    Thread.current[:settings_config] = config
+    @@current[:settings_config] = config
     return config
   end
 
@@ -42,12 +44,12 @@ class Setting < ApplicationModel
 
   def self.get(name)
     self.load
-    return Thread.current[:settings_config][name]
+    return @@current[:settings_config][name]
   end
 
   private
     def delete_cache
-      Thread.current[:settings_config] = nil
+      @@current[:settings_config] = nil
     end
     def set_initial
       self.state_initial = self.state
