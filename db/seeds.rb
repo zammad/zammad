@@ -1029,7 +1029,7 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   :title       => 'Ignore Escalation/SLA Information',
-  :name        => 'import_igonre_sla',
+  :name        => 'import_ignore_sla',
   :area        => 'Import::Base',
   :description => 'Ignore Escalation/SLA Information form import system.',
   :options     => {
@@ -1037,7 +1037,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_igonre_sla', 
+        :name     => 'import_ignore_sla', 
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',

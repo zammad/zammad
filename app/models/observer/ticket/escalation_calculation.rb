@@ -7,7 +7,7 @@ class Observer::Ticket::EscalationCalculation < ActiveRecord::Observer
   def after_update(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode') && !Setting.get('import_igonre_sla')
+    return if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
 
     # prevent loops
     return if record[:escalation_calc]
