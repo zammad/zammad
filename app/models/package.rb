@@ -179,11 +179,13 @@ class Package < ApplicationModel
     # verify if package can get installed
     package_db = Package.where( :name => meta[:name] ).first
     if package_db
-      if Gem::Version.new( package_db.version ) == Gem::Version.new( meta[:version] )
-        raise "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
-      end
-      if Gem::Version.new( package_db.version ) > Gem::Version.new( meta[:version] )
-        raise "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
+      if !data[:reinstall]
+        if Gem::Version.new( package_db.version ) == Gem::Version.new( meta[:version] )
+          raise "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
+        end
+        if Gem::Version.new( package_db.version ) > Gem::Version.new( meta[:version] )
+          raise "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
+        end
       end
 
       # uninstall old package
@@ -196,13 +198,15 @@ class Package < ApplicationModel
 
     # store package
     record = Package.create( meta )
-    Store.add(
-      :object      => 'Package',
-      :o_id        => record.id,
-      :data        => package.to_s,
-      :filename    => meta[:name] + '-' + meta[:version] + '.zpm',
-      :preferences => {},
-    )
+    if !data[:reinstall]
+      Store.add(
+        :object      => 'Package',
+        :o_id        => record.id,
+        :data        => package.to_s,
+        :filename    => meta[:name] + '-' + meta[:version] + '.zpm',
+        :preferences => {},
+      )
+    end
 
     # write files
     package.elements.each('zpm/filelist/file') do |element|
@@ -226,6 +230,16 @@ class Package < ApplicationModel
     # prebuild assets
 
     return true
+  end
+
+  # Package.reinstall( package_name )
+  def self.reinstall(package_name)
+    package = Package.where( :name => package_name ).first
+    return if !package
+
+    file = self._get_bin( package.name, package.version )
+    return if !file
+    self.install( :string => file, :reinstall => true )
   end
 
   # Package.uninstall( :name => 'package', :version => '0.1.1' )
