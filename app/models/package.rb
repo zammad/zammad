@@ -68,6 +68,11 @@ class Package < ApplicationModel
         puts "unlink: #{entry}"
         File.delete( entry )
       end
+      backup_file = entry + '.link_backup'
+      if File.exists?( backup_file )
+        puts "Restore backup file of #{backup_file} -> #{entry}."
+        File.rename( backup_file, entry )
+      end
     end
   end
 
@@ -105,7 +110,12 @@ class Package < ApplicationModel
         puts "Unlink file: #{dest.to_s}"
         File.delete( dest.to_s )
       end
- 
+
+      backup_file = dest.to_s + '.link_backup'
+      if File.exists?( backup_file )
+        puts "Restore backup file of #{backup_file} -> #{dest.to_s}."
+        File.rename( backup_file, dest.to_s )
+      end
     end
   end
 
@@ -140,7 +150,13 @@ class Package < ApplicationModel
       end
 
       if File.file?( entry.to_s ) && ( File.file?( dest.to_s ) && !File.symlink?( dest.to_s ) )
-        raise "Can't link #{entry.to_s} -> #{dest.to_s}, destination already exists!"
+        backup_file = dest.to_s + '.link_backup'
+        if File.exists?( backup_file )
+          raise "Can't link #{entry.to_s} -> #{dest.to_s}, destination and .link_backup already exists!"
+        else
+          puts "Create backup file of #{dest.to_s} -> #{backup_file}."
+          File.rename( dest.to_s, backup_file )
+        end
       end
 
       if File.file?( entry )
