@@ -1,91 +1,21 @@
 # Installation on Ubuntu 12.04 Server
-
-## With Apache mod_passenger / MySQL
-### Prerequisits
-* apt-get install ruby1.9.1-full build-essential apache2-suexec mysql-server libmysqlclient-dev postfix libcurl4-openssl-dev libssl-dev apache2-prefork-dev libapr1-dev libaprutil1-dev
-* update-alternatives --set ruby /usr/bin/ruby1.9.1
-* update-alternatives --set gem /usr/bin/gem1.9.1
-* gem install rails therubyracer passenger 
-
-### Add User
-* useradd zammad -m -d /var/www/zammad -s /bin/bash
-* echo "export RAILS_ENV=production" >> /var/www/zammad/.bashrc
-
-### Apache Config
-* /var/lib/gems/1.9.1/gems/passenger-3.0.19/bin/passenger-install-apache2-module 
-* vi /etc/apache2/sites-available/zammad
-```
-<VirtualHost *:80>
-    ServerName zammad.inet.h1.mdd
-    ServerAdmin abauer@magix.net
-
-    SuexecUserGroup "zammad" "zammad"
-
-    DocumentRoot "/var/www/zammad/public/"
-
-    <Directory "/var/www/zammad/public/">
-        Order allow,deny
-        allow from all
-        ## MultiViews must be turned off.
-        Options -MultiViews
-    </Directory>
-</VirtualHost>
-```
-
-
-* rm /etc/apache2/sites-enabled/000-default
-* ln -s /etc/apache2/sites-available/zammad /etc/apache2/sites-enabled/zammad
-* ln -s /etc/apache2/mods-available/suexec.load /etc/apache2/mods-enabled/suexec.load
-* echo "LoadModule passenger_module /var/lib/gems/1.9.1/gems/passenger-3.0.19/ext/apache2/mod_passenger.so" > /etc/apache2/mods-available/passenger.load
-* echo -e "PassengerRoot /var/lib/gems/1.9.1/gems/passenger-3.0.19\nPassengerRuby /usr/bin/ruby1.9.1" > /etc/apache2/mods-available/passenger.conf
-* ln -s /etc/apache2/mods-available/passenger.load /etc/apache2/mods-enabled/passenger.load
-* ln -s /etc/apache2/mods-available/passenger.conf /etc/apache2/mods-enabled/passenger.conf
-* service apache2 restart 
-
-
-### Get Zammad
-* cd /var/www/zammad
-* wget http://zammad.org/zammad-1.0.1.tar.gz
-* tar -xzf zammad-1.0.1.tar.gz
-
-### Edit Gemfile
-* vi Gemfile
-  * comment
-    * gem 'sqlite3'
-  * uncomment
-    * gem 'libv8', '~> 3.11.8'
-    * gem 'execjs'
-    * gem 'therubyracer'
-
-### Install zammad
-* bundle install
-* chown -R zammad:zammad /var/www/zammad
-
-### Create Database
-* mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE DATABASE zammad_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'some_pass'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
-* vi config/database.yml
-* su zammad
-* cd ~
-* rake db:migrate
-* rake db:seed
-* rake assets:precompile
-* ruby script/websocket-server.rb &
-* rails runner 'Session.jobs' &
-
-
-
-
 ## With Apache mod_proxy / MySQL
 
 ### Prerequisits
-* apt-get install ruby1.9.1-full build-essential apache2-suexec mysql-server libmysqlclient-dev postfix 
-* update-alternatives --set ruby /usr/bin/ruby1.9.1
-* update-alternatives --set gem /usr/bin/gem1.9.1
-* gem install rails therubyracer
+* apt-get install apt-get install curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool
 
 ### Add User
-* useradd zammad -m -d /var/www/zammad -s /bin/bash
-* echo "export RAILS_ENV=production" >> /var/www/zammad/.bashrc
+* useradd zammad -m -s /bin/bash
+* echo -e "export RAILS_ENV=development" >> /home/zammad/.bashrc
+* su zammad
+* cd ~
+
+### Install Ruby & Rails
+* curl -L https://get.rvm.io | bash -s stable
+* source /home/zammad/.rvm/scripts/rvm
+* echo "source /home/zammad/.rvm/scripts/rvm" >> /home/zammad/.bashrc
+* rvm install ruby
+* gem install rails therubyracer 
 
 ### Apache Config
 * vi /etc/apache2/sites-available/zammad
@@ -150,8 +80,6 @@
 
 ### Edit Gemfile
 * vi Gemfile
-  * comment
-    * gem 'sqlite3'
   * uncomment
     * gem 'libv8', '~> 3.11.8'
     * gem 'execjs'
@@ -162,7 +90,7 @@
 * chown -R zammad:zammad /var/www/zammad
 
 ### Create Database
-* mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE DATABASE zammad_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'some_pass'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
+* mysql --defaults-file=/etc/mysql/debian.cnf -e "CREATE DATABASE zammad_prod DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'some_pass'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
 * vi config/database.yml
 * su zammad
 * cd ~
@@ -172,8 +100,8 @@
 ### Start Server
 * rake assets:precompile
 * rails server &
-* ruby script/websocket-server.rb &
-* rails runner 'Session.jobs' &
+* ruby script/websocket-server.rb start &
+* rails r 'Scheduler.run' &
 
 
 
@@ -214,6 +142,6 @@
 * rake db:seed
 * rake assets:precompile
 * rails server &
-* ruby script/websocket-server.rb &
-* rails runner 'Session.jobs' &
+* ruby script/websocket-server.rb start &
+* rails r 'Scheduler.run' &
 
