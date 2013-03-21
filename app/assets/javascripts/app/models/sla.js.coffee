@@ -1,4 +1,4 @@
-class App.Sla extends Spine.Model
+class App.Sla extends App.Model
   @configure 'Sla', 'name', 'first_response_time', 'update_time', 'close_time', 'condition', 'data', 'active'
   @extend Spine.Model.Ajax
   @url: 'api/slas'
