@@ -10,9 +10,11 @@ class ApplicationModel < ActiveRecord::Base
   after_update  :cache_delete
   after_destroy :cache_delete
 
+  @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
+
   # for import other objects, remove 'id'
   def self.attributes_protected_by_default
-    if Setting.get('import_mode')
+    if Setting.get('import_mode') && @@import_class_list.include?( self.name.to_s )
       ['type']
     else
       ['id','type']
