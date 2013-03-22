@@ -473,25 +473,13 @@ class Ticket < ApplicationModel
     }
   end
 
-  def escalation_calculation
+  def _escalation_calculation_get_sla
 
-    # set escalation off if ticket is already closed
-    ticket_state      = Ticket::State.lookup( :id => self.ticket_state_id )
-    ticket_state_type = Ticket::StateType.lookup( :id => ticket_state.state_type_id )
-    ignore_escalation = ['removed', 'closed', 'merged', 'pending action']
-    if ignore_escalation.include?(ticket_state_type.name)
-      self.escalation_time            = nil
-#      self.first_response_escal_date  = nil
-#      self.close_time_escal_date      = nil
-      self.save
-      return true
-    end
-
-    # get sla
     sla_selected = nil
     Sla.where( :active => true ).each {|sla|
-      if sla.condition
-        puts sla.condition.inspect
+      if !sla.condition || sla.condition.empty?
+        sla_selected = sla
+      elsif sla.condition
         hit = false
         map = [
           [ 'tickets.ticket_priority_id', 'ticket_priority_id' ],
@@ -515,6 +503,59 @@ class Ticket < ApplicationModel
       end
     }
 
+    # get and set calendar settings
+    if sla_selected
+      BusinessTime::Config.beginning_of_workday = sla_selected.data['beginning_of_workday']
+      BusinessTime::Config.end_of_workday       = sla_selected.data['end_of_workday']
+      days = []
+      ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each {|day|
+        if sla_selected.data[day]
+          days.push day.downcase.to_sym
+        end
+      }
+      BusinessTime::Config.work_week = days
+    end
+    return sla_selected
+  end
+
+  def _escalation_calculation_dest_time(start_time, diff_min)
+    start_time = Time.parse( start_time.to_s )
+    dest_time = (diff_min / 60).round.business_hour.after( start_time )
+    return dest_time
+  end
+
+  def _escalation_calculation_higher_time(escalation_time, check_time, done_time)
+    return escalation_time if done_time
+    return check_time if !escalation_time
+    return escalation_time if !check_time
+    return check_time if escalation_time > check_time
+    return escalation_time
+  end
+
+  def _escalation_calculation_business_time_diff(start_time, end_time)
+    start_time  = Time.parse(start_time.to_s)
+    end_time    = Time.parse(end_time.to_s)
+    diff = start_time.business_time_until(end_time) / 60
+    diff.round
+  end
+
+  def escalation_calculation
+
+    # set escalation off if ticket is already closed
+    ticket_state      = Ticket::State.lookup( :id => self.ticket_state_id )
+    ticket_state_type = Ticket::StateType.lookup( :id => ticket_state.state_type_id )
+    ignore_escalation = ['removed', 'closed', 'merged', 'pending action']
+    if ignore_escalation.include?( ticket_state_type.name )
+      self.escalation_time            = nil
+#      self.first_response_escal_date  = nil
+#      self.close_time_escal_date      = nil
+      self.save
+      return true
+    end
+
+    # get sla for ticket
+    sla_selected = self._escalation_calculation_get_sla
+
     # reset escalation if no sla is set
     if !sla_selected
       self.escalation_time            = nil
@@ -524,75 +565,71 @@ class Ticket < ApplicationModel
       return true
     end
 
-    # get calendar settings
-    BusinessTime::Config.beginning_of_workday = sla_selected.data['beginning_of_workday']
-    BusinessTime::Config.end_of_workday       = sla_selected.data['end_of_workday']
-    days = []
-    ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each {|day|
-      if sla_selected.data[day]
-        days.push day.downcase.to_sym
-      end
-    }
-    BusinessTime::Config.work_week = days
 #    puts sla_selected.inspect
 #    puts days.inspect
-
     self.escalation_time            = nil
     self.first_response_escal_date  = nil
+    self.update_time_escal_date     = nil
     self.close_time_escal_date      = nil
 
     # first response
     if sla_selected.first_response_time
-      created_at = Time.parse(self.created_at.to_s)
-      self.first_response_escal_date = (sla_selected.first_response_time / 60).round.business_hour.after( created_at )
+      self.first_response_escal_date = self._escalation_calculation_dest_time( created_at, sla_selected.first_response_time )
 
       # set ticket escalation
-      if !self.first_response && (!self.escalation_time || self.escalation_time > self.first_response_escal_date)
-        self.escalation_time = self.first_response_escal_date
-      end
+      self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
     end
+    if self.first_response# && !self.first_response_in_min
+#      created_at        = Time.parse(self.created_at.to_s)
+#      first_response_at = Time.parse(self.first_response.to_s)
+#      diff = created_at.business_time_until(first_response_at) / 60
+#      self.first_response_in_min = diff.round
+      self.first_response_in_min = self._escalation_calculation_business_time_diff( self.created_at, self.first_response )
 
-    if self.first_response && !self.first_response_in_min
-      created_at        = Time.parse(self.created_at.to_s)
-      first_response_at = Time.parse(self.first_response.to_s)
-      diff = created_at.business_time_until(first_response_at) / 60
-      self.first_response_in_min = diff.round
     end
-
-    # set time over sla
+    # set sla time
     if sla_selected.first_response_time && self.first_response_in_min
       self.first_response_diff_in_min = sla_selected.first_response_time - self.first_response_in_min
     end
 
-#    # update time
-#    if sla_selected.close_time
-#      created_at = Time.parse(self.created_at.to_s)
-#      self.close_time_escal_date = (sla_selected.close_time / 60).round.business_hour.after( created_at )
+    # update time
+    if sla_selected.update_time
+      last_update = self.last_contact_agent
+      if !last_update
+        last_update = self.created_at
+      end
+      self.update_time_escal_date = self._escalation_calculation_dest_time( last_update, sla_selected.update_time )
+
+      # set ticket escalation
+      self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.update_time_escal_date, false )
+    end
+
+#    if self.last_contact_agent && !self.update_time_in_min
+#      created_at         = Time.parse(self.created_at.to_s)
+#      last_contact_agent = Time.parse(self.last_contact_agent.to_s)
+#      diff = created_at.business_time_until(closed_at) / 60
+#      self.close_time_in_min = diff.round
 #    end
 
     # close time
     if sla_selected.close_time
-      created_at = Time.parse(self.created_at.to_s)
-      self.close_time_escal_date = (sla_selected.close_time / 60).round.business_hour.after( created_at )
+      self.close_time_escal_date = self._escalation_calculation_dest_time( self.created_at, sla_selected.close_time )
 
       # set ticket escalation
-      if !self.close_time && (!self.escalation_time || self.escalation_time > self.close_time_escal_date)
-        self.escalation_time = self.close_time_escal_date
-      end
+      self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.close_time_escal_date, self.close_time )
     end
+    if self.close_time# && !self.close_time_in_min
+#      created_at  = Time.parse(self.created_at.to_s)
+#      closed_at   = Time.parse(self.close_time.to_s)
+#      diff = created_at.business_time_until(closed_at) / 60
+#      self.close_time_in_min = diff.round
+      self.close_time_in_min = self._escalation_calculation_business_time_diff( self.created_at, self.close_time )
 
-    if self.close_time && !self.close_time_in_min
-      created_at  = Time.parse(self.created_at.to_s)
-      closed_at   = Time.parse(self.close_time.to_s)
-      diff = created_at.business_time_until(closed_at) / 60
-      self.close_time_in_min = diff.round
     end
-
-    # set time over sla
+    # set sla time
     if sla_selected.close_time && self.close_time_in_min
       self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
     end
-
     self.save
   end
 
