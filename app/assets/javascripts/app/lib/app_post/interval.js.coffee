@@ -6,10 +6,10 @@ class App.Interval
       _instance ?= new _Singleton
     _instance.set( callback, timeout, key, level )
 
-  @clear: ( key ) ->
+  @clear: ( key, level ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.clear( key )
+    _instance.clear( key, level )
 
   @clearLevel: ( level ) ->
     if _instance == undefined
