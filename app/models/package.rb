@@ -308,7 +308,11 @@ class Package < ApplicationModel
     ['app', 'lib'].each {|dir|
       Dir.glob( Rails.root.join( dir + '/**/*') ).each {|entry|
         if entry =~ /\.rb$/
-          load entry
+          begin
+            load entry
+          rescue => e
+            puts 'ERROR: ' + e.inspect
+          end
         end
       }
     }
