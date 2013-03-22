@@ -1066,7 +1066,7 @@ Setting.create_if_not_exists(
     ],
   },
   :state    => 'http://otrs_host/otrs',
-  :frontend => true
+  :frontend => false
 )
 Setting.create_if_not_exists(
   :title       => 'Import Key',
@@ -1084,7 +1084,7 @@ Setting.create_if_not_exists(
     ],
   },
   :state    => '',
-  :frontend => true
+  :frontend => false
 )
 
 
