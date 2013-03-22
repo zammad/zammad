@@ -16,6 +16,11 @@ class App.Interval
       _instance ?= new _Singleton
     _instance.clearLevel( level )
 
+  @_all: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance._all()
+
 class _Singleton extends Spine.Module
   @include App.Log
 
@@ -71,3 +76,5 @@ class _Singleton extends Spine.Module
       @clear( key, level )
     @levelStack[level] = {}
 
+  _all: ->
+    return @levelStack
