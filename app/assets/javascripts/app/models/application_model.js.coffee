@@ -1,4 +1,13 @@
 class App.Model extends Spine.Model
+  constructor: ->
+    super
+
+    # delete object from local storage on destroy
+    @bind( 'destroy', (e) ->
+      className = Object.getPrototypeOf(e).constructor.className
+      key = "collection::#{className}::#{e.id}"
+      App.Store.delete(key)
+    )
 
   displayName: ->
     return @name if @name
@@ -69,3 +78,4 @@ class App.Model extends Spine.Model
       model: @constructor,
       params: @,
     )
+
