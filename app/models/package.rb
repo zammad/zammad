@@ -204,7 +204,7 @@ class Package < ApplicationModel
         end
       end
 
-      # uninstall old package
+      # uninstall files of old package
       self.uninstall({
         :name               => package_db.name,
         :version            => package_db.version,

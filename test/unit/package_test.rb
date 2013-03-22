@@ -5,7 +5,7 @@ class PackageTest < ActiveSupport::TestCase
   test 'packages' do
     tests = [
 
-      # test 1
+      # test 1 - normal install
       {
         :zpm => '<?xml version="1.0"?>
 <zpm version="1.0">
@@ -50,7 +50,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
         },
       },
 
-      # test 2
+      # test 2 - try to install same package again / should not work
       {
         :zpm => '<?xml version="1.0"?>
 <zpm version="1.0">
@@ -68,7 +68,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
         :result => false,
       },
 
-      # test 3
+      # test 3 - try to install lower version / should not work
       {
         :zpm => '<?xml version="1.0"?>
 <zpm version="1.0">
@@ -86,7 +86,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
         :result => false,
       },
 
-      # test 4
+      # test 4 - upgrade 7 should work
       {
         :zpm => '<?xml version="1.0"?>
 <zpm version="1.0">
@@ -135,7 +135,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
         },
       },
 
-      # test 4
+      # test 4 - uninstall package / should work
       {
         :name     => 'UnitTestSample',
         :version  => '1.0.2',
@@ -155,7 +155,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
         },
       },
 
-      # test 5
+      # test 5 - check auto_install mechanism
       {
         :zpm => '<?xml version="1.0"?>
 <zpm version="1.0">
@@ -204,7 +204,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
         },
       },
 
-      # test 6
+      # test 6 - check uninstall / should work
       {
         :name     => 'UnitTestSample',
         :version  => '1.0.2',
