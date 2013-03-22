@@ -176,16 +176,23 @@ class TestCase < Test::Unit::TestCase
         else
           assert( false, "(#{test[:name]}) url #{instance.current_url} is not matching #{action[:result]}" )
         end
+    elsif action[:element] == :alert
+      element = instance.switch_to.alert
     else
       assert( false, "(#{test[:name]}) unknow selector for '#{action[:element]}'" )
     end
     if action[:execute] == 'set'
+      element.clear
       element.send_keys( action[:value] )
     elsif action[:execute] == 'select'
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, action[:value])
     elsif action[:execute] == 'click'
       element.click
+    elsif action[:execute] == 'accept'
+      element.accept
+    elsif action[:execute] == 'dismiss'
+      element.dismiss
     elsif action[:execute] == 'send_key'
       element.send_keys action[:value]
     elsif action[:execute] == 'match'
