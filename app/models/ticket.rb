@@ -580,10 +580,6 @@ class Ticket < ApplicationModel
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
     end
     if self.first_response# && !self.first_response_in_min
-#      created_at        = Time.parse(self.created_at.to_s)
-#      first_response_at = Time.parse(self.first_response.to_s)
-#      diff = created_at.business_time_until(first_response_at) / 60
-#      self.first_response_in_min = diff.round
       self.first_response_in_min = self._escalation_calculation_business_time_diff( self.created_at, self.first_response )
 
     end
@@ -592,24 +588,27 @@ class Ticket < ApplicationModel
       self.first_response_diff_in_min = sla_selected.first_response_time - self.first_response_in_min
     end
 
+
     # update time
+    last_update = self.last_contact_agent
+    if !last_update
+      last_update = self.created_at
+    end
     if sla_selected.update_time
-      last_update = self.last_contact_agent
-      if !last_update
-        last_update = self.created_at
-      end
       self.update_time_escal_date = self._escalation_calculation_dest_time( last_update, sla_selected.update_time )
 
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.update_time_escal_date, false )
     end
+    if self.last_contact_agent
+      self.update_time_in_min = self._escalation_calculation_business_time_diff( self.created_at, self.last_contact_agent )
+    end
 
-#    if self.last_contact_agent && !self.update_time_in_min
-#      created_at         = Time.parse(self.created_at.to_s)
-#      last_contact_agent = Time.parse(self.last_contact_agent.to_s)
-#      diff = created_at.business_time_until(closed_at) / 60
-#      self.close_time_in_min = diff.round
-#    end
+    # set sla time
+    if sla_selected.update_time && self.update_time_in_min
+      self.update_time_diff_in_min = sla_selected.update_time - self.update_time_in_min
+    end
+
 
     # close time
     if sla_selected.close_time
@@ -619,12 +618,7 @@ class Ticket < ApplicationModel
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.close_time_escal_date, self.close_time )
     end
     if self.close_time# && !self.close_time_in_min
-#      created_at  = Time.parse(self.created_at.to_s)
-#      closed_at   = Time.parse(self.close_time.to_s)
-#      diff = created_at.business_time_until(closed_at) / 60
-#      self.close_time_in_min = diff.round
       self.close_time_in_min = self._escalation_calculation_business_time_diff( self.created_at, self.close_time )
-
     end
     # set sla time
     if sla_selected.close_time && self.close_time_in_min
