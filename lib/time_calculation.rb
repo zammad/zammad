@@ -32,7 +32,11 @@ module TimeCalculation
   end
 
   def self.dest_time(start_time, diff_in_min)
-    start_time = Time.parse( start_time.to_s + 'UTC' )
+    start_time_string = start_time.to_s
+    if start_time.to_s != /UTC/
+      start_time_string +=  ' UTC'
+    end
+    start_time = Time.parse( start_time_string )
     dest_time = diff_in_min.round.business_minute.after( start_time )
     return dest_time
   end

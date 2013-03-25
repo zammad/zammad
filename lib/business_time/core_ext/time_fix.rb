@@ -54,7 +54,6 @@ class Time
       end
 
       while !Time.workday?(next_business_time)
-        puts '4'
         next_business_time += 1.day
       end
 
@@ -94,7 +93,7 @@ class Time
     result += time_b - Time.parse(time_b.strftime('%Y-%m-%d ') + BusinessTime::Config.beginning_of_workday) # Last day
     
     # All days in between
-puts "--- #{time_a}-#{time_b} - #{direction}"
+#puts "--- #{time_a}-#{time_b} - #{direction}"
 
 #    duration_of_working_day = Time.parse(BusinessTime::Config.end_of_workday) - Time.parse(BusinessTime::Config.beginning_of_workday)
 #    result += (time_a.to_date.business_days_until(time_b.to_date) - 1) * duration_of_working_day
@@ -107,7 +106,7 @@ puts "--- #{time_a}-#{time_b} - #{direction}"
       end_of_workday = Time.end_of_workday(time_c)
       if !Time.workday?(time_c)
         time_c = Time.beginning_of_workday(time_c) + 1.day
-        puts 'VACATIONS! ' + time_c.to_s
+#        puts 'VACATIONS! ' + time_c.to_s
       end
       if time_c.to_date == time_b.to_date
         if end_of_workday < time_b

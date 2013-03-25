@@ -1,3 +1,4 @@
+require 'time_calculation'
 class Ticket < ApplicationModel
   before_create   :number_generate, :check_defaults
   before_update   :check_defaults
