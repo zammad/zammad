@@ -23,6 +23,13 @@ class TicketTest < ActiveSupport::TestCase
   end
 
   test 'ticket sla' do
+
+    # cleanup
+    delete = Sla.destroy_all
+    assert( delete, "sla destroy_all" )
+    delete = Ticket.destroy_all
+    assert( delete, "ticket destroy_all" )
+
     ticket = Ticket.create(
       :title           => 'some title äöüß',
       :group           => Group.lookup( :name => 'Users'),
