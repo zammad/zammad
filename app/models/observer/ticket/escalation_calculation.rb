@@ -2,6 +2,21 @@ class Observer::Ticket::EscalationCalculation < ActiveRecord::Observer
   observe 'ticket', 'ticket::_article'
 
   def after_create(record)
+
+    # return if we run import mode
+    return if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
+
+    # do not recalculation if first respons is already out
+    if record.class.name == 'Ticket::Article'
+      record.ticket.escalation_calculation
+      return true
+    end
+
+    # update escalation
+    return if record.callback_loop
+    record.callback_loop = true
+    record.escalation_calculation
+    record.callback_loop = false
   end
 
   def after_update(record)
@@ -9,18 +24,17 @@ class Observer::Ticket::EscalationCalculation < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
 
-    # prevent loops
-    return if record[:escalation_calc]
-    record[:escalation_calc] = true
-
     # do not recalculation if first respons is already out
     if record.class.name == 'Ticket::Article'
-      return true if record.ticket.first_response
       record.ticket.escalation_calculation
       return true
     end
 
     # update escalation
+    return if record.callback_loop
+    record.callback_loop = true
     record.escalation_calculation
+    record.callback_loop = false
+
   end
 end

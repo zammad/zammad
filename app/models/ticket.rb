@@ -15,6 +15,8 @@ class Ticket < ApplicationModel
   belongs_to    :create_article_type,   :class_name => 'Ticket::Article::Type'
   belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
 
+  attr_accessor :callback_loop
+
   def self.number_check (string)
     self.number_adapter.number_check_item(string)
   end
@@ -529,6 +531,7 @@ class Ticket < ApplicationModel
       self.escalation_time            = nil
 #      self.first_response_escal_date  = nil
 #      self.close_time_escal_date      = nil
+      self.callback_loop = true
       self.save
       return true
     end
@@ -541,6 +544,7 @@ class Ticket < ApplicationModel
       self.escalation_time            = nil
 #      self.first_response_escal_date  = nil
 #      self.close_time_escal_date      = nil
+      self.callback_loop = true
       self.save
       return true
     end
@@ -561,7 +565,6 @@ class Ticket < ApplicationModel
     end
     if self.first_response# && !self.first_response_in_min
       self.first_response_in_min = TimeCalculation.business_time_diff( self.created_at, self.first_response )
-
     end
     # set sla time
     if sla_selected.first_response_time && self.first_response_in_min
@@ -604,6 +607,7 @@ class Ticket < ApplicationModel
     if sla_selected.close_time && self.close_time_in_min
       self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
     end
+    self.callback_loop = true
     self.save
   end
 

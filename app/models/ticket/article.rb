@@ -5,11 +5,14 @@ class Ticket::Article < ApplicationModel
   belongs_to    :ticket_article_sender, :class_name => 'Ticket::Article::Sender'
   belongs_to    :created_by,            :class_name => 'User'
 
+  attr_accessor :attachments
+
   private
+
     def attachment_check
 
       # do nothing if no attachment exists
-      return 1 if self['attachments'] == nil
+      return 1 if self.attachments == nil
 
       # store attachments
       article_store = []

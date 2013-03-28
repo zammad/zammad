@@ -18,10 +18,10 @@ class Observer::Ticket::LastContact < ActiveRecord::Observer
       if record.ticket.last_contact_customer == nil ||
         record.ticket.last_contact_agent == nil ||
         record.ticket.last_contact_agent.to_i > record.ticket.last_contact_customer.to_i
-        record.ticket.last_contact_customer = Time.now
+        record.ticket.last_contact_customer = record.created_at
 
         # set last_contact
-        record.ticket.last_contact = Time.now
+        record.ticket.last_contact = record.created_at
 
         # save ticket
         record.ticket.save
@@ -32,10 +32,10 @@ class Observer::Ticket::LastContact < ActiveRecord::Observer
     if sender.name == 'Agent'
 
       # set last_contact_agent
-      record.ticket.last_contact_agent = Time.now
+      record.ticket.last_contact_agent = record.created_at
 
       # set last_contact
-      record.ticket.last_contact = Time.now
+      record.ticket.last_contact = record.created_at
 
       # save ticket
       record.ticket.save

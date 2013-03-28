@@ -25,7 +25,7 @@ class TicketArticlesController < ApplicationController
 
     # find attachments in upload cache
     if form_id
-      @article['attachments'] = Store.list(
+      @article.attachments = Store.list(
         :object => 'UploadCache',
         :o_id   => form_id,
       )

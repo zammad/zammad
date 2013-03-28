@@ -73,6 +73,20 @@ class WorkingTimeTest < ActiveSupport::TestCase
           ],
         },
       },
+      {
+        :start  => '2013-02-28 17:00:00',
+        :end    => '2013-02-28 23:59:59',
+        :diff   => 60,
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
     ]
     tests.each { |test|
       TimeCalculation.config( test[:config] )

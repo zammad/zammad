@@ -83,10 +83,10 @@ class Time
     time_b = Time::roll_forward(time_b)
     
     # If same date, then calculate difference straight forward
-    if time_a.to_date == time_b.to_date
-      result = time_b - time_a
-      return result *= direction
-    end
+#    if time_a.to_date == time_b.to_date
+#      result = time_b - time_a
+#      return result *= direction
+#    end
     
     # Both times are in different dates
     result = Time.parse(time_a.strftime('%Y-%m-%d ') + BusinessTime::Config.end_of_workday) - time_a   # First day

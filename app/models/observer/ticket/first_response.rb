@@ -20,7 +20,7 @@ class Observer::Ticket::FirstResponse < ActiveRecord::Observer
     return true if record.ticket.first_response
 
     # set first_response
-    record.ticket.first_response = Time.now
+    record.ticket.first_response = record.created_at
 
     # save ticket
     record.ticket.save
