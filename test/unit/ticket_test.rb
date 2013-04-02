@@ -322,6 +322,8 @@ class TicketTest < ActiveSupport::TestCase
       :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
       :updated_by_id   => 1,
       :created_by_id   => 1,
+      :created_at      => '2013-03-28 23:49:00 UTC',
+      :updated_at      => '2013-03-28 23:49:00 UTC',
     )
     assert( ticket, "ticket created" )
 
