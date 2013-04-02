@@ -382,10 +382,49 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal( ticket.first_response_diff_in_min, 60, 'ticket.first_response_diff_in_min verify - outbound' )
     assert_equal( ticket.close_time, nil, 'ticket.close_time verify - outbound' )
 
-
     delete = ticket.destroy
     assert( delete, "ticket destroy" )
 
+
+    ticket = Ticket.create(
+      :title           => 'some title äöüß',
+      :group           => Group.lookup( :name => 'Users'),
+      :customer_id     => 2,
+      :ticket_state    => Ticket::State.lookup( :name => 'new' ),
+      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :updated_by_id   => 1,
+      :created_by_id   => 1,
+      :created_at      => '2013-03-28 23:49:00 UTC',
+      :updated_at      => '2013-03-28 23:49:00 UTC',
+    )
+    assert( ticket, "ticket created" )
+
+    assert_equal( ticket.title, 'some title äöüß', 'ticket.title verify' )
+    assert_equal( ticket.group.name, 'Users', 'ticket.group verify' )
+    assert_equal( ticket.ticket_state.name, 'new', 'ticket.state verify' )
+
+    # create inbound article
+    article_inbound = Ticket::Article.create(
+      :ticket_id              => ticket.id,
+      :from                   => 'some_sender@example.com',
+      :subject                => 'some subject',
+      :message_id             => 'some@id',
+      :body                   => 'some message',
+      :internal               => false,
+      :ticket_article_sender  => Ticket::Article::Sender.where(:name => 'Customer').first,
+      :ticket_article_type    => Ticket::Article::Type.where(:name => 'phone').first,
+      :updated_by_id          => 1,
+      :created_by_id          => 1,
+      :created_at             => '2013-03-28 23:49:00 UTC',
+      :updated_at             => '2013-03-28 23:49:00 UTC',
+    )
+    ticket = Ticket.find(ticket.id)
+    assert_equal( ticket.article_count, 1, 'ticket.article_count verify - inbound' )
+    assert_equal( ticket.last_contact.to_s, article_inbound.created_at.to_s, 'ticket.last_contact verify - inbound' )
+    assert_equal( ticket.last_contact_customer.to_s, article_inbound.created_at.to_s, 'ticket.last_contact_customer verify - inbound' )
+    assert_equal( ticket.last_contact_agent, nil, 'ticket.last_contact_agent verify - inbound' )
+    assert_equal( ticket.first_response.to_s, article_inbound.created_at.to_s, 'ticket.first_response verify - inbound' )
+    assert_equal( ticket.close_time, nil, 'ticket.close_time verify - inbound' )
 
     delete = sla.destroy
     assert( delete, "sla destroy" )
