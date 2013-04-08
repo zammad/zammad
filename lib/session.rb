@@ -20,7 +20,7 @@ module Session
     path = @path + '/' + client_id.to_s
     FileUtils.mkpath path
     meta[:last_ping] = Time.new.to_i.to_s
-    File.open( path + '/session', 'w' ) { |file|
+    File.open( path + '/session', 'wb' ) { |file|
       data = {
         :user => {
           :id => session['id'],
@@ -28,7 +28,7 @@ module Session
         :meta => meta,
       }
 #      puts 'CREATE' + Marshal.dump(data)
-      file.puts Marshal.dump(data)
+      file.write Marshal.dump(data)
     }
 
     # send update to browser
@@ -55,8 +55,8 @@ module Session
     data = self.get(client_id)
     path = @path + '/' + client_id.to_s
     data[:meta][:last_ping] = Time.new.to_i.to_s
-    File.open( path + '/session', 'w' ) { |file|
-      file.puts Marshal.dump(data)
+    File.open( path + '/session', 'wb' ) { |file|
+      file.write Marshal.dump(data)
     }
     return true
   end
@@ -65,7 +65,7 @@ module Session
     session_file = @path + '/' + client_id.to_s + '/session'
     data = nil
     return if !File.exist? session_file
-    File.open( session_file, 'r' ) { |file|
+    File.open( session_file, 'rb' ) { |file|
       all = ''
       while line = file.gets
         all = all + line
@@ -91,9 +91,9 @@ module Session
       end    
     end
     return false if !File.directory? path
-    File.open( path + 'a-' + filename, 'w' ) { |file|
+    File.open( path + 'a-' + filename, 'wb' ) { |file|
       file.flock( File::LOCK_EX )
-      file.puts data.to_json
+      file.write data.to_json
       file.flock( File::LOCK_UN )
       file.close
     }
@@ -192,7 +192,7 @@ module Session
     FileUtils.mv( file_old, file_new )
     data = nil
     all = ''
-    File.open( file_new, 'r' ) { |file|
+    File.open( file_new, 'rb' ) { |file|
       while line = file.gets  
         all = all + line  
       end
