@@ -25,14 +25,20 @@ module TimeCalculation
   end
 
   def self.business_time_diff(start_time, end_time)
-    start_time  = Time.parse( start_time.to_s + 'UTC' )
-    end_time    = Time.parse( end_time.to_s + 'UTC' )
+    if start_time.class == String
+      start_time  = Time.parse( start_time.to_s + 'UTC' )
+    end
+    if end_time.class == String
+      end_time = Time.parse( end_time.to_s + 'UTC' )
+    end
     diff = start_time.business_time_until( end_time ) / 60
     diff.round
   end
 
   def self.dest_time(start_time, diff_in_min)
-    start_time = Time.parse( start_time.to_s + ' UTC' )
+    if start_time.class == String
+      start_time = Time.parse( start_time.to_s + ' UTC' )
+    end
     dest_time = diff_in_min.round.business_minute.after( start_time )
     return dest_time
   end

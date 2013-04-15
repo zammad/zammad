@@ -15,19 +15,48 @@ module BusinessTime
 
     def after(time)
       after_time = Time.roll_forward(time)
-      # Step through the hours, skipping over non-business hours
-      @minutes.times do
-        after_time = after_time + 1.minute
+      # Step through the minutes, skipping over non-business minutes
+      days = @minutes / 60 / 24
+      hours = ( @minutes - ( days * 60 * 24 ) ) / 60
+      minutes =  @minutes - ( (days * 60 * 24 ) + (hours * 60) )
+      if @minutes > 60 * 12
+        
+      end
+
+      local_sec = @minutes * 60
+      loop = true
+      while (loop == true) do
+        a = after_time
+        if local_sec >= 60 * 60
+          after_time = after_time + 1.hour
+        else
+          after_time = after_time + 1.minute
+        end
 
         # Ignore minutes before opening and after closing
         if (after_time > Time.end_of_workday(after_time))
           after_time = after_time + off_minutes
+          if local_sec < 60 * 60
+            after_time = after_time - 60
+          else
+            after_time = after_time - 60 * 60
+          end
+          next
         end
 
         # Ignore weekends and holidays
         while !Time.workday?(after_time)
-          after_time = after_time + 1.day
+          after_time = Time.beginning_of_workday(after_time + 1.day)
+          a = after_time
         end
+        diff = after_time - a
+        local_sec = local_sec - diff
+
+        if local_sec <= 0
+          loop = false
+          next
+        end
+
       end
       after_time
     end
