@@ -66,15 +66,14 @@ module Session
     data = nil
     return if !File.exist? session_file
     File.open( session_file, 'rb' ) { |file|
-      all = ''
-      while line = file.gets
-        all = all + line
-      end
+      file.flock( File::LOCK_EX )
+      all = file.read
       begin
         data = Marshal.load( all )
       rescue
         return
       end
+      file.flock( File::LOCK_UN )
     }
     return data
   end
