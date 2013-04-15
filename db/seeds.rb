@@ -1087,6 +1087,44 @@ Setting.create_if_not_exists(
   :frontend => false
 )
 
+Setting.create_if_not_exists(
+  :title       => 'Import User for http basic authentiation',
+  :name        => 'import_otrs_user',
+  :area        => 'Import::OTRS',
+  :description => 'Defines http basic authentiation user (only if OTRS is protected via http basic auth).',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'import_otrs_user', 
+        :tag      => 'input',
+      },
+    ],
+  },
+  :state    => '',
+  :frontend => false
+)
+
+Setting.create_if_not_exists(
+  :title       => 'Import Password for http basic authentiation',
+  :name        => 'import_otrs_password',
+  :area        => 'Import::OTRS',
+  :description => 'Defines http basic authentiation password (only if OTRS is protected via http basic auth).',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'import_otrs_password', 
+        :tag      => 'input',
+      },
+    ],
+  },
+  :state    => '',
+  :frontend => false
+)
+
 
 email_address = EmailAddress.create_if_not_exists(
   :id             => 1,
