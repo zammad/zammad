@@ -68,12 +68,12 @@ module Session
     File.open( session_file, 'rb' ) { |file|
       file.flock( File::LOCK_EX )
       all = file.read
+      file.flock( File::LOCK_UN )
       begin
         data = Marshal.load( all )
       rescue
         return
       end
-      file.flock( File::LOCK_UN )
     }
     return data
   end
