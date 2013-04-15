@@ -7,6 +7,12 @@ module Import::OTRS
 #    response = Net::HTTP.get_response( URI.parse(url), { :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE } )
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
+
+    user     = Setting.get('import_otrs_user');
+    password = Setting.get('import_otrs_password');
+    if user && user != '' && password && password != ''
+      http.basic_auth user, password
+    end
     if url =~ /https/i
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -15,12 +21,18 @@ module Import::OTRS
     begin
       response = http.request(request)
 #    puts 'R:' + response.body.to_s
-      return response
     rescue Exception => e
       puts "can't get #{url}"
       puts e.inspect
       return
     end
+    if !response
+      raise "Can't connect to #{url}, got no response!"
+    end
+    if response.code.to_s != '200'
+      raise "Connection to #{url} failed, '#{response.code.to_s}'!"
+    end
+    return response
   end
   def self.post(base, data)
     url = Setting.get('import_otrs_endpoint') + '/' + base
@@ -28,6 +40,13 @@ module Import::OTRS
     puts 'POST: ' + url
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
+
+    user     = Setting.get('import_otrs_user');
+    password = Setting.get('import_otrs_password');
+    if user && user != '' && password && password != ''
+      http.basic_auth user, password
+    end
+
     if url =~ /https/i
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -35,6 +54,13 @@ module Import::OTRS
     request = Net::HTTP::Post.new(uri.request_uri)
     request.set_form_data(data)
     response = http.request(request)
+
+    if !response
+      raise "Can't connect to #{url}, got no response!"
+    end
+    if response.code.to_s != '200'
+      raise "Connection to #{url} failed, '#{response.code.to_s}'!"
+    end
     return response
   end
 
