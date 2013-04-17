@@ -6,7 +6,6 @@ class Index extends App.Controller
     'submit form':         'submit'
     'click .submit':       'submit'
     'click .cancel':       'cancel'
-    'click .article-type': 'articleTypeSelect'
 
   constructor: (params) ->
     super
@@ -20,10 +19,22 @@ class Index extends App.Controller
     @navupdate '#ticket_create'
 
     @edit_form = undefined
-    @article_type = 'phone'
-    @article_type_map =
-      'phone': 'Customer'
-      'email': 'Agent'
+    if !@type
+      @type = 'call_inbound'
+    article_sender_type_map =
+      call_inbound:
+        sender:  'Customer'
+        article: 'phone'
+        title:   'Call Inbound'
+      call_outbound:
+        sender:  'Agent'
+        article: 'phone'
+        title:   'Call Outbound'
+      email:
+        sender:  'Agent'
+        article: 'email'
+        title:   'Email'
+    @article_attributes = article_sender_type_map[@type]
 
     @fetch(params)
 
@@ -117,6 +128,7 @@ class Index extends App.Controller
     ]
     @html App.view('agent_ticket_create')(
       head:  'New Ticket'
+      title: @article_attributes['title']
       agent: @isRole('Agent')
       admin: @isRole('Admin')
     )
@@ -130,12 +142,6 @@ class Index extends App.Controller
       autofocus: true
       form_data: @edit_form
     )
-
-    # send chanel type
-    if defaults['article_type']
-      @articleTypeSet( defaults['article_type'] )
-    else
-      @articleTypeSet( @article_type )
 
     # add elastic to textarea
     @el.find('textarea').elastic()
@@ -163,21 +169,6 @@ class Index extends App.Controller
   localUserInfo: (params) =>
     @userInfo( user_id: params.customer_id )
 
-  articleTypeSet: (name) =>
-    console.log 'SET', name
-    @el.find('.article-type').removeClass('active')
-    @el.find('.article-type[data-type="' + name + '"]').addClass('active')
-    @el.find('[name="article_type"]').val(name)
-
-  articleTypeSelect: (e) =>
-    console.log 'SELECT', e
-    e.preventDefault()
-    article_type = $(e.target).parent().data('type')
-    if !article_type
-      article_type = $(e.target).data('type')
-    @articleTypeSet( article_type )
-    @article_type = article_type
-
   userNew: (e) =>
     e.preventDefault()
     new UserNew()
@@ -197,11 +188,11 @@ class Index extends App.Controller
 
     # create ticket
     object = new App.Ticket
-    @log 'updateAttributes', params, @article_type, @article_type_map[@article_type]
 
     # find sender_id
-    sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', @article_type_map[@article_type] )
-    type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', @article_type )
+    sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', @article_attributes['sender'] )
+    type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', @article_attributes['article'] )
+
     if params.group_id
       group  = App.Collection.find( 'Group', params.group_id )
 
@@ -328,6 +319,10 @@ class UserNew extends App.ControllerModal
 
 App.Config.set( 'ticket_create', Index, 'Routes' )
 App.Config.set( 'ticket_create/:ticket_id/:article_id', Index, 'Routes' )
+App.Config.set( 'ticket_create/:type', Index, 'Routes' )
 
-App.Config.set( 'TicketNew', { prio: 8000, parent: '', name: 'New', target: '#ticket_create', role: ['Agent'] }, 'NavBarRight' )
+App.Config.set( 'New', { prio: 8000, parent: '', name: 'New', target: '#new', role: ['Agent'] }, 'NavBarRight' )
+App.Config.set( 'TicketNewCallOutbound', { prio: 8001, parent: '#new', name: 'Call Outbound', target: '#ticket_create/call_outbound', role: ['Agent'] }, 'NavBarRight' )
+App.Config.set( 'TicketNewCallInbound', { prio: 8002, parent: '#new', name: 'Call Inbound', target: '#ticket_create/call_inbound', role: ['Agent'] }, 'NavBarRight' )
+App.Config.set( 'TicketNewEmail', { prio: 8003, parent: '#new', name: 'Email', target: '#ticket_create/email', role: ['Agent'] }, 'NavBarRight' )
 
