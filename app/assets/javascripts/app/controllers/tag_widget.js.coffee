@@ -6,8 +6,9 @@ class App.TagWidget extends App.Controller
     @load()
 
   load: =>
+    @attribute_id = 'tags_' + @object.id + '_' + @object_type
     App.Com.ajax(
-      id:    'tags_' + @object.id + '_' + @object_type
+      id:    @attribute_id
       type:  'GET'
       url:   'api/tags'
       data:
@@ -23,15 +24,16 @@ class App.TagWidget extends App.Controller
     # insert data
     @html App.view('tag_widget')(
       tags: tags || [],
+      tag_id: @attribute_id
     )
-    @el.find('#tags').tagsInput(
+    @el.find('#' + @attribute_id ).tagsInput(
       width:       '150px'
       defaultText: App.i18n.translateContent('add a Tag')
       onAddTag:    @onAddTag
       onRemoveTag: @onRemoveTag
 #      height: '65px'
     )
-    @delay @siteUpdate, 100
+    @delay @siteUpdate, 200
 
 #    @el.find('#tags').elastic()
 
@@ -62,8 +64,9 @@ class App.TagWidget extends App.Controller
     )
 
   siteUpdate: (reorder) =>
-    container = document.getElementById("tags_tagsinput")
+    container = document.getElementById(@attribute_id + '_tagsinput')
     if reorder
-      $('#tags_tagsinput').height( 20 )
+      $('#' + @attribute_id + '_tagsinput').height( 20 )
     height = container.scrollHeight
-    $('#tags_tagsinput').height( height - 10 )
+    console.log(2222, height)
+    $('#' + @attribute_id + '_tagsinput').height( height - 10 )
