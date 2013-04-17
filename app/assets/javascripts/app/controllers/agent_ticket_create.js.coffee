@@ -1,6 +1,4 @@
-$ = jQuery.sub()
-
-class Index extends App.Controller
+class Index extends App.ControllerContent
   events:
     'click .customer_new': 'userNew'
     'submit form':         'submit'

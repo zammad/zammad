@@ -83,8 +83,8 @@
       </div>
       <div class="span8 well-muted article-message">
         <form class="form-stacked pull-left">
-          <div id="form-ticket-update"></div>
-          <div id="form-article-update"></div>
+          <div data-id="form-ticket-update"></div>
+          <div data-id="form-article-update"></div>
           <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
         </form>
       </div>
@@ -93,11 +93,11 @@
   </div>
 
   <div class="span3">
-    <div id="customer_info"></div>
-    <div id="action_info"></div>
-    <div id="tag_info"></div>
-    <div id="link_info"></div>
-    <div id="text_module"></div>
+    <div data-id="customer_info"></div>
+    <div data-id="action_info"></div>
+    <div data-id="tag_info"></div>
+    <div data-id="link_info"></div>
+    <div data-id="text_module"></div>
   </div>
 
 </div>

@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.i18n
   _instance = undefined
 

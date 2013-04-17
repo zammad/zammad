@@ -1,4 +1,4 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
   events:
     'click .action':  'action'
 

@@ -6,7 +6,7 @@ $.fn.item = ->
   elementID or= $(@).parents('[data-id]').data('id')
   Note.find(elementID)
 
-class Index extends App.Controller
+class Index extends App.ControllerContent
   events:
     'click [data-type=network-new]':              'network_new'
     'click [data-type=network-edit]':             'network_edit'

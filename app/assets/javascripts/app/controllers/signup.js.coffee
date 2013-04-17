@@ -1,6 +1,4 @@
-$ = jQuery.sub()
-
-class Index extends App.Controller
+class Index extends App.ControllerContent
   className: 'container signup'
 
   events:

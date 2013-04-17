@@ -1,6 +1,4 @@
-$ = jQuery.sub()
-
-class Index extends App.Controller
+class TicketZoom extends App.Controller
   events:
     'click .submit':                          'update'
     'click [data-type=reply]':                'reply'
@@ -34,7 +32,11 @@ class Index extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false)
-    @interval( update, 30000, 'zoom_check', 'page' )
+    @interval( update, 30000, @key, 'ticket_zoom' )
+
+  release: =>
+    @clearInterval( @key, 'ticket_zoom' )
+    @el.remove()
 
   fetch: (ticket_id, force) ->
 
@@ -143,7 +145,7 @@ class Index extends App.Controller
     )
 
     new App.ControllerForm(
-      el:        @el.find('#form-ticket-update')
+      el:        @el.find('[data-id="form-ticket-update"]')
       form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_ticket
@@ -153,7 +155,7 @@ class Index extends App.Controller
     )
 
     new App.ControllerForm(
-      el:        @el.find('#form-article-update')
+      el:        @el.find('[data-id="form-article-update"]')
       form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_article
@@ -184,7 +186,7 @@ class Index extends App.Controller
     # start customer info controller
     if !@isRole('Customer')
       new App.UserInfo(
-        el:      @el.find('#customer_info')
+        el:      @el.find('[data-id="customer_info"]')
         user_id: @ticket.customer_id
         ticket:  @ticket
       )
@@ -192,7 +194,7 @@ class Index extends App.Controller
     # start action controller
     if !@isRole('Customer')
       new TicketActionRow(
-        el:      @el.find('#action_info')
+        el:      @el.find('[data-id="action_info"]')
         ticket:  @ticket
         zoom:    @
       )
@@ -200,7 +202,7 @@ class Index extends App.Controller
     # start tag controller
     if !@isRole('Customer')
       new App.TagWidget(
-        el:           @el.find('#tag_info')
+        el:           @el.find('[data-id="tag_info"]')
         object_type:  'Ticket'
         object:        @ticket
       )
@@ -208,7 +210,7 @@ class Index extends App.Controller
     # start link info controller
     if !@isRole('Customer')
       new App.LinkInfo(
-        el:           @el.find('#link_info')
+        el:           @el.find('[data-id="link_info"]')
         object_type:  'Ticket'
         object:        @ticket
       )
@@ -216,7 +218,7 @@ class Index extends App.Controller
     # show text module UI
     if !@isRole('Customer')
       new App.TextModuleUI(
-        el:   @el.find('#text_module')
+        el:   @el.find('[data-id="text_module"]')
         data:
           ticket: @ticket
       )
@@ -580,6 +582,12 @@ class TicketActionRow extends App.Controller
     e.preventDefault()
     new App.TicketCustomer( ticket_id: @ticket.id, zoom: @zoom )
 
-App.Config.set( 'ticket/zoom/:ticket_id', Index, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', Index, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/:article_id', Index, 'Routes' )
+class TicketZoomRouter extends App.ControllerPermanent
+  constructor: (params) ->
+    super
+    @log 'zoom router', params
+    App.TaskManager.add( 'Ticket', @ticket_id, { callback: TicketZoom } )
+
+App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
+App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
+App.Config.set( 'ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes' )

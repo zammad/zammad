@@ -1,0 +1,5 @@
+<div class="well" style="position: fixed; top: 40px; width: 100%; padding: 5px;">
+  <% for item in @item_list: %>
+    <span class="label label-success" data-id="<%- item.key %>"><span class="task"><a style="color: #ffffff;" href="#ticket/zoom/<%- item.data.id %>" title="<%= item.data.title %>"><%= item.data.title %></a></span> <a href="#" data-type="close" class="icon-remove-circle" title="<%- @T('close') %>"></a></span>
+  <% end %>
+</div>

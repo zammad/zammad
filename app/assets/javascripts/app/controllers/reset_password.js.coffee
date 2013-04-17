@@ -1,4 +1,4 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
   className: 'container'
 
   events:
@@ -66,7 +66,7 @@ class Index extends App.Controller
 
 App.Config.set( 'reset_password', Index, 'Routes' )
 
-class Verify extends App.Controller
+class Verify extends App.ControllerContent
   className: 'container'
 
   events:

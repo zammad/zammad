@@ -106,7 +106,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
         ui.modalHide()
     )
 
-class App.ControllerGenericIndex extends App.Controller
+class App.ControllerGenericIndex extends App.ControllerContent
   events:
     'click [data-type=edit]':    'edit'
     'click [data-type=destroy]': 'destroy'
@@ -195,7 +195,7 @@ class App.ControllerGenericIndex extends App.Controller
       genericObject: @genericObject
     )
 
-class App.ControllerLevel2 extends App.Controller
+class App.ControllerLevel2 extends App.ControllerContent
   events:
     'click [data-toggle="tabnav"]': 'toggle',
 

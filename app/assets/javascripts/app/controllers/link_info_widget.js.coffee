@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.LinkInfo extends App.Controller
   events:
     'click [data-type=add]': 'add',

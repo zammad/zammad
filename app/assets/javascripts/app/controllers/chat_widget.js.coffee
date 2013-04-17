@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.ChatWidget extends App.Controller
   events:
     'submit   #chat_form':          'submitMessage'

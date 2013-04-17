@@ -1,5 +1,5 @@
 body {
-  padding-top:50px;
+  padding-top:74px;
   font-size: 13px;
 }
 
@@ -47,6 +47,17 @@ table th, table td {
   white-space: nowrap;
 }
 
+.task {
+  display: inline-block;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.task > a:hover {
+  text-decoration: none;
+}
+
 .max-size-scroll {
   max-height: 240px;
   overflow-y: scroll;
@@ -85,6 +96,16 @@ h4 {
 }
 .navbar .nav > li > a {
   padding: 10px 12px 10px;
+}
+
+/*
+.container,
+ */
+.navbar-static-top .container,
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container {
+  width: 96%;
+  min-width: 940px;
 }
 
 /*

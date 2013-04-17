@@ -1,4 +1,3 @@
-
 class App.Run extends App.Controller
   constructor: ->
     super

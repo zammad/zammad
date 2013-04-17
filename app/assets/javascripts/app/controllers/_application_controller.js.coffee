@@ -309,6 +309,17 @@ class App.Controller extends Spine.Controller
   ws_send: (data) ->
     App.Event.trigger( 'ws:send', JSON.stringify(data) )
 
+class App.ControllerPermanent extends App.Controller
+  constructor: ->
+    super
+    $('#content_permanent').show()
+    @el.find('#content').empty()
+
+class App.ControllerContent extends App.Controller
+  constructor: ->
+    super
+    $('#content_permanent').hide()
+
 class App.ControllerModal extends App.Controller
   className: 'modal hide fade',
   tag: 'div',

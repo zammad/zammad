@@ -1,6 +1,4 @@
-$ = jQuery.sub()
-
-class Index extends App.Controller
+class Index extends App.ControllerContent
   events:
     'submit form':         'submit',
     'click .submit':       'submit',
@@ -112,7 +110,6 @@ class Index extends App.Controller
 
     # generate form    
     configure_attributes = [
-#      { name: 'customer_id',        display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @userInfo },
       { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, filter: groupFilter, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
 #      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
       { name: 'subject',            display: 'Subject',  tag: 'input',    type: 'text', limit: 100, null: false, default: defaults['subject'], class: 'span7', },
@@ -120,7 +117,7 @@ class Index extends App.Controller
 #      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['ticket_state_id'],    translate: true, class: 'medium' },
 #      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['ticket_priority_id'], translate: true, class: 'medium' },
     ]
-    @html App.view('agent_ticket_create')( head: 'New Ticket' )
+    @html App.view('customer_ticket_create')( head: 'New Ticket' )
 
     new App.ControllerForm(
       el:      @el.find('#form_create')
@@ -146,7 +143,6 @@ class Index extends App.Controller
 
     # get params
     params = @formParam(e.target)
-    @log 'CustomerTicketCreate', 'notice', 'params', params
 
     # set customer id
     params.customer_id = @Session.get('id')
@@ -183,7 +179,6 @@ class Index extends App.Controller
       ticket_article_sender_id: sender.id
       form_id:                  @form_id
     }
-#          console.log('params', params)
 
     object.load(params)
 

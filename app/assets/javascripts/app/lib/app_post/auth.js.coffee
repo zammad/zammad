@@ -113,11 +113,18 @@ class App.Auth
   @_logout: (data) ->
     App.Log.log 'Auth', 'notice', '_logout'
 
+    # empty session
+    App.Session.init()
+
     # update websocket auth info
     App.WebSocket.auth()
 
     # clear store
     App.Store.clear('all')
+
+    # rebuild navbar
+    App.Event.trigger( 'auth' )
+    App.Event.trigger( 'ui:rerender' )
 
   @_loginError: (xhr, statusText, error) ->
     App.Log.log 'Auth', 'notice', '_loginError:error'
@@ -130,3 +137,7 @@ class App.Auth
 
     # clear store
     App.Store.clear('all')
+
+    # rebuild navbar
+    App.Event.trigger( 'auth' )
+    App.Event.trigger( 'ui:rerender' )

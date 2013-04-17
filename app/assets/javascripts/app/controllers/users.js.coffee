@@ -1,6 +1,4 @@
-$ = jQuery.sub()
-
-class Index extends App.Controller
+class Index extends App.ControllerContent
   constructor: ->
     super
 
@@ -30,5 +28,4 @@ class Index extends App.Controller
     )
 
 App.Config.set( 'users', Index, 'Routes' )
-
 App.Config.set( 'User', { prio: 1000, parent: '#admin', name: 'Users', target: '#users', role: ['Admin'] }, 'NavBar' )
