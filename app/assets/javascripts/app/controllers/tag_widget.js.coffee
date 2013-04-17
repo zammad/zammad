@@ -68,5 +68,4 @@ class App.TagWidget extends App.Controller
     if reorder
       $('#' + @attribute_id + '_tagsinput').height( 20 )
     height = container.scrollHeight
-    console.log(2222, height)
     $('#' + @attribute_id + '_tagsinput').height( height - 10 )
