@@ -16,11 +16,13 @@ class Index extends App.Controller
     # set title
     @title 'New Ticket'
     @form_id = App.ControllerForm.formId()
-    @navupdate '#ticket_create'
 
     @edit_form = undefined
+
+    # set article attributes
+    default_type = 'call_inbound'
     if !@type
-      @type = 'call_inbound'
+      @type = default_type
     article_sender_type_map =
       call_inbound:
         sender:  'Customer'
@@ -35,6 +37,13 @@ class Index extends App.Controller
         article: 'email'
         title:   'Email'
     @article_attributes = article_sender_type_map[@type]
+
+    # if no map entry exists, route to default
+    if !@article_attributes
+      @navigate '#ticket_create/' + default_type
+
+    # update navbar highlighting
+    @navupdate '#ticket_create/' + @type
 
     @fetch(params)
 
