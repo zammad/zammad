@@ -65,16 +65,18 @@ module Session
     session_file = @path + '/' + client_id.to_s + '/session'
     data = nil
     return if !File.exist? session_file
-    File.open( session_file, 'rb' ) { |file|
-      file.flock( File::LOCK_EX )
-      all = file.read
-      file.flock( File::LOCK_UN )
-      begin
+    begin
+      File.open( session_file, 'rb' ) { |file|
+        file.flock( File::LOCK_EX )
+        all = file.read
+        file.flock( File::LOCK_UN )
         data = Marshal.load( all )
-      rescue
-        return
-      end
-    }
+      }
+    rescue Exception => e
+      puts "Error reading '#{session_file}':"
+      puts e.inspect
+      return
+    end
     return data
   end
 
