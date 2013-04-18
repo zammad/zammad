@@ -8,16 +8,19 @@ module Import::OTRS
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
 
-    user     = Setting.get('import_otrs_user');
-    password = Setting.get('import_otrs_password');
-    if user && user != '' && password && password != ''
-      http.basic_auth user, password
-    end
     if url =~ /https/i
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     request = Net::HTTP::Get.new(uri.request_uri)
+
+    # http basic auth (if needed)
+    user     = Setting.get('import_otrs_user');
+    password = Setting.get('import_otrs_password');
+    if user && user != '' && password && password != ''
+      request.basic_auth user, password
+    end
+
     begin
       response = http.request(request)
 #    puts 'R:' + response.body.to_s
@@ -41,12 +44,6 @@ module Import::OTRS
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
 
-    user     = Setting.get('import_otrs_user');
-    password = Setting.get('import_otrs_password');
-    if user && user != '' && password && password != ''
-      http.basic_auth user, password
-    end
-
     if url =~ /https/i
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -54,6 +51,13 @@ module Import::OTRS
     request = Net::HTTP::Post.new(uri.request_uri)
     request.set_form_data(data)
     response = http.request(request)
+
+    # http basic auth (if needed)
+    user     = Setting.get('import_otrs_user');
+    password = Setting.get('import_otrs_password');
+    if user && user != '' && password && password != ''
+      response.basic_auth user, password
+    end
 
     if !response
       raise "Can't connect to #{url}, got no response!"
@@ -330,6 +334,9 @@ module Import::OTRS
               end
             end
             user = User.where( :email => email ).first
+            if !user
+              user = User.where( :login => email ).first
+            end
             if !user
               begin
                 display_name = Mail::Address.new( article_new[:from] ).display_name ||
