@@ -47,6 +47,14 @@ table th, table td {
   white-space: nowrap;
 }
 
+.taskbar {
+  position: fixed;
+  top: 40px;
+  width: 100%;
+  padding: 5px;
+  z-index: 990;
+}
+
 .task {
   display: inline-block;
   max-width: 120px;
@@ -54,7 +62,9 @@ table th, table td {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.task > a,
 .task > a:hover {
+  color: #ffffff;
   text-decoration: none;
 }
 
