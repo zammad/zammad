@@ -1,4 +1,5 @@
 require 'json'
+require 'rss'
 
 module Session
 
@@ -73,6 +74,7 @@ module Session
         data = Marshal.load( all )
       }
     rescue Exception => e
+      File.delete(session_file)
       puts "Error reading '#{session_file}':"
       puts e.inspect
       return
