@@ -7,7 +7,14 @@ module RSS
     begin
       puts 'fetch rss...'
       response = Net::HTTP.get_response( URI.parse(url) )
+
+      # check if redirect is needed
+      if response.code.to_s == '301' || response.code.to_s == '302'
+        url = response.header['location']
+        response = Net::HTTP.get_response( URI.parse( url ) )
+      end
       if response.code.to_s != '200'
+        raise "Can't fetch '#{url}', http code: #{response.code.to_s}"
         return
       end
       rss     = SimpleRSS.parse response.body
