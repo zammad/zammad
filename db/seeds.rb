@@ -1670,6 +1670,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Merge", :target =
 Translation.create_if_not_exists( :locale => 'de', :source => "History", :target => "Historie", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "new", :target => "neu", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "closed", :target => "geschlossen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "close", :target => "schließen", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "open", :target => "offen", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "pending", :target => "warten", :updated_by_id => 1, :created_by_id => 1  )
 Translation.create_if_not_exists( :locale => 'de', :source => "merged", :target => "zusammengefügt", :updated_by_id => 1, :created_by_id => 1  )
