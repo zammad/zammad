@@ -1,5 +1,5 @@
 <div class="well taskbar">
   <% for item in @item_list: %>
-    <span class="label label-success" data-id="<%- item.key %>"><span class="task"><a href="#ticket/zoom/<%- item.data.id %>" title="<%= item.data.title %>"><%= item.data.title %></a></span> <a href="#" data-type="close" class="icon-remove-circle" title="<%- @T('close') %>"></a></span>
+    <span class="label <% if item.task.active: %>label-success<% else: %>label-info<% end %>" data-id="<%- item.key %>"><span class="task"><a href="#ticket/zoom/<%- item.data.id %>" title="<%= item.data.title %>"><%= item.data.title %></a></span><a href="#" data-type="close" class="icon-remove-circle" title="<%- @T('close') %>"></a></span>
   <% end %>
 </div>

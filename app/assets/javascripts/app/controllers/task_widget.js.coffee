@@ -24,6 +24,7 @@ class App.TaskWidget extends App.Controller
     for key, task of tasks
       item = {}
       item.key  = key
+      item.task = task
       item.data = App[task.type].find( task.type_id )
       item_list.push item
 
@@ -34,9 +35,27 @@ class App.TaskWidget extends App.Controller
   remove: (e) =>
     e.preventDefault()
     key = $(e.target).parent().data('id')
+
+    # check if active task is closed
+    task_last = undefined
+    tasks_all = App.TaskManager.all()
+    active_is_closed = false
+    for task_key, task of tasks_all
+      console.log('--', task_key, task)
+      if task.active && task_key.toString() is key.toString()
+        active_is_closed = true
+
+    # remove task
     App.TaskManager.remove( key )
     @render()
-    if _.isEmpty( App.TaskManager.all() ) 
-      @navigate '#'
+
+    # navigate to next task if needed
+    if active_is_closed
+      for key, task of tasks_all
+        task_last = task
+      if task_last
+        @navigate task_last.url
+      if _.isEmpty( tasks_all ) 
+        @navigate '#'
 
 App.Config.set( 'task', App.TaskWidget, 'Widgets' )

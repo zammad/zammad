@@ -34,6 +34,10 @@ class TicketZoom extends App.Controller
       @fetch( @ticket_id, false)
     @interval( update, 30000, @key, 'ticket_zoom' )
 
+  activate: =>
+    @navupdate '#'
+    @title 'Ticket Zoom ' + @ticket.number
+  
   release: =>
     @clearInterval( @key, 'ticket_zoom' )
     @el.remove()
@@ -586,7 +590,7 @@ class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
     @log 'zoom router', params
-    App.TaskManager.add( 'Ticket', @ticket_id, { callback: TicketZoom } )
+    App.TaskManager.add( 'Ticket', @ticket_id, TicketZoom, params )
 
 App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
 App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
