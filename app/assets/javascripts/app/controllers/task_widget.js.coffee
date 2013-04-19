@@ -50,12 +50,13 @@ class App.TaskWidget extends App.Controller
     @render()
 
     # navigate to next task if needed
-    if active_is_closed
+    if active_is_closed && !_.isEmpty( tasks_all )
       for key, task of tasks_all
         task_last = task
       if task_last
-        @navigate task_last.url
-      if _.isEmpty( tasks_all ) 
-        @navigate '#'
+        @navigate task_last.worker.url()
+        return
+    if _.isEmpty( tasks_all ) 
+      @navigate '#'
 
 App.Config.set( 'task', App.TaskWidget, 'Widgets' )

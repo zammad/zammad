@@ -34,6 +34,9 @@ class TicketZoom extends App.Controller
       @fetch( @ticket_id, false)
     @interval( update, 30000, @key, 'ticket_zoom' )
 
+  url: =>
+    '#ticket/zoom/' + @ticket.id
+
   activate: =>
     @navupdate '#'
     @title 'Ticket Zoom ' + @ticket.number

@@ -63,7 +63,6 @@ class _Singleton extends Spine.Module
       type:    type
       type_id: type_id
       params:  params
-      url:     window.location.hash
       worker:  a
       active:  true
     @tasks[@task_count] = task
@@ -73,7 +72,6 @@ class _Singleton extends Spine.Module
 
   remove: ( key ) =>
     if @tasks[key]
-      console.log('rrrelease', @tasks[key], @tasks[key].worker)
       @tasks[key].worker.release()
     delete @tasks[key]
     App.Event.trigger 'ui:rerender'
