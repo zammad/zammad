@@ -1,4 +1,5 @@
 require 'digest/sha2'
+require 'organization'
 
 class User < ApplicationModel
   include Gmaps

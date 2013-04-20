@@ -1,7 +1,6 @@
 require 'net/pop'
 
 class Channel::POP3 < Channel::EmailParser
-  include UserInfo
 
   def fetch (channel)
     ssl  = false

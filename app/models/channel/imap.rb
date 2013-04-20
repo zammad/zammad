@@ -1,7 +1,6 @@
 require 'net/imap'
 
 class Channel::IMAP < Channel::EmailParser
-  include UserInfo
 
   def fetch (channel)
     ssl  = false

@@ -34,7 +34,6 @@ class Store < ApplicationModel
     end
 
     data['store_file_id'] = file.id
-    data['created_by_id'] = 1
 
     # not needed attributes
     data.delete('data')

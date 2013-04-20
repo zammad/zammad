@@ -1,7 +1,6 @@
 require 'history'
 
 class Observer::Tag::TicketHistory < ActiveRecord::Observer
-  include UserInfo
   observe 'tag'
 
   def after_create(record)
@@ -16,7 +15,7 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
       :history_object         => 'Ticket',
       :history_attribute      => 'Tag',
       :value_from             => record.tag_item.name,
-      :created_by_id          => current_user_id || record.created_by_id || 1
+      :created_by_id          => record.created_by_id || UserInfo.current_user_id || 1
     )
   end
   def after_destroy(record)
@@ -31,7 +30,7 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
       :history_object         => 'Ticket',
       :history_attribute      => 'Tag',
       :value_from             => record.tag_item.name,
-      :created_by_id          => current_user_id || record.created_by_id || 1
+      :created_by_id          => record.created_by_id || UserInfo.current_user_id || 1
     )
   end
 end

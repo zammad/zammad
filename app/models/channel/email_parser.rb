@@ -348,8 +348,6 @@ class Channel::EmailParser
           :title              => mail[:subject] || '',
           :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
           :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
-          :updated_by_id      => user.id,
-          :created_by_id      => user.id,
         }
 
         # x-headers lookup
@@ -373,8 +371,6 @@ class Channel::EmailParser
         internal = true
       end
       article_attributes = {
-        :created_by_id            => user.id,
-        :updated_by_id            => user.id,
         :ticket_id                => ticket.id, 
         :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
         :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,

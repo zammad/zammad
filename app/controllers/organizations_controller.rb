@@ -95,6 +95,7 @@ curl http://localhost/api/organizations.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def create
+    return if is_not_role('Agent')
     model_create_render(Organization, params)
   end
 
@@ -125,6 +126,7 @@ curl http://localhost/api/organizations.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def update
+    return if is_not_role('Agent')
     model_update_render(Organization, params)
   end
 
@@ -139,6 +141,7 @@ Test:
 =end
 
 def destroy
+    return if is_not_role('Agent')
     model_destory_render(Organization, params)
   end
 end

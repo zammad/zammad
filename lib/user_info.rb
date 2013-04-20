@@ -1,5 +1,5 @@
 module UserInfo
-  def current_user_id
+  def self.current_user_id
     Thread.current[:user_id]
   end
  

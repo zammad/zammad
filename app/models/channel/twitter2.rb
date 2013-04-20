@@ -1,8 +1,6 @@
 require 'twitter'
 
 class Channel::Twitter2
-  include UserInfo
-
   def connect(channel)
     @client = Twitter::Client.new(
       :consumer_key       => channel[:options][:consumer_key],
@@ -212,7 +210,6 @@ class Channel::Twitter2
         :title              => tweet.text[0,40],
         :ticket_state_id    => state_id,
         :ticket_priority_id => priority_id,
-        :created_by_id      => user.id
       )
     end
 
@@ -239,7 +236,6 @@ class Channel::Twitter2
       to = tweet.recipient.name
     end
     article = Ticket::Article.create(
-      :created_by_id            => user.id,
       :ticket_id                => ticket.id,
       :ticket_article_type_id   => Ticket::Article::Type.where( :name => @article_type ).first.id,
       :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,

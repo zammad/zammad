@@ -20,8 +20,6 @@ class TicketArticlesController < ApplicationController
     form_id  = params[:ticket_article][:form_id]
     params[:ticket_article].delete(:form_id)
     @article = Ticket::Article.new( params[:ticket_article] )
-    @article.created_by_id = current_user.id
-    @article.updated_by_id = current_user.id
 
     # find attachments in upload cache
     if form_id
@@ -48,7 +46,6 @@ class TicketArticlesController < ApplicationController
   # PUT /articles/1
   def update
     @article = Ticket::Article.find( params[:id] )
-    params[:ticket_article][:updated_by_id] = current_user.id
 
     if @article.update_attributes(params[:ticket_article])
       render :json => @article, :status => :ok

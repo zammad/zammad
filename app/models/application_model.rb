@@ -3,8 +3,8 @@ require 'cache'
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
 
-  before_create  :cache_delete
-  before_update  :cache_delete_before
+  before_create  :cache_delete, :fill_up_user_create
+  before_update  :cache_delete_before, :fill_up_user_update
   before_destroy :cache_delete_before
   after_create  :cache_delete
   after_update  :cache_delete
@@ -37,6 +37,35 @@ class ApplicationModel < ActiveRecord::Base
     data.delete( :created_by_id )
 
     data
+  end
+
+
+  def fill_up_user_create
+    if self.class.column_names.include? 'updated_by_id'
+      if UserInfo.current_user_id
+        if self.updated_by_id && self.updated_by_id != UserInfo.current_user_id
+          raise "WARNING: create - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+        end
+        self.updated_by_id = UserInfo.current_user_id
+      end
+    end
+    if self.class.column_names.include? 'created_by_id'
+      if UserInfo.current_user_id
+        if self.created_by_id && self.created_by_id != UserInfo.current_user_id
+          raise "WARNING: create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+        end
+        self.created_by_id = UserInfo.current_user_id
+      end
+    end
+  end
+  def fill_up_user_update
+    return if !self.class.column_names.include? 'updated_by_id'
+    if UserInfo.current_user_id
+#      if self.updated_by_id && self.updated_by_id != UserInfo.current_user_id
+#        raise "WARNING: update - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+#      end
+      self.updated_by_id = UserInfo.current_user_id
+    end
   end
 
   def cache_update(o)

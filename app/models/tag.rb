@@ -20,7 +20,6 @@ class Tag < ApplicationModel
       :tag_object_id      => tag_object_id,
       :tag_item_id        => tag_item_id,
       :o_id               => data[:o_id],
-      :created_by_id      => data[:created_by_id]
     )
     return true
   end

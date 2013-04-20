@@ -1203,6 +1203,7 @@ user = User.create_if_not_exists(
   :updated_by_id => 1,
   :created_by_id => 1
 )
+UserInfo.current_user_id = 1
 user_community = User.create_if_not_exists(
   :login         => 'nicole.braun@zammad.org',
   :firstname     => 'Nicole',
@@ -1213,8 +1214,6 @@ user_community = User.create_if_not_exists(
   :roles         => roles,
 #  :groups        => groups,
   :organizations => organizations,
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 Link::Type.create_if_not_exists( :name => 'normal' )
@@ -1224,40 +1223,41 @@ Link::Object.create_if_not_exists( :name => 'Question/Answer' )
 Link::Object.create_if_not_exists( :name => 'Idea' )
 Link::Object.create_if_not_exists( :name => 'Bug' )
 
-Ticket::StateType.create_if_not_exists( :name => 'new', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'open', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'pending reminder', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'pending action', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'closed', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'merged', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'removed', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'new', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'open', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'pending reminder', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'pending action', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'closed', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'merged', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :name => 'removed', :updated_by_id  => 1 )
 
-Ticket::State.create_if_not_exists( :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::State.create_if_not_exists( :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::State.create_if_not_exists( :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create_if_not_exists( :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create_if_not_exists( :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id, :updated_by_id  => 1, :created_by_id => 1  )
-Ticket::State.create_if_not_exists( :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :updated_by_id  => 1, :created_by_id => 1  )
+Ticket::State.create_if_not_exists( :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id )
+Ticket::State.create_if_not_exists( :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id )
+Ticket::State.create_if_not_exists( :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id  )
+Ticket::State.create_if_not_exists( :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id  )
+Ticket::State.create_if_not_exists( :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id  )
+Ticket::State.create_if_not_exists( :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id  )
 
-Ticket::Priority.create_if_not_exists( :name => '1 low', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Priority.create_if_not_exists( :name => '2 normal', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Priority.create_if_not_exists( :name => '3 high', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Priority.create_if_not_exists( :name => '1 low' )
+Ticket::Priority.create_if_not_exists( :name => '2 normal' )
+Ticket::Priority.create_if_not_exists( :name => '3 high' )
 
-Ticket::Article::Type.create_if_not_exists( :name => 'email', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'sms', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'chat', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'fax', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'phone', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'twitter status', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'twitter direct-message', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'facebook', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'note', :communication => false, :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Type.create_if_not_exists( :name => 'web', :communication => true, :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Type.create_if_not_exists( :name => 'email', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'sms', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'chat', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'fax', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'phone', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'twitter status', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'twitter direct-message', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'facebook', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :name => 'note', :communication => false )
+Ticket::Article::Type.create_if_not_exists( :name => 'web', :communication => true )
 
-Ticket::Article::Sender.create_if_not_exists( :name => 'Agent', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Sender.create_if_not_exists( :name => 'Customer', :updated_by_id  => 1, :created_by_id => 1 )
-Ticket::Article::Sender.create_if_not_exists( :name => 'System', :updated_by_id  => 1, :created_by_id => 1 )
+Ticket::Article::Sender.create_if_not_exists( :name => 'Agent' )
+Ticket::Article::Sender.create_if_not_exists( :name => 'Customer' )
+Ticket::Article::Sender.create_if_not_exists( :name => 'System' )
 
+UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
   :group_id           => Group.where( :name => 'Users' ).first.id,
   :customer_id        => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
@@ -1265,8 +1265,6 @@ ticket = Ticket.create(
   :title              => 'Welcome to Zammad!',
   :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
   :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
-  :updated_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
-  :created_by_id      => User.where( :login => 'nicole.braun@zammad.org' ).first.id
 )
 Ticket::Article.create(
   :ticket_id                => ticket.id, 
@@ -1286,10 +1284,9 @@ Regards,
 The Zammad.org Project
 ',
   :internal                 => false,
-  :updated_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
-  :created_by_id            => User.where( :login => 'nicole.braun@zammad.org' ).first.id
 )
 
+UserInfo.current_user_id = 1
 overview_role = Role.where( :name => 'Agent' ).first
 Overview.create_if_not_exists(
   :name       => 'My assigned Tickets',
@@ -1310,8 +1307,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 Overview.create_if_not_exists(
@@ -1333,8 +1328,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 Overview.create_if_not_exists(
@@ -1355,8 +1348,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 Overview.create_if_not_exists(
@@ -1377,8 +1368,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'escalation_time' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 Overview.create_if_not_exists(
@@ -1400,8 +1389,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 Overview.create_if_not_exists(
@@ -1423,8 +1410,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 overview_role = Role.where( :name => 'Customer' ).first
@@ -1447,8 +1432,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 Overview.create_if_not_exists(
   :name                => 'My Organization Tickets',
@@ -1470,8 +1453,6 @@ Overview.create_if_not_exists(
     :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
     :view_mode_default => 's',
   },
-  :updated_by_id => 1,
-  :created_by_id => 1
 )
 
 Channel.create_if_not_exists(
@@ -1485,16 +1466,12 @@ Channel.create_if_not_exists(
   },
   :group_id       => 1,
   :active         => false,
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 Channel.create_if_not_exists(
   :adapter        => 'Sendmail',
   :area           => 'Email::Outbound',
   :options        => {},
   :active         => true,
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 
 network = Network.create_if_not_exists(
@@ -1505,13 +1482,9 @@ network = Network.create_if_not_exists(
 
 Network::Category::Type.create_if_not_exists(
   :name   => 'Announcement',
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 Network::Category::Type.create_if_not_exists(
   :name => 'Idea',
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 Network::Category::Type.create_if_not_exists(
   :name => 'Question',
@@ -1520,21 +1493,15 @@ Network::Category::Type.create_if_not_exists(
 )
 Network::Category::Type.create_if_not_exists(
   :name => 'Bug Report',
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 
 Network::Privacy.create_if_not_exists(
   :name => 'logged in',
   :key  => 'loggedIn',
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 Network::Privacy.create_if_not_exists(
   :name => 'logged in and moderator',
   :key  => 'loggedInModerator',
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 Network::Category.create_if_not_exists(
   :name                     => 'Announcements',
@@ -1543,8 +1510,6 @@ Network::Category.create_if_not_exists(
   :network_category_type_id => Network::Category::Type.where(:name => 'Announcement').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in and moderator').first.id,
   :allow_comments           => true,
-  :updated_by_id            => 1,
-  :created_by_id            => 1,
 )
 Network::Category.create_if_not_exists(
   :name                     => 'Questions',
@@ -1553,8 +1518,6 @@ Network::Category.create_if_not_exists(
   :network_category_type_id => Network::Category::Type.where(:name => 'Question').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
 #  :network_categories_moderator_user_ids => User.where(:login => '-').first.id,
-  :updated_by_id            => 1,
-  :created_by_id            => 1,
 )
 Network::Category.create_if_not_exists(
   :name                     => 'Ideas',
@@ -1563,8 +1526,6 @@ Network::Category.create_if_not_exists(
   :network_category_type_id => Network::Category::Type.where(:name => 'Idea').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
   :allow_comments           => true,
-  :updated_by_id            => 1,
-  :created_by_id            => 1,
 )
 Network::Category.create_if_not_exists(
   :name                     => 'Bug Reports',
@@ -1573,285 +1534,267 @@ Network::Category.create_if_not_exists(
   :network_category_type_id => Network::Category::Type.where(:name => 'Bug Report').first.id,
   :network_privacy_id       => Network::Privacy.where(:name => 'logged in').first.id,
   :allow_comments           => true,
-  :updated_by_id            => 1,
-  :created_by_id            => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Announcement',
   :body                 => 'Some announcement....',
   :network_category_id  => Network::Category.where(:name => 'Announcements').first.id,
-  :updated_by_id        => 1,
-  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :updated_by_id    => 1,
-  :created_by_id    => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Question?',
   :body                 => 'Some questions....',
   :network_category_id  => Network::Category.where(:name => 'Questions').first.id,
-  :updated_by_id        => 1,
-  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :updated_by_id    => 1,
-  :created_by_id    => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Idea',
   :body                 => 'Some idea....',
   :network_category_id  => Network::Category.where(:name => 'Ideas').first.id,
-  :updated_by_id        => 1,
-  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :updated_by_id    => 1,
-  :created_by_id    => 1,
 )
 item = Network::Item.create(
   :title                => 'Example Bug Report',
   :body                 => 'Some bug....',
   :network_category_id  => Network::Category.where(:name => 'Bug Reports').first.id,
-  :updated_by_id        => 1,
-  :created_by_id        => 1,
 )
 Network::Item::Comment.create(
   :network_item_id  => item.id,
   :body             => 'Some comment....',
-  :updated_by_id    => 1,
-  :created_by_id    => 1,
 )
 
-Translation.create_if_not_exists( :locale => 'de', :source => "New", :target => "Neu", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Create", :target => "Erstellen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Cancel", :target => "Abbrechen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Submit", :target => "Übermitteln", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Sign out", :target => "Abmelden", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Profile", :target => "Profil", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Settings", :target => "Einstellungen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Overviews", :target => "Übersichten", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Manage", :target => "Verwalten", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Users", :target => "Benutzer", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Groups", :target => "Gruppen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Group", :target => "Gruppe", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Organizations", :target => "Organisationen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Organization", :target => "Organisation", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Recent Viewed", :target => "Zuletzt angesehen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Security", :target => "Sicherheit", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "From", :target => "Von", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Title", :target => "Titel", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Customer", :target => "Kunde", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "State", :target => "Status", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Created", :target => "Erstellt", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Attributes", :target => "Attribute", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Direction", :target => "Richtung", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Owner", :target => "Besitzer", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Subject", :target => "Betreff", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Priority", :target => "Priorität", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "Wähle den Kundn f�r das Ticket oder erstell einen neuen.", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "New Ticket", :target => "Neues Ticket", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Firstname", :target => "Vorname", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Lastname", :target => "Nachname", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Phone", :target => "Telefon", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Street", :target => "Straße", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Zip", :target => "PLZ", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "City", :target => "Stadt", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Note", :target => "Notiz", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "note", :target => "Notiz", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "New User", :target => "Neuer Benutzer", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Merge", :target => "Zusammenfügen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "History", :target => "Historie", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "new", :target => "neu", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "closed", :target => "geschlossen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "close", :target => "schließen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "open", :target => "offen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "pending", :target => "warten", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "merged", :target => "zusammengefügt", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "removed", :target => "zurück gezogen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Activity Stream", :target => "Aktivitäts-Stream", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "updated", :target => "aktuallisierte", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "created", :target => "erstellte", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "My assigned Tickets", :target => "Meine zugewisenen Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Unassigned Tickets", :target => "Nicht zugewisene/freie Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Unassigned & Open Tickets", :target => "Nicht zugewisene & offene Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "All Tickets", :target => "Alle Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Escalated Tickets", :target => "Eskallierte Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "My pending reached Tickets", :target => "Meine warten erreicht Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Password", :target => "Passwort", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Password (confirm)", :target => "Passwort (bestätigen)", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Role", :target => "Rolle", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Roles", :target => "Rollen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Active", :target => "Aktiv", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Edit", :target => "Bearbeiten", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Base", :target => "Basis", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Number", :target => "Nummer", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Sender Format", :target => "Absender Format", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Authentication", :target => "Authorisierung", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Product Name", :target => "Produkt Name", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "To", :target => "An", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Customer", :target => "Kunde", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Linked Accounts", :target => "Verknüpfte Accounts", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Sign in with", :target => "Anmelden mit", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Username or email", :target => "Benutzer oder Email", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Remember me", :target => "An mich erinnern", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Forgot password?", :target => "Passwort vergessen?", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Sign in using", :target => "Anmelden über", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "New to", :target => "Neu bei", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "join today!", :target => "werde Teil!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Sign up", :target => "Registrieren", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Sign in", :target => "Anmelden", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Create my account", :target => "Meinen Account erstellen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Login successfully! Have a nice day!", :target => "Anmeldung erfolgreich!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Last contact", :target => "Letzter Kontakt", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Last contact (Agent)", :target => "Letzter Kontakt (Agent)", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Last contact (Customer)", :target => "Letzter Kontakt (Kunde)", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Close time", :target => "Schließzeit", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "First response", :target => "Erste Reaktion", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Ticket %s created!", :target => "Ticket %s erstellt!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "days", :target => "Tage", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "hour", :target => "Stunde", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "hours", :target => "Stunden", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "minute", :target => "Minute", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "minutes", :target => "Minuten", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "See more", :target => "mehr anzeigen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Search", :target => "Suche", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Forgot your password?", :target => "Passwort vergessen?", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Templates", :target => "Vorlagen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Delete", :target => "Löschen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Apply", :target => "Übernehmen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Save as Template", :target => "Als Template speichern", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Save", :target => "Speichern", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Open Tickets", :target => "Offene Ticket", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Closed Tickets", :target => "Geschlossene Ticket", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "set to internal", :target => "auf intern setzen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "set to public", :target => "auf öffentlich setzen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "split", :target => "teilen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Type", :target => "Typ", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "raw", :target => "unverarbeitet", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "1 low", :target => "1 niedrig", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "2 normal", :target => "2 normal", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "3 high", :target => "3 hoch", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "public", :target => "öffentlich", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "internal", :target => "intern", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Attach files", :target => "Dateien anhängen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Visability", :target => "Sichtbarkeit", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Actions", :target => "Aktionen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Email", :target => "E-Mail", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "email", :target => "E-Mail", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "phone", :target => "Telefon", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "fax", :target => "Fax", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "chat", :target => "Chat", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "sms", :target => "SMS", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "twitter status", :target => "Twitter Status Meldung", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "twitter direct-message", :target => "Twitter Direkt-Nachricht", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "All Open Tickets", :target => "Alle offenen Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "child", :target => "Kind", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "parent", :target => "Eltern", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "normal", :target => "Normal", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Linked Objects", :target => "Verknüpfte Objekte", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Links", :target => "Verknüpftungen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "My Organization Tickets", :target => "Meine Organisations Tickets", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "My Organization", :target => "Meine Organisation", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "We've sent password reset instructions to your email address.", :target => "Wir haben Ihnen die Anleitung zum zurücksetzen Ihres Passworts an Ihre E-Mail-Adresse gesendet.", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Enter your username or email address", :target => "Bitte geben Sie Ihren Benutzernamen oder E-Mail-Adresse ein", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Choose your new password.", :target => "Wählen Sie Ihr neues Passwort.", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Woo hoo! Your password has been changed!", :target => "Vielen Dank, Ihr Passwort wurde geändert!", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Please try to login!", :target => "Bitte melden Sie sich nun an!", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Username or email address invalid, please try again.", :target => "Benutzername oder E-Mail-Addresse ungültig, bitte erneut versuchen.", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.", :target => "Wir haben die Anforderung per E-Mail an Sie versendet, bitte überprüfen Sie Ihr Email-Postfach (auch die Junk E-Mails) ggf. starten Sie eine Anforderung erneut.", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "again", :target => "erneut", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "none", :target => "keine", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Welcome!", :target => "Willkommen!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Please click the button below to create your first one.", :target => "Klicken Sie die Schaltfläche unten um das erste zu erstellen.", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Create your first Ticket", :target => "Erstellen Sie Ihr erstes Ticket", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "You have not created a Ticket yet.", :target => "Sie haben noch kein Ticket erstellt.", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "The way to communicate with us is this thing called \"Ticket\".", :target => "Der Weg um mit uns zu kommunizieren ist das sogenannte \"Ticket\".", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "or", :target => "oder", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "yes", :target => "ja", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "no", :target => "nein", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Attachment", :target => "Anhang", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Year", :target => "Jahr", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Month", :target => "Monat", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Closed", :target => "Geschlossen", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Re-Open", :target => "Wiedereröffnet", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Day", :target => "Tag", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "First Solution", :target => "Erstlösung", :updated_by_id => 1, :created_by_id => 1 )
-Translation.create_if_not_exists( :locale => 'de', :source => "Vendor", :target => "Hersteller", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Action", :target => "Aktion", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "uninstall", :target => "deinstallieren", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "install", :target => "installieren", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "reinstall", :target => "erneut installieren", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "deactivate", :target => "deaktivieren", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "activate", :target => "aktivieren", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "uninstalled", :target => "deinstalliert", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "installed", :target => "installiert", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "deactivated", :target => "deaktiviert", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "activated", :target => "aktiviert", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "new", :target => "neu", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "note", :target => "Notiz", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "phone", :target => "Telefon", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "web", :target => "Web", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Change order", :target => "Reihenfolge ändern", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Group by", :target => "Gruppieren mit", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Items per page", :target => "Einträge je Seite", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact", :target => "Letzter Kontakt", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact Agent", :target => "Letzter Kontakt Agent", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact Customer", :target => "Letzter Kontakt Kunde", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Create an inbound Ticket", :target => "Erstelle ein eingehendes Ticket", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Create an outbound Ticket (will send this as email to customer)", :target => "Erstelle ein ausgehendes Ticket (wird per E-Mail an den Kunden gesendet)", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Age", :target => "Alter", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Article Count", :target => "Artikel Anzahl", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Article", :target => "Artikel", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Close Time", :target => "Schließzeit", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "First Response", :target => "Erste Reaktion", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "up", :target => "auf", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "down", :target => "ab", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Inbound", :target => "Eingehend", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Outbound", :target => "Ausgehend", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Adresses", :target => "Adressen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Signatures", :target => "Signatur", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Filter", :target => "Filter", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Bulk-Action executed!", :target => "Sammelaktion ausgeführt!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Moved in", :target => "Hinein Verschoben", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Moved out", :target => "Heraus Verschoben", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Country", :target => "Land", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Invitation sent!", :target => "Einladung versendet", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Can't create user", :target => "Benutzer konnte nicht angelegt werden!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Update successful!", :target => "Aktualisierung erfolgreich!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Invite Agents", :target => "Agenten einladen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Getting started!", :target => "Ersten Schritte!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Create Admin", :target => "Admin erstellen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Configure Channels", :target => "Kanäle konfigurieren", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Send invitation", :target => "Einladung senden", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Next...", :target => "Weiter...", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Week", :target => "Woche", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Follow up possible", :target => "Nachfrage möglich", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Assign Follow Ups", :target => "Zuweisung bei Nachfrage", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Signature", :target => "Signatur", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Change your password", :target => "Ändern Sie Ihr Passwort", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Current Password", :target => "Aktuelles Passwort", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "New Password", :target => "Neues Passwort", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "New Password (confirm)", :target => "Neues Passwort (bestätigen)", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Language", :target => "Sprache", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Link Accounts", :target => "Verknüpfte Accounts", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Change your language.", :target => "Ändern Sie Ihr Sprache.", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Successfully!", :target => "Erfolgreich!", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Remove", :target => "Entfernen", :updated_by_id => 1, :created_by_id => 1  )
-Translation.create_if_not_exists( :locale => 'de', :source => "Add", :target => "Hinzufügen", :updated_by_id => 1, :created_by_id => 1  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New", :target => "Neu" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create", :target => "Erstellen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Cancel", :target => "Abbrechen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Submit", :target => "Übermitteln"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Sign out", :target => "Abmelden"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Profile", :target => "Profil"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Settings", :target => "Einstellungen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Overviews", :target => "Übersichten"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Manage", :target => "Verwalten"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Users", :target => "Benutzer"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Groups", :target => "Gruppen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Group", :target => "Gruppe"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Organizations", :target => "Organisationen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Organization", :target => "Organisation"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Recent Viewed", :target => "Zuletzt angesehen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Security", :target => "Sicherheit"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "From", :target => "Von"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Title", :target => "Titel"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Customer", :target => "Kunde"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "State", :target => "Status"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Created", :target => "Erstellt"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Attributes", :target => "Attribute"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Direction", :target => "Richtung"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Owner", :target => "Besitzer"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Subject", :target => "Betreff"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Priority", :target => "Priorität"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "Wähle den Kundn f�r das Ticket oder erstell einen neuen."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New Ticket", :target => "Neues Ticket"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Firstname", :target => "Vorname"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Lastname", :target => "Nachname"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Phone", :target => "Telefon"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Street", :target => "Straße"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Zip", :target => "PLZ"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "City", :target => "Stadt"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Note", :target => "Notiz"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "note", :target => "Notiz"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New User", :target => "Neuer Benutzer"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Merge", :target => "Zusammenfügen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "History", :target => "Historie"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "new", :target => "neu"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "closed", :target => "geschlossen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "close", :target => "schließen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "open", :target => "offen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "pending", :target => "warten"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "merged", :target => "zusammengefügt"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "removed", :target => "zurück gezogen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Activity Stream", :target => "Aktivitäts-Stream"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "updated", :target => "aktuallisierte"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "created", :target => "erstellte"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "My assigned Tickets", :target => "Meine zugewisenen Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Unassigned Tickets", :target => "Nicht zugewisene/freie Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Unassigned & Open Tickets", :target => "Nicht zugewisene & offene Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "All Tickets", :target => "Alle Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Escalated Tickets", :target => "Eskallierte Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "My pending reached Tickets", :target => "Meine warten erreicht Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Password", :target => "Passwort"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Password (confirm)", :target => "Passwort (bestätigen)"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Role", :target => "Rolle"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Roles", :target => "Rollen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Active", :target => "Aktiv"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Edit", :target => "Bearbeiten"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Base", :target => "Basis"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Number", :target => "Nummer"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Sender Format", :target => "Absender Format"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Authentication", :target => "Authorisierung"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Product Name", :target => "Produkt Name"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "To", :target => "An"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Customer", :target => "Kunde"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Linked Accounts", :target => "Verknüpfte Accounts"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Sign in with", :target => "Anmelden mit"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Username or email", :target => "Benutzer oder Email"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Remember me", :target => "An mich erinnern"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Forgot password?", :target => "Passwort vergessen?"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Sign in using", :target => "Anmelden über"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New to", :target => "Neu bei"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "join today!", :target => "werde Teil!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Sign up", :target => "Registrieren"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Sign in", :target => "Anmelden"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create my account", :target => "Meinen Account erstellen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Login successfully! Have a nice day!", :target => "Anmeldung erfolgreich!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Last contact", :target => "Letzter Kontakt"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Last contact (Agent)", :target => "Letzter Kontakt (Agent)"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Last contact (Customer)", :target => "Letzter Kontakt (Kunde)"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Close time", :target => "Schließzeit"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "First response", :target => "Erste Reaktion"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Ticket %s created!", :target => "Ticket %s erstellt!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "day", :target => "Tag"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "days", :target => "Tage"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "hour", :target => "Stunde"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "hours", :target => "Stunden"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "minute", :target => "Minute"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "minutes", :target => "Minuten"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "See more", :target => "mehr anzeigen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Search", :target => "Suche"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Forgot your password?", :target => "Passwort vergessen?"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Templates", :target => "Vorlagen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Delete", :target => "Löschen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Apply", :target => "Übernehmen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Save as Template", :target => "Als Template speichern"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Save", :target => "Speichern"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Open Tickets", :target => "Offene Ticket"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Closed Tickets", :target => "Geschlossene Ticket"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "set to internal", :target => "auf intern setzen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "set to public", :target => "auf öffentlich setzen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "split", :target => "teilen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Type", :target => "Typ"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "raw", :target => "unverarbeitet"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "1 low", :target => "1 niedrig"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "2 normal", :target => "2 normal"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "3 high", :target => "3 hoch"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "public", :target => "öffentlich"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "internal", :target => "intern"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Attach files", :target => "Dateien anhängen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Visability", :target => "Sichtbarkeit"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Actions", :target => "Aktionen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Email", :target => "E-Mail"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "email", :target => "E-Mail"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "phone", :target => "Telefon"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "fax", :target => "Fax"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "chat", :target => "Chat"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "sms", :target => "SMS"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "twitter status", :target => "Twitter Status Meldung"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "twitter direct-message", :target => "Twitter Direkt-Nachricht"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "All Open Tickets", :target => "Alle offenen Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "child", :target => "Kind"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "parent", :target => "Eltern"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "normal", :target => "Normal"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Linked Objects", :target => "Verknüpfte Objekte"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Links", :target => "Verknüpftungen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change Customer", :target => "Kunden ändern"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "My Organization Tickets", :target => "Meine Organisations Tickets"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "My Organization", :target => "Meine Organisation"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "We've sent password reset instructions to your email address.", :target => "Wir haben Ihnen die Anleitung zum zurücksetzen Ihres Passworts an Ihre E-Mail-Adresse gesendet." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Enter your username or email address", :target => "Bitte geben Sie Ihren Benutzernamen oder E-Mail-Adresse ein" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Choose your new password.", :target => "Wählen Sie Ihr neues Passwort." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Woo hoo! Your password has been changed!", :target => "Vielen Dank, Ihr Passwort wurde geändert!" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Please try to login!", :target => "Bitte melden Sie sich nun an!" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Username or email address invalid, please try again.", :target => "Benutzername oder E-Mail-Addresse ungültig, bitte erneut versuchen."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.", :target => "Wir haben die Anforderung per E-Mail an Sie versendet, bitte überprüfen Sie Ihr Email-Postfach (auch die Junk E-Mails) ggf. starten Sie eine Anforderung erneut." )
+Translation.create_if_not_exists( :locale => 'de', :source => "again", :target => "erneut"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "none", :target => "keine"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Welcome!", :target => "Willkommen!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Please click the button below to create your first one.", :target => "Klicken Sie die Schaltfläche unten um das erste zu erstellen."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create your first Ticket", :target => "Erstellen Sie Ihr erstes Ticket"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "You have not created a Ticket yet.", :target => "Sie haben noch kein Ticket erstellt."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "The way to communicate with us is this thing called \"Ticket\".", :target => "Der Weg um mit uns zu kommunizieren ist das sogenannte \"Ticket\"."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "or", :target => "oder"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "yes", :target => "ja"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "no", :target => "nein"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Attachment", :target => "Anhang" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Year", :target => "Jahr" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Month", :target => "Monat" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Day", :target => "Tag" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Closed", :target => "Geschlossen" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Re-Open", :target => "Wiedereröffnet" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Day", :target => "Tag" )
+Translation.create_if_not_exists( :locale => 'de', :source => "First Solution", :target => "Erstlösung" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Vendor", :target => "Hersteller"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Action", :target => "Aktion"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "uninstall", :target => "deinstallieren"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "install", :target => "installieren"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "reinstall", :target => "erneut installieren"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "deactivate", :target => "deaktivieren"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "activate", :target => "aktivieren"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "uninstalled", :target => "deinstalliert"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "installed", :target => "installiert"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "deactivated", :target => "deaktiviert"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "activated", :target => "aktiviert"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "new", :target => "neu"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "note", :target => "Notiz"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "phone", :target => "Telefon"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "web", :target => "Web"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change order", :target => "Reihenfolge ändern"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Group by", :target => "Gruppieren mit"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Items per page", :target => "Einträge je Seite"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact", :target => "Letzter Kontakt"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact Agent", :target => "Letzter Kontakt Agent"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Last Contact Customer", :target => "Letzter Kontakt Kunde"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create an inbound Ticket", :target => "Erstelle ein eingehendes Ticket"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create an outbound Ticket (will send this as email to customer)", :target => "Erstelle ein ausgehendes Ticket (wird per E-Mail an den Kunden gesendet)"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Age", :target => "Alter"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Article Count", :target => "Artikel Anzahl"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Article", :target => "Artikel"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Close Time", :target => "Schließzeit"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "First Response", :target => "Erste Reaktion"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "up", :target => "auf"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "down", :target => "ab"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Inbound", :target => "Eingehend"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Outbound", :target => "Ausgehend"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Adresses", :target => "Adressen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Signatures", :target => "Signatur"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Filter", :target => "Filter"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Bulk-Action executed!", :target => "Sammelaktion ausgeführt!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Moved in", :target => "Hinein Verschoben"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Moved out", :target => "Heraus Verschoben"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Country", :target => "Land"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Invitation sent!", :target => "Einladung versendet"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Can't create user", :target => "Benutzer konnte nicht angelegt werden!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Update successful!", :target => "Aktualisierung erfolgreich!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Invite Agents", :target => "Agenten einladen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Getting started!", :target => "Ersten Schritte!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Create Admin", :target => "Admin erstellen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Configure Channels", :target => "Kanäle konfigurieren"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Send invitation", :target => "Einladung senden"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Next...", :target => "Weiter..."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Week", :target => "Woche"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Follow up possible", :target => "Nachfrage möglich"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Assign Follow Ups", :target => "Zuweisung bei Nachfrage"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Signature", :target => "Signatur"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change your password", :target => "Ändern Sie Ihr Passwort"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Current Password", :target => "Aktuelles Passwort"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New Password", :target => "Neues Passwort"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "New Password (confirm)", :target => "Neues Passwort (bestätigen)"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Language", :target => "Sprache"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Link Accounts", :target => "Verknüpfte Accounts"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Change your language.", :target => "Ändern Sie Ihr Sprache."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Successfully!", :target => "Erfolgreich!"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Remove", :target => "Entfernen"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Add", :target => "Hinzufügen"  )
 
-#Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "", :updated_by_id => 1, :created_by_id => 1  )
+#Translation.create_if_not_exists( :locale => 'de', :source => "", :target => ""  )
 
 # install all packages in auto_install
 Package.auto_install()

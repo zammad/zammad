@@ -122,7 +122,6 @@ class Ticket < ApplicationModel
 
     # create new merge article
     Ticket::Article.create(
-      :created_by_id            => data[:created_by_id],
       :ticket_id                => self.id, 
       :ticket_article_type_id   => Ticket::Article::Type.lookup( :name => 'note' ).id,
       :ticket_article_sender_id => Ticket::Article::Sender.lookup( :name => 'Agent' ).id,

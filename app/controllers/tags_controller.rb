@@ -30,7 +30,6 @@ class TagsController < ApplicationController
       :object        => params[:object],
       :o_id          => params[:o_id],
       :item          => params[:item],
-      :created_by_id => current_user.id,
     );
     if success
       render :json => success, :status => :created
@@ -45,7 +44,6 @@ class TagsController < ApplicationController
       :object        => params[:object],
       :o_id          => params[:o_id],
       :item          => params[:item],
-      :created_by_id => current_user.id,
     );
     if success
       render :json => success, :status => :created

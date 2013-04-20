@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include UserInfo
 #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user,
@@ -56,12 +55,20 @@ class ApplicationController < ActionController::Base
   # a Rails application; logging in sets the session value and
   # logging out removes it.
   def current_user
-    @_current_user ||= session[:user_id] &&
-    User.find_by_id( session[:user_id] )
+    return @_current_user if @_current_user
+    return if !session[:user_id]
+    @_current_user = User.find_by_id( session[:user_id] )
   end
   def current_user_set(user)
     @_current_user = user
     set_user
+  end
+
+  # Sets the current user into a named Thread location so that it can be accessed
+  # by models and observers
+  def set_user
+    return if !current_user
+    UserInfo.current_user_id = current_user.id
   end
 
   def authentication_check_only
@@ -126,6 +133,7 @@ class ApplicationController < ActionController::Base
 
     # return auth not ok (no session exists)
     if !session[:user_id]
+      puts 'no valid session, user_id'
       message = 'no valid session, user_id'
       return {
         :auth    => false,
@@ -154,13 +162,6 @@ class ApplicationController < ActionController::Base
 
     # return auth ok
     return true
-  end
-
-  # Sets the current user into a named Thread location so that it can be accessed
-  # by models and observers
-  def set_user
-    return if !current_user
-    UserInfo.current_user_id = current_user.id
   end
 
   def is_role( role_name )
@@ -211,10 +212,6 @@ class ApplicationController < ActionController::Base
       # create object
       generic_object = object.new( object.param_cleanup(params) )
 
-      # set created_by_id and updated_by_id
-      generic_object.created_by_id = current_user.id
-      generic_object.updated_by_id = current_user.id
-
       # save object
       generic_object.save
       model_create_render_item(generic_object)
@@ -232,9 +229,6 @@ class ApplicationController < ActionController::Base
 
       # find object
       generic_object = object.find( params[:id] )
-
-      # set created_by_id and updated_by_id
-      params['updated_by_id'] = current_user.id
 
       # save object
       generic_object.update_attributes( object.param_cleanup(params) )
