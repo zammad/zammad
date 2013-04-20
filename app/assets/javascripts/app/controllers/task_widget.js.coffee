@@ -15,6 +15,12 @@ class App.TaskWidget extends App.Controller
       App.TaskManager.reset()
       @el.html('')
 
+    @interval(
+      -> App.TaskManager.sync()
+      2000,
+      'task-widget',
+    )
+
   render: ->
 
     return if _.isEmpty( @Session.all() )

@@ -24,7 +24,12 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.reset()
 
-class _Singleton extends Spine.Module
+  @sync: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.syncTasks()
+
+class _Singleton extends App.Controller
   @include App.Log
 
   constructor: ->
@@ -37,7 +42,7 @@ class _Singleton extends Spine.Module
       task_count = 0
       for task in cache
         task_count += 1
-        setTimeout(
+        @delay(
           ->
             task = cache.shift()
             App.TaskManager.add(task.type, task.type_id, task.callback, task.params, true)
@@ -62,7 +67,6 @@ class _Singleton extends Spine.Module
           else
             task.active = true
         App.Event.trigger 'ui:rerender'
-        @syncTasks()
         return key
 
     @task_count++
@@ -72,7 +76,6 @@ class _Singleton extends Spine.Module
     active = true
     if to_not_show
       active = false
-    console.log('start...', type, type_id, callback, params, @task_count )
     if active
       $('#content').empty()
 
@@ -94,32 +97,65 @@ class _Singleton extends Spine.Module
       active:   active
     @tasks[@task_count] = task
     App.Event.trigger 'ui:rerender'
-    @syncTasks()
+    if !to_not_show
+      @syncAdd(task)
 
     @task_count
 
-  remove: ( key ) =>
+  remove: ( key, to_not_show = false ) =>
     if @tasks[key]
       @tasks[key].worker.release()
+    if !to_not_show
+      @syncRemove( @tasks[key] )
     delete @tasks[key]
     App.Event.trigger 'ui:rerender'
-    @syncTasks()
 
   reset: =>
     @tasks = {}
     App.Event.trigger 'ui:rerender'
 
-  syncTasks: =>
-    store = []
-    for task_key, task of @tasks
-      item =
-        type:     task.type
-        type_id:  task.type_id
-        params:   task.params
-        callback: task.callback
-        active:   task.active
-      store.push item
-
-    console.log('to write', store)
+  syncAdd: (task) =>
+    store = @syncLoad() || []
+    for item in store
+      return if item.type is task.type && item.type_id is task.type_id
+    item =
+      type:     task.type
+      type_id:  task.type_id
+      params:   task.params
+      callback: task.callback
+      active:   task.active
+    store.push item
     App.Store.write( 'tasks', store )
 
+  syncRemove: (task) =>
+    store    = @syncLoad() || []
+    storeNew = []
+    for item in store
+      if item.type isnt task.type || item.type_id isnt task.type_id
+        storeNew.push item
+    App.Store.write( 'tasks', storeNew )
+
+  syncLoad: =>
+    App.Store.get( 'tasks' )
+
+  syncTasks: =>
+    store = @syncLoad() || []
+
+    # open tasks
+    for item in store
+      existsLocal = false
+      for task_key, task of @tasks
+        if item.type is task.type && item.type_id is task.type_id
+          # also open here
+          existsLocal = true
+      if !existsLocal
+         @add(item.type, item.type_id, item.callback, item.params, true)
+
+    # close tasks
+    for task_key, task of @tasks
+      onlyLocal = true
+      for item in store
+        if item.type is task.type && item.type_id is task.type_id
+          onlyLocal = false
+      if onlyLocal
+        @remove( task_key, true )
