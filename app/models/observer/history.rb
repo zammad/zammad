@@ -154,7 +154,7 @@ class Observer::History < ActiveRecord::Observer
         :value_to               => value[1],
         :id_from                => value_ids[0],
         :id_to                  => value_ids[1],
-        :created_by_id          => self['updated_by_id'] || UserInfo.current_user_id || 1
+        :created_by_id          => record['updated_by_id'] || UserInfo.current_user_id || 1
       )
 
     end
