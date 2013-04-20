@@ -75,6 +75,8 @@ class _Singleton extends App.Controller
     if active
       $('.content_permanent').hide()
       $('#content_permanent_' + @task_count ).show()
+    else
+      $('#content_permanent_' + @task_count ).hide()
     params_app = _.clone(params)
     params_app['el']       = $('#content_permanent_' + @task_count )
     params_app['task_key'] = @task_count
