@@ -19,6 +19,13 @@ class ActiveSupport::TestCase
   # load seeds
   load "#{Rails.root}/db/seeds.rb" 
 
+  setup do
+
+    # set current user
+    puts 'reset UserInfo.current_user_id'
+    UserInfo.current_user_id = nil
+  end
+
   # Add more helper methods to be used by all tests here...
 end
 
