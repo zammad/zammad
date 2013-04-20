@@ -47,6 +47,8 @@ class App.TicketZoom extends App.Controller
 
   fetch: (ticket_id, force) ->
 
+    return if !@Session.all()
+
     # get data
     App.Com.ajax(
       id:    'ticket_zoom'
