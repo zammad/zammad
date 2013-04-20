@@ -15,11 +15,13 @@ class App.TaskWidget extends App.Controller
       App.TaskManager.reset()
       @el.html('')
 
-    @interval(
-      -> App.TaskManager.sync()
-      2000,
-      'task-widget',
-    )
+    App.TaskManager.syncInitial()
+
+    sync = =>
+      App.TaskManager.sync()
+      @delay( sync, 2000, 'task-widget' )
+
+    @delay( sync, 2500, 'task-widget' )
 
   render: ->
 
@@ -47,7 +49,6 @@ class App.TaskWidget extends App.Controller
     tasks_all = App.TaskManager.all()
     active_is_closed = false
     for task_key, task of tasks_all
-      console.log('--', task_key, task)
       if task.active && task_key.toString() is key.toString()
         active_is_closed = true
 

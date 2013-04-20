@@ -24,6 +24,11 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.reset()
 
+  @syncInitial: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.syncTasksInitial()
+
   @sync: ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -36,26 +41,12 @@ class _Singleton extends App.Controller
     @tasks      = {}
     @task_count = 0
 
-    # reopen tasks
-    cache = App.Store.get( 'tasks' )
-    if cache
-      task_count = 0
-      for task in cache
-        task_count += 1
-        @delay(
-          ->
-            task = cache.shift()
-            App.TaskManager.add(task.type, task.type_id, task.callback, task.params, true)
-          task_count * 500
-        )
-
   all: ->
     @tasks
 
   add: ( type, type_id, callback, params, to_not_show = false ) ->
     for key, task of @tasks
       if task.type is type && task.type_id is type_id
-        console.log('STOP TASK, already exists', task)
         return key if to_not_show
         $('#content').empty()
         $('.content_permanent').hide()
@@ -137,6 +128,20 @@ class _Singleton extends App.Controller
 
   syncLoad: =>
     App.Store.get( 'tasks' )
+
+  syncTasksInitial: =>
+    # reopen tasks
+    store = _.clone(@syncLoad())
+    return if !store
+    task_count = 0
+    for task in store
+      task_count += 1
+      @delay(
+        =>
+          task = store.shift()
+          @add(task.type, task.type_id, task.callback, task.params, true)
+        task_count * 500
+      )
 
   syncTasks: =>
     store = @syncLoad() || []
