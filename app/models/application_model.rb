@@ -1,4 +1,5 @@
 require 'cache'
+require 'user_info'
 
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
