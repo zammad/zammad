@@ -17,9 +17,10 @@ class Tag < ApplicationModel
 
     # create history
     Tag.create(
-      :tag_object_id      => tag_object_id,
-      :tag_item_id        => tag_item_id,
-      :o_id               => data[:o_id],
+      :tag_object_id  => tag_object_id,
+      :tag_item_id    => tag_item_id,
+      :o_id           => data[:o_id],
+      :created_by_id  => data[:created_by_id],
     )
     return true
   end
@@ -36,9 +37,9 @@ class Tag < ApplicationModel
 
     # create history
     result = Tag.where(
-      :tag_object_id      => tag_object_id,
-      :tag_item_id        => tag_item_id,
-      :o_id               => data[:o_id],
+      :tag_object_id  => tag_object_id,
+      :tag_item_id    => tag_item_id,
+      :o_id           => data[:o_id],
     )
     result.each { |item|
       item.destroy
