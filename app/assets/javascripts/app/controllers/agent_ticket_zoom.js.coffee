@@ -1,4 +1,4 @@
-class TicketZoom extends App.Controller
+class App.TicketZoom extends App.Controller
   events:
     'click .submit':                          'update'
     'click [data-type=reply]':                'reply'
@@ -71,6 +71,10 @@ class TicketZoom extends App.Controller
 
         @load(data)
         App.Store.write( @key, data )
+
+      error: =>
+        App.TaskManager.remove( @task_key )
+        @release()
     )
     @doNotLog = 1
 
@@ -593,7 +597,13 @@ class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
     @log 'zoom router', params
-    App.TaskManager.add( 'Ticket', @ticket_id, TicketZoom, params )
+    # cleanup params
+    clean_params =
+      ticket_id:  params.ticket_id
+      article_id: params.article_id
+      nav:        params.nav
+
+    App.TaskManager.add( 'Ticket', @ticket_id, 'TicketZoom', clean_params )
 
 App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
 App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
