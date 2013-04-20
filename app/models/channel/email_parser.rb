@@ -294,6 +294,10 @@ class Channel::EmailParser
     # use transaction
     ActiveRecord::Base.transaction do
 
+      # reset current_user
+      UserInfo.current_user_id = 1
+
+
       if mail[ 'x-zammad-customer-login'.to_sym ]
         user = User.where( :login => mail[ 'x-zammad-customer-login'.to_sym ] ).first
       end
