@@ -216,11 +216,12 @@ class Package < ApplicationModel
     record = Package.create( meta )
     if !data[:reinstall]
       Store.add(
-        :object      => 'Package',
-        :o_id        => record.id,
-        :data        => package.to_s,
-        :filename    => meta[:name] + '-' + meta[:version] + '.zpm',
-        :preferences => {},
+        :object        => 'Package',
+        :o_id          => record.id,
+        :data          => package.to_s,
+        :filename      => meta[:name] + '-' + meta[:version] + '.zpm',
+        :preferences   => {},
+        :created_by_id => UserInfo.current_user_id || 1,
       )
     end
 

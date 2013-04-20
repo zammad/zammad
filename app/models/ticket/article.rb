@@ -18,11 +18,12 @@ class Ticket::Article < ApplicationModel
       article_store = []
       self.attachments.each do |attachment|
         article_store.push Store.add(
-          :object      => 'Ticket::Article',
-          :o_id        => self.id,
-          :data        => attachment.store_file.data,
-          :filename    => attachment.filename,
-          :preferences => attachment.preferences
+          :object        => 'Ticket::Article',
+          :o_id          => self.id,
+          :data          => attachment.store_file.data,
+          :filename      => attachment.filename,
+          :preferences   => attachment.preferences,
+          :created_by_id => self.created_by_id,
         )
       end
       self.attachments = article_store

@@ -36,11 +36,12 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
 
     # store mail plain
     Store.add(
-      :object      => 'Ticket::Article::Mail',
-      :o_id        => record.id,
-      :data        => message.to_s,
-      :filename    => "ticket-#{ticket.number}-#{record.id}.eml",
-      :preferences => {}
+      :object        => 'Ticket::Article::Mail',
+      :o_id          => record.id,
+      :data          => message.to_s,
+      :filename      => "ticket-#{ticket.number}-#{record.id}.eml",
+      :preferences   => {},
+      :created_by_id => record.created_by_id,
     )
 
     # add history record

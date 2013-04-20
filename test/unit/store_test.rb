@@ -25,11 +25,12 @@ class StoreTest < ActiveSupport::TestCase
 
       # add attachments
       store = Store.add(
-        :object      => 'Test',
-        :o_id        => 1,
-        :data        => file[:data],
-        :filename    => file[:filename],
-        :preferences => {}
+        :object        => 'Test',
+        :o_id          => 1,
+        :data          => file[:data],
+        :filename      => file[:filename],
+        :preferences   => {},
+        :created_by_id => 1,
       )
       assert store
 
