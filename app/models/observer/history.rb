@@ -1,7 +1,6 @@
 require 'history'
 
 class Observer::History < ActiveRecord::Observer
-  include UserInfo
   observe :ticket, :user, 'ticket::_article'
 
   def after_create(record)
@@ -26,7 +25,7 @@ class Observer::History < ActiveRecord::Observer
       :history_object         => record.class.name,
       :related_o_id           => related_o_id,
       :related_history_object => related_history_object,
-      :created_by_id          => current_user_id || record.created_by_id || 1
+      :created_by_id          => record.created_by_id || UserInfo.current_user_id || 1
     )
   end
 
@@ -50,7 +49,7 @@ class Observer::History < ActiveRecord::Observer
     diff = differences_from?(current, record)
     puts ' DIFF'
     puts ' ' + diff.inspect
-    puts ' CURRENT USER ID ' + current_user_id.to_s
+    puts ' CURRENT USER ID ' + UserInfo.current_user_id.to_s
 
     map = {
       :group_id => {
@@ -155,7 +154,7 @@ class Observer::History < ActiveRecord::Observer
         :value_to               => value[1],
         :id_from                => value_ids[0],
         :id_to                  => value_ids[1],
-        :created_by_id          => current_user_id || 1 || self['created_by_id'] || 1
+        :created_by_id          => self['updated_by_id'] || UserInfo.current_user_id || 1
       )
 
     end
