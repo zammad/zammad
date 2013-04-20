@@ -1476,8 +1476,6 @@ Channel.create_if_not_exists(
 
 network = Network.create_if_not_exists(
   :name   => 'base',
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 
 Network::Category::Type.create_if_not_exists(
@@ -1488,8 +1486,6 @@ Network::Category::Type.create_if_not_exists(
 )
 Network::Category::Type.create_if_not_exists(
   :name => 'Question',
-  :updated_by_id  => 1,
-  :created_by_id  => 1,
 )
 Network::Category::Type.create_if_not_exists(
   :name => 'Bug Report',
