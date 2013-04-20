@@ -40,12 +40,12 @@ class ApplicationModel < ActiveRecord::Base
     data
   end
 
-
+  # set created_by_id & updated_by_id if not given based on UserInfo
   def fill_up_user_create
     if self.class.column_names.include? 'updated_by_id'
       if UserInfo.current_user_id
         if self.updated_by_id && self.updated_by_id != UserInfo.current_user_id
-          raise "WARNING: create - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+          puts "NOTICE create - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
         end
         self.updated_by_id = UserInfo.current_user_id
       end
@@ -53,18 +53,17 @@ class ApplicationModel < ActiveRecord::Base
     if self.class.column_names.include? 'created_by_id'
       if UserInfo.current_user_id
         if self.created_by_id && self.created_by_id != UserInfo.current_user_id
-          raise "WARNING: create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+          puts "NOTICE create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
         end
         self.created_by_id = UserInfo.current_user_id
       end
     end
   end
+
+  # set updated_by_id if not given based on UserInfo
   def fill_up_user_update
     return if !self.class.column_names.include? 'updated_by_id'
     if UserInfo.current_user_id
-#      if self.updated_by_id && self.updated_by_id != UserInfo.current_user_id
-#        raise "WARNING: update - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
-#      end
       self.updated_by_id = UserInfo.current_user_id
     end
   end
