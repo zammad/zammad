@@ -21,7 +21,7 @@ class App.TaskWidget extends App.Controller
       App.TaskManager.sync()
       @delay( sync, 3000, 'task-widget' )
 
-    @delay( sync, 3000, 'task-widget' )
+    @delay( sync, 5000, 'task-widget' )
 
   render: ->
 

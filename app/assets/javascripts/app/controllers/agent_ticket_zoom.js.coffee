@@ -74,7 +74,8 @@ class App.TicketZoom extends App.Controller
         @load(data)
         App.Store.write( @key, data )
 
-      error: =>
+      error: (xhr, status, error) =>
+        return if status is 'abort'
         App.TaskManager.remove( @task_key )
         @release()
     )
