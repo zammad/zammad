@@ -116,13 +116,15 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
 
   def create
     user = User.new( User.param_cleanup(params) )
-    user.updated_by_id = (current_user && current_user.id) || 1
-    user.created_by_id = (current_user && current_user.id) || 1
 
     begin
+      # check if it's first user
+      count = User.all.count()
 
       # if it's a signup, add user to customer role
-      if user.created_by_id == 1
+      if !current_user
+        user.updated_by_id = 1
+        user.created_by_id = 1
 
         # check if feature is enabled
         if !Setting.get('user_create_account')
@@ -130,12 +132,9 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
           return
         end
 
-        # check if it's first user
-        count     = User.all.count()
+        # add first user as admin/agent and to all groups
         group_ids = []
         role_ids  = []
-
-        # add first user as admin/agent and to all groups
         if count <= 2
           Role.where( :name => [ 'Admin', 'Agent'] ).each { |role|
             role_ids.push role.id
@@ -263,20 +262,34 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
 =end
 
   def update
-    return if is_not_role('Admin')
-    user = User.find(params[:id])
+
+    # allow user to update him self
+    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+      return if params[:id] != current_user.id
+    end
+
+    user = User.find( params[:id] )
 
     begin
+  
       user.update_attributes( User.param_cleanup(params) )
-      if params[:role_ids]
+
+      # only allow Admin's and Agent's
+      if is_role('Admin') && is_role('Agent') && params[:role_ids]
         user.role_ids = params[:role_ids]
       end
-      if params[:group_ids]
+
+      # only allow Admin's
+      if is_role('Admin') && params[:group_ids]
         user.group_ids = params[:group_ids]
       end
-      if params[:organization_ids]
+
+      # only allow Admin's and Agent's
+      if is_role('Admin') && is_role('Agent') && params[:organization_ids]
         user.organization_ids = params[:organization_ids]
       end
+
+      # get new data
       user_new = User.user_data_full( params[:id] )
       render :json => user_new, :status => :ok
     rescue Exception => e
@@ -286,6 +299,7 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
 
   # DELETE /api/users/1
   def destroy
+    return if !is_role('Admin')
     model_destory_render(User, params)
   end
 

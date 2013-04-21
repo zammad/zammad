@@ -1,6 +1,4 @@
-$ = jQuery.sub()
-
-class Index extends App.Controller
+class Index extends App.ControllerContent
   className: 'container getstarted'
 
   events:
@@ -120,7 +118,7 @@ class Index extends App.Controller
           App.Event.trigger 'notify', {
             type:    'success'
             msg:     App.i18n.translateContent( 'Invitation sent!' )
-            timeout: 2500
+            timeout: 3500
           }
 
           # rerender page

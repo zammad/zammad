@@ -184,6 +184,8 @@ class TestCase < Test::Unit::TestCase
     if action[:execute] == 'set'
       element.clear
       element.send_keys( action[:value] )
+    elsif action[:execute] == 'sendkey'
+      element.send_keys( action[:value] )
     elsif action[:execute] == 'select'
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, action[:value])

@@ -7,7 +7,7 @@ class AaaGettingStartedTest < TestCase
       {
         :name     => 'start',
         :instance => browser_instance,
-        :url      => browser_url + '/#getting_started',
+        :url      => browser_url + '/',
         :action   => [
           {
             :execute => 'wait',
@@ -21,32 +21,31 @@ class AaaGettingStartedTest < TestCase
         ],
       },
       {
-        :name     => 'getting started',
+        :name     => 'getting started - master agent',
         :action   => [
           {
             :execute => 'set',
-            :css     => 'input[name="firstname"]',
+            :css     => '#form-master input[name="firstname"]',
             :value   => 'Test Master',
           },
           {
             :execute => 'set',
-            :css     => 'input[name="lastname"]',
+            :css     => '#form-master input[name="lastname"]',
             :value   => 'Agent',
           },
           {
             :execute => 'set',
-            :css     => 'input[name="email"]',
+            :css     => '#form-master input[name="email"]',
             :value   => 'master@example.com',
           },
           {
             :execute => 'set',
-            :element => :text_field,
-            :css     => 'input[name="password"]',
+            :css     => '#form-master input[name="password"]',
             :value   => 'test1234äöüß',
           },
           {
             :execute => 'set',
-            :css     => 'input[name="password_confirm"]',
+            :css     => '#form-master input[name="password_confirm"]',
             :value   => 'test1234äöüß',
           },
           {
@@ -67,14 +66,76 @@ class AaaGettingStartedTest < TestCase
             :element => :url,
             :result  => '#getting_started',
           },
+        ],
+      },
 
-          # check action
+      # create agent1
+      {
+        :name     => 'getting started - agent 1',
+        :action   => [
+
           {
             :execute      => 'match',
             :css          => 'body',
             :value        => 'Invite Agents',
             :match_result => true,
           },
+          {
+            :execute => 'wait',
+            :value   => 4,
+          },
+          {
+            :execute => 'set',
+            :css     => '#form-agent input[name="firstname"]',
+            :value   => 'Agent 1',
+          },
+          {
+            :execute => 'set',
+            :css     => '#form-agent input[name="lastname"]',
+            :value   => 'Test',
+          },
+          {
+            :execute => 'set',
+            :css     => '#form-agent input[name="email"]',
+            :value   => 'agent1@example.com',
+          },
+          {
+            :execute => 'click',
+            :css     => '#form-agent input[name="group_ids"][value="1"]',
+          },
+          {
+            :execute => 'click',
+            :css     => '#form-agent button[type="submit"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
+          },
+          {
+            :execute => 'check',
+            :css     => '#login',
+            :result  => false,
+          },
+          {
+            :execute => 'check',
+            :element => :url,
+            :result  => '#getting_started',
+          },
+
+          # check action
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'Invitation sent',
+            :match_result => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'Invite Agents',
+            :match_result => true,
+          },
+
         ],
       },
     ]
