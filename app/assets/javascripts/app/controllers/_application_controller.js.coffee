@@ -164,7 +164,7 @@ class App.Controller extends Spine.Controller
     return string
 
   userInfo: (data) =>
-    el = data.el || $('#customer_info')
+    el = data.el || $('[data-id="customer_info"]')
     el.unbind()
 
     # start customer info controller

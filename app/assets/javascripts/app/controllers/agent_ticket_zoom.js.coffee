@@ -34,6 +34,14 @@ class App.TicketZoom extends App.Controller
       @fetch( @ticket_id, false)
     @interval( update, 30000, @key, 'ticket_zoom' )
 
+  meta: =>
+    return if !@ticket
+    meta =
+      url: @url()
+      head: @ticket.title
+      title: @ticket.number + ' ' + @ticket.title
+      id: @ticket.id
+
   url: =>
     '#ticket/zoom/' + @ticket.id
 
@@ -115,6 +123,8 @@ class App.TicketZoom extends App.Controller
         article = App.Collection.find( 'TicketArticle', article_id )
         @articles.push article
 
+    App.Event.trigger 'ui:rerender'
+
     # rework articles
     for article in @articles
       new Article( article: article )
@@ -163,7 +173,7 @@ class App.TicketZoom extends App.Controller
       form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_ticket
-        className:            'create'
+        className:            'update_ticket_' + @ticket.id
       params:    @ticket
       form_data: @edit_form
     )
@@ -173,6 +183,7 @@ class App.TicketZoom extends App.Controller
       form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_article
+        className:            'update_ticket_' + @ticket.id
       form_data: @edit_form
     )
 

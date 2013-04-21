@@ -30,10 +30,21 @@ class App.TaskWidget extends App.Controller
     tasks = App.TaskManager.all()
     item_list = []
     for key, task of tasks
+      data =
+        url:   '#'
+        id:    false
+        title: '?'
+        head:  '?'
+      if task.worker
+        meta = task.worker.meta()
+        if meta
+          data = meta
+      data.title = App.i18n.escape( data.title )
+      data.head  = App.i18n.escape( data.head )
       item = {}
       item.key  = key
       item.task = task
-      item.data = App[task.type].find( task.type_id )
+      item.data = data
       item_list.push item
 
     @html App.view('task_widget')(

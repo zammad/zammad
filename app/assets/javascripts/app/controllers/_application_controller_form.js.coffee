@@ -373,9 +373,12 @@ class App.ControllerForm extends App.Controller
           onRemoveTag: onRemoveTag
         )
         siteUpdate(true)
+  
+        # update box size
+        App.Event.bind 'ui:rerender:content', =>
+          siteUpdate(true)
 
       @delay( a, 80 )
-
 
     # autocompletion
     else if attribute.tag is 'autocompletion'

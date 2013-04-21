@@ -58,6 +58,7 @@ class _Singleton extends App.Controller
           else
             task.active = true
         App.Event.trigger 'ui:rerender'
+        App.Event.trigger 'ui:rerender:content'
         return key
 
     @task_count++

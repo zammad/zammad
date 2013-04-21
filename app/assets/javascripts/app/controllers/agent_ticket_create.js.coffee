@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class App.TicketCreate extends App.Controller
   events:
     'click .customer_new': 'userNew'
     'submit form':         'submit'
@@ -49,6 +49,24 @@ class Index extends App.ControllerContent
     App.Event.bind 'ticket_create_rerender', (defaults) =>
       @log 'AgentTicketPhone', 'error', defaults
       @render(defaults)
+
+  meta: =>
+    meta =
+      url:   @url()
+      head:  App.i18n.translateInline( @article_attributes['title'] )
+      title: App.i18n.translateInline( @article_attributes['title'] )
+      id:    @type
+
+  url: =>
+    '#ticket_create/' + @type
+
+  activate: =>
+    @navupdate '#'
+#    @title 'Ticket Create ' + @ticket.number
+  
+  release: =>
+#    @clearInterval( @key, 'ticket_zoom' )
+    @el.remove()
 
   # get data / in case also ticket data for split
   fetch: (params) ->
@@ -141,11 +159,11 @@ class Index extends App.ControllerContent
     )
 
     new App.ControllerForm(
-      el: @el.find('#form_create')
+      el: @el.find('.ticket_create')
       form_id: @form_id
       model:
         configure_attributes: configure_attributes
-        className:            'create'
+        className:            'create_' + @type
       autofocus: true
       form_data: @edit_form
     )
@@ -164,13 +182,13 @@ class Index extends App.ControllerContent
 
     # show template UI
     new App.TemplateUI(
-      el:          @el.find('#ticket_template'),
+      el:          @el.find('[data-id="ticket_template"]'),
       template_id: template['id'],
     )
 
     # show text module UI
     new App.TextModuleUI(
-      el: @el.find('#text_module'),
+      el: @el.find('[data-id="text_module"]'),
     )
 
   localUserInfo: (params) =>
@@ -252,10 +270,13 @@ class Index extends App.ControllerContent
             timeout: 12000,
 
           # create new create screen
-          ui.render()
+#          ui.render()
+          App.TaskManager.remove( ui.task_key )
 
           # scroll to top
           ui.scrollTo()
+
+          ui.navigate "#ticket/zoom/#{@id}"
 
         error: ->
           ui.log 'save failed!'
@@ -324,9 +345,21 @@ class UserNew extends App.ControllerModal
         ui.modalHide()
     )
 
-App.Config.set( 'ticket_create', Index, 'Routes' )
-App.Config.set( 'ticket_create/:ticket_id/:article_id', Index, 'Routes' )
-App.Config.set( 'ticket_create/:type', Index, 'Routes' )
+class TicketCreateRouter extends App.ControllerPermanent
+  constructor: (params) ->
+    super
+    @log 'create router', params
+    # cleanup params
+    clean_params =
+      ticket_id:  params.ticket_id
+      article_id: params.article_id
+      type:       params.type
+
+    App.TaskManager.add( 'TicketCreateScreen', params['type'], 'TicketCreate', clean_params )
+
+App.Config.set( 'ticket_create', TicketCreateRouter, 'Routes' )
+App.Config.set( 'ticket_create/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
+App.Config.set( 'ticket_create/:type', TicketCreateRouter, 'Routes' )
 
 App.Config.set( 'New', { prio: 8000, parent: '', name: 'New', target: '#new', role: ['Agent'] }, 'NavBarRight' )
 App.Config.set( 'TicketNewCallOutbound', { prio: 8001, parent: '#new', name: 'Call Outbound', target: '#ticket_create/call_outbound', role: ['Agent'] }, 'NavBarRight' )

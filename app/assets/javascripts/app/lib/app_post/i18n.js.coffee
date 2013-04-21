@@ -29,6 +29,11 @@ class App.i18n
       _instance ?= new _Singleton( args )
     _instance.set( args )
 
+  @escape: ( args ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton( args )
+    _instance.escape( args )
+
 class _Singleton extends Spine.Module
   @include App.Log
 

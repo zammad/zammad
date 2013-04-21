@@ -1,9 +1,11 @@
-$ = jQuery.sub()
-
 class App.TagWidget extends App.Controller
   constructor: ->
     super
     @load()
+
+    # update box size
+    App.Event.bind 'ui:rerender:content', =>
+      @siteUpdate()
 
   load: =>
     @attribute_id = 'tags_' + @object.id + '_' + @object_type
@@ -33,7 +35,7 @@ class App.TagWidget extends App.Controller
       onRemoveTag: @onRemoveTag
 #      height: '65px'
     )
-    @delay @siteUpdate, 200
+    @delay @siteUpdate, 250
 
 #    @el.find('#tags').elastic()
 
@@ -64,7 +66,7 @@ class App.TagWidget extends App.Controller
     )
 
   siteUpdate: (reorder) =>
-    container = document.getElementById(@attribute_id + '_tagsinput')
+    container = document.getElementById( @attribute_id + '_tagsinput' )
     if reorder
       $('#' + @attribute_id + '_tagsinput').height( 20 )
     height = container.scrollHeight
