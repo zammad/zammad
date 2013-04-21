@@ -33,8 +33,8 @@ class App.TaskWidget extends App.Controller
       data =
         url:   '#'
         id:    false
-        title: '?'
-        head:  '?'
+        title: App.i18n.translateInline('Loading...')
+        head:  App.i18n.translateInline('Loading...')
       if task.worker
         meta = task.worker.meta()
         if meta

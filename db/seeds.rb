@@ -1791,6 +1791,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Remove", :target 
 Translation.create_if_not_exists( :locale => 'de', :source => "Add", :target => "Hinzufügen"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Call Outbound", :target => "Anruf ausgehend"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Call Inbound", :target => "Anruf eingehend"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Loading...", :target => "Laden..."  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => ""  )
 
