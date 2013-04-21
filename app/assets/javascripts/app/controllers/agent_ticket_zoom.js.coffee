@@ -129,8 +129,6 @@ class App.TicketZoom extends App.Controller
     for article in @articles
       new Article( article: article )
 
-    # set title
-    @title 'Ticket Zoom ' + @ticket.number
     @configure_attributes_ticket = [
       { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
       { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
