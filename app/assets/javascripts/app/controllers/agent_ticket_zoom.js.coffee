@@ -83,9 +83,11 @@ class App.TicketZoom extends App.Controller
         App.Store.write( @key, data )
 
       error: (xhr, status, error) =>
+
+        # do not close window if request is abort or network error exists
         return if status is 'abort'
+        return if status is 'error'
         App.TaskManager.remove( @task_key )
-        @release()
     )
     @doNotLog = 1
 
@@ -599,7 +601,7 @@ class TicketActionRow extends App.Controller
 
   merge_dialog: (e) ->
     e.preventDefault()
-    new App.TicketMerge( ticket_id: @ticket.id )
+    new App.TicketMerge( ticket_id: @ticket.id, task_key: @zoom.task_key )
 
   customer_dialog: (e) ->
     e.preventDefault()

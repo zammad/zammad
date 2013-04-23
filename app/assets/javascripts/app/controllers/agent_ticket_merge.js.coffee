@@ -131,7 +131,9 @@ class App.TicketMerge extends App.ControllerModal
           @notify
             type:    'success',
             msg:     App.i18n.translateContent( 'Ticket %s merged!', data.slave_ticket['number'] ),
-            timeout: 6000,
+            timeout: 4000,
+
+          App.TaskManager.remove( @task_key )
 
         else
 
