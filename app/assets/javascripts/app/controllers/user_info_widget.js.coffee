@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.UserInfo extends App.Controller
   events:
     'focusout [data-type=update]': 'update',

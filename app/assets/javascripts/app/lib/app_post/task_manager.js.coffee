@@ -83,10 +83,14 @@ class _Singleton extends App.Controller
     else
       $('#content_permanent_' + @task_count ).removeClass('active')
       $('#content_permanent_' + @task_count ).hide()
+
+    # create new controller instanz
     params_app = _.clone(params)
     params_app['el']       = $('#content_permanent_' + @task_count )
     params_app['task_key'] = @task_count
     a = new App[callback]( params_app )
+
+    # remember new controller / prepare for task storage
     task = 
       type:     type
       type_id:  type_id
@@ -95,7 +99,14 @@ class _Singleton extends App.Controller
       worker:   a
       active:   active
     @tasks[@task_count] = task
+
+    # activate controller
+    if !to_not_show
+      a.activate()
+
     App.Event.trigger 'ui:rerender'
+
+    # add new controller to task storage
     if !to_not_show
       @syncAdd(task)
 

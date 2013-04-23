@@ -12,7 +12,6 @@ class App.TicketCreate extends App.Controller
     return if !@authenticate()
 
     # set title
-    @title 'New Ticket'
     @form_id = App.ControllerForm.formId()
 
     @edit_form = undefined
@@ -62,7 +61,7 @@ class App.TicketCreate extends App.Controller
 
   activate: =>
     @navupdate '#'
-#    @title 'Ticket Create ' + @ticket.number
+    @title @article_attributes['title']
   
   release: =>
 #    @clearInterval( @key, 'ticket_zoom' )
