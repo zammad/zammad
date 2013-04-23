@@ -50,7 +50,9 @@ class _Singleton extends App.Controller
         return key if to_not_show
         $('#content').empty()
         $('.content_permanent').hide()
+        $('.content_permanent').removeClass('active')
         $('#content_permanent_' + key ).show()
+        $('#content_permanent_' + key ).addClass('active')
         @tasks[key].worker.activate()
         for task_key, task of @tasks
           if task_key isnt key 
@@ -75,8 +77,11 @@ class _Singleton extends App.Controller
 
     if active
       $('.content_permanent').hide()
+      $('.content_permanent').removeClass('active')
       $('#content_permanent_' + @task_count ).show()
+      $('#content_permanent_' + @task_count ).addClass('active')
     else
+      $('#content_permanent_' + @task_count ).removeClass('active')
       $('#content_permanent_' + @task_count ).hide()
     params_app = _.clone(params)
     params_app['el']       = $('#content_permanent_' + @task_count )

@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="page-header ticket-zoom">
   <div class="row">
     <div class="span10">
       <h1><span contenteditable="true" class="title_update inline-edit"><%= @P( @ticket.title ) %></span> <small><%= @ticket.number %></small></h1>

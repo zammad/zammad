@@ -135,6 +135,7 @@ class TestCase < Test::Unit::TestCase
 
   def browser_single_test(tests, keep_connection = false)
     instance = nil
+    @stack   = nil
     tests.each { |test|
       if test[:instance]
         instance = test[:instance]
@@ -183,7 +184,11 @@ class TestCase < Test::Unit::TestCase
     end
     if action[:execute] == 'set'
       element.clear
-      element.send_keys( action[:value] )
+      if action[:value] == '###stack###'
+        element.send_keys( @stack )
+      else
+        element.send_keys( action[:value] )
+      end
     elsif action[:execute] == 'sendkey'
       element.send_keys( action[:value] )
     elsif action[:execute] == 'select'
@@ -227,7 +232,23 @@ class TestCase < Test::Unit::TestCase
         else
           text = element.text
         end
-        if text =~ /#{Regexp.quote(action[:value])}/
+        if action[:value] == '###stack###'
+          action[:value] = @stack
+        end
+        match = false
+        if action[:no_quote]
+          if text =~ /#{action[:value]}/
+            if $1
+              @stack = $1
+            end
+            match = $1 || true
+          end
+        else
+          if text =~ /#{Regexp.quote(action[:value])}/
+            match = true
+          end
+        end
+        if match
           if action[:match_result]
             assert( true, "(#{test[:name]}) matching '#{action[:value]}' in content '#{text}'" )
           else
