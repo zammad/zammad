@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class AgentTicketActionSimpleTest < TestCase
-  def test_customer_ticket_create
+  def test_agent_ticket
     tests = [
       {
         :name     => 'agent ticket create 1',
@@ -272,7 +272,7 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 6,
           },
 
           # check if megred to ticket is shown now
@@ -288,7 +288,7 @@ class AgentTicketActionSimpleTest < TestCase
             :execute      => 'match',
             :css          => 'body',
             :value        => 'test to merge',
-            :match_result => false,
+            :match_result => true,
           },
         ],
       },
