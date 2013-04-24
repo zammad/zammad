@@ -47,7 +47,10 @@ class App.TicketZoom extends App.Controller
 
   activate: =>
     @navupdate '#'
-    @title 'Ticket Zoom ' + @ticket.number
+    if @ticket
+      @title 'Ticket Zoom ' + @ticket.number
+#    else
+#      @title 'Loading...'
   
   release: =>
     @clearInterval( @key, 'ticket_zoom' )
@@ -59,7 +62,7 @@ class App.TicketZoom extends App.Controller
 
     # get data
     App.Com.ajax(
-      id:    'ticket_zoom'
+      id:    'ticket_zoom_' + ticket_id 
       type:  'GET'
       url:   'api/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
       data:
@@ -70,6 +73,7 @@ class App.TicketZoom extends App.Controller
           return if _.isEqual( @dataLastCall.ticket, data.ticket)
           diff = difference( @dataLastCall.ticket, data.ticket )
           console.log('diff', diff)
+          App.TaskManager.notify(@task_key)
           if $('[name="body"]').val()
             App.Event.trigger 'notify', {
               type: 'success'

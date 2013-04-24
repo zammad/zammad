@@ -193,7 +193,12 @@ class App.Navigation extends App.Controller
             sub = @getOrder( dropdown[ item.parent ] )
             itemLevel1.child = sub
 
-    nav = @getOrder(level1)
+    # clean up, only show navbar items with existing childrens
+    clean_list = []
+    for item in level1
+      if !item.child || item.child && !_.isEmpty( item.child )
+        clean_list.push item
+    nav = @getOrder(clean_list)
     return nav
 
   getOrder: (data) ->

@@ -56,16 +56,42 @@ table th, table td {
 }
 
 .task {
+  margin: -6px;
+  padding: 0px 4px;
   display: inline-block;
   max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .task > a,
 .task > a:hover {
   color: #ffffff;
   text-decoration: none;
+}
+
+.btn-default .task > a,
+.btn-default .task > a:hover {
+  color: #333333;
+}
+
+.taskbar .btn-mini {
+  margin-top: 2px;
+}
+
+[data-type="close"] {
+  margin-left: 5px;
+}
+
+.taskbar-new {
+  float: right;
+  margin-right: 12px;
+}
+
+.taskbar-new .dropdown-menu {
+  right: -1px;
+  left: auto;
 }
 
 .max-size-scroll {

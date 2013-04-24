@@ -48,7 +48,8 @@ class App.TaskWidget extends App.Controller
       item_list.push item
 
     @html App.view('task_widget')(
-      item_list: item_list
+      item_list:      item_list
+      taskBarActions: @_getTaskActions()
     )
 
   remove: (e) =>
@@ -76,5 +77,31 @@ class App.TaskWidget extends App.Controller
         return
     if _.isEmpty( tasks_all ) 
       @navigate '#'
+
+  _getTaskActions: ->
+    roles  = App.Session.get( 'roles' )
+    navbar = _.values( @Config.get( 'TaskActions' ) )
+    level1 = []
+
+    for item in navbar
+      if typeof item.callback is 'function'
+        data = item.callback() || {}
+        for key, value of data
+          item[key] = value
+      if !item.parent
+        match = 0
+        if !item.role
+          match = 1
+        if !roles && item.role
+          match = _.include( item.role, 'Anybody' )
+        if roles
+          for role in roles
+            if !match
+              match = _.include( item.role, role.name )
+
+        if match
+          level1.push item
+    level1
+
 
 App.Config.set( 'task', App.TaskWidget, 'Widgets' )

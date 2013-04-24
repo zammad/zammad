@@ -63,6 +63,9 @@ class App.TicketCreate extends App.Controller
     @navupdate '#'
     @title @article_attributes['title']
   
+  changed: =>
+    true
+
   release: =>
 #    @clearInterval( @key, 'ticket_zoom' )
     @el.remove()
@@ -195,7 +198,7 @@ class App.TicketCreate extends App.Controller
 
   userNew: (e) =>
     e.preventDefault()
-    new UserNew()
+    new UserNew( type: @type )
 
   cancel: ->
     @navigate '#'
@@ -332,8 +335,8 @@ class UserNew extends App.ControllerModal
         # force to reload object
         callbackReload = (user) ->
           realname = user.displayName()
-          $('#create_customer_id').val( user.id )
-          $('#create_customer_id_autocompletion').val( realname )
+          $('#create_' + ui.type + '_customer_id').val( user.id )
+          $('#create_' + ui.type + '_customer_id_autocompletion').val( realname )
 
           # start customer info controller
           ui.userInfo( user_id: user.id )
@@ -360,8 +363,7 @@ App.Config.set( 'ticket_create', TicketCreateRouter, 'Routes' )
 App.Config.set( 'ticket_create/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
 App.Config.set( 'ticket_create/:type', TicketCreateRouter, 'Routes' )
 
-App.Config.set( 'New', { prio: 8000, parent: '', name: 'New', target: '#new', role: ['Agent'] }, 'NavBarRight' )
-App.Config.set( 'TicketNewCallOutbound', { prio: 8001, parent: '#new', name: 'Call Outbound', target: '#ticket_create/call_outbound', role: ['Agent'] }, 'NavBarRight' )
-App.Config.set( 'TicketNewCallInbound', { prio: 8002, parent: '#new', name: 'Call Inbound', target: '#ticket_create/call_inbound', role: ['Agent'] }, 'NavBarRight' )
-App.Config.set( 'TicketNewEmail', { prio: 8003, parent: '#new', name: 'Email', target: '#ticket_create/email', role: ['Agent'] }, 'NavBarRight' )
+App.Config.set( 'TicketNewCallOutbound', { prio: 8001, name: 'Call Outbound', target: '#ticket_create/call_outbound', role: ['Agent'] }, 'TaskActions' )
+App.Config.set( 'TicketNewCallInbound', { prio: 8002, name: 'Call Inbound', target: '#ticket_create/call_inbound', role: ['Agent'] }, 'TaskActions' )
+App.Config.set( 'TicketNewEmail', { prio: 8003, name: 'Email', target: '#ticket_create/email', role: ['Agent'] }, 'TaskActions' )
 

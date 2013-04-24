@@ -19,6 +19,11 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.remove( key )
 
+  @notify: ( key ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.notify( key )
+
   @reset: ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -54,6 +59,7 @@ class _Singleton extends App.Controller
         $('#content_permanent_' + key ).show()
         $('#content_permanent_' + key ).addClass('active')
         @tasks[key].worker.activate()
+        @tasks[key].notify = false
         for task_key, task of @tasks
           if task_key isnt key 
             task.active = false
@@ -120,6 +126,9 @@ class _Singleton extends App.Controller
     delete @tasks[key]
     App.Event.trigger 'ui:rerender'
 
+  notify: ( key ) =>
+    @tasks[key].notify = true
+
   reset: =>
     @tasks = {}
     App.Event.trigger 'ui:rerender'
@@ -133,7 +142,6 @@ class _Singleton extends App.Controller
       type_id:  task.type_id
       params:   task.params
       callback: task.callback
-      active:   task.active
     store.push item
     App.Store.write( 'tasks', store )
 
