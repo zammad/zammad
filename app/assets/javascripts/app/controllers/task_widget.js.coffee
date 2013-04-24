@@ -56,6 +56,12 @@ class App.TaskWidget extends App.Controller
     e.preventDefault()
     key = $(e.target).parent().data('id')
 
+    # check if input has changed
+    task = App.TaskManager.get( key )
+    if task.worker && task.worker.changed
+      if task.worker.changed()
+        return if !window.confirm( App.i18n.translateInline('Tab has changed, you really want to close it?') )
+
     # check if active task is closed
     task_last = undefined
     tasks_all = App.TaskManager.all()

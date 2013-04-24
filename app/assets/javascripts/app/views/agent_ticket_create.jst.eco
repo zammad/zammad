@@ -5,7 +5,7 @@
     </div>
   </div>
 </div>
-<form class="form-horizontal">
+<form class="form-horizontal ticket-create">
   <input type="hidden" value="" name="article_type"/>
   <div class="row">
     <div class="span9 ticket_create"></div>

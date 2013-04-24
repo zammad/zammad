@@ -64,7 +64,10 @@ class App.TicketCreate extends App.Controller
     @title @article_attributes['title']
   
   changed: =>
-    true
+    formCurrent = @formParam( '.ticket-create' )
+    diff = difference( @formDefault, formCurrent )
+    return false  if !diff || _.isEmpty( diff )
+    return true
 
   release: =>
 #    @clearInterval( @key, 'ticket_zoom' )
@@ -192,6 +195,8 @@ class App.TicketCreate extends App.Controller
     new App.TextModuleUI(
       el: @el.find('[data-id="text_module"]'),
     )
+
+    @formDefault = @formParam( '.ticket-create' )
 
   localUserInfo: (params) =>
     @userInfo( user_id: params.customer_id )

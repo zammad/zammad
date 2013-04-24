@@ -14,6 +14,11 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.add( type, type_id, callback, params, to_not_show )
 
+  @get: ( key ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.get( key )
+
   @remove: ( key ) ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -117,6 +122,9 @@ class _Singleton extends App.Controller
       @syncAdd(task)
 
     @task_count
+
+  get: ( key ) =>
+    return @tasks[key]
 
   remove: ( key, to_not_show = false ) =>
     if @tasks[key]
