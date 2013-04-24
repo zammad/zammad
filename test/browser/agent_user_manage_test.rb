@@ -71,7 +71,13 @@ class AgentUserManageTest < TestCase
           # call new ticket screen again
           {
             :execute => 'click',
-            :css     => '.taskbar a[data-type="close"]',
+            :css     => '.taskbar span[data-type="close"]',
+          },
+
+          # accept task close warning
+          {
+            :execute => 'accept',
+            :element => :alert,
           },
           {
             :execute => 'wait',

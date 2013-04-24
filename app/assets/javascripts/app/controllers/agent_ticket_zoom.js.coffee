@@ -53,7 +53,7 @@ class App.TicketZoom extends App.Controller
 #      @title 'Loading...'
 
   changed: =>
-    formCurrent = @formParam( '.ticket-update' )
+    formCurrent = @formParam( @el.find('.ticket-update') )
     diff = difference( @formDefault, formCurrent )
     return false if !diff || _.isEmpty( diff )
     return true
@@ -208,7 +208,7 @@ class App.TicketZoom extends App.Controller
     # show frontend times
     @frontendTimeUpdate()
 
-    @formDefault = @formParam( '.ticket-update' )
+    @formDefault = @formParam( @el.find('.ticket-update') )
 
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )

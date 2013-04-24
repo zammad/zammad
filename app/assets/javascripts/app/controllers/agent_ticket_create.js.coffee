@@ -64,9 +64,9 @@ class App.TicketCreate extends App.Controller
     @title @article_attributes['title']
   
   changed: =>
-    formCurrent = @formParam( '.ticket-create' )
+    formCurrent = @formParam( @el.find('.ticket-create') )
     diff = difference( @formDefault, formCurrent )
-    return false  if !diff || _.isEmpty( diff )
+    return false if !diff || _.isEmpty( diff )
     return true
 
   release: =>
@@ -196,7 +196,7 @@ class App.TicketCreate extends App.Controller
       el: @el.find('[data-id="text_module"]'),
     )
 
-    @formDefault = @formParam( '.ticket-create' )
+    @formDefault = @formParam( @el.find('.ticket-create') )
 
   localUserInfo: (params) =>
     @userInfo( user_id: params.customer_id )

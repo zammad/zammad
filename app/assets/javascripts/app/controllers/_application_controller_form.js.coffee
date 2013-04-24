@@ -1162,17 +1162,21 @@ class App.ControllerForm extends App.Controller
   @params: (form) ->
     param = {}
 
+    # create jquery object if not already exists
+    if typeof form isnt 'function'
+      form = $(form)
+
     # find form based on sub elements
-    if $(form).children()[0]
-      form = $(form).children().parents('form')
+    if form.children()[0]
+      form = form.children().parents('form')
 
     # find form based on parents next <form>
-    else if $(form).parents('form')[0]
-      form = $(form).parents('form')
+    else if form.parents('form')[0]
+      form = form.parents('form')
 
     # find form based on parents next <form>, not really good!
-    else if $(form).parents().find('form')[0]
-      form = $(form).parents().find('form')
+    else if form.parents().find('form')[0]
+      form = form.parents().find('form')
     else
       App.Log.log 'ControllerForm', 'error', 'no form found!', form
 
