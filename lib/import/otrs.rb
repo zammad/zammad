@@ -49,15 +49,16 @@ module Import::OTRS
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     request = Net::HTTP::Post.new(uri.request_uri)
-    request.set_form_data(data)
-    response = http.request(request)
 
     # http basic auth (if needed)
     user     = Setting.get('import_otrs_user');
     password = Setting.get('import_otrs_password');
     if user && user != '' && password && password != ''
-      response.basic_auth user, password
+      request.basic_auth user, password
     end
+
+    request.set_form_data(data)
+    response = http.request(request)
 
     if !response
       raise "Can't connect to #{url}, got no response!"
