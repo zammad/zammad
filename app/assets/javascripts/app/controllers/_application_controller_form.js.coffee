@@ -4,7 +4,8 @@ class App.ControllerForm extends App.Controller
       @[key] = value
     @attribute_count = 0
 
-    @form = @formGen()
+    if !@form
+      @form = @formGen()
 #    @log 'form', @form
     if @el
       @el.prepend( @form )
