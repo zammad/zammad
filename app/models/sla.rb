@@ -1,3 +1,5 @@
+require 'cache'
+
 class Sla < ApplicationModel
   store     :condition
   store     :data
@@ -9,6 +11,7 @@ class Sla < ApplicationModel
 
   private
     def escalation_calculation_rebuild
+      Cache.delete( 'SLA::List::Active' )
       Ticket.escalation_calculation_rebuild
     end
 end

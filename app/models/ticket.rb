@@ -1,4 +1,6 @@
 require 'time_calculation'
+require 'sla'
+
 class Ticket < ApplicationModel
   before_create   :number_generate, :check_defaults
   before_update   :check_defaults
@@ -478,7 +480,12 @@ class Ticket < ApplicationModel
   def _escalation_calculation_get_sla
 
     sla_selected = nil
-    Sla.where( :active => true ).each {|sla|
+    sla_list = Cache.get( 'SLA::List::Active' )
+    if sla_list == nil
+      sla_list = Sla.where( :active => true ).all
+      Cache.write( 'SLA::List::Active', sla_list, { :expires_in => 1.hour } )
+    end
+    sla_list.each {|sla|
       if !sla.condition || sla.condition.empty?
         sla_selected = sla
       elsif sla.condition
