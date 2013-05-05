@@ -87,12 +87,15 @@ class Index extends App.ControllerContent
     }
 
     # redirect to #
-    if @Config.get( 'requested_url' ) isnt ''
-      @navigate @Config.get( 'requested_url' )
+    requested_url = @Config.get( 'requested_url' )
+    if requested_url isnt ''
+      console.log("REDIRECT to '#{requested_url}'")
+      @navigate requested_url
 
       # reset
       @Config.set( 'requested_url', '' )
     else
+      console.log("REDIRECT to -#/-")
       @navigate '#/'
 
   error: (xhr, statusText, error) =>
