@@ -69,6 +69,10 @@ class Channel::Twitter2
 
       # use transaction
       ActiveRecord::Base.transaction do
+
+        # reset current_user
+        UserInfo.current_user_id = 1
+
         puts 'import tweet'
         fetch_import( tweet, channel, group )
       end
@@ -146,6 +150,7 @@ class Channel::Twitter2
         :note           => sender.description,
         :active         => true,
         :roles          => roles,
+        :updated_by_id  => 1,
         :created_by_id  => 1 
       )
       puts 'autentication create...'
@@ -187,6 +192,12 @@ class Channel::Twitter2
     ticket = nil
     if @article_type == 'twitter direct-message'
       ticket = Ticket.where( :customer_id => user.id ).first
+      if ticket
+        ticket_state_type = Ticket::StateType.where( ticket.ticket_state.state_type_id )
+        if ticket_state_type.name == 'closed' || ticket_state_type.name == 'closed'
+          ticket = nil
+        end
+      end
     end
     if !ticket
       group = Group.where( :name => group ).first
@@ -243,7 +254,7 @@ class Channel::Twitter2
       :from                     => sender.name,
       :to                       => to,
       :message_id               => tweet.id,
-      :internal                 => false
+      :internal                 => false,
     )
 
   end
@@ -258,22 +269,22 @@ class Channel::Twitter2
       :oauth_token        => channel[:options][:oauth_token],
       :oauth_token_secret => channel[:options][:oauth_token_secret]
     )
-    puts 'to:' + atts[:to].to_s
-    if atts[:type] == 'twitter direct-message'
+    if attr[:type] == 'twitter direct-message'
+      puts 'to:' + attr[:to].to_s
       dm = client.direct_message_create(
-        atts[:to].to_s,
-        atts[:body].to_s,
-        options = {}
+        attr[:to].to_s,
+        attr[:body].to_s,
+        {}
       )
 #      puts dm.inspect
       return dm      
     end
 
-    if atts[:type] == 'twitter status'
+    if attr[:type] == 'twitter status'
       message = client.update(
-        atts[:body].to_s,
-        options = {
-          :in_reply_to_status_id => atts[:in_reply_to]
+        attr[:body].to_s,
+        {
+          :in_reply_to_status_id => attr[:in_reply_to]
         }
       )
 #      puts message.inspect
