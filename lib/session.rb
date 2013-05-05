@@ -1,5 +1,6 @@
 require 'json'
 require 'rss'
+require 'session_helper'
 
 module Session
 
