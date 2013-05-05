@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.Auth
 
   @login: (params) ->
