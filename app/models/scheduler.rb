@@ -52,11 +52,10 @@ class Scheduler < ApplicationModel
   end
 
   def self._start_job( job, worker, worker_count )
-    puts "execute #{job.method}..."
+    puts "execute #{job.method} (worker #{worker} of #{worker_count})..."
     job.last_run = Time.now
     job.pid = Thread.current.object_id
     job.save
-    puts "execute #{job.method} (worker #{worker} of #{worker_count})..."
     eval job.method()
   end
 end
