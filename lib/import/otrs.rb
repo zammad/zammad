@@ -153,13 +153,10 @@ module Import::OTRS
     return
   end
 
-  def self.diff_loop
+  def self.diff_worker
     return if !Setting.get('import_mode')
     return if Setting.get('import_otrs_endpoint') == 'http://otrs_host/otrs'
-    while true
-      self.diff
-      sleep 30
-    end
+    self.diff
   end
 
   def self.diff

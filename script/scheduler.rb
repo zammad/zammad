@@ -6,26 +6,31 @@ require 'daemons'
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
 daemon_options = {
-  :multiple   => false,
+  :multiple   => true,
   :dir_mode   => :normal,
   :dir        => File.join(dir, 'tmp', 'pids'),
   :backtrace  => true
 }
 
-Daemons.run_proc('scheduler_runner', daemon_options) do
-  if ARGV.include?('--')
-    ARGV.slice! 0..ARGV.index('--')
-  else
-    ARGV.clear
+worker_count = 2
+
+(1..worker_count).each {|count|
+  name = 'scheduler_runner' + count.to_s
+  Daemons.run_proc(name, daemon_options) do
+    if ARGV.include?('--')
+      ARGV.slice! 0..ARGV.index('--')
+    else
+      ARGV.clear
+    end
+  
+    Dir.chdir dir
+    RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
+  
+    $stdout.reopen( dir + "/log/" + name + "_out.log", "w")
+    $stderr.reopen( dir + "/log/" + name + "_err.log", "w")
+    require File.join(dir, "config", "environment")
+    require 'scheduler'
+  
+    Scheduler.run(count, worker_count)
   end
-
-  Dir.chdir dir
-  RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
-
-  $stdout.reopen( dir + "/log/scheduler_out.log", "w")
-  $stderr.reopen( dir + "/log/scheduler_err.log", "w")
-  require File.join(dir, "config", "environment")
-  require 'scheduler'
-
-  Scheduler.run
-end
+}
