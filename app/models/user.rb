@@ -76,6 +76,7 @@ class User < ApplicationModel
     user_auth = nil
     config.each {|config_item|
       next if !config_item[:adapter]
+      next if config_item.class == TrueClass
       file = "auth/#{config_item[:adapter]}"
       require file
       user_auth = Auth.const_get("#{config_item[:adapter].to_s.upcase}").check( username, password, config_item, user )
@@ -126,6 +127,7 @@ class User < ApplicationModel
     user_auth = nil
     config.each {|config_item|
       next if !config_item[:adapter]
+      next if config_item.class == TrueClass
       file = "sso/#{config_item[:adapter]}"
       require file
       user_auth = SSO.const_get("#{config_item[:adapter].to_s.upcase}").check( params, config_item )
