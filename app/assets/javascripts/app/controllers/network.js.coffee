@@ -1,4 +1,3 @@
-$ = jQuery.sub()
 Note = App.Note
 
 $.fn.item = ->

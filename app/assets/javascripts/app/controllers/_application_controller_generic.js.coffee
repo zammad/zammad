@@ -1,4 +1,3 @@
-$ = jQuery.sub()
 $.fn.item = (genericObject) ->
   elementID   = $(@).data('id')
   elementID or= $(@).parents('[data-id]').data('id')

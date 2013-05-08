@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.DashboardTicket extends App.Controller
   events:
     'click [data-type=edit]':     'zoom'

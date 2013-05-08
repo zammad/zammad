@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.ChannelTwitter extends App.Controller
   events:
     'click [data-toggle="tabnav"]': 'toggle',

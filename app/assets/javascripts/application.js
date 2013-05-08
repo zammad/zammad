@@ -5,7 +5,7 @@
 // the compiled file.
 //
 
-//= require ./app/lib/core/jquery-1.8.3.min.js
+//= require ./app/lib/core/jquery-1.9.1.min.js
 //= require ./app/lib/core/jquery-ui-1.8.23.custom.min.js
 //= require ./app/lib/core/underscore-1.3.3.js
 

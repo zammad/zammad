@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.ChannelChat extends App.ControllerTabs
   constructor: ->
     super

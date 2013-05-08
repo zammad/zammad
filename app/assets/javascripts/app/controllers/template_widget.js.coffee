@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.TemplateUI extends App.Controller
   events:
     'click [data-type=template_save]':   'create',

@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.DashboardRss extends App.Controller
   constructor: ->
     super

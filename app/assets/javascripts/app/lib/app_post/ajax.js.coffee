@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.Com
   _instance = undefined # Must be declared here to force the closure on the class
   @ajax: (args) -> # Must be a static method

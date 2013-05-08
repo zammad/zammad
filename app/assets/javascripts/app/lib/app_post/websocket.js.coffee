@@ -1,5 +1,3 @@
-$ = jQuery.sub()
-
 class App.WebSocket
   _instance = undefined # Must be declared here to force the closure on the class
   @connect: (args) -> # Must be a static method
