@@ -24,27 +24,29 @@ class App.Notify extends Spine.Controller
     if data['type'] is 'warning'
       data['type'] = 'alert'
 
-    $.noty.closeAll()
+    if data['removeAll']
+      $.noty.closeAll()
     if data.link
       data.msg = '<a href="' + data.link + '">' + data.msg + '</a>'
     $('#notify').noty(
       {
-        text:     data.msg,
-        layout:   'top',
-        type:     data.type,
-        theme:    'noty_theme_twitter',
+        dismissQueue: true
+        text:     data.msg
+        layout:   'top'
+        type:     data.type
+        theme:    'noty_theme_twitter'
         animateOpen: { 
           height: 'toggle'
           opacity: 0.85,
         },
         animateClose: {
-          opacity: 0.25,
+          opacity: 0.25
         },
-        speed:            450,
-        timeout:          data.timeout || 3800,
-        closeButton:      false,
-        closeOnSelfClick: true,
-        closeOnSelfOver:  false,
+        speed:            450
+        timeout:          data.timeout || 3800
+        closeButton:      false
+        closeOnSelfClick: true
+        closeOnSelfOver:  false
       }
     )
   

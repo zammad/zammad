@@ -2,9 +2,9 @@ class Index extends App.ControllerContent
   className: 'container signup'
 
   events:
-    'submit form': 'submit',
-    'click .submit': 'submit',
-    'click .cancel': 'cancel',
+    'submit form': 'submit'
+    'click .submit': 'submit'
+    'click .cancel': 'cancel'
 
   constructor: ->
     super
@@ -37,7 +37,7 @@ class Index extends App.ControllerContent
     )
 
   cancel: ->
-    @navigate 'login'
+    @navigate '#login'
 
   submit: (e) ->
     e.preventDefault()
@@ -80,10 +80,10 @@ class Index extends App.ControllerContent
     App.Auth.loginCheck()
 
     # add notify
-    App.Event.trigger 'notify:removeall'
     @notify
-      type: 'success',
-      msg: 'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
+      type:      'success'
+      msg:       'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
+      removeAll: true
 
     # redirect to #
     @navigate '#'
@@ -91,16 +91,9 @@ class Index extends App.ControllerContent
   error: (xhr, statusText, error) =>
 
     # add notify
-    App.Event.trigger 'notify:removeall'
-    App.Event.trigger 'notify', {
-      type: 'warning'
-      msg:  'Wrong Username and Password combination.'
-    }
-
-    # rerender login page
-    @render(
-      msg: 'Wrong Username and Password combination.'
-      username: @username
-    )
+    @notify
+      type:      'warning'
+      msg:       'Wrong Username and Password combination.'
+      removeAll: true
 
 App.Config.set( 'signup', Index, 'Routes' )

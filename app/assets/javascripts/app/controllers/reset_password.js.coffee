@@ -140,10 +140,10 @@ class Verify extends App.ControllerContent
         App.Auth.loginCheck()
 
         # add notify
-        App.Event.trigger 'notify:removeall'
         @notify
-          type: 'success',
-          msg: 'Woo hoo! Your password has been changed!'
+          type:      'success'
+          msg:       'Woo hoo! Your password has been changed!'
+          removeAll: true
 
         # redirect to #
         @navigate '#'
@@ -151,10 +151,10 @@ class Verify extends App.ControllerContent
       error: =>
 
         # add notify
-        App.Event.trigger 'notify:removeall'
         @notify
-          type: 'error',
-          msg: 'Something went wrong. Please contact your administrator.'
+          type:      'error'
+          msg:       'Something went wrong. Please contact your administrator.'
+          removeAll: true
     )
 
   render_changed_failed: =>

@@ -1,6 +1,6 @@
 class Index extends App.ControllerContent
   events:
-    'submit #login': 'login',
+    'submit #login': 'login'
 
   constructor: ->
     super
@@ -47,7 +47,7 @@ class Index extends App.ControllerContent
       auth_providers: auth_providers
     )
 
-    # set focus
+    # set focus to username or password
     if !$(@el).find('[name="username"]').val()
       $(@el).find('[name="username"]').focus()
     else
@@ -68,9 +68,9 @@ class Index extends App.ControllerContent
 
     # session create with login/password
     App.Auth.login(
-      data:    params,
+      data:    params
       success: @success
-      error:   @error,
+      error:   @error
     )
 
   success: (data, status, xhr) =>
@@ -80,15 +80,14 @@ class Index extends App.ControllerContent
     App.WebSocket.send( event: 'navupdate_ticket_overview' )
 
     # add notify
-    App.Event.trigger 'notify:removeall'
-    App.Event.trigger 'notify', {
-      type: 'success',
-      msg: App.i18n.translateContent('Login successfully! Have a nice day!'),
-    }
+    @notify
+      type:      'success'
+      msg:       App.i18n.translateContent('Login successfully! Have a nice day!')
+      removeAll: true
 
     # redirect to #
     requested_url = @Config.get( 'requested_url' )
-    if requested_url isnt ''
+    if requested_url && requested_url isnt '#login'
       console.log("REDIRECT to '#{requested_url}'")
       @navigate requested_url
 
@@ -101,11 +100,10 @@ class Index extends App.ControllerContent
   error: (xhr, statusText, error) =>
 
     # add notify
-    App.Event.trigger 'notify:removeall'
-    App.Event.trigger 'notify', {
-      type: 'error',
-      msg: App.i18n.translateContent('Wrong Username and Password combination.'), 
-    }
+    @notify
+      type:      'error'
+      msg:       App.i18n.translateContent('Wrong Username and Password combination.')
+      removeAll: true
 
     # rerender login page
     @render(
@@ -115,7 +113,7 @@ class Index extends App.ControllerContent
     # login shake
     @delay(
       => @shake( @el.find('#login') ),
-      700
+      600
     )
 
 App.Config.set( 'login', Index, 'Routes' )
