@@ -324,7 +324,7 @@ class App.ControllerForm extends App.Controller
       item = $( App.view('generic/textarea')( attribute: attribute ) )
       if attribute.upload
         fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
-        item = $( item.html() + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
+        item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
 
         # add file uploader
         u = =>

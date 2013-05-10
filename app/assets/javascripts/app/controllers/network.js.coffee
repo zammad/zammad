@@ -1,10 +1,3 @@
-Note = App.Note
-
-$.fn.item = ->
-  elementID   = $(@).data('id')
-  elementID or= $(@).parents('[data-id]').data('id')
-  Note.find(elementID)
-
 class Index extends App.ControllerContent
   events:
     'click [data-type=network-new]':              'network_new'
