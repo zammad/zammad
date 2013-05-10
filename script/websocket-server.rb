@@ -120,7 +120,7 @@ EventMachine.run {
       begin
         data = JSON.parse(msg)
       rescue => e
-        log 'error', "can't parse message: #{ msg }, #{ e.inspect}", client_id
+        log 'error', "can't parse message: #{ msg }, #{ e.inspect }", client_id
         next
       end
 
@@ -182,17 +182,29 @@ EventMachine.run {
           if local_client_id.to_s != client_id.to_s
 
             # broadcast to recipient list
-            if data['recipient'] && data['recipient']['user_id']
-              data['recipient']['user_id'].each { |user_id|
-                if local_client[:user][:id] == user_id
-                  log 'notice', "send broadcast to (user_id=#{user_id})", local_client_id
-                  if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                    @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
+            if data['recipient']
+              if data['recipient'].class != Hash
+                log 'error', "recipient attribute isn't a hash '#{ data['recipient'].inspect }'"
+              else
+                if !data['recipient'].has_key?('user_id')
+                  log 'error', "need recipient.user_id attribute '#{ data['recipient'].inspect }'"
+                else
+                  if data['recipient']['user_id'].class != Array
+                    log 'error', "recipient.user_id attribute isn't an array '#{ data['recipient']['user_id'].inspect }'"
                   else
-                    Session.send( local_client_id, data )
+                    data['recipient']['user_id'].each { |user_id|
+                      if local_client[:user][:id].to_i == user_id.to_i
+                        log 'notice', "send broadcast to (user_id=#{user_id})", local_client_id
+                        if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
+                          @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
+                        else
+                          Session.send( local_client_id, data )
+                        end
+                      end
+                    }
                   end
                 end
-              }
+              end
 
             # broadcast every client
             else
