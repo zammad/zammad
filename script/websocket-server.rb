@@ -141,6 +141,17 @@ EventMachine.run {
       if data['action'] == 'spool'
         @spool.each { |message|
 
+          begin
+            message_parsed = JSON.parse( message[:msg] )
+          rescue => e
+            log 'error', "can't parse spool message: #{ message }, #{ e.inspect }"
+            next
+          end
+
+          # add spool attribute to push spool info to clients
+          message_parsed['data']['spool'] = true
+          msg = JSON.generate( message_parsed )
+
           # only send not already now messages
           if !data['timestamp'] || data['timestamp'] < message[:timestamp]
 
@@ -149,14 +160,14 @@ EventMachine.run {
               message[:msg_object]['recipient']['user_id'].each { |user_id|
                 if @clients[client_id][:session]['id'] == user_id
                   log 'notice', "send spool to (user_id=#{user_id})", client_id
-                  @clients[client_id][:websocket].send( "[#{ message[:msg] }]" )
+                  @clients[client_id][:websocket].send( "[#{ msg }]" )
                 end
               }
 
-            # spool every client
+            # spool to every client
             else
               log 'notice', "send spool", client_id
-              @clients[client_id][:websocket].send( "[#{ message[:msg] }]" )
+              @clients[client_id][:websocket].send( "[#{ msg }]" )
             end
 
           end
