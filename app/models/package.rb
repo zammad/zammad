@@ -252,10 +252,11 @@ class Package < ApplicationModel
   # Package.reinstall( package_name )
   def self.reinstall(package_name)
     package = Package.where( :name => package_name ).first
-    return if !package
+    if !package
+      raise "No such package '#{package_name}'"
+    end
 
     file = self._get_bin( package.name, package.version )
-    return if !file
     self.install( :string => file, :reinstall => true )
   end
 
@@ -345,8 +346,14 @@ class Package < ApplicationModel
     )
 
     # find file
-    return if !list
-    list.first.store_file.data
+    if !list || !list.first
+      raise "No such file in storage list #{name} #{version}"
+    end
+    store_file = list.first.store_file
+    if !store_file
+      raise "No such file in storage #{name} #{version}"
+    end
+    store_file.data
   end
 
   def self._read_file(file, fullpath = false)
