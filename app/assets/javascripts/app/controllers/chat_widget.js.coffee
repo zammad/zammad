@@ -55,6 +55,12 @@ class App.ChatWidget extends App.Controller
         if length > 10
           @messageLog = @messageLog.slice( length - max, length )
         @render()
+
+        if !e.spool
+          @notifyDesktop(
+            msg:  'Chat'
+            body: "#{e.nick}: #{e.message}"
+          )
     )
 
     App.Event.bind(

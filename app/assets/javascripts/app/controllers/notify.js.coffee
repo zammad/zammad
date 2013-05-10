@@ -14,6 +14,17 @@ class App.Notify extends Spine.Controller
       @log 'notify:removeall', @
       @destroyAll()
 
+    App.Event.bind 'notifyDesktop', (data) =>
+      if !data['icon']
+        data['icon'] = 'unknown'
+      notify.createNotification( data.msg, data )
+
+    # request desktop notification after login
+    App.Event.bind 'auth', (data) ->
+      if !_.isEmpty(data)
+        notify.config( pageVisibility: false )
+        notify.requestPermission()
+
   render: (data) ->
 #    notify = App.view('notify')(data: data)
 #    @append( notify )

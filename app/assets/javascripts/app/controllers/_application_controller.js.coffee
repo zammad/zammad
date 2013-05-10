@@ -15,6 +15,10 @@ class App.Controller extends Spine.Controller
   notify: (data) ->
     App.Event.trigger 'notify', data
 
+  # add @notifyDesktop methode to create desktop notification
+  notifyDesktop: (data) ->
+    App.Event.trigger 'notifyDesktop', data
+
   # add @navupdate methode to update navigation
   navupdate: (url) ->
     App.Event.trigger 'navupdate', url
