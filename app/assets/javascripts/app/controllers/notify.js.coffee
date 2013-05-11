@@ -22,8 +22,9 @@ class App.Notify extends Spine.Controller
     # request desktop notification after login
     App.Event.bind 'auth', (data) ->
       if !_.isEmpty(data)
-        notify.config( pageVisibility: false )
         notify.requestPermission()
+
+    notify.config( pageVisibility: false )
 
   render: (data) ->
 #    notify = App.view('notify')(data: data)
