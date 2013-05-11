@@ -192,7 +192,7 @@ class ApplicationController < ActionController::Base
   end
 
   def log_view (object)
-    History.log_view( object, current_user )
+    RecentView.log( object, current_user )
   end
 
   def config_frontend

@@ -352,13 +352,13 @@ class UserState
       # recent viewed
       cache_key = @cache_key + '_recent_viewed'
       if CacheIn.expired(cache_key)
-        recent_viewed = History.recent_viewed( user )
+        recent_viewed = RecentView.list_fulldata( user, 10 )
         recent_viewed_cache = CacheIn.get( cache_key, { :re_expire => true } )
         self.log 'notice', 'fetch recent_viewed - ' + cache_key
         if recent_viewed != recent_viewed_cache
           self.log 'notify', 'fetch recent_viewed changed - ' + cache_key
 
-          recent_viewed_full = History.recent_viewed_fulldata( user )
+          recent_viewed_full = RecentView.list_fulldata( user, 10 )
           CacheIn.set( cache_key, recent_viewed, { :expires_in => 5.seconds } )
           CacheIn.set( cache_key + '_push', recent_viewed_full )
         end

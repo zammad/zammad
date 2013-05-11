@@ -24,7 +24,7 @@ class App.TicketZoom extends App.Controller
     @article_id     = params.article_id
     @signature      = undefined
     @signature_used = undefined
-    @doNotLog       = 0
+    @doNotLog       = params['doNotLog'] || 0
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )

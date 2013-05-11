@@ -99,6 +99,8 @@ class _Singleton extends App.Controller
     params_app = _.clone(params)
     params_app['el']       = $('#content_permanent_' + @task_count )
     params_app['task_key'] = @task_count
+    if to_not_show
+      params_app['doNotLog'] = 1
     a = new App[callback]( params_app )
 
     # remember new controller / prepare for task storage

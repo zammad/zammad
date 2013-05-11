@@ -294,7 +294,7 @@ class TicketsController < ApplicationController
     end
 
     # log object as viewed
-    if !params[:do_not_log]
+    if !params[:do_not_log] || params[:do_not_log].to_i == 0
       log_view( ticket )
     end
 

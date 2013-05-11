@@ -17,7 +17,7 @@ curl http://localhost/api/recent_viewed.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def recent_viewed
-    recent_viewed = History.recent_viewed_fulldata( current_user, 10 )
+    recent_viewed = RecentView.list_fulldata( current_user, 10 )
 
     # return result
     render :json => recent_viewed
