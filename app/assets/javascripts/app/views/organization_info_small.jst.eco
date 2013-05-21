@@ -1,0 +1,6 @@
+<table style="width: 100%;">
+  <tr>
+    <td><%- @P( @organization ) %></td>
+    <td>...</td>
+  </tr>
+</table>

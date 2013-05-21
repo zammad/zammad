@@ -219,12 +219,39 @@ class App.Controller extends Spine.Controller
   interval: (callback, interval, interval_id, level) =>
     App.Interval.set(callback, interval, interval_id, level)
 
+  ticketPopups: (position = 'right') ->
+
+    # remove old popovers
+    $('.popover-inner').parent().remove()
+
+    # show ticket popup
+    ui = @
+    $('.ticket-data').popover(
+      trigger: 'hover'
+      html:    true
+      delay:   { show: 500, hide: 1200 }
+#      placement: 'bottom'
+      placement: position
+      title: ->
+        ticket_id = $(@).data('id')
+        ticket = App.Collection.find( 'Ticket', ticket_id )
+        ticket.title
+      content: ->
+        ticket_id = $(@).data('id')
+        ticket = App.Collection.find( 'Ticket', ticket_id )
+        ticket.humanTime = ui.humanTime(ticket.created_at)
+        # insert data
+        App.view('ticket_info_small')(
+          ticket: ticket,
+        )
+    )
+
   userPopups: (position = 'right') ->
 
     # remove old popovers
     $('.popover-inner').parent().remove()
 
-    # show user popup    
+    # show user popup
     $('.user-data').popover(
       trigger: 'hover'
       html:    true
@@ -262,6 +289,31 @@ class App.Controller extends Spine.Controller
         App.view('user_info_small')(
           user: user,
           data: data,
+        )
+    )
+
+  organizationPopups: (position = 'right') ->
+
+    # remove old popovers
+    $('.popover-inner').parent().remove()
+
+    # show organization popup
+    $('.organization-data').popover(
+      trigger: 'hover'
+      html:    true
+      delay:   { show: 500, hide: 1200 }
+#      placement: 'bottom'
+      placement: position
+      title: ->
+        organization_id = $(@).data('id')
+        organization = App.Collection.find( 'Organization', organization_id )
+        organization.name
+      content: ->
+        organization_id = $(@).data('id')
+        organization = App.Collection.find( 'Organization', organization_id )
+        # insert data
+        App.view('organization_info_small')(
+          organization: organization,
         )
     )
 

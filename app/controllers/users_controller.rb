@@ -306,16 +306,11 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
   # GET /api/users/search
   def search
 
-    # get params
-    query = params[:term]
-    limit = params[:limit] || 18
-
     # do query
-    user_all = User.find(
-      :all,
-      :limit      => limit,
-      :conditions => ['firstname LIKE ? or lastname LIKE ? or email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"],
-      :order      => 'firstname'
+    user_all = User.search(
+      :query        => params[:term],
+      :limit        => params[:limit],
+      :current_user => current_user,
     )
 
     # build result list

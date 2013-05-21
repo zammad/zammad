@@ -61,9 +61,18 @@ class App.Navigation extends App.Controller
       open_tab:     open_tab
       active_tab:   active_tab
       user:         user
-      tickets:      @tickets || []
+      result:       @result || []
       search:       search
     )
+
+    # start ticket popups
+    @ticketPopups('right')
+
+    # start user popups
+    @userPopups('right')
+
+    # start oorganization popups
+    @organizationPopups('right')
 
     # set focus to search box
     if @searchFocus
@@ -77,29 +86,59 @@ class App.Navigation extends App.Controller
       App.Com.ajax(
         id:    'ticket_search'
         type:  'GET'
-        url:   'api/tickets/search'
+        url:   'api/search'
         data:
           term: @term
         processData: true,
         success: (data, status, xhr) =>
 
           # load user collection
-          if data.users
-            App.Collection.load( type: 'User', data: data.users )
+          if data.load.organizations
+            App.Collection.load( type: 'Organization', data: data.load.organizations )
 
+          # load user collection
+          if data.load.users
+            App.Collection.load( type: 'User', data: data.load.users )
+          
           # load ticket collection
-          if data.tickets
-            App.Collection.load( type: 'Ticket', data: data.tickets )
+          if data.load.tickets
+            App.Collection.load( type: 'Ticket', data: data.load.tickets )
 
-            @tickets = []
+          @result = data.result
+          for area in @result
+            if area.name is 'Ticket'
+              area.result = []
+              for id in area.ids
+                ticket = App.Collection.find( 'Ticket', id )
+                ticket.humanTime = @humanTime(ticket.created_at)
+                data =
+                  display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
+                  id:       ticket.id
+                  class:    "ticket-data"
+                  url:      "#ticket/zoom/#{ticket.id}"
+                area.result.push data
+            else if area.name is 'User'
+              area.result = []
+              for id in area.ids
+                user = App.Collection.find( 'User', id )
+                data =
+                  display:  "#{user.displayName()}"
+                  id:       user.id
+                  class:    "user-data"
+                  url:      "#users/#{user.id}"
+                area.result.push data
+            else if area.name is 'Organization'
+              area.result = []
+              for id in area.ids
+                organization = App.Collection.find( 'Organization', id )
+                data =
+                  display:  "#{organization.displayName()}"
+                  id:       organization.id
+                  class:    "organization-data"
+                  url:      "#organizations/#{ticket.id}"
+                area.result.push data
 
-            for ticket_raw in data.tickets
-              ticket = App.Collection.find( 'Ticket', ticket_raw.id )
-
-              # set human time
-              ticket.humanTime = @humanTime(ticket.created_at)
-
-              @tickets.push ticket
+          if @result
             @render(user)
       )
 
@@ -121,7 +160,7 @@ class App.Navigation extends App.Controller
       @delay(
         =>
           @searchFocus = false
-          @tickets = []
+          @result = []
           @render(user)
         320
       )

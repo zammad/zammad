@@ -1,0 +1,17 @@
+<table style="width: 100%;">
+  <tr>
+    <td>#<%- @P( @ticket.number ) %></td>
+    <td><%- @P( @ticket.humanTime ) %></td>
+  </tr>
+  <tr>
+    <td><%- @P( @ticket.group ) %></td>
+    <td><%- @T( @ticket.ticket_state.name ) %></td>
+  </tr>
+  <tr>
+    <td><%- @T( @ticket.ticket_priority.name ) %></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2"><%- @P( @ticket.owner ) %></td>
+  </tr>
+</table>

@@ -247,6 +247,26 @@ Your #{config.product_name} Team
     return user
   end
 
+  def self.search(params)
+
+    # get params
+    query = params[:query]
+    limit = params[:limit] || 10
+    current_user = params[:current_user]
+
+    # enable search only for agents and admins
+    return [] if !current_user.is_role('Agent') && !current_user.is_role('Admin')
+
+    # do query
+    users = User.find(
+      :all,
+      :limit      => limit,
+      :conditions => ['(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%"],
+      :order      => 'firstname'
+    )
+    return users
+  end
+
   def self.find_fulldata(user_id)
 
     cache = self.cache_get(user_id, true)

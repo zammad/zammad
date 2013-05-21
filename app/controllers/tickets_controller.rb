@@ -445,48 +445,25 @@ class TicketsController < ApplicationController
   # GET /api/tickets/search
   def search
     
-    # get params
-    query = params[:term]
-    limit = params[:limit] || 15
-
-    conditions = []
-    if current_user.is_role('Agent')
-      group_ids = Group.select( 'groups.id' ).joins(:users).
-        where( 'groups_users.user_id = ?', current_user.id ).
-        where( 'groups.active = ?', true ).
-        map( &:id )
-      conditions = [ 'group_id IN (?)', group_ids ]
-    else
-      if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
-        conditions = [ 'customer_id = ?', current_user.id ]
-      else
-        conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-      end
-    end
-
-    # do query
-    tickets_all = Ticket.select('DISTINCT(tickets.id)').
-      where(conditions).
-      where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
-      joins(:articles).
-      limit(limit).
-      order('`tickets`.`created_at` DESC')
-
     # build result list
-    tickets = []
-    users = {}
-    tickets_all.each do |ticket|
-      ticket_tmp = Ticket.lookup( :id => ticket.id )
-      tickets.push ticket_tmp
-      users[ ticket['owner_id'] ] = User.user_data_full( ticket_tmp['owner_id'] )
-      users[ ticket['customer_id'] ] = User.user_data_full( ticket_tmp['customer_id'] )
-      users[ ticket['created_by_id'] ] = User.user_data_full( ticket_tmp['created_by_id'] )
+    tickets = Ticket.search(
+      :limit        => params[:limit],
+      :query        => params[:term],
+      :current_user => current_user,
+    )
+    users_data = {}
+    ticket_result = []
+    tickets.each do |ticket|
+      ticket_result.push ticket.id
+      users_data[ ticket['owner_id'] ] = User.user_data_full( ticket['owner_id'] )
+      users_data[ ticket['customer_id'] ] = User.user_data_full( ticket['customer_id'] )
+      users_data[ ticket['created_by_id'] ] = User.user_data_full( ticket['created_by_id'] )
     end
 
     # return result
     render :json => {
-      :tickets => tickets,
-      :users   => users,
+      :tickets => ticket_result,
+      :users   => users_data,
     }
   end
 

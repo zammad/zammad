@@ -1578,6 +1578,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Settings", :targe
 Translation.create_if_not_exists( :locale => 'de', :source => "Overviews", :target => "Übersichten"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Manage", :target => "Verwalten"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Users", :target => "Benutzer"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "User", :target => "Benutzer"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Groups", :target => "Gruppen"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Group", :target => "Gruppe"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Organizations", :target => "Organisationen"  )
