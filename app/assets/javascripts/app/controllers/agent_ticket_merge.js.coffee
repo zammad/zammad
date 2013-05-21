@@ -86,15 +86,15 @@ class App.TicketMerge extends App.ControllerModal
     )
 
     @el.delegate('[name="master_ticket_number"]', 'focus', (e) ->
-      $(e.target).parents().find('[name="radio"]').attr( 'checked', false )
+      $(e.target).parents().find('[name="radio"]').prop( 'checked', false )
     )
 
     @el.delegate('[name="radio"]', 'click', (e) ->
-        if $(e.target).attr('checked')
-          ticket_id = $(e.target).val()
-          ticket    = App.Collection.find( 'Ticket', ticket_id )
-          $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
-      )
+      if $(e.target).prop('checked')
+        ticket_id = $(e.target).val()
+        ticket    = App.Collection.find( 'Ticket', ticket_id )
+        $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
+    )
 
     @modalShow()
 
