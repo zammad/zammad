@@ -232,6 +232,51 @@ class Ticket < ApplicationModel
     return false
   end
 
+#  Ticket.search(
+#    :current_user => 123,
+#    :query        => 'search something',
+#    :limit        => 15,
+#  )
+  def self.search (params)
+
+    # get params
+    query        = params[:query]
+    limit        = params[:limit] || 12
+    current_user = params[:current_user]
+
+    conditions = []
+    if current_user.is_role('Agent')
+      group_ids = Group.select( 'groups.id' ).joins(:users).
+        where( 'groups_users.user_id = ?', current_user.id ).
+        where( 'groups.active = ?', true ).
+        map( &:id )
+      conditions = [ 'group_id IN (?)', group_ids ]
+    else
+      if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
+        conditions = [ 'customer_id = ?', current_user.id ]
+      else
+        conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
+      end
+    end
+
+    # do query
+    tickets_all = Ticket.select('DISTINCT(tickets.id)').
+      where(conditions).
+      where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
+      joins(:articles).
+      limit(limit).
+      order('`tickets`.`created_at` DESC')
+
+    # build result list
+    tickets = []
+    users = {}
+    tickets_all.each do |ticket|
+      ticket_tmp = Ticket.lookup( :id => ticket.id )
+      tickets.push ticket_tmp
+    end
+
+    return tickets
+  end
 #  Ticket.overview_list(
 #    :current_user => 123,
 #  )
@@ -659,21 +704,4 @@ class Ticket < ApplicationModel
   class Number
   end
 
-  class Flag < ApplicationModel
-  end
-
-  class Priority < ApplicationModel
-    self.table_name = 'ticket_priorities'
-    validates     :name, :presence => true
-  end
-
-  class StateType < ApplicationModel
-    has_many      :states,            :class_name => 'Ticket::State'
-    validates     :name, :presence => true
-  end
-
-  class State < ApplicationModel
-    belongs_to    :state_type,        :class_name => 'Ticket::StateType'
-    validates     :name, :presence => true
-  end
 end
