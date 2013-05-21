@@ -208,7 +208,7 @@ class TicketsController < ApplicationController
       end
     }
 
-    recent_viewed = History.recent_viewed_fulldata( current_user, 8 )
+    recent_viewed = RecentView.list_fulldata( current_user, 8 )
 
     # return result
     render :json => {
