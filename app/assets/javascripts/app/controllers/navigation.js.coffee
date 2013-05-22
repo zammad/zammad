@@ -98,14 +98,11 @@ class App.Navigation extends App.Controller
           
           # load user collection
           if data.load.organizations
-            console.log(999999999)
             for organization_id, organization of data.load.organizations
-              console.log(2222, organization)
               if organization.user_ids
                 organization.users = []
                 for user_id in organization.user_ids
                   user = App.Collection.find( 'User', user_id )
-                  console.log(111, user_id)
                   organization.users.push user
             App.Collection.load( type: 'Organization', data: data.load.organizations )
 
