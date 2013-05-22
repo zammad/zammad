@@ -1,6 +1,18 @@
 <table style="width: 100%;">
   <tr>
-    <td><%- @P( @organization ) %></td>
-    <td>...</td>
+    <td><%- @T( 'Shared' ) %></td>
+    <td><%- @P( @organization.shared ) %></td>
+  </tr>
+  <tr>
+    <td><%- @T( 'Note' ) %></td>
+    <td><%- @P( @organization.note ) %></td>
   </tr>
 </table>
+<% if  @organization.users: %>
+<strong><%- @T('Users') %></strong>
+<ul>
+  <% for user in @organization.users: %>
+  <li><%= user.displayName() %></li>
+  <% end %>
+</ul>
+<% end %>

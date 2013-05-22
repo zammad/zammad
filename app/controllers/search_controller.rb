@@ -40,7 +40,13 @@ class SearchController < ApplicationController
     organization_result = []
     organizations.each do |organization|
       organization_result.push organization.id
-      organizations_data[ organization.id ] = Organization.find( organization.id )
+      organizations_data[ organization.id ] = Organization.find( organization.id ).attributes
+      organizations_data[ organization.id ][:user_ids] = []
+      users = User.where( :organization_id => organization.id ).limit(10)
+      users.each {|user|
+        users_data[ user.id ] = User.user_data_full( user.id )
+        organizations_data[ organization.id ][:user_ids].push user.id
+      }
     end
 
     result = []

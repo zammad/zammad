@@ -5,6 +5,14 @@
     </div>
   <% end %>
 <% end %>
+<% if @user['organization']: %>
+  <div class="row">
+    <div class="customer-info">
+      <strong><%- @T( 'Organization' ) %></strong><br/>
+      <%- @P( @user['organization'] ) %>
+    </div>
+  </div>
+<% end %>
 <% if !_.isEmpty(@user['accounts']): %>
   <div class="row">
     <div class="customer-info">

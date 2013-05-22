@@ -93,13 +93,23 @@ class App.Navigation extends App.Controller
         success: (data, status, xhr) =>
 
           # load user collection
-          if data.load.organizations
-            App.Collection.load( type: 'Organization', data: data.load.organizations )
-
-          # load user collection
           if data.load.users
             App.Collection.load( type: 'User', data: data.load.users )
           
+          # load user collection
+          if data.load.organizations
+            console.log(999999999)
+            for organization_id, organization of data.load.organizations
+              console.log(2222, organization)
+              if organization.user_ids
+                organization.users = []
+                for user_id in organization.user_ids
+                  user = App.Collection.find( 'User', user_id )
+                  console.log(111, user_id)
+                  organization.users.push user
+            App.Collection.load( type: 'Organization', data: data.load.organizations )
+
+
           # load ticket collection
           if data.load.tickets
             App.Collection.load( type: 'Ticket', data: data.load.tickets )

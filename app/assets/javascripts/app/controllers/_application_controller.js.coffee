@@ -281,7 +281,7 @@ class App.Controller extends Spine.Controller
           if user[item.name]
 
             # do not show firstname and lastname / already show via diplayName()
-            if item.name isnt 'firstname' && item.name isnt 'lastname'
+            if item.name isnt 'firstname' && item.name isnt 'lastname' && item.name isnt 'organization'
               if item.info #&& ( @user[item.name] || item.name isnt 'note' )
                 data.push item
 
