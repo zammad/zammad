@@ -26,7 +26,7 @@ class _Singleton
     @_run()
 
     # bindings
-    $('body').bind( 'ajaxSend', =>
+    $(document).bind( 'ajaxSend', =>
       @_show_spinner()
     ).bind( 'ajaxComplete', =>
       @_hide_spinner()
