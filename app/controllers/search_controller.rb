@@ -21,8 +21,8 @@ class SearchController < ApplicationController
 
     # do query
     users = User.search(
-      :query => params[:term],
-      :limit => params[:limit],
+      :query        => params[:term],
+      :limit        => params[:limit],
       :current_user => current_user,
     )
     user_result = []
@@ -32,10 +32,11 @@ class SearchController < ApplicationController
     end
 
     organizations = Organization.search(
-      :query => params[:term],
-      :limit => params[:limit],
+      :query        => params[:term],
+      :limit        => params[:limit],
       :current_user => current_user,
     )
+
     organizations_data = {}
     organization_result = []
     organizations.each do |organization|
