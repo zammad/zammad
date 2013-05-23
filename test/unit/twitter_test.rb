@@ -149,6 +149,7 @@ class TwitterTest < ActiveSupport::TestCase
       'armin_theo',
       text,
     )
+    assert( dm, "dm with ##{hash} created" )
     sleep 10
 
     # fetch check system account
@@ -157,6 +158,7 @@ class TwitterTest < ActiveSupport::TestCase
     # check if ticket and article has been created
     article = Ticket::Article.where( :message_id => dm.id ).last
     assert( article, "inbound article created" )
+#    ticket  = Ticket.find( article.ticket.id )
     ticket  = article.ticket
     assert( ticket, "ticket of inbound article exists" )
     assert( ticket.articles, "ticket.articles exists" )
