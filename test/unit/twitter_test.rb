@@ -158,6 +158,8 @@ class TwitterTest < ActiveSupport::TestCase
     article = Ticket::Article.where( :message_id => dm.id ).last
     assert( article, "inbound article created" )
     ticket  = article.ticket
+    assert( ticket, "ticket of inbound article exists" )
+    assert( ticket.articles, "ticket.articles exists" )
     article_count = ticket.articles.count
     assert( article_count )
 #    assert_equal( ticket.ticket_state.name, 'new' )
