@@ -17,10 +17,20 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       # get current state of objects
       if event[:name] == 'Ticket::Article'
         article = Ticket::Article.lookup( :id => event[:id] )
+
+        # next if article is already deleted
+        next if !article
+
         ticket  = article.ticket
-      else
+      elsif event[:name] == 'Ticket'
         ticket  = Ticket.lookup( :id => event[:id] )
+        
+        # next if ticket is already deleted
+        next if !ticket
+
         article = ticket.articles[-1]
+      else
+        raise "unknown object for notification #{event[:name]}"
       end
 
       # send new ticket notification to agents
