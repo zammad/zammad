@@ -14,4 +14,7 @@
   <tr>
     <td colspan="2"><%- @P( @ticket.owner ) %></td>
   </tr>
+  <tr>
+    <td colspan="2"><%- @P( @ticket.customer ) %></td>
+  </tr>
 </table>

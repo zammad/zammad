@@ -40,7 +40,7 @@ class App.TicketCreate extends App.Controller
       @navigate '#ticket_create/' + default_type
 
     # update navbar highlighting
-    @navupdate '#ticket_create/' + @type
+    @navupdate '#ticket_create/' + @type + '/id/' + @id
 
     @fetch(params)
 
@@ -57,7 +57,7 @@ class App.TicketCreate extends App.Controller
       id:    @type
 
   url: =>
-    '#ticket_create/' + @type
+    '#ticket_create/' + @type + '/id/' + @id
 
   activate: =>
     @navupdate '#'
@@ -168,7 +168,7 @@ class App.TicketCreate extends App.Controller
       form_id: @form_id
       model:
         configure_attributes: configure_attributes
-        className:            'create_' + @type
+        className:            'create_' + @type + '_' + @id
       autofocus: true
       form_data: @edit_form
     )
@@ -199,7 +199,10 @@ class App.TicketCreate extends App.Controller
     @formDefault = @formParam( @el.find('.ticket-create') )
 
   localUserInfo: (params) =>
-    @userInfo( user_id: params.customer_id )
+    @userInfo(
+      user_id: params.customer_id
+      el:      @el.find('[data-id="customer_info"]')
+    )
 
   userNew: (e) =>
     e.preventDefault()
@@ -340,8 +343,8 @@ class UserNew extends App.ControllerModal
         # force to reload object
         callbackReload = (user) ->
           realname = user.displayName()
-          $('#create_' + ui.type + '_customer_id').val( user.id )
-          $('#create_' + ui.type + '_customer_id_autocompletion').val( realname )
+          $('#create_' + ui.type + '_' +  ui.id + '_customer_id').val( user.id )
+          $('#create_' + ui.type + '_' +  ui.id + '_customer_id_autocompletion').val( realname )
 
           # start customer info controller
           ui.userInfo( user_id: user.id )
@@ -356,18 +359,31 @@ class TicketCreateRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
     @log 'create router', params
+
+    # create new uniq form id
+    if !params['id']
+      id = Math.floor( Math.random() * 99999 )
+      @navigate "#ticket_create/#{params['type']}/id/#{id}"
+      return
+
     # cleanup params
     clean_params =
       ticket_id:  params.ticket_id
       article_id: params.article_id
       type:       params.type
+      id:         params.id
 
-    App.TaskManager.add( 'TicketCreateScreen', params['type'], 'TicketCreate', clean_params )
+    App.TaskManager.add( 'TicketCreateScreen', params['type'] + '-' + params['id'], 'TicketCreate', clean_params )
 
-App.Config.set( 'ticket_create', TicketCreateRouter, 'Routes' )
+# split ticket
 App.Config.set( 'ticket_create/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
-App.Config.set( 'ticket_create/:type', TicketCreateRouter, 'Routes' )
 
+# create new ticket routs/controller
+App.Config.set( 'ticket_create', TicketCreateRouter, 'Routes' )
+App.Config.set( 'ticket_create/:type', TicketCreateRouter, 'Routes' )
+App.Config.set( 'ticket_create/:type/id/:id', TicketCreateRouter, 'Routes' )
+
+# set new task actions
 App.Config.set( 'TicketNewCallOutbound', { prio: 8001, name: 'Call Outbound', target: '#ticket_create/call_outbound', role: ['Agent'] }, 'TaskActions' )
 App.Config.set( 'TicketNewCallInbound', { prio: 8002, name: 'Call Inbound', target: '#ticket_create/call_inbound', role: ['Agent'] }, 'TaskActions' )
 App.Config.set( 'TicketNewEmail', { prio: 8003, name: 'Email', target: '#ticket_create/email', role: ['Agent'] }, 'TaskActions' )
