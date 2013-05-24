@@ -50,10 +50,14 @@ class App.TicketCreate extends App.Controller
       @render(defaults)
 
   meta: =>
+    text = App.i18n.translateInline( @article_attributes['title'] )
+    subject = @el.find('[name=subject]').val()
+    if subject
+      text = "#{text}: #{subject}"
     meta =
       url:   @url()
-      head:  App.i18n.translateInline( @article_attributes['title'] )
-      title: App.i18n.translateInline( @article_attributes['title'] )
+      head:  text
+      title: text
       id:    @type
 
   url: =>
