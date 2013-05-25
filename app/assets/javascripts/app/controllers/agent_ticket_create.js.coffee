@@ -210,7 +210,9 @@ class App.TicketCreate extends App.Controller
 
   userNew: (e) =>
     e.preventDefault()
-    new UserNew( type: @type )
+    new UserNew(
+      create_screen: @
+    )
 
   cancel: ->
     @navigate '#'
@@ -347,8 +349,8 @@ class UserNew extends App.ControllerModal
         # force to reload object
         callbackReload = (user) ->
           realname = user.displayName()
-          $('#create_' + ui.type + '_' +  ui.id + '_customer_id').val( user.id )
-          $('#create_' + ui.type + '_' +  ui.id + '_customer_id_autocompletion').val( realname )
+          ui.create_screen.el.find('[name=customer_id]').val( user.id )
+          ui.create_screen.el.find('[name=customer_id_autocompletion]').val( realname )
 
           # start customer info controller
           ui.userInfo( user_id: user.id )
