@@ -314,6 +314,7 @@ class Package < ApplicationModel
             load entry
           rescue => e
             puts 'ERROR: ' + e.inspect
+            puts 'Traceback: ' + e.backtrace
           end
         end
       }
