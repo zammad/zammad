@@ -1,7 +1,7 @@
 module ExtraRoutes
   def add(map)
     map.resources :translations
-    map.match '/translations/lang/:locale',   :to => 'translations#load'
+    map.match '/translations/lang/:locale',   :to => 'translations#load', :via => :get
   end
   module_function :add
 end
