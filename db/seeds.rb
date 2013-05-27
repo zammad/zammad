@@ -1187,8 +1187,8 @@ Group.create_if_not_exists(
 )
 
 roles         = Role.where( :name => 'Customer' )
-organizations = Organization.find( :all )
-groups        = Group.find( :all )
+organizations = Organization.all
+groups        = Group.all
 
 user = User.create_if_not_exists(
   :login         => '-',
