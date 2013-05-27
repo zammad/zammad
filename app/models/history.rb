@@ -54,7 +54,9 @@ class History < ApplicationModel
       history_record.update_attributes(record)
     else
       record_new = History.create(record)
-      record_new.id = record[:id]
+      if record[:id]
+        record_new.id = record[:id]
+      end
       record_new.save
     end
   end
