@@ -2,6 +2,11 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
 
+# preparation for rails 4
+#gem 'rails', '4.0.0.rc1'
+#gem 'rails-observers'
+#gem 'activerecord-session_store'
+
 # Bundle edge Rails instead:
 #gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
@@ -10,6 +15,10 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
+
+# preparation for rails 4
+#  gem 'sass-rails',   '~> 4.0.0.rc1'
+#  gem 'coffee-rails', '~> 4.0.0.rc1'
   gem 'sass-rails',   '~> 3.2.4'
   gem 'coffee-rails', '~> 3.2.2'
   gem 'uglifier', '>= 1.2.3'
@@ -45,6 +54,11 @@ gem 'simple-rss'
 # e. g. for mysql you need to load mysql
 gem 'mysql2'
 #gem 'sqlite3'
+
+#platforms :jruby do
+#  gem 'jruby-openssl'
+#  gem 'activerecord-jdbcmysql-adapter'
+#end
 
 gem 'net-ldap'
 
