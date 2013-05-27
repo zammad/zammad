@@ -6,28 +6,28 @@ class EmailParserTest < ActiveSupport::TestCase
     files = [
       {
         :data     => IO.read('test/fixtures/mail1.box'),
-        :body_md5 => 'd62c8530fc8fd35bcff0b599db95a170',
+        :body_md5 => 'b57d21dcac6b05e1aa67af51a9e4c1ec',
         :params   => {
           :from               => 'John.Smith@example.com',
           :from_email         => 'John.Smith@example.com',
-          :from_display_name  => nil,
+          :from_display_name  => '',
           :subject            => 'CI Daten für PublicView ',
         },
       },
       {
         :data     => IO.read('test/fixtures/mail2.box'),
-        :body_md5 => '548917e0bff0806f9b27c09bbf23bb38',
+        :body_md5 => '154c7d3ae7b94f99589df62882841b08',
         :params   => {
           :from               => 'Martin Edenhofer <martin@example.com>',
           :from_email         => 'martin@example.com',
           :from_display_name  => 'Martin Edenhofer',
           :subject            => 'aaäöüßad asd',
-          :body_md5     => "äöüß ad asd\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.",
+          :body_md5           => "äöüß ad asd\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.\n",
         },
       },
       {
         :data     => IO.read('test/fixtures/mail3.box'),
-        :body_md5 => '218971f005cddf7a1b70a980507f589d',
+        :body_md5 => '96a0a7847c1c60e82058db8f8bff8136',
         :params   => {
           :from               => '"Günther John | Example GmbH" <k.guenther@example.com>',
           :from_email         => 'k.guenther@example.com',
@@ -66,7 +66,7 @@ Liebe Grüße!
       },
       {
         :data     => IO.read('test/fixtures/mail5.box'),
-        :body_md5 => '51364a306362f513f53f2bbea7820f37',
+        :body_md5 => 'f34033e9a34bb5367062dd5df21115df',
         :params   => {
           :from               => 'marc.smith@example.com (Marc Smith)',
           :from_email         => 'marc.smith@example.com',
@@ -76,7 +76,7 @@ Liebe Grüße!
       },
       {
         :data     => IO.read('test/fixtures/mail6.box'),
-        :body_md5 => '1fc492b8d762d82f861dbb70b7cf7610',
+        :body_md5 => 'fb6654b0171261e0cc103e63af75407b',
         :params   => {
           :from               => '"Hans BÄKOSchönland" <me@bogen.net>',
           :from_email         => 'me@bogen.net',
@@ -95,6 +95,7 @@ Test4:&amp;
 Test5:=
 
 
+
 [1] http://localhost/8HMZENUS/2737??PS=
 "
         },
@@ -105,7 +106,7 @@ Test5:=
         :params   => {
           :from               => 'Eike.Ehringer@example.com',
           :from_email         => 'Eike.Ehringer@example.com',
-          :from_display_name  => nil,
+          :from_display_name  => '',
           :subject            => 'AW:Installation [Ticket#11392]',
           :body_md5     => "Hallo.
 Jetzt muss ich dir noch kurzfristig absagen für morgen.
@@ -137,17 +138,17 @@ Managing Director: Martin Edenhofer
       },
       {
         :data         => IO.read('test/fixtures/mail8.box'),
-        :body_md5     => 'b506a6aa5f76e608c982d15a449ee163',
+        :body_md5     => 'ca502c70a1b006f5184d1f0bf79d5799',
         :attachments  => [
           {
-            :md5      => '635e03d2ddde520b925262c8ffd03234',
+            :md5      => 'c3ca4aab222eed8a148a716371b70129',
             :filename => 'message.html',
           },
         ],
         :params   => {
           :from               => 'Franz.Schaefer@example.com',
           :from_email         => 'Franz.Schaefer@example.com',
-          :from_display_name  => nil,
+          :from_display_name  => '',
           :subject            => 'could not rename: ZZZAAuto',
           :body_md5     => "Gravierend?
 
@@ -171,12 +172,13 @@ Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman),
 Oliver Bauer, Heiko Bauer, Boudewijn Bauer
 Sitz der Gesellschaft / Registered Office: Hof
 Registergericht / Commercial Register of the Local Court: HRB 0000 AG 
-Hof",
+Hof
+",
         },
       },
       {
         :data         => IO.read('test/fixtures/mail9.box'),
-        :body_md5     => 'd2f0a663dd0e371e9f0c3d5688441a6f',
+        :body_md5     => 'c70de14cc69b17b07850b570d7a4fbe7',
         :attachments  => [
           {
             :md5      => '9964263c167ab47f8ec59c48e57cb905',
@@ -192,15 +194,15 @@ Hof",
           :from_email         => 'martin@example.de',
           :from_display_name  => 'Martin Edenhofer',
           :subject            => 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
-          :body         => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address."
+          :body         => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.\n\n"
         },
       },
       {
         :data         => IO.read('test/fixtures/mail10.box'),
-        :body_md5     => '8d6ea42f7f36a790e67f50e3a5f27063',
+        :body_md5     => 'ddfad696bd34d83f607763180243f3c5',
         :attachments  => [
           {
-            :md5      => '08b0c83fd155db23f22bed845715225d',
+            :md5      => '52d946fdf1a9304d0799cceb2fcf0e36',
             :filename => 'message.html',
           },
           {
@@ -235,10 +237,10 @@ Hof",
       },
       {
         :data         => IO.read('test/fixtures/mail12.box'),
-        :body_md5     => 'c89a6ba15143aa23c090bf5fe5cd39dd',
+        :body_md5     => '8b48e082bc77e927d395448875259172',
         :attachments  => [
           {
-            :md5      => 'a928e4665c3e59ea27d57d67ef15ecc5',
+            :md5      => '46cf0f95ea0c8211cbb704e1959b9173',
             :filename => 'message.html',
           },
           {
@@ -249,7 +251,7 @@ Hof",
         :params   => {
           :from               => 'Alex.Smith@example.com',
           :from_email         => 'Alex.Smith@example.com',
-          :from_display_name  => nil,
+          :from_display_name  => '',
           :subject            => 'AW: Agenda [Ticket#11995]',
           :to                 => 'example@znuny.com',
         },
@@ -266,21 +268,21 @@ Hof",
         :params   => {
           :from               => 'thomas.smith@example.com',
           :from_email         => 'thomas.smith@example.com',
-          :from_display_name  => nil,
+          :from_display_name  => '',
           :subject            => 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]',
           :to                 => 'q1@znuny.com',
         },
       },
       {
         :data         => IO.read('test/fixtures/mail14.box'),
-        :body_md5     => '548917e0bff0806f9b27c09bbf23bb38',
+        :body_md5     => '154c7d3ae7b94f99589df62882841b08',
         :attachments  => [
           {
-            :md5      => 'c7d16825111cddb26253365f7c05859c',
+            :md5      => '5536be23f647953dc39c1673205d6f5b',
             :filename => 'file-1',
           },
           {
-            :md5      => '2f0c4f903ae59cf1b8bacb7bc0094b7a',
+            :md5      => '4eeeae078b920f9d0708353ba0f6aa63',
             :filename => 'file-2',
           },
         ],
