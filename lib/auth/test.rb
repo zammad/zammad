@@ -7,7 +7,7 @@ module Auth::TEST
     if !ENV['RAILS_ENV'] || ENV['RAILS_ENV'] == 'development'
       return user if password == 'test'
     end
-    
+
     return false
   end
 end

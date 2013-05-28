@@ -227,7 +227,7 @@ class TestCase < Test::Unit::TestCase
           end
         end
       else
-        if action[:css] =~ /input/i
+        if action[:css] =~ /(input|textarea)/i
           text = element.attribute('value')
         else
           text = element.text

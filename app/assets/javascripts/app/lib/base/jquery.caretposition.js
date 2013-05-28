@@ -4,6 +4,24 @@
  * @license under GNU license
  * @author Bevis Zhao (i@bevis.me, http://bevis.me)
  */
+
+// workaround to work with jquery 1.9
+// http://api.jquery.com/jQuery.browser/
+(function(){
+  if (!jQuery.browser) {
+    jQuery.browser={};
+    jQuery.browser.msie    = false;
+    jQuery.browser.version = 0;
+    if( navigator.userAgent.match(/MSIE ([0-9]+)\./) ){
+      jQuery.browser.msie    = true;
+      jQuery.browser.version = RegExp.$1;
+    }
+    else if ( !navigator.userAgent.match(/mozilla/i) && !navigator.userAgent.match(/webkit/i) ){
+      jQuery.browser.mozilla = true;
+    }
+  }
+})();
+
 $(function() {
 
 	var calculator = {
