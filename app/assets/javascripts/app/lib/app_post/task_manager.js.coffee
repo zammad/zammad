@@ -9,15 +9,20 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.all()
 
-  @add: ( type, type_id, callback, params, to_not_show ) ->
+  @add: ( type, type_id, callback, params, to_not_show, state ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.add( type, type_id, callback, params, to_not_show )
+    _instance.add( type, type_id, callback, params, to_not_show, state )
 
   @get: ( key ) ->
     if _instance == undefined
       _instance ?= new _Singleton
     _instance.get( key )
+
+  @update: ( key, params ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.update( key, params )
 
   @remove: ( key ) ->
     if _instance == undefined
@@ -39,6 +44,11 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.syncTasksInitial()
 
+  @syncSave: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.syncSave()
+
   @sync: ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -50,11 +60,12 @@ class _Singleton extends App.Controller
   constructor: ->
     @tasks      = {}
     @task_count = 0
+    @syncTasksInitial()
 
   all: ->
     @tasks
 
-  add: ( type, type_id, callback, params, to_not_show = false ) ->
+  add: ( type, type_id, callback, params, to_not_show = false, state ) ->
     for key, task of @tasks
       if task.type is type && task.type_id is type_id
         return key if to_not_show
@@ -99,6 +110,13 @@ class _Singleton extends App.Controller
     params_app = _.clone(params)
     params_app['el']       = $('#content_permanent_' + @task_count )
     params_app['task_key'] = @task_count
+
+    # check if we have old state there
+    if !state
+      oldTask = @get_by_type( type, type_id )
+      if oldTask
+        state = oldTask.state
+    params_app['form_state'] = state
     if to_not_show
       params_app['doNotLog'] = 1
     a = new App[callback]( params_app )
@@ -128,6 +146,12 @@ class _Singleton extends App.Controller
   get: ( key ) =>
     return @tasks[key]
 
+  update: ( key, params ) =>
+    return false if !@tasks[key]
+    for item, value of params
+      @tasks[key][item] = value
+    @syncSave()
+
   remove: ( key, to_not_show = false ) =>
     if @tasks[key]
       @tasks[key].worker.release()
@@ -142,6 +166,11 @@ class _Singleton extends App.Controller
   reset: =>
     @tasks = {}
     App.Event.trigger 'ui:rerender'
+
+  get_by_type: (type, type_id) =>
+    store = @syncLoad() || []
+    for item in store
+      return item if item.type is type && item.type_id is type_id
 
   syncAdd: (task) =>
     store = @syncLoad() || []
@@ -163,6 +192,27 @@ class _Singleton extends App.Controller
         storeNew.push item
     App.Store.write( 'tasks', storeNew )
 
+  syncSave: =>
+    store    = @syncLoad() || []
+    storeNew = []
+    for item in store
+      for key, task of @tasks
+        if task.type is item.type && task.type_id is item.type_id
+          console.log('MATCH', item)
+          if @tasks[key]['state']
+            item['state'] = @tasks[key]['state']
+          storeNew.push item
+#      if @tasks[key]
+#       @tasks[key].worker.release()
+#     
+#      storeNew.push item
+#    item =
+#      type:     task.type
+#      type_id:  task.type_id
+#      params:   task.params
+#      callback: task.callback
+    App.Store.write( 'tasks', storeNew )
+
   syncLoad: =>
     App.Store.get( 'tasks' )
 
@@ -176,7 +226,7 @@ class _Singleton extends App.Controller
       @delay(
         =>
           task = store.shift()
-          @add(task.type, task.type_id, task.callback, task.params, true)
+          @add(task.type, task.type_id, task.callback, task.params, true, task.state)
         task_count * 500
       )
 

@@ -15,8 +15,6 @@ class App.TaskWidget extends App.Controller
       App.TaskManager.reset()
       @el.html('')
 
-    App.TaskManager.syncInitial()
-
     sync = =>
       App.TaskManager.sync()
       @delay( sync, 3000, 'task-widget' )

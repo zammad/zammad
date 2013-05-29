@@ -34,6 +34,9 @@ class App.TicketZoom extends App.Controller
       @fetch( @ticket_id, false)
     @interval( update, 30000, @key, 'ticket_zoom' )
 
+    # start auto save
+    @autosave()
+
   meta: =>
     return if !@ticket
     meta =
@@ -61,6 +64,17 @@ class App.TicketZoom extends App.Controller
   release: =>
     @clearInterval( @key, 'ticket_zoom' )
     @el.remove()
+
+  autosave: =>
+    @auto_save_key = 'zoom' + @id
+    update = =>
+      data = @formParam( @el.find('.ticket-update') )
+      diff = difference( @autosaveLast, data )
+      if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
+        @autosaveLast = data
+        console.log('form hash changed', diff, data)
+        App.TaskManager.update( @task_key, { 'state': data })
+    @interval( update, 10000, @id,  @auto_save_key )
 
   fetch: (ticket_id, force) ->
 
@@ -141,34 +155,36 @@ class App.TicketZoom extends App.Controller
     for article in @articles
       new Article( article: article )
 
+    defaults = @form_state || {}
+
     @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left'  },
-      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_state_id'] },
+      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_priority_id'] },
+      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left', default: defaults['group_id']  },
+      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left', default: defaults['owner_id'] },
     ]
     if @isRole('Customer')
       @configure_attributes_ticket = [
-        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_state_id'] },
+        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_priority_id'] },
       ]
 
     @configure_attributes_article = [
-      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium', item_class: '' },
-      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true  },
-      { name: 'internal',                 display: 'Visability',  tag: 'select',   default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '' },
+      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium', item_class: '', default: defaults['ticket_article_type_id'] },
+      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['to'] },
+      { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['cc'] },
+      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['subject'] },
+      { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['in_reply_to'] },
+      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true, default: defaults['body']  },
+      { name: 'internal',                 display: 'Visability',  tag: 'select',   default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: defaults['internal'] },
     ]
     if @isRole('Customer')
       @configure_attributes_article = [
-        { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-        { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-        { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-        { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-        { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true  },
+        { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['to'] },
+        { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['cc'] },
+        { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['subject'] },
+        { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['in_reply_to'] },
+        { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true, default: defaults['body']  },
       ]
 
     @html App.view('agent_ticket_zoom')(
@@ -623,6 +639,7 @@ class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
     @log 'zoom router', params
+
     # cleanup params
     clean_params =
       ticket_id:  params.ticket_id

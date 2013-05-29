@@ -49,6 +49,9 @@ class App.TicketCreate extends App.Controller
       @log 'AgentTicketPhone', 'error', defaults
       @render(defaults)
 
+    # start auto save
+    @autosave()
+
   meta: =>
     text = App.i18n.translateInline( @article_attributes['title'] )
     subject = @el.find('[name=subject]').val()
@@ -66,7 +69,7 @@ class App.TicketCreate extends App.Controller
   activate: =>
     @navupdate '#'
     @title @article_attributes['title']
-  
+
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-create') )
     diff = difference( @formDefault, formCurrent )
@@ -76,6 +79,18 @@ class App.TicketCreate extends App.Controller
   release: =>
 #    @clearInterval( @key, 'ticket_zoom' )
     @el.remove()
+    @clearInterval( @id, @auto_save_key )
+
+  autosave: =>
+    @auto_save_key = 'create' + @type + @id
+    update = =>
+      data = @formParam( @el.find('.ticket-create') )
+      diff = difference( @autosaveLast, data )
+      if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
+        @autosaveLast = data
+        console.log('form hash changed', diff, data)
+        App.TaskManager.update( @task_key, { 'state': data })
+    @interval( update, 10000, @id,  @auto_save_key )
 
   # get data / in case also ticket data for split
   fetch: (params) ->
@@ -135,7 +150,7 @@ class App.TicketCreate extends App.Controller
   render: (template = {}) ->
 
     # set defaults
-    defaults = template['options'] || {}
+    defaults = template['options'] || @form_state || {}
     if !( 'ticket_state_id' of defaults )
       defaults['ticket_state_id'] = App.Collection.findByAttribute( 'TicketState', 'name', 'open' ).id
     if !( 'ticket_priority_id' of defaults )
