@@ -19,7 +19,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.timestamps
     end
     add_index :network_category_types, [:name], :unique => true
-    
+
     create_table :network_privacies do |t|
       t.column :name,                 :string, :limit => 100, :null => false
       t.column :key,                  :string, :limit => 250, :null => false
@@ -51,7 +51,7 @@ class CreateNetwork < ActiveRecord::Migration
     create_table :network_items do |t|
       t.references :network_category,                     :null => false
       t.column :title,                :string, :limit => 200,   :null => false
-      t.column :body,                 :string, :limit => 25000, :null => false
+      t.column :body,                 :string, :limit => 20000, :null => false
       t.column :updated_by_id,        :integer,                 :null => false
       t.column :created_by_id,        :integer,                 :null => false
       t.timestamps
@@ -60,13 +60,13 @@ class CreateNetwork < ActiveRecord::Migration
 
     create_table :network_item_comments do |t|
       t.references :network_item,                               :null => false
-      t.column :body,                 :string, :limit => 25000, :null => false
+      t.column :body,                 :string, :limit => 20000, :null => false
       t.column :updated_by_id,        :integer,               :null => false
       t.column :created_by_id,        :integer,               :null => false
       t.timestamps
     end
     add_index :network_item_comments, [:network_item_id]
-    
+
     create_table :network_item_plus do |t|
       t.references :network_item,                             :null => false
       t.column :updated_by_id,        :integer,               :null => false
@@ -90,7 +90,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.timestamps
     end
     add_index :network_item_subscriptions, [:network_item_id, :created_by_id], :unique => true, :name => 'index_network_item_subscriptions_on_item_id_and_created_by_id'
-    
+
   end
 
   def down
