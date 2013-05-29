@@ -213,9 +213,11 @@ class ApplicationController < ActionController::Base
       generic_object = object.new( object.param_cleanup(params) )
 
       # save object
-      generic_object.save
+      generic_object.save!
+
       model_create_render_item(generic_object)
     rescue Exception => e
+      puts e.message.inspect
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
@@ -231,7 +233,7 @@ class ApplicationController < ActionController::Base
       generic_object = object.find( params[:id] )
 
       # save object
-      generic_object.update_attributes( object.param_cleanup(params) )
+      generic_object.update_attributes!( object.param_cleanup(params) )
       model_update_render_item(generic_object)
     rescue Exception => e  
       logger.error e.message
