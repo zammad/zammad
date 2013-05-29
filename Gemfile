@@ -24,11 +24,6 @@ group :assets do
   gem 'uglifier', '>= 1.2.3'
 end
 
-gem 'jquery-rails'
-
-# Optional support for eco templates
-gem 'eco'
-
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
