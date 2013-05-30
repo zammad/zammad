@@ -7,6 +7,8 @@ gem 'rails', '3.2.13'
 #gem 'rails-observers'
 #gem 'activerecord-session_store'
 
+gem 'eco'
+
 # Bundle edge Rails instead:
 #gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
