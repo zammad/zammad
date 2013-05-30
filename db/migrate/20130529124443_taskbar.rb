@@ -1,4 +1,4 @@
-class TaskManagerStates < ActiveRecord::Migration
+class Taskbar < ActiveRecord::Migration
   def up
     create_table :taskbars do |t|
       t.column :user_id,              		:integer,   :null => false

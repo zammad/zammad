@@ -22,7 +22,7 @@ class TaskbarController < ApplicationController
   def create
 
     params[:user_id] = current_user.id
-    model_create_render(taskbar,params)
+    model_create_render(Taskbar,params)
 
   end
 
