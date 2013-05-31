@@ -2,55 +2,47 @@ class TaskbarController < ApplicationController
   before_filter :authentication_check
 
   def index
-    
-    current_user_tasks = Taskbar.where(:user_id=>current_user.id)
+
+    current_user_tasks = Taskbar.where( :user_id => current_user.id )
     model_index_render_result(current_user_tasks)
-    
+
   end
 
   def show
-    taskbar = Taskbar.find(params[:id])
+    taskbar = Taskbar.find( params[:id] )
+    return if !access(taskbar)
 
-    if taskbar.user_id != current_user.id
-      render :json => { :error => 'Not allowed to show this task.' }, :status => :unprocessable_entity
-      return
-    end
-   
     model_show_render_item(taskbar)
   end
 
   def create
-
     params[:user_id] = current_user.id
     model_create_render(Taskbar,params)
-
   end
 
   def update
+    taskbar = Taskbar.find( params[:id] )
+    return if !access(taskbar)
+
     params[:user_id] = current_user.id
-    taskbar = Taskbar.find(params[:id])
-
-    if taskbar.user_id != current_user.id
-      render :json => { :error => 'Not allowed to update this task.' }, :status => :unprocessable_entity
-      return
-    end
-  
+    taskbar.update_attributes!( Taskbar.param_cleanup(params) )
     model_update_render_item(taskbar)
-
   end
 
   def destroy
-    
-    params[:user_id] = current_user.id
-    taskbar = Taskbar.find(params[:id])
+    taskbar = Taskbar.find( params[:id] )
+    return if !access(taskbar)
 
-    if taskbar.user_id != current_user.id
-      render :json => { :error => 'Not allowed to delete this task.' }, :status => :unprocessable_entity
-      return
-    end
-    
-    model_destory_render_item()
     taskbar.destroy
-
+    model_destory_render_item()
   end
+
+  private
+    def access(taskbar)
+      if taskbar.user_id != current_user.id
+        render :json => { :error => 'Not allowed to access this task.' }, :status => :unprocessable_entity
+        return false
+      end
+      return true
+    end
 end

@@ -27,7 +27,7 @@ class App.TaskWidget extends App.Controller
         id:    false
         title: App.i18n.translateInline('Loading...')
         head:  App.i18n.translateInline('Loading...')
-      worker = App.TaskManager.worker( task.type, task.type_id  )
+      worker = App.TaskManager.worker( task.key  )
       if worker
         meta = worker.meta()
         if meta
@@ -46,27 +46,26 @@ class App.TaskWidget extends App.Controller
 
   remove: (e) =>
     e.preventDefault()
-    type_id = $(e.target).parent().data('type-id')
-    type    = $(e.target).parent().data('type')
-    if !type_id && !type
-      throw "No such type and type-id attributes found for task item"
+    key = $(e.target).parent().data('key')
+    if !key
+      throw "No such key attributes found for task item"
 
     # check if input has changed
-    worker = App.TaskManager.worker( type, type_id  )
+    worker = App.TaskManager.worker( key )
     if worker && worker.changed
       if worker.changed()
         return if !window.confirm( App.i18n.translateInline('Tab has changed, you really want to close it?') )
 
     # check if active task is closed
-    currentTask = App.TaskManager.get( type, type_id )
+    currentTask = App.TaskManager.get( key )
     tasks = App.TaskManager.all()
     active_is_closed = false
     for task in tasks
-      if currentTask.active && task.type is type && task.type_id.toString() is type_id.toString()
+      if currentTask.active && task.key is key
         active_is_closed = true
 
     # remove task
-    App.TaskManager.remove( type, type_id )
+    App.TaskManager.remove( key )
     @render()
 
     # navigate to next task if needed
@@ -76,11 +75,11 @@ class App.TaskWidget extends App.Controller
       for task in tasks
         task_last = task
       if task_last
-        worker = App.TaskManager.worker( task_last.type, task_last.type_id  )
+        worker = App.TaskManager.worker( task_last.key )
         if worker
           @navigate worker.url()
         return
-    if _.isEmpty( tasks ) 
+    if _.isEmpty( tasks )
       @navigate '#'
 
   _getTaskActions: ->
@@ -107,6 +106,5 @@ class App.TaskWidget extends App.Controller
         if match
           level1.push item
     level1
-
 
 App.Config.set( 'task', App.TaskWidget, 'Widgets' )

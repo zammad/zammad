@@ -2,7 +2,7 @@ module ExtraCollection
   def session( collections, user )
 
     # all base stuff
-    collections['Taskbar']       = Taskbar.all
+    collections['Taskbar']       = Taskbar.where( :user_id => user.id )
     collections['Role']          = Role.all
     collections['Group']         = Group.all
 

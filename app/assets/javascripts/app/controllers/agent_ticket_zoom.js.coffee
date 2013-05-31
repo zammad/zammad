@@ -34,14 +34,11 @@ class App.TicketZoom extends App.Controller
       @fetch( @ticket_id, false )
     @interval( update, 30000, @key, 'ticket_zoom' )
 
-    # start auto save
-    @autosave()
-
   meta: =>
     return if !@ticket
     meta =
       url: @url()
-      head: @ticket.title
+      head: @ticket.title + ' ' + @ticket.title
       title: @ticket.number + ' ' + @ticket.title
       id: @ticket.id
 
@@ -51,9 +48,9 @@ class App.TicketZoom extends App.Controller
   activate: =>
     @navupdate '#'
     if @ticket
-      @title 'Ticket Zoom ' + @ticket.number
-#    else
-#      @title 'Loading...'
+      @title App.i18n.translateInline('Ticket Zoom') + ' ' + @ticket.number + ' ' + @ticket.title
+    else
+      @title App.i18n.translateInline('Loading...')
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-update') )
@@ -73,7 +70,7 @@ class App.TicketZoom extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = data
         console.log('form hash changed', diff, data)
-        App.TaskManager.update( 'Ticket', @ticket_id, { 'state': data })
+        App.TaskManager.update( @task_key, { 'state': data })
     @interval( update, 10000, @id,  @auto_save_key )
 
   fetch: (ticket_id, force) ->
@@ -82,7 +79,7 @@ class App.TicketZoom extends App.Controller
 
     # get data
     App.Com.ajax(
-      id:    'ticket_zoom_' + ticket_id 
+      id:    'ticket_zoom_' + ticket_id
       type:  'GET'
       url:   'api/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
       data:
@@ -93,11 +90,11 @@ class App.TicketZoom extends App.Controller
           return if _.isEqual( @dataLastCall.ticket, data.ticket)
           diff = difference( @dataLastCall.ticket, data.ticket )
           console.log('diff', diff)
-          App.TaskManager.notify( 'Ticket', @ticket_id )
+          App.TaskManager.notify( @task_key )
           if $('[name="body"]').val()
             App.Event.trigger 'notify', {
               type: 'success'
-              msg: App.i18n.translateContent('Ticket has changed!')
+              msg: App.i18n.translateInline('Ticket has changed!')
               timeout: 30000
             }
             return
@@ -105,6 +102,9 @@ class App.TicketZoom extends App.Controller
 
         @load(data)
         App.Store.write( @key, data )
+
+        # start auto save
+        @autosave()
 
       error: (xhr, status, error) =>
 
@@ -392,7 +392,7 @@ class App.TicketZoom extends App.Controller
     if selectedText
       body = @el.find('[name="body"]').val() || ''
       selectedText = selectedText.replace /^(.*)$/mg, (match) =>
-        '> ' + match  
+        '> ' + match
       body = selectedText + "\n" + body
       @el.find('[name="body"]').val(body)
 
@@ -645,7 +645,7 @@ class TicketZoomRouter extends App.ControllerPermanent
       article_id: params.article_id
       nav:        params.nav
 
-    App.TaskManager.add( 'Ticket', @ticket_id, 'TicketZoom', clean_params )
+    App.TaskManager.add( 'Ticket-' + @ticket_id, 'TicketZoom', clean_params )
 
 App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
 App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
