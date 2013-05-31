@@ -89,7 +89,7 @@ class App.TicketCreate extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = data
         console.log('form hash changed', diff, data)
-        App.TaskManager.update( @task_key, { 'state': data })
+        App.TaskManager.update( 'TicketCreateScreen', @type + '-' + @id, { 'state': data })
     @interval( update, 10000, @id,  @auto_save_key )
 
   # get data / in case also ticket data for split
@@ -302,7 +302,7 @@ class App.TicketCreate extends App.Controller
 
           # create new create screen
 #          ui.render()
-          App.TaskManager.remove( ui.task_key )
+          App.TaskManager.remove( 'TicketCreateScreen', ui.type + '-' + ui.id )
 
           # scroll to top
           ui.scrollTo()

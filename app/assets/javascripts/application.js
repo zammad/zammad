@@ -12,6 +12,7 @@
 //not_used= require_tree ./app/lib/spine
 //= require ./app/lib/spine/spine.js
 //= require ./app/lib/spine/ajax.js
+//= require ./app/lib/spine/local.js
 //= require ./app/lib/spine/route.js
 
 //= require ./app/lib/flot/jquery.flot.js

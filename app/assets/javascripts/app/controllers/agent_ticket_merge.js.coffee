@@ -133,7 +133,7 @@ class App.TicketMerge extends App.ControllerModal
             msg:     App.i18n.translateContent( 'Ticket %s merged!', data.slave_ticket['number'] ),
             timeout: 4000,
 
-          App.TaskManager.remove( @task_key )
+          App.TaskManager.remove( 'Ticket', data.slave_ticket['id'] )
 
         else
 

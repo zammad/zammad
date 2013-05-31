@@ -11,7 +11,7 @@ class App.TicketZoom extends App.Controller
 
   constructor: (params) ->
     super
-    @log 'zoom', params
+#    console.log 'zoom', params
 
     # check authentication
     return if !@authenticate()
@@ -31,7 +31,7 @@ class App.TicketZoom extends App.Controller
     if cache
       @load(cache)
     update = =>
-      @fetch( @ticket_id, false)
+      @fetch( @ticket_id, false )
     @interval( update, 30000, @key, 'ticket_zoom' )
 
     # start auto save
@@ -73,7 +73,7 @@ class App.TicketZoom extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = data
         console.log('form hash changed', diff, data)
-        App.TaskManager.update( @task_key, { 'state': data })
+        App.TaskManager.update( 'Ticket', @ticket_id, { 'state': data })
     @interval( update, 10000, @id,  @auto_save_key )
 
   fetch: (ticket_id, force) ->
@@ -93,7 +93,7 @@ class App.TicketZoom extends App.Controller
           return if _.isEqual( @dataLastCall.ticket, data.ticket)
           diff = difference( @dataLastCall.ticket, data.ticket )
           console.log('diff', diff)
-          App.TaskManager.notify(@task_key)
+          App.TaskManager.notify( 'Ticket', @ticket_id )
           if $('[name="body"]').val()
             App.Event.trigger 'notify', {
               type: 'success'
@@ -293,7 +293,6 @@ class App.TicketZoom extends App.Controller
     internal = true
     if article.internal == true
       internal = false
-
     article.updateAttributes(
       internal: internal
     )
