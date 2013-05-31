@@ -35,7 +35,7 @@ class TaskbarController < ApplicationController
       return
     end
   
-    model_update_render_item(taskbar, params)
+    model_update_render_item(taskbar)
 
   end
 
@@ -49,7 +49,7 @@ class TaskbarController < ApplicationController
       return
     end
     
-    model_destory_render_item(taskbar)
+    model_destory_render_item()
     taskbar.destroy
 
   end
