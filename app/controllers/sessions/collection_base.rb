@@ -2,6 +2,7 @@ module ExtraCollection
   def session( collections, user )
 
     # all base stuff
+    collections['Taskbar']       = Taskbar.all
     collections['Role']          = Role.all
     collections['Group']         = Group.all
 
