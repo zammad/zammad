@@ -100,6 +100,11 @@ class AgentTicketActionSimpleTest < TestCase
 
           # update ticket
           {
+            :execute => 'select',
+            :css     => 'select[name="ticket_article_type_id"]',
+            :value   => 'note',
+          },
+          {
             :execute => 'check',
             :css     => 'textarea[name="body"]',
             :result  => true,
@@ -216,6 +221,11 @@ class AgentTicketActionSimpleTest < TestCase
           },
 
           # update ticket
+          {
+            :execute => 'select',
+            :css     => 'select[name="ticket_article_type_id"]',
+            :value   => 'note',
+          },
           {
             :execute => 'check',
             :css     => '.content_permanent.active textarea[name="body"]',
