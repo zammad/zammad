@@ -50,7 +50,10 @@ class App.TicketCreate extends App.Controller
       @render(defaults)
 
     # start auto save
-    @autosave()
+    @delay(
+      => @autosave(),
+      5000
+    )
 
   meta: =>
     text = App.i18n.translateInline( @article_attributes['title'] )
@@ -68,7 +71,7 @@ class App.TicketCreate extends App.Controller
 
   activate: =>
     @navupdate '#'
-    @title @article_attributes['title']
+    @title @meta().title
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-create') )
@@ -89,7 +92,7 @@ class App.TicketCreate extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = data
         console.log('form hash changed', diff, data)
-        App.TaskManager.update( 'TicketCreateScreen', @type + '-' + @id, { 'state': data })
+        App.TaskManager.update( @task_key, { 'state': data })
     @interval( update, 10000, @id,  @auto_save_key )
 
   # get data / in case also ticket data for split
@@ -164,7 +167,7 @@ class App.TicketCreate extends App.Controller
 #      defaults['customer_id'] = '2'
 #      defaults['customer_id_autocompletion'] = '12312313'
 
-    # generate form    
+    # generate form
     configure_attributes = [
       { name: 'customer_id',        display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo },
       { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
@@ -296,13 +299,13 @@ class App.TicketCreate extends App.Controller
           # notify UI
           ui.notify
             type:    'success',
-            msg:     App.i18n.translateContent( 'Ticket %s created!', @number ),
+            msg:     App.i18n.translateInline( 'Ticket %s created!', @number ),
             link:    "#ticket/zoom/#{@id}"
             timeout: 12000,
 
           # create new create screen
 #          ui.render()
-          App.TaskManager.remove( 'TicketCreateScreen', ui.type + '-' + ui.id )
+          App.TaskManager.remove( ui.task_key )
 
           # scroll to top
           ui.scrollTo()
@@ -394,7 +397,7 @@ class TicketCreateRouter extends App.ControllerPermanent
       type:       params.type
       id:         params.id
 
-    App.TaskManager.add( 'TicketCreateScreen', params['type'] + '-' + params['id'], 'TicketCreate', clean_params )
+    App.TaskManager.add( 'TicketCreateScreen-' + params['type'] + '-' + params['id'], 'TicketCreate', clean_params )
 
 # split ticket
 App.Config.set( 'ticket_create/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )

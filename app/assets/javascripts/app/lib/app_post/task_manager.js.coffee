@@ -9,40 +9,40 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.all()
 
-  @add: ( type, type_id, callback, params, to_not_show, state ) ->
+  @add: ( key, callback, params, to_not_show, state ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.add( type, type_id, callback, params, to_not_show, state )
+    _instance.add( key, callback, params, to_not_show, state )
 
-  @get: ( type, type_id ) ->
+  @get: ( key ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.get( type, type_id )
+    _instance.get( key )
 
-  @update: ( type, type_id, params ) ->
+  @update: ( key, params ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.update( type, type_id, params )
+    _instance.update( key, params )
 
-  @remove: ( type, type_id ) ->
+  @remove: ( key ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.remove( type, type_id )
+    _instance.remove( key )
 
-  @notify: ( type, type_id ) ->
+  @notify: ( key ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.notify( type, type_id )
+    _instance.notify( key )
 
   @reset: ->
     if _instance == undefined
       _instance ?= new _Singleton
     _instance.reset()
 
-  @worker: ( type, type_id ) ->
+  @worker: ( key ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.worker( type, type_id )
+    _instance.worker( key )
 
   @workerAll: ->
     if _instance == undefined
@@ -57,42 +57,40 @@ class _Singleton extends App.Controller
     @workersStarted = {}
     @activeTask = undefined
     @tasksInitial()
-    
+
   all: ->
     App.Taskbar.all()
 
-  worker: ( type, type_id ) ->
-    key = @keyGenerate(type, type_id)
+  worker: ( key ) ->
     return @workers[ key ] if @workers[ key ]
     return
 
   workerAll: ->
     @workers
 
-  add: ( type, type_id, callback, params, to_not_show = false, state ) ->
+  add: ( key, callback, params, to_not_show = false, state ) ->
     active = true
     if to_not_show
       active = false
 
     # create new task if not exists
-    task = @get( type, type_id )
-#    console.log('add', type, type_id, callback, params, to_not_show, state, task)
+    task = @get( key )
+#    console.log('add', key, callback, params, to_not_show, state, task)
     if !task
       task = new App.Taskbar
       task.load(
-        type:     type
-        type_id:  type_id
+        key:      key
         params:   params
         callback: callback
+        client_id: 123
         notify:   false
         active:   active
       )
       task.save()
-    
+
     tasks = @all()
 
     # empty static content if task is shown
-    key = @keyGenerate(type, type_id)
     if active
       @activeTask = key
       $('#content').empty()
@@ -116,37 +114,41 @@ class _Singleton extends App.Controller
     # set all tasks to active false, only new/selected one to active
     if active
       for task in tasks
-        task_key = @keyGenerate(task.type, task.type_id)
-        if task_key isnt key 
-          task.active = false
-        else
-          task.active = true
-        task.save()
-    else
-      for task in tasks
-        task_key = @keyGenerate(task.type, task.type_id)
-        if @activeTask isnt task_key
+        if task.key isnt key
           if task.active
             task.active = false
+            console.log(111, 'save')
+            task.save()
+        else
+          if !task.active
+            console.log(222, 'save')
+            task.active = true
+            task.save()
+    else
+      for task in tasks
+        if @activeTask isnt task.key
+          if task.active
+            task.active = false
+            console.log(333, 'save')
             task.save()
 
     # start worker for task if not exists
-    @startController(type, type_id, callback, params, state, key, to_not_show)
+    @startController(key, callback, params, state, to_not_show)
 
     App.Event.trigger 'ui:rerender'
     App.Event.trigger 'ui:rerender:content'
     return key
 
-  startController: (type, type_id, callback, params, state, key, to_not_show) =>
+  startController: (key, callback, params, state, to_not_show) =>
 
-#    console.log('controller started...', callback, type, type_id, params, state)
+#    console.log('controller started...', callback, key, params, state)
 
     # activate controller
-    worker = @worker( type, type_id  )
+    worker = @worker( key )
     if worker && worker.activate
       worker.activate()
 
-    # return if controller is alreary started 
+    # return if controller is alreary started
     return if @workersStarted[key]
     @workersStarted[key] = true
 
@@ -157,7 +159,7 @@ class _Singleton extends App.Controller
 
     # check if we have old state there
     if !state
-      oldTask = @get( type, type_id )
+      oldTask = @get( key )
       if oldTask
         state = oldTask.state
     params_app['form_state'] = state
@@ -173,37 +175,37 @@ class _Singleton extends App.Controller
 
     return a
 
-  get: ( type, type_id ) =>
+  get: ( key ) =>
     tasks = App.Taskbar.all()
     for task in tasks
-      return task if task.type is type && task.type_id.toString() is type_id.toString()
+      return task if task.key is key
     return
-#    throw "No such task with '#{type}' and '#{type_id}'"
+#    throw "No such task with '#{key}'"
 
-  update: ( type, type_id, params ) =>
-    task = @get( type, type_id )
+  update: ( key, params ) =>
+    task = @get( key )
     if !task
-      throw "No such task with '#{type}' and '#{type_id}' to update"
+      throw "No such task with '#{key}' to update"
     for item, value of params
       task.updateAttribute(item, value)
 #    task.save()
 
-  remove: ( type, type_id, to_not_show = false ) =>
-    task = @get( type, type_id )
+  remove: ( key, to_not_show = false ) =>
+    task = @get( key )
     if !task
-      throw "No such task with '#{type}' and '#{type_id}' to remove"
+      throw "No such task with '#{key}' to remove"
 
-    worker = @worker( type, type_id  )
+    worker = @worker( key )
     if worker && worker.release
       worker.release()
-    @workersStarted[ @keyGenerate(type, type_id) ] = false
+    @workersStarted[ key ] = false
     task.destroy()
     App.Event.trigger 'ui:rerender'
 
-  notify: ( type, type_id ) =>
-    task = @get( type, type_id )
+  notify: ( key ) =>
+    task = @get( key )
     if !task
-      throw "No such task with '#{type}' and '#{type_id}' to notify"
+      throw "No such task with '#{key}' to notify"
     task.notify = true
 
   reset: =>
@@ -212,7 +214,7 @@ class _Singleton extends App.Controller
 
   tasksInitial: =>
     # reopen tasks
-    App.Taskbar.fetch()
+#    App.Taskbar.fetch()
     tasks = @all()
     return if !tasks
     task_count = 0
@@ -221,9 +223,7 @@ class _Singleton extends App.Controller
       @delay(
         =>
           task = tasks.shift()
-          @add(task.type, task.type_id, task.callback, task.params, true, task.state)
+          @add(task.key, task.callback, task.params, true, task.state)
         task_count * 500
       )
 
-  keyGenerate: ( type, type_id )->
-    "#{type}_#{type_id}"

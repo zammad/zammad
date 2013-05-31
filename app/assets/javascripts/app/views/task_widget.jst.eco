@@ -1,6 +1,6 @@
-<div class="taskbar">
+<div class="well taskbar">
   <% for item in @item_list: %>
-    <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="btn btn-mini <% if item.task.active: %>active btn-success<% else if item.task.notify: %>active btn-warning<% else: %>btn-default<% end %>" data-type="<%- item.task.type %>" data-type-id="<%- item.task.type_id %>"><span class="task"><%- item.data.head %></span><span data-type="close" class="icon-remove-circle" title="<%- @T('close') %>"></a>
+    <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="btn btn-mini <% if item.task.active: %>active btn-success<% else if item.task.notify: %>active btn-warning<% else: %>btn-default<% end %>" data-key="<%- item.task.key %>"><span class="task"><%- item.data.head %></span><span data-type="close" class="icon-remove-circle" title="<%- @T('close') %>"></a>
   <% end %>
   <% if !_.isEmpty( @taskBarActions ): %>
   <div class="taskbar-new">
