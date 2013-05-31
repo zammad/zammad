@@ -95,7 +95,7 @@ class App.Navigation extends App.Controller
           # load user collection
           if data.load.users
             App.Collection.load( type: 'User', data: data.load.users )
-          
+
           # load user collection
           if data.load.organizations
             for organization_id, organization of data.load.organizations
@@ -255,7 +255,7 @@ class App.Navigation extends App.Controller
 
       newlist[ item['prio'] ] = item;
 
-    # get keys for sort order    
+    # get keys for sort order
     keys = _.keys(newlist)
     inorder = keys.sort(@sortit)
 
@@ -265,7 +265,7 @@ class App.Navigation extends App.Controller
       inordervalue.push newlist[ num ]
     return inordervalue
 
-  sortit: (a,b) ->  
+  sortit: (a,b) ->
     return(a-b)
 
   addPrioCount: (newlist, item) ->

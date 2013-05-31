@@ -300,6 +300,12 @@ class AgentTicketActionSimpleTest < TestCase
             :value        => 'test to merge',
             :match_result => true,
           },
+
+          # close task/cleanup
+          {
+            :execute => 'click',
+            :css     => '#task [data-type="close"]',
+          },
         ],
       },
     ]
