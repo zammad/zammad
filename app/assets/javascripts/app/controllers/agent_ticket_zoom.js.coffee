@@ -38,8 +38,8 @@ class App.TicketZoom extends App.Controller
     return if !@ticket
     meta =
       url: @url()
-      head: @ticket.title + ' ' + @ticket.title
-      title: @ticket.number + ' ' + @ticket.title
+      head: @ticket.title
+      title: '#' + @ticket.number + ' - ' + @ticket.title
       id: @ticket.id
 
   url: =>
@@ -87,16 +87,23 @@ class App.TicketZoom extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         if @dataLastCall && !force
-          return if _.isEqual( @dataLastCall.ticket, data.ticket)
+
+          # return if ticket hasnt changed
+          return if _.isEqual( @dataLastCall.ticket, data.ticket )
+
+          # return if ticket changed by my self
+          return if data.ticket.updated_by_id is @Session.all().id
+
+          # trigger task notify
           diff = difference( @dataLastCall.ticket, data.ticket )
           console.log('diff', diff)
           App.TaskManager.notify( @task_key )
           if $('[name="body"]').val()
-            App.Event.trigger 'notify', {
-              type: 'success'
-              msg: App.i18n.translateInline('Ticket has changed!')
-              timeout: 30000
-            }
+#            App.Event.trigger 'notify', {
+#              type: 'success'
+#              msg: App.i18n.translateInline('Ticket has changed!')
+#              timeout: 30000
+#            }
             return
         @dataLastCall = data
 
