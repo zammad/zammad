@@ -117,19 +117,22 @@ class _Singleton extends App.Controller
         if task.key isnt key
           if task.active
             task.active = false
-            console.log(111, 'save')
             task.save()
         else
+          changed = false
           if !task.active
-            console.log(222, 'save')
+            changed = true
             task.active = true
+          if task.notify
+            changed = true
+            task.notify = false
+          if changed
             task.save()
     else
       for task in tasks
         if @activeTask isnt task.key
           if task.active
             task.active = false
-            console.log(333, 'save')
             task.save()
 
     # start worker for task if not exists
@@ -176,7 +179,7 @@ class _Singleton extends App.Controller
     return a
 
   get: ( key ) =>
-    tasks = App.Taskbar.all()
+    tasks = @all()
     for task in tasks
       return task if task.key is key
     return
@@ -207,6 +210,8 @@ class _Singleton extends App.Controller
     if !task
       throw "No such task with '#{key}' to notify"
     task.notify = true
+    task.save()
+    App.Event.trigger 'ui:rerender'
 
   reset: =>
     App.Taskbar.deleteAll()
