@@ -44,6 +44,24 @@ class App.TaskWidget extends App.Controller
       taskBarActions: @_getTaskActions()
     )
 
+    dndOptions =
+      tolerance:            'pointer'
+      distance:             15
+      opacity:              0.6
+      forcePlaceholderSize: true
+      items:                '> a'
+      update:               =>
+        items = @el.find('.taskbar > a')
+        order = []
+        for item in items
+          key = $(item).data('key')
+          if !key
+            throw "No such key attributes found for task item"
+          order.push key
+        App.TaskManager.reorder( order  )
+
+    @el.find( '.taskbar' ).sortable( dndOptions )
+
   remove: (e) =>
     e.preventDefault()
     key = $(e.target).parent().data('key')

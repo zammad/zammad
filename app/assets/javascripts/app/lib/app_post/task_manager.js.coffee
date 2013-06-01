@@ -34,6 +34,11 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.notify( key )
 
+  @reorder: ( order ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.reorder( order )
+
   @reset: ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -59,7 +64,11 @@ class _Singleton extends App.Controller
     @tasksInitial()
 
   all: ->
-    App.Taskbar.all()
+    tasks = App.Taskbar.all()
+    tasks = _(tasks).sortBy( (task) ->
+      return task.prio;
+    )
+    return tasks
 
   worker: ( key ) ->
     return @workers[ key ] if @workers[ key ]
@@ -83,6 +92,7 @@ class _Singleton extends App.Controller
         params:   params
         callback: callback
         client_id: 123
+        prio:     App.Taskbar.count() + 1
         notify:   false
         active:   active
       )
@@ -212,6 +222,16 @@ class _Singleton extends App.Controller
     task.notify = true
     task.save()
     App.Event.trigger 'ui:rerender'
+
+  reorder: ( order ) =>
+    prio = 0
+    for key in order
+      task = @get( key )
+      if !task
+        throw "No such task with '#{key}' of order"
+      prio++
+      task.prio = prio
+      task.save()
 
   reset: =>
     App.Taskbar.deleteAll()
