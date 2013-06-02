@@ -172,6 +172,9 @@ EventMachine.run {
 
           end
         }
+
+        # send spool:sent event to client
+        @clients[client_id][:websocket].send( '[{"event":"spool:sent"}]' )
       end
 
       # get session

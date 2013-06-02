@@ -54,6 +54,11 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.workerAll()
 
+  @clientId: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.clientId()
+
 class _Singleton extends App.Controller
   @include App.Log
 
@@ -230,18 +235,38 @@ class _Singleton extends App.Controller
       if !task
         throw "No such task with '#{key}' of order"
       prio++
-      task.prio = prio
-      task.save()
+      if task.prio isnt prio
+        task.prio = prio
+        task.save()
 
   reset: =>
     App.Taskbar.deleteAll()
     App.Event.trigger 'ui:rerender'
+
+  clientId: =>
+    if !@clientIdInt
+       @clientIdInt = Math.floor( Math.random() * 99999999 )
+    @clientIdInt
 
   tasksInitial: =>
     # reopen tasks
 #    App.Taskbar.fetch()
     tasks = @all()
     return if !tasks
+
+    # check if we have different
+
+    # broadcast to other browser instance
+    App.WebSocket.send(
+      action: 'broadcast'
+      event:  'session:takeover'
+      spool:  true
+      data:
+        recipient:
+          user_id: [ App.Session.get( 'id' ) ]
+        client_id: @clientId()
+    )
+
     task_count = 0
     for task in tasks
       task_count += 1

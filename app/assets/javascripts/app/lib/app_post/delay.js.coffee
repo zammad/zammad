@@ -16,6 +16,11 @@ class App.Delay
       _instance ?= new _Singleton
     _instance.clearLevel( level )
 
+  @reset: ( level ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.reset( level )
+
   @_all: ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -77,6 +82,12 @@ class _Singleton extends Spine.Module
     for key, data of @levelStack[ level ]
       @clear( key, level )
     @levelStack[level] = {}
+
+  reset: ->
+    for level, items of @levelStack
+      for key, data of items
+        @clear( key, level )
+      @levelStack[level] = {}
 
   _all: ->
     return @levelStack

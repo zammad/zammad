@@ -2,7 +2,7 @@
 <% if @close: %>
   <a href="#" class="close">&times;</a>
 <% end %>
-  <h2><%- @T( 'Error' ) %></h2>
+  <h2><%- @T( @title ) %></h2>
 </div>
 <div class="modal-body">
   <form class="form-horizontal">
@@ -13,8 +13,10 @@
   </form>
 </div>
 <div class="modal-footer">
-<!--
-  <button class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
+<% if @button: %>
+  <button class="btn btn-primary submit"><%- @T( @button ) %></button>
+<% end %>
+<% if @cancel: %>
   <button class="btn cancel"><%- @T( 'Cancel' ) %></button>
--->
+<% end %>
 </div>

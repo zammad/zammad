@@ -15,6 +15,34 @@ class App.TaskWidget extends App.Controller
       App.TaskManager.reset()
       @el.html('')
 
+    # only do take over check after spool messages are finised
+    App.Event.bind 'spool:sent', (data) =>
+      @spoolSent = true
+
+    # session take over message
+    App.Event.bind 'session:takeover', (data) =>
+
+      # only if spool messages are already sent
+      return if !@spoolSent
+
+      # check if error message is already shown
+      if !@error
+
+        # only if new client id isnt own client id
+        if data.client_id isnt App.TaskManager.clientId()
+          @error = new App.SessionReloadModal(
+            title:    'Session'
+            message:  'Session taken over... please reload page or work with other browser window.'
+            keyboard: false
+            backdrop: true
+            close:    true
+            button:   'Reload application'
+          )
+
+          # disable all delay's and interval's
+          App.Delay.reset()
+          App.Interval.reset()
+
   render: ->
 
     return if _.isEmpty( @Session.all() )

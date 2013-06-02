@@ -391,7 +391,7 @@ class App.ControllerModal extends App.Controller
     # do not use @el, because it's inserted by js
     if options
       delete options.el
-      
+
       # callbacks
 #      @callback = {}
 #      if options.success
@@ -439,7 +439,8 @@ class App.ErrorModal extends App.ControllerModal
     @render()
 
   render: ->
-    @html App.view('error')(
+    @html App.view('modal')(
+      title:   'Error',
       message: @message
       detail:  @detail
       close:   @close
@@ -448,3 +449,40 @@ class App.ErrorModal extends App.ControllerModal
       backdrop: false,
       keyboard: false,
     )
+
+class App.SessionReloadModal extends App.ControllerModal
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('modal')(
+      title:   @title || '?'
+      message: @message || '?'
+      detail:  @detail
+      close:   @close
+      button:  @button
+    )
+    @modalShow(
+      backdrop: @backdrop,
+      keyboard: @keyboard,
+    )
+
+  modalHide: (e) ->
+    @reload(e)
+
+  submit: (e) ->
+    @reload(e)
+
+  reload: (e) ->
+    if e
+      e.preventDefault()
+    if window.location.reload
+      window.location.reload()
+      return true
+    if window.location.href
+      window.location.href = window.location.href
+      return true
+
+    throw "Cant reload page!"
+
