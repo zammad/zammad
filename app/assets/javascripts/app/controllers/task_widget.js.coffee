@@ -42,6 +42,7 @@ class App.TaskWidget extends App.Controller
           # disable all delay's and interval's
           App.Delay.reset()
           App.Interval.reset()
+          App.WebSocket.close( force: true )
 
   render: ->
 

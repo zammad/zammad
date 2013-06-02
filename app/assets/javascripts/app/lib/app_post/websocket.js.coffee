@@ -37,6 +37,7 @@ class _Singleton extends App.Controller
   queue: []
   supported:                true
   lastSpoolMessage:         undefined
+  connectionKeepDown:       false
   connectionEstablished:    false
   connectionWasEstablished: false
   tryToConnect:             false
@@ -67,7 +68,7 @@ class _Singleton extends App.Controller
     else
 
 #      console.log 'ws:send trying', data, @ws, @ws.readyState
-  
+
       # A value of 0 indicates that the connection has not yet been established.
       # A value of 1 indicates that the connection is established and communication is possible.
       # A value of 2 indicates that the connection is going through the closing handshake.
@@ -106,7 +107,10 @@ class _Singleton extends App.Controller
     # set timestamp to get spool messages later
     @lastSpoolMessage = Math.round( +new Date()/1000 )
 
-  close: =>
+  close: ( params = {} ) =>
+    if params['force']
+      @connectionKeepDown = true
+
     return if @backend is 'ajax'
 
     @ws.close()
@@ -178,6 +182,9 @@ class _Singleton extends App.Controller
 
     @ws.onclose = (e) =>
       @log 'Websocket', 'debug', "ws:onclose", e
+
+      # take connection down and keep it down
+      return if @connectionKeepDown
 
       # set timestamp to get spool messages later
       if @connectionEstablished
