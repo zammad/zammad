@@ -10,7 +10,7 @@ class History < ApplicationModel
   @@cache_object = {}
   @@cache_attribute = {}
 
-  def self.history_create(data) 
+  def self.add(data) 
 
     # lookups
     if data[:history_type]
@@ -61,13 +61,15 @@ class History < ApplicationModel
     end
   end
 
-  def self.history_destroy( requested_object, requested_object_id )
-    History.where( :history_object_id => History::Object.where( :name => requested_object ) ).
-      where( :o_id => requested_object_id ).
-      destroy_all
+  def self.remove( requested_object, requested_object_id )
+    history_object = History::Object.where( :name => requested_object ).first
+    History.where(
+      :history_object_id => history_object.id,
+      :o_id              => requested_object_id,
+    ).destroy_all
   end
 
-  def self.history_list( requested_object, requested_object_id, related_history_object = nil )
+  def self.list( requested_object, requested_object_id, related_history_object = nil )
     if !related_history_object
       history_object = self.history_object_lookup( requested_object )
       history = History.where( :history_object_id => history_object.id ).
@@ -179,7 +181,7 @@ class History < ApplicationModel
       if item['history_object'] == 'User'
         users[ item['o_id'] ] = User.user_data_full( item['o_id'] )
       end
-          
+
       # load users
       if !users[ item['created_by_id'] ]
         users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )

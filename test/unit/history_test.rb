@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
- 
+
 class HistoryTest < ActiveSupport::TestCase
   test 'ticket' do
     tests = [
@@ -154,15 +154,15 @@ class HistoryTest < ActiveSupport::TestCase
           article.update_attributes( test[:ticket_update][:article] )
         end
       end
- 
-      # execute ticket events      
+
+      # execute ticket events
       Observer::Ticket::Notification.transaction
 
       # remember ticket
       tickets.push ticket
 
       # get history
-      history_list = History.history_list( 'Ticket', ticket.id, 'Ticket::Article' )
+      history_list = History.list( 'Ticket', ticket.id, 'Ticket::Article' )
       puts history_list.inspect
       test[:history_check].each { |check_item|
 #        puts '+++++++++++'

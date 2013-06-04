@@ -24,7 +24,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         ticket  = article.ticket
       elsif event[:name] == 'Ticket'
         ticket  = Ticket.lookup( :id => event[:id] )
-        
+
         # next if ticket is already deleted
         next if !ticket
 
@@ -235,7 +235,7 @@ From: #{article.from}
 
     # add history record
     if recipient_list != ''
-      History.history_create(
+      History.add(
         :o_id                   => ticket.id,
         :history_type           => 'notification',
         :history_object         => 'Ticket',
