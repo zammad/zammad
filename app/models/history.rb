@@ -10,7 +10,7 @@ class History < ApplicationModel
   @@cache_object = {}
   @@cache_attribute = {}
 
-  def self.history_create(data) 
+  def self.history_create(data)
 
     # lookups
     if data[:history_type]
@@ -179,7 +179,7 @@ class History < ApplicationModel
       if item['history_object'] == 'User'
         users[ item['o_id'] ] = User.user_data_full( item['o_id'] )
       end
-          
+
       # load users
       if !users[ item['created_by_id'] ]
         users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )
@@ -227,7 +227,7 @@ class History < ApplicationModel
       return history_type
     end
 
-    def self.history_object_lookup_id( id ) 
+    def self.history_object_lookup_id( id )
 
       # use cache
       return @@cache_object[ id ] if @@cache_object[ id ]
@@ -238,7 +238,7 @@ class History < ApplicationModel
       return history_object
     end
 
-    def self.history_object_lookup( name ) 
+    def self.history_object_lookup( name )
 
       # use cache
       return @@cache_object[ name ] if @@cache_object[ name ]
@@ -258,7 +258,7 @@ class History < ApplicationModel
       return history_object
     end
 
-    def self.history_attribute_lookup( name ) 
+    def self.history_attribute_lookup( name )
 
       # use cache
       return @@cache_attribute[ name ] if @@cache_attribute[ name ]

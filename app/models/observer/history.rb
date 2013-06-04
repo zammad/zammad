@@ -39,7 +39,7 @@ class Observer::History < ActiveRecord::Observer
 
     # do not send anything if nothing has changed
     return if current.attributes == record.attributes
-  
+
     puts "HISTORY OBSERVER, object will be updated #{ record.class.name.to_s}.find(#{ current.id.to_s })"
 #    puts 'current'
 #    puts current.inspect
