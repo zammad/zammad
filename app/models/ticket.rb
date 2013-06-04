@@ -695,7 +695,7 @@ class Ticket < ApplicationModel
     def destroy_dependencies
 
       # delete history
-      History.history_destroy( 'Ticket', self.id )
+      History.remove( 'Ticket', self.id )
 
       # delete articles
       self.articles.destroy_all

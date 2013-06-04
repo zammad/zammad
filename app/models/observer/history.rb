@@ -19,7 +19,7 @@ class Observer::History < ActiveRecord::Observer
       related_o_id           = record.ticket_id
       related_history_object = 'Ticket'
     end
-    History.history_create(
+    History.add(
       :o_id                   => record.id,
       :history_type           => 'created',
       :history_object         => record.class.name,
@@ -143,7 +143,7 @@ class Observer::History < ActiveRecord::Observer
         related_o_id              = record.ticket_id
         related_history_object_id = 'Ticket'
       end
-      History.history_create(
+      History.add(
         :o_id                   => current.id,
         :history_type           => 'updated',
         :history_object         => record.class.name,
