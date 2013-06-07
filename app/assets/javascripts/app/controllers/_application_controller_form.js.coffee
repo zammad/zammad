@@ -157,7 +157,7 @@ class App.ControllerForm extends App.Controller
 
     # set value
     if @params
-      
+
       # check if we have a references
       parts = attribute.name.split '::'
       if parts[0] && parts[1]
@@ -201,8 +201,8 @@ class App.ControllerForm extends App.Controller
       # build options list
       if _.isEmpty(attribute.options)
         attribute.options = [
-          { name: 'active', value: true } 
-          { name: 'inactive', value: false } 
+          { name: 'active', value: true }
+          { name: 'inactive', value: false }
         ]
 
       # update boolean types
@@ -219,6 +219,27 @@ class App.ControllerForm extends App.Controller
 
     # select
     else if attribute.tag is 'select'
+      item = $( App.view('generic/select')( attribute: attribute ) )
+
+    # timezone
+    else if attribute.tag is 'timezone'
+      attribute.options = []
+      timezones = App.Config.get('timezones')
+
+      # build list based on config
+      for timezone_value, timezone_diff of timezones
+        if timezone_diff > 0
+          timezone_diff = '+' + timezone_diff
+        item =
+          name:  "#{timezone_value} (GMT#{timezone_diff})"
+          value: timezone_value
+        attribute.options.push item
+
+      # finde selected item of list
+      for record in attribute.options
+        if record.value is attribute.value
+          record.selected = 'selected'
+
       item = $( App.view('generic/select')( attribute: attribute ) )
 
     # select
@@ -374,7 +395,7 @@ class App.ControllerForm extends App.Controller
           onRemoveTag: onRemoveTag
         )
         siteUpdate(true)
-  
+
         # update box size
         App.Event.bind 'ui:rerender:content', =>
           siteUpdate(true)
@@ -493,7 +514,7 @@ class App.ControllerForm extends App.Controller
           name    = 'owner_id'
           if key is 'customer_id'
             display = 'Customer'
-            name    = 'customer_id'            
+            name    = 'customer_id'
           attribute_config = {
             name:       attribute.name + '::tickets.' + name
             display:    display
@@ -674,7 +695,7 @@ class App.ControllerForm extends App.Controller
         )
 #        itemSub.append('<a href=\"#\" class=\"icon-minus\"></a>')
         item.find('.ticket_attribute_item').append( itemSub )
-        
+
 
       # list of shown attributes
       show = []
@@ -793,7 +814,7 @@ class App.ControllerForm extends App.Controller
             selected: true
             disable:  false
           },
-          
+
 #          {
 #            value:    'tag'
 #            name:     'Tag'

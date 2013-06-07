@@ -1,5 +1,5 @@
 class App.Sla extends App.Model
-  @configure 'Sla', 'name', 'first_response_time', 'update_time', 'close_time', 'condition', 'data', 'active'
+  @configure 'Sla', 'name', 'first_response_time', 'update_time', 'close_time', 'condition', 'timezone', 'data', 'active'
   @extend Spine.Model.Ajax
   @url: 'api/slas'
   @configure_attributes = [
@@ -8,7 +8,8 @@ class App.Sla extends App.Model
     { name: 'update_time',         display: 'Update Time',         tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
     { name: 'close_time',          display: 'Solution Time',       tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
     { name: 'condition',           display: 'Conditions where SLA is used', tag: 'ticket_attribute_selection', null: true, class: 'span4' },
-    { 
+    { name: 'timezone',            display: 'Timezone',            tag: 'timezone', null: true, class: 'span4' },
+    {
       name:    'data'
       display: 'Business Times'
       tag:     'working_hour'

@@ -504,7 +504,7 @@ class Ticket < ApplicationModel
     when Symbol, String
       require "ticket/number/#{adapter_name.to_s.downcase}"
       adapter = Ticket::Number.const_get("#{adapter_name.to_s.capitalize}")
-    else  
+    else
       raise "Missing number_adapter '#{adapter_name}'"
     end
     return adapter
@@ -557,10 +557,6 @@ class Ticket < ApplicationModel
       end
     }
 
-    # get and set calendar settings
-    if sla_selected
-      TimeCalculation.config( sla_selected.data )
-    end
     return sla_selected
   end
 
@@ -609,13 +605,13 @@ class Ticket < ApplicationModel
 
     # first response
     if sla_selected.first_response_time
-      self.first_response_escal_date = TimeCalculation.dest_time( created_at, sla_selected.first_response_time )
+      self.first_response_escal_date = TimeCalculation.dest_time( created_at, sla_selected.first_response_time, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
     end
     if self.first_response# && !self.first_response_in_min
-      self.first_response_in_min = TimeCalculation.business_time_diff( self.created_at, self.first_response )
+      self.first_response_in_min = TimeCalculation.business_time_diff( self.created_at, self.first_response, sla_selected.data, sla_selected.timezone  )
     end
     # set sla time
     if sla_selected.first_response_time && self.first_response_in_min
@@ -629,13 +625,13 @@ class Ticket < ApplicationModel
       last_update = self.created_at
     end
     if sla_selected.update_time
-      self.update_time_escal_date = TimeCalculation.dest_time( last_update, sla_selected.update_time )
+      self.update_time_escal_date = TimeCalculation.dest_time( last_update, sla_selected.update_time, sla_selected.data, sla_selected.timezone  )
 
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.update_time_escal_date, false )
     end
     if self.last_contact_agent
-      self.update_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.last_contact_agent )
+      self.update_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.last_contact_agent, sla_selected.data, sla_selected.timezone  )
     end
 
     # set sla time
@@ -646,13 +642,13 @@ class Ticket < ApplicationModel
 
     # close time
     if sla_selected.close_time
-      self.close_time_escal_date = TimeCalculation.dest_time( self.created_at, sla_selected.close_time )
+      self.close_time_escal_date = TimeCalculation.dest_time( self.created_at, sla_selected.close_time, sla_selected.data, sla_selected.timezone  )
 
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.close_time_escal_date, self.close_time )
     end
     if self.close_time# && !self.close_time_in_min
-      self.close_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.close_time )
+      self.close_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.close_time, sla_selected.data, sla_selected.timezone  )
     end
     # set sla time
     if sla_selected.close_time && self.close_time_in_min

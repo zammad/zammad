@@ -12,7 +12,9 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp/*
+/tmp/websocket/*
+/tmp/cache/*
+/tmp/pids/*
 
 # Ignore .project files
 /.project
