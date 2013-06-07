@@ -73,6 +73,8 @@ class WorkingTimeTest < ActiveSupport::TestCase
           ],
         },
       },
+
+      # test 5
       {
         :start  => '2013-02-28 17:00:00',
         :end    => '2013-02-28 23:59:59',
@@ -87,10 +89,158 @@ class WorkingTimeTest < ActiveSupport::TestCase
           'end_of_workday'       => '6:00 pm',
         },
       },
+
+      # test 6
+      {
+        :start  => '2013-02-28 17:00:00',
+        :end    => '2013-03-08 23:59:59',
+        :diff   => 3660,
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 7
+      {
+        :start  => '2012-02-28 17:00:00',
+        :end    => '2013-03-08 23:59:59',
+        :diff   => 160860,
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 8
+      {
+        :start  => '2013-02-28 17:01:00',
+        :end    => '2013-02-28 18:10:59',
+        :diff   => 61,
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 9
+      {
+        :start  => '2013-02-28 18:01:00',
+        :end    => '2013-02-28 18:10:59',
+        :diff   => 0,
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 10 / summertime
+      {
+        :start  => '2013-02-28 18:01:00',
+        :end    => '2013-02-28 18:10:59',
+        :diff   => 0,
+        :timezone => 'Europe/Berlin',
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 11 / summertime
+      {
+        :start  => '2013-02-28 17:01:00',
+        :end    => '2013-02-28 17:10:59',
+        :diff   => 0,
+        :timezone => 'Europe/Berlin',
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 12 / wintertime
+      {
+        :start  => '2013-08-29 17:01:00',
+        :end    => '2013-08-29 17:10:59',
+        :diff   => 0,
+        :timezone => 'Europe/Berlin',
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 13 / summertime
+      {
+        :start  => '2013-02-28 16:01:00',
+        :end    => '2013-02-28 16:10:59',
+        :diff   => 10,
+        :timezone => 'Europe/Berlin',
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 14 / wintertime
+      {
+        :start  => '2013-08-29 16:01:00',
+        :end    => '2013-08-29 16:10:59',
+        :diff   => 0,
+        :timezone => 'Europe/Berlin',
+        :config => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
     ]
     tests.each { |test|
-      TimeCalculation.config( test[:config], nil, test[:start] )
-      diff = TimeCalculation.business_time_diff( test[:start], test[:end] )
+      diff = TimeCalculation.business_time_diff( test[:start], test[:end], test[:config], test[:timezone] )
       assert_equal( diff, test[:diff], 'diff' )
     }
   end
@@ -178,6 +328,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
+
       # test 6
       {
         :start     => '2012-12-17 08:00:00',
@@ -241,10 +392,112 @@ class WorkingTimeTest < ActiveSupport::TestCase
           'end_of_workday'       => '6:00 pm',
         },
       },
+
+      # test 11 / summertime
+      {
+        :start     => '2013-03-08 21:20:15',
+        :dest_time => '2013-03-11 09:00:00',
+        :diff      => 120,
+        :timezone  => 'Europe/Berlin',
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 12 / wintertime
+      {
+        :start     => '2013-09-06 21:20:15',
+        :dest_time => '2013-09-09 08:00:00',
+        :diff      => 120,
+        :timezone  => 'Europe/Berlin',
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 13 / wintertime
+      {
+        :start     => '2013-10-21 06:30:00',
+        :dest_time => '2013-10-21 09:00:00',
+        :diff      => 120,
+        :timezone  => 'Europe/Berlin',
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '9:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 14 / wintertime
+      {
+        :start     => '2013-10-21 04:34:15',
+        :dest_time => '2013-10-21 09:00:00',
+        :diff      => 120,
+        :timezone  => 'Europe/Berlin',
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '9:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 15 / wintertime
+      {
+        :start     => '2013-10-20 22:34:15',
+        :dest_time => '2013-10-21 09:00:00',
+        :diff      => 120,
+        :timezone  => 'Europe/Berlin',
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '9:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 16 / wintertime
+      {
+        :start     => '2013-10-21 07:00:15',
+        :dest_time => '2013-10-21 09:00:00',
+        :diff      => 120,
+        :timezone  => 'Europe/Berlin',
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '9:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
     ]
     tests.each { |test|
-      TimeCalculation.config( test[:config], nil, test[:start] )
-      dest_time = TimeCalculation.dest_time( test[:start] + ' UTC', test[:diff] )
+      dest_time = TimeCalculation.dest_time( test[:start] + ' UTC', test[:diff], test[:config], test[:timezone] )
       assert_equal( dest_time.gmtime, Time.parse( test[:dest_time] + ' UTC' ), "dest time - #{test[:dest_time].to_s}" )
     }
   end
