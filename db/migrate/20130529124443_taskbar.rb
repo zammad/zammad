@@ -13,8 +13,8 @@ class Taskbar < ActiveRecord::Migration
       t.column :active,                     :boolean,   :null => false, :default => false
       t.timestamps
     end
-    add_index :tasks, [:user_id]
-    add_index :tasks, [:client_id]
+    add_index :taskbars, [:user_id]
+    add_index :taskbars, [:client_id]
   end
 
   def down
