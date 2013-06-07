@@ -504,7 +504,7 @@ class Ticket < ApplicationModel
     when Symbol, String
       require "ticket/number/#{adapter_name.to_s.downcase}"
       adapter = Ticket::Number.const_get("#{adapter_name.to_s.capitalize}")
-    else  
+    else
       raise "Missing number_adapter '#{adapter_name}'"
     end
     return adapter
@@ -522,7 +522,7 @@ class Ticket < ApplicationModel
     }
   end
 
-  def _escalation_calculation_get_sla
+  def _escalation_calculation_get_sla(time)
 
     sla_selected = nil
     sla_list = Cache.get( 'SLA::List::Active' )
@@ -559,7 +559,7 @@ class Ticket < ApplicationModel
 
     # get and set calendar settings
     if sla_selected
-      TimeCalculation.config( sla_selected.data )
+      TimeCalculation.config( sla_selected.data, sla_selected.timezone, time )
     end
     return sla_selected
   end
@@ -588,7 +588,7 @@ class Ticket < ApplicationModel
     end
 
     # get sla for ticket
-    sla_selected = self._escalation_calculation_get_sla
+    sla_selected = self._escalation_calculation_get_sla(self.created_at)
 
     # reset escalation if no sla is set
     if !sla_selected

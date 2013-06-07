@@ -89,7 +89,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
       },
     ]
     tests.each { |test|
-      TimeCalculation.config( test[:config] )
+      TimeCalculation.config( test[:config], nil, test[:start] )
       diff = TimeCalculation.business_time_diff( test[:start], test[:end] )
       assert_equal( diff, test[:diff], 'diff' )
     }
@@ -243,7 +243,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
       },
     ]
     tests.each { |test|
-      TimeCalculation.config( test[:config] )
+      TimeCalculation.config( test[:config], nil, test[:start] )
       dest_time = TimeCalculation.dest_time( test[:start] + ' UTC', test[:diff] )
       assert_equal( dest_time.gmtime, Time.parse( test[:dest_time] + ' UTC' ), "dest time - #{test[:dest_time].to_s}" )
     }

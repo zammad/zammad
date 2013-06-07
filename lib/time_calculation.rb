@@ -4,7 +4,25 @@ require 'business_time/core_ext/fixnum_minute'
 require 'business_time/core_ext/time_fix'
 
 module TimeCalculation
-  def self.config(config)
+  def self.config(config, timezone, start_time)
+    time_diff = 0
+    if timezone
+      begin
+         time_diff = Time.parse(start_time.to_s).in_time_zone(timezone).utc_offset
+      rescue Exception => e
+        puts "ERROR: Can't fine tomezone #{timezone}"
+        puts e.inspect
+        puts e.backtrace
+      end
+    end
+    beginning_of_workday = Time.parse("1977-10-27 #{config['beginning_of_workday']}") + time_diff
+    if beginning_of_workday
+      config['beginning_of_workday'] = "#{beginning_of_workday.hour}:#{beginning_of_workday.min}"
+    end
+    end_of_workday = Time.parse("1977-10-27 #{config['end_of_workday']}") + time_diff
+    if end_of_workday
+      config['end_of_workday'] = "#{end_of_workday.hour}:#{end_of_workday.min}"
+    end
     BusinessTime::Config.beginning_of_workday = config['beginning_of_workday']
     BusinessTime::Config.end_of_workday       = config['end_of_workday']
     days = []

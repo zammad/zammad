@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
- 
+
 class TicketTest < ActiveSupport::TestCase
   test 'ticket create' do
     ticket = Ticket.create(
@@ -195,7 +195,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.close_time_escal_date verify 3' )
     assert_equal( ticket.close_time_in_min, nil, 'ticket.close_time_in_min verify 3' )
     assert_equal( ticket.close_time_diff_in_min, nil, 'ticket.close_time_diff_in_min verify 3' )
- 
+
     # set first reponse over time
     ticket.update_attributes(
       :first_response => '2013-03-21 14:00:00 UTC',
@@ -214,7 +214,7 @@ class TicketTest < ActiveSupport::TestCase
 
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.close_time_escal_date verify 4' )
     assert_equal( ticket.close_time_in_min, nil, 'ticket.close_time_in_min verify 4' )
-    assert_equal( ticket.close_time_diff_in_min, nil, 'ticket.close_time_diff_in_min verify 4' ) 
+    assert_equal( ticket.close_time_diff_in_min, nil, 'ticket.close_time_diff_in_min verify 4' )
 
     # set update time in time
     ticket.update_attributes(
@@ -432,4 +432,100 @@ class TicketTest < ActiveSupport::TestCase
     delete = sla.destroy
     assert( delete, "sla destroy" )
   end
+
+  test 'ticket sla + timezone' do
+
+    # cleanup
+    delete = Sla.destroy_all
+    assert( delete, "sla destroy_all" )
+    delete = Ticket.destroy_all
+    assert( delete, "ticket destroy_all" )
+
+    ticket = Ticket.create(
+      :title           => 'some title äöüß',
+      :group           => Group.lookup( :name => 'Users'),
+      :customer_id     => 2,
+      :ticket_state    => Ticket::State.lookup( :name => 'new' ),
+      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :created_at      => '2013-03-21 09:30:00 UTC',
+      :updated_at      => '2013-03-21 09:30:00 UTC',
+      :updated_by_id   => 1,
+      :created_by_id   => 1,
+    )
+    assert( ticket, "ticket created" )
+    assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
+
+    # set sla's for timezone "Europe/Berlin" (+1), so UTC times are 8:00-17:00
+    sla = Sla.create(
+      :name => 'test sla 1',
+      :condition => {},
+      :data => {
+        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
+        "beginning_of_workday" => "9:00",
+        "end_of_workday"       => "18:00",
+      },
+      :timezone            => 'Europe/Berlin',
+      :first_response_time => 120,
+      :update_time   => 180,
+      :close_time    => 240,
+      :active        => true,
+      :updated_by_id => 1,
+      :created_by_id => 1,
+    )
+    ticket = Ticket.find(ticket.id)
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 12:00:00 UTC', 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 12:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 13:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
+
+    delete = sla.destroy
+    assert( delete, "sla destroy" )
+
+    delete = ticket.destroy
+    assert( delete, "ticket destroy" )
+
+    ticket = Ticket.create(
+      :title           => 'some title äöüß',
+      :group           => Group.lookup( :name => 'Users'),
+      :customer_id     => 2,
+      :ticket_state    => Ticket::State.lookup( :name => 'new' ),
+      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :created_at      => '2013-10-21 09:30:00 UTC',
+      :updated_at      => '2013-10-21 09:30:00 UTC',
+      :updated_by_id   => 1,
+      :created_by_id   => 1,
+    )
+    assert( ticket, "ticket created" )
+    assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
+
+    # set sla's for timezone "Europe/Berlin" (+1), so UTC times are 8:00-17:00
+    sla = Sla.create(
+      :name => 'test sla 1',
+      :condition => {},
+      :data => {
+        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
+        "beginning_of_workday" => "9:00",
+        "end_of_workday"       => "18:00",
+      },
+      :timezone            => 'Europe/Berlin',
+      :first_response_time => 120,
+      :update_time   => 180,
+      :close_time    => 240,
+      :active        => true,
+      :updated_by_id => 1,
+      :created_by_id => 1,
+    )
+    ticket = Ticket.find(ticket.id)
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 13:00:00 UTC', 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-10-21 13:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-10-21 14:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-10-21 15:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
+
+    delete = ticket.destroy
+    assert( delete, "ticket destroy" )
+
+    delete = sla.destroy
+    assert( delete, "sla destroy" )
+  end
+
 end
