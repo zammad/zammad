@@ -1,7 +1,7 @@
 class App.MaintananceWidget extends App.Controller
   constructor: ->
     super
-    
+
     # bind on event to show message
     App.Event.bind 'session:maintanance', (data) =>
       console.log('hannes was here')
@@ -23,3 +23,5 @@ class Message extends App.ControllerModal
       backdrop: false,
       keyboard: false,
     )
+
+App.Config.set( 'maintanance', App.MaintananceWidget, 'Widgets' )
