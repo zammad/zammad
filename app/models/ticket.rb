@@ -522,7 +522,7 @@ class Ticket < ApplicationModel
     }
   end
 
-  def _escalation_calculation_get_sla(time)
+  def _escalation_calculation_get_sla
 
     sla_selected = nil
     sla_list = Cache.get( 'SLA::List::Active' )
@@ -584,7 +584,7 @@ class Ticket < ApplicationModel
     end
 
     # get sla for ticket
-    sla_selected = self._escalation_calculation_get_sla(self.created_at)
+    sla_selected = self._escalation_calculation_get_sla
 
     # reset escalation if no sla is set
     if !sla_selected
