@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'browser_test_helper'
- 
+
 class ChatTest < TestCase
   def test_websocket
     message = 'message 1äöüß ' + rand(99999999999999999).to_s
@@ -11,8 +11,8 @@ class ChatTest < TestCase
         :instance2 => browser_instance,
         :instance1_username => 'master@example.com',
         :instance1_password => 'test',
-        :instance2_username => 'master@example.com',
-        :instance2_password => 'test',        
+        :instance2_username => 'agent1@example.com',
+        :instance2_password => 'test',
         :url      => browser_url,
         :action   => [
           {
