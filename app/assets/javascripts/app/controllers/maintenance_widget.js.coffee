@@ -5,6 +5,7 @@ class App.MaintananceWidget extends App.Controller
     # bind on event to show message
     App.Event.bind 'session:maintanance', (data) =>
       console.log('hannes was here')
+      new Message(data)
 
 
 class Message extends App.ControllerModal
@@ -14,14 +15,14 @@ class Message extends App.ControllerModal
 
   render: ->
     @html App.view('modal')(
-      title:   'Maintanance Message',
+      title:   @title,
       message: @message
       detail:  @detail
       close:   @close
     )
     @modalShow(
-      backdrop: false,
-      keyboard: false,
+      backdrop: true,
+      keyboard: true,
     )
 
 App.Config.set( 'maintanance', App.MaintananceWidget, 'Widgets' )
