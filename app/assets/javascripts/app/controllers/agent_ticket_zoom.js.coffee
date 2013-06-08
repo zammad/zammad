@@ -156,7 +156,8 @@ class App.TicketZoom extends App.Controller
         article = App.Collection.find( 'TicketArticle', article_id )
         @articles.push article
 
-    App.Event.trigger 'ui:rerender'
+    # update taskbar with new meta data
+    App.Event.trigger 'task:render'
 
     # rework articles
     for article in @articles

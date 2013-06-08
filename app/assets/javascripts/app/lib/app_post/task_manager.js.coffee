@@ -206,6 +206,7 @@ class _Singleton extends App.Controller
     for item, value of params
       task.updateAttribute(item, value)
 #    task.save()
+    App.Event.trigger 'task:render'
 
   remove: ( key, to_not_show = false ) =>
     task = @get( key )

@@ -195,6 +195,9 @@ class App.TicketCreate extends App.Controller
       form_data: @edit_form
     )
 
+    # update taskbar with new meta data
+    App.Event.trigger 'task:render'
+
     # add elastic to textarea
     @el.find('textarea').elastic()
 
