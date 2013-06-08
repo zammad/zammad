@@ -47,6 +47,10 @@ class _Singleton extends App.Controller
   constructor: (@args) ->
     super
 
+    # on auth, send new auth data to server
+    App.Event.bind 'auth', =>
+      @auth()
+
     # bind to send messages
     App.Event.bind 'ws:send', (data) =>
       @send(data)

@@ -147,7 +147,6 @@ EventMachine.run {
             log 'error', "can't parse spool message: #{ message }, #{ e.inspect }"
             next
           end
-
           # add spool attribute to push spool info to clients
           message_parsed['data']['spool'] = true
           msg = JSON.generate( message_parsed )
@@ -156,8 +155,8 @@ EventMachine.run {
           if !data['timestamp'] || data['timestamp'] < message[:timestamp]
 
             # spool to recipient list
-            if message[:msg_object]['recipient'] && message[:msg_object]['recipient']['user_id']
-              message[:msg_object]['recipient']['user_id'].each { |user_id|
+            if message_parsed['data']['recipient'] && message_parsed['data']['recipient']['user_id']
+              message_parsed['data']['recipient']['user_id'].each { |user_id|
                 if @clients[client_id][:session]['id'] == user_id
                   log 'notice', "send spool to (user_id=#{user_id})", client_id
                   @clients[client_id][:websocket].send( "[#{ msg }]" )
@@ -194,19 +193,18 @@ EventMachine.run {
         client_list = Session.list
         client_list.each {|local_client_id, local_client|
           if local_client_id.to_s != client_id.to_s
-
             # broadcast to recipient list
-            if data['recipient']
-              if data['recipient'].class != Hash
-                log 'error', "recipient attribute isn't a hash '#{ data['recipient'].inspect }'"
+            if data['data']['recipient']
+              if data['data']['recipient'].class != Hash
+                log 'error', "recipient attribute isn't a hash '#{ data['data']['recipient'].inspect }'"
               else
-                if !data['recipient'].has_key?('user_id')
-                  log 'error', "need recipient.user_id attribute '#{ data['recipient'].inspect }'"
+                if !data['data']['recipient'].has_key?('user_id')
+                  log 'error', "need recipient.user_id attribute '#{ data['data']['recipient'].inspect }'"
                 else
-                  if data['recipient']['user_id'].class != Array
-                    log 'error', "recipient.user_id attribute isn't an array '#{ data['recipient']['user_id'].inspect }'"
+                  if data['data']['recipient']['user_id'].class != Array
+                    log 'error', "recipient.user_id attribute isn't an array '#{ data['data']['recipient']['user_id'].inspect }'"
                   else
-                    data['recipient']['user_id'].each { |user_id|
+                    data['data']['recipient']['user_id'].each { |user_id|
                       if local_client[:user][:id].to_i == user_id.to_i
                         log 'notice', "send broadcast to (user_id=#{user_id})", local_client_id
                         if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]

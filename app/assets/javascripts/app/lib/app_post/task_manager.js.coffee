@@ -153,8 +153,7 @@ class _Singleton extends App.Controller
     # start worker for task if not exists
     @startController(key, callback, params, state, to_not_show)
 
-    App.Event.trigger 'ui:rerender'
-    App.Event.trigger 'ui:rerender:content'
+    App.Event.trigger 'task:render'
     return key
 
   startController: (key, callback, params, state, to_not_show) =>
@@ -218,7 +217,7 @@ class _Singleton extends App.Controller
       worker.release()
     @workersStarted[ key ] = false
     task.destroy()
-    App.Event.trigger 'ui:rerender'
+    App.Event.trigger 'task:render'
 
   notify: ( key ) =>
     task = @get( key )
@@ -226,7 +225,7 @@ class _Singleton extends App.Controller
       throw "No such task with '#{key}' to notify"
     task.notify = true
     task.save()
-    App.Event.trigger 'ui:rerender'
+    App.Event.trigger 'task:render'
 
   reorder: ( order ) =>
     prio = 0
@@ -241,15 +240,17 @@ class _Singleton extends App.Controller
 
   reset: =>
     App.Taskbar.deleteAll()
-    App.Event.trigger 'ui:rerender'
+    App.Event.trigger 'task:render'
 
   clientId: =>
     if !@clientIdInt
-       @clientIdInt = Math.floor( Math.random() * 99999999 )
+      @clientIdInt = Math.floor( Math.random() * 99999999 )
     @clientIdInt
 
   tasksInitial: =>
     # reopen tasks
+    App.Event.trigger 'taskbar:init'
+
 #    App.Taskbar.fetch()
     tasks = @all()
     return if !tasks
@@ -276,4 +277,6 @@ class _Singleton extends App.Controller
           @add(task.key, task.callback, task.params, true, task.state)
         task_count * 500
       )
+
+    App.Event.trigger 'taskbar:ready'
 

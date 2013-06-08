@@ -37,6 +37,11 @@ class _Singleton
       @support = false
 #    @support = false
 
+    # clear store on every login/logout
+    if @support
+      App.Event.bind 'auth', =>
+        @clear('all')
+
   # write to local storage
   write: (key, value) ->
     @store[key] = value

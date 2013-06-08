@@ -158,11 +158,15 @@ class TestCase < Test::Unit::TestCase
     end
     instance.close
   end
-  
+
   def browser_element_action(test, action, instance)
     if action[:css]
       begin
-        element = instance.find_element( { :css => action[:css] } )
+        if action[:range] == 'all'
+          element = instance.find_elements( { :css => action[:css] } )
+        else
+          element = instance.find_element( { :css => action[:css] } )
+        end
       rescue
         element = nil
       end
@@ -179,6 +183,20 @@ class TestCase < Test::Unit::TestCase
         end
     elsif action[:element] == :alert
       element = instance.switch_to.alert
+    elsif action[:execute] == 'close_all_tasks'
+      while true
+        begin
+          element = instance.find_element( { :css => '.taskbar [data-type="close"]' } )
+          if element
+            element.click
+            sleep 0.8
+          else
+            break
+          end
+        rescue
+          break
+        end
+      end
     else
       assert( false, "(#{test[:name]}) unknow selector for '#{action[:element]}'" )
     end
@@ -195,7 +213,13 @@ class TestCase < Test::Unit::TestCase
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, action[:value])
     elsif action[:execute] == 'click'
-      element.click
+      if element.class == Array
+        element.each {|item|
+          item.click
+        }
+      else
+        element.click
+      end
     elsif action[:execute] == 'accept'
       element.accept
     elsif action[:execute] == 'dismiss'
@@ -263,6 +287,7 @@ class TestCase < Test::Unit::TestCase
         end
       end
     elsif action[:execute] == 'check'
+    elsif action[:execute] == 'close_all_tasks'
     else
       assert( false, "(#{test[:name]}) unknow action '#{action[:execute]}'" )
     end

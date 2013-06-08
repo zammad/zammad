@@ -6,14 +6,22 @@ class App.TaskWidget extends App.Controller
     super
     @render()
 
-    # rerender view
-    App.Event.bind 'ui:rerender', (data) =>
+    # render on generic ui call
+    App.Event.bind 'ui:rerender', =>
       @render()
 
-    # rebuild taskbar widget
-    App.Event.bind 'auth', (user) =>
-      App.TaskManager.reset()
+    # render view
+    App.Event.bind 'task:render', (data) =>
+      @render()
+
+    # render on login
+    App.Event.bind 'auth:login', (user) =>
+      @render()
+
+    # reset current tasks on logout
+    App.Event.bind 'auth:logout', =>
       @el.html('')
+      App.TaskManager.reset()
 
     # only do take over check after spool messages are finised
     App.Event.bind 'spool:sent', (data) =>

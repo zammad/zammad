@@ -9,9 +9,6 @@ class App.Auth
       data:    JSON.stringify(params.data),
       success: (data, status, xhr) =>
 
-        # clear store
-        App.Store.clear('all')
-
         # set login (config, session, ...)
         @_login(data)
 
@@ -67,11 +64,9 @@ class App.Auth
       # empty session
       App.Session.init()
 
-      # update websocked auth info
-      App.WebSocket.auth()
-
       # rebuild navbar with new navbar items
       App.Event.trigger( 'auth' )
+      App.Event.trigger( 'auth:logout' )
       App.Event.trigger( 'ui:rerender' )
 
       return false;
@@ -88,6 +83,8 @@ class App.Auth
     for key, value of data.session
       App.Session.set( key, value )
 
+    App.Event.trigger( 'auth', data.session )
+
     # init of i18n
     preferences = App.Session.get( 'preferences' )
     if preferences && preferences.locale
@@ -100,11 +97,7 @@ class App.Auth
     for key, value of data.default_collections
       App[key].refresh( value, options: { clear: true } )
 
-    # update websocked auth info
-    App.WebSocket.auth()
-
-    # rebuild navbar with user data
-    App.Event.trigger( 'auth', data.session )
+    App.Event.trigger( 'auth:login', data.session )
     App.Event.trigger( 'ui:rerender' )
 
 
@@ -114,14 +107,8 @@ class App.Auth
     # empty session
     App.Session.init()
 
-    # update websocket auth info
-    App.WebSocket.auth()
-
-    # clear store
-    App.Store.clear('all')
-
-    # rebuild navbar
     App.Event.trigger( 'auth' )
+    App.Event.trigger( 'auth:logout' )
     App.Event.trigger( 'ui:rerender' )
 
   @_loginError: (xhr, statusText, error) ->
@@ -130,12 +117,7 @@ class App.Auth
     # empty session
     App.Session.init()
 
-    # update websocked auth info
-    App.WebSocket.auth()
-
-    # clear store
-    App.Store.clear('all')
-
     # rebuild navbar
     App.Event.trigger( 'auth' )
+    App.Event.trigger( 'auth:logout' )
     App.Event.trigger( 'ui:rerender' )
