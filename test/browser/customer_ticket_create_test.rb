@@ -13,11 +13,11 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 6,
+            :value   => 3,
           },
           {
             :execute => 'check',
-            :css     => '#form_create',
+            :css     => '.ticket-create',
             :result  => true,
           },
           {
@@ -26,22 +26,22 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'select',
-            :css     => '#form_create select[name="group_id"]',
+            :css     => '.ticket-create select[name="group_id"]',
             :value   => 'Users',
           },
           {
             :execute => 'set',
-            :css     => '#form_create input[name="subject"]',
+            :css     => '.ticket-create input[name="subject"]',
             :value   => 'some subject 123äöü',
           },
           {
             :execute => 'set',
-            :css     => '#form_create textarea[name="body"]',
+            :css     => '.ticket-create textarea[name="body"]',
             :value   => 'some body 123äöü',
           },
           {
             :execute => 'click',
-            :css     => 'button[type="submit"]',
+            :css     => '.ticket-create button[type="submit"]',
           },
           {
             :execute => 'wait',
@@ -61,7 +61,7 @@ class CustomerTicketCreateTest < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => 'div.article',
+            :css          => '.active div.article',
             :value        => 'some body 123äöü',
             :match_result => true,
           },
@@ -69,17 +69,17 @@ class CustomerTicketCreateTest < TestCase
           # update ticket
           {
             :execute => 'check',
-            :css     => 'textarea[name="body"]',
+            :css     => '.active textarea[name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => 'textarea[name="body"]',
+            :css     => '.active textarea[name="body"]',
             :value   => 'some body 1234 äöüß',
           },
           {
             :execute => 'click',
-            :css     => 'button',
+            :css     => '.active button',
             :type    => 'submit',
           },
           {

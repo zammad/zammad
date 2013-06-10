@@ -5,13 +5,11 @@
     </div>
   </div>
 </div>
-<form class="form-horizontal">
+<form class="form-horizontal ticket-create">
   <input type="hidden" value="" name="article_type"/>
   <div class="row">
     <div class="span9" id="form_create"></div>
-    <div class="span3">
-      <div id="xxx"></div>
-    </div>
+    <div class="span3"></div>
   </div>
   <div class="form-actions">
     <button type="reset" class="btn cancel"><%- @T( 'Cancel' ) %></button>&nbsp;<button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
