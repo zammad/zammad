@@ -254,7 +254,6 @@ class _Singleton extends App.Controller
     # stop init request if new one is started
     if @_ajaxInitWorking
       @_ajaxInitWorking.abort()
-
     # call init request
     @_ajaxInitWorking = App.Com.ajax(
       type:  'POST'

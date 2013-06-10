@@ -81,7 +81,6 @@ if ARGV[0] == 'start'  && @options[:d]
 end
 
 @clients = {}
-@spool   = []
 EventMachine.run {
   EventMachine::WebSocket.start( :host => @options[:b], :port => @options[:p], :secure => @options[:s], :tls_options => tls_options ) do |ws|
 
@@ -129,50 +128,30 @@ EventMachine.run {
 
       # spool messages for new connects
       if data['spool']
-        meta = {
-          :msg        => msg,
-          :msg_object => data,
-          :timestamp  => Time.now.to_i,
-        }
-        @spool.push meta
+        Session.spool_create(msg)
       end
 
-      # get spool messages
+      # get spool messages and send them to new client connection
       if data['action'] == 'spool'
-        @spool.each { |message|
+        log 'notice', "request spool data", client_id
 
-          begin
-            message_parsed = JSON.parse( message[:msg] )
-          rescue => e
-            log 'error', "can't parse spool message: #{ message }, #{ e.inspect }"
-            next
-          end
-          # add spool attribute to push spool info to clients
-          message_parsed['data']['spool'] = true
-          msg = JSON.generate( message_parsed )
+        spool = Session.spool_list( data['timestamp'], @clients[client_id][:session]['id'] )
+        spool.each { |item|
 
-          # only send not already now messages
-          if !data['timestamp'] || data['timestamp'] < message[:timestamp]
+          # create new msg to push to client
+          msg = JSON.generate( item[:message] )
 
-            # spool to recipient list
-            if message_parsed['data']['recipient'] && message_parsed['data']['recipient']['user_id']
-              message_parsed['data']['recipient']['user_id'].each { |user_id|
-                if @clients[client_id][:session]['id'] == user_id
-                  log 'notice', "send spool to (user_id=#{user_id})", client_id
-                  @clients[client_id][:websocket].send( "[#{ msg }]" )
-                end
-              }
-
-            # spool to every client
-            else
-              log 'notice', "send spool", client_id
-              @clients[client_id][:websocket].send( "[#{ msg }]" )
-            end
-
+          if item[:type] == 'direct'
+            log 'notice', "send spool to (user_id=#{ @clients[client_id][:session]['id'] })", client_id
+            @clients[client_id][:websocket].send( "[#{ msg }]" )
+          else
+            log 'notice', "send spool", client_id
+            @clients[client_id][:websocket].send( "[#{ msg }]" )
           end
         }
 
         # send spool:sent event to client
+        log 'notice', "send spool:sent event", client_id
         @clients[client_id][:websocket].send( '[{"event":"spool:sent"}]' )
       end
 

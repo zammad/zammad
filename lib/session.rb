@@ -42,6 +42,80 @@ module Session
     end
   end
 
+  def self.spool_create( msg )
+    path = @path + '/spool/'
+    FileUtils.mkpath path
+    file = Time.new.to_f.to_s + '-' + rand(99999).to_s
+    File.open( path + '/' + file , 'wb' ) { |file|
+      data = {
+        :msg        => msg,
+        :timestamp  => Time.now.to_i,
+      }
+#      puts 'CREATE' + Marshal.dump(data)
+      file.write data.to_json
+    }
+  end
+
+  def self.spool_list( timestamp, current_user_id )
+    path = @path + '/spool/'
+    FileUtils.mkpath path
+    data = []
+    to_delete = []
+    Dir.foreach( path ) do |entry|
+      next if entry == '.' || entry == '..'
+      File.open( path + '/' + entry, 'rb' ) { |file|
+        all = file.read
+        spool = JSON.parse( all )
+        begin
+          message_parsed = JSON.parse( spool['msg'] )
+        rescue => e
+          log 'error', "can't parse spool message: #{ message }, #{ e.inspect }"
+          next
+        end
+
+        # ignore message older then 48h
+        if spool['timestamp'] + (2 * 86400) < Time.now.to_i
+          to_delete.push path + '/' + entry
+          next
+        end
+
+        # add spool attribute to push spool info to clients
+        message_parsed['data']['spool'] = true
+
+        # only send not already now messages
+        if !timestamp || timestamp < spool['timestamp']
+
+          # spool to recipient list
+          if message_parsed['data']['recipient'] && message_parsed['data']['recipient']['user_id']
+            message_parsed['data']['recipient']['user_id'].each { |user_id|
+              if current_user_id == user_id
+                item = {
+                  :type    => 'direct',
+                  :message => message_parsed,
+                  :spool   => spool,
+                }
+                data.push item
+              end
+            }
+
+          # spool to every client
+          else
+            item = {
+              :type    => 'broadcast',
+              :message => message_parsed,
+              :spool   => spool,
+            }
+            data.push item
+          end
+        end
+      }
+    end
+    to_delete.each {|file|
+      File.delete(file)
+    }
+    return data
+  end
+
   def self.list
     client_ids = self.sessions
     session_list = {}
@@ -85,14 +159,18 @@ module Session
 
   def self.send( client_id, data )
     path = @path + '/' + client_id.to_s + '/'
-    filename = 'send-' + Time.new().to_i.to_s + '-' + rand(99999999).to_s
+    filename = 'send-' + Time.new().to_f.to_s# + '-' + rand(99999999).to_s
     check = true
+    count = 0
     while check
       if File::exists?( path + filename )
-        filename = filename  + '-' + rand(99999).to_s
+        count += 1
+        filename = filename  + '-' + count
+#        filename = filename  + '-' + rand(99999).to_s
+#        filename = filename  + '-' + rand(99999).to_s
       else
         check = false
-      end    
+      end
     end
     return false if !File.directory? path
     File.open( path + 'a-' + filename, 'wb' ) { |file|
@@ -121,7 +199,7 @@ module Session
         # connection already open
         next if @@client_threads[client_id]
 
-        # get current user  
+        # get current user
         session_data = Session.get( client_id )
         next if !session_data
         next if !session_data[:user]
@@ -172,13 +250,12 @@ module Session
 
     data = []
     Dir.foreach( path ) do |entry|
-      if entry != '.' && entry != '..'
-        data.push entry
-      end
+      next if entry == '.' || entry == '..' || entry == 'spool'
+      data.push entry
     end
     return data
   end
-  
+
   def self.queue( client_id )
     path = @path + '/' + client_id.to_s + '/'
     data = []
@@ -197,9 +274,7 @@ module Session
     data = nil
     all = ''
     File.open( file_new, 'rb' ) { |file|
-      while line = file.gets  
-        all = all + line  
-      end
+      all = file.read
     }
     File.delete( file_new )
     data = JSON.parse( all )

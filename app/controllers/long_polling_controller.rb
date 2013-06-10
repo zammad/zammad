@@ -9,7 +9,7 @@ class LongPollingController < ApplicationController
     if !client_id
       new_connection = true
       client_id = client_id_gen
-      puts 'NEW CLIENT CONNECTION: ' + client_id.to_s
+      log 'notice', "new client connection", client_id
     else
       # cerify client id
       if !client_id_verify
@@ -21,6 +21,33 @@ class LongPollingController < ApplicationController
       params['data'] = {}
     end
 
+    # spool messages for new connects
+    if params['data']['spool']
+      msg = JSON.generate( params )
+      Session.spool_create(msg)
+    end
+
+    # get spool messages and send them to new client connection
+    if params['data']['action'] == 'spool'
+      log 'notice', "request spool data", client_id
+
+      spool = Session.spool_list( params['data']['timestamp'], current_user.id )
+      spool.each { |item|
+        if item[:type] == 'direct'
+          log 'notice', "send spool to (user_id=#{ current_user.id })", client_id
+          Session.send( client_id, item[:message] )
+        else
+          log 'notice', "send spool", client_id
+          Session.send( client_id, item[:message] )
+        end
+      }
+
+      # send spool:sent event to client
+      log 'notice', "send spool:sent event", client_id
+      Session.send( client_id, { :event => 'spool:sent' } )
+    end
+
+
     # receive message
     if params['data']['action'] == 'login'
       user_id = session[:user_id]
@@ -28,6 +55,7 @@ class LongPollingController < ApplicationController
       if user_id
         user = User.user_data_full( user_id )
       end
+      log 'notice', "send auth login (user_id #{user_id})", client_id
       Session.create( client_id, user, { :type => 'ajax' } )
 
     # broadcast
@@ -42,11 +70,13 @@ class LongPollingController < ApplicationController
           if params['data']['recipient'] && params['data']['recipient']['user_id']
             params['data']['recipient']['user_id'].each { |user_id|
               if local_client[:user][:id] == user_id
+                log 'notice', "send broadcast (user_id #{user_id})", local_client_id
                 Session.send( local_client_id, params['data'] )
               end
             }
           # broadcast every client
           else
+            log 'notice', "send broadcast", local_client_id
             Session.send( local_client_id, params['data'] )
           end
         end
@@ -80,7 +110,7 @@ class LongPollingController < ApplicationController
         count = count - 1
         queue = Session.queue( client_id )
         if queue && queue[0]
-  #        puts "send " + queue.inspect + client_id.to_s
+#          puts "send " + queue.inspect + client_id.to_s
           render :json => queue
           return
         end
@@ -90,7 +120,9 @@ class LongPollingController < ApplicationController
           return
         end
       end
-    rescue
+    rescue Exception => e
+      puts e.inspect
+      puts e.backtrace
       render :json => { :error => 'Invalid client_id in receive loop!' }, :status => :unprocessable_entity
       return
     end
@@ -111,5 +143,13 @@ class LongPollingController < ApplicationController
 #    Session.update( client_id )
 #      Session.touch( params[:client_id] )
       return true
+    end
+
+    def log( level, data, client_id = '-' )
+      if false
+        return if level == 'debug'
+      end
+      puts "#{Time.now}:client(#{ client_id }) #{ data }"
+#      puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
     end
 end
