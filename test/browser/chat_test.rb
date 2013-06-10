@@ -28,6 +28,10 @@ class ChatTest < TestCase
             :result  => false,
           },
           {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
             :where   => :instance1,
             :execute => 'click',
             :css     => '#chat_toogle',
@@ -46,9 +50,18 @@ class ChatTest < TestCase
             :value   => 4,
           },
           {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '#chat_toogle',
+          },
+          {
             :where   => :instance1,
             :execute => 'click',
             :css     => '#chat_toogle',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
           },
           {
             :where   => :instance1,
