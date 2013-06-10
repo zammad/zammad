@@ -393,7 +393,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
-      # test 11 / summertime
+      # test 11 / summertime 7am-5pm
       {
         :start     => '2013-03-08 21:20:15',
         :dest_time => '2013-03-11 09:00:00',
@@ -410,7 +410,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
-      # test 12 / wintertime
+      # test 12 / wintertime 6am-4pm
       {
         :start     => '2013-09-06 21:20:15',
         :dest_time => '2013-09-09 08:00:00',
@@ -427,7 +427,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
-      # test 13 / wintertime
+      # test 13 / wintertime - 7am-4pm
       {
         :start     => '2013-10-21 06:30:00',
         :dest_time => '2013-10-21 09:00:00',
@@ -444,7 +444,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
-      # test 14 / wintertime
+      # test 14 / wintertime - 7am-4pm
       {
         :start     => '2013-10-21 04:34:15',
         :dest_time => '2013-10-21 09:00:00',
@@ -461,7 +461,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
-      # test 15 / wintertime
+      # test 15 / wintertime - 7am-4pm
       {
         :start     => '2013-10-20 22:34:15',
         :dest_time => '2013-10-21 09:00:00',
@@ -478,10 +478,10 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
-      # test 16 / wintertime
+      # test 16 / wintertime - 7am-4pm
       {
         :start     => '2013-10-21 07:00:15',
-        :dest_time => '2013-10-21 09:00:00',
+        :dest_time => '2013-10-21 09:00:15',
         :diff      => 120,
         :timezone  => 'Europe/Berlin',
         :config    => {
