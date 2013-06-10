@@ -99,17 +99,22 @@ class App.TaskWidget extends App.Controller
 
     @el.find( '.taskbar' ).sortable( dndOptions )
 
-  remove: (e) =>
+  remove: (e, key = false, force = false) =>
     e.preventDefault()
-    key = $(e.target).parent().data('key')
+    if !key
+      key = $(e.target).parent().data('key')
     if !key
       throw "No such key attributes found for task item"
 
     # check if input has changed
     worker = App.TaskManager.worker( key )
-    if worker && worker.changed
+    if !force && worker && worker.changed
       if worker.changed()
-        return if !window.confirm( App.i18n.translateInline('Tab has changed, you really want to close it?') )
+        new Remove(
+          key: key
+          ui:  @
+        )
+        return
 
     # check if active task is closed
     currentTask = App.TaskManager.get( key )
@@ -161,5 +166,27 @@ class App.TaskWidget extends App.Controller
         if match
           level1.push item
     level1
+
+class Remove extends App.ControllerModal
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    #    return if !window.confirm( App.i18n.translateInline('Tab has changed, you really want to close it?') )
+    @html App.view('modal')(
+      title:   'Confirm'
+      message: 'Tab has changed, you really want to close it?'
+      close:   true
+      button:  'Close'
+    )
+    @modalShow(
+      backdrop: true,
+      keyboard: true,
+    )
+
+  submit: (e) =>
+    @modalHide()
+    @ui.remove(e, @key, true)
 
 App.Config.set( 'task', App.TaskWidget, 'Widgets' )

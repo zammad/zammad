@@ -76,11 +76,15 @@ class AgentUserManageTest < TestCase
             :execute => 'click',
             :css     => '.taskbar span[data-type="close"]',
           },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
 
           # accept task close warning
           {
-            :execute => 'accept',
-            :element => :alert,
+            :execute => 'click',
+            :css     => '.modal .submit',
           },
           {
             :execute => 'wait',
