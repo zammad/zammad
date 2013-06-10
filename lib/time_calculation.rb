@@ -1,4 +1,23 @@
 module TimeCalculation
+
+=begin
+
+put working hours matrix and timezone in function, returns UTC working hours matrix
+
+  working_hours_martix = TimeCalculation.working_hours('2013-10-27 20:00:15', working_hours_matrix, 'Europe/Berlin')
+
+  working_hours_martix = {
+    :Mon => [nil,nil,nil,nil,nil,nil,nil,nil,true,true,true,true,true,true,true,true,true,true,true,nil,nil,nil,nil,nil],
+    :Tue => [nil,nil,nil,nil,nil,nil,nil,nil,true,true,true,true,true,true,true,true,true,true,true,nil,nil,nil,nil,nil],
+    :Wed => [nil,nil,nil,nil,nil,nil,nil,nil,true,true,true,true,true,true,true,true,true,true,true,nil,nil,nil,nil,nil],
+    :Thu => [nil,nil,nil,nil,nil,nil,nil,nil,true,true,true,true,true,true,true,true,true,true,true,nil,nil,nil,nil,nil],
+    :Fri => [nil,nil,nil,nil,nil,nil,nil,nil,true,true,true,true,true,true,true,true,true,true,true,nil,nil,nil,nil,nil],
+    :Sat => [],
+    :Sun => [],
+  }
+
+=end
+
   def self.working_hours(start_time, config, timezone)
     time_diff = 0
     if timezone
@@ -76,6 +95,19 @@ module TimeCalculation
     end
     return working_hours
   end
+
+=begin
+
+  returns business hours in minutes between to dates
+
+  business_hours_in_min = Time.Calculation.business_time_diff(
+    '2013-10-27 14:00:15',
+    '2013-10-27 18:10:15',
+    working_hours_martix,
+    'Europe/Berlin',
+  )
+
+=end
 
   def self.business_time_diff(start_time, end_time, config, timezone = '')
     if start_time.class == String
@@ -179,6 +211,19 @@ module TimeCalculation
     diff = count / 60
     diff.round
   end
+
+=begin
+
+  returns destination date of start time plus X minutes
+
+  dest_time = Time.Calculation.dest_time(
+    '2013-10-27 14:00:15',
+    120,
+    working_hours_martix,
+    'Europe/Berlin',
+  )
+
+=end
 
   def self.dest_time(start_time, diff_in_min, config, timezone = '')
     if start_time.class == String
