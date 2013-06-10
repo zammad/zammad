@@ -90,7 +90,36 @@ class History < ApplicationModel
         order('created_at ASC, id ASC')
     end
 
-    return history
+    list = []
+    history.each { |item|
+      item_tmp = item.attributes
+      item_tmp['history_type'] = item.history_type.name
+      item_tmp['history_object'] = item.history_object.name
+      if item.history_attribute
+       item_tmp['history_attribute'] = item.history_attribute.name
+      end
+      item_tmp.delete( 'history_attribute_id' )
+      item_tmp.delete( 'history_object_id' )
+      item_tmp.delete( 'history_type_id' )
+      item_tmp.delete( 'o_id' )
+      item_tmp.delete( 'updated_at' )
+      if item_tmp['id_to'] == nil && item_tmp['id_from'] == nil
+        item_tmp.delete( 'id_to' )
+        item_tmp.delete( 'id_from' )
+      end
+      if item_tmp['value_to'] == nil && item_tmp['value_from'] == nil
+        item_tmp.delete( 'value_to' )
+        item_tmp.delete( 'value_from' )
+      end
+      if item_tmp['related_history_object_id'] == nil
+        item_tmp.delete( 'related_history_object_id' )
+      end
+      if item_tmp['related_o_id'] == nil
+        item_tmp.delete( 'related_o_id' )
+      end
+      list.push item_tmp
+    }
+    return list
   end
 
   def self.activity_stream( user, limit = 10 )
