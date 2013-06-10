@@ -313,7 +313,15 @@ class App.TicketCreate extends App.Controller
           # scroll to top
           ui.scrollTo()
 
-          ui.navigate "#ticket/zoom/#{@id}"
+          # access to group
+          session = App.Session.all()
+          if session && session['group_ids'] && _.contains(session['group_ids'], @group_id)
+            ui.navigate "#ticket/zoom/#{@id}"
+            return
+
+          # if not, show start screen
+          ui.navigate "#"
+
 
         error: ->
           ui.log 'save failed!'
