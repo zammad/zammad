@@ -9,6 +9,9 @@ class AgentUserManageTest < TestCase
         :name     => 'create customer',
         :action   => [
           {
+            :execute => 'close_all_tasks',
+          },
+          {
             :execute => 'click',
             :css     => 'a[href="#new"]',
           },
@@ -22,7 +25,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.customer_new',
+            :css     => '.active .customer_new',
           },
           {
             :execute => 'wait',
@@ -55,14 +58,14 @@ class AgentUserManageTest < TestCase
           # check is used is selected
           {
             :execute      => 'match',
-            :css          => 'input[name="customer_id"]',
+            :css          => '.active input[name="customer_id"]',
             :value        => '^[0-9].?$',
             :no_quote     => true,
             :match_result => true,
           },
           {
             :execute      => 'match',
-            :css          => 'input[name="customer_id_autocompletion"]',
+            :css          => '.active input[name="customer_id_autocompletion"]',
             :value        => 'Customer',
             :no_quote     => true,
             :match_result => true,
@@ -97,47 +100,47 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute      => 'match',
-            :css          => 'input[name="customer_id"]',
+            :css          => '.active input[name="customer_id"]',
             :value        => '^[0-9].?$',
             :no_quote     => true,
             :match_result => false,
           },
           {
             :execute      => 'match',
-            :css          => 'input[name="customer_id_autocompletion"]',
+            :css          => '.active input[name="customer_id_autocompletion"]',
             :value        => 'Customer',
             :no_quote     => true,
             :match_result => false,
           },
           {
             :execute => 'set',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => customer_user_email,
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 3,
           },
           {
             :execute => 'sendkey',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => :arrow_down,
           },
           {
             :execute => 'sendkey',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => :tab,
           },
           {
             :execute      => 'match',
-            :css          => 'input[name="customer_id"]',
+            :css          => '.active input[name="customer_id"]',
             :value        => '^[0-9].?$',
             :no_quote     => true,
             :match_result => true,
           },
           {
             :execute      => 'match',
-            :css          => 'input[name="customer_id_autocompletion"]',
+            :css          => '.active input[name="customer_id_autocompletion"]',
             :value        => 'Customer',
             :no_quote     => true,
             :match_result => true,

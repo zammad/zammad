@@ -79,7 +79,7 @@ class TestCase < Test::Unit::TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 2,
           },
           {
             :execute => 'check',
