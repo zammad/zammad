@@ -77,7 +77,7 @@ class _Singleton extends App.Controller
       # A value of 1 indicates that the connection is established and communication is possible.
       # A value of 2 indicates that the connection is going through the closing handshake.
       # A value of 3 indicates that the connection has been closed or could not be opened.
-      if @ws.readyState is 0
+      if @ws.readyState isnt 1
         @queue.push data
       else
         string = JSON.stringify( data )

@@ -8,9 +8,9 @@ class TaskbarSessionTest < TestCase
         :name     => 'start',
         :instance1 => browser_instance,
         :instance2 => browser_instance,
-        :instance1_username => 'master@example.com',
+        :instance1_username => 'agent1@example.com',
         :instance1_password => 'test',
-        :instance2_username => 'master@example.com',
+        :instance2_username => 'agent1@example.com',
         :instance2_password => 'test',
         :url      => browser_url,
         :action   => [
@@ -28,7 +28,7 @@ class TaskbarSessionTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 10,
           },
           {
             :where        => :instance1,
@@ -80,7 +80,7 @@ class TaskbarSessionTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 10,
           },
           {
             :where        => :instance1,

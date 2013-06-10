@@ -252,10 +252,6 @@ class _Singleton extends App.Controller
     # reopen tasks
     App.Event.trigger 'taskbar:init'
 
-#    App.Taskbar.fetch()
-    tasks = @all()
-    return if !tasks
-
     # check if we have different
 
     # broadcast to other browser instance
@@ -268,6 +264,10 @@ class _Singleton extends App.Controller
           user_id: [ App.Session.get( 'id' ) ]
         client_id: @clientId()
     )
+
+#    App.Taskbar.fetch()
+    tasks = @all()
+    return if !tasks
 
     task_count = 0
     for task in tasks
