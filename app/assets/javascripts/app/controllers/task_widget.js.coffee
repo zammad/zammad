@@ -173,7 +173,6 @@ class Remove extends App.ControllerModal
     @render()
 
   render: ->
-    #    return if !window.confirm( App.i18n.translateInline('Tab has changed, you really want to close it?') )
     @html App.view('modal')(
       title:   'Confirm'
       message: 'Tab has changed, you really want to close it?'

@@ -12,6 +12,10 @@ class AgentUserManageTest < TestCase
             :execute => 'close_all_tasks',
           },
           {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
             :execute => 'click',
             :css     => 'a[href="#new"]',
           },
@@ -72,6 +76,10 @@ class AgentUserManageTest < TestCase
           },
 
           # call new ticket screen again
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
           {
             :execute => 'click',
             :css     => '.taskbar span[data-type="close"]',
