@@ -225,7 +225,11 @@ class Ticket < ApplicationModel
     end
 
     # check agent
+
+    # access if requestor is owner
     return true if self.owner_id == data[:current_user].id
+
+    # access if requestor is in group
     data[:current_user].groups.each {|group|
       return true if self.group.id == group.id
     }
