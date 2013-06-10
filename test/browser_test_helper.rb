@@ -161,6 +161,7 @@ class TestCase < Test::Unit::TestCase
 
   def browser_element_action(test, action, instance)
     if action[:css]
+#      puts "NOTICE: css #{ action[:css] }"
       begin
         if action[:range] == 'all'
           element = instance.find_elements( { :css => action[:css] } )
@@ -182,6 +183,7 @@ class TestCase < Test::Unit::TestCase
           assert( false, "(#{test[:name]}) url #{instance.current_url} is not matching #{action[:result]}" )
         end
     elsif action[:element] == :alert
+puts "laalal"
       element = instance.switch_to.alert
     elsif action[:execute] == 'close_all_tasks'
       while true
@@ -213,12 +215,16 @@ class TestCase < Test::Unit::TestCase
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, action[:value])
     elsif action[:execute] == 'click'
-      if element.class == Array
-        element.each {|item|
-          item.click
-        }
-      else
-        element.click
+
+      # ignore alert clicks on safari / not supported
+      if action[:element] != :alert || ( action[:element] == :alert && ENV['BROWSER'] !~ /safari/i )
+        if element.class == Array
+          element.each {|item|
+            item.click
+          }
+        else
+          element.click
+        end
       end
     elsif action[:execute] == 'accept'
       element.accept
