@@ -8,6 +8,9 @@ class AgentTicketActionSimpleTest < TestCase
         :name     => 'agent ticket create 1',
         :action   => [
           {
+            :execute => 'close_all_tasks',
+          },
+          {
             :execute => 'click',
             :css     => 'a[href="#new"]',
           },
