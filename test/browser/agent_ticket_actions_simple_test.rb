@@ -21,7 +21,7 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute => 'check',
-            :css     => '.ticket_create',
+            :css     => '.active .ticket_create',
             :result  => true,
           },
           {
@@ -30,7 +30,7 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => 'ma',
           },
           {
@@ -39,32 +39,32 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute => 'sendkey',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => :arrow_down,
           },
           {
             :execute => 'sendkey',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => :tab,
           },
           {
             :execute => 'select',
-            :css     => '.ticket_create select[name="group_id"]',
+            :css     => '.active .ticket_create select[name="group_id"]',
             :value   => 'Users',
           },
           {
             :execute => 'set',
-            :css     => '.ticket_create input[name="subject"]',
+            :css     => '.active .ticket_create input[name="subject"]',
             :value   => 'some subject 123äöü',
           },
           {
             :execute => 'set',
-            :css     => '.ticket_create textarea[name="body"]',
+            :css     => '.active .ticket_create textarea[name="body"]',
             :value   => 'some body 123äöü',
           },
           {
             :execute => 'click',
-            :css     => '.form-actions button[type="submit"]',
+            :css     => '.active .form-actions button[type="submit"]',
           },
           {
             :execute => 'wait',
@@ -84,7 +84,7 @@ class AgentTicketActionSimpleTest < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => 'div.article',
+            :css          => '.active div.article',
             :value        => 'some body 123äöü',
             :match_result => true,
           },
@@ -92,7 +92,7 @@ class AgentTicketActionSimpleTest < TestCase
           # remember old ticket where we want to merge to
           {
             :execute      => 'match',
-            :css          => '.ticket-zoom small',
+            :css          => '.active .ticket-zoom small',
             :value        => '^(.*)$',
             :no_quote     => true,
             :match_result => true,
@@ -101,22 +101,22 @@ class AgentTicketActionSimpleTest < TestCase
           # update ticket
           {
             :execute => 'select',
-            :css     => 'select[name="ticket_article_type_id"]',
+            :css     => '.active select[name="ticket_article_type_id"]',
             :value   => 'note',
           },
           {
             :execute => 'check',
-            :css     => 'textarea[name="body"]',
+            :css     => '.active textarea[name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => 'textarea[name="body"]',
+            :css     => '.active textarea[name="body"]',
             :value   => 'some body 1234 äöüß',
           },
           {
             :execute => 'click',
-            :css     => 'button',
+            :css     => '.active button',
           },
           {
             :execute => 'wait',
@@ -152,7 +152,7 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute => 'check',
-            :css     => '.ticket_create',
+            :css     => '.active .ticket_create',
             :result  => true,
           },
           {
@@ -161,7 +161,7 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => 'ma',
           },
           {
@@ -170,32 +170,32 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute => 'sendkey',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => :arrow_down,
           },
           {
             :execute => 'sendkey',
-            :css     => '.ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
             :value   => :tab,
           },
           {
             :execute => 'select',
-            :css     => '.ticket_create select[name="group_id"]',
+            :css     => '.active .ticket_create select[name="group_id"]',
             :value   => 'Users',
           },
           {
             :execute => 'set',
-            :css     => '.ticket_create input[name="subject"]',
+            :css     => '.active .ticket_create input[name="subject"]',
             :value   => 'test to merge',
           },
           {
             :execute => 'set',
-            :css     => '.ticket_create textarea[name="body"]',
+            :css     => '.active .ticket_create textarea[name="body"]',
             :value   => 'some body 123äöü 222',
           },
           {
             :execute => 'click',
-            :css     => '.form-actions button[type="submit"]',
+            :css     => '.active .form-actions button[type="submit"]',
           },
           {
             :execute => 'wait',
@@ -215,7 +215,7 @@ class AgentTicketActionSimpleTest < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => '.content_permanent.active',
+            :css          => '.active',
             :value        => 'some body 123äöü 222',
             :match_result => true,
           },
@@ -223,22 +223,22 @@ class AgentTicketActionSimpleTest < TestCase
           # update ticket
           {
             :execute => 'select',
-            :css     => 'select[name="ticket_article_type_id"]',
+            :css     => '.active select[name="ticket_article_type_id"]',
             :value   => 'note',
           },
           {
             :execute => 'check',
-            :css     => '.content_permanent.active textarea[name="body"]',
+            :css     => '.active textarea[name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => 'textarea[name="body"]',
+            :css     => '.active textarea[name="body"]',
             :value   => 'some body 1234 äöüß 222',
           },
           {
             :execute => 'click',
-            :css     => 'button',
+            :css     => '.active button',
           },
           {
             :execute => 'wait',
@@ -246,7 +246,7 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute      => 'match',
-            :css          => '.ticket-answer',
+            :css          => '.active .ticket-answer',
             :value        => 'some body 1234 äöüß 222',
             :match_result => true,
           },
@@ -265,7 +265,7 @@ class AgentTicketActionSimpleTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[data-type="merge"]',
+            :css     => '.active a[data-type="merge"]',
           },
           {
             :execute => 'wait',
@@ -288,7 +288,7 @@ class AgentTicketActionSimpleTest < TestCase
           # check if megred to ticket is shown now
           {
             :execute      => 'match',
-            :css          => '.ticket-zoom small',
+            :css          => '.active .ticket-zoom small',
             :value        => '###stack###',
             :match_result => true,
           },
