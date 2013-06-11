@@ -44,6 +44,8 @@ class App.Content extends App.Controller
 
           @log 'Content', 'notice', 'execute page controller', route, params
 
+          if !App.Browser.init()
+            return
           # remove observers for page
           App.Collection.observeUnbindLevel('page')
 
