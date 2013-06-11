@@ -185,7 +185,7 @@ EventMachine.run {
                   else
                     data['data']['recipient']['user_id'].each { |user_id|
                       if local_client[:user][:id].to_i == user_id.to_i
-                        log 'notice', "send broadcast to (user_id=#{user_id})", local_client_id
+                        log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id=#{user_id})", local_client_id
                         if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
                           @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
                         else
@@ -199,13 +199,15 @@ EventMachine.run {
 
             # broadcast every client
             else
-              log 'notice', "send broadcast", local_client_id
+              log 'notice', "send broadcast from (#{client_id.to_s})", local_client_id
               if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
                 @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
               else
                 Session.send( local_client_id, data )
               end
             end
+          else
+            log 'notice', "do not send broadcast to it self", client_id
           end
         }
       end
