@@ -9,6 +9,9 @@ class App.Run extends App.Controller
     if !App.Browser.check()
       return
 
+    # hide splash screen
+    $('#splash').hide()
+
     # init collections
     App.Collection.init()
 

@@ -105,6 +105,10 @@ class _Singleton extends App.Controller
 
     tasks = @all()
 
+    # create div for permanent content
+    if !$("#content_permanent")[0]
+      $('#app').append('<div id="content_permanent" class="container"></div>')
+
     # empty static content if task is shown
     if active
       @activeTask = key
