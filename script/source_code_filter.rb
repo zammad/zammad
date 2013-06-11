@@ -14,11 +14,9 @@ def checkForHeader(fileName)
 
 	if allLines[0] =~ /(^# Copyright)/ || allLines[1] =~ /(^# Copyright)/
 		foundHeader = true
-		puts 'foundHeader'
 	end
 	if allLines[0] =~ /(^#!\/)/
 		foundSheBang = true
-		puts 'foundSheBang'
 	end
 
 	file.each do |line|
@@ -31,7 +29,6 @@ def checkForHeader(fileName)
 			t_file.puts line
 			t_file.puts header
 		else
-			puts line
 			t_file.puts line.rstrip
 		end
 	end
