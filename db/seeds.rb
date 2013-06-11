@@ -1807,7 +1807,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "First Response Ti
 Translation.create_if_not_exists( :locale => 'de', :source => "Update Time", :target => "Aktuallisierungszeit"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Solution Time", :target => "Lösungszeit"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Add Attribute", :target => "Attribut hinzufügen"  )
-Translation.create_if_not_exists( :locale => 'de', :source => "", :target => ""  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Back to top", :target => "Nach oben"  )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => ""  )
 

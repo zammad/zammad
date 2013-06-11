@@ -450,3 +450,17 @@ footer {
 .sub_attribute .controls {
   margin-left: 80px;
 }
+
+#splash {
+  background-color: #eee;
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  height: 100%;
+}
+#splash .logo {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+  width: 100px;
+}

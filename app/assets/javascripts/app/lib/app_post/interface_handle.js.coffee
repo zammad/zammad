@@ -6,7 +6,11 @@ class App.Run extends App.Controller
     App.Event.trigger('app:init')
 
     # browser check
-    # App.Browser.check()
+    if !App.Browser.check()
+      return
+
+    # hide splash screen
+    $('#splash').hide()
 
     # init collections
     App.Collection.init()
@@ -21,9 +25,13 @@ class App.Run extends App.Controller
     App.Event.trigger('widget:init')
     widgets = App.Config.get( 'Widgets' )
     if widgets
-      for key, widget of widgets
+      sortedKeys = []
+      for key, value of widgets
+        sortedKeys.push key
+      sortedKeys = sortedKeys.sort()
+      for key in sortedKeys
         @el.append('<div id="' + key + '"></div>')
-        new widget( el: @el.find("##{key}") )
+        new widgets[key]( el: @el.find("##{key}") )
     App.Event.trigger('widget:ready')
 
     # bind to fill selected text into
