@@ -24,12 +24,12 @@ class App.Browser
       return false
 
     # disable Safari 3 and older
-    else if data.browser == 'Firefox' && data.version <= 3
+    else if data.browser == 'Safari' && data.version <= 3
       @message(data)
       return false
 
     # disable Opera 10 and older
-    else if data.browser == 'Firefox' && data.version <= 10
+    else if data.browser == 'Opera' && data.version <= 10
       @message(data)
       return false
 
