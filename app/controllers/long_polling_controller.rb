@@ -70,15 +70,17 @@ class LongPollingController < ApplicationController
           if params['data']['data']['recipient'] && params['data']['data']['recipient']['user_id']
             params['data']['data']['recipient']['user_id'].each { |user_id|
               if local_client[:user][:id] == user_id
-                log 'notice', "send broadcast (user_id #{user_id})", local_client_id
+                log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id #{user_id})", local_client_id
                 Session.send( local_client_id, params['data'] )
               end
             }
           # broadcast every client
           else
-            log 'notice', "send broadcast", local_client_id
+            log 'notice', "send broadcast from (#{client_id.to_s})", local_client_id
             Session.send( local_client_id, params['data'] )
           end
+        else
+          log 'notice', "do not send broadcast to it self", client_id
         end
       }
     end
@@ -100,9 +102,12 @@ class LongPollingController < ApplicationController
       return
     end
 
-    # check queue queue to send
+    # check queue to send
     client_id = client_id_check
     begin
+
+      # update last ping
+      Session.touch( client_id )
 
       # set max loop time to 28 sec. because of 30 sec. timeout of mod_proxy
       count = 14
@@ -140,8 +145,6 @@ class LongPollingController < ApplicationController
       return if !params[:client_id]
       sessions = Session.sessions
       return if !sessions.include?( params[:client_id].to_s )
-#    Session.update( client_id )
-#      Session.touch( params[:client_id] )
       return true
     end
 
