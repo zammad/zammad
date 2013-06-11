@@ -1,6 +1,6 @@
 1) App Boot
 
-1.1) app:ready
+1.1) app:init
 
 1.2) collection:init
 1.2.1) collection:ready
@@ -16,6 +16,8 @@
 
 1.5) widget:init
 1.5.1) widget:ready
+
+1.6) app:ready
 
 
 2) Task

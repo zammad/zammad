@@ -3,7 +3,10 @@ class App.Run extends App.Controller
     super
     @el = $('#app')
 
-    @trigger('app:ready')
+    App.Event.trigger('app:init')
+
+    # browser check
+    # App.Browser.check()
 
     # init collections
     App.Collection.init()
@@ -15,16 +18,18 @@ class App.Run extends App.Controller
     App.Auth.loginCheck()
 
     # start widgets
-    @trigger('widget:init')
+    App.Event.trigger('widget:init')
     widgets = App.Config.get( 'Widgets' )
     if widgets
       for key, widget of widgets
         @el.append('<div id="' + key + '"></div>')
         new widget( el: @el.find("##{key}") )
-    @trigger('widget:ready')
+    App.Event.trigger('widget:ready')
 
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
+
+    App.Event.trigger('app:ready')
 
 class App.Content extends App.Controller
   className: 'container'
