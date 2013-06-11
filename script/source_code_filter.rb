@@ -14,6 +14,8 @@ def checkForHeader(fileName)
 
    if allLines[0] =~ /(^# Copyright)/ || allLines[1] =~ /(^# Copyright)/
       foundHeader = true
+   elsif allLines[1] =~/^=begin/ #assume external script
+      foundHeader = true
    end
    if allLines[0] =~ /(^#!\/)/
       foundSheBang = true
