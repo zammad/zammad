@@ -400,6 +400,20 @@ class App.ControllerModal extends App.Controller
 #        @callback.error = options.error
 
     super(options)
+    if options.show
+      @render()
+
+  render: ->
+    @html App.view('modal')(
+      title:   @title,
+      message: @message
+      detail:  @detail
+      close:   @close
+    )
+    @modalShow(
+      backdrop: @backdrop,
+      keyboard: @keyboard,
+    )
 
   modalShow: (params) ->
     defaults = {

@@ -1,13 +1,48 @@
-class App.Browser extends App.Controller
-  constructor: ->
-    super
+class App.Browser
+  @detection: ->
+    data =
+      browser: @searchString(@dataBrowser) or "An unknown browser"
+      version: @searchVersion(navigator.userAgent) or @searchVersion(navigator.appVersion) or "an unknown version"
+      OS:      @searchString(@dataOS) or "an unknown OS"
 
-  @init: ->
-    @browser = @searchString(@dataBrowser) or "An unknown browser"
-    @version = @searchVersion(navigator.userAgent) or @searchVersion(navigator.appVersion) or "an unknown version"
-    @OS = @searchString(@dataOS) or "an unknown OS"
-    return @check()
+  @check: ->
+    data = @detection()
 
+    # disable Crome 13 and older
+    if data.browser == 'Chrome' && data.version <= 13
+      @message(data)
+      return false
+
+    # disable Firefox 6 and older
+    else if data.browser == 'Firefox' && data.version <= 6
+      @message(data)
+      return false
+
+    # disable IE 8 and older
+    else if data.browser == 'Explorer' && data.version <= 8
+      @message(data)
+      return false
+
+    # disable Safari 3 and older
+    else if data.browser == 'Firefox' && data.version <= 3
+      @message(data)
+      return false
+
+    # disable Opera 10 and older
+    else if data.browser == 'Firefox' && data.version <= 10
+      @message(data)
+      return false
+
+    return true
+
+  @message: (data) ->
+    new App.ControllerModal(
+      title:    'Browser too old!'
+      message:  "Your Browser is not supported. Please use a newer one (#{data.browser} #{data.version} #{data.OS})"
+      show:     true
+      backdrop: false
+      keyboard: false
+    )
 
   @searchString: (data) ->
     i = 0
@@ -99,14 +134,5 @@ class App.Browser extends App.Controller
     subString: "Linux"
     identity: "Linux"
   ]
-
-  @check: ->
-    if @browser == 'Chrome' && @version <= 27
-      App.Event.trigger('session:browscheckfailed', {title: 'Error', message: 'Your Browser is not supported!'})
-      return false
-    else
-      return true
-
-      
 
 
