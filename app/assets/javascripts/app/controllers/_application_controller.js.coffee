@@ -468,6 +468,11 @@ class App.SessionReloadModal extends App.ControllerModal
       keyboard: @keyboard,
     )
 
+    # reload page on modal hidden
+    @el.on('hidden', =>
+      @reload()
+    )
+
   modalHide: (e) ->
     @reload(e)
 
