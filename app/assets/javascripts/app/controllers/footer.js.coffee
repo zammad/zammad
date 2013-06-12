@@ -12,4 +12,4 @@ class App.Footer extends App.Controller
   render: () ->
     @html App.view('footer')()
 
-App.Config.set( 'zzzfooter', App.Footer, 'Widgets' )
+App.Config.set( 'footer', App.Footer, 'Footers' )

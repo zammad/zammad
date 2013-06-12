@@ -218,7 +218,7 @@ class AgentTicketActionSimpleTest < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => '.active',
+            :css          => '.content_permanent.active',
             :value        => 'some body 123äöü 222',
             :match_result => true,
           },
@@ -226,22 +226,22 @@ class AgentTicketActionSimpleTest < TestCase
           # update ticket
           {
             :execute => 'select',
-            :css     => '.active select[name="ticket_article_type_id"]',
+            :css     => '.content_permanent.active select[name="ticket_article_type_id"]',
             :value   => 'note',
           },
           {
             :execute => 'check',
-            :css     => '.active textarea[name="body"]',
+            :css     => '.content_permanent.active textarea[name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => '.active textarea[name="body"]',
+            :css     => '.content_permanent.active textarea[name="body"]',
             :value   => 'some body 1234 äöüß 222',
           },
           {
             :execute => 'click',
-            :css     => '.active button',
+            :css     => '.content_permanent.active button',
           },
           {
             :execute => 'wait',
@@ -249,7 +249,7 @@ class AgentTicketActionSimpleTest < TestCase
           },
           {
             :execute      => 'match',
-            :css          => '.active .ticket-answer',
+            :css          => '.content_permanent.active .ticket-answer',
             :value        => 'some body 1234 äöüß 222',
             :match_result => true,
           },

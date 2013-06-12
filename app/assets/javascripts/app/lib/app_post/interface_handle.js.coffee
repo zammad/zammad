@@ -21,23 +21,30 @@ class App.Run extends App.Controller
     # check if session already exists/try to get session data from server
     App.Auth.loginCheck()
 
+    # start navbars
+    @setupWidget( 'Navigations', 'nav', @el.find('nav') )
+
     # start widgets
-    App.Event.trigger('widget:init')
-    widgets = App.Config.get( 'Widgets' )
-    if widgets
-      sortedKeys = []
-      for key, value of widgets
-        sortedKeys.push key
-      sortedKeys = sortedKeys.sort()
-      for key in sortedKeys
-        @el.append('<div id="' + key + '"></div>')
-        new widgets[key]( el: @el.find("##{key}") )
-    App.Event.trigger('widget:ready')
+    @setupWidget( 'Widgets', 'widget', @el.find('section') )
+
+    # start widgets
+    @setupWidget( 'Footers', 'footer', @el.find('footer') )
 
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
 
     App.Event.trigger('app:ready')
+
+  setupWidget: (config, event, el) ->
+
+    # start widgets
+    App.Event.trigger( event + ':init')
+    widgets = App.Config.get( config )
+    if widgets
+      for key, widget of widgets
+        el.append('<div id="' + key + '"></div>')
+        new widget( el: el.find("##{key}") )
+    App.Event.trigger( event + ':ready')
 
 class App.Content extends App.Controller
   className: 'container'

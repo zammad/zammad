@@ -14,10 +14,16 @@
 1.4.1) auth:login
 1.4.2) auth:logout
 
-1.5) widget:init
-1.5.1) widget:ready
+1.5) nav:init
+1.5.1) nav:ready
 
-1.6) app:ready
+1.6) widget:init
+1.6.1) widget:ready
+
+1.7) footer:init
+1.7.1) footer:ready
+
+1.8) app:ready
 
 
 2) Task

@@ -342,4 +342,4 @@ class App.Navigation extends App.Controller
 
     @Config.set( 'NavBarRight', NavBarRight )
 
-App.Config.set( 'navigation', App.Navigation, 'Widgets' )
+App.Config.set( 'navigation', App.Navigation, 'Navigations' )
