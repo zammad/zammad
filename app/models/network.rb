@@ -1,7 +1,9 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Network < ApplicationModel
-#  belongs_to :group
-#  belongs_to :ticket_state, :class_name => 'Ticket::State'
-#  belongs_to :ticket_priority, :class_name => 'Ticket::Priority'
+  #  belongs_to :group
+  #  belongs_to :ticket_state, :class_name => 'Ticket::State'
+  #  belongs_to :ticket_priority, :class_name => 'Ticket::Priority'
 
   class Category < ApplicationModel
     self.table_name = 'network_categories'
@@ -12,7 +14,7 @@ class Network < ApplicationModel
     class Subscription < ApplicationModel
     end
   end
-  
+
   class Item < ApplicationModel
     class Comment < ApplicationModel
     end

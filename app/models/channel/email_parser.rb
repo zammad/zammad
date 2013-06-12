@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 # encoding: utf-8
 
 require 'mail'
@@ -72,7 +74,7 @@ class Channel::EmailParser
     data[:from_local]        = Mail::Address.new( mail[:from].value ).local
     data[:from_domain]       = Mail::Address.new( mail[:from].value ).domain
     data[:from_display_name] = Mail::Address.new( mail[:from].value ).display_name ||
-      ( Mail::Address.new( mail[:from].value ).comments && Mail::Address.new( mail[:from].value ).comments[0] )
+    ( Mail::Address.new( mail[:from].value ).comments && Mail::Address.new( mail[:from].value ).comments[0] )
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] = Mail::Field.new( 'X-From', data[:from_display_name] ).to_s
@@ -81,8 +83,8 @@ class Channel::EmailParser
     data[:message_id] = data['message-id'.to_sym]
 
     # body
-#    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
-#    html_part = message.html_part ? message.html_part.body.decoded : nil
+    #    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
+    #    html_part = message.html_part ? message.html_part.body.decoded : nil
     data[:attachments] = []
 
     # multi part email
@@ -93,7 +95,7 @@ class Channel::EmailParser
         data[:body] = mail.text_part.body.decoded
         data[:body] = Encode.conv( mail.text_part.charset, data[:body] )
 
-      # html attachment/body may exists and will be converted to text
+        # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
         if mail.html_part.body
@@ -102,7 +104,7 @@ class Channel::EmailParser
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
           data[:body] = html2ascii( data[:body] )
 
-        # any other attachments
+          # any other attachments
         else
           data[:body] = 'no visible content'
         end
@@ -144,7 +146,7 @@ class Channel::EmailParser
         }
       end
 
-    # not multipart email
+      # not multipart email
     else
 
       # text part
@@ -152,7 +154,7 @@ class Channel::EmailParser
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
-      # html part
+        # html part
       else
         filename = '-no name-'
         if mail.mime_type.to_s.downcase == 'text/html'
@@ -161,7 +163,7 @@ class Channel::EmailParser
           data[:body] = Encode.conv( mail.charset, data[:body] )
           data[:body] = html2ascii( data[:body] )
 
-        # any other attachments
+          # any other attachments
         else
           data[:body] = 'no visible content'
         end
@@ -375,10 +377,10 @@ class Channel::EmailParser
         internal = true
       end
       article_attributes = {
-        :ticket_id                => ticket.id, 
+        :ticket_id                => ticket.id,
         :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
         :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-        :body                     => mail[:body], 
+        :body                     => mail[:body],
         :from                     => mail[:from],
         :to                       => mail[:to],
         :cc                       => mail[:cc],
@@ -425,7 +427,7 @@ class Channel::EmailParser
 
     # run postmaster post filter
     filters = {
-#      '0010' => Channel::Filter::Trusted,
+      #      '0010' => Channel::Filter::Trusted,
     }
 
     # filter( channel, mail )
@@ -525,14 +527,14 @@ module Mail
           text
         else
           # Join QP encoded-words that are adjacent to avoid decoding partial chars
-#          text.gsub!(/\?\=\=\?.+?\?[Qq]\?/m, '') if text =~ /\?==\?/
+          #          text.gsub!(/\?\=\=\?.+?\?[Qq]\?/m, '') if text =~ /\?==\?/
 
           # Search for occurences of quoted strings or plain strings
           text.scan(/(                                  # Group around entire regex to include it in matches
-                       \=\?[^?]+\?([QB])\?[^?]+?\?\=  # Quoted String with subgroup for encoding method
-                       |                                # or
-                       .+?(?=\=\?|$)                    # Plain String
-                     )/xmi).map do |matches|
+            \=\?[^?]+\?([QB])\?[^?]+?\?\=  # Quoted String with subgroup for encoding method
+            |                                # or
+            .+?(?=\=\?|$)                    # Plain String
+          )/xmi).map do |matches|
             string, method = *matches
             if    method == 'b' || method == 'B'
               b_value_decode(string)

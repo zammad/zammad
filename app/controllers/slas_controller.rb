@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class SlasController < ApplicationController
   before_filter :authentication_check
 
@@ -17,7 +19,7 @@ Example:
   "updated_by_id":2.
   "created_by_id":2,
 }
-  
+
 =end
 
 =begin
@@ -63,7 +65,7 @@ Response:
 
 Test:
 curl http://localhost/api/slas/#{id}.json -v -u #{login}:#{password}
- 
+
 =end
 
   def show

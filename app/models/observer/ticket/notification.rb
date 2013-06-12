@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'notification_factory'
 
 class Observer::Ticket::Notification < ActiveRecord::Observer
@@ -10,8 +12,8 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-#    puts '@@event_buffer'
-#    puts @@event_buffer.inspect
+    #    puts '@@event_buffer'
+    #    puts @@event_buffer.inspect
     @@event_buffer.each { |event|
 
       # get current state of objects
@@ -24,7 +26,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         ticket  = article.ticket
       elsif event[:name] == 'Ticket'
         ticket  = Ticket.lookup( :id => event[:id] )
-        
+
         # next if ticket is already deleted
         next if !ticket
 
@@ -44,19 +46,19 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-a new Ticket (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+            a new Ticket (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
 
-Group: #{ticket.group.name}
-Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-State: i18n(#{ticket.ticket_state.name})
+            Group: #{ticket.group.name}
+            Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+            State: i18n(#{ticket.ticket_state.name})
 
-From: #{article.from}
-<snip>
-#{article.body}
-</snip>
+            From: #{article.from}
+            <snip>
+            #{article.body}
+            </snip>
 
-#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
-'
+            #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
+            '
           },
           ticket,
           article
@@ -77,17 +79,17 @@ From: #{article.from}
             :subject   => 'New Ticket has been created! (#{ticket.title})',
             :body      => 'Thanks for your email. A new ticket has been created.
 
-You wrote:
-<snip>
-#{article.body}
-</snip>
+            You wrote:
+            <snip>
+            #{article.body}
+            </snip>
 
-Your email will be answered by a human ASAP
+            Your email will be answered by a human ASAP
 
-Have fun with Zammad! :-)
+            Have fun with Zammad! :-)
 
-Your Zammad Team
-'
+            Your Zammad Team
+            '
           },
           ticket,
           article
@@ -110,25 +112,25 @@ Your Zammad Team
               :subject   => 'Follow Up (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-a follow Up (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+              a follow Up (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
 
-Group: #{ticket.group.name}
-Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-State: i18n(#{ticket.ticket_state.name})
+              Group: #{ticket.group.name}
+              Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+              State: i18n(#{ticket.ticket_state.name})
 
-From: #{article.from}
-<snip>
-#{article.body}
-</snip>
+              From: #{article.from}
+              <snip>
+              #{article.body}
+              </snip>
 
-#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
-'
+              #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
+              '
             },
             ticket,
             article
           )
         end
-        
+
         # send new note notification to owner
         # if agent == created.id
         if article.ticket_article_sender.name == 'Agent' && article.created_by_id != article.ticket.owner_id
@@ -138,20 +140,20 @@ From: #{article.from}
               :recipient => 'owner', # group|owner|to_work_on
               :subject   => 'Updated (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
-              
-updated (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
 
-Group: #{ticket.group.name}
-Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-State: i18n(#{ticket.ticket_state.name})
+              updated (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
 
-From: #{article.from}
-<snip>
-#{article.body}
-</snip>
+              Group: #{ticket.group.name}
+              Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
+              State: i18n(#{ticket.ticket_state.name})
 
-#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
-'
+              From: #{article.from}
+              <snip>
+              #{article.body}
+              </snip>
+
+              #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
+              '
             },
             ticket,
             article
@@ -159,7 +161,7 @@ From: #{article.from}
         end
       end
     }
-    
+
     # reset buffer
     @@event_buffer = []
   end
@@ -173,20 +175,20 @@ From: #{article.from}
     if data[:recipient] == 'group'
       recipients = ticket.agent_of_group()
 
-    # owner
+      # owner
     elsif data[:recipient] == 'owner'
       if ticket.owner_id != 1
         recipients.push ticket.owner
       end
 
-    # customer
+      # customer
     elsif data[:recipient] == 'customer'
       if ticket.customer_id != 1
-# temporarily disabled        
-#        recipients.push ticket.customer
+        # temporarily disabled
+        #        recipients.push ticket.customer
       end
 
-    # owner or group of agents to work on
+      # owner or group of agents to work on
     elsif data[:recipient] == 'to_work_on'
       if ticket.owner_id != 1
         recipients.push ticket.owner
@@ -251,8 +253,8 @@ From: #{article.from}
     # return if we run import mode
     return if Setting.get('import_mode')
 
-#    puts 'CREATED!!!!'
-#    puts record.inspect
+    #    puts 'CREATED!!!!'
+    #    puts record.inspect
     e = {
       :name => record.class.name,
       :type => 'create',
@@ -272,12 +274,12 @@ From: #{article.from}
 
     # do not send anything if nothing has changed
     return if current.attributes == record.attributes
-  
-#    puts 'UPDATE!!!!!!!!'
-#    puts 'current'
-#    puts current.inspect
-#    puts 'record'
-#    puts record.inspect
+
+    #    puts 'UPDATE!!!!!!!!'
+    #    puts 'current'
+    #    puts current.inspect
+    #    puts 'record'
+    #    puts record.inspect
 
     e = {
       :name => record.class.name,
@@ -293,10 +295,10 @@ From: #{article.from}
     # return if we run import mode
     return if Setting.get('import_mode')
 
-#    puts 'after_update'
-#    puts record.inspect
-#    puts '-----'
-#    puts @a.inspect
-#    AuditTrail.new(record, "UPDATED")
+    #    puts 'after_update'
+    #    puts record.inspect
+    #    puts '-----'
+    #    puts @a.inspect
+    #    AuditTrail.new(record, "UPDATED")
   end
 end

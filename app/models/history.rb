@@ -1,10 +1,12 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class History < ApplicationModel
   self.table_name = 'histories'
   belongs_to :history_type,             :class_name => 'History::Type'
   belongs_to :history_object,           :class_name => 'History::Object'
   belongs_to :history_attribute,        :class_name => 'History::Attribute'
-#  before_validation :check_type, :check_object
-#  attr_writer :history_type, :history_object
+  #  before_validation :check_type, :check_object
+  #  attr_writer :history_type, :history_object
 
   @@cache_type = {}
   @@cache_object = {}
@@ -63,29 +65,29 @@ class History < ApplicationModel
 
   def self.history_destroy( requested_object, requested_object_id )
     History.where( :history_object_id => History::Object.where( :name => requested_object ) ).
-      where( :o_id => requested_object_id ).
-      destroy_all
+    where( :o_id => requested_object_id ).
+    destroy_all
   end
 
   def self.history_list( requested_object, requested_object_id, related_history_object = nil )
     if !related_history_object
       history_object = self.history_object_lookup( requested_object )
       history = History.where( :history_object_id => history_object.id ).
-        where( :o_id => requested_object_id ).
-        where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] ) ).
-        order('created_at ASC, id ASC')
+      where( :o_id => requested_object_id ).
+      where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] ) ).
+      order('created_at ASC, id ASC')
     else
       history_object_requested = self.history_object_lookup( requested_object )
       history_object_related   = self.history_object_lookup( related_history_object )
       history = History.where(
-          '((history_object_id = ? AND o_id = ?) OR (history_object_id = ? AND related_o_id = ? )) AND history_type_id IN (?)',
-          history_object_requested.id,
-          requested_object_id,
-          history_object_related.id,
-          requested_object_id,
-          History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] )
-        ).
-        order('created_at ASC, id ASC')
+        '((history_object_id = ? AND o_id = ?) OR (history_object_id = ? AND related_o_id = ? )) AND history_type_id IN (?)',
+        history_object_requested.id,
+        requested_object_id,
+        history_object_related.id,
+        requested_object_id,
+        History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] )
+      ).
+      order('created_at ASC, id ASC')
     end
 
     list = []
@@ -94,7 +96,7 @@ class History < ApplicationModel
       item_tmp['history_type'] = item.history_type.name
       item_tmp['history_object'] = item.history_object.name
       if item.history_attribute
-       item_tmp['history_attribute'] = item.history_attribute.name
+        item_tmp['history_attribute'] = item.history_attribute.name
       end
       item_tmp.delete( 'history_attribute_id' )
       item_tmp.delete( 'history_object_id' )
@@ -121,14 +123,14 @@ class History < ApplicationModel
   end
 
   def self.activity_stream( user, limit = 10 )
-#    g = Group.where( :active => true ).joins(:users).where( 'users.id' => user.id )
-#    stream = History.select("distinct(histories.o_id), created_by_id, history_attribute_id, history_type_id, history_object_id, value_from, value_to").
-#      where( :history_type_id   => History::Type.where( :name => ['created', 'updated']) ).
+    #    g = Group.where( :active => true ).joins(:users).where( 'users.id' => user.id )
+    #    stream = History.select("distinct(histories.o_id), created_by_id, history_attribute_id, history_type_id, history_object_id, value_from, value_to").
+    #      where( :history_type_id   => History::Type.where( :name => ['created', 'updated']) ).
     stream = History.select("distinct(histories.o_id), created_by_id, history_type_id, history_object_id").
-      where( :history_object_id => History::Object.where( :name => [ 'Ticket', 'Ticket::Article' ] ) ).
-      where( :history_type_id   => History::Type.where( :name => [ 'created', 'updated' ]) ).
-      order('created_at DESC, id DESC').
-      limit(limit)
+    where( :history_object_id => History::Object.where( :name => [ 'Ticket', 'Ticket::Article' ] ) ).
+    where( :history_type_id   => History::Type.where( :name => [ 'created', 'updated' ]) ).
+    order('created_at DESC, id DESC').
+    limit(limit)
     datas = []
     stream.each do |item|
       data = item.attributes
@@ -137,7 +139,7 @@ class History < ApplicationModel
       data.delete('history_object_id')
       data.delete('history_type_id')
       datas.push data
-#      item['history_attribute'] = item.history_attribute
+      #      item['history_attribute'] = item.history_attribute
     end
     return datas
   end
@@ -196,87 +198,87 @@ class History < ApplicationModel
 
   private
 
-    def self.history_type_lookup_id( id )
+  def self.history_type_lookup_id( id )
 
-      # use cache
-      return @@cache_type[ id ] if @@cache_type[ id ]
+    # use cache
+    return @@cache_type[ id ] if @@cache_type[ id ]
 
-      # lookup
-      history_type = History::Type.find(id)
-      @@cache_type[ id ] = history_type
-      return history_type
-    end
+    # lookup
+    history_type = History::Type.find(id)
+    @@cache_type[ id ] = history_type
+    return history_type
+  end
 
-    def self.history_type_lookup( name )
+  def self.history_type_lookup( name )
 
-      # use cache
-      return @@cache_type[ name ] if @@cache_type[ name ]
+    # use cache
+    return @@cache_type[ name ] if @@cache_type[ name ]
 
-      # lookup
-      history_type = History::Type.where( :name => name ).first
-      if history_type
-        @@cache_type[ name ] = history_type
-        return history_type
-      end
-
-      # create
-      history_type = History::Type.create(
-        :name   => name
-      )
+    # lookup
+    history_type = History::Type.where( :name => name ).first
+    if history_type
       @@cache_type[ name ] = history_type
       return history_type
     end
 
-    def self.history_object_lookup_id( id )
+    # create
+    history_type = History::Type.create(
+      :name   => name
+    )
+    @@cache_type[ name ] = history_type
+    return history_type
+  end
 
-      # use cache
-      return @@cache_object[ id ] if @@cache_object[ id ]
+  def self.history_object_lookup_id( id )
 
-      # lookup
-      history_object = History::Object.find(id)
-      @@cache_object[ id ] = history_object
-      return history_object
-    end
+    # use cache
+    return @@cache_object[ id ] if @@cache_object[ id ]
 
-    def self.history_object_lookup( name )
+    # lookup
+    history_object = History::Object.find(id)
+    @@cache_object[ id ] = history_object
+    return history_object
+  end
 
-      # use cache
-      return @@cache_object[ name ] if @@cache_object[ name ]
+  def self.history_object_lookup( name )
 
-      # lookup
-      history_object = History::Object.where( :name => name ).first
-      if history_object
-        @@cache_object[ name ] = history_object
-        return history_object
-      end
+    # use cache
+    return @@cache_object[ name ] if @@cache_object[ name ]
 
-      # create
-      history_object = History::Object.create(
-        :name   => name
-      )
+    # lookup
+    history_object = History::Object.where( :name => name ).first
+    if history_object
       @@cache_object[ name ] = history_object
       return history_object
     end
 
-    def self.history_attribute_lookup( name )
+    # create
+    history_object = History::Object.create(
+      :name   => name
+    )
+    @@cache_object[ name ] = history_object
+    return history_object
+  end
 
-      # use cache
-      return @@cache_attribute[ name ] if @@cache_attribute[ name ]
+  def self.history_attribute_lookup( name )
 
-      # lookup
-      history_attribute = History::Attribute.where( :name => name ).first
-      if history_attribute
-        @@cache_attribute[ name ] = history_attribute
-        return history_attribute
-      end
+    # use cache
+    return @@cache_attribute[ name ] if @@cache_attribute[ name ]
 
-      # create
-      history_attribute = History::Attribute.create(
-        :name   => name
-      )
+    # lookup
+    history_attribute = History::Attribute.where( :name => name ).first
+    if history_attribute
       @@cache_attribute[ name ] = history_attribute
       return history_attribute
     end
+
+    # create
+    history_attribute = History::Attribute.create(
+      :name   => name
+    )
+    @@cache_attribute[ name ] = history_attribute
+    return history_attribute
+  end
 
   class Object < ApplicationModel
   end

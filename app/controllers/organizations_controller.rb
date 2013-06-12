@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class OrganizationsController < ApplicationController
   before_filter :authentication_check
 
@@ -17,7 +19,7 @@ Example:
   "created_at":"2012-09-14T17:51:53Z",
   "created_by_id":2,
 }
-  
+
 =end
 
 =begin
@@ -62,7 +64,7 @@ Response:
 
 Test:
 curl http://localhost/api/organizations/#{id}.json -v -u #{login}:#{password}
- 
+
 =end
 
   def show
@@ -137,10 +139,10 @@ Resource:
 Response:
 
 Test:
- 
+
 =end
 
-def destroy
+  def destroy
     return if is_not_role('Agent')
     model_destory_render(Organization, params)
   end

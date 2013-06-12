@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class PostmasterFiltersController < ApplicationController
   before_filter :authentication_check
 
@@ -70,7 +72,7 @@ Response:
 
 Test:
 curl http://localhost/api/postmaster_filters/#{id}.json -v -u #{login}:#{password}
- 
+
 =end
 
   def show
@@ -173,7 +175,7 @@ Resource:
 Response:
 
 Test:
- 
+
 =end
 
   def destroy

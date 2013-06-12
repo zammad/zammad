@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
   observe 'ticket::_article'
 
@@ -23,7 +25,7 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
         :body        => record.body,
         :in_reply_to => record.in_reply_to
       },
-#      Rails.application.config.channel_twitter
+      #      Rails.application.config.channel_twitter
     )
     record.message_id = message.id
     record.save

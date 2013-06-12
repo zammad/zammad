@@ -1,16 +1,18 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class ApplicationController < ActionController::Base
-#  http_basic_authenticate_with :name => "test", :password => "ttt"
+  #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user,
-                :authentication_check,
-                :config_frontend,
-                :user_data_full,
-                :is_role,
-                :model_create_render,
-                :model_update_render,
-                :model_restory_render,
-                :mode_show_rendeder,
-                :model_index_render
+  :authentication_check,
+  :config_frontend,
+  :user_data_full,
+  :is_role,
+  :model_create_render,
+  :model_update_render,
+  :model_restory_render,
+  :mode_show_rendeder,
+  :model_index_render
 
   before_filter :set_user
   before_filter :cors_preflight_check
@@ -19,7 +21,7 @@ class ApplicationController < ActionController::Base
   after_filter  :trigger_events
 
   # For all responses in this controller, return the CORS access control headers.
-  def set_access_control_headers 
+  def set_access_control_headers
     headers['Access-Control-Allow-Origin']      = '*'
     headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
     headers['Access-Control-Max-Age']           = '1728000'
@@ -45,7 +47,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # execute events      
+  # execute events
   def trigger_events
     Observer::Ticket::Notification.transaction
   end
@@ -73,7 +75,7 @@ class ApplicationController < ActionController::Base
 
   def authentication_check_only
     puts 'authentication_check'
-#    puts params.inspect
+    #    puts params.inspect
 
     # check http basic auth
     authenticate_with_http_basic do |username, password|
@@ -107,7 +109,7 @@ class ApplicationController < ActionController::Base
     end
 
     # check logon session
-    if params['logon_session'] 
+    if params['logon_session']
       logon_session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
       if logon_session
         userdata = User.find( logon_session.data[:user_id] )
@@ -207,15 +209,15 @@ class ApplicationController < ActionController::Base
     config['timezones'] = {}
     TZInfo::Timezone.all.each { |t|
 
-        # ignore the following time zones
-        next if t.name =~ /^GMT/
-        next if t.name =~ /^Etc/
-        next if t.name =~ /^MET/
-        next if t.name =~ /^MST/
-        next if t.name =~ /^ROC/
-        next if t.name =~ /^ROK/
-        diff = t.current_period.utc_total_offset / 60 /60
-        config['timezones'][ t.name ] = diff
+      # ignore the following time zones
+      next if t.name =~ /^GMT/
+      next if t.name =~ /^Etc/
+      next if t.name =~ /^MET/
+      next if t.name =~ /^MST/
+      next if t.name =~ /^ROC/
+      next if t.name =~ /^ROK/
+      diff = t.current_period.utc_total_offset / 60 /60
+      config['timezones'][ t.name ] = diff
     }
 
     return config
@@ -251,7 +253,7 @@ class ApplicationController < ActionController::Base
       # save object
       generic_object.update_attributes!( object.param_cleanup(params) )
       model_update_render_item(generic_object)
-    rescue Exception => e  
+    rescue Exception => e
       logger.error e.message
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end

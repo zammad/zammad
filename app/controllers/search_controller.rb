@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class SearchController < ApplicationController
   before_filter :authentication_check
 
   # GET /api/search
   def search
-    
+
     # build result list
     tickets = Ticket.search(
       :limit        => params[:limit],

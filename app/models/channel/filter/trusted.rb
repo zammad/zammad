@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 # delete all X-Zammad header if channel is not trusted
 module Channel::Filter::Trusted
 

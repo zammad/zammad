@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Observer::Ticket::LastContact < ActiveRecord::Observer
   observe 'ticket::_article'
 
   def after_create(record)
-#    puts 'check last contact'
+    #    puts 'check last contact'
 
     # if article in internal
     return true if record.internal
@@ -41,4 +43,4 @@ class Observer::Ticket::LastContact < ActiveRecord::Observer
       record.ticket.save
     end
   end
-end  
+end

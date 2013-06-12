@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Organization < ApplicationModel
   has_and_belongs_to_many :users
   validates               :name, :presence => true
@@ -27,7 +29,7 @@ class Organization < ApplicationModel
         :limit      => limit,
         :conditions => ['users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"],
         :order      => 'organizations.name'
-      ) 
+      )
     end
     return organizations
   end

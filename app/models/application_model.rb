@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'cache'
 require 'user_info'
 
@@ -26,7 +28,7 @@ class ApplicationModel < ActiveRecord::Base
     data = {}
     self.new.attributes.each {|item|
       if params.has_key?(item[0])
-#        puts 'use ' + item[0].to_s + '-' + params[item[0]].to_s
+        #        puts 'use ' + item[0].to_s + '-' + params[item[0]].to_s
         data[item[0].to_sym] = params[item[0]]
       end
     }
@@ -69,9 +71,9 @@ class ApplicationModel < ActiveRecord::Base
   end
 
   def cache_update(o)
-#    puts 'u ' + self.class.to_s
+    #    puts 'u ' + self.class.to_s
     if self.respond_to?('cache_delete') then self.cache_delete end
-#    puts 'g ' + group.class.to_s
+    #    puts 'g ' + group.class.to_s
     if o.respond_to?('cache_delete') then o.cache_delete end
   end
   def cache_delete_before
@@ -120,11 +122,11 @@ class ApplicationModel < ActiveRecord::Base
 
   def self.lookup(data)
     if data[:id]
-#      puts "GET- + #{self.to_s}.#{data[:id].to_s}"
+      #      puts "GET- + #{self.to_s}.#{data[:id].to_s}"
       cache = self.cache_get( data[:id] )
       return cache if cache
 
-#      puts "Fillup- + #{self.to_s}.#{data[:id].to_s}"
+      #      puts "Fillup- + #{self.to_s}.#{data[:id].to_s}"
       record = self.where( :id => data[:id] ).first
       self.cache_set( data[:id], record )
       return record

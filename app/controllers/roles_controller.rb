@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class RolesController < ApplicationController
   before_filter :authentication_check
 
@@ -16,7 +18,7 @@ Example:
   "updated_by_id":2,
   "created_by_id":2,
 }
-  
+
 =end
 
 =begin
@@ -61,7 +63,7 @@ Response:
 
 Test:
 curl http://localhost/api/roles/#{id}.json -v -u #{login}:#{password}
- 
+
 =end
 
   def show
@@ -133,7 +135,7 @@ Resource:
 Response:
 
 Test:
- 
+
 =end
 
   def destroy

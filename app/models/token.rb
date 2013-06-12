@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Token < ActiveRecord::Base
   before_create           :generate_token
 
@@ -8,7 +10,7 @@ class Token < ActiveRecord::Base
     # fetch token
     token = Token.where( :action => data[:action], :name => data[:name] ).first
     return if !token
-    
+
     # check if token is still valid
     if token.created_at < 1.day.ago
 
@@ -23,9 +25,9 @@ class Token < ActiveRecord::Base
   end
 
   private
-    def generate_token
-      begin
-        self.name = SecureRandom.hex(20)
-      end while Token.exists?( :name => self.name )
-    end
+  def generate_token
+    begin
+      self.name = SecureRandom.hex(20)
+    end while Token.exists?( :name => self.name )
+  end
 end

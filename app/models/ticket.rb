@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'time_calculation'
 require 'sla'
 
@@ -64,7 +66,7 @@ class Ticket < ApplicationModel
         owner_ids.push user.id
       }
     end
- 
+
     # get group
     group_ids = []
     Group.where( :active => true ).each { |group|
@@ -78,11 +80,11 @@ class Ticket < ApplicationModel
     }
     groups_users = {}
     group_ids.each {|group_id|
-        groups_users[ group_id ] = []
-        Group.find( group_id ).users.each {|user|
-            next if !agents[ user.id ]
-            groups_users[ group_id ].push user.id
-        }
+      groups_users[ group_id ] = []
+      Group.find( group_id ).users.each {|user|
+        next if !agents[ user.id ]
+        groups_users[ group_id ].push user.id
+      }
     }
 
     # get priorities
@@ -124,7 +126,7 @@ class Ticket < ApplicationModel
 
     # create new merge article
     Ticket::Article.create(
-      :ticket_id                => self.id, 
+      :ticket_id                => self.id,
       :ticket_article_type_id   => Ticket::Article::Type.lookup( :name => 'note' ).id,
       :ticket_article_sender_id => Ticket::Article::Sender.lookup( :name => 'Agent' ).id,
       :body                     => 'merged',
@@ -152,9 +154,9 @@ class Ticket < ApplicationModel
     self.save
   end
 
-#  def self.agent
-#    Role.where( :name => ['Agent'], :active => true ).first.users.where( :active => true ).uniq()
-#  end
+  #  def self.agent
+  #    Role.where( :name => ['Agent'], :active => true ).first.users.where( :active => true ).uniq()
+  #  end
 
   def subject_build (subject)
 
@@ -204,9 +206,9 @@ class Ticket < ApplicationModel
     return subject
   end
 
-#  ticket.permission(
-#    :current_user => 123
-#  )
+  #  ticket.permission(
+  #    :current_user => 123
+  #  )
   def permission (data)
 
     # check customer
@@ -236,11 +238,11 @@ class Ticket < ApplicationModel
     return false
   end
 
-#  Ticket.search(
-#    :current_user => 123,
-#    :query        => 'search something',
-#    :limit        => 15,
-#  )
+  #  Ticket.search(
+  #    :current_user => 123,
+  #    :query        => 'search something',
+  #    :limit        => 15,
+  #  )
   def self.search (params)
 
     # get params
@@ -251,9 +253,9 @@ class Ticket < ApplicationModel
     conditions = []
     if current_user.is_role('Agent')
       group_ids = Group.select( 'groups.id' ).joins(:users).
-        where( 'groups_users.user_id = ?', current_user.id ).
-        where( 'groups.active = ?', true ).
-        map( &:id )
+      where( 'groups_users.user_id = ?', current_user.id ).
+      where( 'groups.active = ?', true ).
+      map( &:id )
       conditions = [ 'group_id IN (?)', group_ids ]
     else
       if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
@@ -265,11 +267,11 @@ class Ticket < ApplicationModel
 
     # do query
     tickets_all = Ticket.select('DISTINCT(tickets.id)').
-      where(conditions).
-      where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
-      joins(:articles).
-      limit(limit).
-      order('`tickets`.`created_at` DESC')
+    where(conditions).
+    where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
+    joins(:articles).
+    limit(limit).
+    order('`tickets`.`created_at` DESC')
 
     # build result list
     tickets = []
@@ -281,9 +283,9 @@ class Ticket < ApplicationModel
 
     return tickets
   end
-#  Ticket.overview_list(
-#    :current_user => 123,
-#  )
+  #  Ticket.overview_list(
+  #    :current_user => 123,
+  #  )
   def self.overview_list (data)
 
     # get customer overviews
@@ -303,10 +305,10 @@ class Ticket < ApplicationModel
     return overviews
   end
 
-#  Ticket.overview(
-#    :view         => 'some_view_url',
-#    :current_user => OBJECT,
-#  )
+  #  Ticket.overview(
+  #    :view         => 'some_view_url',
+  #    :current_user => OBJECT,
+  #  )
   def self.overview (data)
 
     overviews = self.overview_list(data)
@@ -339,35 +341,35 @@ class Ticket < ApplicationModel
     end
 
     # sortby
-      # prio
-      # state
-      # group
-      # customer
+    # prio
+    # state
+    # group
+    # customer
 
     # order
-      # asc
-      # desc
+    # asc
+    # desc
 
     # groupby
-      # prio
-      # state
-      # group
-      # customer    
+    # prio
+    # state
+    # group
+    # customer
 
-#    all = attributes[:myopenassigned]
-#    all.merge( { :group_id => groups } )
+    #    all = attributes[:myopenassigned]
+    #    all.merge( { :group_id => groups } )
 
-#    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
+    #    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
     # get only tickets with permissions
     if data[:current_user].is_role('Customer')
       group_ids = Group.select( 'groups.id' ).
-        where( 'groups.active = ?', true ).
-        map( &:id )
+      where( 'groups.active = ?', true ).
+      map( &:id )
     else
       group_ids = Group.select( 'groups.id' ).joins(:users).
-        where( 'groups_users.user_id = ?', [ data[:current_user].id ] ).
-        where( 'groups.active = ?', true ).
-        map( &:id )
+      where( 'groups_users.user_id = ?', [ data[:current_user].id ] ).
+      where( 'groups.active = ?', true ).
+      map( &:id )
     end
 
     # overview meta for navbar
@@ -400,10 +402,10 @@ class Ticket < ApplicationModel
         order_by = overview_selected.group_by + '_id, ' + order_by
       end
       tickets = Ticket.select( 'id' ).
-        where( :group_id => group_ids ).
-        where( self._condition( overview_selected.condition ) ).
-        order( order_by ).
-        limit( 500 )
+      where( :group_id => group_ids ).
+      where( self._condition( overview_selected.condition ) ).
+      order( order_by ).
+      limit( 500 )
 
       ticket_ids = []
       tickets.each { |ticket|
@@ -411,8 +413,8 @@ class Ticket < ApplicationModel
       }
 
       tickets_count = Ticket.where( :group_id => group_ids ).
-        where( self._condition( overview_selected.condition ) ).
-        count()
+      where( self._condition( overview_selected.condition ) ).
+      count()
 
       return {
         :ticket_list   => ticket_ids,
@@ -424,14 +426,14 @@ class Ticket < ApplicationModel
     # get tickets for overview
     data[:start_page] ||= 1
     tickets = Ticket.where( :group_id => group_ids ).
-      where( self._condition( overview_selected.condition ) ).
-      order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )#.
-#      limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] ).
-#      offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
+    where( self._condition( overview_selected.condition ) ).
+    order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )#.
+    #      limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] ).
+    #      offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
 
     tickets_count = Ticket.where( :group_id => group_ids ).
-      where( self._condition( overview_selected.condition ) ).
-      count()
+    where( self._condition( overview_selected.condition ) ).
+    count()
 
     return {
       :tickets       => tickets,
@@ -580,8 +582,8 @@ class Ticket < ApplicationModel
     ignore_escalation = ['removed', 'closed', 'merged', 'pending action']
     if ignore_escalation.include?( ticket_state_type.name )
       self.escalation_time            = nil
-#      self.first_response_escal_date  = nil
-#      self.close_time_escal_date      = nil
+      #      self.first_response_escal_date  = nil
+      #      self.close_time_escal_date      = nil
       self.callback_loop = true
       self.save
       return true
@@ -593,15 +595,15 @@ class Ticket < ApplicationModel
     # reset escalation if no sla is set
     if !sla_selected
       self.escalation_time            = nil
-#      self.first_response_escal_date  = nil
-#      self.close_time_escal_date      = nil
+      #      self.first_response_escal_date  = nil
+      #      self.close_time_escal_date      = nil
       self.callback_loop = true
       self.save
       return true
     end
 
-#    puts sla_selected.inspect
-#    puts days.inspect
+    #    puts sla_selected.inspect
+    #    puts days.inspect
     self.escalation_time            = nil
     self.first_response_escal_date  = nil
     self.update_time_escal_date     = nil
@@ -664,42 +666,42 @@ class Ticket < ApplicationModel
 
   private
 
-    def number_generate
-      return if self.number
+  def number_generate
+    return if self.number
 
-      # generate number
-      (1..25_000).each do |i|
+    # generate number
+    (1..25_000).each do |i|
+      number = Ticket.number_adapter.number_generate_item()
+      ticket = Ticket.where( :number => number ).first
+      if ticket != nil
         number = Ticket.number_adapter.number_generate_item()
-        ticket = Ticket.where( :number => number ).first
-        if ticket != nil
-          number = Ticket.number_adapter.number_generate_item()
-        else
-          self.number = number
-          return number
-        end
+      else
+        self.number = number
+        return number
       end
     end
-    def check_defaults
-      if !self.owner_id
-        self.owner_id = 1
-      end
-#      if self.customer_id && ( !self.organization_id || self.organization_id.empty? )
-      if self.customer_id
-        customer = User.find( self.customer_id )
-        if  self.organization_id != customer.organization_id
-          self.organization_id = customer.organization_id
-        end
-      end
-
+  end
+  def check_defaults
+    if !self.owner_id
+      self.owner_id = 1
     end
-    def destroy_dependencies
-
-      # delete history
-      History.history_destroy( 'Ticket', self.id )
-
-      # delete articles
-      self.articles.destroy_all
+    #      if self.customer_id && ( !self.organization_id || self.organization_id.empty? )
+    if self.customer_id
+      customer = User.find( self.customer_id )
+      if  self.organization_id != customer.organization_id
+        self.organization_id = customer.organization_id
+      end
     end
+
+  end
+  def destroy_dependencies
+
+    # delete history
+    History.history_destroy( 'Ticket', self.id )
+
+    # delete articles
+    self.articles.destroy_all
+  end
 
   class Number
   end

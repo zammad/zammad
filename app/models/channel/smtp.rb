@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Channel::SMTP < Channel::EmailBuild
   def send(attr, channel, notification = false)
 
@@ -12,9 +14,9 @@ class Channel::SMTP < Channel::EmailBuild
       :domain               => channel[:options][:host],
       :user_name            => channel[:options][:user],
       :password             => channel[:options][:password],
-    #  :authentication       => 'plain',
+      #  :authentication       => 'plain',
       :enable_starttls_auto => true
     }
-    mail.deliver    
+    mail.deliver
   end
 end

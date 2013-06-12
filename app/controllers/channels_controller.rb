@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class ChannelsController < ApplicationController
   before_filter :authentication_check
 
@@ -111,7 +113,7 @@ Response:
 
 Test:
 curl http://localhost/api/channels/#{id}.json -v -u #{login}:#{password}
- 
+
 =end
 
   def show

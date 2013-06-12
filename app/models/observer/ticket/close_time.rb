@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Observer::Ticket::CloseTime < ActiveRecord::Observer
   observe 'ticket'
 
@@ -10,24 +12,24 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
   end
 
   private
-    def _check(record)
-#      puts 'check close time'
+  def _check(record)
+    #      puts 'check close time'
 
-      # return if we run import mode
-      return if Setting.get('import_mode')
+    # return if we run import mode
+    return if Setting.get('import_mode')
 
-      # check if close_time is already set
-      return true if record.close_time
+    # check if close_time is already set
+    return true if record.close_time
 
-      # check if ticket is closed now
-      ticket_state = Ticket::State.lookup( :id => record.ticket_state_id )
-      ticket_state_type = Ticket::StateType.lookup( :id => ticket_state.state_type_id )
-      return true if ticket_state_type.name != 'closed'
+    # check if ticket is closed now
+    ticket_state = Ticket::State.lookup( :id => record.ticket_state_id )
+    ticket_state_type = Ticket::StateType.lookup( :id => ticket_state.state_type_id )
+    return true if ticket_state_type.name != 'closed'
 
-      # set close_time
-      record.close_time = Time.now
+    # set close_time
+    record.close_time = Time.now
 
-      # save ticket
-      record.save
-    end
+    # save ticket
+    record.save
+  end
 end

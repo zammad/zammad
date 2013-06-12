@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Ticket::Article < ApplicationModel
   after_create  :attachment_check
   belongs_to    :ticket
@@ -9,25 +11,25 @@ class Ticket::Article < ApplicationModel
 
   private
 
-    def attachment_check
+  def attachment_check
 
-      # do nothing if no attachment exists
-      return 1 if self.attachments == nil
+    # do nothing if no attachment exists
+    return 1 if self.attachments == nil
 
-      # store attachments
-      article_store = []
-      self.attachments.each do |attachment|
-        article_store.push Store.add(
-          :object        => 'Ticket::Article',
-          :o_id          => self.id,
-          :data          => attachment.store_file.data,
-          :filename      => attachment.filename,
-          :preferences   => attachment.preferences,
-          :created_by_id => self.created_by_id,
-        )
-      end
-      self.attachments = article_store
+    # store attachments
+    article_store = []
+    self.attachments.each do |attachment|
+      article_store.push Store.add(
+        :object        => 'Ticket::Article',
+        :o_id          => self.id,
+        :data          => attachment.store_file.data,
+        :filename      => attachment.filename,
+        :preferences   => attachment.preferences,
+        :created_by_id => self.created_by_id,
+      )
     end
+    self.attachments = article_store
+  end
 
   class Flag < ApplicationModel
   end

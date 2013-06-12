@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Channel::Sendmail < Channel::EmailBuild
   def send(attr, channel, notification = false)
 
@@ -6,6 +8,6 @@ class Channel::Sendmail < Channel::EmailBuild
 
     mail = build(attr, notification)
     mail.delivery_method :sendmail
-    mail.deliver    
+    mail.deliver
   end
 end

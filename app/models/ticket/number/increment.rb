@@ -1,5 +1,7 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 module Ticket::Number::Increment
-  extend self  
+  extend self
 
   def number_generate_item
 

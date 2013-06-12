@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Authorization < ApplicationModel
   belongs_to              :user
   after_create            :delete_user_cache
@@ -33,19 +35,19 @@ class Authorization < ApplicationModel
     end
     return auth
   end
-  
+
   def self.create_from_hash(hash, user = nil)
     if user then
       user.update_attributes(
-#        :username => hash['username'],
+        #        :username => hash['username'],
         :image => hash['info']['image']
       )
 
       # fillup empty attributes
       # TODO
-      
+
     else
-      user = User.create_from_hash!(hash)    
+      user = User.create_from_hash!(hash)
     end
 
     auth = Authorization.create(
@@ -60,8 +62,8 @@ class Authorization < ApplicationModel
   end
 
   private
-    def delete_user_cache
-      self.user.cache_delete
-    end
+  def delete_user_cache
+    self.user.cache_delete
+  end
 
 end

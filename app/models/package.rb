@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'rexml/document'
 class Package < ApplicationModel
   @@root = Rails.root.to_s
@@ -34,7 +36,7 @@ class Package < ApplicationModel
       location = data[:output] + '/' + package.elements["zpm/name"].text + '-' + package.elements["zpm/version"].text + '.zpm'
       puts "NOTICE: writting package to '#{location}'"
       file = File.new( location, 'wb' )
-      file.write( package.to_s ) 
+      file.write( package.to_s )
       file.close
       return true
     end
@@ -76,7 +78,7 @@ class Package < ApplicationModel
     end
   end
 
-  # check if zpm is a package source repo 
+  # check if zpm is a package source repo
   def self._package_base_dir?(package_base_dir)
     package = false
     Dir.glob(  package_base_dir + '/*.szpm') do |entry|
@@ -93,7 +95,7 @@ class Package < ApplicationModel
   # execute migration down + unlink files
   def self.unlink(package_base_dir)
 
-    # check if zpm is a package source repo 
+    # check if zpm is a package source repo
     package = self._package_base_dir?(package_base_dir)
 
     # migration down
@@ -105,7 +107,7 @@ class Package < ApplicationModel
       file = entry
       file = file.sub( /#{package_base_dir.to_s}/, '' )
       dest = @@root + '/' + file
- 
+
       if File.symlink?( dest.to_s )
         puts "Unlink file: #{dest.to_s}"
         File.delete( dest.to_s )
@@ -123,7 +125,7 @@ class Package < ApplicationModel
   # link files + execute migration up
   def self.link(package_base_dir)
 
-    # check if zpm is a package source repo 
+    # check if zpm is a package source repo
     package = self._package_base_dir?(package_base_dir)
 
     # link files
@@ -322,14 +324,14 @@ class Package < ApplicationModel
   end
 
   def self._parse(xml)
-#    puts xml.inspect
+    #    puts xml.inspect
     begin
       package = REXML::Document.new( xml )
     rescue => e
       puts 'ERROR: ' + e.inspect
       return
     end
-#    puts package.inspect
+    #    puts package.inspect
     return package
   end
 
@@ -403,7 +405,7 @@ class Package < ApplicationModel
     begin
       puts "NOTICE: install '#{location}' (#{permission})"
       file = File.new( location, 'wb' )
-      file.write( data ) 
+      file.write( data )
       file.close
       File.chmod( permission.to_i(8), location )
     rescue => e
@@ -481,7 +483,7 @@ class Package < ApplicationModel
             record.destroy
           end
 
-        # up
+          # up
         else
           done = Package::Migration.where( :name => package.underscore, :version => version ).first
           next if done

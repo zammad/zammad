@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class TicketArticlesController < ApplicationController
   before_filter :authentication_check
 
@@ -66,7 +68,7 @@ class TicketArticlesController < ApplicationController
   def attachment_new
 
     # store file
-#    content_type = request.content_type
+    #    content_type = request.content_type
     content_type = request[:content_type]
     puts 'content_type: ' + content_type.inspect
     if !content_type || content_type == 'application/octet-stream'

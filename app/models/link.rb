@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Link < ApplicationModel
   belongs_to :link_type,    :class_name => 'Link::Type'
   belongs_to :link_object,  :class_name => 'Link::Object'
@@ -14,7 +16,7 @@ class Link < ApplicationModel
     :link_object       => 'Ticket',
     :link_object_value => 1
   )
- 
+
 =end
 
   def self.list(data)
@@ -66,7 +68,7 @@ class Link < ApplicationModel
     :link_object_source_value => 1,
     :link_object_target_id    => 1,
     :link_object_target_value => 1
-  ) 
+  )
 
 =end
 
@@ -101,7 +103,7 @@ class Link < ApplicationModel
     :link_object_source_value => 6,
     :link_object_target       => 'Ticket',
     :link_object_target_value => 31
-  ) 
+  )
 
 =end
 
@@ -150,25 +152,25 @@ class Link < ApplicationModel
   end
 
   private
-    def self.link_type_get(data)
-      linktype = Link::Type.where( :name => data[:name] ).first
-      if !linktype
-        linktype = Link::Type.create(
-          :name => data[:name]
-        )
-      end
-      return linktype
+  def self.link_type_get(data)
+    linktype = Link::Type.where( :name => data[:name] ).first
+    if !linktype
+      linktype = Link::Type.create(
+        :name => data[:name]
+      )
     end
+    return linktype
+  end
 
-    def self.link_object_get(data)
-      linkobject = Link::Object.where( :name => data[:name] ).first
-      if !linkobject
-        linkobject = Link::Object.create(
-          :name => data[:name]
-        )
-      end
-      return linkobject
+  def self.link_object_get(data)
+    linkobject = Link::Object.where( :name => data[:name] ).first
+    if !linkobject
+      linkobject = Link::Object.create(
+        :name => data[:name]
+      )
     end
+    return linkobject
+  end
 
 end
 

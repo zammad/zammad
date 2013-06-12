@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Translation < ApplicationModel
   before_create :set_initial
 
@@ -19,7 +21,7 @@ class Translation < ApplicationModel
   end
 
   private
-    def set_initial
-      self.target_initial = self.target
-    end
+  def set_initial
+    self.target_initial = self.target
+  end
 end

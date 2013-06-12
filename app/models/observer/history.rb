@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'history'
 
 class Observer::History < ActiveRecord::Observer
@@ -9,7 +11,7 @@ class Observer::History < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     puts "HISTORY OBSERVER, object created #{ record.class.name }.find(#{ record.id })"
-#    puts record.inspect
+    #    puts record.inspect
 
     # if Ticket::Article has changed, remember ticket to be able
     # to show article changes in ticket history
@@ -34,17 +36,17 @@ class Observer::History < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-#    puts 'before_update'
+    #    puts 'before_update'
     current = record.class.find(record.id)
 
     # do not send anything if nothing has changed
     return if current.attributes == record.attributes
 
     puts "HISTORY OBSERVER, object will be updated #{ record.class.name.to_s}.find(#{ current.id.to_s })"
-#    puts 'current'
-#    puts current.inspect
-#    puts 'record'
-#    puts record.inspect
+    #    puts 'current'
+    #    puts current.inspect
+    #    puts 'record'
+    #    puts record.inspect
 
     diff = differences_from?(current, record)
     puts ' DIFF'
@@ -123,7 +125,7 @@ class Observer::History < ActiveRecord::Observer
           value[1] = map[key.to_sym][:lookup_object].find( value_ids[1] ).send( map[key.to_sym][:lookup_method] )
         end
 
-      # if not, fill diff data to value, empty value_ids
+        # if not, fill diff data to value, empty value_ids
       else
         value = value_ids
         value_ids = []

@@ -1,9 +1,10 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class TicketOverviewsController < ApplicationController
   before_filter :authentication_check
 
   # GET /api/tickets
   def show
-#sleep 2
 
     # get navbar overview data
     if !params[:view]
@@ -20,7 +21,7 @@ class TicketOverviewsController < ApplicationController
         :view         => params[:view],
         :current_user => current_user,
         :array        => true,
-      ) 
+      )
       tickets = []
       overview[:tickets].each {|ticket_id|
         data = { :id => ticket_id }
@@ -37,7 +38,7 @@ class TicketOverviewsController < ApplicationController
     end
     overview = Ticket.overview(
       :view         => params[:view],
-#      :view_mode    => params[:view_mode],
+      #      :view_mode    => params[:view_mode],
       :current_user => User.find( current_user.id ),
       :array        => true,
     )
@@ -74,14 +75,14 @@ class TicketOverviewsController < ApplicationController
     }
     groups_users = {}
     group_ids.each {|group_id|
-        groups_users[ group_id ] = []
-        Group.find(group_id).users.each {|user|
-            next if !agents[ user.id ]
-            groups_users[ group_id ].push user.id
-            if !users[user.id]
-              users[user.id] = User.user_data_full(user.id)
-            end
-        }
+      groups_users[ group_id ] = []
+      Group.find(group_id).users.each {|user|
+        next if !agents[ user.id ]
+        groups_users[ group_id ].push user.id
+        if !users[user.id]
+          users[user.id] = User.user_data_full(user.id)
+        end
+      }
     }
 
     # return result

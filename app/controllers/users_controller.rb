@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class UsersController < ApplicationController
   before_filter :authentication_check, :except => [:create, :password_reset_send, :password_reset_verify]
 
 =begin
- 
+
 Format:
 JSON
 
@@ -36,7 +38,7 @@ Example:
 
 =begin
 
-Resource: 
+Resource:
 GET /api/users.json
 
 Response:
@@ -55,7 +57,7 @@ Response:
 
 Test:
 curl http://localhost/api/users.json -v -u #{login}:#{password}
-  
+
 =end
 
   def index
@@ -69,7 +71,7 @@ curl http://localhost/api/users.json -v -u #{login}:#{password}
 
 =begin
 
-Resource: 
+Resource:
 GET /api/users/1.json
 
 Response:
@@ -143,14 +145,14 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
             group_ids.push group.id
           }
 
-        # everybody else will go as customer per default
+          # everybody else will go as customer per default
         else
           role_ids.push Role.where( :name => 'Customer' ).first.id
         end
         user.role_ids  = role_ids
         user.group_ids = group_ids
 
-      # else do assignment as defined
+        # else do assignment as defined
       else
         if params[:role_ids]
           user.role_ids = params[:role_ids]
@@ -195,19 +197,19 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
         data[:subject] = 'Invitation to #{config.product_name} at #{config.fqdn}'
         data[:body]    = 'Hi #{user.firstname},
 
-I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - a customer support / ticket system platform.
+        I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - a customer support / ticket system platform.
 
-Click on the following link and set your password:
+        Click on the following link and set your password:
 
-#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
+        #{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
 
-Enjoy,
+        Enjoy,
 
-  #{current_user.firstname} #{current_user.lastname}
+        #{current_user.firstname} #{current_user.lastname}
 
-  Your #{config.product_name} Team
-'
-    
+        Your #{config.product_name} Team
+        '
+
         # prepare subject & body
         [:subject, :body].each { |key|
           data[key.to_sym] = NotificationFactory.build(
@@ -220,7 +222,7 @@ Enjoy,
             }
           )
         }
-    
+
         # send notification
         NotificationFactory.send(
           :recipient => user,
@@ -271,7 +273,7 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
     user = User.find( params[:id] )
 
     begin
-  
+
       user.update_attributes( User.param_cleanup(params) )
 
       # only allow Admin's and Agent's
@@ -424,18 +426,18 @@ curl http://localhost/api/users/password_change.json -v -u #{login}:#{password} 
     # check old password
     if !params[:password_old]
       render :json => { :message => 'Old password needed!' }, :status => :unprocessable_entity
-      return  
+      return
     end
     user = User.authenticate( current_user.login, params[:password_old] )
     if !user
       render :json => { :message => 'Old password is wrong!' }, :status => :unprocessable_entity
-      return  
+      return
     end
 
     # set new password
     if !params[:password_new]
       render :json => { :message => 'New password needed!' }, :status => :unprocessable_entity
-      return  
+      return
     end
     user.update_attributes( :password => params[:password_new] )
     render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
@@ -465,7 +467,7 @@ curl http://localhost/api/users/preferences.json -v -u #{login}:#{password} -H "
   def preferences
     if !current_user
       render :json => { :message => 'No current user!' }, :status => :unprocessable_entity
-      return  
+      return
     end
     if params[:user]
       params[:user].each {|key, value|
@@ -500,17 +502,17 @@ curl http://localhost/api/users/account.json -v -u #{login}:#{password} -H "Cont
   def account_remove
     if !current_user
       render :json => { :message => 'No current user!' }, :status => :unprocessable_entity
-      return  
+      return
     end
 
     # provider + uid to remove
     if !params[:provider]
       render :json => { :message => 'provider needed!' }, :status => :unprocessable_entity
-      return  
+      return
     end
     if !params[:uid]
       render :json => { :message => 'uid needed!' }, :status => :unprocessable_entity
-      return  
+      return
     end
 
     # remove from database
@@ -521,7 +523,7 @@ curl http://localhost/api/users/account.json -v -u #{login}:#{password} -H "Cont
     )
     if !record.first
       render :json => { :message => 'No record found!' }, :status => :unprocessable_entity
-      return  
+      return
     end
     record.destroy_all
     render :json => { :message => 'ok' }, :status => :ok

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class GettingStartedController < ApplicationController
 
 =begin
@@ -22,7 +24,7 @@ Response:
 
 Test:
 curl http://localhost/api/getting_started.json -v -u #{login}:#{password}
- 
+
 =end
 
   def index

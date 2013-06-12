@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Observer::Ticket::FirstResponse < ActiveRecord::Observer
   observe 'ticket::_article'
 
   def after_create(record)
-#    puts 'check first response'
+    #    puts 'check first response'
 
     # return if we run import mode
     return if Setting.get('import_mode')

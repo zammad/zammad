@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 module ExtraCollection
   def session( collections, user )
 
@@ -9,10 +11,10 @@ module ExtraCollection
     collections['TicketArticleSender'] = Ticket::Article::Sender.all
 
     if !user.is_role('Customer')
-  
+
       # all signatures
       collections['Signature']           = Signature.all
-  
+
       # all email addresses
       collections['EmailAddress']        = EmailAddress.all
     end
@@ -30,13 +32,13 @@ module ExtraCollection
 
       # all signatures
       collections['Signature']           = Signature.all
-  
+
       # all email addresses
       collections['EmailAddress']        = EmailAddress.all
-  
+
       # all templates
       collections['Template']            = Template.all
-  
+
       # all text modules
       collections['TextModule']          = TextModule.all
     end

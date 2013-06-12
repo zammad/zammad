@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'twitter'
 
 class Channel::Twitter2
@@ -32,7 +34,7 @@ class Channel::Twitter2
       @article_type = 'twitter status'
       fetch_loop(tweets, channel, channel[:options][:mentions][:group])
     end
-    
+
     # direct messages
     if channel[:options][:direct_messages]
       puts " - searching for direct_messages"
@@ -49,13 +51,13 @@ class Channel::Twitter2
     all_tweets = []
     result_class = tweets.class
     if result_class.to_s == 'Array'
-        all_tweets = tweets
+      all_tweets = tweets
     elsif result_class.to_s == 'Twitter::SearchResults'
-        tweets.results.map do |tweet|
-            all_tweets.push tweet
-        end
+      tweets.results.map do |tweet|
+        all_tweets.push tweet
+      end
     else
-        puts 'UNKNOWN: ' + result_class.to_s
+      puts 'UNKNOWN: ' + result_class.to_s
     end
 
     # find tweets
@@ -77,7 +79,7 @@ class Channel::Twitter2
         fetch_import( tweet, channel, group )
       end
 
-      # execute ticket events      
+      # execute ticket events
       Observer::Ticket::Notification.transaction
     end
   end
@@ -91,16 +93,16 @@ class Channel::Twitter2
     if tweet['user']
       sender = tweet['user']
 
-    # direct message (full user data is included)
+      # direct message (full user data is included)
     elsif tweet['sender']
       sender = tweet['sender']
 
-    # search (no user data is included, do extra lookup)
+      # search (no user data is included, do extra lookup)
     elsif tweet['from_user_id']
       begin
 
         # reconnect for #<Twitter::Error::NotFound: Sorry, that page does not exist> workaround
-#        @client = connect(channel)
+        #        @client = connect(channel)
         sender = @client.user(tweet.from_user_id)
       rescue Exception => e
         puts "Exception: twitter: " + e.inspect
@@ -113,10 +115,10 @@ class Channel::Twitter2
     if tweet['in_reply_to_status_id']
       puts 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
       tweet_sub = @client.status(tweet.in_reply_to_status_id)
-#        puts tweet_sub.inspect
+      #        puts tweet_sub.inspect
       (user, ticket, article) = fetch_import(tweet_sub, channel, group)
     end
-    
+
     # create stuff
     user = fetch_user_create(tweet, sender)
     if !ticket
@@ -126,11 +128,11 @@ class Channel::Twitter2
     article = fetch_article_create(user, ticket, tweet, sender)
     return user, ticket, article
   end
-  
+
   def fetch_user_create(tweet, sender)
     # create sender in db
-#    puts tweet.inspect
-#    user = User.where( :login => tweet.sender.screen_name ).first
+    #    puts tweet.inspect
+    #    user = User.where( :login => tweet.sender.screen_name ).first
     auth = Authorization.where( :uid => sender.id, :provider => 'twitter' ).first
     user = nil
     if auth
@@ -151,7 +153,7 @@ class Channel::Twitter2
         :active         => true,
         :roles          => roles,
         :updated_by_id  => 1,
-        :created_by_id  => 1 
+        :created_by_id  => 1
       )
       puts 'autentication create...'
       authentication = Authorization.create(
@@ -167,12 +169,12 @@ class Channel::Twitter2
     # set current user
     UserInfo.current_user_id = user.id
 
-    return user 
+    return user
   end
-  
+
   def fetch_ticket_create(user, tweet, sender, channel, group)
 
-#    puts '+++++++++++++++++++++++++++' + tweet.inspect
+    #    puts '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
     if tweet['in_reply_to_status_id']
       puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
@@ -260,7 +262,7 @@ class Channel::Twitter2
   end
 
   def send(attr, notification = false)
-#    logger.debug('tweeeeettttt!!!!!!')
+    #    logger.debug('tweeeeettttt!!!!!!')
     channel = Channel.where( :area => 'Twitter::Inbound', :active => true ).first
 
     client = Twitter::Client.new(
@@ -276,8 +278,8 @@ class Channel::Twitter2
         attr[:body].to_s,
         {}
       )
-#      puts dm.inspect
-      return dm      
+      #      puts dm.inspect
+      return dm
     end
 
     if attr[:type] == 'twitter status'
@@ -287,7 +289,7 @@ class Channel::Twitter2
           :in_reply_to_status_id => attr[:in_reply_to]
         }
       )
-#      puts message.inspect
+      #      puts message.inspect
       return message
     end
 

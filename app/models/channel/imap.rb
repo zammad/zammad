@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'net/imap'
 
 class Channel::IMAP < Channel::EmailParser
@@ -34,9 +36,9 @@ class Channel::IMAP < Channel::EmailParser
       count += 1
       puts " - message #{count.to_s}/#{count_all.to_s}"
       msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
-#      puts msg.to_s
+      #      puts msg.to_s
 
-      # delete email from server after article was created      
+      # delete email from server after article was created
       if process(channel, msg)
         imap.store(message_id, "+FLAGS", [:Deleted])
       end

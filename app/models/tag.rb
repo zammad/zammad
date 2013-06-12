@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Tag < ApplicationModel
   belongs_to :tag_object,       :class_name => 'Tag::Object'
   belongs_to :tag_item,         :class_name => 'Tag::Item'
@@ -5,7 +7,7 @@ class Tag < ApplicationModel
   @@cache_item = {}
   @@cache_object = {}
 
-  def self.tag_add(data) 
+  def self.tag_add(data)
 
     # lookups
     if data[:object]
@@ -25,7 +27,7 @@ class Tag < ApplicationModel
     return true
   end
 
-  def self.tag_remove(data) 
+  def self.tag_remove(data)
 
     # lookups
     if data[:object]
@@ -50,81 +52,81 @@ class Tag < ApplicationModel
   def self.tag_list( data )
     tag_object_id_requested = self.tag_object_lookup( data[:object] )
     tag_search = Tag.where(
-        :tag_object_id => tag_object_id_requested,
-        :o_id          => data[:o_id],
+      :tag_object_id => tag_object_id_requested,
+      :o_id          => data[:o_id],
     )
     tags = []
     tag_search.each {|tag|
-      tags.push self.tag_item_lookup_id( tag.tag_item_id ) 
+      tags.push self.tag_item_lookup_id( tag.tag_item_id )
     }
     return tags
   end
 
   private
 
-    def self.tag_item_lookup_id( id )
+  def self.tag_item_lookup_id( id )
 
-      # use cache
-      return @@cache_item[ id ] if @@cache_item[ id ]
+    # use cache
+    return @@cache_item[ id ] if @@cache_item[ id ]
 
-      # lookup
-      tag_item = Tag::Item.find(id)
-      @@cache_item[ id ] = tag_item.name
-      return tag_item.name
-    end
+    # lookup
+    tag_item = Tag::Item.find(id)
+    @@cache_item[ id ] = tag_item.name
+    return tag_item.name
+  end
 
-    def self.tag_item_lookup( name )
+  def self.tag_item_lookup( name )
 
-      name = name.downcase
+    name = name.downcase
 
-      # use cache
-      return @@cache_item[ name ] if @@cache_item[ name ]
+    # use cache
+    return @@cache_item[ name ] if @@cache_item[ name ]
 
-      # lookup
-      tag_item = Tag::Item.where( :name => name ).first
-      if tag_item
-        @@cache_item[ name ] = tag_item.id
-        return tag_item.id
-      end
-
-      # create
-      tag_item = Tag::Item.create(
-        :name => name
-      )
+    # lookup
+    tag_item = Tag::Item.where( :name => name ).first
+    if tag_item
       @@cache_item[ name ] = tag_item.id
       return tag_item.id
     end
 
-    def self.tag_object_lookup_id( id ) 
+    # create
+    tag_item = Tag::Item.create(
+      :name => name
+    )
+    @@cache_item[ name ] = tag_item.id
+    return tag_item.id
+  end
 
-      # use cache
-      return @@cache_object[ id ] if @@cache_object[ id ]
+  def self.tag_object_lookup_id( id )
 
-      # lookup
-      tag_object = Tag::Object.find(id)
-      @@cache_object[ id ] = tag_object.name
-      return tag_object.name
-    end
+    # use cache
+    return @@cache_object[ id ] if @@cache_object[ id ]
 
-    def self.tag_object_lookup( name ) 
+    # lookup
+    tag_object = Tag::Object.find(id)
+    @@cache_object[ id ] = tag_object.name
+    return tag_object.name
+  end
 
-      # use cache
-      return @@cache_object[ name ] if @@cache_object[ name ]
+  def self.tag_object_lookup( name )
 
-      # lookup
-      tag_object = Tag::Object.where( :name => name ).first
-      if tag_object
-        @@cache_object[ name ] = tag_object.id
-        return tag_object.id
-      end
+    # use cache
+    return @@cache_object[ name ] if @@cache_object[ name ]
 
-      # create
-      tag_object = Tag::Object.create(
-        :name => name
-      )
+    # lookup
+    tag_object = Tag::Object.where( :name => name ).first
+    if tag_object
       @@cache_object[ name ] = tag_object.id
       return tag_object.id
     end
+
+    # create
+    tag_object = Tag::Object.create(
+      :name => name
+    )
+    @@cache_object[ name ] = tag_object.id
+    return tag_object.id
+  end
 
   class Object < ActiveRecord::Base
   end

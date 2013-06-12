@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'digest/sha2'
 require 'organization'
 
@@ -41,7 +43,7 @@ class User < ApplicationModel
 
     # do not authenticate with nothing
     return if !username || username == ''
-    return if !password || password == '' 
+    return if !password || password == ''
 
     # try to find user based on login
     user = User.where( :login => username.downcase, :active => true ).first
@@ -117,11 +119,11 @@ class User < ApplicationModel
         :adapter => 'otrs',
       },
     ]
-#    Setting.where( :area => 'Security::Authentication' ).each {|setting|
-#      if setting.state[:value]
-#        config.push setting.state[:value]
-#      end
-#    }
+    #    Setting.where( :area => 'Security::Authentication' ).each {|setting|
+    #      if setting.state[:value]
+    #        config.push setting.state[:value]
+    #      end
+    #    }
 
     # try to login against configure auth backends
     user_auth = nil
@@ -160,7 +162,7 @@ class User < ApplicationModel
       :firstname     => hash['info']['name'],
       :email         => hash['info']['email'],
       :image         => hash['info']['image'],
-#      :url        => url.to_s,
+      #      :url        => url.to_s,
       :note          => hash['info']['description'],
       :source        => hash['provider'],
       :roles         => roles,
@@ -193,18 +195,18 @@ class User < ApplicationModel
     data[:subject] = 'Reset your #{config.product_name} password'
     data[:body]    = 'Forgot your password?
 
-We received a request to reset the password for your #{config.product_name} account (#{user.login}).
+    We received a request to reset the password for your #{config.product_name} account (#{user.login}).
 
-If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
+    If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
 
-#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
+    #{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
 
-This link takes you to a page where you can change your password.
+    This link takes you to a page where you can change your password.
 
-If you don\'t want to reset your password, please ignore this message. Your password will not be reset. 
+    If you don\'t want to reset your password, please ignore this message. Your password will not be reset.
 
-Your #{config.product_name} Team
-'
+    Your #{config.product_name} Team
+    '
 
     # prepare subject & body
     [:subject, :body].each { |key|
@@ -320,7 +322,7 @@ Your #{config.product_name} Team
 
     return data
   end
-  
+
   def self.user_data_full (user_id)
 
     # get user
@@ -404,124 +406,124 @@ Your #{config.product_name} Team
   end
 
   private
-    def check_geo
+  def check_geo
 
-      # geo update if no user exists
-      if !self.id
-        self.geo_update
+    # geo update if no user exists
+    if !self.id
+      self.geo_update
+      return
+    end
+
+    location = ['street', 'zip', 'city', 'country']
+
+    # get current user data
+    current = User.where( :id => self.id ).first
+    return if !current
+
+    # check if geo update is needed
+    current_location = {}
+    location.each { |item|
+      current_location[item] = current[item]
+    }
+
+    # get full address
+    next_location = {}
+    location.each { |item|
+      next_location[item] = self[item]
+    }
+
+    # return if address hasn't changed and geo data is already available
+    return if ( current_location == next_location ) && ( self.preferences['lat'] && self.preferences['lng'] )
+
+    # geo update
+    self.geo_update
+  end
+
+  def check_name
+
+    if ( self.firstname && !self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? )
+
+      # Lastname, Firstname
+      scan = self.firstname.scan(/, /)
+      if scan[0]
+        name = self.firstname.split(', ', 2)
+        self.lastname  = name[0]
+        self.firstname = name[1]
         return
       end
 
-      location = ['street', 'zip', 'city', 'country']
-
-      # get current user data      
-      current = User.where( :id => self.id ).first
-      return if !current
-
-      # check if geo update is needed
-      current_location = {}
-      location.each { |item|
-        current_location[item] = current[item]
-      }
-
-      # get full address
-      next_location = {}
-      location.each { |item|
-        next_location[item] = self[item]
-      }
-
-      # return if address hasn't changed and geo data is already available
-      return if ( current_location == next_location ) && ( self.preferences['lat'] && self.preferences['lng'] )
-
-      # geo update
-      self.geo_update
-    end
-
-    def check_name
-
-      if ( self.firstname && !self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? )
-
-        # Lastname, Firstname
-        scan = self.firstname.scan(/, /)
-        if scan[0]
-          name = self.firstname.split(', ', 2)
-          self.lastname  = name[0]
-          self.firstname = name[1]
-          return
-        end
-
-        # Firstname Lastname
-        name = self.firstname.split(' ', 2)
-        self.firstname = name[0]
-        self.lastname  = name[1]
-        return
+      # Firstname Lastname
+      name = self.firstname.split(' ', 2)
+      self.firstname = name[0]
+      self.lastname  = name[1]
+      return
 
       # -no name- firstname.lastname@example.com
-      elsif ( !self.firstname || self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? ) && ( self.email && !self.email.empty? )
-        scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
-        if scan[0]
-          self.firstname = scan[0][0].capitalize
-          self.lastname  = scan[0][1].capitalize
-        end
+    elsif ( !self.firstname || self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? ) && ( self.email && !self.email.empty? )
+      scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
+      if scan[0]
+        self.firstname = scan[0][0].capitalize
+        self.lastname  = scan[0][1].capitalize
+      end
 
+    end
+  end
+
+  def check_email
+    if self.email
+      self.email = self.email.downcase
+    end
+  end
+
+  def check_login
+    if self.login
+      self.login = self.login.downcase
+      check = true
+      while check
+        exists = User.where( :login => self.login ).first
+        if exists
+          self.login = self.login + rand(99).to_s
+        else
+          check = false
+        end
       end
     end
+  end
 
-    def check_email
+  # FIXME: Remove me later
+  def check_login_update
+    if self.login
+      self.login = self.login.downcase
+    end
+  end
+
+  def check_image
+    require 'digest/md5'
+    if !self.image || self.image == ''
       if self.email
-        self.email = self.email.downcase
+        hash = Digest::MD5.hexdigest(self.email)
+        self.image = "http://www.gravatar.com/avatar/#{hash}?s=48"
       end
     end
+  end
 
-    def check_login
-      if self.login
-        self.login = self.login.downcase
-        check = true
-        while check
-          exists = User.where( :login => self.login ).first
-          if exists
-            self.login = self.login + rand(99).to_s
-          else
-            check = false
-          end
-        end
+  def check_password
+
+    # set old password again if not given
+    if self.password == '' || !self.password
+
+      # get current record
+      if self.id
+        current = User.find(self.id)
+        self.password = current.password
       end
-    end
-
-    # FIXME: Remove me later 
-    def check_login_update
-      if self.login
-        self.login = self.login.downcase
-      end
-    end
-
-    def check_image
-      require 'digest/md5'
-      if !self.image || self.image == ''
-        if self.email
-          hash = Digest::MD5.hexdigest(self.email)
-          self.image = "http://www.gravatar.com/avatar/#{hash}?s=48"
-        end
-      end
-    end
-
-    def check_password
-
-      # set old password again if not given
-      if self.password == '' || !self.password
-
-        # get current record
-        if self.id
-          current = User.find(self.id)
-          self.password = current.password
-        end
 
       # create crypted password if not already crypted
-      else
-        if self.password !~ /^\{sha2\}/
-          crypted = Digest::SHA2.hexdigest( self.password )
-          self.password = "{sha2}#{crypted}"
-        end
+    else
+      if self.password !~ /^\{sha2\}/
+        crypted = Digest::SHA2.hexdigest( self.password )
+        self.password = "{sha2}#{crypted}"
       end
     end
+  end
 end

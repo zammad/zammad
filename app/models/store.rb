@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'digest/md5'
 
 class Store < ApplicationModel
@@ -14,10 +16,10 @@ class Store < ApplicationModel
     data['store_object_id'] = store_object.id
 
     # check if record already exists
-#    store = Store.where( :store_object_id => store_object.id, :o_id => data['o_id'],  ).first
-#    if store != nil
-#      return store
-#    end
+    #    store = Store.where( :store_object_id => store_object.id, :o_id => data['o_id'],  ).first
+    #    if store != nil
+    #      return store
+    #    end
 
     # check real store
     md5 = Digest::MD5.hexdigest( data['data'] )
@@ -49,7 +51,7 @@ class Store < ApplicationModel
     # search
     store_object_id = Store::Object.lookup( :name => data[:object] )
     stores = Store.where( :store_object_id => store_object_id, :o_id => data[:o_id].to_i ).
-      order('created_at ASC, id ASC')
+    order('created_at ASC, id ASC')
     return stores
   end
 
@@ -57,8 +59,8 @@ class Store < ApplicationModel
     # search
     store_object_id = Store::Object.lookup( :name => data[:object] )
     stores = Store.where( :store_object_id => store_object_id ).
-      where( :o_id => data[:o_id] ).
-      order('created_at ASC, id ASC')
+    where( :o_id => data[:o_id] ).
+    order('created_at ASC, id ASC')
     stores.each do |store|
       store.destroy
     end
@@ -73,9 +75,9 @@ class Store < ApplicationModel
     before_validation :add_md5
 
     private
-      def add_md5
-        self.md5 = Digest::MD5.hexdigest( self.data )
-      end
+    def add_md5
+      self.md5 = Digest::MD5.hexdigest( self.data )
+    end
   end
 
 end

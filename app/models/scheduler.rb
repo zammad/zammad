@@ -1,9 +1,11 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Scheduler < ApplicationModel
 
   def self.run( worker, worker_count )
 
     Thread.abort_on_exception = true
-  
+
     jobs_started = {}
     while true
       puts "Scheduler running (worker #{worker} of #{worker_count})..."
@@ -44,7 +46,7 @@ class Scheduler < ApplicationModel
       else
         self._start_job( job, worker, worker_count )
       end
-#        raise "Exception from thread"
+      #        raise "Exception from thread"
       job.pid = ''
       job.save
       puts " ...stopped thread for '#{job.method}'"

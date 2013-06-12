@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class LongPollingController < ApplicationController
 
   # GET /api/message_send
@@ -58,7 +60,7 @@ class LongPollingController < ApplicationController
       log 'notice', "send auth login (user_id #{user_id})", client_id
       Session.create( client_id, user, { :type => 'ajax' } )
 
-    # broadcast
+      # broadcast
     elsif params['data']['action'] == 'broadcast'
 
       # list all current clients
@@ -74,7 +76,7 @@ class LongPollingController < ApplicationController
                 Session.send( local_client_id, params['data'] )
               end
             }
-          # broadcast every client
+            # broadcast every client
           else
             log 'notice', "send broadcast from (#{client_id.to_s})", local_client_id
             Session.send( local_client_id, params['data'] )
@@ -115,7 +117,7 @@ class LongPollingController < ApplicationController
         count = count - 1
         queue = Session.queue( client_id )
         if queue && queue[0]
-#          puts "send " + queue.inspect + client_id.to_s
+          #          puts "send " + queue.inspect + client_id.to_s
           render :json => queue
           return
         end
@@ -134,25 +136,25 @@ class LongPollingController < ApplicationController
   end
 
   private
-    def client_id_check
-      return params[:client_id] if params[:client_id]
-      return
-    end
-    def client_id_gen
-      rand(99999999)
-    end
-    def client_id_verify
-      return if !params[:client_id]
-      sessions = Session.sessions
-      return if !sessions.include?( params[:client_id].to_s )
-      return true
-    end
+  def client_id_check
+    return params[:client_id] if params[:client_id]
+    return
+  end
+  def client_id_gen
+    rand(99999999)
+  end
+  def client_id_verify
+    return if !params[:client_id]
+    sessions = Session.sessions
+    return if !sessions.include?( params[:client_id].to_s )
+    return true
+  end
 
-    def log( level, data, client_id = '-' )
-      if false
-        return if level == 'debug'
-      end
-      puts "#{Time.now}:client(#{ client_id }) #{ data }"
-#      puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
+  def log( level, data, client_id = '-' )
+    if false
+      return if level == 'debug'
     end
+    puts "#{Time.now}:client(#{ client_id }) #{ data }"
+    #      puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
+  end
 end

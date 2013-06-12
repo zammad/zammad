@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class TicketsController < ApplicationController
   before_filter :authentication_check
 
@@ -133,7 +135,7 @@ class TicketsController < ApplicationController
         :open   => tickets_open,
         :closed => tickets_closed
       }
-#          :users => users,
+      # :users => users,
     }
   end
 
@@ -187,9 +189,9 @@ class TicketsController < ApplicationController
     )
     ticket = Ticket.find( params[:ticket_id] )
     ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states )
-      .where( 'id != ?', [ ticket.id ] )
-      .order('created_at DESC')
-      .limit(6)
+    .where( 'id != ?', [ ticket.id ] )
+    .order('created_at DESC')
+    .limit(6)
 
     # get related users
     users = {}
@@ -257,14 +259,14 @@ class TicketsController < ApplicationController
       }
       return
     end
-      
+
     # merge ticket
     success = ticket_slave.merge_to(
       {
         :ticket_id     => ticket_master.id,
         :created_by_id => current_user.id,
-       }
-     )
+      }
+    )
 
     # return result
     render :json => {
@@ -346,7 +348,7 @@ class TicketsController < ApplicationController
 
       # load article ids
       ticket[:article_ids].push article_tmp['id']
-      
+
       # add attachment list to article
       article_tmp['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => article.id )
 
@@ -375,8 +377,8 @@ class TicketsController < ApplicationController
     # get attributes to update
     attributes_to_change = Ticket.attributes_to_change(
       :user       => current_user,
-#      :ticket_id  => params[:ticket_id],
-#      :article_id => params[:article_id]
+      #      :ticket_id  => params[:ticket_id],
+      #      :article_id => params[:article_id]
     )
 
     users = {}
@@ -444,7 +446,7 @@ class TicketsController < ApplicationController
 
   # GET /api/tickets/search
   def search
-    
+
     # build result list
     tickets = Ticket.search(
       :limit        => params[:limit],

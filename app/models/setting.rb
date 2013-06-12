@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class Setting < ApplicationModel
   store         :options
   store         :state
@@ -48,17 +50,17 @@ class Setting < ApplicationModel
   end
 
   private
-    def delete_cache
-      @@current[:settings_config] = nil
-    end
-    def set_initial
-      self.state_initial = self.state
-    end
-    def state_check
-      if self.state || self.state == false
-        if !self.state.respond_to?('has_key?') || !self.state.has_key?(:value)
-          self.state = { :value => self.state }
-        end
+  def delete_cache
+    @@current[:settings_config] = nil
+  end
+  def set_initial
+    self.state_initial = self.state
+  end
+  def state_check
+    if self.state || self.state == false
+      if !self.state.respond_to?('has_key?') || !self.state.has_key?(:value)
+        self.state = { :value => self.state }
       end
     end
+  end
 end

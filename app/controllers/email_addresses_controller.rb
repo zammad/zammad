@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class EmailAddressesController < ApplicationController
   before_filter :authentication_check
 
@@ -61,7 +63,7 @@ Response:
 
 Test:
 curl http://localhost/api/email_addresses/#{id}.json -v -u #{login}:#{password}
- 
+
 =end
 
   def show
@@ -137,7 +139,7 @@ Resource:
 Response:
 
 Test:
- 
+
 =end
 
   def destroy

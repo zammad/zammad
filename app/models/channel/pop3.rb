@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'net/pop'
 
 class Channel::POP3 < Channel::EmailParser
@@ -16,7 +18,7 @@ class Channel::POP3 < Channel::EmailParser
     if ssl
       pop.enable_ssl
     end
-    pop.start( channel[:options][:user], channel[:options][:password] ) 
+    pop.start( channel[:options][:user], channel[:options][:password] )
     count     = 0
     count_all = pop.mails.size
     pop.each_mail do |m|

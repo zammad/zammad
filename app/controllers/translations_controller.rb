@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 class TranslationsController < ApplicationController
   before_filter :authentication_check, :except => [:load]
 

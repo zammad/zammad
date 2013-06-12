@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'mail'
 
 class Channel::EmailBuild
@@ -28,7 +30,7 @@ class Channel::EmailBuild
       end
     end
 
-    # add body    
+    # add body
     mail.text_part = Mail::Part.new do
       body attr[:body]
     end
