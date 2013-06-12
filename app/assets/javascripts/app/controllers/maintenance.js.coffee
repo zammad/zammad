@@ -13,8 +13,13 @@ class App.Maintenance extends App.ControllerContent
   sendMessage: (e) ->
     e.preventDefault()
     params = @formParam(e.target)
-    console.log(params)
-    App.Event.trigger('session:maintanance', {title: params.HeaderText, message: params.Message})
+    App.Event.trigger(
+        'ws:send'
+          action: 'broadcast'
+          event:  'session:maintenance'
+          spool:  false
+          data:   {title: params.headerText, message: params.message}
+      )
 
 
 App.Config.set( 'maintenance', App.Maintenance, 'Routes' )

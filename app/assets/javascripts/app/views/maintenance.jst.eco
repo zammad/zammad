@@ -16,7 +16,7 @@
   </div>
   <div class="control-group">
     <div class="controls">
-      <button type="submit" class="btn">Send Message</button>
+      <button type="submit" class="btn btn-primary submit">Send Message</button>
     </div>
   </div>
 </form>
