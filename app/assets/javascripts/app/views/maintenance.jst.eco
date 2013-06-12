@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1>Maintenance Message<small></small></h1>
+</div>
+<form class="form-horizontal" id="maintenanceForm">
+  <div class="control-group">
+    <label class="control-label" for="HeaderText">Header Text</label>
+    <div class="controls">
+      <input type="text" id="HeaderText" name="HeaderText" placeholder="Header Text">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="Message">Message</label>
+    <div class="controls">
+      <textarea id="Message" name="Message" class="" rows="8"  placeholder="Maintenance Message"></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn btn-primary submit">Send Message</button>
+    </div>
+  </div>
+</form>
