@@ -610,7 +610,9 @@ class Ticket < ApplicationModel
     # first response
     if sla_selected.first_response_time
       self.first_response_escal_date = TimeCalculation.dest_time( created_at, sla_selected.first_response_time, sla_selected.data, sla_selected.timezone )
-
+      extended_escalation = escalation_suspend( self.first_response_escal_date, 'relative', sla_selected.timezone)
+      self.first_response_escal_date = TimeCalculation.dest_time( self.first_response_escal_date, extended_escalation.to_i, sla_selected.timezone) 
+        
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
     end
@@ -699,6 +701,95 @@ class Ticket < ApplicationModel
 
       # delete articles
       self.articles.destroy_all
+    end
+    #type could be:
+    # real - time without supsend state
+    # relative - only suspend time              
+
+    def escalation_suspend (end_time, type, sla_timezone)
+      sum_temp = 0
+      total_time = 0
+      #get history for ticket
+      history_list = History.history_list( 'Ticket', self.id, 'Ticket' )
+
+      #loop through hist. changes and get time
+      last_state            = nil
+      last_state_change     = nil
+      last_state_is_pending = false
+      history_list.each { |history_item|
+
+        # ignore if it isn't a state change
+        next if history_item['history_attribute'] != 'ticket_state'
+
+        # ignore all older state changes after first_response
+        next if last_state_change && last_state_change > self.first_response
+
+        # if created_at is later then first_response, use first_response as last time
+        if history_item['created_at'] > self.first_response
+          history_item['created_at'] = self.first_response
+        end
+
+        # get initial state and time
+        if !last_state
+          last_state        = history_item['value_from']
+          last_state_change = self.created_at
+        end
+
+        # use time if ticket got from e. g. open to pending
+        if history_item['value_from'] != 'pending' && history_item['value_to'] == 'pending'
+          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_timezone)
+          puts 'Diff count !=pending -> ==pending ' + diff.to_s
+          sum_temp = sum_temp + diff
+          total_time = total_time + diff
+          last_state_is_pending = true
+
+        # use time if ticket got from e. g. open to open
+        elsif history_item['value_from'] != 'pending' && history_item['value_to'] != 'pending'
+          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_timezone)
+          puts 'Diff count !=pending -> !=pending ' + diff.to_s
+          sum_temp = sum_temp + diff
+          total_time = total_time + diff
+          last_state_is_pending = false
+        elsif history_item['value_from'] == 'pending' && history_item['value_to'] != 'pending'
+          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_timezone)
+          puts 'Diff count !=pending -> !=pending ' + diff.to_s
+          total_time = total_time + diff
+          last_state_is_pending = false
+        # no pending state, do not count
+        else
+          puts "Diff do not count #{history_item['value_from']}->#{history_item['value_to']} -> #{history_item['created_at']}"
+          last_state_is_pending = false
+        end
+
+        # remember for next loop last state
+        last_state        = history_item['value_to']
+        last_state_change = history_item['created_at']
+      }
+
+      # if last state isnt pending, count rest
+      if !last_state_is_pending && last_state_change && last_state_change < end_time
+        diff = TimeCalculation.business_time_diff( last_state_change, end_time, sla_timezone)
+        sum_temp = sum_temp + diff
+        total_time = total_time + diff
+      end
+
+      # if we have not had any state change
+      if !last_state_change
+        puts self.created_at.to_s + ' ' + end_time.to_s + ' ' + sla_timezone.to_s
+        diff = TimeCalculation.business_time_diff( self.created_at, end_time, sla_timezone)
+        sum_temp = sum_temp + diff
+        total_time = total_time + diff
+      end
+      puts total_time
+      #return sum
+      if (type == 'real')
+        return sum_temp
+      elsif (type == 'relative')
+        return total_time - sum_temp
+      else
+        return nil
+      end
+      
     end
 
   class Number
