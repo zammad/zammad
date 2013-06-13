@@ -755,7 +755,7 @@ class Ticket < ApplicationModel
 
         # use time if ticket got from e. g. open to pending
         if history_item['value_from'] != 'pending' && history_item['value_to'] == 'pending'
-          diff = self.escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
+          diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
           puts "Diff count !=pending -> ==pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
           total_time_without_pending = total_time_without_pending + diff
           total_time = total_time + diff
@@ -763,13 +763,13 @@ class Ticket < ApplicationModel
 
         # use time if ticket got from e. g. open to open
         elsif history_item['value_from'] != 'pending' && history_item['value_to'] != 'pending'
-          diff = self.escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
+          diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
           puts "Diff count !=pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
           total_time_without_pending = total_time_without_pending + diff
           total_time = total_time + diff
           last_state_is_pending = false
         elsif history_item['value_from'] == 'pending' && history_item['value_to'] != 'pending'
-          diff = self.escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
+          diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
           puts "Diff not count ==pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
           total_time = total_time + diff
           last_state_is_pending = false
@@ -786,7 +786,7 @@ class Ticket < ApplicationModel
 
       # if last state isnt pending, count rest
       if !last_state_is_pending && last_state_change && last_state_change < end_time
-        diff = self.escalation_time_diff( last_state_change, end_time, sla_selected )
+        diff = escalation_time_diff( last_state_change, end_time, sla_selected )
         puts "Diff count last state was not pending #{diff.to_s} - #{last_state_change} - #{end_time}"
         total_time_without_pending = total_time_without_pending + diff
         total_time = total_time + diff
@@ -794,7 +794,7 @@ class Ticket < ApplicationModel
 
       # if we have not had any state change
       if !last_state_change
-        diff = self.escalation_time_diff( start_time, end_time, sla_selected )
+        diff = escalation_time_diff( start_time, end_time, sla_selected )
         puts 'Diff state has not changed ' + diff.to_s
         total_time_without_pending = total_time_without_pending + diff
         total_time = total_time + diff
