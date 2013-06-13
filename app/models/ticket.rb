@@ -706,7 +706,7 @@ class Ticket < ApplicationModel
     # real - time without supsend state
     # relative - only suspend time              
 
-    def escalation_suspend (end_time, type, sla_timezone)
+def escalation_suspend (end_time, type, sla_selected)
       sum_temp = 0
       total_time = 0
       #get history for ticket
@@ -737,7 +737,7 @@ class Ticket < ApplicationModel
 
         # use time if ticket got from e. g. open to pending
         if history_item['value_from'] != 'pending' && history_item['value_to'] == 'pending'
-          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_timezone)
+          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'],sla_selected.data, sla_selected.timezone)
           puts 'Diff count !=pending -> ==pending ' + diff.to_s
           sum_temp = sum_temp + diff
           total_time = total_time + diff
@@ -745,13 +745,13 @@ class Ticket < ApplicationModel
 
         # use time if ticket got from e. g. open to open
         elsif history_item['value_from'] != 'pending' && history_item['value_to'] != 'pending'
-          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_timezone)
+          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_selected.data, sla_selected.timezone)
           puts 'Diff count !=pending -> !=pending ' + diff.to_s
           sum_temp = sum_temp + diff
           total_time = total_time + diff
           last_state_is_pending = false
         elsif history_item['value_from'] == 'pending' && history_item['value_to'] != 'pending'
-          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_timezone)
+          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_selected.data, sla_selected.timezone)
           puts 'Diff count !=pending -> !=pending ' + diff.to_s
           total_time = total_time + diff
           last_state_is_pending = false
@@ -768,15 +768,14 @@ class Ticket < ApplicationModel
 
       # if last state isnt pending, count rest
       if !last_state_is_pending && last_state_change && last_state_change < end_time
-        diff = TimeCalculation.business_time_diff( last_state_change, end_time, sla_timezone)
+        diff = TimeCalculation.business_time_diff( last_state_change, end_time, sla_selected.data, sla_selected.timezone)
         sum_temp = sum_temp + diff
         total_time = total_time + diff
       end
 
       # if we have not had any state change
       if !last_state_change
-        puts self.created_at.to_s + ' ' + end_time.to_s + ' ' + sla_timezone.to_s
-        diff = TimeCalculation.business_time_diff( self.created_at, end_time, sla_timezone)
+        diff = TimeCalculation.business_time_diff( self.created_at, end_time, sla_selected.data, sla_selected.timezone)
         sum_temp = sum_temp + diff
         total_time = total_time + diff
       end
