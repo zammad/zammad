@@ -750,7 +750,7 @@ class Ticket < ApplicationModel
         # get initial state and time
         if !last_state
           last_state        = history_item['value_from']
-          last_state_change = self.created_at
+          last_state_change = start_time
         end
 
         # use time if ticket got from e. g. open to pending
@@ -811,9 +811,9 @@ class Ticket < ApplicationModel
       # if we have not had any state change
       if !last_state_change
         if sla_selected
-          diff = TimeCalculation.business_time_diff( self.created_at, end_time, sla_selected.data, sla_selected.timezone)
+          diff = TimeCalculation.business_time_diff( start_time, end_time, sla_selected.data, sla_selected.timezone)
         else
-          diff = TimeCalculation.business_time_diff( self.created_at, end_time )
+          diff = TimeCalculation.business_time_diff( start_time, end_time )
         end
         puts 'Diff state has not changed ' + diff.to_s
         total_time_without_pending = total_time_without_pending + diff
