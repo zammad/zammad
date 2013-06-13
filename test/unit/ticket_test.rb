@@ -633,14 +633,14 @@ class TicketTest < ActiveSupport::TestCase
     #)
 
     # set first response in time
-    ticket.update_attributes(
-      :last_contact_agent => '2013-06-04 10:30:00 UTC',
-    )
+    #ticket.update_attributes(
+    #  :last_contact_agent => '2013-06-04 10:30:00 UTC',
+    #)
 
     ticket.update_attributes(
       :first_response => '2013-06-04 10:45:00 UTC',
     )
-    
+
     # set ticket from 11:30 to closed
     History.history_create(
       :history_type      => 'updated',
