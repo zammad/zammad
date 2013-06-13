@@ -109,13 +109,19 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
 =end
 
-  def self.business_time_diff(start_time, end_time, config, timezone = '')
+  def self.business_time_diff(start_time, end_time, config = nil, timezone = '')
     if start_time.class == String
       start_time  = Time.parse( start_time.to_s + 'UTC' )
     end
     if end_time.class == String
       end_time = Time.parse( end_time.to_s + 'UTC' )
     end
+
+    # if no config is given, just return calculation directly
+    if !config
+      return ((end_time - start_time) / 60 ).round
+    end
+
 
     working_hours = self.working_hours(start_time, config, timezone)
 
@@ -225,9 +231,16 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
 =end
 
-  def self.dest_time(start_time, diff_in_min, config, timezone = '')
+  def self.dest_time(start_time, diff_in_min, config = nil, timezone = '')
     if start_time.class == String
       start_time = Time.parse( start_time.to_s + ' UTC' )
+    end
+
+    return start_time if diff_in_min == 0
+
+    # if no config is given, just return calculation directly
+    if !config
+      return start_time + (diff_in_min * 60)
     end
 
     # loop
@@ -277,8 +290,12 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       # fillup to first full hour
       if first_loop
 
-        # get rest of this hour
-        diff = 3600 - (start_time - start_time.beginning_of_hour)
+        # get rest of this hour if diff_in_min in lower the one hour
+        diff_to_count = 3600
+        if diff_to_count > (diff_in_min * 60)
+          diff_to_count = diff_in_min * 60
+        end
+        diff = diff_to_count - (start_time - start_time.beginning_of_hour)
         start_time += diff
 
         # check if it's countable hour
@@ -307,6 +324,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
         # check if it's business hour and count
         if working_hours[ week_day_map[week_day] ][ next_hour ]
+
           # check if count is within this hour
           if count > 59 * 60
             diff = 3600

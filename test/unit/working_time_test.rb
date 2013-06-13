@@ -238,6 +238,13 @@ class WorkingTimeTest < ActiveSupport::TestCase
           'end_of_workday'       => '6:00 pm',
         },
       },
+
+      # test 15
+      {
+        :start  => '2013-08-29 16:01:00',
+        :end    => '2013-08-29 16:10:59',
+        :diff   => 10,
+      },
     ]
     tests.each { |test|
       diff = TimeCalculation.business_time_diff( test[:start], test[:end], test[:config], test[:timezone] )
@@ -495,6 +502,51 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
+      # test 17
+      {
+        :start     => '2013-10-21 04:01:00',
+        :dest_time => '2013-10-21 06:00:00',
+        :diff      => 119,
+      },
+
+      # test 18
+      {
+        :start     => '2013-10-21 04:01:00',
+        :dest_time => '2013-10-21 04:01:00',
+        :diff      => 0,
+      },
+
+      # test 19
+      {
+        :start     => '2013-04-12 21:20:15',
+        :dest_time => '2013-04-12 21:20:15',
+        :diff      => 0,
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
+
+      # test 20
+      {
+        :start     => '2013-04-12 11:20:15',
+        :dest_time => '2013-04-12 11:21:15',
+        :diff      => 1,
+        :config    => {
+          'Mon'                  => true,
+          'Tue'                  => true,
+          'Wed'                  => true,
+          'Thu'                  => true,
+          'Fri'                  => true,
+          'beginning_of_workday' => '8:00 am',
+          'end_of_workday'       => '6:00 pm',
+        },
+      },
     ]
     tests.each { |test|
       dest_time = TimeCalculation.dest_time( test[:start] + ' UTC', test[:diff], test[:config], test[:timezone] )
