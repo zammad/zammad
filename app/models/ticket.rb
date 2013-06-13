@@ -609,20 +609,27 @@ class Ticket < ApplicationModel
 
     # first response
     if sla_selected.first_response_time
-      self.first_response_escal_date = TimeCalculation.dest_time( created_at, sla_selected.first_response_time, sla_selected.data, sla_selected.timezone )
-      extended_escalation = escalation_suspend( self.first_response_escal_date, 'relative', sla_selected )
-      self.first_response_escal_date = TimeCalculation.dest_time( self.first_response_escal_date, extended_escalation.to_i, sla_selected.data, sla_selected.timezone )
+
+      # get escalation date without pending time
+      self.first_response_escal_date = TimeCalculation.dest_time( self.created_at, sla_selected.first_response_time, sla_selected.data, sla_selected.timezone )
+
+      # get pending time between created and first response escal. time
+      time_in_pending = escalation_suspend( self.created_at, self.first_response_escal_date, 'relative', sla_selected )
+
+      # get new escalation time (original escal_date + time_in_pending)
+      self.first_response_escal_date = TimeCalculation.dest_time( self.first_response_escal_date, time_in_pending.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
     end
     if self.first_response# && !self.first_response_in_min
-      self.first_response_in_min = TimeCalculation.business_time_diff( self.created_at, self.first_response, sla_selected.data, sla_selected.timezone  )
-      self.first_response_in_min = escalation_suspend( self.first_response, 'real', sla_selected )
-      
-      #self.first_response_in_min = TimeCalculation.business_time_diff( self.first_response_in_min, extended_escalation.to_i, sla_selected.data, sla_selected.timezone  )
+
+      # get response time in min between created and first response
+      self.first_response_in_min = escalation_suspend( self.created_at, self.first_response, 'real', sla_selected )
+
     end
-    # set sla time
+
+    # set time to show if sla is raised ot in
     if sla_selected.first_response_time && self.first_response_in_min
       self.first_response_diff_in_min = sla_selected.first_response_time - self.first_response_in_min
     end
@@ -651,20 +658,24 @@ class Ticket < ApplicationModel
 
     # close time
     if sla_selected.close_time
+
+      # get escalation date without pending time
       self.close_time_escal_date = TimeCalculation.dest_time( self.created_at, sla_selected.close_time, sla_selected.data, sla_selected.timezone  )
+
+      # get pending time between created and close escal. time
+      extended_escalation = escalation_suspend( self.created_at, self.close_time_escal_date, 'relative', sla_selected )
+
+      # get new escalation time (original escal_date + time_in_pending)
+      self.close_time_escal_date = TimeCalculation.dest_time( self.close_time_escal_date, extended_escalation.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.close_time_escal_date, self.close_time )
     end
-    if self.close_time# && !self.close_time_in_min
-      self.close_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.close_time, sla_selected.data, sla_selected.timezone  )
-      puts '#### 1 ' + self.close_time_in_min.to_s
-      self.close_time_in_min == escalation_suspend( self.close_time, 'real', sla_selected )
-      puts '#### 2 ' + self.close_time_in_min.to_s
+    if self.close_time # && !self.close_time_in_min
+      self.close_time_in_min = escalation_suspend( self.created_at, self.close_time, 'real', sla_selected )
     end
     # set sla time
     if sla_selected.close_time && self.close_time_in_min
-      puts '#### 3 ' + sla_selected.close_time.to_s + ' - ' + self.close_time_in_min.to_s
       self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
     end
     self.callback_loop = true
@@ -713,8 +724,8 @@ class Ticket < ApplicationModel
     # real - time without supsend state
     # relative - only suspend time
 
-def escalation_suspend (end_time, type, sla_selected)
-      sum_temp = 0
+    def escalation_suspend (start_time, end_time, type, sla_selected)
+      total_time_without_pending = 0
       total_time = 0
       #get history for ticket
       history_list = History.history_list( 'Ticket', self.id, 'Ticket' )
@@ -728,12 +739,12 @@ def escalation_suspend (end_time, type, sla_selected)
         # ignore if it isn't a state change
         next if history_item['history_attribute'] != 'ticket_state'
 
-        # ignore all older state changes after first_response
-        next if last_state_change && last_state_change > self.first_response
+        # ignore all older state changes after end_time
+        next if last_state_change && last_state_change > end_time
 
-        # if created_at is later then first_response, use first_response as last time
-        if history_item['created_at'] > self.first_response
-          history_item['created_at'] = self.first_response
+        # if created_at is later then end_time, use end_time as last time
+        if history_item['created_at'] > end_time
+          history_item['created_at'] = end_time
         end
 
         # get initial state and time
@@ -749,8 +760,8 @@ def escalation_suspend (end_time, type, sla_selected)
           else
             diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'] )
           end
-          puts 'Diff count !=pending -> ==pending ' + diff.to_s
-          sum_temp = sum_temp + diff
+          puts "Diff count !=pending -> ==pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
+          total_time_without_pending = total_time_without_pending + diff
           total_time = total_time + diff
           last_state_is_pending = true
 
@@ -761,8 +772,8 @@ def escalation_suspend (end_time, type, sla_selected)
           else
             diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'] )
           end
-          puts 'Diff count !=pending -> !=pending ' + diff.to_s
-          sum_temp = sum_temp + diff
+          puts "Diff count !=pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
+          total_time_without_pending = total_time_without_pending + diff
           total_time = total_time + diff
           last_state_is_pending = false
         elsif history_item['value_from'] == 'pending' && history_item['value_to'] != 'pending'
@@ -771,7 +782,7 @@ def escalation_suspend (end_time, type, sla_selected)
           else
             diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'] )
           end
-          puts 'Diff count !=pending -> !=pending ' + diff.to_s
+          puts "Diff not count ==pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
           total_time = total_time + diff
           last_state_is_pending = false
         # no pending state, do not count
@@ -792,7 +803,8 @@ def escalation_suspend (end_time, type, sla_selected)
         else
           diff = TimeCalculation.business_time_diff( last_state_change, end_time )
         end
-        sum_temp = sum_temp + diff
+        puts "Diff count last state was not pending #{diff.to_s} - #{last_state_change} - #{end_time}"
+        total_time_without_pending = total_time_without_pending + diff
         total_time = total_time + diff
       end
 
@@ -803,17 +815,19 @@ def escalation_suspend (end_time, type, sla_selected)
         else
           diff = TimeCalculation.business_time_diff( self.created_at, end_time )
         end
-        sum_temp = sum_temp + diff
+        puts 'Diff state has not changed ' + diff.to_s
+        total_time_without_pending = total_time_without_pending + diff
         total_time = total_time + diff
       end
-      puts total_time
+
       #return sum
       if (type == 'real')
-        return sum_temp
+        return total_time_without_pending
       elsif (type == 'relative')
-        return total_time - sum_temp
+        relative = total_time - total_time_without_pending
+        return relative
       else
-        return nil
+        raise "ERROR: Unknown type #{type}"
       end
     end
 

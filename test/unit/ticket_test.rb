@@ -680,7 +680,7 @@ class TicketTest < ActiveSupport::TestCase
     #assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
     #assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
     assert_equal( ticket.close_time_in_min, 150, 'ticket.close_time_in_min verify 3' )
-    assert_equal( ticket.close_time_diff_in_min, 150, 'ticket.close_time_diff_in_min# verify 3' )
+    assert_equal( ticket.close_time_diff_in_min, 90, 'ticket.close_time_diff_in_min# verify 3' )
     delete = sla.destroy
     assert( delete, "sla destroy" )
 
