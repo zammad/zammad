@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 
 $LOAD_PATH << './lib'
 require 'rubygems'
@@ -22,15 +24,15 @@ worker_count = 2
     else
       ARGV.clear
     end
-  
+
     Dir.chdir dir
     RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
-  
+
     $stdout.reopen( dir + "/log/" + name + "_out.log", "w")
     $stderr.reopen( dir + "/log/" + name + "_err.log", "w")
     require File.join(dir, "config", "environment")
     require 'scheduler'
-  
+
     Scheduler.run(count, worker_count)
   end
 }

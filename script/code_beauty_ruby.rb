@@ -27,7 +27,7 @@ module RBeautify
    # user-customizable values
 
    RBeautify::TabStr = " "
-   RBeautify::TabSize = 3
+   RBeautify::TabSize = 2
 
    # indent regexp tests
 
@@ -35,6 +35,7 @@ module RBeautify
       /^module\b/,
       /^class\b/,
       /^if\b/,
+      /[A-z]\($/,
       /(=\s*|^)until\b/,
       /(=\s*|^)for\b/,
       /^unless\b/,
@@ -59,6 +60,9 @@ module RBeautify
       /^rescue\b/,
       /^ensure\b/,
       /^elsif\b/,
+      /^\)$/,
+      /^\);$/,
+      /^\)\./,
       /^end\b/,
       /^else\b/,
       /\bwhen\b/,

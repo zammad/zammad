@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 
 $LOAD_PATH << './lib'
 require 'rubygems'
@@ -160,12 +162,12 @@ EventMachine.run {
         @clients[client_id][:session] = data['session']
         Session.create( client_id, data['session'], { :type => 'websocket' } )
 
-      # remember ping, send pong back
+        # remember ping, send pong back
       elsif data['action'] == 'ping'
         @clients[client_id][:last_ping] = Time.now
         @clients[client_id][:websocket].send( '[{"action":"pong"}]' )
 
-      # broadcast
+        # broadcast
       elsif data['action'] == 'broadcast'
 
         # list all current clients
@@ -197,7 +199,7 @@ EventMachine.run {
                 end
               end
 
-            # broadcast every client
+              # broadcast every client
             else
               log 'notice', "send broadcast from (#{client_id.to_s})", local_client_id
               if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
@@ -256,7 +258,7 @@ EventMachine.run {
       begin
         queue = Session.queue( client_id )
         if queue && queue[0]
-#          log "send " + queue.inspect, client_id
+          #          log "send " + queue.inspect, client_id
           log 'notice', "send data to client", client_id
           client[:websocket].send( queue.to_json )
         end
@@ -313,7 +315,7 @@ EventMachine.run {
       return if level == 'debug'
     end
     puts "#{Time.now}:client(#{ client_id }) #{ data }"
-#    puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
+    #    puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
   end
 
 }

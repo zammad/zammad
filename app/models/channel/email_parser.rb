@@ -531,9 +531,9 @@ module Mail
 
           # Search for occurences of quoted strings or plain strings
           text.scan(/(                                  # Group around entire regex to include it in matches
-            \=\?[^?]+\?([QB])\?[^?]+?\?\=  # Quoted String with subgroup for encoding method
-            |                                # or
-            .+?(?=\=\?|$)                    # Plain String
+          \=\?[^?]+\?([QB])\?[^?]+?\?\=  # Quoted String with subgroup for encoding method
+          |                                # or
+          .+?(?=\=\?|$)                    # Plain String
           )/xmi).map do |matches|
             string, method = *matches
             if    method == 'b' || method == 'B'
