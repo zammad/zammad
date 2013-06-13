@@ -634,8 +634,13 @@ class TicketTest < ActiveSupport::TestCase
 
     # set first response in time
     ticket.update_attributes(
+      :last_contact_agent => '2013-06-04 10:30:00 UTC',
+    )
+
+    ticket.update_attributes(
       :first_response => '2013-06-04 10:45:00 UTC',
     )
+    
     # set ticket from 11:30 to closed
     History.history_create(
       :history_type      => 'updated',
@@ -677,8 +682,8 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
     assert_equal( ticket.first_response_in_min, 75, 'ticket.first_response_in_min verify 3' )
     assert_equal( ticket.first_response_diff_in_min, 45, 'ticket.first_response_diff_in_min verify 3' )
-    #assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
-    #assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
+    #assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 13:45:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
     assert_equal( ticket.close_time_in_min, 150, 'ticket.close_time_in_min verify 3' )
     assert_equal( ticket.close_time_diff_in_min, 90, 'ticket.close_time_diff_in_min# verify 3' )
     delete = sla.destroy
