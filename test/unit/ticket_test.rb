@@ -569,6 +569,10 @@ class TicketTest < ActiveSupport::TestCase
     delete = ticket.destroy
     assert( delete, "ticket destroy" )
 
+  end
+
+  test 'ticket escalation suspend' do
+
 
     ticket = Ticket.create(
       :title           => 'some title äöüß3',

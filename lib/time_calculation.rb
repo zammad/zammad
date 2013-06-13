@@ -109,13 +109,19 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
 =end
 
-  def self.business_time_diff(start_time, end_time, config, timezone = '')
+  def self.business_time_diff(start_time, end_time, config = nil, timezone = '')
     if start_time.class == String
       start_time  = Time.parse( start_time.to_s + 'UTC' )
     end
     if end_time.class == String
       end_time = Time.parse( end_time.to_s + 'UTC' )
     end
+
+    # if no config is given, just return calculation directly
+    if !config
+      return ((end_time - start_time) / 60 ).round
+    end
+
 
     working_hours = self.working_hours(start_time, config, timezone)
 
@@ -225,9 +231,14 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
 =end
 
-  def self.dest_time(start_time, diff_in_min, config, timezone = '')
+  def self.dest_time(start_time, diff_in_min, config = nil, timezone = '')
     if start_time.class == String
       start_time = Time.parse( start_time.to_s + ' UTC' )
+    end
+
+    # if no config is given, just return calculation directly
+    if !config
+      return start_time + (diff_in_min * 60)
     end
 
     # loop

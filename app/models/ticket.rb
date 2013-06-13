@@ -610,9 +610,9 @@ class Ticket < ApplicationModel
     # first response
     if sla_selected.first_response_time
       self.first_response_escal_date = TimeCalculation.dest_time( created_at, sla_selected.first_response_time, sla_selected.data, sla_selected.timezone )
-      extended_escalation = escalation_suspend( self.first_response_escal_date, 'relative', sla_selected.timezone)
-      self.first_response_escal_date = TimeCalculation.dest_time( self.first_response_escal_date, extended_escalation.to_i, sla_selected.timezone) 
-        
+      extended_escalation = escalation_suspend( self.first_response_escal_date, 'relative', sla_selected )
+      self.first_response_escal_date = TimeCalculation.dest_time( self.first_response_escal_date, extended_escalation.to_i, sla_selected.data, sla_selected.timezone )
+
       # set ticket escalation
       self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
     end
@@ -704,7 +704,7 @@ class Ticket < ApplicationModel
     end
     #type could be:
     # real - time without supsend state
-    # relative - only suspend time              
+    # relative - only suspend time
 
 def escalation_suspend (end_time, type, sla_selected)
       sum_temp = 0
@@ -737,7 +737,11 @@ def escalation_suspend (end_time, type, sla_selected)
 
         # use time if ticket got from e. g. open to pending
         if history_item['value_from'] != 'pending' && history_item['value_to'] == 'pending'
-          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'],sla_selected.data, sla_selected.timezone)
+          if sla_selected
+            diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'],sla_selected.data, sla_selected.timezone)
+          else
+            diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'] )
+          end
           puts 'Diff count !=pending -> ==pending ' + diff.to_s
           sum_temp = sum_temp + diff
           total_time = total_time + diff
@@ -745,13 +749,21 @@ def escalation_suspend (end_time, type, sla_selected)
 
         # use time if ticket got from e. g. open to open
         elsif history_item['value_from'] != 'pending' && history_item['value_to'] != 'pending'
-          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_selected.data, sla_selected.timezone)
+          if sla_selected
+            diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_selected.data, sla_selected.timezone)
+          else
+            diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'] )
+          end
           puts 'Diff count !=pending -> !=pending ' + diff.to_s
           sum_temp = sum_temp + diff
           total_time = total_time + diff
           last_state_is_pending = false
         elsif history_item['value_from'] == 'pending' && history_item['value_to'] != 'pending'
-          diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_selected.data, sla_selected.timezone)
+          if sla_selected
+            diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'], sla_selected.data, sla_selected.timezone)
+          else
+            diff = TimeCalculation.business_time_diff( last_state_change, history_item['created_at'] )
+          end
           puts 'Diff count !=pending -> !=pending ' + diff.to_s
           total_time = total_time + diff
           last_state_is_pending = false
@@ -768,14 +780,22 @@ def escalation_suspend (end_time, type, sla_selected)
 
       # if last state isnt pending, count rest
       if !last_state_is_pending && last_state_change && last_state_change < end_time
-        diff = TimeCalculation.business_time_diff( last_state_change, end_time, sla_selected.data, sla_selected.timezone)
+        if sla_selected
+          diff = TimeCalculation.business_time_diff( last_state_change, end_time, sla_selected.data, sla_selected.timezone)
+        else
+          diff = TimeCalculation.business_time_diff( last_state_change, end_time )
+        end
         sum_temp = sum_temp + diff
         total_time = total_time + diff
       end
 
       # if we have not had any state change
       if !last_state_change
-        diff = TimeCalculation.business_time_diff( self.created_at, end_time, sla_selected.data, sla_selected.timezone)
+        if sla_selected
+          diff = TimeCalculation.business_time_diff( self.created_at, end_time, sla_selected.data, sla_selected.timezone)
+        else
+          diff = TimeCalculation.business_time_diff( self.created_at, end_time )
+        end
         sum_temp = sum_temp + diff
         total_time = total_time + diff
       end
@@ -788,7 +808,6 @@ def escalation_suspend (end_time, type, sla_selected)
       else
         return nil
       end
-      
     end
 
   class Number
