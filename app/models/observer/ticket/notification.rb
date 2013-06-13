@@ -269,7 +269,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    puts 'before_update'
+    #puts 'before_update'
     current = record.class.find(record.id)
 
     # do not send anything if nothing has changed

@@ -49,9 +49,9 @@ class Observer::History < ActiveRecord::Observer
     #    puts record.inspect
 
     diff = differences_from?(current, record)
-    puts ' DIFF'
-    puts ' ' + diff.inspect
-    puts ' CURRENT USER ID ' + UserInfo.current_user_id.to_s
+    #puts ' DIFF'
+    #puts ' ' + diff.inspect
+    #puts ' CURRENT USER ID ' + UserInfo.current_user_id.to_s
 
     map = {
       :group_id => {
@@ -88,11 +88,11 @@ class Observer::History < ActiveRecord::Observer
       # do not log created_at and updated_at attributes
       next if ignore_attributes[key.to_sym] == true
 
-      puts " CHANGED: #{key} is #{value_ids.inspect}"
+      #puts " CHANGED: #{key} is #{value_ids.inspect}"
 
       # check if diff are ids, if yes do lookup
       if value_ids[0].to_s == value_ids[1].to_s
-        puts 'NEXT!!'
+        #puts 'NEXT!!'
         next
       end
 
