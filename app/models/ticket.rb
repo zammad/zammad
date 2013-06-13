@@ -618,6 +618,9 @@ class Ticket < ApplicationModel
     end
     if self.first_response# && !self.first_response_in_min
       self.first_response_in_min = TimeCalculation.business_time_diff( self.created_at, self.first_response, sla_selected.data, sla_selected.timezone  )
+      self.first_response_in_min = escalation_suspend( self.first_response, 'real', sla_selected )
+      
+      #self.first_response_in_min = TimeCalculation.business_time_diff( self.first_response_in_min, extended_escalation.to_i, sla_selected.data, sla_selected.timezone  )
     end
     # set sla time
     if sla_selected.first_response_time && self.first_response_in_min
@@ -655,9 +658,13 @@ class Ticket < ApplicationModel
     end
     if self.close_time# && !self.close_time_in_min
       self.close_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.close_time, sla_selected.data, sla_selected.timezone  )
+      puts '#### 1 ' + self.close_time_in_min.to_s
+      self.close_time_in_min == escalation_suspend( self.close_time, 'real', sla_selected )
+      puts '#### 2 ' + self.close_time_in_min.to_s
     end
     # set sla time
     if sla_selected.close_time && self.close_time_in_min
+      puts '#### 3 ' + sla_selected.close_time.to_s + ' - ' + self.close_time_in_min.to_s
       self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
     end
     self.callback_loop = true

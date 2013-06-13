@@ -618,19 +618,19 @@ class TicketTest < ActiveSupport::TestCase
     )
 
     # set ticket from 11:00 to pending
-    History.history_create(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'ticket_state',
-      :o_id              => ticket.id,
-      :id_to             => 3,
-      :id_from           => 2,
-      :value_from        => 'open',
-      :value_to          => 'pending',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 11:00:00',
-      :updated_at        => '2013-06-04 11:00:00'
-    )
+    #History.history_create(
+    #  :history_type      => 'updated',
+    #  :history_object    => 'Ticket',
+    #  :history_attribute => 'ticket_state',
+    #  :o_id              => ticket.id,
+    #  :id_to             => 3,
+    #  :id_from           => 2,
+    #  :value_from        => 'open',
+    #  :value_to          => 'pending',
+    #  :created_by_id     => 1,
+    #  :created_at        => '2013-06-04 11:00:00',
+    #  :updated_at        => '2013-06-04 11:00:00'
+    #)
 
     # set first response in time
     ticket.update_attributes(
@@ -644,7 +644,7 @@ class TicketTest < ActiveSupport::TestCase
       :o_id              => ticket.id,
       :id_to             => 3,
       :id_from           => 2,
-      :value_from        => 'pending',
+      :value_from        => 'open',
       :value_to          => 'closed',
       :created_by_id     => 1,
       :created_at        => '2013-06-04 12:00:00',
@@ -675,12 +675,12 @@ class TicketTest < ActiveSupport::TestCase
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 12:00:00 UTC', 'ticket.escalation_time verify 1' ) #check escal. time because first resp. is already done
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
-    #assert_equal( ticket.first_response_in_min, 75, 'ticket.first_response_in_min verify 3' )
-    #assert_equal( ticket.first_response_diff_in_min, 45, 'ticket.first_response_diff_in_min verify 3' )
+    assert_equal( ticket.first_response_in_min, 75, 'ticket.first_response_in_min verify 3' )
+    assert_equal( ticket.first_response_diff_in_min, 45, 'ticket.first_response_diff_in_min verify 3' )
     #assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
     #assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
-    #assert_equal( ticket.close_time_in_min, 90, 'ticket.first_response_in_min verify 3' )
-    #assert_equal( ticket.close_time_diff_in_min, 150, 'ticket.first_response_diff_in_min verify 3' )
+    assert_equal( ticket.close_time_in_min, 150, 'ticket.close_time_in_min verify 3' )
+    assert_equal( ticket.close_time_diff_in_min, 150, 'ticket.close_time_diff_in_min# verify 3' )
     delete = sla.destroy
     assert( delete, "sla destroy" )
 
