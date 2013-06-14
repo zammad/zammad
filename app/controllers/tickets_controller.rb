@@ -155,6 +155,7 @@ class TicketsController < ApplicationController
     users = {}
     users[ ticket.owner_id ] = User.user_data_full( ticket.owner_id )
     users[ ticket.customer_id ] = User.user_data_full( ticket.customer_id )
+    history_list = []
     history.each do |item|
 
       users[ item[:created_by_id] ] = User.user_data_full( item[:created_by_id] )
