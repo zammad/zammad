@@ -163,7 +163,7 @@ class HistoryTest < ActiveSupport::TestCase
 
       # get history
       history_list = History.list( 'Ticket', ticket.id, 'Ticket::Article' )
-      puts history_list.inspect
+#      puts history_list.inspect
       test[:history_check].each { |check_item|
 #        puts '+++++++++++'
 #        puts check_item.inspect
@@ -172,27 +172,29 @@ class HistoryTest < ActiveSupport::TestCase
           next if match
 #          puts '--------'
 #          puts history_item.inspect
-          next if history_item['history_object'] != check_item[:history_object]
-          next if history_item['history_type'] != check_item[:history_type]
-          next if check_item[:history_attribute] != history_item['history_attribute']
+          next if history_item.history_object.name != check_item[:history_object]
+          next if history_item.history_type.name != check_item[:history_type]
+          if check_item[:history_attribute]
+            next if check_item[:history_attribute] != history_item.history_attribute.name
+          end
           match = true
-          if history_item['history_type'] == check_item[:history_type]
-            assert( true, "History type #{history_item['history_type']} found!")
+          if history_item.history_type.name == check_item[:history_type]
+            assert( true, "History type #{history_item.history_type.name} found!")
           end
           if check_item[:history_attribute]
-            assert_equal( check_item[:history_attribute], history_item['history_attribute'], "check history attribute #{check_item[:history_attribute]}")
+            assert_equal( check_item[:history_attribute], history_item.history_attribute.name, "check history attribute #{check_item[:history_attribute]}")
           end
           if check_item[:value_from]
-            assert_equal( check_item[:value_from], history_item['value_from'], "check history :value_from #{history_item['value_from']} ok")
+            assert_equal( check_item[:value_from], history_item.value_from, "check history :value_from #{history_item.value_from} ok")
           end
           if check_item[:value_to]
-            assert_equal( check_item[:value_to], history_item['value_to'], "check history :value_to #{history_item['value_to']} ok")
+            assert_equal( check_item[:value_to], history_item.value_to, "check history :value_to #{history_item.value_to} ok")
           end
           if check_item[:id_from]
-            assert_equal( check_item[:id_from], history_item['id_from'], "check history :id_from #{history_item['id_from']} ok")
+            assert_equal( check_item[:id_from], history_item.id_from, "check history :id_from #{history_item.id_from} ok")
           end
           if check_item[:id_to]
-            assert_equal( check_item[:id_to], history_item['id_to'], "check history :id_to #{history_item['id_to']} ok")
+            assert_equal( check_item[:id_to], history_item.id_to, "check history :id_to #{history_item.id_to} ok")
           end
         }
         assert( match, "history check not matched! #{check_item.inspect}")

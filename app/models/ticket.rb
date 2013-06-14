@@ -732,7 +732,7 @@ class Ticket < ApplicationModel
       total_time_without_pending = 0
       total_time = 0
       #get history for ticket
-      history_list = History.list( 'Ticket', self.id, 'Ticket' )
+      history_list = History.list( 'Ticket', self.id )
 
       #loop through hist. changes and get time
       last_state            = nil
