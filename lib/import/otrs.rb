@@ -206,7 +206,7 @@ module Import::OTRS
     result = json(response)
     self._ticket_result(result)
   end
-  
+
   def self._ticket_result(result)
 #    puts result.inspect
     map = {
@@ -309,7 +309,7 @@ module Import::OTRS
         end
 
         record['Articles'].each { |article|
-    
+
           # get article values
           article_new = {
             :created_by_id => 1,
@@ -342,10 +342,10 @@ module Import::OTRS
               rescue
                 display_name = article_new[:from]
               end
-    
+
               # do extra decoding because we needed to use field.value
               display_name = Mail::Field.new( 'X-From', display_name ).to_s
-    
+
               roles = Role.lookup( :name => 'Customer' )
               user = User.create(
                 :login          => email,
@@ -361,7 +361,7 @@ module Import::OTRS
             end
             article_new[:created_by_id] = user.id
           end
-    
+
           if article_new[:ticket_article_sender] == 'customer'
             article_new[:ticket_article_sender_id] = Ticket::Article::Sender.lookup( :name => 'Customer' ).id
             article_new.delete( :ticket_article_sender )
@@ -374,7 +374,7 @@ module Import::OTRS
             article_new[:ticket_article_sender_id] = Ticket::Article::Sender.lookup( :name => 'System' ).id
             article_new.delete( :ticket_article_sender )
           end
-    
+
           if article_new[:ticket_article_type] == 'email-external'
             article_new[:ticket_article_type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
             article_new[:internal] = false
@@ -410,14 +410,14 @@ module Import::OTRS
             article.id = article_new[:id]
             article.save
           end
-    
+
         }
-    
+
         record['History'].each { |history|
     #      puts '-------'
     #      puts history.inspect
           if history['HistoryType'] == 'NewTicket'
-            History.history_create(
+            History.add(
               :id                 => history['HistoryID'],
               :o_id               => history['TicketID'],
               :history_type       => 'created',
@@ -444,7 +444,7 @@ module Import::OTRS
               end
             end
     #        puts "STATE UPDATE (#{history['HistoryID']}): -> #{from}->#{to}"
-            History.history_create(
+            History.add(
               :id                 => history['HistoryID'],
               :o_id               => history['TicketID'],
               :history_type       => 'updated',
@@ -469,7 +469,7 @@ module Import::OTRS
               to      = $3
               to_id   = $4
             end
-            History.history_create(
+            History.add(
               :id                 => history['HistoryID'],
               :o_id               => history['TicketID'],
               :history_type       => 'updated',
@@ -494,7 +494,7 @@ module Import::OTRS
               to      = $3
               to_id   = $4
             end
-            History.history_create(
+            History.add(
               :id                 => history['HistoryID'],
               :o_id               => history['TicketID'],
               :history_type       => 'updated',
@@ -509,7 +509,7 @@ module Import::OTRS
             )
           end
           if history['ArticleID'] && history['ArticleID'] != 0
-            History.history_create(
+            History.add(
               :id                 => history['HistoryID'],
               :o_id               => history['ArticleID'],
               :history_type       => 'created',
@@ -688,7 +688,7 @@ module Import::OTRS
       :UserLastname  => :lastname,
 #      :UserTitle     => 
       :UserLogin     => :login,
-      :UserPw        => :password, 
+      :UserPw        => :password,
     };
 
     result.each { |user|

@@ -237,7 +237,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
     # add history record
     if recipient_list != ''
-      History.history_create(
+      History.add(
         :o_id                   => ticket.id,
         :history_type           => 'notification',
         :history_object         => 'Ticket',

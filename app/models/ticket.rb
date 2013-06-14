@@ -713,11 +713,12 @@ class Ticket < ApplicationModel
       end
     end
 
+
   end
   def destroy_dependencies
 
-    # delete history
-    History.history_destroy( 'Ticket', self.id )
+      # delete history
+      History.remove( 'Ticket', self.id )
 
       # delete articles
       self.articles.destroy_all
@@ -731,7 +732,7 @@ class Ticket < ApplicationModel
       total_time_without_pending = 0
       total_time = 0
       #get history for ticket
-      history_list = History.history_list( 'Ticket', self.id, 'Ticket' )
+      history_list = History.list( 'Ticket', self.id, 'Ticket' )
 
       #loop through hist. changes and get time
       last_state            = nil
@@ -740,51 +741,53 @@ class Ticket < ApplicationModel
       history_list.each { |history_item|
 
         # ignore if it isn't a state change
-        next if history_item['history_attribute'] != 'ticket_state'
+        next if !history_item.history_attribute_id
+        history_attribute = History::Attribute.lookup( :id => history_item.history_attribute_id );
+        next if history_attribute.name != 'ticket_state'
 
         # ignore all older state changes after end_time
         next if last_state_change && last_state_change > end_time
 
         # if created_at is later then end_time, use end_time as last time
-        if history_item['created_at'] > end_time
-          history_item['created_at'] = end_time
+        if history_item.created_at > end_time
+          history_item.created_at = end_time
         end
 
         # get initial state and time
         if !last_state
-          last_state        = history_item['value_from']
+          last_state        = history_item.value_from
           last_state_change = start_time
         end
 
         # use time if ticket got from e. g. open to pending
-        if history_item['value_from'] != 'pending' && history_item['value_to'] == 'pending'
-          diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
-          puts "Diff count !=pending -> ==pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
+        if history_item.value_from != 'pending' && history_item.value_to == 'pending'
+          diff = escalation_time_diff( last_state_change, history_item.created_at, sla_selected )
+          puts "Diff count !=pending -> ==pending #{diff.to_s} - #{last_state_change} - #{history_item.created_at}"
           total_time_without_pending = total_time_without_pending + diff
           total_time = total_time + diff
           last_state_is_pending = true
 
         # use time if ticket got from e. g. open to open
-        elsif history_item['value_from'] != 'pending' && history_item['value_to'] != 'pending'
-          diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
-          puts "Diff count !=pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
+        elsif history_item.value_from != 'pending' && history_item.value_to != 'pending'
+          diff = escalation_time_diff( last_state_change, history_item.created_at, sla_selected )
+          puts "Diff count !=pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item.created_at}"
           total_time_without_pending = total_time_without_pending + diff
           total_time = total_time + diff
           last_state_is_pending = false
-        elsif history_item['value_from'] == 'pending' && history_item['value_to'] != 'pending'
-          diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
-          puts "Diff not count ==pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item['created_at']}"
+        elsif history_item.value_from == 'pending' && history_item.value_to != 'pending'
+          diff = escalation_time_diff( last_state_change, history_item.created_at, sla_selected )
+          puts "Diff not count ==pending -> !=pending #{diff.to_s} - #{last_state_change} - #{history_item.created_at}"
           total_time = total_time + diff
           last_state_is_pending = false
         # no pending state, do not count
         else
-          puts "Diff do not count #{history_item['value_from']}->#{history_item['value_to']} -> #{history_item['created_at']}"
+          puts "Diff do not count #{history_item.value_from}->#{history_item.value_to} -> #{history_item.created_at}"
           last_state_is_pending = false
         end
 
         # remember for next loop last state
-        last_state        = history_item['value_to']
-        last_state_change = history_item['created_at']
+        last_state        = history_item.value_to
+        last_state_change = history_item.created_at
       }
 
       # if last state isnt pending, count rest

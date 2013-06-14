@@ -11,13 +11,12 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
     return true if record.tag_object.name != 'Ticket';
 
     # add ticket history
-    History.history_create(
+    History.add(
       :o_id                   => record.o_id,
       :history_type           => 'added',
       :history_object         => 'Ticket',
       :history_attribute      => 'Tag',
       :value_from             => record.tag_item.name,
-      :created_by_id          => record.created_by_id || UserInfo.current_user_id || 1
     )
   end
   def after_destroy(record)
@@ -26,13 +25,12 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
     return true if record.tag_object.name != 'Ticket';
 
     # add ticket history
-    History.history_create(
+    History.add(
       :o_id                   => record.o_id,
       :history_type           => 'removed',
       :history_object         => 'Ticket',
       :history_attribute      => 'Tag',
       :value_from             => record.tag_item.name,
-      :created_by_id          => record.created_by_id || UserInfo.current_user_id || 1
     )
   end
 end

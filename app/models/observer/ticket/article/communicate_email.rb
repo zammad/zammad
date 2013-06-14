@@ -57,7 +57,7 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
       end
     }
     if recipient_list != ''
-      History.history_create(
+      History.add(
         :o_id                   => record.id,
         :history_type           => 'email',
         :history_object         => 'Ticket::Article',
@@ -65,7 +65,6 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
         :related_history_object => 'Ticket',
         :value_from             => record.subject,
         :value_to               => recipient_list,
-        :created_by_id          => record.created_by_id,
       )
     end
   end

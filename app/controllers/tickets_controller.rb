@@ -149,7 +149,7 @@ class TicketsController < ApplicationController
     return if !ticket_permission( ticket )
 
     # get history of ticket
-    history = History.history_list( 'Ticket', params[:id], 'Ticket::Article' )
+    history = History.list( 'Ticket', params[:id], 'Ticket::Article' )
 
     # get related users
     users = {}

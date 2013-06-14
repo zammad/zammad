@@ -12,7 +12,27 @@ class History < ApplicationModel
   @@cache_object = {}
   @@cache_attribute = {}
 
-  def self.history_create(data)
+=begin
+
+add a new history entry for an object
+
+  History.add(
+    :history_type      => 'updated',
+    :history_object    => 'Ticket',
+    :history_attribute => 'ticket_state',
+    :o_id              => ticket.id,
+    :id_to             => 3,
+    :id_from           => 2,
+    :value_from        => 'open',
+    :value_to          => 'pending',
+    :created_by_id     => 1,
+    :created_at        => '2013-06-04 10:00:00',
+    :updated_at        => '2013-06-04 10:00:00'
+  )
+
+=end
+
+  def self.add(data)
 
     # lookups
     if data[:history_type]
@@ -63,13 +83,31 @@ class History < ApplicationModel
     end
   end
 
-  def self.history_destroy( requested_object, requested_object_id )
-    History.where( :history_object_id => History::Object.where( :name => requested_object ) ).
-    where( :o_id => requested_object_id ).
-    destroy_all
+=begin
+
+remove whole history entries of an object
+
+  History.remove( 'Ticket', 123 )
+
+=end
+
+  def self.remove( requested_object, requested_object_id )
+    history_object = History::Object.where( :name => requested_object ).first
+    History.where(
+      :history_object_id => history_object.id,
+      :o_id              => requested_object_id,
+    ).destroy_all
   end
 
-  def self.history_list( requested_object, requested_object_id, related_history_object = nil )
+=begin
+
+return all histoy entries of an object
+
+  history_list = History.list( 'Ticket', 123 )
+
+=end
+
+  def self.list( requested_object, requested_object_id, related_history_object = nil )
     if !related_history_object
       history_object = self.history_object_lookup( requested_object )
       history = History.where( :history_object_id => history_object.id ).
@@ -90,36 +128,7 @@ class History < ApplicationModel
       order('created_at ASC, id ASC')
     end
 
-    list = []
-    history.each { |item|
-      item_tmp = item.attributes
-      item_tmp['history_type'] = item.history_type.name
-      item_tmp['history_object'] = item.history_object.name
-      if item.history_attribute
-        item_tmp['history_attribute'] = item.history_attribute.name
-      end
-      item_tmp.delete( 'history_attribute_id' )
-      item_tmp.delete( 'history_object_id' )
-      item_tmp.delete( 'history_type_id' )
-      item_tmp.delete( 'o_id' )
-      item_tmp.delete( 'updated_at' )
-      if item_tmp['id_to'] == nil && item_tmp['id_from'] == nil
-        item_tmp.delete( 'id_to' )
-        item_tmp.delete( 'id_from' )
-      end
-      if item_tmp['value_to'] == nil && item_tmp['value_from'] == nil
-        item_tmp.delete( 'value_to' )
-        item_tmp.delete( 'value_from' )
-      end
-      if item_tmp['related_history_object_id'] == nil
-        item_tmp.delete( 'related_history_object_id' )
-      end
-      if item_tmp['related_o_id'] == nil
-        item_tmp.delete( 'related_o_id' )
-      end
-      list.push item_tmp
-    }
-    return list
+    return history
   end
 
   def self.activity_stream( user, limit = 10 )
