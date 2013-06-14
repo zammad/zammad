@@ -588,7 +588,7 @@ class TicketTest < ActiveSupport::TestCase
     assert( ticket, 'ticket created' )
 
     # set ticket at 10:00 to pending
-    History.history_create(
+    History.add(
       :history_type      => 'updated',
       :history_object    => 'Ticket',
       :history_attribute => 'ticket_state',
@@ -603,7 +603,7 @@ class TicketTest < ActiveSupport::TestCase
     )
 
     # set ticket at 10:30 to open
-    History.history_create(
+    History.add(
       :history_type      => 'updated',
       :history_object    => 'Ticket',
       :history_attribute => 'ticket_state',
@@ -618,7 +618,7 @@ class TicketTest < ActiveSupport::TestCase
     )
 
     # set ticket from 11:00 to pending
-    #History.history_create(
+    #History.add(
     #  :history_type      => 'updated',
     #  :history_object    => 'Ticket',
     #  :history_attribute => 'ticket_state',
@@ -642,7 +642,7 @@ class TicketTest < ActiveSupport::TestCase
     )
 
     # set ticket from 11:30 to closed
-    History.history_create(
+    History.add(
       :history_type      => 'updated',
       :history_object    => 'Ticket',
       :history_attribute => 'ticket_state',

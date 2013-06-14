@@ -65,6 +65,7 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
         :related_history_object => 'Ticket',
         :value_from             => record.subject,
         :value_to               => recipient_list,
+        :created_by_id          => record.created_by_id,
       )
     end
   end

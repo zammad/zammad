@@ -156,12 +156,40 @@ class TicketsController < ApplicationController
     users[ ticket.owner_id ] = User.user_data_full( ticket.owner_id )
     users[ ticket.customer_id ] = User.user_data_full( ticket.customer_id )
     history.each do |item|
-      users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )
+
+      users[ item[:created_by_id] ] = User.user_data_full( item[:created_by_id] )
+      item_tmp = item.attributes
       if item['history_object'] == 'Ticket::Article'
-        item['type'] = 'Article ' + item['type'].to_s
+        item_temp['type'] = 'Article ' + item['type'].to_s
       else
-        item['type'] = 'Ticket ' + item['type'].to_s
+        item_tmp['type'] = 'Ticket ' + item['type'].to_s
       end
+      item_tmp['history_type'] = item.history_type.name
+      item_tmp['history_object'] = item.history_object.name
+      if item.history_attribute
+       item_tmp['history_attribute'] = item.history_attribute.name
+      end
+      item_tmp.delete( 'history_attribute_id' )
+      item_tmp.delete( 'history_object_id' )
+      item_tmp.delete( 'history_type_id' )
+      item_tmp.delete( 'o_id' )
+      item_tmp.delete( 'updated_at' )
+      if item_tmp['id_to'] == nil && item_tmp['id_from'] == nil
+        item_tmp.delete( 'id_to' )
+        item_tmp.delete( 'id_from' )
+      end
+      if item_tmp['value_to'] == nil && item_tmp['value_from'] == nil
+        item_tmp.delete( 'value_to' )
+        item_tmp.delete( 'value_from' )
+      end
+      if item_tmp['related_history_object_id'] == nil
+        item_tmp.delete( 'related_history_object_id' )
+      end
+      if item_tmp['related_o_id'] == nil
+        item_tmp.delete( 'related_o_id' )
+      end
+      history_list.push item_tmp
+
     end
 
     # fetch meta relations
@@ -173,7 +201,7 @@ class TicketsController < ApplicationController
     render :json => {
       :ticket             => ticket,
       :users              => users,
-      :history            => history,
+      :history            => history_list,
       :history_objects    => history_objects,
       :history_types      => history_types,
       :history_attributes => history_attributes
