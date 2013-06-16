@@ -163,36 +163,35 @@ class App.TicketZoom extends App.Controller
     for article in @articles
       new Article( article: article )
 
-    defaults = @form_state || {}
 
     @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_state_id'] },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_priority_id'] },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left', default: defaults['group_id']  },
-      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left', default: defaults['owner_id'] },
+      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left'  },
+      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left' },
     ]
     if @isRole('Customer')
       @configure_attributes_ticket = [
-        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_state_id'] },
-        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left', default: defaults['ticket_priority_id'] },
+        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
       ]
 
     @configure_attributes_article = [
-      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium', item_class: '', default: defaults['ticket_article_type_id'] },
-      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['to'] },
-      { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['cc'] },
-      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['subject'] },
-      { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['in_reply_to'] },
-      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true, default: defaults['body']  },
-      { name: 'internal',                 display: 'Visability',  tag: 'select',   default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: defaults['internal'] },
+      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium' },
+      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+      { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+#      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+      { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
+      { name: 'internal',                 display: 'Visability',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
     ]
     if @isRole('Customer')
       @configure_attributes_article = [
-        { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['to'] },
-        { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['cc'] },
-        { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['subject'] },
-        { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide', default: defaults['in_reply_to'] },
-        { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true, default: defaults['body']  },
+        { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+        { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+#        { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+        { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+        { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
       ]
 
     @html App.view('agent_ticket_zoom')(
@@ -202,13 +201,14 @@ class App.TicketZoom extends App.Controller
       isCustomer: @isRole('Customer')
     )
 
+    defaults = @form_state || @ticket
     new App.ControllerForm(
       el:        @el.find('[data-id="form-ticket-update"]')
       form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_ticket
         className:            'update_ticket_' + @ticket.id
-      params:    @ticket
+      params:    defaults
       form_data: @edit_form
     )
 
@@ -219,6 +219,31 @@ class App.TicketZoom extends App.Controller
         configure_attributes: @configure_attributes_article
         className:            'update_ticket_' + @ticket.id
       form_data: @edit_form
+      params:    defaults
+      dependency: [
+        {
+          bind: {
+            name:     'ticket_article_type_id'
+            relation: 'TicketArticleType'
+            value:    ["email"]
+          },
+          change: {
+            action: 'show'
+            name: ['to', 'cc'],
+          },
+        },
+        {
+          bind: {
+            name:     'ticket_article_type_id'
+            relation: 'TicketArticleType'
+            value:    ['note', 'twitter status', 'twitter direct-message']
+          },
+          change: {
+            action: 'hide'
+            name: ['to', 'cc'],
+          },
+        },
+      ]
     )
 
     @el.find('textarea').elastic()
@@ -318,36 +343,9 @@ class App.TicketZoom extends App.Controller
     @form_update_execute(article_type)
 
   form_update_execute: (article_type) =>
-    if article_type.name is 'twitter status'
-
-      # hide to
-      @el.find('[name="to"]').parents('.control-group').addClass('hide')
-      @el.find('[name="cc"]').parents('.control-group').addClass('hide')
-      @el.find('[name="subject"]').parents('.control-group').addClass('hide')
-
-    else if article_type.name is 'twitter direct-message'
-
-      # show
-      @el.find('[name="to"]').parents('.control-group').removeClass('hide')
-      @el.find('[name="cc"]').parents('.control-group').addClass('hide')
-      @el.find('[name="subject"]').parents('.control-group').addClass('hide')
-
-    else if article_type.name is 'note'
-
-      # hide to
-      @el.find('[name="to"]').parents('.control-group').addClass('hide')
-      @el.find('[name="cc"]').parents('.control-group').addClass('hide')
-      @el.find('[name="subject"]').parents('.control-group').addClass('hide')
-
-    else if article_type.name is 'email'
-
-      # show
-      @el.find('[name="to"]').parents('.control-group').removeClass('hide')
-      @el.find('[name="cc"]').parents('.control-group').removeClass('hide')
-#      @el.find('[name="subject"]').parents('.control-group').removeClass('hide')
 
       # add signature
-      if !@signature_used && @signature && @signature.body
+      if !@form_state && !@signature_used && @signature && @signature.body
         @signature_used = true
         body = @el.find('[name="body"]').val() || ''
         body = body + "\n" + @signature.body

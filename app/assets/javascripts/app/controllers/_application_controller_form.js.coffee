@@ -6,9 +6,13 @@ class App.ControllerForm extends App.Controller
 
     if !@form
       @form = @formGen()
-#    @log 'form', @form
     if @el
       @el.prepend( @form )
+
+    # trigger change to rebuild shown/hidden item and update sub selections
+    @form.find('input').trigger('change')
+    @form.find('textarea').trigger('change')
+    @form.find('select').trigger('change')
 
   html: =>
     @form.html()
@@ -32,7 +36,7 @@ class App.ControllerForm extends App.Controller
         # if password, add confirm password item
         if attribute.type is 'password'
 
-          # get existing value, if exists
+          # set selected value passed on current params
           if @params
             if attribute.name of @params
               attribute.value = @params[attribute.name]
@@ -155,7 +159,11 @@ class App.ControllerForm extends App.Controller
     else
       attribute.autocomplete = 'autocomplete="' + attribute.autocomplete + '"'
 
-    # set value
+    # set default values
+    if attribute.value is undefined && 'default' of attribute
+      attribute.value = attribute.default
+
+    # set params value
     if @params
 
       # check if we have a references
@@ -163,15 +171,10 @@ class App.ControllerForm extends App.Controller
       if parts[0] && parts[1]
         if @params[ parts[0] ] && @params[ parts[0] ][ parts[1] ]
           attribute.value = @params[ parts[0] ][ parts[1] ]
-      else
-        attribute.value = @params[ attribute.name ]
 
-    # set default value
-    else
-      if 'default' of attribute
-        attribute.value = attribute.default
-      else
-        attribute.value = ''
+      # set params value to default
+      if attribute.name of @params
+        attribute.value = @params[attribute.name]
 
     App.Log.log 'ControllerForm', 'debug', 'formGenItem-before', attribute
 
@@ -994,17 +997,65 @@ class App.ControllerForm extends App.Controller
             form.find('[name="' + toChangeAttribute + '"]').replaceWith( newElement )
     )
 
+    # bind dependency
+    if @dependency
+      for action in @dependency
+
+        # bind on element if name is matching
+        if action.bind && action.bind.name is attribute.name
+          ui = @
+          do (action, attribute) ->
+            item.bind('change', ->
+              value = $(@).val()
+
+              # lookup relation if needed
+              if action.bind.relation
+                data = App[action.bind.relation].find( value )
+                value = data.name
+
+              # check if value is used in condition
+              if _.contains( action.bind.value, value )
+                if action.change.action is 'hide'
+                  ui._hide(action.change.name)
+                else
+                  ui._show(action.change.name)
+            )
+
     if !attribute.display
+
+      # hide/show item
+      #if attribute.hide
+      #  @._hide(attribute.name)
+
       return item
     else
-      a = $(
+      fullItem = $(
         App.view('generic/attribute')(
           attribute: attribute,
           item:      '',
         )
       )
-      a.find('.controls').prepend( item )
-      return a
+      fullItem.find('.controls').prepend( item )
+
+      # hide/show item
+      if attribute.hide
+        @._hide(attribute.name, fullItem)
+
+      return fullItem
+
+  _show: (name, el = @el) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      el.find('[name="' + key + '"]').parents('.control-group').removeClass('hide')
+      el.find('[name="' + key + '"]').removeClass('is-hidden')
+
+  _hide: (name, el = @el) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      el.find('[name="' + key + '"]').parents('.control-group').addClass('hide')
+      el.find('[name="' + key + '"]').addClass('is-hidden')
 
   # sort attribute.options
   _sortOptions: (attribute) ->
@@ -1203,7 +1254,15 @@ class App.ControllerForm extends App.Controller
       App.Log.log 'ControllerForm', 'error', 'no form found!', form
 
     array = form.serializeArray()
+
+    # 1:1 and boolean params
     for key in array
+
+      # check if item is-hidden and should not be used
+      if form.find('[name="' + key.name + '"]').hasClass('is-hidden')
+        continue
+
+      # collect all other params
       if param[key.name]
         if typeof param[key.name] is 'string'
           param[key.name] = [ param[key.name], key.value]
