@@ -138,7 +138,7 @@ class _Singleton extends App.Controller
     @log 'Websocket', 'debug', 'received websockend ping'
 
     # test again after 1 min
-    @delay @ping, 60000, undefined, 'ws'
+    @delay @ping, 60000, 'websocket-pong', 'ws'
 
   connect: =>
     return if @backend is 'ajax'
@@ -177,7 +177,7 @@ class _Singleton extends App.Controller
       @queue = []
 
       # send ping to check connection
-      @delay @ping, 60000, undefined, 'ws'
+      @delay @ping, 60000, 'websocket-send-ping-to-heck-connection', 'ws'
 
     @ws.onmessage = (e) =>
       pipe = JSON.parse( e.data )
@@ -213,11 +213,11 @@ class _Singleton extends App.Controller
             message: 'No connection to websocket, trying to reconnect...'
           )
         if !@tryToConnect
-          @delay message, 7000, 'websocket-no-connection-try-reconnect', 'ws'
+          @delay message, 7000, 'websocket-no-connection-try-reconnect-message', 'ws'
         @tryToConnect = true
 
       # try reconnect after 4.5 sec.
-      @delay @connect, 4500, undefined, 'ws'
+      @delay @connect, 4500, 'websocket-try-reconnect-after-x-sec', 'ws'
 
     @ws.onerror = (e) =>
       @log 'Websocket', 'debug', "ws:onerror", e
@@ -272,6 +272,11 @@ class _Singleton extends App.Controller
       error: =>
         @_ajaxInitDone = true
         @_ajaxInitWorking = false
+
+        # try reconnect on error after x sec.
+        reconnect = =>
+          @_ajaxInit( force: true )
+        @delay reconnect, 10000, '_ajaxInit-reconnect-on-error', 'ws'
     )
 
   _ajaxSend: (data) =>
@@ -323,5 +328,4 @@ class _Singleton extends App.Controller
         @client_id = undefined
         @_ajaxInit( force: true )
         @_ajaxReceiveWorking = false
-        @delay @_ajaxReceive, 5000, undefined, 'ws'
     )
