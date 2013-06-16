@@ -1320,7 +1320,7 @@ class App.ControllerForm extends App.Controller
     for key of inputSelectObject
       param[ key ] = inputSelectObject[ key ]
 
-    App.Log.log 'ControllerForm', 'notice', 'formParam', form, param
+    #App.Log.log 'ControllerForm', 'notice', 'formParam', form, param
     return param
 
   @formId: ->
