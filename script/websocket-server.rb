@@ -154,7 +154,7 @@ EventMachine.run {
 
         # send spool:sent event to client
         log 'notice', "send spool:sent event", client_id
-        @clients[client_id][:websocket].send( '[{"event":"spool:sent","time":' + Time.now.to_i.to_s + '}]' )
+        @clients[client_id][:websocket].send( '[{"event":"spool:sent","data":{"timestamp":' + Time.now.to_i.to_s + '}}]' )
       end
 
       # get session

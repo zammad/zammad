@@ -47,7 +47,7 @@ class LongPollingController < ApplicationController
       # send spool:sent event to client
       sleep 0.2
       log 'notice', "send spool:sent event", client_id
-      Session.send( client_id, { :event => 'spool:sent', :timestamp => Time.now.to_i } )
+      Session.send( client_id, { :event => 'spool:sent', :data => { :timestamp => Time.now.to_i } } )
     end
 
 
@@ -110,6 +110,7 @@ class LongPollingController < ApplicationController
     begin
 
       # update last ping
+      sleep 1
       Session.touch( client_id )
 
       # set max loop time to 28 sec. because of 30 sec. timeout of mod_proxy
