@@ -4,7 +4,6 @@ class App.Maintenance extends App.ControllerContent
 
   constructor: ->
     super
-    # render page
     @render()
 
   render: ->
@@ -18,11 +17,9 @@ class App.Maintenance extends App.ControllerContent
           action: 'broadcast'
           event:  'session:maintenance'
           spool:  false
-          data:
-            title:   params.HeaderText
-            message: params.Message
-      )
-
+          data:   params
+    )
+    @render()
 
 App.Config.set( 'maintenance', App.Maintenance, 'Routes' )
 App.Config.set( 'maintenance', { prio: 3600, parent: '#admin', name: 'Maintenance Message', target: '#maintenance', role: ['Admin'] }, 'NavBar' )
