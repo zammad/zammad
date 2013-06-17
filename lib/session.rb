@@ -61,9 +61,15 @@ module Session
     FileUtils.mkpath path
     data = []
     to_delete = []
-    Dir.foreach( path ) do |entry|
+    files = []
+    Dir.foreach( path ) {|entry|
       next if entry == '.' || entry == '..'
-      File.open( path + '/' + entry, 'rb' ) { |file|
+      files.push entry
+    }
+    files.sort.each {|entry|
+      filename = path + '/' + entry
+      next if !File::exists?( filename )
+      File.open( filename, 'rb' ) { |file|
         all = file.read
         spool = JSON.parse( all )
         begin
@@ -86,8 +92,8 @@ module Session
         if !timestamp || timestamp < spool['timestamp']
 
           # spool to recipient list
-          if message_parsed['data']['recipient'] && message_parsed['data']['recipient']['user_id']
-            message_parsed['data']['recipient']['user_id'].each { |user_id|
+          if message_parsed['data'] && message_parsed['data']['data'] && message_parsed['data']['data']['recipient'] && message_parsed['data']['data']['recipient']['user_id']
+            message_parsed['data']['data']['recipient']['user_id'].each { |user_id|
               if current_user_id == user_id
                 item = {
                   :type    => 'direct',
@@ -109,7 +115,7 @@ module Session
           end
         end
       }
-    end
+    }
     to_delete.each {|file|
       File.delete(file)
     }
