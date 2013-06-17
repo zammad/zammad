@@ -265,11 +265,17 @@ module Session
   def self.queue( client_id )
     path = @path + '/' + client_id.to_s + '/'
     data = []
-    Dir.foreach( path ) do |entry|
+    files = []
+    Dir.foreach( path ) {|entry|
+      next if entry == '.' || entry == '..'
+      files.push entry
+    }
+    files.sort.each {|entry|
+      filename = path + '/' + entry
       if /^send/.match( entry )
         data.push Session.queue_file( path, entry )
       end
-    end
+    }
     return data
   end
 
