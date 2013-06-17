@@ -367,6 +367,7 @@ class App.TicketZoom extends App.Controller
     # preselect article type
     @el.find('[name="ticket_article_type_id"]').find('option:selected').removeAttr('selected')
     @el.find('[name="ticket_article_type_id"]').find('[value="' + article_type.id + '"]').attr('selected',true)
+    @el.find('[name="ticket_article_type_id"]').trigger('change')
 
     # empty form
     @el.find('[name="to"]').val('')
