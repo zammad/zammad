@@ -1,13 +1,13 @@
 class App.Maintenance extends App.ControllerContent
   events:
     'submit form': 'sendMessage'
+
   constructor: ->
     super
     # render page
     @render()
 
   render: ->
-    
     @html App.view('maintenance')()
 
   sendMessage: (e) ->
@@ -18,7 +18,9 @@ class App.Maintenance extends App.ControllerContent
           action: 'broadcast'
           event:  'session:maintenance'
           spool:  false
-          data:   {title: params.headerText, message: params.message}
+          data:
+            title:   params.HeaderText
+            message: params.Message
       )
 
 
