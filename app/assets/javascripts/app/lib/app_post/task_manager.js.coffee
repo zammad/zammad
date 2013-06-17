@@ -54,10 +54,10 @@ class App.TaskManager
       _instance ?= new _Singleton
     _instance.workerAll()
 
-  @clientId: ->
+  @TaskbarId: ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.clientId()
+    _instance.TaskbarId()
 
 class _Singleton extends App.Controller
   @include App.Log
@@ -247,10 +247,10 @@ class _Singleton extends App.Controller
     App.Taskbar.deleteAll()
     App.Event.trigger 'task:render'
 
-  clientId: =>
-    if !@clientIdInt
-      @clientIdInt = Math.floor( Math.random() * 99999999 )
-    @clientIdInt
+  TaskbarId: =>
+    if !@TaskbarIdInt
+      @TaskbarIdInt = Math.floor( Math.random() * 99999999 )
+    @TaskbarIdInt
 
   tasksInitial: =>
     # reopen tasks
@@ -266,7 +266,7 @@ class _Singleton extends App.Controller
       data:
         recipient:
           user_id: [ App.Session.get( 'id' ) ]
-        client_id: @clientId()
+        taskbar_id: @TaskbarId()
     )
 
 #    App.Taskbar.fetch()

@@ -37,7 +37,7 @@ class App.TaskWidget extends App.Controller
       if !@error
 
         # only if new client id isnt own client id
-        if data.client_id isnt App.TaskManager.clientId()
+        if data.taskbar_id isnt App.TaskManager.TaskbarId()
           @error = new App.SessionReloadModal(
             title:    'Session'
             message:  'Session taken over... please reload page or work with other browser window.'
