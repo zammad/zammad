@@ -345,7 +345,7 @@ class App.TicketZoom extends App.Controller
   form_update_execute: (article_type) =>
 
       # add signature
-      if !@form_state && !@signature_used && @signature && @signature.body
+      if !@form_state && !@signature_used && @signature && @signature.body && article_type.name is 'email'
         @signature_used = true
         body = @el.find('[name="body"]').val() || ''
         body = body + "\n" + @signature.body
@@ -508,6 +508,10 @@ class App.TicketZoom extends App.Controller
           )
         else
           @fetch( @ticket.id, true )
+
+        # reset form after save
+        App.TaskManager.update( @task_key, { 'state': undefined })
+        @form_state = undefined
     )
 
 #    errors = article.validate()
