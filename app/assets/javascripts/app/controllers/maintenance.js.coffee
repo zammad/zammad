@@ -4,6 +4,8 @@ class App.Maintenance extends App.ControllerContent
 
   constructor: ->
     super
+    # check authentication
+    return if !@authenticate()
     @render()
 
   render: ->
