@@ -37,14 +37,15 @@ class LongPollingController < ApplicationController
       spool.each { |item|
         if item[:type] == 'direct'
           log 'notice', "send spool to (user_id=#{ current_user.id })", client_id
-          Session.send( client_id, item[:message] )
+          Session.send( client_id, item[:message]['data'] )
         else
           log 'notice', "send spool", client_id
-          Session.send( client_id, item[:message] )
+          Session.send( client_id, item[:message]['data'] )
         end
       }
 
       # send spool:sent event to client
+      sleep 0.2
       log 'notice', "send spool:sent event", client_id
       Session.send( client_id, { :event => 'spool:sent' } )
     end

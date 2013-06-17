@@ -93,10 +93,35 @@ class ChatTest < TestCase
             :value        => message,
             :match_result => true,
           },
-#          {
-#            :execute => 'wait',
-#            :value   => 1,
-#          },
+          {
+            :where        => :instance1,
+            :execute      => 'navigate',
+            :to           => browser_url,
+          },
+          {
+            :execute => 'wait',
+            :value   => 8,
+          },
+          {
+            :where   => :instance1,
+            :execute => 'click',
+            :css     => '#chat_toogle',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where        => :instance1,
+            :execute      => 'match',
+            :css          => '#chat_log_container',
+            :value        => message,
+            :match_result => true,
+          },
+          {
+            :execute => 'wait',
+            :value   => 8,
+          },
         ],
       },
     ]

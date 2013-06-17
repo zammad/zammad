@@ -198,6 +198,8 @@ class TestCase < Test::Unit::TestCase
           break
         end
       end
+    elsif action[:execute] == 'navigate'
+      instance.navigate.to( action[:to] )
     else
       assert( false, "(#{test[:name]}) unknow selector for '#{action[:element]}'" )
     end
@@ -289,6 +291,7 @@ class TestCase < Test::Unit::TestCase
       end
     elsif action[:execute] == 'check'
     elsif action[:execute] == 'close_all_tasks'
+    elsif action[:execute] == 'navigate'
     else
       assert( false, "(#{test[:name]}) unknow action '#{action[:execute]}'" )
     end
