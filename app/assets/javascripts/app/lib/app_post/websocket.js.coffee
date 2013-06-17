@@ -65,10 +65,7 @@ class _Singleton extends App.Controller
     App.Event.bind( 'spool:sent', (data) =>
 
       # set timestamp to get spool messages later
-      if !data
-        @lastSpoolMessage = Math.round( +new Date()/1000 )
-      else
-        @lastSpoolMessage = data.timestamp
+      @lastSpoolMessage = data.timestamp
 
       # set sentSpoolFinished
       @sentSpoolFinished = true
