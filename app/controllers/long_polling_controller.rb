@@ -47,7 +47,7 @@ class LongPollingController < ApplicationController
       # send spool:sent event to client
       sleep 0.2
       log 'notice', "send spool:sent event", client_id
-      Session.send( client_id, { :event => 'spool:sent' } )
+      Session.send( client_id, { :event => 'spool:sent', :timestamp => Time.now.to_i } )
     end
 
 

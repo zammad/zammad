@@ -37,6 +37,7 @@ class _Singleton extends App.Controller
   queue: []
   supported:                true
   lastSpoolMessage:         undefined
+  sentSpoolFinished:        true
   connectionKeepDown:       false
   connectionEstablished:    false
   connectionWasEstablished: false
@@ -48,7 +49,7 @@ class _Singleton extends App.Controller
     super
 
     # on auth, send new auth data to server
-    App.Event.bind 'auth', =>
+    App.Event.bind 'auth', (data) =>
       @auth()
 
     # bind to send messages
@@ -58,6 +59,21 @@ class _Singleton extends App.Controller
     # get spool messages after successful ws login
     App.Event.bind( 'ws:login', (data) =>
       @spool()
+    )
+
+    # get spool:sent
+    App.Event.bind( 'spool:sent', (data) =>
+
+      # set timestamp to get spool messages later
+      if !data
+        @lastSpoolMessage = Math.round( +new Date()/1000 )
+      else
+        @lastSpoolMessage = data.timestamp
+
+      # set sentSpoolFinished
+      @sentSpoolFinished = true
+
+      @clearDelay 'reset-spool-sent-if-not-returned', 'ws'
     )
 
     # inital connect
@@ -93,6 +109,8 @@ class _Singleton extends App.Controller
     @send(data)
 
   spool: =>
+    return if !@sentSpoolFinished
+    @sentSpoolFinished = false
 
     # build data to send to server
     data =
@@ -102,14 +120,16 @@ class _Singleton extends App.Controller
 
     @log 'Websocket', 'debug', 'spool', data
 
+    # reset @sentSpoolFinished if spool:sent will not return
+    reset = =>
+      @sentSpoolFinished = true
+    @delay reset, 60000, 'reset-spool-sent-finished-if-not-returned', 'ws'
+
     # ask for spool messages
     App.Event.trigger(
       'ws:send'
       data
     )
-
-    # set timestamp to get spool messages later
-    @lastSpoolMessage = Math.round( +new Date()/1000 )
 
   close: ( params = {} ) =>
     if params['force']
