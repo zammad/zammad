@@ -50,8 +50,7 @@ def checkForHeader(fileName)
 end
 
 #folder array
-#folder = ['app/assets/javascripts/app','app/controllers/', 'app/models/', 'app/helpers/', 'app/mailers/' ]
-folder = ['script']
+folder = ['app/assets/javascripts/app','app/controllers/', 'app/models/', 'app/helpers/', 'app/mailers/' ]
 folder.each do |folder|
   puts 'Working on folder' + folder.to_s
   rbfiles = File.join("../#{folder}**", "*.{rb,coffee}")
