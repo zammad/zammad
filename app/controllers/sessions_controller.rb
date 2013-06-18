@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
     # remember me - set session cookie to expire later
     reset_session
     if params[:remember_me]
-      request.env['rack.session.options'][:expire_after] = 1.year.from_now
+      request.env['rack.session.options'][:expire_after] = 1.year
     else
       request.env['rack.session.options'][:expire_after] = nil
     end
@@ -99,8 +99,8 @@ class SessionsController < ApplicationController
     # Remove the user id from the session
     @_current_user = session[:user_id] = nil
 
-    # reset session cookie (set :expire_after to '' in case remember_me is active)
-    request.env['rack.session.options'][:expire_after] = -1.year.from_now
+    # reset session cookie (reset :expire_after in case remember_me is active)
+    request.env['rack.session.options'][:expire_after] = -1.year
     request.env['rack.session.options'][:renew] = true
 
     render :json => { }
