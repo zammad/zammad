@@ -1,0 +1,12 @@
+<div class="row article">
+  <div class="avatar span1 thumbnails">
+    <img class="thumbnail user-data" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
+  </div>
+  <div class="span8 well-muted article-message">
+    <form class="form-stacked pull-left ticket-update">
+      <div class="form-ticket-update"></div>
+      <div class="form-article-update"></div>
+      <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
+    </form>
+  </div>
+</div>
