@@ -6,7 +6,12 @@ require 'code_beauty_ruby.rb'
 def checkForHeader(fileName)
   foundHeader = false;
   foundSheBang = false;
+  isCoffee = false;
+
   header = "# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/\n\n"
+  if File.extname(fileName) == '.coffee'
+    isCoffee = true
+  end
 
   file = File.open(fileName)
   t_file = Tempfile.new('Temp')
@@ -39,16 +44,17 @@ def checkForHeader(fileName)
   t_file.close
   FileUtils.cp(t_file.path, fileName)
   t_file.unlink
-
-  t_file = RBeautify.beautify_file(fileName)
+  if !isCoffee
+    t_file = RBeautify.beautify_file(fileName)
+  end
 end
 
 #folder array
-folder = ['app/controllers/', 'app/models/', 'app/helpers/', 'app/mailers/' ]
-
+#folder = ['app/assets/javascripts/app','app/controllers/', 'app/models/', 'app/helpers/', 'app/mailers/' ]
+folder = ['script']
 folder.each do |folder|
   puts 'Working on folder' + folder.to_s
-  rbfiles = File.join("../#{folder}**", "*.rb")
+  rbfiles = File.join("../#{folder}**", "*.{rb,coffee}")
   d = Dir.glob(rbfiles)
 
   d.each  {|fileName|
