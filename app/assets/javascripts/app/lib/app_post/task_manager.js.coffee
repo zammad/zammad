@@ -212,8 +212,8 @@ class _Singleton extends App.Controller
     if !task
       throw "No such task with '#{key}' to update"
     return if task.isNew()
-      for item, value of params
-        task.updateAttribute(item, value)
+    for item, value of params
+      task.updateAttribute(item, value)
     App.Event.trigger 'task:render'
 
   remove: ( key, to_not_show = false ) =>
