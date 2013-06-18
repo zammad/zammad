@@ -7,12 +7,17 @@ class App.i18n
   @translateContent: ( string, args... ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.translate_content( string, args )
+    _instance.translateContent( string, args )
+
+  @translatePlain: ( string, args... ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.translatePlain( string, args )
 
   @translateInline: ( string, args... ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.translate_inline( string, args )
+    _instance.translateInline( string, args )
 
   @translateTimestamp: ( args ) ->
     if _instance == undefined
@@ -116,11 +121,11 @@ class _Singleton extends Spine.Module
           App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale } )
     )
 
-  translate_inline: ( string, args... ) =>
-    @translate( string, args... )
+  translateInline: ( string, args... ) =>
+    @escape( @translate( string, args... ) )
 
-  translate_content: ( string, args... ) =>
-    translated = @translate( string, args... )
+  translateContent: ( string, args... ) =>
+    translated = @escape( @translate( string, args... ) )
 #    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + '<span class="icon-edit"></span>'
     if App.Config.get( 'Translation' )
       replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
@@ -129,6 +134,9 @@ class _Singleton extends Spine.Module
       replace += '</span>'
     else
       translated
+
+  translatePlain: ( string, args... ) =>
+    @translate( string, args... )
 
   translate: ( string, args... ) =>
 
@@ -146,9 +154,6 @@ class _Singleton extends Spine.Module
     # search %s
     for arg in args
       translated = translated.replace(/%s/, arg)
-
-    # escape
-    translated = @escape(translated)
 
     @log 'i18n', 'debug', 'translate', string, args, translated
 
