@@ -185,6 +185,14 @@ class TestCase < Test::Unit::TestCase
         else
           assert( false, "(#{test[:name]}) url #{instance.current_url} is not matching #{action[:result]}" )
         end
+    elsif action[:element] == :title
+      title = instance.title
+      if title =~ /#{action[:value]}/i
+        assert( true, "(#{test[:name]}) matching '#{action[:value]}' in title" )
+      else
+        assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in title" )
+      end
+      return
     elsif action[:element] == :alert
       element = instance.switch_to.alert
     elsif action[:execute] == 'close_all_tasks'

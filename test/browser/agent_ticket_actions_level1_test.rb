@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionSimpleTest < TestCase
+class AgentTicketActionLevel1Test < TestCase
   def test_agent_ticket
     tests = [
       {
