@@ -9,7 +9,7 @@ class App.Controller extends Spine.Controller
   # add @title methode to set title
   title: (name) ->
 #    $('html head title').html( @Config.get(product_name) + ' - ' + App.i18n.translateInline(name) )
-    document.title = @Config.get('product_name') + ' - ' + App.i18n.translateInline(name)
+    document.title = @Config.get('product_name') + ' - ' + App.i18n.translatePlain(name)
 
   # add @notify methode to create notification
   notify: (data) ->
