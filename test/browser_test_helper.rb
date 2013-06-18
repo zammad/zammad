@@ -162,6 +162,9 @@ class TestCase < Test::Unit::TestCase
   def browser_element_action(test, action, instance)
 #puts "NOTICE: " + action.inspect
     if action[:css]
+      if action[:css].match '###stack###'
+        action[:css].gsub! '###stack###', @stack
+      end
       begin
         if action[:range] == 'all'
           element = instance.find_elements( { :css => action[:css] } )
@@ -200,6 +203,13 @@ class TestCase < Test::Unit::TestCase
       end
     elsif action[:execute] == 'navigate'
       instance.navigate.to( action[:to] )
+    elsif action[:execute] == 'reload'
+      instance.navigate.refresh
+    elsif action[:link]
+      if action[:link].match '###stack###'
+        action[:link].gsub! '###stack###', @stack
+      end
+      element = instance.find_element( { :partial_link_text => action[:link] } )
     else
       assert( false, "(#{test[:name]}) unknow selector for '#{action[:element]}'" )
     end
@@ -292,6 +302,7 @@ class TestCase < Test::Unit::TestCase
     elsif action[:execute] == 'check'
     elsif action[:execute] == 'close_all_tasks'
     elsif action[:execute] == 'navigate'
+    elsif action[:execute] == 'reload'
     else
       assert( false, "(#{test[:name]}) unknow action '#{action[:execute]}'" )
     end

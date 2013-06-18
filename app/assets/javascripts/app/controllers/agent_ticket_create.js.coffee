@@ -71,7 +71,6 @@ class App.TicketCreate extends App.Controller
 
   activate: =>
     @navupdate '#'
-    @title @meta().title
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-create') )

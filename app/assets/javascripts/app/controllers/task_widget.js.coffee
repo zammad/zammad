@@ -69,12 +69,14 @@ class App.TaskWidget extends App.Controller
         meta = worker.meta()
         if meta
           data = meta
-      data.title = App.i18n.escape( data.title )
-      data.head  = App.i18n.escape( data.head )
       item = {}
       item.task = task
       item.data = data
       item_list.push item
+
+      # set title
+      if task.active
+        @title data.title
 
     @html App.view('task_widget')(
       item_list:      item_list

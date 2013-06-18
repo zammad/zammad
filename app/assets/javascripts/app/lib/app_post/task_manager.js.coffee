@@ -63,6 +63,7 @@ class _Singleton extends App.Controller
   @include App.Log
 
   constructor: ->
+    super
     @workers        = {}
     @workersStarted = {}
     @activeTask = undefined
@@ -136,7 +137,8 @@ class _Singleton extends App.Controller
         if task.key isnt key
           if task.active
             task.active = false
-            task.save()
+            if !task.isNew()
+              task.save()
         else
           changed = false
           if !task.active
@@ -146,13 +148,15 @@ class _Singleton extends App.Controller
             changed = true
             task.notify = false
           if changed
-            task.save()
+            if !task.isNew()
+              task.save()
     else
       for task in tasks
         if @activeTask isnt task.key
           if task.active
             task.active = false
-            task.save()
+            if !task.isNew()
+              task.save()
 
     # start worker for task if not exists
     @startController(key, callback, params, state, to_not_show)
@@ -169,7 +173,7 @@ class _Singleton extends App.Controller
     if worker && worker.activate
       worker.activate()
 
-    # return if controller is alreary started
+    # return if controller is already started
     return if @workersStarted[key]
     @workersStarted[key] = true
 
@@ -207,9 +211,9 @@ class _Singleton extends App.Controller
     task = @get( key )
     if !task
       throw "No such task with '#{key}' to update"
-    for item, value of params
-      task.updateAttribute(item, value)
-#    task.save()
+    return if task.isNew()
+      for item, value of params
+        task.updateAttribute(item, value)
     App.Event.trigger 'task:render'
 
   remove: ( key, to_not_show = false ) =>
@@ -229,7 +233,8 @@ class _Singleton extends App.Controller
     if !task
       throw "No such task with '#{key}' to notify"
     task.notify = true
-    task.save()
+    if !task.isNew()
+      task.save()
     App.Event.trigger 'task:render'
 
   reorder: ( order ) =>
@@ -241,7 +246,8 @@ class _Singleton extends App.Controller
       prio++
       if task.prio isnt prio
         task.prio = prio
-        task.save()
+        if !task.isNew()
+          task.save()
 
   reset: =>
     App.Taskbar.deleteAll()
@@ -280,7 +286,7 @@ class _Singleton extends App.Controller
         =>
           task = tasks.shift()
           @add(task.key, task.callback, task.params, true, task.state)
-        task_count * 500
+        task_count * 350
       )
 
     App.Event.trigger 'taskbar:ready'

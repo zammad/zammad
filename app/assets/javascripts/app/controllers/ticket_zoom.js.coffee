@@ -35,10 +35,6 @@ class App.TicketZoom extends App.Controller
 
   activate: =>
     @navupdate '#'
-    if @ticket
-      @title App.i18n.translateInline('Ticket Zoom') + ' ' + @ticket.number + ' ' + @ticket.title
-    else
-      @title App.i18n.translateInline('Loading...')
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-update') )
@@ -76,8 +72,8 @@ class App.TicketZoom extends App.Controller
       success: (data, status, xhr) =>
         if @dataLastCall && !force
 
-#          # return if ticket hasnt changed
-#          return if _.isEqual( @dataLastCall.ticket, data.ticket )
+          # return if ticket hasnt changed
+          return if _.isEqual( @dataLastCall.ticket, data.ticket )
 
           # return if ticket changed by my self
           return if data.ticket.updated_by_id is @Session.all().id
@@ -87,13 +83,8 @@ class App.TicketZoom extends App.Controller
           console.log('diff', diff)
           if !_.isEmpty(diff)
             App.TaskManager.notify( @task_key )
-#          if $('[name="body"]').val()
-#            App.Event.trigger 'notify', {
-#              type: 'success'
-#              msg: App.i18n.translateInline('Ticket has changed!')
-#              timeout: 30000
-#            }
-#            return
+
+        # remember current data
         @dataLastCall = data
 
         @load(data, force)
@@ -119,7 +110,6 @@ class App.TicketZoom extends App.Controller
 
     # reset old indexes
     @ticket = undefined
-    @articles = undefined
 
     # get edit form attributes
     @edit_form = data.edit_form
@@ -144,11 +134,6 @@ class App.TicketZoom extends App.Controller
     # get data
     if !@ticket
       @ticket = App.Collection.find( 'Ticket', @ticket_id )
-    if !@articles
-      @articles = []
-      for article_id in @ticket.article_ids
-        article = App.Collection.find( 'TicketArticle', article_id )
-        @articles.push article
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
@@ -157,7 +142,6 @@ class App.TicketZoom extends App.Controller
       @renderDone = true
       @html App.view('ticket_zoom')(
         ticket:     @ticket
-        articles:   @articles
         nav:        @nav
         isCustomer: @isRole('Customer')
       )
@@ -185,7 +169,6 @@ class App.TicketZoom extends App.Controller
   TicketTitle: =>
     # show ticket title
     new TicketTitle(
-      articles: @articles
       ticket:   @ticket
       el:       @el.find('.ticket-title')
     )
@@ -193,7 +176,6 @@ class App.TicketZoom extends App.Controller
   TicketInfo: =>
     # show ticket info
     new TicketInfo(
-      articles: @articles
       ticket:   @ticket
       el:       @el.find('.ticket-info')
     )
@@ -201,7 +183,6 @@ class App.TicketZoom extends App.Controller
   ArticleView: =>
     # show article
     new ArticleView(
-      articles: @articles
       ticket:   @ticket
       el:       @el.find('.article-view')
       ui:       @
@@ -210,7 +191,6 @@ class App.TicketZoom extends App.Controller
   Edit: =>
     # show edit
     new Edit(
-      articles:   @articles
       ticket:     @ticket
       el:         @el.find('.edit')
       form_state: @form_state
@@ -222,7 +202,6 @@ class App.TicketZoom extends App.Controller
   TicketAction: =>
     # show ticket action row
     new TicketAction(
-      articles:   @articles
       ticket:     @ticket
       el:         @el.find('.ticket-action')
       ui:         @
@@ -238,8 +217,7 @@ class TicketTitle extends App.Controller
 
   render: ->
     @html App.view('ticket_zoom/ticket_title')(
-      ticket:   @ticket
-      articles: @articles
+      ticket: @ticket
     )
 
   update: (e) =>
@@ -254,9 +232,12 @@ class TicketTitle extends App.Controller
       .replace(/&gt;/g, '>')
     if title is '-'
       title = ''
-    @ticket.title = title
-    @ticket.load( title: title )
-    @ticket.save()
+
+    # update title
+    ticket = App.Collection.find( 'Ticket', @ticket.id )
+    ticket.title = title
+    ticket.load( title: title )
+    ticket.save()
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
@@ -269,8 +250,7 @@ class TicketInfo extends App.Controller
 
   render: ->
     @html App.view('ticket_zoom/ticket_info')(
-      ticket:   @ticket
-      articles: @articles
+      ticket: @ticket
     )
 
 class TicketAction extends App.Controller
@@ -333,9 +313,10 @@ class Edit extends App.Controller
 
   render: ->
 
+    ticket = App.Collection.find( 'Ticket', @ticket.id )
+
     @html App.view('ticket_zoom/edit')(
-      ticket:     @ticket
-      articles:   @articles
+      ticket:     ticket
       isCustomer: @isRole('Customer')
     )
 
@@ -370,13 +351,13 @@ class Edit extends App.Controller
       ]
 
     @form_id = App.ControllerForm.formId()
-    defaults = @form_state || @ticket
+    defaults = @form_state || ticket
     new App.ControllerForm(
       el:        @el.find('.form-ticket-update')
       form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_ticket
-        className:            'update_ticket_' + @ticket.id
+        className:            'update_ticket_' + ticket.id
       params:    defaults
       form_data: @edit_form
     )
@@ -386,7 +367,7 @@ class Edit extends App.Controller
       form_id:   @form_id
       model:
         configure_attributes: @configure_attributes_article
-        className:            'update_ticket_' + @ticket.id
+        className:            'update_ticket_' + ticket.id
       form_data: @edit_form
       params:    defaults
       dependency: [
@@ -426,7 +407,10 @@ class Edit extends App.Controller
   update: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    @log 'TicketZoom', 'notice', 'update', params, @ticket
+
+    ticket = App.Collection.find( 'Ticket', @ticket.id )
+
+    @log 'TicketZoom', 'notice', 'update', params, ticket
     article_type = App.Collection.find( 'TicketArticleType', params['ticket_article_type_id'] )
 
     # update ticket
@@ -440,7 +424,7 @@ class Edit extends App.Controller
         ticket_update['owner_id'] = 1
 
     # check if title exists
-    if !ticket_update['title'] && !@ticket.title
+    if !ticket_update['title'] && !ticket.title
       alert( App.i18n.translateContent('Title needed') )
       return
 
@@ -463,25 +447,25 @@ class Edit extends App.Controller
       if params['body'].match(/attachment/i) || params['body'].match( attachmentTranslatedRegExp )
         return if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
 
-    @ticket.load( ticket_update )
-    @log 'TicketZoom', 'notice', 'update ticket', ticket_update, @ticket
+    ticket.load( ticket_update )
+    @log 'TicketZoom', 'notice', 'update ticket', ticket_update, ticket
 
     # disable form
     @formDisable(e)
 
-    errors = @ticket.validate()
+    errors = ticket.validate()
     if errors
       @log 'TicketZoom', 'error', 'update', errors
       @formEnable(e)
 
-    @ticket.save(
+    ticket.save(
       success: (r) =>
 
         # create article
         if params['body']
           article = new App.TicketArticle
           params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
-          params.ticket_id = @ticket.id
+          params.ticket_id = ticket.id
           params.form_id   = @form_id
 
           if !params['internal']
@@ -502,12 +486,12 @@ class Edit extends App.Controller
             @log 'TicketZoom', 'error', 'update article', errors
           article.save(
             success: (r) =>
-              @ui.fetch( @ticket.id, true )
+              @ui.fetch( ticket.id, true )
             error: (r) =>
               @log 'TicketZoom', 'error', 'update article', r
           )
         else
-          @ui.fetch( @ticket.id, true )
+          @ui.fetch( ticket.id, true )
 
         # reset form after save
         App.TaskManager.update( @task_key, { 'state': undefined })
@@ -533,6 +517,12 @@ class ArticleView extends App.Controller
     @render()
 
   render: ->
+
+    # get all articles
+    @articles = []
+    for article_id in @ticket.article_ids
+      article = App.Collection.find( 'TicketArticle', article_id )
+      @articles.push article
 
     # rework articles
     for article in @articles
