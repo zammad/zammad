@@ -215,12 +215,12 @@ class App.TicketCreate extends App.Controller
       template_id: template['id'],
     )
 
+    @formDefault = @formParam( @el.find('.ticket-create') )
+
     # show text module UI
     new App.TextModuleUI(
-      el: @el,
+      el: $('.ticket-create')
     )
-
-    @formDefault = @formParam( @el.find('.ticket-create') )
 
   localUserInfo: (params) =>
     @userInfo(
@@ -286,7 +286,7 @@ class App.TicketCreate extends App.Controller
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      console.log 'error new', errors
       @formValidate( form: e.target, errors: errors )
 
     # save ticket, create article
@@ -305,8 +305,7 @@ class App.TicketCreate extends App.Controller
             link:    "#ticket/zoom/#{@id}"
             timeout: 12000,
 
-          # create new create screen
-#          ui.render()
+          # close ticket create task
           App.TaskManager.remove( ui.task_key )
 
           # scroll to top
