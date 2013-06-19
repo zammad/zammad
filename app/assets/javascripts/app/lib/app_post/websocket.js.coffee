@@ -180,7 +180,7 @@ class _Singleton extends App.Controller
       @connectionWasEstablished = true
 
       # close error message show up (because try so connect again) if exists
-      @clearDelay('websocket-no-connection-try-reconnect')
+      @clearDelay('websocket-no-connection-try-reconnect-message')
       if @error
         @error.modalHide()
         @error = false
