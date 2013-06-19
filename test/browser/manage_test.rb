@@ -67,7 +67,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'button.submit',
+            :css     => '.modal button.submit',
           },
           {
             :execute => 'wait',
@@ -94,7 +94,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'button.submit',
+            :css     => '.modal button.submit',
           },
           {
             :execute => 'wait',
@@ -147,7 +147,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'button.submit',
+            :css     => '.modal button.submit',
           },
           {
             :execute => 'wait',
@@ -179,7 +179,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'button.submit',
+            :css     => '.modal button.submit',
           },
           {
             :execute => 'wait',
@@ -239,6 +239,36 @@ class ManageTest < TestCase
             :value        => 'some sla update ' + random,
             :match_result => false,
           },
+          {
+            :execute => 'reload',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#/"]',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#admin"]',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#slas"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'some sla update ' + random,
+            :match_result => false,
+          },
+
         ],
 
       },
