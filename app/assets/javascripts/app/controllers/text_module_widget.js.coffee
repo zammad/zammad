@@ -26,8 +26,7 @@ class App.TextModuleUI extends App.Controller
                           .find('small')
                           .text("(" + e.keywords + ")").end()
       element.append(template)
-    $('textarea').sew({values: values, token: '::', elementFactory: elementFactory })
-
+    @el.find('textarea').sew({values: values, token: '::', elementFactory: elementFactory })
 
 class App.TextModuleUIOld extends App.Controller
   events:

@@ -147,8 +147,7 @@ class App.TicketZoom extends App.Controller
   render: (force) =>
 
     # get data
-    if !@ticket
-      @ticket = App.Collection.find( 'Ticket', @ticket_id )
+    @ticket = App.Collection.find( 'Ticket', @ticket_id )
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
@@ -172,6 +171,14 @@ class App.TicketZoom extends App.Controller
     if force || !@editDone
       @editDone = true
       @Edit()
+
+    # show text module UI
+    if !@isRole('Customer')
+      new App.TextModuleUI(
+        el:   @el
+        data:
+          ticket: @ticket
+      )
 
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )
@@ -309,13 +316,6 @@ class TicketAction extends App.Controller
         object:       @ticket
       )
 
-    # show text module UI
-    if !@isRole('Customer')
-      new App.TextModuleUI(
-        el:   @el.find('.text_module')
-        data:
-          ticket: @ticket
-      )
 
 
 class Edit extends App.Controller

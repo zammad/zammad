@@ -217,7 +217,7 @@ class App.TicketCreate extends App.Controller
 
     # show text module UI
     new App.TextModuleUI(
-      el: @el.find('[data-id="text_module"]'),
+      el: @el,
     )
 
     @formDefault = @formParam( @el.find('.ticket-create') )
