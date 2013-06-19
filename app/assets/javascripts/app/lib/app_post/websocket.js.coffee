@@ -147,7 +147,7 @@ class _Singleton extends App.Controller
     check = =>
       @log 'Websocket', 'notice', 'no websockend ping response, reconnect...'
       @close()
-    @delay check, 120000, 'websocket-ping-check', 'ws'
+    @delay check, 90000, 'websocket-ping-check', 'ws'
 
   pong: ->
     return if @backend is 'ajax'
@@ -183,7 +183,8 @@ class _Singleton extends App.Controller
       @clearDelay('websocket-no-connection-try-reconnect')
       if @error
         @error.modalHide()
-        @error = undefined
+        @error = false
+        @tryToConnect = false
 
       @auth()
 
@@ -202,7 +203,7 @@ class _Singleton extends App.Controller
       @_receiveMessage(pipe)
 
     @ws.onclose = (e) =>
-      @log 'Websocket', 'debug', "ws:onclose", e
+      @log 'Websocket', 'notice', 'close websocket connection'
 
       # take connection down and keep it down
       return if @connectionKeepDown
@@ -226,8 +227,12 @@ class _Singleton extends App.Controller
             return
 
           # show reconnect message
-          @error = new App.ErrorModal(
-            message: 'No connection to websocket, trying to reconnect...'
+          @error = new App.ControllerModal(
+            title:   'Lost network connection!'
+            message: 'Lost network connection to system, trying to reconnect...'
+            backdrop: false
+            keyboard: false
+            show:     true
           )
         if !@tryToConnect
           @delay message, 7000, 'websocket-no-connection-try-reconnect-message', 'ws'
