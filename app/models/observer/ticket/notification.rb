@@ -11,7 +11,13 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    EventBuffer.list.each { |event|
+    # get buffer
+    list = EventBuffer.list
+
+    # reset buffer
+    EventBuffer.reset
+
+    list.each { |event|
 
       # get current state of objects
       if event[:name] == 'Ticket::Article'
@@ -158,9 +164,6 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         end
       end
     }
-
-    # reset buffer
-    EventBuffer.reset
   end
 
   def self.send_notify(data, ticket, article)
