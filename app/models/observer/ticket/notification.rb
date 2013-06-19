@@ -1,20 +1,17 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
+require 'event_buffer'
 require 'notification_factory'
 
 class Observer::Ticket::Notification < ActiveRecord::Observer
   observe :ticket, 'ticket::_article'
-
-  @@event_buffer = []
 
   def self.transaction
 
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    #    puts '@@event_buffer'
-    #    puts @@event_buffer.inspect
-    @@event_buffer.each { |event|
+    EventBuffer.list.each { |event|
 
       # get current state of objects
       if event[:name] == 'Ticket::Article'
@@ -163,7 +160,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     }
 
     # reset buffer
-    @@event_buffer = []
+    EventBuffer.reset
   end
 
   def self.send_notify(data, ticket, article)
@@ -261,7 +258,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       :data => record,
       :id   => record.id,
     }
-    @@event_buffer.push e
+    EventBuffer.add(e)
   end
 
   def before_update(record)
@@ -287,7 +284,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       :data => record,
       :id   => record.id,
     }
-    @@event_buffer.push e
+    EventBuffer.add(e)
   end
 
   def after_update(record)
