@@ -38,11 +38,12 @@ class App.TicketZoom extends App.Controller
 
   meta: =>
     return if !@ticket
+    ticket = App.Collection.find( 'Ticket', @ticket.id )
     meta =
-      url: @url()
-      head: @ticket.title
-      title: '#' + @ticket.number + ' - ' + @ticket.title
-      id: @ticket.id
+      url:   @url()
+      head:  ticket.title
+      title: '#' + ticket.number + ' - ' + ticket.title
+      id:    ticket.id
 
   url: =>
     '#ticket/zoom/' + @ticket.id
