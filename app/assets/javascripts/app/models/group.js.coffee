@@ -1,5 +1,5 @@
 class App.Group extends App.Model
-  @configure 'Group', 'name', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'email_address_id', 'signature_id', 'note', 'active'
+  @configure 'Group', 'name', 'assignment_timeout', 'follow_up_possible', 'follow_up_assignment', 'email_address_id', 'signature_id', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: 'api/groups'
 

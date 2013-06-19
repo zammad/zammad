@@ -1,4 +1,4 @@
 class App.TicketArticleType extends App.Model
-  @configure 'TicketArticleType', 'name'
+  @configure 'TicketArticleType', 'name', 'updated_at'
   @extend Spine.Model.Ajax
   @url: '/ticket_article_types'

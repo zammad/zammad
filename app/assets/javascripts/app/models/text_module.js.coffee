@@ -1,5 +1,5 @@
 class App.TextModule extends App.Model
-  @configure 'TextModule', 'name', 'keywords', 'content', 'active', 'group_ids', 'user_id'
+  @configure 'TextModule', 'name', 'keywords', 'content', 'active', 'group_ids', 'user_id', 'updated_at'
   @extend Spine.Model.Ajax
   @url: 'api/text_modules'
   @configure_attributes = [

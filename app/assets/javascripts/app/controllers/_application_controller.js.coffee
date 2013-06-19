@@ -1,8 +1,15 @@
 class App.Controller extends Spine.Controller
   @include App.Log
 
-  constructor: ->
+  constructor: (params) ->
+
+    # unbind old bindlings
+    if params && params.el && params.el.unbind
+      params.el.unbind()
+
     super
+
+    # create shortcuts
     @Config  = App.Config
     @Session = App.Session
 

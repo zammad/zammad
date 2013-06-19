@@ -1,13 +1,16 @@
 class App.Model extends Spine.Model
+  @destroyBind: false
+
   constructor: ->
     super
 
     # delete object from local storage on destroy
-    @bind( 'destroy', (e) ->
-      className = Object.getPrototypeOf(e).constructor.className
-      key = "collection::#{className}::#{e.id}"
-      App.Store.delete(key)
-    )
+    if !@constructor.destroyBind
+      @bind( 'destroy', (e) ->
+        className = Object.getPrototypeOf(e).constructor.className
+        key = "collection::#{className}::#{e.id}"
+        App.Store.delete(key)
+      )
 
   displayName: ->
     return @name if @name

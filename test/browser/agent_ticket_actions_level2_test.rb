@@ -224,7 +224,7 @@ class AgentTicketActionsLevel2Test < TestCase
           # change task and page title in first browser
           {
             :execute => 'wait',
-            :value   => 30,
+            :value   => 10,
           },
           {
             :where        => :instance1,

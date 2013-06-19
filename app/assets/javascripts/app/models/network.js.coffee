@@ -1,5 +1,5 @@
 class App.Network extends App.Model
-  @configure 'Network', 'name', 'note', 'active'
+  @configure 'Network', 'name', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @configure_attributes = [
     { name: 'name', display: 'Name', tag: 'input', type: 'text', limit: 100, 'null': false, 'class': 'xlarge' },

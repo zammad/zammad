@@ -1,5 +1,5 @@
 class App.PostmasterFilter extends App.Model
-  @configure 'PostmasterFilter', 'name', 'channel', 'match', 'perform', 'note', 'active'
+  @configure 'PostmasterFilter', 'name', 'channel', 'match', 'perform', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: 'api/postmaster_filters'
 

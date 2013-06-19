@@ -25,7 +25,7 @@ module Zammad
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-    config.active_record.observers = 
+    config.active_record.observers =
       'observer::_history',
       'observer::_ticket::_first_response',
       'observer::_ticket::_last_contact',
@@ -41,11 +41,8 @@ module Zammad
       'observer::_ticket::_notification',
       'observer::_tag::_ticket_history',
       'observer::_ticket::_reset_new_state',
-      'observer::_ticket::_escalation_calculation'
-
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
+      'observer::_ticket::_escalation_calculation',
+      'observer::_web_socket_notify'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

@@ -24,10 +24,6 @@ require 'daemons'
   :i => Dir.pwd.to_s + '/tmp/pids/websocket.pid'
 }
 
-if ARGV[0] != 'start' && ARGV[0] != 'stop'
-  puts "Usage: websocket-server.rb start|stop [options]"
-  exit;
-end
 tls_options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: websocket-server.rb start|stop [options]"
@@ -57,6 +53,11 @@ OptionParser.new do |opts|
     tls_options[:cert_chain_file] = c
   end
 end.parse!
+
+if ARGV[0] != 'start' && ARGV[0] != 'stop'
+  puts "Usage: websocket-server.rb start|stop [options]"
+  exit;
+end
 
 puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s },pid:#{@options[:i].to_s})"
 #puts options.inspect

@@ -293,6 +293,16 @@ module Session
     return data
   end
 
+  def self.broadcast( data )
+
+    # list all current clients
+    client_list = self.list
+    client_list.each {|local_client_id, local_client|
+      Session.send( local_client_id, data )
+    }
+    return true
+  end
+
   def self.destory( client_id )
     path = @path + '/' + client_id.to_s
     FileUtils.rm_rf path

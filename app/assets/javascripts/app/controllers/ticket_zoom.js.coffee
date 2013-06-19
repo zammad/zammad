@@ -20,7 +20,21 @@ class App.TicketZoom extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false )
-    @interval( update, 30000, @key, 'ticket_zoom' )
+    @interval( update, 120000, @key, 'ticket_zoom' )
+
+    # fetch new data if triggered
+    App.Event.bind(
+      'ticket:updated'
+      (data) =>
+        update = =>
+          if data.id.toString() is @ticket_id.toString()
+            ticket = App.Collection.find( 'Ticket', @ticket_id )
+            console.log('TRY', data.updated_at, ticket.updated_at)
+            if data.updated_at isnt ticket.updated_at
+              @fetch( @ticket_id, false )
+        @delay( update, 2000, 'ticket-zoom-' + @ticket_id )
+      'ticket-zoom-' + @ticket_id
+    )
 
   meta: =>
     return if !@ticket
@@ -43,6 +57,7 @@ class App.TicketZoom extends App.Controller
     return true
 
   release: =>
+    App.Event.unbindLevel 'ticket-zoom-' + @ticket_id
     @clearInterval( @key, 'ticket_zoom' )
     @el.remove()
 
@@ -75,13 +90,12 @@ class App.TicketZoom extends App.Controller
           # return if ticket hasnt changed
           return if _.isEqual( @dataLastCall.ticket, data.ticket )
 
-          # return if ticket changed by my self
-          return if data.ticket.updated_by_id is @Session.all().id
-
           # trigger task notify
           diff = difference( @dataLastCall.ticket, data.ticket )
           console.log('diff', diff)
-          if !_.isEmpty(diff)
+
+          # notify if ticket changed not by my self
+          if !_.isEmpty(diff) && data.ticket.updated_by_id isnt @Session.all().id
             App.TaskManager.notify( @task_key )
 
         # remember current data
@@ -601,7 +615,7 @@ class ArticleView extends App.Controller
     #@ui.el.find('[name="cc"]').val('')
     #@ui.el.find('[name="subject"]').val('')
     @ui.el.find('[name="in_reply_to"]').val('')
-    console.log('repl2', article_type.name)
+
     if article.message_id
       @ui.el.find('[name="in_reply_to"]').val(article.message_id)
 
