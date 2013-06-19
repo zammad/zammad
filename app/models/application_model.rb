@@ -25,6 +25,8 @@ class ApplicationModel < ActiveRecord::Base
   end
 
   def self.param_cleanup(params)
+
+    # only use object attributes
     data = {}
     self.new.attributes.each {|item|
       if params.has_key?(item[0])
@@ -32,6 +34,12 @@ class ApplicationModel < ActiveRecord::Base
         data[item[0].to_sym] = params[item[0]]
       end
     }
+
+    # we do want to set this via database
+    self.param_validation(data)
+  end
+
+  def self.param_validation(data)
 
     # we do want to set this via database
     data.delete( :updated_at )

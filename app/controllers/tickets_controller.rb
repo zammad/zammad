@@ -22,7 +22,7 @@ class TicketsController < ApplicationController
 
   # POST /api/tickets
   def create
-    @ticket = Ticket.new( params[:ticket] )
+    @ticket = Ticket.new( Ticket.param_validation( params[:ticket] ) )
 
     # check if article is given
     if !params[:article]
@@ -87,7 +87,7 @@ class TicketsController < ApplicationController
     # permissin check
     return if !ticket_permission(@ticket)
 
-    if @ticket.update_attributes( params[:ticket] )
+    if @ticket.update_attributes( Ticket.param_validation( params[:ticket] ) )
       render :json => @ticket, :status => :ok
     else
       render :json => @ticket.errors, :status => :unprocessable_entity
