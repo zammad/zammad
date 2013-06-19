@@ -58,7 +58,7 @@ class TicketsController < ApplicationController
 
       # find attachments in upload cache
       if form_id
-        @article['attachments'] = Store.list(
+        @article.attachments = Store.list(
           :object => 'UploadCache',
           :o_id   => form_id,
         )
@@ -69,7 +69,7 @@ class TicketsController < ApplicationController
       end
 
       # remove attachments from upload cache
-      if params[:form_id]
+      if form_id
         Store.remove(
           :object => 'UploadCache',
           :o_id   => form_id,
