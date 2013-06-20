@@ -49,7 +49,7 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'button.submit',
+            :css     => '.modal button.submit',
           },
           {
             :execute => 'wait',
@@ -103,7 +103,7 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'button.submit',
+            :css     => '.modal button.submit',
           },
           {
             :execute => 'wait',
@@ -134,7 +134,7 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'textarea[name=body]',
+            :css     => '.active textarea[name=body]',
             :value   => '::' + random,
           },
           {
@@ -149,7 +149,7 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'sendkey',
-            :css     => 'textarea[name=body]',
+            :css     => '.active textarea[name=body]',
             :value   => :enter,
           },
           {
@@ -158,7 +158,7 @@ class TextModuleTest < TestCase
           },
           {
             :execute      => 'match',
-            :css          => 'textarea[name=body]',
+            :css          => '.active textarea[name=body]',
             :value        => random,
             :match_result => true,
           },
