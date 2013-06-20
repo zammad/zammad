@@ -59,12 +59,12 @@ class App.DashboardTicket extends App.Controller
 
     App.Overview.unbind('local:rerender')
     App.Overview.bind 'local:rerender', (record) =>
-      @log 'rerender...', record
+      @log 'notice', 'rerender...', record
       @render(data)
 
     App.Overview.unbind('local:refetch')
     App.Overview.bind 'local:refetch', (record) =>
-      @log 'refetch...', record
+      @log 'notice', 'refetch...', record
       @fetch()
 
     @render( data )
@@ -123,7 +123,6 @@ class App.DashboardTicket extends App.Controller
     @Config.set('LastOverviewPosition', position )
     @Config.set('LastOverviewTotal', @tickets_count )
 
-    @log 'goto zoom!', id, position
     @navigate 'ticket/zoom/' + id + '/nav/true'
 
   settings: (e) =>

@@ -2,64 +2,64 @@ class App.TaskManager
   _instance = undefined
 
   @init: ->
-    _instance ?= new _Singleton
+    _instance ?= new _taskManagerSingleton
 
   @all: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.all()
 
   @add: ( key, callback, params, to_not_show, state ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.add( key, callback, params, to_not_show, state )
 
   @get: ( key ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.get( key )
 
   @update: ( key, params ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.update( key, params )
 
   @remove: ( key ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.remove( key )
 
   @notify: ( key ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.notify( key )
 
   @reorder: ( order ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.reorder( order )
 
   @reset: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.reset()
 
   @worker: ( key ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.worker( key )
 
   @workerAll: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.workerAll()
 
   @TaskbarId: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _taskManagerSingleton
     _instance.TaskbarId()
 
-class _Singleton extends App.Controller
+class _taskManagerSingleton extends App.Controller
   @include App.Log
 
   constructor: ->

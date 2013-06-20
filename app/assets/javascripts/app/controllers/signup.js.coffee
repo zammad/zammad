@@ -49,7 +49,7 @@ class Index extends App.ControllerContent
       @params.login = @params.email
 
     @params.role_ids = [0]
-    @log 'updateAttributes', @params
+    @log 'notice', 'updateAttributes', @params
     user = new App.User
     user.load(@params)
 

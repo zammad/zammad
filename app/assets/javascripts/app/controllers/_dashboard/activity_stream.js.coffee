@@ -80,7 +80,6 @@ class App.DashboardActivityStream extends App.Controller
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
     subid = $(e.target).parents('[data-subid]').data('subid')
-    @log 'goto zoom!', id, subid
     if subid
       @navigate 'ticket/zoom/' + id + '/' + subid
     else

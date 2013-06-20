@@ -2,69 +2,69 @@ class App.Collection
   _instance = undefined
 
   @init: ->
-    _instance = new _Singleton
+    _instance = new _collectionSingleton
 
   @load: ( args ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.load( args )
 
   @reset: ( args ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.reset( args )
 
   @find: ( type, id, callback, force ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.find( type, id, callback, force )
 
   @get: ( args ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.get( args )
 
   @all: ( args ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.all( args )
 
   @deleteAll: ( type ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.deleteAll( type )
 
   @findByAttribute: ( type, key, value ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.findByAttribute( type, key, value )
 
   @count: ( type ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.count( type )
 
   @fetch: ( type ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.fetch( type )
 
   @observe: (args) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.observe(args)
 
   @observeUnbindLevel: (level) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance.observeUnbindLevel(level)
 
   @_observeStats: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _collectionSingleton
     _instance._observeStats()
 
-class _Singleton extends Spine.Module
+class _collectionSingleton extends Spine.Module
   @include App.Log
 
   constructor: (@args) ->
@@ -76,7 +76,7 @@ class _Singleton extends Spine.Module
       if data.collections
         for type of data.collections
 
-          @log 'Collection', 'debug', 'loadCollection:trigger', type, data.collections[type]
+          @log 'debug', 'loadCollection:trigger', type, data.collections[type]
           @load( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # add trigger - bind new events
@@ -86,7 +86,7 @@ class _Singleton extends Spine.Module
       if data.collections
         for type of data.collections
 
-          @log 'Collection', 'debug', 'resetCollection:trigger', type, data.collections[type]
+          @log 'debug', 'resetCollection:trigger', type, data.collections[type]
           @reset( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # find collections to load
@@ -99,14 +99,14 @@ class _Singleton extends Spine.Module
       if parts[0] is 'collection'
         data = App.Store.get( key )
         if data && data.localStorage
-          @log 'Collection', 'debug', 'load INIT', data
+          @log 'debug', 'load INIT', data
           @load( data )
 
   reset: (params) ->
     if !App[ params.type ]
-      @log 'Collection', 'error', 'reset', 'no such collection', params
+      @log 'error', 'reset', 'no such collection', params
       return
-    @log 'Collection', 'debug', 'reset', params
+    @log 'debug', 'reset', params
 
     # empty in-memory
     App[ params.type ].refresh( [], { clear: true } )
@@ -122,7 +122,7 @@ class _Singleton extends Spine.Module
     @load(params)
 
   load: (params) ->
-    @log 'Collection', 'debug', 'load', params
+    @log 'debug', 'load', params
 
     return if _.isEmpty( params.data )
 
@@ -160,9 +160,9 @@ class _Singleton extends Spine.Module
       return data
     else
       if force
-        @log 'Collection', 'debug', 'find forced to load!', type, id
+        @log 'debug', 'find forced to load!', type, id
       else
-        @log 'Collection', 'debug', 'find not loaded!', type, id
+        @log 'debug', 'find not loaded!', type, id
       if callback
 
         # execute callback if record got loaded
@@ -180,7 +180,7 @@ class _Singleton extends Spine.Module
           callback( data )
 
         # fetch object
-        @log 'Collection', 'debug', 'loading..' + type +  '..', id
+        @log 'debug', 'loading..' + type +  '..', id
         App[type].fetch( id: id )
         return true
       return false
@@ -265,15 +265,15 @@ class _Singleton extends Spine.Module
 
   get: (params) ->
     if !App[ params.type ]
-      @log 'Collection', 'error', 'get', 'no such collection', params
+      @log 'error', 'get', 'no such collection', params
       return
 
-    @log 'Collection', 'debug', 'get', params
+    @log 'debug', 'get', params
     App[ params.type ].refresh( object, options: { clear: true } )
 
   all: (params) ->
     if !App[ params.type ]
-      @log 'Collection', 'error', 'all', 'no such collection', params
+      @log 'error', 'all', 'no such collection', params
       return
 
     all = App[ params.type ].all()
@@ -301,23 +301,23 @@ class _Singleton extends Spine.Module
 
   findByAttribute: ( type, key, value ) ->
     if !App[type]
-      @log 'Collection', 'error', 'findByAttribute', 'no such collection', type, key, value
+      @log 'error', 'findByAttribute', 'no such collection', type, key, value
       return
     item = App[type].findByAttribute( key, value )
     if !item
-      @log 'Collection', 'error', 'findByAttribute', 'no such item in collection', type, key, value
+      @log 'error', 'findByAttribute', 'no such item in collection', type, key, value
       return
     item
 
   count: ( type ) ->
     if !App[type]
-      @log 'Collection', 'error', 'count', 'no such collection', type, key, value
+      @log 'error', 'count', 'no such collection', type, key, value
       return
     App[type].count()
 
   fetch: ( type ) ->
     if !App[type]
-      @log 'Collection', 'error', 'fetch', 'no such collection', type, key, value
+      @log 'error', 'fetch', 'no such collection', type, key, value
       return
     App[type].fetch()
 

@@ -58,7 +58,7 @@ class App.TicketHistory extends App.ControllerModal
   sortorder: (e) ->
     e.preventDefault()
     isSorted = @el.find('.sorted')
-    @log 'is sorted?', isSorted
+
     if isSorted.length
       @sortstate = 'notsorted'
       @html App.view('agent_ticket_history')(

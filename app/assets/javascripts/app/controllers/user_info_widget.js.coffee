@@ -45,7 +45,7 @@ class App.UserInfo extends App.Controller
     user = App.Collection.find( 'User', @user_id )
     if user.note isnt note
       user.updateAttributes( note: note )
-      @log 'update', e, note, user
+      @log 'notice', 'update', e, note, user
 
   edit: (e) =>
     e.preventDefault()

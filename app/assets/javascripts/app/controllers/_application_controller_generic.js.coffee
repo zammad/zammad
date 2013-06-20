@@ -21,7 +21,6 @@ class App.ControllerGenericNew extends App.ControllerModal
     @modalShow()
 
   submit: (e) ->
-    @log 'submit'
     e.preventDefault()
     params = @formParam( e.target )
 
@@ -31,7 +30,7 @@ class App.ControllerGenericNew extends App.ControllerModal
     # validate
     errors = object.validate()
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
 
@@ -81,7 +80,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
     # validate
     errors = @item.validate()
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
 
@@ -133,9 +132,9 @@ class App.ControllerGenericIndex extends App.ControllerContent
     )
 
     App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
-      @log 'ajax notice', msg.status
+      @log 'error', 'ajax', msg.status
       if msg.status is 401
-        @log 'ajax error', rec, msg, msg.status
+        @log 'error', 'ajax', rec, msg, msg.status
 #        @navigate @pageData.navupdate
 #        alert('relogin')
         @navigate 'login'

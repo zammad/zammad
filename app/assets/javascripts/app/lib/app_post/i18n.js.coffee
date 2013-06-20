@@ -2,44 +2,44 @@ class App.i18n
   _instance = undefined
 
   @init: ( args ) ->
-    _instance ?= new _Singleton( args )
+    _instance ?= new _i18nSingleton( args )
 
   @translateContent: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _i18nSingleton
     _instance.translateContent( string, args )
 
   @translatePlain: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _i18nSingleton
     _instance.translatePlain( string, args )
 
   @translateInline: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _i18nSingleton
     _instance.translateInline( string, args )
 
   @translateTimestamp: ( args ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _i18nSingleton
     _instance.timestamp( args )
 
   @get: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _i18nSingleton
     _instance.get()
 
   @set: ( args ) ->
     if _instance == undefined
-      _instance ?= new _Singleton( args )
+      _instance ?= new _i18nSingleton( args )
     _instance.set( args )
 
   @escape: ( args ) ->
     if _instance == undefined
-      _instance ?= new _Singleton( args )
+      _instance ?= new _i18nSingleton( args )
     _instance.escape( args )
 
-class _Singleton extends Spine.Module
+class _i18nSingleton extends Spine.Module
   @include App.Log
 
   constructor: ( locale ) ->
@@ -67,7 +67,7 @@ class _Singleton extends Spine.Module
 
         # update translation
         return if $this.data('before') is translation_new
-        @log 'i18n', 'debug', 'translate Update', translation_new, $this.data, 'before'
+        @log 'debug', 'translate Update', translation_new, $this.data, 'before'
         $this.data 'before', translation_new
 
         # update runtime translation map
@@ -155,7 +155,7 @@ class _Singleton extends Spine.Module
     for arg in args
       translated = translated.replace(/%s/, arg)
 
-    @log 'i18n', 'debug', 'translate', string, args, translated
+    @log 'debug', 'translate', string, args, translated
 
     # return translated string
     return translated

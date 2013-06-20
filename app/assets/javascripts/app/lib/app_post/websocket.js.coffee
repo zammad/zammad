@@ -2,36 +2,36 @@ class App.WebSocket
   _instance = undefined # Must be declared here to force the closure on the class
   @connect: (args) -> # Must be a static method
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _webSocketSingleton
     _instance
 
   @close: (args) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _webSocketSingleton
     _instance.close(args)
 
   @send: (args) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _webSocketSingleton
     _instance.send(args)
 
   @auth: (args) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _webSocketSingleton
     _instance.auth(args)
 
   @channel: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _webSocketSingleton
     _instance.channel()
 
   @_spool: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _webSocketSingleton
     _instance.spool()
 
 # The actual Singleton class
-class _Singleton extends App.Controller
+class _webSocketSingleton extends App.Controller
   @include App.Log
 
   queue: []
@@ -44,6 +44,7 @@ class _Singleton extends App.Controller
   tryToConnect:             false
   backend:                  'websocket'
   client_id:                undefined
+  error:                    false
 
   constructor: (@args) ->
     super
@@ -84,8 +85,6 @@ class _Singleton extends App.Controller
       @_ajaxSend(data)
     else
 
-#      console.log 'ws:send trying', data, @ws, @ws.readyState
-
       # A value of 0 indicates that the connection has not yet been established.
       # A value of 1 indicates that the connection is established and communication is possible.
       # A value of 2 indicates that the connection is going through the closing handshake.
@@ -115,7 +114,7 @@ class _Singleton extends App.Controller
     if @lastSpoolMessage
       data['timestamp'] = @lastSpoolMessage
 
-    @log 'Websocket', 'debug', 'spool', data
+    @log 'debug', 'spool', data
 
     # reset @sentSpoolFinished if spool:sent will not return
     reset = =>
@@ -139,20 +138,20 @@ class _Singleton extends App.Controller
   ping: =>
     return if @backend is 'ajax'
 
-    @log 'Websocket', 'debug', 'send websockend ping'
+    @log 'debug', 'send websockend ping'
     @send( { action: 'ping' } )
 
     # check if ping is back within 2 min
     @clearDelay('websocket-ping-check', 'ws')
     check = =>
-      @log 'Websocket', 'notice', 'no websockend ping response, reconnect...'
+      @log 'notice', 'no websockend ping response, reconnect...'
       @close()
     @delay check, 90000, 'websocket-ping-check', 'ws'
 
   pong: ->
     return if @backend is 'ajax'
 
-    @log 'Websocket', 'debug', 'received websockend ping'
+    @log 'debug', 'received websockend ping'
 
     # test again after 1 min
     @delay @ping, 60000, 'websocket-pong', 'ws'
@@ -162,7 +161,7 @@ class _Singleton extends App.Controller
 
     if !window.WebSocket
       @backend = 'ajax'
-      @log 'WebSocket', 'notice', 'no support of websocket, use ajax long polling'
+      @log 'notice', 'no support of websocket, use ajax long polling'
       @_ajaxInit()
       return
 
@@ -174,7 +173,7 @@ class _Singleton extends App.Controller
 
     # Set event handlers.
     @ws.onopen = =>
-      @log 'Websocket', 'notice', 'new websocket connection open'
+      @log 'notice', 'new websocket connection open'
 
       @connectionEstablished = true
       @connectionWasEstablished = true
@@ -190,7 +189,7 @@ class _Singleton extends App.Controller
 
       # empty queue
       for item in @queue
-        @log 'Websocket', 'debug', 'empty ws queue', item
+        @log 'debug', 'empty ws queue', item
         @send(item)
       @queue = []
 
@@ -199,11 +198,11 @@ class _Singleton extends App.Controller
 
     @ws.onmessage = (e) =>
       pipe = JSON.parse( e.data )
-      @log 'Websocket', 'debug', 'ws:onmessage', pipe
+      @log 'debug', 'ws:onmessage', pipe
       @_receiveMessage(pipe)
 
     @ws.onclose = (e) =>
-      @log 'Websocket', 'notice', 'close websocket connection'
+      @log 'notice', 'close websocket connection'
 
       # take connection down and keep it down
       return if @connectionKeepDown
@@ -222,7 +221,7 @@ class _Singleton extends App.Controller
           # use fallback if no connection was possible
           if !@connectionWasEstablished
             @backend = 'ajax'
-            @log 'WebSocket', 'notice', 'No connection to websocket, use ajax long polling as fallback'
+            @log 'notice', 'No connection to websocket, use ajax long polling as fallback'
             @_ajaxInit()
             return
 
@@ -242,7 +241,7 @@ class _Singleton extends App.Controller
       @delay @connect, 4500, 'websocket-try-reconnect-after-x-sec', 'ws'
 
     @ws.onerror = (e) =>
-      @log 'Websocket', 'debug', "ws:onerror", e
+      @log 'debug', "ws:onerror", e
 
   _receiveMessage: (data = []) =>
 
@@ -255,17 +254,17 @@ class _Singleton extends App.Controller
 
         # fill collection
         if item['collection']
-          @log 'Websocket', 'debug', "onmessage collection:" + item['collection']
+          @log 'debug', "onmessage collection:" + item['collection']
           App.Store.write( item['collection'], item['data'] )
 
         # fire event
         if item['event']
           if typeof item['event'] is 'object'
             for event in item['event']
-              @log 'Websocket', 'debug', "onmessage event:" + event
+              @log 'debug', "onmessage event:" + event
               App.Event.trigger( event, item['data'] )
           else
-            @log 'Websocket', 'debug', "onmessage event:" + item['event']
+            @log 'debug', "onmessage event:" + item['event']
             App.Event.trigger( item['event'], item['data'] )
 
   _ajaxInit: (data = {}) =>
@@ -285,7 +284,7 @@ class _Singleton extends App.Controller
       queue: false
       success: (data) =>
         if data.client_id
-          @log 'Websocket', 'notice', 'ajax:new client_id', data.client_id
+          @log 'notice', 'ajax:new client_id', data.client_id
           @client_id = data.client_id
           @_ajaxReceive()
           @_ajaxSendQueue()
@@ -302,7 +301,7 @@ class _Singleton extends App.Controller
     )
 
   _ajaxSend: (data) =>
-    @log 'Websocket', 'debug', 'ajax:sendmessage', data
+    @log 'debug', 'ajax:sendmessage', data
     if !@client_id || @client_id is undefined || !@_ajaxInitDone
       @_ajaxInit()
       @queue.push data
@@ -339,7 +338,7 @@ class _Singleton extends App.Controller
       data:  JSON.stringify({ client_id: @client_id })
       processData: false
       success: (data) =>
-        @log 'Websocket', 'notice', 'ajax:onmessage', data
+        @log 'notice', 'ajax:onmessage', data
         @_receiveMessage(data)
         if data && data.error
           @client_id = undefined

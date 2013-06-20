@@ -114,7 +114,6 @@ class App.ChatWidget extends App.Controller
       @el.find('div.well').addClass('alert-success')
       @delay( =>
           @el.find('div.well').removeClass('alert-success')
-          @log 'DELAY rm'
 
           App.Event.trigger(
             'ws:send'

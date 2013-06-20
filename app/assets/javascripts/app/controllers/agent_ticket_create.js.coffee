@@ -46,7 +46,7 @@ class App.TicketCreate extends App.Controller
 
     # lisen if view need to be rerendert
     App.Event.bind 'ticket_create_rerender', (defaults) =>
-      @log 'AgentTicketPhone', 'error', defaults
+      @log 'notice', 'error', defaults
       @render(defaults)
 
     # start auto save
@@ -90,7 +90,7 @@ class App.TicketCreate extends App.Controller
       diff = difference( @autosaveLast, data )
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = data
-        console.log('form hash changed', diff, data)
+        @log 'notice', 'form hash changed', diff, data
         App.TaskManager.update( @task_key, { 'state': data })
     @interval( update, 10000, @id,  @auto_save_key )
 
@@ -145,7 +145,6 @@ class App.TicketCreate extends App.Controller
             t.customer_id_autocompletion = a.from
             t.subject = a.subject || t.title
             t.body = a.body
-            @log '11111', t
           @render( options: t )
       )
 
@@ -286,7 +285,7 @@ class App.TicketCreate extends App.Controller
 
     # show errors in form
     if errors
-      console.log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
 
     # save ticket, create article
@@ -346,7 +345,7 @@ class UserNew extends App.ControllerModal
     @modalShow()
 
   submit: (e) ->
-    @log 'submit'
+
     e.preventDefault()
     params = @formParam(e.target)
 
@@ -359,12 +358,12 @@ class UserNew extends App.ControllerModal
     # find role_id
     role = App.Collection.findByAttribute( 'Role', 'name', 'Customer' )
     params.role_ids = role.id
-    @log 'updateAttributes', params
+    @log 'notice', 'updateAttributes', params
     user.load(params)
 
     errors = user.validate()
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return
 
@@ -391,7 +390,6 @@ class UserNew extends App.ControllerModal
 class TicketCreateRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
-    @log 'create router', params
 
     # create new uniq form id
     if !params['id']

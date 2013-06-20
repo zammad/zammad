@@ -3,30 +3,30 @@ class App.Interval
 
   @set: ( callback, timeout, key, level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _intervalSingleton
     _instance.set( callback, timeout, key, level )
 
   @clear: ( key, level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _intervalSingleton
     _instance.clear( key, level )
 
   @clearLevel: ( level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _intervalSingleton
     _instance.clearLevel( level )
 
   @reset: ( level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _intervalSingleton
     _instance.reset( level )
 
   @_all: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _intervalSingleton
     _instance._all()
 
-class _Singleton extends Spine.Module
+class _intervalSingleton extends Spine.Module
   @include App.Log
 
   constructor: ->
@@ -47,7 +47,7 @@ class _Singleton extends Spine.Module
       key = Math.floor( Math.random() * 99999 )
 
     # setTimeout
-    @log 'Interval', 'debug', 'set', key, timeout, level, callback
+    @log 'debug', 'set', key, timeout, level, callback
     callback()
     interval_id = setInterval( callback, timeout )
 
@@ -72,7 +72,7 @@ class _Singleton extends Spine.Module
     data = @levelStack[ level ][ key.toString() ]
     return if !data
 
-    @log 'Interval', 'debug', 'clear', data
+    @log 'debug', 'clear', data
     clearInterval( data['interval_id'] )
 
   clearLevel: (level) ->

@@ -452,7 +452,7 @@ class App.ControllerModal extends App.Controller
 
   submit: (e) ->
     e.preventDefault()
-    @log 'You need to implement your own "submit" method!'
+    @log 'error', 'You need to implement your own "submit" method!'
 
 class App.ErrorModal extends App.ControllerModal
   constructor: ->

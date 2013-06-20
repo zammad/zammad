@@ -2,34 +2,34 @@ class App.Event
   _instance = undefined
 
   @init: ->
-    _instance = new _Singleton
+    _instance = new _eventSingleton
 
   @bind: ( events, callback, level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _eventSingleton
     _instance.bind( events, callback, level )
 
   @unbind: ( events, callback, level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _eventSingleton
     _instance.unbind( events, callback, level )
 
   @trigger: ( events, data ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _eventSingleton
     _instance.trigger( events, data )
 
   @unbindLevel: (level) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _eventSingleton
     _instance.unbindLevel(level)
 
   @_allBindings: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _eventSingleton
     _instance._allBindings()
 
-class _Singleton extends Spine.Module
+class _eventSingleton extends Spine.Module
   @include App.Log
 
   constructor: ->
@@ -60,7 +60,7 @@ class _Singleton extends Spine.Module
       }
 
       # bind
-      @log 'Event', 'debug', 'bind', event, callback
+      @log 'debug', 'bind', event, callback
       Spine.bind( event, callback )
 
   unbind: ( events, callback, level ) ->
@@ -81,13 +81,13 @@ class _Singleton extends Spine.Module
         else
           return item if item.event isnt event
       )
-      @log 'Event', 'debug', 'unbind', event, callback
+      @log 'debug', 'unbind', event, callback
       Spine.unbind( event, callback )
 
   trigger: ( events, data ) ->
     eventList = events.split(' ')
     for event in eventList
-      @log 'Event', 'debug', 'trigger', event, data
+      @log 'debug', 'trigger', event, data
       Spine.trigger event, data
 
   _allBindings: ->

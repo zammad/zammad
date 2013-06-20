@@ -124,7 +124,7 @@ class App.TicketMerge extends App.ControllerModal
           @modalHide()
 
           # view ticket
-          @log 'nav...', App.Collection.find( 'Ticket', data.master_ticket['id'] )
+          @log 'notice', 'nav...', App.Collection.find( 'Ticket', data.master_ticket['id'] )
           @navigate '#ticket/zoom/' + data.master_ticket['id']
 
           # notify UI

@@ -74,7 +74,6 @@ class Index extends App.ControllerContent
     )
 
   success: (data, status, xhr) =>
-    @log 'login:success', data
 
     # rebuild navbar with ticket overview counter
     App.WebSocket.send( event: 'navupdate_ticket_overview' )
@@ -88,13 +87,13 @@ class Index extends App.ControllerContent
     # redirect to #
     requested_url = @Config.get( 'requested_url' )
     if requested_url && requested_url isnt '#login'
-      console.log("REDIRECT to '#{requested_url}'")
+      @log 'notice', "REDIRECT to '#{requested_url}'"
       @navigate requested_url
 
       # reset
       @Config.set( 'requested_url', '' )
     else
-      console.log("REDIRECT to -#/-")
+      @log 'notice', "REDIRECT to -#/-"
       @navigate '#/'
 
   error: (xhr, statusText, error) =>

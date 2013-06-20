@@ -57,7 +57,7 @@ class App.Content extends App.Controller
       do (route, callback) =>
         @route(route, (params) ->
 
-          @log 'Content', 'notice', 'execute page controller', route, params
+          @log 'notice', 'execute page controller', route, params
 
           # remove observers for page
           App.Collection.observeUnbindLevel('page')

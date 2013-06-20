@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2013-2013 Zammad Foundation, http://zammad-foundation.org/
 
 require 'cache'
 require 'user_info'
@@ -15,12 +15,12 @@ class ApplicationModel < ActiveRecord::Base
 
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
-  # for import other objects, remove 'id'
+  # for import of other objects, remove 'id'
   def self.attributes_protected_by_default
     if Setting.get('import_mode') && @@import_class_list.include?( self.name.to_s )
       ['type']
     else
-      ['id','type']
+      ['id','type', 'created_at', 'updated_at']
     end
   end
 

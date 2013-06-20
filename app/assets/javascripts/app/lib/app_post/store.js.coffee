@@ -1,35 +1,35 @@
 class App.Store
   _instance = undefined # Must be declared here to force the closure on the class
   @renew: ->
-    _instance = new _Singleton
+    _instance = new _storeSingleton
 
   @write: (key, value) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _storeSingleton
     _instance.write(key, value)
 
   @get: (args) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _storeSingleton
     _instance.get(args)
 
   @delete: (args) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _storeSingleton
     _instance.delete(args)
 
   @clear: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _storeSingleton
     _instance.clear()
 
   @list: () ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _storeSingleton
     _instance.list()
 
 # The actual Singleton class
-class _Singleton
+class _storeSingleton
   store: {}
   constructor: ->
     @support = true
@@ -51,7 +51,7 @@ class _Singleton
     catch e
       if e is QUOTA_EXCEEDED_ERR
         # do something nice to notify your users
-        App.Log.log 'App.Store', 'error', 'Local storage quote exceeded, please relogin!'
+        App.Log.error 'App.Store', 'Local storage quote exceeded, please relogin!'
 
   # get item
   get: (key) ->

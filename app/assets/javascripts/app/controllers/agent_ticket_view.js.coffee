@@ -12,7 +12,7 @@ class Index extends App.ControllerContent
     return if !@authenticate()
 
     @view_mode = localStorage.getItem( "mode:#{@view}" ) || 's'
-    @log 'view:', @view, @view_mode
+    @log 'notice', 'view:', @view, @view_mode
 
     # set title
     @title ''
@@ -78,12 +78,12 @@ class Index extends App.ControllerContent
 
     App.Overview.unbind('local:rerender')
     App.Overview.bind 'local:rerender', (record) =>
-      @log 'rerender...', record
+      @log 'notice', 'rerender...', record
       @render()
 
     App.Overview.unbind('local:refetch')
     App.Overview.bind 'local:refetch', (record) =>
-      @log 'refetch...', record
+      @log 'notice', 'refetch...', record
       @fetch()
 
 #    # bind render after a change is done
@@ -286,7 +286,7 @@ class Index extends App.ControllerContent
     @bulk_count = @el.find('.table-overview').find('[name="bulk"]:checked').length
     @bulk_count_index = 0
     @el.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
-      @log '@bulk_count_index', @bulk_count, @bulk_count_index
+      @log 'notice', '@bulk_count_index', @bulk_count, @bulk_count_index
       ticket_id = $(element).val()
       ticket = App.Ticket.find(ticket_id)
       params = @formParam(e.target)
@@ -297,7 +297,7 @@ class Index extends App.ControllerContent
         if params[item] != ''
           ticket_update[item] = params[item]
 
-#      @log 'update', params, ticket_update, ticket
+#      @log 'notice', 'update', params, ticket_update, ticket
 
       ticket.load(ticket_update)
       ticket.save(

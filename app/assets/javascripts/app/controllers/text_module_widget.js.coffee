@@ -50,7 +50,7 @@ class App.TextModuleUIOld extends App.Controller
 
   reload: =>
       App.TextModule.bind 'refresh', =>
-        @log 'loading....'
+        @log 'notice', 'loading....'
         @render()
         App.TextModule.unbind 'refresh'
       App.Collection.fetch( 'TextModule' )
@@ -262,7 +262,7 @@ class App.TextModuleUIOld extends App.Controller
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      @log 'error', errors
     else
       ui = @
       text_module.save(

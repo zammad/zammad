@@ -4,7 +4,6 @@ class App.DashboardRecentViewed extends App.Controller
 
   constructor: ->
     super
-#    @log 'aaaa', @el
 
     @items = []
 
@@ -54,5 +53,5 @@ class App.DashboardRecentViewed extends App.Controller
   zoom: (e) =>
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
-    @log 'goto zoom!'
+
     @navigate 'ticket/zoom/' + id

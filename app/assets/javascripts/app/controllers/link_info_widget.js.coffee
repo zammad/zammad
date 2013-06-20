@@ -121,7 +121,6 @@ class App.LinkAdd extends App.ControllerModal
   submit: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    @log 'link', params
 
     # get data
     App.Com.ajax(

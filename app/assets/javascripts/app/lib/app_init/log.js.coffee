@@ -1,15 +1,26 @@
 class App.Log
   _instance = undefined
 
-  @log: ( module, level, args... ) ->
+  @log: ( level, args... ) ->
     if _instance == undefined
       _instance ?= new _Singleton
+    module = @constructor.name
     _instance.log( module, level, args )
 
-  @debug: ( module, level, args... ) ->
+  @debug: ( module, args... ) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.log( module, level, args )
+    _instance.log( module, 'debug', args )
+
+  @notice: ( module, args... ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.log( module, 'notice', args )
+
+  @error: ( module, args... ) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.log( module, 'error', args )
 
 class _Singleton
   constructor: ->

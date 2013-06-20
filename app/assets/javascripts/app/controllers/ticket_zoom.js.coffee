@@ -1,7 +1,6 @@
 class App.TicketZoom extends App.Controller
   constructor: (params) ->
     super
-#    console.log 'zoom', params
 
     # check authentication
     return if !@authenticate()
@@ -20,7 +19,7 @@ class App.TicketZoom extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false )
-    @interval( update, 120000, @key, 'ticket_zoom' )
+    @interval( update, 300000, @key, 'ticket_zoom' )
 
     # fetch new data if triggered
     App.Event.bind(
@@ -29,7 +28,7 @@ class App.TicketZoom extends App.Controller
         update = =>
           if data.id.toString() is @ticket_id.toString()
             ticket = App.Collection.find( 'Ticket', @ticket_id )
-            console.log('TRY', data.updated_at, ticket.updated_at)
+            @log 'notice', 'TRY', data.updated_at, ticket.updated_at
             if data.updated_at isnt ticket.updated_at
               @fetch( @ticket_id, false )
         @delay( update, 2000, 'ticket-zoom-' + @ticket_id )
@@ -69,7 +68,7 @@ class App.TicketZoom extends App.Controller
       diff = difference( @autosaveLast, data )
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = data
-        console.log('form hash changed', diff, data)
+        @log 'notice', 'form hash changed', diff, data
         App.TaskManager.update( @task_key, { 'state': data })
     @interval( update, 10000, @id,  @auto_save_key )
 
@@ -93,7 +92,7 @@ class App.TicketZoom extends App.Controller
 
           # trigger task notify
           diff = difference( @dataLastCall.ticket, data.ticket )
-          console.log('diff', diff)
+          @log 'diff', diff
 
           # notify if ticket changed not by my self
           if !_.isEmpty(diff) && data.ticket.updated_by_id isnt @Session.all().id
@@ -425,7 +424,7 @@ class Edit extends App.Controller
 
     ticket = App.Collection.find( 'Ticket', @ticket.id )
 
-    @log 'TicketZoom', 'notice', 'update', params, ticket
+    @log 'notice', 'update', params, ticket
     article_type = App.Collection.find( 'TicketArticleType', params['ticket_article_type_id'] )
 
     # update ticket
@@ -463,14 +462,14 @@ class Edit extends App.Controller
         return if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
 
     ticket.load( ticket_update )
-    @log 'TicketZoom', 'notice', 'update ticket', ticket_update, ticket
+    @log 'notice', 'update ticket', ticket_update, ticket
 
     # disable form
     @formDisable(e)
 
     errors = ticket.validate()
     if errors
-      @log 'TicketZoom', 'error', 'update', errors
+      @log 'error', 'update', errors
       @formEnable(e)
 
     ticket.save(
@@ -494,16 +493,16 @@ class Edit extends App.Controller
           else
             sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Agent' )
           params.ticket_article_sender_id = sender.id
-          @log 'TicketZoom', 'notice', 'update article', params, sender
+          @log 'notice', 'update article', params, sender
           article.load(params)
           errors = article.validate()
           if errors
-            @log 'TicketZoom', 'error', 'update article', errors
+            @log 'error', 'update article', errors
           article.save(
             success: (r) =>
               @ui.fetch( ticket.id, true )
             error: (r) =>
-              @log 'TicketZoom', 'error', 'update article', r
+              @log 'error', 'update article', r
           )
         else
           @ui.fetch( ticket.id, true )
@@ -634,7 +633,6 @@ class ArticleView extends App.Controller
 
     else if article_type.name is 'email'
       @ui.el.find('[name="to"]').val(article.from)
-#    @log 'reply ', article, @el.find('[name="to"]')
 
     # add quoted text if needed
     selectedText = App.ClipBoard.getSelected()
@@ -777,7 +775,6 @@ class TicketActionRow extends App.Controller
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
-    @log 'zoom router', params
 
     # cleanup params
     clean_params =

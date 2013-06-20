@@ -82,13 +82,13 @@ class Index extends App.ControllerContent
     else
       @params.role_ids = [0]
 
-    @log 'updateAttributes', @params
+    @log 'notice', 'updateAttributes', @params
     user = new App.User
     user.load(@params)
 
     errors = user.validate()
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
 
@@ -134,7 +134,7 @@ class Index extends App.ControllerContent
     )
 
   relogin: (data, status, xhr) =>
-    @log 'login:success', data
+    @log 'notice', 'relogin:success', data
 
     # login check
     App.Auth.loginCheck()

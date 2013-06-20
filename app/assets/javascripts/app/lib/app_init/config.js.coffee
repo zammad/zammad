@@ -2,24 +2,24 @@ class App.Config
   _instance = undefined
 
   @init: ->
-    _instance ?= new _Singleton
+    _instance ?= new _configSingleton
 
   @get: ( key, group ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _configSingleton
     _instance.get( key, group )
 
   @set: ( key, value, group ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _configSingleton
     _instance.set( key, value, group )
 
   @_all: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _configSingleton
     _instance._all()
 
-class _Singleton
+class _configSingleton
   constructor: ->
     @config = {}
 

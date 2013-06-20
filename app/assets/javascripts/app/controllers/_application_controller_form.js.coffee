@@ -18,7 +18,7 @@ class App.ControllerForm extends App.Controller
     @form.html()
 
   formGen: ->
-    App.Log.log 'ControllerForm', 'debug', 'formGen', @model.configure_attributes
+    App.Log.debug 'ControllerForm', 'formGen', @model.configure_attributes
 
     fieldset = $('<fieldset>')
 
@@ -176,7 +176,7 @@ class App.ControllerForm extends App.Controller
       if attribute.name of @params
         attribute.value = @params[attribute.name]
 
-    App.Log.log 'ControllerForm', 'debug', 'formGenItem-before', attribute
+    App.Log.debug 'ControllerForm', 'formGenItem-before', attribute
 
     # build options list based on config
     @_getConfigOptionList( attribute )
@@ -259,7 +259,6 @@ class App.ControllerForm extends App.Controller
       counter = 0
       for key of loopData
         counter =+ 1
-#        @log 'kkk', key, loopData[ key ]
 
         # clone to keep it untouched for next loop
         select = _.clone( attribute )
@@ -432,17 +431,15 @@ class App.ControllerForm extends App.Controller
             source: '/users/search',
             minLength: 2,
             select: ( event, ui ) =>
-              @log 'selected', event, ui
+              @log 'notice', 'selected', event, ui
               b(event, ui.item.id)
           }
         )
         ###
-#        @log '111111', @local_attribute_full, item
         $(@local_attribute_full).autocomplete(
           source: 'api/users/search',
           minLength: 2,
           select: ( event, ui ) =>
-#            @log 'selected', event, ui
             b(event, ui.item.id)
         )
       @delay( a, 180 )
@@ -935,7 +932,6 @@ class App.ControllerForm extends App.Controller
       item = $( App.view('generic/input')( attribute: attribute ) )
 
     if attribute.onchange
-#      @log 'on change', attribute.name
       if typeof attribute.onchange is 'function'
         attribute.onchange(attribute)
       else
@@ -943,7 +939,6 @@ class App.ControllerForm extends App.Controller
           a = i.split(/__/)
           if a[1]
             if a[0] is attribute.name
-#              @log 'aaa', i, a[0], attribute.id
               @attribute = attribute
               @classname = classname
               @attributes_clean = attributes_clean
@@ -1114,11 +1109,11 @@ class App.ControllerForm extends App.Controller
 
     list = []
     if attribute.filter
-      App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter', attribute.filter
+      App.Log.debug 'ControllerForm', '_getRelationOptionList:filter', attribute.filter
 
       # function based filter
       if typeof attribute.filter is 'function'
-        App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-function'
+        App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-function'
 
         all = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
 
@@ -1128,7 +1123,7 @@ class App.ControllerForm extends App.Controller
       else if attribute.filter[ attribute.name ]
         filter = attribute.filter[ attribute.name ]
 
-        App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-data', filter
+        App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data', filter
 
         # check all records
         for record in App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
@@ -1143,13 +1138,13 @@ class App.ControllerForm extends App.Controller
 
       # no data filter matched
       else
-        App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-data no filter matched'
+        App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data no filter matched'
         list = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
     else
-      App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList:filter-no filter defined'
+      App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-no filter defined'
       list = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
 
-    App.Log.log 'ControllerForm', 'debug', '_getRelationOptionList', attribute, list
+    App.Log.debug 'ControllerForm', '_getRelationOptionList', attribute, list
 
     # build options list
     @_buildOptionList( list, attribute )
@@ -1180,7 +1175,7 @@ class App.ControllerForm extends App.Controller
     return if !attribute.options
 
     return if typeof attribute.filter isnt 'function'
-    App.Log.log 'ControllerForm', 'debug', '_filterOption:filter-function'
+    App.Log.debug 'ControllerForm', '_filterOption:filter-function'
 
     attribute.options = attribute.filter( attribute.options, attribute )
 
@@ -1251,7 +1246,7 @@ class App.ControllerForm extends App.Controller
     else if form.parents().find('form')[0]
       form = form.parents().find('form')
     else
-      App.Log.log 'ControllerForm', 'error', 'no form found!', form
+      App.Log.error 'ControllerForm', 'no form found!', form
 
     array = form.serializeArray()
 
@@ -1320,7 +1315,7 @@ class App.ControllerForm extends App.Controller
     for key of inputSelectObject
       param[ key ] = inputSelectObject[ key ]
 
-    #App.Log.log 'ControllerForm', 'notice', 'formParam', form, param
+    #App.Log.notice 'ControllerForm', 'formParam', form, param
     return param
 
   @formId: ->
@@ -1328,14 +1323,14 @@ class App.ControllerForm extends App.Controller
     formId.toString().substr formId.toString().length-9, 9
 
   @disable: (form) ->
-    App.Log.log 'ControllerForm', 'notice', 'disable...', $(form.target).parent()
+    App.Log.notice 'ControllerForm', 'disable...', $(form.target).parent()
     $(form.target).parent().find('button').attr('disabled', true)
     $(form.target).parent().find('[type="submit"]').attr('disabled', true)
     $(form.target).parent().find('[type="reset"]').attr('disabled', true)
 
 
   @enable: (form) ->
-    App.Log.log 'ControllerForm', 'notice', 'enable...', $(form.target).parent()
+    App.Log.notice 'ControllerForm', 'enable...', $(form.target).parent()
     $(form.target).parent().find('button').attr('disabled', false)
     $(form.target).parent().find('[type="submit"]').attr('disabled', false)
     $(form.target).parent().find('[type="reset"]').attr('disabled', false)

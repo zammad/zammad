@@ -19,10 +19,10 @@ class Index extends App.ControllerContent
     networks = App.Network.all()
     network_categories = App.NetworkCategory.all()
     for network in networks
-      @log 'f', network    for network in networks
+      @log 'notice', network    for network in networks
 
     for network_category in network_categories
-      @log 'fc', network_category
+      @log 'notice', network_category
       
     @html App.view('network')(
       networks: App.Network.all(),

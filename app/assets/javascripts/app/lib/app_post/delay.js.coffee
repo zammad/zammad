@@ -3,30 +3,30 @@ class App.Delay
 
   @set: ( callback, timeout, key, level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _delaySingleton
     _instance.set( callback, timeout, key, level )
 
   @clear: ( key, level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _delaySingleton
     _instance.clear( key, level )
 
   @clearLevel: ( level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _delaySingleton
     _instance.clearLevel( level )
 
   @reset: ( level ) ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _delaySingleton
     _instance.reset( level )
 
   @_all: ->
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _delaySingleton
     _instance._all()
 
-class _Singleton extends Spine.Module
+class _delaySingleton extends Spine.Module
   @include App.Log
 
   constructor: ->
@@ -47,9 +47,9 @@ class _Singleton extends Spine.Module
       key = Math.floor( Math.random() * 99999 )
 
     # setTimeout
-    @log 'Delay', 'debug', 'set', key, timeout, level, callback
+    @log 'debug', 'set', key, timeout, level, callback
     call = =>
-      @clear( key ) 
+      @clear( key )
       callback()
     delay_id = setTimeout( call, timeout )
 
@@ -74,7 +74,7 @@ class _Singleton extends Spine.Module
     data = @levelStack[ level ][ key.toString() ]
     return if !data
 
-    @log 'Delay', 'debug', 'clear', data
+    @log 'debug', 'clear', data
     clearTimeout( data['delay_id'] )
 
   clearLevel: (level) ->

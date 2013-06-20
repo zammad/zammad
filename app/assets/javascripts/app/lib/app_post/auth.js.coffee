@@ -1,7 +1,7 @@
 class App.Auth
 
   @login: (params) ->
-    App.Log.log 'Auth', 'notice', 'login', params
+    App.Log.notice 'Auth', 'login', params
     App.Com.ajax(
       id:     'login',
       type:   'POST',
@@ -21,7 +21,7 @@ class App.Auth
     )
 
   @loginCheck: ->
-    App.Log.log 'Auth', 'notice', 'loginCheck'
+    App.Log.notice 'Auth', 'loginCheck'
     App.Com.ajax(
       id:    'login_check'
       async: false
@@ -37,7 +37,7 @@ class App.Auth
     )
 
   @logout: ->
-    App.Log.log 'Auth', 'notice', 'logout'
+    App.Log.notice 'Auth', 'logout'
     App.Com.ajax(
       id:   'logout'
       type: 'DELETE'
@@ -52,7 +52,7 @@ class App.Auth
     )
 
   @_login: (data) ->
-    App.Log.log 'Auth', 'notice', '_login:success', data
+    App.Log.notice 'Auth', '_login:success', data
 
     # if session is not valid
     if data.error
@@ -102,7 +102,7 @@ class App.Auth
 
 
   @_logout: (data) ->
-    App.Log.log 'Auth', 'notice', '_logout'
+    App.Log.notice 'Auth', '_logout'
 
     # empty session
     App.Session.init()
@@ -112,7 +112,7 @@ class App.Auth
     App.Event.trigger( 'ui:rerender' )
 
   @_loginError: (xhr, statusText, error) ->
-    App.Log.log 'Auth', 'notice', '_loginError:error'
+    App.Log.notice 'Auth', '_loginError:error'
 
     # empty session
     App.Session.init()

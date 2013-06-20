@@ -119,7 +119,7 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
 
@@ -131,7 +131,6 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
       success: =>
         @modalHide()
       error: =>
-        @log 'errors'
         @modalHide()
     )
 
@@ -211,7 +210,7 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
 
@@ -223,7 +222,6 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
       success: =>
         @modalHide()
       error: =>
-        @log 'errors'
         @modalHide()
     )
 
@@ -259,7 +257,6 @@ class App.ChannelEmailSignature extends App.Controller
   edit: (e) =>
     e.preventDefault()
     item = $(e.target).item( App.Signature )
-    @log '123', item, $(e.target)
     new App.ChannelEmailSignatureEdit( object: item )
 
 class App.ChannelEmailSignatureEdit extends App.ControllerModal
@@ -303,7 +300,7 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
 
@@ -315,7 +312,6 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
       success: =>
         @modalHide()
       error: =>
-        @log 'errors'
         @modalHide()
     )
 
@@ -430,7 +426,7 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
 
@@ -442,7 +438,6 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
       success: =>
         @modalHide()
       error: =>
-        @log 'errors'
         @modalHide()
     )
 

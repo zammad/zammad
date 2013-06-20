@@ -18,7 +18,7 @@ class App.TemplateUI extends App.Controller
 
   reload: =>
       App.Template.bind 'refresh', =>
-        @log 'loading....'
+        @log 'notice', 'loading...'
         @render()
         App.Template.unbind 'refresh'
       App.Collection.fetch( 'Template' )
@@ -85,7 +85,7 @@ class App.TemplateUI extends App.Controller
 
     # show errors in form
     if errors
-      @log 'error new', errors
+      @log 'error', errors
     else
       ui = @
       template.save(
@@ -94,5 +94,5 @@ class App.TemplateUI extends App.Controller
           ui.render()
 
         error: =>
-          @log 'save failed!'
+          @log 'error', 'save failed!'
       )
