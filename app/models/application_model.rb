@@ -20,7 +20,7 @@ class ApplicationModel < ActiveRecord::Base
     if Setting.get('import_mode') && @@import_class_list.include?( self.name.to_s )
       ['type']
     else
-      ['id','type', 'created_at', 'updated_at']
+      ['id','type']
     end
   end
 
