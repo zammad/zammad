@@ -21,7 +21,7 @@ class App.Session
     _instance.all()
 
 class _sessionSingleton extends Spine.Module
-  @include App.Log
+  @include App.LogInclude
 
   constructor: ->
     @clear()

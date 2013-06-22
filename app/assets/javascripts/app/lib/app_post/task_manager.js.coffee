@@ -60,7 +60,7 @@ class App.TaskManager
     _instance.TaskbarId()
 
 class _taskManagerSingleton extends App.Controller
-  @include App.Log
+  @include App.LogInclude
 
   constructor: ->
     super

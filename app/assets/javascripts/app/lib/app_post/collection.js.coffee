@@ -65,7 +65,7 @@ class App.Collection
     _instance._observeStats()
 
 class _collectionSingleton extends Spine.Module
-  @include App.Log
+  @include App.LogInclude
 
   constructor: (@args) ->
 

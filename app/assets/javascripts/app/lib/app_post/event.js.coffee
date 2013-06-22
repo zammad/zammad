@@ -30,7 +30,7 @@ class App.Event
     _instance._allBindings()
 
 class _eventSingleton extends Spine.Module
-  @include App.Log
+  @include App.LogInclude
 
   constructor: ->
     @eventCurrent = {}

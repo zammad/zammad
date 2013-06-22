@@ -40,7 +40,7 @@ class App.i18n
     _instance.escape( args )
 
 class _i18nSingleton extends Spine.Module
-  @include App.Log
+  @include App.LogInclude
 
   constructor: ( locale ) ->
     @map = {}

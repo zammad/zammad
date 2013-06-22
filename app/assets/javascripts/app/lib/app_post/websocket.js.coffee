@@ -32,7 +32,7 @@ class App.WebSocket
 
 # The actual Singleton class
 class _webSocketSingleton extends App.Controller
-  @include App.Log
+  @include App.LogInclude
 
   queue: []
   supported:                true
@@ -179,7 +179,7 @@ class _webSocketSingleton extends App.Controller
       @connectionWasEstablished = true
 
       # close error message show up (because try so connect again) if exists
-      @clearDelay('websocket-no-connection-try-reconnect-message')
+      @clearDelay('websocket-no-connection-try-reconnect-message', 'ws')
       if @error
         @error.modalHide()
         @error = false

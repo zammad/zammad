@@ -1,5 +1,5 @@
 class App.Controller extends Spine.Controller
-  @include App.Log
+  @include App.LogInclude
 
   constructor: (params) ->
 

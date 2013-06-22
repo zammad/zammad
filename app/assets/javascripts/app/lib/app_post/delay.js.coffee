@@ -27,7 +27,7 @@ class App.Delay
     _instance._all()
 
 class _delaySingleton extends Spine.Module
-  @include App.Log
+  @include App.LogInclude
 
   constructor: ->
     @levelStack = {}

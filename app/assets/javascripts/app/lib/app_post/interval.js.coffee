@@ -27,7 +27,7 @@ class App.Interval
     _instance._all()
 
 class _intervalSingleton extends Spine.Module
-  @include App.Log
+  @include App.LogInclude
 
   constructor: ->
     @levelStack = {}
