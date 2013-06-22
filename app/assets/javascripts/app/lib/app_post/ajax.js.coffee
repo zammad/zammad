@@ -2,11 +2,11 @@ class App.Com
   _instance = undefined # Must be declared here to force the closure on the class
   @ajax: (args) -> # Must be a static method
     if _instance == undefined
-      _instance ?= new _Singleton
+      _instance ?= new _ajaxSingleton
     _instance.ajax(args)
 
 # The actual Singleton class
-class _Singleton
+class _ajaxSingleton
   defaults:
     contentType: 'application/json'
     dataType: 'json'
@@ -33,7 +33,7 @@ class _Singleton
     )
 
     # show error messages
-    $('body').bind( 'ajaxError', ( e, jqxhr, settings, exception ) ->
+    $(document).bind( 'ajaxError', ( e, jqxhr, settings, exception ) ->
       status = jqxhr.status
       detail = jqxhr.responseText
       if !status && !detail
@@ -44,6 +44,9 @@ class _Singleton
 
       # do not show any error message on wrong login
       return if status is 422
+
+      # do not show any error message with code 200
+      return if status is 200
 
       # show human readable message
       if status is 401
