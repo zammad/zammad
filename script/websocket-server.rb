@@ -139,20 +139,22 @@ EventMachine.run {
       if data['action'] == 'spool'
         log 'notice', "request spool data", client_id
 
-        spool = Session.spool_list( data['timestamp'], @clients[client_id][:session]['id'] )
-        spool.each { |item|
+        if @clients[client_id][:session]['id']
+          spool = Session.spool_list( data['timestamp'], @clients[client_id][:session]['id'] )
+          spool.each { |item|
 
-          # create new msg to push to client
-          msg = JSON.generate( item[:message] )
+            # create new msg to push to client
+            msg = JSON.generate( item[:message] )
 
-          if item[:type] == 'direct'
-            log 'notice', "send spool to (user_id=#{ @clients[client_id][:session]['id'] })", client_id
-            @clients[client_id][:websocket].send( "[#{ msg }]" )
-          else
-            log 'notice', "send spool", client_id
-            @clients[client_id][:websocket].send( "[#{ msg }]" )
-          end
-        }
+            if item[:type] == 'direct'
+              log 'notice', "send spool to (user_id=#{ @clients[client_id][:session]['id'] })", client_id
+              @clients[client_id][:websocket].send( "[#{ msg }]" )
+            else
+              log 'notice', "send spool", client_id
+              @clients[client_id][:websocket].send( "[#{ msg }]" )
+            end
+          }
+        end
 
         # send spool:sent event to client
         log 'notice', "send spool:sent event", client_id

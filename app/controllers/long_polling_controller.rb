@@ -33,16 +33,18 @@ class LongPollingController < ApplicationController
     if params['data']['action'] == 'spool'
       log 'notice', "request spool data", client_id
 
-      spool = Session.spool_list( params['data']['timestamp'], current_user.id )
-      spool.each { |item|
-        if item[:type] == 'direct'
-          log 'notice', "send spool to (user_id=#{ current_user.id })", client_id
-          Session.send( client_id, item[:message]['data'] )
-        else
-          log 'notice', "send spool", client_id
-          Session.send( client_id, item[:message]['data'] )
-        end
-      }
+      if current_user
+        spool = Session.spool_list( params['data']['timestamp'], current_user.id )
+        spool.each { |item|
+          if item[:type] == 'direct'
+            log 'notice', "send spool to (user_id=#{ current_user.id })", client_id
+            Session.send( client_id, item[:message]['data'] )
+          else
+            log 'notice', "send spool", client_id
+            Session.send( client_id, item[:message]['data'] )
+          end
+        }
+      end
 
       # send spool:sent event to client
       sleep 0.2
