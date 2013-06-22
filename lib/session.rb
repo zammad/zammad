@@ -257,7 +257,7 @@ module Session
     data = []
     Dir.foreach( path ) do |entry|
       next if entry == '.' || entry == '..' || entry == 'spool'
-      data.push entry
+      data.push entry.to_s
     end
     return data
   end

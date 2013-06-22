@@ -89,8 +89,9 @@ EventMachine.run {
 
     # register client connection
     ws.onopen {
-      client_id = ws.object_id
+      client_id = ws.object_id.to_s
       log 'notice', 'Client connected.', client_id
+      Session.create( client_id, {}, { :type => 'websocket' } )
 
       if !@clients.include? client_id
         @clients[client_id] = {
@@ -103,7 +104,7 @@ EventMachine.run {
 
     # unregister client connection
     ws.onclose {
-      client_id = ws.object_id
+      client_id = ws.object_id.to_s
       log 'notice', 'Client disconnected.', client_id
 
       # removed from current client list
@@ -117,7 +118,7 @@ EventMachine.run {
     # manage messages
     ws.onmessage { |msg|
 
-      client_id = ws.object_id
+      client_id = ws.object_id.to_s
       log 'debug', "received message: #{ msg } ", client_id
       begin
         data = JSON.parse(msg)
@@ -174,7 +175,7 @@ EventMachine.run {
         # list all current clients
         client_list = Session.list
         client_list.each {|local_client_id, local_client|
-          if local_client_id.to_s != client_id.to_s
+          if local_client_id != client_id
             # broadcast to recipient list
             if data['data']['recipient']
               if data['data']['recipient'].class != Hash
@@ -269,7 +270,7 @@ EventMachine.run {
 
         # disconnect client
         client[:error_count] += 1
-        if client[:error_count] > 100
+        if client[:error_count] > 20
           if @clients.include? client_id
             @clients.delete client_id
           end

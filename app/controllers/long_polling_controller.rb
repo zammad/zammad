@@ -67,7 +67,7 @@ class LongPollingController < ApplicationController
       # list all current clients
       client_list = Session.list
       client_list.each {|local_client_id, local_client|
-        if local_client_id.to_s != client_id.to_s
+        if local_client_id != client_id
 
           # broadcast to recipient list
           if params['data']['data']['recipient'] && params['data']['data']['recipient']['user_id']
@@ -139,11 +139,11 @@ class LongPollingController < ApplicationController
 
   private
   def client_id_check
-    return params[:client_id] if params[:client_id]
+    return params[:client_id].to_s if params[:client_id]
     return
   end
   def client_id_gen
-    rand(99999999)
+    rand(9999999999).to_s
   end
   def client_id_verify
     return if !params[:client_id]
