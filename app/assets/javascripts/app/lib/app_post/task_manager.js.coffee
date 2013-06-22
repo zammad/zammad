@@ -137,8 +137,7 @@ class _taskManagerSingleton extends App.Controller
         if task.key isnt key
           if task.active
             task.active = false
-            if task.isOnline()
-              task.save()
+            @taskUpdate( task )
         else
           changed = false
           if !task.active
@@ -148,15 +147,13 @@ class _taskManagerSingleton extends App.Controller
             changed = true
             task.notify = false
           if changed
-            if task.isOnline()
-              task.save()
+            @taskUpdate( task )
     else
       for task in tasks
         if @activeTask isnt task.key
           if task.active
             task.active = false
-            if task.isOnline()
-              task.save()
+            @taskUpdate( task )
 
     # start worker for task if not exists
     @startController(key, callback, params, state, to_not_show)
@@ -211,12 +208,9 @@ class _taskManagerSingleton extends App.Controller
     task = @get( key )
     if !task
       throw "No such task with '#{key}' to update"
-    @log 'notice', task.isOnline()
-    @log 'notice', task, task.id, task.isOnline()
-    return if !task.isOnline()
     for item, value of params
-      task.updateAttribute(item, value)
-    App.Event.trigger 'task:render'
+      task[item] = value
+    @taskUpdate( task )
 
   remove: ( key, to_not_show = false ) =>
     task = @get( key )
@@ -227,7 +221,7 @@ class _taskManagerSingleton extends App.Controller
     if worker && worker.release
       worker.release()
     @workersStarted[ key ] = false
-    task.destroy()
+    @taskDestroy(task)
     App.Event.trigger 'task:render'
 
   notify: ( key ) =>
@@ -235,9 +229,7 @@ class _taskManagerSingleton extends App.Controller
     if !task
       throw "No such task with '#{key}' to notify"
     task.notify = true
-    if task.isOnline()
-      task.save()
-    App.Event.trigger 'task:render'
+    @taskUpdate( task )
 
   reorder: ( order ) =>
     prio = 0
@@ -248,8 +240,7 @@ class _taskManagerSingleton extends App.Controller
       prio++
       if task.prio isnt prio
         task.prio = prio
-        if task.isOnline()
-          task.save()
+        @taskUpdate( task )
 
   reset: =>
     App.Taskbar.deleteAll()
@@ -259,6 +250,20 @@ class _taskManagerSingleton extends App.Controller
     if !@TaskbarIdInt
       @TaskbarIdInt = Math.floor( Math.random() * 99999999 )
     @TaskbarIdInt
+
+  taskUpdate: (task) ->
+    @log 'notice', "UPDATE task #{task.id}"
+    update = ->
+      if task.isOnline()
+        task.save()
+      App.Event.trigger 'task:render'
+    #update()
+    @delay( update, 100, task.id, 'taskbar' )
+
+  taskDestroy: (task) ->
+    @clearDelay( task.id, 'taskbar' )
+    task.destroy()
+    App.Event.trigger 'task:render'
 
   tasksInitial: =>
     # reopen tasks
