@@ -137,7 +137,7 @@ class _taskManagerSingleton extends App.Controller
         if task.key isnt key
           if task.active
             task.active = false
-            if !task.isNew()
+            if task.isOnline()
               task.save()
         else
           changed = false
@@ -148,14 +148,14 @@ class _taskManagerSingleton extends App.Controller
             changed = true
             task.notify = false
           if changed
-            if !task.isNew()
+            if task.isOnline()
               task.save()
     else
       for task in tasks
         if @activeTask isnt task.key
           if task.active
             task.active = false
-            if !task.isNew()
+            if task.isOnline()
               task.save()
 
     # start worker for task if not exists
@@ -211,7 +211,9 @@ class _taskManagerSingleton extends App.Controller
     task = @get( key )
     if !task
       throw "No such task with '#{key}' to update"
-    return if task.isNew()
+    @log 'notice', task.isOnline()
+    @log 'notice', task, task.id, task.isOnline()
+    return if !task.isOnline()
     for item, value of params
       task.updateAttribute(item, value)
     App.Event.trigger 'task:render'
@@ -233,7 +235,7 @@ class _taskManagerSingleton extends App.Controller
     if !task
       throw "No such task with '#{key}' to notify"
     task.notify = true
-    if !task.isNew()
+    if task.isOnline()
       task.save()
     App.Event.trigger 'task:render'
 
@@ -246,7 +248,7 @@ class _taskManagerSingleton extends App.Controller
       prio++
       if task.prio isnt prio
         task.prio = prio
-        if !task.isNew()
+        if task.isOnline()
           task.save()
 
   reset: =>

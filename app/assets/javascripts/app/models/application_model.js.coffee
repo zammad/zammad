@@ -82,3 +82,8 @@ class App.Model extends Spine.Model
       params: @,
     )
 
+  isOnline: ->
+    return false if !@id
+    return true if typeof @id is 'number' # in case of real database id
+    return true if @id[0] isnt 'c'
+    return false
