@@ -298,7 +298,7 @@ EventMachine.run {
         client[:websocket].close_websocket
 
         # delete sesstion from client list
-        sleep 1
+        sleep 0.3
         @clients.delete(client_id)
       end
     }
