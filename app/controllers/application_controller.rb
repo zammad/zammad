@@ -74,9 +74,12 @@ class ApplicationController < ActionController::Base
   end
 
   def authentication_check_only
+    puts '----'
     puts 'authentication_check'
-    #    puts params.inspect
-
+    #puts params.inspect
+    puts session.inspect
+    puts cookies.inspect
+    puts '----'
     # check http basic auth
     authenticate_with_http_basic do |username, password|
       puts 'http basic auth check'
