@@ -222,7 +222,6 @@ class _taskManagerSingleton extends App.Controller
       worker.release()
     @workersStarted[ key ] = false
     @taskDestroy(task)
-    App.Event.trigger 'task:render'
 
   notify: ( key ) =>
     task = @get( key )
@@ -262,8 +261,10 @@ class _taskManagerSingleton extends App.Controller
 
   taskDestroy: (task) ->
     @clearDelay( task.id, 'taskbar' )
-    task.destroy()
-    App.Event.trigger 'task:render'
+    task.destroy(
+      success: ->
+        App.Event.trigger 'task:render'
+    )
 
   tasksInitial: =>
     # reopen tasks

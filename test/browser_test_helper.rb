@@ -225,7 +225,6 @@ class TestCase < Test::Unit::TestCase
       instance.navigate.refresh
     elsif action[:execute] == 'js'
       result = instance.execute_script( action[:value] )
-      puts "JS RESULT" + result.inspect
     elsif action[:link]
       if action[:link].match '###stack###'
         action[:link].gsub! '###stack###', @stack
