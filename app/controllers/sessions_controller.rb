@@ -37,12 +37,12 @@ class SessionsController < ApplicationController
     logon_session_key = nil
     if params['logon_session']
       logon_session_key = Digest::MD5.hexdigest( rand(999999).to_s + Time.new.to_s )
-      session = ActiveRecord::SessionStore::Session.create(
-        :session_id => logon_session_key,
-        :data => {
-          :user_id => user['id']
-        }
-      )
+#      session = ActiveRecord::SessionStore::Session.create(
+#        :session_id => logon_session_key,
+#        :data => {
+#          :user_id => user['id']
+#        }
+#      )
     end
 
     puts ".222.."
