@@ -31,7 +31,8 @@ class SessionsController < ApplicationController
     # set session user_id
     user = User.find_fulldata(user.id)
     session[:user_id] = user['id']
-
+    puts "..."
+    puts session.inspect 
     # check logon session
     logon_session_key = nil
     if params['logon_session']
@@ -43,6 +44,9 @@ class SessionsController < ApplicationController
         }
       )
     end
+
+    puts ".222.."
+    puts session.inspect 
 
     # return new session data
     render :json => {
