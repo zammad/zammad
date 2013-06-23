@@ -27,7 +27,7 @@ puts "RACK " + request.env['rack.session.options'].inspect
     else
       request.env['rack.session.options'][:expire_after] = nil
     end
-    reset_session
+#    reset_session
 puts "RACK2 " + request.env['rack.session.options'].inspect
 
     # set session user_id
