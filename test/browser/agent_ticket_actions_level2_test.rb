@@ -165,6 +165,24 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'js',
+            :value        => '$("#global-search").focus()',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'js',
+            :value        => '$("#global-search").blur()',
+          },
+          {
+            :execute => 'wait',
             :value   => 3,
           },
           {
@@ -176,18 +194,34 @@ class AgentTicketActionsLevel2Test < TestCase
           },
 
           # change title in second browser
+#          {
+#            :where        => :instance2,
+#            :execute      => 'sendkey',
+#            :css          => '.active .ticket-title-update',
+#            :value        => 'TTT',
+#          },
+#          {
+#            :where        => :instance2,
+#            :execute      => 'sendkey',
+#            :css          => '.active .ticket-title-update',
+#            :value        => :tab,
+#          },
           {
             :where        => :instance2,
-            :execute      => 'sendkey',
-            :css          => '.active .ticket-title-update',
-            :value        => 'TTT',
+            :execute      => 'js',
+            :value        => '$(".active .ticket-title .ticket-title-update").focus()',
           },
           {
             :where        => :instance2,
-            :execute      => 'sendkey',
-            :css          => '.active .ticket-title-update',
-            :value        => :tab,
+            :execute      => 'js',
+            :value        => '$(".active .ticket-title .ticket-title-update").html("TTTsome level 2 &lt;b&gt;subject&lt;/b&gt; 123äöü")',
           },
+          {
+            :where        => :instance2,
+            :execute      => 'js',
+            :value        => '$(".active .ticket-title .ticket-title-update").blur()',
+          },
+
 
           # set body in edit area
           {

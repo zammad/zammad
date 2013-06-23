@@ -193,6 +193,16 @@ class TestCase < Test::Unit::TestCase
         assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in title" )
       end
       return
+    elsif action[:element] == :cookie
+      cookies = instance.manage.all_cookies
+      cookies.each {|cookie|
+        if cookie.to_s =~ /#{action[:value]}/i
+          assert( true, "(#{test[:name]}) matching '#{action[:value]}' in cookie" )
+          return
+        end
+      }
+      assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in cookie" )
+      return
     elsif action[:element] == :alert
       element = instance.switch_to.alert
     elsif action[:execute] == 'close_all_tasks'
@@ -213,6 +223,9 @@ class TestCase < Test::Unit::TestCase
       instance.navigate.to( action[:to] )
     elsif action[:execute] == 'reload'
       instance.navigate.refresh
+    elsif action[:execute] == 'js'
+      result = instance.execute_script( action[:value] )
+      puts "JS RESULT" + result.inspect
     elsif action[:link]
       if action[:link].match '###stack###'
         action[:link].gsub! '###stack###', @stack
@@ -311,6 +324,7 @@ class TestCase < Test::Unit::TestCase
     elsif action[:execute] == 'close_all_tasks'
     elsif action[:execute] == 'navigate'
     elsif action[:execute] == 'reload'
+    elsif action[:execute] == 'js'
     else
       assert( false, "(#{test[:name]}) unknow action '#{action[:execute]}'" )
     end
