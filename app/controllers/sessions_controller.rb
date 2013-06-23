@@ -21,16 +21,17 @@ class SessionsController < ApplicationController
     default_collection = SessionHelper::default_collections(user)
 
     # remember me - set session cookie to expire later
-    reset_session
+puts "RACK " + request.env['rack.session.options'].inspect
     if params[:remember_me]
       request.env['rack.session.options'][:expire_after] = 1.year
     else
       request.env['rack.session.options'][:expire_after] = nil
     end
+    reset_session
+puts "RACK2 " + request.env['rack.session.options'].inspect
 
     # set session user_id
     user = User.find_fulldata(user.id)
-    session[:user_id] = user['id']
     puts "..."
     puts session.inspect 
     # check logon session
@@ -43,10 +44,13 @@ class SessionsController < ApplicationController
 #          :user_id => user['id']
 #        }
 #      )
+    else
+      session[:user_id] = user['id']
     end
 
     puts ".222.."
     puts session.inspect 
+    puts cookies.inspect
 
     # return new session data
     render :json => {
