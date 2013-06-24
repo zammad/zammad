@@ -66,10 +66,6 @@ class AgentTicketActionLevel1Test < TestCase
             :value   => 'some body 123äöü',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
             :execute => 'click',
             :css     => '.active .form-actions button[type="submit"]',
           },
