@@ -188,20 +188,20 @@ class TestCase < Test::Unit::TestCase
     elsif action[:element] == :title
       title = instance.title
       if title =~ /#{action[:value]}/i
-        assert( true, "(#{test[:name]}) matching '#{action[:value]}' in title" )
+        assert( true, "(#{test[:name]}) matching '#{action[:value]}' in title '#{title}'" )
       else
-        assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in title" )
+        assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in title '#{title}'" )
       end
       return
     elsif action[:element] == :cookie
       cookies = instance.manage.all_cookies
       cookies.each {|cookie|
         if cookie.to_s =~ /#{action[:value]}/i
-          assert( true, "(#{test[:name]}) matching '#{action[:value]}' in cookie" )
+          assert( true, "(#{test[:name]}) matching '#{action[:value]}' in cookie '#{cookie.to_s}'" )
           return
         end
       }
-      assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in cookie" )
+      assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in cookie '#{cookie.to_s}'" )
       return
     elsif action[:element] == :alert
       element = instance.switch_to.alert
