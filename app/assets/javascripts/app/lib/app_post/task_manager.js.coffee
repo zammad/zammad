@@ -64,8 +64,9 @@ class _taskManagerSingleton extends App.Controller
 
   constructor: ->
     super
-    @workers        = {}
-    @workersStarted = {}
+    @workers           = {}
+    @workersStarted    = {}
+    @taskUpdateProcess = {}
     @activeTask = undefined
     @tasksInitial()
 
@@ -252,19 +253,42 @@ class _taskManagerSingleton extends App.Controller
 
   taskUpdate: (task) ->
     @log 'notice', "UPDATE task #{task.id}"
-    update = ->
+    update = =>
+      console.log('update', @taskUpdateProcess)
       if task.isOnline()
-        task.save()
+        if !@taskUpdateProcess[task.id]
+          @taskUpdateProcess[task.id]  = 0
+        @taskUpdateProcess[task.id]++
+        task.save(
+          success: =>
+            @taskUpdateProcess[task.id]--
+            console.log('update done', @taskUpdateProcess)
+          error: (task) =>
+            @taskUpdateProcess[task.id]--
+            console.log('update done', @taskUpdateProcess)
+        )
       App.Event.trigger 'task:render'
-    #update()
     @delay( update, 100, task.id, 'taskbar' )
 
   taskDestroy: (task) ->
     @clearDelay( task.id, 'taskbar' )
-    task.destroy(
-      success: ->
-        App.Event.trigger 'task:render'
-    )
+    destroy = ->
+      task.destroy(
+        success: ->
+          App.Event.trigger 'task:render'
+      )
+    console.log('delete', @taskUpdateProcess)
+
+    # check if update is still in process
+    if @taskUpdateProcess[task.id]
+      @delay(
+        => @taskDestroy(task)
+        800
+      )
+      return
+
+    # destory task in backend
+    destroy()
 
   tasksInitial: =>
     # reopen tasks
