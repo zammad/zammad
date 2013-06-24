@@ -86,7 +86,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
 
           # accept task close warning
