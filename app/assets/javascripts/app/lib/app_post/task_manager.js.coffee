@@ -73,6 +73,21 @@ class _taskManagerSingleton extends App.Controller
     @activeTask        = undefined
     @tasksInitial()
 
+    # render on login
+    App.Event.bind 'auth:login', =>
+      @initialLoad = true
+      @all()
+
+    # render on logout
+    App.Event.bind 'auth:logout', =>
+      for task in @all
+        worker = @worker( task.key )
+        if worker && worker.release
+          worker.release()
+        @workersStarted[ task.key ] = false
+      @reset()
+
+    # send updates to server
     @interval( @taskUpdateLoop, 2500 )
 
   all: ->

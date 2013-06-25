@@ -83,4 +83,118 @@ class TaskbarTaskTest < TestCase
     ]
     browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
   end
+  def test_persistant_task_with_relogin
+    tests = [
+      {
+        :name     => 'persistant task',
+        :action   => [
+          {
+            :execute => 'wait',
+            :value   => 2,
+          },
+          {
+            :execute => 'close_all_tasks',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#new"]',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#ticket_create/call_inbound"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 3,
+          },
+          {
+            :execute => 'set',
+            :css     => '.active .ticket_create input[name="subject"]',
+            :value   => 'INBOUND TEST#1',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#new"]',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#ticket_create/call_outbound"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :execute => 'set',
+            :css     => '.active .ticket_create input[name="subject"]',
+            :value   => 'OUTBOUND TEST#1',
+          },
+          {
+            :execute => 'wait',
+            :value   => 20,
+          },
+         {
+            :execute => 'click',
+            :css     => 'a[href="#current_user"]',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#logout"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :execute => 'check',
+            :css     => '#login',
+            :result  => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'INBOUND TEST#1',
+            :match_result => false,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'OUTBOUND TEST#1',
+            :match_result => false,
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="username"]',
+            :value   => 'agent1@example.com',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password"]',
+            :value   => 'test'
+          },
+          {
+            :execute => 'click',
+            :css     => '#login button',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'INBOUND TEST#1',
+            :match_result => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'OUTBOUND TEST#1',
+            :match_result => true,
+          },
+        ],
+      },
+    ]
+    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
+  end
 end

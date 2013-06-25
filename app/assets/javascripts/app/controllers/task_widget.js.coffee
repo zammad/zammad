@@ -11,20 +11,19 @@ class App.TaskWidget extends App.Controller
       @render()
 
     # render view
-    App.Event.bind 'task:render', (data) =>
+    App.Event.bind 'task:render', =>
       @render()
 
     # render on login
-    App.Event.bind 'auth:login', (user) =>
+    App.Event.bind 'auth:login', =>
       @render()
 
     # reset current tasks on logout
     App.Event.bind 'auth:logout', =>
       @el.html('')
-      App.TaskManager.reset()
 
     # only do take over check after spool messages are finised
-    App.Event.bind 'spool:sent', (data) =>
+    App.Event.bind 'spool:sent', =>
       @spoolSent = true
 
     # session take over message
