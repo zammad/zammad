@@ -61,7 +61,7 @@ class ChatTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
           {
             :where   => :instance1,
@@ -77,7 +77,7 @@ class ChatTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 6,
           },
           {
             :where        => :instance1,
@@ -109,7 +109,7 @@ class ChatTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 8,
           },
           {
             :where        => :instance1,
@@ -117,10 +117,6 @@ class ChatTest < TestCase
             :css          => '#chat_log_container',
             :value        => message,
             :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 8,
           },
         ],
       },
