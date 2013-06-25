@@ -128,7 +128,6 @@ class App.TaskWidget extends App.Controller
 
     # remove task
     App.TaskManager.remove( key )
-    @render()
 
     # navigate to next task if needed
     tasks = App.TaskManager.all()

@@ -67,15 +67,28 @@ class _taskManagerSingleton extends App.Controller
     @workers           = {}
     @workersStarted    = {}
     @taskUpdateProcess = {}
-    @activeTask = undefined
+    @allTasks          = []
+    @tasksToUpdate     = {}
+    @initialLoad       = true
+    @activeTask        = undefined
     @tasksInitial()
 
+    @interval( @taskUpdateLoop, 2500 )
+
   all: ->
-    tasks = App.Taskbar.all()
-    tasks = _(tasks).sortBy( (task) ->
+
+    # initial load of taskbar collection
+    if @initialLoad
+      @initialLoad = false
+      tasks = App.Taskbar.all()
+      for task in tasks
+        @allTasks.push task.attributes()
+
+    # sort by prio
+    @allTasks = _(@allTasks).sortBy( (task) ->
       return task.prio;
     )
-    return tasks
+    return @allTasks
 
   worker: ( key ) ->
     return @workers[ key ] if @workers[ key ]
@@ -99,13 +112,21 @@ class _taskManagerSingleton extends App.Controller
         params:   params
         callback: callback
         client_id: 123
-        prio:     App.Taskbar.count() + 1
+        prio:     @allTasks.length + 1
         notify:   false
         active:   active
       )
-      task.save()
+      @allTasks.push task.attributes()
 
-    tasks = @all()
+      # save new task and update task collection
+      ui = @
+      task.save(
+        success: ->
+          for taskPosition of ui.allTasks
+            if ui.allTasks[taskPosition] && ui.allTasks[taskPosition]['key'] is @key
+              task = @attributes()
+              ui.allTasks[taskPosition] = task
+      )
 
     # create div for permanent content
     if !$("#content_permanent")[0]
@@ -134,7 +155,7 @@ class _taskManagerSingleton extends App.Controller
 
     # set all tasks to active false, only new/selected one to active
     if active
-      for task in tasks
+      for task in @allTasks
         if task.key isnt key
           if task.active
             task.active = false
@@ -150,7 +171,7 @@ class _taskManagerSingleton extends App.Controller
           if changed
             @taskUpdate( task )
     else
-      for task in tasks
+      for task in @allTasks
         if @activeTask isnt task.key
           if task.active
             task.active = false
@@ -199,8 +220,7 @@ class _taskManagerSingleton extends App.Controller
     return a
 
   get: ( key ) =>
-    tasks = @all()
-    for task in tasks
+    for task in @allTasks
       return task if task.key is key
     return
 #    throw "No such task with '#{key}'"
@@ -243,6 +263,7 @@ class _taskManagerSingleton extends App.Controller
         @taskUpdate( task )
 
   reset: =>
+    @allTasks = []
     App.Taskbar.deleteAll()
     App.Event.trigger 'task:render'
 
@@ -252,35 +273,43 @@ class _taskManagerSingleton extends App.Controller
     @TaskbarIdInt
 
   taskUpdate: (task) ->
-    @log 'notice', "UPDATE task #{task.id}"
-    update = =>
-      console.log('update', @taskUpdateProcess)
-      if task.isOnline()
-        if !@taskUpdateProcess[task.id]
-          @taskUpdateProcess[task.id]  = 0
-        @taskUpdateProcess[task.id]++
-        task.save(
-          success: =>
-            @taskUpdateProcess[task.id]--
-            console.log('update done', @taskUpdateProcess)
-          error: (task) =>
-            @taskUpdateProcess[task.id]--
-            console.log('update done', @taskUpdateProcess)
-        )
-      App.Event.trigger 'task:render'
-    @delay( update, 100, task.id, 'taskbar' )
+    @log 'notice', "UPDATE task #{task.id}", task
+    @tasksToUpdate[ task.key ] = 'toUpdate'
+    App.Event.trigger 'task:render'
+
+  taskUpdateLoop: =>
+    for key of @tasksToUpdate
+      continue if !key
+      task = @get( key )
+      continue if !task
+      if @tasksToUpdate[ task.key ] is 'toUpdate'
+        @tasksToUpdate[ task.key ] = 'inProgress'
+        taskUpdate = new App.Taskbar
+        taskUpdate.load( task )
+        if taskUpdate.isOnline()
+          ui = @
+          taskUpdate.save(
+            success: ->
+              if ui.tasksToUpdate[ @key ] is 'inProgress'
+                delete ui.tasksToUpdate[ @key ]
+            error: (task) =>
+              if ui.tasksToUpdate[ @key ] is 'inProgress'
+                delete ui.tasksToUpdate[ @key ]
+          )
 
   taskDestroy: (task) ->
-    @clearDelay( task.id, 'taskbar' )
-    destroy = ->
-      task.destroy(
-        success: ->
-          App.Event.trigger 'task:render'
-      )
-    console.log('delete', @taskUpdateProcess)
+    allTasks = _.filter(
+      @allTasks
+      (taskLocal) ->
+        return task if task.key isnt taskLocal.key
+        return
+    )
+    @allTasks = allTasks || []
+    App.Event.trigger 'task:render'
 
     # check if update is still in process
-    if @taskUpdateProcess[task.id]
+    if @tasksToUpdate[ task.key ] is 'inProgress'
+      console.log( 'DESTROY', task, @tasksToUpdate[ task.key ], task.key)
       @delay(
         => @taskDestroy(task)
         800
@@ -288,7 +317,9 @@ class _taskManagerSingleton extends App.Controller
       return
 
     # destory task in backend
-    destroy()
+    delete @tasksToUpdate[ task.key ]
+    App.Taskbar.destroy(task.id)
+    return
 
   tasksInitial: =>
     # reopen tasks
@@ -307,7 +338,6 @@ class _taskManagerSingleton extends App.Controller
         taskbar_id: @TaskbarId()
     )
 
-#    App.Taskbar.fetch()
     tasks = @all()
     return if !tasks
 
@@ -318,7 +348,7 @@ class _taskManagerSingleton extends App.Controller
         =>
           task = tasks.shift()
           @add(task.key, task.callback, task.params, true, task.state)
-        task_count * 350
+        task_count * 300
       )
 
     App.Event.trigger 'taskbar:ready'
