@@ -4,6 +4,17 @@ require 'rails/test_help'
 require 'selenium-webdriver'
 
 class TestCase < Test::Unit::TestCase
+  def browser
+    ENV['BROWSER'] || 'firefox'
+  end
+
+  def browser_support_cookies
+    if browser =~ /(internet_explorer|ie)/i
+      return false
+    end
+    return true
+  end
+
   def browser_url
     ENV['BROWSER_URL'] || 'http://localhost:3000'
   end
@@ -13,24 +24,21 @@ class TestCase < Test::Unit::TestCase
       @browsers = []
     end
     if !ENV['REMOTE_URL']
-      if !ENV['BROWSER']
-        ENV['BROWSER'] = 'firefox'
-      end
-      browser = Selenium::WebDriver.for( ENV['BROWSER'].to_sym )
-      @browsers.push browser
-      return browser
+      local_browser = Selenium::WebDriver.for( browser.to_sym )
+      @browsers.push local_browser
+      return local_browser
     end
 
-    caps = Selenium::WebDriver::Remote::Capabilities.send( ENV['BROWSER'] )
+    caps = Selenium::WebDriver::Remote::Capabilities.send( browser )
     caps.platform = ENV['BROWSER_OS'] || 'Windows 2008'
     caps.version  = ENV['BROWSER_VERSION'] || '8'
-    browser = Selenium::WebDriver.for(
+    local_browser = Selenium::WebDriver.for(
       :remote,
       :url                  => ENV['REMOTE_URL'],
       :desired_capabilities => caps,
     )
-    @browsers.push browser
-    return browser
+    @browsers.push local_browser
+    return local_browser
   end
 
   def teardown
@@ -39,10 +47,10 @@ class TestCase < Test::Unit::TestCase
     # only shut down browser type once
     # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
     shutdown = {}
-    @browsers.each{ |browser|
-      next if shutdown[ browser.browser ]
-      shutdown[ browser.browser ] = true
-      browser.quit
+    @browsers.each{ |local_browser|
+      next if shutdown[ local_browser.browser ]
+      shutdown[ local_browser.browser ] = true
+      local_browser.quit
     }
   end
 
@@ -194,6 +202,9 @@ class TestCase < Test::Unit::TestCase
       end
       return
     elsif action[:element] == :cookie
+      if !browser_support_cookies
+        assert( true, "(#{test[:name]}) '#{action[:value]}' ups browser is not supporting reading cookies")
+      end
       cookies = instance.manage.all_cookies
       cookies.each {|cookie|
         if cookie.to_s =~ /#{action[:value]}/i
