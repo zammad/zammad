@@ -80,11 +80,11 @@ class _taskManagerSingleton extends App.Controller
 
     # render on logout
     App.Event.bind 'auth:logout', =>
-      for task in @all
+      for task in @allTasks
         worker = @worker( task.key )
         if worker && worker.release
           worker.release()
-        @workersStarted[ task.key ] = false
+        delete @workersStarted[ task.key ]
       @reset()
 
     # send updates to server
@@ -256,7 +256,7 @@ class _taskManagerSingleton extends App.Controller
     worker = @worker( key )
     if worker && worker.release
       worker.release()
-    @workersStarted[ key ] = false
+    delete @workersStarted[ key ]
     @taskDestroy(task)
 
   notify: ( key ) =>
