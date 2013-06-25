@@ -38,7 +38,7 @@ class App.Browser
   @message: (data) ->
     new App.ControllerModal(
       title:    'Browser too old!'
-      message:  "Your Browser is not supported. Please use a newer one (#{data.browser} #{data.version} #{data.OS})"
+      message:  "Your Browser is not supported (#{data.browser} #{data.version} #{data.OS}). Please use a newer one."
       show:     true
       backdrop: false
       keyboard: false
