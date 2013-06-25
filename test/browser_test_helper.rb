@@ -201,7 +201,7 @@ class TestCase < Test::Unit::TestCase
           return
         end
       }
-      assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in cookie '#{cookie.to_s}'" )
+      assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in cookie '#{cookies.to_s}'" )
       return
     elsif action[:element] == :alert
       element = instance.switch_to.alert
