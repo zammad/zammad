@@ -26,6 +26,18 @@ class App.TaskWidget extends App.Controller
     App.Event.bind 'spool:sent', =>
       @spoolSent = true
 
+      # broadcast to other browser instance
+      App.WebSocket.send(
+        action: 'broadcast'
+        event:  'session:takeover'
+        spool:  true
+        recipient:
+          user_id: [ App.Session.get( 'id' ) ]
+        data:
+          taskbar_id: App.TaskManager.TaskbarId()
+      )
+
+
     # session take over message
     App.Event.bind 'session:takeover', (data) =>
 

@@ -342,17 +342,6 @@ class _taskManagerSingleton extends App.Controller
 
     # check if we have different
 
-    # broadcast to other browser instance
-    App.WebSocket.send(
-      action: 'broadcast'
-      event:  'session:takeover'
-      spool:  true
-      data:
-        recipient:
-          user_id: [ App.Session.get( 'id' ) ]
-        taskbar_id: @TaskbarId()
-    )
-
     tasks = @all()
     return if !tasks
 

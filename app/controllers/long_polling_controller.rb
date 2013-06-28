@@ -25,7 +25,7 @@ class LongPollingController < ApplicationController
 
     # spool messages for new connects
     if params['data']['spool']
-      msg = JSON.generate( params )
+      msg = JSON.generate( params['data'] )
       Session.spool_create(msg)
     end
 
@@ -38,10 +38,10 @@ class LongPollingController < ApplicationController
         spool.each { |item|
           if item[:type] == 'direct'
             log 'notice', "send spool to (user_id=#{ current_user.id })", client_id
-            Session.send( client_id, item[:message]['data'] )
+            Session.send( client_id, item[:message] )
           else
             log 'notice', "send spool", client_id
-            Session.send( client_id, item[:message]['data'] )
+            Session.send( client_id, item[:message] )
           end
         }
       end
@@ -72,8 +72,8 @@ class LongPollingController < ApplicationController
         if local_client_id != client_id
 
           # broadcast to recipient list
-          if params['data']['data']['recipient'] && params['data']['data']['recipient']['user_id']
-            params['data']['data']['recipient']['user_id'].each { |user_id|
+          if params['data']['recipient'] && params['data']['recipient']['user_id']
+            params['data']['recipient']['user_id'].each { |user_id|
               if local_client[:user][:id] == user_id
                 log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id #{user_id})", local_client_id
                 Session.send( local_client_id, params['data'] )

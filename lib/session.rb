@@ -86,19 +86,18 @@ module Session
         end
 
         # add spool attribute to push spool info to clients
-        message_parsed['data']['spool'] = true
+        message_parsed['spool'] = true
 
         # only send not already now messages
         if !timestamp || timestamp < spool['timestamp']
 
           # spool to recipient list
-          if message_parsed['data'] && message_parsed['data']['data'] && message_parsed['data']['data']['recipient'] && message_parsed['data']['data']['recipient']['user_id']
-            message_parsed['data']['data']['recipient']['user_id'].each { |user_id|
+          if message_parsed['recipient'] && message_parsed['recipient']['user_id']
+            message_parsed['recipient']['user_id'].each { |user_id|
               if current_user_id == user_id
                 item = {
                   :type    => 'direct',
                   :message => message_parsed,
-                  :spool   => spool,
                 }
                 data.push item
               end
@@ -109,7 +108,6 @@ module Session
             item = {
               :type    => 'broadcast',
               :message => message_parsed,
-              :spool   => spool,
             }
             data.push item
           end
