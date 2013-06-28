@@ -25,6 +25,7 @@ class TestCase < Test::Unit::TestCase
     end
     if !ENV['REMOTE_URL']
       local_browser = Selenium::WebDriver.for( browser.to_sym )
+      local_browser.manage.window.resize_to(1024, 1024)
       @browsers.push local_browser
       return local_browser
     end
