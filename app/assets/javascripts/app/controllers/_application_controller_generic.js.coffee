@@ -41,13 +41,9 @@ class App.ControllerGenericNew extends App.ControllerModal
     ui = @
     object.save(
       success: ->
-
-        # force to reload object
-        callbackReload = (user) ->
-          if ui.callback
-            ui.callback( user )
-          ui.modalHide()
-        App.Collection.find( ui['genericObject'], @id, callbackReload , true )
+        if ui.callback
+          ui.callback( @ )
+        ui.modalHide()
 
       error: ->
         ui.log 'errors'
@@ -91,13 +87,9 @@ class App.ControllerGenericEdit extends App.ControllerModal
     ui = @
     @item.save(
       success: ->
-
-        # force to reload object
-        callbackReload = (user) ->
-          if ui.callback
-            ui.callback( user )
-          ui.modalHide()
-        App.Collection.find( ui['genericObject'], @id, callbackReload , true )
+        if ui.callback
+          ui.callback( @ )
+        ui.modalHide()
 
       error: =>
         ui.log 'errors'
