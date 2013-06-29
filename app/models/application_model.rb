@@ -2,6 +2,7 @@
 
 require 'cache'
 require 'user_info'
+require 'session'
 
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
@@ -205,5 +206,44 @@ class ApplicationModel < ActiveRecord::Base
     else
       raise "Need name for create_or_update()"
     end
+  end
+
+  def notify_clients_after_create
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
+    class_name = self.class.name
+    class_name.gsub!(/::/, '')
+    Session.broadcast(
+      :event => class_name + ':created',
+      :data => { :id => self.id, :updated_at => self.updated_at }
+    )
+  end
+
+  def notify_clients_after_update
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+    puts "#{self.class.name.downcase} UPDATED " + self.updated_at.to_s
+    class_name = self.class.name
+    class_name.gsub!(/::/, '')
+    Session.broadcast(
+      :event => class_name + ':updated',
+      :data => { :id => self.id, :updated_at => self.updated_at }
+    )
+  end
+
+  def notify_clients_after_destroy
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+    puts "#{self.class.name.downcase} DESTOY " + self.updated_at.to_s
+    class_name = self.class.name
+    class_name.gsub!(/::/, '')
+    Session.broadcast(
+      :event => class_name + ':destroy',
+      :data => { :id => self.id, :updated_at => self.updated_at }
+    )
   end
 end

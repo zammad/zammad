@@ -23,7 +23,7 @@ class App.TicketZoom extends App.Controller
 
     # fetch new data if triggered
     App.Event.bind(
-      'ticket:updated'
+      'Ticket:updated'
       (data) =>
         update = =>
           if data.id.toString() is @ticket_id.toString()

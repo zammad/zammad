@@ -122,6 +122,12 @@ class App.ControllerGenericIndex extends App.ControllerContent
         },
       ],
     )
+    App.Event.bind(
+      @genericObject+ ':created ' + @genericObject + ':updated ' + @genericObject + ':destroy'
+      =>
+        App[ @genericObject ].fetch()
+      'page'
+    )
 
     App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
       @log 'error', 'ajax', msg.status
@@ -139,7 +145,7 @@ class App.ControllerGenericIndex extends App.ControllerContent
 
   render: =>
 
-    objects = App.Collection.all( 
+    objects = App.Collection.all(
       type:   @genericObject,
       sortBy: @defaultSortBy || 'name',
     )
