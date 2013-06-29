@@ -7,6 +7,9 @@ class Ticket < ApplicationModel
   before_create   :number_generate, :check_defaults
   before_update   :check_defaults
   before_destroy  :destroy_dependencies
+  after_create    :notify_clients_after_create
+  after_update    :notify_clients_after_update
+  after_destroy   :notify_clients_after_destroy
 
   belongs_to    :group
   has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update

@@ -41,8 +41,7 @@ module Zammad
       'observer::_ticket::_notification',
       'observer::_tag::_ticket_history',
       'observer::_ticket::_reset_new_state',
-      'observer::_ticket::_escalation_calculation',
-      'observer::_web_socket_notify'
+      'observer::_ticket::_escalation_calculation'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
