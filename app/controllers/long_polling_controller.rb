@@ -31,7 +31,13 @@ class LongPollingController < ApplicationController
 
     # get spool messages and send them to new client connection
     if params['data']['action'] == 'spool'
-      log 'notice', "request spool data", client_id
+
+      # error handling
+      if params['data']['timestamp']
+        log 'notice', "request spool data > '#{Time.at( params['data']['timestamp'] ).to_s}'", client_id
+      else
+        log 'notice', "request spool init data", client_id
+      end
 
       if current_user
         spool = Session.spool_list( params['data']['timestamp'], current_user.id )
@@ -49,7 +55,7 @@ class LongPollingController < ApplicationController
       # send spool:sent event to client
       sleep 0.2
       log 'notice', "send spool:sent event", client_id
-      Session.send( client_id, { :event => 'spool:sent', :data => { :timestamp => Time.now.to_i } } )
+      Session.send( client_id, { :event => 'spool:sent', :data => { :timestamp => Time.now.utc.to_i } } )
     end
 
 

@@ -55,7 +55,7 @@ OptionParser.new do |opts|
 end.parse!
 
 if ARGV[0] != 'start' && ARGV[0] != 'stop'
-  puts "Usage: websocket-server.rb start|stop [options]"
+  puts "Usage: #{File.basename(__FILE__)} start|stop [options]"
   exit;
 end
 
@@ -137,9 +137,15 @@ EventMachine.run {
 
       # get spool messages and send them to new client connection
       if data['action'] == 'spool'
-        log 'notice', "request spool data", client_id
 
-        if @clients[client_id][:session]['id']
+        # error handling
+        if data['timestamp']
+          log 'notice', "request spool data > '#{Time.at(data['timestamp']).to_s}'", client_id
+        else
+          log 'notice', "request spool with init data", client_id
+        end
+
+        if @clients[client_id] && @clients[client_id][:session] && @clients[client_id][:session]['id']
           spool = Session.spool_list( data['timestamp'], @clients[client_id][:session]['id'] )
           spool.each { |item|
 
@@ -153,11 +159,13 @@ EventMachine.run {
               @clients[client_id][:websocket].send( "[#{ msg }]" )
             end
           }
+        else
+          log 'error', "can't send spool, session not authenticated", client_id
         end
 
         # send spool:sent event to client
         log 'notice', "send spool:sent event", client_id
-        @clients[client_id][:websocket].send( '[{"event":"spool:sent","data":{"timestamp":' + Time.now.to_i.to_s + '}}]' )
+        @clients[client_id][:websocket].send( '[{"event":"spool:sent","data":{"timestamp":' + Time.now.utc.to_i.to_s + '}}]' )
       end
 
       # get session

@@ -207,9 +207,7 @@ class _webSocketSingleton extends App.Controller
       # take connection down and keep it down
       return if @connectionKeepDown
 
-      # set timestamp to get spool messages later
       if @connectionEstablished
-        @lastSpoolMessage = Math.round( +new Date()/1000 )
         @connectionEstablished = false
 
       return if @backend is 'ajax'
@@ -247,6 +245,10 @@ class _webSocketSingleton extends App.Controller
 
       # go through all blocks
       for item in data
+
+        # set timestamp to get spool messages later
+        if item['spool']
+          @lastSpoolMessage = Math.round( +new Date()/1000 )
 
         # reset reconnect loop
         if item['action'] is 'pong'
