@@ -10,9 +10,10 @@ class App.ControllerForm extends App.Controller
       @el.prepend( @form )
 
     # trigger change to rebuild shown/hidden item and update sub selections
-    @form.find('input').trigger('change')
-    @form.find('textarea').trigger('change')
-    @form.find('select').trigger('change')
+    if typeof @form is 'object'
+      @form.find('input').trigger('change')
+      @form.find('textarea').trigger('change')
+      @form.find('select').trigger('change')
 
   html: =>
     @form.html()
