@@ -105,6 +105,14 @@ class _taskManagerSingleton extends App.Controller
     )
     return @allTasks
 
+  newPrio: ->
+    prio = 1
+    for task in @allTasks
+      if task.prio && task.prio > prio
+        prio = task.prio
+    prio++
+    prio
+
   worker: ( key ) ->
     return @workers[ key ] if @workers[ key ]
     return
@@ -127,7 +135,7 @@ class _taskManagerSingleton extends App.Controller
         params:   params
         callback: callback
         client_id: 123
-        prio:     @allTasks.length + 1
+        prio:     @newPrio()
         notify:   false
         active:   active
       )
