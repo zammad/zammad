@@ -94,6 +94,8 @@ class App.TaskWidget extends App.Controller
       taskBarActions: @_getTaskActions()
     )
 
+    @resizeTasks()
+
     dndOptions =
       tolerance:            'pointer'
       distance:             15
@@ -140,6 +142,8 @@ class App.TaskWidget extends App.Controller
     # remove task
     App.TaskManager.remove( key )
 
+    @resizeTasks()
+
     # navigate to next task if needed
     tasks = App.TaskManager.all()
     if active_is_closed && !_.isEmpty( tasks )
@@ -153,6 +157,17 @@ class App.TaskWidget extends App.Controller
         return
     if _.isEmpty( tasks )
       @navigate '#'
+
+  resizeTasks: ->
+    width = $('#task .taskbar').width() - 280
+    task_count = App.TaskManager.all().length
+    task_size  = ( width / task_count ) - ( task_count * 1.3 )
+    if task_size < 40
+      $('#task .task').css('max-width', '40px')
+    else if task_size < 130
+      $('#task .task').css('max-width', task_size + 'px')
+    else
+      $('#task .task').css('max-width', '120px')
 
   _getTaskActions: ->
     roles  = App.Session.get( 'roles' )
