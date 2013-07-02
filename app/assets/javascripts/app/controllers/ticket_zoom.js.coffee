@@ -31,7 +31,7 @@ class App.TicketZoom extends App.Controller
             @log 'notice', 'TRY', data.updated_at, ticket.updated_at
             if data.updated_at isnt ticket.updated_at
               @fetch( @ticket_id, false )
-        @delay( update, 2000, 'ticket-zoom-' + @ticket_id )
+        @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
       'ticket-zoom-' + @ticket_id
     )
 
@@ -63,14 +63,18 @@ class App.TicketZoom extends App.Controller
 
   autosave: =>
     @auto_save_key = 'zoom' + @id
+
+    @autosaveLast = _.clone( @formDefault )
     update = =>
-      data = @formParam( @el.find('.ticket-update') )
-      diff = difference( @autosaveLast, data )
+      currentData = @formParam( @el.find('.ticket-update') )
+      diff = difference( @autosaveLast, currentData )
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
-        @autosaveLast = data
-        @log 'notice', 'form hash changed', diff, data
-        App.TaskManager.update( @task_key, { 'state': data })
-    @interval( update, 10000, @id,  @auto_save_key )
+        @autosaveLast = currentData
+        @log 'notice', 'form hash changed', diff, currentData
+        @el.find('.ticket-update').parent().addClass('form-changed')
+        @el.find('.ticket-update').parent().parent().find('.reset-message').show()
+        App.TaskManager.update( @task_key, { 'state': currentData })
+    @interval( update, 1500, @id,  @auto_save_key )
 
   fetch: (ticket_id, force) ->
 
@@ -98,14 +102,14 @@ class App.TicketZoom extends App.Controller
           if !_.isEmpty(diff) && data.ticket.updated_by_id isnt @Session.all().id
             App.TaskManager.notify( @task_key )
 
+          # rerender edit box
+          @editDone = false
+
         # remember current data
         @dataLastCall = data
 
         @load(data, force)
         App.Store.write( @key, data )
-
-        # start auto save
-        @autosave()
 
       error: (xhr, status, error) =>
 
@@ -168,8 +172,14 @@ class App.TicketZoom extends App.Controller
     @ArticleView()
 
     if force || !@editDone
+      # reset form on force reload
+      if force && _.isEmpty( App.TaskManager.get(@task_key).state )
+        App.TaskManager.update( @task_key, { 'state': {} })
       @editDone = true
-      @Edit()
+
+      # rerender widget if it hasn't changed
+      if !@editWidget || _.isEmpty( App.TaskManager.get(@task_key).state )
+        @editWidget = @Edit()
 
     # show text module UI
     if !@isRole('Customer')
@@ -214,7 +224,6 @@ class App.TicketZoom extends App.Controller
     new Edit(
       ticket:     @ticket
       el:         @el.find('.edit')
-      form_state: @form_state
       edit_form:  @edit_form
       task_key:   @task_key
       ui:         @
@@ -319,7 +328,8 @@ class TicketAction extends App.Controller
 
 class Edit extends App.Controller
   events:
-    'click .submit': 'update'
+    'click .submit':             'update'
+    'click [data-type="reset"]': 'reset'
 
   constructor: ->
     super
@@ -332,6 +342,7 @@ class Edit extends App.Controller
     @html App.view('ticket_zoom/edit')(
       ticket:     ticket
       isCustomer: @isRole('Customer')
+      formChanged: !_.isEmpty( App.TaskManager.get(@task_key).state )
     )
 
     @configure_attributes_ticket = [
@@ -365,7 +376,9 @@ class Edit extends App.Controller
       ]
 
     @form_id = App.ControllerForm.formId()
-    defaults = @form_state || ticket
+    defaults = ticket
+    if !_.isEmpty( App.TaskManager.get(@task_key).state )
+      defaults = App.TaskManager.get(@task_key).state
     new App.ControllerForm(
       el:        @el.find('.form-ticket-update')
       form_id:   @form_id
@@ -413,7 +426,10 @@ class Edit extends App.Controller
     @el.find('textarea').elastic()
 
     # remember form defaults
-    @formDefault = @formParam( @el.find('.ticket-update') )
+    @ui.formDefault = @formParam( @el.find('.ticket-update') )
+
+    # start auto save
+    @ui.autosave()
 
     # enable user popups
     @userPopups()
@@ -498,6 +514,10 @@ class Edit extends App.Controller
           errors = article.validate()
           if errors
             @log 'error', 'update article', errors
+
+          # reset form after save
+          App.TaskManager.update( @task_key, { 'state': {} })
+
           article.save(
             success: (r) =>
               @ui.fetch( ticket.id, true )
@@ -505,17 +525,21 @@ class Edit extends App.Controller
               @log 'error', 'update article', r
           )
         else
-          @ui.fetch( ticket.id, true )
+          # reset form after save
+          App.TaskManager.update( @task_key, { 'state': {} })
 
-        # reset form after save
-        App.TaskManager.update( @task_key, { 'state': undefined })
-        @ui.form_state     = undefined
+          @ui.fetch( ticket.id, true )
     )
 
 #    errors = article.validate()
 #    @log 'error new', errors
 #    @formValidate( form: e.target, errors: errors )
     return false
+
+  reset: (e) =>
+    e.preventDefault()
+    App.TaskManager.update( @task_key, { 'state': {} })
+    @render()
 
 
 class ArticleView extends App.Controller

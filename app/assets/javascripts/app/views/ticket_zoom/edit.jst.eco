@@ -2,7 +2,13 @@
   <div class="avatar span1 thumbnails">
     <img class="thumbnail user-data" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
   </div>
-  <div class="span8 well-muted article-message">
+  <div class="span8 well-muted article-message <% if @formChanged: %>form-changed<% end %>">
+    <div class="reset-message<% if !@formChanged: %> hide<% end %>">
+      <div>
+        <a href="#" data-type="reset"><%- @T('Discard your unsaved changes.') %></a> <href="#" class="icon-repeat" data-type="reset"></a>
+      </div>
+      <hr>
+    </div>
     <form class="form-stacked pull-left ticket-update">
       <div class="form-ticket-update"></div>
       <div class="form-article-update"></div>

@@ -151,7 +151,7 @@ class App.TicketCreate extends App.Controller
   render: (template = {}) ->
 
     # set defaults
-    defaults = template['options'] || @form_state || {}
+    defaults = template['options'] || App.TaskManager.get(@task_key).state || {}
     if !( 'ticket_state_id' of defaults )
       defaults['ticket_state_id'] = App.Collection.findByAttribute( 'TicketState', 'name', 'open' ).id
     if !( 'ticket_priority_id' of defaults )

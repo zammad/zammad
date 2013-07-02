@@ -9,10 +9,10 @@ class App.TaskManager
       _instance ?= new _taskManagerSingleton
     _instance.all()
 
-  @add: ( key, callback, params, to_not_show, state ) ->
+  @add: ( key, callback, params, to_not_show ) ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
-    _instance.add( key, callback, params, to_not_show, state )
+    _instance.add( key, callback, params, to_not_show )
 
   @get: ( key ) ->
     if _instance == undefined
@@ -120,14 +120,14 @@ class _taskManagerSingleton extends App.Controller
   workerAll: ->
     @workers
 
-  add: ( key, callback, params, to_not_show = false, state ) ->
+  add: ( key, callback, params, to_not_show = false ) ->
     active = true
     if to_not_show
       active = false
 
     # create new task if not exists
     task = @get( key )
-#    console.log('add', key, callback, params, to_not_show, state, task)
+#    console.log('add', key, callback, params, to_not_show, task)
     if !task
       task = new App.Taskbar
       task.load(
@@ -201,14 +201,14 @@ class _taskManagerSingleton extends App.Controller
             @taskUpdate( task )
 
     # start worker for task if not exists
-    @startController(key, callback, params, state, to_not_show)
+    @startController(key, callback, params, to_not_show)
 
     App.Event.trigger 'task:render'
     return key
 
-  startController: (key, callback, params, state, to_not_show) =>
+  startController: (key, callback, params, to_not_show) =>
 
-#    console.log('controller started...', callback, key, params, state)
+#    console.log('controller started...', callback, key, params)
 
     # activate controller
     worker = @worker( key )
@@ -223,13 +223,6 @@ class _taskManagerSingleton extends App.Controller
     params_app = _.clone(params)
     params_app['el']       = $('#content_permanent_' + key )
     params_app['task_key'] = key
-
-    # check if we have old state there
-    if !state
-      oldTask = @get( key )
-      if oldTask
-        state = oldTask.state
-    params_app['form_state'] = state
 
     if to_not_show
       params_app['doNotLog'] = 1
@@ -359,7 +352,7 @@ class _taskManagerSingleton extends App.Controller
       @delay(
         =>
           task = tasks.shift()
-          @add(task.key, task.callback, task.params, true, task.state)
+          @add(task.key, task.callback, task.params, true)
         task_count * 300
       )
 

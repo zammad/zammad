@@ -450,6 +450,11 @@ footer {
   margin-left: 80px;
 }
 
+.form-changed {
+  border: 1px solid #fbeed5;
+  background-color: #fcf8e3;
+}
+
 #splash {
   background-color: #eee;
   position: absolute;
