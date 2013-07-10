@@ -2,8 +2,15 @@
 
 class TestsController < ApplicationController
 
-  # GET /test
-  def index
+  # GET /tests/core
+  def core
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+
+  # GET /tests/from
+  def form
     respond_to do |format|
       format.html # index.html.erb
     end
