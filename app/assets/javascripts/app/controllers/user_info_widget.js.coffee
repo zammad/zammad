@@ -5,7 +5,13 @@ class App.UserInfo extends App.Controller
 
   constructor: ->
     super
-    App.Collection.find( 'User', @user_id, @render )
+
+    callback = (user) =>
+      @render(user)
+      if @callback
+        @callback(user)
+
+    App.Collection.find( 'User', @user_id, callback )
 
   render: (user) =>
 

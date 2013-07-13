@@ -5,8 +5,7 @@ class App.TicketCustomer extends App.ControllerModal
 
   render: -> 
     configure_attributes = [
-#      { name: 'customer_id', display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @userInfo },
-      { name: 'customer_id', display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span5', autocapitalize: false, help: 'Select the new customer of the Ticket.', },
+      { name: 'customer_id', display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span5', autocapitalize: false, help: 'Select the new customer of the Ticket.', source: 'api/users/search', minLengt: 2 },
     ]
 
     @html App.view('agent_ticket_customer')()
@@ -36,7 +35,7 @@ class App.TicketCustomer extends App.ControllerModal
 
       # close modal
       @modalHide()
-  
+
       # reload zoom view
       @zoom.render()
 

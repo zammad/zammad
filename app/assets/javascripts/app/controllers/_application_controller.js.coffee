@@ -180,8 +180,9 @@ class App.Controller extends Spine.Controller
 
     # start customer info controller
     new App.UserInfo(
-      el:      el
-      user_id: data.user_id
+      el:       el
+      user_id:  data.user_id
+      callback: data.callback
     )
 
   authenticate: ->

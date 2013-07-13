@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class AgentTicketActionLevel1Test < TestCase
-  def test_agent_ticket
+  def test_agent_ticket_create
     tests = [
       {
         :name     => 'agent ticket create 1',

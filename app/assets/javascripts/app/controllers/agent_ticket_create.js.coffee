@@ -71,6 +71,7 @@ class App.TicketCreate extends App.Controller
 
   activate: =>
     @navupdate '#'
+    @el.find('textarea').elastic()
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-create') )
@@ -151,23 +152,13 @@ class App.TicketCreate extends App.Controller
   render: (template = {}) ->
 
     # set defaults
-    defaults = template['options'] || App.TaskManager.get(@task_key).state || {}
-    if !( 'ticket_state_id' of defaults )
-      defaults['ticket_state_id'] = App.Collection.findByAttribute( 'TicketState', 'name', 'open' ).id
-    if !( 'ticket_priority_id' of defaults )
-      defaults['ticket_priority_id'] = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' ).id
-
-    # remember customers
-    if $('#create_customer_id').val()
-      defaults['customer_id'] = $('#create_customer_id').val()
-      defaults['customer_id_autocompletion'] = $('#create_customer_id_autocompletion').val()
-    else
-#      defaults['customer_id'] = '2'
-#      defaults['customer_id_autocompletion'] = '12312313'
+    defaults =
+      ticket_state_id:    App.Collection.findByAttribute( 'TicketState', 'name', 'open' ).id
+      ticket_priority_id: App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' ).id
 
     # generate form
     configure_attributes = [
-      { name: 'customer_id',        display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo },
+      { name: 'customer_id',        display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo, source: 'api/users/search', minLengt: 2 },
       { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
       { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
       { name: 'tags',               display: 'Tags',     tag: 'tag',      type: 'text', null: true, default: defaults['tags'], class: 'span7', },
@@ -183,6 +174,12 @@ class App.TicketCreate extends App.Controller
       admin: @isRole('Admin')
     )
 
+    params = undefined
+    if template && !_.isEmpty( template.options )
+      params = template.options
+    else if App.TaskManager.get(@task_key) && !_.isEmpty( App.TaskManager.get(@task_key).state )
+      params = App.TaskManager.get(@task_key).state
+
     new App.ControllerForm(
       el: @el.find('.ticket_create')
       form_id: @form_id
@@ -191,6 +188,7 @@ class App.TicketCreate extends App.Controller
         className:            'create_' + @type + '_' + @id
       autofocus: true
       form_data: @edit_form
+      params:    params
     )
 
     # update taskbar with new meta data
@@ -202,12 +200,6 @@ class App.TicketCreate extends App.Controller
     # update textarea size
     @el.find('textarea').trigger('change')
 
-    # start customer info controller
-    if defaults['customer_id']
-      $('#create_customer_id').val( defaults['customer_id'] )
-      $('#create_customer_id_autocompletion').val( defaults['customer_id_autocompletion'] )
-      @userInfo( user_id: defaults['customer_id'] )
-
     # show template UI
     new App.TemplateUI(
       el:          @el.find('[data-id="ticket_template"]'),
@@ -217,14 +209,24 @@ class App.TicketCreate extends App.Controller
     @formDefault = @formParam( @el.find('.ticket-create') )
 
     # show text module UI
-    new App.TextModuleUI(
+    @textModule = new App.TextModuleUI(
       el: $('.ticket-create')
     )
 
   localUserInfo: (params) =>
+
+    # update text module UI
+    callback = (user) =>
+      @textModule.reload(
+        data:
+          ticket:
+            customer: user
+      )
+
     @userInfo(
-      user_id: params.customer_id
-      el:      @el.find('[data-id="customer_info"]')
+      user_id:  params.customer_id
+      el:       @el.find('[data-id="customer_info"]')
+      callback: callback
     )
 
   userNew: (e) =>

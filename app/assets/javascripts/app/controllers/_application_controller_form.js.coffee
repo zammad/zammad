@@ -177,6 +177,10 @@ class App.ControllerForm extends App.Controller
       if attribute.name of @params
         attribute.value = @params[attribute.name]
 
+      if attribute.tag is 'autocompletion'
+        if @params[ attribute.name + '_autocompletion_value_shown' ]
+          attribute.valueShown = @params[ attribute.name + '_autocompletion_value_shown' ]
+
     App.Log.debug 'ControllerForm', 'formGenItem-before', attribute
 
     # build options list based on config
@@ -414,10 +418,14 @@ class App.ControllerForm extends App.Controller
         @local_attribute_full = '#' + attribute.id + '_autocompletion'
         @callback = attribute.callback
 
-        b = (event, key) =>
+        # call calback on init
+        if @callback && attribute.value && @params
+          @callback( @params )
 
+        b = (event, item) =>
           # set html form attribute
-          $(@local_attribute).val(key)
+          $(@local_attribute).val(item.id)
+          $(@local_attribute + '_autocompletion_value_shown').val(item.value)
 
           # call calback
           if @callback
@@ -431,17 +439,17 @@ class App.ControllerForm extends App.Controller
           auto: {
             source: '/users/search',
             minLength: 2,
-            select: ( event, ui ) =>
-              @log 'notice', 'selected', event, ui
-              b(event, ui.item.id)
+            select: ( event, ui ) ->
+              #@log 'notice', 'selected', event, ui
+              b(event, ui.item)
           }
         )
         ###
         $(@local_attribute_full).autocomplete(
-          source: 'api/users/search',
-          minLength: 2,
+          source: attribute.source,
+          minLength: attribute.minLengt || 3,
           select: ( event, ui ) =>
-            b(event, ui.item.id)
+            b(event, ui.item)
         )
       @delay( a, 180 )
 

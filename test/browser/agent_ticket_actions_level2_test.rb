@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class AgentTicketActionsLevel2Test < TestCase
-  def test_websocket
+  def test_work_with_two_browser_on_same_ticket
     message = 'message 1äöüß ' + rand(99999999999999999).to_s
     tests = [
       {
@@ -170,6 +170,11 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'js',
+            :value        => '$("#global-search").val("")',
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'js',
             :value        => '$("#global-search").focus()',
           },
           {
@@ -180,6 +185,11 @@ class AgentTicketActionsLevel2Test < TestCase
             :where        => :instance2,
             :execute      => 'js',
             :value        => '$("#global-search").blur()',
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'js',
+            :value        => '$("#global-search").parent().parent().removeClass("open")',
           },
           {
             :execute => 'wait',
