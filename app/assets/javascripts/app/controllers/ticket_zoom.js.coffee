@@ -49,6 +49,7 @@ class App.TicketZoom extends App.Controller
 
   activate: =>
     @navupdate '#'
+    @el.find('textarea').elastic()
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-update') )
