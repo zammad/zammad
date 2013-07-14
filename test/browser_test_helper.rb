@@ -205,6 +205,7 @@ class TestCase < Test::Unit::TestCase
     elsif action[:element] == :cookie
       if !browser_support_cookies
         assert( true, "(#{test[:name]}) '#{action[:value]}' ups browser is not supporting reading cookies")
+        return
       end
       cookies = instance.manage.all_cookies
       cookies.each {|cookie|
