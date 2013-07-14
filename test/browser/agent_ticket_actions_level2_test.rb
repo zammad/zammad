@@ -231,6 +231,10 @@ class AgentTicketActionsLevel2Test < TestCase
             :execute      => 'js',
             :value        => '$(".active .ticket-title .ticket-title-update").blur()',
           },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
 
 
           # set body in edit area
@@ -248,10 +252,6 @@ class AgentTicketActionsLevel2Test < TestCase
           },
 
           # change task and page title in second browser
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
           {
             :where        => :instance2,
             :execute      => 'match',
