@@ -63,6 +63,10 @@ class TaskbarTaskTest < TestCase
             :css     => '.task',
           },
           {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
             :execute      => 'match',
             :css          => 'body',
             :value        => 'some test AAA',
