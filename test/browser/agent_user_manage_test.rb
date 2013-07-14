@@ -78,7 +78,7 @@ class AgentUserManageTest < TestCase
           # call new ticket screen again
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
           {
             :execute => 'click',
