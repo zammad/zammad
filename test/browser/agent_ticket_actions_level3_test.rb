@@ -28,10 +28,6 @@ class AgentTicketActionsLevel3Test < TestCase
             :result  => false,
           },
           {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
             :where   => :instance1,
             :execute => 'close_all_tasks',
           },
@@ -60,10 +56,6 @@ class AgentTicketActionsLevel3Test < TestCase
             :execute => 'check',
             :css     => '.active .ticket_create',
             :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
           },
           {
             :where   => :instance1,
@@ -112,13 +104,7 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :value   => 6,
           },
           {
             :where   => :instance1,

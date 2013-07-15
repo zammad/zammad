@@ -26,6 +26,7 @@ class TestCase < Test::Unit::TestCase
     if !ENV['REMOTE_URL']
       local_browser = Selenium::WebDriver.for( browser.to_sym )
       local_browser.manage.window.resize_to(1024, 1024)
+      local_browser.manage.timeouts.implicit_wait = 3 # seconds
       @browsers.push local_browser
       return local_browser
     end
@@ -38,6 +39,7 @@ class TestCase < Test::Unit::TestCase
       :url                  => ENV['REMOTE_URL'],
       :desired_capabilities => caps,
     )
+    local_browser.manage.timeouts.implicit_wait = 3 # seconds
     @browsers.push local_browser
     return local_browser
   end

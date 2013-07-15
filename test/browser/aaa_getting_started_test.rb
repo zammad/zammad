@@ -108,18 +108,13 @@ class AaaGettingStartedTest < TestCase
             :css     => '#form-agent button[type="submit"]',
           },
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
             :execute => 'check',
             :element => :url,
             :result  => '#getting_started',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
           },
 
           # check action

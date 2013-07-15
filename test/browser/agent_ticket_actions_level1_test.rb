@@ -71,12 +71,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :value   => 6,
           },
           {
             :execute => 'check',
@@ -202,12 +197,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :value   => 6,
           },
           {
             :execute => 'check',
@@ -245,7 +235,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 5,
           },
           {
             :execute      => 'match',

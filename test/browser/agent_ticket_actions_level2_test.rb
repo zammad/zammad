@@ -28,10 +28,6 @@ class AgentTicketActionsLevel2Test < TestCase
             :result  => false,
           },
           {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
             :where   => :instance1,
             :execute => 'close_all_tasks',
           },
@@ -60,10 +56,6 @@ class AgentTicketActionsLevel2Test < TestCase
             :execute => 'check',
             :css     => '.active .ticket_create',
             :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
           },
           {
             :where   => :instance1,
@@ -232,8 +224,9 @@ class AgentTicketActionsLevel2Test < TestCase
             :value        => '$(".active .ticket-title .ticket-title-update").blur()',
           },
           {
-            :execute => 'wait',
-            :value   => 1,
+            :where        => :instance2,
+            :execute      => 'js',
+            :value        => '$(".active .ticket-title .ticket-title-update").trigger("blur")',
           },
 
 
