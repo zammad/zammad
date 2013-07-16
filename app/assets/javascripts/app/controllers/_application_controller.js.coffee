@@ -18,6 +18,12 @@ class App.Controller extends Spine.Controller
 #    $('html head title').html( @Config.get(product_name) + ' - ' + App.i18n.translateInline(name) )
     document.title = @Config.get('product_name') + ' - ' + App.i18n.translatePlain(name)
 
+  copyToClipboard: (text) ->
+    if window.clipboardData # IE
+      window.clipboardData.setData( 'Text', text )
+    else
+      window.prompt( "Copy to clipboard: Ctrl+C, Enter", text )
+
   # add @notify methode to create notification
   notify: (data) ->
     App.Event.trigger 'notify', data
