@@ -235,6 +235,12 @@ class User < ApplicationModel
   # check token
   def self.password_reset_check(token)
     user = Token.check( :action => 'PasswordReset', :name => token )
+
+    # reset login failed if token is valid
+    if user
+      user.login_failed = 0
+      user.save
+    end
     return user
   end
 
