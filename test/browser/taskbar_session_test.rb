@@ -15,18 +15,6 @@ class TaskbarSessionTest < TestCase
         :url      => browser_url,
         :action   => [
           {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
             :execute => 'wait',
             :value   => 14,
           },
@@ -66,18 +54,6 @@ class TaskbarSessionTest < TestCase
         :instance2_password => 'test',
         :url      => browser_url,
         :action   => [
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
           {
             :execute => 'wait',
             :value   => 14,
