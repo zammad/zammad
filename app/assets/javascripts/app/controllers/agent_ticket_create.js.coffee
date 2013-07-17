@@ -83,6 +83,7 @@ class App.TicketCreate extends App.Controller
 #    @clearInterval( @key, 'ticket_zoom' )
     @el.remove()
     @clearInterval( @id, @auto_save_key )
+    @textModule.release()
 
   autosave: =>
     @auto_save_key = 'create' + @type + @id
@@ -210,7 +211,7 @@ class App.TicketCreate extends App.Controller
 
     # show text module UI
     @textModule = new App.TextModuleUI(
-      el: $('.ticket-create')
+      el: @el.find('.ticket-create')
     )
 
   localUserInfo: (params) =>

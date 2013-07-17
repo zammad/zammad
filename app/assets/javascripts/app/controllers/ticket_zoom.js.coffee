@@ -58,6 +58,7 @@ class App.TicketZoom extends App.Controller
     return true
 
   release: =>
+    @textModule.release()
     App.Event.unbindLevel 'ticket-zoom-' + @ticket_id
     @clearInterval( @key, 'ticket_zoom' )
     @el.remove()
@@ -184,7 +185,7 @@ class App.TicketZoom extends App.Controller
 
     # show text module UI
     if !@isRole('Customer')
-      new App.TextModuleUI(
+      @textModule = new App.TextModuleUI(
         el:   @el
         data:
           ticket: @ticket

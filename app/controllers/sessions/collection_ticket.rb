@@ -38,9 +38,6 @@ module ExtraCollection
 
       # all templates
       collections['Template']            = Template.all
-
-      # all text modules
-      collections['TextModule']          = TextModule.all
     end
   end
 

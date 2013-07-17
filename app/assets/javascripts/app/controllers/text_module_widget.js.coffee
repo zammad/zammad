@@ -1,23 +1,6 @@
 class App.TextModuleUI extends App.Controller
   constructor: ->
     super
-    ui = @
-    values = []
-    all = App.Collection.all( type: 'TextModule' )
-    for item in all
-      if item.active is true
-        contentNew = item.content.replace( /<%=\s{0,2}(.+?)\s{0,2}%>/g, ( all, key ) ->
-          key = key.replace( /@/g, 'ui.data.' )
-          varString = "#{key}" + ''
-          try
-            key = eval (varString)
-          catch error
-    #        console.log( "tag replacement: " + error )
-            key = ''
-          return key
-        )
-        value = { val: contentNew, keywords: item.keywords || item.name }
-        values.push value
 
     customItemTemplate = "<div><span />&nbsp;<small /></div>"
     elementFactory = (element, e) ->
@@ -26,7 +9,65 @@ class App.TextModuleUI extends App.Controller
                           .find('small')
                           .text("(" + e.keywords + ")").end()
       element.append(template)
-    @el.find('textarea').sew({values: values, token: '::', elementFactory: elementFactory })
+
+    @el.find('textarea').sew(
+        values:         @reload()
+        token:          '::'
+        elementFactory: elementFactory
+    )
+
+    App.TextModule.bind(
+      'refresh change'
+      =>
+       @reload()
+    )
+
+    # subscribe and reload data / fetch new data if triggered
+    @bindLevel = 'TextModule-' + Math.floor( Math.random() * 99999 )
+    App.Event.bind(
+      'TextModule:updated TextModule:created TextModule:destroy'
+      =>
+        App.TextModule.fetch()
+      @bindLevel
+    )
+
+    # fetch init collection
+    App.TextModule.fetch()
+
+  release: =>
+    App.Event.unbindLevel(@bindLevel)
+
+  reload: (data = false) =>
+    if data
+      @lastData = data
+    all = App.TextModule.all()
+    values = [{val: '-', keywords: '-'}]
+    ui = @lastData || @
+    for item in all
+      if item.active is true
+        contentNew = item.content.replace( /<%=\s{0,2}(.+?)\s{0,2}%>/g, ( all, key ) ->
+          key = key.replace( /@/g, 'ui.data.' )
+          varString = "#{key}" + ''
+          try
+            key = eval (varString)
+          catch error
+            console.log( "tag replacement: " + error )
+            key = ''
+          return key
+        )
+        value = { val: contentNew, keywords: item.keywords || item.name }
+        values.push value
+
+    if values.length isnt 1
+      values.shift()
+
+    # set new data
+    if @el.find('textarea')[0]
+      if $(@el.find('textarea')[0]).data()
+        if $(@el.find('textarea')[0]).data().plugin_sew
+          $(@el.find('textarea')[0]).data().plugin_sew.options.values = values
+
+    return values
 
 class App.TextModuleUIOld extends App.Controller
   events:
