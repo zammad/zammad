@@ -17,18 +17,6 @@ class AgentTicketActionsLevel2Test < TestCase
         :action   => [
           {
             :where   => :instance1,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :where   => :instance1,
             :execute => 'close_all_tasks',
           },
           {
