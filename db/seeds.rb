@@ -1809,6 +1809,8 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Solution Time", :
 Translation.create_if_not_exists( :locale => 'de', :source => "Add Attribute", :target => "Attribut hinzufügen"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Back to top", :target => "Nach oben"  )
 Translation.create_if_not_exists( :locale => 'de', :source => "Discard your unsaved changes.", :target => "Verwerfen der ungespeicherten Änderungen."  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Copy to clipboard: Ctrl+C, Enter", :target => "In die Zwischenablage kopieren: Strg+C, Return"  )
+Translation.create_if_not_exists( :locale => 'de', :source => "Copy to clipboard", :target => "In die Zwischenablage kopieren"  )
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => ""  )
 
 # install all packages in auto_install
