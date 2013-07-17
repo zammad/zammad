@@ -66,7 +66,6 @@ class _taskManagerSingleton extends App.Controller
     super
     @workers           = {}
     @workersStarted    = {}
-    @taskUpdateProcess = {}
     @allTasks          = []
     @tasksToUpdate     = {}
     @initialLoad       = true
@@ -77,14 +76,10 @@ class _taskManagerSingleton extends App.Controller
     App.Event.bind 'auth:login', =>
       @initialLoad = true
       @all()
+      @tasksInitial()
 
     # render on logout
     App.Event.bind 'auth:logout', =>
-      for task in @allTasks
-        worker = @worker( task.key )
-        if worker && worker.release
-          worker.release()
-        delete @workersStarted[ task.key ]
       @reset()
 
     # send updates to server
@@ -127,7 +122,8 @@ class _taskManagerSingleton extends App.Controller
 
     # create new task if not exists
     task = @get( key )
-#    console.log('add', key, callback, params, to_not_show, task)
+    console.log('TASKBAR RESET', @allTasks)
+    console.log('add', key, callback, params, to_not_show, task)
     if !task
       task = new App.Taskbar
       task.load(
@@ -279,8 +275,23 @@ class _taskManagerSingleton extends App.Controller
         @taskUpdate( task )
 
   reset: =>
-    @allTasks = []
+
+    # release tasks
+    for task in @allTasks
+      worker = @worker( task.key )
+      if worker && worker.release
+        worker.release()
+      delete @workersStarted[ task.key ]
+
+    # clear instance vars
+    @tasksToUpdate = {}
+    @allTasks      = []
+    @activeTask    = undefined
+
+    # clear inmem tasks
     App.Taskbar.deleteAll()
+
+    # rerender task bar
     App.Event.trigger 'task:render'
 
   TaskbarId: =>
@@ -338,6 +349,7 @@ class _taskManagerSingleton extends App.Controller
     return
 
   tasksInitial: =>
+
     # reopen tasks
     App.Event.trigger 'taskbar:init'
 

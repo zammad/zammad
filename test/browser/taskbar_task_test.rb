@@ -90,7 +90,7 @@ class TaskbarTaskTest < TestCase
   def test_persistant_task_with_relogin
     tests = [
       {
-        :name     => 'persistant task',
+        :name     => 'agent1 - create persistant task',
         :action   => [
           {
             :execute => 'wait',
@@ -137,7 +137,7 @@ class TaskbarTaskTest < TestCase
             :execute => 'wait',
             :value   => 20,
           },
-         {
+          {
             :execute => 'click',
             :css     => 'a[href="#current_user"]',
           },
@@ -146,8 +146,56 @@ class TaskbarTaskTest < TestCase
             :css     => 'a[href="#logout"]',
           },
           {
+            :execute => 'check',
+            :css     => '#login',
+            :result  => true,
+          },
+          {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 10,
+          },
+        ],
+      },
+      {
+        :name     => 'relogin with master - task are not viewable',
+        :action   => [
+          {
+            :execute => 'set',
+            :css     => 'input[name="username"]',
+            :value   => 'master@example.com',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password"]',
+            :value   => 'test'
+          },
+          {
+            :execute => 'click',
+            :css     => '#login button',
+          },
+          {
+            :execute => 'wait',
+            :value   => 6,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'INBOUND TEST#1',
+            :match_result => false,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'OUTBOUND TEST#1',
+            :match_result => false,
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#current_user"]',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#logout"]',
           },
           {
             :execute => 'check',
@@ -166,6 +214,11 @@ class TaskbarTaskTest < TestCase
             :value        => 'OUTBOUND TEST#1',
             :match_result => false,
           },
+        ],
+      },
+      {
+        :name     => 'relogin with agent - task are viewable',
+        :action   => [
           {
             :execute => 'set',
             :css     => 'input[name="username"]',
