@@ -24,6 +24,13 @@ class App.Controller extends Spine.Controller
     else
       window.prompt( "Copy to clipboard: Ctrl+C, Enter", text )
 
+  # disable all delay's and interval's
+  disconnectClient: ->
+    App.Delay.reset()
+    App.Interval.reset()
+    App.WebSocket.close( force: true )
+
+
   # add @notify methode to create notification
   notify: (data) ->
     App.Event.trigger 'notify', data
@@ -478,7 +485,7 @@ class App.ErrorModal extends App.ControllerModal
       keyboard: false,
     )
 
-class App.SessionReloadModal extends App.ControllerModal
+class App.SessionMessage extends App.ControllerModal
   constructor: ->
     super
     @render()
@@ -497,15 +504,19 @@ class App.SessionReloadModal extends App.ControllerModal
     )
 
     # reload page on modal hidden
-    @el.on('hidden', =>
-      @reload()
-    )
+    if @forceReload
+      @el.on('hidden', =>
+        @reload()
+      )
 
-  modalHide: (e) ->
-    @reload(e)
+  modalHide: (e) =>
+    if @forceReload
+      @reload(e)
+    @el.modal('hide')
 
-  submit: (e) ->
-    @reload(e)
+  submit: (e) =>
+    if @forceReload
+      @reload(e)
 
   reload: (e) ->
     if e

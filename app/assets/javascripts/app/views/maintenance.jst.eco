@@ -5,18 +5,24 @@
   <div class="control-group">
     <label class="control-label" for="title"><%- @T('Title') %></label>
     <div class="controls">
-      <input type="text" name="title" class="span7" placeholder="<%- @Ti('Title') %>" required>
+      <input type="text" name="title" class="span7" placeholder="<%- @Ti('some title') %>" required>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="message"><%- @T('Message') %></label>
     <div class="controls">
-      <textarea name="message" class="span7" rows="8" placeholder="<%- @Ti('Maintenance Message') %>" required></textarea>
+      <textarea name="message" class="span7" rows="8" placeholder="<%- @Ti('what details') %>" required></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="message"><%- @T('Reload application') %></label>
+    <div class="controls">
+      <input name="reload" type="checkbox" value="1">
     </div>
   </div>
   <div class="control-group">
     <div class="controls">
-      <button type="submit" class="btn btn-primary submit"><%- @T('Send Message') %></button>
+      <button type="submit" class="btn btn-primary submit"><%- @T('Send to clients') %></button>
     </div>
   </div>
 </form>

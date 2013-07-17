@@ -12,15 +12,19 @@ class Message extends App.ControllerModal
     @render(@message)
 
   render: (message = {}) ->
-    @html App.view('modal')(
-      title:   message.title,
-      message: message.message
-      detail:  message.detail
-      close:   message.close
-    )
-    @modalShow(
-      backdrop: true,
-      keyboard: true,
+
+    if message.reload
+      @disconnectClient()
+      button = 'Reload application'
+
+    new App.SessionMessage(
+      title:       message.title
+      message:     message.message
+      keyboard:    false
+      backdrop:    true
+      close:       true
+      button:      button
+      forceReload: message.reload
     )
 
 App.Config.set( 'maintenance', App.MaintenanceWidget, 'Widgets' )

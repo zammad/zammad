@@ -49,19 +49,16 @@ class App.TaskWidget extends App.Controller
 
         # only if new client id isnt own client id
         if data.taskbar_id isnt App.TaskManager.TaskbarId()
-          @error = new App.SessionReloadModal(
-            title:    'Session'
-            message:  'Session taken over... please reload page or work with other browser window.'
-            keyboard: false
-            backdrop: true
-            close:    true
-            button:   'Reload application'
+          @error = new App.SessionMessage(
+            title:       'Session'
+            message:     'Session taken over... please reload page or work with other browser window.'
+            keyboard:    false
+            backdrop:    true
+            close:       true
+            button:      'Reload application'
+            forceReload: true
           )
-
-          # disable all delay's and interval's
-          App.Delay.reset()
-          App.Interval.reset()
-          App.WebSocket.close( force: true )
+          @disconnectClient()
 
   render: ->
 

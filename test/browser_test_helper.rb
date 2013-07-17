@@ -248,7 +248,17 @@ class TestCase < Test::Unit::TestCase
     else
       assert( false, "(#{test[:name]}) unknow selector for '#{action[:element]}'" )
     end
-    if action[:execute] == 'set'
+    if action[:execute] == 'setCheck'
+      checked = element.attribute('checked')
+      if !checked
+        element.click
+      end
+    elsif action[:execute] == 'setUncheck'
+      checked = element.attribute('checked')
+      if checked
+        element.click
+      end
+    elsif action[:execute] == 'set'
       element.clear
       if action[:value] == '###stack###'
         element.send_keys( @stack )

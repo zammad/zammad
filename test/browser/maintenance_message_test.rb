@@ -6,7 +6,7 @@ class MaintenanceMessageTest < TestCase
     message = 'message 1äöüß ' + rand(99999999999999999).to_s
     tests = [
       {
-        :name     => 'start',
+        :name     => 'check #1',
         :instance1 => browser_instance,
         :instance2 => browser_instance,
         :instance1_username => 'master@example.com',
@@ -15,18 +15,6 @@ class MaintenanceMessageTest < TestCase
         :instance2_password => 'test',
         :url      => browser_url,
         :action   => [
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
           {
             :execute => 'wait',
             :value   => 1,
@@ -37,17 +25,9 @@ class MaintenanceMessageTest < TestCase
             :css     => 'a[href="#admin"]',
           },
           {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
             :where   => :instance1,
             :execute => 'click',
             :css     => 'a[href="#maintenance"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
           },
           {
             :where   => :instance1,
@@ -71,13 +51,20 @@ class MaintenanceMessageTest < TestCase
             :value   => 5,
           },
           {
+            :where        => :instance1,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => message,
+            :match_result => false,
+          },
+          {
             :where   => :instance2,
             :execute => 'check',
             :css     => '.modal-header',
             :result  => true,
           },
           {
-            :where   => :instance2,
+            :where        => :instance2,
             :execute      => 'match',
             :css          => 'body',
             :value        => message,
@@ -86,37 +73,21 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => 'div.modal-backdrop.fade.in',
+            :css     => 'div.modal-header .close',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
           },
         ],
       },
       {
-        :name     => 'start',
+        :name     => 'check #2',
         :action   => [
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
           {
             :where   => :instance1,
             :execute => 'click',
             :css     => 'a[href="#admin"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
           },
           {
             :where   => :instance1,
@@ -124,37 +95,122 @@ class MaintenanceMessageTest < TestCase
             :css     => 'a[href="#maintenance"]',
           },
           {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
             :where   => :instance1,
             :execute => 'set',
             :css     => 'input[name="title"]',
-            :value   => message,
+            :value   => message + ' #2',
           },
           {
             :where   => :instance1,
             :execute => 'set',
             :css     => 'textarea[name="message"]',
-            :value   => message,
+            :value   => message + ' #2',
+          },
+          {
+            :where   => :instance1,
+            :execute => 'click',
+            :css     => 'button[type="submit"]',
           },
           {
             :execute => 'wait',
             :value   => 5,
           },
           {
-            :where   => :instance2,
+            :where        => :instance1,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => message + ' #2',
+            :match_result => false,
+          },
+          {
+            :where   => :instance1,
             :execute => 'check',
             :css     => 'div.modal-backdrop.fade.in',
             :result  => false,
           },
           {
-            :where   => :instance2,
+            :where        => :instance2,
             :execute      => 'match',
             :css          => 'body',
-            :value        => message,
+            :value        => message + ' #2',
+            :match_result => true,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => 'div.modal-header .close',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
+          },
+        ],
+      },
+      {
+        :name     => 'check #3',
+        :action   => [
+          {
+            :where   => :instance1,
+            :execute => 'click',
+            :css     => 'a[href="#admin"]',
+          },
+          {
+            :where   => :instance1,
+            :execute => 'click',
+            :css     => 'a[href="#maintenance"]',
+          },
+          {
+            :where   => :instance1,
+            :execute => 'set',
+            :css     => 'input[name="title"]',
+            :value   => message + ' #3' ,
+          },
+          {
+            :where   => :instance1,
+            :execute => 'set',
+            :css     => 'textarea[name="message"]',
+            :value   => message + ' #3',
+          },
+          {
+            :where   => :instance1,
+            :execute => 'setCheck',
+            :css     => 'input[name="reload"][value="1"]',
+          },
+          {
+            :where   => :instance1,
+            :execute => 'click',
+            :css     => 'button[type="submit"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 5,
+          },
+          {
+            :where   => :instance1,
+            :execute => 'check',
+            :css     => 'div.modal-backdrop.fade.in',
+            :result  => false,
+          },
+          {
+            :where        => :instance1,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => message + ' #3',
             :match_result => false,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => message + ' #3',
+            :match_result => true,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'Reload application',
+            :match_result => true,
           },
         ],
       },
