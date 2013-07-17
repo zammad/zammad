@@ -183,14 +183,14 @@ class TextModuleTest < TestCase
           },
           {
             :where   => :instance2,
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :where   => :instance2,
             :execute => 'set',
             :css     => '.active input[name=subject]',
             :value   => 'A',
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => 'a[href="#new"]',
           },
           {
             :where   => :instance2,
