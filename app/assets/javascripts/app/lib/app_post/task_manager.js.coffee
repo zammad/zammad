@@ -122,8 +122,7 @@ class _taskManagerSingleton extends App.Controller
 
     # create new task if not exists
     task = @get( key )
-    console.log('TASKBAR RESET', @allTasks)
-    console.log('add', key, callback, params, to_not_show, task)
+    #console.log('add', key, callback, params, to_not_show, task)
     if !task
       task = new App.Taskbar
       task.load(
@@ -336,7 +335,6 @@ class _taskManagerSingleton extends App.Controller
 
     # check if update is still in process
     if @tasksToUpdate[ task.key ] is 'inProgress'
-      console.log( 'DESTROY', task, @tasksToUpdate[ task.key ], task.key)
       @delay(
         => @taskDestroy(task)
         800
