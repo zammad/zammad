@@ -451,7 +451,7 @@ class App.ControllerForm extends App.Controller
           select: ( event, ui ) =>
             b(event, ui.item)
         )
-      @delay( a, 180 )
+      @delay( a, 280 )
 
     # working_hour
     else if attribute.tag is 'working_hour'
