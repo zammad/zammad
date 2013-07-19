@@ -692,6 +692,281 @@ class TicketTest < ActiveSupport::TestCase
     delete = ticket.destroy
     assert( delete, "ticket destroy" )
 
+
+    ###test Ticket created in state pending and closed without reopen or state change
+    ticket = Ticket.create(
+      :title           => 'some title äöüß3',
+      :group           => Group.lookup( :name => 'Users'),
+      :customer_id     => 2,
+      :ticket_state    => Ticket::State.lookup( :name => 'pending' ),
+      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :created_at      => '2013-06-04 09:00:00 UTC',
+      :updated_at      => '2013-06-04 09:00:00 UTC',
+      :updated_by_id   => 1,
+      :created_by_id   => 1,
+    )
+    assert( ticket, 'ticket created' )
+
+
+    # set ticket from 11:30 to closed
+    History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 4,
+      :id_from           => 3,
+      :value_from        => 'pending',
+      :value_to          => 'closed',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 12:00:00',
+      :updated_at        => '2013-06-04 12:00:00'
+    )
+    ticket.update_attributes(
+      :close_time => '2013-06-04 12:00:00 UTC',
+    )
+
+    sla = Sla.create(
+      :name => 'test sla 1',
+      :condition => {},
+      :data => {
+        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
+        "beginning_of_workday" => "9:00",
+        "end_of_workday"       => "18:00",
+      },
+      #:timezone            => 'Europe/Berlin',
+      :first_response_time => 120,
+      :update_time   => 180,
+      :close_time    => 240,
+      :active        => true,
+      :updated_by_id => 1,
+      :created_by_id => 1,
+    )
+    ticket = Ticket.find(ticket.id)
+
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.escalation_time verify 1' ) #check escal. time because first resp. is already done
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
+    assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 15:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_in_min, 0, 'ticket.close_time_in_min verify 3' )
+    assert_equal( ticket.close_time_diff_in_min, 240, 'ticket.close_time_diff_in_min# verify 3' )    
+
+    delete = sla.destroy
+    assert( delete, "sla destroy" )
+
+    delete = ticket.destroy
+    assert( delete, "ticket destroy" )
+
+
+      ###test Ticket created in state pending, changed state to openen, back to pending and closed
+    ticket = Ticket.create(
+      :title           => 'some title äöüß3',
+      :group           => Group.lookup( :name => 'Users'),
+      :customer_id     => 2,
+      :ticket_state    => Ticket::State.lookup( :name => 'pending' ),
+      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :created_at      => '2013-06-04 09:00:00 UTC',
+      :updated_at      => '2013-06-04 09:00:00 UTC',
+      :updated_by_id   => 1,
+      :created_by_id   => 1,
+    )
+    assert( ticket, 'ticket created' )
+
+    #state change to open 10:30
+    History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 2,
+      :id_from           => 3,
+      :value_from        => 'pending',
+      :value_to          => 'open',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 10:30:00',
+      :updated_at        => '2013-06-04 10:30:00'
+    )
+
+    #state change to pending 11:00
+    History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 3,
+      :id_from           => 2,
+      :value_from        => 'open',
+      :value_to          => 'pending',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 11:00:00',
+      :updated_at        => '2013-06-04 11:00:00'
+    )
+
+    # set ticket from 12:00 to closed
+    History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 4,
+      :id_from           => 3,
+      :value_from        => 'pending',
+      :value_to          => 'closed',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 12:00:00',
+      :updated_at        => '2013-06-04 12:00:00'
+    )
+    ticket.update_attributes(
+      :close_time => '2013-06-04 12:00:00 UTC',
+    )
+
+    sla = Sla.create(
+      :name => 'test sla 1',
+      :condition => {},
+      :data => {
+        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
+        "beginning_of_workday" => "9:00",
+        "end_of_workday"       => "18:00",
+      },
+      #:timezone            => 'Europe/Berlin',
+      :first_response_time => 120,
+      :update_time   => 180,
+      :close_time    => 240,
+      :active        => true,
+      :updated_by_id => 1,
+      :created_by_id => 1,
+    )
+    ticket = Ticket.find(ticket.id)
+
+     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' ) #check escal. time because first resp. is already done
+     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
+     assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
+     assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
+     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
+     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 15:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
+     assert_equal( ticket.close_time_in_min, 30, 'ticket.close_time_in_min verify 3' )
+     assert_equal( ticket.close_time_diff_in_min, 210, 'ticket.close_time_diff_in_min# verify 3' )    
+
+    delete = sla.destroy
+    assert( delete, "sla destroy" )
+
+    delete = ticket.destroy
+    assert( delete, "ticket destroy" )
+
+    ### Test Ticket created in state pending, changed state to openen, back to pending and back to open then
+    ### close ticket
+    ticket = Ticket.create(
+      :title           => 'some title äöüß3',
+      :group           => Group.lookup( :name => 'Users'),
+      :customer_id     => 2,
+      :ticket_state    => Ticket::State.lookup( :name => 'pending' ),
+      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :created_at      => '2013-06-04 09:00:00 UTC',
+      :updated_at      => '2013-06-04 09:00:00 UTC',
+      :updated_by_id   => 1,
+      :created_by_id   => 1,
+    )
+    assert( ticket, 'ticket created' )
+  
+    #state change to open from pending
+       History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 2,
+      :id_from           => 3,
+      :value_from        => 'pending',
+      :value_to          => 'open',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 10:30:00',
+      :updated_at        => '2013-06-04 10:30:00'
+    )
+
+    #state change to pending from open 11:00
+    History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 3,
+      :id_from           => 2,
+      :value_from        => 'open',
+      :value_to          => 'pending',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 11:00:00',
+      :updated_at        => '2013-06-04 11:00:00'
+    )
+
+    #state change to open 11:30
+    History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 2,
+      :id_from           => 3,
+      :value_from        => 'pending',
+      :value_to          => 'open',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 11:30:00',
+      :updated_at        => '2013-06-04 11:30:00'
+    )
+
+    # set ticket from open to closed 12:00 
+    History.add(
+      :history_type      => 'updated',
+      :history_object    => 'Ticket',
+      :history_attribute => 'ticket_state',
+      :o_id              => ticket.id,
+      :id_to             => 4,
+      :id_from           => 3,
+      :value_from        => 'pending',
+      :value_to          => 'closed',
+      :created_by_id     => 1,
+      :created_at        => '2013-06-04 12:00:00',
+      :updated_at        => '2013-06-04 12:00:00'
+    )
+    ticket.update_attributes(
+      :close_time => '2013-06-04 12:00:00 UTC',
+    )
+
+    sla = Sla.create(
+      :name => 'test sla 1',
+      :condition => {},
+      :data => {
+        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
+        "beginning_of_workday" => "9:00",
+        "end_of_workday"       => "18:00",
+      },
+      #:timezone            => 'Europe/Berlin',
+      :first_response_time => 120,
+      :update_time   => 180,
+      :close_time    => 240,
+      :active        => true,
+      :updated_by_id => 1,
+      :created_by_id => 1,
+    )
+    ticket = Ticket.find(ticket.id)
+
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.escalation_time verify 1' ) #check escal. time because first resp. is already done
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
+    assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 15:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_in_min, 60, 'ticket.close_time_in_min verify 3' )
+    assert_equal( ticket.close_time_diff_in_min, 180, 'ticket.close_time_diff_in_min# verify 3' )    
+
+    delete = sla.destroy
+    assert( delete, "sla destroy" )
+
+    delete = ticket.destroy
+    assert( delete, "ticket destroy" )
+
+
   end
 
 end
