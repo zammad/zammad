@@ -85,6 +85,11 @@ group :development, :test do
     # UI tests w/ Selenium
     gem 'selenium-webdriver'
 
+    # rest client lib for unit tests
+    gem 'faraday'
+
+    # websocket unit tests
+#    gem 'em-websocket-client'
 end
 
 gem 'business_time'
