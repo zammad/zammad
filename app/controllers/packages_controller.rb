@@ -5,7 +5,7 @@ class PackagesController < ApplicationController
 
   # GET /api/packages
   def index
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     packages = Package.all( :order => 'name' )
     render :json => {
       :packages => packages
@@ -14,7 +14,7 @@ class PackagesController < ApplicationController
 
   # POST /api/packages
   def install
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
 
     Package.install( :string => params[:file_upload].read )
 
@@ -23,7 +23,7 @@ class PackagesController < ApplicationController
 
   # DELETE /api/packages
   def uninstall
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
 
     package = Package.find( params[:id] )
 

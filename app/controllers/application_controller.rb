@@ -83,15 +83,10 @@ class ApplicationController < ActionController::Base
     # check http basic auth
     authenticate_with_http_basic do |username, password|
       puts 'http basic auth check'
-      userdata = User.lookup( :login => username )
+      userdata = User.authenticate( username, password )
       message = ''
       if !userdata
-        message = 'authentication failed, user'
-      else
-        success = User.authenticate( username, password )
-        if !success
-          message = 'authentication failed, pw'
-        end
+        message = 'authentication failed'
       end
 
       # return auth ok
@@ -183,8 +178,11 @@ class ApplicationController < ActionController::Base
   end
 
   def is_not_role( role_name )
+    deny_if_not_role( role_name )
+  end
+  def deny_if_not_role( role_name )
     return false if is_role( role_name )
-    response_access_deny()
+    response_access_deny
     return true
   end
 

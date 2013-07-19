@@ -52,7 +52,7 @@ curl http://localhost/api/overviews.json -v -u #{login}:#{password}
 =end
 
   def index
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_index_render(Overview, params)
   end
 
@@ -74,7 +74,7 @@ curl http://localhost/api/overviews/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_show_render(Overview, params)
   end
 
@@ -108,7 +108,7 @@ curl http://localhost/api/overviews.json -v -u #{login}:#{password} -H "Content-
 =end
 
   def create
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_create_render(Overview, params)
   end
 
@@ -142,7 +142,7 @@ curl http://localhost/api/overviews.json -v -u #{login}:#{password} -H "Content-
 =end
 
   def update
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_update_render(Overview, params)
   end
 
@@ -160,7 +160,7 @@ curl http://localhost/api/overviews.json -v -u #{login}:#{password} -H "Content-
 =end
 
   def destroy
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_destory_render(Overview, params)
   end
 end

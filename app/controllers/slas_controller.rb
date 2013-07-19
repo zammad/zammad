@@ -47,7 +47,7 @@ curl http://localhost/api/slas.json -v -u #{login}:#{password}
 =end
 
   def index
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_index_render(Sla, params)
   end
 
@@ -69,7 +69,7 @@ curl http://localhost/api/slas/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_show_render(Sla, params)
   end
 
@@ -98,7 +98,7 @@ curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type:
 =end
 
   def create
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_create_render(Sla, params)
   end
 
@@ -127,7 +127,7 @@ curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type:
 =end
 
   def update
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_update_render(Sla, params)
   end
 
@@ -145,7 +145,7 @@ curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type:
 =end
 
   def destroy
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_destory_render(Sla, params)
   end
 end

@@ -61,12 +61,18 @@ curl http://localhost/api/users.json -v -u #{login}:#{password}
 =end
 
   def index
-    users = User.all
+
+    # only allow customer to fetch him self
+    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+      users = User.where( :id => current_user.id )
+    else
+      users = User.all
+    end
     users_all = []
     users.each {|user|
       users_all.push User.user_data_full( user.id )
     }
-    render :json => users_all
+    render :json => users_all, :status => :ok
   end
 
 =begin
@@ -87,6 +93,14 @@ curl http://localhost/api/users/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
+
+    # access deny
+    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+      if params[:id].to_i != current_user.id
+        response_access_deny
+        return
+      end
+    end
     user = User.user_data_full( params[:id] )
     render :json => user
   end
@@ -267,7 +281,10 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
 
     # allow user to update him self
     if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
-      return if params[:id] != current_user.id
+      if params[:id] != current_user.id
+        response_access_deny
+        return
+      end
     end
 
     user = User.find( params[:id] )
@@ -301,12 +318,20 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
 
   # DELETE /api/users/1
   def destroy
-    return if !is_role('Admin')
+    if !is_role('Admin')
+      response_access_deny
+      return
+    end
     model_destory_render(User, params)
   end
 
   # GET /api/users/search
   def search
+
+    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+      response_access_deny
+      return
+    end
 
     # do query
     user_all = User.search(
@@ -528,6 +553,5 @@ curl http://localhost/api/users/account.json -v -u #{login}:#{password} -H "Cont
     record.destroy_all
     render :json => { :message => 'ok' }, :status => :ok
   end
-
 
 end

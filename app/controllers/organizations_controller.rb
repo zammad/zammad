@@ -47,7 +47,17 @@ curl http://localhost/api/organizations.json -v -u #{login}:#{password}
 =end
 
   def index
-    model_index_render(Organization, params)
+
+    # only allow customer to fetch his own organization
+    organizations = []
+    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+      if current_user.organization_id
+        organizations = Organization.where( :id => current_user.organization_id )
+      end
+    else
+      organizations = Organization.all
+    end
+    render :json => organizations
   end
 
 =begin
@@ -68,6 +78,18 @@ curl http://localhost/api/organizations/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
+
+    # only allow customer to fetch his own organization
+    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+      if !current_user.organization_id
+        render :json => {}
+        return
+      end
+      if params[:id].to_i != current_user.organization_id
+        response_access_deny
+        return
+      end
+    end
     model_show_render(Organization, params)
   end
 
@@ -97,7 +119,7 @@ curl http://localhost/api/organizations.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def create
-    return if is_not_role('Agent')
+    return if deny_if_not_role('Agent')
     model_create_render(Organization, params)
   end
 
@@ -128,7 +150,7 @@ curl http://localhost/api/organizations.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def update
-    return if is_not_role('Agent')
+    return if deny_if_not_role('Agent')
     model_update_render(Organization, params)
   end
 
@@ -143,7 +165,7 @@ Test:
 =end
 
   def destroy
-    return if is_not_role('Agent')
+    return if deny_if_not_role('Agent')
     model_destory_render(Organization, params)
   end
 end

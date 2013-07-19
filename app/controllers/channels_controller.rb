@@ -94,7 +94,7 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password}
 =end
 
   def index
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_index_render(Channel, params)
   end
 
@@ -117,7 +117,7 @@ curl http://localhost/api/channels/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_show_render(Channel, params)
   end
 
@@ -153,7 +153,7 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-T
 =end
 
   def create
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_create_render(Channel, params)
   end
 
@@ -190,7 +190,7 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-T
 =end
 
   def update
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_update_render(Channel, params)
   end
 
@@ -208,7 +208,7 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-T
 =end
 
   def destroy
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_destory_render(Channel, params)
   end
 end

@@ -15,19 +15,19 @@ class TicketPrioritiesController < ApplicationController
 
   # POST /ticket_priorities
   def create
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_create_render(Ticket::Priority, params)
   end
 
   # PUT /ticket_priorities/1
   def update
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_update_render(Ticket::Priority, params)
   end
 
   # DELETE /ticket_priorities/1
   def destroy
-    return if is_not_role('Admin')
+    return if deny_if_not_role('Admin')
     model_destory_render(Ticket::Priority, params)
   end
 end

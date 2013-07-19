@@ -10,6 +10,10 @@ module ExtraCollection
 
     if !user.is_role('Customer')
       collections['Organization']  = Organization.all
+    else
+      if user.organization_id
+        collections['Organization']  = Organization.find( user.organization_id )
+      end
     end
   end
   def push( collections, user )
@@ -20,6 +24,10 @@ module ExtraCollection
 
     if !user.is_role('Customer')
       collections['Organization']  = Organization.all
+    else
+      if user.organization_id
+        collections['Organization']  = Organization.find( user.organization_id )
+      end
     end
   end
   module_function :session, :push

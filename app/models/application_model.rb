@@ -203,8 +203,19 @@ class ApplicationModel < ActiveRecord::Base
       record = self.new( data )
       record.save
       return record
+    elsif data[:login]
+      records = self.where( :login => data[:login] )
+      records.each {|record|
+        if record.login.downcase == data[:login].downcase
+          record.update_attributes( data )
+          return record
+        end
+      }
+      record = self.new( data )
+      record.save
+      return record
     else
-      raise "Need name for create_or_update()"
+      raise "Need name or login for create_or_update()"
     end
   end
 
