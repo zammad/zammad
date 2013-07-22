@@ -294,6 +294,26 @@ Hof
           :to                 => '\'Martin Edenhofer via Znuny Sales\' <sales@znuny.com>',
         },
       },
+      # spam email
+      {
+        :data         => IO.read('test/fixtures/mail15.box'),
+        :body_md5     => 'd41d8cd98f00b204e9800998ecf8427e',
+        :attachments  => [
+          # :preferences=>{"Message-ID"=>"<temp@test>", "Content-Type"=>"application/octet-stream; name=\"\xBC\xA8\xD0\xA7\xB9\xDC\xC0\xED,\xBE\xBF\xBE\xB9\xCB\xAD\xB4\xED\xC1\xCB.xls\"", "Mime-Type"=>"application/octet-stream", "Charset"=>"UTF-8"}}
+          # mutt c1abb5fb77a9d2ab2017749a7987c074
+          {
+            :md5      => '2ef81e47872d42efce7ef34bfa2de043',
+            :filename => 'file-1',
+          },
+        ],
+        :params   => {
+          :from               => '"Sara.Gang" <ynbe.ctrhk@gmail.com>',
+          :from_email         => 'ynbe.ctrhk@gmail.com',
+          :from_display_name  => "Sara.Gang",
+          :subject            => '绩效管理,究竟谁错了',
+          :to                 => 'info42@znuny.com',
+        },
+      },
     ]
 
     files.each { |file|

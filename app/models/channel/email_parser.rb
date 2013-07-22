@@ -135,11 +135,18 @@ class Channel::EmailParser
         attachment_count_total = 0
         mail.parts.each { |part|
           attachment_count_total += 1
-          if mail.text_part && mail.text_part == part
-            # ignore text/plain attachments - already shown in view
-          elsif mail.html_part && mail.html_part == part
-            # ignore text/html - html part, already shown in view
-          else
+
+          # protect process to work fine with spam emails, see test/fixtures/mail15.box
+          begin
+            if mail.text_part && mail.text_part == part
+              # ignore text/plain attachments - already shown in view
+            elsif mail.html_part && mail.html_part == part
+              # ignore text/html - html part, already shown in view
+            else
+              attachs = self._get_attachment( part, data[:attachments] )
+              data[:attachments].concat( attachs )
+            end
+          rescue
             attachs = self._get_attachment( part, data[:attachments] )
             data[:attachments].concat( attachs )
           end
