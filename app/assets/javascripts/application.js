@@ -5,9 +5,9 @@
 // the compiled file.
 //
 
-//= require ./app/lib/core/jquery-1.9.1.min.js
+//= require ./app/lib/core/jquery-1.10.2.min.js
 //= require ./app/lib/core/jquery-ui-1.8.23.custom.min.js
-//= require ./app/lib/core/underscore-1.3.3.js
+//= require ./app/lib/core/underscore-1.5.1.js
 
 //not_used= require_tree ./app/lib/spine
 //= require ./app/lib/spine/spine.js
@@ -65,3 +65,9 @@ function difference(object1, object2) {
   }
   return changes;
 }
+
+jQuery.event.special.remove = {
+  remove: function(e) {
+    if (e.handler) e.handler();
+  }
+};
