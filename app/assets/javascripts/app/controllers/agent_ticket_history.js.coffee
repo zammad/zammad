@@ -34,7 +34,7 @@ class App.TicketHistory extends App.ControllerModal
         App.Collection.load( type: 'HistoryAttribute', data: data.history_attributes )
 
         # load history collections
-        App.Collection.deleteAll( 'History' )
+        App.History.deleteAll()
         App.Collection.load( type: 'History', data: data.history )
 
         # render page

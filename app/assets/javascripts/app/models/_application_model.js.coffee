@@ -87,3 +87,105 @@ class App.Model extends Spine.Model
     return true if typeof @id is 'number' # in case of real database id
     return true if @id[0] isnt 'c'
     return false
+
+  @retrieve: ( id, callback, force ) ->
+    if !force && App[ @className ].exists( id )
+      data = App[ @className ].find( id )
+#      data = @_fillUp( @className, data )
+      if callback
+        callback( data )
+      return data
+    else
+      if force
+        console.log 'debug', 'find forced to load!', @className, id
+      else
+        console.log 'debug', 'find not loaded!', @className, id
+      if callback
+
+        # execute callback if record got loaded
+        col = @
+        App[ @className ].one 'refresh', (record) ->
+          delay = =>
+            data = App[ @className ].find( id )
+            if callback
+              callback( data )
+          window.setTimeout(delay, 200)
+
+        # fetch object
+        console.log 'debug', 'loading..' + @className +  '..', id
+        App[ @className ].fetch( id: id )
+        return true
+      return false
+
+  @subscribe: (callback, param = {}) ->
+    if !@SUBSCRIPTION_COLLECTION
+      @SUBSCRIPTION_COLLECTION = {}
+
+      # subscribe and render data / fetch new data if triggered
+      @bind(
+        'refresh change'
+        =>
+          for key, callbackSingle of @SUBSCRIPTION_COLLECTION
+            callbackSingle()
+      )
+
+      # trigger deleteAll() and fetch() on network notify
+      events = "#{@className}:created #{@className}:updated #{@className}:destroy"
+      App.Event.bind(
+        events
+        =>
+          @deleteAll()
+#          callbacks = =>
+#            for key, callbackSingle of @SUBSCRIPTION_COLLECTION
+#              callbackSingle()
+#          @one 'refresh', (collection) =>
+#            callbacks(collection)
+          @fetch()
+
+        'Collection::Subscribe::' + @className
+      )
+
+
+    key = @className + '-' + Math.floor( Math.random() * 99999 )
+    @SUBSCRIPTION_COLLECTION[key] = callback
+
+    # fetch init collection
+    if param['initFetch'] is true
+      @one 'refresh', (collection) =>
+        callback(collection)
+      @fetch()
+
+    return key
+
+  subscribe: (callback) ->
+    if !App[ @constructor.className ]['SUBSCRIPTION_ITEM']
+      App[ @constructor.className ]['SUBSCRIPTION_ITEM'] = {}
+    if !App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id]
+      App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id] = {}
+
+      events = "#{@constructor.className}:created #{@constructor.className}:updated #{@constructor.className}:destroy"
+      App.Event.bind(
+        events
+        (record) =>
+          if @id.toString() is record.id.toString()
+            App[ @constructor.className ].one 'refresh', (record) =>
+              user = App[ @constructor.className ].find(@id)
+              for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id]
+                callback(user)
+            App[ @constructor.className ].fetch( id: @id )
+        'Item::Subscribe::' + @constructor.className
+      )
+
+    key = @constructor.className + '-' + Math.floor( Math.random() * 99999 )
+    App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id][key] = callback
+    return key
+
+  @unsubscribe: (data) ->
+    if @SUBSCRIPTION_ITEM
+      for id, keys of @SUBSCRIPTION_ITEM
+        if keys[data]
+          delete keys[data]
+
+    if @SUBSCRIPTION_COLLECTION
+      if @SUBSCRIPTION_COLLECTION[data]
+        delete @SUBSCRIPTION_COLLECTION[data]

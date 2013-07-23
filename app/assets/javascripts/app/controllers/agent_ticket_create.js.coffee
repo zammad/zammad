@@ -80,10 +80,7 @@ class App.TicketCreate extends App.Controller
     return true
 
   release: =>
-#    @clearInterval( @key, 'ticket_zoom' )
-    @el.remove()
     @clearInterval( @id, @auto_save_key )
-    @textModule.release()
 
   autosave: =>
     @auto_save_key = 'create' + @type + @id
@@ -203,15 +200,15 @@ class App.TicketCreate extends App.Controller
 
     # show template UI
     new App.TemplateUI(
-      el:          @el.find('[data-id="ticket_template"]'),
-      template_id: template['id'],
+      el:          @el.find('[data-id="ticket_template"]')
+      template_id: template['id']
     )
 
     @formDefault = @formParam( @el.find('.ticket-create') )
 
     # show text module UI
     @textModule = new App.TextModuleUI(
-      el: @el.find('.ticket-create')
+      el: @el.find('.ticket-create').find('textarea')
     )
 
   localUserInfo: (params) =>

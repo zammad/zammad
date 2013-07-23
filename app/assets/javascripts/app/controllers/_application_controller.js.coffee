@@ -9,9 +9,15 @@ class App.Controller extends Spine.Controller
 
     super
 
+    # apply to release controller on dom remove
+    @el.on('remove', @release)
+
     # create shortcuts
     @Config  = App.Config
     @Session = App.Session
+
+  release: =>
+    # release custom bindings after it got removed from dom
 
   # add @title methode to set title
   title: (name) ->
@@ -206,7 +212,7 @@ class App.Controller extends Spine.Controller
     # remember requested url
     @Config.set( 'requested_url', window.location.hash )
 
-    # redirect to login  
+    # redirect to login
     @navigate '#login'
     return false
 

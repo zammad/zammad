@@ -172,6 +172,7 @@ class TestCase < Test::Unit::TestCase
 
   def browser_element_action(test, action, instance)
 #puts "NOTICE: " + action.inspect
+    sleep 0.2
     if action[:css]
       if action[:css].match '###stack###'
         action[:css].gsub! '###stack###', @stack
@@ -221,7 +222,8 @@ class TestCase < Test::Unit::TestCase
     elsif action[:element] == :alert
       element = instance.switch_to.alert
     elsif action[:execute] == 'close_all_tasks'
-      while true
+#      while true
+       for i in 1..100
         begin
           element = instance.find_element( { :css => '.taskbar [data-type="close"]' } )
           if element

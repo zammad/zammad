@@ -19,50 +19,15 @@ class App.Collection
       _instance ?= new _collectionSingleton
     _instance.find( type, id, callback, force )
 
-  @get: ( args ) ->
-    if _instance == undefined
-      _instance ?= new _collectionSingleton
-    _instance.get( args )
-
   @all: ( args ) ->
     if _instance == undefined
       _instance ?= new _collectionSingleton
     _instance.all( args )
 
-  @deleteAll: ( type ) ->
-    if _instance == undefined
-      _instance ?= new _collectionSingleton
-    _instance.deleteAll( type )
-
   @findByAttribute: ( type, key, value ) ->
     if _instance == undefined
       _instance ?= new _collectionSingleton
     _instance.findByAttribute( type, key, value )
-
-  @count: ( type ) ->
-    if _instance == undefined
-      _instance ?= new _collectionSingleton
-    _instance.count( type )
-
-  @fetch: ( type ) ->
-    if _instance == undefined
-      _instance ?= new _collectionSingleton
-    _instance.fetch( type )
-
-  @observe: (args) ->
-    if _instance == undefined
-      _instance ?= new _collectionSingleton
-    _instance.observe(args)
-
-  @observeUnbindLevel: (level) ->
-    if _instance == undefined
-      _instance ?= new _collectionSingleton
-    _instance.observeUnbindLevel(level)
-
-  @_observeStats: ->
-    if _instance == undefined
-      _instance ?= new _collectionSingleton
-    _instance._observeStats()
 
 class _collectionSingleton extends Spine.Module
   @include App.LogInclude
@@ -263,14 +228,6 @@ class _collectionSingleton extends Spine.Module
     else
       return data
 
-  get: (params) ->
-    if !App[ params.type ]
-      @log 'error', 'get', 'no such collection', params
-      return
-
-    @log 'debug', 'get', params
-    App[ params.type ].refresh( object, options: { clear: true } )
-
   all: (params) ->
     if !App[ params.type ]
       @log 'error', 'all', 'no such collection', params
@@ -296,9 +253,6 @@ class _collectionSingleton extends Spine.Module
 
     return all_complied
 
-  deleteAll: (type) ->
-    App[type].deleteAll()
-
   findByAttribute: ( type, key, value ) ->
     if !App[type]
       @log 'error', 'findByAttribute', 'no such collection', type, key, value
@@ -308,18 +262,6 @@ class _collectionSingleton extends Spine.Module
       @log 'error', 'findByAttribute', 'no such item in collection', type, key, value
       return
     item
-
-  count: ( type ) ->
-    if !App[type]
-      @log 'error', 'count', 'no such collection', type, key, value
-      return
-    App[type].count()
-
-  fetch: ( type ) ->
-    if !App[type]
-      @log 'error', 'fetch', 'no such collection', type, key, value
-      return
-    App[type].fetch()
 
   _sortBy: ( collection, attribute ) ->
     _.sortBy( collection, (item) ->
@@ -365,33 +307,3 @@ class _collectionSingleton extends Spine.Module
     )
     return collection
 
-  observeUnbindLevel: (level) ->
-    return if !@observeCurrent
-    return if !@observeCurrent[level]
-    for observers in @observeCurrent[level]
-      @_observeUnbind( observers )
-    @observeCurrent[level] = []
-
-  observe: (data) ->
-    if !@observeCurrent
-      @observeCurrent = {}
-
-    if !@observeCurrent[ data.level ]
-      @observeCurrent[ data.level ] = []
-
-    @observeCurrent[ data.level ].push data.collections
-    for observe in data.collections
-      events = observe.event.split(' ')
-      for event in events
-        if App[ observe.collection ]
-          App[ observe.collection ].bind( event, observe.callback )
-
-  _observeUnbind: (observers) ->
-    for observe in observers
-      events = observe.event.split(' ')
-      for event in events
-        if App[ observe.collection ]
-          App[ observe.collection ].unbind( event, observe.callback )
-
-  _observeStats: ->
-    @observeCurrent

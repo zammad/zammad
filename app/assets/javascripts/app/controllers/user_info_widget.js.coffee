@@ -6,14 +6,23 @@ class App.UserInfo extends App.Controller
   constructor: ->
     super
 
+    # show user
     callback = (user) =>
       @render(user)
       if @callback
         @callback(user)
 
-    App.Collection.find( 'User', @user_id, callback )
+      # subscribe and reload data / fetch new data if triggered
+      @subscribeId = user.subscribe(@render)
+
+    App.User.retrieve( @user_id, callback )
+
+  release: =>
+    App.User.unsubscribe(@subscribeId)
 
   render: (user) =>
+    if !user
+      user = @u
 
     # get display data
     data = []

@@ -108,26 +108,11 @@ class App.ControllerGenericIndex extends App.ControllerContent
     # set title
     @title @pageData.title
 
-    # set nav bar    
+    # set nav bar
     @navupdate @pageData.navupdate
 
     # bind render after a change is done
-    App.Collection.observe(
-      level:       'page',
-      collections: [
-        {
-          collection: @genericObject,
-          event:      'refresh change',
-          callback:   @render,
-        },
-      ],
-    )
-    App.Event.bind(
-      @genericObject+ ':created ' + @genericObject + ':updated ' + @genericObject + ':destroy'
-      =>
-        App[ @genericObject ].fetch()
-      'page'
-    )
+    @subscribeId = App[ @genericObject ].subscribe(@render)
 
     App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
       @log 'error', 'ajax', msg.status
@@ -142,6 +127,9 @@ class App.ControllerGenericIndex extends App.ControllerContent
 
     # fetch all
     App[ @genericObject ].fetch()
+
+  release: =>
+    App[ @genericObject ].unsubscribe(@subscribeId)
 
   render: =>
 

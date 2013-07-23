@@ -318,10 +318,7 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
 
   # DELETE /api/users/1
   def destroy
-    if !is_role('Admin')
-      response_access_deny
-      return
-    end
+    return if deny_if_not_role('Admin')
     model_destory_render(User, params)
   end
 

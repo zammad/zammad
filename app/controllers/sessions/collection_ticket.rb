@@ -31,13 +31,10 @@ module ExtraCollection
     if !user.is_role('Customer')
 
       # all signatures
-      collections['Signature']           = Signature.all
+      collections['Signature']    = Signature.all
 
       # all email addresses
-      collections['EmailAddress']        = EmailAddress.all
-
-      # all templates
-      collections['Template']            = Template.all
+      collections['EmailAddress'] = EmailAddress.all
     end
   end
 

@@ -10,36 +10,23 @@ class App.TextModuleUI extends App.Controller
                           .text("(" + e.keywords + ")").end()
       element.append(template)
 
-    @el.find('textarea').sew(
-        values:         @reload()
-        token:          '::'
-        elementFactory: elementFactory
+    @el.parent().find('textarea').sew(
+      values:         @reload(@data)
+      token:          '::'
+      elementFactory: elementFactory
     )
 
-    App.TextModule.bind(
-      'refresh change'
-      =>
-       @reload()
-    )
-
-    # subscribe and reload data / fetch new data if triggered
-    @bindLevel = 'TextModule-' + Math.floor( Math.random() * 99999 )
-    App.Event.bind(
-      'TextModule:updated TextModule:created TextModule:destroy'
-      =>
-        App.TextModule.fetch()
-      @bindLevel
-    )
-
-    # fetch init collection
-    App.TextModule.fetch()
+    @subscribeId = App.TextModule.subscribe(@update, initFetch: true )
 
   release: =>
-    App.Event.unbindLevel(@bindLevel)
+    App.TextModule.unsubscribe(@subscribeId)
 
   reload: (data = false) =>
     if data
       @lastData = data
+    @update()
+
+  update: =>
     all = App.TextModule.all()
     values = [{val: '-', keywords: '-'}]
     ui = @lastData || @
@@ -51,7 +38,7 @@ class App.TextModuleUI extends App.Controller
           try
             key = eval (varString)
           catch error
-            console.log( "tag replacement: " + error )
+            #console.log( "tag replacement: " + error )
             key = ''
           return key
         )
@@ -62,10 +49,10 @@ class App.TextModuleUI extends App.Controller
       values.shift()
 
     # set new data
-    if @el.find('textarea')[0]
-      if $(@el.find('textarea')[0]).data()
-        if $(@el.find('textarea')[0]).data().plugin_sew
-          $(@el.find('textarea')[0]).data().plugin_sew.options.values = values
+    if @el[0]
+      if $(@el[0]).data()
+        if $(@el[0]).data().plugin_sew
+          $(@el[0]).data().plugin_sew.options.values = values
 
     return values
 
@@ -82,7 +69,7 @@ class App.TextModuleUIOld extends App.Controller
 
     # fetch item on demand
     fetch_needed = 1
-    if App.Collection.count( 'TextModule' ) > 0
+    if App.TextModule.count() > 0
       fetch_needed = 0
       @render()
 
@@ -94,7 +81,7 @@ class App.TextModuleUIOld extends App.Controller
         @log 'notice', 'loading....'
         @render()
         App.TextModule.unbind 'refresh'
-      App.Collection.fetch( 'TextModule' )
+      App.TextModule.fetch()
 
   render: =>
 

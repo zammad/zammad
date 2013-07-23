@@ -1,6 +1,6 @@
 class App.TaskWidget extends App.Controller
   events:
-    'click    [data-type="close"]': 'remove'
+    'click [data-type="close"]': 'remove'
 
   constructor: ->
     super

@@ -86,19 +86,6 @@ class Index extends App.ControllerContent
       @log 'notice', 'refetch...', record
       @fetch()
 
-#    # bind render after a change is done
-#    App.Collection.observe(
-#      level:       'page',
-#      collections: [
-#        {
-#          collection: @genericObject,
-#          event:      'refresh change',
-#          callback:   @render,
-#        },
-#      ],
-#    )
-
-
     @ticket_list_show = []
     for ticket_id in @ticket_list
       @ticket_list_show.push App.Collection.find( 'Ticket', ticket_id )

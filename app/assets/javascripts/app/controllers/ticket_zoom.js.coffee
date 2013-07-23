@@ -58,25 +58,8 @@ class App.TicketZoom extends App.Controller
     return true
 
   release: =>
-    @textModule.release()
     App.Event.unbindLevel 'ticket-zoom-' + @ticket_id
     @clearInterval( @key, 'ticket_zoom' )
-    @el.remove()
-
-  autosave: =>
-    @auto_save_key = 'zoom' + @id
-
-    @autosaveLast = _.clone( @formDefault )
-    update = =>
-      currentData = @formParam( @el.find('.ticket-update') )
-      diff = difference( @autosaveLast, currentData )
-      if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
-        @autosaveLast = currentData
-        @log 'notice', 'form hash changed', diff, currentData
-        @el.find('.ticket-update').parent().addClass('form-changed')
-        @el.find('.ticket-update').parent().parent().find('.reset-message').show()
-        App.TaskManager.update( @task_key, { 'state': currentData })
-    @interval( update, 1500, @id,  @auto_save_key )
 
   fetch: (ticket_id, force) ->
 
@@ -156,7 +139,6 @@ class App.TicketZoom extends App.Controller
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
-
     if !@renderDone
       @renderDone = true
       @html App.view('ticket_zoom')(
@@ -185,8 +167,8 @@ class App.TicketZoom extends App.Controller
 
     # show text module UI
     if !@isRole('Customer')
-      @textModule = new App.TextModuleUI(
-        el:   @el
+      new App.TextModuleUI(
+        el:   @el.find('textarea')
         data:
           ticket: @ticket
       )
@@ -235,6 +217,7 @@ class App.TicketZoom extends App.Controller
     # show ticket action row
     new TicketAction(
       ticket:     @ticket
+      task_key:   @task_key
       el:         @el.find('.ticket-action')
       ui:         @
     )
@@ -337,6 +320,9 @@ class Edit extends App.Controller
     super
     @render()
 
+  release: =>
+    @autosaveStop()
+
   render: ->
 
     ticket = App.Collection.find( 'Ticket', @ticket.id )
@@ -431,13 +417,32 @@ class Edit extends App.Controller
     @ui.formDefault = @formParam( @el.find('.ticket-update') )
 
     # start auto save
-    @ui.autosave()
+    @autosaveStart()
 
     # enable user popups
     @userPopups()
 
+  autosaveStop: =>
+    @clearInterval( @ticket.id,  @auto_save_key )
+
+  autosaveStart: =>
+    @auto_save_key = 'zoom' + @ticket.id
+
+    @autosaveLast = _.clone( @ui.formDefault )
+    update = =>
+      currentData = @formParam( @el.find('.ticket-update') )
+      diff = difference( @autosaveLast, currentData )
+      if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
+        @autosaveLast = currentData
+        @log 'notice', 'form hash changed', diff, currentData
+        @el.find('.ticket-update').parent().addClass('form-changed')
+        @el.find('.ticket-update').parent().parent().find('.reset-message').show()
+        App.TaskManager.update( @task_key, { 'state': currentData })
+    @interval( update, 1500, @ticket.id,  @auto_save_key )
+
   update: (e) =>
     e.preventDefault()
+    @autosaveStop()
     params = @formParam(e.target)
 
     ticket = App.Collection.find( 'Ticket', @ticket.id )
@@ -477,7 +482,10 @@ class Edit extends App.Controller
       attachmentTranslated = App.i18n.translateContent('Attachment')
       attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
       if params['body'].match(/attachment/i) || params['body'].match( attachmentTranslatedRegExp )
-        return if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+        if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+          return
+        else
+          @autosaveStart()
 
     ticket.load( ticket_update )
     @log 'notice', 'update ticket', ticket_update, ticket
@@ -489,6 +497,7 @@ class Edit extends App.Controller
     if errors
       @log 'error', 'update', errors
       @formEnable(e)
+      @autosaveStart()
 
     ticket.save(
       success: (r) =>

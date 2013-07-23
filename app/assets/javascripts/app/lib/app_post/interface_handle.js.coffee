@@ -59,9 +59,6 @@ class App.Content extends App.Controller
 
           @log 'notice', 'execute page controller', route, params
 
-          # remove observers for page
-          App.Collection.observeUnbindLevel('page')
-
           # remove events for page
           App.Event.unbindLevel('page')
 

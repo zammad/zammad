@@ -6,22 +6,10 @@ class App.TemplateUI extends App.Controller
 
   constructor: ->
     super
+    @subscribeId = App.Template.subscribe(@render, initFetch: true )
 
-    # fetch item on demand
-    fetch_needed = 1
-    if App.Collection.count( 'Template' ) > 0
-      fetch_needed = 0
-      @render()
-
-    if fetch_needed
-      @reload()
-
-  reload: =>
-      App.Template.bind 'refresh', =>
-        @log 'notice', 'loading...'
-        @render()
-        App.Template.unbind 'refresh'
-      App.Collection.fetch( 'Template' )
+  release: =>
+    App.Template.unsubscribe(@subscribeId)
 
   render: =>
     @configure_attributes = [
@@ -30,16 +18,16 @@ class App.TemplateUI extends App.Controller
 
     template = {}
     if @template_id
-      template = App.Collection.find( 'Template', @template_id )
+      template = App.Template.find( @template_id )
 
     # insert data
     @html App.view('template_widget')(
       template: template,
     )
     new App.ControllerForm(
-      el: @el.find('#form-template'),
-      model: { configure_attributes: @configure_attributes, className: '' },
-      autofocus: false,
+      el:        @el.find('#form-template')
+      model:     { configure_attributes: @configure_attributes, className: '' }
+      autofocus: false
     )
 
   delete: (e) =>
@@ -47,9 +35,9 @@ class App.TemplateUI extends App.Controller
 
     # get params
     params = @formParam(e.target)
-    template = App.Collection.find( 'Template', params['template_id'] )
+    template = App.Template.find( params['template_id'] )
     if confirm('Sure?')
-      template.destroy() 
+      template.destroy()
       @template_id = undefined
       @render()
 
@@ -59,7 +47,7 @@ class App.TemplateUI extends App.Controller
     # get params
     params = @formParam(e.target)
 
-    template = App.Collection.find( 'Template', params['template_id'] )
+    template = App.Template.find( params['template_id'] )
     App.Event.trigger 'ticket_create_rerender', template.attributes()
 
   create: (e) =>

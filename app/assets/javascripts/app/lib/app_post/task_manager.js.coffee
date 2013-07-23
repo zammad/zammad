@@ -232,7 +232,9 @@ class _taskManagerSingleton extends App.Controller
 
   get: ( key ) =>
     for task in @allTasks
-      return task if task.key is key
+      if task.key is key
+        return task
+#      return task if task.key is key
     return
 #    throw "No such task with '#{key}'"
 
@@ -249,10 +251,23 @@ class _taskManagerSingleton extends App.Controller
     if !task
       throw "No such task with '#{key}' to remove"
 
-    worker = @worker( key )
-    if worker && worker.release
-      worker.release()
+    allTasks = _.filter(
+      @allTasks
+      (taskLocal) ->
+        return task if task.key isnt taskLocal.key
+        return
+    )
+    @allTasks = allTasks || []
+
+    $('#content_permanent_' + key ).html('')
+    $('#content_permanent_' + key ).remove()
+
     delete @workersStarted[ key ]
+    delete @workers[ key ]
+
+    App.Event.trigger 'task:render'
+
+    # destroy in backend
     @taskDestroy(task)
 
   notify: ( key ) =>
@@ -277,10 +292,11 @@ class _taskManagerSingleton extends App.Controller
 
     # release tasks
     for task in @allTasks
-      worker = @worker( task.key )
-      if worker && worker.release
-        worker.release()
+      $('#content_permanent_' + task.key ).html('')
+      $('#content_permanent_' + task.key ).remove()
+
       delete @workersStarted[ task.key ]
+      delete @workers[ task.key ]
 
     # clear instance vars
     @tasksToUpdate = {}
@@ -324,14 +340,6 @@ class _taskManagerSingleton extends App.Controller
           )
 
   taskDestroy: (task) ->
-    allTasks = _.filter(
-      @allTasks
-      (taskLocal) ->
-        return task if task.key isnt taskLocal.key
-        return
-    )
-    @allTasks = allTasks || []
-    App.Event.trigger 'task:render'
 
     # check if update is still in process
     if @tasksToUpdate[ task.key ] is 'inProgress'
