@@ -67,7 +67,7 @@ class AgentTicketActionLevel4Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 7,
           },
 
           # reload instances, verify again
@@ -76,7 +76,7 @@ class AgentTicketActionLevel4Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 4,
           },
 
           {
