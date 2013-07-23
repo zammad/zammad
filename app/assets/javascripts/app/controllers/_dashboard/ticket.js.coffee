@@ -50,7 +50,7 @@ class App.DashboardTicket extends App.Controller
 
       # load user collection
       App.Collection.load( type: 'User', data: data.collections.users )
-  
+
       # load ticket collection
       App.Collection.load( type: 'Ticket', data: data.collections.tickets )
 
@@ -95,7 +95,7 @@ class App.DashboardTicket extends App.Controller
     while i < end
       i = i + 1
       if @ticket_list[ i - 1 ]
-        @tickets_in_table.push App.Collection.find( 'Ticket', @ticket_list[ i - 1 ] )
+        @tickets_in_table.push App.Ticket.retrieve( @ticket_list[ i - 1 ] )
 
     shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d )
     new App.ControllerTable(

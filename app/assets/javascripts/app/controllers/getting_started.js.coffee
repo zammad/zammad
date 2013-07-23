@@ -76,7 +76,7 @@ class Index extends App.ControllerContent
     @params.invite = true
 
     # find agent role
-    role = App.Collection.findByAttribute( 'Role', 'name', 'Agent' )
+    role = App.Role.findByAttribute( 'name', 'Agent' )
     if role
       @params.role_ids = role.id
     else

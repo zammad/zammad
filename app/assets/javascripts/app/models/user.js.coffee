@@ -29,3 +29,20 @@ class App.User extends App.Model
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
     'login', 'firstname', 'lastname',
   ]
+
+  @_fillUp: (data) ->
+
+    # set socal media links
+    if data['accounts']
+      for account of data['accounts']
+        if account == 'twitter'
+          data['accounts'][account]['link'] = 'http://twitter.com/' + data['accounts'][account]['username']
+        if account == 'facebook'
+          data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
+
+    # set image url
+    if !data.image
+      data.image = 'http://placehold.it/48x48'
+
+    data
+

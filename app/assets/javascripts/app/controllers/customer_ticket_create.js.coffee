@@ -62,8 +62,8 @@ class Index extends App.ControllerContent
             App.Collection.load( type: 'TicketArticle', data: data.articles || [] )
 
             # render page
-            t = App.Collection.find( 'Ticket', params.ticket_id ).attributes()
-            a = App.Collection.find( 'TicketArticle', params.article_id )
+            t = App.Ticket.find( params.ticket_id ).attributes()
+            a = App.TicketArticle.find( params.article_id )
 
             # reset owner
             t.owner_id = 0
@@ -79,9 +79,9 @@ class Index extends App.ControllerContent
     # set defaults
     defaults = template['options'] || {}
     if !( 'ticket_state_id' of defaults )
-      defaults['ticket_state_id'] = App.Collection.findByAttribute( 'TicketState', 'name', 'new' )
+      defaults['ticket_state_id'] = App.TicketState.findByAttribute( 'name', 'new' )
     if !( 'ticket_priority_id' of defaults )
-      defaults['ticket_priority_id'] = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' )
+      defaults['ticket_priority_id'] = App.TicketPriority.findByAttribute( 'name', '2 normal' )
 
     groupFilter = (collection, type) =>
 
@@ -148,11 +148,11 @@ class Index extends App.ControllerContent
     params.customer_id = @Session.get('id')
 
     # set prio
-    priority = App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' )
+    priority = App.TicketPriority.findByAttribute( 'name', '2 normal' )
     params.ticket_priority_id = priority.id
 
     # set state
-    state = App.Collection.findByAttribute( 'TicketState', 'name', 'new' )
+    state = App.TicketState.findByAttribute( 'name', 'new' )
     params.ticket_state_id = state.id
 
     # fillup params
@@ -164,10 +164,10 @@ class Index extends App.ControllerContent
     @log 'CustomerTicketCreate', 'notice', 'updateAttributes', params
 
     # find sender_id
-    sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Customer' )
-    type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', 'web' )
+    sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+    type   = App.TicketArticleType.findByAttribute( 'name', 'web' )
     if params.group_id
-      group  = App.Collection.find( 'Group', params.group_id )
+      group  = App.Group.find( params.group_id )
 
     # create article
     params['article'] = {

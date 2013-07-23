@@ -68,7 +68,7 @@ class Index extends App.ControllerContent
 
       # load user collection
       App.Collection.load( type: 'User', data: data.collections.users )
-  
+
       # load ticket collection
       App.Collection.load( type: 'Ticket', data: data.collections.tickets )
 
@@ -88,7 +88,7 @@ class Index extends App.ControllerContent
 
     @ticket_list_show = []
     for ticket_id in @ticket_list
-      @ticket_list_show.push App.Collection.find( 'Ticket', ticket_id )
+      @ticket_list_show.push App.Ticket.retrieve( ticket_id )
 
     # remeber bulk attributes
     @bulk = data.bulk

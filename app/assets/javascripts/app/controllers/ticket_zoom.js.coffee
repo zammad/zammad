@@ -27,7 +27,7 @@ class App.TicketZoom extends App.Controller
       (data) =>
         update = =>
           if data.id.toString() is @ticket_id.toString()
-            ticket = App.Collection.find( 'Ticket', @ticket_id )
+            ticket = App.Ticket.retrieve( @ticket_id )
             @log 'notice', 'TRY', data.updated_at, ticket.updated_at
             if data.updated_at isnt ticket.updated_at
               @fetch( @ticket_id, false )
@@ -37,7 +37,7 @@ class App.TicketZoom extends App.Controller
 
   meta: =>
     return if !@ticket
-    ticket = App.Collection.find( 'Ticket', @ticket.id )
+    ticket = App.Ticket.retrieve( @ticket.id )
     meta =
       url:   @url()
       head:  ticket.title
@@ -135,7 +135,7 @@ class App.TicketZoom extends App.Controller
   render: (force) =>
 
     # get data
-    @ticket = App.Collection.find( 'Ticket', @ticket_id )
+    @ticket = App.Ticket.retrieve( @ticket_id )
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
@@ -249,7 +249,7 @@ class TicketTitle extends App.Controller
       title = ''
 
     # update title
-    ticket = App.Collection.find( 'Ticket', @ticket.id )
+    ticket = App.Ticket.retrieve( @ticket.id )
     ticket.title = title
     ticket.load( title: title )
     ticket.save()
@@ -325,7 +325,7 @@ class Edit extends App.Controller
 
   render: ->
 
-    ticket = App.Collection.find( 'Ticket', @ticket.id )
+    ticket = App.Ticket.retrieve( @ticket.id )
 
     @html App.view('ticket_zoom/edit')(
       ticket:     ticket
@@ -445,10 +445,10 @@ class Edit extends App.Controller
     @autosaveStop()
     params = @formParam(e.target)
 
-    ticket = App.Collection.find( 'Ticket', @ticket.id )
+    ticket = App.Ticket.retrieve( @ticket.id )
 
     @log 'notice', 'update', params, ticket
-    article_type = App.Collection.find( 'TicketArticleType', params['ticket_article_type_id'] )
+    article_type = App.TicketArticleType.find( params['ticket_article_type_id'] )
 
     # update ticket
     ticket_update = {}
@@ -514,11 +514,11 @@ class Edit extends App.Controller
 
           # find sender_id
           if @isRole('Customer')
-            sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Customer' )
-            type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', 'web' )
+            sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+            type   = App.TicketArticleType.findByAttribute( 'name', 'web' )
             params['ticket_article_type_id'] = type.id
           else
-            sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', 'Agent' )
+            sender = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
           params.ticket_article_sender_id = sender.id
           @log 'notice', 'update article', params, sender
           article.load(params)
@@ -570,7 +570,7 @@ class ArticleView extends App.Controller
     # get all articles
     @articles = []
     for article_id in @ticket.article_ids
-      article = App.Collection.find( 'TicketArticle', article_id )
+      article = App.TicketArticle.retrieve( article_id )
       @articles.push article
 
     # rework articles
@@ -633,9 +633,9 @@ class ArticleView extends App.Controller
   reply: (e) =>
     e.preventDefault()
     article_id   = $(e.target).parents('[data-id]').data('id')
-    article      = App.Collection.find( 'TicketArticle', article_id )
-    article_type = App.Collection.find( 'TicketArticleType', article.ticket_article_type_id )
-    customer     = App.Collection.find( 'User', article.created_by_id )
+    article      = App.TicketArticle.find( article_id )
+    article_type = App.TicketArticleType.find( article.ticket_article_type_id )
+    customer     = App.User.find( article.created_by_id )
 
     # update form
     @checkIfSignatureIsNeeded(article_type)

@@ -40,4 +40,4 @@ class App.TicketCustomer extends App.ControllerModal
       @zoom.render()
 
     # load user if not already exists
-    App.Collection.find( 'User', params['customer_id'], callback )
+    App.User.retrieve( params['customer_id'], callback )

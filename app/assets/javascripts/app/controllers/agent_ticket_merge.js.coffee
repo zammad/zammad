@@ -34,7 +34,7 @@ class App.TicketMerge extends App.ControllerModal
     list = []
     for t in data.customer.tickets
       if t.id isnt @ticket_id
-        ticketItem = App.Collection.find( 'Ticket', t.id )
+        ticketItem = App.Ticket.retrieve( t.id )
         list.push ticketItem
     new App.ControllerTable(
       el:                @el.find('#ticket-merge-customer-tickets'),
@@ -61,7 +61,7 @@ class App.TicketMerge extends App.ControllerModal
     list = []
     for t in data.recent.tickets
       if t.id isnt @ticket_id
-        ticketItem = App.Collection.find( 'Ticket', t.id )
+        ticketItem = App.Ticket.retrieve( t.id )
         list.push ticketItem
     new App.ControllerTable(
       el:                @el.find('#ticket-merge-recent-tickets'),
@@ -92,7 +92,7 @@ class App.TicketMerge extends App.ControllerModal
     @el.delegate('[name="radio"]', 'click', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
-        ticket    = App.Collection.find( 'Ticket', ticket_id )
+        ticket    = App.Ticket.retrieve( ticket_id )
         $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
     )
 
@@ -124,7 +124,7 @@ class App.TicketMerge extends App.ControllerModal
           @modalHide()
 
           # view ticket
-          @log 'notice', 'nav...', App.Collection.find( 'Ticket', data.master_ticket['id'] )
+          @log 'notice', 'nav...', App.Ticket.find( data.master_ticket['id'] )
           @navigate '#ticket/zoom/' + data.master_ticket['id']
 
           # notify UI

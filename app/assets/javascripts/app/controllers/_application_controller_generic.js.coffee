@@ -133,10 +133,7 @@ class App.ControllerGenericIndex extends App.ControllerContent
 
   render: =>
 
-    objects = App.Collection.all(
-      type:   @genericObject,
-      sortBy: @defaultSortBy || 'name',
-    )
+    objects = App[@genericObject].search( sortBy: @defaultSortBy || 'name' )
 
     # remove ignored items from collection
     if @ignoreObjectIDs

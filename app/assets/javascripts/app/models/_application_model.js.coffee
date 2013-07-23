@@ -91,7 +91,7 @@ class App.Model extends Spine.Model
   @retrieve: ( id, callback, force ) ->
     if !force && App[ @className ].exists( id )
       data = App[ @className ].find( id )
-#      data = @_fillUp( @className, data )
+      data = @_fillUp( data )
       if callback
         callback( data )
       return data
@@ -189,3 +189,73 @@ class App.Model extends Spine.Model
     if @SUBSCRIPTION_COLLECTION
       if @SUBSCRIPTION_COLLECTION[data]
         delete @SUBSCRIPTION_COLLECTION[data]
+
+  @_fillUp: (data) ->
+    # nothing
+    data
+
+  @search: (params) ->
+    all = @all()
+    all_complied = []
+    for item in all
+      item_new = @find( item.id )
+      all_complied.push item_new
+
+    if params.filter
+      all_complied = @_filter( all_complied, params.filter )
+
+    if params.filterExtended
+      all_complied = @_filterExtended( all_complied, params.filterExtended )
+
+    if params.sortBy
+      all_complied = @_sortBy( all_complied, params.sortBy )
+
+    if params.order
+      all_complied = @_order( all_complied, params.order )
+
+    return all_complied
+
+  @_sortBy: ( collection, attribute ) ->
+    _.sortBy( collection, (item) ->
+      return '' if item[ attribute ] is undefined || item[ attribute ] is null
+      return item[ attribute ].toLowerCase()
+    )
+
+  @_order: ( collection, attribute ) ->
+    if attribute is 'DESC'
+      return collection.reverse()
+    return collection
+
+  @_filter: ( collection, filter ) ->
+    for key, value of filter
+      collection = _.filter( collection, (item) ->
+        if item[ key ] is value
+          return item
+      )
+    return collection
+
+  @_filterExtended: ( collection, filters ) ->
+    collection = _.filter( collection, (item) ->
+
+      # check all filters
+      for filter in filters
+
+        # all conditions need match
+        matchInner = undefined
+        for key, value of filter
+
+          if matchInner isnt false
+            reg = new RegExp( value, 'i' )
+            if item[ key ] isnt undefined && item[ key ] isnt null && item[ key ].match( reg )
+              matchInner = true
+            else
+              matchInner = false
+
+        # if all matched, add item to new collection
+        if matchInner is true
+          return item
+
+      return
+    )
+    return collection
+

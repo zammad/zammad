@@ -13,3 +13,18 @@ class App.TicketArticle extends App.Model
       { name: 'ticket_article_sender_id', display: 'Sender',   tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '', class: 'medium' },
       { name: 'internal',                 display: 'Visability', tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium' },
     ]
+
+  @_fillUp: (data) ->
+
+    # add created & updated
+    if data.created_by_id
+      data.created_by = App.User.find( data.created_by_id )
+    if data.updated_by_id
+      data.updated_by = App.User.find( data.updated_by_id )
+
+    # add relations
+    data.article_type   = App.TicketArticleType.find( data.ticket_article_type_id )
+    data.article_sender = App.TicketArticleSender.find( data.ticket_article_sender_id )
+
+    data
+

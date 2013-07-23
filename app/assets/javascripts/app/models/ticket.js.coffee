@@ -19,3 +19,31 @@ class App.Ticket extends App.Model
       { name: 'escalation_time',       display: 'Escalation in',           tag: 'time', null: true, style: 'width: 12%' },
       { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
     ]
+
+  @_fillUp: (data) ->
+
+    # priority
+    data.ticket_priority = App.TicketPriority.find( data.ticket_priority_id )
+
+    # state
+    data.ticket_state = App.TicketState.find( data.ticket_state_id )
+
+    # group
+    data.group = App.Group.find( data.group_id )
+
+    # customer
+    if data.customer_id
+      data.customer = App.User.find( data.customer_id )
+
+    # owner
+    if data.owner_id
+      data.owner = App.User.find( data.owner_id )
+
+    # add created & updated
+    if data.created_by_id
+      data.created_by = App.User.find( data.created_by_id )
+    if data.updated_by_id
+      data.updated_by = App.User.find( data.updated_by_id )
+
+    data
+

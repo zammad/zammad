@@ -136,8 +136,8 @@ class App.TicketCreate extends App.Controller
             App.Collection.load( type: 'TicketArticle', data: data.articles || [] )
 
             # render page
-            t = App.Collection.find( 'Ticket', params.ticket_id ).attributes()
-            a = App.Collection.find( 'TicketArticle', params.article_id )
+            t = App.Ticket.find( params.ticket_id ).attributes()
+            a = App.TicketArticle.find( params.article_id )
 
             # reset owner
             t.owner_id = 0
@@ -151,8 +151,8 @@ class App.TicketCreate extends App.Controller
 
     # set defaults
     defaults =
-      ticket_state_id:    App.Collection.findByAttribute( 'TicketState', 'name', 'open' ).id
-      ticket_priority_id: App.Collection.findByAttribute( 'TicketPriority', 'name', '2 normal' ).id
+      ticket_state_id:    App.TicketState.findByAttribute( 'name', 'open' ).id
+      ticket_priority_id: App.TicketPriority.findByAttribute( 'name', '2 normal' ).id
 
     # generate form
     configure_attributes = [
@@ -250,11 +250,11 @@ class App.TicketCreate extends App.Controller
     object = new App.Ticket
 
     # find sender_id
-    sender = App.Collection.findByAttribute( 'TicketArticleSender', 'name', @article_attributes['sender'] )
-    type   = App.Collection.findByAttribute( 'TicketArticleType', 'name', @article_attributes['article'] )
+    sender = App.TicketArticleSender.findByAttribute( 'name', @article_attributes['sender'] )
+    type   = App.TicketArticleType.findByAttribute( 'name', @article_attributes['article'] )
 
     if params.group_id
-      group  = App.Collection.find( 'Group', params.group_id )
+      group  = App.Group.find( params.group_id )
 
     # create article
     if sender.name is 'Customer'
@@ -356,7 +356,7 @@ class UserNew extends App.ControllerModal
     user = new App.User
 
     # find role_id
-    role = App.Collection.findByAttribute( 'Role', 'name', 'Customer' )
+    role = App.Role.findByAttribute( 'name', 'Customer' )
     params.role_ids = role.id
     @log 'notice', 'updateAttributes', params
     user.load(params)
@@ -381,7 +381,7 @@ class UserNew extends App.ControllerModal
           # start customer info controller
           ui.userInfo( user_id: user.id )
           ui.modalHide()
-        App.Collection.find( 'User', @id, callbackReload , true )
+        App.User.retrieve( @id, callbackReload , true )
 
       error: ->
         ui.modalHide()

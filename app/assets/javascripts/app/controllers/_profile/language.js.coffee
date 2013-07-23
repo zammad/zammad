@@ -45,8 +45,7 @@ class App.ProfileLanguage extends App.Controller
     )
 
   success: (data, status, xhr) =>
-    App.Collection.find(
-      'User',
+    App.User.retrieve(
       App.Session.get( 'id' ),
       =>
         App.i18n.set( @locale )
@@ -57,7 +56,7 @@ class App.ProfileLanguage extends App.Controller
           msg:  App.i18n.translateContent( 'Successfully!' )
         )
       ,
-      true,
+      true
     )
 
   error: (xhr, status, error) =>

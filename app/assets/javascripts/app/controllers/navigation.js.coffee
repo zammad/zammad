@@ -102,7 +102,7 @@ class App.Navigation extends App.Controller
               if organization.user_ids
                 organization.users = []
                 for user_id in organization.user_ids
-                  user = App.Collection.find( 'User', user_id )
+                  user = App.User.find( user_id )
                   organization.users.push user
             App.Collection.load( type: 'Organization', data: data.load.organizations )
 
@@ -116,7 +116,7 @@ class App.Navigation extends App.Controller
             if area.name is 'Ticket'
               area.result = []
               for id in area.ids
-                ticket = App.Collection.find( 'Ticket', id )
+                ticket = App.Ticket.find( id )
                 ticket.humanTime = @humanTime(ticket.created_at)
                 data =
                   display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
@@ -127,7 +127,7 @@ class App.Navigation extends App.Controller
             else if area.name is 'User'
               area.result = []
               for id in area.ids
-                user = App.Collection.find( 'User', id )
+                user = App.User.find( id )
                 data =
                   display:  "#{user.displayName()}"
                   id:       user.id
@@ -137,7 +137,7 @@ class App.Navigation extends App.Controller
             else if area.name is 'Organization'
               area.result = []
               for id in area.ids
-                organization = App.Collection.find( 'Organization', id )
+                organization = App.Organization.find( id )
                 data =
                   display:  "#{organization.displayName()}"
                   id:       organization.id
@@ -329,7 +329,7 @@ class App.Navigation extends App.Controller
       if prio is 8000
         divider   = true
         navheader = 'Recent Viewed'
-      ticket = App.Collection.find( 'Ticket', item.o_id )
+      ticket = App.Ticket.find( item.o_id )
       prio++
       NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
         prio:      prio,

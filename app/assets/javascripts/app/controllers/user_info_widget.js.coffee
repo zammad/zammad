@@ -57,7 +57,7 @@ class App.UserInfo extends App.Controller
   # update changes
   update: (e) =>
     note = $(e.target).parent().find('[data-type=update]').val()
-    user = App.Collection.find( 'User', @user_id )
+    user = App.User.find( @user_id )
     if user.note isnt note
       user.updateAttributes( note: note )
       @log 'notice', 'update', e, note, user

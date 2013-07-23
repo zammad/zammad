@@ -58,7 +58,7 @@ class App.TemplateUI extends App.Controller
     name = params['template_name']
 #    delete params['template_name']
 
-    template = App.Collection.findByAttribute( 'Template', 'name', name )
+    template = App.Template.findByAttribute( 'name', name )
     if !template
       template = new App.Template
 

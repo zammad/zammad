@@ -77,7 +77,7 @@ class _i18nSingleton extends Spine.Module
         $(".translation[data-text='#{source}']").html( translation_new )
 
         # update permanent translation map
-        translation = App.Collection.findByAttribute( 'Translation', 'source', source )
+        translation = App.Translation.findByAttribute( 'source', source )
         if translation
           translation.updateAttribute( 'target', translation_new )
         else

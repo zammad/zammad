@@ -1124,7 +1124,7 @@ class App.ControllerForm extends App.Controller
       if typeof attribute.filter is 'function'
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-function'
 
-        all = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
+        all = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
 
         list = attribute.filter( all, 'collection' )
 
@@ -1135,7 +1135,7 @@ class App.ControllerForm extends App.Controller
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data', filter
 
         # check all records
-        for record in App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
+        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
 
           # check all filter attributes
           for key in filter
@@ -1148,10 +1148,10 @@ class App.ControllerForm extends App.Controller
       # no data filter matched
       else
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data no filter matched'
-        list = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
+        list = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
     else
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-no filter defined'
-      list = App.Collection.all( type: attribute.relation, sortBy: attribute.sortBy || 'name' )
+      list = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
 
     App.Log.debug 'ControllerForm', '_getRelationOptionList', attribute, list
 

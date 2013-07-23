@@ -261,11 +261,11 @@ class App.Controller extends Spine.Controller
       placement: position
       title: ->
         ticket_id = $(@).data('id')
-        ticket = App.Collection.find( 'Ticket', ticket_id )
+        ticket = App.Ticket.find( ticket_id )
         ticket.title
       content: ->
         ticket_id = $(@).data('id')
-        ticket = App.Collection.find( 'Ticket', ticket_id )
+        ticket = App.Ticket.find( ticket_id )
         ticket.humanTime = ui.humanTime(ticket.created_at)
         # insert data
         App.view('ticket_info_small')(
@@ -287,11 +287,11 @@ class App.Controller extends Spine.Controller
       placement: position
       title: ->
         user_id = $(@).data('id')
-        user = App.Collection.find( 'User', user_id )
+        user = App.User.find( user_id )
         user.displayName()
       content: ->
         user_id = $(@).data('id')
-        user = App.Collection.find( 'User', user_id )
+        user = App.User.find( user_id )
 
         # get display data
         data = []
@@ -333,11 +333,11 @@ class App.Controller extends Spine.Controller
       placement: position
       title: ->
         organization_id = $(@).data('id')
-        organization = App.Collection.find( 'Organization', organization_id )
+        organization = App.Organization.find( organization_id )
         organization.name
       content: ->
         organization_id = $(@).data('id')
-        organization = App.Collection.find( 'Organization', organization_id )
+        organization = App.Organization.find( organization_id )
         # insert data
         App.view('organization_info_small')(
           organization: organization,

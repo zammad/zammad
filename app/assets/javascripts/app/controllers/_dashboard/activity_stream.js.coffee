@@ -51,15 +51,15 @@ class App.DashboardActivityStream extends App.Controller
 
     # load user data
     for item in items
-      item.created_by = App.Collection.find( 'User', item.created_by_id )
+      item.created_by = App.User.find( item.created_by_id )
 
     # load ticket data
     for item in items
       item.data = {}
       if item.history_object is 'Ticket'
-        item.data.title = App.Collection.find( 'Ticket', item.o_id ).title
+        item.data.title = App.Ticket.find( item.o_id ).title
       if item.history_object is 'Ticket::Article'
-        article = App.Collection.find( 'TicketArticle', item.o_id )
+        article = App.TicketArticle.find( item.o_id )
         item.history_object = 'Article'
         item.sub_o_id = article.id
         item.o_id = article.ticket_id

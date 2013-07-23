@@ -106,8 +106,8 @@ class App.ControllerTable extends App.Controller
           rowWithoutId = row.name + '_id'
           for attribute in attributes
             if rowWithoutId is attribute.name
-              if attribute.relation && App[attribute.relation]
-                record = App.Collection.find( attribute.relation, object[rowWithoutId] )
+              if attribute.relation && App[ attribute.relation ]
+                record = App[ attribute.relation ].find( object[rowWithoutId] )
                 object[row.name] = record.name
 
     @log 'debug', 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects

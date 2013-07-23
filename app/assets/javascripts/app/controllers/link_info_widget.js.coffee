@@ -40,7 +40,7 @@ class App.LinkInfo extends App.Controller
         list[ item['link_type'] ] = []
 
       if item['link_object'] is 'Ticket'
-        ticket = App.Collection.find( 'Ticket', item['link_object_value'] )
+        ticket = App.Ticket.retrieve( item['link_object_value'] )
         if ticket.ticket_state.name is 'merged'
           ticket.css = 'merged'
         list[ item['link_type'] ].push ticket

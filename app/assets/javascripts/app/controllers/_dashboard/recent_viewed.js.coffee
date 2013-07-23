@@ -33,11 +33,11 @@ class App.DashboardRecentViewed extends App.Controller
 
     # load user data
     for item in @items
-      item.created_by = App.Collection.find( 'User', item.created_by_id )
+      item.created_by = App.User.find( item.created_by_id )
 
     # load ticket data
     for item in @items
-      item.ticket = App.Collection.find( 'User', item.o_id )
+      item.ticket = App.User.find( item.o_id )
 
     html = App.view('dashboard/recent_viewed')(
       head: 'Recent Viewed',

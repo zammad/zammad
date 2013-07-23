@@ -201,8 +201,7 @@ class App.TextModuleUIOld extends App.Controller
     @renderTable('')
 
   objectSearch: (search) =>
-    objects = App.Collection.all(
-      type:   'TextModule',
+    objects = App.TextModule.search(
       sortBy: 'name',
       filter: { active: true },
       filterExtended: [ { name: "^#{search}" }, { content: search }, { keywords: search } ],
@@ -226,7 +225,7 @@ class App.TextModuleUIOld extends App.Controller
 #    @el.find('.popover-inner').parent().remove()
     $('.popover').remove()
 
-    # show user popup    
+    # show user popup
     @el.find('#form-text-module').find('.item').popover(
       trigger: 'hover'
       html:    true
@@ -235,18 +234,18 @@ class App.TextModuleUIOld extends App.Controller
       placement: 'right'
       title: ->
         id = $(@).data('id')
-        text_module = App.Collection.find( 'TextModule', id )
+        text_module = App.TextModule.find( id )
         text_module.name
       content: ->
         id = $(@).data('id')
-        text_module = App.Collection.find( 'TextModule', id )
+        text_module = App.TextModule.find( id )
         text_module.content
     )
 
   paste: (e) =>
     e.preventDefault()
     id = $(e.target).parents('tr').data('id')
-    text_module = App.Collection.find( 'TextModule', id )
+    text_module = App.TextModule.find( id )
     @_insert( text_module.content, @ )
 
   delete: (e) =>
@@ -254,15 +253,15 @@ class App.TextModuleUIOld extends App.Controller
 
     # get params
     params = @formParam(e.target)
-    text_module = App.Collection.find( 'TextModule', params['text_module_id'] )
+    text_module = App.TextModule.find( params['text_module_id'] )
     if confirm('Sure?')
-      text_module.destroy() 
+      text_module.destroy()
       @render()
 
   select: (e) =>
     e.preventDefault()
     id = $(e.target).parents('tr').data('id')
-    text_module = App.Collection.find( 'TextModule', id )
+    text_module = App.TextModule.find( id )
     @el.find('#text-module-preview-content').val( text_module.content )
     @el.find('#text_module_name').val( text_module.name )
 
@@ -274,7 +273,7 @@ class App.TextModuleUIOld extends App.Controller
     name = params['name']
 #    delete params['text_module_name']
 
-    text_module = App.Collection.findByAttribute( 'TextModule', 'name', name )
+    text_module = App.TextModule.findByAttribute( 'name', name )
     if !text_module
       text_module = new App.TextModule
 
