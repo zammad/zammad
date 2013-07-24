@@ -390,7 +390,7 @@ class Edit extends App.Controller
           bind: {
             name:     'ticket_article_type_id'
             relation: 'TicketArticleType'
-            value:    ["email"]
+            value:    ['email']
           },
           change: {
             action: 'show'
@@ -448,7 +448,17 @@ class Edit extends App.Controller
     ticket = App.Ticket.retrieve( @ticket.id )
 
     @log 'notice', 'update', params, ticket
-    article_type = App.TicketArticleType.find( params['ticket_article_type_id'] )
+
+    # find sender_id
+    if @isRole('Customer')
+      sender       = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+      article_type = App.TicketArticleType.findByAttribute( 'name', 'web' )
+      params.ticket_article_type_id   = article_type.id
+      params.ticket_article_sender_id = sender.id
+    else
+      sender       = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+      article_type = App.TicketArticleType.find( params['ticket_article_type_id'] )
+      params.ticket_article_sender_id = sender.id
 
     # update ticket
     ticket_update = {}
@@ -465,6 +475,7 @@ class Edit extends App.Controller
       alert( App.i18n.translateContent('Title needed') )
       return
 
+    # validate email params
     if article_type.name is 'email'
 
       # check if recipient exists
@@ -483,9 +494,8 @@ class Edit extends App.Controller
       attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
       if params['body'].match(/attachment/i) || params['body'].match( attachmentTranslatedRegExp )
         if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-          return
-        else
           @autosaveStart()
+          return
 
     ticket.load( ticket_update )
     @log 'notice', 'update ticket', ticket_update, ticket
@@ -493,59 +503,54 @@ class Edit extends App.Controller
     # disable form
     @formDisable(e)
 
+    # validate ticket
     errors = ticket.validate()
     if errors
       @log 'error', 'update', errors
       @formEnable(e)
       @autosaveStart()
+      return
+
+    # validate article
+    if params['body']
+      article = new App.TicketArticle
+      params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
+      params.ticket_id = ticket.id
+      params.form_id   = @form_id
+
+      if !params['internal']
+        params['internal'] = false
+
+      @log 'notice', 'update article', params, sender
+      article.load(params)
+      errors = article.validate()
+      if errors
+        @log 'error', 'update article', errors
+        @formEnable(e)
+        @autosaveStart()
+        return
 
     ticket.save(
       success: (r) =>
 
-        # create article
-        if params['body']
-          article = new App.TicketArticle
-          params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
-          params.ticket_id = ticket.id
-          params.form_id   = @form_id
-
-          if !params['internal']
-            params['internal'] = false
-
-          # find sender_id
-          if @isRole('Customer')
-            sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-            type   = App.TicketArticleType.findByAttribute( 'name', 'web' )
-            params['ticket_article_type_id'] = type.id
-          else
-            sender = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-          params.ticket_article_sender_id = sender.id
-          @log 'notice', 'update article', params, sender
-          article.load(params)
-          errors = article.validate()
-          if errors
-            @log 'error', 'update article', errors
-
-          # reset form after save
-          App.TaskManager.update( @task_key, { 'state': {} })
-
+        # reset form after save
+        if article
           article.save(
             success: (r) =>
               @ui.fetch( ticket.id, true )
+
+              # reset form after save
+              App.TaskManager.update( @task_key, { 'state': {} })
             error: (r) =>
               @log 'error', 'update article', r
           )
         else
+
           # reset form after save
           App.TaskManager.update( @task_key, { 'state': {} })
 
           @ui.fetch( ticket.id, true )
     )
-
-#    errors = article.validate()
-#    @log 'error new', errors
-#    @formValidate( form: e.target, errors: errors )
-    return false
 
   reset: (e) =>
     e.preventDefault()
