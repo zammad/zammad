@@ -49,12 +49,6 @@ class App.TicketCreate extends App.Controller
       @log 'notice', 'error', defaults
       @render(defaults)
 
-    # start auto save
-    @delay(
-      => @autosave(),
-      5000
-    )
-
   meta: =>
     text = App.i18n.translateInline( @article_attributes['title'] )
     subject = @el.find('[name=subject]').val()
@@ -91,7 +85,7 @@ class App.TicketCreate extends App.Controller
         @autosaveLast = data
         @log 'notice', 'form hash changed', diff, data
         App.TaskManager.update( @task_key, { 'state': data })
-    @interval( update, 10000, @id,  @auto_save_key )
+    @interval( update, 3000, @id,  @auto_save_key )
 
   # get data / in case also ticket data for split
   fetch: (params) ->
@@ -210,6 +204,9 @@ class App.TicketCreate extends App.Controller
     @textModule = new App.TextModuleUI(
       el: @el.find('.ticket-create').find('textarea')
     )
+
+    # start auto save
+    @autosave()
 
   localUserInfo: (params) =>
 
