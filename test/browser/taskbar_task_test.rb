@@ -109,12 +109,16 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 2,
           },
           {
             :execute => 'set',
             :css     => '.active .ticket_create input[name="subject"]',
             :value   => 'INBOUND TEST#1',
+          },
+          {
+            :execute => 'wait',
+            :value   => 3,
           },
           {
             :execute => 'click',
@@ -126,7 +130,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
           {
             :execute => 'set',
