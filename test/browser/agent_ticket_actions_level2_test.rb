@@ -216,6 +216,10 @@ class AgentTicketActionsLevel2Test < TestCase
             :execute      => 'js',
             :value        => '$(".active .ticket-title .ticket-title-update").trigger("blur")',
           },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
 
 
           # set body in edit area

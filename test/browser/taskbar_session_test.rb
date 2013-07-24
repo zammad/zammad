@@ -16,7 +16,7 @@ class TaskbarSessionTest < TestCase
         :action   => [
           {
             :execute => 'wait',
-            :value   => 14,
+            :value   => 12,
           },
           {
             :where        => :instance1,
@@ -32,10 +32,6 @@ class TaskbarSessionTest < TestCase
             :value        => 'Reload application',
             :match_result => false,
           },
-#          {
-#            :execute => 'wait',
-#            :value   => 1,
-#          },
         ],
       },
     ]
@@ -56,7 +52,7 @@ class TaskbarSessionTest < TestCase
         :action   => [
           {
             :execute => 'wait',
-            :value   => 14,
+            :value   => 12,
           },
           {
             :where        => :instance1,
@@ -72,10 +68,6 @@ class TaskbarSessionTest < TestCase
             :value        => 'Reload application',
             :match_result => false,
           },
-#          {
-#            :execute => 'wait',
-#            :value   => 1,
-#          },
         ],
       },
     ]

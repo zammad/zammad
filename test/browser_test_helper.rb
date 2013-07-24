@@ -25,8 +25,7 @@ class TestCase < Test::Unit::TestCase
     end
     if !ENV['REMOTE_URL']
       local_browser = Selenium::WebDriver.for( browser.to_sym )
-      local_browser.manage.window.resize_to(1024, 1024)
-      local_browser.manage.timeouts.implicit_wait = 3 # seconds
+      browser_instance_preferences(local_browser)
       @browsers.push local_browser
       return local_browser
     end
@@ -39,20 +38,25 @@ class TestCase < Test::Unit::TestCase
       :url                  => ENV['REMOTE_URL'],
       :desired_capabilities => caps,
     )
-    local_browser.manage.timeouts.implicit_wait = 3 # seconds
+    browser_instance_preferences(local_browser)
     @browsers.push local_browser
     return local_browser
+  end
+  def browser_instance_preferences(local_browser)
+    local_browser.manage.window.resize_to(1024, 1024)
+    if ENV['REMOTE_URL'] !~ /saucelabs/i
+      if @browsers.size < 1
+        local_browser.manage.window.move_to(0, 0)
+      else
+        local_browser.manage.window.move_to(1024, 0)
+      end
+    end
+    local_browser.manage.timeouts.implicit_wait = 3 # seconds
   end
 
   def teardown
     return if !@browsers
-
-    # only shut down browser type once
-    # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
-    shutdown = {}
     @browsers.each{ |local_browser|
-      next if shutdown[ local_browser.browser ]
-      shutdown[ local_browser.browser ] = true
       local_browser.quit
     }
   end
@@ -171,7 +175,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_element_action(test, action, instance)
-#puts "NOTICE: " + action.inspect
+puts "NOTICE: " + action.inspect
     sleep 0.2
     if action[:css]
       if action[:css].match '###stack###'

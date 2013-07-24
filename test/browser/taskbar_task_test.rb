@@ -42,7 +42,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 20,
+            :value   => 12,
           },
         ],
       },
@@ -135,7 +135,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 20,
+            :value   => 12,
           },
           {
             :execute => 'click',
