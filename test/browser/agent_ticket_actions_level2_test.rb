@@ -27,84 +27,10 @@ class AgentTicketActionsLevel2Test < TestCase
           # create ticket
           {
             :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#ticket_create/call_inbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '.active .ticket_create',
-            :result  => true,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => 'ma',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :tab,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'select',
-            :css     => '.active .ticket_create select[name="group_id"]',
-            :value   => 'Users',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="subject"]',
-            :value   => 'some level 2 <b>subject</b> 123äöü',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active .ticket_create textarea[name="body"]',
-            :value   => 'some level 2 <b>body</b> 123äöü',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => '.active .form-actions button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :element => :url,
-            :result  => '#ticket/zoom/',
+            :execute => 'create_ticket',
+            :group   => 'Users',
+            :subject => 'some level 2 <b>subject</b> 123äöü',
+            :body    => 'some level 2 <b>body</b> 123äöü',
           },
 
           # check ticket
@@ -118,7 +44,7 @@ class AgentTicketActionsLevel2Test < TestCase
 
           # remember old ticket where we want to merge to
           {
-            :where   => :instance1,
+            :where        => :instance1,
             :execute      => 'match',
             :css          => '.active .ticket-zoom small',
             :value        => '^(.*)$',
@@ -218,9 +144,8 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 3,
           },
-
 
           # set body in edit area
           {

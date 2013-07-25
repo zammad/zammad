@@ -176,6 +176,9 @@ class AuthTest < TestCase
             :element      => :cookie,
             :value        => 'expires=>.+?\d{4}.+?,',
           },
+          {
+            :execute      => 'logout',
+          },
         ],
       },
     ]

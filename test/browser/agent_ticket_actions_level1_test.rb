@@ -10,73 +10,13 @@ class AgentTicketActionLevel1Test < TestCase
           {
             :execute => 'close_all_tasks',
           },
+
+          # create ticket
           {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket_create/call_inbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute => 'check',
-            :css     => '.active .ticket_create',
-            :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => 'ma',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :tab,
-          },
-          {
-            :execute => 'select',
-            :css     => '.active .ticket_create select[name="group_id"]',
-            :value   => 'Users',
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="subject"]',
-            :value   => 'some subject 123äöü',
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket_create textarea[name="body"]',
-            :value   => 'some body 123äöü',
-          },
-          {
-            :execute => 'click',
-            :css     => '.active .form-actions button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute => 'check',
-            :element => :url,
-            :result  => '#ticket/zoom/',
+            :execute => 'create_ticket',
+            :group   => 'Users',
+            :subject => 'some subject 123äöü',
+            :body    => 'some body 123äöü',
           },
 
           # check ticket
@@ -136,73 +76,13 @@ class AgentTicketActionLevel1Test < TestCase
       {
         :name     => 'agent ticket create 2',
         :action   => [
+
+          # create ticket
           {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket_create/call_inbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute => 'check',
-            :css     => '.active .ticket_create',
-            :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => 'ma',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :tab,
-          },
-          {
-            :execute => 'select',
-            :css     => '.active .ticket_create select[name="group_id"]',
-            :value   => 'Users',
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="subject"]',
-            :value   => 'test to merge',
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket_create textarea[name="body"]',
-            :value   => 'some body 123äöü 222',
-          },
-          {
-            :execute => 'click',
-            :css     => '.active .form-actions button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute => 'check',
-            :element => :url,
-            :result  => '#ticket/zoom/',
+            :execute => 'create_ticket',
+            :group   => 'Users',
+            :subject => 'test to merge',
+            :body    => 'some body 123äöü 222',
           },
 
           # check ticket

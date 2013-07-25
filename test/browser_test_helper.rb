@@ -30,7 +30,12 @@ class TestCase < Test::Unit::TestCase
       return local_browser
     end
 
-    caps = Selenium::WebDriver::Remote::Capabilities.send( browser )
+    caps = Selenium::WebDriver::Remote::Capabilities.send(
+      browser,
+      #:forceCreateProcess => true,
+      #:ensureCleanSession => true,
+      #:internetExplorerSwitches => 'InetCpl.cpl,ClearMyTracksByProcess 2',
+    )
     caps.platform = ENV['BROWSER_OS'] || 'Windows 2008'
     caps.version  = ENV['BROWSER_VERSION'] || '8'
     local_browser = Selenium::WebDriver.for(
@@ -70,36 +75,9 @@ class TestCase < Test::Unit::TestCase
         :url      => data[:url] || browser_url,
         :action   => [
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="username"]',
-            :value   => data[:username] || 'nicole.braun@zammad.org',
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password"]',
-            :value   => data[:password] || 'test'
-          },
-          {
-            :execute => 'click',
-            :css     => '#login button',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :execute  => 'login',
+            :username => data[:username] || 'nicole.braun@zammad.org',
+            :password => data[:password] || 'test'
           },
         ],
       },
@@ -175,8 +153,8 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_element_action(test, action, instance)
-puts "NOTICE: " + action.inspect
-    sleep 0.2
+puts "NOTICE #{Time.now.to_s}: " + action.inspect
+    sleep 0.1
     if action[:css]
       if action[:css].match '###stack###'
         action[:css].gsub! '###stack###', @stack
@@ -225,9 +203,80 @@ puts "NOTICE: " + action.inspect
       return
     elsif action[:element] == :alert
       element = instance.switch_to.alert
+    elsif action[:execute] == 'login'
+      sleep 1
+      login = instance.find_element( { :css => '#login' } )
+      if !login
+        assert( false, "(#{test[:name]}) no login box found!" )
+        return
+      end
+      element = instance.find_element( { :css => '#login input[name="username"]' } )
+      element.clear
+      element.send_keys( action[:username] )
+      element = instance.find_element( { :css => '#login input[name="password"]' } )
+      element.clear
+      element.send_keys( action[:password] )
+      instance.find_element( { :css => '#login button' } ).click
+      sleep 4
+      return
+    elsif action[:execute] == 'logout'
+      instance.find_element( { :css => 'a[href="#current_user"]' } ).click
+      sleep 0.1
+      instance.find_element( { :css => 'a[href="#logout"]' } ).click
+      sleep 2
+      login = instance.find_element( { :css => '#login' } )
+      if !login
+        assert( false, "(#{test[:name]}) no login box found!" )
+        return
+      end
+      assert( true, "(#{test[:name]}) logout" )
+      return
+    elsif action[:execute] == 'create_ticket'
+      instance.find_element( { :css => 'a[href="#new"]' } ).click
+      instance.find_element( { :css => 'a[href="#ticket_create/call_inbound"]' } ).click
+      sleep 4
+      element = instance.find_element( { :css => '.active .ticket_create' } )
+      if !element
+        assert( false, "(#{test[:name]}) no ticket create screen found!" )
+        return
+      end
+      sleep 5
+      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element.clear
+      element.send_keys( 'ma' )
+      sleep 4
+      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element.send_keys( :arrow_down )
+      sleep 0.2
+      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element.send_keys( :tab )
+      sleep 0.1
+      element = instance.find_element( { :css => '.active .ticket_create select[name="group_id"]' } )
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, action[:group])
+      sleep 0.1
+      element = instance.find_element( { :css => '.active .ticket_create input[name="subject"]' } )
+      element.clear
+      element.send_keys( action[:subject] )
+      sleep 0.1
+      element = instance.find_element( { :css => '.active .ticket_create textarea[name="body"]' } )
+      element.clear
+      element.send_keys( action[:body] )
+      if action[:do_not_submit]
+        assert( true, "(#{test[:name]}) ticket created without submit" )
+        return
+      end
+      sleep 0.1
+      instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
+      sleep 6
+      if instance.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
+        assert( true, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
+        return
+      end
+      assert( true, "(#{test[:name]}) ticket created" )
+      return
     elsif action[:execute] == 'close_all_tasks'
-#      while true
-       for i in 1..100
+      for i in 1..100
         begin
           element = instance.find_element( { :css => '.taskbar [data-type="close"]' } )
           if element
@@ -240,10 +289,14 @@ puts "NOTICE: " + action.inspect
           break
         end
       end
+      assert( true, "(#{test[:name]}) all tasks closed" )
+      return
     elsif action[:execute] == 'navigate'
       instance.navigate.to( action[:to] )
+      return
     elsif action[:execute] == 'reload'
       instance.navigate.refresh
+      return
     elsif action[:execute] == 'js'
       result = instance.execute_script( action[:value] )
     elsif action[:link]
@@ -351,9 +404,6 @@ puts "NOTICE: " + action.inspect
         end
       end
     elsif action[:execute] == 'check'
-    elsif action[:execute] == 'close_all_tasks'
-    elsif action[:execute] == 'navigate'
-    elsif action[:execute] == 'reload'
     elsif action[:execute] == 'js'
     else
       assert( false, "(#{test[:name]}) unknow action '#{action[:execute]}'" )

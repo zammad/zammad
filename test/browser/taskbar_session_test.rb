@@ -5,13 +5,13 @@ class TaskbarSessionTest < TestCase
   def test_current_session_a_same_agent
     tests = [
       {
-        :name     => 'start',
-        :instance1 => browser_instance,
-        :instance2 => browser_instance,
-        :instance1_username => 'agent1@example.com',
-        :instance1_password => 'test',
-        :instance2_username => 'agent1@example.com',
-        :instance2_password => 'test',
+        :name                => 'check taken over session block screen with same user',
+        :instance1           => browser_instance,
+        :instance2           => browser_instance,
+        :instance1_username  => 'agent1@example.com',
+        :instance1_password  => 'test',
+        :instance2_username  => 'agent1@example.com',
+        :instance2_password  => 'test',
         :url      => browser_url,
         :action   => [
           {
@@ -41,14 +41,14 @@ class TaskbarSessionTest < TestCase
   def test_current_session_b_different_agent
     tests = [
       {
-        :name     => 'start',
-        :instance1 => browser_instance,
-        :instance2 => browser_instance,
-        :instance1_username => 'master@example.com',
-        :instance1_password => 'test',
-        :instance2_username => 'agent1@example.com',
-        :instance2_password => 'test',
-        :url      => browser_url,
+        :name                => 'check taken over session block screen with same user',
+        :instance1           => browser_instance,
+        :instance2           => browser_instance,
+        :instance1_username  => 'master@example.com',
+        :instance1_password  => 'test',
+        :instance2_username  => 'agent1@example.com',
+        :instance2_password  => 'test',
+        :url                 => browser_url,
         :action   => [
           {
             :execute => 'wait',

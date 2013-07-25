@@ -27,78 +27,10 @@ class AgentTicketActionsLevel3Test < TestCase
           # create ticket
           {
             :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#ticket_create/call_inbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => '.active .ticket_create',
-            :result  => true,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => 'ma',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
-            :value   => :tab,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'select',
-            :css     => '.active .ticket_create select[name="group_id"]',
-            :value   => 'Users',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active .ticket_create input[name="subject"]',
-            :value   => 'some level 3 <b>subject</b> 123äöü',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active .ticket_create textarea[name="body"]',
-            :value   => 'some level 3 <b>body</b> 123äöü',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => '.active .form-actions button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :element => :url,
-            :result  => '#ticket/zoom/',
+            :execute => 'create_ticket',
+            :group   => 'Users',
+            :subject => 'some level 3 <b>subject</b> 123äöü',
+            :body    => 'some level 3 <b>body</b> 123äöü',
           },
 
           # check ticket

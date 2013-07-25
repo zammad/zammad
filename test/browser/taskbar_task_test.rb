@@ -118,7 +118,12 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 4,
+          },
+          {
+            :execute => 'set',
+            :css     => '.active .ticket_create textarea[name="body"]',
+            :value   => 'INBOUND BODY TEST#1',
           },
           {
             :execute => 'click',
@@ -136,6 +141,15 @@ class TaskbarTaskTest < TestCase
             :execute => 'set',
             :css     => '.active .ticket_create input[name="subject"]',
             :value   => 'OUTBOUND TEST#1',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :execute => 'set',
+            :css     => '.active .ticket_create textarea[name="body"]',
+            :value   => 'OUTBOUND BODY TEST#1',
           },
           {
             :execute => 'wait',
