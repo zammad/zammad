@@ -6,7 +6,7 @@ class App.Footer extends App.Controller
     @render()
 
     # rebuild ticket overview data
-    App.Event.bind 'ui:rerender', =>
+    @bind 'ui:rerender', =>
       @render()
 
   render: () ->

@@ -37,11 +37,8 @@ class _intervalSingleton extends Spine.Module
     if !level
       level = '_all'
 
-    if !@levelStack[level]
-      @levelStack[level] = {}
-
     if key
-      @clear( key )
+      @clear( key, level )
 
     if !key
       key = Math.floor( Math.random() * 99999 )
@@ -52,6 +49,8 @@ class _intervalSingleton extends Spine.Module
     interval_id = setInterval( callback, timeout )
 
     # remember all interval
+    if !@levelStack[level]
+      @levelStack[level] = {}
     @levelStack[ level ][ key.toString() ] = {
       interval_id: interval_id
       timeout:     timeout
@@ -65,8 +64,7 @@ class _intervalSingleton extends Spine.Module
     if !level
       level = '_all'
 
-    if !@levelStack[ level ]
-      @levelStack[ level ] = {}
+    return if !@levelStack[ level ]
 
     # get global interval ids
     data = @levelStack[ level ][ key.toString() ]
@@ -75,11 +73,16 @@ class _intervalSingleton extends Spine.Module
     @log 'debug', 'clear', data
     clearInterval( data['interval_id'] )
 
+    # cleanup if needed
+    delete @levelStack[ level ][ key.toString() ]
+    if _.isEmpty( @levelStack[ level ] )
+      delete @levelStack[ level ]
+
   clearLevel: (level) ->
     return if !@levelStack[ level ]
     for key, data of @levelStack[ level ]
       @clear( key, level )
-    @levelStack[level] = {}
+    delete @levelStack[level]
 
   reset: ->
     for level, items of @levelStack

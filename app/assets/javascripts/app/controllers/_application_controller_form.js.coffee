@@ -373,7 +373,7 @@ class App.ControllerForm extends App.Controller
               fail:    ''
             debug: false
           )
-        @delay( u, 80 )
+        App.Delay.set( u, 80, undefined, 'form_upload' )
 
     # tag
     else if attribute.tag is 'tag'
@@ -407,7 +407,7 @@ class App.ControllerForm extends App.Controller
         App.Event.bind 'ui:rerender:content', =>
           siteUpdate(true)
 
-      @delay( a, 80 )
+      App.Delay.set( a, 80, undefined, 'form_tags' )
 
     # autocompletion
     else if attribute.tag is 'autocompletion'
@@ -451,7 +451,7 @@ class App.ControllerForm extends App.Controller
           select: ( event, ui ) =>
             b(event, ui.item)
         )
-      @delay( a, 280 )
+      App.Delay.set( a, 280, undefined, 'form_autocompletion' )
 
     # working_hour
     else if attribute.tag is 'working_hour'
@@ -966,7 +966,7 @@ class App.ControllerForm extends App.Controller
                   item = $( ui.formGenItem(attribute, classname, attributes_clean) )
                   ui.log item, classname
                 )
-              @delay( b, 100 )
+              App.Delay.set( b, 100, undefined, 'form_change' )
 #            if attribute.onchange[]
 
     ui = @

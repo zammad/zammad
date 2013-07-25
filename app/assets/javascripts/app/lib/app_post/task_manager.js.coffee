@@ -73,17 +73,25 @@ class _taskManagerSingleton extends App.Controller
     @tasksInitial()
 
     # render on login
-    App.Event.bind 'auth:login', =>
-      @initialLoad = true
-      @all()
-      @tasksInitial()
+    App.Event.bind(
+      'auth:login'
+      =>
+        @initialLoad = true
+        @all()
+        @tasksInitial()
+      'task'
+    )
 
     # render on logout
-    App.Event.bind 'auth:logout', =>
-      @reset()
+    App.Event.bind(
+      'auth:logout'
+      =>
+        @reset()
+      'task'
+    )
 
     # send updates to server
-    @interval( @taskUpdateLoop, 2500 )
+    App.Interval.set( @taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task' )
 
   all: ->
 
@@ -343,9 +351,11 @@ class _taskManagerSingleton extends App.Controller
 
     # check if update is still in process
     if @tasksToUpdate[ task.key ] is 'inProgress'
-      @delay(
+      App.Delay.set(
         => @taskDestroy(task)
         800
+        undefined
+        'task'
       )
       return
 
@@ -367,11 +377,13 @@ class _taskManagerSingleton extends App.Controller
     task_count = 0
     for task in tasks
       task_count += 1
-      @delay(
+      App.Delay.set(
         =>
           task = tasks.shift()
           @add(task.key, task.callback, task.params, true)
         task_count * 300
+        undefined
+        'task'
       )
 
     App.Event.trigger 'taskbar:ready'

@@ -3,8 +3,12 @@ class App.MaintenanceWidget extends App.Controller
     super
 
     # bind on event to show message
-    App.Event.bind 'session:maintenance', (data) =>
-      new Message( message: data )
+    App.Event.bind(
+      'session:maintenance'
+      (data) =>
+        new Message( message: data )
+      'maintenance'
+    )
 
 class Message extends App.ControllerModal
   constructor: ->

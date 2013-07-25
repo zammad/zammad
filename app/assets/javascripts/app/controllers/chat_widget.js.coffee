@@ -11,7 +11,7 @@ class App.ChatWidget extends App.Controller
     @messageLog = []
 
     # rebuild chat widget
-    App.Event.bind 'auth', (user) =>
+    @bind 'auth', (user) =>
       if !user
         @messageLog = []
         @el.html('')
@@ -39,7 +39,7 @@ class App.ChatWidget extends App.Controller
     @render()
     @hide()
 
-    App.Event.bind(
+    @bind(
       'chat:message'
       (e) =>
 
@@ -63,7 +63,7 @@ class App.ChatWidget extends App.Controller
           )
     )
 
-    App.Event.bind(
+    @bind(
       'chat:window_toggle'
       (e) =>
         if e.show
@@ -72,7 +72,7 @@ class App.ChatWidget extends App.Controller
           @hide()
     )
 
-    App.Event.bind(
+    @bind(
       'chat:message_new'
       (e) =>
 

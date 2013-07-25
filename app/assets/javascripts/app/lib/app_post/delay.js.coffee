@@ -37,11 +37,8 @@ class _delaySingleton extends Spine.Module
     if !level
       level = '_all'
 
-    if !@levelStack[level]
-      @levelStack[level] = {}
-
     if key
-      @clear( key )
+      @clear( key, level )
 
     if !key
       key = Math.floor( Math.random() * 99999 )
@@ -49,11 +46,13 @@ class _delaySingleton extends Spine.Module
     # setTimeout
     @log 'debug', 'set', key, timeout, level, callback
     call = =>
-      @clear( key )
+      @clear( key, level )
       callback()
     delay_id = setTimeout( call, timeout )
 
     # remember all delays
+    if !@levelStack[level]
+      @levelStack[level] = {}
     @levelStack[ level ][ key.toString() ] = {
       delay_id: delay_id
       timeout:  timeout
@@ -67,8 +66,7 @@ class _delaySingleton extends Spine.Module
     if !level
       level = '_all'
 
-    if !@levelStack[ level ]
-      @levelStack[ level ] = {}
+    return if !@levelStack[ level ]
 
     # get global delay ids
     data = @levelStack[ level ][ key.toString() ]
@@ -77,11 +75,16 @@ class _delaySingleton extends Spine.Module
     @log 'debug', 'clear', data
     clearTimeout( data['delay_id'] )
 
+    # cleanup if needed
+    delete @levelStack[ level ][ key.toString() ]
+    if _.isEmpty( @levelStack[ level ] )
+      delete @levelStack[ level ]
+
   clearLevel: (level) ->
     return if !@levelStack[ level ]
     for key, data of @levelStack[ level ]
       @clear( key, level )
-    @levelStack[level] = {}
+    delete @levelStack[level]
 
   reset: ->
     for level, items of @levelStack

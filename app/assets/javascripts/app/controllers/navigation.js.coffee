@@ -4,15 +4,15 @@ class App.Navigation extends App.Controller
     @render()
 
     # rerender view
-    App.Event.bind 'ui:rerender', (data) =>
+    @bind 'ui:rerender', (data) =>
       @render()
 
     # update selected item
-    App.Event.bind 'navupdate', (data) =>
+    @bind 'navupdate', (data) =>
       @update( arguments[0] )
 
     # rebuild nav bar with given user data
-    App.Event.bind 'auth', (user) =>
+    @bind 'auth', (user) =>
       @log 'Navigation', 'notice', 'navbar rebuild', user
 
       if !_.isEmpty( user )
@@ -26,12 +26,12 @@ class App.Navigation extends App.Controller
       @render()
 
     # rebuild ticket overview data
-    App.Event.bind 'navupdate_ticket_overview', (data) =>
+    @bind 'navupdate_ticket_overview', (data) =>
       @ticket_overview_build(data)
       @render()
 
     # rebuild recent viewed data
-    App.Event.bind 'update_recent_viewed', (data) =>
+    @bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
       @render()
 

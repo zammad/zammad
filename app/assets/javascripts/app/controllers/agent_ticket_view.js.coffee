@@ -25,7 +25,7 @@ class Index extends App.ControllerContent
     @key = 'ticket_overview_' + @view
 
     # bind to rebuild view event
-    App.Event.bind( 'ticket_overview_rebuild', @fetch, 'page' )
+    @bind( 'ticket_overview_rebuild', @fetch )
 
     # render
     @fetch()

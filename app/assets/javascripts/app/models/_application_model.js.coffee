@@ -190,6 +190,16 @@ class App.Model extends Spine.Model
       if @SUBSCRIPTION_COLLECTION[data]
         delete @SUBSCRIPTION_COLLECTION[data]
 
+  @_bindsEmpty: ->
+    if @SUBSCRIPTION_ITEM
+      for id, keys of @SUBSCRIPTION_ITEM
+        return false if !_.isEmpty(keys)
+
+    if @SUBSCRIPTION_COLLECTION && !_.isEmpty( @SUBSCRIPTION_COLLECTION )
+      return false
+
+    return true
+
   @_fillUp: (data) ->
     # nothing
     data
@@ -259,3 +269,4 @@ class App.Model extends Spine.Model
     )
     return collection
 
+  

@@ -4,7 +4,7 @@ class App.TagWidget extends App.Controller
     @load()
 
     # update box size
-    App.Event.bind 'ui:rerender:content', =>
+    @bind 'ui:rerender:content', =>
       @siteUpdate()
 
   load: =>

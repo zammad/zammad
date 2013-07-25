@@ -19,10 +19,10 @@ class App.TicketZoom extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false )
-    @interval( update, 300000, @key, 'ticket_zoom' )
+    @interval( update, 300000, 'pull_check' )
 
     # fetch new data if triggered
-    App.Event.bind(
+    @bind(
       'Ticket:updated'
       (data) =>
         update = =>
@@ -32,7 +32,6 @@ class App.TicketZoom extends App.Controller
             if data.updated_at isnt ticket.updated_at
               @fetch( @ticket_id, false )
         @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
-      'ticket-zoom-' + @ticket_id
     )
 
   meta: =>
@@ -58,8 +57,7 @@ class App.TicketZoom extends App.Controller
     return true
 
   release: =>
-    App.Event.unbindLevel 'ticket-zoom-' + @ticket_id
-    @clearInterval( @key, 'ticket_zoom' )
+    # nothing
 
   fetch: (ticket_id, force) ->
 
@@ -179,7 +177,7 @@ class App.TicketZoom extends App.Controller
       offset = offset - 45
       scrollTo = ->
         @scrollTo( 0, offset )
-      @delay( scrollTo, 100, undefined, 'page' )
+      @delay( scrollTo, 100, false )
 
   TicketTitle: =>
     # show ticket title
@@ -423,11 +421,9 @@ class Edit extends App.Controller
     @userPopups()
 
   autosaveStop: =>
-    @clearInterval( @ticket.id,  @auto_save_key )
+    @clearInterval( 'autosave' )
 
   autosaveStart: =>
-    @auto_save_key = 'zoom' + @ticket.id
-
     @autosaveLast = _.clone( @ui.formDefault )
     update = =>
       currentData = @formParam( @el.find('.ticket-update') )
@@ -438,7 +434,7 @@ class Edit extends App.Controller
         @el.find('.ticket-update').parent().addClass('form-changed')
         @el.find('.ticket-update').parent().parent().find('.reset-message').show()
         App.TaskManager.update( @task_key, { 'state': currentData })
-    @interval( update, 1500, @ticket.id,  @auto_save_key )
+    @interval( update, 1500, 'autosave' )
 
   update: (e) =>
     e.preventDefault()

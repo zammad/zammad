@@ -9,12 +9,47 @@ class App.Controller extends Spine.Controller
 
     super
 
+    # generate controllerId
+    @controllerId = 'controller-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+
     # apply to release controller on dom remove
+    @el.on('remove', @releaseController)
     @el.on('remove', @release)
 
     # create shortcuts
     @Config  = App.Config
     @Session = App.Session
+
+  bind: (event, callback) =>
+    App.Event.bind(
+      event
+      callback
+      @controllerId
+    )
+
+  unbind: (event, callback) =>
+    App.Event.unbind(
+      event
+      callback
+      @controllerId
+    )
+
+  clearDelay: (delay_id) =>
+    App.Delay.clear(delay_id, @controllerId)
+
+  delay: (callback, timeout, delay_id) =>
+    App.Delay.set(callback, timeout, delay_id, @controllerId)
+
+  clearInterval: (interval_id) =>
+    App.Interval.clear(interval_id, @controllerId)
+
+  interval: (callback, interval, interval_id) =>
+    App.Interval.set(callback, interval, interval_id, @controllerId)
+
+  releaseController: =>
+    App.Event.unbindLevel(@controllerId)
+    App.Delay.clearLevel(@controllerId)
+    App.Interval.clearLevel(@controllerId)
 
   release: =>
     # release custom bindings after it got removed from dom
@@ -231,20 +266,7 @@ class App.Controller extends Spine.Controller
         $(this).attr( 'title', App.i18n.translateTimestamp(timestamp) )
         $(this).html( time )
       )
-    @interval( update, 30000, 'frontendTimeUpdate' )
-
-
-  clearDelay: (delay_id, level) =>
-    App.Delay.clear(delay_id, level)
-
-  delay: (callback, timeout, delay_id, level) =>
-    App.Delay.set(callback, timeout, delay_id, level)
-
-  clearInterval: (interval_id, level) =>
-    App.Interval.clear(interval_id, level)
-
-  interval: (callback, interval, interval_id, level) =>
-    App.Interval.set(callback, interval, interval_id, level)
+    App.Interval.set( update, 30000, 'frontendTimeUpdate', 'ui' )
 
   ticketPopups: (position = 'right') ->
 

@@ -50,28 +50,41 @@ class _webSocketSingleton extends App.Controller
     super
 
     # on auth, send new auth data to server
-    App.Event.bind 'auth', (data) =>
-      @auth()
+    App.Event.bind(
+      'auth'
+      (data) =>
+        @auth()
+      'ws'
+    )
 
     # bind to send messages
-    App.Event.bind 'ws:send', (data) =>
-      @send(data)
+    App.Event.bind(
+      'ws:send'
+      (data) =>
+        @send(data)
+      'ws'
+    )
 
     # get spool messages after successful ws login
-    App.Event.bind( 'ws:login', (data) =>
-      @spool()
+    App.Event.bind(
+      'ws:login', (data) =>
+        @spool()
+      'ws'
     )
 
     # get spool:sent
-    App.Event.bind( 'spool:sent', (data) =>
+    App.Event.bind(
+      'spool:sent'
+      (data) =>
 
-      # set timestamp to get spool messages later
-      @lastSpoolMessage = data.timestamp
+        # set timestamp to get spool messages later
+        @lastSpoolMessage = data.timestamp
 
-      # set sentSpoolFinished
-      @sentSpoolFinished = true
+        # set sentSpoolFinished
+        @sentSpoolFinished = true
 
-      @clearDelay 'reset-spool-sent-if-not-returned', 'ws'
+        App.Delay.clear 'reset-spool-sent-if-not-returned', 'ws'
+      'ws'
     )
 
     # inital connect
@@ -119,7 +132,7 @@ class _webSocketSingleton extends App.Controller
     # reset @sentSpoolFinished if spool:sent will not return
     reset = =>
       @sentSpoolFinished = true
-    @delay reset, 60000, 'reset-spool-sent-finished-if-not-returned', 'ws'
+    App.Delay.set reset, 60000, 'reset-spool-sent-finished-if-not-returned', 'ws'
 
     # ask for spool messages
     App.Event.trigger(
@@ -142,11 +155,11 @@ class _webSocketSingleton extends App.Controller
     @send( { action: 'ping' } )
 
     # check if ping is back within 2 min
-    @clearDelay('websocket-ping-check', 'ws')
+    App.Delay.clear 'websocket-ping-check', 'ws'
     check = =>
       @log 'notice', 'no websockend ping response, reconnect...'
       @close()
-    @delay check, 90000, 'websocket-ping-check', 'ws'
+    App.Delay.set check, 90000, 'websocket-ping-check', 'ws'
 
   pong: ->
     return if @backend is 'ajax'
@@ -154,7 +167,7 @@ class _webSocketSingleton extends App.Controller
     @log 'debug', 'received websockend ping'
 
     # test again after 1 min
-    @delay @ping, 60000, 'websocket-pong', 'ws'
+    App.Delay.set @ping, 60000, 'websocket-pong', 'ws'
 
   connect: =>
     return if @backend is 'ajax'
@@ -179,7 +192,7 @@ class _webSocketSingleton extends App.Controller
       @connectionWasEstablished = true
 
       # close error message show up (because try so connect again) if exists
-      @clearDelay('websocket-no-connection-try-reconnect-message', 'ws')
+      App.Delay.clear('websocket-no-connection-try-reconnect-message', 'ws')
       if @error
         @error.modalHide()
         @error = false
@@ -194,7 +207,7 @@ class _webSocketSingleton extends App.Controller
       @queue = []
 
       # send ping to check connection
-      @delay @ping, 60000, 'websocket-send-ping-to-heck-connection', 'ws'
+      App.Delay.set @ping, 60000, 'websocket-send-ping-to-heck-connection', 'ws'
 
     @ws.onmessage = (e) =>
       pipe = JSON.parse( e.data )
@@ -232,11 +245,11 @@ class _webSocketSingleton extends App.Controller
             show:     true
           )
         if !@tryToConnect
-          @delay message, 7000, 'websocket-no-connection-try-reconnect-message', 'ws'
+          App.Delay.set message, 7000, 'websocket-no-connection-try-reconnect-message', 'ws'
         @tryToConnect = true
 
       # try reconnect after 4.5 sec.
-      @delay @connect, 4500, 'websocket-try-reconnect-after-x-sec', 'ws'
+      App.Delay.set @connect, 4500, 'websocket-try-reconnect-after-x-sec', 'ws'
 
     @ws.onerror = (e) =>
       @log 'debug', "ws:onerror", e
@@ -299,7 +312,7 @@ class _webSocketSingleton extends App.Controller
         # try reconnect on error after x sec.
         reconnect = =>
           @_ajaxInit( force: true )
-        @delay reconnect, 10000, '_ajaxInit-reconnect-on-error', 'ws'
+        App.Delay.set reconnect, 10000, '_ajaxInit-reconnect-on-error', 'ws'
     )
 
   _ajaxSend: (data) =>

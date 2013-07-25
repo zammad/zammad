@@ -84,14 +84,13 @@ table th, table td {
   margin-left: 5px;
 }
 
-.taskbar-new {
-  float: right;
-  margin-right: 12px;
+.taskbar-items {
+  float: left;
 }
 
-.taskbar-new .dropdown-menu {
-  right: -1px;
-  left: auto;
+.taskbar-new {
+  float: right;
+  margin-right: 14px;
 }
 
 .max-size-scroll {

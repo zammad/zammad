@@ -1,4 +1,100 @@
 class App.TaskWidget extends App.Controller
+
+  constructor: ->
+    super
+    @render()
+
+    # render on generic ui call
+    @bind 'ui:rerender', => @render()
+
+    # render on login
+    @bind 'auth:login', => @render()
+
+    # reset current tasks on logout
+    @bind 'auth:logout', => @el.html('')
+
+    # only do take over check after spool messages are finised
+    App.Event.bind(
+      'spool:sent'
+      =>
+        @spoolSent = true
+
+        # broadcast to other browser instance
+        App.WebSocket.send(
+          action: 'broadcast'
+          event:  'session:takeover'
+          spool:  true
+          recipient:
+            user_id: [ App.Session.get( 'id' ) ]
+          data:
+            taskbar_id: App.TaskManager.TaskbarId()
+        )
+      'task'
+    )
+
+    # session take over message
+    App.Event.bind(
+      'session:takeover'
+      (data) =>
+
+        # only if spool messages are already sent
+        return if !@spoolSent
+
+        # check if error message is already shown
+        if !@error
+
+          # only if new client id isnt own client id
+          if data.taskbar_id isnt App.TaskManager.TaskbarId()
+            @error = new App.SessionMessage(
+              title:       'Session'
+              message:     'Session taken over... please reload page or work with other browser window.'
+              keyboard:    false
+              backdrop:    true
+              close:       true
+              button:      'Reload application'
+              forceReload: true
+            )
+            @disconnectClient()
+      'task'
+    )
+
+  render: ->
+    return if _.isEmpty( @Session.all() )
+
+    @html App.view('task_widget')(
+      taskBarActions: @_getTaskActions()
+    )
+    @el.find('.taskbar-items').html('')
+    new Taskbar(
+      el: @el.find('.taskbar-items')
+    )
+
+  _getTaskActions: ->
+    roles  = App.Session.get( 'roles' )
+    navbar = _.values( @Config.get( 'TaskActions' ) )
+    level1 = []
+
+    for item in navbar
+      if typeof item.callback is 'function'
+        data = item.callback() || {}
+        for key, value of data
+          item[key] = value
+      if !item.parent
+        match = 0
+        if !item.role
+          match = 1
+        if !roles && item.role
+          match = _.include( item.role, 'Anybody' )
+        if roles
+          for role in roles
+            if !match
+              match = _.include( item.role, role.name )
+
+        if match
+          level1.push item
+    level1
+
+class Taskbar extends App.Controller
   events:
     'click [data-type="close"]': 'remove'
 
@@ -6,62 +102,13 @@ class App.TaskWidget extends App.Controller
     super
     @render()
 
-    # render on generic ui call
-    App.Event.bind 'ui:rerender', =>
-      @render()
-
     # render view
-    App.Event.bind 'task:render', =>
-      @render()
-
-    # render on login
-    App.Event.bind 'auth:login', =>
-      @render()
+    @bind 'task:render', => @render()
 
     # reset current tasks on logout
-    App.Event.bind 'auth:logout', =>
-      @el.html('')
-
-    # only do take over check after spool messages are finised
-    App.Event.bind 'spool:sent', =>
-      @spoolSent = true
-
-      # broadcast to other browser instance
-      App.WebSocket.send(
-        action: 'broadcast'
-        event:  'session:takeover'
-        spool:  true
-        recipient:
-          user_id: [ App.Session.get( 'id' ) ]
-        data:
-          taskbar_id: App.TaskManager.TaskbarId()
-      )
-
-
-    # session take over message
-    App.Event.bind 'session:takeover', (data) =>
-
-      # only if spool messages are already sent
-      return if !@spoolSent
-
-      # check if error message is already shown
-      if !@error
-
-        # only if new client id isnt own client id
-        if data.taskbar_id isnt App.TaskManager.TaskbarId()
-          @error = new App.SessionMessage(
-            title:       'Session'
-            message:     'Session taken over... please reload page or work with other browser window.'
-            keyboard:    false
-            backdrop:    true
-            close:       true
-            button:      'Reload application'
-            forceReload: true
-          )
-          @disconnectClient()
+    @bind 'auth:logout', => @el.html('')
 
   render: ->
-
     return if _.isEmpty( @Session.all() )
 
     tasks = App.TaskManager.all()
@@ -86,9 +133,8 @@ class App.TaskWidget extends App.Controller
       if task.active
         @title data.title
 
-    @html App.view('task_widget')(
-      item_list:      item_list
-      taskBarActions: @_getTaskActions()
+    @html App.view('task_widget_tasks')(
+      item_list: item_list
     )
 
     @resizeTasks()
@@ -100,7 +146,7 @@ class App.TaskWidget extends App.Controller
       forcePlaceholderSize: true
       items:                '> a'
       update:               =>
-        items = @el.find('.taskbar > a')
+        items = @el.find('> a')
         order = []
         for item in items
           key = $(item).data('key')
@@ -109,7 +155,7 @@ class App.TaskWidget extends App.Controller
           order.push key
         App.TaskManager.reorder( order  )
 
-    @el.find( '.taskbar' ).sortable( dndOptions )
+    @el.sortable( dndOptions )
 
   remove: (e, key = false, force = false) =>
     e.preventDefault()
@@ -165,31 +211,6 @@ class App.TaskWidget extends App.Controller
       $('#task .task').css('max-width', task_size + 'px')
     else
       $('#task .task').css('max-width', '120px')
-
-  _getTaskActions: ->
-    roles  = App.Session.get( 'roles' )
-    navbar = _.values( @Config.get( 'TaskActions' ) )
-    level1 = []
-
-    for item in navbar
-      if typeof item.callback is 'function'
-        data = item.callback() || {}
-        for key, value of data
-          item[key] = value
-      if !item.parent
-        match = 0
-        if !item.role
-          match = 1
-        if !roles && item.role
-          match = _.include( item.role, 'Anybody' )
-        if roles
-          for role in roles
-            if !match
-              match = _.include( item.role, role.name )
-
-        if match
-          level1.push item
-    level1
 
 class Remove extends App.ControllerModal
   constructor: ->

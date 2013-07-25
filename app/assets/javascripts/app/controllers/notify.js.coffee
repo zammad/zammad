@@ -6,21 +6,21 @@ class App.Notify extends Spine.Controller
 
   constructor: ->
     super
-    
-    App.Event.bind 'notify', (data) =>
+
+    @bind 'notify', (data) =>
       @render(data)
 
-    App.Event.bind 'notify:removeall', =>
+    @bind 'notify:removeall', =>
       @log 'notify:removeall', @
       @destroyAll()
 
-    App.Event.bind 'notifyDesktop', (data) =>
+    @bind 'notifyDesktop', (data) =>
       if !data['icon']
         data['icon'] = 'unknown'
       notify.createNotification( data.msg, data )
 
     # request desktop notification after login
-    App.Event.bind 'auth', (data) ->
+    @bind 'auth', (data) ->
       if !_.isEmpty(data)
         notify.requestPermission()
 

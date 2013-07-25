@@ -39,7 +39,7 @@ class _eventSingleton extends Spine.Module
     return if !@eventCurrent[level]
     for item in @eventCurrent[level]
       @unbind( item.event, item.callback, level )
-    @eventCurrent[level] = []
+    delete @eventCurrent[level]
 
   bind: ( events, callback, level ) ->
 

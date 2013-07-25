@@ -45,7 +45,7 @@ class App.TicketCreate extends App.Controller
     @fetch(params)
 
     # lisen if view need to be rerendert
-    App.Event.bind 'ticket_create_rerender', (defaults) =>
+    @bind 'ticket_create_rerender', (defaults) =>
       @log 'notice', 'error', defaults
       @render(defaults)
 
@@ -74,10 +74,9 @@ class App.TicketCreate extends App.Controller
     return true
 
   release: =>
-    @clearInterval( @id, @auto_save_key )
+    # nothing
 
   autosave: =>
-    @auto_save_key = 'create' + @type + @id
     update = =>
       data = @formParam( @el.find('.ticket-create') )
       diff = difference( @autosaveLast, data )
@@ -85,7 +84,7 @@ class App.TicketCreate extends App.Controller
         @autosaveLast = data
         @log 'notice', 'form hash changed', diff, data
         App.TaskManager.update( @task_key, { 'state': data })
-    @interval( update, 3000, @id,  @auto_save_key )
+    @interval( update, 3000, @id )
 
   # get data / in case also ticket data for split
   fetch: (params) ->
@@ -182,9 +181,6 @@ class App.TicketCreate extends App.Controller
       form_data: @edit_form
       params:    params
     )
-
-    # update taskbar with new meta data
-    App.Event.trigger 'task:render'
 
     # add elastic to textarea
     @el.find('textarea').elastic()
