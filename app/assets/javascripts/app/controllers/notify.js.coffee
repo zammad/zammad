@@ -1,26 +1,25 @@
 class App.Notify extends Spine.Controller
+  className: 'container'
   events:
     'click .alert': 'destroy'
-
-  className: 'container'
 
   constructor: ->
     super
 
-    @bind 'notify', (data) =>
+    App.Event.bind 'notify', (data) =>
       @render(data)
 
-    @bind 'notify:removeall', =>
+    App.Event.bind 'notify:removeall', =>
       @log 'notify:removeall', @
       @destroyAll()
 
-    @bind 'notifyDesktop', (data) =>
+    App.Event.bind 'notifyDesktop', (data) =>
       if !data['icon']
         data['icon'] = 'unknown'
       notify.createNotification( data.msg, data )
 
     # request desktop notification after login
-    @bind 'auth', (data) ->
+    App.Event.bind 'auth', (data) ->
       if !_.isEmpty(data)
         notify.requestPermission()
 
@@ -47,7 +46,7 @@ class App.Notify extends Spine.Controller
         layout:   'top'
         type:     data.type
         theme:    'noty_theme_twitter'
-        animateOpen: { 
+        animateOpen: {
           height: 'toggle'
           opacity: 0.85,
         },
@@ -61,7 +60,7 @@ class App.Notify extends Spine.Controller
         closeOnSelfOver:  false
       }
     )
-  
+
   destroy: (e) ->
     e.preventDefault()
 #    $(e.target).parents('.alert').remove();
