@@ -100,11 +100,12 @@ App.Com.ajax({
 });
 
 // delay
+window.testDelay1 = false
 App.Delay.set( function() {
-    test( "delay - test 1 - 1/2", function() {
+    test( "delay - test 1 - 1/3 - should not be executed, will be reset by next set()", function() {
 
       // check
-      ok( !window.testDelay1, 'delay - test 1 - 1/2' );
+      ok( false, 'delay - test 1 - 1/3 - should not be executed, will be reset by next set()' );
       window.testDelay1 = true;
     });
   },
@@ -113,15 +114,27 @@ App.Delay.set( function() {
   'level'
 );
 App.Delay.set( function() {
-    test( "delay - test 1 - 2/2", function() {
+    test( "delay - test 1 - 2/3", function() {
 
       // check
-      ok( window.testDelay1, 'delay - test 1 - 2/2' );
+      ok( !window.testDelay1, 'delay - test 1 - 2/3' );
       window.testDelay1 = 1;
     });
   },
   2000,
   'delay-test1',
+  'level'
+);
+App.Delay.set( function() {
+    test( "delay - test 1 - 2/3", function() {
+
+      // check
+      ok( window.testDelay1, 'delay - test 1 - 2/3' );
+      window.testDelay1 = false;
+    });
+  },
+  3000,
+  'delay-test1-verify',
   'level'
 );
 
