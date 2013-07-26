@@ -169,7 +169,7 @@ class SessionsController < ApplicationController
   end
 
   def delete_old
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 150.days ).delete_all
+    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 90.days ).delete_all
     ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.now - 2.days ).delete_all
     render :json => {}
   end
