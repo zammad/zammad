@@ -148,4 +148,30 @@ class SessionsController < ApplicationController
     redirect_to '/#'
   end
 
+  def list
+    return if deny_if_not_role('Admin')
+    sessions = ActiveRecord::SessionStore::Session.order('created_at DESC').limit(10000)
+    users = {}
+    sessions_clean = []
+    sessions.each {|session|
+      next if !session.data['user_id']
+      sessions_clean.push session
+      if session.data['user_id']
+        if !users[ session.data['user_id'] ]
+          users[ session.data['user_id'] ] = User.user_data_full( session.data['user_id'] )
+        end
+      end
+    }
+    render :json => {
+      :sessions => sessions_clean,
+      :users    => users,
+    }
+  end
+
+  def delete
+    return if deny_if_not_role('Admin')
+    session = ActiveRecord::SessionStore::Session.find(params[:id])
+    session.destroy
+    render :json => {}
+  end
 end

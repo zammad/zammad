@@ -26,6 +26,7 @@ module Zammad
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers =
+      'observer::_session',
       'observer::_history',
       'observer::_ticket::_first_response',
       'observer::_ticket::_last_contact',

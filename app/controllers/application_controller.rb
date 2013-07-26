@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   :mode_show_rendeder,
   :model_index_render
 
-  before_filter :set_user
+  before_filter :set_user, :session_update
   before_filter :cors_preflight_check
 
   after_filter  :set_access_control_headers
@@ -73,9 +73,26 @@ class ApplicationController < ActionController::Base
     UserInfo.current_user_id = current_user.id
   end
 
+  # update session updated_at
+  def session_update
+    session[:ping] = Time.now.utc.iso8601
+
+    # check if remote ip need to be updated
+    if !session[:remote_id] || session[:remote_id] != request.remote_ip
+      session[:remote_id]  = request.remote_ip
+      session[:geo]        = Geoip.location( request.remote_ip )
+    end
+
+    # fill user agent
+    if !session[:user_agent]
+      session[:user_agent] = request.env['HTTP_USER_AGENT']
+    end
+  end
+
   def authentication_check_only
 
     puts 'authentication_check'
+    session[:request_type] = 1
     #puts params.inspect
     #puts session.inspect
     #puts cookies.inspect
@@ -83,6 +100,8 @@ class ApplicationController < ActionController::Base
     # check http basic auth
     authenticate_with_http_basic do |username, password|
       puts 'http basic auth check'
+      session[:request_type] = 2
+
       userdata = User.authenticate( username, password )
       message = ''
       if !userdata
@@ -112,6 +131,8 @@ class ApplicationController < ActionController::Base
       if logon_session
         userdata = User.find( logon_session.data[:user_id] )
       end
+
+      session[:request_type] = 3
 
       # set logon session user to current user
       current_user_set(userdata)
