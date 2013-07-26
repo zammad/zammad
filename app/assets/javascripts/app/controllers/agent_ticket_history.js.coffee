@@ -44,7 +44,7 @@ class App.TicketHistory extends App.ControllerModal
   render: ->
 
     @html App.view('agent_ticket_history')(
-      objects: App.History.all()
+      objects: App.History.search()
     )
 
     @modalShow()
@@ -62,13 +62,13 @@ class App.TicketHistory extends App.ControllerModal
     if isSorted.length
       @sortstate = 'notsorted'
       @html App.view('agent_ticket_history')(
-        objects: App.History.all()
+        objects: App.History.search()
         state:   @sortstate
       )
     else
       @sortstate = 'sorted'
       @html App.view('agent_ticket_history')(
-        objects: App.History.all().reverse()
+        objects: App.History.search().reverse()
         state:   @sortstate
       )
 

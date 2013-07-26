@@ -16,4 +16,5 @@ class App.History extends App.Model
     if data.history_object_id
       data.object    = App.HistoryObject.find( data.history_object_id )
 
+    return data
 

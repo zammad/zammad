@@ -207,9 +207,14 @@ class App.Model extends Spine.Model
   @search: (params) ->
     all = @all()
     all_complied = []
+    if !params
+      for item in all
+        item_new = @find( item.id )
+        all_complied.push @_fillUp(item_new)
+      return all_complied
     for item in all
       item_new = @find( item.id )
-      all_complied.push item_new
+      all_complied.push @_fillUp(item_new)
 
     if params.filter
       all_complied = @_filter( all_complied, params.filter )
