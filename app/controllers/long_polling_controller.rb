@@ -121,8 +121,8 @@ class LongPollingController < ApplicationController
       sleep 1
       Session.touch( client_id )
 
-      # set max loop time to 28 sec. because of 30 sec. timeout of mod_proxy
-      count = 14
+      # set max loop time to 24 sec. because of 30 sec. timeout of mod_proxy
+      count = 12
       while true
         count = count - 1
         queue = Session.queue( client_id )
