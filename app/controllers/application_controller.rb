@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
+require 'geoip'
+
 class ApplicationController < ActionController::Base
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
