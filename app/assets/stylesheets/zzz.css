@@ -47,15 +47,23 @@ table th, table td {
   white-space: nowrap;
 }
 
-.taskbar {
+#task {
+}
+
+#task > .taskbar {
   position: fixed;
+  display: table;
   top: 40px;
   width: 100%;
-  padding: 5px;
+  padding: 2px 2px 2px 2px;
   z-index: 990;
 }
 
-.task {
+#task > .taskbar > div {
+  display: table-cell;
+}
+
+#task .task {
   margin: -6px;
   padding: 0px 4px;
   display: inline-block;
@@ -65,32 +73,31 @@ table th, table td {
   white-space: nowrap;
 }
 
-.task > a,
-.task > a:hover {
+#task .task > a,
+#task .task > a:hover {
   color: #ffffff;
   text-decoration: none;
 }
 
-.btn-default .task > a,
-.btn-default .task > a:hover {
+#task .btn-default .task > a,
+#task .btn-default .task > a:hover {
   color: #333333;
 }
 
-.taskbar .btn-mini {
+#task .taskbar .btn-mini {
   margin-top: 2px;
 }
 
-[data-type="close"] {
+#task [data-type="close"] {
   margin-left: 5px;
 }
 
-.taskbar-items {
-  float: left;
+#task .taskbar-items {
 }
 
-.taskbar-new {
-  float: right;
-  margin-right: 14px;
+#task .taskbar-new {
+  text-align: right;
+  padding-right: 12px;
 }
 
 .max-size-scroll {

@@ -102,6 +102,12 @@ class Taskbar extends App.Controller
     super
     @render()
 
+    # on window resize
+    resizeTasksDelay = =>
+      App.Delay.set( @resizeTasks, 100, 'resizeTasks', 'task' )
+    $(window).off( 'resize.taskbar' )
+    $(window).on( 'resize.taskbar', resizeTasksDelay )
+
     # render view
     @bind 'task:render', => @render()
 
@@ -202,15 +208,29 @@ class Taskbar extends App.Controller
       @navigate '#'
 
   resizeTasks: ->
-    width = $('#task .taskbar').width() - 280
+    width = $('#task .taskbar').width() - $('#task .taskbar-new').width() - 200
     task_count = App.TaskManager.all().length
     task_size  = ( width / task_count ) - ( task_count * 1.3 )
+
+    elementsOversize = 0
+    elementsOversizeLeftTotal = 0
+    $('#task .task').each(
+      (position, element) ->
+        width = $(element).parent().width()
+        if width > task_size
+          elementsOversize++
+        else
+          elementsOversizeLeftTotal += task_size - width
+    )
+
+    addOversize = elementsOversizeLeftTotal / elementsOversize
+    task_size += addOversize
     if task_size < 40
       $('#task .task').css('max-width', '40px')
     else if task_size < 130
       $('#task .task').css('max-width', task_size + 'px')
     else
-      $('#task .task').css('max-width', '120px')
+      $('#task .task').css('max-width', '130px')
 
 class Remove extends App.ControllerModal
   constructor: ->
