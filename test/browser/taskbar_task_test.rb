@@ -156,12 +156,7 @@ class TaskbarTaskTest < TestCase
             :value   => 12,
           },
           {
-            :execute => 'click',
-            :css     => 'a[href="#current_user"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#logout"]',
+            :execute => 'logout',
           },
           {
             :execute => 'check',
@@ -178,18 +173,9 @@ class TaskbarTaskTest < TestCase
         :name     => 'relogin with master - task are not viewable',
         :action   => [
           {
-            :execute => 'set',
-            :css     => 'input[name="username"]',
-            :value   => 'master@example.com',
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password"]',
-            :value   => 'test'
-          },
-          {
-            :execute => 'click',
-            :css     => '#login button',
+            :execute  => 'login',
+            :username => 'master@example.com',
+            :password => 'test',
           },
           {
             :execute => 'wait',
@@ -208,12 +194,7 @@ class TaskbarTaskTest < TestCase
             :match_result => false,
           },
           {
-            :execute => 'click',
-            :css     => 'a[href="#current_user"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#logout"]',
+            :execute => 'logout',
           },
           {
             :execute => 'check',
@@ -238,22 +219,13 @@ class TaskbarTaskTest < TestCase
         :name     => 'relogin with agent - task are viewable',
         :action   => [
           {
-            :execute => 'set',
-            :css     => 'input[name="username"]',
-            :value   => 'agent1@example.com',
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password"]',
-            :value   => 'test'
-          },
-          {
-            :execute => 'click',
-            :css     => '#login button',
+            :execute  => 'login',
+            :username => 'agent1@example.com',
+            :password => 'test',
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 3,
           },
           {
             :execute      => 'match',
