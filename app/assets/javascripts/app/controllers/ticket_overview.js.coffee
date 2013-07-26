@@ -356,7 +356,7 @@ class Settings extends App.ControllerModal
         class: 'medium'
 #        item_class: 'pull-left'
       },
-      { 
+      {
         name:    'attributes'
         display: 'Attributes'
         tag:     'checkbox'
