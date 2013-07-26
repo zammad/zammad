@@ -10,7 +10,7 @@ class Session extends App.ControllerContent
     @load()
     @interval(
       =>
-        @load
+        @load()
       10000
     )
 

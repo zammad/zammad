@@ -150,7 +150,7 @@ class SessionsController < ApplicationController
 
   def list
     return if deny_if_not_role('Admin')
-    sessions = ActiveRecord::SessionStore::Session.order('created_at DESC').limit(10000)
+    sessions = ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(10000)
     users = {}
     sessions_clean = []
     sessions.each {|session|
@@ -168,10 +168,18 @@ class SessionsController < ApplicationController
     }
   end
 
+  def delete_old
+    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 150.days ).delete_all
+    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.now - 2.days ).delete_all
+    render :json => {}
+  end
+
   def delete
     return if deny_if_not_role('Admin')
-    session = ActiveRecord::SessionStore::Session.find(params[:id])
-    session.destroy
+    session = ActiveRecord::SessionStore::Session.where( :id => params[:id] ).first
+    if session
+      session.destroy
+    end
     render :json => {}
   end
 end

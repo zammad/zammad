@@ -110,6 +110,9 @@ class ApplicationController < ActionController::Base
         message = 'authentication failed'
       end
 
+      # remember user
+      session[:user_id] = userdata.id
+
       # return auth ok
       if message == ''
 
