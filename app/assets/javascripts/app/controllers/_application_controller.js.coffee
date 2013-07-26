@@ -283,11 +283,11 @@ class App.Controller extends Spine.Controller
       placement: position
       title: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.find( ticket_id )
+        ticket = App.Ticket.retrieve( ticket_id )
         ticket.title
       content: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.find( ticket_id )
+        ticket = App.Ticket.retrieve( ticket_id )
         ticket.humanTime = ui.humanTime(ticket.created_at)
         # insert data
         App.view('ticket_info_small')(
