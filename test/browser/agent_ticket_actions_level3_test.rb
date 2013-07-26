@@ -130,7 +130,7 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 4,
           },
           {
             :where        => :instance2,
