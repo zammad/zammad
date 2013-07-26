@@ -133,6 +133,7 @@ module Session
 
   def self.touch( client_id )
     data = self.get(client_id)
+    return if !data
     path = @path + '/' + client_id.to_s
     data[:meta][:last_ping] = Time.new.to_i.to_s
     File.open( path + '/session', 'wb' ) { |file|
