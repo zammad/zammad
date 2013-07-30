@@ -1,21 +1,26 @@
-<div class="page-header">
-  <div class="row">
-    <div class="span12">
-      <h1 class="pull-left"><%- @T( 'New Ticket' ) %> <small>(<%- @T( @title ) %>)<% if @admin: %> <a href="#" data-type="settings" class="icon-edit"></a><% end %></small></h1>
-    </div>
-  </div>
-</div>
-<form class="form-horizontal ticket-create">
-  <input type="hidden" value="" name="article_type"/>
-  <div class="row">
-    <div class="span9 ticket_create"></div>
-    <div class="span3">
+<div class="content-two">
+  <div class="sidebar">
+    <div class="ticket-action">
       <div data-id="customer_info"></div>
       <div data-id="ticket_template"></div>
       <div data-id="text_module"></div>
     </div>
   </div>
-  <div class="form-actions">
-    <button type="reset" class="btn cancel"><%- @T( 'Cancel' ) %></button>&nbsp;<button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
+
+  <div class="main">
+
+    <div class="page-header">
+      <h1><%- @T( 'New Ticket' ) %> <small>(<%- @T( @title ) %>)<% if @admin: %> <a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a><% end %></small></h1>
+    </div>
+
+    <form class="form-horizontal form-large ticket-create">
+      <input type="hidden" value="" name="article_type"/>
+      <div class="span9 ticket_create"></div>
+      <div class="form-actions">
+        <button type="reset" class="btn cancel"><%- @T( 'Cancel' ) %></button>&nbsp;<button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
+      </div>
+    </form>
+
+   </div>
   </div>
-</form>
+</div>

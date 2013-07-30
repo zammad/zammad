@@ -433,6 +433,7 @@ class Edit extends App.Controller
         @log 'notice', 'form hash changed', diff, currentData
         @el.find('.ticket-update').parent().addClass('form-changed')
         @el.find('.ticket-update').parent().parent().find('.reset-message').show()
+        @el.find('.ticket-update').parent().parent().find('.reset-message').removeClass('hide')
         App.TaskManager.update( @task_key, { 'state': currentData })
     @interval( update, 1500, 'autosave' )
 

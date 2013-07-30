@@ -1,4 +1,4 @@
-<div class="well well-chat span3">
+<div class="well chat">
   <h4><%- @T('Chat') %><a href="#" id="chat_toogle" class="close">&times;</a></h4>
   <div id="chat_content" <% if !@isShown: %>class="hide"<% end %>>
     <div id="chat_log_container" class="max-size-scroll">
@@ -7,7 +7,7 @@
       <% end %>
     </div>
     <form id="chat_form">
-      <input name="chat_message" type="text" value="" class="span3"/>
+      <input name="chat_message" type="text" value="" class="form-control input-small"/>
     </form>
   </div>
 </div>

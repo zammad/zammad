@@ -1,4 +1,5 @@
-class Session extends App.ControllerContent
+class Index extends App.ControllerContent
+  divClass: 'lala'
   events:
     'click [data-type="delete"]': 'destroy'
 
@@ -8,11 +9,11 @@ class Session extends App.ControllerContent
     return if !@authenticate()
 
     @load()
-    @interval(
-      =>
-        @load()
-      10000
-    )
+#    @interval(
+#      =>
+#        @load()
+#      10000
+#    )
 
   # fetch data, render view
   load: ->
@@ -51,5 +52,8 @@ class Session extends App.ControllerContent
     )
 
 
-App.Config.set( 'session', Session, 'Routes' )
-App.Config.set( 'session', { prio: 3700, parent: '#admin', name: 'Sessions', target: '#session', role: ['Admin'] }, 'NavBar' )
+#App.Config.set( 'session', Session, 'Routes' )
+#App.Config.set( 'session', { prio: 3700, parent: '#admin', name: 'Sessions', target: '#session', role: ['Admin'] }, 'NavBar' )
+
+App.Config.set( 'Session', { prio: 3700, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, role: ['Admin'] }, 'NavBarLevel44' )
+

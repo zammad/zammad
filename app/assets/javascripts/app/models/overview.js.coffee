@@ -1,4 +1,4 @@
-class App.Overview extends Spine.Model
+class App.Overview extends App.Model
   @configure 'Overview', 'name', 'link', 'prio', 'condition', 'order', 'group_by', 'view', 'user_id', 'organization_shared', 'role_id', 'order', 'group_by', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: 'api/overviews'
@@ -11,7 +11,7 @@ class App.Overview extends Spine.Model
 #    { name: 'content',    display: 'Content',             tag: 'textarea',                limit: 250, 'null': false, 'class': 'span4' },
     { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_attribute_selection', null: true, class: 'span4' },
     { name: 'prio',       display: 'Prio',                tag: 'input',    type: 'text', limit: 10, 'null': false, 'class': 'span4' },
-    { 
+    {
       name:    'view::s'
       display: 'Attributes'
       tag:     'checkbox'
@@ -60,7 +60,7 @@ class App.Overview extends Spine.Model
         article_count:          'Article Count'
       class:   'span4'
     },
-    { 
+    {
       name:    'order::direction'
       display: 'Direction'
       tag:     'select'
@@ -72,7 +72,7 @@ class App.Overview extends Spine.Model
         DESC:  'down'
       class:   'span4'
     },
-    { 
+    {
       name:    'group_by'
       display: 'Group by'
       tag:     'select'

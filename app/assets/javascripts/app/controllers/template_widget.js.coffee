@@ -54,6 +54,7 @@ class App.TemplateUI extends App.Controller
     e.preventDefault()
 
     # get params
+    form   = @formParam( $('.ticket-create') )
     params = @formParam(e.target)
     name = params['template_name']
 #    delete params['template_name']
@@ -62,10 +63,9 @@ class App.TemplateUI extends App.Controller
     if !template
       template = new App.Template
 
-    options = params
     template.load(
       name:    params['template_name']
-      options: options
+      options: form
     )
 
     # validate form

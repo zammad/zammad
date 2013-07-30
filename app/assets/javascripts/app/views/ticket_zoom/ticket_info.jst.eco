@@ -1,4 +1,4 @@
-<div class="span12">
+<div>
   <%= @ticket.group.name %> -
   <%- @T( @ticket.ticket_state.name ) %> -
   <%- @T( @ticket.ticket_priority.name ) %> -

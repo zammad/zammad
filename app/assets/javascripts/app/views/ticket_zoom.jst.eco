@@ -1,7 +1,14 @@
-<div class="page-header ticket-zoom">
-  <div class="row">
-    <div class="span10 ticket-title"></div>
-    <div class="span2">
+<div class="content-two">
+  <div class="sidebar">
+    <div class="ticket-action"></div>
+  </div>
+  <div class="main">
+
+    <div class="page-header ticket-zoom">
+      <div class="ticket-title"></div>
+      <div class="ticket-info"></div>
+
+      <div class="span2">
       <% if @C( 'LastOverview' ) && @nav: %>
       <div class="pagination pagination-small pagination-right">
         <span class="count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
@@ -12,17 +19,16 @@
         </ul>
       </div>
       <% end %>
+      </div>
+
     </div>
+
+
+    <div class="ticket-answer">
+      <div class="article-view"></div>
+      <div class="edit"></div>
+    </div>
+
   </div>
-  <div class="row ticket-info"></div>
 </div>
 
-<div class="row ticket-answer">
-  <div class="span9">
-    <div class="article-view"></div>
-    <div class="edit"></div>
-  </div>
-
-  <div class="span3 ticket-action"></div>
-
-</div>

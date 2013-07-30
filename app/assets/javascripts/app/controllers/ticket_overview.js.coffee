@@ -1,4 +1,29 @@
-class Index extends App.ControllerContent
+class Index extends App.Controller
+  constructor: ->
+    super
+
+    @render()
+
+  render: ->
+
+    @html App.view('agent_ticket_view')()
+
+    if !@view
+      cache = App.Store.get( 'navupdate_ticket_overview' )
+      if cache && cache[0]
+        @view = cache[0].link
+
+    new Navbar(
+      el:   @el.find('.sidebar')
+      view: @view
+    )
+
+    new Table(
+      el:   @el.find('.main')
+      view: @view
+    )
+
+class Table extends App.ControllerContent
   events:
     'click [data-type=edit]':      'zoom'
     'click [data-type=settings]':  'settings'
@@ -131,7 +156,7 @@ class Index extends App.ControllerContent
     ]
     if @isRole('Customer')
       view_modes = []
-    html = App.view('agent_ticket_view')(
+    html = App.view('agent_ticket_view/content')(
       overview:    @overview
       view_modes:  view_modes
       checkbox:    checkbox
@@ -140,6 +165,7 @@ class Index extends App.ControllerContent
     html = $(html)
 #    html.find('li').removeClass('active')
 #    html.find("[data-id=\"#{@start_page}\"]").parents('li').addClass('active')
+
     @html html
 
     # create table/overview
@@ -486,6 +512,39 @@ class Settings extends App.ControllerModal
     )
     @modalHide()
 
+class Navbar extends App.Controller
+  constructor: ->
+    super
+
+    # rebuild ticket overview data
+    @bind 'navupdate_ticket_overview', (data) =>
+      if !_.isEmpty(data)
+        App.Store.write( 'navupdate_ticket_overview', data )
+        @render(data)
+
+    cache = App.Store.get( 'navupdate_ticket_overview' )
+    if cache
+      @render( cache )
+    else
+      @render( [] )
+
+  render: (dataOrig) ->
+
+    data = _.clone(dataOrig)
+
+    # add new views
+    for item in data
+      item.target = '#ticket_view/' + item.link
+      if item.link is @view
+        item.active = true
+      else
+        item.active = false
+
+    @html App.view('agent_ticket_view/navbar')(
+      items: data
+    )
+
+
 class Router extends App.Controller
   constructor: ->
     super
@@ -538,8 +597,9 @@ class Router extends App.Controller
       else
         @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
 
+App.Config.set( 'ticket_view', Index, 'Routes' )
 App.Config.set( 'ticket_view/:view', Index, 'Routes' )
-App.Config.set( 'ticket_view/:view/:position/:direction', Router, 'Routes' )
+#App.Config.set( 'ticket_view/:view/:position/:direction', Router, 'Routes' )
 
 App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket_view', role: ['Agent', 'Customer'] }, 'NavBar' )
 #App.Config.set( '', { prio: 1000, parent: '#ticket_view', name: 'My assigned Tickets (51)', target: '#ticket_view/my_assigned', role: ['Agent'] }

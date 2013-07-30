@@ -426,7 +426,7 @@ class App.ControllerContent extends App.Controller
     $('#content_permanent').hide()
 
 class App.ControllerModal extends App.Controller
-  className: 'modal hide fade',
+  className: 'modal fade',
   tag: 'div',
 
   events:
@@ -476,8 +476,8 @@ class App.ControllerModal extends App.Controller
     @el.bind('hidden', =>
 
       # navigate back to home page
-      if @pageData && @pageData.home
-        @navigate @pageData.home
+#      if @pageData && @pageData.home
+#        @navigate @pageData.home
 
       # navigate back
       if params && params.navigateBack

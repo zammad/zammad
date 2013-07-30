@@ -1,0 +1,35 @@
+<div class="page-header clearfix">
+  <div class="page-header-title">
+    <h1><%- @T( @overview.name ) %> <% if @edit: %><small><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a></small><% end %></h1>
+  </div>
+  <div class="page-header-meta">
+    <ul class="pagination">
+    <% for item in @view_modes: %>
+      <li class="<%= item.class %>">
+        <a href="#" data-type="viewmode" data-mode="<%= item.type %>"><%= item.name %></a>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+</div>
+<!--
+  <div class="pagination pull-left">
+    <ul>
+      <% if @start_page != 1: %>
+        <li><a href="#" data-id="<%= @start_page - 1 %>" data-type="page">«</a></li>
+      <% end %>
+      <% for item in [1..@pages_total]: %>
+        <li>
+          <a href="#" data-id="<%= item %>" data-type="page"><%= item %></a>
+        </li>
+      <% end %>
+      <% if @start_page != @pages_total: %>
+        <li><a href="#" data-id="<%= @start_page + 1 %>" data-type="page">»</a></li>
+      <% end %>
+    </ul>
+  </div>
+-->
+
+<div class="table-overview"></div>
+
+<div class="bulk-action hide well"></div>

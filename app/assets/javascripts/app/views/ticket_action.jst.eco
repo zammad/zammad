@@ -1,4 +1,4 @@
-<div class="well">
+<div class="">
   <h3><%- @T( 'Actions' ) %></h3>
   <ul>
     <li><a href="#" data-type="history"><%- @T( 'History' ) %></a></li>

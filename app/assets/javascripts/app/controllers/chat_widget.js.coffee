@@ -130,6 +130,7 @@ class App.ChatWidget extends App.Controller
         'chat-message-new'
       )
     @el.find('#chat_content').show(100)
+    @el.find('#chat_content').removeClass('hide')
     @newMessage = false
 
     # hide
@@ -142,6 +143,7 @@ class App.ChatWidget extends App.Controller
   hide: =>
     @isShown = false
     @el.find('#chat_content').hide(100)
+    @el.find('#chat_content').addClass('hide')
     @el.find('#chat_toogle').html('&diams;');
 
   focusIn: =>

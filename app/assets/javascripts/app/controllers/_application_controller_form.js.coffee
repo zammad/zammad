@@ -362,10 +362,10 @@ class App.ControllerForm extends App.Controller
               params:
                 form_id: @form_id
             text:
-              uploadButton: '<i class="icon-attachment"></i>'
+              uploadButton: '<i class="glyphicon glyphicon-upload"></i>'
             template: '<div class="qq-uploader">' +
                         '<pre class="btn qq-upload-icon qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
-                        '<div class="btn qq-upload-icon qq-upload-button pull-right" style="">{uploadButtonText}</div>' +
+                        '<div class="btn btn-default qq-upload-icon2 qq-upload-button pull-right" style="">{uploadButtonText}</div>' +
                         '<ul class="qq-upload-list span5" style="margin-top: 10px;"></ul>' +
                       '</div>',
             classes:
@@ -1051,14 +1051,14 @@ class App.ControllerForm extends App.Controller
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.control-group').removeClass('hide')
+      el.find('[name="' + key + '"]').parents('.form-group').removeClass('hide')
       el.find('[name="' + key + '"]').removeClass('is-hidden')
 
   _hide: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.control-group').addClass('hide')
+      el.find('[name="' + key + '"]').parents('.form-group').addClass('hide')
       el.find('[name="' + key + '"]').addClass('is-hidden')
 
   # sort attribute.options
@@ -1347,18 +1347,18 @@ class App.ControllerForm extends App.Controller
   @validate: (data) ->
 
     # remove all errors
-    $(data.form).parents().find('.error').removeClass('error')
+    $(data.form).parents().find('.has-error').removeClass('has-error')
     $(data.form).parents().find('.help-inline').html('')
 
     # show new errors
     for key, msg of data.errors
-      $(data.form).parents().find('[name*="' + key + '"]').parents('div .control-group').addClass('error')
+      $(data.form).parents().find('[name*="' + key + '"]').parents('div .form-group').addClass('has-error')
       $(data.form).parents().find('[name*="' + key + '"]').parent().find('.help-inline').html(msg)
 
     # set autofocus
-    $(data.form).parents().find('.error').find('input, textarea').first().focus()
+    $(data.form).parents().find('.has-error').find('input, textarea').first().focus()
 
 #    # enable form again
-#    if $(data.form).parents().find('.error').html()
+#    if $(data.form).parents().find('.has-error').html()
 #      @formEnable(data.form)
 

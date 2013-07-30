@@ -45,13 +45,14 @@ class App.UserInfo extends App.Controller
 
     # insert data
     @html App.view('user_info')(
-      user: user,
-      data: data,
+      user: user
+      data: data
     )
 
     @userTicketPopups(
-      selector: '.user-tickets',
-      user_id:  user.id,
+      selector: '.user-tickets'
+      user_id:  user.id
+      position: 'right'
     )
 
   # update changes

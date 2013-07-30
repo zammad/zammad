@@ -1,4 +1,4 @@
-class App.Maintenance extends App.ControllerContent
+class Index extends App.ControllerContent
   events:
     'submit form': 'sendMessage'
 
@@ -23,5 +23,5 @@ class App.Maintenance extends App.ControllerContent
     )
     @render()
 
-App.Config.set( 'maintenance', App.Maintenance, 'Routes' )
-App.Config.set( 'maintenance', { prio: 3600, parent: '#admin', name: 'Maintenance Message', target: '#maintenance', role: ['Admin'] }, 'NavBar' )
+App.Config.set( 'Maintenance', { prio: 3600, name: 'Maintenances', parent: '#system', target: '#system/maintenances', controller: Index, role: ['Admin'] }, 'NavBarLevel44' )
+

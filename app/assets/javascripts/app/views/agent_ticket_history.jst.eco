@@ -1,9 +1,11 @@
-<div class="modal-header">
-  <a href="#" class="close">&times;</a>
-  <h2><%- @T( 'History' ) %></h2>
-  <a href="#" data-type="sortorder" id="sortorder" class="<%= @state %>"><%- @T( 'Change order' ) %></a>
-</div>
-<div class="modal-body">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <a href="#" class="close">&times;</a>
+      <h2 class="modal-title"><%- @T( 'History' ) %></h2>
+      <a href="#" data-type="sortorder" id="sortorder" class="<%= @state %>"><%- @T( 'Change order' ) %></a>
+    </div>
+    <div class="modal-body">
 
 <% open = false %>
 <% for object in @objects: %>
@@ -47,6 +49,9 @@
   </ul>
 <% end %>
 
-</div>
-<div class="modal-footer">
+    </div>
+
+    <div class="modal-footer">
+    </div>
+  </div>
 </div>

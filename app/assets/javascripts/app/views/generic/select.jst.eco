@@ -1,4 +1,4 @@
-<select id="<%= @attribute.id %>" class="<%= @attribute.class %>" name="<%= @attribute.name %>" <%= @attribute.multiple %> <%= @attribute.required %> <%= @attribute.autofocus %>>
+<select id="<%= @attribute.id %>" class="form-control <%= @attribute.class %>" name="<%= @attribute.name %>" <%= @attribute.multiple %> <%= @attribute.required %> <%= @attribute.autofocus %>>
 <% for row in @attribute.options: %>
   <option value="<%= row.value %>" <%= row.selected %> <%= row.disabled %>><%= row.name %></option>
 <% end %>

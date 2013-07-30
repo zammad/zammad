@@ -66,13 +66,13 @@ class App.Navigation extends App.Controller
     )
 
     # start ticket popups
-    @ticketPopups('right')
+    @ticketPopups('left')
 
     # start user popups
-    @userPopups('right')
+    @userPopups('left')
 
     # start oorganization popups
-    @organizationPopups('right')
+    @organizationPopups('left')
 
     # set focus to search box
     if @searchFocus
@@ -279,8 +279,8 @@ class App.Navigation extends App.Controller
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
 
   ticket_overview_build: (data) =>
-
     App.Store.write( 'navupdate_ticket_overview', data )
+    return
 
     # remove old views
     NavBar = @Config.get( 'NavBar' ) || {}
