@@ -11,7 +11,7 @@ class App.TicketArticle extends App.Model
       { name: 'body',                     display: 'Text',     tag: 'textarea', rows: 5,      limit: 100, null: false, class: 'span8',  },
       { name: 'ticket_article_type_id',   display: 'Type',     tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '', class: 'medium' },
       { name: 'ticket_article_sender_id', display: 'Sender',   tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '', class: 'medium' },
-      { name: 'internal',                 display: 'Visability', tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium' },
+      { name: 'internal',                 display: 'Visibility', tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium' },
     ]
 
   @_fillUp: (data) ->
