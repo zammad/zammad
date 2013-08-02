@@ -43,7 +43,6 @@ class Index extends App.ControllerContent
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
     type = $(e.target).data('type')
-    console.log 'ID', id, type
     if type is 'uninstall'
       httpType = 'DELETE'
 
