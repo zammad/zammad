@@ -25,6 +25,7 @@ class _trackSingleton
     @browser = App.Browser.detection()
     @data    = []
     @url     = 'https://portal.znuny.com/api/ui'
+#    @url     = 'api/ui'
 
     @log( 'start', 'notice', {} )
 
@@ -59,7 +60,7 @@ class _trackSingleton
       if settings.url.substr(0,length) isnt @url && settings.url.substr(0,6) isnt 'api/ui'
         level = 'notice'
         responseText = ''
-        if request.status > 200
+        if request.status >= 400
           level = 'error'
           responseText = request.responseText
         @log(
@@ -68,6 +69,7 @@ class _trackSingleton
           {
             type:         settings.type
             dataType:     settings.dataType
+            async:        settings.async
             url:          settings.url
             data:         settings.data
             status:       request.status
@@ -80,7 +82,8 @@ class _trackSingleton
       'beforeunload'
       =>
         @log( 'end', 'notice', {} )
-        @send()
+        @send(false)
+        return
     )
 
 
@@ -93,7 +96,7 @@ class _trackSingleton
       data:     args
     @data.push info
 
-  send: =>
+  send: (async = true) =>
     return if _.isEmpty @data
     newData = _.clone( @data )
     @data = []
@@ -109,10 +112,11 @@ class _trackSingleton
         newDataNew.push itemNew
       catch e
         # nothing
-      
+
     App.Com.ajax(
-      type:  'POST'
-      url:   @url
+      type:   'POST'
+      url:    @url
+      async:  async
       data:   JSON.stringify(
         track_id: @trackId
         log:      newDataNew
@@ -132,6 +136,9 @@ class _trackSingleton
     @data
 
 `
+window.onerror = function(errorMsg, url, lineNumber) {
+  console.error(errorMsg + " - in " + url + ", line " + lineNumber);
+};
 
 (function() {
   var console = window.console
