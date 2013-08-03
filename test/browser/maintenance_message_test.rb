@@ -32,19 +32,19 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'input[name="title"]',
+            :css     => '#content input[name="title"]',
             :value   => message,
           },
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'textarea[name="message"]',
+            :css     => '#content textarea[name="message"]',
             :value   => message,
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'button[type="submit"]',
+            :css     => '#content button[type="submit"]',
           },
           {
             :execute => 'wait',
@@ -97,19 +97,19 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'input[name="title"]',
+            :css     => '#content input[name="title"]',
             :value   => message + ' #2',
           },
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'textarea[name="message"]',
+            :css     => '#content textarea[name="message"]',
             :value   => message + ' #2',
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'button[type="submit"]',
+            :css     => '#content button[type="submit"]',
           },
           {
             :execute => 'wait',
@@ -162,24 +162,24 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'input[name="title"]',
+            :css     => '#content input[name="title"]',
             :value   => message + ' #3' ,
           },
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'textarea[name="message"]',
+            :css     => '#content textarea[name="message"]',
             :value   => message + ' #3',
           },
           {
             :where   => :instance1,
             :execute => 'setCheck',
-            :css     => 'input[name="reload"][value="1"]',
+            :css     => '#content input[name="reload"][value="1"]',
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'button[type="submit"]',
+            :css     => '#content button[type="submit"]',
           },
           {
             :execute => 'wait',
