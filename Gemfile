@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.14'
 
 # preparation for rails 4
 #gem 'rails', '4.0.0.rc1'
