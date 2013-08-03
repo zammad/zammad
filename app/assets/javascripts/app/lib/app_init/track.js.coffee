@@ -54,34 +54,24 @@ class _trackSingleton
     )
 
     # log ajax calls
-    $(document).bind( 'ajaxError', ( e, request, settings, exception ) =>
-      if status
-        @log(
-          'ajax.error',
-          'error',
-          {
-            type:         settings.type
-            dataType:     settings.dataType
-            url:          settings.url
-            data:         settings.data
-            status:       request.status
-            responseText: request.responseText
-          }
-        )
-    )
     $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
       length = @url.length
-      if settings.url.substr(0,length) isnt @url
+      if settings.url.substr(0,length) isnt @url && settings.url.substr(0,6) isnt 'api/ui'
+        level = 'notice'
+        responseText = ''
+        if request.status > 200
+          level = 'error'
+          responseText = request.responseText
         @log(
           'ajax.send',
-          'notice',
+          level,
           {
             type:         settings.type
             dataType:     settings.dataType
             url:          settings.url
             data:         settings.data
             status:       request.status
-#            responseText: request.responseText
+            responseText: responseText
           }
         )
     )
@@ -142,9 +132,6 @@ class _trackSingleton
     @data
 
 `
-window.onerror = function(errorMsg, url, lineNumber) {
-  console.error(errorMsg + " - in " + url + ", line " + lineNumber);
-};
 
 (function() {
   var console = window.console
