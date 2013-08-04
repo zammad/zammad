@@ -1,9 +1,6 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class SessionsController < ApplicationController
-  #  def create
-  #    render :text => request.env['rack.auth'].inspect
-  #  end
 
   # "Create" a login, aka "log the user in"
   def create
