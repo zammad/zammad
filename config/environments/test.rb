@@ -11,18 +11,19 @@ Zammad::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
+  config.assets.compress = false
+  config.assets.compile = true
+  config.assets.digest = true
+
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
-
-  # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -34,4 +35,11 @@ Zammad::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Disable request forgery protection in test environment
+  config.action_controller.allow_forgery_protection    = false
+
+  # autoload on
+  config.dependency_loading = true
+
 end
