@@ -434,7 +434,7 @@ class Edit extends App.Controller
         @el.find('.ticket-update').parent().addClass('form-changed')
         @el.find('.ticket-update').parent().parent().find('.reset-message').show()
         App.TaskManager.update( @task_key, { 'state': currentData })
-    @interval( update, 1500, 'autosave' )
+    @interval( update, 2800, 'autosave' )
 
   update: (e) =>
     e.preventDefault()
