@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
     # auth failed
     if !user
-      render :json => { :error => 'login failed' }, :status => :unprocessable_entity
+      render :json => { :error => 'login failed' }, :status => :unauthorized
       return
     end
 

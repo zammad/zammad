@@ -43,7 +43,7 @@ class _ajaxSingleton
       return if status is 0
 
       # do not show any error message on wrong login
-      return if status is 422
+      return if status is 401 && !settings.url.match('login')
 
       # do not show any error message with code 200
       return if status is 200
