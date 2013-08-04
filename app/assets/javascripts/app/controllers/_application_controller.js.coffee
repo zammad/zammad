@@ -10,7 +10,7 @@ class App.Controller extends Spine.Controller
     super
 
     # generate controllerId
-    @controllerId = 'controller-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+    @controllerId = 'controller-' + new Date().getTime() + '-' + Math.floor( Math.random() * 999999 )
 
     # apply to release controller on dom remove
     @el.on('remove', @releaseController)

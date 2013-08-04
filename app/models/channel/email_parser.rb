@@ -50,7 +50,7 @@ class Channel::EmailParser
     :x-zammad-owner    => 'some_owner_login',
 
     # article headers
-    :x-zammad-article-visability => 'internal',
+    :x-zammad-article-visibility => 'internal',
     :x-zammad-article-type       => 'agent',
     :x-zammad-article-sender     => 'customer',
 
@@ -380,7 +380,7 @@ class Channel::EmailParser
 
       # set attributes
       internal = false
-      if mail[ 'X-Zammad-Article-Visability'.to_sym ] && mail[ 'X-Zammad-Article-Visability'.to_sym ] == 'internal'
+      if mail[ 'X-Zammad-Article-Visibility'.to_sym ] && mail[ 'X-Zammad-Article-Visibility'.to_sym ] == 'internal'
         internal = true
       end
       article_attributes = {
