@@ -85,11 +85,12 @@ table th, table td {
 
 .content-two .sidebar {
   padding: 8px 10px;
-  width: 180px;
+  width: 200px;
   height: 100%;
   float: left;
   position: absolute;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .content-two .sidebar.nav-manage {
   padding-left: 16px;
@@ -117,12 +118,13 @@ table th, table td {
   width: 600px;
   height: 100%;
   float: left;
-  margin-left: 184px;
+  margin-left: 204px;
   padding-bottom: 10px;
   padding-left: 14px;
   border-left: 1px solid #eeeeee;
   position: absolute;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .content-two .main > .nav {
   margin-top: 12px;
@@ -132,11 +134,11 @@ table th, table td {
 }
 @media (min-width: 800px) {
   .content-two .sidebar {
-    width: 220px;
+    width: 240px;
   }
   .content-two .main {
-    width: 680px;
-    margin-left: 224px;
+    width: 660px;
+    margin-left: 244px;
   }
   .content-two .meta {
     display: none;
@@ -144,11 +146,11 @@ table th, table td {
 }
 @media (min-width: 1024px) {
   .content-two .sidebar {
-    width: 240px;
+    width: 260px;
   }
   .content-two .main {
-    width: 780px;
-    margin-left: 244px;
+    width: 760px;
+    margin-left: 264px;
   }
   .content-two .meta {
     display: none;
@@ -156,11 +158,11 @@ table th, table td {
 }
 @media (min-width: 1200px) {
   .content-two .sidebar {
-    width: 260px;
+    width: 280px;
   }
   .content-two .main {
-    width: 820px;
-    margin-left: 264px;
+    width: 800px;
+    margin-left: 284px;
   }
   .content-two .meta {
     width: 140px;
@@ -341,12 +343,18 @@ h3 {
 h4 {
   font-size: 20px;
 }
-h4 {
-  font-size: 14px;
+h5 {
+  font-size: 16px;
 }
 
+.form-group .help-message {
+  float: right;
+  margin-right: -23px;
+  margin-top: -23px;
+}
 .form-control {
-  height: 35px;
+  height: 33px;
+  font-size: 13px;
 }
 
 .form-large {
@@ -502,6 +510,17 @@ form.form-inline input[type="password"] {
 
 .edit {
   min-height:30px;
+  bottom: 0px;
+/*  position: fixed; */
+  padding: 2px 14px;
+  width: 720px;
+  margin-bottom: 0px;
+}
+.edit .form-group {
+  margin-bottom: 2px;
+}
+.edit .form-control {
+  height: 30px;
 }
 
 .edit:focus {
@@ -542,13 +561,37 @@ footer {
     margin-bottom: 5px;
 }
 
+.customer_info {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.customer_info ul.nav > li {
+  width: 50%;
+}
+.customer_info ul.nav > li > a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.customer_info .thumbnail {
+  position: absolute;
+  right: 14px;
+  top: 50px;
+}
+.customer_info textarea {
+  padding-left: 10px;
+  width: 100%;
+  border-color: #eee;
+}
+
 .ticket-action {
-  padding-left: 12px;
+  padding-left: 2px;
 }
 
 .ticket-answer .avatar {
   padding-left: 6px;
-  padding-top: 10px;
+  padding-top: 4px;
   width: 70px;
   float: left;
 }
@@ -556,6 +599,9 @@ footer {
   padding-left: 20px;
 }
 
+.ticket-update {
+  width: 100%;
+}
 .ticket-update .span2 {
   width: 160px;
   margin-right: 4px;
@@ -578,8 +624,13 @@ footer {
   border-bottom: 1px solid #eeeeee;
 }
 
+.article-content {
+  
+  margin-left: 70px;
+}
 .article-message {
-
+  padding: 4px 2px;
+/*
   margin-top: 0px;
   margin-bottom: 6px;
   margin-left: 10px;
@@ -591,6 +642,7 @@ footer {
   margin-left: 70px;
 
   min-height: 85px;
+*/
 }
 
 .show_toogle {
@@ -615,6 +667,7 @@ footer {
   background-color: #f2dede;
   border-color: #eed3d7;
   border: 1px solid #fbeed5;
+  border-radius: 2px;
 }
 
 .merged, .merge:hover {
@@ -635,6 +688,7 @@ footer {
 .nav .form-control {
   height: 34px;
   margin-top: 1px;
+  border-radius: 8px;
 }
 
 .nav .form-control {
@@ -651,6 +705,16 @@ footer {
 
 .navbar-nav > li > a {
   line-height: 18px;
+}
+
+.navbar .bell {
+  display: none;
+}
+.navbar .bell.show {
+  display: block;
+}
+.navbar .bell.show a {
+  color: #fff;
 }
 
 .nav.nav-tabs.nav-stacked > li > a > span {
@@ -677,9 +741,9 @@ footer {
 }
 
 .customer-info {
-  width:86%;
-  padding-top: 5px;
-  padding-left: 20px;
+  width: 100%;
+  padding-top: 7px;
+  padding-left: 7px;
   padding-right: 10px;
 }
 
@@ -760,14 +824,6 @@ footer {
   padding: 5px;
   background-color: transparent;
 }
-
-.chat {
-  padding: 0px 14px;
-  width: 200px;
-  margin-bottom: 0;
-  z-index: 1040;
-}
-
 
 .sub_attribute .control-label {
   width: 60px;
