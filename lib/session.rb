@@ -824,7 +824,9 @@ class ClientState
     self.user( ticket['owner_id'], users )
     self.user( ticket['customer_id'], users )
     self.user( ticket['created_by_id'], users )
-    self.user( ticket['updated_by_id'], users )
+    if ticket['updated_by_id']
+      self.user( ticket['updated_by_id'], users )
+    end
   end
 
   # add user if needed
