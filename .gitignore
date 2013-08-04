@@ -15,6 +15,7 @@
 /tmp/websocket/*
 /tmp/cache/*
 /tmp/pids/*
+/public/assets/*
 
 # Ignore .project files
 /.project
