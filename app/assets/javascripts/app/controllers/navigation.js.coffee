@@ -35,6 +35,13 @@ class App.Navigation extends App.Controller
       @recent_viewed_build(data)
       @render()
 
+    # bell on / bell off
+    @bind 'bell', (data) =>
+      if data is 'on'
+        @el.find('.bell').addClass('show')
+      else
+        @el.find('.bell').removeClass('show')
+
   render: () ->
     user      = App.Session.all()
     nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )

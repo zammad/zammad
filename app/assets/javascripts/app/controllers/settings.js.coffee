@@ -59,9 +59,8 @@ class Ticket extends App.ControllerTabs
 
     @render()
 
-App.Config.set( 'System', { prio: 1400, parent: '#settings', name: 'System', target: '#settings/system', controller: System, role: ['Admin'] }, 'NavBarLevel44' )
-App.Config.set( 'Security', { prio: 1500, parent: '#settings', name: 'Security', target: '#settings/security', controller: Security, role: ['Admin'] }, 'NavBarLevel44' )
-App.Config.set( 'Import', { prio: 1550, parent: '#settings', name: 'Import', target: '#settings/import', controller: Import, role: ['Admin'] }, 'NavBarLevel44' )
-App.Config.set( 'Ticket', { prio: 1600, parent: '#settings', name: 'Ticket', target: '#settings/ticket', controller: Ticket, role: ['Admin'] }, 'NavBarLevel44' )
+App.Config.set( 'SettingSystem', { prio: 1400, parent: '#settings', name: 'System', target: '#settings/system', controller: System, role: ['Admin'] }, 'NavBarLevel44' )
+App.Config.set( 'SettingSecurity', { prio: 1500, parent: '#settings', name: 'Security', target: '#settings/security', controller: Security, role: ['Admin'] }, 'NavBarLevel44' )
+App.Config.set( 'SettingImport', { prio: 1550, parent: '#settings', name: 'Import', target: '#settings/import', controller: Import, role: ['Admin'] }, 'NavBarLevel44' )
+App.Config.set( 'SettingTicket', { prio: 1600, parent: '#settings', name: 'Ticket', target: '#settings/ticket', controller: Ticket, role: ['Admin'] }, 'NavBarLevel44' )
 
-#App.Config.set( 'Object', { prio: 1700, parent: '#settings', name: 'Objects', target: '#settings/objects', role: ['Admin'] }, 'NavBar' )

@@ -29,7 +29,7 @@ class App.TagWidget extends App.Controller
       tag_id: @attribute_id
     )
     @el.find('#' + @attribute_id ).tagsInput(
-      width:       '150px'
+      width:       '236px'
       defaultText: App.i18n.translateContent('add a Tag')
       onAddTag:    @onAddTag
       onRemoveTag: @onRemoveTag

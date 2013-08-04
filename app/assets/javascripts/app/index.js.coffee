@@ -41,7 +41,9 @@ class App extends Spine.Controller
 
       # define linkify helper
       params.L = ( item ) ->
-        window.linkify( item )
+        if item && typeof item is 'string'
+          return window.linkify( item )
+        item
 
       # define config helper
       params.C = ( key ) ->

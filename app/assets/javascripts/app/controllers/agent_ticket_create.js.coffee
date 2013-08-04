@@ -190,7 +190,7 @@ class App.TicketCreate extends App.Controller
 
     # show template UI
     new App.TemplateUI(
-      el:          @el.find('[data-id="ticket_template"]')
+      el:          @el.find('.ticket_template')
       template_id: template['id']
     )
 
@@ -216,7 +216,7 @@ class App.TicketCreate extends App.Controller
 
     @userInfo(
       user_id:  params.customer_id
-      el:       @el.find('[data-id="customer_info"]')
+      el:       @el.find('.customer_info')
       callback: callback
     )
 

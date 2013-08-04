@@ -1,9 +1,9 @@
 <div class="content-two">
   <div class="sidebar">
     <div class="ticket-action">
-      <div data-id="customer_info"></div>
-      <div data-id="ticket_template"></div>
-      <div data-id="text_module"></div>
+      <div class="customer_info"></div>
+      <div class="ticket_template"></div>
+      <div class="text_module"></div>
     </div>
   </div>
 

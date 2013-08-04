@@ -345,12 +345,12 @@ class Edit extends App.Controller
 
     @configure_attributes_article = [
       { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium' },
+      { name: 'internal',                 display: 'Visability',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
       { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
       { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
 #      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
       { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
-      { name: 'internal',                 display: 'Visability',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
     ]
     if @isRole('Customer')
       @configure_attributes_article = [
@@ -435,7 +435,7 @@ class Edit extends App.Controller
         @el.find('.ticket-update').parent().parent().find('.reset-message').show()
         @el.find('.ticket-update').parent().parent().find('.reset-message').removeClass('hide')
         App.TaskManager.update( @task_key, { 'state': currentData })
-    @interval( update, 1500, 'autosave' )
+    @interval( update, 3000, 'autosave' )
 
   update: (e) =>
     e.preventDefault()

@@ -41,6 +41,8 @@
       </ul>
     </li>
 
+    <li class="bell"><a href="#bell" class="glyphicon glyphicon-bell"></a></li>
+
     <% for item in @navbar_right: %>
       <% if item.child: %>
         <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">

@@ -1,5 +1,5 @@
 <% for article in @articles: %>
-  <div class="article" data-id="<%= article.id %>" id="article-<%= article.id %>">
+  <div class="article clearfix" data-id="<%= article.id %>" id="article-<%= article.id %>">
     <div class="avatar thumbnails">
       <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
       <ul>
@@ -7,7 +7,8 @@
         <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="api/ticket_article_plain/<%= article.id %>"><%- @T( 'raw' ) %></a></li><% end %>
       </ul>
     </div>
-    <div class="article-message <% if article.internal is true: %> internal<% end %>">
+    <div class="article-message clearfix <% if article.internal is true: %> internal<% end %>">
+      <div class="article-content">
       <% if article.from: %>
         <div>
           <strong title="<%- @Ti( 'From' ) %>: <%= article.from %>"><%= article.from %></strong>
@@ -36,7 +37,8 @@
         <% end %>
         </div>
       <% end %>
-      <div style="white-space:pre-wrap;" class="article-content"><%- article.html %></div>
+      <div style="white-space:pre-wrap;" class=""><%- article.html %></div>
+      </div>
     </div>
   </div>
 <% end %>

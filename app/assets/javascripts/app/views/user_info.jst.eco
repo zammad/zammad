@@ -1,63 +1,82 @@
-<div class="">
+
+<ul class="nav nav-tabs" style="font-size: 12px;">
+  <li class="active"><a href="#" data-area="user-info"><%- @T('Customer') %></a></li>
+<% if @organization: %>
+  <li><a href="#" data-area="org-info"><%- @T( 'Organization' ) %></a></li>
+<% end %>
+<!--
+  <li class="active"><a href="#" data-area="user-info"><%= @user.displayName() %></a></li>
+<% if @organization: %>
+  <li><a href="#" data-area="org-info"><%- @P( @organization.displayName() ) %></a></li>
+<% end %>
+-->
+</ul>
+
+<div class="user-info">
+  <a href="#" data-type="edit-user" data-id="<%- @user.id %>" class="pull-right glyphicon glyphicon-edit"></a>
+  <!--
   <h3><%- @T( 'Customer' ) %> <a href="#" data-type="edit" class="glyphicon glyphicon-edit"></a></h3>
+  -->
 <% if @user.image: %>
   <img class="thumbnail" src="<%- @user.image %>" alt="">
 <% end %>
-  <div class="row">
-    <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></div>
-  </div>
-<% for row in @data: %>
+  <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></div>
+<% for row in @userData: %>
   <% if @user[row.name] || row.name is 'note': %>
-    <div class="row">
-      <% if row.tag isnt 'textarea': %>
-        <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
-      <% else: %>
-        <div class="customer-info" title="<%- @Ti( row.display ) %>">
-          <strong><%- @T( row.display ) %></strong><br/>
-          <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update"><%= @user[row.name] %></textarea>
-       </div>
-      <% end %>
-    </div>
+    <% if row.tag isnt 'textarea': %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
+    <% else: %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>">
+        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update-user" placeholder="<%- @T( row.display ) %>"><%= @user[row.name] %></textarea>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
-<% if @user['organization']: %>
-  <div class="row">
-    <div class="customer-info">
-      <strong><%- @T( 'Organization' ) %></strong><br/>
-      <%- @P( @user['organization'] ) %>
-    </div>
-  </div>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
-  <div class="row">
-    <div class="customer-info">
-      <strong><%- @T( 'Linked Accounts' ) %></strong><br/>
+  <div class="customer-info">
+    <strong><%- @T( 'Linked Accounts' ) %></strong><br/>
   <% for account of @user['accounts']: %>
-      <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
+    <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
   <% end %>
-    </div>
   </div>
 <% end %>
 <% if !_.isEmpty(@user['links']): %>
   <% for link in @user['links']: %>
-  <div class="row">
-    <div class="customer-info">
-      <strong><%- @T( link['title'] ) %></strong><br/>
-      <% for item in link['items']: %>
-        <% if item['url']: %>
-          <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
-        <% else: %>
-          <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
-        <% end %>
-          <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
-        <% if item['url']: %>
-          </a>
-        <% else: %>
-          </span>
-        <% end %>
+  <div class="customer-info">
+    <strong><%- @T( link['title'] ) %></strong><br/>
+    <% for item in link['items']: %>
+      <% if item['url']: %>
+        <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
+      <% else: %>
+        <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
       <% end %>
-    </div>
+        <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
+      <% if item['url']: %>
+        </a>
+      <% else: %>
+        </span>
+      <% end %>
+    <% end %>
   </div>
   <% end %>
 <% end %>
 </div>
+
+
+<% if @organization: %>
+<div class="org-info hide">
+  <a href="#" data-type="edit-org" data-id="<%- @organization.id %>" class="pull-right glyphicon glyphicon-edit"></a>
+  <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></div>
+<% for row in @organizationData: %>
+  <% if @organization[row.name] || row.name is 'note': %>
+    <% if row.tag isnt 'textarea': %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
+    <% else: %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>">
+        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update-org" placeholder="<%- @T( row.display ) %>"><%= @organization[row.name] %></textarea>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+</div>
+<% end %>
