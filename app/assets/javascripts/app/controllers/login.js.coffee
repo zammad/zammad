@@ -5,7 +5,7 @@ class Index extends App.ControllerContent
   constructor: ->
     super
 
-    # navigate to # if sesstion if exists
+    # navigate to # if session if exists
     if @Session.get( 'id' )
       @navigate '#'
       return
