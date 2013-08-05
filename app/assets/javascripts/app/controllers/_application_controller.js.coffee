@@ -473,7 +473,7 @@ class App.ControllerModal extends App.Controller
     data = $.extend({}, defaults, params)
     @el.modal(data)
 
-    @el.bind('hidden', =>
+    @el.bind('hidden.bs.modal', =>
 
       # navigate back to home page
 #      if @pageData && @pageData.home
