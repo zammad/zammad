@@ -10,7 +10,7 @@ class TicketsController < ApplicationController
     render :json => @tickets
   end
 
-  # GET /api/tickets/1
+  # GET /api/tickets/:id
   def show
     @ticket = Ticket.find( params[:id] )
 
@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
     render :json => @ticket, :status => :created
   end
 
-  # PUT /api/tickets/1
+  # PUT /api/tickets/:id
   def update
     @ticket = Ticket.find(params[:id])
 
@@ -94,7 +94,7 @@ class TicketsController < ApplicationController
     end
   end
 
-  # DELETE /api/tickets/1
+  # DELETE /api/tickets/:id
   def destroy
     @ticket = Ticket.find( params[:id] )
 
@@ -139,7 +139,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/ticket_history/1
+  # GET /api/ticket_history/:id
   def ticket_history
 
     # get ticket data
@@ -209,7 +209,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/ticket_merge_list/1
+  # GET /api/ticket_merge_list/:id
   def ticket_merge_list
 
     # get closed/open states
@@ -251,7 +251,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /ticket_merge/1/1
+  # GET /ticket_merge/:master_id/:slave_id
   def ticket_merge
 
     # check master ticket
@@ -305,7 +305,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /ticket_full/1
+  # GET /ticket_full/:id
   def ticket_full
 
     # permission check
