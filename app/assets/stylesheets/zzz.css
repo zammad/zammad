@@ -74,6 +74,18 @@ table th, table td {
   border-bottom: 1px solid #eeeeee;
 }
 
+.hero-two {
+  width: 100%;
+}
+.hero-two .hero-left {
+  width: 50%;
+  float: left;
+}
+.hero-two .hero-right {
+  width: 50%;
+  float: right;
+}
+
 .content-two {
   top: 80px;
   bottom: 0px;
@@ -270,7 +282,6 @@ table th, table td {
 }
 
 #task .task {
-  display: inline-block;
   max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -303,6 +314,7 @@ table th, table td {
 #task [data-type="close"] {
   margin-left: 5px;
   font-size: 10px;
+  vertical-align: middle;
 }
 
 #task .taskbar-items {
@@ -779,7 +791,7 @@ footer {
  * noty changes
  */
 .noty_bar.noty_layout_top {
-  top: 48px;
+  top: 56px;
   position: fixed;
   left: 50%;
   margin-left: -300px;
