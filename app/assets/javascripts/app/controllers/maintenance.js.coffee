@@ -23,5 +23,5 @@ class Index extends App.ControllerContent
     )
     @render()
 
-App.Config.set( 'Maintenance', { prio: 3600, name: 'Maintenances', parent: '#system', target: '#system/maintenances', controller: Index, role: ['Admin'] }, 'NavBarLevel44' )
+App.Config.set( 'Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, role: ['Admin'] }, 'NavBarLevel44' )
 
