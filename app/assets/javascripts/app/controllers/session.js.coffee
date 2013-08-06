@@ -19,7 +19,7 @@ class Session extends App.ControllerContent
     App.Com.ajax(
       id:    'sessions'
       type:  'GET'
-      url:   'api/sessions'
+      url:   @Config.get('api_path') + '/sessions'
       success: (data) =>
         @render(data)
     )
@@ -45,7 +45,7 @@ class Session extends App.ControllerContent
     App.Com.ajax(
       id:    'sessions/' + sessionId
       type:  'DELETE'
-      url:   'api/sessions/' + sessionId
+      url:   @Config.get('api_path') + '/sessions/' + sessionId
       success: (data) =>
         @load()
     )

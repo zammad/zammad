@@ -1,5 +1,6 @@
 class App.Model extends Spine.Model
   @destroyBind: false
+  @api_path: App.Config.get('api_path')
 
   constructor: ->
     super

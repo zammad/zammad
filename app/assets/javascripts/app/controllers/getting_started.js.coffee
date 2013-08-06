@@ -21,7 +21,7 @@ class Index extends App.ControllerContent
     App.Com.ajax(
       id:    'getting_started',
       type:  'GET',
-      url:   'api/getting_started',
+      url:   @Config.get('api_path') + '/getting_started',
       data:  {
 #        view:       @view,
       }

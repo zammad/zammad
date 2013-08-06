@@ -38,7 +38,7 @@ class App.ProfilePassword extends App.Controller
     App.Com.ajax(
       id:   'password_reset'
       type: 'POST'
-      url:  'api/users/password_change'
+      url:  @Config.get('api_path') + '/users/password_change'
       data: JSON.stringify(params)
       processData: true
       success: @success

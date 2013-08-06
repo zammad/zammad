@@ -3,7 +3,7 @@
 class SearchController < ApplicationController
   before_filter :authentication_check
 
-  # GET /api/search
+  # GET /api/v1/search
   def search
 
     # build result list

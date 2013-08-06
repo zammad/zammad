@@ -39,7 +39,7 @@ Example:
 =begin
 
 Resource:
-GET /api/users.json
+GET /api/v1/users.json
 
 Response:
 [
@@ -56,7 +56,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/users.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/users.json -v -u #{login}:#{password}
 
 =end
 
@@ -78,7 +78,7 @@ curl http://localhost/api/users.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/users/1.json
+GET /api/v1/users/1.json
 
 Response:
 {
@@ -88,7 +88,7 @@ Response:
 },
 
 Test:
-curl http://localhost/api/users/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/users/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -108,7 +108,7 @@ curl http://localhost/api/users/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/users.json
+POST /api/v1/users.json
 
 Payload:
 {
@@ -126,7 +126,7 @@ Response:
 },
 
 Test:
-curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"login": "some_login","firstname": "some firstname","lastname": "some lastname","email": "some@example.com"}'
+curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"login": "some_login","firstname": "some firstname","lastname": "some lastname","email": "some@example.com"}'
 
 =end
 
@@ -255,7 +255,7 @@ curl http://localhost/api/users.json -v -u #{login}:#{password} -H "Content-Type
 =begin
 
 Resource:
-PUT /api/users/#{id}.json
+PUT /api/v1/users/#{id}.json
 
 Payload:
 {
@@ -273,7 +273,7 @@ Response:
 },
 
 Test:
-curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"login": "some_login","firstname": "some firstname","lastname": "some lastname","email": "some@example.com"}'
+curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"login": "some_login","firstname": "some firstname","lastname": "some lastname","email": "some@example.com"}'
 
 =end
 
@@ -316,13 +316,13 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
     end
   end
 
-  # DELETE /api/users/1
+  # DELETE /api/v1/users/1
   def destroy
     return if deny_if_not_role('Admin')
     model_destory_render(User, params)
   end
 
-  # GET /api/users/search
+  # GET /api/v1/users/search
   def search
 
     if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
@@ -355,7 +355,7 @@ curl http://localhost/api/users/2.json -v -u #{login}:#{password} -H "Content-Ty
 =begin
 
 Resource:
-POST /api/users/password_reset
+POST /api/v1/users/password_reset
 
 Payload:
 {
@@ -368,7 +368,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/users/password_reset.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
+curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
 
 =end
 
@@ -391,7 +391,7 @@ curl http://localhost/api/users/password_reset.json -v -u #{login}:#{password} -
 =begin
 
 Resource:
-POST /api/users/password_reset_verify
+POST /api/v1/users/password_reset_verify
 
 Payload:
 {
@@ -405,7 +405,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/users/password_reset_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
+curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
 
 =end
 
@@ -425,7 +425,7 @@ curl http://localhost/api/users/password_reset_verify.json -v -u #{login}:#{pass
 =begin
 
 Resource:
-POST /api/users/password_change
+POST /api/v1/users/password_change
 
 Payload:
 {
@@ -439,7 +439,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
+curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
 
 =end
 
@@ -468,7 +468,7 @@ curl http://localhost/api/users/password_change.json -v -u #{login}:#{password} 
 =begin
 
 Resource:
-PUT /api/users/preferences.json
+PUT /api/v1/users/preferences.json
 
 Payload:
 {
@@ -482,7 +482,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/users/preferences.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
+curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
 
 =end
 
@@ -503,7 +503,7 @@ curl http://localhost/api/users/preferences.json -v -u #{login}:#{password} -H "
 =begin
 
 Resource:
-DELETE /api/users/account.json
+DELETE /api/v1/users/account.json
 
 Payload:
 {
@@ -517,7 +517,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/users/account.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
+curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
 
 =end
 

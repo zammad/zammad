@@ -12,7 +12,7 @@ class App.TagWidget extends App.Controller
     App.Com.ajax(
       id:    @attribute_id
       type:  'GET'
-      url:   'api/tags'
+      url:   @Config.get('api_path') + '/tags'
       data:
         object: @object_type
         o_id:   @object.id
@@ -42,7 +42,7 @@ class App.TagWidget extends App.Controller
   onAddTag: (item) =>
     App.Com.ajax(
       type:  'GET',
-      url:   'api/tags/add',
+      url:   @Config.get('api_path') + '/tags/add',
       data:
         object: @object_type,
         o_id:   @object.id,
@@ -55,7 +55,7 @@ class App.TagWidget extends App.Controller
   onRemoveTag: (item) =>
     App.Com.ajax(
       type:  'GET'
-      url:   'api/tags/remove'
+      url:   @Config.get('api_path') + '/tags/remove'
       data:
         object: @object_type
         o_id:   @object.id

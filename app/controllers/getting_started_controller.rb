@@ -5,7 +5,7 @@ class GettingStartedController < ApplicationController
 =begin
 
 Resource:
-GET /api/getting_started.json
+GET /api/v1/getting_started.json
 
 Response:
 {
@@ -23,7 +23,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/getting_started.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
 
 =end
 

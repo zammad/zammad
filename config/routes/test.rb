@@ -1,5 +1,5 @@
 module ExtraRoutes
-  def add(map)
+  def add(map, api_path)
 
     map.match '/tests-core',      :to => 'tests#core',  :via => :get
     map.match '/tests-form',      :to => 'tests#form',  :via => :get

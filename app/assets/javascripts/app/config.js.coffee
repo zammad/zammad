@@ -1,0 +1,1 @@
+App.Config.set('api_path', 'api/v1')

@@ -5,7 +5,7 @@ class App.Auth
     App.Com.ajax(
       id:     'login',
       type:   'POST',
-      url:     '/signin',
+      url:     App.Config.get('api_path') + '/signin',
       data:    JSON.stringify(params.data),
       success: (data, status, xhr) =>
 
@@ -26,7 +26,7 @@ class App.Auth
       id:    'login_check'
       async: false
       type:  'GET'
-      url:   '/signshow'
+      url:   App.Config.get('api_path') + '/signshow'
       success: (data, status, xhr) =>
 
         # set login (config, session, ...)
@@ -41,7 +41,7 @@ class App.Auth
     App.Com.ajax(
       id:   'logout'
       type: 'DELETE'
-      url:  '/signout'
+      url:  App.Config.get('api_path') + '/signout'
       success: =>
 
         # set logout (config, session, ...)

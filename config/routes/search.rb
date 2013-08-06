@@ -1,8 +1,8 @@
 module ExtraRoutes
-  def add(map)
+  def add(map, api_path)
 
     # search
-    map.match '/api/search',                  :to => 'search#search', :via => [:get, :post]
+    map.match api_path + '/search',        	:to => 'search#search', :via => [:get, :post]
 
   end
   module_function :add

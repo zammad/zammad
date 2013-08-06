@@ -13,6 +13,6 @@ Zammad::Application.routes.draw do
   files = Dir.glob( "#{dir}/routes/*.rb" )
   for file in files
     require file
-    ExtraRoutes.add(self)
+    ExtraRoutes.add(self, Rails.configuration.api_path)
   end
 end

@@ -25,7 +25,7 @@ Example:
 =begin
 
 Resource:
-GET /api/templates.json
+GET /api/v1/templates.json
 
 Response:
 [
@@ -42,7 +42,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/templates.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/templates.json -v -u #{login}:#{password}
 
 =end
 
@@ -54,7 +54,7 @@ curl http://localhost/api/templates.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/templates/#{id}.json
+GET /api/v1/templates/#{id}.json
 
 Response:
 {
@@ -64,7 +64,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/templates/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/templates/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -76,7 +76,7 @@ curl http://localhost/api/templates/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/templates.json
+POST /api/v1/templates.json
 
 Payload:
 {
@@ -92,7 +92,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -104,7 +104,7 @@ curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-
 =begin
 
 Resource:
-PUT /api/templates/{id}.json
+PUT /api/v1/templates/{id}.json
 
 Payload:
 {
@@ -120,7 +120,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -132,13 +132,13 @@ curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-
 =begin
 
 Resource:
-DELETE /api/templates/{id}.json
+DELETE /api/v1/templates/{id}.json
 
 Response:
 {}
 
 Test:
-curl http://localhost/api/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
 
 =end
 

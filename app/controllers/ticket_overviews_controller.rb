@@ -3,7 +3,7 @@
 class TicketOverviewsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /api/tickets
+  # GET /api/v1/tickets
   def show
 
     # get navbar overview data

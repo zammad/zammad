@@ -32,7 +32,7 @@ Example:
 =begin
 
 Resource:
-GET /api/postmaster_filters.json
+GET /api/v1/postmaster_filters.json
 
 Response:
 [
@@ -49,7 +49,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/postmaster_filters.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/postmaster_filters.json -v -u #{login}:#{password}
 
 =end
 
@@ -61,7 +61,7 @@ curl http://localhost/api/postmaster_filters.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/postmaster_filters/#{id}.json
+GET /api/v1/postmaster_filters/#{id}.json
 
 Response:
 {
@@ -71,7 +71,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/postmaster_filters/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/postmaster_filters/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -83,7 +83,7 @@ curl http://localhost/api/postmaster_filters/#{id}.json -v -u #{login}:#{passwor
 =begin
 
 Resource:
-POST /api/postmaster_filters.json
+POST /api/v1/postmaster_filters.json
 
 Payload:
 {
@@ -116,7 +116,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/postmaster_filters.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/postmaster_filters.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -128,7 +128,7 @@ curl http://localhost/api/postmaster_filters.json -v -u #{login}:#{password} -H 
 =begin
 
 Resource:
-PUT /api/postmaster_filters/{id}.json
+PUT /api/v1/postmaster_filters/{id}.json
 
 Payload:
 {
@@ -159,7 +159,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/postmaster_filters.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/postmaster_filters.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 

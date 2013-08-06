@@ -3,7 +3,7 @@
 class LinksController < ApplicationController
   before_filter :authentication_check
 
-  # GET /api/links
+  # GET /api/v1/links
   def index
     links = Link.list(
       :link_object       => params[:link_object],
@@ -39,7 +39,7 @@ class LinksController < ApplicationController
     }
   end
 
-  # POST /api/links/add
+  # POST /api/v1/links/add
   def add
 
     # lookup object id
@@ -59,7 +59,7 @@ class LinksController < ApplicationController
     end
   end
 
-  # DELETE /api/links/remove
+  # DELETE /api/v1/links/remove
   def remove
     link = Link.remove(params)
 

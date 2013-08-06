@@ -25,7 +25,7 @@ Example:
 =begin
 
 Resource:
-GET /api/organizations.json
+GET /api/v1/organizations.json
 
 Response:
 [
@@ -42,7 +42,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/organizations.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password}
 
 =end
 
@@ -63,7 +63,7 @@ curl http://localhost/api/organizations.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/organizations/#{id}.json
+GET /api/v1/organizations/#{id}.json
 
 Response:
 {
@@ -73,7 +73,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/organizations/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -96,7 +96,7 @@ curl http://localhost/api/organizations/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/organizations.json
+POST /api/v1/organizations.json
 
 Payload:
 {
@@ -114,7 +114,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/organizations.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true,"shared": true,"note": "some note"}'
+curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true,"shared": true,"note": "some note"}'
 
 =end
 
@@ -126,7 +126,7 @@ curl http://localhost/api/organizations.json -v -u #{login}:#{password} -H "Cont
 =begin
 
 Resource:
-PUT /api/organizations/{id}.json
+PUT /api/v1/organizations/{id}.json
 
 Payload:
 {
@@ -145,7 +145,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/organizations.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"id": 1,"name": "some_name","active": true,"shared": true,"note": "some note"}'
+curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"id": 1,"name": "some_name","active": true,"shared": true,"note": "some note"}'
 
 =end
 

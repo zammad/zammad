@@ -37,7 +37,7 @@ class App.ProfileLanguage extends App.Controller
     App.Com.ajax(
       id:   'preferences'
       type: 'PUT'
-      url:  'api/users/preferences'
+      url:  @Config.get('api_path') + '/users/preferences'
       data: JSON.stringify(params)
       processData: true
       success: @success

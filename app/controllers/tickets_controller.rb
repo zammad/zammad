@@ -3,14 +3,14 @@
 class TicketsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /api/tickets
+  # GET /api/v1/tickets
   def index
     @tickets = Ticket.all
 
     render :json => @tickets
   end
 
-  # GET /api/tickets/1
+  # GET /api/v1/tickets/1
   def show
     @ticket = Ticket.find( params[:id] )
 
@@ -20,7 +20,7 @@ class TicketsController < ApplicationController
     render :json => @ticket
   end
 
-  # POST /api/tickets
+  # POST /api/v1/tickets
   def create
     @ticket = Ticket.new( Ticket.param_validation( params[:ticket] ) )
 
@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
     render :json => @ticket, :status => :created
   end
 
-  # PUT /api/tickets/1
+  # PUT /api/v1/tickets/1
   def update
     @ticket = Ticket.find(params[:id])
 
@@ -94,7 +94,7 @@ class TicketsController < ApplicationController
     end
   end
 
-  # DELETE /api/tickets/1
+  # DELETE /api/v1/tickets/1
   def destroy
     @ticket = Ticket.find( params[:id] )
 
@@ -106,8 +106,8 @@ class TicketsController < ApplicationController
     head :ok
   end
 
-  # GET /api/ticket_customer
-  # GET /api/tickets_customer
+  # GET /api/v1/ticket_customer
+  # GET /api/v1/tickets_customer
   def ticket_customer
 
     # return result
@@ -120,7 +120,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/ticket_history/1
+  # GET /api/v1/ticket_history/1
   def ticket_history
 
     # get ticket data
@@ -190,7 +190,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/ticket_merge_list/1
+  # GET /api/v1/ticket_merge_list/1
   def ticket_merge_list
 
     ticket      = Ticket.find( params[:ticket_id] )
@@ -231,7 +231,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /ticket_merge/1/1
+  # GET /api/v1/ticket_merge/1/1
   def ticket_merge
 
     # check master ticket
@@ -285,7 +285,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /ticket_full/1
+  # GET /api/v1/ticket_full/1
   def ticket_full
 
     # permission check
@@ -380,7 +380,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /ticket_create/1
+  # GET /api/v1/ticket_create/1
   def ticket_create
 
     # get attributes to update
@@ -453,7 +453,7 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/tickets/search
+  # GET /api/v1/tickets/search
   def search
 
     # build result list

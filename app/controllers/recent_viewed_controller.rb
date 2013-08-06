@@ -6,7 +6,7 @@ class RecentViewedController < ApplicationController
 =begin
 
 Resource:
-GET /api/recent_viewed
+GET /api/v1/recent_viewed
 
 Response:
 {
@@ -14,7 +14,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/recent_viewed.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
+curl http://localhost/api/v1/recent_viewed.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
 
 =end
 

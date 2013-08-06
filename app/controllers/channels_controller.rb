@@ -70,7 +70,7 @@ Example:
 =begin
 
 Resource:
-GET /api/channels.json
+GET /api/v1/channels.json
 
 Response:
 [
@@ -89,7 +89,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/channels.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/channels.json -v -u #{login}:#{password}
 
 =end
 
@@ -101,7 +101,7 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/channels/#{id}.json
+GET /api/v1/channels/#{id}.json
 
 Response:
 {
@@ -112,7 +112,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/channels/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/channels/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -124,7 +124,7 @@ curl http://localhost/api/channels/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/channels.json
+POST /api/v1/channels.json
 
 Payload:
 {
@@ -148,7 +148,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -160,7 +160,7 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-T
 =begin
 
 Resource:
-PUT /api/channels/{id}.json
+PUT /api/v1/channels/{id}.json
 
 Payload:
 {
@@ -185,7 +185,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -197,13 +197,13 @@ curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-T
 =begin
 
 Resource:
-DELETE /api/channels/{id}.json
+DELETE /api/v1/channels/{id}.json
 
 Response:
 {}
 
 Test:
-curl http://localhost/api/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
 
 =end
 
