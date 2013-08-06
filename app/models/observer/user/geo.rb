@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
-require 'gmaps'
 
 class Observer::User::Geo < ActiveRecord::Observer
   observe 'user'
@@ -54,8 +53,13 @@ class Observer::User::Geo < ActiveRecord::Observer
     # return if no address is given
     return if address == ''
 
+    # load adapter
+    adapter = Setting.get('geo_backend')
+    return if !adapter
+    adapter_module = Object.const_get(adapter)
+
     # db lookup
-    latlng = Gmaps.geocode(address)
+    latlng = adapter_module.geocode(address)
     return if !latlng
 
     # store data

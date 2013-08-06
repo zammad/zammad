@@ -133,7 +133,28 @@ Setting.create_if_not_exists(
   :state       => 'DB',
   :frontend    => false
 )
-
+Setting.create_if_not_exists(
+  :title       => 'Geo Location Backend',
+  :name        => 'geo_backend',
+  :area        => 'System::Geo',
+  :description => 'Defines the backend for geo location lookups.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'geo_backend', 
+        :tag      => 'select',
+        :options  => {
+          '' => '-',
+          'Gmaps' => 'Google Maps',
+        },
+      },
+    ],
+  },
+  :state    => 'Gmaps',
+  :frontend => true
+)
 
 Setting.create_if_not_exists(
   :title       => 'New User Accounts',

@@ -40,9 +40,9 @@ module Zammad
       'observer::_ticket::_article::_communicate_facebook',
       'observer::_ticket::_article::_communicate_twitter',
       'observer::_ticket::_notification',
-      'observer::_tag::_ticket_history',
       'observer::_ticket::_reset_new_state',
       'observer::_ticket::_escalation_calculation',
+      'observer::_tag::_ticket_history',
       'observer::_user::_geo'
 
 
