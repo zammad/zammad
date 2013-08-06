@@ -1,6 +1,12 @@
-<div class="page-header">
-  <h1><%- @T( @head ) %> <small><!--<a href="#" data-type="settings" class="glyphicon glyphicon-edit">--></a></small></h1>
-</div>
+<div class="content-two">
+  <div class="sidebar">
+    <div class="side-overviews" id="sortable-sidebar"></div>
+  </div>
+  <div class="main">
+
+    <div class="page-header">
+      <h1><%- @T( @head ) %> <small><!--<a href="#" data-type="settings" class="glyphicon glyphicon-edit">--></a></small></h1>
+    </div>
 
   <div class="span9">
 <!--
@@ -14,6 +20,4 @@
 -->
     <div class="main-overviews" id="sortable"></div>
   </div>
-  <div class="span3">
-    <div class="side-overviews" id="sortable-sidebar"></div>
-  </div>
+</div>

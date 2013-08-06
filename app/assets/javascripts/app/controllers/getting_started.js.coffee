@@ -145,8 +145,10 @@ class Index extends App.ControllerContent
 #        type: 'success',
 #        msg: 'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
 
-    @el.find('.master_user').fadeOut('slow', =>
-      @el.find('.agent_user').fadeIn()
-    )
+    @el.find('.master_user').addClass('hide')
+    @el.find('.agent_user').removeClass('hide')
+#    @el.find('.master_user').fadeOut('slow', =>
+#      @el.find('.agent_user').fadeIn()
+#    )
 
 App.Config.set( 'getting_started', Index, 'Routes' )
