@@ -1,7 +1,7 @@
 class App.History extends App.Model
   @configure 'History', 'name'
   @extend Spine.Model.Ajax
-  @url: @api_path + '/histories'
+  @url: @apiPath + '/histories'
 
   @_fillUp: (data) ->
 

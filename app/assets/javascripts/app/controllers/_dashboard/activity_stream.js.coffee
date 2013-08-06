@@ -23,7 +23,7 @@ class App.DashboardActivityStream extends App.Controller
       App.Com.ajax(
         id:    'dashoard_activity_stream'
         type:  'GET'
-        url:   @Config.get('api_path') + '/activity_stream'
+        url:   @apiPath + '/activity_stream'
         data:  {
           limit: 8
         }

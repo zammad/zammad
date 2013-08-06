@@ -53,7 +53,7 @@ class App.ProfileLinkedAccounts extends App.Controller
     App.Com.ajax(
       id:   'account'
       type: 'DELETE'
-      url:  @Config.get('api_path') + '/users/account'
+      url:  @apiPath + '/users/account'
       data: JSON.stringify({ provider: provider, uid: uid })
       processData: true
       success: @success

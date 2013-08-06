@@ -42,7 +42,7 @@ class Index extends App.ControllerContent
       App.Com.ajax(
         id:    'ticket_overview_' + @key,
         type:  'GET',
-        url:   @Config.get('api_path') + '/ticket_overviews',
+        url:   @apiPath + '/ticket_overviews',
         data:  {
           view:       @view,
           view_mode:  @view_mode,
@@ -502,7 +502,7 @@ class Router extends App.Controller
     else
       App.Com.ajax(
         type:       'GET'
-        url:        @Config.get('api_path') + '/ticket_overviews'
+        url:        @apiPath + '/ticket_overviews'
         data:
           view:      @view
           array:     true
