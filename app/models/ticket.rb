@@ -520,11 +520,8 @@ class Ticket < ApplicationModel
   end
 
   def self.escalation_calculation_rebuild
-    ticket_state_list_open   = Ticket::State.where(
-      :state_type_id => Ticket::StateType.where(
-        :name => ['new','open', 'pending reminder', 'pending action']
-      )
-    )
+    ticket_state_list_open = Ticket::State.by_category( 'open' )
+    
     tickets = Ticket.where( :ticket_state_id => ticket_state_list_open )
     tickets.each {|ticket|
       ticket.escalation_calculation
@@ -691,6 +688,47 @@ class Ticket < ApplicationModel
     end
     self.callback_loop = true
     self.save
+  end
+
+=begin
+
+list tickets by customer groupd in state categroie open and closed
+
+  result = Ticket.list_by_customer(
+    :customer_id     => 123,
+    :limit           => 15, # optional, default 15
+  )
+
+returns
+
+  result = {
+    :open   => tickets_open,
+    :closed => tickets_closed,
+  }
+
+=end
+
+  def self.list_by_customer(data)
+
+    # get closed/open states
+    ticket_state_list_open   = Ticket::State.by_category( 'open' )
+    ticket_state_list_closed = Ticket::State.by_category( 'closed' )
+
+    # get tickets
+    tickets_open = Ticket.where(
+      :customer_id     => data[:customer_id],
+      :ticket_state_id => ticket_state_list_open
+    ).limit( data[:limit] || 15 ).order('created_at DESC')
+
+    tickets_closed = Ticket.where(
+      :customer_id     => data[:customer_id],
+      :ticket_state_id => ticket_state_list_closed
+    ).limit( data[:limit] || 15 ).order('created_at DESC')
+
+    return {
+      :open   => tickets_open,
+      :closed => tickets_closed,
+    }
   end
 
   private

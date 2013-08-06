@@ -110,32 +110,13 @@ class TicketsController < ApplicationController
   # GET /api/tickets_customer
   def ticket_customer
 
-    # get closed/open states
-    ticket_state_list_open   = Ticket::State.where(
-      :state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action'] )
-    )
-    ticket_state_list_closed = Ticket::State.where(
-      :state_type_id => Ticket::StateType.where( :name => ['closed'] )
-    )
-
-    # get tickets
-    tickets_open = Ticket.where(
-      :customer_id     => params[:customer_id],
-      :ticket_state_id => ticket_state_list_open
-    ).limit(15).order('created_at DESC')
-
-    tickets_closed = Ticket.where(
-      :customer_id     => params[:customer_id],
-      :ticket_state_id => ticket_state_list_closed
-    ).limit(15).order('created_at DESC')
-
     # return result
+    result = Ticket.list_by_customer(
+      :customer_id => params[:customer_id],
+      :limit       => 15,
+    )
     render :json => {
-      :tickets => {
-        :open   => tickets_open,
-        :closed => tickets_closed
-      }
-      # :users => users,
+      :tickets => result
     }
   end
 
@@ -212,12 +193,11 @@ class TicketsController < ApplicationController
   # GET /api/ticket_merge_list/1
   def ticket_merge_list
 
-    # get closed/open states
-    ticket_states   = Ticket::State.where(
-      :state_type_id => Ticket::StateType.where( :name => ['new','open', 'pending reminder', 'pending action', 'closed'] )
+    ticket      = Ticket.find( params[:ticket_id] )
+    ticket_list = Ticket.where(
+      :customer_id     => ticket.customer_id,
+      :ticket_state_id => Ticket::State.by_category( 'open' )
     )
-    ticket = Ticket.find( params[:ticket_id] )
-    ticket_list = Ticket.where( :customer_id => ticket.customer_id, :ticket_state_id => ticket_states )
     .where( 'id != ?', [ ticket.id ] )
     .order('created_at DESC')
     .limit(6)
