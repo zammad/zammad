@@ -4,10 +4,8 @@ require 'digest/sha2'
 require 'organization'
 
 class User < ApplicationModel
-  include Gmaps
-
-  before_create   :check_name, :check_email, :check_login, :check_image, :check_geo, :check_password
-  before_update   :check_password, :check_image, :check_geo, :check_email, :check_login_update
+  before_create   :check_name, :check_email, :check_login, :check_image, :check_password
+  before_update   :check_password, :check_image, :check_email, :check_login_update
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
@@ -380,73 +378,12 @@ class User < ApplicationModel
     return user
   end
 
-  # update all users geo data
-  def self.geo_update_all
-    User.all.each { |user|
-      user.geo_update
-      user.save
-    }
-  end
-
-  # update geo data of one user
-  def geo_update
-    address = ''
-    location = ['street', 'zip', 'city', 'country']
-    location.each { |item|
-      if self[item] && self[item] != ''
-        address = address + ',' + self[item]
-      end
-    }
-
-    # return if no address is given
-    return if address == ''
-
-    # dp lookup
-    latlng = Gmaps.geocode(address)
-    if latlng
-      self.preferences['lat'] = latlng[0]
-      self.preferences['lng'] = latlng[1]
-    end
-  end
-
   def update_last_login
     self.last_login = Time.now
     self.save
   end
 
   private
-  def check_geo
-
-    # geo update if no user exists
-    if !self.id
-      self.geo_update
-      return
-    end
-
-    location = ['street', 'zip', 'city', 'country']
-
-    # get current user data
-    current = User.where( :id => self.id ).first
-    return if !current
-
-    # check if geo update is needed
-    current_location = {}
-    location.each { |item|
-      current_location[item] = current[item]
-    }
-
-    # get full address
-    next_location = {}
-    location.each { |item|
-      next_location[item] = self[item]
-    }
-
-    # return if address hasn't changed and geo data is already available
-    return if ( current_location == next_location ) && ( self.preferences['lat'] && self.preferences['lng'] )
-
-    # geo update
-    self.geo_update
-  end
 
   def check_name
 
