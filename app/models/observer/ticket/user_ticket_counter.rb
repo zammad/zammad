@@ -14,25 +14,17 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
     return if !record.customer_id
 
     # open ticket count
-    ticket_state_open_ids = Cache.get( 'ticket::state_ids::open' )
-    if !ticket_state_open_ids
-      ticket_state_open_ids = self.state_ids( ['new','open', 'pending reminder', 'pending action'] )
-      Cache.write( 'ticket::state_ids::open', ticket_state_open_ids, { :expires_in => 1.hour } )
-    end
-    tickets_open = Ticket.where(
+    ticket_state_open = Ticket::State.by_category( 'open' )
+    tickets_open      = Ticket.where(
       :customer_id     => record.customer_id,
-      :ticket_state_id => ticket_state_open_ids,
+      :ticket_state_id => ticket_state_open,
     ).count()
 
     # closed ticket count
-    ticket_state_closed_ids = Cache.get( 'ticket::state_ids::closed' )
-    if !ticket_state_closed_ids
-      ticket_state_closed_ids = self.state_ids( ['closed'] )
-      Cache.write( 'ticket::state_ids::closed', ticket_state_closed_ids, { :expires_in => 1.hour } )
-    end
-    tickets_closed = Ticket.where(
+    ticket_state_closed = Ticket::State.by_category( 'closed' )
+    tickets_closed      = Ticket.where(
       :customer_id     => record.customer_id,
-      :ticket_state_id => ticket_state_closed_ids,
+      :ticket_state_id => ticket_state_closed,
     ).count()
 
     # check if update is needed
@@ -49,18 +41,6 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
     if need_update
       customer.save
     end
-  end
-
-  def state_ids(ticket_state_types)
-    ticket_state_types = Ticket::StateType.where(
-        :name => ticket_state_types,
-    )
-    ticket_states = Ticket::State.where( :state_type_id => ticket_state_types )
-    ticket_state_ids = []
-    ticket_states.each {|ticket_state|
-      ticket_state_ids.push ticket_state.id
-    }
-    ticket_state_ids
   end
 
 end

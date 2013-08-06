@@ -3,6 +3,29 @@
 class Translation < ApplicationModel
   before_create :set_initial
 
+  def self.list(locale)
+    translations = Translation.where( :locale => locale )
+    list = []
+    translations.each { |item|
+      data = [
+        item.id,
+        item.source,
+        item.target,
+      ]
+      list.push data
+    }
+
+    timestamp_map_default = 'yyyy-mm-dd HH:MM'
+    timestamp_map = {
+      :de => 'dd.mm.yyyy HH:MM',
+    }
+    timestamp = timestamp_map[ locale.to_sym ] || timestamp_map_default
+    return {
+      :list            => list,
+      :timestampFormat => timestamp,
+    }
+  end
+
   def self.translate(locale, string)
 
     # translate string
