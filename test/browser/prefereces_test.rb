@@ -28,22 +28,13 @@ class PreferencesTest < TestCase
             :value   => 1,
           },
           {
-            :execute => 'check',
-            :css     => '#language',
-            :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
             :execute => 'select',
-            :css     => '#language select[name="locale"]',
+            :css     => '.language_item select[name="locale"]',
             :value   => 'Deutsch',
           },
           {
             :execute => 'click',
-            :css     => '#language button',
+            :css     => '.content button[type="submit"]',
           },
           {
             :execute => 'wait',
@@ -62,12 +53,12 @@ class PreferencesTest < TestCase
           },
           {
             :execute => 'select',
-            :css     => '#language select[name="locale"]',
+            :css     => '.language_item select[name="locale"]',
             :value   => 'English (United States)',
           },
           {
             :execute => 'click',
-            :css     => '#language button',
+            :css     => '.content button[type="submit"]',
           },
           {
             :execute => 'wait',

@@ -9,7 +9,7 @@ class SettingTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#settings"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',

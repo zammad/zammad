@@ -237,7 +237,7 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => '.active button',
+            :css     => '.active button.submit',
           },
           {
             :execute => 'wait',

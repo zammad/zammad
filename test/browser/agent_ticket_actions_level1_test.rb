@@ -54,7 +54,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.active button',
+            :css     => '.active button.submit',
           },
           {
             :execute => 'wait',
@@ -111,7 +111,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.content_permanent.active button',
+            :css     => '.content_permanent.active button.submit',
           },
           {
             :execute => 'wait',
@@ -136,6 +136,10 @@ class AgentTicketActionLevel1Test < TestCase
       {
         :name     => 'agent ticket merge',
         :action   => [
+          {
+            :execute => 'click',
+            :css     => '.active .action',
+          },
           {
             :execute => 'click',
             :css     => '.active a[data-type="merge"]',
