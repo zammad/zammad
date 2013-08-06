@@ -1,7 +1,7 @@
 class App.Role extends App.Model
   @configure 'Role', 'name', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
-  @url: @api_path + '/roles'
+  @url: @apiPath + '/roles'
   @configure_attributes = [
     { name: 'name',       display: 'Name',    tag: 'input',   type: 'text', limit: 100, 'null': false, 'class': 'span4' },
     { name: 'note',       display: 'Note',    tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, 'null': true, 'class': 'span4' },

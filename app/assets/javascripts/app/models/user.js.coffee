@@ -1,7 +1,7 @@
 class App.User extends App.Model
   @configure 'User', 'login', 'firstname', 'lastname', 'email', 'web', 'password', 'phone', 'fax', 'mobile', 'street', 'zip', 'city', 'country', 'organization_id', 'department', 'note', 'role_ids', 'group_ids', 'active', 'invite', 'updated_at'
   @extend Spine.Model.Ajax
-  @url: @api_path + '/users'
+  @url: @apiPath + '/users'
 
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [

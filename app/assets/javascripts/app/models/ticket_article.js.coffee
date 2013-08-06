@@ -1,7 +1,7 @@
 class App.TicketArticle extends App.Model
   @configure 'TicketArticle', 'from', 'to', 'cc', 'subject', 'body', 'ticket_id', 'ticket_article_type_id', 'ticket_article_sender_id', 'internal', 'in_reply_to', 'form_id', 'updated_at'
   @extend Spine.Model.Ajax
-  @url: @api_path + '/ticket_articles'
+  @url: @apiPath + '/ticket_articles'
   @configure_attributes = [
       { name: 'ticket_id',                display: 'TicketID', null: false, readonly: 1, },
       { name: 'from',                     display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },

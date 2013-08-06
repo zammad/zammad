@@ -21,7 +21,7 @@ class App.DashboardRss extends App.Controller
       App.Com.ajax(
         id:    'dashboard_rss'
         type:  'GET'
-        url:   @Config.get('api_path') + '/rss_fetch'
+        url:   @apiPath + '/rss_fetch'
         data:  {
           limit: 8
           url:   'http://www.heise.de/newsticker/heise-atom.xml'

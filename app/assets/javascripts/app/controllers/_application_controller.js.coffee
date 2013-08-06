@@ -20,6 +20,9 @@ class App.Controller extends Spine.Controller
     @Config  = App.Config
     @Session = App.Session
 
+    # create common accessors
+    @apiPath = @Config.get('api_path')
+
   bind: (event, callback) =>
     App.Event.bind(
       event

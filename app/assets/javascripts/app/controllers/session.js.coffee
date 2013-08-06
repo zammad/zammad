@@ -20,7 +20,7 @@ class Index extends App.ControllerContent
     App.Com.ajax(
       id:    'sessions'
       type:  'GET'
-      url:   @Config.get('api_path') + '/sessions'
+      url:   @apiPath + '/sessions'
       success: (data) =>
         @render(data)
     )
@@ -46,7 +46,7 @@ class Index extends App.ControllerContent
     App.Com.ajax(
       id:    'sessions/' + sessionId
       type:  'DELETE'
-      url:   @Config.get('api_path') + '/sessions/' + sessionId
+      url:   @apiPath + '/sessions/' + sessionId
       success: (data) =>
         @load()
     )

@@ -16,7 +16,7 @@ class Index extends App.ControllerContent
     App.Com.ajax(
       id:    'packages',
       type:  'GET',
-      url:   @Config.get('api_path') + '/packages',
+      url:   @apiPath + '/packages',
       processData: true,
       success: (data) =>
         @render(data)
@@ -50,7 +50,7 @@ class Index extends App.ControllerContent
       App.Com.ajax(
         id:    'packages',
         type:  httpType,
-        url:   'api/packages',
+        url:   @apiPath + '/packages',
         data:  JSON.stringify( { id: id } ),
         processData: false,
         success: (data) =>
