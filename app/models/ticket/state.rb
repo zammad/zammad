@@ -10,6 +10,10 @@ list tickets by customer
 
   states = Ticket::State.by_category('open') # open|closed
 
+returns:
+
+  state objects
+
 =end
 
   def self.by_category(category)
@@ -23,5 +27,25 @@ list tickets by customer
       )
   	end
     raise "Unknown category '#{category}'"
+  end
+
+=begin
+
+check if state is ignored for escalation
+
+  ticket_state = Ticket::State.lookup( :name => 'state name' )
+
+  result = ticket_state.ignore_escalation?
+
+returns:
+
+  true/false
+
+=end
+
+  def ignore_escalation?
+  	ignore_escalation = ['removed', 'closed', 'merged']
+    return true if ignore_escalation.include?( self.name )
+    return false
   end
 end
