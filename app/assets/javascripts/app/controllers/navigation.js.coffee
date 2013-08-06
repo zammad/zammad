@@ -93,7 +93,7 @@ class App.Navigation extends App.Controller
       App.Com.ajax(
         id:    'ticket_search'
         type:  'GET'
-        url:   'api/search'
+        url:   @Config.get('api_path') + '/search'
         data:
           term: @term
         processData: true,

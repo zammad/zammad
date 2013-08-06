@@ -14,7 +14,7 @@ class App.LinkInfo extends App.Controller
     App.Com.ajax(
       id:    'links_' + @object.id + '_' + @object_type,
       type:  'GET',
-      url:   'api/links',
+      url:   @Config.get('api_path') + '/links',
       data:  {
         link_object:       @object_type,
         link_object_value: @object.id,
@@ -83,7 +83,7 @@ class App.LinkInfo extends App.Controller
     App.Com.ajax(
       id:    'links_remove_' + @object.id + '_' + @object_type,
       type:  'GET',
-      url:   'api/links/remove',
+      url:   @Config.get('api_path') + '/links/remove',
       data:  {
         link_type:                 link_type,
         link_object_source:        link_object_source,
@@ -126,7 +126,7 @@ class App.LinkAdd extends App.ControllerModal
     App.Com.ajax(
       id:    'links_add_' + @object.id + '_' + @object_type,
       type:  'GET',
-      url:   'api/links/add',
+      url:   @Config.get('api_path') + '/links/add',
       data:  {
         link_type:                params['link_type'],
         link_object_target:       'Ticket',

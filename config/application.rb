@@ -76,6 +76,9 @@ module Zammad
     # Use a different cache store in production
     config.cache_store = :file_store, 'tmp/cache/file_store'
 
+    # REST api path
+    config.api_path = '/api/v1'
+
     # Enable threaded mode
     config.threadsafe!
 

@@ -358,7 +358,7 @@ class App.ControllerForm extends App.Controller
         u = =>
           @el.find('#' + fileUploaderId ).fineUploader(
             request:
-              endpoint: 'api/ticket_attachment_new'
+              endpoint: App.Config.get('api_path') + '/ticket_attachment_new'
               params:
                 form_id: @form_id
             text:

@@ -76,75 +76,75 @@ class RestTest < ActiveSupport::TestCase
     )
 
     # not existing user
-    request = get( 'not_existing@example.com', 'adminpw', '/api/users')
+    request = get( 'not_existing@example.com', 'adminpw', '/api/v1/users')
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['error'], 'authentication failed' )
 
     # username auth, wrong pw
-    request = get( 'rest-admin', 'not_existing', '/api/users' )
+    request = get( 'rest-admin', 'not_existing', '/api/v1/users' )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data]['error'], 'authentication failed' )
 
     # email auth, wrong pw
-    request = get( 'rest-admin@example.com', 'not_existing', '/api/users' )
+    request = get( 'rest-admin@example.com', 'not_existing', '/api/v1/users' )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data]['error'], 'authentication failed' )
 
     # username auth
-    request = get( 'rest-admin', 'adminpw', '/api/users' )
+    request = get( 'rest-admin', 'adminpw', '/api/v1/users' )
     assert_equal( request[:response].status, 200 )
 
     # email auth
-    request = get( 'rest-admin@example.com', 'adminpw', '/api/users' )
+    request = get( 'rest-admin@example.com', 'adminpw', '/api/v1/users' )
     assert_equal( request[:response].status, 200 )
 
     # /users
 
     # index
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/users')
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/users')
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Array)
     assert( request[:data].length >= 3 )
 
     # show/:id
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/users/' + agent.id.to_s )
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/users/' + agent.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['email'], 'rest-agent@example.com')
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/users/' + customer_without_org.id.to_s )
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/users/' + customer_without_org.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['email'], 'rest-customer1@example.com')
 
     # index
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/users')
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/users')
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Array)
     assert_equal( request[:data].length, 1 )
 
     # show/:id
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/users/' + customer_without_org.id.to_s )
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/users/' + customer_without_org.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['email'], 'rest-customer1@example.com')
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/users/' + customer_with_org.id.to_s )
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/users/' + customer_with_org.id.to_s )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['email'], nil)
 
     # index
-    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/users')
+    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/v1/users')
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Array)
     assert_equal( request[:data].length, 1 )
 
     # show/:id
-    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/users/' + customer_with_org.id.to_s )
+    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/v1/users/' + customer_with_org.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['email'], 'rest-customer2@example.com')
-    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/users/' + customer_without_org.id.to_s )
+    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/v1/users/' + customer_without_org.id.to_s )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['email'], nil)
@@ -153,82 +153,82 @@ class RestTest < ActiveSupport::TestCase
     # /organizations
 
     # index
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/organizations')
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/organizations')
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Array)
     assert( request[:data].length >= 3 )
 
     # show/:id
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/organizations/' + organization.id.to_s )
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/organizations/' + organization.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['name'], 'Rest Org')
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/organizations/' + organization2.id.to_s )
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/organizations/' + organization2.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['name'], 'Rest Org #2')
 
     # index
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/organizations')
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/organizations')
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Array)
     assert_equal( request[:data].length, 0 )
 
     # show/:id
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/organizations/' + organization.id.to_s )
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/organizations/' + organization.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['name'], nil)
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/organizations/' + organization2.id.to_s )
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/organizations/' + organization2.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['name'], nil)
 
     # index
-    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/organizations')
+    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/v1/organizations')
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Array)
     assert_equal( request[:data].length, 1 )
 
     # show/:id
-    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/organizations/' + organization.id.to_s )
+    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/v1/organizations/' + organization.id.to_s )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['name'], 'Rest Org')
-    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/organizations/' + organization2.id.to_s )
+    request = get( 'rest-customer2@example.com', 'customer2pw', '/api/v1/organizations/' + organization2.id.to_s )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert_equal( request[:data]['name'], nil)
 
 
     # packages
-    request = get( 'rest-admin@example.com', 'adminpw', '/api/packages' )
+    request = get( 'rest-admin@example.com', 'adminpw', '/api/v1/packages' )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Hash)
     assert( request[:data]['packages'] )
 
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/packages' )
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/packages' )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert( !request[:data]['name'] )
 
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/packages' )
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/packages' )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert( !request[:data]['name'] )
 
     # settings
-    request = get( 'rest-admin@example.com', 'adminpw', '/api/settings' )
+    request = get( 'rest-admin@example.com', 'adminpw', '/api/v1/settings' )
     assert_equal( request[:response].status, 200 )
     assert_equal( request[:data].class, Array)
     assert( request[:data][0] )
 
-    request = get( 'rest-agent@example.com', 'agentpw', '/api/settings' )
+    request = get( 'rest-agent@example.com', 'agentpw', '/api/v1/settings' )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert( !request[:data]['name'] )
 
-    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/settings' )
+    request = get( 'rest-customer1@example.com', 'customer1pw', '/api/v1/settings' )
     assert_equal( request[:response].status, 401 )
     assert_equal( request[:data].class, Hash)
     assert( !request[:data]['name'] )

@@ -27,7 +27,7 @@ Example:
 =begin
 
 Resource:
-GET /api/text_modules.json
+GET /api/v1/text_modules.json
 
 Response:
 [
@@ -44,7 +44,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/text_modules.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password}
 
 =end
 
@@ -55,7 +55,7 @@ curl http://localhost/api/text_modules.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/text_modules/#{id}.json
+GET /api/v1/text_modules/#{id}.json
 
 Response:
 {
@@ -65,7 +65,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/text_modules/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/text_modules/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -76,7 +76,7 @@ curl http://localhost/api/text_modules/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/text_modules.json
+POST /api/v1/text_modules.json
 
 Payload:
 {
@@ -94,7 +94,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/text_modules.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -105,7 +105,7 @@ curl http://localhost/api/text_modules.json -v -u #{login}:#{password} -H "Conte
 =begin
 
 Resource:
-PUT /api/text_modules/{id}.json
+PUT /api/v1/text_modules/{id}.json
 
 Payload:
 {
@@ -123,7 +123,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/text_modules.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -134,13 +134,13 @@ curl http://localhost/api/text_modules.json -v -u #{login}:#{password} -H "Conte
 =begin
 
 Resource:
-DELETE /api/text_modules/{id}.json
+DELETE /api/v1/text_modules/{id}.json
 
 Response:
 {}
 
 Test:
-curl http://localhost/api/text_modules.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
 
 =end
 

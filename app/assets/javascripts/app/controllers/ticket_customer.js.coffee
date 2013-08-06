@@ -5,7 +5,7 @@ class App.TicketCustomer extends App.ControllerModal
 
   render: ->
     configure_attributes = [
-      { name: 'customer_id', display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span5', autocapitalize: false, help: 'Select the new customer of the Ticket.', source: 'api/users/search', minLengt: 2 },
+      { name: 'customer_id', display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span5', autocapitalize: false, help: 'Select the new customer of the Ticket.', source: @Config.get('api_path') + '/users/search', minLengt: 2 },
     ]
 
     @html App.view('agent_ticket_customer')()

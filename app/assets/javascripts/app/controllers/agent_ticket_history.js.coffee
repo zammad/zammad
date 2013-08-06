@@ -13,7 +13,7 @@ class App.TicketHistory extends App.ControllerModal
     App.Com.ajax(
       id:    'ticket_history',
       type:  'GET',
-      url:   'api/ticket_history/' + ticket_id,
+      url:   @Config.get('api_path') + '/ticket_history/' + ticket_id,
       success: (data, status, xhr) =>
         # remember ticket
         @ticket = data.ticket

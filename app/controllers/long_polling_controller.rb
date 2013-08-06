@@ -2,7 +2,7 @@
 
 class LongPollingController < ApplicationController
 
-  # GET /api/message_send
+  # GET /api/v1/message_send
   def message_send
     new_connection = false
 
@@ -104,7 +104,7 @@ class LongPollingController < ApplicationController
     end
   end
 
-  # GET /api/message_receive
+  # GET /api/v1/message_receive
   def message_receive
 
     # check client id

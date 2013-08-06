@@ -16,7 +16,7 @@ class Index extends App.ControllerContent
     App.Com.ajax(
       id:    'packages',
       type:  'GET',
-      url:   'api/packages',
+      url:   @Config.get('api_path') + '/packages',
       processData: true,
       success: (data) =>
         @render(data)

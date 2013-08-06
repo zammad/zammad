@@ -6,7 +6,7 @@ class RssController < ApplicationController
 =begin
 
 Resource:
-GET /api/rss_fetch
+GET /api/v1/rss_fetch
 
 Response:
 {
@@ -14,7 +14,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/rss_fetch.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
+curl http://localhost/api/v1/rss_fetch.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
 
 =end
 

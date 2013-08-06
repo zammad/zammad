@@ -2,18 +2,29 @@
 
 class Translation < ApplicationModel
   before_create :set_initial
+  after_create  :cache_clear
+  after_update  :cache_clear
+  after_destroy :cache_clear
 
   def self.list(locale)
-    translations = Translation.where( :locale => locale )
-    list = []
-    translations.each { |item|
-      data = [
-        item.id,
-        item.source,
-        item.target,
-      ]
-      list.push data
-    }
+
+    # check cache
+    list = cache_get( locale )
+    if !list
+      list = []
+      translations = Translation.where( :locale => locale.downcase )
+      translations.each { |item|
+        data = [
+          item.id,
+          item.source,
+          item.target,
+        ]
+        list.push data
+      }
+
+      # set cache
+      cache_set( locale, list )
+    end
 
     timestamp_map_default = 'yyyy-mm-dd HH:MM'
     timestamp_map = {
@@ -46,5 +57,14 @@ class Translation < ApplicationModel
   private
   def set_initial
     self.target_initial = self.target
+  end
+  def cache_clear
+    Cache.delete( 'Translation::' + self.locale.downcase )
+  end
+  def self.cache_set(locale, data)
+    Cache.write( 'Translation::' + locale.downcase, data )
+  end
+  def self.cache_get(locale)
+    Cache.get( 'Translation::' + locale.downcase )
   end
 end

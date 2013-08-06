@@ -103,7 +103,7 @@ class _i18nSingleton extends Spine.Module
     App.Com.ajax(
       id:    'i18n-set-' + locale,
       type:   'GET',
-      url:    '/translations/lang/' + locale,
+      url:    App.Config.get('api_path') + '/translations/lang/' + locale,
       async:  false,
       success: (data, status, xhr) =>
 

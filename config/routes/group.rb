@@ -1,11 +1,11 @@
 module ExtraRoutes
-  def add(map)
+  def add(map, api_path)
 
     # groups
-    map.match '/api/groups',                       :to => 'groups#index',  :via => :get
-    map.match '/api/groups/:id',                   :to => 'groups#show',   :via => :get
-    map.match '/api/groups',                       :to => 'groups#create', :via => :post
-    map.match '/api/groups/:id',                   :to => 'groups#update', :via => :put
+    map.match api_path + '/groups',                     :to => 'groups#index',  :via => :get
+    map.match api_path + '/groups/:id',                 :to => 'groups#show',   :via => :get
+    map.match api_path + '/groups',                     :to => 'groups#create', :via => :post
+    map.match api_path + '/groups/:id',                 :to => 'groups#update', :via => :put
 
   end
   module_function :add

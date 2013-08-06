@@ -1,11 +1,11 @@
 module ExtraRoutes
-  def add(map)
+  def add(map, api_path)
 
     # roles
-    map.match '/api/roles',                       :to => 'roles#index',   :via => :get
-    map.match '/api/roles/:id',                   :to => 'roles#show',    :via => :get
-    map.match '/api/roles',                       :to => 'roles#create',  :via => :post
-    map.match '/api/roles/:id',                   :to => 'roles#update',  :via => :put
+    map.match api_path + '/roles',            :to => 'roles#index',   :via => :get
+    map.match api_path + '/roles/:id',        :to => 'roles#show',    :via => :get
+    map.match api_path + '/roles',            :to => 'roles#create',  :via => :post
+    map.match api_path + '/roles/:id',        :to => 'roles#update',  :via => :put
 
   end
   module_function :add

@@ -67,7 +67,7 @@ class App.TicketZoom extends App.Controller
     App.Com.ajax(
       id:    'ticket_zoom_' + ticket_id
       type:  'GET'
-      url:   'api/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
+      url:   @Config.get('api_path') + '/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
       data:
         view: @view
       processData: true

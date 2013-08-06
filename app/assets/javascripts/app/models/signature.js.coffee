@@ -1,7 +1,7 @@
 class App.Signature extends App.Model
   @configure 'Signature', 'name', 'body', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
-  @url: 'api/signatures'
+  @url: @api_path + '/signatures'
 
   @configure_attributes = [
     { name: 'name',                 display: 'Name',              tag: 'input',    type: 'text', limit: 100, 'null': false, 'class': 'span4' },

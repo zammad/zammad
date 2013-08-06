@@ -53,7 +53,7 @@ class Index extends App.Controller
     App.Com.ajax(
       id:   'account'
       type: 'DELETE'
-      url:  'api/users/account'
+      url:  @Config.get('api_path') + '/users/account'
       data: JSON.stringify({ provider: provider, uid: uid })
       processData: true
       success: @success

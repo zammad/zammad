@@ -27,7 +27,7 @@ Example:
 =begin
 
 Resource:
-GET /api/groups.json
+GET /api/v1/groups.json
 
 Response:
 [
@@ -44,7 +44,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/groups.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/groups.json -v -u #{login}:#{password}
 
 =end
 
@@ -55,7 +55,7 @@ curl http://localhost/api/groups.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/groups/#{id}.json
+GET /api/v1/groups/#{id}.json
 
 Response:
 {
@@ -65,7 +65,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/groups/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/groups/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -76,7 +76,7 @@ curl http://localhost/api/groups/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/groups.json
+POST /api/v1/groups.json
 
 Payload:
 {
@@ -96,7 +96,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -108,7 +108,7 @@ curl http://localhost/api/groups.json -v -u #{login}:#{password} -H "Content-Typ
 =begin
 
 Resource:
-PUT /api/groups/{id}.json
+PUT /api/v1/groups/{id}.json
 
 Payload:
 {
@@ -128,7 +128,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
