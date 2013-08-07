@@ -23,6 +23,12 @@ class App.Controller extends Spine.Controller
     # create common accessors
     @apiPath = @Config.get('api_path')
 
+    # remember ajax calls to abort them on dom release
+    @ajaxCalls = []
+    @ajax = (data) =>
+      ajaxId = App.Ajax.request(data)
+      @ajaxCalls.push ajaxId
+
   bind: (event, callback) =>
     App.Event.bind(
       event
@@ -53,6 +59,9 @@ class App.Controller extends Spine.Controller
     App.Event.unbindLevel(@controllerId)
     App.Delay.clearLevel(@controllerId)
     App.Interval.clearLevel(@controllerId)
+    if @ajaxCalls
+      for callId in @ajaxCalls
+        App.Ajax.abort(callId)
 
   release: =>
     # release custom bindings after it got removed from dom
@@ -73,7 +82,6 @@ class App.Controller extends Spine.Controller
     App.Delay.reset()
     App.Interval.reset()
     App.WebSocket.close( force: true )
-
 
   # add @notify methode to create notification
   notify: (data) ->
@@ -376,7 +384,7 @@ class App.Controller extends Spine.Controller
 
     # get data
     tickets = {}
-    App.Com.ajax(
+    App.Ajax.request(
       type:  'GET',
       url:   @Config.get('api_path') + '/ticket_customer',
       data:  {

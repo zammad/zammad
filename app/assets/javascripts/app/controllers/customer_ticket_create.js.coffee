@@ -34,7 +34,7 @@ class Index extends App.ControllerContent
 
       @render()
     else
-      App.Com.ajax(
+      @ajax(
         id:    'ticket_create',
         type:  'GET',
         url:   @apiPath + '/ticket_create',

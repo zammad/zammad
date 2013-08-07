@@ -8,7 +8,7 @@ class App.DashboardRecentViewed extends App.Controller
     @items = []
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'dashboard_recent_viewed',
       type:  'GET',
       url:   @apiPath + '/recent_viewed',

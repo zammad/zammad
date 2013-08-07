@@ -20,7 +20,7 @@ class App.DashboardActivityStream extends App.Controller
 
     # init fetch via ajax, all other updates on time via websockets
     else
-      App.Com.ajax(
+      @ajax(
         id:    'dashoard_activity_stream'
         type:  'GET'
         url:   @apiPath + '/activity_stream'

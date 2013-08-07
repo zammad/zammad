@@ -291,7 +291,7 @@ class _webSocketSingleton extends App.Controller
     if @_ajaxInitWorking
       @_ajaxInitWorking.abort()
     # call init request
-    @_ajaxInitWorking = App.Com.ajax(
+    @_ajaxInitWorking = App.Ajax.request(
       type:  'POST'
       url:   @Config.get('api_path') + '/message_send'
       data:  JSON.stringify({ data: { action: 'login' }  })
@@ -327,7 +327,7 @@ class _webSocketSingleton extends App.Controller
   _ajaxSendQueue: =>
     while !_.isEmpty(@queue)
       data = @queue.shift()
-      App.Com.ajax(
+      App.Ajax.request(
         type:  'POST'
         url:   @Config.get('api_path') + '/message_send'
         data:  JSON.stringify({ client_id: @client_id, data: data })
@@ -346,7 +346,7 @@ class _webSocketSingleton extends App.Controller
     return if !@client_id
     return if @_ajaxReceiveWorking is true
     @_ajaxReceiveWorking = true
-    App.Com.ajax(
+    App.Ajax.request(
       id:    'message_receive',
       type:  'POST'
       url:   @Config.get('api_path') + '/message_receive'

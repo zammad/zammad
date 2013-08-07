@@ -113,7 +113,7 @@ class _trackSingleton
       catch e
         # nothing
 
-    App.Com.ajax(
+    App.Ajax.request(
       type:   'POST'
       url:    @url
       async:  async

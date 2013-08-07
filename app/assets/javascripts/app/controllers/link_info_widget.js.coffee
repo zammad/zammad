@@ -11,7 +11,7 @@ class App.LinkInfo extends App.Controller
   fetch: () =>
     # fetch item on demand
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'links_' + @object.id + '_' + @object_type,
       type:  'GET',
       url:   @apiPath + '/links',
@@ -80,7 +80,7 @@ class App.LinkInfo extends App.Controller
     link_object_target_value = @object.id
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'links_remove_' + @object.id + '_' + @object_type,
       type:  'GET',
       url:   @apiPath + '/links/remove',
@@ -123,7 +123,7 @@ class App.LinkAdd extends App.ControllerModal
     params = @formParam(e.target)
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'links_add_' + @object.id + '_' + @object_type,
       type:  'GET',
       url:   @apiPath + '/links/add',
