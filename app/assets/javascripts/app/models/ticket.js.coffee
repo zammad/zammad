@@ -33,17 +33,29 @@ class App.Ticket extends App.Model
 
     # customer
     if data.customer_id
-      data.customer = App.User.find( data.customer_id )
+      if !App.User.exists( data.customer_id )
+        console.error("Can't find user for data.customer_id #{data.customer_id} for ticket #{data.id}")
+      else
+        data.customer = App.User.find( data.customer_id )
 
     # owner
     if data.owner_id
-      data.owner = App.User.find( data.owner_id )
+      if !App.User.exists( data.owner_id )
+        console.error("Can't find user for data.owner_id #{data.owner_id} for ticket #{data.id}")
+      else
+        data.owner = App.User.find( data.owner_id )
 
     # add created & updated
     if data.created_by_id
-      data.created_by = App.User.find( data.created_by_id )
+      if !App.User.exists( data.created_by_id )
+        console.error("Can't find user for data.created_by_id #{data.created_by_id} for ticket #{data.id}")
+      else
+        data.created_by = App.User.find( data.created_by_id )
     if data.updated_by_id
-      data.updated_by = App.User.find( data.updated_by_id )
+      if !App.User.exists( data.updated_by_id )
+        console.error("Can't find user for data.updated_by_id #{data.updated_by_id} for ticket #{data.id}")
+      else
+        data.updated_by = App.User.find( data.updated_by_id )
 
     data
 
