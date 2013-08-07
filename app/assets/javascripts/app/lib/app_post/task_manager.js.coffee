@@ -130,8 +130,9 @@ class _taskManagerSingleton extends App.Controller
 
     # create new task if not exists
     task = @get( key )
-    #console.log('add', key, callback, params, to_not_show, task)
+    console.log('add', key, callback, params, to_not_show, task)
     if !task
+      console.log('add, create new taskbar in backend')
       task = new App.Taskbar
       task.load(
         key:      key
@@ -211,7 +212,7 @@ class _taskManagerSingleton extends App.Controller
 
   startController: (key, callback, params, to_not_show) =>
 
-#    console.log('controller started...', callback, key, params)
+    console.log('controller start try...', callback, key)
 
     # activate controller
     worker = @worker( key )
@@ -221,6 +222,7 @@ class _taskManagerSingleton extends App.Controller
     # return if controller is already started
     return if @workersStarted[key]
     @workersStarted[key] = true
+    console.log('controller start now...', callback, key)
 
     # create new controller instanz
     params_app = _.clone(params)
@@ -231,11 +233,14 @@ class _taskManagerSingleton extends App.Controller
       params_app['doNotLog'] = 1
     a = new App[callback]( params_app )
     @workers[ key ] = a
+    console.log('controller start now 2...', callback, key)
 
     # activate controller
     if !to_not_show
+      console.log('controller start now 2 activate...', callback, key)
       a.activate()
 
+    console.log('controller start now 2 return...', callback, key)
     return a
 
   get: ( key ) =>
