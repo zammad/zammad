@@ -144,6 +144,10 @@ class AgentUserManageTest < TestCase
             :value   => :tab,
           },
           {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
             :execute      => 'match',
             :css          => '.active input[name="customer_id"]',
             :value        => '^[0-9].?$',
