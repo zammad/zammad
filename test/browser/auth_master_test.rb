@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'browser_test_helper'
- 
+
 class AuthMasterTest < TestCase
   def test_authentication
     tests = [
