@@ -8,7 +8,7 @@ Presort of group (highest sort priority).
 
 X-Zammad-Owner: [login of agent]
 --------------------------------
-Assigne ticket to agent.
+Assign ticket to agent.
 
 X-Zammad-Ignore: [yes|true]
 -------------------------
@@ -26,9 +26,9 @@ X-Zammad-Article-Type: (email|phone|fax|sms|webrequest|note|twitter status|direc
 -------------------------------------------------------------------------------------------------------
 Article type (for whole list check your database).
 
-X-Zammad-Article-Visability: (internal|external)
+X-Zammad-Article-Visibility: (internal|external)
 ------------------------------------------------
-Article visability.
+Article visibility.
 
 X-Zammad-Customer-Email: [email address]
 ----------------------------------------
