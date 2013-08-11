@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Origin']      = '*'
     headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
     headers['Access-Control-Max-Age']           = '1728000'
-    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
+    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     if request.method == 'OPTIONS'
       headers['Access-Control-Allow-Origin']      = '*'
       headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
-      headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
+      headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
       headers['Access-Control-Max-Age']           = '1728000'
       headers['Access-Control-Allow-Credentials'] = 'true'
       render :text => '', :content_type => 'text/plain'
