@@ -55,15 +55,10 @@ class SignupTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 2,
           },
 
           # check action
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
           {
             :execute => 'check',
             :css     => '#form-signup',

@@ -12,10 +12,6 @@ class CustomerTicketCreateTest < TestCase
             :css     => 'a[href="#customer_ticket_new"]',
           },
           {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
             :execute => 'check',
             :css     => '.ticket-create',
             :result  => true,
@@ -46,11 +42,6 @@ class CustomerTicketCreateTest < TestCase
           {
             :execute => 'wait',
             :value   => 3,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
           },
           {
             :execute => 'check',

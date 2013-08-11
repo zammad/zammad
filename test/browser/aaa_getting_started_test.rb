@@ -10,10 +10,6 @@ class AaaGettingStartedTest < TestCase
         :url      => browser_url + '/',
         :action   => [
           {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
             :execute => 'check',
             :css     => '#form-master',
             :result  => true,
@@ -54,12 +50,7 @@ class AaaGettingStartedTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :value   => 3,
           },
           {
             :execute => 'check',
@@ -79,10 +70,6 @@ class AaaGettingStartedTest < TestCase
             :css          => 'body',
             :value        => 'Invite Agents',
             :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
           },
           {
             :execute => 'set',

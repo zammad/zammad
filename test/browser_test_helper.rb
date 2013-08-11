@@ -211,13 +211,11 @@ puts "NOTICE #{Time.now.to_s}: " + action.inspect
     elsif action[:element] == :alert
       element = instance.switch_to.alert
     elsif action[:execute] == 'login'
-      sleep 1
-      login = instance.find_element( { :css => '#login' } )
-      if !login
+      element = instance.find_element( { :css => '#login input[name="username"]' } )
+      if !element
         assert( false, "(#{test[:name]}) no login box found!" )
         return
       end
-      element = instance.find_element( { :css => '#login input[name="username"]' } )
       element.clear
       element.send_keys( action[:username] )
       element = instance.find_element( { :css => '#login input[name="password"]' } )
@@ -241,13 +239,12 @@ puts "NOTICE #{Time.now.to_s}: " + action.inspect
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
       instance.find_element( { :css => 'a[href="#ticket_create/call_inbound"]' } ).click
-      sleep 4
       element = instance.find_element( { :css => '.active .ticket_create' } )
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
         return
       end
-      sleep 5
+      sleep 4
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.clear
       element.send_keys( 'ma' )

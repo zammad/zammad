@@ -38,10 +38,6 @@ class AuthTest < TestCase
         :name     => 'login',
         :action   => [
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
             :execute => 'check',
             :css     => '#login',
             :result  => true,

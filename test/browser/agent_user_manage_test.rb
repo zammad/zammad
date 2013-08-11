@@ -24,10 +24,6 @@ class AgentUserManageTest < TestCase
             :css     => 'a[href="#ticket_create/call_inbound"]',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
             :execute => 'click',
             :css     => '.active .customer_new',
           },
@@ -76,10 +72,6 @@ class AgentUserManageTest < TestCase
           },
 
           # call new ticket screen again
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
           {
             :execute => 'click',
             :css     => '.taskbar span[data-type="close"]',
