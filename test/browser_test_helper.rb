@@ -23,19 +23,14 @@ class TestCase < Test::Unit::TestCase
     if !@browsers
       @browsers = []
     end
-    if !ENV['REMOTE_URL']
+    if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
       local_browser = Selenium::WebDriver.for( browser.to_sym )
       browser_instance_preferences(local_browser)
       @browsers.push local_browser
       return local_browser
     end
 
-    caps = Selenium::WebDriver::Remote::Capabilities.send(
-      browser,
-      #:forceCreateProcess => true,
-      #:ensureCleanSession => true,
-      #:internetExplorerSwitches => 'InetCpl.cpl,ClearMyTracksByProcess 2',
-    )
+    caps = Selenium::WebDriver::Remote::Capabilities.send( browser )
     caps.platform = ENV['BROWSER_OS'] || 'Windows 2008'
     caps.version  = ENV['BROWSER_VERSION'] || '8'
     local_browser = Selenium::WebDriver.for(
@@ -61,9 +56,21 @@ class TestCase < Test::Unit::TestCase
 
   def teardown
     return if !@browsers
-    @browsers.each{ |local_browser|
-      local_browser.quit
-    }
+
+    # only shut down browser type once on local webdriver tests
+    # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
+    if !ENV['REMOTE_URL']
+      shutdown = {}
+      @browsers.each{ |local_browser|
+        next if shutdown[ local_browser.browser ]
+        shutdown[ local_browser.browser ] = true
+        local_browser.quit
+      }
+    else
+      @browsers.each{ |local_browser|
+        local_browser.quit
+      }
+    end
   end
 
   # Add more helper methods to be used by all tests here...
