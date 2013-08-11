@@ -92,5 +92,4 @@ group :development, :test do
 #    gem 'em-websocket-client'
 end
 
-gem 'business_time'
 gem 'thin'
