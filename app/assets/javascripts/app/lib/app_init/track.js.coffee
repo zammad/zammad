@@ -29,7 +29,10 @@ class _trackSingleton
 
     @log( 'start', 'notice', {} )
 
-    App.Interval.set @send, 60000
+    # start initial submit 10 sec. later to avoid ie10 cookie issues
+    delay = =>
+      App.Interval.set @send, 60000
+    App.Delay.set delay, 10000
 
     # log clicks
     $(document).bind(
