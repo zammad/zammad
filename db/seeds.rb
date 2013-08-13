@@ -153,7 +153,7 @@ Setting.create_if_not_exists(
     ],
   },
   :state    => 'Gmaps',
-  :frontend => true
+  :frontend => false
 )
 
 Setting.create_if_not_exists(
