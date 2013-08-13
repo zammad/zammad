@@ -68,7 +68,6 @@ class _taskManagerSingleton extends App.Controller
     @workersStarted    = {}
     @allTasks          = []
     @tasksToUpdate     = {}
-    @initialLoad       = true
     @activeTask        = undefined
     @tasksInitial()
 
@@ -76,8 +75,6 @@ class _taskManagerSingleton extends App.Controller
     App.Event.bind(
       'auth:login'
       =>
-        @initialLoad = true
-        @all()
         @tasksInitial()
       'task'
     )
@@ -94,13 +91,6 @@ class _taskManagerSingleton extends App.Controller
     App.Interval.set( @taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task' )
 
   all: ->
-
-    # initial load of taskbar collection
-    if @initialLoad
-      @initialLoad = false
-      tasks = App.Taskbar.all()
-      for task in tasks
-        @allTasks.push task.attributes()
 
     # sort by prio
     @allTasks = _(@allTasks).sortBy( (task) ->
@@ -316,7 +306,7 @@ class _taskManagerSingleton extends App.Controller
     @allTasks      = []
     @activeTask    = undefined
 
-    # clear inmem tasks
+    # clear in mem tasks
     App.Taskbar.deleteAll()
 
     # rerender task bar
@@ -348,6 +338,7 @@ class _taskManagerSingleton extends App.Controller
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
             error: (task) =>
+              ui.log 'error', "can't update task '#{task.id}'"
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
           )
@@ -371,17 +362,19 @@ class _taskManagerSingleton extends App.Controller
 
   tasksInitial: =>
 
+    # initial load of taskbar collection
+    tasks     = App.Taskbar.all()
+    @allTasks = []
+    for task in tasks
+      @allTasks.push task.attributes()
+
     # reopen tasks
     App.Event.trigger 'taskbar:init'
 
-    # check if we have different
-
-    tasks = @all()
-    return if !tasks
-
     task_count = 0
-    for task in tasks
+    for task in @allTasks
       task_count += 1
+      console.log('START', task)
       App.Delay.set(
         =>
           task = tasks.shift()
