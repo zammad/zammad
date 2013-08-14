@@ -3,7 +3,11 @@
 <head>
   <title><%= Setting.get('product_name') %></title>
   <%= stylesheet_link_tag    "application" %>
+  <% if Rails.configuration.assets.debug %>
   <%= javascript_include_tag "application" %>
+  <% else %>
+  <%= javascript_include_tag "application", :defer => 'defer' %>
+  <% end %>
   <%= csrf_meta_tags %>
 </head>
 <body>

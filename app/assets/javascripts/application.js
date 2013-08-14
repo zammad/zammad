@@ -71,3 +71,8 @@ jQuery.event.special.remove = {
     if (e.handler) e.handler();
   }
 };
+
+// start application
+jQuery(function(){
+  new App.Run();
+});
