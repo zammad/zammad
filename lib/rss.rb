@@ -9,11 +9,11 @@ module RSS
       response = Net::HTTP.get_response( URI.parse(url) )
 
       # check if redirect is needed
-      if response.code.to_s == '301' || response.code.to_s == '302'
+      if response.kind_of? Net::HTTPRedirection 
         url = response.header['location']
         response = Net::HTTP.get_response( URI.parse( url ) )
       end
-      if response.code.to_s != '200'
+      if ! response.kind_of? Net::HTTPSuccess
         raise "Can't fetch '#{url}', http code: #{response.code.to_s}"
         return
       end
