@@ -5,10 +5,10 @@
 Summary: A request tracking tool.
 Name: zammad
 Version: 0.4
-Release: 1
+Release: 1%{?dist}.zammad
 Copyright: AGPL
 Group: Applications/Web
-Source: ftp://ftp.gnomovision.com/pub/cdplayer/cdplayer-1.0.tgz
+Source: http://download.zammad.org/latest.tar.bz2
 URL: http://zammad.org/documentation
 Vendor: Zammad Foundation
 Packager: Roy Kaldung <roy@kaldung.com>
@@ -28,8 +28,11 @@ You're going to love Zammad!
 %build
 
 %install
-mkdir -p %{basedir}
-ln -s /opt/zammad/config /etc/zammad
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT%{basedir}
+mkdir -p $RPM_BUILD_ROOT/etc
+cd $RPM_BUILD_ROOT/etc
+ln -s $RPM_BUILD_ROOT%{basedir}/config etc/zammad
 
 %files
 %doc /opt/zammad/doc/README
