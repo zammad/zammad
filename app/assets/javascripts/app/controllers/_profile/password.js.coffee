@@ -35,7 +35,7 @@ class Index extends App.Controller
     @formDisable(e)
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:   'password_reset'
       type: 'POST'
       url:  @apiPath + '/users/password_change'

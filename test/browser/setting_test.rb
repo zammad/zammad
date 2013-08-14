@@ -20,10 +20,6 @@ class SettingTest < TestCase
             :css     => 'a[href="#settings/security/third_party_auth"]',
           },
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
             :execute => 'check',
             :css     => '#auth_facebook select[name="auth_facebook"]',
             :result  => true,

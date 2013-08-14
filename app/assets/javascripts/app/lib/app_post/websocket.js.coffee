@@ -287,11 +287,9 @@ class _webSocketSingleton extends App.Controller
     # return if init is already done and not forced
     return if @_ajaxInitDone && !data.force
 
-    # stop init request if new one is started
-    if @_ajaxInitWorking
-      @_ajaxInitWorking.abort()
     # call init request
-    @_ajaxInitWorking = App.Com.ajax(
+    App.Ajax.request(
+      id:    'ws-login'
       type:  'POST'
       url:   @Config.get('api_path') + '/message_send'
       data:  JSON.stringify({ data: { action: 'login' }  })
@@ -304,10 +302,8 @@ class _webSocketSingleton extends App.Controller
           @_ajaxReceive()
           @_ajaxSendQueue()
         @_ajaxInitDone = true
-        @_ajaxInitWorking = false
       error: =>
         @_ajaxInitDone = true
-        @_ajaxInitWorking = false
 
         # try reconnect on error after x sec.
         reconnect = =>
@@ -327,7 +323,7 @@ class _webSocketSingleton extends App.Controller
   _ajaxSendQueue: =>
     while !_.isEmpty(@queue)
       data = @queue.shift()
-      App.Com.ajax(
+      App.Ajax.request(
         type:  'POST'
         url:   @Config.get('api_path') + '/message_send'
         data:  JSON.stringify({ client_id: @client_id, data: data })
@@ -346,7 +342,7 @@ class _webSocketSingleton extends App.Controller
     return if !@client_id
     return if @_ajaxReceiveWorking is true
     @_ajaxReceiveWorking = true
-    App.Com.ajax(
+    App.Ajax.request(
       id:    'message_receive',
       type:  'POST'
       url:   @Config.get('api_path') + '/message_receive'

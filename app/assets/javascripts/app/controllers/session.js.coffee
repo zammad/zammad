@@ -9,15 +9,15 @@ class Index extends App.ControllerContent
     return if !@authenticate()
 
     @load()
-#    @interval(
-#      =>
-#        @load()
-#      10000
-#    )
+    @interval(
+      =>
+        @load()
+      45000
+    )
 
   # fetch data, render view
   load: ->
-    App.Com.ajax(
+    @ajax(
       id:    'sessions'
       type:  'GET'
       url:   @apiPath + '/sessions'
@@ -43,7 +43,7 @@ class Index extends App.ControllerContent
   destroy: (e) ->
     e.preventDefault()
     sessionId = $( e.target ).data('session-id')
-    App.Com.ajax(
+    @ajax(
       id:    'sessions/' + sessionId
       type:  'DELETE'
       url:   @apiPath + '/sessions/' + sessionId

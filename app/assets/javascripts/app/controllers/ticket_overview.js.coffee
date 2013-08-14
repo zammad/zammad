@@ -64,7 +64,7 @@ class Table extends App.ControllerContent
 
     # init fetch via ajax, all other updates on time via websockets
     else
-      App.Com.ajax(
+      @ajax(
         id:    'ticket_overview_' + @key,
         type:  'GET',
         url:   @apiPath + '/ticket_overviews',
@@ -559,7 +559,7 @@ class Router extends App.Controller
       @ticket_list   = cache.ticket_list
       @redirect()
     else
-      App.Com.ajax(
+      @ajax(
         type:       'GET'
         url:        @apiPath + '/ticket_overviews'
         data:

@@ -102,7 +102,7 @@ class App.TicketCreate extends App.Controller
 
       @render()
     else
-      App.Com.ajax(
+      @ajax(
         id:    'ticket_create'
         type:  'GET'
         url:   @apiPath + '/ticket_create'

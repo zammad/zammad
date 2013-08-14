@@ -90,8 +90,8 @@ class App.Navigation extends App.Controller
       @searchFocusSet = false
 
     searchFunction = =>
-      App.Com.ajax(
-        id:    'ticket_search'
+      App.Ajax.request(
+        id:    'search'
         type:  'GET'
         url:   @apiPath + '/search'
         data:

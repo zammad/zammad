@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AuthTest < TestCase
+class AuthCustomerTest < TestCase
   def test_authentication
     tests = [
       {
@@ -38,10 +38,6 @@ class AuthTest < TestCase
         :name     => 'login',
         :action   => [
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
             :execute => 'check',
             :css     => '#login',
             :result  => true,
@@ -62,7 +58,7 @@ class AuthTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
 
           # check action

@@ -10,7 +10,7 @@ class App.TicketHistory extends App.ControllerModal
 
   fetch: (@ticket_id) ->
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'ticket_history',
       type:  'GET',
       url:   @apiPath + '/ticket_history/' + ticket_id,

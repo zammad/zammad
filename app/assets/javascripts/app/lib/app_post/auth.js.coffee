@@ -2,7 +2,7 @@ class App.Auth
 
   @login: (params) ->
     App.Log.notice 'Auth', 'login', params
-    App.Com.ajax(
+    App.Ajax.request(
       id:     'login',
       type:   'POST',
       url:     App.Config.get('api_path') + '/signin',
@@ -22,7 +22,7 @@ class App.Auth
 
   @loginCheck: ->
     App.Log.notice 'Auth', 'loginCheck'
-    App.Com.ajax(
+    App.Ajax.request(
       id:    'login_check'
       async: false
       type:  'GET'
@@ -38,7 +38,7 @@ class App.Auth
 
   @logout: ->
     App.Log.notice 'Auth', 'logout'
-    App.Com.ajax(
+    App.Ajax.request(
       id:   'logout'
       type: 'DELETE'
       url:  App.Config.get('api_path') + '/signout'

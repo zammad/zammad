@@ -34,7 +34,7 @@ class Index extends App.Controller
 
     # get data
     @locale = params['locale']
-    App.Com.ajax(
+    @ajax(
       id:   'preferences'
       type: 'PUT'
       url:  @apiPath + '/users/preferences'

@@ -13,7 +13,7 @@ class Index extends App.ControllerContent
     @load()
 
   load: ->
-    App.Com.ajax(
+    @ajax(
       id:    'packages',
       type:  'GET',
       url:   @apiPath + '/packages',
@@ -47,7 +47,7 @@ class Index extends App.ControllerContent
       httpType = 'DELETE'
 
     if httpType
-      App.Com.ajax(
+      @ajax(
         id:    'packages',
         type:  httpType,
         url:   @apiPath + '/packages',

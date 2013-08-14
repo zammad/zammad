@@ -14,8 +14,8 @@ class App.Browser
       console.log('Browser not supported')
       return false
 
-    # disable Firefox 6 and older
-    else if data.browser == 'Firefox' && data.version <= 6
+    # disable Firefox 9 and older
+    else if data.browser == 'Firefox' && data.version <= 9
       @message(data)
       console.log('Browser not supported')
       return false

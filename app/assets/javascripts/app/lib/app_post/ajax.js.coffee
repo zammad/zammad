@@ -1,9 +1,14 @@
-class App.Com
+class App.Ajax
   _instance = undefined # Must be declared here to force the closure on the class
-  @ajax: (args) -> # Must be a static method
+  @request: (args) -> # Must be a static method
     if _instance == undefined
       _instance ?= new _ajaxSingleton
-    _instance.ajax(args)
+    _instance.request(args)
+
+  @abort: (args) -> # Must be a static method
+    if _instance == undefined
+      _instance ?= new _ajaxSingleton
+    _instance.abort(args)
 
 # The actual Singleton class
 class _ajaxSingleton
@@ -61,19 +66,44 @@ class _ajaxSingleton
       )
     )
 
-  ajax: (params) ->
+  request: (params) ->
     data = $.extend({}, @defaults, params )
+
+    # execute call with id, clear old call first if exists
     if params['id']
-      if @current_request[ params['id'] ]
-        @current_request[ params['id'] ].abort()
+      @abort( params['id'] )
       @current_request[ params['id'] ] = $.ajax( data )
+      return params['id']
+
+    # generate a uniq rand id
+    params['id'] = 'rand-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+
+    # queue request
+    if params['queue']
+      @queue_list.push data
+      if !@queue_running
+        @_run()
+
+    # execute request
     else
-      if params['queue']
-        @queue_list.push data
-        if !@queue_running
-          @_run()
-      else
-        $.ajax(data)
+      @current_request[ params['id'] ] = $.ajax(data)
+
+    params['id']
+
+  abort: (id) =>
+
+    # abort current_request
+    if @current_request[ id ]
+      @current_request[ id ].abort()
+      delete @current_request[ id ]
+
+    # remove from queue list
+    @queue_list = _.filter(
+      @queue_list
+      (item) ->
+        return item if item['id'] isnt id
+        return
+    )
 
   _run: =>
     if @queue_list && @queue_list[0]
@@ -82,7 +112,7 @@ class _ajaxSingleton
       request.complete = =>
         @queue_running = false
         @_run()
-      $.ajax( request )
+      @current_request[ request['id'] ] = $.ajax( request )
 
   _show_spinner: =>
     @count++

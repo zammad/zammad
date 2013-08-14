@@ -27,7 +27,7 @@ class App.DashboardTicket extends App.Controller
 
     # init fetch via ajax, all other updates on time via websockets
     else
-      App.Com.ajax(
+      @ajax(
         id:    'dashboard_ticket_' + @key,
         type:  'GET',
         url:   @apiPath + '/ticket_overviews',

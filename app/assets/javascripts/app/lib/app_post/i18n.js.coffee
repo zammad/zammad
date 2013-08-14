@@ -100,7 +100,7 @@ class _i18nSingleton extends Spine.Module
     @locale = locale
 
     @map = {}
-    App.Com.ajax(
+    App.Ajax.request(
       id:    'i18n-set-' + locale,
       type:   'GET',
       url:    App.Config.get('api_path') + '/translations/lang/' + locale,

@@ -6,7 +6,7 @@ class App.TicketMerge extends App.ControllerModal
   fetch: ->
 
     # merge tickets
-    App.Com.ajax(
+    @ajax(
       id:    'ticket_merge_list',
       type:  'GET',
       url:   @apiPath + '/ticket_merge_list/' + @ticket_id,
@@ -104,7 +104,7 @@ class App.TicketMerge extends App.ControllerModal
     params = @formParam(e.target)
 
     # merge tickets
-    App.Com.ajax(
+    @ajax(
       id:    'ticket_merge',
       type:  'GET',
       url:   @apiPath +  '/ticket_merge/' + @ticket_id + '/' + params['master_ticket_number'],

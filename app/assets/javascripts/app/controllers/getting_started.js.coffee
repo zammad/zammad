@@ -18,7 +18,7 @@ class Index extends App.ControllerContent
   fetch: ->
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'getting_started',
       type:  'GET',
       url:   @apiPath + '/getting_started',

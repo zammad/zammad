@@ -64,7 +64,7 @@ class App.TicketZoom extends App.Controller
     return if !@Session.all()
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'ticket_zoom_' + ticket_id
       type:  'GET'
       url:   @apiPath + '/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
