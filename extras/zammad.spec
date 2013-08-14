@@ -12,7 +12,7 @@ Source: http://download.zammad.org/latest.tar.bz2
 URL: http://zammad.org/documentation
 Vendor: Zammad Foundation
 Packager: Roy Kaldung <roy@kaldung.com>
-Requires: nginx >= 1.4
+Requires: nginx >= 1.4, libv8
 Requires(pre): shadow-utils
 Requires(post): chkconfig
 
@@ -38,9 +38,8 @@ ln -s $RPM_BUILD_ROOT%{basedir}/config etc/zammad
 %doc /opt/zammad/doc/README
 %doc /opt/zammad/doc/X-Headers.txt
 /opt/zammad/doc/app
-# symlink /opt/zammad/config to /etc/zammad
-%config /opt/zammad/config
 /opt/zammad/
+%config /opt/zammad/config
 
 
 %pre
