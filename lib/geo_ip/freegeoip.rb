@@ -1,11 +1,11 @@
 require 'faraday'
 require 'cache'
 
-module Geoip
+module GeoIp::Freegeoip
   def self.location(address)
 
     # check cache
-    cache_key = "geoip::#{address}"
+    cache_key = "freegeoip::#{address}"
     cache = Cache.get( cache_key )
     return cache if cache
 

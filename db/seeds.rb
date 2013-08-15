@@ -135,7 +135,7 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   :title       => 'Geo Location Backend',
-  :name        => 'geo_backend',
+  :name        => 'geo_location_backend',
   :area        => 'System::Geo',
   :description => 'Defines the backend for geo location lookups.',
   :options     => {
@@ -143,16 +143,38 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'geo_backend', 
+        :name     => 'geo_location_backend',
         :tag      => 'select',
         :options  => {
           '' => '-',
-          'Gmaps' => 'Google Maps',
+          'GeoLocation::Gmaps' => 'Google Maps',
         },
       },
     ],
   },
-  :state    => 'Gmaps',
+  :state    => 'GeoLocation::Gmaps',
+  :frontend => false
+)
+Setting.create_if_not_exists(
+  :title       => 'Geo IP Backend',
+  :name        => 'geo_ip_backend',
+  :area        => 'System::Geo',
+  :description => 'Defines the backend for geo ip lookups.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'geo_ip_backend',
+        :tag      => 'select',
+        :options  => {
+          '' => '-',
+          'GeoIp::Freegeoip' => 'freegeoip.net',
+        },
+      },
+    ],
+  },
+  :state    => 'GeoIp::Freegeoip',
   :frontend => false
 )
 
