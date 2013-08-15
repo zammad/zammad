@@ -712,13 +712,13 @@ Setting.create_if_not_exists(
         :name      => 'ticket_number', 
         :tag       => 'select',
         :options   => {
-          'increment' => 'Increment (SystemID.Counter)',
-          'date'      => 'Date (Year.Month.Day.SystemID.Counter)',
+          'Ticket::Number::Increment' => 'Increment (SystemID.Counter)',
+          'Ticket::Number::Date'      => 'Date (Year.Month.Day.SystemID.Counter)',
         },
       },
     ],
   },
-  :state    => 'increment',
+  :state    => 'Ticket::Number::Increment',
   :frontend => false
 )
 Setting.create_if_not_exists(

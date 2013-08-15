@@ -333,7 +333,7 @@ class Channel::EmailParser
       UserInfo.current_user_id = user.id
 
       # get ticket# from subject
-      ticket = Ticket.number_check( mail[:subject] )
+      ticket = Ticket::Number.check( mail[:subject] )
 
       # set ticket state to open if not new
       if ticket

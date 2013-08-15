@@ -4,7 +4,7 @@ require 'time_calculation'
 require 'sla'
 
 class Ticket < ApplicationModel
-  before_create   :number_generate, :check_defaults
+  before_create   :check_generate, :check_defaults
   before_update   :check_defaults
   before_destroy  :destroy_dependencies
   after_create    :notify_clients_after_create
@@ -23,10 +23,6 @@ class Ticket < ApplicationModel
   belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
 
   attr_accessor :callback_loop
-
-  def self.number_check (string)
-    self.number_adapter.number_check_item(string)
-  end
 
   def agent_of_group
     Group.find( self.group_id ).users.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
@@ -504,21 +500,6 @@ class Ticket < ApplicationModel
     return bind
   end
 
-  def self.number_adapter
-
-    # load backend based on config
-    adapter_name = Setting.get('ticket_number')
-    adapter = nil
-    case adapter_name
-    when Symbol, String
-      require "ticket/number/#{adapter_name.to_s.downcase}"
-      adapter = Ticket::Number.const_get("#{adapter_name.to_s.capitalize}")
-    else
-      raise "Missing number_adapter '#{adapter_name}'"
-    end
-    return adapter
-  end
-
   def self.escalation_calculation_rebuild
     ticket_state_list_open = Ticket::State.by_category( 'open' )
 
@@ -731,21 +712,11 @@ returns
 
   private
 
-  def number_generate
+  def check_generate
     return if self.number
-
-    # generate number
-    (1..25_000).each do |i|
-      number = Ticket.number_adapter.number_generate_item()
-      ticket = Ticket.where( :number => number ).first
-      if ticket != nil
-        number = Ticket.number_adapter.number_generate_item()
-      else
-        self.number = number
-        return number
-      end
-    end
+    self.number = Ticket::Number.generate
   end
+
   def check_defaults
     if !self.owner_id
       self.owner_id = 1
@@ -873,8 +844,5 @@ returns
       end
       diff
     end
-
-  class Number
-  end
 
 end
