@@ -1,7 +1,7 @@
 require 'faraday'
 require 'cache'
 
-module GeoIp::Freegeoip
+class GeoIp::Freegeoip
   def self.location(address)
 
     # check cache
