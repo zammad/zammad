@@ -4,7 +4,7 @@ class ApplicationLib
 
 load adapter based on setting option
 
-  adapter = self.load_adapter_by_setting( 'some_setting_with_class_name' )
+  result = self.load_adapter_by_setting( 'some_setting_with_class_name' )
 
 returns
 
@@ -24,7 +24,7 @@ returns
 
 load adapter
 
-  adapter = self.load_adapter( 'some_class_name' )
+  result = self.load_adapter( 'some_class_name' )
 
 returns
 
