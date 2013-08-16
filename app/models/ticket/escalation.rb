@@ -25,7 +25,7 @@ module Ticket::Escalation
     end
 
     # get sla for ticket
-    sla_selected = self._escalation_calculation_get_sla
+    sla_selected = _escalation_calculation_get_sla
 
     # reset escalation if no sla is set
     if !sla_selected
