@@ -1,3 +1,4 @@
+require 'setting'
 class UpdateTicketNumber < ActiveRecord::Migration
   def up
     Setting.create_or_update(
@@ -31,4 +32,3 @@ class UpdateTicketNumber < ActiveRecord::Migration
   def down
   end
 end
-
