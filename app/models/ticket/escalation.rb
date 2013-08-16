@@ -2,7 +2,7 @@
 
 module Ticket::Escalation
 
-  def self.escalation_calculation_rebuild
+  def self.rebuild_all
     ticket_state_list_open = Ticket::State.by_category( 'open' )
 
     tickets = Ticket.where( :ticket_state_id => ticket_state_list_open )
@@ -25,7 +25,7 @@ module Ticket::Escalation
     end
 
     # get sla for ticket
-    sla_selected = _escalation_calculation_get_sla
+    sla_selected = escalation_calculation_get_sla
 
     # reset escalation if no sla is set
     if !sla_selected
@@ -57,7 +57,7 @@ module Ticket::Escalation
       self.first_response_escal_date = TimeCalculation.dest_time( self.first_response_escal_date, time_in_pending.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
-      self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
+      self.escalation_time = calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
     end
     if self.first_response# && !self.first_response_in_min
 
@@ -87,7 +87,7 @@ module Ticket::Escalation
       self.update_time_escal_date = TimeCalculation.dest_time( self.update_time_escal_date, time_in_pending.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
-      self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.update_time_escal_date, false )
+      self.escalation_time = calculation_higher_time( self.escalation_time, self.update_time_escal_date, false )
     end
     if self.last_contact_agent
       self.update_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.last_contact_agent, sla_selected.data, sla_selected.timezone  )
@@ -112,7 +112,7 @@ module Ticket::Escalation
       self.close_time_escal_date = TimeCalculation.dest_time( self.close_time_escal_date, extended_escalation.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
-      self.escalation_time = self._escalation_calculation_higher_time( self.escalation_time, self.close_time_escal_date, self.close_time )
+      self.escalation_time = calculation_higher_time( self.escalation_time, self.close_time_escal_date, self.close_time )
     end
     if self.close_time # && !self.close_time_in_min
       self.close_time_in_min = escalation_suspend( self.created_at, self.close_time, 'real', sla_selected )
@@ -232,7 +232,7 @@ module Ticket::Escalation
       diff
     end
 
-    def _escalation_calculation_get_sla
+    def escalation_calculation_get_sla
 
       sla_selected = nil
       sla_list = Cache.get( 'SLA::List::Active' )
@@ -270,7 +270,7 @@ module Ticket::Escalation
       return sla_selected
     end
 
-    def _escalation_calculation_higher_time(escalation_time, check_time, done_time)
+    def calculation_higher_time(escalation_time, check_time, done_time)
       return escalation_time if done_time
       return check_time if !escalation_time
       return escalation_time if !check_time
