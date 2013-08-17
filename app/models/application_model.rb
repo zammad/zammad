@@ -25,6 +25,18 @@ class ApplicationModel < ActiveRecord::Base
     end
   end
 
+=begin
+
+remove all not used model attributes of params
+
+  result = Model.param_cleanup(params)
+
+returns
+
+  result = params # params with valid attributes of model
+
+=end
+
   def self.param_cleanup(params)
 
     # only use object attributes
@@ -40,6 +52,18 @@ class ApplicationModel < ActiveRecord::Base
     self.param_validation(data)
   end
 
+=begin
+
+remove all not used params of object (per default :updated_at, :created_at, :updated_by_id and :created_by_id)
+
+  result = Model.param_validation(params)
+
+returns
+
+  result = params # params without listed attributes
+
+=end
+
   def self.param_validation(data)
 
     # we do want to set this via database
@@ -51,7 +75,20 @@ class ApplicationModel < ActiveRecord::Base
     data
   end
 
-  # set created_by_id & updated_by_id if not given based on UserInfo
+=begin
+
+set created_by_id & updated_by_id if not given based on UserInfo (current session)
+
+Used as before_create callback, no own use needed
+
+  result = Model.fill_up_user_create(params)
+
+returns
+
+  result = params # params with updated_by_id & created_by_id if not given based on UserInfo (current session)
+
+=end
+
   def fill_up_user_create
     if self.class.column_names.include? 'updated_by_id'
       if UserInfo.current_user_id
@@ -71,7 +108,20 @@ class ApplicationModel < ActiveRecord::Base
     end
   end
 
-  # set updated_by_id if not given based on UserInfo
+=begin
+
+set updated_by_id if not given based on UserInfo (current session)
+
+Used as before_update callback, no own use needed
+
+  result = Model.fill_up_user_update(params)
+
+returns
+
+  result = params # params with updated_by_id & created_by_id if not given based on UserInfo (current session)
+
+=end
+
   def fill_up_user_update
     return if !self.class.column_names.include? 'updated_by_id'
     if UserInfo.current_user_id
@@ -129,6 +179,20 @@ class ApplicationModel < ActiveRecord::Base
     Cache.get( key.to_s )
   end
 
+=begin
+
+lookup model from cache (if exists) or retrieve it from db, id, name or login possible
+
+  result = Model.lookup( :id => 123 )
+  result = Model.lookup( :name => 'some name' )
+  result = Model.lookup( :login => 'some login' )
+
+returns
+
+  result = model # with all attributes
+
+=end
+
   def self.lookup(data)
     if data[:id]
       #      puts "GET- + #{self.to_s}.#{data[:id].to_s}"
@@ -168,6 +232,18 @@ class ApplicationModel < ActiveRecord::Base
     end
   end
 
+=begin
+
+create model if not exists (check exists based on id, name, login or locale)
+
+  result = Model.create_if_not_exists( attributes )
+
+returns
+
+  result = model # with all attributes
+
+=end
+
   def self.create_if_not_exists(data)
     if data[:id]
       record = self.where( :id => data[:id] ).first
@@ -190,6 +266,18 @@ class ApplicationModel < ActiveRecord::Base
     end
     self.create(data)
   end
+
+=begin
+
+create or update model (check exists based on name, login or locale)
+
+  result = Model.create_or_update( attributes )
+
+returns
+
+  result = model # with all attributes
+
+=end
 
   def self.create_or_update(data)
     if data[:name]
@@ -214,10 +302,36 @@ class ApplicationModel < ActiveRecord::Base
       record = self.new( data )
       record.save
       return record
+    elsif data[:locale]
+      records = self.where( :locale => data[:locale] )
+      records.each {|record|
+        if record.locale.downcase == data[:locale].downcase
+          record.update_attributes( data )
+          return record
+        end
+      }
+      record = self.new( data )
+      record.save
+      return record
     else
-      raise "Need name or login for create_or_update()"
+      raise "Need name, login or locale for create_or_update()"
     end
   end
+
+=begin
+
+notify_clients_after_create after model got created
+
+used as callback in model file
+
+class OwnModel < ApplicationModel
+  after_create    :notify_clients_after_create
+  after_update    :notify_clients_after_update
+  after_destroy   :notify_clients_after_destroy
+
+  [...]
+
+=end
 
   def notify_clients_after_create
 
@@ -232,6 +346,21 @@ class ApplicationModel < ActiveRecord::Base
     )
   end
 
+=begin
+
+notify_clients_after_update after model got updated
+
+used as callback in model file
+
+class OwnModel < ApplicationModel
+  after_create    :notify_clients_after_create
+  after_update    :notify_clients_after_update
+  after_destroy   :notify_clients_after_destroy
+
+  [...]
+
+=end
+
   def notify_clients_after_update
 
     # return if we run import mode
@@ -245,6 +374,20 @@ class ApplicationModel < ActiveRecord::Base
     )
   end
 
+=begin
+
+notify_clients_after_destroy after model got destroyed
+
+used as callback in model file
+
+class OwnModel < ApplicationModel
+  after_create    :notify_clients_after_create
+  after_update    :notify_clients_after_update
+  after_destroy   :notify_clients_after_destroy
+
+  [...]
+
+=end
   def notify_clients_after_destroy
 
     # return if we run import mode
