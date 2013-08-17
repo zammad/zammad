@@ -250,7 +250,7 @@ Setting.create_if_not_exists(
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via OTRS.',
   :state    => {
-    :adapter           => 'otrs',
+    :adapter           => 'Auth::Otrs',
     :required_group_ro => 'stats',
     :group_rw_role_map => {
       'admin' => 'Admin',
@@ -271,7 +271,7 @@ Setting.create_if_not_exists(
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via LDAP.',
   :state    => {
-    :adapter        => 'ldap',
+    :adapter        => 'Auth::Ldap',
     :host           => 'localhost',
     :port           => 389,
     :bind_dn        => 'cn=Manager,dc=example,dc=org',

@@ -60,96 +60,26 @@ class User < ApplicationModel
       return false
     end
 
-    # use auth backends
-    config = [
-      {
-        :adapter => 'internal',
-      },
-      {
-        :adapter => 'test',
-      },
-    ]
-    Setting.where( :area => 'Security::Authentication' ).each {|setting|
-      if setting.state[:value]
-        config.push setting.state[:value]
-      end
-    }
-
-    # try to login against configure auth backends
-    user_auth = nil
-    config.each {|config_item|
-      next if !config_item[:adapter]
-      next if config_item.class == TrueClass
-      file = "auth/#{config_item[:adapter]}"
-      require file
-      user_auth = Auth.const_get("#{config_item[:adapter].to_s.upcase}").check( username, password, config_item, user )
-
-      # auth ok
-      if user_auth
-
-        # remember last login date
-        user_auth.update_last_login
-
-        # reset login failed
-        user_auth.login_failed = 0
-        user_auth.save
-
-        return user_auth
-      end
-    }
+    user_auth = Auth.check( username, password, user )
 
     # set login failed +1
     if !user_auth && user
+      sleep 1
       user.login_failed = user.login_failed + 1
       user.save
     end
 
-    # auth failed
-    sleep 1
+    # auth ok
     return user_auth
   end
 
   def self.sso(params)
 
-    # use auth backends
-    config = [
-      {
-        :adapter => 'env',
-      },
-      {
-        :adapter => 'otrs',
-      },
-    ]
-    #    Setting.where( :area => 'Security::Authentication' ).each {|setting|
-    #      if setting.state[:value]
-    #        config.push setting.state[:value]
-    #      end
-    #    }
-
     # try to login against configure auth backends
-    user_auth = nil
-    config.each {|config_item|
-      next if !config_item[:adapter]
-      next if config_item.class == TrueClass
-      file = "sso/#{config_item[:adapter]}"
-      require file
-      user_auth = SSO.const_get("#{config_item[:adapter].to_s.upcase}").check( params, config_item )
+    user_auth = Sso.check( params, user )
+    return if !user_auth
 
-      # auth ok
-      if user_auth
-
-        # remember last login date
-        user_auth.update_last_login
-
-        # reset login failed
-        user_auth.login_failed = 0
-        user_auth.save
-
-        return user_auth
-      end
-    }
-
-    return false
+    return user_auth
   end
 
   def self.create_from_hash!(hash)
