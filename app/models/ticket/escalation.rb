@@ -2,6 +2,18 @@
 
 module Ticket::Escalation
 
+=begin
+
+rebuild escalations for all open tickets
+
+  result = Ticket::Escalation.rebuild_all
+
+returns
+
+  result = true
+
+=end
+
   def self.rebuild_all
     ticket_state_list_open = Ticket::State.by_category( 'open' )
 
@@ -10,6 +22,19 @@ module Ticket::Escalation
       ticket.escalation_calculation
     }
   end
+
+=begin
+
+rebuild escalation for ticket
+
+  ticket = Ticket.find(123)
+  result = ticket.escalation_calculation
+
+returns
+
+  result = true
+
+=end
 
   def escalation_calculation
 
