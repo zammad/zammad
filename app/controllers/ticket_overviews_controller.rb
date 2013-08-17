@@ -8,7 +8,7 @@ class TicketOverviewsController < ApplicationController
 
     # get navbar overview data
     if !params[:view]
-      result = Ticket.overview(
+      result = Ticket::Overview.list(
         :current_user => current_user,
       )
       render :json => result
@@ -17,7 +17,7 @@ class TicketOverviewsController < ApplicationController
 
     # get real overview data
     if params[:array]
-      overview = Ticket.overview(
+      overview = Ticket::Overview.list(
         :view         => params[:view],
         :current_user => current_user,
         :array        => true,
@@ -36,7 +36,7 @@ class TicketOverviewsController < ApplicationController
       }
       return
     end
-    overview = Ticket.overview(
+    overview = Ticket::Overview.list(
       :view         => params[:view],
       #      :view_mode    => params[:view_mode],
       :current_user => User.find( current_user.id ),
