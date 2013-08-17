@@ -31,16 +31,14 @@ class Ticket < ApplicationModel
 
 =begin
 
-merge tickets
+list of agents in group of ticket
 
   ticket = Ticket.find(123)
-  result = ticket.merge_to(
-    :ticket_id => 123,
-  )
+  result = ticket.agent_of_group
 
 returns
 
-  result = true|false
+  result = [user1, user2, ...]
 
 =end
 
