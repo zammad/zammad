@@ -24,99 +24,13 @@ class Ticket < ApplicationModel
 
   include Ticket::Escalation
   include Ticket::Subject
+  extend Ticket::Search
+  extend Ticket::Permission
 
   attr_accessor :callback_loop
 
   def agent_of_group
     Group.find( self.group_id ).users.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
-  end
-
-  def self.agents
-    User.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
-  end
-
-  def self.attributes_to_change(params)
-    if params[:ticket_id]
-      params[:ticket] = self.find( params[:ticket_id] )
-    end
-    if params[:article_id]
-      params[:article] = self.find( params[:article_id] )
-    end
-
-    # get ticket states
-    ticket_state_ids = []
-    if params[:ticket]
-      ticket_state_type = params[:ticket].ticket_state.state_type
-    end
-    ticket_state_types = ['open', 'closed', 'pending action', 'pending reminder']
-    if ticket_state_type && !ticket_state_types.include?(ticket_state_type.name)
-      ticket_state_ids.push params[:ticket].ticket_state.id
-    end
-    ticket_state_types.each {|type|
-      ticket_state_type = Ticket::StateType.where( :name => type ).first
-      if ticket_state_type
-        ticket_state_type.states.each {|ticket_state|
-          ticket_state_ids.push ticket_state.id
-        }
-      end
-    }
-
-    # get owner
-    owner_ids = []
-    if params[:ticket]
-      params[:ticket].agent_of_group.each { |user|
-        owner_ids.push user.id
-      }
-    end
-
-    # get group
-    group_ids = []
-    Group.where( :active => true ).each { |group|
-      group_ids.push group.id
-    }
-
-    # get group / user relations
-    agents = {}
-    Ticket.agents.each { |user|
-      agents[ user.id ] = 1
-    }
-    groups_users = {}
-    group_ids.each {|group_id|
-      groups_users[ group_id ] = []
-      Group.find( group_id ).users.each {|user|
-        next if !agents[ user.id ]
-        groups_users[ group_id ].push user.id
-      }
-    }
-
-    # get priorities
-    ticket_priority_ids = []
-    Ticket::Priority.where( :active => true ).each { |priority|
-      ticket_priority_ids.push priority.id
-    }
-
-    ticket_article_type_ids = []
-    if params[:ticket]
-      ticket_article_types = ['note', 'phone']
-      if params[:ticket].group.email_address_id
-        ticket_article_types.push 'email'
-      end
-      ticket_article_types.each {|ticket_article_type_name|
-        ticket_article_type = Ticket::Article::Type.lookup( :name => ticket_article_type_name )
-        if ticket_article_type
-          ticket_article_type_ids.push ticket_article_type.id
-        end
-      }
-    end
-
-    return {
-      :ticket_article_type_id => ticket_article_type_ids,
-      :ticket_state_id        => ticket_state_ids,
-      :ticket_priority_id     => ticket_priority_ids,
-      :owner_id               => owner_ids,
-      :group_id               => group_ids,
-      :group_id__owner_id     => groups_users,
-    }
   end
 
 =begin
@@ -171,147 +85,6 @@ returns
     self.save
   end
 
-=begin
-
-check if user has access to ticket
-
-  ticket = Ticket.find(123)
-  result = ticket.permission( :current_user => User.find(123) )
-
-returns
-
-  result = true|false
-
-=end
-
-  def permission (data)
-
-    # check customer
-    if data[:current_user].is_role('Customer')
-
-      # access ok if its own ticket
-      return true if self.customer_id == data[:current_user].id
-
-      # access ok if its organization ticket
-      if data[:current_user].organization_id && self.organization_id
-        return true if self.organization_id == data[:current_user].organization_id
-      end
-
-      # no access
-      return false
-    end
-
-    # check agent
-
-    # access if requestor is owner
-    return true if self.owner_id == data[:current_user].id
-
-    # access if requestor is in group
-    data[:current_user].groups.each {|group|
-      return true if self.group.id == group.id
-    }
-    return false
-  end
-
-=begin
-
-search tickets
-
-  result = Ticket.search(
-    :current_user => User.find(123),
-    :query        => 'search something',
-    :limit        => 15,
-  )
-
-returns
-
-  result = [ticket_model1, ticket_model2]
-
-=end
-
-  def self.search (params)
-
-    # get params
-    query        = params[:query]
-    limit        = params[:limit] || 12
-    current_user = params[:current_user]
-
-    conditions = []
-    if current_user.is_role('Agent')
-      group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', current_user.id ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
-      conditions = [ 'group_id IN (?)', group_ids ]
-    else
-      if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
-        conditions = [ 'customer_id = ?', current_user.id ]
-      else
-        conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-      end
-    end
-
-    # do query
-    tickets_all = Ticket.select('DISTINCT(tickets.id)').
-    where(conditions).
-    where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
-    joins(:articles).
-    limit(limit).
-    order('`tickets`.`created_at` DESC')
-
-    # build result list
-    tickets = []
-    users = {}
-    tickets_all.each do |ticket|
-      ticket_tmp = Ticket.lookup( :id => ticket.id )
-      tickets.push ticket_tmp
-    end
-
-    return tickets
-  end
-
-
-=begin
-
-list tickets by customer groupd in state categroie open and closed
-
-  result = Ticket.list_by_customer(
-    :customer_id     => 123,
-    :limit           => 15, # optional, default 15
-  )
-
-returns
-
-  result = {
-    :open   => tickets_open,
-    :closed => tickets_closed,
-  }
-
-=end
-
-  def self.list_by_customer(data)
-
-    # get closed/open states
-    ticket_state_list_open   = Ticket::State.by_category( 'open' )
-    ticket_state_list_closed = Ticket::State.by_category( 'closed' )
-
-    # get tickets
-    tickets_open = Ticket.where(
-      :customer_id     => data[:customer_id],
-      :ticket_state_id => ticket_state_list_open
-    ).limit( data[:limit] || 15 ).order('created_at DESC')
-
-    tickets_closed = Ticket.where(
-      :customer_id     => data[:customer_id],
-      :ticket_state_id => ticket_state_list_closed
-    ).limit( data[:limit] || 15 ).order('created_at DESC')
-
-    return {
-      :open   => tickets_open,
-      :closed => tickets_closed,
-    }
-  end
-
   private
 
   def check_generate
@@ -323,10 +96,9 @@ returns
     if !self.owner_id
       self.owner_id = 1
     end
-    #      if self.customer_id && ( !self.organization_id || self.organization_id.empty? )
     if self.customer_id
       customer = User.find( self.customer_id )
-      if  self.organization_id != customer.organization_id
+      if self.organization_id != customer.organization_id
         self.organization_id = customer.organization_id
       end
     end

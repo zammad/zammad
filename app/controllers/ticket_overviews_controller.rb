@@ -70,7 +70,7 @@ class TicketOverviewsController < ApplicationController
       group_ids.push group.id
     }
     agents = {}
-    Ticket.agents.each { |user|
+    Ticket::ScreenOptions.agents.each { |user|
       agents[ user.id ] = 1
     }
     groups_users = {}

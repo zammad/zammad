@@ -433,7 +433,7 @@ class UserState
       # create_attributes
       cache_key = @cache_key + '_ticket_create_attributes'
       if CacheIn.expired(cache_key)
-        ticket_create_attributes = Ticket.attributes_to_change(
+        ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
           :current_user_id => user.id,
         )
         ticket_create_attributes_cache = CacheIn.get( cache_key, { :re_expire => true } )
@@ -660,7 +660,7 @@ class ClientState
             group_ids.push group.id
           }
           agents = {}
-          Ticket.agents.each { |user|
+          Ticket::ScreenOptions.agents.each { |user|
             agents[ user.id ] = 1
           }
           groups_users = {}
