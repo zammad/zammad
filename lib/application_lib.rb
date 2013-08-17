@@ -8,7 +8,7 @@ load adapter based on setting option
 
 returns
 
-  result = adapter_class
+  result = Some::Classname
 
 =end
 
@@ -24,17 +24,27 @@ returns
 
 load adapter
 
-  result = self.load_adapter( 'some_class_name' )
+  result = self.load_adapter( 'Some::Classname' )
 
 returns
 
-  result = adapter_class
+  result = Some::Classname
 
 =end
 
   def self.load_adapter(adapter)
 
     # load adapter
-    Object.const_get(adapter)
+
+    # will only work on ruby 2.0
+#    Object.const_get(adapter)
+
+    # will work on ruby 1.9 and 2.0
+#    adapter.split('::').inject(Object) do |mod, class_name|
+#      mod.const_get(class_name)
+#    end
+
+    # will work with active_support
+    adapter.constantize
   end
 end
