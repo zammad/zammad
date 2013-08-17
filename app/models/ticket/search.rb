@@ -18,7 +18,7 @@ returns
 
 =end
 
-  def self.search (params)
+  def search (params)
 
     # get params
     query        = params[:query]

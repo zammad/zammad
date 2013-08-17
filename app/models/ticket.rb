@@ -24,10 +24,25 @@ class Ticket < ApplicationModel
 
   include Ticket::Escalation
   include Ticket::Subject
+  include Ticket::Permission
   extend Ticket::Search
-  extend Ticket::Permission
 
   attr_accessor :callback_loop
+
+=begin
+
+merge tickets
+
+  ticket = Ticket.find(123)
+  result = ticket.merge_to(
+    :ticket_id => 123,
+  )
+
+returns
+
+  result = true|false
+
+=end
 
   def agent_of_group
     Group.find( self.group_id ).users.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
