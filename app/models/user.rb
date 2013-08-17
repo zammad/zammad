@@ -19,6 +19,19 @@ class User < ApplicationModel
 
   store                   :preferences
 
+=begin
+
+fullname of user
+
+  user = User.find(123)
+  result = user.fulename
+
+returns
+
+  result = "Bob Smith"
+
+=end
+
   def fullname
     fullname = ''
     if self.firstname
@@ -33,12 +46,37 @@ class User < ApplicationModel
     return fullname
   end
 
+=begin
+
+check if user is in role
+
+  user = User.find(123)
+  result = user.is_role('Customer')
+
+returns
+
+  result = true|false
+
+=end
+
   def is_role( role_name )
     self.roles.each { |role|
       return role if role.name == role_name
     }
     return false
   end
+
+=begin
+
+authenticate user
+
+  result = User.authenticate(username, password)
+
+returns
+
+  result = user_model # user model if authentication was successfully
+
+=end
 
   def self.authenticate( username, password )
 
@@ -73,6 +111,18 @@ class User < ApplicationModel
     return user_auth
   end
 
+=begin
+
+authenticate user agains sso
+
+  result = User.sso(sso_params)
+
+returns
+
+  result = user_model # user model if authentication was successfully
+
+=end
+
   def self.sso(params)
 
     # try to login against configure auth backends
@@ -81,6 +131,18 @@ class User < ApplicationModel
 
     return user_auth
   end
+
+=begin
+
+create user from from omni auth hash
+
+  result = User.create_from_hash!(hash)
+
+returns
+
+  result = user_model # user model if create was successfully
+
+=end
 
   def self.create_from_hash!(hash)
     url = ''
@@ -102,6 +164,18 @@ class User < ApplicationModel
     )
 
   end
+
+=begin
+
+send reset password email with token to user
+
+  result = User.password_reset_send(username)
+
+returns
+
+  result = true|false
+
+=end
 
   def self.password_reset_send(username)
     return if !username || username == ''
@@ -160,7 +234,18 @@ class User < ApplicationModel
     return true
   end
 
-  # check token
+=begin
+
+check reset password token
+
+  result = User.password_reset_check(token)
+
+returns
+
+  result = user_model # user_model if token was verified
+
+=end
+
   def self.password_reset_check(token)
     user = Token.check( :action => 'PasswordReset', :name => token )
 
@@ -171,6 +256,18 @@ class User < ApplicationModel
     end
     return user
   end
+
+=begin
+
+reset reset password with token and set new password
+
+  result = User.password_reset_via_token(token,password)
+
+returns
+
+  result = user_model # user_model if token was verified
+
+=end
 
   def self.password_reset_via_token(token,password)
 
@@ -185,6 +282,22 @@ class User < ApplicationModel
     Token.where( :action => 'PasswordReset', :name => token ).first.destroy
     return user
   end
+
+=begin
+
+search user
+
+  result = User.search(
+    :query        => 'some search term'
+    :limit        => 15,
+    :current_user => user_model,
+  )
+
+returns
+
+  result = [user_model1, user_model2, ...]
+
+=end
 
   def self.search(params)
 
@@ -307,6 +420,19 @@ class User < ApplicationModel
 
     return user
   end
+
+=begin
+
+update last login date (is automatically done by auth and sso backend)
+
+  user = User.find(123)
+  result = user.update_last_login
+
+returns
+
+  result = new_user_model
+
+=end
 
   def update_last_login
     self.last_login = Time.now
