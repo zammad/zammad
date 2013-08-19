@@ -1,14 +1,12 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'overview'
-
-class Ticket::Overview
+module Ticket::Overviews
 
 =begin
 
 all overview by user
 
-  result = Ticket::Overview.all(
+  result = Ticket::Overviews.all(
     :current_user => User.find(123),
   )
 
@@ -28,20 +26,19 @@ returns
       else
         overviews = Overview.where( :role_id => role.id, :organization_shared => false, :active => true )
       end
-      return overviews
+     overviews
     end
 
     # get agent overviews
     role = data[:current_user].is_role( 'Agent' )
-    overviews = Overview.where( :role_id => role.id, :active => true )
-    return overviews
+    Overview.where( :role_id => role.id, :active => true )
   end
 
 =begin
 
 selected overview by user
 
-  result = Ticket::Overview.list(
+  result = Ticket::Overviews.list(
     :current_user => User.find(123),
     :view         => 'some_view_url',
   )
@@ -187,7 +184,6 @@ returns
       :tickets_count => tickets_count,
       :overview      => overview_selected_raw,
     }
-
   end
 
   private
@@ -249,5 +245,4 @@ returns
       bind[0] = sql
       return bind
     end
-
 end
