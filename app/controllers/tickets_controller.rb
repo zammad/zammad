@@ -182,7 +182,10 @@ class TicketsController < ApplicationController
   # GET /api/v1/ticket_merge_list/1
   def ticket_merge_list
 
-    ticket      = Ticket.find( params[:ticket_id] )
+    ticket = Ticket.find( params[:ticket_id] )
+    assets = ticket.assets({})
+
+    # open tickets by customer
     ticket_list = Ticket.where(
       :customer_id     => ticket.customer_id,
       :ticket_state_id => Ticket::State.by_category( 'open' )
@@ -191,19 +194,29 @@ class TicketsController < ApplicationController
     .order('created_at DESC')
     .limit(6)
 
-    # get related users
-    assets = {}
+    # get related assets
+    ticket_ids_by_customer = [] 
     ticket_list.each {|ticket|
-      ticket = Ticket.lookup( :id => ticket.id )
+      ticket_ids_by_customer.push ticket.id
       assets = ticket.assets(assets)
     }
 
-    recent_viewed = RecentView.list_fulldata( current_user, 8 )
+
+    ticket_ids_recent_viewed = []
+    ticket_recent_view = RecentView.list( current_user, 8 )
+    ticket_recent_view.each {|item|
+      if item['recent_view_object'] == 'Ticket'
+        ticket_ids_recent_viewed.push item['o_id']
+        ticket = Ticket.find( item['o_id'] )
+        assets = ticket.assets(assets)
+      end
+    }
 
     # return result
     render :json => {
-      :customer => assets,
-      :recent   => recent_viewed
+      :assets                   => assets,
+      :ticket_ids_by_customer   => ticket_ids_by_customer,
+      :ticket_ids_recent_viewed => ticket_ids_recent_viewed,
     }
   end
 
