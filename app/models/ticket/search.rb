@@ -50,13 +50,11 @@ returns
 
     # build result list
     tickets = []
-    users = {}
     tickets_all.each do |ticket|
-      ticket_tmp = Ticket.lookup( :id => ticket.id )
-      tickets.push ticket_tmp
+      tickets.push Ticket.lookup( :id => ticket.id )
     end
 
-    return tickets
+    tickets
   end
 
 end
