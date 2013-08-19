@@ -211,9 +211,8 @@ class App.TicketCreate extends App.Controller
     # update text module UI
     callback = (user) =>
       @textModule.reload(
-        data:
-          ticket:
-            customer: user
+        ticket:
+          customer: user
       )
 
     @userInfo(

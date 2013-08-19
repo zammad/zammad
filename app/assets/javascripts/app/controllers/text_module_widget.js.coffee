@@ -2,6 +2,7 @@ class App.TextModuleUI extends App.Controller
   constructor: ->
     super
 
+    @lastData = {}
     customItemTemplate = "<div><span />&nbsp;<small /></div>"
     elementFactory = (element, e) ->
       template = $(customItemTemplate).find('span')
@@ -23,7 +24,7 @@ class App.TextModuleUI extends App.Controller
 
   reload: (data = false) =>
     if data
-      @lastData = data
+      @lastData['data'] = data
     @update()
 
   update: =>
@@ -35,10 +36,12 @@ class App.TextModuleUI extends App.Controller
         contentNew = item.content.replace( /<%=\s{0,2}(.+?)\s{0,2}%>/g, ( all, key ) ->
           key = key.replace( /@/g, 'ui.data.' )
           varString = "#{key}" + ''
+#          console.log( "tag replacement env: ", ui.data)
           try
+#            console.log( "tag replacement: " + key, varString )
             key = eval (varString)
           catch error
-            #console.log( "tag replacement: " + error )
+#            console.log( "tag replacement error: " + error )
             key = ''
           return key
         )
