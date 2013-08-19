@@ -19,14 +19,14 @@
 //= require ./app/lib/flot/jquery.flot.selection.js
 
 //not_used= require_tree ./app/lib/bootstrap
-//= require ./app/lib/bootstrap/bootstrap-dropdown.js
-//= require ./app/lib/bootstrap/bootstrap-tooltip.js
-//= require ./app/lib/bootstrap/bootstrap-popover.js
-//= require ./app/lib/bootstrap/bootstrap-modal.js
-//= require ./app/lib/bootstrap/bootstrap-tab.js
-//= require ./app/lib/bootstrap/bootstrap-transition.js
-//= require ./app/lib/bootstrap/bootstrap-button.js
-//= require ./app/lib/bootstrap/bootstrap-collapse.js
+//= require ./app/lib/bootstrap/dropdown.js
+//= require ./app/lib/bootstrap/tooltip.js
+//= require ./app/lib/bootstrap/popover.js
+//= require ./app/lib/bootstrap/modal.js
+//= require ./app/lib/bootstrap/tab.js
+//= require ./app/lib/bootstrap/transition.js
+//= require ./app/lib/bootstrap/button.js
+//= require ./app/lib/bootstrap/collapse.js
 
 //= require_tree ./app/lib/base
 
