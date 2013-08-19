@@ -82,7 +82,7 @@ class App.TicketZoom extends App.Controller
           @log 'diff', diff
 
           # notify if ticket changed not by my self
-          if !_.isEmpty(diff) && data.ticket.updated_by_id isnt @Session.all().id
+          if !_.isEmpty(diff) && data.asset.ticket[0].updated_by_id isnt @Session.all().id
             App.TaskManager.notify( @task_key )
 
           # rerender edit box
@@ -112,20 +112,19 @@ class App.TicketZoom extends App.Controller
     # reset old indexes
     @ticket = undefined
 
+
+    # remember article ids
+    @ticket_article_ids = data.ticket_article_ids
+
+
     # get edit form attributes
     @edit_form = data.edit_form
 
     # get signature
     @signature = data.signature
 
-    # load user collection
-    App.Collection.load( type: 'User', data: data.users )
-
-    # load ticket collection
-    App.Collection.load( type: 'Ticket', data: [data.ticket] )
-
-    # load article collections
-    App.Collection.load( type: 'TicketArticle', data: data.articles )
+    # load collections
+    App.Event.trigger 'loadAssets', data.assets
 
     # render page
     @render(force)
@@ -196,9 +195,10 @@ class App.TicketZoom extends App.Controller
   ArticleView: =>
     # show article
     new ArticleView(
-      ticket:   @ticket
-      el:       @el.find('.article-view')
-      ui:       @
+      ticket:             @ticket
+      ticket_article_ids: @ticket_article_ids
+      el:                 @el.find('.article-view')
+      ui:                 @
     )
 
   Edit: =>
@@ -570,7 +570,7 @@ class ArticleView extends App.Controller
 
     # get all articles
     @articles = []
-    for article_id in @ticket.article_ids
+    for article_id in @ticket_article_ids
       article = App.TicketArticle.retrieve( article_id )
       @articles.push article
 
@@ -620,16 +620,16 @@ class ArticleView extends App.Controller
 
   checkIfSignatureIsNeeded: (article_type) =>
 
-      # add signature
-      if @ui.signature && @ui.signature.body && article_type.name is 'email'
-        body   = @ui.el.find('[name="body"]').val() || ''
-        regexp = new RegExp( escapeRegExp( @ui.signature.body ) , 'i')
-        if !body.match(regexp)
-          body = body + "\n" + @ui.signature.body
-          @ui.el.find('[name="body"]').val( body )
+    # add signature
+    if @ui.signature && @ui.signature.body && article_type.name is 'email'
+      body   = @ui.el.find('[name="body"]').val() || ''
+      regexp = new RegExp( escapeRegExp( @ui.signature.body ) , 'i')
+      if !body.match(regexp)
+        body = body + "\n" + @ui.signature.body
+        @ui.el.find('[name="body"]').val( body )
 
-          # update textarea size
-          @ui.el.find('[name="body"]').trigger('change')
+        # update textarea size
+        @ui.el.find('[name="body"]').trigger('change')
 
   reply: (e) =>
     e.preventDefault()
@@ -774,7 +774,7 @@ class Article extends App.Controller
         actions.push {
           name: 'split'
           type: 'split'
-          href: '#ticket_create/' + @article.ticket_id + '/' + @article.id
+          href: '#ticket_create/call_inbound/' + @article.ticket_id + '/' + @article.id
         }
     @article.actions = actions
 

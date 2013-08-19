@@ -25,6 +25,7 @@ class Ticket < ApplicationModel
   include Ticket::Escalation
   include Ticket::Subject
   include Ticket::Permission
+  include Ticket::Assets
   extend Ticket::Search
 
   attr_accessor :callback_loop

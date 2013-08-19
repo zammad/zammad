@@ -10,32 +10,20 @@ class LinksController < ApplicationController
       :link_object_value => params[:link_object_value],
     )
 
-    #
-    tickets = []
-    users = {}
+    assets = {}
     link_list = []
     links.each { |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
-        data = Ticket.lookup( :id => item['link_object_value'] )
-        tickets.push data
-        if !users[ data['owner_id'] ]
-          users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
-        end
-        if !users[ data['customer_id'] ]
-          users[ data['customer_id'] ] = User.user_data_full( data['customer_id'] )
-        end
-        if !users[ data['created_by_id'] ]
-          users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
-        end
+        ticket = Ticket.lookup( :id => item['link_object_value'] )
+        assets = ticket.assets(assets)
       end
     }
 
     # return result
     render :json => {
-      :links    => link_list,
-      :tickets  => tickets,
-      :users    => users,
+      :links  => link_list,
+      :assets => assets,
     }
   end
 

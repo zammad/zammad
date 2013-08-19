@@ -48,11 +48,8 @@ class App.DashboardTicket extends App.Controller
       data.ajax = false
       App.Store.write( @key, data )
 
-      # load user collection
-      App.Collection.load( type: 'User', data: data.collections.users )
-
-      # load ticket collection
-      App.Collection.load( type: 'Ticket', data: data.collections.tickets )
+      # load collections
+      App.Event.trigger 'loadAssets', data.assets
 
     # get meta data
     App.Overview.refresh( data.overview, options: { clear: true } )
@@ -71,12 +68,12 @@ class App.DashboardTicket extends App.Controller
 
   render: (data) ->
     return if !data
-    return if !data.ticket_list
+    return if !data.ticket_ids
     return if !data.overview
 
     @overview      = data.overview
     @tickets_count = data.tickets_count
-    @ticket_list   = data.ticket_list
+    @ticket_ids    = data.ticket_ids
     # FIXME 10
     pages_total =  parseInt( ( @tickets_count / 10 ) + 0.99999 ) || 1
     html = App.view('dashboard/ticket')(
@@ -94,8 +91,8 @@ class App.DashboardTicket extends App.Controller
     i = start
     while i < end
       i = i + 1
-      if @ticket_list[ i - 1 ]
-        @tickets_in_table.push App.Ticket.retrieve( @ticket_list[ i - 1 ] )
+      if @ticket_ids[ i - 1 ]
+        @tickets_in_table.push App.Ticket.retrieve( @ticket_ids[ i - 1 ] )
 
     shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d )
     new App.ControllerTable(

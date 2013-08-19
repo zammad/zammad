@@ -1,10 +1,6 @@
 class App.DashboardActivityStream extends App.Controller
-  events:
-    'click [data-type=edit]': 'zoom'
-
   constructor: ->
     super
-    @items = []
 
     @fetch()
 
@@ -36,34 +32,29 @@ class App.DashboardActivityStream extends App.Controller
   load: (data) =>
     items = data.activity_stream
 
-    # load user collection
-    App.Collection.load( type: 'User', data: data.users )
-
-    # load ticket collection
-    App.Collection.load( type: 'Ticket', data: data.tickets )
-
-    # load article collection
-    App.Collection.load( type: 'TicketArticle', data: data.articles )
+    # load collections
+    App.Event.trigger 'loadAssets', data.assets
 
     @render(items)
 
   render: (items) ->
 
-    # load user data
     for item in items
-      item.created_by = App.User.find( item.created_by_id )
-
-    # load ticket data
-    for item in items
-      item.data = {}
       if item.history_object is 'Ticket'
-        item.data.title = App.Ticket.find( item.o_id ).title
-      if item.history_object is 'Ticket::Article'
+        ticket = App.Ticket.find( item.o_id )
+        item.link = '#ticket_zoom/' + ticket.id
+        item.title = ticket.title
+        item.type  = item.history_object
+        item.updated_by_id = ticket.updated_by_id
+        item.updated_by = App.User.find( ticket.updated_by_id )
+      else if item.history_object is 'Ticket::Article'
         article = App.TicketArticle.find( item.o_id )
-        item.history_object = 'Article'
-        item.sub_o_id = article.id
-        item.o_id = article.ticket_id
-        item.data.title = article.subject
+        ticket  = App.Ticket.find( article.ticket_id )
+        item.link = '#ticket_zoom/' + ticket.id + '/' + article.od
+        item.title = article.subject || ticket.title
+        item.type  = item.history_object
+        item.updated_by_id = article.updated_by_id
+        item.updated_by = App.User.find( article.updated_by_id )
 
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',
@@ -76,11 +67,3 @@ class App.DashboardActivityStream extends App.Controller
     # start user popups
     @userPopups('left')
 
-  zoom: (e) =>
-    e.preventDefault()
-    id = $(e.target).parents('[data-id]').data('id')
-    subid = $(e.target).parents('[data-subid]').data('subid')
-    if subid
-      @navigate 'ticket/zoom/' + id + '/' + subid
-    else
-      @navigate 'ticket/zoom/' + id

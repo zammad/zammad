@@ -23,11 +23,8 @@ class App.LinkInfo extends App.Controller
       success: (data, status, xhr) =>
         @links = data.links
 
-        # load user collection
-        App.Collection.load( type: 'User', data: data.users )
-
-        # load ticket collection
-        App.Collection.load( type: 'Ticket', data: data.tickets )
+        # load collections
+        App.Event.trigger 'loadAssets', data.assets
 
         @render()
     )

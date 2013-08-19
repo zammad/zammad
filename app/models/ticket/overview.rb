@@ -164,7 +164,7 @@ returns
       count()
 
       return {
-        :ticket_list   => ticket_ids,
+        :ticket_ids    => ticket_ids,
         :tickets_count => tickets_count,
         :overview      => overview_selected_raw,
       }

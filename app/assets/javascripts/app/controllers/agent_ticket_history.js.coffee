@@ -15,23 +15,9 @@ class App.TicketHistory extends App.ControllerModal
       type:  'GET',
       url:   @apiPath + '/ticket_history/' + ticket_id,
       success: (data, status, xhr) =>
-        # remember ticket
-        @ticket = data.ticket
 
-        # load user collection
-        App.Collection.load( type: 'User', data: data.users )
-
-        # load ticket collection
-        App.Collection.load( type: 'Ticket', data: [data.ticket] )
-
-        # load history_type collections
-        App.Collection.load( type: 'HistoryType', data: data.history_types )
-
-        # load history_object collections
-        App.Collection.load( type: 'HistoryObject', data: data.history_objects )
-
-        # load history_attributes collections
-        App.Collection.load( type: 'HistoryAttribute', data: data.history_attributes )
+        # load collections
+        App.Event.trigger 'loadAssets', data.assets
 
         # load history collections
         App.History.deleteAll()
@@ -53,7 +39,7 @@ class App.TicketHistory extends App.ControllerModal
     @userPopups()
 
     # show frontend times
-    @delay( @frontendTimeUpdate, 200, 'ui-time-update' )
+    @delay( @frontendTimeUpdate, 300, 'ui-time-update' )
 
   sortorder: (e) ->
     e.preventDefault()
@@ -71,7 +57,6 @@ class App.TicketHistory extends App.ControllerModal
         objects: App.History.search().reverse()
         state:   @sortstate
       )
-
 
     @modalShow()
 

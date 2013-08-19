@@ -3,7 +3,7 @@
 class TicketOverviewsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /api/v1/tickets
+  # GET /api/v1/ticket_overviews
   def show
 
     # get navbar overview data
@@ -38,8 +38,7 @@ class TicketOverviewsController < ApplicationController
     end
     overview = Ticket::Overview.list(
       :view         => params[:view],
-      #      :view_mode    => params[:view_mode],
-      :current_user => User.find( current_user.id ),
+      :current_user => current_user,
       :array        => true,
     )
     if !overview
@@ -48,20 +47,10 @@ class TicketOverviewsController < ApplicationController
     end
 
     # get related users
-    users = {}
-    tickets = []
-    overview[:ticket_list].each {|ticket_id|
-      data = Ticket.lookup( :id => ticket_id )
-      tickets.push data
-      if !users[ data['owner_id'] ]
-        users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
-      end
-      if !users[ data['customer_id'] ]
-        users[ data['customer_id'] ] = User.user_data_full( data['customer_id'] )
-      end
-      if !users[ data['created_by_id'] ]
-        users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
-      end
+    assets = { :users => {} }
+    overview[:ticket_ids].each {|ticket_id|
+      ticket = Ticket.lookup( :id => ticket_id )
+      assets = ticket.assets(assets)
     }
 
     # get groups
@@ -79,8 +68,8 @@ class TicketOverviewsController < ApplicationController
       Group.find(group_id).users.each {|user|
         next if !agents[ user.id ]
         groups_users[ group_id ].push user.id
-        if !users[user.id]
-          users[user.id] = User.user_data_full(user.id)
+        if !assets[:users][user.id]
+          assets[:users][user.id] = User.user_data_full(user.id)
         end
       }
     }
@@ -88,15 +77,12 @@ class TicketOverviewsController < ApplicationController
     # return result
     render :json => {
       :overview      => overview[:overview],
-      :ticket_list   => overview[:ticket_list],
+      :ticket_ids    => overview[:ticket_ids],
       :tickets_count => overview[:tickets_count],
       :bulk          => {
         :group_id__owner_id => groups_users,
       },
-      :collections    => {
-        :users   => users,
-        :tickets => tickets,
-      },
+      :assets        => assets,
     }
   end
 

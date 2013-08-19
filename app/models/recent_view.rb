@@ -44,14 +44,14 @@ class RecentView < ApplicationModel
     recent_viewed = self.list( user, limit )
 
     # get related users
-    users = {}
-    tickets = []
+    assets = {}
+    ticket_ids = []
     recent_viewed.each {|item|
 
       # load article ids
       #      if item.recent_view_object == 'Ticket'
-      ticket = Ticket.find( item['o_id'] ).attributes
-      tickets.push ticket
+      ticket = Ticket.find( item['o_id'] )
+      ticket_ids.push ticket.id
       #      end
       #      if item.recent_view_object 'Ticket::Article'
       #        tickets.push Ticket::Article.find(item.o_id)
@@ -60,21 +60,12 @@ class RecentView < ApplicationModel
       #        tickets.push User.find(item.o_id)
       #      end
 
-      # load users
-      if !users[ ticket['owner_id'] ]
-        users[ ticket['owner_id'] ] = User.user_data_full( ticket['owner_id'] )
-      end
-      if !users[ ticket['created_by_id'] ]
-        users[ ticket['created_by_id'] ] = User.user_data_full( ticket['created_by_id'] )
-      end
-      if !users[ item['created_by_id'] ]
-        users[ item['created_by_id'] ] = User.user_data_full( item['created_by_id'] )
-      end
+      assets = ticket.assets(assets)
     }
     return {
       :recent_viewed => recent_viewed,
-      :tickets       => tickets,
-      :users         => users,
+      :ticket_ids    => ticket_ids,
+      :assets        => assets,
     }
   end
 
