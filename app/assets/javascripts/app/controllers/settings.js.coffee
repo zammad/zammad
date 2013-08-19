@@ -5,10 +5,11 @@ class System extends App.ControllerTabs
     return if !@authenticate()
 
     @tabs = [
-      { name: 'Base',     'target': 'base',      controller: App.SettingsArea, params: { area: 'System::Base' } },
+      { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Base' } },
   #    { name: 'Language', 'target': 'language',  controller: App.SettingsSystem, params: { area: 'System::Language' } },
   #    { name: 'Log',      'target': 'log',       controller: App.SettingsSystem, params: { area: 'System::Log' } },
-      { name: 'Storage',  'target': 'storage',   controller: App.SettingsArea, params: { area: 'System::Storage' } },
+      { name: 'Storage',      'target': 'storage',  controller: App.SettingsArea, params: { area: 'System::Storage' } },
+      { name: 'Geo Services', 'target': 'geo',      controller: App.SettingsArea, params: { area: 'System::Geo' } },
     ]
 
     # render page
