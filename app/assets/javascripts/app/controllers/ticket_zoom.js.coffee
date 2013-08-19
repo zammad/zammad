@@ -27,7 +27,7 @@ class App.TicketZoom extends App.Controller
       (data) =>
         update = =>
           if data.id.toString() is @ticket_id.toString()
-            ticket = App.Ticket.retrieve( @ticket_id )
+            ticket = App.Ticket.find( @ticket_id )
             @log 'notice', 'TRY', data.updated_at, ticket.updated_at
             if data.updated_at isnt ticket.updated_at
               @fetch( @ticket_id, false )
@@ -68,28 +68,25 @@ class App.TicketZoom extends App.Controller
       id:    'ticket_zoom_' + ticket_id
       type:  'GET'
       url:   @apiPath + '/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
-      data:
-        view: @view
       processData: true
       success: (data, status, xhr) =>
-        if @dataLastCall && !force
+
+        # check if ticket has changed
+        newTicketRaw = data.assets.tickets[ticket_id]
+        if @ticketUpdatedAtLastCall && !force
 
           # return if ticket hasnt changed
-          return if _.isEqual( @dataLastCall.ticket, data.ticket )
-
-          # trigger task notify
-          diff = difference( @dataLastCall.ticket, data.ticket )
-          @log 'diff', diff
+          return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at
 
           # notify if ticket changed not by my self
-          if !_.isEmpty(diff) && data.asset.ticket[0].updated_by_id isnt @Session.all().id
+          if newTicketRaw.updated_by_id isnt @Session.all().id
             App.TaskManager.notify( @task_key )
 
           # rerender edit box
           @editDone = false
 
         # remember current data
-        @dataLastCall = data
+        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
         @load(data, force)
         App.Store.write( @key, data )
@@ -112,10 +109,8 @@ class App.TicketZoom extends App.Controller
     # reset old indexes
     @ticket = undefined
 
-
     # remember article ids
     @ticket_article_ids = data.ticket_article_ids
-
 
     # get edit form attributes
     @edit_form = data.edit_form
