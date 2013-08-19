@@ -26,7 +26,7 @@ returns
       else
         overviews = Overview.where( :role_id => role.id, :organization_shared => false, :active => true )
       end
-     overviews
+      return overviews
     end
 
     # get agent overviews
