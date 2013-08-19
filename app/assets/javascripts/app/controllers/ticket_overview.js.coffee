@@ -80,22 +80,19 @@ class Table extends App.ControllerContent
 
   load: (data) =>
     return if !data
-    return if !data.ticket_list
+    return if !data.ticket_ids
     return if !data.overview
 
     @overview      = data.overview
     @tickets_count = data.tickets_count
-    @ticket_list   = data.ticket_list
+    @ticket_ids    = data.ticket_ids
 
     if data.ajax
       data.ajax = false
       App.Store.write( @key, data )
 
-      # load user collection
-      App.Collection.load( type: 'User', data: data.collections.users )
-
-      # load ticket collection
-      App.Collection.load( type: 'Ticket', data: data.collections.tickets )
+      # load collections
+      App.Event.trigger 'loadAssets', data.assets
 
     # get meta data
     @overview = data.overview
@@ -112,7 +109,7 @@ class Table extends App.ControllerContent
       @fetch()
 
     @ticket_list_show = []
-    for ticket_id in @ticket_list
+    for ticket_id in @ticket_ids
       @ticket_list_show.push App.Ticket.retrieve( ticket_id )
 
     # remeber bulk attributes
@@ -556,7 +553,7 @@ class Router extends App.Controller
     cache = App.Store.get( @key )
     if cache
       @tickets_count = cache.tickets_count
-      @ticket_list   = cache.ticket_list
+      @ticket_ids    = cache.ticket_ids
       @redirect()
     else
       @ajax(
@@ -570,7 +567,7 @@ class Router extends App.Controller
       )
 
   load: (data) =>
-    @ticket_list   = data.ticket_list
+    @ticket_ids    = data.ticket_ids
     @tickets_count = data.tickets_count
 #    App.Store.write( data )
     @redirect()
@@ -583,19 +580,19 @@ class Router extends App.Controller
 
     # redirect
     if @direction == 'next'
-      if @ticket_list[ @position ] && @ticket_list[ @position ]
+      if @ticket_ids[ @position ] && @ticket_ids[ @position ]
         position = @position + 1
         @Config.set( 'LastOverviewPosition', position )
-        @navigate 'ticket/zoom/' + @ticket_list[ @position ] + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_ids[ @position ] + '/nav/true'
       else
-        @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
     else
-      if @ticket_list[ @position - 2 ] && @ticket_list[ @position - 2 ] + '/nav/true'
+      if @ticket_ids[ @position - 2 ] && @ticket_ids[ @position - 2 ] + '/nav/true'
         position = @position - 1
         @Config.set( 'LastOverviewPosition', position )
-        @navigate 'ticket/zoom/' + @ticket_list[ @position - 2 ] + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 2 ] + '/nav/true'
       else
-        @navigate 'ticket/zoom/' + @ticket_list[ @position - 1 ] + '/nav/true'
+        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
 
 App.Config.set( 'ticket_view', Index, 'Routes' )
 App.Config.set( 'ticket_view/:view', Index, 'Routes' )

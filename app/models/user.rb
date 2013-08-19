@@ -4,6 +4,9 @@ require 'digest/sha2'
 require 'organization'
 
 class User < ApplicationModel
+  include User::Assets
+  extend User::Search
+
   before_create   :check_name, :check_email, :check_login, :check_image, :check_password
   before_update   :check_password, :check_image, :check_email, :check_login_update
   after_create    :notify_clients_after_create
@@ -126,7 +129,7 @@ returns
   def self.sso(params)
 
     # try to login against configure auth backends
-    user_auth = Sso.check( params, user )
+    user_auth = Sso.check( params )
     return if !user_auth
 
     return user_auth
@@ -281,42 +284,6 @@ returns
     # delete token
     Token.where( :action => 'PasswordReset', :name => token ).first.destroy
     return user
-  end
-
-=begin
-
-search user
-
-  result = User.search(
-    :query        => 'some search term'
-    :limit        => 15,
-    :current_user => user_model,
-  )
-
-returns
-
-  result = [user_model1, user_model2, ...]
-
-=end
-
-  def self.search(params)
-
-    # get params
-    query = params[:query]
-    limit = params[:limit] || 10
-    current_user = params[:current_user]
-
-    # enable search only for agents and admins
-    return [] if !current_user.is_role('Agent') && !current_user.is_role('Admin')
-
-    # do query
-    users = User.find(
-      :all,
-      :limit      => limit,
-      :conditions => ['(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%"],
-      :order      => 'firstname'
-    )
-    return users
   end
 
   def self.find_fulldata(user_id)

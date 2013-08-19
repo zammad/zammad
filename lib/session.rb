@@ -395,7 +395,7 @@ class UserState
       # overview
       cache_key = @cache_key + '_overview'
       if CacheIn.expired(cache_key)
-        overview = Ticket::Overview.list(
+        overview = Ticket::Overviews.list(
           :current_user => user,
         )
         overview_cache = CacheIn.get( cache_key, { :re_expire => true } )
@@ -410,13 +410,13 @@ class UserState
       end
 
       # overview lists
-      overviews = Ticket::Overview.all(
+      overviews = Ticket::Overviews.all(
         :current_user => user,
       )
       overviews.each { |overview|
         cache_key = @cache_key + '_overview_data_' + overview.link
         if CacheIn.expired(cache_key)
-          overview_data = Ticket::Overview.list(
+          overview_data = Ticket::Overviews.list(
             :view         => overview.link,
             :current_user => user,
             :array        => true,
@@ -597,14 +597,14 @@ class ClientState
       if !CacheIn.get( 'pushed_tickets' + @client_id.to_s )
         CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 20.seconds } )
         if @pushed[:tickets]
-          tickets = []
+          tickets = {}
           users = {}
           @pushed[:tickets].each {|ticket_id, ticket_data|
             self.ticket( ticket_id, tickets, users )
           }
           if !tickets.empty?
-            tickets.each {|ticket|
-              self.log 'notify', "push update of already pushed ticket id #{ticket['id']}"
+            tickets.each {|id, ticket|
+              self.log 'notify', "push update of already pushed ticket id #{id}"
             }
             # send update to browser
             self.send({
@@ -637,7 +637,7 @@ class ClientState
       end
 
       # overview_data
-      overviews = Ticket::Overview.all(
+      overviews = Ticket::Overviews.all(
         :current_user => user,
       )
       overviews.each { |overview|
@@ -649,8 +649,8 @@ class ClientState
           overview_data = CacheIn.get( cache_key, { :ignore_expire => true } )
           self.log 'notify', "push overview_data #{overview.link} for user #{user.id}"
           users = {}
-          tickets = []
-          overview_data[:ticket_list].each {|ticket_id|
+          tickets = {}
+          overview_data[:ticket_ids].each {|ticket_id|
             self.ticket( ticket_id, tickets, users )
           }
 
@@ -678,20 +678,23 @@ class ClientState
 
           # send update to browser
           self.send({
+            :data => {
+              :users   => users,
+              :tickets => tickets,
+            },
+            :event => [ 'loadAssets' ]
+          })
+          self.send({
             :data   => {
               :overview      => overview_data[:overview],
-              :ticket_list   => overview_data[:ticket_list],
+              :ticket_ids    => overview_data[:ticket_ids],
               :tickets_count => overview_data[:tickets_count],
-              :collections    => {
-                :User   => users,
-                :Ticket => tickets,
-              },
               :bulk => {
                 :group_id__owner_id => groups_users,
                 :owner_id           => [],
               },
             },
-            :event      => [ 'loadCollection', 'ticket_overview_rebuild' ],
+            :event      => [ 'ticket_overview_rebuild' ],
             :collection => 'ticket_overview_' + overview.link.to_s,
           })
         end
@@ -816,7 +819,7 @@ class ClientState
     ticket = Ticket.lookup( :id => ticket_id )
     if @pushed[:tickets][ticket_id] != ticket['updated_at']
       @pushed[:tickets][ticket_id] = ticket['updated_at']
-      tickets.push ticket
+      tickets[ticket_id] = ticket
     end
 
     # add users if needed

@@ -1,7 +1,4 @@
 class App.DashboardRecentViewed extends App.Controller
-  events:
-    'click [data-type=edit]': 'zoom'
-
   constructor: ->
     super
 
@@ -16,28 +13,21 @@ class App.DashboardRecentViewed extends App.Controller
         limit: 5,
       }
       processData: true,
-#      data: JSON.stringify( view: @view ),
       success: (data, status, xhr) =>
         @items = data.recent_viewed
 
-        # load user collection
-        App.Collection.load( type: 'User', data: data.users )
-
-        # load ticket collection
-        App.Collection.load( type: 'Ticket', data: data.tickets )
+        # load collections
+        App.Event.trigger 'loadAssets', data.assets
 
         @render()
     )
 
   render: ->
 
-    # load user data
     for item in @items
-      item.created_by = App.User.find( item.created_by_id )
-
-    # load ticket data
-    for item in @items
-      item.ticket = App.User.find( item.o_id )
+      item.link = '#ticket_zoom/' + item.o_id
+      item.title = App.Ticket.find( item.o_id ).title
+      item.type  = item.recent_view_object
 
     html = App.view('dashboard/recent_viewed')(
       head: 'Recent Viewed',
@@ -49,9 +39,3 @@ class App.DashboardRecentViewed extends App.Controller
 
     # start user popups
     @userPopups('left')
-
-  zoom: (e) =>
-    e.preventDefault()
-    id = $(e.target).parents('[data-id]').data('id')
-
-    @navigate 'ticket/zoom/' + id

@@ -27,7 +27,7 @@ class App.TicketZoom extends App.Controller
       (data) =>
         update = =>
           if data.id.toString() is @ticket_id.toString()
-            ticket = App.Ticket.retrieve( @ticket_id )
+            ticket = App.Ticket.find( @ticket_id )
             @log 'notice', 'TRY', data.updated_at, ticket.updated_at
             if data.updated_at isnt ticket.updated_at
               @fetch( @ticket_id, false )
@@ -68,28 +68,25 @@ class App.TicketZoom extends App.Controller
       id:    'ticket_zoom_' + ticket_id
       type:  'GET'
       url:   @apiPath + '/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
-      data:
-        view: @view
       processData: true
       success: (data, status, xhr) =>
-        if @dataLastCall && !force
+
+        # check if ticket has changed
+        newTicketRaw = data.assets.tickets[ticket_id]
+        if @ticketUpdatedAtLastCall && !force
 
           # return if ticket hasnt changed
-          return if _.isEqual( @dataLastCall.ticket, data.ticket )
-
-          # trigger task notify
-          diff = difference( @dataLastCall.ticket, data.ticket )
-          @log 'diff', diff
+          return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at
 
           # notify if ticket changed not by my self
-          if !_.isEmpty(diff) && data.ticket.updated_by_id isnt @Session.all().id
+          if newTicketRaw.updated_by_id isnt @Session.all().id
             App.TaskManager.notify( @task_key )
 
           # rerender edit box
           @editDone = false
 
         # remember current data
-        @dataLastCall = data
+        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
         @load(data, force)
         App.Store.write( @key, data )
@@ -112,20 +109,17 @@ class App.TicketZoom extends App.Controller
     # reset old indexes
     @ticket = undefined
 
+    # remember article ids
+    @ticket_article_ids = data.ticket_article_ids
+
     # get edit form attributes
     @edit_form = data.edit_form
 
     # get signature
     @signature = data.signature
 
-    # load user collection
-    App.Collection.load( type: 'User', data: data.users )
-
-    # load ticket collection
-    App.Collection.load( type: 'Ticket', data: [data.ticket] )
-
-    # load article collections
-    App.Collection.load( type: 'TicketArticle', data: data.articles )
+    # load collections
+    App.Event.trigger 'loadAssets', data.assets
 
     # render page
     @render(force)
@@ -196,9 +190,10 @@ class App.TicketZoom extends App.Controller
   ArticleView: =>
     # show article
     new ArticleView(
-      ticket:   @ticket
-      el:       @el.find('.article-view')
-      ui:       @
+      ticket:             @ticket
+      ticket_article_ids: @ticket_article_ids
+      el:                 @el.find('.article-view')
+      ui:                 @
     )
 
   Edit: =>
@@ -571,7 +566,7 @@ class ArticleView extends App.Controller
 
     # get all articles
     @articles = []
-    for article_id in @ticket.article_ids
+    for article_id in @ticket_article_ids
       article = App.TicketArticle.retrieve( article_id )
       @articles.push article
 
@@ -621,16 +616,16 @@ class ArticleView extends App.Controller
 
   checkIfSignatureIsNeeded: (article_type) =>
 
-      # add signature
-      if @ui.signature && @ui.signature.body && article_type.name is 'email'
-        body   = @ui.el.find('[name="body"]').val() || ''
-        regexp = new RegExp( escapeRegExp( @ui.signature.body ) , 'i')
-        if !body.match(regexp)
-          body = body + "\n" + @ui.signature.body
-          @ui.el.find('[name="body"]').val( body )
+    # add signature
+    if @ui.signature && @ui.signature.body && article_type.name is 'email'
+      body   = @ui.el.find('[name="body"]').val() || ''
+      regexp = new RegExp( escapeRegExp( @ui.signature.body ) , 'i')
+      if !body.match(regexp)
+        body = body + "\n" + @ui.signature.body
+        @ui.el.find('[name="body"]').val( body )
 
-          # update textarea size
-          @ui.el.find('[name="body"]').trigger('change')
+        # update textarea size
+        @ui.el.find('[name="body"]').trigger('change')
 
   reply: (e) =>
     e.preventDefault()
@@ -775,7 +770,7 @@ class Article extends App.Controller
         actions.push {
           name: 'split'
           type: 'split'
-          href: '#ticket_create/' + @article.ticket_id + '/' + @article.id
+          href: '#ticket_create/call_inbound/' + @article.ticket_id + '/' + @article.id
         }
     @article.actions = actions
 

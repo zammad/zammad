@@ -35,12 +35,18 @@ class App.TicketCreate extends App.Controller
         title:   'Email'
     @article_attributes = article_sender_type_map[@type]
 
+    # remember split info if exists
+    split = ''
+    if @ticket_id && @article_id
+      split = "/#{@ticket_id}/#{@article_id}"
+
     # if no map entry exists, route to default
     if !@article_attributes
-      @navigate '#ticket_create/' + default_type
+      @navigate '#ticket_create/' + default_type + split
+      return
 
     # update navbar highlighting
-    @navupdate '#ticket_create/' + @type + '/id/' + @id
+    @navupdate '#ticket_create/' + @type + '/id/' + @id + split
 
     @fetch(params)
 
@@ -97,8 +103,8 @@ class App.TicketCreate extends App.Controller
       # get edit form attributes
       @edit_form = cache.edit_form
 
-      # load user collection
-      App.Collection.load( type: 'User', data: cache.users )
+      # load collections
+      App.Event.trigger 'loadAssets', cache.assets
 
       @render()
     else
@@ -118,17 +124,11 @@ class App.TicketCreate extends App.Controller
           # get edit form attributes
           @edit_form = data.edit_form
 
-          # load user collection
-          App.Collection.load( type: 'User', data: data.users )
+          # load collections
+          App.Event.trigger 'loadAssets', data.assets
 
-          # load ticket collection
-          if data.ticket && data.articles
-            App.Collection.load( type: 'Ticket', data: [data.ticket] )
-
-            # load article collections
-            App.Collection.load( type: 'TicketArticle', data: data.articles || [] )
-
-            # render page
+          # split ticket
+          if data.split && data.split.ticket_id && data.split.article_id
             t = App.Ticket.find( params.ticket_id ).attributes()
             a = App.TicketArticle.find( params.article_id )
 
@@ -137,6 +137,8 @@ class App.TicketCreate extends App.Controller
             t.customer_id_autocompletion = a.from
             t.subject = a.subject || t.title
             t.body = a.body
+
+          # render page
           @render( options: t )
       )
 
@@ -209,9 +211,8 @@ class App.TicketCreate extends App.Controller
     # update text module UI
     callback = (user) =>
       @textModule.reload(
-        data:
-          ticket:
-            customer: user
+        ticket:
+          customer: user
       )
 
     @userInfo(
@@ -386,8 +387,13 @@ class TicketCreateRouter extends App.ControllerPermanent
 
     # create new uniq form id
     if !params['id']
+      # remember split info if exists
+      split = ''
+      if params['ticket_id'] && params['article_id']
+        split = "/#{params['ticket_id']}/#{params['article_id']}"
+
       id = Math.floor( Math.random() * 99999 )
-      @navigate "#ticket_create/#{params['type']}/id/#{id}"
+      @navigate "#ticket_create/#{params['type']}/id/#{id}#{split}" 
       return
 
     # cleanup params
@@ -399,13 +405,15 @@ class TicketCreateRouter extends App.ControllerPermanent
 
     App.TaskManager.add( 'TicketCreateScreen-' + params['type'] + '-' + params['id'], 'TicketCreate', clean_params )
 
-# split ticket
-App.Config.set( 'ticket_create/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
-
 # create new ticket routs/controller
 App.Config.set( 'ticket_create', TicketCreateRouter, 'Routes' )
 App.Config.set( 'ticket_create/:type', TicketCreateRouter, 'Routes' )
 App.Config.set( 'ticket_create/:type/id/:id', TicketCreateRouter, 'Routes' )
+
+
+# split ticket
+App.Config.set( 'ticket_create/:type/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
+App.Config.set( 'ticket_create/:type/id/:id/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
 
 # set new task actions
 App.Config.set( 'TicketNewCallOutbound', { prio: 8001, name: 'Call Outbound', target: '#ticket_create/call_outbound', role: ['Agent'] }, 'TaskActions' )

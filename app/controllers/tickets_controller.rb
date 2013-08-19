@@ -132,14 +132,13 @@ class TicketsController < ApplicationController
     # get history of ticket
     history = History.list( 'Ticket', params[:id], 'Ticket::Article' )
 
-    # get related users
-    users = {}
-    users[ ticket.owner_id ] = User.user_data_full( ticket.owner_id )
-    users[ ticket.customer_id ] = User.user_data_full( ticket.customer_id )
+    # get related assets
+    assets = ticket.assets({})
     history_list = []
     history.each do |item|
 
-      users[ item[:created_by_id] ] = User.user_data_full( item[:created_by_id] )
+      assets = item.assets(assets)
+
       item_tmp = item.attributes
       if item['history_object'] == 'Ticket::Article'
         item_temp['type'] = 'Article ' + item['type'].to_s
@@ -171,29 +170,22 @@ class TicketsController < ApplicationController
         item_tmp.delete( 'related_o_id' )
       end
       history_list.push item_tmp
-
     end
-
-    # fetch meta relations
-    history_objects    = History::Object.all()
-    history_types      = History::Type.all()
-    history_attributes = History::Attribute.all()
 
     # return result
     render :json => {
-      :ticket             => ticket,
-      :users              => users,
-      :history            => history_list,
-      :history_objects    => history_objects,
-      :history_types      => history_types,
-      :history_attributes => history_attributes
+      :assets   => assets,
+      :history  => history_list,
     }
   end
 
   # GET /api/v1/ticket_merge_list/1
   def ticket_merge_list
 
-    ticket      = Ticket.find( params[:ticket_id] )
+    ticket = Ticket.find( params[:ticket_id] )
+    assets = ticket.assets({})
+
+    # open tickets by customer
     ticket_list = Ticket.where(
       :customer_id     => ticket.customer_id,
       :ticket_state_id => Ticket::State.by_category( 'open' )
@@ -202,35 +194,29 @@ class TicketsController < ApplicationController
     .order('created_at DESC')
     .limit(6)
 
-    # get related users
-    users = {}
-    tickets = []
+    # get related assets
+    ticket_ids_by_customer = [] 
     ticket_list.each {|ticket|
-      data = Ticket.lookup( :id => ticket.id )
-      tickets.push data
-      if !users[ data['owner_id'] ]
-        users[ data['owner_id'] ] = User.user_data_full( data['owner_id'] )
-      end
-      if !users[ data['customer_id'] ]
-        users[ data['customer_id'] ] = User.user_data_full( data['customer_id'] )
-      end
-      if !users[ data['created_by_id'] ]
-        users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
-      end
-      if !users[ data['updated_by_id'] ]
-        users[ data['updated_by_id'] ] = User.user_data_full( data['updated_by_id'] )
+      ticket_ids_by_customer.push ticket.id
+      assets = ticket.assets(assets)
+    }
+
+
+    ticket_ids_recent_viewed = []
+    ticket_recent_view = RecentView.list( current_user, 8 )
+    ticket_recent_view.each {|item|
+      if item['recent_view_object'] == 'Ticket'
+        ticket_ids_recent_viewed.push item['o_id']
+        ticket = Ticket.find( item['o_id'] )
+        assets = ticket.assets(assets)
       end
     }
 
-    recent_viewed = RecentView.list_fulldata( current_user, 8 )
-
     # return result
     render :json => {
-      :customer => {
-        :tickets       => tickets,
-        :users         => users,
-      },
-      :recent => recent_viewed
+      :assets                   => assets,
+      :ticket_ids_by_customer   => ticket_ids_by_customer,
+      :ticket_ids_recent_viewed => ticket_ids_recent_viewed,
     }
   end
 
@@ -295,18 +281,6 @@ class TicketsController < ApplicationController
     ticket = Ticket.find( params[:id] )
     return if !ticket_permission( ticket )
 
-    # get related users
-    users = {}
-    if !users[ticket.owner_id]
-      users[ticket.owner_id] = User.user_data_full( ticket.owner_id )
-    end
-    if !users[ticket.customer_id]
-      users[ticket.customer_id] = User.user_data_full( ticket.customer_id )
-    end
-    if !users[ticket.created_by_id]
-      users[ticket.created_by_id] = User.user_data_full( ticket.created_by_id )
-    end
-
     # log object as viewed
     if !params[:do_not_log] || params[:do_not_log].to_i == 0
       log_view( ticket )
@@ -328,58 +302,52 @@ class TicketsController < ApplicationController
       )
     end
 
+    # get related users
+    assets = {}
+    assets[:users] = {}
+    assets = ticket.assets(assets)
+
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
 
     attributes_to_change[:owner_id].each { |user_id|
-      if !users[user_id]
-        users[user_id] = User.user_data_full( user_id )
+      if !assets[:users][user_id]
+        assets[:users][user_id] = User.user_data_full( user_id )
       end
     }
 
     attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
       user_ids.each {|user_id|
-        if !users[user_id]
-          users[user_id] = User.user_data_full( user_id )
+        if !assets[:users][user_id]
+          assets[:users][user_id] = User.user_data_full( user_id )
         end
       }
     }
 
     # get related articles
-    ticket = ticket.attributes
-    ticket[:article_ids] = []
     articles = Ticket::Article.where( :ticket_id => params[:id] )
 
     # get related users
-    articles_used = []
+    article_ids = []
     articles.each {|article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && is_role('Customer')
-      article_tmp = article.attributes
 
       # load article ids
-      ticket[:article_ids].push article_tmp['id']
+      article_ids.push article.id
 
-      # add attachment list to article
-      article_tmp['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => article.id )
-
-      # remember article
-      articles_used.push article_tmp
-
-      # load users
-      if !users[article.created_by_id]
-        users[article.created_by_id] = User.user_data_full( article.created_by_id )
-      end
+      # load assets
+      assets = article.assets(assets)
     }
 
     # return result
     render :json => {
-      :ticket    => ticket,
-      :articles  => articles_used,
-      :signature => signature,
-      :users     => users,
-      :edit_form => attributes_to_change,
+      :ticket_id          => ticket.id,
+      :ticket_article_ids => article_ids,
+      :signature          => signature,
+      :assets             => assets,
+      :edit_form          => attributes_to_change,
     }
   end
 
@@ -393,65 +361,47 @@ class TicketsController < ApplicationController
       #      :article_id => params[:article_id]
     )
 
-    users = {}
+    assets = {}
+    assets[:users] = {}
     attributes_to_change[:owner_id].each { |user_id|
-      if !users[user_id]
-        users[user_id] = User.user_data_full( user_id )
+      if !assets[:users][user_id]
+        assets[:users][user_id] = User.user_data_full( user_id )
       end
     }
 
     attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
       user_ids.each {|user_id|
-        if !users[user_id]
-          users[user_id] = User.user_data_full( user_id )
+        if !assets[:users][user_id]
+          assets[:users][user_id] = User.user_data_full( user_id )
         end
       }
     }
 
     # split data
-    ticket = nil
-    articles = nil
+    split = {}
     if params[:ticket_id] && params[:article_id]
       ticket = Ticket.find( params[:ticket_id] )
-
-      # get related users
-      if !users[ticket.owner_id]
-        users[ticket.owner_id] = User.user_data_full( ticket.owner_id )
-      end
-      if !users[ticket.customer_id]
-        users[ticket.customer_id] = User.user_data_full( ticket.customer_id )
-      end
-      if !users[ticket.created_by_id]
-        users[ticket.created_by_id] = User.user_data_full( ticket.created_by_id )
-      end
+      split[:ticket_id] = ticket.id
+      assets = ticket.assets(assets)
 
       owner_ids = []
       ticket.agent_of_group.each { |user|
         owner_ids.push user.id
-        if !users[user.id]
-          users[user.id] = User.user_data_full( user.id )
+        if !assets[:users][user.id]
+          assets[:users][user.id] = User.user_data_full( user.id )
         end
       }
 
       # get related articles
-      ticket[:article_ids] = [ params[:article_id] ]
-
       article = Ticket::Article.find( params[:article_id] )
-
-      # add attachment list to article
-      article['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => article.id )
-
-      # load users
-      if !users[article.created_by_id]
-        users[article.created_by_id] = User.user_data_full( article.created_by_id )
-      end
+      split[:article_id] = article.id
+      assets = article.assets(assets)
     end
 
     # return result
     render :json => {
-      :ticket    => ticket,
-      :articles  => [ article ],
-      :users     => users,
+      :split     => split,
+      :assets    => assets,
       :edit_form => attributes_to_change,
     }
   end
@@ -465,19 +415,17 @@ class TicketsController < ApplicationController
       :query        => params[:term],
       :current_user => current_user,
     )
-    users_data = {}
+    assets = {}
     ticket_result = []
     tickets.each do |ticket|
       ticket_result.push ticket.id
-      users_data[ ticket['owner_id'] ] = User.user_data_full( ticket['owner_id'] )
-      users_data[ ticket['customer_id'] ] = User.user_data_full( ticket['customer_id'] )
-      users_data[ ticket['created_by_id'] ] = User.user_data_full( ticket['created_by_id'] )
+      assets = ticket.assets(assets)
     end
 
     # return result
     render :json => {
       :tickets => ticket_result,
-      :users   => users_data,
+      :assets  => assets,
     }
   end
 

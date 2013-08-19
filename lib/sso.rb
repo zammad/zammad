@@ -6,7 +6,7 @@ class Sso < ApplicationLib
 
 authenticate user via username and password
 
-  result = Sso.check( params, config_item )
+  result = Sso.check( params )
 
 returns
 
