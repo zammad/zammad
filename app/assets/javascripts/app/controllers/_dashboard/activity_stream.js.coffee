@@ -42,17 +42,17 @@ class App.DashboardActivityStream extends App.Controller
     for item in items
       if item.history_object is 'Ticket'
         ticket = App.Ticket.find( item.o_id )
-        item.link = '#ticket_zoom/' + ticket.id
+        item.link = '#ticket/zoom/' + ticket.id
         item.title = ticket.title
-        item.type  = item.history_object
+        item.type = 'Ticket'
         item.updated_by_id = ticket.updated_by_id
         item.updated_by = App.User.find( ticket.updated_by_id )
       else if item.history_object is 'Ticket::Article'
         article = App.TicketArticle.find( item.o_id )
         ticket  = App.Ticket.find( article.ticket_id )
-        item.link = '#ticket_zoom/' + ticket.id + '/' + article.od
+        item.link = '#ticket/zoom/' + ticket.id + '/' + article.id
         item.title = article.subject || ticket.title
-        item.type  = item.history_object
+        item.type = 'Article'
         item.updated_by_id = article.updated_by_id
         item.updated_by = App.User.find( article.updated_by_id )
 
