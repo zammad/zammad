@@ -20,11 +20,6 @@ class PreferencesTest < TestCase
             :css     => 'a[href="#profile/language"]',
           },
           {
-            :execute => 'check',
-            :css     => '#language',
-            :result  => true,
-          },
-          {
             :execute => 'select',
             :css     => '.language_item select[name="locale"]',
             :value   => 'Deutsch',
