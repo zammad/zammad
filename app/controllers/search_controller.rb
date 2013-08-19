@@ -68,7 +68,7 @@ class SearchController < ApplicationController
 
     # return result
     render :json => {
-      :load   => assets,
+      :assets => assets,
       :result => result,
     }
   end
