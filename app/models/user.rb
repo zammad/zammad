@@ -129,7 +129,7 @@ returns
   def self.sso(params)
 
     # try to login against configure auth backends
-    user_auth = Sso.check( params, user )
+    user_auth = Sso.check( params )
     return if !user_auth
 
     return user_auth
