@@ -1,11 +1,13 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'faraday'
 require 'cache'
 
-module Geoip
+class GeoIp::Freegeoip
   def self.location(address)
 
     # check cache
-    cache_key = "geoip::#{address}"
+    cache_key = "freegeoip::#{address}"
     cache = Cache.get( cache_key )
     return cache if cache
 

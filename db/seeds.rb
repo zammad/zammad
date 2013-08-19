@@ -135,7 +135,7 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   :title       => 'Geo Location Backend',
-  :name        => 'geo_backend',
+  :name        => 'geo_location_backend',
   :area        => 'System::Geo',
   :description => 'Defines the backend for geo location lookups.',
   :options     => {
@@ -143,17 +143,39 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'geo_backend', 
+        :name     => 'geo_location_backend',
         :tag      => 'select',
         :options  => {
           '' => '-',
-          'Gmaps' => 'Google Maps',
+          'GeoLocation::Gmaps' => 'Google Maps',
         },
       },
     ],
   },
-  :state    => 'Gmaps',
-  :frontend => true
+  :state    => 'GeoLocation::Gmaps',
+  :frontend => false
+)
+Setting.create_if_not_exists(
+  :title       => 'Geo IP Backend',
+  :name        => 'geo_ip_backend',
+  :area        => 'System::Geo',
+  :description => 'Defines the backend for geo ip lookups.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'geo_ip_backend',
+        :tag      => 'select',
+        :options  => {
+          '' => '-',
+          'GeoIp::Freegeoip' => 'freegeoip.net',
+        },
+      },
+    ],
+  },
+  :state    => 'GeoIp::Freegeoip',
+  :frontend => false
 )
 
 Setting.create_if_not_exists(
@@ -228,7 +250,7 @@ Setting.create_if_not_exists(
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via OTRS.',
   :state    => {
-    :adapter           => 'otrs',
+    :adapter           => 'Auth::Otrs',
     :required_group_ro => 'stats',
     :group_rw_role_map => {
       'admin' => 'Admin',
@@ -249,7 +271,7 @@ Setting.create_if_not_exists(
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via LDAP.',
   :state    => {
-    :adapter        => 'ldap',
+    :adapter        => 'Auth::Ldap',
     :host           => 'localhost',
     :port           => 389,
     :bind_dn        => 'cn=Manager,dc=example,dc=org',
@@ -690,13 +712,13 @@ Setting.create_if_not_exists(
         :name      => 'ticket_number', 
         :tag       => 'select',
         :options   => {
-          'increment' => 'Increment (SystemID.Counter)',
-          'date'      => 'Date (Year.Month.Day.SystemID.Counter)',
+          'Ticket::Number::Increment' => 'Increment (SystemID.Counter)',
+          'Ticket::Number::Date'      => 'Date (Year.Month.Day.SystemID.Counter)',
         },
       },
     ],
   },
-  :state    => 'increment',
+  :state    => 'Ticket::Number::Increment',
   :frontend => false
 )
 Setting.create_if_not_exists(

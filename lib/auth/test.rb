@@ -1,6 +1,6 @@
-module Auth
-end
-module Auth::TEST
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
+module Auth::Test
   def self.check( username, password, config, user )
 
     # development systems

@@ -3,7 +3,7 @@
 module Ticket::Number::Date
   extend self
 
-  def number_generate_item
+  def generate
 
     # get config
     config = Setting.get('ticket_number_date')
@@ -64,7 +64,7 @@ module Ticket::Number::Date
     end
     return number
   end
-  def number_check_item (string)
+  def check(string)
 
     # get config
     system_id           = Setting.get('system_id') || ''

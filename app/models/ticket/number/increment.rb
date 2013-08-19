@@ -3,7 +3,7 @@
 module Ticket::Number::Increment
   extend self
 
-  def number_generate_item
+  def generate
 
     # get config
     config = Setting.get('ticket_number_increment')
@@ -68,7 +68,7 @@ module Ticket::Number::Increment
     return number
   end
 
-  def number_check_item (string)
+  def check(string)
 
     # get config
     system_id           = Setting.get('system_id') || ''

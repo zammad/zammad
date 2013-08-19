@@ -395,7 +395,7 @@ class UserState
       # overview
       cache_key = @cache_key + '_overview'
       if CacheIn.expired(cache_key)
-        overview = Ticket.overview(
+        overview = Ticket::Overview.list(
           :current_user => user,
         )
         overview_cache = CacheIn.get( cache_key, { :re_expire => true } )
@@ -405,20 +405,19 @@ class UserState
 #          puts overview.inspect
 #          puts '------'
 #          puts overview_cache.inspect
-          CacheIn.set( cache_key, overview, { :expires_in => 3.seconds } )
+          CacheIn.set( cache_key, overview, { :expires_in => 4.seconds } )
         end
       end
 
       # overview lists
-      overviews = Ticket.overview_list(
+      overviews = Ticket::Overview.all(
         :current_user => user,
       )
       overviews.each { |overview|
         cache_key = @cache_key + '_overview_data_' + overview.link
         if CacheIn.expired(cache_key)
-          overview_data = Ticket.overview(
+          overview_data = Ticket::Overview.list(
             :view         => overview.link,
-#            :view_mode    => params[:view_mode],
             :current_user => user,
             :array        => true,
           )
@@ -434,7 +433,7 @@ class UserState
       # create_attributes
       cache_key = @cache_key + '_ticket_create_attributes'
       if CacheIn.expired(cache_key)
-        ticket_create_attributes = Ticket.attributes_to_change(
+        ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
           :current_user_id => user.id,
         )
         ticket_create_attributes_cache = CacheIn.get( cache_key, { :re_expire => true } )
@@ -638,7 +637,7 @@ class ClientState
       end
 
       # overview_data
-      overviews = Ticket.overview_list(
+      overviews = Ticket::Overview.all(
         :current_user => user,
       )
       overviews.each { |overview|
@@ -661,7 +660,7 @@ class ClientState
             group_ids.push group.id
           }
           agents = {}
-          Ticket.agents.each { |user|
+          Ticket::ScreenOptions.agents.each { |user|
             agents[ user.id ] = 1
           }
           groups_users = {}

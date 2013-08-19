@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'geoip'
-
 class ApplicationController < ActionController::Base
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
@@ -82,7 +80,7 @@ class ApplicationController < ActionController::Base
     # check if remote ip need to be updated
     if !session[:remote_id] || session[:remote_id] != request.remote_ip
       session[:remote_id]  = request.remote_ip
-      session[:geo]        = Geoip.location( request.remote_ip )
+      session[:geo]        = GeoIp.location( request.remote_ip )
     end
 
     # fill user agent

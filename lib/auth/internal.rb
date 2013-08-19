@@ -1,6 +1,6 @@
-module Auth
-end
-module Auth::INTERNAL
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
+module Auth::Internal
   def self.check( username, password, config, user )
 
     # return if no user exists

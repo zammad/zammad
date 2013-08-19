@@ -14,6 +14,6 @@ class Sla < ApplicationModel
   private
   def escalation_calculation_rebuild
     Cache.delete( 'SLA::List::Active' )
-    Ticket.escalation_calculation_rebuild
+    Ticket::Escalation.rebuild_all
   end
 end

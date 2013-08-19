@@ -7,7 +7,7 @@ Setting.create_or_update(
   :area        => 'Security::Authentication',
   :description => 'Enables user authentication via LDAP.',
   :state    => {
-    :adapter        => 'ldap',
+    :adapter        => 'Auth::Ldap',
     :host           => 'localhost',
     :port           => 389,
     :bind_dn        => 'cn=Manager,dc=example,dc=org',
@@ -45,6 +45,7 @@ else
     :created_by_id => 1
   )
 end
+
 class AuthTest < ActiveSupport::TestCase
   test 'auth' do
     tests = [

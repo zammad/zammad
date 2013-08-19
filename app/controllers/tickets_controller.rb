@@ -111,7 +111,7 @@ class TicketsController < ApplicationController
   def ticket_customer
 
     # return result
-    result = Ticket.list_by_customer(
+    result = Ticket::ScreenOptions.list_by_customer(
       :customer_id => params[:customer_id],
       :limit       => 15,
     )
@@ -216,6 +216,9 @@ class TicketsController < ApplicationController
       end
       if !users[ data['created_by_id'] ]
         users[ data['created_by_id'] ] = User.user_data_full( data['created_by_id'] )
+      end
+      if !users[ data['updated_by_id'] ]
+        users[ data['updated_by_id'] ] = User.user_data_full( data['updated_by_id'] )
       end
     }
 
@@ -326,7 +329,7 @@ class TicketsController < ApplicationController
     end
 
     # get attributes to update
-    attributes_to_change = Ticket.attributes_to_change( :user => current_user, :ticket => ticket )
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
 
     attributes_to_change[:owner_id].each { |user_id|
       if !users[user_id]
@@ -384,7 +387,7 @@ class TicketsController < ApplicationController
   def ticket_create
 
     # get attributes to update
-    attributes_to_change = Ticket.attributes_to_change(
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       :user       => current_user,
       #      :ticket_id  => params[:ticket_id],
       #      :article_id => params[:article_id]
