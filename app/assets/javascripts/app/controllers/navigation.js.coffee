@@ -92,24 +92,8 @@ class App.Navigation extends App.Controller
         processData: true,
         success: (data, status, xhr) =>
 
-          # load user collection
-          if data.load.users
-            App.Collection.load( type: 'User', data: data.load.users )
-
-          # load user collection
-          if data.load.organizations
-            for organization_id, organization of data.load.organizations
-              if organization.user_ids
-                organization.users = []
-                for user_id in organization.user_ids
-                  user = App.User.find( user_id )
-                  organization.users.push user
-            App.Collection.load( type: 'Organization', data: data.load.organizations )
-
-
-          # load ticket collection
-          if data.load.tickets
-            App.Collection.load( type: 'Ticket', data: data.load.tickets )
+          # load collections
+          App.Event.trigger 'loadAssets', data.assets
 
           @result = data.result
           for area in @result
