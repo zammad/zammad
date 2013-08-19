@@ -247,7 +247,7 @@ puts "NOTICE #{Time.now.to_s}: " + action.inspect
       sleep 4
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.clear
-      element.send_keys( 'ma' )
+      element.send_keys( 'nico' )
       sleep 4
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.send_keys( :arrow_down )

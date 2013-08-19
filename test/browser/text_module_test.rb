@@ -263,7 +263,7 @@ class TextModuleTest < TestCase
         :action   => [
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 4,
           },
           {
             :where   => :instance2,
@@ -392,6 +392,16 @@ class TextModuleTest < TestCase
             :where    => :instance2,
             :execute => 'set',
             :css     => '.active textarea[name=body]',
+            :value   => 'test',
+          },
+          {
+            :execute => 'wait',
+            :value   => 4,
+          },
+          {
+            :where    => :instance2,
+            :execute => 'set',
+            :css     => '.active textarea[name=body]',
             :value   => '::' + random,
           },
           {
@@ -418,7 +428,7 @@ class TextModuleTest < TestCase
             :where        => :instance2,
             :execute      => 'match',
             :css          => '.active textarea[name=body]',
-            :value        => 'some content' + random,
+            :value        => 'some content Braun' + random,
             :match_result => true,
           },
         ],
