@@ -27,5 +27,4 @@ class Index extends App.ControllerContent
 #App.Config.set( 'slas', Index, 'Routes' )
 #App.Config.set( 'Sla', { prio: 2900, parent: '#admin', name: 'SLAs', target: '#slas', role: ['Admin'] }, 'NavBar' )
 
-App.Config.set( 'Sla', { prio: 2900, name: 'SLAs', target: '#manage/slas', controller: Index, role: ['Admin'] }, 'NavBarLevel2' )
-
+App.Config.set( 'Sla', { prio: 2900, name: 'SLAs', parent: '#manage', target: '#manage/slas', controller: Index, role: ['Admin'] }, 'NavBarLevel44' )
