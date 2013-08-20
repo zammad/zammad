@@ -371,7 +371,7 @@ class _taskManagerSingleton extends App.Controller
     # reopen tasks
     App.Event.trigger 'taskbar:init'
 
-    task_count = 0
+    task_count = 1
     for task in @allTasks
       task_count += 1
       console.log('START', task)
