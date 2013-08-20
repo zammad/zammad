@@ -57,7 +57,12 @@ class App.TicketCreate extends App.Controller
 
   meta: =>
     text = App.i18n.translateInline( @article_attributes['title'] )
-    subject = @el.find('[name=subject]').val()
+    if !@_initMetaDone
+      @_initMetaDone = true
+      state = App.TaskManager.get(@task_key).state
+      subject = state['subject']
+    else
+      subject = @el.find('[name=subject]').val()
     if subject
       text = "#{text}: #{subject}"
     meta =

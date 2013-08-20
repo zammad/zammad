@@ -35,16 +35,18 @@ class App.TicketZoom extends App.Controller
     )
 
   meta: =>
-    return if !@ticket
-    ticket = App.Ticket.retrieve( @ticket.id )
     meta =
       url:   @url()
-      head:  ticket.title
-      title: '#' + ticket.number + ' - ' + ticket.title
-      id:    ticket.id
+      head:  '???'
+      title: '???'
+      id:    @ticket_id
+    if @ticket
+      meta.head  = @ticket.title
+      meta.title = '#' + @ticket.number + ' - ' + @ticket.title
+    meta
 
   url: =>
-    '#ticket/zoom/' + @ticket.id
+    '#ticket/zoom/' + @ticket_id
 
   activate: =>
     @navupdate '#'
@@ -106,9 +108,6 @@ class App.TicketZoom extends App.Controller
 
   load: (data, force) =>
 
-    # reset old indexes
-    @ticket = undefined
-
     # remember article ids
     @ticket_article_ids = data.ticket_article_ids
 
@@ -121,13 +120,13 @@ class App.TicketZoom extends App.Controller
     # load collections
     App.Event.trigger 'loadAssets', data.assets
 
+    # get data
+    @ticket = App.Ticket.retrieve( @ticket_id )
+
     # render page
     @render(force)
 
   render: (force) =>
-
-    # get data
-    @ticket = App.Ticket.retrieve( @ticket_id )
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
