@@ -21,7 +21,7 @@ class App.DashboardActivityStream extends App.Controller
         type:  'GET'
         url:   @apiPath + '/activity_stream'
         data:  {
-          limit: 8
+          limit: @limit || 8
         }
         processData: true
         success: (data) =>
