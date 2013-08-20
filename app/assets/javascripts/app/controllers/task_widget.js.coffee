@@ -215,11 +215,11 @@ class Taskbar extends App.Controller
     elementsOversizeLeftTotal = 0
     $('#task .task').each(
       (position, element) ->
-        widthTask = $(element).parent().width()
+        widthTask = $(element).width()
         if widthTask > task_size
           elementsOversize++
         else
-          elementsOversizeLeftTotal += ( width / task_count ) - widthTask
+          elementsOversizeLeftTotal += task_size - widthTask
     )
 
     addOversize = elementsOversizeLeftTotal / elementsOversize
