@@ -52,10 +52,34 @@ class TestCase < Test::Unit::TestCase
       end
     end
     local_browser.manage.timeouts.implicit_wait = 3 # seconds
+
+    browser_instance_js_on_start(local_browser)
+  end
+
+  def browser_instance_js_on_start(instance)
+    instance.execute_script('
+    window.jsErrors = [];
+    window.onerror = function(errorMessage) {
+      window.jsErrors.push(errorMessage);
+    };');
+  end
+
+  def browser_instance_js_on_teardown(instance)
+    result = instance.execute_script( 'return window.jsErrors;' )
+    if result
+      puts 'JS ERRORS: ' + result.inspect
+    else
+      puts 'JS ERRORS: -none-'
+    end
   end
 
   def teardown
     return if !@browsers
+
+    # show js errors
+    @browsers.each{ |local_browser|
+      browser_instance_js_on_teardown(local_browser)
+    }
 
     # only shut down browser type once on local webdriver tests
     # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
@@ -160,7 +184,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_element_action(test, action, instance)
-puts "NOTICE #{Time.now.to_s}: " + action.inspect
+    puts "NOTICE #{Time.now.to_s}: " + action.inspect
     sleep 0.1
     if action[:css]
       if action[:css].match '###stack###'
