@@ -462,13 +462,13 @@ class UserState
       # activity steam
       cache_key = @cache_key + '_activity_stream'
       if CacheIn.expired(cache_key)
-        activity_stream = History.activity_stream( user )
+        activity_stream = History.activity_stream( user, 20 )
         activity_stream_cache = CacheIn.get( cache_key, { :re_expire => true } )
         self.log 'notice', 'fetch activity_stream - ' + cache_key
         if activity_stream != activity_stream_cache
           self.log 'notify', 'fetch activity_stream changed - ' + cache_key
 
-          activity_stream_full = History.activity_stream_fulldata( user )
+          activity_stream_full = History.activity_stream_fulldata( user, 20 )
           CacheIn.set( cache_key, activity_stream, { :expires_in => 0.75.minutes } )
           CacheIn.set( cache_key + '_push', activity_stream_full )
         end
