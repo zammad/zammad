@@ -208,19 +208,18 @@ class Taskbar extends App.Controller
       @navigate '#'
 
   resizeTasks: ->
-    width = $('#task .taskbar').width() - $('#task .taskbar-new').width() - 200
+    width = $('#task .taskbar-items').width()# - $('#task .taskbar-new').width() - 200
     task_count = App.TaskManager.all().length
-    task_size  = ( width / task_count ) - ( task_count * 1.3 )
-
+    task_size  = ( width / task_count ) - 44
     elementsOversize = 0
     elementsOversizeLeftTotal = 0
     $('#task .task').each(
       (position, element) ->
-        width = $(element).parent().width()
-        if width > task_size
+        widthTask = $(element).parent().width()
+        if widthTask > task_size
           elementsOversize++
         else
-          elementsOversizeLeftTotal += task_size - width
+          elementsOversizeLeftTotal += ( width / task_count ) - widthTask
     )
 
     addOversize = elementsOversizeLeftTotal / elementsOversize
