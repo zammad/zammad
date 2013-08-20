@@ -286,6 +286,7 @@ table th, table td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: inline-block;
 }
 
 #task .task > a,
