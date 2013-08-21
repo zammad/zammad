@@ -1,13 +1,11 @@
-module ExtraRoutes
-  def add(map, api_path)
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    # base objects
-    map.match api_path + '/settings',               :to => 'settings#index',   :via => :get
-    map.match api_path + '/settings/:id',           :to => 'settings#show',    :via => :get
-    map.match api_path + '/settings',               :to => 'settings#create',  :via => :post
-    map.match api_path + '/settings/:id',           :to => 'settings#update',  :via => :put
-    map.match api_path + '/settings/:id',           :to => 'settings#destroy', :via => :delete
+  # base objects
+  match api_path + '/settings',               :to => 'settings#index',   :via => :get
+  match api_path + '/settings/:id',           :to => 'settings#show',    :via => :get
+  match api_path + '/settings',               :to => 'settings#create',  :via => :post
+  match api_path + '/settings/:id',           :to => 'settings#update',  :via => :put
+  match api_path + '/settings/:id',           :to => 'settings#destroy', :via => :delete
 
-  end
-  module_function :add
 end

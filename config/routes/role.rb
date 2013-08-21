@@ -1,12 +1,10 @@
-module ExtraRoutes
-  def add(map, api_path)
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    # roles
-    map.match api_path + '/roles',            :to => 'roles#index',   :via => :get
-    map.match api_path + '/roles/:id',        :to => 'roles#show',    :via => :get
-    map.match api_path + '/roles',            :to => 'roles#create',  :via => :post
-    map.match api_path + '/roles/:id',        :to => 'roles#update',  :via => :put
+  # roles
+  match api_path + '/roles',            :to => 'roles#index',   :via => :get
+  match api_path + '/roles/:id',        :to => 'roles#show',    :via => :get
+  match api_path + '/roles',            :to => 'roles#create',  :via => :post
+  match api_path + '/roles/:id',        :to => 'roles#update',  :via => :put
 
-  end
-  module_function :add
 end

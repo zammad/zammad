@@ -375,14 +375,14 @@ class _taskManagerSingleton extends App.Controller
     for task in @allTasks
       task_count += 1
       console.log('START', task)
-      App.Delay.set(
-        =>
-          task = tasks.shift()
-          @add(task.key, task.callback, task.params, true)
-        task_count * 300
-        undefined
-        'task'
-      )
+      do (task) =>
+        App.Delay.set(
+          =>
+            @add(task.key, task.callback, task.params, true)
+          task_count * 900
+          undefined
+          'task'
+        )
 
     App.Event.trigger 'taskbar:ready'
 

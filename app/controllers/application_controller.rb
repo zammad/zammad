@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   :mode_show_rendeder,
   :model_index_render
 
-  before_filter :set_user, :session_update
+  before_filter :log_request, :set_user, :session_update
   before_filter :cors_preflight_check
 
   after_filter  :set_access_control_headers
@@ -50,6 +50,10 @@ class ApplicationController < ActionController::Base
   # execute events
   def trigger_events
     Observer::Ticket::Notification.transaction
+  end
+
+  def log_request
+    puts Time.now().to_s + ' ' + request.original_fullpath.to_s
   end
 
   # Finds the User with the ID stored in the session with the key

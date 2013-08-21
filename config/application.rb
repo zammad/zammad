@@ -82,5 +82,8 @@ module Zammad
     # Enable threaded mode
     config.threadsafe!
 
+    # catch all router files
+    config.paths['config/routes'] += Dir[Rails.root.join("config/routes/*.rb")]
+
   end
 end

@@ -83,6 +83,10 @@ class App.Auth
     for key, value of data.session
       App.Session.set( key, value )
 
+    # refresh default collections
+    for key, value of data.default_collections
+      App[key].refresh( value, options: { clear: true } )
+
     App.Event.trigger( 'auth', data.session )
 
     # init of i18n
@@ -92,10 +96,6 @@ class App.Auth
     if !locale
       locale = window.navigator.userLanguage || window.navigator.language || 'en'
     App.i18n.set( locale )
-
-    # refresh default collections
-    for key, value of data.default_collections
-      App[key].refresh( value, options: { clear: true } )
 
     App.Event.trigger( 'auth:login', data.session )
     App.Event.trigger( 'ui:rerender' )

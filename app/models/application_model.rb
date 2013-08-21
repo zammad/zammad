@@ -2,7 +2,7 @@
 
 require 'cache'
 require 'user_info'
-require 'session'
+require 'sessions'
 
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
@@ -340,7 +340,7 @@ class OwnModel < ApplicationModel
 
     class_name = self.class.name
     class_name.gsub!(/::/, '')
-    Session.broadcast(
+    Sessions.broadcast(
       :event => class_name + ':created',
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
@@ -368,7 +368,7 @@ class OwnModel < ApplicationModel
     puts "#{self.class.name.downcase} UPDATED " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
-    Session.broadcast(
+    Sessions.broadcast(
       :event => class_name + ':updated',
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
@@ -395,7 +395,7 @@ class OwnModel < ApplicationModel
     puts "#{self.class.name.downcase} DESTOY " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
-    Session.broadcast(
+    Sessions.broadcast(
       :event => class_name + ':destroy',
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
