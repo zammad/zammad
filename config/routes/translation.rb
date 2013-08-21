@@ -1,12 +1,11 @@
-module ExtraRoutes
-  def add(map, api_path)
-    map.match api_path + '/translations',              :to => 'translations#index',   :via => :get
-    map.match api_path + '/translations/:id',          :to => 'translations#show',    :via => :get
-    map.match api_path + '/translations',              :to => 'translations#create',  :via => :post
-    map.match api_path + '/translations/:id',          :to => 'translations#update',  :via => :put
-    map.match api_path + '/translations/:id',          :to => 'translations#destroy', :via => :delete
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    map.match api_path + '/translations/lang/:locale', :to => 'translations#load',    :via => :get
-  end
-  module_function :add
+  match api_path + '/translations',              :to => 'translations#index',   :via => :get
+  match api_path + '/translations/:id',          :to => 'translations#show',    :via => :get
+  match api_path + '/translations',              :to => 'translations#create',  :via => :post
+  match api_path + '/translations/:id',          :to => 'translations#update',  :via => :put
+  match api_path + '/translations/:id',          :to => 'translations#destroy', :via => :delete
+
+  match api_path + '/translations/lang/:locale', :to => 'translations#load',    :via => :get
 end

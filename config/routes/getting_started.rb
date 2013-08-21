@@ -1,9 +1,7 @@
-module ExtraRoutes
-  def add(map, api_path)
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    # getting_started
-    map.match api_path + '/getting_started',       :to => 'getting_started#index', :via => :get
+  # getting_started
+  match api_path + '/getting_started',       :to => 'getting_started#index', :via => :get
 
-  end
-  module_function :add
 end
