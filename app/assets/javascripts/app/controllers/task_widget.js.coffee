@@ -120,6 +120,8 @@ class Taskbar extends App.Controller
     tasks = App.TaskManager.all()
     item_list = []
     for task in tasks
+
+      # collect meta data of task for task bar item
       data =
         url:   '#'
         id:    false
@@ -128,8 +130,13 @@ class Taskbar extends App.Controller
       worker = App.TaskManager.worker( task.key  )
       if worker
         meta = worker.meta()
+
+        # apply meta data of controller
         if meta
-          data = meta
+          for key, value of meta
+            data[key] = value
+
+      # collect new task bar items
       item = {}
       item.task = task
       item.data = data

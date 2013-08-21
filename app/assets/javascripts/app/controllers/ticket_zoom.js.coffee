@@ -36,10 +36,8 @@ class App.TicketZoom extends App.Controller
 
   meta: =>
     meta =
-      url:   @url()
-      head:  '???'
-      title: '???'
-      id:    @ticket_id
+      url: @url()
+      id:  @ticket_id
     if @ticket
       meta.head  = @ticket.title
       meta.title = '#' + @ticket.number + ' - ' + @ticket.title
@@ -428,7 +426,7 @@ class Edit extends App.Controller
         @el.find('.ticket-update').parent().addClass('form-changed')
         @el.find('.ticket-update').parent().parent().find('.reset-message').show()
         App.TaskManager.update( @task_key, { 'state': currentData })
-    @interval( update, 2800, 'autosave' )
+    @interval( update, 3000, 'autosave' )
 
   update: (e) =>
     e.preventDefault()

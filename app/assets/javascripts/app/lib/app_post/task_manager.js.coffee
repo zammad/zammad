@@ -379,7 +379,7 @@ class _taskManagerSingleton extends App.Controller
         App.Delay.set(
           =>
             @add(task.key, task.callback, task.params, true)
-          task_count * 300
+          task_count * 900
           undefined
           'task'
         )
