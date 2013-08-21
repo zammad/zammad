@@ -29,10 +29,10 @@ class _trackSingleton
 
     @log( 'start', 'notice', {} )
 
-    # start initial submit 10 sec. later to avoid ie10 cookie issues
+    # start initial submit 30 sec. later to avoid ie10 cookie issues
     delay = =>
-      App.Interval.set @send, 60000
-    App.Delay.set delay, 10000
+      App.Interval.set @send, 80000
+    App.Delay.set delay, 30000
 
     # log clicks
     $(document).bind(
@@ -139,9 +139,15 @@ class _trackSingleton
     @data
 
 `
-window.onerror = function(errorMsg, url, lineNumber) {
-  console.error(errorMsg + " - in " + url + ", line " + lineNumber);
-};
+(function() {
+  window.onerrorOld = window.onerror
+  window.onerror = function(errorMsg, url, lineNumber) {
+    console.error(errorMsg + " - in " + url + ", line " + lineNumber);
+    if (window.onerrorOld) {
+      window.onerrorOld(errorMsg, url, lineNumber);
+    }
+  }
+}).call(this);
 
 (function() {
   var console = window.console
