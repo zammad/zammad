@@ -2,7 +2,7 @@ require 'json'
 require 'rss'
 require 'session_helper'
 
-module Session
+module Sessions
 
   # get application root directory
   @root = Dir.pwd.to_s
@@ -205,7 +205,7 @@ module Session
         next if @@client_threads[client_id]
 
         # get current user
-        session_data = Session.get( client_id )
+        session_data = Sessions.get( client_id )
         next if !session_data
         next if !session_data[:user]
         next if !session_data[:user][:id]
@@ -272,7 +272,7 @@ module Session
     files.sort.each {|entry|
       filename = path + '/' + entry
       if /^send/.match( entry )
-        data.push Session.queue_file( path, entry )
+        data.push Sessions.queue_file( path, entry )
       end
     }
     return data
@@ -297,7 +297,7 @@ module Session
     # list all current clients
     client_list = self.list
     client_list.each {|local_client_id, local_client|
-      Session.send( local_client_id, data )
+      Sessions.send( local_client_id, data )
     }
     return true
   end
@@ -552,7 +552,7 @@ class ClientState
     while true
 
       # get connection user
-      session_data = Session.get( @client_id )
+      session_data = Sessions.get( @client_id )
       return if !session_data
       return if !session_data[:user]
       return if !session_data[:user][:id]
@@ -849,7 +849,7 @@ class ClientState
 
   # send update to browser
   def send( data )
-    Session.send( @client_id, data )
+    Sessions.send( @client_id, data )
   end
 
   def log( level, data )
