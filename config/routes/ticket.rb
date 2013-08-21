@@ -15,7 +15,7 @@ module ExtraRoutes
     map.match api_path + '/ticket_merge/:slave_ticket_id/:master_ticket_number', :to => 'tickets#ticket_merge', :via => :get
 
     # ticket overviews
-    map.match api_path + '/ticket_overviews',                                  :to => 'ticket_overviews#show', :via => :get
+    map.match api_path + '/ticket_overviews',                              :to => 'ticket_overviews#show',     :via => :get
 
     # ticket priority
     map.match api_path + '/ticket_priorities',                             :to => 'ticket_priorities#index',   :via => :get
