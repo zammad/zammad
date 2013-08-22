@@ -3,11 +3,14 @@
 class Taskbar < ApplicationModel
   store           :state
   store           :params
-  before_create   :update_last_contact
-  before_update   :update_last_contact
+  before_create   :update_last_contact, :set_user
+  before_update   :update_last_contact, :set_user
 
   private
   def update_last_contact
     self.last_contact = Time.now
+  end
+  def set_user
+    self.user_id = UserInfo.current_user_id
   end
 end
