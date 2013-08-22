@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
 
   def authentication_check_only
 
-    puts 'authentication_check'
+    #puts 'authentication_check'
     session[:request_type] = 1
     #puts params.inspect
     #puts session.inspect
@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
 
     # check http basic auth
     authenticate_with_http_basic do |username, password|
-      puts 'http basic auth check'
+      #puts 'http basic auth check'
       session[:request_type] = 2
 
       userdata = User.authenticate( username, password )
