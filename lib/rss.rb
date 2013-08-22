@@ -1,4 +1,5 @@
-module RSS
+require 'simple-rss'
+module Rss
   def self.fetch(url, limit = 10)
     cache_key = 'rss::' + url
     items = Cache.get( cache_key )
