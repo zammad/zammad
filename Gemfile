@@ -1,11 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.14'
-
-# preparation for rails 4
-#gem 'rails', '4.0.0.rc1'
-#gem 'rails-observers'
-#gem 'activerecord-session_store'
+gem 'rails', '4.0.0'
+gem 'rails-observers'
+gem 'activerecord-session_store'
 
 gem 'eco'
 
@@ -19,10 +16,8 @@ gem 'json'
 group :assets do
 
 # preparation for rails 4
-#  gem 'sass-rails',   '~> 4.0.0.rc1'
-#  gem 'coffee-rails', '~> 4.0.0.rc1'
-  gem 'sass-rails',   '~> 3.2.4'
-  gem 'coffee-rails', '~> 3.2.2'
+  gem 'sass-rails',   '~> 4.0.0'
+  gem 'coffee-rails', '~> 4.0.0'
   gem 'uglifier'
 end
 
@@ -76,6 +71,8 @@ gem 'em-websocket'
 # in production environments by default.
 group :development, :test do
 
+    gem 'test-unit'
+
     gem 'sqlite3'
 
     # code coverage
@@ -92,4 +89,4 @@ group :development, :test do
 #    gem 'em-websocket-client'
 end
 
-gem 'thin'
+gem 'puma'

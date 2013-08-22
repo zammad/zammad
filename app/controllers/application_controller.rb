@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   :mode_show_rendeder,
   :model_index_render
 
-  before_filter :log_request, :set_user, :session_update
+  skip_before_filter :verify_authenticity_token
+  before_filter :set_user, :session_update
   before_filter :cors_preflight_check
 
   after_filter  :set_access_control_headers
@@ -50,10 +51,6 @@ class ApplicationController < ActionController::Base
   # execute events
   def trigger_events
     Observer::Ticket::Notification.transaction
-  end
-
-  def log_request
-    puts Time.now().to_s + ' ' + request.original_fullpath.to_s
   end
 
   # Finds the User with the ID stored in the session with the key
@@ -257,7 +254,7 @@ class ApplicationController < ActionController::Base
     begin
 
       # create object
-      generic_object = object.new( object.param_cleanup(params) )
+      generic_object = object.new( object.param_cleanup( params[object.to_s.downcase] ) )
 
       # save object
       generic_object.save!
@@ -280,7 +277,7 @@ class ApplicationController < ActionController::Base
       generic_object = object.find( params[:id] )
 
       # save object
-      generic_object.update_attributes!( object.param_cleanup(params) )
+      generic_object.update_attributes!( object.param_cleanup( params[object.to_s.downcase] ) )
       model_update_render_item(generic_object)
     rescue Exception => e
       logger.error e.message

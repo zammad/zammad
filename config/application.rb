@@ -79,11 +79,5 @@ module Zammad
     # REST api path
     config.api_path = '/api/v1'
 
-    # Enable threaded mode
-    config.threadsafe!
-
-    # catch all router files
-    config.paths['config/routes'] += Dir[Rails.root.join("config/routes/*.rb")]
-
   end
 end
