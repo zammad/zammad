@@ -152,7 +152,7 @@ class AuthCustomerTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 6,
           },
 
           # check action
