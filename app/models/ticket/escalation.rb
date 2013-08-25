@@ -150,6 +150,55 @@ returns
     self.save
   end
 
+=begin
+
+return sla for ticket
+
+  ticket = Ticket.find(123)
+  result = ticket.escalation_calculation_get_sla
+
+returns
+
+  result = selected_sla
+
+=end
+
+def escalation_calculation_get_sla
+    sla_selected = nil
+    sla_list = Cache.get( 'SLA::List::Active' )
+    if sla_list == nil
+      sla_list = Sla.where( :active => true ).all
+      Cache.write( 'SLA::List::Active', sla_list, { :expires_in => 1.hour } )
+    end
+    sla_list.each {|sla|
+      if !sla.condition || sla.condition.empty?
+        sla_selected = sla
+      elsif sla.condition
+        hit = false
+        map = [
+          [ 'tickets.ticket_priority_id', 'ticket_priority_id' ],
+          [ 'tickets.group_id', 'group_id' ]
+        ]
+        map.each {|item|
+          if sla.condition[ item[0] ]
+            if sla.condition[ item[0] ].class == String
+              sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
+            end
+            if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
+              hit = true
+            else
+              hit = false
+            end
+          end
+        }
+        if hit
+          sla_selected = sla
+        end
+      end
+    }
+    sla_selected
+  end
+
   private
 
     #type could be:
@@ -255,44 +304,6 @@ returns
         diff = TimeCalculation.business_time_diff( start_time, end_time )
       end
       diff
-    end
-
-    def escalation_calculation_get_sla
-
-      sla_selected = nil
-      sla_list = Cache.get( 'SLA::List::Active' )
-      if sla_list == nil
-        sla_list = Sla.where( :active => true ).all
-        Cache.write( 'SLA::List::Active', sla_list, { :expires_in => 1.hour } )
-      end
-      sla_list.each {|sla|
-        if !sla.condition || sla.condition.empty?
-          sla_selected = sla
-        elsif sla.condition
-          hit = false
-          map = [
-            [ 'tickets.ticket_priority_id', 'ticket_priority_id' ],
-            [ 'tickets.group_id', 'group_id' ]
-          ]
-          map.each {|item|
-            if sla.condition[ item[0] ]
-              if sla.condition[ item[0] ].class == String
-                sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
-              end
-              if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
-                hit = true
-              else
-                hit = false
-              end
-            end
-          }
-          if hit
-            sla_selected = sla
-          end
-        end
-      }
-
-      return sla_selected
     end
 
     def calculation_higher_time(escalation_time, check_time, done_time)
