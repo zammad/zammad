@@ -25,7 +25,7 @@ class AuthMasterTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
           {
             :execute => 'check',
@@ -58,7 +58,7 @@ class AuthMasterTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
 
           # check action
