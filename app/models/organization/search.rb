@@ -53,7 +53,7 @@ returns
           end
         }
         if !organization_exists
-          organizations.push organization
+          organizations.push organization_by_user
         end
       }
     end
