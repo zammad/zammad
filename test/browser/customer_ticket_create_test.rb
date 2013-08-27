@@ -74,14 +74,9 @@ class CustomerTicketCreateTest < TestCase
             :type    => 'submit',
           },
           {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some body 1234 äöüß',
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'some body 1234 äöüß',
           },
         ],
       },

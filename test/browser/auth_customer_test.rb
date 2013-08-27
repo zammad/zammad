@@ -25,7 +25,7 @@ class AuthCustomerTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
           {
             :execute => 'check',
@@ -68,28 +68,22 @@ class AuthCustomerTest < TestCase
             :result  => false,
           },
           {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'nicole.braun@zammad.org',
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'nicole.braun@zammad.org',
           },
           {
-            :execute => 'reload',
+            :execute  => 'reload',
           },
           {
-            :execute => 'wait',
-            :value   => 3,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'nicole.braun@zammad.org',
           },
           {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'nicole.braun@zammad.org',
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :element      => :cookie,
-            :value        => 'expires=>nil',
+            :execute  => 'match',
+            :element  => :cookie,
+            :value    => 'expires=>nil',
           },
         ],
       },
@@ -152,7 +146,7 @@ class AuthCustomerTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 6,
           },
 
           # check action
@@ -162,18 +156,17 @@ class AuthCustomerTest < TestCase
             :result  => false,
           },
           {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'nicole.braun@zammad.org',
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'nicole.braun@zammad.org',
           },
           {
-            :execute      => 'match',
-            :element      => :cookie,
-            :value        => 'expires=>.+?\d{4}.+?,',
+            :execute  => 'match',
+            :element  => :cookie,
+            :value    => 'expires=>.+?\d{4}.+?,',
           },
           {
-            :execute      => 'logout',
+            :execute  => 'logout',
           },
         ],
       },

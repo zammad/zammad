@@ -52,34 +52,10 @@ class TestCase < Test::Unit::TestCase
       end
     end
     local_browser.manage.timeouts.implicit_wait = 3 # seconds
-
-    browser_instance_js_on_start(local_browser)
-  end
-
-  def browser_instance_js_on_start(instance)
-    instance.execute_script('
-    window.jsErrors = [];
-    window.onerror = function(errorMessage) {
-      window.jsErrors.push(errorMessage);
-    };');
-  end
-
-  def browser_instance_js_on_teardown(instance)
-    result = instance.execute_script( 'return window.jsErrors;' )
-    if result
-      puts 'JS ERRORS: ' + result.inspect
-    else
-      puts 'JS ERRORS: -none-'
-    end
   end
 
   def teardown
     return if !@browsers
-
-    # show js errors
-    @browsers.each{ |local_browser|
-      browser_instance_js_on_teardown(local_browser)
-    }
 
     # only shut down browser type once on local webdriver tests
     # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
@@ -185,6 +161,13 @@ class TestCase < Test::Unit::TestCase
 
   def browser_element_action(test, action, instance)
     puts "NOTICE #{Time.now.to_s}: " + action.inspect
+    if action[:execute] !~ /accept|dismiss/i
+      cookies = instance.manage.all_cookies
+      cookies.each {|cookie|
+        puts "  COOKIE " + cookie.to_s
+      }
+    end
+
     sleep 0.1
     if action[:css]
       if action[:css].match '###stack###'
@@ -252,13 +235,26 @@ class TestCase < Test::Unit::TestCase
       instance.find_element( { :css => 'a[href="#current_user"]' } ).click
       sleep 0.1
       instance.find_element( { :css => 'a[href="#logout"]' } ).click
-      sleep 2
-      login = instance.find_element( { :css => '#login' } )
-      if !login
-        assert( false, "(#{test[:name]}) no login box found!" )
-        return
-      end
-      assert( true, "(#{test[:name]}) logout" )
+      (1..6).each {|loop|
+        login = instance.find_element( { :css => '#login' } )
+        if login
+          assert( true, "(#{test[:name]}) logout" )
+          return
+        end
+      }
+      assert( false, "(#{test[:name]}) no login box found!" )
+      return
+    elsif action[:execute] == 'watch_for'
+      (1..24).each { |loop|
+        element = instance.find_element( { :css => action[:area] } )
+        text = element.text
+        if text =~ /#{action[:value]}/i
+          assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+          return
+        end
+        sleep 0.5
+      } 
+      assert( false, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
       return
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
@@ -268,7 +264,7 @@ class TestCase < Test::Unit::TestCase
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
         return
       end
-      sleep 4
+      sleep 2
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.clear
       element.send_keys( 'nico' )
@@ -296,12 +292,14 @@ class TestCase < Test::Unit::TestCase
       end
       sleep 0.1
       instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
-      sleep 6
-      if instance.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
-        assert( true, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
-        return
-      end
-      assert( true, "(#{test[:name]}) ticket created" )
+      (1..14).each {|loop|
+        if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
+          assert( true, "(#{test[:name]}) ticket created" )
+          return
+        end
+        sleep 0.5
+      }
+      assert( true, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
       return
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100

@@ -478,7 +478,7 @@ class UserState
       cache_key = @cache_key + '_rss'
       if CacheIn.expired(cache_key)
         url = 'http://www.heise.de/newsticker/heise-atom.xml'
-        rss_items = RSS.fetch( url, 8 )
+        rss_items = Rss.fetch( url, 8 )
         rss_items_cache = CacheIn.get( cache_key, { :re_expire => true } )
         self.log 'notice', 'fetch rss - ' + cache_key
         if rss_items != rss_items_cache
