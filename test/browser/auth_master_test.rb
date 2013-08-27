@@ -63,15 +63,14 @@ class AuthMasterTest < TestCase
 
           # check action
           {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :execute  => 'check',
+            :css      => '#login',
+            :result   => false,
           },
           {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'master@example',
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'master@example',
           },
         ],
       },

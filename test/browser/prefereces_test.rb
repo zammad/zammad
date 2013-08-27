@@ -34,14 +34,9 @@ class PreferencesTest < TestCase
             :css     => '#language button',
           },
           {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'Sprache',
-            :match_result => true,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Sprache',
           },
           {
             :execute => 'select',
@@ -53,14 +48,9 @@ class PreferencesTest < TestCase
             :css     => '#language button',
           },
           {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'Language',
-            :match_result => true,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Language',
           },
         ],
       },
