@@ -32,7 +32,7 @@
       <% if article.attachments: %>
         <div>
         <% for attachment in article.attachments: %>
-          <a href="api/ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment" class="" title="<%= attachment.size %>"><%= attachment.filename %></a>
+          <a href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment" class="" title="<%= attachment.size %>"><%= attachment.filename %></a>
         <% end %>
         </div>
       <% end %>

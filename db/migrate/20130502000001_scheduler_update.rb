@@ -23,7 +23,7 @@ class SchedulerUpdate < ActiveRecord::Migration
     )
     Scheduler.create_or_update(
       :name           => 'Generate Session data',
-      :method         => 'Session.jobs',
+      :method         => 'Sessions.jobs',
       :period         => 60,
       :prio           => 1,
       :active         => true,

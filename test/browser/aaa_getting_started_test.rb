@@ -64,7 +64,6 @@ class AaaGettingStartedTest < TestCase
       {
         :name     => 'getting started - agent 1',
         :action   => [
-
           {
             :execute      => 'match',
             :css          => 'body',
@@ -100,16 +99,9 @@ class AaaGettingStartedTest < TestCase
             :result  => '#getting_started',
           },
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-
-          # check action
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'Invitation sent',
-            :match_result => true,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Invitation sent',
           },
           {
             :execute      => 'match',

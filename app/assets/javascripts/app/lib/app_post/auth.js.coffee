@@ -3,10 +3,10 @@ class App.Auth
   @login: (params) ->
     App.Log.notice 'Auth', 'login', params
     App.Ajax.request(
-      id:     'login',
-      type:   'POST',
-      url:     App.Config.get('api_path') + '/signin',
-      data:    JSON.stringify(params.data),
+      id:     'login'
+      type:   'POST'
+      url:    App.Config.get('api_path') + '/signin'
+      data:   JSON.stringify(params.data)
       success: (data, status, xhr) =>
 
         # set login (config, session, ...)
