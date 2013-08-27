@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   :mode_show_rendeder,
   :model_index_render
 
+  skip_filter :verify_authenticity_token
   before_filter :log_request, :set_user, :session_update
   before_filter :cors_preflight_check
 
