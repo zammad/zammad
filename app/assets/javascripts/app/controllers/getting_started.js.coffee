@@ -136,9 +136,6 @@ class Index extends App.ControllerContent
   relogin: (data, status, xhr) =>
     @log 'notice', 'relogin:success', data
 
-    # login check
-    App.Auth.loginCheck()
-
     # add notify
     App.Event.trigger 'notify:removeall'
 #      @notify
