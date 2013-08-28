@@ -245,6 +245,7 @@ class TestCase < Test::Unit::TestCase
       assert( false, "(#{test[:name]}) no login box found!" )
       return
     elsif action[:execute] == 'watch_for'
+      text = ''
       (1..36).each { |loop|
         element = instance.find_element( { :css => action[:area] } )
         text = element.text
