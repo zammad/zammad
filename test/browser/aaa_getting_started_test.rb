@@ -94,14 +94,14 @@ class AaaGettingStartedTest < TestCase
             :css     => '#form-agent button[type="submit"]',
           },
           {
-            :execute => 'check',
-            :element => :url,
-            :result  => '#getting_started',
-          },
-          {
             :execute => 'watch_for',
             :area    => 'body',
             :value   => 'Invitation sent',
+          },
+          {
+            :execute => 'check',
+            :element => :url,
+            :result  => '#getting_started',
           },
           {
             :execute      => 'match',
