@@ -167,7 +167,9 @@ class App.ControllerGenericIndex extends App.ControllerContent
 
   destroy: (e) ->
     item = $(e.target).item( App[ @genericObject ] )
-    item.destroy() if confirm('Sure?')
+    new DestroyConfirm(
+      item: item
+    )
 
   new: (e) ->
     e.preventDefault()
@@ -175,6 +177,27 @@ class App.ControllerGenericIndex extends App.ControllerContent
       pageData:      @pageData,
       genericObject: @genericObject
     )
+
+class DestroyConfirm extends App.ControllerModal
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('modal')(
+      title:   'Confirm'
+      message: 'Sure to delete this object?'
+      cancel:  true
+      button:  'Yes'
+    )
+    @modalShow(
+      backdrop: true,
+      keyboard: true,
+    )
+
+  submit: (e) =>
+    @modalHide()
+    @item.destroy()
 
 class App.ControllerLevel2 extends App.ControllerContent
   events:

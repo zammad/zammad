@@ -184,8 +184,8 @@ class ManageTest < TestCase
             :value   => 2,
           },
           {
-            :execute => 'accept',
-            :element => :alert,
+            :execute => 'click',
+            :css     => '.modal .submit',
           },
           {
             :execute => 'wait',

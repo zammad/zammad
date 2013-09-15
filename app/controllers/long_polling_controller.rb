@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class LongPollingController < ApplicationController
+  skip_filter :session_update
 
   # GET /api/v1/message_send
   def message_send
@@ -118,7 +119,10 @@ class LongPollingController < ApplicationController
     begin
 
       # update last ping
-      sleep 1
+      4.times {|loop|
+        sleep 0.25
+      }
+      #sleep 1
       Sessions.touch( client_id )
 
       # set max loop time to 24 sec. because of 30 sec. timeout of mod_proxy
@@ -131,7 +135,10 @@ class LongPollingController < ApplicationController
           render :json => queue
           return
         end
-        sleep 2
+        8.times {|loop|
+          sleep 0.25
+        }
+        #sleep 2
         if count == 0
           render :json => { :action => 'pong' }
           return
