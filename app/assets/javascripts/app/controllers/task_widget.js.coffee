@@ -217,7 +217,7 @@ class Taskbar extends App.Controller
   resizeTasks: ->
     width = $('#task .taskbar-items').width()# - $('#task .taskbar-new').width() - 200
     task_count = App.TaskManager.all().length
-    task_size  = ( width / task_count ) - 44
+    task_size  = ( width / task_count ) - 40
     elementsOversize = 0
     elementsOversizeLeftTotal = 0
     $('#task .task').each(
