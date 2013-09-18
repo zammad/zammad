@@ -1,7 +1,7 @@
 class App.LinkInfo extends App.ControllerDrox
   events:
     'click [data-type=add]': 'add',
-    'click [data-type=edit]': 'edit',
+    'click [data-type=edit]': 'toggle',
     'click [data-type=remove]': 'remove',
 
   constructor: ->
@@ -27,6 +27,9 @@ class App.LinkInfo extends App.ControllerDrox
         App.Event.trigger 'loadAssets', data.assets
 
         @render()
+
+        if _.isEmpty(data.links)
+          @toggle()
     )
 
   render: =>
@@ -62,15 +65,16 @@ class App.LinkInfo extends App.ControllerDrox
 #    )
 
   # enable/disable edit mode
-  edit: (e) =>
-    e.preventDefault()
+  toggle: (e) =>
+    if e
+      e.preventDefault()
     @edit_mode = true
-    if $(e.target).parents().find('[data-type=add]').hasClass('hide')
-      $(e.target).parents().find('[data-type=remove]').removeClass('hide')
-      $(e.target).parents().find('[data-type=add]').removeClass('hide')
+    if @el.find('[data-type=add]').hasClass('hide')
+      @el.find('[data-type=remove]').removeClass('hide')
+      @el.find('[data-type=add]').removeClass('hide')
     else
-      $(e.target).parents().find('[data-type=remove]').addClass('hide')
-      $(e.target).parents().find('[data-type=add]').addClass('hide')
+      @el.find('[data-type=remove]').addClass('hide')
+      @el.find('[data-type=add]').addClass('hide')
 
   remove: (e) =>
     e.preventDefault()
