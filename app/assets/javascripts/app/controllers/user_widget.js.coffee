@@ -45,7 +45,7 @@ class App.UserWidget extends App.ControllerDrox
 
     # insert userData
     @html @template(
-      file:   'user_widget'
+      file:   'widget/user'
       header: 'Customer'
       edit:   true
       params:

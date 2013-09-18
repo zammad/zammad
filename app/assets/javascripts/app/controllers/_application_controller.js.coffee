@@ -295,13 +295,13 @@ class App.Controller extends Spine.Controller
       title: ->
         ticket_id = $(@).data('id')
         ticket = App.Ticket.retrieve( ticket_id )
-        ticket.title
+        App.i18n.escape( ticket.title )
       content: ->
         ticket_id = $(@).data('id')
         ticket = App.Ticket.retrieve( ticket_id )
         ticket.humanTime = ui.humanTime(ticket.created_at)
         # insert data
-        App.view('ticket_info_small')(
+        App.view('popover/ticket')(
           ticket: ticket,
         )
     )
@@ -321,7 +321,7 @@ class App.Controller extends Spine.Controller
       title: ->
         user_id = $(@).data('id')
         user = App.User.find( user_id )
-        user.displayName()
+        App.i18n.escape( user.displayName() ) 
       content: ->
         user_id = $(@).data('id')
         user = App.User.find( user_id )
@@ -346,7 +346,7 @@ class App.Controller extends Spine.Controller
                 data.push item
 
         # insert data
-        App.view('user_info_small')(
+        App.view('popover/user')(
           user: user,
           data: data,
         )
@@ -367,12 +367,12 @@ class App.Controller extends Spine.Controller
       title: ->
         organization_id = $(@).data('id')
         organization = App.Organization.find( organization_id )
-        organization.name
+        App.i18n.escape( organization.name )
       content: ->
         organization_id = $(@).data('id')
         organization = App.Organization.find( organization_id )
         # insert data
-        App.view('organization_info_small')(
+        App.view('popover/organization')(
           organization: organization,
         )
     )
@@ -417,7 +417,7 @@ class App.Controller extends Spine.Controller
           ticket.humanTime = controller.humanTime(ticket.created_at)
 
         # insert data
-        App.view('user_ticket_info_small')(
+        App.view('popover/user_ticket_list')(
           tickets: data,
         )
     )

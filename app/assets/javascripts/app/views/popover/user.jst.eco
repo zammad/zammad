@@ -1,31 +1,24 @@
 <% for row in @data: %>
   <% if @user[row.name]: %>
-    <div class="row">
       <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
-    </div>
   <% end %>
 <% end %>
 <% if @user['organization']: %>
-  <div class="row">
     <div class="customer-info">
       <strong><%- @T( 'Organization' ) %></strong><br/>
       <%- @P( @user['organization'] ) %>
     </div>
-  </div>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
-  <div class="row">
     <div class="customer-info">
       <strong><%- @T( 'Linked Accounts' ) %></strong><br/>
       <% for account of @user['accounts']: %>
         <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
       <% end %>
     </div>
-  </div>
 <% end %>
 <% if !_.isEmpty( @user['links'] ): %>
   <% for link in @user['links']: %>
-  <div class="row">
     <div class="customer-info">
       <strong><%- @T( link['title'] ) %></strong><br/>
       <% for item in link['items']: %>
@@ -42,6 +35,5 @@
         <% end %>
       <% end %>
     </div>
-  </div>
   <% end %>
 <% end %>

@@ -44,7 +44,7 @@ class App.OrganizationWidget extends App.Controller
             organizationData.push item
 
     # insert userData
-    @html App.view('organization_widget')(
+    @html App.view('widget/organization')(
       organization:     organization
       organizationData: organizationData
     )

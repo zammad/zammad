@@ -173,7 +173,7 @@ class App.ChatWidget extends App.Controller
     shown = false
     if @isShown
       shown = true
-    @html App.view('chat_widget')(
+    @html App.view('widget/chat')(
       messages: @messageLog
       isShown:  shown
     )

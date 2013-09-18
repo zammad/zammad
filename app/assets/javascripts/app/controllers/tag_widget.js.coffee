@@ -26,7 +26,7 @@ class App.TagWidget extends App.Controller
   render: (tags) =>
 
     # insert data
-    @html App.view('tag_widget')(
+    @html App.view('widget/tag')(
       tags: tags || [],
       tag_id: @attribute_id
     )
