@@ -244,7 +244,7 @@ class App.Controller extends Spine.Controller
     el.unbind()
 
     # start customer info controller
-    new App.UserInfo(
+    new App.UserWidget(
       el:       el
       user_id:  data.user_id
       callback: data.callback

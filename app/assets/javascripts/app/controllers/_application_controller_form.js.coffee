@@ -383,7 +383,8 @@ class App.ControllerForm extends App.Controller
           container = document.getElementById( attribute.id + "_tagsinput" )
           if reorder
             $('#' + attribute.id + "_tagsinput" ).height( 20 )
-          height = container.scrollHeight
+          height = container.scrollHeight || 45
+          console.log('siteUpdate', height)
           $('#' + attribute.id + "_tagsinput" ).height( height - 16 )
 
         onAddTag = =>
@@ -393,10 +394,9 @@ class App.ControllerForm extends App.Controller
           siteUpdate(true)
 
         $('#' + attribute.id + '_tagsinput').remove()
-        w = $('#' + attribute.id).width()
         h = $('#' + attribute.id).height()
         $('#' + attribute.id).tagsInput(
-          width: w + 'px'
+          width: '100%'
 #          height: (h + 30 )+ 'px'
           onAddTag:    onAddTag
           onRemoveTag: onRemoveTag

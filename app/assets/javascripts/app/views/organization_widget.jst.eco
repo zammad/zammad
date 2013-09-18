@@ -1,0 +1,26 @@
+<div class="drox">
+  <div class="drox-header">
+    <h3>
+      <%- @T( 'Organization' ) %>
+      <a href="#" data-type="edit-org" data-id="<%- @organization.id %>" class="pull-right glyphicon glyphicon-edit"></a>
+    </h3>
+  </div>
+  <div class="drox-body">
+
+  <%= @organization.displayName() %>
+
+  <% for row in @organizationData: %>
+    <% if @organization[row.name] || row.name is 'note': %>
+      <% if row.tag isnt 'textarea': %>
+        <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
+      <% else: %>
+        <div class="customer-info" title="<%- @Ti( row.display ) %>">
+          <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update-org" placeholder="<%- @T( row.display ) %>"><%= @organization[row.name] %></textarea>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  </div>
+</div>
+

@@ -208,6 +208,7 @@ class _taskManagerSingleton extends App.Controller
     worker = @worker( key )
     if worker && worker.activate
       worker.activate()
+      App.Event.trigger('ui:rerender:task')
 
     # return if controller is already started
     return if @workersStarted[key]

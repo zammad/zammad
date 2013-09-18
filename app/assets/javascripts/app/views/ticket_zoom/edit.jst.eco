@@ -4,19 +4,20 @@
   <img class="thumbnail user-data" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
 </div>
 -->
-<div class="article-message <% if @formChanged: %>form-changed<% end %>">
-  <h5><%- @T('Message') %> <a href="#" class="close">&times;</a></h5>
-  <div class="article-message-edit">
-  <div class="reset-message<% if !@formChanged: %> hide<% end %>">
-    <div>
+<div class="well edit-ticket <% if @formChanged: %>form-changed<% end %>">
+  <div class="edit-title">
+    <h4><%- @T('Edit') %>
+    <small class="reset-message<% if !@formChanged: %> hide<% end %>">
       <a href="#" data-type="reset"><%- @T('Discard your unsaved changes.') %></a> <href="#" class="glyphicon glyphicon-repeat" data-type="reset"></a>
-    </div>
+    </small>
+    </h4>
   </div>
-  <form class="form-stacked pull-left ticket-update">
-    <div class="form-ticket-update"></div>
-    <div class="form-article-update"></div>
-    <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-  </form>
+  <div class="edit-content">
+    <form class="form-stacked ticket-update">
+      <div class="form-ticket-update"></div>
+      <div class="form-article-update"></div>
+      <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
+    </form>
   <div>
 </div>
 </div>

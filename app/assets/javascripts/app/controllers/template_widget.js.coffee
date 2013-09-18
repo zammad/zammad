@@ -1,4 +1,4 @@
-class App.TemplateUI extends App.Controller
+class App.TemplateUI extends App.ControllerDrox
   events:
     'click [data-type=template_save]':   'create',
     'click [data-type=template_select]': 'select',
@@ -21,8 +21,11 @@ class App.TemplateUI extends App.Controller
       template = App.Template.find( @template_id )
 
     # insert data
-    @html App.view('template_widget')(
-      template: template,
+    @html @template(
+      file:   'template_widget'
+      header: 'Templates'
+      params:
+        template: template
     )
     new App.ControllerForm(
       el:        @el.find('#form-template')

@@ -1,22 +1,5 @@
-
-<ul class="nav nav-tabs" style="font-size: 12px;">
-  <li class="active"><a href="#" data-area="user-info"><%- @T('Customer') %></a></li>
-<% if @organization: %>
-  <li><a href="#" data-area="org-info"><%- @T( 'Organization' ) %></a></li>
-<% end %>
-<!--
-  <li class="active"><a href="#" data-area="user-info"><%= @user.displayName() %></a></li>
-<% if @organization: %>
-  <li><a href="#" data-area="org-info"><%- @P( @organization.displayName() ) %></a></li>
-<% end %>
--->
-</ul>
-
 <div class="user-info">
-  <a href="#" data-type="edit-user" data-id="<%- @user.id %>" class="pull-right glyphicon glyphicon-edit"></a>
-  <!--
-  <h3><%- @T( 'Customer' ) %> <a href="#" data-type="edit" class="glyphicon glyphicon-edit"></a></h3>
-  -->
+
 <% if @user.image: %>
   <img class="thumbnail" src="<%- @user.image %>" alt="">
 <% end %>
@@ -62,21 +45,4 @@
 <% end %>
 </div>
 
-
-<% if @organization: %>
-<div class="org-info hide">
-  <a href="#" data-type="edit-org" data-id="<%- @organization.id %>" class="pull-right glyphicon glyphicon-edit"></a>
-  <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></div>
-<% for row in @organizationData: %>
-  <% if @organization[row.name] || row.name is 'note': %>
-    <% if row.tag isnt 'textarea': %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
-    <% else: %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>">
-        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update-org" placeholder="<%- @T( row.display ) %>"><%= @organization[row.name] %></textarea>
-      </div>
-    <% end %>
-  <% end %>
-<% end %>
 </div>
-<% end %>

@@ -6,6 +6,8 @@ class App.TagWidget extends App.Controller
     # update box size
     @bind 'ui:rerender:content', =>
       @siteUpdate()
+    @bind 'ui:rerender:task', =>
+      @siteUpdate()
 
   load: =>
     @attribute_id = 'tags_' + @object.id + '_' + @object_type
@@ -29,11 +31,11 @@ class App.TagWidget extends App.Controller
       tag_id: @attribute_id
     )
     @el.find('#' + @attribute_id ).tagsInput(
-      width:       '236px'
+      width:       '100%'
       defaultText: App.i18n.translateContent('add a Tag')
       onAddTag:    @onAddTag
       onRemoveTag: @onRemoveTag
-#      height: '65px'
+      height:      '45px'
     )
     @delay @siteUpdate, 250
 

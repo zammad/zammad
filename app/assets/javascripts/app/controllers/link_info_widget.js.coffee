@@ -1,4 +1,4 @@
-class App.LinkInfo extends App.Controller
+class App.LinkInfo extends App.ControllerDrox
   events:
     'click [data-type=add]': 'add',
     'click [data-type=edit]': 'edit',
@@ -8,7 +8,7 @@ class App.LinkInfo extends App.Controller
     super
     @fetch()
 
-  fetch: () =>
+  fetch: =>
     # fetch item on demand
     # get data
     @ajax(
@@ -29,7 +29,7 @@ class App.LinkInfo extends App.Controller
         @render()
     )
 
-  render: () =>
+  render: =>
 
     list = {}
     for item in @links
@@ -43,8 +43,12 @@ class App.LinkInfo extends App.Controller
         list[ item['link_type'] ].push ticket
 
     # insert data
-    @html App.view('link/info')(
-      links: list,
+    @html @template(
+      file:   'link/info'
+      header: 'Links'
+      edit:   true
+      params:
+        links: list
     )
 
     # show edit mode once enabled
@@ -61,12 +65,12 @@ class App.LinkInfo extends App.Controller
   edit: (e) =>
     e.preventDefault()
     @edit_mode = true
-    if $(e.target).parent().parent().find('[data-type=add]').hasClass('hide')
-      $(e.target).parent().parent().find('[data-type=remove]').removeClass('hide')
-      $(e.target).parent().parent().find('[data-type=add]').removeClass('hide')
+    if $(e.target).parents().find('[data-type=add]').hasClass('hide')
+      $(e.target).parents().find('[data-type=remove]').removeClass('hide')
+      $(e.target).parents().find('[data-type=add]').removeClass('hide')
     else
-      $(e.target).parent().parent().find('[data-type=remove]').addClass('hide')
-      $(e.target).parent().parent().find('[data-type=add]').addClass('hide')
+      $(e.target).parents().find('[data-type=remove]').addClass('hide')
+      $(e.target).parents().find('[data-type=add]').addClass('hide')
 
   remove: (e) =>
     e.preventDefault()

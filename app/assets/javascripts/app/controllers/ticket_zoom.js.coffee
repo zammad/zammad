@@ -140,7 +140,6 @@ class App.TicketZoom extends App.Controller
     @frontendTimeUpdate()
 
     @TicketTitle()
-    @TicketInfo()
     @TicketAction()
     @ArticleView()
 
@@ -175,13 +174,6 @@ class App.TicketZoom extends App.Controller
     new TicketTitle(
       ticket:   @ticket
       el:       @el.find('.ticket-title')
-    )
-
-  TicketInfo: =>
-    # show ticket info
-    new TicketInfo(
-      ticket:   @ticket
-      el:       @el.find('.ticket-info')
     )
 
   ArticleView: =>
@@ -248,15 +240,26 @@ class TicketTitle extends App.Controller
     App.Event.trigger 'task:render'
 
 
-class TicketInfo extends App.Controller
+class TicketInfo extends App.ControllerDrox
   constructor: ->
     super
     @render()
 
   render: ->
-    @html App.view('ticket_zoom/ticket_info')(
-      ticket: @ticket
+    @html @template(
+      file:   'ticket_zoom/ticket_info'
+      header: '#' + @ticket.number
+      params:
+        ticket: @ticket
     )
+
+    # start tag controller
+    if !@isRole('Customer')
+      new App.TagWidget(
+        el:           @el.find('.tag_info')
+        object_type:  'Ticket'
+        object:        @ticket
+      )
 
 class TicketAction extends App.Controller
   constructor: ->
@@ -267,30 +270,29 @@ class TicketAction extends App.Controller
 
     @html App.view('ticket_zoom/ticket_action')()
 
+    # show ticket info
+    new TicketInfo(
+      ticket:   @ticket
+      el:       @el.find('.ticket_info')
+    )
+
     # start customer info controller
     if !@isRole('Customer')
-      new App.UserInfo(
+      new App.UserWidget(
         el:      @el.find('.customer_info')
         user_id: @ticket.customer_id
         ticket:  @ticket
       )
 
     # start action controller
+    ###
     if !@isRole('Customer')
       new TicketActionRow(
         el:      @el.find('.action_info')
         ticket:  @ticket
         zoom:    @ui
       )
-
-    # start tag controller
-    if !@isRole('Customer')
-      new App.TagWidget(
-        el:           @el.find('.tag_info')
-        object_type:  'Ticket'
-        object:        @ticket
-      )
-
+    ###
     # start link info controller
     if !@isRole('Customer')
       new App.LinkInfo(
@@ -423,9 +425,9 @@ class Edit extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = currentData
         @log 'notice', 'form hash changed', diff, currentData
-        @el.find('.ticket-update').parent().addClass('form-changed')
-        @el.find('.ticket-update').parent().parent().find('.reset-message').show()
-        @el.find('.ticket-update').parent().parent().find('.reset-message').removeClass('hide')
+        @el.find('.edit-ticket').addClass('form-changed')
+        @el.find('.edit-ticket').find('.reset-message').show()
+        @el.find('.edit-ticket').find('.reset-message').removeClass('hide')
         App.TaskManager.update( @task_key, { 'state': currentData })
     @interval( update, 3000, 'autosave' )
 

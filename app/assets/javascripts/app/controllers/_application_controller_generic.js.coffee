@@ -199,6 +199,16 @@ class DestroyConfirm extends App.ControllerModal
     @modalHide()
     @item.destroy()
 
+class App.ControllerDrox extends App.Controller
+  constructor: ->
+    super
+
+  template: (data) ->
+    drox = $( App.view('generic/drox')(data) )
+    content = App.view(data.file)(data.params)
+    drox.find('.drox-body').append(content)
+    drox
+
 class App.ControllerLevel2 extends App.ControllerContent
   events:
     'click [data-toggle="tabnav"]': 'toggle',

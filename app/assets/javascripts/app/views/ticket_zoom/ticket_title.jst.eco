@@ -1,1 +1,1 @@
-<h1><span contenteditable="true" class="ticket-title-update inline-edit"><%= @P( @ticket.title ) %></span> <small><%= @ticket.number %></small></h1>
+<h1><span contenteditable="true" class="ticket-title-update inline-edit"><%= @P( @ticket.title ) %></span></h1>

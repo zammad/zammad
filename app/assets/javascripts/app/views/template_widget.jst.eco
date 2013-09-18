@@ -1,10 +1,9 @@
 <div class="">
-  <h3><%- @T( 'Templates' ) %></h3>
   <form>
     <div id="form-template"></div>
-    <!--<button type="submit" class="btn" data-type="template_edit"><%- @T( 'Edit' ) %></button>-->
-    <button type="submit" class="btn" data-type="template_delete"><%- @T( 'Delete' ) %></button>
-    <button type="submit" class="btn" data-type="template_select"><%- @T( 'Apply' ) %></button>
+    <!--<button type="submit" class="btn btn-default" data-type="template_edit"><%- @T( 'Edit' ) %></button>-->
+    <button type="submit" class="btn btn-default" data-type="template_delete"><%- @T( 'Delete' ) %></button>
+    <button type="submit" class="btn btn-default" data-type="template_select"><%- @T( 'Apply' ) %></button>
   </form>
   <br>
   <form>
@@ -12,6 +11,6 @@
       <label class="" for="template_name"><%- @T( 'Save as Template' ) %></label>
       <input type="text" name="template_name" id="template_name" class="form-control" value="<%= @template.name %>"/>
     </fieldset>
-    <button type="submit" class="btn" data-type="template_save"><%- @T( 'Save' ) %></button>
+    <button type="submit" class="btn btn-default" data-type="template_save"><%- @T( 'Save' ) %></button>
   </form>
 </div>

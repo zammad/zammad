@@ -1,13 +1,12 @@
 <div class="content-two">
   <div class="sidebar">
-    <div class="ticket-action"></div>
+    <div class="ticket-action panel-group"></div>
   </div>
   <div class="main">
 
     <div class="page-header ticket-zoom clearfix">
       <div class="page-header-title">
         <div class="ticket-title"></div>
-        <div class="ticket-info"></div>
       </div>
       <div class="page-header-meta">
         <% if @C( 'LastOverview' ) && @nav: %>
@@ -25,7 +24,7 @@
 
     <div class="ticket-answer">
       <div class="article-view"></div>
-      <div class="edit well"></div>
+      <div class="edit"></div>
     </div>
 
   </div>
