@@ -191,7 +191,7 @@ class App.TextModuleUIOld extends App.Controller
     )
 
     # insert data
-    @html App.view('text_module_widget')(
+    @html App.view('widget/text_module')(
       search: @search,
     )
 

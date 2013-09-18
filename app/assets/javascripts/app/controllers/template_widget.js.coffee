@@ -22,7 +22,7 @@ class App.TemplateUI extends App.ControllerDrox
 
     # insert data
     @html @template(
-      file:   'template_widget'
+      file:   'widget/template'
       header: 'Templates'
       params:
         template: template
