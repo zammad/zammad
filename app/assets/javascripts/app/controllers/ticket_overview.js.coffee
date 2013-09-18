@@ -525,6 +525,17 @@ class Navbar extends App.Controller
     else
       @render( [] )
 
+      # init fetch via ajax, all other updates on time via websockets
+      @ajax(
+        id:    'ticket_overviews',
+        type:  'GET',
+        url:   @apiPath + '/ticket_overviews',
+        processData: true,
+        success: (data) =>
+          App.Store.write( 'navupdate_ticket_overview', data )
+          @render(data)
+        )
+
   render: (dataOrig) ->
 
     data = _.clone(dataOrig)

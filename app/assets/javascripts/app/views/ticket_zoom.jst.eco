@@ -1,6 +1,7 @@
 <div class="content-two">
   <div class="sidebar">
-    <div class="ticket-action panel-group"></div>
+    <div class="ticket-widgets"></div>
+    <div class="ticket-action"></div>
   </div>
   <div class="main">
 

@@ -1,23 +1,21 @@
-<div class="">
-<!--
-<div class="avatar thumbnails">
-  <img class="thumbnail user-data" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
-</div>
--->
-<div class="well edit-ticket <% if @formChanged: %>form-changed<% end %>">
-  <div class="edit-title">
-    <h4><%- @T('Edit') %>
-    <small class="reset-message<% if !@formChanged: %> hide<% end %>">
-      <a href="#" data-type="reset"><%- @T('Discard your unsaved changes.') %></a> <href="#" class="glyphicon glyphicon-repeat" data-type="reset"></a>
-    </small>
-    </h4>
+<div class="article clearfix">
+  <div class="avatar thumbnails">
+    <img class="thumbnail user-data" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
   </div>
-  <div class="edit-content">
-    <form class="form-stacked ticket-update">
-      <div class="form-ticket-update"></div>
-      <div class="form-article-update"></div>
-      <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-    </form>
-  <div>
-</div>
+  <div class="well edit-ticket article-message <% if @formChanged: %>form-changed<% end %>">
+    <div class="edit-title article-content">
+      <h4><%- @T('Edit') %>
+      <small class="reset-message<% if !@formChanged: %> hide<% end %>">
+        <a href="#" data-type="reset"><%- @T('Discard your unsaved changes.') %></a> <href="#" class="glyphicon glyphicon-repeat" data-type="reset"></a>
+      </small>
+      </h4>
+    </div>
+    <div class="edit-content">
+      <form class="form-stacked ticket-update">
+        <div class="form-ticket-update"></div>
+        <div class="form-article-update"></div>
+        <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
+      </form>
+    <div>
+  </div>
 </div>

@@ -140,6 +140,7 @@ class App.TicketZoom extends App.Controller
     @frontendTimeUpdate()
 
     @TicketTitle()
+    @TicketWidgets()
     @TicketAction()
     @ArticleView()
 
@@ -195,14 +196,23 @@ class App.TicketZoom extends App.Controller
       ui:         @
     )
 
-  TicketAction: =>
+  TicketWidgets: =>
     # show ticket action row
-    new TicketAction(
+    new TicketWidgets(
       ticket:     @ticket
       task_key:   @task_key
-      el:         @el.find('.ticket-action')
+      el:         @el.find('.ticket-widgets')
       ui:         @
     )
+
+  TicketAction: =>
+    # start action controller
+    if !@isRole('Customer')
+      new TicketActionRow(
+        el:      @el.find('.ticket-action')
+        ticket:  @ticket
+        ui:      @
+      )
 
 class TicketTitle extends App.Controller
   events:
@@ -213,7 +223,7 @@ class TicketTitle extends App.Controller
     @render()
 
   render: ->
-    @html App.view('ticket_zoom/ticket_title')(
+    @html App.view('ticket_zoom/title')(
       ticket: @ticket
     )
 
@@ -247,7 +257,7 @@ class TicketInfo extends App.ControllerDrox
 
   render: ->
     @html @template(
-      file:   'ticket_zoom/ticket_info'
+      file:   'ticket_zoom/info'
       header: '#' + @ticket.number
       params:
         ticket: @ticket
@@ -261,14 +271,14 @@ class TicketInfo extends App.ControllerDrox
         object:        @ticket
       )
 
-class TicketAction extends App.Controller
+class TicketWidgets extends App.Controller
   constructor: ->
     super
     @render()
 
   render: ->
 
-    @html App.view('ticket_zoom/ticket_action')()
+    @html App.view('ticket_zoom/widgets')()
 
     # show ticket info
     new TicketInfo(
@@ -284,15 +294,6 @@ class TicketAction extends App.Controller
         ticket:  @ticket
       )
 
-    # start action controller
-    ###
-    if !@isRole('Customer')
-      new TicketActionRow(
-        el:      @el.find('.action_info')
-        ticket:  @ticket
-        zoom:    @ui
-      )
-    ###
     # start link info controller
     if !@isRole('Customer')
       new App.LinkInfo(
@@ -300,8 +301,6 @@ class TicketAction extends App.Controller
         object_type:  'Ticket'
         object:       @ticket
       )
-
-
 
 class Edit extends App.Controller
   events:
@@ -789,7 +788,7 @@ class TicketActionRow extends App.Controller
     @render()
 
   render: ->
-    @html App.view('ticket_action')()
+    @html App.view('ticket_zoom/actions')()
 
   history_dialog: (e) ->
     e.preventDefault()
@@ -797,11 +796,11 @@ class TicketActionRow extends App.Controller
 
   merge_dialog: (e) ->
     e.preventDefault()
-    new App.TicketMerge( ticket_id: @ticket.id, task_key: @zoom.task_key )
+    new App.TicketMerge( ticket_id: @ticket.id, task_key: @ui.task_key )
 
   customer_dialog: (e) ->
     e.preventDefault()
-    new App.TicketCustomer( ticket_id: @ticket.id, zoom: @zoom )
+    new App.TicketCustomer( ticket_id: @ticket.id, ui: @ui )
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->

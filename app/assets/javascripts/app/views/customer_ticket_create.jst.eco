@@ -1,4 +1,4 @@
-<div class="content-one">
+<div class="content-one ticket-create">
   <div class="page-header clearfix">
     <div class="page-header-title">
       <h1 class="pull-left"><%- @T( 'New Ticket' ) %></h1>

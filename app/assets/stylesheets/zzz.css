@@ -602,7 +602,8 @@ form.form-inline input[type="password"] {
   font-size: 12px;
 }
 .edit-content {
-  margin-top: 20px;
+  margin-left: 68px;
+  margin-right: 22px;
 }
 
 .delete {
@@ -660,7 +661,32 @@ footer {
 }
 
 .ticket-action {
-  padding-left: 2px;
+  padding: 6px 8px 6px;
+  position: fixed;
+  bottom: 0px;
+  background-color: #fff;
+  width: 100%;
+  left: 0px;
+  border-top: 1px solid #eeeeee;
+  width: 200px;
+  margin-left: 4px;
+}
+
+
+@media (min-width: 800px) {
+  .ticket-action {
+    width: 240px;
+  }
+}
+@media (min-width: 1024px) {
+  .ticket-action {
+    width: 260px;
+  }
+}
+@media (min-width: 1200px) {
+  .ticket-action {
+    width: 280px;
+  }
 }
 
 .ticket-answer .avatar {
@@ -677,7 +703,7 @@ footer {
   width: 100%;
 }
 .ticket-update .span2 {
-  width: 160px;
+  width: 152px;
   margin-right: 4px;
 }
 .ticket-update .medium {
