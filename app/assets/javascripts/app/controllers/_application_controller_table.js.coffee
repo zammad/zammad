@@ -127,10 +127,10 @@ class App.ControllerTable extends App.Controller
     # enable checkbox bulk selection
     if data.checkbox
       table.delegate('[name="bulk_all"]', 'click', (e) ->
-        if $(e.target).attr('checked')
-          $(e.target).parents().find('[name="bulk"]').attr( 'checked', true );
+        if $(e.target).prop('checked')
+          $(e.target).parents().find('[name="bulk"]').prop( 'checked', true );
         else
-          $(e.target).parents().find('[name="bulk"]').attr( 'checked', false );
+          $(e.target).parents().find('[name="bulk"]').prop( 'checked', false );
       )
 
     return table
