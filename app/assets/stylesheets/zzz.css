@@ -454,6 +454,10 @@ h5 {
 */
 }
 
+.dropdown-menu > li > a {
+  font-weight: 200;
+}
+
 .dropdown-menu .count {
   padding-top: 1px;
   margin-left: 10px;
@@ -495,6 +499,10 @@ h5 {
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
+}
+
+.hero-unit h1 {
+  font-size: 52px;
 }
 
 .hero-unit p {
