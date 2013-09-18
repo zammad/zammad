@@ -4,7 +4,7 @@
       <img class="thumbnail user-data" data-id="<%= article.created_by_id %>" src="<%= article.created_by.image %>" alt="">
       <ul>
         <li style="font-size: 10px;"><%- @T(article.article_type.name) %></li>
-        <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="api/ticket_article_plain/<%= article.id %>"><%- @T( 'raw' ) %></a></li><% end %>
+        <% if article.article_type.name is 'email': %><li style="font-size: 10px;"><a href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= article.id %>"><%- @T( 'raw' ) %></a></li><% end %>
       </ul>
     </div>
     <div class="article-message clearfix <% if article.internal is true: %> internal<% end %>">
