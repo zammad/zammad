@@ -580,7 +580,7 @@ form.form-inline input[type="password"] {
 .edit .form-group {
   margin-bottom: 2px;
 }
-.edit .form-control {
+.edit select, .edit input {
   height: 30px;
 }
 .edit:focus {
