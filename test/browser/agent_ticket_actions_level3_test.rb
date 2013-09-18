@@ -44,10 +44,10 @@ class AgentTicketActionsLevel3Test < TestCase
 
           # remember old ticket where we want to merge to
           {
-            :where   => :instance1,
+            :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
-            :value        => '^(.*)$',
+            :css          => '.active .ticket_info h3',
+            :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,
           },

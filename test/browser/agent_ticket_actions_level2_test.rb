@@ -46,8 +46,8 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
-            :value        => '^(.*)$',
+            :css          => '.active .ticket_info h3',
+            :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
