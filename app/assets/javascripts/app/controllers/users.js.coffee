@@ -26,4 +26,4 @@ class Index extends App.Controller
         ]
     )
 
-App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarLevel44' )
+App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

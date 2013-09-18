@@ -24,8 +24,4 @@ class Index extends App.ControllerContent
       },
     )
 
-#App.Config.set( 'overviews', Index, 'Routes' )
-#App.Config.set( 'Overview', { prio: 2300, parent: '#admin', name: 'Overviews', target: '#overviews', role: ['Admin'] }, 'NavBar' )
-
-App.Config.set( 'Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, role: ['Admin'] }, 'NavBarLevel44' )
-
+App.Config.set( 'Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
