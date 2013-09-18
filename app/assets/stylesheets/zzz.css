@@ -660,6 +660,11 @@ footer {
   border-color: #eee;
 }
 
+.bulk-action {
+  position: absolute;
+  width: 100%;
+}
+
 .ticket-action {
   padding: 6px 8px 6px;
   position: fixed;
