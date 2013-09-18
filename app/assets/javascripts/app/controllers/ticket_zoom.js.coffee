@@ -608,9 +608,9 @@ class ArticleView extends App.Controller
     e.preventDefault()
     $(e.target).hide()
     if $(e.target).next('div')[0]
-      $(e.target).next('div').show()
+      $(e.target).next('div').removeClass('hide')
     else
-      $(e.target).parent().next('div').show()
+      $(e.target).parent().next('div').removeClass('hide')
 
   checkIfSignatureIsNeeded: (article_type) =>
 
@@ -705,9 +705,9 @@ class Article extends App.Controller
     if article_lines.length > preview
       preview_mode = true
       if article_lines[preview] is ''
-        article_lines.splice( preview, 0, '----SEEMORE----' )
+        article_lines.splice( preview, 0, '-----SEEMORE-----' )
       else
-        article_lines.splice( preview + 1, 0, '----SEEMORE----' )
+        article_lines.splice( preview - 1, 0, '-----SEEMORE-----' )
       @article['html'] = article_lines.join("\n")
     @article['html'] = window.linkify( @article['html'] )
     notify = '<a href="#" class="show_toogle">' + App.i18n.translateContent('See more') + '</a>'
@@ -715,7 +715,7 @@ class Article extends App.Controller
     # preview mode
     if preview_mode
       @article_changed = false
-      @article['html'] = @article['html'].replace /^\n{0,10}----SEEMORE----\n/m, (match) =>
+      @article['html'] = @article['html'].replace /^-----SEEMORE-----\n/m, (match) =>
         @article_changed = true
         notify + '<div class="hide">'
       if @article_changed
@@ -729,7 +729,6 @@ class Article extends App.Controller
         notify + '<div class="hide">' + match
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
-
 
   actionRow: ->
     if @isRole('Customer')
