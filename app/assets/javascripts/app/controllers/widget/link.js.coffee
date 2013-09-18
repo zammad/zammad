@@ -1,4 +1,4 @@
-class App.LinkInfo extends App.ControllerDrox
+class App.WidgetLink extends App.ControllerDrox
   events:
     'click [data-type=add]': 'add',
     'click [data-type=edit]': 'toggle',

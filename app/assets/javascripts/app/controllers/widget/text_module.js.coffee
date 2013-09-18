@@ -1,4 +1,4 @@
-class App.TextModuleUI extends App.Controller
+class App.WidgetTextModule extends App.Controller
   constructor: ->
     super
 
@@ -59,7 +59,7 @@ class App.TextModuleUI extends App.Controller
 
     return values
 
-class App.TextModuleUIOld extends App.Controller
+class App.WidgetTextModuleOld extends App.Controller
   events:
     'click [data-type=save]':               'create',
     'click [data-type=text_module_delete]': 'delete',

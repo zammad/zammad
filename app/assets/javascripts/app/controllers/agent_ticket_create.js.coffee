@@ -191,7 +191,7 @@ class App.TicketCreate extends App.Controller
     @el.find('textarea').trigger('change')
 
     # show template UI
-    new App.TemplateUI(
+    new App.WidgetTemplate(
       el:          @el.find('.ticket_template')
       template_id: template['id']
     )
@@ -199,7 +199,7 @@ class App.TicketCreate extends App.Controller
     @formDefault = @formParam( @el.find('.ticket-create') )
 
     # show text module UI
-    @textModule = new App.TextModuleUI(
+    @textModule = new App.WidgetTextModule(
       el: @el.find('.ticket-create').find('textarea')
     )
 

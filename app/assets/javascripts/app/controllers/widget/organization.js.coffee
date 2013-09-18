@@ -1,4 +1,4 @@
-class App.OrganizationWidget extends App.Controller
+class App.WidgetOrganization extends App.Controller
   events:
     'focusout [data-type=update-org]':  'update',
     'click [data-type=edit-org]':       'edit'

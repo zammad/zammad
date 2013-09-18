@@ -1,4 +1,4 @@
-class App.UserWidget extends App.ControllerDrox
+class App.WidgetUser extends App.ControllerDrox
   events:
     'focusout [data-type=update]': 'update',
     'click [data-type=edit]':      'edit'
@@ -62,7 +62,7 @@ class App.UserWidget extends App.ControllerDrox
 
     if user.organization_id
       @el.append('<div class="org-info"></div>')
-      new App.OrganizationWidget(
+      new App.WidgetOrganization(
         organization_id: user.organization_id
         el:              @el.find('.org-info')
       )

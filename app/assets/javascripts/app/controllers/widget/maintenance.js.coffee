@@ -1,4 +1,4 @@
-class App.MaintenanceWidget extends App.Controller
+class Widget extends App.Controller
   constructor: ->
     super
 
@@ -31,4 +31,4 @@ class Message extends App.ControllerModal
       forceReload: message.reload
     )
 
-App.Config.set( 'maintenance', App.MaintenanceWidget, 'Widgets' )
+App.Config.set( 'maintenance', Widget, 'Widgets' )

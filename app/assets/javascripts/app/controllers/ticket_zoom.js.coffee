@@ -156,7 +156,7 @@ class App.TicketZoom extends App.Controller
 
     # show text module UI
     if !@isRole('Customer')
-      new App.TextModuleUI(
+      new App.WidgetTextModule(
         el:   @el.find('textarea')
         data:
           ticket: @ticket
@@ -265,7 +265,7 @@ class TicketInfo extends App.ControllerDrox
 
     # start tag controller
     if !@isRole('Customer')
-      new App.TagWidget(
+      new App.WidgetTag(
         el:           @el.find('.tag_info')
         object_type:  'Ticket'
         object:        @ticket
@@ -288,7 +288,7 @@ class TicketWidgets extends App.Controller
 
     # start customer info controller
     if !@isRole('Customer')
-      new App.UserWidget(
+      new App.WidgetUser(
         el:      @el.find('.customer_info')
         user_id: @ticket.customer_id
         ticket:  @ticket
@@ -296,7 +296,7 @@ class TicketWidgets extends App.Controller
 
     # start link info controller
     if !@isRole('Customer')
-      new App.LinkInfo(
+      new App.WidgetLink(
         el:           @el.find('.link_info')
         object_type:  'Ticket'
         object:       @ticket

@@ -1,4 +1,4 @@
-class App.TemplateUI extends App.ControllerDrox
+class App.WidgetTemplate extends App.ControllerDrox
   events:
     'click [data-type=template_save]':   'create',
     'click [data-type=template_select]': 'select',

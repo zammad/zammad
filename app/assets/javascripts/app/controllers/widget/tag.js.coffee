@@ -1,4 +1,4 @@
-class App.TagWidget extends App.Controller
+class App.WidgetTag extends App.Controller
   constructor: ->
     super
     @load()

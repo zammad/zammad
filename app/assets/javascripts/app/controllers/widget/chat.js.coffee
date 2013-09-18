@@ -1,4 +1,4 @@
-class App.ChatWidget extends App.Controller
+class Widget extends App.Controller
   events:
     'submit   #chat_form':          'submitMessage'
     'focusin  [name=chat_message]': 'focusIn'
@@ -212,4 +212,4 @@ class App.ChatWidget extends App.Controller
       )
       @render()
 
-App.Config.set( 'chat', App.ChatWidget, 'Widgets' )
+App.Config.set( 'chat', Widget, 'Widgets' )
