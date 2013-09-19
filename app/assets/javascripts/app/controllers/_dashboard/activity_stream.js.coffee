@@ -65,5 +65,5 @@ class App.DashboardActivityStream extends App.Controller
     @html html
 
     # start user popups
-    @userPopups('left')
+    @userPopups('right')
 
