@@ -7,14 +7,8 @@ module Rss
 
     begin
       puts 'fetch rss...'
-      response = Net::HTTP.get_response( URI.parse(url) )
-
-      # check if redirect is needed
-      if response.kind_of? Net::HTTPRedirection 
-        url = response.header['location']
-        response = Net::HTTP.get_response( URI.parse( url ) )
-      end
-      if ! response.kind_of? Net::HTTPSuccess
+      response = UserAgent.request(url)
+      if !response.success?
         raise "Can't fetch '#{url}', http code: #{response.code.to_s}"
         return
       end
