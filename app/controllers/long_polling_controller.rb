@@ -8,17 +8,11 @@ class LongPollingController < ApplicationController
     new_connection = false
 
     # check client id
-    client_id = client_id_check
+    client_id = client_id_verify
     if !client_id
       new_connection = true
       client_id = client_id_gen
       log 'notice', "new client connection", client_id
-    else
-      # cerify client id
-      if !client_id_verify
-        render :json => { :error => 'Invalid client_id in send!' }, :status => :unprocessable_entity
-        return
-      end
     end
     if !params['data']
       params['data'] = {}
@@ -109,13 +103,13 @@ class LongPollingController < ApplicationController
   def message_receive
 
     # check client id
-    if !client_id_verify
+    client_id = client_id_verify
+    if !client_id
       render :json => { :error => 'Invalid client_id receive!' }, :status => :unprocessable_entity
       return
     end
 
     # check queue to send
-    client_id = client_id_check
     begin
 
       # update last ping
@@ -153,18 +147,16 @@ class LongPollingController < ApplicationController
   end
 
   private
-  def client_id_check
-    return params[:client_id].to_s if params[:client_id]
-    return
-  end
+
   def client_id_gen
     rand(9999999999).to_s
   end
+
   def client_id_verify
     return if !params[:client_id]
     sessions = Sessions.sessions
     return if !sessions.include?( params[:client_id].to_s )
-    return true
+    return params[:client_id].to_s
   end
 
   def log( level, data, client_id = '-' )
