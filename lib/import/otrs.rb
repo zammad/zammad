@@ -4,36 +4,16 @@ module Import::OTRS
   def self.request(part)
     url = Setting.get('import_otrs_endpoint') + '/' + part + ';Key=' + Setting.get('import_otrs_endpoint_key')
     puts 'GET: ' + url
-#    response = Net::HTTP.get_response( URI.parse(url), { :use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE } )
-    uri = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
-
-    if url =~ /https/i
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-    request = Net::HTTP::Get.new(uri.request_uri)
-
-    # http basic auth (if needed)
-    user     = Setting.get('import_otrs_user');
-    password = Setting.get('import_otrs_password');
-    if user && user != '' && password && password != ''
-      request.basic_auth user, password
-    end
-
-    begin
-      response = http.request(request)
-#    puts 'R:' + response.body.to_s
-    rescue Exception => e
-      puts "can't get #{url}"
-      puts e.inspect
+    response = UserAgent.request(
+      url,
+      {
+        :user     => Setting.get('import_otrs_user'),
+        :password => Setting.get('import_otrs_password'),
+      },
+    )
+    if !response.success?
+      puts "ERROR: #{response.error}"
       return
-    end
-    if !response
-      raise "Can't connect to #{url}, got no response!"
-    end
-    if response.code.to_s != '200'
-      raise "Connection to #{url} failed, '#{response.code.to_s}'!"
     end
     return response
   end
@@ -41,30 +21,17 @@ module Import::OTRS
     url = Setting.get('import_otrs_endpoint') + '/' + base
     data['Key'] = Setting.get('import_otrs_endpoint_key')
     puts 'POST: ' + url
-    uri = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
-
-    if url =~ /https/i
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    end
-    request = Net::HTTP::Post.new(uri.request_uri)
-
-    # http basic auth (if needed)
-    user     = Setting.get('import_otrs_user');
-    password = Setting.get('import_otrs_password');
-    if user && user != '' && password && password != ''
-      request.basic_auth user, password
-    end
-
-    request.set_form_data(data)
-    response = http.request(request)
-
-    if !response
-      raise "Can't connect to #{url}, got no response!"
-    end
-    if response.code.to_s != '200'
-      raise "Connection to #{url} failed, '#{response.code.to_s}'!"
+    response = UserAgent.request(
+      url,
+      {
+        :method   => 'post',
+        :user     => Setting.get('import_otrs_user'),
+        :password => Setting.get('import_otrs_password'),
+      },
+    )
+    if !response.success?
+      puts "ERROR: #{response.error}"
+      return
     end
     return response
   end
@@ -77,7 +44,7 @@ module Import::OTRS
   def self.auth(username, password)
     response = post( "public.pl", { :Action => 'Export', :Type => 'Auth', :User => username, :Pw => password } )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
 
     result = json(response)
     return result
@@ -86,7 +53,7 @@ module Import::OTRS
   def self.session(session_id)
     response = post( "public.pl", { :Action => 'Export', :Type => 'SessionCheck', :SessionID => session_id } )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
 
     result = json(response)
     return result
@@ -105,7 +72,7 @@ module Import::OTRS
 
     response = request("public.pl?Action=Export")
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
 
 #self.ticket('156115')
 #return
@@ -189,7 +156,7 @@ module Import::OTRS
     url = "public.pl?Action=Export;Type=TicketDiff;Limit=30"
     response = request( url )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
     result = json(response)
     self._ticket_result(result)
   end
@@ -201,7 +168,7 @@ module Import::OTRS
     }
     response = request( url )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
 
     result = json(response)
     self._ticket_result(result)
@@ -528,7 +495,7 @@ module Import::OTRS
   def self.ticket_state
     response = request( "public.pl?Action=Export;Type=State" )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
 
     result = json(response)
 #    puts result.inspect
@@ -585,7 +552,7 @@ module Import::OTRS
   def self.ticket_priority
     response = request( "public.pl?Action=Export;Type=Priority" )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
 
     result = json(response)
     map = {
@@ -629,7 +596,7 @@ module Import::OTRS
   def self.ticket_group
     response = request( "public.pl?Action=Export;Type=Queue" )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
 
     result = json(response)
     map = {
@@ -673,7 +640,7 @@ module Import::OTRS
   def self.user
     response = request( "public.pl?Action=Export;Type=User" )
     return if !response
-    return if response.code.to_s != '200'
+    return if !response.success?
     result = json(response)
     map = {
       :ChangeTime    => :updated_at,
@@ -739,7 +706,7 @@ module Import::OTRS
       response = request( "public.pl?Action=Export;Type=Customer;Count=100;Offset=#{count}" )
       return if !response
       count = count + 3000
-      return if response.code.to_s != '200'
+      return if !response.success?
       result = json(response)
       map = {
         :ChangeTime    => :updated_at,
