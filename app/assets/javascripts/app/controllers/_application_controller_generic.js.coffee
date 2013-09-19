@@ -200,8 +200,15 @@ class DestroyConfirm extends App.ControllerModal
     @item.destroy()
 
 class App.ControllerDrox extends App.Controller
-  constructor: ->
+  constructor: (params) ->
     super
+
+    if params.data && params.data.text
+      @inline(params.data)
+
+  inline: (data) ->
+    @html App.view('generic/drox')(data)
+    @el.find('.drox-body').text(data.text)
 
   template: (data) ->
     drox = $( App.view('generic/drox')(data) )

@@ -191,12 +191,15 @@ table th, table td {
     width: 280px;
   }
   .content-two .main {
-    width: 800px;
+    width: 900px;
     margin-left: 284px;
   }
   .content-two .meta {
+/*
     width: 140px;
     display: table-cell;
+*/
+    display: none;
   }
 }
 
@@ -851,6 +854,14 @@ footer {
 }
 .nav.nav-pills > li > a > span.badge {
   margin-top: -18px;
+}
+
+.nav.nav-pills li .glyphicon {
+  display: none;
+}
+.nav.nav-pills li:hover .glyphicon, .nav li:focus .glyphicon {
+  display: inline-block;
+  text-decoration: none;
 }
 
 .customer-info {
