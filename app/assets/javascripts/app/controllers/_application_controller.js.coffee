@@ -287,11 +287,11 @@ class App.Controller extends Spine.Controller
     # show ticket popup
     ui = @
     $('.ticket-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 1200 }
+      placement:  position
       title: ->
         ticket_id = $(@).data('id')
         ticket = App.Ticket.retrieve( ticket_id )
@@ -313,11 +313,11 @@ class App.Controller extends Spine.Controller
 
     # show user popup
     $('.user-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 1200 }
+      placement:  position
       title: ->
         user_id = $(@).data('id')
         user = App.User.find( user_id )
@@ -359,11 +359,11 @@ class App.Controller extends Spine.Controller
 
     # show organization popup
     $('.organization-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 1200 }
+      placement:  position
       title: ->
         organization_id = $(@).data('id')
         organization = App.Organization.find( organization_id )
@@ -401,10 +401,11 @@ class App.Controller extends Spine.Controller
     # show user popup
     controller = @
     $(data.selector).popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 5200 }
-      placement: data.position
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 5200 }
+      placement:  data.position
       title: ->
         $(@).find('[title="*"]').val()
 
