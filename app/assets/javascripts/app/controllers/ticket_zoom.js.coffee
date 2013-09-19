@@ -606,11 +606,14 @@ class ArticleView extends App.Controller
 
   show_toogle: (e) ->
     e.preventDefault()
-    $(e.target).hide()
+    #$(e.target).hide()
     if $(e.target).next('div')[0]
-      $(e.target).next('div').removeClass('hide')
-    else
-      $(e.target).parent().next('div').removeClass('hide')
+      if $(e.target).next('div').hasClass('hide')
+        $(e.target).next('div').removeClass('hide')
+        $(e.target).text( App.i18n.translateContent('Fold in') )
+      else
+        $(e.target).text( App.i18n.translateContent('See more') )
+        $(e.target).next('div').addClass('hide')
 
   checkIfSignatureIsNeeded: (article_type) =>
 
@@ -717,7 +720,7 @@ class Article extends App.Controller
       @article_changed = false
       @article['html'] = @article['html'].replace /^-----SEEMORE-----\n/m, (match) =>
         @article_changed = true
-        notify + '<div class="hide">'
+        notify + '<div class="hide preview">'
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
 
@@ -726,7 +729,7 @@ class Article extends App.Controller
       @article_changed = false
       @article['html'] = @article['html'].replace /^\n{0,10}(--|__)/m, (match) =>
         @article_changed = true
-        notify + '<div class="hide">' + match
+        notify + '<div class="hide preview">' + match
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
 
