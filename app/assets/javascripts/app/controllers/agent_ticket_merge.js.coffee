@@ -1,4 +1,4 @@
-  class App.TicketMerge extends App.ControllerModal
+class App.TicketMerge extends App.ControllerModal
   constructor: ->
     super
     @fetch()
