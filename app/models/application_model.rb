@@ -1,12 +1,9 @@
 # Copyright (C) 2013-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'cache'
-require 'user_info'
-require 'sessions'
-
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
 
+  before_create  :check_attributes_protected, :cache_delete, :fill_up_user_create
   before_create  :cache_delete, :fill_up_user_create
   before_update  :cache_delete_before, :fill_up_user_update
   before_destroy :cache_delete_before
@@ -16,12 +13,11 @@ class ApplicationModel < ActiveRecord::Base
 
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
-  # for import of other objects, remove 'id'
-  def self.attributes_protected_by_default
+  def check_attributes_protected
     if Setting.get('import_mode') && @@import_class_list.include?( self.name.to_s )
-      ['type']
+      # do noting, use id as it is
     else
-      ['id','type']
+      self[:id] = nil
     end
   end
 
@@ -38,6 +34,10 @@ returns
 =end
 
   def self.param_cleanup(params)
+
+    if params == nil
+      raise "No params for #{self.to_s}!"
+    end
 
     # only use object attributes
     data = {}
@@ -71,7 +71,9 @@ returns
     data.delete( :created_at )
     data.delete( :updated_by_id )
     data.delete( :created_by_id )
-
+    if data.respond_to?('permit!')
+      data.permit!
+    end
     data
   end
 

@@ -18,7 +18,6 @@ class TaskbarController < ApplicationController
   end
 
   def create
-    params[:user_id] = current_user.id
     model_create_render(Taskbar,params)
   end
 
@@ -26,7 +25,6 @@ class TaskbarController < ApplicationController
     taskbar = Taskbar.find( params[:id] )
     return if !access(taskbar)
 
-    params[:user_id] = current_user.id
     taskbar.update_attributes!( Taskbar.param_cleanup(params) )
     model_update_render_item(taskbar)
   end

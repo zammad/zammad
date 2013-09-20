@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'time_calculation'
-require 'sla'
-
 class Ticket < ApplicationModel
   before_create   :check_generate, :check_defaults
   before_update   :check_defaults
