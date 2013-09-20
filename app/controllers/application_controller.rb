@@ -257,7 +257,7 @@ class ApplicationController < ActionController::Base
     begin
 
       # create object
-      generic_object = object.new( object.param_cleanup( params[object.to_s.downcase] ) )
+      generic_object = object.new( object.param_cleanup( params[object.to_app_model] ) )
 
       # save object
       generic_object.save!
@@ -266,6 +266,7 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       puts e.message.inspect
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -280,10 +281,11 @@ class ApplicationController < ActionController::Base
       generic_object = object.find( params[:id] )
 
       # save object
-      generic_object.update_attributes!( object.param_cleanup( params[object.to_s.downcase] ) )
+      generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model] ) )
       model_update_render_item(generic_object)
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -298,6 +300,7 @@ class ApplicationController < ActionController::Base
       model_destory_render_item()
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -311,6 +314,7 @@ class ApplicationController < ActionController::Base
       model_show_render_item(generic_object)
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -324,6 +328,7 @@ class ApplicationController < ActionController::Base
       model_index_render_result( generic_object )
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
