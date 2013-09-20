@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
   :mode_show_rendeder,
   :model_index_render
 
-  skip_filter :verify_authenticity_token
-  before_filter :log_request, :set_user, :session_update
+  skip_before_filter :verify_authenticity_token
+  before_filter :set_user, :session_update
   before_filter :cors_preflight_check
 
   after_filter  :set_access_control_headers
@@ -51,10 +51,6 @@ class ApplicationController < ActionController::Base
   # execute events
   def trigger_events
     Observer::Ticket::Notification.transaction
-  end
-
-  def log_request
-    puts Time.now().to_s + ' ' + request.original_fullpath.to_s
   end
 
   # Finds the User with the ID stored in the session with the key
@@ -99,7 +95,7 @@ class ApplicationController < ActionController::Base
 
   def authentication_check_only
 
-    puts 'authentication_check'
+    #puts 'authentication_check'
     session[:request_type] = 1
     #puts params.inspect
     #puts session.inspect
@@ -107,7 +103,7 @@ class ApplicationController < ActionController::Base
 
     # check http basic auth
     authenticate_with_http_basic do |username, password|
-      puts 'http basic auth check'
+      #puts 'http basic auth check'
       session[:request_type] = 2
 
       userdata = User.authenticate( username, password )
@@ -261,7 +257,7 @@ class ApplicationController < ActionController::Base
     begin
 
       # create object
-      generic_object = object.new( object.param_cleanup(params) )
+      generic_object = object.new( object.param_cleanup( params[object.to_app_model] ) )
 
       # save object
       generic_object.save!
@@ -270,6 +266,7 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       puts e.message.inspect
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -284,10 +281,11 @@ class ApplicationController < ActionController::Base
       generic_object = object.find( params[:id] )
 
       # save object
-      generic_object.update_attributes!( object.param_cleanup(params) )
+      generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model] ) )
       model_update_render_item(generic_object)
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -302,6 +300,7 @@ class ApplicationController < ActionController::Base
       model_destory_render_item()
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -315,6 +314,7 @@ class ApplicationController < ActionController::Base
       model_show_render_item(generic_object)
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -328,6 +328,7 @@ class ApplicationController < ActionController::Base
       model_index_render_result( generic_object )
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end

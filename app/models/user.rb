@@ -1,9 +1,5 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'sso'
-require 'digest/sha2'
-require 'organization'
-
 class User < ApplicationModel
   include User::Assets
   extend User::Search

@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'cache'
-
 class Sla < ApplicationModel
   store     :condition
   store     :data

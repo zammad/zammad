@@ -53,7 +53,7 @@ class TicketsController < ApplicationController
     if params[:article]
       form_id  = params[:article][:form_id]
       params[:article].delete(:form_id)
-      @article = Ticket::Article.new( params[:article] )
+      @article = Ticket::Article.new( Ticket::Article.param_validation( params[:article] ) )
       @article.ticket_id     = @ticket.id
 
       # find attachments in upload cache
