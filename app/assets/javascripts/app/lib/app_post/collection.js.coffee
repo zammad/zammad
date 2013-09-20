@@ -20,6 +20,28 @@ class _collectionSingleton extends Spine.Module
   constructor: (@args) ->
 
     # add trigger - bind new events
+    App.Event.bind 'loadAssets', (data) =>
+      if data
+        for type, collections of data
+          if type is 'users'
+            type = 'User'
+          if type is 'tickets'
+            type = 'Ticket'
+          if type is 'ticket_article'
+            type = 'TicketArticle'
+          if type is 'organization'
+            type = 'Organization'
+          if type is 'history_object'
+            type = 'HistoryObject'
+          if type is 'history_type'
+            type = 'HistoryType'
+          if type is 'history_attribute'
+            type = 'HistoryAttribute'
+
+          @log 'debug', 'loadCollection:trigger', type, collections
+          @load( localStorage: data.localStorage, type: type, data: collections )
+
+    # add trigger - bind new events
     App.Event.bind 'loadCollection', (data) =>
 
       # load collections

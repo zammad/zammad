@@ -35,10 +35,10 @@ class App.ProfilePassword extends App.Controller
     @formDisable(e)
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:   'password_reset'
       type: 'POST'
-      url:  'api/users/password_change'
+      url:  @apiPath + '/users/password_change'
       data: JSON.stringify(params)
       processData: true
       success: @success

@@ -13,10 +13,10 @@ class Index extends App.ControllerContent
     @load()
 
   load: ->
-    App.Com.ajax(
+    @ajax(
       id:    'packages',
       type:  'GET',
-      url:   'api/packages',
+      url:   @apiPath + '/packages',
       processData: true,
       success: (data) =>
         @render(data)
@@ -43,15 +43,14 @@ class Index extends App.ControllerContent
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
     type = $(e.target).data('type')
-    console.log 'ID', id, type
     if type is 'uninstall'
       httpType = 'DELETE'
 
     if httpType
-      App.Com.ajax(
+      @ajax(
         id:    'packages',
         type:  httpType,
-        url:   'api/packages',
+        url:   @apiPath + '/packages',
         data:  JSON.stringify( { id: id } ),
         processData: false,
         success: (data) =>

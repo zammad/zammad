@@ -40,9 +40,11 @@ module Zammad
       'observer::_ticket::_article::_communicate_facebook',
       'observer::_ticket::_article::_communicate_twitter',
       'observer::_ticket::_notification',
-      'observer::_tag::_ticket_history',
       'observer::_ticket::_reset_new_state',
-      'observer::_ticket::_escalation_calculation'
+      'observer::_ticket::_escalation_calculation',
+      'observer::_tag::_ticket_history',
+      'observer::_user::_geo'
+
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
@@ -74,8 +76,14 @@ module Zammad
     # Use a different cache store in production
     config.cache_store = :file_store, 'tmp/cache/file_store'
 
+    # REST api path
+    config.api_path = '/api/v1'
+
     # Enable threaded mode
     config.threadsafe!
+
+    # catch all router files
+    config.paths['config/routes'] += Dir[Rails.root.join("config/routes/*.rb")]
 
   end
 end

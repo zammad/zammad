@@ -1,12 +1,10 @@
-module ExtraRoutes
-  def add(map)
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    # groups
-    map.match '/api/groups',                       :to => 'groups#index',  :via => :get
-    map.match '/api/groups/:id',                   :to => 'groups#show',   :via => :get
-    map.match '/api/groups',                       :to => 'groups#create', :via => :post
-    map.match '/api/groups/:id',                   :to => 'groups#update', :via => :put
+  # groups
+  match api_path + '/groups',                     :to => 'groups#index',  :via => :get
+  match api_path + '/groups/:id',                 :to => 'groups#show',   :via => :get
+  match api_path + '/groups',                     :to => 'groups#create', :via => :post
+  match api_path + '/groups/:id',                 :to => 'groups#update', :via => :put
 
-  end
-  module_function :add
 end

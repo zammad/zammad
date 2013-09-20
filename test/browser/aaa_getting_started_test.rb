@@ -10,10 +10,6 @@ class AaaGettingStartedTest < TestCase
         :url      => browser_url + '/',
         :action   => [
           {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
             :execute => 'check',
             :css     => '#form-master',
             :result  => true,
@@ -54,12 +50,7 @@ class AaaGettingStartedTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :value   => 3,
           },
           {
             :execute => 'check',
@@ -73,16 +64,11 @@ class AaaGettingStartedTest < TestCase
       {
         :name     => 'getting started - agent 1',
         :action   => [
-
           {
             :execute      => 'match',
             :css          => 'body',
             :value        => 'Invite Agents',
             :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
           },
           {
             :execute => 'set',
@@ -108,21 +94,14 @@ class AaaGettingStartedTest < TestCase
             :css     => '#form-agent button[type="submit"]',
           },
           {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Invitation sent',
+          },
+          {
             :execute => 'check',
             :element => :url,
             :result  => '#getting_started',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-
-          # check action
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'Invitation sent',
-            :match_result => true,
           },
           {
             :execute      => 'match',

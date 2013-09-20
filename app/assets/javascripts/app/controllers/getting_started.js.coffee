@@ -18,10 +18,10 @@ class Index extends App.ControllerContent
   fetch: ->
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'getting_started',
       type:  'GET',
-      url:   'api/getting_started',
+      url:   @apiPath + '/getting_started',
       data:  {
 #        view:       @view,
       }
@@ -135,9 +135,6 @@ class Index extends App.ControllerContent
 
   relogin: (data, status, xhr) =>
     @log 'notice', 'relogin:success', data
-
-    # login check
-    App.Auth.loginCheck()
 
     # add notify
     App.Event.trigger 'notify:removeall'

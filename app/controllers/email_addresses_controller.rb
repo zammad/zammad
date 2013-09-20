@@ -24,7 +24,7 @@ Example:
 =begin
 
 Resource:
-GET /api/email_addresses.json
+GET /api/v1/email_addresses.json
 
 Response:
 [
@@ -41,7 +41,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/email_addresses.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password}
 
 =end
 
@@ -52,7 +52,7 @@ curl http://localhost/api/email_addresses.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/email_addresses/#{id}.json
+GET /api/v1/email_addresses/#{id}.json
 
 Response:
 {
@@ -62,7 +62,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/email_addresses/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -73,7 +73,7 @@ curl http://localhost/api/email_addresses/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/email_addresses.json
+POST /api/v1/email_addresses.json
 
 Payload:
 {
@@ -92,7 +92,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/email_addresses.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -104,7 +104,7 @@ curl http://localhost/api/email_addresses.json -v -u #{login}:#{password} -H "Co
 =begin
 
 Resource:
-PUT /api/email_addresses/{id}.json
+PUT /api/v1/email_addresses/{id}.json
 
 Payload:
 {
@@ -123,7 +123,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/email_addresses.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 

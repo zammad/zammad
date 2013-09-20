@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'browser_test_helper'
- 
+
 class SignupTest < TestCase
   def test_signup
     signup_user_email = 'signup-test-' + rand(999999).to_s + '@example.com'
@@ -55,15 +55,10 @@ class SignupTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 5,
           },
 
           # check action
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
           {
             :execute => 'check',
             :css     => '#form-signup',

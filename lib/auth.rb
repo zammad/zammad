@@ -1,0 +1,63 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
+class Auth < ApplicationLib
+
+=begin
+
+authenticate user via username and password
+
+  result = Auth.check( username, password, user )
+
+returns
+
+  result = user_model # if authentication was successfully
+
+=end
+
+  def self.check(username, password, user)
+
+    # use std. auth backends
+    config = [
+      {
+        :adapter => 'Auth::Internal',
+      },
+      {
+        :adapter => 'Auth::Test',
+      },
+    ]
+
+    # added configured backends
+    Setting.where( :area => 'Security::Authentication' ).each {|setting|
+      if setting.state[:value]
+        config.push setting.state[:value]
+      end
+    }
+
+    # try to login against configure auth backends
+    user_auth = nil
+    config.each {|config_item|
+      next if !config_item[:adapter]
+
+      # load backend
+      backend = self.load_adapter( config_item[:adapter] )
+      return if !backend
+
+      user_auth = backend.check( username, password, config_item, user )
+
+      # auth ok
+      if user_auth
+
+        # remember last login date
+        user_auth.update_last_login
+
+        # reset login failed
+        user_auth.login_failed = 0
+        user_auth.save
+
+        return user_auth
+      end
+    }
+    return
+
+  end
+end

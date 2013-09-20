@@ -36,5 +36,10 @@ class _Singleton
       @_log( module, level, args )
 
   _log: ( module, level, args ) ->
-    console.log "App.#{module}(#{level})", args
+    if level is 'error'
+      console.error "App.#{module}(#{level})", args
+    else if level is 'debug'
+      console.debug "App.#{module}(#{level})", args
+    else
+      console.log "App.#{module}(#{level})", args
 

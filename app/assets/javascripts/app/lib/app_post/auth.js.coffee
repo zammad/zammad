@@ -2,11 +2,11 @@ class App.Auth
 
   @login: (params) ->
     App.Log.notice 'Auth', 'login', params
-    App.Com.ajax(
-      id:     'login',
-      type:   'POST',
-      url:     '/signin',
-      data:    JSON.stringify(params.data),
+    App.Ajax.request(
+      id:     'login'
+      type:   'POST'
+      url:    App.Config.get('api_path') + '/signin'
+      data:   JSON.stringify(params.data)
       success: (data, status, xhr) =>
 
         # set login (config, session, ...)
@@ -22,11 +22,11 @@ class App.Auth
 
   @loginCheck: ->
     App.Log.notice 'Auth', 'loginCheck'
-    App.Com.ajax(
+    App.Ajax.request(
       id:    'login_check'
       async: false
       type:  'GET'
-      url:   '/signshow'
+      url:   App.Config.get('api_path') + '/signshow'
       success: (data, status, xhr) =>
 
         # set login (config, session, ...)
@@ -38,10 +38,10 @@ class App.Auth
 
   @logout: ->
     App.Log.notice 'Auth', 'logout'
-    App.Com.ajax(
+    App.Ajax.request(
       id:   'logout'
       type: 'DELETE'
-      url:  '/signout'
+      url:  App.Config.get('api_path') + '/signout'
       success: =>
 
         # set logout (config, session, ...)
@@ -83,6 +83,10 @@ class App.Auth
     for key, value of data.session
       App.Session.set( key, value )
 
+    # refresh default collections
+    for key, value of data.default_collections
+      App[key].refresh( value, options: { clear: true } )
+
     App.Event.trigger( 'auth', data.session )
 
     # init of i18n
@@ -92,10 +96,6 @@ class App.Auth
     if !locale
       locale = window.navigator.userLanguage || window.navigator.language || 'en'
     App.i18n.set( locale )
-
-    # refresh default collections
-    for key, value of data.default_collections
-      App[key].refresh( value, options: { clear: true } )
 
     App.Event.trigger( 'auth:login', data.session )
     App.Event.trigger( 'ui:rerender' )

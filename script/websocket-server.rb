@@ -8,7 +8,7 @@ require 'eventmachine'
 require 'em-websocket'
 require 'json'
 require 'fileutils'
-require 'session'
+require 'sessions'
 require 'optparse'
 require 'daemons'
 
@@ -91,7 +91,7 @@ EventMachine.run {
     ws.onopen {
       client_id = ws.object_id.to_s
       log 'notice', 'Client connected.', client_id
-      Session.create( client_id, {}, { :type => 'websocket' } )
+      Sessions.create( client_id, {}, { :type => 'websocket' } )
 
       if !@clients.include? client_id
         @clients[client_id] = {
@@ -112,7 +112,7 @@ EventMachine.run {
         @clients.delete client_id
       end
 
-      Session.destory( client_id )
+      Sessions.destory( client_id )
     }
 
     # manage messages
@@ -132,7 +132,7 @@ EventMachine.run {
 
       # spool messages for new connects
       if data['spool']
-        Session.spool_create(msg)
+        Sessions.spool_create(msg)
       end
 
       # get spool messages and send them to new client connection
@@ -146,7 +146,7 @@ EventMachine.run {
         end
 
         if @clients[client_id] && @clients[client_id][:session] && @clients[client_id][:session]['id']
-          spool = Session.spool_list( data['timestamp'], @clients[client_id][:session]['id'] )
+          spool = Sessions.spool_list( data['timestamp'], @clients[client_id][:session]['id'] )
           spool.each { |item|
 
             # create new msg to push to client
@@ -171,7 +171,7 @@ EventMachine.run {
       # get session
       if data['action'] == 'login'
         @clients[client_id][:session] = data['session']
-        Session.create( client_id, data['session'], { :type => 'websocket' } )
+        Sessions.create( client_id, data['session'], { :type => 'websocket' } )
 
         # remember ping, send pong back
       elsif data['action'] == 'ping'
@@ -182,7 +182,7 @@ EventMachine.run {
       elsif data['action'] == 'broadcast'
 
         # list all current clients
-        client_list = Session.list
+        client_list = Sessions.list
         client_list.each {|local_client_id, local_client|
           if local_client_id != client_id
 
@@ -203,7 +203,7 @@ EventMachine.run {
                         if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
                           @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
                         else
-                          Session.send( local_client_id, data )
+                          Sessions.send( local_client_id, data )
                         end
                       end
                     }
@@ -217,7 +217,7 @@ EventMachine.run {
               if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
                 @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
               else
-                Session.send( local_client_id, data )
+                Sessions.send( local_client_id, data )
               end
             end
           else
@@ -247,7 +247,7 @@ EventMachine.run {
     }
 
     # ajax
-    client_list = Session.list
+    client_list = Sessions.list
     clients = 0
     client_list.each {|client_id, client|
       next if client[:meta][:type] == 'websocket'
@@ -268,7 +268,7 @@ EventMachine.run {
       next if client[:disconnect]
       log 'debug', 'checking for data...', client_id
       begin
-        queue = Session.queue( client_id )
+        queue = Sessions.queue( client_id )
         if queue && queue[0]
           #          log "send " + queue.inspect, client_id
           log 'notice', "send data to client", client_id
@@ -305,19 +305,19 @@ EventMachine.run {
         # try to close regular
         client[:websocket].close_websocket
 
-        # delete sesstion from client list
+        # delete session from client list
         sleep 0.3
         @clients.delete(client_id)
       end
     }
 
     # ajax
-    clients = Session.list
+    clients = Sessions.list
     clients.each { |client_id, client|
       next if client[:meta][:type] == 'websocket'
       if ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
         log 'notice', "closing idle ajax connection", client_id
-        Session.destory( client_id )
+        Sessions.destory( client_id )
       end
     }
   end

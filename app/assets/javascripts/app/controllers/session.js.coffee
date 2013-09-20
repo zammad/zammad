@@ -11,15 +11,15 @@ class Session extends App.ControllerContent
     @interval(
       =>
         @load()
-      10000
+      30000
     )
 
   # fetch data, render view
   load: ->
-    App.Com.ajax(
+    @ajax(
       id:    'sessions'
       type:  'GET'
-      url:   'api/sessions'
+      url:   @apiPath + '/sessions'
       success: (data) =>
         @render(data)
     )
@@ -42,10 +42,10 @@ class Session extends App.ControllerContent
   destroy: (e) ->
     e.preventDefault()
     sessionId = $( e.target ).data('session-id')
-    App.Com.ajax(
+    @ajax(
       id:    'sessions/' + sessionId
       type:  'DELETE'
-      url:   'api/sessions/' + sessionId
+      url:   @apiPath + '/sessions/' + sessionId
       success: (data) =>
         @load()
     )

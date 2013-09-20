@@ -1,4 +1,5 @@
-module RSS
+require 'simple-rss'
+module Rss
   def self.fetch(url, limit = 10)
     cache_key = 'rss::' + url
     items = Cache.get( cache_key )
@@ -6,14 +7,8 @@ module RSS
 
     begin
       puts 'fetch rss...'
-      response = Net::HTTP.get_response( URI.parse(url) )
-
-      # check if redirect is needed
-      if response.code.to_s == '301' || response.code.to_s == '302'
-        url = response.header['location']
-        response = Net::HTTP.get_response( URI.parse( url ) )
-      end
-      if response.code.to_s != '200'
+      response = UserAgent.request(url)
+      if !response.success?
         raise "Can't fetch '#{url}', http code: #{response.code.to_s}"
         return
       end

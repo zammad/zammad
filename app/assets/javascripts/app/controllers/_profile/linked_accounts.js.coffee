@@ -50,10 +50,10 @@ class App.ProfileLinkedAccounts extends App.Controller
     uid      = $(e.target).data('uid')
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:   'account'
       type: 'DELETE'
-      url:  'api/users/account'
+      url:  @apiPath + '/users/account'
       data: JSON.stringify({ provider: provider, uid: uid })
       processData: true
       success: @success

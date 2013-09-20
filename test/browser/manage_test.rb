@@ -70,14 +70,9 @@ class ManageTest < TestCase
             :css     => '.modal button.submit',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => random,
           },
           {
             :execute => 'click',
@@ -97,14 +92,9 @@ class ManageTest < TestCase
             :css     => '.modal button.submit',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => '2Manage Lastname' + random,
-            :match_result => true,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => '2Manage Lastname' + random,
           },
           {
             :execute => 'wait',
@@ -150,14 +140,9 @@ class ManageTest < TestCase
             :css     => '.modal button.submit',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => random,
           },
           {
             :execute => 'click',
@@ -182,14 +167,9 @@ class ManageTest < TestCase
             :css     => '.modal button.submit',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some sla update ' + random,
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'some sla update ' + random,
           },
           {
             :execute => 'wait',
@@ -204,8 +184,8 @@ class ManageTest < TestCase
             :value   => 2,
           },
           {
-            :execute => 'accept',
-            :element => :alert,
+            :execute => 'click',
+            :css     => '.modal .submit',
           },
           {
             :execute => 'wait',

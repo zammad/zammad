@@ -3,7 +3,7 @@
 class PackagesController < ApplicationController
   before_filter :authentication_check
 
-  # GET /api/packages
+  # GET /api/v1/packages
   def index
     return if deny_if_not_role('Admin')
     packages = Package.all( :order => 'name' )
@@ -12,7 +12,7 @@ class PackagesController < ApplicationController
     }
   end
 
-  # POST /api/packages
+  # POST /api/v1/packages
   def install
     return if deny_if_not_role('Admin')
 
@@ -21,7 +21,7 @@ class PackagesController < ApplicationController
     redirect_to '/#package'
   end
 
-  # DELETE /api/packages
+  # DELETE /api/v1/packages
   def uninstall
     return if deny_if_not_role('Admin')
 

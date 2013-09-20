@@ -5,28 +5,7 @@ class TranslationsController < ApplicationController
 
   # GET /translations/:lang
   def load
-    translations = Translation.where( :locale => params[:locale] )
-
-    list = []
-    translations.each { |item|
-      data = [
-        item.id,
-        item.source,
-        item.target,
-      ]
-      list.push data
-    }
-
-    timestamp_map_default = 'yyyy-mm-dd HH:MM'
-    timestamp_map = {
-      :de => 'dd.mm.yyyy HH:MM',
-    }
-    timestamp = timestamp_map[ params[:locale].to_sym ] || timestamp_map_default
-
-    render :json => {
-      :list            => list,
-      :timestampFormat => timestamp,
-    }
+    render :json => Translation.list( params[:locale] )
   end
 
   # GET /translations

@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'geoip'
-
 class ApplicationController < ActionController::Base
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
@@ -16,7 +14,8 @@ class ApplicationController < ActionController::Base
   :mode_show_rendeder,
   :model_index_render
 
-  before_filter :set_user, :session_update
+  skip_filter :verify_authenticity_token
+  before_filter :log_request, :set_user, :session_update
   before_filter :cors_preflight_check
 
   after_filter  :set_access_control_headers
@@ -27,7 +26,7 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Origin']      = '*'
     headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
     headers['Access-Control-Max-Age']           = '1728000'
-    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
+    headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
@@ -39,7 +38,7 @@ class ApplicationController < ActionController::Base
     if request.method == 'OPTIONS'
       headers['Access-Control-Allow-Origin']      = '*'
       headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
-      headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
+      headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
       headers['Access-Control-Max-Age']           = '1728000'
       headers['Access-Control-Allow-Credentials'] = 'true'
       render :text => '', :content_type => 'text/plain'
@@ -54,6 +53,10 @@ class ApplicationController < ActionController::Base
     Observer::Ticket::Notification.transaction
   end
 
+  def log_request
+    puts Time.now().to_s + ' ' + request.original_fullpath.to_s
+  end
+
   # Finds the User with the ID stored in the session with the key
   # :current_user_id This is a common way to handle user login in
   # a Rails application; logging in sets the session value and
@@ -61,7 +64,7 @@ class ApplicationController < ActionController::Base
   def current_user
     return @_current_user if @_current_user
     return if !session[:user_id]
-    @_current_user = User.find_by_id( session[:user_id] )
+    @_current_user = User.find( session[:user_id] )
   end
   def current_user_set(user)
     @_current_user = user
@@ -77,12 +80,15 @@ class ApplicationController < ActionController::Base
 
   # update session updated_at
   def session_update
-    session[:ping] = Time.now.utc.iso8601
+
+    # on many paralell requests, session got reinitialised if Time. is used, as workaround use DateTime.
+    #session[:ping] = Time.now.utc.iso8601
+    session[:ping] = DateTime.now.iso8601
 
     # check if remote ip need to be updated
     if !session[:remote_id] || session[:remote_id] != request.remote_ip
       session[:remote_id]  = request.remote_ip
-      session[:geo]        = Geoip.location( request.remote_ip )
+      session[:geo]        = GeoIp.location( request.remote_ip )
     end
 
     # fill user agent

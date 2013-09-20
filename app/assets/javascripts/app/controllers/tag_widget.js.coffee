@@ -9,10 +9,10 @@ class App.TagWidget extends App.Controller
 
   load: =>
     @attribute_id = 'tags_' + @object.id + '_' + @object_type
-    App.Com.ajax(
+    @ajax(
       id:    @attribute_id
       type:  'GET'
-      url:   'api/tags'
+      url:   @apiPath + '/tags'
       data:
         object: @object_type
         o_id:   @object.id
@@ -40,9 +40,9 @@ class App.TagWidget extends App.Controller
 #    @el.find('#tags').elastic()
 
   onAddTag: (item) =>
-    App.Com.ajax(
+    @ajax(
       type:  'GET',
-      url:   'api/tags/add',
+      url:   @apiPath + '/tags/add',
       data:
         object: @object_type,
         o_id:   @object.id,
@@ -53,9 +53,9 @@ class App.TagWidget extends App.Controller
     )
 
   onRemoveTag: (item) =>
-    App.Com.ajax(
+    @ajax(
       type:  'GET'
-      url:   'api/tags/remove'
+      url:   @apiPath + '/tags/remove'
       data:
         object: @object_type
         o_id:   @object.id

@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'browser_test_helper'
- 
+
 class AuthMasterTest < TestCase
   def test_authentication
     tests = [
@@ -25,7 +25,7 @@ class AuthMasterTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
           {
             :execute => 'check',
@@ -37,10 +37,6 @@ class AuthMasterTest < TestCase
       {
         :name     => 'login',
         :action   => [
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
           {
             :execute => 'check',
             :css     => '#login',
@@ -62,20 +58,19 @@ class AuthMasterTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
 
           # check action
           {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
+            :execute  => 'check',
+            :css      => '#login',
+            :result   => false,
           },
           {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'master@example',
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'master@example',
           },
         ],
       },

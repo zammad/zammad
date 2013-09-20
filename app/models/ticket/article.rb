@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket::Article < ApplicationModel
+  include Ticket::Article::Assets
+
   after_create  :attachment_check
   belongs_to    :ticket
   belongs_to    :ticket_article_type,   :class_name => 'Ticket::Article::Type'

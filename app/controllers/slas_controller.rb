@@ -25,7 +25,7 @@ Example:
 =begin
 
 Resource:
-GET /api/slas.json
+GET /api/v1/slas.json
 
 Response:
 [
@@ -42,7 +42,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/slas.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 
 =end
 
@@ -54,7 +54,7 @@ curl http://localhost/api/slas.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/slas/#{id}.json
+GET /api/v1/slas/#{id}.json
 
 Response:
 {
@@ -64,7 +64,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/slas/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/slas/#{id}.json -v -u #{login}:#{password}
 
 =end
 
@@ -76,7 +76,7 @@ curl http://localhost/api/slas/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/slas.json
+POST /api/v1/slas.json
 
 Payload:
 {
@@ -93,7 +93,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/slas.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -105,7 +105,7 @@ curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type:
 =begin
 
 Resource:
-PUT /api/slas/{id}.json
+PUT /api/v1/slas/{id}.json
 
 Payload:
 {
@@ -122,7 +122,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/slas.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -134,13 +134,13 @@ curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type:
 =begin
 
 Resource:
-DELETE /api/slas/{id}.json
+DELETE /api/v1/slas/{id}.json
 
 Response:
 {}
 
 Test:
-curl http://localhost/api/slas.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+curl http://localhost/api/v1/slas.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
 
 =end
 

@@ -144,7 +144,7 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 5,
           },
 
           # set body in edit area
@@ -240,15 +240,10 @@ class AgentTicketActionsLevel2Test < TestCase
             :css     => '.active button',
           },
           {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where        => :instance1,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some update 4711',
-            :match_result => true,
+            :where   => :instance1,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'some update 4711',
           },
 
           # verify empty text in input body

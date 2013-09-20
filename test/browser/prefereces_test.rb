@@ -16,25 +16,13 @@ class PreferencesTest < TestCase
             :css     => 'a[href="#profile"]',
           },
           {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
             :execute => 'click',
             :css     => 'a[href="#profile/language"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
           },
           {
             :execute => 'check',
             :css     => '#language',
             :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
           },
           {
             :execute => 'select',
@@ -46,19 +34,9 @@ class PreferencesTest < TestCase
             :css     => '#language button',
           },
           {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'Sprache',
-            :match_result => true,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Sprache',
           },
           {
             :execute => 'select',
@@ -70,14 +48,9 @@ class PreferencesTest < TestCase
             :css     => '#language button',
           },
           {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'Language',
-            :match_result => true,
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Language',
           },
         ],
       },

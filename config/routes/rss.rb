@@ -1,9 +1,7 @@
-module ExtraRoutes
-  def add(map)
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    # rss
-    map.match '/api/rss_fetch',   :to => 'rss#fetch', :via => :get
+  # rss
+  match api_path + '/rss_fetch',   :to => 'rss#fetch', :via => :get
 
-  end
-  module_function :add
 end

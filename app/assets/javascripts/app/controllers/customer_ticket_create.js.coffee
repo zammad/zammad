@@ -24,24 +24,20 @@ class Index extends App.ControllerContent
     # use cache
     cache = App.Store.get( 'ticket_create_attributes' )
 
-    if cache && !params.ticket_id && !params.article_id
+    if cache
 
       # get edit form attributes
       @edit_form = cache.edit_form
 
-      # load user collection
-      App.Collection.load( type: 'User', data: cache.users )
+      # load collections
+      App.Event.trigger 'loadAssets', cache.assets
 
       @render()
     else
-      App.Com.ajax(
+      @ajax(
         id:    'ticket_create',
         type:  'GET',
-        url:   'api/ticket_create',
-        data:  {
-          ticket_id: params.ticket_id,
-          article_id: params.article_id,
-        },
+        url:   @apiPath + '/ticket_create',
         processData: true,
         success: (data, status, xhr) =>
 
@@ -51,27 +47,10 @@ class Index extends App.ControllerContent
           # get edit form attributes
           @edit_form = data.edit_form
 
-          # load user collection
-          App.Collection.load( type: 'User', data: data.users )
+          # load collections
+          App.Event.trigger 'loadAssets', data.assets
 
-          # load ticket collection
-          if data.ticket && data.articles
-            App.Collection.load( type: 'Ticket', data: [data.ticket] )
-
-            # load article collections
-            App.Collection.load( type: 'TicketArticle', data: data.articles || [] )
-
-            # render page
-            t = App.Ticket.find( params.ticket_id ).attributes()
-            a = App.TicketArticle.find( params.article_id )
-
-            # reset owner
-            t.owner_id = 0
-            t.customer_id_autocompletion = a.from
-            t.subject = a.subject || t.title
-            t.body = a.body
-            @log 'CustomerTicketCreate', 'notice', 'created', t
-          @render( options: t )
+          @render()
       )
 
   render: (template = {}) ->

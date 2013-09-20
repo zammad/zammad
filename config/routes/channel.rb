@@ -1,13 +1,11 @@
-module ExtraRoutes
-  def add(map)
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    # channels
-    map.match '/api/channels',                       :to => 'channels#index',   :via => :get
-    map.match '/api/channels/:id',                   :to => 'channels#show',    :via => :get
-    map.match '/api/channels',                       :to => 'channels#create',  :via => :post
-    map.match '/api/channels/:id',                   :to => 'channels#update',  :via => :put
-    map.match '/api/channels/:id',                   :to => 'channels#destroy', :via => :delete
+  # channels
+  match api_path + '/channels',                       :to => 'channels#index',   :via => :get
+  match api_path + '/channels/:id',                   :to => 'channels#show',    :via => :get
+  match api_path + '/channels',                       :to => 'channels#create',  :via => :post
+  match api_path + '/channels/:id',                   :to => 'channels#update',  :via => :put
+  match api_path + '/channels/:id',                   :to => 'channels#destroy', :via => :delete
 
-  end
-  module_function :add
 end

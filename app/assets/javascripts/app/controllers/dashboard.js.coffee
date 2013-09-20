@@ -53,9 +53,9 @@ class Index extends App.ControllerContent
 #          },
 #        },
 
-#        recent_viewed: {
-#          controller: App.DashboardRecentViewed,
-#        }
+        recent_viewed: {
+          controller: App.DashboardRecentViewed,
+        }
       }
     }
 

@@ -11,10 +11,10 @@ class App.LinkInfo extends App.Controller
   fetch: () =>
     # fetch item on demand
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'links_' + @object.id + '_' + @object_type,
       type:  'GET',
-      url:   'api/links',
+      url:   @apiPath + '/links',
       data:  {
         link_object:       @object_type,
         link_object_value: @object.id,
@@ -23,11 +23,8 @@ class App.LinkInfo extends App.Controller
       success: (data, status, xhr) =>
         @links = data.links
 
-        # load user collection
-        App.Collection.load( type: 'User', data: data.users )
-
-        # load ticket collection
-        App.Collection.load( type: 'Ticket', data: data.tickets )
+        # load collections
+        App.Event.trigger 'loadAssets', data.assets
 
         @render()
     )
@@ -80,10 +77,10 @@ class App.LinkInfo extends App.Controller
     link_object_target_value = @object.id
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'links_remove_' + @object.id + '_' + @object_type,
       type:  'GET',
-      url:   'api/links/remove',
+      url:   @apiPath + '/links/remove',
       data:  {
         link_type:                 link_type,
         link_object_source:        link_object_source,
@@ -123,10 +120,10 @@ class App.LinkAdd extends App.ControllerModal
     params = @formParam(e.target)
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:    'links_add_' + @object.id + '_' + @object_type,
       type:  'GET',
-      url:   'api/links/add',
+      url:   @apiPath + '/links/add',
       data:  {
         link_type:                params['link_type'],
         link_object_target:       'Ticket',

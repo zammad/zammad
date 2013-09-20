@@ -32,6 +32,9 @@ Zammad::Application.configure do
   # Do not compress assets
   config.assets.compress = false
 
+  # Deliver all in one application.(js|css) file
+  #config.assets.debug = false
   # Expands the lines which load the assets
   config.assets.debug = true
+
 end

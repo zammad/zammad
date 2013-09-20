@@ -34,10 +34,10 @@ class App.ProfileLanguage extends App.Controller
 
     # get data
     @locale = params['locale']
-    App.Com.ajax(
+    @ajax(
       id:   'preferences'
       type: 'PUT'
-      url:  'api/users/preferences'
+      url:  @apiPath + '/users/preferences'
       data: JSON.stringify(params)
       processData: true
       success: @success

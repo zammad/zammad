@@ -6,35 +6,33 @@ class App.TicketMerge extends App.ControllerModal
   fetch: ->
 
     # merge tickets
-    App.Com.ajax(
+    @ajax(
       id:    'ticket_merge_list',
       type:  'GET',
-      url:   'api/ticket_merge_list/' + @ticket_id,
+      url:   @apiPath + '/ticket_merge_list/' + @ticket_id,
       data:  {
 #        view: @view
       }
       processData: true,
       success: (data, status, xhr) =>
 
-        if data.customer
-          App.Collection.load( type: 'Ticket', data: data.customer.tickets )
-          App.Collection.load( type: 'User', data: data.customer.users )
+        # load collections
+        App.Event.trigger 'loadAssets', data.assets
 
-        if data.recent
-          App.Collection.load( type: 'Ticket', data: data.recent.tickets )
-          App.Collection.load( type: 'User', data: data.recent.users )
+        @ticket_ids_by_customer    = data.ticket_ids_by_customer
+        @ticket_ids_recent_viewed  = data.ticket_ids_recent_viewed
 
-        @render( data )
+        @render()
     )
 
-  render: (data) ->
+  render: ->
 
     @html App.view('agent_ticket_merge')()
 
     list = []
-    for t in data.customer.tickets
-      if t.id isnt @ticket_id
-        ticketItem = App.Ticket.retrieve( t.id )
+    for ticket_id in @ticket_ids_by_customer
+      if ticket_id isnt @ticket_id
+        ticketItem = App.Ticket.retrieve( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
       el:                @el.find('#ticket-merge-customer-tickets'),
@@ -59,9 +57,9 @@ class App.TicketMerge extends App.ControllerModal
     )
 
     list = []
-    for t in data.recent.tickets
-      if t.id isnt @ticket_id
-        ticketItem = App.Ticket.retrieve( t.id )
+    for ticket_id in @ticket_ids_recent_viewed
+      if ticket_id isnt @ticket_id
+        ticketItem = App.Ticket.retrieve( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
       el:                @el.find('#ticket-merge-recent-tickets'),
@@ -104,10 +102,10 @@ class App.TicketMerge extends App.ControllerModal
     params = @formParam(e.target)
 
     # merge tickets
-    App.Com.ajax(
+    @ajax(
       id:    'ticket_merge',
       type:  'GET',
-      url:   'api/ticket_merge/' + @ticket_id + '/' + params['master_ticket_number'],
+      url:   @apiPath +  '/ticket_merge/' + @ticket_id + '/' + params['master_ticket_number'],
       data:  {
 #        view: @view
       }

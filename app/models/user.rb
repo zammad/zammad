@@ -1,13 +1,15 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
+require 'sso'
 require 'digest/sha2'
 require 'organization'
 
 class User < ApplicationModel
-  include Gmaps
+  include User::Assets
+  extend User::Search
 
-  before_create   :check_name, :check_email, :check_login, :check_image, :check_geo, :check_password
-  before_update   :check_password, :check_image, :check_geo, :check_email, :check_login_update
+  before_create   :check_name, :check_email, :check_login, :check_image, :check_password
+  before_update   :check_password, :check_image, :check_email, :check_login_update
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
@@ -20,6 +22,19 @@ class User < ApplicationModel
   belongs_to              :organization,    :class_name => 'Organization'
 
   store                   :preferences
+
+=begin
+
+fullname of user
+
+  user = User.find(123)
+  result = user.fulename
+
+returns
+
+  result = "Bob Smith"
+
+=end
 
   def fullname
     fullname = ''
@@ -35,12 +50,37 @@ class User < ApplicationModel
     return fullname
   end
 
+=begin
+
+check if user is in role
+
+  user = User.find(123)
+  result = user.is_role('Customer')
+
+returns
+
+  result = true|false
+
+=end
+
   def is_role( role_name )
     self.roles.each { |role|
       return role if role.name == role_name
     }
     return false
   end
+
+=begin
+
+authenticate user
+
+  result = User.authenticate(username, password)
+
+returns
+
+  result = user_model # user model if authentication was successfully
+
+=end
 
   def self.authenticate( username, password )
 
@@ -62,97 +102,51 @@ class User < ApplicationModel
       return false
     end
 
-    # use auth backends
-    config = [
-      {
-        :adapter => 'internal',
-      },
-      {
-        :adapter => 'test',
-      },
-    ]
-    Setting.where( :area => 'Security::Authentication' ).each {|setting|
-      if setting.state[:value]
-        config.push setting.state[:value]
-      end
-    }
-
-    # try to login against configure auth backends
-    user_auth = nil
-    config.each {|config_item|
-      next if !config_item[:adapter]
-      next if config_item.class == TrueClass
-      file = "auth/#{config_item[:adapter]}"
-      require file
-      user_auth = Auth.const_get("#{config_item[:adapter].to_s.upcase}").check( username, password, config_item, user )
-
-      # auth ok
-      if user_auth
-
-        # remember last login date
-        user_auth.update_last_login
-
-        # reset login failed
-        user_auth.login_failed = 0
-        user_auth.save
-
-        return user_auth
-      end
-    }
+    user_auth = Auth.check( username, password, user )
 
     # set login failed +1
     if !user_auth && user
+      sleep 1
       user.login_failed = user.login_failed + 1
       user.save
     end
 
-    # auth failed
-    sleep 1
+    # auth ok
     return user_auth
   end
 
+=begin
+
+authenticate user agains sso
+
+  result = User.sso(sso_params)
+
+returns
+
+  result = user_model # user model if authentication was successfully
+
+=end
+
   def self.sso(params)
 
-    # use auth backends
-    config = [
-      {
-        :adapter => 'env',
-      },
-      {
-        :adapter => 'otrs',
-      },
-    ]
-    #    Setting.where( :area => 'Security::Authentication' ).each {|setting|
-    #      if setting.state[:value]
-    #        config.push setting.state[:value]
-    #      end
-    #    }
-
     # try to login against configure auth backends
-    user_auth = nil
-    config.each {|config_item|
-      next if !config_item[:adapter]
-      next if config_item.class == TrueClass
-      file = "sso/#{config_item[:adapter]}"
-      require file
-      user_auth = SSO.const_get("#{config_item[:adapter].to_s.upcase}").check( params, config_item )
+    user_auth = Sso.check( params )
+    return if !user_auth
 
-      # auth ok
-      if user_auth
-
-        # remember last login date
-        user_auth.update_last_login
-
-        # reset login failed
-        user_auth.login_failed = 0
-        user_auth.save
-
-        return user_auth
-      end
-    }
-
-    return false
+    return user_auth
   end
+
+=begin
+
+create user from from omni auth hash
+
+  result = User.create_from_hash!(hash)
+
+returns
+
+  result = user_model # user model if create was successfully
+
+=end
 
   def self.create_from_hash!(hash)
     url = ''
@@ -174,6 +168,18 @@ class User < ApplicationModel
     )
 
   end
+
+=begin
+
+send reset password email with token to user
+
+  result = User.password_reset_send(username)
+
+returns
+
+  result = true|false
+
+=end
 
   def self.password_reset_send(username)
     return if !username || username == ''
@@ -232,7 +238,18 @@ class User < ApplicationModel
     return true
   end
 
-  # check token
+=begin
+
+check reset password token
+
+  result = User.password_reset_check(token)
+
+returns
+
+  result = user_model # user_model if token was verified
+
+=end
+
   def self.password_reset_check(token)
     user = Token.check( :action => 'PasswordReset', :name => token )
 
@@ -243,6 +260,18 @@ class User < ApplicationModel
     end
     return user
   end
+
+=begin
+
+reset reset password with token and set new password
+
+  result = User.password_reset_via_token(token,password)
+
+returns
+
+  result = user_model # user_model if token was verified
+
+=end
 
   def self.password_reset_via_token(token,password)
 
@@ -256,26 +285,6 @@ class User < ApplicationModel
     # delete token
     Token.where( :action => 'PasswordReset', :name => token ).first.destroy
     return user
-  end
-
-  def self.search(params)
-
-    # get params
-    query = params[:query]
-    limit = params[:limit] || 10
-    current_user = params[:current_user]
-
-    # enable search only for agents and admins
-    return [] if !current_user.is_role('Agent') && !current_user.is_role('Admin')
-
-    # do query
-    users = User.find(
-      :all,
-      :limit      => limit,
-      :conditions => ['(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%"],
-      :order      => 'firstname'
-    )
-    return users
   end
 
   def self.find_fulldata(user_id)
@@ -380,34 +389,18 @@ class User < ApplicationModel
     return user
   end
 
-  # update all users geo data
-  def self.geo_update_all
-    User.all.each { |user|
-      user.geo_update
-      user.save
-    }
-  end
+=begin
 
-  # update geo data of one user
-  def geo_update
-    address = ''
-    location = ['street', 'zip', 'city', 'country']
-    location.each { |item|
-      if self[item] && self[item] != ''
-        address = address + ',' + self[item]
-      end
-    }
+update last login date (is automatically done by auth and sso backend)
 
-    # return if no address is given
-    return if address == ''
+  user = User.find(123)
+  result = user.update_last_login
 
-    # dp lookup
-    latlng = Gmaps.geocode(address)
-    if latlng
-      self.preferences['lat'] = latlng[0]
-      self.preferences['lng'] = latlng[1]
-    end
-  end
+returns
+
+  result = new_user_model
+
+=end
 
   def update_last_login
     self.last_login = Time.now
@@ -415,38 +408,6 @@ class User < ApplicationModel
   end
 
   private
-  def check_geo
-
-    # geo update if no user exists
-    if !self.id
-      self.geo_update
-      return
-    end
-
-    location = ['street', 'zip', 'city', 'country']
-
-    # get current user data
-    current = User.where( :id => self.id ).first
-    return if !current
-
-    # check if geo update is needed
-    current_location = {}
-    location.each { |item|
-      current_location[item] = current[item]
-    }
-
-    # get full address
-    next_location = {}
-    location.each { |item|
-      next_location[item] = self[item]
-    }
-
-    # return if address hasn't changed and geo data is already available
-    return if ( current_location == next_location ) && ( self.preferences['lat'] && self.preferences['lng'] )
-
-    # geo update
-    self.geo_update
-  end
 
   def check_name
 

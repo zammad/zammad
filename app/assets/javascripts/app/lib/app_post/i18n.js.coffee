@@ -99,11 +99,14 @@ class _i18nSingleton extends Spine.Module
       locale = 'en'
     @locale = locale
 
+    # set lang attribute of html tag
+    $('html').prop( 'lang', locale.substr(0, 2) )
+
     @map = {}
-    App.Com.ajax(
+    App.Ajax.request(
       id:    'i18n-set-' + locale,
       type:   'GET',
-      url:    '/translations/lang/' + locale,
+      url:    App.Config.get('api_path') + '/translations/lang/' + locale,
       async:  false,
       success: (data, status, xhr) =>
 

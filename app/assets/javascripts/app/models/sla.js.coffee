@@ -1,7 +1,7 @@
 class App.Sla extends App.Model
   @configure 'Sla', 'name', 'first_response_time', 'update_time', 'close_time', 'condition', 'timezone', 'data', 'active', 'updated_at'
   @extend Spine.Model.Ajax
-  @url: 'api/slas'
+  @url: @apiPath + '/slas'
   @configure_attributes = [
     { name: 'name',                display: 'Name',                tag: 'input',    type: 'text', limit: 100, null: false, 'class': 'span4' },
     { name: 'first_response_time', display: 'First Response Time', tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },

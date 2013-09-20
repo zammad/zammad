@@ -2,7 +2,7 @@ require 'json'
 require 'rss'
 require 'session_helper'
 
-module Session
+module Sessions
 
   # get application root directory
   @root = Dir.pwd.to_s
@@ -205,7 +205,7 @@ module Session
         next if @@client_threads[client_id]
 
         # get current user
-        session_data = Session.get( client_id )
+        session_data = Sessions.get( client_id )
         next if !session_data
         next if !session_data[:user]
         next if !session_data[:user][:id]
@@ -272,7 +272,7 @@ module Session
     files.sort.each {|entry|
       filename = path + '/' + entry
       if /^send/.match( entry )
-        data.push Session.queue_file( path, entry )
+        data.push Sessions.queue_file( path, entry )
       end
     }
     return data
@@ -297,7 +297,7 @@ module Session
     # list all current clients
     client_list = self.list
     client_list.each {|local_client_id, local_client|
-      Session.send( local_client_id, data )
+      Sessions.send( local_client_id, data )
     }
     return true
   end
@@ -395,7 +395,7 @@ class UserState
       # overview
       cache_key = @cache_key + '_overview'
       if CacheIn.expired(cache_key)
-        overview = Ticket.overview(
+        overview = Ticket::Overviews.list(
           :current_user => user,
         )
         overview_cache = CacheIn.get( cache_key, { :re_expire => true } )
@@ -405,20 +405,19 @@ class UserState
 #          puts overview.inspect
 #          puts '------'
 #          puts overview_cache.inspect
-          CacheIn.set( cache_key, overview, { :expires_in => 3.seconds } )
+          CacheIn.set( cache_key, overview, { :expires_in => 4.seconds } )
         end
       end
 
       # overview lists
-      overviews = Ticket.overview_list(
+      overviews = Ticket::Overviews.all(
         :current_user => user,
       )
       overviews.each { |overview|
         cache_key = @cache_key + '_overview_data_' + overview.link
         if CacheIn.expired(cache_key)
-          overview_data = Ticket.overview(
+          overview_data = Ticket::Overviews.list(
             :view         => overview.link,
-#            :view_mode    => params[:view_mode],
             :current_user => user,
             :array        => true,
           )
@@ -434,7 +433,7 @@ class UserState
       # create_attributes
       cache_key = @cache_key + '_ticket_create_attributes'
       if CacheIn.expired(cache_key)
-        ticket_create_attributes = Ticket.attributes_to_change(
+        ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
           :current_user_id => user.id,
         )
         ticket_create_attributes_cache = CacheIn.get( cache_key, { :re_expire => true } )
@@ -479,7 +478,7 @@ class UserState
       cache_key = @cache_key + '_rss'
       if CacheIn.expired(cache_key)
         url = 'http://www.heise.de/newsticker/heise-atom.xml'
-        rss_items = RSS.fetch( url, 8 )
+        rss_items = Rss.fetch( url, 8 )
         rss_items_cache = CacheIn.get( cache_key, { :re_expire => true } )
         self.log 'notice', 'fetch rss - ' + cache_key
         if rss_items != rss_items_cache
@@ -553,7 +552,7 @@ class ClientState
     while true
 
       # get connection user
-      session_data = Session.get( @client_id )
+      session_data = Sessions.get( @client_id )
       return if !session_data
       return if !session_data[:user]
       return if !session_data[:user][:id]
@@ -598,14 +597,14 @@ class ClientState
       if !CacheIn.get( 'pushed_tickets' + @client_id.to_s )
         CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 20.seconds } )
         if @pushed[:tickets]
-          tickets = []
+          tickets = {}
           users = {}
           @pushed[:tickets].each {|ticket_id, ticket_data|
             self.ticket( ticket_id, tickets, users )
           }
           if !tickets.empty?
-            tickets.each {|ticket|
-              self.log 'notify', "push update of already pushed ticket id #{ticket['id']}"
+            tickets.each {|id, ticket|
+              self.log 'notify', "push update of already pushed ticket id #{id}"
             }
             # send update to browser
             self.send({
@@ -638,7 +637,7 @@ class ClientState
       end
 
       # overview_data
-      overviews = Ticket.overview_list(
+      overviews = Ticket::Overviews.all(
         :current_user => user,
       )
       overviews.each { |overview|
@@ -650,8 +649,8 @@ class ClientState
           overview_data = CacheIn.get( cache_key, { :ignore_expire => true } )
           self.log 'notify', "push overview_data #{overview.link} for user #{user.id}"
           users = {}
-          tickets = []
-          overview_data[:ticket_list].each {|ticket_id|
+          tickets = {}
+          overview_data[:ticket_ids].each {|ticket_id|
             self.ticket( ticket_id, tickets, users )
           }
 
@@ -661,7 +660,7 @@ class ClientState
             group_ids.push group.id
           }
           agents = {}
-          Ticket.agents.each { |user|
+          Ticket::ScreenOptions.agents.each { |user|
             agents[ user.id ] = 1
           }
           groups_users = {}
@@ -679,20 +678,23 @@ class ClientState
 
           # send update to browser
           self.send({
+            :data => {
+              :users   => users,
+              :tickets => tickets,
+            },
+            :event => [ 'loadAssets' ]
+          })
+          self.send({
             :data   => {
               :overview      => overview_data[:overview],
-              :ticket_list   => overview_data[:ticket_list],
+              :ticket_ids    => overview_data[:ticket_ids],
               :tickets_count => overview_data[:tickets_count],
-              :collections    => {
-                :User   => users,
-                :Ticket => tickets,
-              },
               :bulk => {
                 :group_id__owner_id => groups_users,
                 :owner_id           => [],
               },
             },
-            :event      => [ 'loadCollection', 'ticket_overview_rebuild' ],
+            :event      => [ 'ticket_overview_rebuild' ],
             :collection => 'ticket_overview_' + overview.link.to_s,
           })
         end
@@ -817,7 +819,7 @@ class ClientState
     ticket = Ticket.lookup( :id => ticket_id )
     if @pushed[:tickets][ticket_id] != ticket['updated_at']
       @pushed[:tickets][ticket_id] = ticket['updated_at']
-      tickets.push ticket
+      tickets[ticket_id] = ticket
     end
 
     # add users if needed
@@ -847,7 +849,7 @@ class ClientState
 
   # send update to browser
   def send( data )
-    Session.send( @client_id, data )
+    Sessions.send( @client_id, data )
   end
 
   def log( level, data )

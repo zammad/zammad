@@ -23,19 +23,14 @@ class TestCase < Test::Unit::TestCase
     if !@browsers
       @browsers = []
     end
-    if !ENV['REMOTE_URL']
+    if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
       local_browser = Selenium::WebDriver.for( browser.to_sym )
       browser_instance_preferences(local_browser)
       @browsers.push local_browser
       return local_browser
     end
 
-    caps = Selenium::WebDriver::Remote::Capabilities.send(
-      browser,
-      #:forceCreateProcess => true,
-      #:ensureCleanSession => true,
-      #:internetExplorerSwitches => 'InetCpl.cpl,ClearMyTracksByProcess 2',
-    )
+    caps = Selenium::WebDriver::Remote::Capabilities.send( browser )
     caps.platform = ENV['BROWSER_OS'] || 'Windows 2008'
     caps.version  = ENV['BROWSER_VERSION'] || '8'
     local_browser = Selenium::WebDriver.for(
@@ -61,9 +56,21 @@ class TestCase < Test::Unit::TestCase
 
   def teardown
     return if !@browsers
-    @browsers.each{ |local_browser|
-      local_browser.quit
-    }
+
+    # only shut down browser type once on local webdriver tests
+    # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
+    if !ENV['REMOTE_URL']
+      shutdown = {}
+      @browsers.each{ |local_browser|
+        next if shutdown[ local_browser.browser ]
+        shutdown[ local_browser.browser ] = true
+        local_browser.quit
+      }
+    else
+      @browsers.each{ |local_browser|
+        local_browser.quit
+      }
+    end
   end
 
   # Add more helper methods to be used by all tests here...
@@ -153,7 +160,14 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_element_action(test, action, instance)
-puts "NOTICE #{Time.now.to_s}: " + action.inspect
+    puts "NOTICE #{Time.now.to_s}: " + action.inspect
+    if action[:execute] !~ /accept|dismiss/i
+      cookies = instance.manage.all_cookies
+      cookies.each {|cookie|
+        puts "  COOKIE " + cookie.to_s
+      }
+    end
+
     sleep 0.1
     if action[:css]
       if action[:css].match '###stack###'
@@ -204,13 +218,11 @@ puts "NOTICE #{Time.now.to_s}: " + action.inspect
     elsif action[:element] == :alert
       element = instance.switch_to.alert
     elsif action[:execute] == 'login'
-      sleep 1
-      login = instance.find_element( { :css => '#login' } )
-      if !login
+      element = instance.find_element( { :css => '#login input[name="username"]' } )
+      if !element
         assert( false, "(#{test[:name]}) no login box found!" )
         return
       end
-      element = instance.find_element( { :css => '#login input[name="username"]' } )
       element.clear
       element.send_keys( action[:username] )
       element = instance.find_element( { :css => '#login input[name="password"]' } )
@@ -223,27 +235,40 @@ puts "NOTICE #{Time.now.to_s}: " + action.inspect
       instance.find_element( { :css => 'a[href="#current_user"]' } ).click
       sleep 0.1
       instance.find_element( { :css => 'a[href="#logout"]' } ).click
-      sleep 2
-      login = instance.find_element( { :css => '#login' } )
-      if !login
-        assert( false, "(#{test[:name]}) no login box found!" )
-        return
-      end
-      assert( true, "(#{test[:name]}) logout" )
+      (1..6).each {|loop|
+        login = instance.find_element( { :css => '#login' } )
+        if login
+          assert( true, "(#{test[:name]}) logout" )
+          return
+        end
+      }
+      assert( false, "(#{test[:name]}) no login box found!" )
+      return
+    elsif action[:execute] == 'watch_for'
+      text = ''
+      (1..36).each { |loop|
+        element = instance.find_element( { :css => action[:area] } )
+        text = element.text
+        if text =~ /#{action[:value]}/i
+          assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+          return
+        end
+        sleep 0.33
+      } 
+      assert( false, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
       return
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
       instance.find_element( { :css => 'a[href="#ticket_create/call_inbound"]' } ).click
-      sleep 4
       element = instance.find_element( { :css => '.active .ticket_create' } )
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
         return
       end
-      sleep 5
+      sleep 2
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.clear
-      element.send_keys( 'ma' )
+      element.send_keys( 'nico' )
       sleep 4
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.send_keys( :arrow_down )
@@ -268,12 +293,14 @@ puts "NOTICE #{Time.now.to_s}: " + action.inspect
       end
       sleep 0.1
       instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
-      sleep 6
-      if instance.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
-        assert( true, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
-        return
-      end
-      assert( true, "(#{test[:name]}) ticket created" )
+      (1..14).each {|loop|
+        if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
+          assert( true, "(#{test[:name]}) ticket created" )
+          return
+        end
+        sleep 0.5
+      }
+      assert( true, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
       return
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100

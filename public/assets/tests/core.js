@@ -1,6 +1,6 @@
 
 // ajax
-App.Com.ajax({
+App.Ajax.request({
   type:  'GET',
   url:   '/assets/tests/ajax-test.json',
   success: function (data) {
@@ -18,7 +18,7 @@ App.Com.ajax({
 });
 
 // ajax queueing
-App.Com.ajax({
+App.Ajax.request({
   type:  'GET',
   url:   '/tests/wait/2',
   queue: true,
@@ -38,7 +38,7 @@ App.Com.ajax({
     });
   }
 });
-App.Com.ajax({
+App.Ajax.request({
   type:  'GET',
   url:   '/tests/wait/1',
   queue: true,
@@ -60,7 +60,7 @@ App.Com.ajax({
 });
 
 // ajax parallel
-App.Com.ajax({
+App.Ajax.request({
   type:  'GET',
   url:   '/tests/wait/2',
   success: function (data) {
@@ -79,7 +79,7 @@ App.Com.ajax({
     });
   }
 });
-App.Com.ajax({
+App.Ajax.request({
   type:  'GET',
   url:   '/tests/wait/1',
   success: function (data) {
@@ -210,7 +210,7 @@ App.Delay.set( function() {
       App.Interval.clear('interval-test1')
     });
   },
-  2500
+  2400
 );
 App.Delay.set( function() {
     test( "interval - test 1 - 1/1", function() {
@@ -240,7 +240,7 @@ App.Delay.set( function() {
       App.Interval.clearLevel('page')
     });
   },
-  2500
+  2400
 );
 App.Delay.set( function() {
     test( "interval - test 2 - 1/1", function() {

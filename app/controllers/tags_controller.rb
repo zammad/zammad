@@ -3,7 +3,7 @@
 class TagsController < ApplicationController
   before_filter :authentication_check
 
-  # GET /api/tags
+  # GET /api/v1/tags
   def index
     list = Tag.list()
 
@@ -13,7 +13,7 @@ class TagsController < ApplicationController
     }
   end
 
-  # GET /api/tags
+  # GET /api/v1/tags
   def list
     list = Tag.tag_list(
       :object => params[:object],
@@ -26,7 +26,7 @@ class TagsController < ApplicationController
     }
   end
 
-  # POST /api/tag/add
+  # POST /api/v1/tag/add
   def add
     success = Tag.tag_add(
       :object        => params[:object],
@@ -40,7 +40,7 @@ class TagsController < ApplicationController
     end
   end
 
-  # DELETE /api/tag/remove
+  # DELETE /api/v1/tag/remove
   def remove
     success = Tag.tag_remove(
       :object        => params[:object],

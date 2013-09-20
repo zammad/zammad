@@ -1,7 +1,8 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'import/otrs'
-module Auth
-end
-module Auth::OTRS
+
+module Auth::Otrs
   def self.check( username, password, config, user )
 
     endpoint = Setting.get('import_otrs_endpoint')

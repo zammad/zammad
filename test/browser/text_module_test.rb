@@ -263,7 +263,7 @@ class TextModuleTest < TestCase
         :action   => [
           {
             :execute => 'wait',
-            :value   => 3,
+            :value   => 4,
           },
           {
             :where   => :instance2,
@@ -349,6 +349,78 @@ class TextModuleTest < TestCase
           },
           {
             :where   => :instance2,
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'match',
+            :css          => '.active textarea[name=body]',
+            :value        => 'some content Braun' + random,
+            :match_result => true,
+          },
+        ],
+      },
+      {
+        :name     => 'verify zoom',
+        :action   => [
+
+          # create ticket
+          {
+            :where   => :instance2,
+            :execute => 'create_ticket',
+            :group   => 'Users',
+            :subject => 'some subject 123äöü',
+            :body    => 'some body 123äöü',
+          },
+
+          # check ticket
+          {
+            :where        => :instance2,
+            :execute      => 'match',
+            :css          => '.active div.article',
+            :value        => 'some body 123äöü',
+            :match_result => true,
+          },
+
+          # check ticket zoom
+          {
+            :execute => 'wait',
+            :value   => 4,
+          },
+          {
+            :where    => :instance2,
+            :execute => 'set',
+            :css     => '.active textarea[name=body]',
+            :value   => 'test',
+          },
+          {
+            :execute => 'wait',
+            :value   => 4,
+          },
+          {
+            :where    => :instance2,
+            :execute => 'set',
+            :css     => '.active textarea[name=body]',
+            :value   => '::' + random,
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => random,
+            :match_result => true,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '.-sew-list-item.selected',
+          },
+          {
             :execute => 'wait',
             :value   => 1,
           },

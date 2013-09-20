@@ -43,10 +43,10 @@ class Index extends App.ControllerContent
     @formDisable(e)
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:   'password_reset'
       type: 'POST'
-      url:  'api/users/password_reset'
+      url:  @apiPath + '/users/password_reset'
       data: JSON.stringify(params)
       processData: true
       success: @success
@@ -83,10 +83,10 @@ class Verify extends App.ControllerContent
     # get data
     params = {}
     params['token'] = @token
-    App.Com.ajax(
+    @ajax(
       id:   'password_reset_verify'
       type: 'POST'
-      url:  'api/users/password_reset_verify'
+      url:  @apiPath + '/users/password_reset_verify'
       data: JSON.stringify(params)
       processData: true
       success: @render_success
@@ -119,10 +119,10 @@ class Verify extends App.ControllerContent
     @password = params['password']
 
     # get data
-    App.Com.ajax(
+    @ajax(
       id:   'password_reset_verify'
       type: 'POST'
-      url:  'api/users/password_reset_verify'
+      url:  @apiPath + '/users/password_reset_verify'
       data: JSON.stringify(params)
       processData: true
       success: @render_changed_success

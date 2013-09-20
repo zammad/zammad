@@ -68,7 +68,6 @@ class _taskManagerSingleton extends App.Controller
     @workersStarted    = {}
     @allTasks          = []
     @tasksToUpdate     = {}
-    @initialLoad       = true
     @activeTask        = undefined
     @tasksInitial()
 
@@ -76,8 +75,6 @@ class _taskManagerSingleton extends App.Controller
     App.Event.bind(
       'auth:login'
       =>
-        @initialLoad = true
-        @all()
         @tasksInitial()
       'task'
     )
@@ -94,13 +91,6 @@ class _taskManagerSingleton extends App.Controller
     App.Interval.set( @taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task' )
 
   all: ->
-
-    # initial load of taskbar collection
-    if @initialLoad
-      @initialLoad = false
-      tasks = App.Taskbar.all()
-      for task in tasks
-        @allTasks.push task.attributes()
 
     # sort by prio
     @allTasks = _(@allTasks).sortBy( (task) ->
@@ -130,8 +120,9 @@ class _taskManagerSingleton extends App.Controller
 
     # create new task if not exists
     task = @get( key )
-    #console.log('add', key, callback, params, to_not_show, task)
+    console.log('add', key, callback, params, to_not_show, task)
     if !task
+      console.log('add, create new taskbar in backend')
       task = new App.Taskbar
       task.load(
         key:      key
@@ -211,7 +202,7 @@ class _taskManagerSingleton extends App.Controller
 
   startController: (key, callback, params, to_not_show) =>
 
-#    console.log('controller started...', callback, key, params)
+    console.log('controller start try...', callback, key)
 
     # activate controller
     worker = @worker( key )
@@ -221,6 +212,7 @@ class _taskManagerSingleton extends App.Controller
     # return if controller is already started
     return if @workersStarted[key]
     @workersStarted[key] = true
+    console.log('controller start now...', callback, key)
 
     # create new controller instanz
     params_app = _.clone(params)
@@ -231,11 +223,14 @@ class _taskManagerSingleton extends App.Controller
       params_app['doNotLog'] = 1
     a = new App[callback]( params_app )
     @workers[ key ] = a
+    console.log('controller start now 2...', callback, key)
 
     # activate controller
     if !to_not_show
+      console.log('controller start now 2 activate...', callback, key)
       a.activate()
 
+    console.log('controller start now 2 return...', callback, key)
     return a
 
   get: ( key ) =>
@@ -311,7 +306,7 @@ class _taskManagerSingleton extends App.Controller
     @allTasks      = []
     @activeTask    = undefined
 
-    # clear inmem tasks
+    # clear in mem tasks
     App.Taskbar.deleteAll()
 
     # rerender task bar
@@ -343,6 +338,7 @@ class _taskManagerSingleton extends App.Controller
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
             error: (task) =>
+              ui.log 'error', "can't update task '#{task.id}'"
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
           )
@@ -366,25 +362,27 @@ class _taskManagerSingleton extends App.Controller
 
   tasksInitial: =>
 
+    # initial load of taskbar collection
+    tasks     = App.Taskbar.all()
+    @allTasks = []
+    for task in tasks
+      @allTasks.push task.attributes()
+
     # reopen tasks
     App.Event.trigger 'taskbar:init'
 
-    # check if we have different
-
-    tasks = @all()
-    return if !tasks
-
     task_count = 0
-    for task in tasks
+    for task in @allTasks
       task_count += 1
-      App.Delay.set(
-        =>
-          task = tasks.shift()
-          @add(task.key, task.callback, task.params, true)
-        task_count * 300
-        undefined
-        'task'
-      )
+      console.log('START', task)
+      do (task) =>
+        App.Delay.set(
+          =>
+            @add(task.key, task.callback, task.params, true)
+          task_count * 600
+          undefined
+          'task'
+        )
 
     App.Event.trigger 'taskbar:ready'
 

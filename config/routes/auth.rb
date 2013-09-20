@@ -1,19 +1,18 @@
-module ExtraRoutes
-  def add(map)
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
 
-    # omniauth
-    map.match '/auth/:provider/callback', :to => 'sessions#create_omniauth',:via => [:post, :get, :puts, :delete]
+  # omniauth
+  match '/auth/:provider/callback',       :to => 'sessions#create_omniauth',:via => [:post, :get, :puts, :delete]
 
-    # sso
-    map.match '/auth/sso',                :to => 'sessions#create_sso',     :via => [:post, :get]
+  # sso
+  match '/auth/sso',                      :to => 'sessions#create_sso',     :via => [:post, :get]
 
-    # sessions
-    map.match '/signin',                  :to => 'sessions#create',         :via => :post
-    map.match '/signshow',                :to => 'sessions#show',           :via => :get
-    map.match '/signout',                 :to => 'sessions#destroy',        :via => [:get, :delete]
+  # sessions
+  match api_path + '/signin',        :to => 'sessions#create',         :via => :post
+  match api_path + '/signshow',      :to => 'sessions#show',           :via => :get
+  match api_path + '/signout',       :to => 'sessions#destroy',        :via => [:get, :delete]
 
-    map.match '/api/sessions',            :to => 'sessions#list',           :via => :get
-    map.match '/api/sessions/:id',        :to => 'sessions#delete',         :via => :delete
-  end
-  module_function :add
+  match api_path + '/sessions',      :to => 'sessions#list',           :via => :get
+  match api_path + '/sessions/:id',  :to => 'sessions#delete',         :via => :delete
+
 end

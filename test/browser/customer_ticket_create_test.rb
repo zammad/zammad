@@ -12,10 +12,6 @@ class CustomerTicketCreateTest < TestCase
             :css     => 'a[href="#customer_ticket_new"]',
           },
           {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
             :execute => 'check',
             :css     => '.ticket-create',
             :result  => true,
@@ -49,11 +45,6 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :execute => 'check',
             :element => :url,
             :result  => '#ticket/zoom/',
           },
@@ -83,14 +74,9 @@ class CustomerTicketCreateTest < TestCase
             :type    => 'submit',
           },
           {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some body 1234 äöüß',
-            :match_result => true,
+            :execute  => 'watch_for',
+            :area     => 'body',
+            :value    => 'some body 1234 äöüß',
           },
         ],
       },

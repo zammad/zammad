@@ -1,8 +1,8 @@
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
 require 'net/ldap'
 
-module Auth
-end
-module Auth::LDAP
+module Auth::Ldap
   def self.check( username, password, config, user )
 
     scope = Net::LDAP::SearchScope_WholeSubtree

@@ -1,6 +1,6 @@
-module SSO
-end
-module SSO::OTRS
+# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+
+module Sso::Otrs
   def self.check( params, config_item )
 
     endpoint = Setting.get('import_otrs_endpoint')

@@ -10,7 +10,7 @@ class App.Controller extends Spine.Controller
     super
 
     # generate controllerId
-    @controllerId = 'controller-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+    @controllerId = 'controller-' + new Date().getTime() + '-' + Math.floor( Math.random() * 999999 )
 
     # apply to release controller on dom remove
     @el.on('remove', @releaseController)
@@ -19,6 +19,15 @@ class App.Controller extends Spine.Controller
     # create shortcuts
     @Config  = App.Config
     @Session = App.Session
+
+    # create common accessors
+    @apiPath = @Config.get('api_path')
+
+    # remember ajax calls to abort them on dom release
+    @ajaxCalls = []
+    @ajax = (data) =>
+      ajaxId = App.Ajax.request(data)
+      @ajaxCalls.push ajaxId
 
   bind: (event, callback) =>
     App.Event.bind(
@@ -50,6 +59,9 @@ class App.Controller extends Spine.Controller
     App.Event.unbindLevel(@controllerId)
     App.Delay.clearLevel(@controllerId)
     App.Interval.clearLevel(@controllerId)
+    if @ajaxCalls
+      for callId in @ajaxCalls
+        App.Ajax.abort(callId)
 
   release: =>
     # release custom bindings after it got removed from dom
@@ -70,7 +82,6 @@ class App.Controller extends Spine.Controller
     App.Delay.reset()
     App.Interval.reset()
     App.WebSocket.close( force: true )
-
 
   # add @notify methode to create notification
   notify: (data) ->
@@ -373,9 +384,9 @@ class App.Controller extends Spine.Controller
 
     # get data
     tickets = {}
-    App.Com.ajax(
+    App.Ajax.request(
       type:  'GET',
-      url:   'api/ticket_customer',
+      url:   @Config.get('api_path') + '/ticket_customer',
       data:  {
         customer_id: data.user_id,
       }

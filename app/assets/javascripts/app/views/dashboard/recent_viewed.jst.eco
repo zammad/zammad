@@ -3,7 +3,7 @@
     <h2 class="can-move"><%- @T( @head ) %></h2>
     <ul>
     <% for item in @items: %>
-      <li><span data-id="<%= item.o_id %>"><a data-type="edit" href="#"><%= item.history_object.name %> (<%= item.ticket.title %>)</a></span></li>
+      <li><span data-id="<%= item.o_id %>"><a href="<%= item.link %>"><%= item.type %> (<%= item.title %>)</a></span></li>
     <% end %>
     </ul>
   </div>
