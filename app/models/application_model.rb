@@ -39,6 +39,10 @@ returns
 
   def self.param_cleanup(params)
 
+    if params == nil
+      raise "No params for #{self.to_s}!"
+    end
+
     # only use object attributes
     data = {}
     self.new.attributes.each {|item|
