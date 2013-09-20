@@ -21,7 +21,7 @@
     <% open = true %>
     <% last_user = object['created_by_id'] %>
     <% lasttime = object['created_at'] %>
-    <span class="user-data" data-id="<%= object.created_by.id %>"><%= object.created_by.displayName() %></span> -
+    <span class="user-popover" data-id="<%= object.created_by.id %>"><%= object.created_by.displayName() %></span> -
     <span class="humanTimeFromNow" data-time="<%- object.created_at %>">?</span>
     <ul>
   <% end %>

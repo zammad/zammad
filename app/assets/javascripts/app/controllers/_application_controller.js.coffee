@@ -145,11 +145,11 @@ class App.Controller extends Spine.Controller
     all_attributes = [
       { name: 'number',                 link: true, title: 'title' },
       { name: 'title',                  link: true, title: 'title' },
-      { name: 'customer',               class: 'user-data', data: { id: true } },
+      { name: 'customer',               class: 'user-popover', data: { id: true } },
       { name: 'ticket_state',           translate: true, title: true },
       { name: 'ticket_priority',        translate: true, title: true },
       { name: 'group',                  title: 'group' },
-      { name: 'owner',                  class: 'user-data', data: { id: true } },
+      { name: 'owner',                  class: 'user-popover', data: { id: true } },
       { name: 'created_at',             callback: @frontendTime },
       { name: 'last_contact',           callback: @frontendTime },
       { name: 'last_contact_agent',     callback: @frontendTime },
@@ -282,11 +282,11 @@ class App.Controller extends Spine.Controller
   ticketPopups: (position = 'right') ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # show ticket popup
     ui = @
-    $('.ticket-data').popover(
+    @el.find('.ticket-popover').popover(
       trigger:    'hover'
       container:  'body'
       html:       true
@@ -309,10 +309,10 @@ class App.Controller extends Spine.Controller
   userPopups: (position = 'right') ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # show user popup
-    $('.user-data').popover(
+    @el.find('.user-popover').popover(
       trigger:    'hover'
       container:  'body'
       html:       true
@@ -355,10 +355,10 @@ class App.Controller extends Spine.Controller
   organizationPopups: (position = 'right') ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # show organization popup
-    $('.organization-data').popover(
+    @el.find('.organization-popover').popover(
       trigger:    'hover'
       container:  'body'
       html:       true
@@ -380,7 +380,7 @@ class App.Controller extends Spine.Controller
   userTicketPopups: (data) ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # get data
     tickets = {}
@@ -400,7 +400,7 @@ class App.Controller extends Spine.Controller
 
     # show user popup
     controller = @
-    $(data.selector).popover(
+    @el.find(data.selector).popover(
       trigger:    'hover'
       container:  'body'
       html:       true

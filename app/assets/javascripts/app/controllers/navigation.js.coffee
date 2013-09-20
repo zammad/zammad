@@ -112,7 +112,7 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
                   id:       ticket.id
-                  class:    "ticket-data"
+                  class:    "ticket-popover"
                   url:      "#ticket/zoom/#{ticket.id}"
                 area.result.push data
             else if area.name is 'User'
@@ -122,7 +122,7 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "#{user.displayName()}"
                   id:       user.id
-                  class:    "user-data"
+                  class:    "user-popover"
                   url:      "#users/#{user.id}"
                 area.result.push data
             else if area.name is 'Organization'
@@ -132,7 +132,7 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "#{organization.displayName()}"
                   id:       organization.id
-                  class:    "organization-data"
+                  class:    "organization-popover"
                   url:      "#organizations/#{ticket.id}"
                 area.result.push data
 

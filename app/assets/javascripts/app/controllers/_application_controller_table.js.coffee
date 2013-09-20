@@ -22,11 +22,11 @@ class App.ControllerTable extends App.Controller
       overview_extended: [
         { name: 'number',                 link: true },
         { name: 'title',                  link: true },
-        { name: 'customer',               class: 'user-data', data: { id: true } },
+        { name: 'customer',               class: 'user-popover', data: { id: true } },
         { name: 'ticket_state',           translate: true },
         { name: 'ticket_priority',        translate: true },
         { name: 'group' },
-        { name: 'owner',                  class: 'user-data', data: { id: true } },
+        { name: 'owner',                  class: 'user-popover', data: { id: true } },
         { name: 'created_at',             callback: @frontendTime },
         { name: 'last_contact',           callback: @frontendTime },
         { name: 'last_contact_agent',     callback: @frontendTime },

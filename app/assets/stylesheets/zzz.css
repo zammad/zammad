@@ -74,6 +74,9 @@ table th, table td {
   border-bottom: 1px solid #eeeeee;
 }
 
+.popover {
+  z-index: 1110;
+}
 .hero-two {
   width: 100%;
 }
