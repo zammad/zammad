@@ -1,9 +1,5 @@
 # Copyright (C) 2013-2013 Zammad Foundation, http://zammad-foundation.org/
 
-require 'cache'
-require 'user_info'
-require 'sessions'
-
 class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
 
