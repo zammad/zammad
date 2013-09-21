@@ -31,9 +31,9 @@ class Sessions::Client
       # remember last run
       Sessions::CacheIn.set( 'last_run_' + user.id.to_s , true, { :expires_in => 20.seconds } )
 
-      # verify already pushed data
+      # verify already pushed data, send update if needed
       if !Sessions::CacheIn.get( 'pushed_users' + @client_id.to_s )
-        Sessions::CacheIn.set( 'pushed_users' + @client_id.to_s , true, { :expires_in => 20.seconds } )
+        Sessions::CacheIn.set( 'pushed_users' + @client_id.to_s , true, { :expires_in => 60.seconds } )
         if @pushed[:users]
           users = {}
           @pushed[:users].each {|user_id, user_o|
@@ -46,19 +46,19 @@ class Sessions::Client
             # send update to browser
             self.send({
               :data   => {
-                :collections => {
-                   User.to_app_model => users,
-                },
+                User.to_app_model => users,
               },
-              :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
+              :event => [ 'loadAssets' ],
             });
           end
         end
       end
 
-      # verify already pushed data
+
+
+      # verify already pushed data, send update if needed
       if !Sessions::CacheIn.get( 'pushed_tickets' + @client_id.to_s )
-        Sessions::CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 20.seconds } )
+        Sessions::CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 60.seconds } )
         if @pushed[:tickets]
           tickets = {}
           users = {}
@@ -72,12 +72,10 @@ class Sessions::Client
             # send update to browser
             self.send({
               :data   => {
-                :collections => {
-                  Ticket.to_app_model  => tickets,
-                  User.to_app_model    => users,
-                },
+                Ticket.to_app_model => tickets,
+                User.to_app_model   => users,
               },
-              :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
+              :event => [ 'loadAssets' ],
             });
           end
         end
