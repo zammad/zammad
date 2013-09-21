@@ -257,7 +257,7 @@ class ApplicationController < ActionController::Base
     begin
 
       # create object
-      generic_object = object.new( object.param_cleanup( params[object.to_app_model] ) )
+      generic_object = object.new( object.param_cleanup( params[object.to_app_model_url] ) )
 
       # save object
       generic_object.save!
@@ -281,7 +281,7 @@ class ApplicationController < ActionController::Base
       generic_object = object.find( params[:id] )
 
       # save object
-      generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model] ) )
+      generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model_url] ) )
       model_update_render_item(generic_object)
     rescue Exception => e
       logger.error e.message

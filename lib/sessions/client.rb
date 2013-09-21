@@ -47,7 +47,7 @@ class Sessions::Client
             self.send({
               :data   => {
                 :collections => {
-                   User.to_online_model.to_sym => users,
+                   User.to_app_model => users,
                 },
               },
               :event => [ 'loadCollection', 'ticket_overview_rebuild' ],
@@ -73,8 +73,8 @@ class Sessions::Client
             self.send({
               :data   => {
                 :collections => {
-                  Ticket.to_online_model.to_sym  => tickets,
-                  User.to_online_model.to_sym    => users,
+                  Ticket.to_app_model  => tickets,
+                  User.to_app_model    => users,
                 },
               },
               :event => [ 'loadCollection', 'ticket_overview_rebuild' ],

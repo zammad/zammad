@@ -70,8 +70,8 @@ module Sessions::Backend::TicketOverviewList
         # send update to browser
         client.send({
           :data => {
-            User.to_online_model.to_sym    => users,
-            Ticket.to_online_model.to_sym  => tickets,
+            User.to_app_model    => users,
+            Ticket.to_app_model  => tickets,
           },
           :event => [ 'loadAssets' ]
         })

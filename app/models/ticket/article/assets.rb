@@ -23,24 +23,24 @@ returns
 
   def assets (data)
 
-    if !data[ Ticket::Article.to_online_model.to_sym ]
-      data[ Ticket::Article.to_online_model.to_sym ] = {}
+    if !data[ Ticket::Article.to_app_model ]
+      data[ Ticket::Article.to_app_model ] = {}
     end
-    if !data[ Ticket::Article.to_online_model.to_sym ][ self.id ]
-      data[ Ticket::Article.to_online_model.to_sym ][ self.id ] = self.attributes
+    if !data[ Ticket::Article.to_app_model ][ self.id ]
+      data[ Ticket::Article.to_app_model ][ self.id ] = self.attributes
 
       # add attachment list to article
-      data[ Ticket::Article.to_online_model.to_sym ][ self.id ]['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => self.id )
+      data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => self.id )
     end
 
-    if !data[ User.to_online_model.to_sym ]
-      data[ User.to_online_model.to_sym ] = {}
+    if !data[ User.to_app_model ]
+      data[ User.to_app_model ] = {}
     end
-    if !data[ User.to_online_model.to_sym ][ self['created_by_id'] ]
-      data[ User.to_online_model.to_sym ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
+    if !data[ User.to_app_model ][ self['created_by_id'] ]
+      data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
     end
-    if !data[ User.to_online_model.to_sym ][ self['updated_by_id'] ]
-      data[ User.to_online_model.to_sym ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
+    if !data[ User.to_app_model ][ self['updated_by_id'] ]
+      data[ User.to_app_model ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
     end
     data
   end

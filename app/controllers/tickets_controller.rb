@@ -304,22 +304,22 @@ class TicketsController < ApplicationController
 
     # get related users
     assets = {}
-    assets[ User.to_online_model.to_sym ] = {}
+    assets[ User.to_app_model ] = {}
     assets = ticket.assets(assets)
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
 
     attributes_to_change[:owner_id].each { |user_id|
-      if !assets[ User.to_online_model.to_sym ][user_id]
-        assets[ User.to_online_model.to_sym ][user_id] = User.user_data_full( user_id )
+      if !assets[ User.to_app_model ][user_id]
+        assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
       end
     }
 
     attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
       user_ids.each {|user_id|
-        if !assets[ User.to_online_model.to_sym ][user_id]
-          assets[ User.to_online_model.to_sym ][user_id] = User.user_data_full( user_id )
+        if !assets[ User.to_app_model ][user_id]
+          assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
         end
       }
     }
@@ -362,17 +362,17 @@ class TicketsController < ApplicationController
     )
 
     assets = {}
-    assets[ User.to_online_model.to_sym ] = {}
+    assets[ User.to_app_model ] = {}
     attributes_to_change[:owner_id].each { |user_id|
-      if !assets[ User.to_online_model.to_sym ][user_id]
-        assets[ User.to_online_model.to_sym ][user_id] = User.user_data_full( user_id )
+      if !assets[ User.to_app_model ][user_id]
+        assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
       end
     }
 
     attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
       user_ids.each {|user_id|
-        if !assets[ User.to_online_model.to_sym ][user_id]
-          assets[ User.to_online_model.to_sym ][user_id] = User.user_data_full( user_id )
+        if !assets[ User.to_app_model ][user_id]
+          assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
         end
       }
     }
@@ -387,8 +387,8 @@ class TicketsController < ApplicationController
       owner_ids = []
       ticket.agent_of_group.each { |user|
         owner_ids.push user.id
-        if !assets[ User.to_online_model.to_sym ][user.id]
-          assets[ User.to_online_model.to_sym ][user.id] = User.user_data_full( user.id )
+        if !assets[ User.to_app_model ][user.id]
+          assets[ User.to_app_model ][user.id] = User.user_data_full( user.id )
         end
       }
 
