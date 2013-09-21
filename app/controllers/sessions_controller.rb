@@ -160,8 +160,8 @@ class SessionsController < ApplicationController
       end
     }
     render :json => {
-      :sessions => sessions_clean,
-      :users    => users,
+      :sessions                   => sessions_clean,
+      User.to_online_model.to_sym => users,
     }
   end
 

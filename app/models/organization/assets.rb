@@ -22,19 +22,19 @@ returns
 
   def assets (data)
 
-    if !data[:organizations]
-      data[:organizations] = {}
+    if !data[ Organization.to_online_model.to_sym ]
+      data[ Organization.to_online_model.to_sym ] = {}
     end
-    if !data[:users]
-      data[:users] = {}
+    if !data[ User.to_online_model.to_sym ]
+      data[ User.to_online_model.to_sym ] = {}
     end
-    if !data[:organizations][ self.id ]
-      data[:organizations][ self.id ] = self.attributes
-      data[:organizations][ self.id ][:user_ids] = []
+    if !data[ Organization.to_online_model.to_sym ][ self.id ]
+      data[ Organization.to_online_model.to_sym ][ self.id ] = self.attributes
+      data[ Organization.to_online_model.to_sym ][ self.id ][:user_ids] = []
       users = User.where( :organization_id => self.id ).limit(10)
       users.each {|user|
-        data[:users][ user.id ] = User.user_data_full( user.id )
-        data[:organizations][ self.id ][:user_ids].push user.id
+        data[ User.to_online_model.to_sym ][ user.id ] = User.user_data_full( user.id )
+        data[ Organization.to_online_model.to_sym ][ self.id ][:user_ids].push user.id
       }
     end
     data

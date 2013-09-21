@@ -22,22 +22,22 @@ returns
 
   def assets (data)
 
-    if !data[:users]
-      data[:users] = {}
+    if !data[ User.to_online_model.to_sym ]
+      data[ User.to_online_model.to_sym ] = {}
     end
-    if !data[:users][ self['created_by_id'] ]
-      data[:users][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
+    if !data[ User.to_online_model.to_sym ][ self['created_by_id'] ]
+      data[ User.to_online_model.to_sym ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
     end
 
     # fetch meta relations
-    if !data[:history_object]
-      data[:history_object] = History::Object.all()
+    if !data[ History::Object.to_online_model.to_sym ]
+      data[ History::Object.to_online_model.to_sym ] = History::Object.all()
     end
-    if !data[:history_type]
-      data[:history_type] = History::Type.all()
+    if !data[ History::Type.to_online_model.to_sym ]
+      data[ History::Type.to_online_model.to_sym ] = History::Type.all()
     end
-    if !data[:history_attribute]
-      data[:history_attribute] = History::Attribute.all()
+    if !data[ History::Attribute.to_online_model.to_sym ]
+      data[ History::Attribute.to_online_model.to_sym ] = History::Attribute.all()
     end
 
     data

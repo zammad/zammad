@@ -25,18 +25,25 @@ class _collectionSingleton extends Spine.Module
         for type, collections of data
           if type is 'users'
             type = 'User'
+            throw "BREAK, users"
           if type is 'tickets'
             type = 'Ticket'
+            throw "BREAK, tickets"
           if type is 'ticket_article'
             type = 'TicketArticle'
+            throw "BREAK, ticket_article"
           if type is 'organization'
             type = 'Organization'
+            throw "BREAK, organization"
           if type is 'history_object'
             type = 'HistoryObject'
+            throw "BREAK, history_object"
           if type is 'history_type'
             type = 'HistoryType'
+            throw "BREAK, history_type"
           if type is 'history_attribute'
             type = 'HistoryAttribute'
+            throw "BREAK, history_attribute"
 
           @log 'debug', 'loadCollection:trigger', type, collections
           @load( localStorage: data.localStorage, type: type, data: collections )

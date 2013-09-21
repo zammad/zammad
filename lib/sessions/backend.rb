@@ -1,0 +1,2 @@
+module Sessions::Backend
+end

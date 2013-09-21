@@ -72,7 +72,7 @@ class App.TicketZoom extends App.Controller
       success: (data, status, xhr) =>
 
         # check if ticket has changed
-        newTicketRaw = data.assets.tickets[ticket_id]
+        newTicketRaw = data.assets.Ticket[ticket_id]
         if @ticketUpdatedAtLastCall && !force
 
           # return if ticket hasnt changed

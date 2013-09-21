@@ -22,11 +22,11 @@ returns
 
   def assets (data)
 
-    if !data[:users]
-      data[:users] = {}
+    if !data[ User.to_online_model.to_sym ]
+      data[ User.to_online_model.to_sym ] = {}
     end
-    if !data[:users][ self.id ]
-      data[:users][ self.id ] = User.user_data_full( self.id )
+    if !data[ User.to_online_model.to_sym ][ self.id ]
+      data[ User.to_online_model.to_sym ][ self.id ] = User.user_data_full( self.id )
     end
     data
   end

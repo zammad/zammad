@@ -49,7 +49,7 @@ class TicketOverviewsController < ApplicationController
     end
 
     # get related users
-    assets = { :users => {} }
+    assets = { User.to_online_model.to_sym => {} }
     overview[:ticket_ids].each {|ticket_id|
       ticket = Ticket.lookup( :id => ticket_id )
       assets = ticket.assets(assets)
@@ -70,8 +70,8 @@ class TicketOverviewsController < ApplicationController
       Group.find(group_id).users.each {|user|
         next if !agents[ user.id ]
         groups_users[ group_id ].push user.id
-        if !assets[:users][user.id]
-          assets[:users][user.id] = User.user_data_full(user.id)
+        if !assets[ User.to_online_model.to_sym ][user.id]
+          assets[ User.to_online_model.to_sym ][user.id] = User.user_data_full(user.id)
         end
       }
     }
