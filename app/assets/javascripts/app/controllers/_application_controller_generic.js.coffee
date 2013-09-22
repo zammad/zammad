@@ -203,12 +203,15 @@ class App.ControllerDrox extends App.Controller
   constructor: (params) ->
     super
 
-    if params.data && params.data.text
+    if params.data && ( params.data.text || params.data.html )
       @inline(params.data)
 
   inline: (data) ->
     @html App.view('generic/drox')(data)
-    @el.find('.drox-body').text(data.text)
+    if data.text
+      @el.find('.drox-body').text(data.text)
+    if data.html
+      @el.find('.drox-body').html(data.html)
 
   template: (data) ->
     drox = $( App.view('generic/drox')(data) )

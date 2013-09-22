@@ -1859,6 +1859,10 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Feedback about ou
 Translation.create_if_not_exists( :locale => 'de', :source => "What ideas do you have?", :target => "Welche Ideen haben Sie?" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Attach Screenshot of page", :target => "Screenshot dieser Seite anhängen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Thanks for your Feedback!", :target => "Vielen Dank für Ihre Feedback!" )
+Translation.create_if_not_exists( :locale => 'de', :source => "What can you do here?", :target => "Was können Sie hier machen?" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Here you can create one.", :target => "Hier können Sie eins erstellen." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Fold in", :target => "Einklappen" )
+
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "" )
 
 # install all packages in auto_install

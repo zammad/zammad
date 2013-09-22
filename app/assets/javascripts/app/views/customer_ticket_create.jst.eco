@@ -1,17 +1,26 @@
-<div class="content-one ticket-create">
-  <div class="page-header clearfix">
-    <div class="page-header-title">
-      <h1 class="pull-left"><%- @T( 'New Ticket' ) %></h1>
-    </div>
+<div class="content-two">
+  <div class="sidebar">
   </div>
-  <div class="page-content">
-    <form class="form-horizontal form-large">
-      <input type="hidden" value="" name="article_type"/>
-      <div id="form_create"></div>
-      <div class="form-actions">
-        <button type="reset" class="btn btn-default cancel"><%- @T( 'Cancel' ) %></button>
-        <button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
+  <div class="main">
+
+    <div class="ticket-create">
+      <div class="page-header clearfix">
+        <div class="page-header-title">
+          <h1 class="pull-left"><%- @T( 'New Ticket' ) %></h1>
+        </div>
       </div>
-    </form>
+      <div class="page-content">
+        <form class="form-horizontal form-large">
+          <input type="hidden" value="" name="article_type"/>
+          <div id="form_create"></div>
+          <div class="form-actions">
+            <button type="reset" class="btn btn-default cancel"><%- @T( 'Cancel' ) %></button>
+            <button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </div>
 </div>
+

@@ -75,7 +75,7 @@ table th, table td {
 }
 
 .popover {
-  min-width: 180px;
+  min-width: 240px;
   z-index: 1110;
 }
 .hero-two {
@@ -161,6 +161,8 @@ table th, table td {
   position: absolute;
   overflow-y: auto;
   overflow-x: hidden;
+  right: 0;
+  left: 0;
 }
 .content-two .main > .nav {
   margin-top: 12px;
@@ -288,6 +290,16 @@ table th, table td {
   border-right: 1px solid #563d7c;
 }
 
+#global-search {
+  width: 150px;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+}
+#global-search:focus {
+  width: 200px;
+  background-color: #ffffff;
+}
+
 #task {
   position: fixed;
   display: table;
@@ -397,12 +409,15 @@ h5 {
 
 .form-large {
   width: 85%;
+  max-width: 700px;
 }
 .form-normal {
   width: 70%;
+  max-width: 400px;
 }
 .form-small {
   width: 50%;
+  max-width: 250px;
 }
 .form-normal fieldset {
   margin-bottom: 10px;
@@ -800,17 +815,7 @@ footer {
 .navbar-form {
   margin-top: 6px;
   margin-bottom: 6px;
-}
-
-.nav .form-control {
-  border-radius: 8px;
-}
-
-.nav .form-control {
-  background-color: #f5f5f5;
-}
-.nav .form-control:focus {
-  background-color: #ffffff;
+  padding: 0;
 }
 
 .navbar-brand {
