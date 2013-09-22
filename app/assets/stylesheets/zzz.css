@@ -712,6 +712,7 @@ footer {
   padding-top: 4px;
   width: 70px;
   float: left;
+  overflow: hidden;
 }
 .avatar ul {
   padding-left: 20px;
