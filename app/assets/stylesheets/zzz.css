@@ -75,6 +75,7 @@ table th, table td {
 }
 
 .popover {
+  min-width: 180px;
   z-index: 1110;
 }
 .hero-two {
