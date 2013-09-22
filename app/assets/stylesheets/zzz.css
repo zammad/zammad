@@ -154,7 +154,7 @@ table th, table td {
   height: 100%;
   float: left;
   margin-left: 204px;
-  margin-right: 16px;
+  padding-right: 16px;
   padding-bottom: 10px;
   padding-left: 14px;
   position: absolute;
@@ -680,24 +680,22 @@ footer {
   width: 100%;
   left: 0px;
   border-top: 1px solid #eeeeee;
-  width: 200px;
+  width: 194px;
   margin-left: 4px;
 }
-
-
 @media (min-width: 800px) {
   .ticket-action {
-    width: 240px;
+    width: 234px;
   }
 }
 @media (min-width: 1024px) {
   .ticket-action {
-    width: 260px;
+    width: 254px;
   }
 }
 @media (min-width: 1200px) {
   .ticket-action {
-    width: 280px;
+    width: 274px;
   }
 }
 
