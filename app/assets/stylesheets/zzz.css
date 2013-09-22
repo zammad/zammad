@@ -602,10 +602,6 @@ form.form-inline input[type="password"] {
 }
 
 
-.edit-ticket {
-  padding: 4px 14px 10px;
-  width: 720px;
-}
 .edit {
 }
 .edit .form-group {
@@ -619,15 +615,11 @@ form.form-inline input[type="password"] {
   outline: 0;
 }
 .edit-title {
-
 }
 .edit-title small {
   font-size: 12px;
 }
-.edit-content {
-  margin-left: 68px;
-  margin-right: 22px;
-}
+
 
 .delete {
   background:url("../assets/close.png") no-repeat;
@@ -715,15 +707,56 @@ footer {
   }
 }
 
-.ticket-answer .avatar {
+.avatar {
   padding-left: 6px;
   padding-top: 4px;
   width: 70px;
   float: left;
 }
-.ticket-answer .avatar ul {
+.avatar ul {
   padding-left: 20px;
 }
+
+.ticket-article-view {
+  max-width: 750px;
+}
+
+.ticket-article {
+  padding: 8px 0 6px 2px;
+  min-height: 110px;
+  margin: 2px 0;
+}
+.ticket-article-item {
+  border-bottom: 1px solid #eeeeee;
+}
+.ticket-article-item:last-child {
+  border-bottom: none;
+}
+.ticket-article h4 {
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+.ticket-article.well {
+  padding: 4px 0 20px 2px;
+  margin-top: 4px;
+}
+.ticket-article-meta {
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 10px;
+}
+.ticket-article-message {
+  padding-left: 6px;
+  padding-top: 4px;
+  margin-left: 70px;
+}
+.ticket-edit .ticket-article-message {
+  padding-right: 40px;
+}
+.message {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
 
 .ticket-update {
   width: 100%;
@@ -736,40 +769,6 @@ footer {
   width: 160px;
 }
 
-.article {
-  width: 100%;
-
-  margin-left: 0;
-  margin-top: 0;
-  margin-bottom: 10px;
-
-  padding-top: 0;
-  padding-bottom: 2px;
-  padding-right: 0;
-
-  border-bottom: 1px solid #eeeeee;
-}
-
-.article-content {
-  
-  margin-left: 70px;
-}
-.article-message {
-  padding: 4px 2px;
-/*
-  margin-top: 0;
-  margin-bottom: 6px;
-  margin-left: 10px;
-
-  padding-top: 10px;
-  padding-bottom: 8px;
-  padding-left: 10px;
-
-  margin-left: 70px;
-
-  min-height: 85px;
-*/
-}
 
 .show_toogle {
   font-size: 10px;
@@ -793,7 +792,7 @@ footer {
   background-color: #f2dede;
   border-color: #eed3d7;
   border: 1px solid #fbeed5;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .merged, .merge:hover {

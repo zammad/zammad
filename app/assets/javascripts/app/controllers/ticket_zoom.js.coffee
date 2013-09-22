@@ -424,9 +424,9 @@ class Edit extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = currentData
         @log 'notice', 'form hash changed', diff, currentData
-        @el.find('.edit-ticket').addClass('form-changed')
-        @el.find('.edit-ticket').find('.reset-message').show()
-        @el.find('.edit-ticket').find('.reset-message').removeClass('hide')
+        @el.find('.ticket-edit').addClass('form-changed')
+        @el.find('.ticket-edit').find('.reset-message').show()
+        @el.find('.ticket-edit').find('.reset-message').removeClass('hide')
         App.TaskManager.update( @task_key, { 'state': currentData })
     @interval( update, 3000, 'autosave' )
 
