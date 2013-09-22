@@ -20,7 +20,7 @@ module Sessions::Backend::Collections
     # check all collections to push
     push_collection = {}
     collections.each { | key, v |
-      cache_key = 'user_' + user.id.to_s + '_push_collections_' + key
+      cache_key = 'user_' + user.id.to_s + '_push_collections_' + key.to_s
       if Sessions::CacheIn.expired(cache_key)
         if push_collection.empty?
           push_collection = SessionHelper::push_collections(user)
@@ -45,7 +45,7 @@ module Sessions::Backend::Collections
 
     collections = Sessions::CacheIn.get( cache_key ) || {}
     collections.each { | key, v |
-      collection_cache_key = 'user_' + user.id.to_s + '_push_collections_' + key
+      collection_cache_key = 'user_' + user.id.to_s + '_push_collections_' + key.to_s
       collection_time = Sessions::CacheIn.get_time( collection_cache_key, { :ignore_expire => true } )
       if collection_time && @@last_change[ user.id ][ key ] != collection_time
 
