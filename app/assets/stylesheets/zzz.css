@@ -124,6 +124,7 @@ table th, table td {
   position: absolute;
   overflow-y: auto;
   overflow-x: hidden;
+  border-right: 1px solid #eeeeee;
 }
 .content-two .sidebar.nav-manage {
   padding-left: 16px;
@@ -148,13 +149,14 @@ table th, table td {
 }
 
 .content-two .main {
-  width: 600px;
+  width: auto;
+  min-width: 760px;
   height: 100%;
   float: left;
   margin-left: 204px;
+  margin-right: 16px;
   padding-bottom: 10px;
   padding-left: 14px;
-  border-left: 1px solid #eeeeee;
   position: absolute;
   overflow-y: auto;
   overflow-x: hidden;
@@ -170,7 +172,6 @@ table th, table td {
     width: 240px;
   }
   .content-two .main {
-    width: 660px;
     margin-left: 244px;
   }
   .content-two .meta {
@@ -182,7 +183,6 @@ table th, table td {
     width: 260px;
   }
   .content-two .main {
-    width: 760px;
     margin-left: 264px;
   }
   .content-two .meta {
@@ -194,12 +194,11 @@ table th, table td {
     width: 280px;
   }
   .content-two .main {
-    width: 900px;
     margin-left: 284px;
   }
   .content-two .meta {
-/*
     width: 140px;
+/*
     display: table-cell;
 */
     display: none;
@@ -292,6 +291,7 @@ table th, table td {
   position: fixed;
   display: table;
   width: 100%;
+  min-width: 1000px;
   top: 46px;
 }
 
@@ -795,6 +795,7 @@ footer {
 
 .navbar {
   min-height: 46px;
+  min-width: 1000px;
 }
 
 .navbar-form {
