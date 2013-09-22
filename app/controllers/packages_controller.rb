@@ -18,7 +18,7 @@ class PackagesController < ApplicationController
 
     Package.install( :string => params[:file_upload].read )
 
-    redirect_to '/#package'
+    redirect_to '/#system/package'
   end
 
   # DELETE /api/v1/packages
