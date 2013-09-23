@@ -23,6 +23,14 @@ returns
 
   def assets (data)
 
+    if !data[ Ticket.to_app_model ]
+      data[ Ticket.to_app_model ] = {}
+    end
+    if !data[ Ticket.to_app_model ][ self.ticket_id ]
+      ticket = Ticket.find( self.ticket_id )
+      data = ticket.assets(data)
+    end
+
     if !data[ Ticket::Article.to_app_model ]
       data[ Ticket::Article.to_app_model ] = {}
     end
