@@ -38,14 +38,14 @@ add a new history entry for an object
 
     # lookups
     if data[:history_type]
-      history_type = self.history_type_lookup( data[:history_type] )
+      history_type = self.type_lookup( data[:history_type] )
     end
     if data[:history_object]
-      history_object = self.history_object_lookup( data[:history_object] )
+      history_object = self.object_lookup( data[:history_object] )
     end
     related_history_object_id = nil
     if data[:related_history_object]
-      related_history_object = self.history_object_lookup( data[:related_history_object] )
+      related_history_object = self.object_lookup( data[:related_history_object] )
       related_history_object_id = related_history_object.id
     end
     history_attribute_id = nil
@@ -111,14 +111,14 @@ return all histoy entries of an object
 
   def self.list( requested_object, requested_object_id, related_history_object = nil )
     if !related_history_object
-      history_object = self.history_object_lookup( requested_object )
+      history_object = self.object_lookup( requested_object )
       history = History.where( :history_object_id => history_object.id ).
       where( :o_id => requested_object_id ).
       where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] ) ).
       order('created_at ASC, id ASC')
     else
-      history_object_requested = self.history_object_lookup( requested_object )
-      history_object_related   = self.history_object_lookup( related_history_object )
+      history_object_requested = self.object_lookup( requested_object )
+      history_object_related   = self.object_lookup( related_history_object )
       history = History.where(
         '((history_object_id = ? AND o_id = ?) OR (history_object_id = ? AND related_o_id = ? )) AND history_type_id IN (?)',
         history_object_requested.id,
@@ -145,8 +145,8 @@ return all histoy entries of an object
     datas = []
     stream.each do |item|
       data = item.attributes
-      data['history_object'] = self.history_object_lookup_id( data['history_object_id'] ).name
-      data['history_type']   = self.history_type_lookup_id( data['history_type_id'] ).name
+      data['history_object'] = self.object_lookup_id( data['history_object_id'] ).name
+      data['history_type']   = self.type_lookup_id( data['history_type_id'] ).name
       data.delete('history_object_id')
       data.delete('history_type_id')
       datas.push data
@@ -185,7 +185,7 @@ return all histoy entries of an object
 
   private
 
-  def self.history_type_lookup_id( id )
+  def self.type_lookup_id( id )
 
     # use cache
     return @@cache_type[ id ] if @@cache_type[ id ]
@@ -196,7 +196,7 @@ return all histoy entries of an object
     return history_type
   end
 
-  def self.history_type_lookup( name )
+  def self.type_lookup( name )
 
     # use cache
     return @@cache_type[ name ] if @@cache_type[ name ]
@@ -216,7 +216,7 @@ return all histoy entries of an object
     return history_type
   end
 
-  def self.history_object_lookup_id( id )
+  def self.object_lookup_id( id )
 
     # use cache
     return @@cache_object[ id ] if @@cache_object[ id ]
@@ -227,7 +227,7 @@ return all histoy entries of an object
     return history_object
   end
 
-  def self.history_object_lookup( name )
+  def self.object_lookup( name )
 
     # use cache
     return @@cache_object[ name ] if @@cache_object[ name ]

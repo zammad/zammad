@@ -8,7 +8,7 @@ class RecentView < ApplicationModel
   def self.log( object, user )
 
     # lookups
-    recent_view_object = self.recent_view_object_lookup( object.class.to_s )
+    recent_view_object = self.object_lookup( object.class.to_s )
 
     # create entry
     record = {
@@ -33,7 +33,7 @@ class RecentView < ApplicationModel
     list = []
     recent_views.each { |item|
       data = item.attributes
-      data['recent_view_object'] = self.recent_view_object_lookup_id( data['recent_view_object_id'] ).name
+      data['recent_view_object'] = self.object_lookup_id( data['recent_view_object_id'] ).name
       data.delete( 'history_object_id' )
       list.push data
     }
@@ -71,7 +71,7 @@ class RecentView < ApplicationModel
 
   private
 
-  def self.recent_view_object_lookup_id( id )
+  def self.object_lookup_id( id )
 
     # use cache
     return @@cache_object[ id ] if @@cache_object[ id ]
@@ -82,7 +82,7 @@ class RecentView < ApplicationModel
     return history_object
   end
 
-  def self.recent_view_object_lookup( name )
+  def self.object_lookup( name )
 
     # use cache
     return @@cache_object[ name ] if @@cache_object[ name ]
