@@ -3,7 +3,7 @@
 require 'history'
 
 class Observer::History < ActiveRecord::Observer
-  observe :ticket, :user, 'ticket::_article'
+  observe :ticket, 'ticket::_article', :user, :organization, :group
 
   def after_create(record)
 
@@ -13,22 +13,17 @@ class Observer::History < ActiveRecord::Observer
     puts "HISTORY OBSERVER, object created #{ record.class.name }.find(#{ record.id })"
     #    puts record.inspect
 
-    # if Ticket::Article has changed, remember ticket to be able
-    # to show article changes in ticket history
-    related_o_id              = nil
-    related_history_object_id = nil
-    if record.class.name == 'Ticket::Article'
-      related_o_id           = record.ticket_id
-      related_history_object = 'Ticket'
+    user_id = record.created_by_id || UserInfo.current_user_id || 1
+
+    # log activity stream
+    if record.respond_to?('history_create')
+      record.history_create( 'created', user_id )
     end
-    History.add(
-      :o_id                   => record.id,
-      :history_type           => 'created',
-      :history_object         => record.class.name,
-      :related_o_id           => related_o_id,
-      :related_history_object => related_history_object,
-      :created_by_id          => record.created_by_id || UserInfo.current_user_id || 1
-    )
+
+    # log activity stream
+    if record.respond_to?('activity_stream')
+      record.activity_stream( 'created', user_id )
+    end
   end
 
   def before_update(record)
@@ -83,6 +78,8 @@ class Observer::History < ActiveRecord::Observer
       :create_article_sender_id => true,
     }
 
+    user_id = record.created_by_id || UserInfo.current_user_id || 1
+    history_logged = false
     diff.each do |key, value_ids|
 
       # do not log created_at and updated_at attributes
@@ -137,28 +134,26 @@ class Observer::History < ActiveRecord::Observer
         attribute_name = attribute_name.scan(/^(.*)_id$/).first.first
       end
 
-      # if Ticket::Article has changed, remember ticket to be able
-      # to show article changes in ticket history
-      related_o_id              = nil
-      related_history_object_id = nil
-      if record.class.name == 'Ticket::Article'
-        related_o_id              = record.ticket_id
-        related_history_object_id = 'Ticket'
-      end
-      History.add(
-        :o_id                   => current.id,
-        :history_type           => 'updated',
-        :history_object         => record.class.name,
+      history_logged = true
+
+      data = {
         :history_attribute      => attribute_name,
-        :related_o_id           => related_o_id,
-        :related_history_object => related_history_object_id,
         :value_from             => value[0],
         :value_to               => value[1],
         :id_from                => value_ids[0],
         :id_to                  => value_ids[1],
-        :created_by_id          => record['updated_by_id'] || UserInfo.current_user_id || 1
-      )
+      }
+      # log activity stream
+      if record.respond_to?('history_create')
+        record.history_create( 'updated', user_id, data )
+      end
+    end
 
+    # log activity stream
+    if history_logged
+      if record.respond_to?('activity_stream')
+        record.activity_stream( 'updated', user_id )
+      end
     end
   end
 

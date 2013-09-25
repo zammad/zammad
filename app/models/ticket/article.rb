@@ -2,6 +2,7 @@
 
 class Ticket::Article < ApplicationModel
   include Ticket::Article::Assets
+  include Ticket::Article::HistoryLog
 
   after_create  :attachment_check
   belongs_to    :ticket

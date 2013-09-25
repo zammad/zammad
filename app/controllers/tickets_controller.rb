@@ -130,7 +130,7 @@ class TicketsController < ApplicationController
     return if !ticket_permission( ticket )
 
     # get history of ticket
-    history = History.list( 'Ticket', params[:id], 'Ticket::Article' )
+    history = ticket.history_get
 
     # get related assets
     assets = ticket.assets({})

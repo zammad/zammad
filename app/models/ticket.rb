@@ -23,6 +23,7 @@ class Ticket < ApplicationModel
   include Ticket::Subject
   include Ticket::Permission
   include Ticket::Assets
+  include Ticket::HistoryLog
   extend Ticket::Search
 
   attr_accessor :callback_loop
@@ -118,7 +119,7 @@ returns
   def destroy_dependencies
 
     # delete history
-    History.remove( 'Ticket', self.id )
+    History.remove( self.class.to_s, self.id )
 
     # delete articles
     self.articles.destroy_all

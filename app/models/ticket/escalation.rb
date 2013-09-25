@@ -212,7 +212,7 @@ def escalation_calculation_get_sla
       total_time_without_pending = 0
       total_time = 0
       #get history for ticket
-      history_list = History.list( 'Ticket', self.id )
+      history_list = self.history_get
 
       #loop through hist. changes and get time
       last_state            = nil

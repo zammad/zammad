@@ -1,12 +1,15 @@
 # Copyright (C) 2013-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationModel < ActiveRecord::Base
+  include ApplicationModel::HistoryLogBase
+
   self.abstract_class = true
 
   before_create  :check_attributes_protected, :cache_delete, :fill_up_user_create
   before_create  :cache_delete, :fill_up_user_create
   before_update  :cache_delete_before, :fill_up_user_update
-  before_destroy :cache_delete_before
+  before_destroy :cache_delete_before, :destroy_dependencies
+
   after_create  :cache_delete
   after_update  :cache_delete
   after_destroy :cache_delete
@@ -402,4 +405,19 @@ class OwnModel < ApplicationModel
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
   end
+
+  private
+
+=begin
+
+destory object dependencies, will be executed automatically
+
+=end
+
+  def destroy_dependencies
+
+    # delete history
+    History.remove( self.class.to_s, self.id )
+  end
+
 end
