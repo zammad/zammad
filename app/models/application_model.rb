@@ -2,6 +2,7 @@
 
 class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::HistoryLogBase
+  include ApplicationModel::ActivityStreamBase
 
   self.abstract_class = true
 
@@ -13,6 +14,13 @@ class ApplicationModel < ActiveRecord::Base
   after_create  :cache_delete
   after_update  :cache_delete
   after_destroy :cache_delete
+
+  after_create  :activity_stream_create
+  after_update  :activity_stream_update
+  after_destroy :activity_stream_destroy
+
+  # create instance accessor
+  class << self; attr_accessor :activity_stream_support_config end
 
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
@@ -410,6 +418,59 @@ class OwnModel < ApplicationModel
 
 =begin
 
+serve methode to configure activity stream support for this model
+
+class Model < ApplicationModel
+  activity_stream_support :role => 'Admin'
+end
+
+=end
+
+  def self.activity_stream_support(data = {})
+    @activity_stream_support_config = data
+  end
+
+=begin
+
+log object create activity stream
+
+  model = Model.find(123)
+  model.activity_stream_create
+
+=end
+
+  def activity_stream_create
+    activity_stream_log( 'created', self['created_by_id'] )
+  end
+
+=begin
+
+log object update activity stream
+
+  model = Model.find(123)
+  model.activity_stream_update
+
+=end
+
+  def activity_stream_update
+    activity_stream_log( 'updated', self['updated_by_id'] )
+  end
+
+=begin
+
+delete object activity stream
+
+  model = Model.find(123)
+  model.activity_stream_destroy
+
+=end
+
+  def activity_stream_destroy
+    ActivityStream.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
 destory object dependencies, will be executed automatically
 
 =end
@@ -418,6 +479,7 @@ destory object dependencies, will be executed automatically
 
     # delete history
     History.remove( self.class.to_s, self.id )
+
   end
 
 end

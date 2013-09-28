@@ -7,6 +7,7 @@ class Ticket < ApplicationModel
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
+  activity_stream_support :role => 'User'
 
   belongs_to    :group
   has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update

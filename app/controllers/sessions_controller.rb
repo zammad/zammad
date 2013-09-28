@@ -14,6 +14,8 @@ class SessionsController < ApplicationController
       return
     end
 
+    user.activity_stream_log( 'session started', user.id )
+
     # auto population of default collections
     default_collection = SessionHelper::default_collections(user)
 

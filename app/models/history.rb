@@ -95,6 +95,7 @@ remove whole history entries of an object
 
   def self.remove( requested_object, requested_object_id )
     history_object = History::Object.where( :name => requested_object ).first
+    return if !history_object
     History.where(
       :history_object_id => history_object.id,
       :o_id              => requested_object_id,
@@ -103,7 +104,7 @@ remove whole history entries of an object
 
 =begin
 
-return all histoy entries of an object
+return all history entries of an object
 
   history_list = History.list( 'Ticket', 123 )
 
@@ -131,56 +132,6 @@ return all histoy entries of an object
     end
 
     return history
-  end
-
-  def self.activity_stream( user, limit = 10 )
-    #    g = Group.where( :active => true ).joins(:users).where( 'users.id' => user.id )
-    #    stream = History.select("distinct(histories.o_id), created_by_id, history_attribute_id, history_type_id, history_object_id, value_from, value_to").
-    #      where( :history_type_id   => History::Type.where( :name => ['created', 'updated']) ).
-    stream = History.select("distinct(histories.o_id), created_by_id, history_type_id, history_object_id").
-    where( :history_object_id => History::Object.where( :name => [ 'Ticket', 'Ticket::Article' ] ) ).
-    where( :history_type_id   => History::Type.where( :name => [ 'created', 'updated' ]) ).
-    order('created_at DESC, id DESC').
-    limit(limit)
-    datas = []
-    stream.each do |item|
-      data = item.attributes
-      data['history_object'] = self.object_lookup_id( data['history_object_id'] ).name
-      data['history_type']   = self.type_lookup_id( data['history_type_id'] ).name
-      data.delete('history_object_id')
-      data.delete('history_type_id')
-      datas.push data
-      #      item['history_attribute'] = item.history_attribute
-    end
-    return datas
-  end
-
-  def self.activity_stream_fulldata( user, limit = 10 )
-    activity_stream = History.activity_stream( user, limit )
-
-    # get related users
-    assets = {}
-    activity_stream.each {|item|
-
-      # load article ids
-      if item['history_object'] == 'Ticket'
-        ticket = Ticket.find( item['o_id'] )
-        assets = ticket.assets(assets)
-      end
-      if item['history_object'] == 'Ticket::Article'
-        article = Ticket::Article.find( item['o_id'] )
-        assets = article.assets(assets)
-      end
-      if item['history_object'] == 'User'
-        user = User.find( item['o_id'] )
-        assets = user.assets(assets)
-      end
-    }
-
-    return {
-      :activity_stream => activity_stream,
-      :assets          => assets,
-    }
   end
 
   private

@@ -40,21 +40,26 @@ class App.DashboardActivityStream extends App.Controller
   render: (items) ->
 
     for item in items
-      if item.history_object is 'Ticket'
+      if item.object is 'Ticket'
         ticket = App.Ticket.find( item.o_id )
         item.link = '#ticket/zoom/' + ticket.id
         item.title = ticket.title
-        item.type = 'Ticket'
-        item.updated_by_id = ticket.updated_by_id
-        item.updated_by = App.User.find( ticket.updated_by_id )
-      else if item.history_object is 'Ticket::Article'
+        item.object = 'Ticket'
+
+      else if item.object is 'Ticket::Article'
         article = App.TicketArticle.find( item.o_id )
         ticket  = App.Ticket.find( article.ticket_id )
         item.link = '#ticket/zoom/' + ticket.id + '/' + article.id
         item.title = article.subject || ticket.title
-        item.type = 'Article'
-        item.updated_by_id = article.updated_by_id
-        item.updated_by = App.User.find( article.updated_by_id )
+        item.object = 'Article'
+
+      else if item.object is 'User'
+        user = App.User.find( item.o_id )
+        item.link = '#user/zoom/' + item.o_id
+        item.title = user.displayName()
+        item.object = 'User'
+
+      item.created_by = App.User.find( item.created_by_id )
 
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',
@@ -67,3 +72,5 @@ class App.DashboardActivityStream extends App.Controller
     # start user popups
     @userPopups('right')
 
+    # update time
+    @frontendTimeUpdate()

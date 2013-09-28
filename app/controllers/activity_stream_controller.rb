@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-class ActivityController < ApplicationController
+class ActivityStreamController < ApplicationController
   before_filter :authentication_check
 
   # GET /api/v1/activity_stream
-  def activity_stream
-    activity_stream = History.activity_stream_fulldata( current_user, params[:limit] )
+  def show
+    activity_stream = current_user.activity_stream( params[:limit], true )
 
     # return result
     render :json => activity_stream

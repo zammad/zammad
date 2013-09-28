@@ -20,10 +20,6 @@ class Observer::History < ActiveRecord::Observer
       record.history_create( 'created', user_id )
     end
 
-    # log activity stream
-    if record.respond_to?('activity_stream')
-      record.activity_stream( 'created', user_id )
-    end
   end
 
   def before_update(record)
@@ -149,12 +145,6 @@ class Observer::History < ActiveRecord::Observer
       end
     end
 
-    # log activity stream
-    if history_logged
-      if record.respond_to?('activity_stream')
-        record.activity_stream( 'updated', user_id )
-      end
-    end
   end
 
   def differences_from?(one, other)

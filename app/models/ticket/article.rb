@@ -4,14 +4,16 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::Assets
   include Ticket::Article::HistoryLog
 
-  after_create  :attachment_check
   belongs_to    :ticket
   belongs_to    :ticket_article_type,   :class_name => 'Ticket::Article::Type'
   belongs_to    :ticket_article_sender, :class_name => 'Ticket::Article::Sender'
   belongs_to    :created_by,            :class_name => 'User'
+  after_create  :attachment_check
   after_create  :notify_clients_after_create
   after_update  :notify_clients_after_update
   after_destroy :notify_clients_after_destroy
+
+  activity_stream_support
 
   attr_accessor :attachments
 
