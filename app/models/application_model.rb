@@ -506,7 +506,7 @@ log object create history, if configured - will be executed automatically
 
   def history_create
     return if !self.class.history_support_config
-#    puts self.changes.inspect
+    #puts 'create ' + self.changes.inspect
     self.history_log( 'created', self.created_by_id )
 
   end
@@ -530,8 +530,8 @@ log object update history with all updated attributes, if configured - will be e
 
     # new record also triggers update, so ignore new records
     changes = self.changes
+    #puts 'updated ' + self.changes.inspect
     return if changes['id'] && !changes['id'][0]
-    #puts 'updated' + self.changes.inspect
 
     # TODO: Swop it to config file later
     ignore_attributes = {
@@ -554,6 +554,7 @@ log object update history with all updated attributes, if configured - will be e
       if attribute_name[-3,3] == '_id'
         attribute_name = attribute_name[ 0, attribute_name.length-3 ]
       end
+
       value_id = []
       if key.to_s[-3,3] == '_id'
         value_id[0] = value[0]
@@ -583,12 +584,12 @@ log object update history with all updated attributes, if configured - will be e
       end
       data = {
         :history_attribute      => attribute_name,
-        :value_from             => value[0],
-        :value_to               => value[1],
+        :value_from             => value[0].to_s,
+        :value_to               => value[1].to_s,
         :id_from                => value_id[0],
         :id_to                  => value_id[1],
       }
-      #puts "HIST NEW " + data.inspect
+      #puts "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       self.history_log( 'updated', self.updated_by_id, data )
     }
   end
