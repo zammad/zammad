@@ -17,3 +17,6 @@ class App.Group extends App.Model
   @configure_overview = [
     'name',
   ]
+
+  uiUrl: ->
+    '#group/zoom/' + @id

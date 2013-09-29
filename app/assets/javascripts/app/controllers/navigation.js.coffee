@@ -113,7 +113,7 @@ class App.Navigation extends App.Controller
                   display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
                   id:       ticket.id
                   class:    "ticket-popover"
-                  url:      "#ticket/zoom/#{ticket.id}"
+                  url:      ticket.uiUrl()
                 area.result.push data
             else if area.name is 'User'
               area.result = []
@@ -123,7 +123,7 @@ class App.Navigation extends App.Controller
                   display:  "#{user.displayName()}"
                   id:       user.id
                   class:    "user-popover"
-                  url:      "#users/#{user.id}"
+                  url:      user.uiUrl()
                 area.result.push data
             else if area.name is 'Organization'
               area.result = []
@@ -133,7 +133,7 @@ class App.Navigation extends App.Controller
                   display:  "#{organization.displayName()}"
                   id:       organization.id
                   class:    "organization-popover"
-                  url:      "#organizations/#{ticket.id}"
+                  url:      organization.uiUrl()
                 area.result.push data
 
           if @result
@@ -320,11 +320,11 @@ class App.Navigation extends App.Controller
       ticket = App.Ticket.find( item.o_id )
       prio++
       NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
-        prio:      prio,
-        parent:    '#current_user',
-        name:      item.recent_view_object + ' (' + ticket.title + ')',
-        target:    '#ticket/zoom/' + ticket.id,
-        divider:   divider,
+        prio:      prio
+        parent:    '#current_user'
+        name:      item.recent_view_object + ' (' + ticket.title + ')'
+        target:    ticket.uiUrl()
+        divider:   divider
         navheader: navheader
       }
 

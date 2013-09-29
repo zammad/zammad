@@ -30,6 +30,9 @@ class App.User extends App.Model
     'login', 'firstname', 'lastname',
   ]
 
+  uiUrl: ->
+    '#user/zoom/' + @id
+
   @_fillUp: (data) ->
 
     # set socal media links

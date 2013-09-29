@@ -40,24 +40,21 @@ class App.DashboardActivityStream extends App.Controller
   render: (items) ->
 
     for item in items
-      if item.object is 'Ticket'
-        ticket = App.Ticket.find( item.o_id )
-        item.link = '#ticket/zoom/' + ticket.id
-        item.title = ticket.title
-        item.object = 'Ticket'
 
-      else if item.object is 'Ticket::Article'
+      item.link  = ''
+      item.title = '???'
+
+      if item.object is 'Ticket::Article'
+        item.object = 'Article'
         article = App.TicketArticle.find( item.o_id )
         ticket  = App.Ticket.find( article.ticket_id )
-        item.link = '#ticket/zoom/' + ticket.id + '/' + article.id
         item.title = article.subject || ticket.title
-        item.object = 'Article'
+        item.link  = article.uiUrl()
 
-      else if item.object is 'User'
-        user = App.User.find( item.o_id )
-        item.link = '#user/zoom/' + item.o_id
-        item.title = user.displayName()
-        item.object = 'User'
+      if App[item.object]
+        object     = App[item.object].find( item.o_id )
+        item.link  = object.uiUrl()
+        item.title = object.displayName()
 
       item.created_by = App.User.find( item.created_by_id )
 
