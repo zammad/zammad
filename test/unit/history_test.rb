@@ -216,6 +216,13 @@ class HistoryTest < ActiveSupport::TestCase
             :value_from        => 'somebody@example.com',
             :value_to          => 'master@example.com',
           },
+          {
+            :history_object    => 'User',
+            :history_type      => 'updated',
+            :history_attribute => 'active',
+            :value_from        => 'true',
+            :value_to          => 'false',
+          },
         ],
       },
 
@@ -233,6 +240,7 @@ class HistoryTest < ActiveSupport::TestCase
 
         # update user
         if test[:user_update][:user]
+          test[:user_update][:user][:active] = false
           user.update_attributes( test[:user_update][:user] )
         end
       end
