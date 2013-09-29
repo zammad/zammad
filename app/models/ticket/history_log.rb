@@ -37,22 +37,22 @@ returns
 
   result = [
     {
-      :history_type      => 'created',
-      :history_object    => 'Ticket',
-      :created_by_id     => 3,
-      :created_at        => "2013-08-19 20:41:33",
+      :type           => 'created',
+      :object         => 'Ticket',
+      :created_by_id  => 3,
+      :created_at     => "2013-08-19 20:41:33",
     },
     {
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'ticket_priority',
-      :o_id              => 1,
-      :id_to             => 3,
-      :id_from           => 2,
-      :value_from        => "low",
-      :value_to          => "high",
-      :created_by_id     => 3,
-      :created_at        => "2013-08-19 20:41:33",
+      :type           => 'updated',
+      :object         => 'Ticket',
+      :attribute      => 'ticket_priority',
+      :o_id           => 1,
+      :id_to          => 3,
+      :id_from        => 2,
+      :value_from     => "low",
+      :value_to       => "high",
+      :created_by_id  => 3,
+      :created_at     => "2013-08-19 20:41:33",
     },
   ]
 
