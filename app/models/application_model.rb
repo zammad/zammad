@@ -28,6 +28,8 @@ class ApplicationModel < ActiveRecord::Base
     attr_accessor :activity_stream_support_config, :history_support_config
   end
 
+  attr_accessor :history_changes_last_done
+
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
   def check_attributes_protected
@@ -530,7 +532,16 @@ log object update history with all updated attributes, if configured - will be e
 
     # new record also triggers update, so ignore new records
     changes = self.changes
+    if self.history_changes_last_done
+      self.history_changes_last_done.each {|key, value|
+        if changes.has_key?(key) && changes[key] == value
+          changes.delete(key)
+        end
+      }
+    end
+    self.history_changes_last_done = changes
     #puts 'updated ' + self.changes.inspect
+
     return if changes['id'] && !changes['id'][0]
 
     # default ignored attributes
@@ -540,6 +551,11 @@ log object update history with all updated attributes, if configured - will be e
       :created_by_id            => true,
       :updated_by_id            => true,
     }
+    if self.class.history_support_config[:ignore_attributes]
+      self.class.history_support_config[:ignore_attributes].each {|key, value|
+        ignore_attributes[key] = value
+      }
+    end
 
     changes.each {|key, value|
 
@@ -553,6 +569,7 @@ log object update history with all updated attributes, if configured - will be e
       end
 
       value_id = []
+      value_str = [ value[0], value[1] ]
       if key.to_s[-3,3] == '_id'
         value_id[0] = value[0]
         value_id[1] = value[1]
@@ -563,9 +580,9 @@ log object update history with all updated attributes, if configured - will be e
             relation_model = relation_class.lookup( :id => value_id[0] )
             if relation_model
               if relation_model['name']
-                value[0] = relation_model['name']
+                value_str[0] = relation_model['name']
               elsif relation_model.respond_to?('fullname')
-                value[0] = relation_model.send('fullname')
+                value_str[0] = relation_model.send('fullname')
               end
             end
           end
@@ -573,9 +590,9 @@ log object update history with all updated attributes, if configured - will be e
             relation_model = relation_class.lookup( :id => value_id[1] )
             if relation_model
               if relation_model['name']
-                value[1] = relation_model['name']
+                value_str[1] = relation_model['name']
               elsif relation_model.respond_to?('fullname')
-                value[1] = relation_model.send('fullname')
+                value_str[1] = relation_model.send('fullname')
               end
             end
           end
@@ -583,8 +600,8 @@ log object update history with all updated attributes, if configured - will be e
       end
       data = {
         :history_attribute      => attribute_name,
-        :value_from             => value[0].to_s,
-        :value_to               => value[1].to_s,
+        :value_from             => value_str[0].to_s,
+        :value_to               => value_str[1].to_s,
         :id_from                => value_id[0],
         :id_to                  => value_id[1],
       }
