@@ -15,8 +15,8 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
       :o_id                   => record.o_id,
       :history_type           => 'added',
       :history_object         => 'Ticket',
-      :history_attribute      => 'Tag',
-      :value_from             => record.tag_item.name,
+      :history_attribute      => 'tag',
+      :value_to               => record.tag_item.name,
     )
   end
   def after_destroy(record)
@@ -29,8 +29,8 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
       :o_id                   => record.o_id,
       :history_type           => 'removed',
       :history_object         => 'Ticket',
-      :history_attribute      => 'Tag',
-      :value_from             => record.tag_item.name,
+      :history_attribute      => 'tag',
+      :value_to               => record.tag_item.name,
     )
   end
 end
