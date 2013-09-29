@@ -177,7 +177,7 @@ return all history entries of an object
     return @@cache_type[ id ] if @@cache_type[ id ]
 
     # lookup
-    history_type = History::Type.find(id)
+    history_type = History::Type.lookup( :id => id )
     @@cache_type[ id ] = history_type
     return history_type
   end
@@ -188,7 +188,7 @@ return all history entries of an object
     return @@cache_type[ name ] if @@cache_type[ name ]
 
     # lookup
-    history_type = History::Type.where( :name => name ).first
+    history_type = History::Type.lookup( :name => name )
     if history_type
       @@cache_type[ name ] = history_type
       return history_type
@@ -208,7 +208,7 @@ return all history entries of an object
     return @@cache_object[ id ] if @@cache_object[ id ]
 
     # lookup
-    history_object = History::Object.find(id)
+    history_object = History::Object.lookup( :id => id )
     @@cache_object[ id ] = history_object
     return history_object
   end
@@ -219,7 +219,7 @@ return all history entries of an object
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    history_object = History::Object.where( :name => name ).first
+    history_object = History::Object.lookup( :name => name )
     if history_object
       @@cache_object[ name ] = history_object
       return history_object
@@ -239,7 +239,7 @@ return all history entries of an object
     return @@cache_attribute[ id ] if @@cache_attribute[ id ]
 
     # lookup
-    history_attribute = History::Attribute.find(id)
+    history_attribute = History::Attribute.lookup( :id => id )
     @@cache_attribute[ id ] = history_attribute
     return history_attribute
   end
@@ -250,7 +250,7 @@ return all history entries of an object
     return @@cache_attribute[ name ] if @@cache_attribute[ name ]
 
     # lookup
-    history_attribute = History::Attribute.where( :name => name ).first
+    history_attribute = History::Attribute.lookup( :name => name )
     if history_attribute
       @@cache_attribute[ name ] = history_attribute
       return history_attribute
