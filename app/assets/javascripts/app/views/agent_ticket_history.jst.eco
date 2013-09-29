@@ -3,44 +3,40 @@
     <div class="modal-header">
       <a href="#" class="close">&times;</a>
       <h2 class="modal-title"><%- @T( 'History' ) %></h2>
-      <a href="#" data-type="sortorder" id="sortorder" class="<%= @state %>"><%- @T( 'Change order' ) %></a>
+      <a href="#" data-type="sortorder" class="<%= @orderClass %>"><%- @T( 'Change order' ) %></a>
     </div>
     <div class="modal-body">
 
 <% open = false %>
-<% for object in @objects: %>
-  <% object['history_object_display'] = object['history_object'] %>
-  <% if object['history_object'] is 'Ticket::Article': %>
-    <% object['history_object_display'] = 'Article' %>
-  <% end %>
-  <% if lasttime isnt object['created_at'] || last_user isnt object['created_by_id']: %>
+<% for item in @items: %>
+  <% if lasttime isnt item['created_at'] || last_user isnt item['created_by_id']: %>
     <% if open: %>
       </ul>
       <hr>
     <% end %>
     <% open = true %>
-    <% last_user = object['created_by_id'] %>
-    <% lasttime = object['created_at'] %>
-    <span class="user-popover" data-id="<%= object.created_by.id %>"><%= object.created_by.displayName() %></span> -
-    <span class="humanTimeFromNow" data-time="<%- object.created_at %>">?</span>
+    <% last_user = item['created_by_id'] %>
+    <% lasttime = item['created_at'] %>
+    <span class="user-popover" data-id="<%= item.created_by.id %>"><%= item.created_by.displayName() %></span> -
+    <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span>
     <ul>
   <% end %>
     <li>
-    <% if ( object['history_type'] is 'notification' || object['history_type'] is 'email' ): %>
-      <%= object['history_type'] %>
-      <% if object['value_from']: %>
-        "<%= object['value_from'] %>" <%- @T( 'sent to' ) %> 
+    <% if ( item['type'] is 'notification' || item['type'] is 'email' ): %>
+      <%= item['type'] %>
+      <% if item['value_from']: %>
+        "<%= item['value_from'] %>" <%- @T( 'sent to' ) %> 
       <% end %>
-      <% if object['value_to']: %>
-        "<%= object['value_to'] %>"
+      <% if item['value_to']: %>
+        "<%= item['value_to'] %>"
       <% end %>
     <% else: %>
-      <%= object['history_type'] %> <%= object['history_object_display'] %> <% if object['history_attribute']: %>"<%= object['history_attribute'] %>"<% end %>
-      <% if object['value_from']: %>
-          <%- @T( 'from' ) %> "<%= object['value_from'] %>"
+      <%= item['type'] %> <%= item['object'] %> <% if item['attribute']: %>"<%= item['attribute'] %>"<% end %>
+      <% if item['value_from']: %>
+          <%- @T( 'from' ) %> "<%= item['value_from'] %>"
       <% end %>
-      <% if object['value_to']: %>
-          <%- @T( 'to' ) %> "<%= object['value_to'] %>"
+      <% if item['value_to']: %>
+          <%- @T( 'to' ) %> "<%= item['value_to'] %>"
       <% end %>
     <% end %>
     </li>

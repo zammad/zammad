@@ -14,6 +14,7 @@ class Ticket::Article < ApplicationModel
   after_destroy :notify_clients_after_destroy
 
   activity_stream_support
+  history_support
 
   attr_accessor :attachments
 

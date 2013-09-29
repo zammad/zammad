@@ -7,7 +7,9 @@ class Ticket < ApplicationModel
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
+
   activity_stream_support :role => 'User'
+  history_support
 
   belongs_to    :group
   has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
@@ -118,9 +120,6 @@ returns
   end
 
   def destroy_dependencies
-
-    # delete history
-    History.remove( self.class.to_s, self.id )
 
     # delete articles
     self.articles.destroy_all

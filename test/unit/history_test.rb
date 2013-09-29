@@ -185,6 +185,7 @@ class HistoryTest < ActiveSupport::TestCase
             :firstname          => 'Bob',
             :lastname           => 'Smith',
             :email              => 'somebody@example.com',
+            :active             => true,
             :updated_by_id      => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
             :created_by_id      => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
           },
@@ -194,6 +195,7 @@ class HistoryTest < ActiveSupport::TestCase
             :firstname          => 'Bob',
             :lastname           => 'Master',
             :email              => 'master@example.com',          },
+            :active             => false,
         },
         :history_check => [
           {
@@ -206,6 +208,13 @@ class HistoryTest < ActiveSupport::TestCase
             :history_attribute => 'lastname',
             :value_from        => 'Smith',
             :value_to          => 'Master',
+          },
+          {
+            :history_object    => 'User',
+            :history_type      => 'updated',
+            :history_attribute => 'email',
+            :value_from        => 'somebody@example.com',
+            :value_to          => 'master@example.com',
           },
         ],
       },
@@ -323,29 +332,29 @@ class HistoryTest < ActiveSupport::TestCase
 #          puts '--------'
 #          puts history_item.inspect
 #          puts history_item.history_object.name
-        next if history_item.history_object.name != check_item[:history_object]
-        next if history_item.history_type.name != check_item[:history_type]
+        next if history_item['object'] != check_item[:history_object]
+        next if history_item['type'] != check_item[:history_type]
         if check_item[:history_attribute]
-          next if check_item[:history_attribute] != history_item.history_attribute.name
+          next if check_item[:history_attribute] != history_item['attribute']
         end
         match = true
-        if history_item.history_type.name == check_item[:history_type]
-          assert( true, "History type #{history_item.history_type.name} found!")
+        if history_item['type'] == check_item[:history_type]
+          assert( true, "History type #{history_item['type']} found!")
         end
         if check_item[:history_attribute]
-          assert_equal( check_item[:history_attribute], history_item.history_attribute.name, "check history attribute #{check_item[:history_attribute]}")
+          assert_equal( check_item[:history_attribute], history_item['attribute'], "check history attribute #{check_item[:history_attribute]}")
         end
         if check_item[:value_from]
-          assert_equal( check_item[:value_from], history_item.value_from, "check history :value_from #{history_item.value_from} ok")
+          assert_equal( check_item[:value_from], history_item['value_from'], "check history :value_from #{history_item['value_from']} ok")
         end
         if check_item[:value_to]
-          assert_equal( check_item[:value_to], history_item.value_to, "check history :value_to #{history_item.value_to} ok")
+          assert_equal( check_item[:value_to], history_item['value_to'], "check history :value_to #{history_item['value_to']} ok")
         end
         if check_item[:id_from]
-          assert_equal( check_item[:id_from], history_item.id_from, "check history :id_from #{history_item.id_from} ok")
+          assert_equal( check_item[:id_from], history_item['id_from'], "check history :id_from #{history_item['id_from']} ok")
         end
         if check_item[:id_to]
-          assert_equal( check_item[:id_to], history_item.id_to, "check history :id_to #{history_item.id_to} ok")
+          assert_equal( check_item[:id_to], history_item['id_to'], "check history :id_to #{history_item['id_to']} ok")
         end
       }
       assert( match, "history check not matched! #{check_item.inspect}")

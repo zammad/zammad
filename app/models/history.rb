@@ -36,6 +36,9 @@ add a new history entry for an object
 
   def self.add(data)
 
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     # lookups
     if data[:history_type]
       history_type = self.type_lookup( data[:history_type] )
@@ -50,7 +53,7 @@ add a new history entry for an object
     end
     history_attribute_id = nil
     if data[:history_attribute]
-      history_attribute = self.history_attribute_lookup( data[:history_attribute] )
+      history_attribute = self.attribute_lookup( data[:history_attribute] )
       history_attribute_id = history_attribute.id
     end
 
@@ -130,8 +133,40 @@ return all history entries of an object
       ).
       order('created_at ASC, id ASC')
     end
+    list = []
+    history.each do |item|
+      data = item.attributes
+      data['object']    = self.object_lookup_id( data['history_object_id'] ).name
+      data['type']      = self.type_lookup_id( data['history_type_id'] ).name
+      data.delete('history_object_id')
+      data.delete('history_type_id')
 
-    return history
+      if data['history_attribute_id']
+        data['attribute'] = self.attribute_lookup_id( data['history_attribute_id'] ).name
+      end
+      data.delete('history_attribute_id')
+
+      data.delete( 'updated_at' )
+      if data['id_to'] == nil && data['id_from'] == nil
+        data.delete( 'id_to' )
+        data.delete( 'id_from' )
+      end
+      if data['value_to'] == nil && data['value_from'] == nil
+        data.delete( 'value_to' )
+        data.delete( 'value_from' )
+      end
+      if data['related_history_object_id'] != nil
+        data['related_object'] = self.object_lookup_id( data['related_history_object_id'] ).name
+      end
+      data.delete( 'related_history_object_id' )
+
+      if data['related_o_id'] == nil
+        data.delete( 'related_o_id' )
+      end
+
+      list.push data
+    end
+    list
   end
 
   private
@@ -198,7 +233,18 @@ return all history entries of an object
     return history_object
   end
 
-  def self.history_attribute_lookup( name )
+  def self.attribute_lookup_id( id )
+
+    # use cache
+    return @@cache_attribute[ id ] if @@cache_attribute[ id ]
+
+    # lookup
+    history_attribute = History::Attribute.find(id)
+    @@cache_attribute[ id ] = history_attribute
+    return history_attribute
+  end
+
+  def self.attribute_lookup( name )
 
     # use cache
     return @@cache_attribute[ name ] if @@cache_attribute[ name ]

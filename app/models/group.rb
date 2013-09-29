@@ -5,5 +5,7 @@ class Group < ApplicationModel
   belongs_to               :email_address
   belongs_to               :signature
   validates                :name, :presence => true
+
   activity_stream_support  :role => 'Admin'
+  history_support
 end

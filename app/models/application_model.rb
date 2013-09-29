@@ -19,8 +19,14 @@ class ApplicationModel < ActiveRecord::Base
   after_update  :activity_stream_update
   after_destroy :activity_stream_destroy
 
+  after_create  :history_create
+  after_update  :history_update
+  after_destroy :history_destroy
+
   # create instance accessor
-  class << self; attr_accessor :activity_stream_support_config end
+  class << self
+    attr_accessor :activity_stream_support_config, :history_support_config
+  end
 
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
@@ -418,7 +424,7 @@ class OwnModel < ApplicationModel
 
 =begin
 
-serve methode to configure activity stream support for this model
+serve methode to configure and enable activity stream support for this model
 
 class Model < ApplicationModel
   activity_stream_support :role => 'Admin'
@@ -432,7 +438,7 @@ end
 
 =begin
 
-log object create activity stream
+log object create activity stream, if configured - will be executed automatically
 
   model = Model.find(123)
   model.activity_stream_create
@@ -445,7 +451,7 @@ log object create activity stream
 
 =begin
 
-log object update activity stream
+log object update activity stream, if configured - will be executed automatically
 
   model = Model.find(123)
   model.activity_stream_update
@@ -453,12 +459,13 @@ log object update activity stream
 =end
 
   def activity_stream_update
+    return if !self.changed?
     activity_stream_log( 'updated', self['updated_by_id'] )
   end
 
 =begin
 
-delete object activity stream
+delete object activity stream, will be executed automatically
 
   model = Model.find(123)
   model.activity_stream_destroy
@@ -471,15 +478,141 @@ delete object activity stream
 
 =begin
 
+serve methode to configure and enable history support for this model
+
+class Model < ApplicationModel
+  history_support
+end
+
+
+class Model < ApplicationModel
+  history_support :ignore_attributes => { :article_count => true }
+end
+
+=end
+
+  def self.history_support(data = {})
+    @history_support_config = data
+  end
+
+=begin
+
+log object create history, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.history_create
+
+=end
+
+  def history_create
+    return if !self.class.history_support_config
+#    puts self.changes.inspect
+    self.history_log( 'created', self.created_by_id )
+
+  end
+
+=begin
+
+log object update history with all updated attributes, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.history_update
+
+=end
+
+  def history_update
+    return if !self.class.history_support_config
+
+    return if !self.changed?
+
+    # return if it's no update
+    return if self.new_record?
+
+    # new record also triggers update, so ignore new records
+    changes = self.changes
+    return if changes['id'] && !changes['id'][0]
+    #puts 'updated' + self.changes.inspect
+
+    # TODO: Swop it to config file later
+    ignore_attributes = {
+      :created_at               => true,
+      :updated_at               => true,
+      :created_by_id            => true,
+      :updated_by_id            => true,
+      :article_count            => true,
+      :create_article_type_id   => true,
+      :create_article_sender_id => true,
+    }
+
+    changes.each {|key, value|
+
+      # do not log created_at and updated_at attributes
+      next if ignore_attributes[key.to_sym] == true
+
+      # get attribute name
+      attribute_name = key.to_s
+      if attribute_name[-3,3] == '_id'
+        attribute_name = attribute_name[ 0, attribute_name.length-3 ]
+      end
+      value_id = []
+      if key.to_s[-3,3] == '_id'
+        value_id[0] = value[0]
+        value_id[1] = value[1]
+
+        if self.respond_to?( attribute_name )
+          relation_class = self.send(attribute_name).class
+          if relation_class
+            relation_model = relation_class.lookup( :id => value_id[0] )
+            if relation_model
+              if relation_model['name']
+                value[0] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value[0] = relation_model.send('fullname')
+              end
+            end
+            relation_model = relation_class.lookup( :id => value_id[1] )
+            if relation_model
+              if relation_model['name']
+                value[1] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value[1] = relation_model.send('fullname')
+              end
+            end
+          end
+        end
+      end
+      data = {
+        :history_attribute      => attribute_name,
+        :value_from             => value[0],
+        :value_to               => value[1],
+        :id_from                => value_id[0],
+        :id_to                  => value_id[1],
+      }
+      #puts "HIST NEW " + data.inspect
+      self.history_log( 'updated', self.updated_by_id, data )
+    }
+  end
+
+=begin
+
+delete object history, will be executed automatically
+
+  model = Model.find(123)
+  model.history_destroy
+
+=end
+
+  def history_destroy
+    History.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
 destory object dependencies, will be executed automatically
 
 =end
 
   def destroy_dependencies
-
-    # delete history
-    History.remove( self.class.to_s, self.id )
-
   end
 
 end

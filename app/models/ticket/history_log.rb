@@ -15,7 +15,7 @@ returns
 
 =end
 
-  def history_create (type, user_id, data = {})
+  def history_log (type, user_id, data = {})
 
     data[:o_id]                   = self['id']
     data[:history_type]           = type
@@ -58,8 +58,25 @@ returns
 
 =end
 
-  def history_get
-    History.list( self.class.name, self['id'], 'Ticket::Article' )
+  def history_get(fulldata = false)
+    list = History.list( self.class.name, self['id'], 'Ticket::Article' )
+    return list if !fulldata
+
+    # get related objects
+    assets = {}
+    list.each {|item|
+      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      assets = record.assets(assets)
+
+      if item['related_object']
+        record = Kernel.const_get( item['related_object'] ).find( item['related_o_id'] )
+        assets = record.assets(assets)
+      end
+    }
+    return {
+      :history => list,
+      :assets  => assets,
+    }
   end
 
 end

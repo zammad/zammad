@@ -6,6 +6,8 @@ class Organization < ApplicationModel
 
   has_and_belongs_to_many  :users
   validates                :name, :presence => true
+
   activity_stream_support  :role => 'Admin'
+  history_support
 
 end

@@ -27,7 +27,6 @@ module Zammad
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers =
       'observer::_session',
-      'observer::_history',
       'observer::_ticket::_first_response',
       'observer::_ticket::_last_contact',
       'observer::_ticket::_close_time',

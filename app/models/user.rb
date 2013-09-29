@@ -20,6 +20,7 @@ class User < ApplicationModel
   store                   :preferences
 
   activity_stream_support  :role => 'Admin'
+  history_support
 
 =begin
 

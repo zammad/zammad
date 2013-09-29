@@ -9,6 +9,7 @@ class App.TicketHistory extends App.ControllerModal
     @fetch(@ticket_id)
 
   fetch: (@ticket_id) ->
+
     # get data
     @ajax(
       id:    'ticket_history',
@@ -19,18 +20,43 @@ class App.TicketHistory extends App.ControllerModal
         # load collections
         App.Event.trigger 'loadAssets', data.assets
 
-        # load history collections
-        App.History.deleteAll()
-        App.Collection.load( type: 'History', data: data.history )
 
         # render page
-        @render()
+        @render(data.history)
     )
 
-  render: ->
+  render: ( items, orderClass = '' ) ->
+
+    for item in items
+      if item.object is 'Ticket'
+        ticket = App.Ticket.find( item.o_id )
+        item.link = '#ticket/zoom/' + ticket.id
+        item.title = ticket.title
+        item.object = 'Ticket'
+
+      else if item.object is 'Ticket::Article'
+        article = App.TicketArticle.find( item.o_id )
+        ticket  = App.Ticket.find( article.ticket_id )
+        item.link = '#ticket/zoom/' + ticket.id + '/' + article.id
+        item.title = article.subject || ticket.title
+        item.object = 'Article'
+
+      else if item.object is 'User'
+        user = App.User.find( item.o_id )
+        item.link = '#user/zoom/' + item.o_id
+        item.title = user.displayName()
+        item.object = 'User'
+
+      item.created_by = App.User.find( item.created_by_id )
+
+    # set cache
+    @historyListCache = items
 
     @html App.view('agent_ticket_history')(
-      objects: App.History.search()
+      items: items
+      orderClass: orderClass
+
+      @historyListCache
     )
 
     @modalShow()
@@ -43,25 +69,9 @@ class App.TicketHistory extends App.ControllerModal
 
   sortorder: (e) ->
     e.preventDefault()
-    isSorted = @el.find('.sorted')
+    idDown = @el.find('[data-type="sortorder"]').hasClass('down')
 
-    if isSorted.length
-      @sortstate = 'notsorted'
-      @html App.view('agent_ticket_history')(
-        objects: App.History.search()
-        state:   @sortstate
-      )
+    if idDown
+      @render( @historyListCache, 'up' )
     else
-      @sortstate = 'sorted'
-      @html App.view('agent_ticket_history')(
-        objects: App.History.search().reverse()
-        state:   @sortstate
-      )
-
-    @modalShow()
-
-    # enable user popups
-    @userPopups()
-
-    # show frontend times
-    @delay( @frontendTimeUpdate, 200, 'ui-time-update' )
+      @render( @historyListCache.reverse(), 'down' )
