@@ -1,9 +1,13 @@
 class Sessions::Client
+
+  attr_accessor :last_change
+
   def initialize( client_id )
     @client_id = client_id
     @cache_key = ''
     @data = {}
     @pushed = {}
+    @last_change = {}
     self.log 'notify', "---client start ws connection---"
     self.fetch
     self.log 'notify', "---client exiting ws connection---"

@@ -1,5 +1,4 @@
 module Sessions::Backend::TicketOverviewList
-  @@last_change = {}
 
   def self.worker( user, worker )
     overviews = Ticket::Overviews.all(
@@ -30,13 +29,13 @@ module Sessions::Backend::TicketOverviewList
     overviews.each { |overview|
       cache_key = 'user_' + user.id.to_s + '_overview_data_' + overview.link
 
-      if !@@last_change[ user.id ]
-        @@last_change[ user.id ] = {}
+      if !client.last_change['overview_list']
+        client.last_change['overview_list'] = {}
       end
 
       overview_data_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-      if overview_data_time && @@last_change[ user.id ][overview.link] != overview_data_time
-        @@last_change[ user.id ][overview.link] = overview_data_time
+      if overview_data_time && client.last_change['overview_list'][overview.link] != overview_data_time
+        client.last_change['overview_list'][overview.link] = overview_data_time
         overview_data = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
         client.log 'notify', "push overview_data #{overview.link} for user #{user.id}"
         users = {}

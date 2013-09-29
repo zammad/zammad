@@ -1,5 +1,4 @@
 module Sessions::Backend::Rss
-  @@last_change = {}
 
   def self.worker( user, worker )
     cache_key = 'user_' + user.id.to_s + '_rss'
@@ -23,8 +22,8 @@ module Sessions::Backend::Rss
     cache_key = 'user_' + user.id.to_s + '_rss'
 
     rss_items_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-    if rss_items_time && @@last_change[ user.id ] != rss_items_time
-      @@last_change[ user.id ] = rss_items_time
+    if rss_items_time && client.last_change['rss'] != rss_items_time
+      client.last_change['rss'] = rss_items_time
       rss_items = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
       client.log 'notify', "push rss for user #{user.id}"
 

@@ -1,5 +1,4 @@
 module Sessions::Backend::TicketCreate
-  @@last_change = {}
 
   def self.worker( user, worker )
     cache_key = 'user_' + user.id.to_s + '_ticket_create_attributes'
@@ -22,8 +21,8 @@ module Sessions::Backend::TicketCreate
     cache_key = 'user_' + user.id.to_s + '_ticket_create_attributes'
 
     ticket_create_attributes_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-    if ticket_create_attributes_time && @@last_change[ user.id ] != ticket_create_attributes_time
-      @@last_change[ user.id ] = ticket_create_attributes_time
+    if ticket_create_attributes_time && client.last_change['ticket_create_attributes'] != ticket_create_attributes_time
+      client.last_change['ticket_create_attributes'] = ticket_create_attributes_time
       create_attributes = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
       users = {}
       create_attributes[:owner_id].each {|user_id|

@@ -1,5 +1,4 @@
 module Sessions::Backend::TicketOverviewIndex
-  @@last_change = {}
 
   def self.worker( user, worker )
     cache_key = 'user_' + user.id.to_s + '_overview'
@@ -22,8 +21,8 @@ module Sessions::Backend::TicketOverviewIndex
   def self.push( user, client )
     cache_key = 'user_' + user.id.to_s + '_overview'
     overview_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-    if overview_time && @@last_change[ user.id ] != overview_time
-      @@last_change[ user.id ] = overview_time
+    if overview_time && client.last_change['overview'] != overview_time
+      client.last_change['overview'] = overview_time
       overview = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
 
       client.log 'notify', "push overview for user #{user.id}"

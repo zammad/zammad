@@ -1,5 +1,4 @@
 module Sessions::Backend::ActivityStream
-  @@last_change = {}
 
   def self.worker( user, worker )
     cache_key = 'user_' + user.id.to_s + '_activity_stream'
@@ -21,8 +20,8 @@ module Sessions::Backend::ActivityStream
     cache_key = 'user_' + user.id.to_s + '_activity_stream'
 
     activity_stream_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-    if activity_stream_time && @@last_change[ user.id ] != activity_stream_time
-      @@last_change[ user.id ] = activity_stream_time
+    if activity_stream_time && client.last_change['activity_stream'] != activity_stream_time
+      client.last_change['activity_stream'] = activity_stream_time
       activity_stream = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
       client.log 'notify', "push activity_stream for user #{user.id}"
 

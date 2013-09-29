@@ -39,17 +39,17 @@ module Sessions::Backend::Collections
   def self.push( user, client )
 
     cache_key = 'user_' + user.id.to_s + '_push_collections'
-    if !@@last_change[ user.id ]
-      @@last_change[ user.id ] = {}
+    if !client.last_change['push_collections']
+      client.last_change['push_collections'] = {}
     end
 
     collections = Sessions::CacheIn.get( cache_key ) || {}
     collections.each { | key, v |
       collection_cache_key = 'user_' + user.id.to_s + '_push_collections_' + key.to_s
       collection_time = Sessions::CacheIn.get_time( collection_cache_key, { :ignore_expire => true } )
-      if collection_time && @@last_change[ user.id ][ key ] != collection_time
+      if collection_time && client.last_change['push_collections'][ key ] != collection_time
 
-        @@last_change[ user.id ][ key ] = collection_time
+        client.last_change['push_collections'][ key ] = collection_time
         push_collections = Sessions::CacheIn.get( collection_cache_key, { :ignore_expire => true } )
 
         client.log 'notify', "push push_collections #{key} for user #{user.id}"
