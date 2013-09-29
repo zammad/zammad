@@ -3,6 +3,7 @@
 class Ticket::Article < ApplicationModel
   include Ticket::Article::Assets
   include Ticket::Article::HistoryLog
+  include Ticket::Article::ActivityStreamLog
 
   belongs_to    :ticket
   belongs_to    :ticket_article_type,   :class_name => 'Ticket::Article::Type'
@@ -14,7 +15,11 @@ class Ticket::Article < ApplicationModel
   after_destroy :notify_clients_after_destroy
 
   activity_stream_support
-  history_support
+
+  history_support :ignore_attributes => {
+    :create_article_type_id   => true,
+    :create_article_sender_id => true,
+  }
 
   attr_accessor :attachments
 

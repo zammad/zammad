@@ -533,15 +533,12 @@ log object update history with all updated attributes, if configured - will be e
     #puts 'updated ' + self.changes.inspect
     return if changes['id'] && !changes['id'][0]
 
-    # TODO: Swop it to config file later
+    # default ignored attributes
     ignore_attributes = {
       :created_at               => true,
       :updated_at               => true,
       :created_by_id            => true,
       :updated_by_id            => true,
-      :article_count            => true,
-      :create_article_type_id   => true,
-      :create_article_sender_id => true,
     }
 
     changes.each {|key, value|
@@ -562,7 +559,7 @@ log object update history with all updated attributes, if configured - will be e
 
         if self.respond_to?( attribute_name )
           relation_class = self.send(attribute_name).class
-          if relation_class
+          if relation_class && value_id[0]
             relation_model = relation_class.lookup( :id => value_id[0] )
             if relation_model
               if relation_model['name']
@@ -571,6 +568,8 @@ log object update history with all updated attributes, if configured - will be e
                 value[0] = relation_model.send('fullname')
               end
             end
+          end
+          if relation_class && value_id[1]
             relation_model = relation_class.lookup( :id => value_id[1] )
             if relation_model
               if relation_model['name']

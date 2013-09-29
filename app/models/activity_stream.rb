@@ -35,10 +35,11 @@ add a new activity entry for an object
 
     role_id = nil
     if data[:role]
-      role_id = Role.lookup( :name => data[:role] )
-      if !role_id
+      role = Role.lookup( :name => data[:role] )
+      if !role
         raise "No such Role #{data[:role]}"
       end
+      role_id = role.id
     end
 
     # check if entry is needed
@@ -52,16 +53,18 @@ add a new activity entry for an object
 
     # resturn if old entry is really freash
     return result if result && result.created_at >= (data[:created_at] - 10.seconds)
-    puts "AS: #{data[:type]} #{data[:object]} #{data[:o_id]}"
 
     # create history
     record = {
       :o_id                        => data[:o_id],
       :activity_stream_type_id     => type.id,
       :activity_stream_object_id   => object.id,
+      :role_id                     => role_id,
+      :group_id                    => data[:group_id],
       :created_at                  => data[:created_at],
       :created_by_id               => data[:created_by_id]
     }
+
     ActivityStream.create(record)
   end
 
@@ -90,10 +93,22 @@ return all activity entries of an user
 =end
 
   def self.list(user,limit)
-#    stream = ActivityStream.where( :role_id => user.roles, :group_id => user.groups )
-    stream = ActivityStream.where('1=1').
-    order( 'created_at DESC, id DESC' ).
-    limit( limit )
+    role_ids = user.role_ids
+    group_ids = user.group_ids
+
+    # do not return an activity stream for custoers
+    customer_role = Role.lookup( :name => 'Customer' )
+
+    return [] if role_ids.include?(customer_role.id)
+    if group_ids.empty?
+      stream = ActivityStream.where('(role_id IN (?) AND group_id is NULL)', role_ids ).
+      order( 'created_at DESC, id DESC' ).
+      limit( limit )
+    else
+      stream = ActivityStream.where('(role_id IN (?) AND group_id is NULL) OR ( role_id IN (?) AND group_id IN (?) ) OR ( role_id is NULL AND group_id IN (?) )', role_ids, role_ids, group_ids, group_ids ).
+      order( 'created_at DESC, id DESC' ).
+      limit( limit )
+    end
     list = []
     stream.each do |item|
       data = item.attributes
@@ -114,7 +129,7 @@ return all activity entries of an user
     return @@cache_type[ id ] if @@cache_type[ id ]
 
     # lookup
-    type = ActivityStream::Type.find(id)
+    type = ActivityStream::Type.lookup( :id => id )
     @@cache_type[ id ] = type
     type
   end
@@ -125,7 +140,7 @@ return all activity entries of an user
     return @@cache_type[ name ] if @@cache_type[ name ]
 
     # lookup
-    type = ActivityStream::Type.where( :name => name ).first
+    type = ActivityStream::Type.lookup( :name => name )
     if type
       @@cache_type[ name ] = type
       return type
@@ -145,7 +160,7 @@ return all activity entries of an user
     return @@cache_object[ id ] if @@cache_object[ id ]
 
     # lookup
-    object = ActivityStream::Object.find(id)
+    object = ActivityStream::Object.lookup( :id => id )
     @@cache_object[ id ] = object
     object
   end
@@ -156,7 +171,7 @@ return all activity entries of an user
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    object = ActivityStream::Object.where( :name => name ).first
+    object = ActivityStream::Object.lookup( :name => name )
     if object
       @@cache_object[ name ] = object
       return object

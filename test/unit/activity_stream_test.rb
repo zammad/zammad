@@ -2,6 +2,21 @@
 require 'test_helper'
 
 class ActivityStreamTest < ActiveSupport::TestCase
+  role  = Role.lookup( :name => 'Admin' )
+  group = Group.lookup( :name => 'Users' )
+  user = User.create_or_update(
+    :login         => 'admin',
+    :firstname     => 'Bob',
+    :lastname      => 'Smith',
+    :email         => 'bob@example.com',
+    :password      => 'some_pass',
+    :active        => true,
+    :role_ids      => [role.id],
+    :group_ids     => [group.id],
+    :updated_by_id => 1,
+    :created_by_id => 1
+  )
+
   test 'ticket+user' do
     tests = [
 
@@ -78,7 +93,9 @@ class ActivityStreamTest < ActiveSupport::TestCase
         # update ticket
         if test[:update][:ticket]
           ticket.update_attributes( test[:update][:ticket] )
-          test[:check][2][:o_id]          = ticket.id
+
+          # check updated user
+          test[:check][2][:o_id]          = User.lookup( :login => 'nicole.braun@zammad.org' ).id
           test[:check][2][:created_at]    = ticket.created_at
           test[:check][2][:created_by_id] = User.lookup( :login => 'nicole.braun@zammad.org' ).id
         end
@@ -91,7 +108,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       tickets.push ticket
 
       # check activity_stream
-      activity_stream_check( User.find(1).activity_stream(3), test[:check] )
+      activity_stream_check( user.activity_stream(3), test[:check] )
     }
 
     # delete tickets
@@ -164,7 +181,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       organizations.push organization
 
       # check activity_stream
-      activity_stream_check( User.find(1).activity_stream(2), test[:check] )
+      activity_stream_check( user.activity_stream(2), test[:check] )
     }
 
     # delete tickets
@@ -178,6 +195,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
 
   def activity_stream_check( activity_stream_list, checks )
+    puts 'AS ' + activity_stream_list.inspect
     checks.each { |check_item|
 #        puts '+++++++++++'
 #        puts check_item.inspect

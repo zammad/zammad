@@ -1,13 +1,13 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-module ApplicationModel::ActivityStreamBase
+module Ticket::ActivityStreamLog
 
 =begin
 
 log activity for this object
 
-  article = Ticket::Article.find(123)
-  result = article.activity_stream_log( 'created', user_id )
+  ticket = Ticket.find(123)
+  result = ticket.activity_stream_log( 'created', user_id )
 
 returns
 
