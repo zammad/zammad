@@ -77,9 +77,9 @@ class RecentView < ApplicationModel
     return @@cache_object[ id ] if @@cache_object[ id ]
 
     # lookup
-    history_object = RecentView::Object.find(id)
+    history_object = RecentView::Object.lookup( :id => id )
     @@cache_object[ id ] = history_object
-    return history_object
+    history_object
   end
 
   def self.object_lookup( name )
@@ -88,7 +88,7 @@ class RecentView < ApplicationModel
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    recent_view_object = RecentView::Object.where( :name => name ).first
+    recent_view_object = RecentView::Object.lookup( :name => name )
     if recent_view_object
       @@cache_object[ name ] = recent_view_object
       return recent_view_object
@@ -99,7 +99,7 @@ class RecentView < ApplicationModel
       :name => name
     )
     @@cache_object[ name ] = recent_view_object
-    return recent_view_object
+    recent_view_object
   end
 
   class Object < ApplicationModel
