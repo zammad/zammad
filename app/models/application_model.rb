@@ -475,6 +475,7 @@ delete object activity stream, will be executed automatically
 =end
 
   def activity_stream_destroy
+    return if !@activity_stream_support_config
     ActivityStream.remove( self.class.to_s, self.id )
   end
 
@@ -620,6 +621,7 @@ delete object history, will be executed automatically
 =end
 
   def history_destroy
+    return if !@history_support_config
     History.remove( self.class.to_s, self.id )
   end
 
