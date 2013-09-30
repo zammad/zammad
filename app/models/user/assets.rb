@@ -22,11 +22,17 @@ returns
 
   def assets (data)
 
-    if !data[:users]
-      data[:users] = {}
+    if !data[ User.to_app_model ]
+      data[ User.to_app_model ] = {}
     end
-    if !data[:users][ self.id ]
-      data[:users][ self.id ] = User.user_data_full( self.id )
+    if !data[ User.to_app_model ][ self.id ]
+      data[ User.to_app_model ][ self.id ] = User.user_data_full( self.id )
+    end
+    if !data[ User.to_app_model ][ self['created_by_id'] ]
+      data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
+    end
+    if !data[ User.to_app_model ][ self['updated_by_id'] ]
+      data[ User.to_app_model ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
     end
     data
   end

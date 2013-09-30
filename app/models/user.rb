@@ -19,6 +19,9 @@ class User < ApplicationModel
 
   store                   :preferences
 
+  activity_stream_support  :role => 'Admin'
+  history_support
+
 =begin
 
 fullname of user
@@ -43,7 +46,7 @@ returns
       end
       fullname = fullname + self.lastname
     end
-    return fullname
+    fullname
   end
 
 =begin
@@ -64,6 +67,52 @@ returns
       return role if role.name == role_name
     }
     return false
+  end
+
+=begin
+
+get users activity stream
+
+  user = User.find(123)
+  result = user.activity_stream( 20 )
+
+returns
+
+  result = [
+    {
+      :id            =>2,
+      :o_id          =>2,
+      :created_by_id => 3,
+      :created_at    => '2013-09-28 00:57:21',
+      :object        => "User",
+      :type          => "created",
+    },
+    {
+      :id            =>2,
+      :o_id          =>2,
+      :created_by_id => 3,
+      :created_at    => '2013-09-28 00:59:21',
+      :object        => "User",
+      :type          => "updated",
+    },
+  ]
+
+=end
+
+  def activity_stream( limit, fulldata = false )
+    activity_stream = ActivityStream.list( self, limit )
+    return activity_stream if !fulldata
+
+    # get related objects
+    assets = {}
+    activity_stream.each {|item|
+      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      assets = record.assets(assets)
+    }
+    return {
+      :activity_stream => activity_stream,
+      :assets          => assets,
+    }
   end
 
 =begin

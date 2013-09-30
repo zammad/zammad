@@ -130,53 +130,11 @@ class TicketsController < ApplicationController
     return if !ticket_permission( ticket )
 
     # get history of ticket
-    history = History.list( 'Ticket', params[:id], 'Ticket::Article' )
+    history = ticket.history_get(true)
 
-    # get related assets
-    assets = ticket.assets({})
-    history_list = []
-    history.each do |item|
-
-      assets = item.assets(assets)
-
-      item_tmp = item.attributes
-      if item['history_object'] == 'Ticket::Article'
-        item_temp['type'] = 'Article ' + item['type'].to_s
-      else
-        item_tmp['type'] = 'Ticket ' + item['type'].to_s
-      end
-      item_tmp['history_type'] = item.history_type.name
-      item_tmp['history_object'] = item.history_object.name
-      if item.history_attribute
-       item_tmp['history_attribute'] = item.history_attribute.name
-      end
-      item_tmp.delete( 'history_attribute_id' )
-      item_tmp.delete( 'history_object_id' )
-      item_tmp.delete( 'history_type_id' )
-      item_tmp.delete( 'o_id' )
-      item_tmp.delete( 'updated_at' )
-      if item_tmp['id_to'] == nil && item_tmp['id_from'] == nil
-        item_tmp.delete( 'id_to' )
-        item_tmp.delete( 'id_from' )
-      end
-      if item_tmp['value_to'] == nil && item_tmp['value_from'] == nil
-        item_tmp.delete( 'value_to' )
-        item_tmp.delete( 'value_from' )
-      end
-      if item_tmp['related_history_object_id'] == nil
-        item_tmp.delete( 'related_history_object_id' )
-      end
-      if item_tmp['related_o_id'] == nil
-        item_tmp.delete( 'related_o_id' )
-      end
-      history_list.push item_tmp
-    end
 
     # return result
-    render :json => {
-      :assets   => assets,
-      :history  => history_list,
-    }
+    render :json => history
   end
 
   # GET /api/v1/ticket_merge_list/1
@@ -304,22 +262,22 @@ class TicketsController < ApplicationController
 
     # get related users
     assets = {}
-    assets[:users] = {}
+    assets[ User.to_app_model ] = {}
     assets = ticket.assets(assets)
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
 
     attributes_to_change[:owner_id].each { |user_id|
-      if !assets[:users][user_id]
-        assets[:users][user_id] = User.user_data_full( user_id )
+      if !assets[ User.to_app_model ][user_id]
+        assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
       end
     }
 
     attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
       user_ids.each {|user_id|
-        if !assets[:users][user_id]
-          assets[:users][user_id] = User.user_data_full( user_id )
+        if !assets[ User.to_app_model ][user_id]
+          assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
         end
       }
     }
@@ -362,17 +320,17 @@ class TicketsController < ApplicationController
     )
 
     assets = {}
-    assets[:users] = {}
+    assets[ User.to_app_model ] = {}
     attributes_to_change[:owner_id].each { |user_id|
-      if !assets[:users][user_id]
-        assets[:users][user_id] = User.user_data_full( user_id )
+      if !assets[ User.to_app_model ][user_id]
+        assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
       end
     }
 
     attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
       user_ids.each {|user_id|
-        if !assets[:users][user_id]
-          assets[:users][user_id] = User.user_data_full( user_id )
+        if !assets[ User.to_app_model ][user_id]
+          assets[ User.to_app_model ][user_id] = User.user_data_full( user_id )
         end
       }
     }
@@ -387,8 +345,8 @@ class TicketsController < ApplicationController
       owner_ids = []
       ticket.agent_of_group.each { |user|
         owner_ids.push user.id
-        if !assets[:users][user.id]
-          assets[:users][user.id] = User.user_data_full( user.id )
+        if !assets[ User.to_app_model ][user.id]
+          assets[ User.to_app_model ][user.id] = User.user_data_full( user.id )
         end
       }
 

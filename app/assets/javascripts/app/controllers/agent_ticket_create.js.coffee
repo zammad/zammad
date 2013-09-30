@@ -191,15 +191,15 @@ class App.TicketCreate extends App.Controller
     @el.find('textarea').trigger('change')
 
     # show template UI
-    new App.TemplateUI(
-      el:          @el.find('[data-id="ticket_template"]')
+    new App.WidgetTemplate(
+      el:          @el.find('.ticket_template')
       template_id: template['id']
     )
 
     @formDefault = @formParam( @el.find('.ticket-create') )
 
     # show text module UI
-    @textModule = new App.TextModuleUI(
+    @textModule = new App.WidgetTextModule(
       el: @el.find('.ticket-create').find('textarea')
     )
 
@@ -217,7 +217,7 @@ class App.TicketCreate extends App.Controller
 
     @userInfo(
       user_id:  params.customer_id
-      el:       @el.find('[data-id="customer_info"]')
+      el:       @el.find('.customer_info')
       callback: callback
     )
 

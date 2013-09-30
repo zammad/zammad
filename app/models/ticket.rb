@@ -1,12 +1,26 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket < ApplicationModel
+  include Ticket::Escalation
+  include Ticket::Subject
+  include Ticket::Permission
+  include Ticket::Assets
+  include Ticket::HistoryLog
+  include Ticket::ActivityStreamLog
+  extend Ticket::Search
+
   before_create   :check_generate, :check_defaults
   before_update   :check_defaults
   before_destroy  :destroy_dependencies
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
+
+  activity_stream_support
+
+  history_support :ignore_attributes => {
+    :article_count => true,
+  }
 
   belongs_to    :group
   has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
@@ -18,12 +32,6 @@ class Ticket < ApplicationModel
   belongs_to    :created_by,            :class_name => 'User'
   belongs_to    :create_article_type,   :class_name => 'Ticket::Article::Type'
   belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
-
-  include Ticket::Escalation
-  include Ticket::Subject
-  include Ticket::Permission
-  include Ticket::Assets
-  extend Ticket::Search
 
   attr_accessor :callback_loop
 
@@ -116,9 +124,6 @@ returns
   end
 
   def destroy_dependencies
-
-    # delete history
-    History.remove( 'Ticket', self.id )
 
     # delete articles
     self.articles.destroy_all

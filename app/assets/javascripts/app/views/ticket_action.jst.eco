@@ -1,8 +1,0 @@
-<div class="well">
-  <h3><%- @T( 'Actions' ) %></h3>
-  <ul>
-    <li><a href="#" data-type="history"><%- @T( 'History' ) %></a></li>
-    <li><a href="#" data-type="merge"><%- @T( 'Merge' ) %></a></li>
-    <li><a href="#" data-type="customer"><%- @T( 'Change Customer' ) %></a></li>
-  </ul>
-</div>

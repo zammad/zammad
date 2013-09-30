@@ -20,6 +20,9 @@ class App.Ticket extends App.Model
       { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
     ]
 
+  uiUrl: ->
+    '#ticket/zoom/' + @id
+
   @_fillUp: (data) ->
 
     # priority

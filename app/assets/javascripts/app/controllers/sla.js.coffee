@@ -1,10 +1,10 @@
 class Index extends App.ControllerContent
   constructor: ->
     super
-    
+
     # check authentication
     return if !@authenticate()
-    
+
     new App.ControllerGenericIndex(
       el: @el,
       id: @id,
@@ -24,6 +24,4 @@ class Index extends App.ControllerContent
       },
     )
 
-App.Config.set( 'slas', Index, 'Routes' )
-App.Config.set( 'Sla', { prio: 2900, parent: '#admin', name: 'SLAs', target: '#slas', role: ['Admin'] }, 'NavBar' )
-
+App.Config.set( 'Sla', { prio: 2900, name: 'SLAs', parent: '#manage', target: '#manage/slas', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

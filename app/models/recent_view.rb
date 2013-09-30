@@ -8,7 +8,7 @@ class RecentView < ApplicationModel
   def self.log( object, user )
 
     # lookups
-    recent_view_object = self.recent_view_object_lookup( object.class.to_s )
+    recent_view_object = self.object_lookup( object.class.to_s )
 
     # create entry
     record = {
@@ -33,7 +33,7 @@ class RecentView < ApplicationModel
     list = []
     recent_views.each { |item|
       data = item.attributes
-      data['recent_view_object'] = self.recent_view_object_lookup_id( data['recent_view_object_id'] ).name
+      data['recent_view_object'] = self.object_lookup_id( data['recent_view_object_id'] ).name
       data.delete( 'history_object_id' )
       list.push data
     }
@@ -71,24 +71,24 @@ class RecentView < ApplicationModel
 
   private
 
-  def self.recent_view_object_lookup_id( id )
+  def self.object_lookup_id( id )
 
     # use cache
     return @@cache_object[ id ] if @@cache_object[ id ]
 
     # lookup
-    history_object = RecentView::Object.find(id)
+    history_object = RecentView::Object.lookup( :id => id )
     @@cache_object[ id ] = history_object
-    return history_object
+    history_object
   end
 
-  def self.recent_view_object_lookup( name )
+  def self.object_lookup( name )
 
     # use cache
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    recent_view_object = RecentView::Object.where( :name => name ).first
+    recent_view_object = RecentView::Object.lookup( :name => name )
     if recent_view_object
       @@cache_object[ name ] = recent_view_object
       return recent_view_object
@@ -99,7 +99,7 @@ class RecentView < ApplicationModel
       :name => name
     )
     @@cache_object[ name ] = recent_view_object
-    return recent_view_object
+    recent_view_object
   end
 
   class Object < ApplicationModel

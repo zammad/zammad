@@ -199,6 +199,26 @@ class DestroyConfirm extends App.ControllerModal
     @modalHide()
     @item.destroy()
 
+class App.ControllerDrox extends App.Controller
+  constructor: (params) ->
+    super
+
+    if params.data && ( params.data.text || params.data.html )
+      @inline(params.data)
+
+  inline: (data) ->
+    @html App.view('generic/drox')(data)
+    if data.text
+      @el.find('.drox-body').text(data.text)
+    if data.html
+      @el.find('.drox-body').html(data.html)
+
+  template: (data) ->
+    drox = $( App.view('generic/drox')(data) )
+    content = App.view(data.file)(data.params)
+    drox.find('.drox-body').append(content)
+    drox
+
 class App.ControllerLevel2 extends App.ControllerContent
   events:
     'click [data-toggle="tabnav"]': 'toggle',
@@ -261,3 +281,66 @@ class App.ControllerTabs extends App.Controller
         new tab.controller( params )
 
     @el.find('.tab-content .tab-pane:first').addClass('active')
+
+class App.ControllerNavSidbar extends App.ControllerContent
+  constructor: (params) ->
+    super
+
+    # get groups
+    groups = App.Config.get(@configKey)
+    groupsUnsorted = []
+    for key, value of groups
+      if !value.controller
+        groupsUnsorted.push value
+
+    @groupsSorted = _.sortBy( groupsUnsorted, (item) -> return item.prio )
+
+    # get items of group
+    for group in @groupsSorted
+      items = App.Config.get(@configKey)
+      itemsUnsorted = []
+      for key, value of items
+        if value.controller
+          if value.parent is group.target
+            itemsUnsorted.push value
+
+      group.items = _.sortBy( itemsUnsorted, (item) -> return item.prio )
+
+
+    # set active item
+    selectedItem = undefined
+    for group in @groupsSorted
+      if group.items
+        for item in group.items
+          if !@target && !selectedItem
+            item.active = true
+            selectedItem = item
+          else if @target && item.target is window.location.hash
+            item.active = true
+            selectedItem = item
+          else
+            item.active = false
+
+    @render(selectedItem)
+
+    if selectedItem
+      new selectedItem.controller(
+        el: @el.find('.main')
+      )
+
+    @bind(
+      'ui:rerender'
+      =>
+        @render(selectedItem, true)
+    )
+
+  render: (selectedItem, force) ->
+    if !$( '.' + @configKey )[0] || force
+      @html App.view('generic/navbar_l2')(
+        groups:     @groupsSorted
+        className:  @configKey
+      )
+    if selectedItem
+      @el.find('li').removeClass('active')
+      @el.find('a[href="' + selectedItem.target + '"]').parent().addClass('active')
+

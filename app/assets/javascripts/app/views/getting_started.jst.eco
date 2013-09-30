@@ -10,22 +10,22 @@
         </ol>
       </div>
     </div>
-    <div class="row">
+    <div class="hero-two clearfix">
     <% if @master_user: %>
-      <div class="span6 master_user">
-        <h2><%- @T( 'Master Agent' ) %></h2>
-        <form class="form-stacked" id="form-master">
+      <div class="master_user hero-left">
+        <h2><%- @T( 'Create Admin' ) %></h2>
+        <form class="form-stacked form-large" id="form-master">
           <button type="submit" class="btn btn-primary submit"><%- @T( 'Next...' ) %></button>
         </form>
       </div>
     <% end %>
-      <div class="span6 agent_user hide">
+      <div class="agent_user hero-left hide">
         <h2><%- @T( 'Invite Agents' ) %></h2>
-        <form class="form-stacked" id="form-agent">
+        <form class="form-stacked form-large" id="form-agent">
           <button type="submit" class="btn btn-primary submit"><%- @T( 'Send invitation' ) %></button>
         </form>
       </div>
-      <div class="span6">
+      <div class="hero-right">
         <h2><%- @T( 'Tour' ) %></h2>
         <p>
           <%- @T( 'Learn all about ...' ) %>

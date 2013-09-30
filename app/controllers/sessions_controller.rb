@@ -1,9 +1,6 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class SessionsController < ApplicationController
-  #  def create
-  #    render :text => request.env['rack.auth'].inspect
-  #  end
 
   # "Create" a login, aka "log the user in"
   def create
@@ -16,6 +13,8 @@ class SessionsController < ApplicationController
       render :json => { :error => 'login failed' }, :status => :unauthorized
       return
     end
+
+    user.activity_stream_log( 'session started', user.id )
 
     # auto population of default collections
     default_collection = SessionHelper::default_collections(user)
@@ -163,8 +162,8 @@ class SessionsController < ApplicationController
       end
     }
     render :json => {
-      :sessions => sessions_clean,
-      :users    => users,
+      :sessions                   => sessions_clean,
+      User.to_app_model => users,
     }
   end
 

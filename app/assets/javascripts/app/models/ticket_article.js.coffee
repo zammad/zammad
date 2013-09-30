@@ -14,6 +14,9 @@ class App.TicketArticle extends App.Model
       { name: 'internal',                 display: 'Visibility', tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium' },
     ]
 
+  uiUrl: ->
+    '#ticket/zoom/' + @ticket_id + '/' + @id
+
   @_fillUp: (data) ->
 
     # add created & updated

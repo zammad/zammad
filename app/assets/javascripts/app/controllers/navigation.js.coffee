@@ -35,6 +35,13 @@ class App.Navigation extends App.Controller
       @recent_viewed_build(data)
       @render()
 
+    # bell on / bell off
+    @bind 'bell', (data) =>
+      if data is 'on'
+        @el.find('.bell').addClass('show')
+      else
+        @el.find('.bell').removeClass('show')
+
   render: () ->
     user      = App.Session.all()
     nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )
@@ -66,13 +73,13 @@ class App.Navigation extends App.Controller
     )
 
     # start ticket popups
-    @ticketPopups('right')
+    @ticketPopups('left')
 
     # start user popups
-    @userPopups('right')
+    @userPopups('left')
 
     # start oorganization popups
-    @organizationPopups('right')
+    @organizationPopups('left')
 
     # set focus to search box
     if @searchFocus
@@ -105,8 +112,8 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
                   id:       ticket.id
-                  class:    "ticket-data"
-                  url:      "#ticket/zoom/#{ticket.id}"
+                  class:    "ticket-popover"
+                  url:      ticket.uiUrl()
                 area.result.push data
             else if area.name is 'User'
               area.result = []
@@ -115,8 +122,8 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "#{user.displayName()}"
                   id:       user.id
-                  class:    "user-data"
-                  url:      "#users/#{user.id}"
+                  class:    "user-popover"
+                  url:      user.uiUrl()
                 area.result.push data
             else if area.name is 'Organization'
               area.result = []
@@ -125,8 +132,8 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "#{organization.displayName()}"
                   id:       organization.id
-                  class:    "organization-data"
-                  url:      "#organizations/#{ticket.id}"
+                  class:    "organization-popover"
+                  url:      organization.uiUrl()
                 area.result.push data
 
           if @result
@@ -263,8 +270,8 @@ class App.Navigation extends App.Controller
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
 
   ticket_overview_build: (data) =>
-
     App.Store.write( 'navupdate_ticket_overview', data )
+    return
 
     # remove old views
     NavBar = @Config.get( 'NavBar' ) || {}
@@ -313,11 +320,11 @@ class App.Navigation extends App.Controller
       ticket = App.Ticket.find( item.o_id )
       prio++
       NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
-        prio:      prio,
-        parent:    '#current_user',
-        name:      item.recent_view_object + ' (' + ticket.title + ')',
-        target:    '#ticket/zoom/' + ticket.id,
-        divider:   divider,
+        prio:      prio
+        parent:    '#current_user'
+        name:      item.recent_view_object + ' (' + ticket.title + ')'
+        target:    ticket.uiUrl()
+        divider:   divider
         navheader: navheader
       }
 

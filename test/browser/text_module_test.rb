@@ -16,11 +16,11 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#text_modules"]',
+            :css     => 'a[href="#manage/text_modules"]',
           },
           {
             :execute => 'click',
@@ -28,17 +28,17 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'input[name=name]',
+            :css     => '.modal input[name=name]',
             :value   => 'some name' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="keywords"]',
+            :css     => '.modal input[name="keywords"]',
             :value   => random,
           },
           {
             :execute => 'set',
-            :css     => 'textarea[name="content"]',
+            :css     => '.modal textarea[name="content"]',
             :value   => 'some content' + random,
           },
           {
@@ -62,11 +62,11 @@ class TextModuleTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#text_modules"]',
+            :css     => 'a[href="#manage/text_modules"]',
           },
           {
             :execute => 'click',
@@ -74,17 +74,17 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'input[name=name]',
+            :css     => '.modal input[name=name]',
             :value   => 'some name' + random2,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="keywords"]',
+            :css     => '.modal input[name="keywords"]',
             :value   => random2,
           },
           {
             :execute => 'set',
-            :css     => 'textarea[name="content"]',
+            :css     => '.modal textarea[name="content"]',
             :value   => 'some content' + random2,
           },
           {
@@ -208,12 +208,12 @@ class TextModuleTest < TestCase
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#text_modules"]',
+            :css     => 'a[href="#manage/text_modules"]',
           },
           {
             :where   => :instance1,
@@ -223,19 +223,19 @@ class TextModuleTest < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'input[name=name]',
+            :css     => '.modal input[name=name]',
             :value   => 'some name' + random,
           },
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'input[name="keywords"]',
+            :css     => '.modal input[name="keywords"]',
             :value   => random,
           },
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => 'textarea[name="content"]',
+            :css     => '.modal textarea[name="content"]',
             :value   => 'some content <%= @ticket.customer.lastname %>' + random,
           },
           {

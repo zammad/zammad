@@ -1,5 +1,0 @@
-<% for ticket in @tickets: %>
-  <div class="row">
-    <div class="customer-info"><a href="#ticket/zoom/<%= ticket.id %>" title="<%= ticket.title %>">T:<%= ticket.number %></a> <span title="<%= ticket.created_at_short %>"><%= ticket.humanTime %></span><br/><%= ticket.title %></div>
-  </div>
-<% end %>

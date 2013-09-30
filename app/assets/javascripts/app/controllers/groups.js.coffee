@@ -24,6 +24,4 @@ class Index extends App.ControllerContent
       },
     )
 
-App.Config.set( 'groups', Index, 'Routes' )
-
-App.Config.set( 'Group', { prio: 1500, parent: '#admin', name: 'Groups', target: '#groups', role: ['Admin'] }, 'NavBar' )
+App.Config.set( 'Group', { prio: 1500, name: 'Groups', parent: '#manage', target: '#manage/groups', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

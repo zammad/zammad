@@ -1,73 +1,74 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#/"><%- @C( 'product_name' ) %></a>
-        <ul class="nav">
-          <% for item in @navbar_left: %>
-            <% if item.child: %>
-            <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
-              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <% for item in item.child: %>
-                  <% if item.divider: %>
-                  <li class="divider"></li>
-                  <% end %>
-                  <% if item.navheader: %>
-                  <li class="nav-header"><%- @T( item.navheader ) %></li>
-                  <% end %>
-                  <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count pull-right"><%= item['count'] %></span><% end %></a></li>
-                <% end %>
-              </ul>
-            </li>
-            <% else: %>
-            <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
-            <% end %>
+  <a class="navbar-brand" href="#/"><%- @C( 'product_name' ) %></a>
+  <ul class="nav navbar-nav">
+  <% for item in @navbar_left: %>
+    <% if item.child: %>
+    <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
+      <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% for item in item.child: %>
+          <% if item.divider: %>
+            <li class="divider"></li>
           <% end %>
+          <% if item.navheader: %>
+            <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+          <% end %>
+          <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count pull-right"><%= item['count'] %></span><% end %></a></li>
+        <% end %>
+      </ul>
+    </li>
+    <% else: %>
+      <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
+    <% end %>
+  <% end %>
 
-          <li class="dropdown <% if @result[0] : %>open<% end %>">
-            <form class="navbar-search">
-              <input id="global-search" class="search-query" type="search" value="<%= @search %>" placeholder="<%- @Ti( 'Search' ) %>" autocomplete="off"/>
-            </form>
-            <ul class="dropdown-menu" style="margin-right: 22px;">
-              <% for area in @result: %>
-                <li class="divider" style="padding: 2px 10px; height: auto; margin: 4px 0px;"><%- @T( area.name ) %></li>
-                <% for item in area.result: %>
-                  <li><a href="<%- item.url %>" class="<%= item.class %>" data-id="<%= item.id %>" style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= item.display %></a></li>
-                <% end %>
-              <% end %>
-            </ul>
-          </li>
-          
-        </ul>
-        <div class="spinner"/>
-<% if @user: %>
-        <ul class="nav pull-right">
-        <% for item in @navbar_right: %>
-          <% if item.child: %>
-            <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
-              <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <% for item in item.child: %>
-                  <% if item.divider: %>
-                  <li class="divider"></li>
-                  <% end %>
-                  <% if item.navheader: %>
-                  <li class="nav-header"><%- @T( item.navheader ) %></li>
-                  <% end %>
-                  <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count pull-right"><%= item['count'] %>)</span><% end %></a></li>
-                <% end %>
-              </ul>
-            </li>
-            <% else: %>
-            <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
-            <% end %>
+  </ul>
+  <div class="spinner"/>
+<% if !_.isEmpty(@user): %>
+  <ul class="nav navbar-nav pull-right">
+
+    <li class="dropdown <% if @result[0] : %>open<% end %>">
+      <form class="navbar-form">
+        <input id="global-search" class="form-control" type="search" value="<%= @search %>" placeholder="<%- @Ti( 'Search' ) %>" autocomplete="off"/>
+      </form>
+      <ul class="dropdown-menu">
+        <% for area in @result: %>
+          <li class="divider" style="padding: 2px 10px; height: auto; margin: 4px 0px;"><%- @T( area.name ) %></li>
+          <% for item in area.result: %>
+            <li><a href="<%- item.url %>" class="<%= item.class %>" data-id="<%= item.id %>" style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= item.display %></a></li>
           <% end %>
-        </ul>
+        <% end %>
+      </ul>
+    </li>
+
+    <li class="bell"><a href="#bell" class="glyphicon glyphicon-bell"></a></li>
+
+    <% for item in @navbar_right: %>
+      <% if item.child: %>
+        <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
+          <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <% for item in item.child: %>
+              <% if item.divider: %>
+                <li class="divider"></li>
+              <% end %>
+              <% if item.navheader: %>
+                <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+              <% end %>
+              <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count pull-right"><%= item['count'] %>)</span><% end %></a></li>
+            <% end %>
+          </ul>
+        </li>
+      <% else: %>
+        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
+      <% end %>
+    <% end %>
+  </ul>
 <% else: %>
-        <ul class="nav pull-right">
-          <li><a href="#login"><%- @T( 'Sign in' ) %></a></li>
-        </ul>
+  <!--
+  <ul class="nav navbar-nav pull-right">
+    <li><a href="#login"><%- @T( 'Sign in' ) %></a></li>
+  </ul>
+  -->
 <% end %>
-    </div>
-  </div>
 </div>

@@ -9,6 +9,7 @@ class App.TicketHistory extends App.ControllerModal
     @fetch(@ticket_id)
 
   fetch: (@ticket_id) ->
+
     # get data
     @ajax(
       id:    'ticket_history',
@@ -19,18 +20,40 @@ class App.TicketHistory extends App.ControllerModal
         # load collections
         App.Event.trigger 'loadAssets', data.assets
 
-        # load history collections
-        App.History.deleteAll()
-        App.Collection.load( type: 'History', data: data.history )
 
         # render page
-        @render()
+        @render(data.history)
     )
 
-  render: ->
+  render: ( items, orderClass = '' ) ->
+
+    for item in items
+
+      item.link  = ''
+      item.title = '???'
+
+      if item.object is 'Ticket::Article'
+        item.object = 'Article'
+        article = App.TicketArticle.find( item.o_id )
+        ticket  = App.Ticket.find( article.ticket_id )
+        item.title = article.subject || ticket.title
+        item.link  = article.uiUrl()
+
+      if App[item.object]
+        object     = App[item.object].find( item.o_id )
+        item.link  = object.uiUrl()
+        item.title = object.displayName()
+
+      item.created_by = App.User.find( item.created_by_id )
+
+    # set cache
+    @historyListCache = items
 
     @html App.view('agent_ticket_history')(
-      objects: App.History.search()
+      items: items
+      orderClass: orderClass
+
+      @historyListCache
     )
 
     @modalShow()
@@ -43,25 +66,9 @@ class App.TicketHistory extends App.ControllerModal
 
   sortorder: (e) ->
     e.preventDefault()
-    isSorted = @el.find('.sorted')
+    isDown = @el.find('[data-type="sortorder"]').hasClass('down')
 
-    if isSorted.length
-      @sortstate = 'notsorted'
-      @html App.view('agent_ticket_history')(
-        objects: App.History.search()
-        state:   @sortstate
-      )
+    if isDown
+      @render( @historyListCache, 'up' )
     else
-      @sortstate = 'sorted'
-      @html App.view('agent_ticket_history')(
-        objects: App.History.search().reverse()
-        state:   @sortstate
-      )
-
-    @modalShow()
-
-    # enable user popups
-    @userPopups()
-
-    # show frontend times
-    @delay( @frontendTimeUpdate, 200, 'ui-time-update' )
+      @render( @historyListCache.reverse(), 'down' )

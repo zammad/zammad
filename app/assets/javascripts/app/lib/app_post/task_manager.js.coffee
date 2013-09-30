@@ -147,7 +147,7 @@ class _taskManagerSingleton extends App.Controller
 
     # create div for permanent content
     if !$("#content_permanent")[0]
-      $('#app section').append('<div id="content_permanent" class="container"></div>')
+      $('#app section').append('<div id="content_permanent" class="content"></div>')
 
     # empty static content if task is shown
     if active
@@ -208,6 +208,7 @@ class _taskManagerSingleton extends App.Controller
     worker = @worker( key )
     if worker && worker.activate
       worker.activate()
+      App.Event.trigger('ui:rerender:task')
 
     # return if controller is already started
     return if @workersStarted[key]

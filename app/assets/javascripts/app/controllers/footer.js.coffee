@@ -1,6 +1,4 @@
 class App.Footer extends App.Controller
-  className: 'container'
-
   constructor: ->
     super
     @render()
@@ -12,4 +10,4 @@ class App.Footer extends App.Controller
   render: () ->
     @html App.view('footer')()
 
-App.Config.set( 'footer', App.Footer, 'Footers' )
+#App.Config.set( 'footer', App.Footer, 'Footers' )

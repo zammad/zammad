@@ -13,11 +13,11 @@ class ManageTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#users"]',
+            :css     => 'a[href="#manage/users"]',
           },
           {
             :execute => 'wait',
@@ -107,11 +107,11 @@ class ManageTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#slas"]',
+            :css     => 'a[href="#manage/slas"]',
           },
           {
             :execute => 'wait',
@@ -203,11 +203,11 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#slas"]',
+            :css     => 'a[href="#manage/slas"]',
           },
           {
             :execute => 'wait',
@@ -232,11 +232,11 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#slas"]',
+            :css     => 'a[href="#manage/slas"]',
           },
           {
             :execute => 'wait',

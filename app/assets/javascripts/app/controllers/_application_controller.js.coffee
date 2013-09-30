@@ -145,11 +145,11 @@ class App.Controller extends Spine.Controller
     all_attributes = [
       { name: 'number',                 link: true, title: 'title' },
       { name: 'title',                  link: true, title: 'title' },
-      { name: 'customer',               class: 'user-data', data: { id: true } },
+      { name: 'customer',               class: 'user-popover', data: { id: true } },
       { name: 'ticket_state',           translate: true, title: true },
       { name: 'ticket_priority',        translate: true, title: true },
       { name: 'group',                  title: 'group' },
-      { name: 'owner',                  class: 'user-data', data: { id: true } },
+      { name: 'owner',                  class: 'user-popover', data: { id: true } },
       { name: 'created_at',             callback: @frontendTime },
       { name: 'last_contact',           callback: @frontendTime },
       { name: 'last_contact_agent',     callback: @frontendTime },
@@ -191,7 +191,7 @@ class App.Controller extends Spine.Controller
       if diff > 0
         escalated = '-'
       if diff >= 0
-        style = "class=\"label label-important\""
+        style = "class=\"label label-danger\""
       else if diff > -60 * 60
         style = "class=\"label label-warning\""
       else
@@ -244,7 +244,7 @@ class App.Controller extends Spine.Controller
     el.unbind()
 
     # start customer info controller
-    new App.UserInfo(
+    new App.WidgetUser(
       el:       el
       user_id:  data.user_id
       callback: data.callback
@@ -282,26 +282,26 @@ class App.Controller extends Spine.Controller
   ticketPopups: (position = 'right') ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # show ticket popup
     ui = @
-    $('.ticket-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+    @el.find('.ticket-popover').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 1200 }
+      placement:  position
       title: ->
         ticket_id = $(@).data('id')
         ticket = App.Ticket.retrieve( ticket_id )
-        ticket.title
+        App.i18n.escape( ticket.title )
       content: ->
         ticket_id = $(@).data('id')
         ticket = App.Ticket.retrieve( ticket_id )
         ticket.humanTime = ui.humanTime(ticket.created_at)
         # insert data
-        App.view('ticket_info_small')(
+        App.view('popover/ticket')(
           ticket: ticket,
         )
     )
@@ -309,19 +309,19 @@ class App.Controller extends Spine.Controller
   userPopups: (position = 'right') ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # show user popup
-    $('.user-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+    @el.find('.user-popover').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 1200 }
+      placement:  position
       title: ->
         user_id = $(@).data('id')
         user = App.User.find( user_id )
-        user.displayName()
+        App.i18n.escape( user.displayName() ) 
       content: ->
         user_id = $(@).data('id')
         user = App.User.find( user_id )
@@ -346,7 +346,7 @@ class App.Controller extends Spine.Controller
                 data.push item
 
         # insert data
-        App.view('user_info_small')(
+        App.view('popover/user')(
           user: user,
           data: data,
         )
@@ -355,24 +355,24 @@ class App.Controller extends Spine.Controller
   organizationPopups: (position = 'right') ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # show organization popup
-    $('.organization-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+    @el.find('.organization-popover').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 1200 }
+      placement:  position
       title: ->
         organization_id = $(@).data('id')
         organization = App.Organization.find( organization_id )
-        organization.name
+        App.i18n.escape( organization.name )
       content: ->
         organization_id = $(@).data('id')
         organization = App.Organization.find( organization_id )
         # insert data
-        App.view('organization_info_small')(
+        App.view('popover/organization')(
           organization: organization,
         )
     )
@@ -380,7 +380,7 @@ class App.Controller extends Spine.Controller
   userTicketPopups: (data) ->
 
     # remove old popovers
-    $('.popover-inner').parent().remove()
+    $('.popover').remove()
 
     # get data
     tickets = {}
@@ -400,11 +400,12 @@ class App.Controller extends Spine.Controller
 
     # show user popup
     controller = @
-    $(data.selector).popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 5200 }
-      placement: data.position
+    @el.find(data.selector).popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 500, hide: 5200 }
+      placement:  data.position
       title: ->
         $(@).find('[title="*"]').val()
 
@@ -417,7 +418,7 @@ class App.Controller extends Spine.Controller
           ticket.humanTime = controller.humanTime(ticket.created_at)
 
         # insert data
-        App.view('user_ticket_info_small')(
+        App.view('popover/user_ticket_list')(
           tickets: data,
         )
     )
@@ -437,7 +438,7 @@ class App.ControllerContent extends App.Controller
     $('#content_permanent').hide()
 
 class App.ControllerModal extends App.Controller
-  className: 'modal hide fade',
+  className: 'modal fade',
   tag: 'div',
 
   events:
@@ -484,11 +485,11 @@ class App.ControllerModal extends App.Controller
     data = $.extend({}, defaults, params)
     @el.modal(data)
 
-    @el.bind('hidden', =>
+    @el.bind('hidden.bs.modal', =>
 
       # navigate back to home page
-      if @pageData && @pageData.home
-        @navigate @pageData.home
+#      if @pageData && @pageData.home
+#        @navigate @pageData.home
 
       # navigate back
       if params && params.navigateBack

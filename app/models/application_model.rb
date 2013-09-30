@@ -1,15 +1,34 @@
 # Copyright (C) 2013-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationModel < ActiveRecord::Base
+  include ApplicationModel::HistoryLogBase
+  include ApplicationModel::ActivityStreamBase
+
   self.abstract_class = true
 
   before_create  :check_attributes_protected, :cache_delete, :fill_up_user_create
   before_create  :cache_delete, :fill_up_user_create
   before_update  :cache_delete_before, :fill_up_user_update
-  before_destroy :cache_delete_before
+  before_destroy :cache_delete_before, :destroy_dependencies
+
   after_create  :cache_delete
   after_update  :cache_delete
   after_destroy :cache_delete
+
+  after_create  :activity_stream_create
+  after_update  :activity_stream_update
+  after_destroy :activity_stream_destroy
+
+  after_create  :history_create
+  after_update  :history_update
+  after_destroy :history_destroy
+
+  # create instance accessor
+  class << self
+    attr_accessor :activity_stream_support_config, :history_support_config
+  end
+
+  attr_accessor :history_changes_last_done
 
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
@@ -402,4 +421,215 @@ class OwnModel < ApplicationModel
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
   end
+
+  private
+
+=begin
+
+serve methode to configure and enable activity stream support for this model
+
+class Model < ApplicationModel
+  activity_stream_support :role => 'Admin'
+end
+
+=end
+
+  def self.activity_stream_support(data = {})
+    @activity_stream_support_config = data
+  end
+
+=begin
+
+log object create activity stream, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.activity_stream_create
+
+=end
+
+  def activity_stream_create
+    activity_stream_log( 'created', self['created_by_id'] )
+  end
+
+=begin
+
+log object update activity stream, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.activity_stream_update
+
+=end
+
+  def activity_stream_update
+    return if !self.changed?
+    activity_stream_log( 'updated', self['updated_by_id'] )
+  end
+
+=begin
+
+delete object activity stream, will be executed automatically
+
+  model = Model.find(123)
+  model.activity_stream_destroy
+
+=end
+
+  def activity_stream_destroy
+    ActivityStream.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
+serve methode to configure and enable history support for this model
+
+class Model < ApplicationModel
+  history_support
+end
+
+
+class Model < ApplicationModel
+  history_support :ignore_attributes => { :article_count => true }
+end
+
+=end
+
+  def self.history_support(data = {})
+    @history_support_config = data
+  end
+
+=begin
+
+log object create history, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.history_create
+
+=end
+
+  def history_create
+    return if !self.class.history_support_config
+    #puts 'create ' + self.changes.inspect
+    self.history_log( 'created', self.created_by_id )
+
+  end
+
+=begin
+
+log object update history with all updated attributes, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.history_update
+
+=end
+
+  def history_update
+    return if !self.class.history_support_config
+
+    return if !self.changed?
+
+    # return if it's no update
+    return if self.new_record?
+
+    # new record also triggers update, so ignore new records
+    changes = self.changes
+    if self.history_changes_last_done
+      self.history_changes_last_done.each {|key, value|
+        if changes.has_key?(key) && changes[key] == value
+          changes.delete(key)
+        end
+      }
+    end
+    self.history_changes_last_done = changes
+    #puts 'updated ' + self.changes.inspect
+
+    return if changes['id'] && !changes['id'][0]
+
+    # default ignored attributes
+    ignore_attributes = {
+      :created_at               => true,
+      :updated_at               => true,
+      :created_by_id            => true,
+      :updated_by_id            => true,
+    }
+    if self.class.history_support_config[:ignore_attributes]
+      self.class.history_support_config[:ignore_attributes].each {|key, value|
+        ignore_attributes[key] = value
+      }
+    end
+
+    changes.each {|key, value|
+
+      # do not log created_at and updated_at attributes
+      next if ignore_attributes[key.to_sym] == true
+
+      # get attribute name
+      attribute_name = key.to_s
+      if attribute_name[-3,3] == '_id'
+        attribute_name = attribute_name[ 0, attribute_name.length-3 ]
+      end
+
+      value_id = []
+      value_str = [ value[0], value[1] ]
+      if key.to_s[-3,3] == '_id'
+        value_id[0] = value[0]
+        value_id[1] = value[1]
+
+        if self.respond_to?( attribute_name )
+          relation_class = self.send(attribute_name).class
+          if relation_class && value_id[0]
+            relation_model = relation_class.lookup( :id => value_id[0] )
+            if relation_model
+              if relation_model['name']
+                value_str[0] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[0] = relation_model.send('fullname')
+              end
+            end
+          end
+          if relation_class && value_id[1]
+            relation_model = relation_class.lookup( :id => value_id[1] )
+            if relation_model
+              if relation_model['name']
+                value_str[1] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[1] = relation_model.send('fullname')
+              end
+            end
+          end
+        end
+      end
+      data = {
+        :history_attribute      => attribute_name,
+        :value_from             => value_str[0].to_s,
+        :value_to               => value_str[1].to_s,
+        :id_from                => value_id[0],
+        :id_to                  => value_id[1],
+      }
+      #puts "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
+      self.history_log( 'updated', self.updated_by_id, data )
+    }
+  end
+
+=begin
+
+delete object history, will be executed automatically
+
+  model = Model.find(123)
+  model.history_destroy
+
+=end
+
+  def history_destroy
+    History.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
+destory object dependencies, will be executed automatically
+
+=end
+
+  def destroy_dependencies
+  end
+
 end

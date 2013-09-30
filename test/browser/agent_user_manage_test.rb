@@ -48,7 +48,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal button',
+            :css     => '.modal button.submit',
           },
           {
             :execute => 'wait',

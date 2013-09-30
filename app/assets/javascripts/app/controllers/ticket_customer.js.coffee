@@ -37,7 +37,7 @@ class App.TicketCustomer extends App.ControllerModal
       @modalHide()
 
       # reload zoom view
-      @zoom.render()
+      @ui.render()
 
     # load user if not already exists
     App.User.retrieve( params['customer_id'], callback )

@@ -1,11 +1,16 @@
 <form class="form-horizontal">
-  <div class="modal-header">
-    <a href="#" class="close" title="<%- @Ti( 'close' ) %>">&times;</a>
-    <h2><%- @T( 'Edit' ) %>: <%- @T( @head ) %></h2>
-  </div>
-  <div class="modal-body" id="object_edit"></div>
-  <div class="modal-footer">
-    <button class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-    <button class="btn cancel"><%- @T( 'Cancel' ) %></button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close" title="<%- @Ti( 'close' ) %>">&times;</a>
+        <h2 class="modal-title"><%- @T( 'Edit' ) %>: <%- @T( @head ) %></h2>
+      </div>
+      <div class="modal-body" id="object_edit"></div>
+        <div class="modal-footer">
+          <button class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
+          <button class="btn cancel"><%- @T( 'Cancel' ) %></button>
+        </div>
+      </div>
+    </div>
   </div>
 </form>

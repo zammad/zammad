@@ -30,8 +30,8 @@ class AgentTicketActionLevel1Test < TestCase
           # remember old ticket where we want to merge to
           {
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
-            :value        => '^(.*)$',
+            :css          => '.active .ticket_info h3',
+            :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
@@ -54,7 +54,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.active button',
+            :css     => '.active button.submit',
           },
           {
             :execute => 'wait',
@@ -110,7 +110,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.content_permanent.active button',
+            :css     => '.content_permanent.active button.submit',
           },
           {
             :execute => 'wait',
@@ -137,6 +137,10 @@ class AgentTicketActionLevel1Test < TestCase
         :action   => [
           {
             :execute => 'click',
+            :css     => '.active .action',
+          },
+          {
+            :execute => 'click',
             :css     => '.active a[data-type="merge"]',
           },
           {
@@ -160,7 +164,7 @@ class AgentTicketActionLevel1Test < TestCase
           # check if megred to ticket is shown now
           {
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
+            :css          => '.active .ticket_info h3',
             :value        => '###stack###',
             :match_result => true,
           },

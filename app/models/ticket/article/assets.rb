@@ -23,24 +23,32 @@ returns
 
   def assets (data)
 
-    if !data[:ticket_article]
-      data[:ticket_article] = {}
+    if !data[ Ticket.to_app_model ]
+      data[ Ticket.to_app_model ] = {}
     end
-    if !data[:ticket_article][ self.id ]
-      data[:ticket_article][ self.id ] = self.attributes
+    if !data[ Ticket.to_app_model ][ self.ticket_id ]
+      ticket = Ticket.find( self.ticket_id )
+      data = ticket.assets(data)
+    end
+
+    if !data[ Ticket::Article.to_app_model ]
+      data[ Ticket::Article.to_app_model ] = {}
+    end
+    if !data[ Ticket::Article.to_app_model ][ self.id ]
+      data[ Ticket::Article.to_app_model ][ self.id ] = self.attributes
 
       # add attachment list to article
-      data[:ticket_article][ self.id ]['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => self.id )
+      data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => self.id )
     end
 
-    if !data[:users]
-      data[:users] = {}
+    if !data[ User.to_app_model ]
+      data[ User.to_app_model ] = {}
     end
-    if !data[:users][ self['created_by_id'] ]
-      data[:users][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
+    if !data[ User.to_app_model ][ self['created_by_id'] ]
+      data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
     end
-    if !data[:users][ self['updated_by_id'] ]
-      data[:users][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
+    if !data[ User.to_app_model ][ self['updated_by_id'] ]
+      data[ User.to_app_model ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
     end
     data
   end

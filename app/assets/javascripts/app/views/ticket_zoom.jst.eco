@@ -1,28 +1,33 @@
-<div class="page-header ticket-zoom">
-  <div class="row">
-    <div class="span10 ticket-title"></div>
-    <div class="span2">
-      <% if @C( 'LastOverview' ) && @nav: %>
-      <div class="pagination pagination-small pagination-right">
-        <span class="count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
-        <% base_url ="#ticket_view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
-        <ul>
-          <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
-          <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
-        </ul>
+<div class="content-two">
+  <div class="sidebar">
+    <div class="ticket-widgets"></div>
+    <div class="ticket-action"></div>
+  </div>
+  <div class="main">
+
+    <div class="page-header ticket-zoom clearfix">
+      <div class="page-header-title">
+        <div class="ticket-title"></div>
       </div>
-      <% end %>
+      <div class="page-header-meta">
+        <% if @C( 'LastOverview' ) && @nav: %>
+          <div class="pagination pagination-small pagination-right">
+            <span class="count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
+            <% base_url ="#ticket_view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
+            <ul>
+              <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
+              <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
     </div>
+
+    <div class="ticket-answer">
+      <div class="article-view"></div>
+      <div class="edit"></div>
+    </div>
+
   </div>
-  <div class="row ticket-info"></div>
 </div>
 
-<div class="row ticket-answer">
-  <div class="span9">
-    <div class="article-view"></div>
-    <div class="edit"></div>
-  </div>
-
-  <div class="span3 ticket-action"></div>
-
-</div>

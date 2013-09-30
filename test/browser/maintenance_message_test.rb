@@ -22,12 +22,12 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#maintenance"]',
+            :css     => 'a[href="#system/maintenance"]',
           },
           {
             :where   => :instance1,
@@ -86,12 +86,12 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#maintenance"]',
+            :css     => 'a[href="#system/maintenance"]',
           },
           {
             :where   => :instance1,
@@ -150,12 +150,12 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => 'a[href="#maintenance"]',
+            :css     => 'a[href="#system/maintenance"]',
           },
           {
             :where   => :instance1,

@@ -13,6 +13,9 @@ class App.Model extends Spine.Model
         App.Store.delete(key)
       )
 
+  uiUrl: ->
+    '#'
+
   displayName: ->
     return @name if @name
     if @realname
@@ -26,6 +29,10 @@ class App.Model extends Spine.Model
       return name
     if @email
       return @email
+    if @title
+      return @title
+    if @subject
+      return @subject
     return '???'
 
   displayNameLong: ->

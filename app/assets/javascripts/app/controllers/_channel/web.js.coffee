@@ -10,4 +10,4 @@ class App.ChannelWeb extends App.ControllerTabs
       },
     ]
 
-    @render()      
+    @render()

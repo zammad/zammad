@@ -1,10 +1,10 @@
 class Index extends App.ControllerContent
   constructor: ->
     super
-    
+
     # check authentication
     return if !@authenticate()
-    
+
     new App.ControllerGenericIndex(
       el: @el,
       id: @id,
@@ -24,6 +24,4 @@ class Index extends App.ControllerContent
       },
     )
 
-App.Config.set( 'text_modules', Index, 'Routes' )
-App.Config.set( 'TextModule', { prio: 2300, parent: '#admin', name: 'Text Modules', target: '#text_modules', role: ['Admin'] }, 'NavBar' )
-
+App.Config.set( 'TextModule', { prio: 2300, name: 'TextModules', parent: '#manage', target: '#manage/text_modules', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

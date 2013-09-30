@@ -48,7 +48,7 @@ class App.SettingsAreaItem extends App.Controller
     )
 
     new App.ControllerForm(
-      el: @el.find('#form-item'),
+      el: @el.find('.form-item'),
       model: { configure_attributes: @configure_attributes, className: '' },
       autofocus: false,
     )
@@ -73,6 +73,7 @@ class App.SettingsAreaItem extends App.Controller
       }
 
     @setting['state'] = state
+    ui = @
     @setting.save(
       success: =>
 
@@ -81,7 +82,7 @@ class App.SettingsAreaItem extends App.Controller
           msg:     App.i18n.translateContent('Update successful!')
           timeout: 1500
         }
-
+        ui.render()
         # login check
-        App.Auth.loginCheck()
+#        App.Auth.loginCheck()
     )

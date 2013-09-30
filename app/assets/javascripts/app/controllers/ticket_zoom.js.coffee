@@ -72,7 +72,7 @@ class App.TicketZoom extends App.Controller
       success: (data, status, xhr) =>
 
         # check if ticket has changed
-        newTicketRaw = data.assets.tickets[ticket_id]
+        newTicketRaw = data.assets.Ticket[ticket_id]
         if @ticketUpdatedAtLastCall && !force
 
           # return if ticket hasnt changed
@@ -140,7 +140,7 @@ class App.TicketZoom extends App.Controller
     @frontendTimeUpdate()
 
     @TicketTitle()
-    @TicketInfo()
+    @TicketWidgets()
     @TicketAction()
     @ArticleView()
 
@@ -156,7 +156,7 @@ class App.TicketZoom extends App.Controller
 
     # show text module UI
     if !@isRole('Customer')
-      new App.TextModuleUI(
+      new App.WidgetTextModule(
         el:   @el.find('textarea')
         data:
           ticket: @ticket
@@ -175,13 +175,6 @@ class App.TicketZoom extends App.Controller
     new TicketTitle(
       ticket:   @ticket
       el:       @el.find('.ticket-title')
-    )
-
-  TicketInfo: =>
-    # show ticket info
-    new TicketInfo(
-      ticket:   @ticket
-      el:       @el.find('.ticket-info')
     )
 
   ArticleView: =>
@@ -203,14 +196,23 @@ class App.TicketZoom extends App.Controller
       ui:         @
     )
 
-  TicketAction: =>
+  TicketWidgets: =>
     # show ticket action row
-    new TicketAction(
+    new TicketWidgets(
       ticket:     @ticket
       task_key:   @task_key
-      el:         @el.find('.ticket-action')
+      el:         @el.find('.ticket-widgets')
       ui:         @
     )
+
+  TicketAction: =>
+    # start action controller
+    if !@isRole('Customer')
+      new TicketActionRow(
+        el:      @el.find('.ticket-action')
+        ticket:  @ticket
+        ui:      @
+      )
 
 class TicketTitle extends App.Controller
   events:
@@ -221,7 +223,7 @@ class TicketTitle extends App.Controller
     @render()
 
   render: ->
-    @html App.view('ticket_zoom/ticket_title')(
+    @html App.view('ticket_zoom/title')(
       ticket: @ticket
     )
 
@@ -248,58 +250,57 @@ class TicketTitle extends App.Controller
     App.Event.trigger 'task:render'
 
 
-class TicketInfo extends App.Controller
+class TicketInfo extends App.ControllerDrox
   constructor: ->
     super
     @render()
 
   render: ->
-    @html App.view('ticket_zoom/ticket_info')(
-      ticket: @ticket
+    @html @template(
+      file:   'ticket_zoom/info'
+      header: '#' + @ticket.number
+      params:
+        ticket: @ticket
     )
-
-class TicketAction extends App.Controller
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-
-    @html App.view('ticket_zoom/ticket_action')()
-
-    # start customer info controller
-    if !@isRole('Customer')
-      new App.UserInfo(
-        el:      @el.find('.customer_info')
-        user_id: @ticket.customer_id
-        ticket:  @ticket
-      )
-
-    # start action controller
-    if !@isRole('Customer')
-      new TicketActionRow(
-        el:      @el.find('.action_info')
-        ticket:  @ticket
-        zoom:    @ui
-      )
 
     # start tag controller
     if !@isRole('Customer')
-      new App.TagWidget(
+      new App.WidgetTag(
         el:           @el.find('.tag_info')
         object_type:  'Ticket'
         object:        @ticket
       )
 
+class TicketWidgets extends App.Controller
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+
+    @html App.view('ticket_zoom/widgets')()
+
+    # show ticket info
+    new TicketInfo(
+      ticket:   @ticket
+      el:       @el.find('.ticket_info')
+    )
+
+    # start customer info controller
+    if !@isRole('Customer')
+      new App.WidgetUser(
+        el:      @el.find('.customer_info')
+        user_id: @ticket.customer_id
+        ticket:  @ticket
+      )
+
     # start link info controller
     if !@isRole('Customer')
-      new App.LinkInfo(
+      new App.WidgetLink(
         el:           @el.find('.link_info')
         object_type:  'Ticket'
         object:       @ticket
       )
-
-
 
 class Edit extends App.Controller
   events:
@@ -337,12 +338,12 @@ class Edit extends App.Controller
 
     @configure_attributes_article = [
       { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium' },
+      { name: 'internal',                 display: 'Visibility',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
       { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
       { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
 #      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
       { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
       { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
-      { name: 'internal',                 display: 'Visibility',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
     ]
     if @isRole('Customer')
       @configure_attributes_article = [
@@ -423,8 +424,9 @@ class Edit extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = currentData
         @log 'notice', 'form hash changed', diff, currentData
-        @el.find('.ticket-update').parent().addClass('form-changed')
-        @el.find('.ticket-update').parent().parent().find('.reset-message').show()
+        @el.find('.ticket-edit').addClass('form-changed')
+        @el.find('.ticket-edit').find('.reset-message').show()
+        @el.find('.ticket-edit').find('.reset-message').removeClass('hide')
         App.TaskManager.update( @task_key, { 'state': currentData })
     @interval( update, 3000, 'autosave' )
 
@@ -604,11 +606,14 @@ class ArticleView extends App.Controller
 
   show_toogle: (e) ->
     e.preventDefault()
-    $(e.target).hide()
+    #$(e.target).hide()
     if $(e.target).next('div')[0]
-      $(e.target).next('div').show()
-    else
-      $(e.target).parent().next('div').show()
+      if $(e.target).next('div').hasClass('hide')
+        $(e.target).next('div').removeClass('hide')
+        $(e.target).text( App.i18n.translateContent('Fold in') )
+      else
+        $(e.target).text( App.i18n.translateContent('See more') )
+        $(e.target).next('div').addClass('hide')
 
   checkIfSignatureIsNeeded: (article_type) =>
 
@@ -703,9 +708,9 @@ class Article extends App.Controller
     if article_lines.length > preview
       preview_mode = true
       if article_lines[preview] is ''
-        article_lines.splice( preview, 0, '----SEEMORE----' )
+        article_lines.splice( preview, 0, '-----SEEMORE-----' )
       else
-        article_lines.splice( preview + 1, 0, '----SEEMORE----' )
+        article_lines.splice( preview - 1, 0, '-----SEEMORE-----' )
       @article['html'] = article_lines.join("\n")
     @article['html'] = window.linkify( @article['html'] )
     notify = '<a href="#" class="show_toogle">' + App.i18n.translateContent('See more') + '</a>'
@@ -713,9 +718,9 @@ class Article extends App.Controller
     # preview mode
     if preview_mode
       @article_changed = false
-      @article['html'] = @article['html'].replace /^\n{0,10}----SEEMORE----\n/m, (match) =>
+      @article['html'] = @article['html'].replace /^-----SEEMORE-----\n/m, (match) =>
         @article_changed = true
-        notify + '<div class="hide">'
+        notify + '<div class="hide preview">'
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
 
@@ -724,10 +729,9 @@ class Article extends App.Controller
       @article_changed = false
       @article['html'] = @article['html'].replace /^\n{0,10}(--|__)/m, (match) =>
         @article_changed = true
-        notify + '<div class="hide">' + match
+        notify + '<div class="hide preview">' + match
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
-
 
   actionRow: ->
     if @isRole('Customer')
@@ -786,7 +790,7 @@ class TicketActionRow extends App.Controller
     @render()
 
   render: ->
-    @html App.view('ticket_action')()
+    @html App.view('ticket_zoom/actions')()
 
   history_dialog: (e) ->
     e.preventDefault()
@@ -794,11 +798,11 @@ class TicketActionRow extends App.Controller
 
   merge_dialog: (e) ->
     e.preventDefault()
-    new App.TicketMerge( ticket_id: @ticket.id, task_key: @zoom.task_key )
+    new App.TicketMerge( ticket_id: @ticket.id, task_key: @ui.task_key )
 
   customer_dialog: (e) ->
     e.preventDefault()
-    new App.TicketCustomer( ticket_id: @ticket.id, zoom: @zoom )
+    new App.TicketCustomer( ticket_id: @ticket.id, ui: @ui )
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->

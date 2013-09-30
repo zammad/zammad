@@ -60,4 +60,29 @@ class Scheduler < ApplicationModel
     job.save
     eval job.method()
   end
+
+  def self.check( name, time_warning = 10, time_critical = 20 )
+    time_warning_time  = Time.now - time_warning.minutes
+    time_critical_time = Time.now - time_critical.minutes
+    scheduler = Scheduler.where( :name => name ).first
+    if !scheduler
+      puts "CRITICAL - no such scheduler jobs '#{name}'"
+      return true
+    end
+#puts "S " + scheduler.inspect
+    if !scheduler.last_run
+      puts "CRITICAL - scheduler jobs never started '#{name}'"
+      exit 2
+    end
+    if scheduler.last_run < time_critical_time
+      puts "CRITICAL - scheduler jobs was not running in last '#{time_critical.to_s}' minutes - last run at '#{scheduler.last_run.to_s}' '#{name}'"
+      exit 2
+    end
+    if scheduler.last_run < time_warning_time
+      puts "CRITICAL - scheduler jobs was not running in last '#{time_warning.to_s}' minutes - last run at '#{scheduler.last_run.to_s}' '#{name}'"
+      exit 2
+    end
+    puts "ok - scheduler jobs was running at '#{scheduler.last_run.to_s}' '#{name}'"
+    exit 0
+  end
 end

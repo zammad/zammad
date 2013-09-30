@@ -23,27 +23,27 @@ returns
 
   def assets (data)
 
-    if !data[:tickets]
-      data[:tickets] = {}
+    if !data[ Ticket.to_app_model ]
+      data[ Ticket.to_app_model ] = {}
     end
-    if !data[:tickets][ self.id ]
-      data[:tickets][ self.id ] = self.attributes
+    if !data[ Ticket.to_app_model ][ self.id ]
+      data[ Ticket.to_app_model ][ self.id ] = self.attributes
     end
 
-    if !data[:users]
-      data[:users] = {}
+    if !data[ User.to_app_model ]
+      data[ User.to_app_model ] = {}
     end
-    if !data[:users][ self['owner_id'] ]
-      data[:users][ self['owner_id'] ] = User.user_data_full( self['owner_id'] )
+    if !data[ User.to_app_model ][ self['owner_id'] ]
+      data[ User.to_app_model ][ self['owner_id'] ] = User.user_data_full( self['owner_id'] )
     end
-    if !data[:users][ self['customer_id'] ]
-      data[:users][ self['customer_id'] ] = User.user_data_full( self['customer_id'] )
+    if !data[ User.to_app_model ][ self['customer_id'] ]
+      data[ User.to_app_model ][ self['customer_id'] ] = User.user_data_full( self['customer_id'] )
     end
-    if !data[:users][ self['created_by_id'] ]
-      data[:users][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
+    if !data[ User.to_app_model ][ self['created_by_id'] ]
+      data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
     end
-    if !data[:users][ self['updated_by_id'] ]
-      data[:users][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
+    if !data[ User.to_app_model ][ self['updated_by_id'] ]
+      data[ User.to_app_model ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
     end
     data
   end
