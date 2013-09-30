@@ -14,15 +14,6 @@ class SessionsController < ApplicationController
       return
     end
 
-    # set session user
-    current_user_set(user)
-
-    # log new session
-    user.activity_stream_log( 'session started', user.id )
-
-    # auto population of default collections
-    default_collection = SessionHelper::default_collections(user)
-
     # remember me - set session cookie to expire later
     if params[:remember_me]
       request.env['rack.session.options'][:expire_after] = 1.year
@@ -32,6 +23,16 @@ class SessionsController < ApplicationController
     # both not needed to set :expire_after works fine
     #  request.env['rack.session.options'][:renew] = true
     #  reset_session
+
+    # set session user
+    session[:user_id] = user.id
+    current_user_set(user)
+
+    # log new session
+    user.activity_stream_log( 'session started', user.id )
+
+    # auto population of default collections
+    default_collection = SessionHelper::default_collections(user)
 
     # set session user_id
     user = User.find_fulldata(user.id)
@@ -128,6 +129,7 @@ class SessionsController < ApplicationController
     end
 
     # set current session user
+    session[:user_id] = authorization.user.id
     current_user_set(authorization.user)
 
     # log new session
@@ -147,6 +149,7 @@ class SessionsController < ApplicationController
     if user
 
       # set current session user
+      session[:user_id] = user.id
       current_user_set(user)
 
       # log new session
