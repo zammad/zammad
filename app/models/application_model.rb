@@ -73,6 +73,33 @@ returns
 
 =begin
 
+set rellations of model based on params
+
+  result = Model.param_set_associations(params)
+
+returns
+
+  result = true|false
+
+=end
+
+  def param_set_associations(params)
+
+    # set relations
+    self.class.reflect_on_all_associations.map { |assoc|
+      real_key = assoc.name.to_s[0,assoc.name.to_s.length-1] + '_ids'
+      if params.has_key?( real_key.to_sym )
+        list = []
+        params[ real_key.to_sym ].each {|item|
+          list.push( assoc.klass.find(item) )
+        }
+        self.send( assoc.name.to_s + '=', list )
+      end
+    }
+  end
+
+=begin
+
 remove all not used params of object (per default :updated_at, :created_at, :updated_by_id and :created_by_id)
 
   result = Model.param_validation(params)

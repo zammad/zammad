@@ -63,6 +63,7 @@ class ApplicationController < ActionController::Base
     @_current_user = User.find( session[:user_id] )
   end
   def current_user_set(user)
+    session[:user_id] = user.id
     @_current_user = user
     set_user
   end
@@ -262,6 +263,9 @@ class ApplicationController < ActionController::Base
       # save object
       generic_object.save!
 
+      # set relations
+      generic_object.param_set_associations( params )
+
       model_create_render_item(generic_object)
     rescue Exception => e
       puts e.message.inspect
@@ -282,7 +286,11 @@ class ApplicationController < ActionController::Base
 
       # save object
       generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model_url] ) )
-      model_update_render_item(generic_object)
+
+      # set relations
+      generic_object.param_set_associations( params )
+
+      model_update_render_item( generic_object )
     rescue Exception => e
       logger.error e.message
       logger.error e.backtrace.inspect
