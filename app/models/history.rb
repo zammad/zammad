@@ -118,18 +118,16 @@ return all history entries of an object
       history_object = self.object_lookup( requested_object )
       history = History.where( :history_object_id => history_object.id ).
       where( :o_id => requested_object_id ).
-      where( :history_type_id => History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] ) ).
       order('created_at ASC, id ASC')
     else
       history_object_requested = self.object_lookup( requested_object )
       history_object_related   = self.object_lookup( related_history_object )
       history = History.where(
-        '((history_object_id = ? AND o_id = ?) OR (history_object_id = ? AND related_o_id = ? )) AND history_type_id IN (?)',
+        '((history_object_id = ? AND o_id = ?) OR (history_object_id = ? AND related_o_id = ? ))',
         history_object_requested.id,
         requested_object_id,
         history_object_related.id,
         requested_object_id,
-        History::Type.where( :name => ['created', 'updated', 'notification', 'email', 'added', 'removed'] )
       ).
       order('created_at ASC, id ASC')
     end
