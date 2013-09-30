@@ -1862,6 +1862,8 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Thanks for your F
 Translation.create_if_not_exists( :locale => 'de', :source => "What can you do here?", :target => "Was können Sie hier machen?" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Here you can create one.", :target => "Hier können Sie eins erstellen." )
 Translation.create_if_not_exists( :locale => 'de', :source => "Fold in", :target => "Einklappen" )
+Translation.create_if_not_exists( :locale => 'de', :source => "from", :target => "von" )
+Translation.create_if_not_exists( :locale => 'de', :source => "to", :target => "nach" )
 
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "" )
 

@@ -66,9 +66,9 @@ class App.TicketHistory extends App.ControllerModal
 
   sortorder: (e) ->
     e.preventDefault()
-    idDown = @el.find('[data-type="sortorder"]').hasClass('down')
+    isDown = @el.find('[data-type="sortorder"]').hasClass('down')
 
-    if idDown
+    if isDown
       @render( @historyListCache, 'up' )
     else
       @render( @historyListCache.reverse(), 'down' )

@@ -23,7 +23,7 @@
   <% end %>
     <li>
     <% if ( item['type'] is 'notification' || item['type'] is 'email' ): %>
-      <%= item['type'] %>
+      <%- @T( item['type'] ) %>
       <% if item['value_from']: %>
         "<%= item['value_from'] %>" <%- @T( 'sent to' ) %> 
       <% end %>
@@ -31,7 +31,7 @@
         "<%= item['value_to'] %>"
       <% end %>
     <% else: %>
-      <%= item['type'] %> <%= item['object'] %> <% if item['attribute']: %>"<%= item['attribute'] %>"<% end %>
+      <%- @T( item['type'] ) %> <%= item['object'] %> <% if item['attribute']: %>"<%= item['attribute'] %>"<% end %>
       <% if item['value_from']: %>
         <% if item['value_to']: %>
           <%- @T( 'from' ) %>
