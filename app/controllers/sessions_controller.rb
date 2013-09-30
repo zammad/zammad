@@ -14,6 +14,10 @@ class SessionsController < ApplicationController
       return
     end
 
+    # set session user
+    current_user_set(user)
+
+    # log new session
     user.activity_stream_log( 'session started', user.id )
 
     # auto population of default collections
@@ -42,8 +46,6 @@ class SessionsController < ApplicationController
 #          :user_id => user['id']
 #        }
 #      )
-    else
-      session[:user_id] = user['id']
     end
 
     # return new session data
@@ -125,11 +127,14 @@ class SessionsController < ApplicationController
       authorization = Authorization.create_from_hash(auth, current_user)
     end
 
+    # set current session user
+    current_user_set(authorization.user)
+
+    # log new session
+    user.activity_stream_log( 'session started', authorization.user.id )
+
     # remember last login date
     authorization.user.update_last_login
-
-    # Log the authorizing user in.
-    session[:user_id] = authorization.user.id
 
     # redirect to app
     redirect_to '/'
@@ -140,7 +145,15 @@ class SessionsController < ApplicationController
 
     # Log the authorizing user in.
     if user
-      session[:user_id] = user.id
+
+      # set current session user
+      current_user_set(user)
+
+      # log new session
+      user.activity_stream_log( 'session started', user.id )
+
+      # remember last login date
+      user.update_last_login
     end
 
     # redirect to app
