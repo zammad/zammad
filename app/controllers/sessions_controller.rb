@@ -25,7 +25,6 @@ class SessionsController < ApplicationController
     #  reset_session
 
     # set session user
-    session[:user_id] = user.id
     current_user_set(user)
 
     # log new session
@@ -129,7 +128,6 @@ class SessionsController < ApplicationController
     end
 
     # set current session user
-    session[:user_id] = authorization.user.id
     current_user_set(authorization.user)
 
     # log new session
@@ -149,7 +147,6 @@ class SessionsController < ApplicationController
     if user
 
       # set current session user
-      session[:user_id] = user.id
       current_user_set(user)
 
       # log new session
