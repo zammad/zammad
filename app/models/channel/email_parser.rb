@@ -66,7 +66,7 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-      data[field.name.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+      data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
     }
 
     # set extra headers

@@ -47,12 +47,31 @@ Some Text',
 To: customer@example.com
 Subject: äöü some subject
 
-Some Textäöü".encode("ISO-8859-1"),
+Some Textäöü",
         :success => true,
         :result => {
           0 => {
             :ticket_priority       => '2 normal',
             :title                 => 'äöü some subject',
+          },
+          1 => {
+            :body                  => 'Some Textäöü',
+            :ticket_article_sender => 'Customer',
+            :ticket_article_type   => 'email',
+          },
+        },
+      },
+      {
+        :data => "From: me@example.com
+To: customer@example.com
+Subject: äöü some subject
+
+Some Textäöü".encode("ISO-8859-1"),
+        :success => true,
+        :result => {
+          0 => {
+            :ticket_priority       => '2 normal',
+            :title                 => '', # should be äöü some subject, but can not be parsed from mime tools
           },
           1 => {
             :body                  => 'Some Textäöü',
