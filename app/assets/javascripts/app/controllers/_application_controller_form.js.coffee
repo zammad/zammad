@@ -1066,7 +1066,6 @@ class App.ControllerForm extends App.Controller
 
     return if !attribute.options
     return if _.isArray( attribute.options )
-
     options_by_name = []
     for i in attribute.options
       options_by_name.push i['name'].toString().toLowerCase()
@@ -1099,8 +1098,13 @@ class App.ControllerForm extends App.Controller
           row.name = App.i18n.translateInline( row.name )
         attribute.options.push row
     else
-      for key, value of selection
-        name_new = value
+      order = _.sortBy(
+        _.keys( selection, (item) ->
+          selection[item].toString().toLowerCase()
+        )
+      ).reverse()
+      for key in order
+        name_new = selection[key]
         if attribute.translate
           name_new = App.i18n.translateInline( name_new )
         attribute.options.push {
