@@ -169,6 +169,7 @@ class SessionsController < ApplicationController
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']
+        user = User.lookup( :id => session.data['user_id'] )
         assets = user.assets( assets )
       end
     }
