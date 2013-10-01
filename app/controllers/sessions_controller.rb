@@ -175,8 +175,10 @@ class SessionsController < ApplicationController
       end
     }
     render :json => {
-      :sessions                   => sessions_clean,
-      User.to_app_model => users,
+      :sessions => sessions_clean,
+      :assets   => {
+        User.to_app_model => users,
+      },
     }
   end
 

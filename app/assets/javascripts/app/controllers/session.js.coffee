@@ -26,7 +26,9 @@ class Index extends App.ControllerContent
     )
 
   render: (data) ->
-    App.Collection.load( type: 'User', data: data.users )
+
+    # load collections
+    App.Event.trigger 'loadAssets', data.assets
 
     # fill users
     for session in data.sessions
