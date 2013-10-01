@@ -45,15 +45,16 @@ returns
         :order      => 'organizations.name'
       )
       organizations_by_user.each {|organization_by_user|
-        puts 'OOO ' + organization_by_user.inspect
         organization_exists = false
         organizations.each {|organization|
           if organization.id == organization_by_user.id
             organization_exists = true
           end
         }
+
+        # get model with full data
         if !organization_exists
-          organizations.push organization_by_user
+          organizations.push Organization.find(organization_by_user)
         end
       }
     end
