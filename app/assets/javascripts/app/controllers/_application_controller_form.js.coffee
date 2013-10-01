@@ -1099,10 +1099,9 @@ class App.ControllerForm extends App.Controller
         attribute.options.push row
     else
       order = _.sortBy(
-        _.keys( selection, (item) ->
+        _.keys(selection), (item) ->
           selection[item].toString().toLowerCase()
-        )
-      ).reverse()
+      )
       for key in order
         name_new = selection[key]
         if attribute.translate
