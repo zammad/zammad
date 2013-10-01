@@ -104,9 +104,8 @@ class Taskbar extends App.Controller
 
     # on window resize
     resizeTasksDelay = =>
-      App.Delay.set( @resizeTasks, 100, 'resizeTasks', 'task' )
-    $(window).off( 'resize.taskbar' )
-    $(window).on( 'resize.taskbar', resizeTasksDelay )
+      App.Delay.set( @resizeTasks, 60, 'resizeTasks', 'task' )
+    $(window).off( 'resize.taskbar' ).on( 'resize.taskbar', resizeTasksDelay )
 
     # render view
     @bind 'task:render', => @render()
