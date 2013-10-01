@@ -7,12 +7,9 @@ class App.TicketMerge extends App.ControllerModal
 
     # merge tickets
     @ajax(
-      id:    'ticket_merge_list',
-      type:  'GET',
-      url:   @apiPath + '/ticket_merge_list/' + @ticket_id,
-      data:  {
-#        view: @view
-      }
+      id:    'ticket_merge_list'
+      type:  'GET'
+      url:   @apiPath + '/ticket_merge_list/' + @ticket_id
       processData: true,
       success: (data, status, xhr) =>
 
@@ -99,6 +96,9 @@ class App.TicketMerge extends App.ControllerModal
   submit: (e) =>
     e.preventDefault()
 
+    # disable form
+    @formDisable(e)
+
     params = @formParam(e.target)
 
     # merge tickets
@@ -127,9 +127,9 @@ class App.TicketMerge extends App.ControllerModal
 
           # notify UI
           @notify
-            type:    'success',
-            msg:     App.i18n.translateContent( 'Ticket %s merged!', data.slave_ticket['number'] ),
-            timeout: 4000,
+            type:    'success'
+            msg:     App.i18n.translateContent( 'Ticket %s merged!', data.slave_ticket['number'] )
+            timeout: 4000
 
           App.TaskManager.remove( 'Ticket-' + data.slave_ticket['id'] )
 
@@ -137,9 +137,13 @@ class App.TicketMerge extends App.ControllerModal
 
           # notify UI
           @notify
-            type:    'error',
-            msg:     App.i18n.translateContent( data['message'] ),
-            timeout: 6000,
-#      error: =>
+            type:    'error'
+            msg:     App.i18n.translateContent( data['message'] )
+            timeout: 6000
+
+          @formEnable(e)
+
+      error: =>
+        @formEnable(e)
     )
 
