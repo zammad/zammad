@@ -1,21 +1,19 @@
 class Sessions::Worker
   def initialize( user_id )
     @user_id = user_id
-    @data = {}
-    @cache_key = 'user_' + user_id.to_s
+
     self.log 'notify', "---user started user state"
 
     Sessions::CacheIn.set( 'last_run_' + user_id.to_s , true, { :expires_in => 20.seconds } )
 
-    user = User.find( @user_id )
-    return if !user
-
-    self.fetch( user )
+    self.fetch( user_id )
   end
 
-  def fetch(user)
+  def fetch(user_id)
 
     while true
+      user = User.lookup( :id => user_id )
+      return if !user
 
       # check if user is still with min one open connection
       if !Sessions::CacheIn.get( 'last_run_' + user.id.to_s )
@@ -24,6 +22,7 @@ class Sessions::Worker
       end
 
       self.log 'notice', "---user - fetch user data"
+
       # overview
       Sessions::Backend::TicketOverviewIndex.worker( user, self )
 
@@ -55,4 +54,3 @@ class Sessions::Worker
     puts "#{Time.now}:user_id(#{ @user_id }) #{ data }"
   end
 end
-

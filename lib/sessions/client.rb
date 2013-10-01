@@ -58,8 +58,6 @@ class Sessions::Client
         end
       end
 
-
-
       # verify already pushed data, send update if needed
       if !Sessions::CacheIn.get( 'pushed_tickets' + @client_id.to_s )
         Sessions::CacheIn.set( 'pushed_tickets' + @client_id.to_s , true, { :expires_in => 60.seconds } )
