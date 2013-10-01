@@ -163,22 +163,18 @@ class SessionsController < ApplicationController
   def list
     return if deny_if_not_role('Admin')
     sessions = ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(10000)
-    users = {}
+    assets = {}
     sessions_clean = []
     sessions.each {|session|
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']
-        if !users[ session.data['user_id'] ]
-          users[ session.data['user_id'] ] = User.user_data_full( session.data['user_id'] )
-        end
+        assets = user.assets( assets )
       end
     }
     render :json => {
       :sessions => sessions_clean,
-      :assets   => {
-        User.to_app_model => users,
-      },
+      :assets   => assets,
     }
   end
 
