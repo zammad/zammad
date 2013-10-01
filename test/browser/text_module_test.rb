@@ -378,7 +378,7 @@ class TextModuleTest < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some body 123äöü',
             :match_result => true,
           },

@@ -37,7 +37,7 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 2 <b>body</b> 123äöü',
             :match_result => true,
           },
@@ -104,7 +104,7 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 2 <b>body</b> 123äöü',
             :match_result => true,
           },
