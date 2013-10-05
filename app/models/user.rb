@@ -19,7 +19,12 @@ class User < ApplicationModel
 
   store                   :preferences
 
-  activity_stream_support  :role => 'Admin'
+  activity_stream_support(
+    :role              => 'Admin',
+    :ignore_attributes => {
+      :last_login => true,
+    }
+  )
   history_support
 
 =begin
