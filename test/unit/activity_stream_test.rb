@@ -4,7 +4,7 @@ require 'test_helper'
 class ActivityStreamTest < ActiveSupport::TestCase
   role  = Role.lookup( :name => 'Admin' )
   group = Group.lookup( :name => 'Users' )
-  user = User.create_or_update(
+  admin_user = User.create_or_update(
     :login         => 'admin',
     :firstname     => 'Bob',
     :lastname      => 'Smith',
@@ -16,6 +16,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     :updated_by_id => 1,
     :created_by_id => 1
   )
+  current_user = User.lookup( :login => 'nicole.braun@zammad.org' )
 
   test 'ticket+user' do
     tests = [
@@ -25,17 +26,17 @@ class ActivityStreamTest < ActiveSupport::TestCase
         :create => {
           :ticket => {
             :group_id           => Group.lookup( :name => 'Users' ).id,
-            :customer_id        => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
+            :customer_id        => current_user.id,
             :owner_id           => User.lookup( :login => '-' ).id,
             :title              => 'Unit Test 1 (äöüß)!',
             :ticket_state_id    => Ticket::State.lookup( :name => 'new' ).id,
             :ticket_priority_id => Ticket::Priority.lookup( :name => '2 normal' ).id,
-            :updated_by_id      => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
-            :created_by_id      => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
+            :updated_by_id      => current_user.id,
+            :created_by_id      => current_user.id,
           },
           :article => {
-              :updated_by_id            => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
-              :created_by_id            => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
+              :updated_by_id            => current_user.id,
+              :created_by_id            => current_user.id,
               :ticket_article_type_id   => Ticket::Article::Type.lookup( :name => 'phone' ).id,
               :ticket_article_sender_id => Ticket::Article::Sender.lookup( :name => 'Customer' ).id,
               :from                     => 'Unit Test <unittest@example.com>',
@@ -52,17 +53,20 @@ class ActivityStreamTest < ActiveSupport::TestCase
         },
         :check => [
           {
+            :result => true,
             :object => 'Ticket',
             :type   => 'created',
           },
           {
+            :result => true,
             :object => 'Ticket::Article',
             :type   => 'created',
           },
           {
+            :result => false,
             :object => 'User',
             :type   => 'updated',
-            :o_id   => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
+            :o_id   => current_user.id,
           },
         ]
       },
@@ -78,14 +82,14 @@ class ActivityStreamTest < ActiveSupport::TestCase
         ticket = Ticket.create( test[:create][:ticket] )
         test[:check][0][:o_id]          = ticket.id
         test[:check][0][:created_at]    = ticket.created_at
-        test[:check][0][:created_by_id] = User.lookup( :login => 'nicole.braun@zammad.org' ).id
+        test[:check][0][:created_by_id] = current_user.id
         sleep 2
 
         test[:create][:article][:ticket_id] = ticket.id
         article = Ticket::Article.create( test[:create][:article] )
         test[:check][1][:o_id]          = article.id
         test[:check][1][:created_at]    = article.created_at
-        test[:check][1][:created_by_id] = User.lookup( :login => 'nicole.braun@zammad.org' ).id
+        test[:check][1][:created_by_id] = current_user.id
 
         assert_equal( ticket.class.to_s, 'Ticket' )
         assert_equal( article.class.to_s, 'Ticket::Article' )
@@ -95,9 +99,9 @@ class ActivityStreamTest < ActiveSupport::TestCase
           ticket.update_attributes( test[:update][:ticket] )
 
           # check updated user
-          test[:check][2][:o_id]          = User.lookup( :login => 'nicole.braun@zammad.org' ).id
+          test[:check][2][:o_id]          = current_user.id
           test[:check][2][:created_at]    = ticket.created_at
-          test[:check][2][:created_by_id] = User.lookup( :login => 'nicole.braun@zammad.org' ).id
+          test[:check][2][:created_by_id] = current_user.id
         end
         if test[:update][:article]
           article.update_attributes( test[:update][:article] )
@@ -108,7 +112,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       tickets.push ticket
 
       # check activity_stream
-      activity_stream_check( user.activity_stream(3), test[:check] )
+      activity_stream_check( admin_user.activity_stream(3), test[:check] )
     }
 
     # delete tickets
@@ -128,8 +132,8 @@ class ActivityStreamTest < ActiveSupport::TestCase
         :create => {
           :organization => {
             :name               => 'some name',
-            :updated_by_id      => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
-            :created_by_id      => User.lookup( :login => 'nicole.braun@zammad.org' ).id,
+            :updated_by_id      => current_user.id,
+            :created_by_id      => current_user.id,
           },
         },
         :update1 => {
@@ -144,10 +148,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
         },
         :check => [
           {
+            :result => true,
             :object => 'Organization',
             :type   => 'created',
           },
           {
+            :result => true,
             :object => 'Organization',
             :type   => 'updated',
           },
@@ -160,7 +166,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       organization = Organization.create( test[:create][:organization] )
       test[:check][0][:o_id]          = organization.id
       test[:check][0][:created_at]    = organization.created_at
-      test[:check][0][:created_by_id] = User.lookup( :login => 'nicole.braun@zammad.org' ).id
+      test[:check][0][:created_by_id] = current_user.id
       sleep 11
 
       assert_equal( organization.class.to_s, 'Organization' )
@@ -169,7 +175,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         organization.update_attributes( test[:update1][:organization] )
         test[:check][1][:o_id]          = organization.id
         test[:check][1][:updated_at]    = organization.updated_at
-        test[:check][1][:created_by_id] = User.lookup( :login => 'nicole.braun@zammad.org' ).id
+        test[:check][1][:created_by_id] = current_user.id
         sleep 2
       end
 
@@ -181,7 +187,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       organizations.push organization
 
       # check activity_stream
-      activity_stream_check( user.activity_stream(2), test[:check] )
+      activity_stream_check( admin_user.activity_stream(2), test[:check] )
     }
 
     # delete tickets
@@ -193,6 +199,152 @@ class ActivityStreamTest < ActiveSupport::TestCase
     }
   end
 
+
+  test 'user with update check false' do
+    tests = [
+
+      # test 1
+      {
+        :create => {
+          :user => {
+            :login              => 'someemail@example.com',
+            :email              => 'Bob Smith II <someemail@example.com>',
+            :updated_by_id      => current_user.id,
+            :created_by_id      => current_user.id,
+          },
+        },
+        :update1 => {
+          :user => {
+            :firstname    => 'Bob U',
+            :lastname     => 'Smith U',
+          },
+        },
+        :check => [
+          {
+            :result => true,
+            :object => 'User',
+            :type   => 'created',
+          },
+          {
+            :result => false,
+            :object => 'User',
+            :type   => 'updated',
+          },
+        ]
+      },
+    ]
+    users = []
+    tests.each { |test|
+
+      user = User.create( test[:create][:user] )
+      test[:check][0][:o_id]          = user.id
+      test[:check][0][:created_at]    = user.created_at
+      test[:check][0][:created_by_id] = current_user.id
+
+      assert_equal( user.class.to_s, 'User' )
+
+      if test[:update1][:user]
+        user.update_attributes( test[:update1][:user] )
+        test[:check][1][:o_id]          = user.id
+        test[:check][1][:updated_at]    = user.updated_at
+        test[:check][1][:created_by_id] = current_user.id
+      end
+
+      # remember organization
+      users.push user
+
+      # check activity_stream
+      activity_stream_check( admin_user.activity_stream(2), test[:check] )
+    }
+
+    # delete tickets
+    users.each { |user|
+      user_id = user.id
+      user.destroy
+      found = User.where( :id => user_id ).first
+      assert( !found, "User destroyed")
+    }
+  end
+
+
+
+  test 'user with update check true' do
+    tests = [
+
+      # test 1
+      {
+        :create => {
+          :user => {
+            :login              => 'someemail@example.com',
+            :email              => 'Bob Smith II <someemail@example.com>',
+            :updated_by_id      => current_user.id,
+            :created_by_id      => current_user.id,
+          },
+        },
+        :update1 => {
+          :user => {
+            :firstname    => 'Bob U',
+            :lastname     => 'Smith U',
+          },
+        },
+        :update2 => {
+          :user => {
+            :firstname    => 'Bob',
+            :lastname     => 'Smith',          },
+        },
+        :check => [
+          {
+            :result => true,
+            :object => 'User',
+            :type   => 'created',
+          },
+          {
+            :result => true,
+            :object => 'User',
+            :type   => 'updated',
+          },
+        ]
+      },
+    ]
+    users = []
+    tests.each { |test|
+
+      user = User.create( test[:create][:user] )
+      test[:check][0][:o_id]          = user.id
+      test[:check][0][:created_at]    = user.created_at
+      test[:check][0][:created_by_id] = current_user.id
+
+      assert_equal( user.class.to_s, 'User' )
+
+      if test[:update1][:user]
+        user.update_attributes( test[:update1][:user] )
+        test[:check][1][:o_id]          = user.id
+        test[:check][1][:updated_at]    = user.updated_at
+        test[:check][1][:created_by_id] = current_user.id
+      end
+
+      # to verify update which need to be logged
+      sleep 14
+
+      if test[:update2][:user]
+        user.update_attributes( test[:update2][:user] )
+      end
+
+      # remember organization
+      users.push user
+
+      # check activity_stream
+      activity_stream_check( admin_user.activity_stream(2), test[:check] )
+    }
+
+    # delete tickets
+    users.each { |user|
+      user_id = user.id
+      user.destroy
+      found = User.where( :id => user_id ).first
+      assert( !found, "User destroyed")
+    }
+  end
 
   def activity_stream_check( activity_stream_list, checks )
     puts 'AS ' + activity_stream_list.inspect
@@ -210,7 +362,11 @@ class ActivityStreamTest < ActiveSupport::TestCase
         next if item['o_id'] != check_item[:o_id]
         match = true
       }
-      assert( match, "activity stream check not matched! #{check_item.inspect}")
+      if check_item[:result]
+        assert( match, "activity stream check not matched! #{check_item.inspect}")
+      else
+        assert( !match, "activity stream check matched but should not! #{check_item.inspect}")
+      end        
     }
   end
 

@@ -14,11 +14,14 @@ class Ticket::Article < ApplicationModel
   after_update  :notify_clients_after_update
   after_destroy :notify_clients_after_destroy
 
-  activity_stream_support
+  activity_stream_support :ignore_attributes => {
+    :ticket_article_type_id   => true,
+    :ticket_article_sender_id => true,
+  }
 
   history_support :ignore_attributes => {
-    :create_article_type_id   => true,
-    :create_article_sender_id => true,
+    :ticket_article_type_id   => true,
+    :ticket_article_sender_id => true,
   }
 
   attr_accessor :attachments

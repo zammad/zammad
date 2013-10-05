@@ -16,7 +16,6 @@ returns
 =end
 
   def activity_stream_log (type, user_id)
-    return if !self.class.activity_stream_support_config
     role = self.class.activity_stream_support_config[:role]
     ActivityStream.add(
       :o_id           => self['id'],

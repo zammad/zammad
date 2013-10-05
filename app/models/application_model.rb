@@ -479,6 +479,7 @@ log object create activity stream, if configured - will be executed automaticall
 =end
 
   def activity_stream_create
+    return if !self.class.activity_stream_support_config
     activity_stream_log( 'created', self['created_by_id'] )
   end
 
@@ -492,7 +493,34 @@ log object update activity stream, if configured - will be executed automaticall
 =end
 
   def activity_stream_update
+    return if !self.class.activity_stream_support_config
+
     return if !self.changed?
+
+    # default ignored attributes
+    ignore_attributes = {
+      :created_at               => true,
+      :updated_at               => true,
+      :created_by_id            => true,
+      :updated_by_id            => true,
+    }
+    if self.class.activity_stream_support_config[:ignore_attributes]
+      self.class.activity_stream_support_config[:ignore_attributes].each {|key, value|
+        ignore_attributes[key] = value
+      }
+    end
+
+    log = false
+    self.changes.each {|key, value|
+
+      # do not log created_at and updated_at attributes
+      next if ignore_attributes[key.to_sym] == true
+
+      log = true
+    }
+
+    return if !log
+
     activity_stream_log( 'updated', self['updated_by_id'] )
   end
 

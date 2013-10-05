@@ -16,10 +16,16 @@ class Ticket < ApplicationModel
   after_update    :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
 
-  activity_stream_support
+  activity_stream_support :ignore_attributes => {
+    :create_article_type_id   => true,
+    :create_article_sender_id => true,
+    :article_count            => true,
+  }
 
   history_support :ignore_attributes => {
-    :article_count => true,
+    :create_article_type_id   => true,
+    :create_article_sender_id => true,
+    :article_count            => true,
   }
 
   belongs_to    :group
