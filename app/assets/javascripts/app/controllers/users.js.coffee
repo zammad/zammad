@@ -37,6 +37,7 @@ class Index extends App.Controller
               callback: (e) ->
                 e.preventDefault()
                 user_id = $(e.target).parent().parent().data('id')
+                App.Auth._logout()
                 window.location = App.Config.get('api_path') + '/sessions/switch/' + user_id
             }
           ]

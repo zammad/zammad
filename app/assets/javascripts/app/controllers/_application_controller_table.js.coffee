@@ -135,7 +135,7 @@ class App.ControllerTable extends App.Controller
                 record = App[ attribute.relation ].find( object[rowWithoutId] )
                 object[row.name] = record.name
 
-    @log 'error', 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
+    @log 'debug', 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
     table = App.view('generic/table')(
       header:   header
       overview: dataTypesForCols
