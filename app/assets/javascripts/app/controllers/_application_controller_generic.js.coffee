@@ -175,15 +175,6 @@ class App.ControllerGenericIndex extends App.Controller
           @el.on( 'click', "[data-type=#{item.dataType}]", callback )
           binds[item.dataType] = true
 
-  custom: (e) =>
-    e.preventDefault()
-    item = $(e.target).item( App[ @genericObject ] )
-    new App.ControllerGenericEdit(
-      id:            item.id
-      pageData:      @pageData
-      genericObject: @genericObject
-    )
-
   edit: (e) =>
     e.preventDefault()
     item = $(e.target).item( App[ @genericObject ] )

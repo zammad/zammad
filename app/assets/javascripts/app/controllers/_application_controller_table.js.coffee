@@ -86,8 +86,15 @@ class App.ControllerTable extends App.Controller
     for row in overview
       if attributes
         for attribute in attributes
+          found = false
           if row is attribute.name
+            found = true
             dataTypesAttribute = _.clone(attribute)
+          else if row + '_id' is attribute.name
+            found = true
+            dataTypesAttribute = _.clone(attribute)
+            dataTypesAttribute['name'] = row
+          if found
             dataTypesAttribute['type'] = 'link'
             if !dataTypesAttribute['dataType']
               dataTypesAttribute['dataType'] = 'edit'
@@ -128,7 +135,7 @@ class App.ControllerTable extends App.Controller
                 record = App[ attribute.relation ].find( object[rowWithoutId] )
                 object[row.name] = record.name
 
-    @log 'debug', 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
+    @log 'error', 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
     table = App.view('generic/table')(
       header:   header
       overview: dataTypesForCols
