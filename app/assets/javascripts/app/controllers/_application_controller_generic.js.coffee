@@ -60,11 +60,11 @@ class App.ControllerGenericEdit extends App.ControllerModal
 
     @html App.view('generic/admin/edit')( head: @pageData.object )
     new App.ControllerForm(
-      el:         @el.find('#object_edit'),
-      model:      App[ @genericObject ],
-      params:     @item,
-      required:   @required,
-      autofocus:  true,
+      el:         @el.find('#object_edit')
+      model:      App[ @genericObject ]
+      params:     @item
+      required:   @required
+      autofocus:  true
     )
     @modalShow()
 
@@ -96,7 +96,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
         ui.modalHide()
     )
 
-class App.ControllerGenericIndex extends App.ControllerContent
+class App.ControllerGenericIndex extends App.Controller
   events:
     'click [data-type=edit]':    'edit'
     'click [data-type=destroy]': 'destroy'
@@ -143,25 +143,53 @@ class App.ControllerGenericIndex extends App.ControllerContent
       )
 
     @html App.view('generic/admin/index')(
-      head:    @pageData.objects,
-      notes:   @pageData.notes,
-      buttons: @pageData.buttons,
-      menus:   @pageData.menus,
+      head:    @pageData.objects
+      notes:   @pageData.notes
+      buttons: @pageData.buttons
+      menus:   @pageData.menus
     )
+
+    # append additional col. link switch to
+    overview = _.clone( App[ @genericObject ].configure_overview )
+    attributes = _.clone( App[ @genericObject ].configure_attributes )
+    if @pageData.addCol
+      for item in @pageData.addCol.overview
+        overview.push item
+      for item in @pageData.addCol.attributes
+        attributes.push item
 
     # append content table
     new App.ControllerTable(
-      el:      @el.find('.table-overview'),
-      model:   App[ @genericObject ],
-      objects: objects,
+      el:         @el.find('.table-overview')
+      model:      App[ @genericObject ]
+      objects:    objects
+      overview:   overview
+      attributes: attributes
+    )
+
+    binds = {}
+    for item in attributes
+      if item.dataType
+        if !binds[item.dataType]
+          callback = item.callback || @edit
+          @el.on( 'click', "[data-type=#{item.dataType}]", callback )
+          binds[item.dataType] = true
+
+  custom: (e) =>
+    e.preventDefault()
+    item = $(e.target).item( App[ @genericObject ] )
+    new App.ControllerGenericEdit(
+      id:            item.id
+      pageData:      @pageData
+      genericObject: @genericObject
     )
 
   edit: (e) =>
     e.preventDefault()
     item = $(e.target).item( App[ @genericObject ] )
     new App.ControllerGenericEdit(
-      id:            item.id,
-      pageData:      @pageData,
+      id:            item.id
+      pageData:      @pageData
       genericObject: @genericObject
     )
 
@@ -174,7 +202,7 @@ class App.ControllerGenericIndex extends App.ControllerContent
   new: (e) ->
     e.preventDefault()
     new App.ControllerGenericNew(
-      pageData:      @pageData,
+      pageData:      @pageData
       genericObject: @genericObject
     )
 
@@ -191,8 +219,8 @@ class DestroyConfirm extends App.ControllerModal
       button:  'Yes'
     )
     @modalShow(
-      backdrop: true,
-      keyboard: true,
+      backdrop: true
+      keyboard: true
     )
 
   submit: (e) =>
@@ -233,10 +261,10 @@ class App.ControllerLevel2 extends App.ControllerContent
     @navupdate @page.nav
 
     @html App.view('generic/admin_level2/index')(
-      page:     @page,
-      menus:    @menu,
-      type:     @type,
-      target:   @target,
+      page:     @page
+      menus:    @menu
+      type:     @type
+      target:   @target
     )
 
     if !@target
@@ -269,7 +297,7 @@ class App.ControllerTabs extends App.Controller
 
   render: ->
     @html App.view('generic/tabs')(
-      tabs: @tabs,
+      tabs: @tabs
     )
     @el.find('.nav-tabs li:first').addClass('active')
 

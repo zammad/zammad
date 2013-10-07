@@ -10,34 +10,34 @@ class App.ControllerTable extends App.Controller
   ###
 
     new App.ControllerTable(
-      header:   ['Host', 'User', 'Adapter', 'Active'],
-      overview: ['host', 'user', 'adapter', 'active'],
-      model:    App.Channel,
-      objects:  data,
-      checkbox: false,
-      radio:    false,
+      header:   ['Host', 'User', 'Adapter', 'Active']
+      overview: ['host', 'user', 'adapter', 'active']
+      model:    App.Channel
+      objects:  data
+      checkbox: false
+      radio:    false
     )
 
     new App.ControllerTable(
       overview_extended: [
-        { name: 'number',                 link: true },
-        { name: 'title',                  link: true },
-        { name: 'customer',               class: 'user-popover', data: { id: true } },
-        { name: 'ticket_state',           translate: true },
-        { name: 'ticket_priority',        translate: true },
+        { name: 'number',                 link: true }
+        { name: 'title',                  link: true }
+        { name: 'customer',               class: 'user-popover', data: { id: true } }
+        { name: 'ticket_state',           translate: true }
+        { name: 'ticket_priority',        translate: true }
         { name: 'group' },
-        { name: 'owner',                  class: 'user-popover', data: { id: true } },
-        { name: 'created_at',             callback: @frontendTime },
-        { name: 'last_contact',           callback: @frontendTime },
-        { name: 'last_contact_agent',     callback: @frontendTime },
-        { name: 'last_contact_customer',  callback: @frontendTime },
-        { name: 'first_response',         callback: @frontendTime },
-        { name: 'close_time',             callback: @frontendTime },
+        { name: 'owner',                  class: 'user-popover', data: { id: true } }
+        { name: 'created_at',             callback: @frontendTime }
+        { name: 'last_contact',           callback: @frontendTime }
+        { name: 'last_contact_agent',     callback: @frontendTime }
+        { name: 'last_contact_customer',  callback: @frontendTime }
+        { name: 'first_response',         callback: @frontendTime }
+        { name: 'close_time',             callback: @frontendTime }
       ],
-      model:    App.Ticket,
-      objects:  tickets,
-      checkbox: false,
-      radio:    false,
+      model:    App.Ticket
+      objects:  tickets
+      checkbox: false
+      radio:    false
     )
 
   ###
@@ -53,7 +53,7 @@ class App.ControllerTable extends App.Controller
       table = '<p>-' + App.i18n.translateContent( 'none' ) + '-</p>'
       return $(table)
 
-    # define normal header
+    # define table header
     if header
       header_new = []
       for key in header
@@ -64,21 +64,39 @@ class App.ControllerTable extends App.Controller
     else if !data.overview_extended
       header = []
       for row in overview
+        found = false
         if attributes
           for attribute in attributes
             if row is attribute.name
+              found = true
               header.push attribute
             else
               rowWithoutId = row + '_id'
               if rowWithoutId is attribute.name
-                header.push  attribute
+                found = true
+                header.push attribute
+        if !found
+          header.push {
+            name:    row
+            display: row
+          }     
 
+    # collect data of col. types
     dataTypesForCols = []
     for row in overview
-      dataTypesForCols.push {
-        name: row
-        link: true
-      }
+      if attributes
+        for attribute in attributes
+          if row is attribute.name
+            dataTypesAttribute = _.clone(attribute)
+            dataTypesAttribute['type'] = 'link'
+            if !dataTypesAttribute['dataType']
+              dataTypesAttribute['dataType'] = 'edit'
+            dataTypesForCols.push dataTypesAttribute
+      else
+        dataTypesForCols.push {
+          name: row
+          link: true
+        }
 
     # extended table format
     if data.overview_extended

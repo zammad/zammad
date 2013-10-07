@@ -24,6 +24,22 @@ class Index extends App.Controller
 #          { name: 'List', 'data-type': '', class: 'active' },
           { name: 'New User', 'data-type': 'new', class: 'primary' }
         ]
+        addCol:
+          overview: ['switch_to']
+          attributes: [
+            {
+              name:     'switch_to'
+              display:  'Switch to'
+              type:     'link'
+              class:    'glyphicon glyphicon-user'
+              readonly: 1
+              dataType: 'switch_to'
+              callback: (e) ->
+                e.preventDefault()
+                user_id = $(e.target).parent().parent().data('id')
+                window.location = App.Config.get('api_path') + '/sessions/switch/' + user_id
+            }
+          ]
     )
 
 App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

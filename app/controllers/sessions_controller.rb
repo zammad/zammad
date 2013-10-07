@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
     current_user_set(user)
 
     # log new session
-    user.activity_stream_log( 'session started', user.id )
+    user.activity_stream_log( 'session started', user.id, true )
 
     # auto population of default collections
     default_collection = SessionHelper::default_collections(user)
@@ -131,7 +131,7 @@ class SessionsController < ApplicationController
     current_user_set(authorization.user)
 
     # log new session
-    user.activity_stream_log( 'session started', authorization.user.id )
+    user.activity_stream_log( 'session started', authorization.user.id, true )
 
     # remember last login date
     authorization.user.update_last_login
@@ -150,13 +150,44 @@ class SessionsController < ApplicationController
       current_user_set(user)
 
       # log new session
-      user.activity_stream_log( 'session started', user.id )
+      user.activity_stream_log( 'session started', user.id, true )
 
       # remember last login date
       user.update_last_login
     end
 
     # redirect to app
+    redirect_to '/#'
+  end
+
+  # "switch" to user
+  def switch_to_user
+    return if deny_if_not_role('Admin')
+
+    # check user
+    if !params[:id]
+      render(
+        :json   => { :message => 'no user given' },
+        :status => :not_found
+      )
+      return false
+    end
+
+    user = User.lookup( :id => params[:id] )
+    if !user
+      render(
+        :json   => {},
+        :status => :not_found
+      )
+      return false
+    end
+
+    # log new session
+    user.activity_stream_log( 'switch to', current_user.id, true )
+
+    # set session user
+    current_user_set(user)
+
     redirect_to '/#'
   end
 

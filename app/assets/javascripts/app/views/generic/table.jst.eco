@@ -32,10 +32,10 @@
   <% position++ %>
   <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
-    <td><input type="checkbox" value="<%= object.id %>" name="bulk"/></td>
+      <td><input type="checkbox" value="<%= object.id %>" name="bulk"/></td>
     <% end %>
     <% if @radio: %>
-    <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
+      <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
     <% end %>
     <% for row in @overview: %>
       <% displayName = @P( object[row.name], row ) %>
@@ -46,18 +46,22 @@
           <% displayNameTitle = @P( object[row.title], row ) %>
         <% end %>
       <% end %>
-    <td <% if row.title: %>title="<%= displayNameTitle %>"<% end %>>
-      <% if row.link: %><a href="#" data-type="edit"><% else: %><span <% if row.class: %>class="<%= row.class %>"<% end %> <% if row.data && row.data.id: %>data-id="<%= object[row.name].id %>"<% end %>><% end %>
-      <% if row.translate || row.callback: %><%- displayName %><% else: %><%= displayName %><% end %>
-      <% if row.link: %></a><% else: %></span><% end %>
-    </td>
+      <td <% if row.title: %>title="<%= displayNameTitle %>"<% end %>>
+        <% if row.type is 'link': %>
+          <a href="#" data-type="<%= row.dataType %>" <% if row.class: %>class="<%= row.class %>"<% end %>>
+        <% else: %>
+          <span <% if row.class: %>class="<%= row.class %>"<% end %> <% if row.data && row.data.id: %>data-id="<%= object[row.name].id %>"<% end %>>
+        <% end %>
+        <% if row.translate || row.callback: %><%- displayName %><% else: %><%= displayName %><% end %>
+        <% if row.type is 'link': %></a><% else: %></span><% end %>
+      </td>
   <% end %>
 <!--
     <td><%= object.updated_at %></td>
 -->
 <% if @destroy: %>
     <td>    
-      <a data-type="destroy">x</a>
+      <a class="glyphicon glyphicon-trash" data-type="destroy">x</a>
     </td>
 <% end %>
   </tr>

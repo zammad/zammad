@@ -143,8 +143,8 @@ class App.Controller extends Spine.Controller
 
   ticketTableAttributes: (attributes) =>
     all_attributes = [
-      { name: 'number',                 link: true, title: 'title' },
-      { name: 'title',                  link: true, title: 'title' },
+      { name: 'number',                 type: 'link', title: 'title', dataType: 'edit' },
+      { name: 'title',                  type: 'link', title: 'title', dataType: 'edit' },
       { name: 'customer',               class: 'user-popover', data: { id: true } },
       { name: 'ticket_state',           translate: true, title: true },
       { name: 'ticket_priority',        translate: true, title: true },
