@@ -19,4 +19,8 @@ class String
       line.length > options[:line_width] ? line.gsub(/(.{1,#{options[:line_width]}})(\s+|$)/, "\\1\n").strip : line
     end * "\n"
   end
+  def to_filename
+    camel_cased_word = self.to_s
+    camel_cased_word.gsub(/::/, '/').downcase
+  end
 end

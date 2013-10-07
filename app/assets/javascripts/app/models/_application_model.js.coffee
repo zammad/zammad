@@ -16,6 +16,9 @@ class App.Model extends Spine.Model
   uiUrl: ->
     '#'
 
+  objectDisplayName: ->
+    @constructor.className
+
   displayName: ->
     return @name if @name
     if @realname

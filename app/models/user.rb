@@ -111,6 +111,7 @@ returns
     # get related objects
     assets = {}
     activity_stream.each {|item|
+      require item['object'].to_filename
       record = Kernel.const_get( item['object'] ).find( item['o_id'] )
       assets = record.assets(assets)
     }

@@ -17,6 +17,9 @@ class App.TicketArticle extends App.Model
   uiUrl: ->
     '#ticket/zoom/' + @ticket_id + '/' + @id
 
+  objectDisplayName: ->
+    'Article'
+
   @_fillUp: (data) ->
 
     # add created & updated
@@ -31,3 +34,12 @@ class App.TicketArticle extends App.Model
 
     data
 
+
+  displayName: ->
+    if @subject
+      return @subject
+    if App.Ticket.exists( @ticket_id )
+      ticket = App.Ticket.find( @ticket_id )
+    if ticket
+      return ticket.title
+    '???'

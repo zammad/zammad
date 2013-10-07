@@ -44,17 +44,14 @@ class App.DashboardActivityStream extends App.Controller
       item.link  = ''
       item.title = '???'
 
-      if item.object is 'Ticket::Article'
-        item.object = 'Article'
-        article = App.TicketArticle.find( item.o_id )
-        ticket  = App.Ticket.find( article.ticket_id )
-        item.title = article.subject || ticket.title
-        item.link  = article.uiUrl()
+      # convert backend name space to local name space
+      item.object = item.object.replace("::", '')
 
       if App[item.object]
-        object     = App[item.object].find( item.o_id )
-        item.link  = object.uiUrl()
-        item.title = object.displayName()
+        object      = App[item.object].find( item.o_id )
+        item.link   = object.uiUrl()
+        item.title  = object.displayName()
+        item.object = object.objectDisplayName()
 
       item.created_by = App.User.find( item.created_by_id )
 
