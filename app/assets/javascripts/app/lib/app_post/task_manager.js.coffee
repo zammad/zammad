@@ -120,7 +120,7 @@ class _taskManagerSingleton extends App.Controller
 
     # create new task if not exists
     task = @get( key )
-    console.log('add', key, callback, params, to_not_show, task)
+    console.log('add', key, callback, params, to_not_show, task, active)
     if !task
       console.log('add, create new taskbar in backend')
       task = new App.Taskbar
@@ -204,24 +204,27 @@ class _taskManagerSingleton extends App.Controller
 
     console.log('controller start try...', callback, key)
 
-    # activate controller
-    worker = @worker( key )
-    if worker && worker.activate
-      worker.activate()
-      App.Event.trigger('ui:rerender:task')
+    # create params
+    params_app = _.clone(params)
+    params_app['el']       = $('#content_permanent_' + key )
+    params_app['task_key'] = key
+    if to_not_show
+      params_app['doNotLog'] = 1
 
     # return if controller is already started
-    return if @workersStarted[key]
+    if @workersStarted[key]
+
+      # activate existing controller
+      worker = @worker( key )
+      if worker && worker.activate && !to_not_show
+        worker.activate(params_app)
+        App.Event.trigger('ui:rerender:task')
+      return
+
     @workersStarted[key] = true
     console.log('controller start now...', callback, key)
 
     # create new controller instanz
-    params_app = _.clone(params)
-    params_app['el']       = $('#content_permanent_' + key )
-    params_app['task_key'] = key
-
-    if to_not_show
-      params_app['doNotLog'] = 1
     a = new App[callback]( params_app )
     @workers[ key ] = a
     console.log('controller start now 2...', callback, key)
@@ -229,7 +232,7 @@ class _taskManagerSingleton extends App.Controller
     # activate controller
     if !to_not_show
       console.log('controller start now 2 activate...', callback, key)
-      a.activate()
+      a.activate(params_app)
 
     console.log('controller start now 2 return...', callback, key)
     return a
