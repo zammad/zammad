@@ -112,7 +112,8 @@ class App.ControllerGenericIndex extends App.Controller
     @navupdate @pageData.navupdate
 
     # bind render after a change is done
-    @subscribeId = App[ @genericObject ].subscribe(@render)
+    if !@disableRender
+      @subscribeId = App[ @genericObject ].subscribe(@render)
 
     App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
       @log 'error', 'ajax', msg.status
@@ -126,10 +127,12 @@ class App.ControllerGenericIndex extends App.Controller
     @render()
 
     # fetch all
-    App[ @genericObject ].fetch()
+    if !@disableInitFetch
+      App[ @genericObject ].fetch()
 
   release: =>
-    App[ @genericObject ].unsubscribe(@subscribeId)
+    if @subscribeId
+      App[ @genericObject ].unsubscribe(@subscribeId)
 
   render: =>
 
