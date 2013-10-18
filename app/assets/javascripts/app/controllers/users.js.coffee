@@ -32,11 +32,11 @@ class Index extends App.Controller
               display:  'Switch to'
               type:     'link'
               class:    'glyphicon glyphicon-user'
-              readonly: 1
               dataType: 'switch_to'
-              callback: (e) ->
+              callback: (e) =>
                 e.preventDefault()
                 user_id = $(e.target).parent().parent().data('id')
+                @disconnectClient()
                 App.Auth._logout()
                 window.location = App.Config.get('api_path') + '/sessions/switch/' + user_id
             }
