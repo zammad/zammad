@@ -21,42 +21,13 @@ class _collectionSingleton extends Spine.Module
 
     # add trigger - bind new events
     App.Event.bind 'loadAssets', (data) =>
-      if data
-        for type, collections of data
-          if type is 'users'
-            type = 'User'
-            throw "BREAK, users"
-          if type is 'tickets'
-            type = 'Ticket'
-            throw "BREAK, tickets"
-          if type is 'ticket_article'
-            type = 'TicketArticle'
-            throw "BREAK, ticket_article"
-          if type is 'organization'
-            type = 'Organization'
-            throw "BREAK, organization"
-          if type is 'history_object'
-            type = 'HistoryObject'
-            throw "BREAK, history_object"
-          if type is 'history_type'
-            type = 'HistoryType'
-            throw "BREAK, history_type"
-          if type is 'history_attribute'
-            type = 'HistoryAttribute'
-            throw "BREAK, history_attribute"
+      if !data
+        @log 'error', 'loadAssets:trigger, got no data, cant load assets'
+        return
 
-          @log 'debug', 'loadCollection:trigger', type, collections
-          @load( localStorage: data.localStorage, type: type, data: collections )
-
-    # add trigger - bind new events
-    App.Event.bind 'loadCollection', (data) =>
-
-      # load collections
-      if data.collections
-        for type of data.collections
-
-          @log 'debug', 'loadCollection:trigger', type, data.collections[type]
-          @load( localStorage: data.localStorage, type: type, data: data.collections[type] )
+      for type, collections of data
+        @log 'debug', 'loadCollection:trigger', type, collections
+        @load( localStorage: data.localStorage, type: type, data: collections )
 
     # add trigger - bind new events
     App.Event.bind 'resetCollection', (data) =>
@@ -69,62 +40,73 @@ class _collectionSingleton extends Spine.Module
           @reset( localStorage: data.localStorage, type: type, data: data.collections[type] )
 
     # find collections to load
-    @_loadCollectionAll()
+    @_loadObjectsFromLocalStore()
 
-  _loadCollectionAll: ->
+  _loadObjectsFromLocalStore: ->
     list = App.Store.list()
     for key in list
       parts = key.split('::')
       if parts[0] is 'collection'
         data = App.Store.get( key )
-        if data && data.localStorage
-          @log 'debug', 'load INIT', data
-          @load( data )
+        data['type']         = parts[1]
+        data['localStorage'] = true
+
+        @log 'debug', 'load INIT', data
+        @load( data )
 
   reset: (params) ->
     if !App[ params.type ]
       @log 'error', 'reset', 'no such collection', params
       return
+
     @log 'debug', 'reset', params
 
-    # empty in-memory
-    App[ params.type ].refresh( [], { clear: true } )
-
     # remove permanent storage
-    list = App.Store.list()
-    for key in list
-      parts = key.split('::')
-      if parts[0] is 'collection' && parts[1] is params.type
-        App.Store.delete(key)
+    @localDelete( params.type )
 
-    # load with new data
-    @load(params)
+    # reset in-memory
+    App[ params.type ].refresh( params.data, { clear: true } )
+
+    # remember in store if not already requested from local storage
+    for object in params.data
+      @localStore( params.type, object )
 
   load: (params) ->
     @log 'debug', 'load', params
 
     return if _.isEmpty( params.data )
 
+    if !App[ params.type ]
+      @log 'error', 'reset', 'no such collection', params
+      return
+
     localStorage = params.localStorage
 
     # load full array once
     if _.isArray( params.data )
-      if !params.refresh && App[ params.type ]
-        App[ params.type ].refresh( params.data )
+      App[ params.type ].refresh( params.data )
 
       # remember in store if not already requested from local storage
       if !localStorage
         for object in params.data
-          App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, data: [ object ] } )
+          @localStore( params.type, object )
       return
 
     # load data from object
-#    if _.isObject( params.data )
     for key, object of params.data
       if !params.refresh && App[ params.type ]
         App[ params.type ].refresh( object )
 
       # remember in store if not already requested from local storage
       if !localStorage
-        App.Store.write( 'collection::' + params.type + '::' + object.id, { type: params.type, localStorage: true, data: [ object ] } )
+        @localStore( params.type, object)
 
+  localDelete: (type) ->
+    list = App.Store.list()
+    for key in list
+      parts = key.split('::')
+      if parts[0] is 'collection' && parts[1] is type
+        App.Store.delete(key)
+
+  localStore: (type, object) ->
+    App.Store.write( 'collection::' + type + '::' + object.id, { data: [ object ] } )
