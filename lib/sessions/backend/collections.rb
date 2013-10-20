@@ -56,8 +56,7 @@ module Sessions::Backend::Collections
 
         # send update to browser
         data = {}
-        data['collections'] = {}
-        data['collections'][key] = push_collections
+        data[key] = push_collections
         client.send({
           :event  => 'resetCollection',
           :data   => data,

@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
     user.activity_stream_log( 'session started', user.id, true )
 
     # auto population of default collections
-    default_collection = SessionHelper::default_collections(user)
+    collections = SessionHelper::default_collections(user)
 
     # set session user_id
     user = User.find_fulldata(user.id)
@@ -50,9 +50,9 @@ class SessionsController < ApplicationController
 
     # return new session data
     render :json => {
-      :session             => user,
-      :default_collections => default_collection,
-      :logon_session       => logon_session_key,
+      :session       => user,
+      :collections   => collections,
+      :logon_session => logon_session_key,
     },
     :status => :created
   end

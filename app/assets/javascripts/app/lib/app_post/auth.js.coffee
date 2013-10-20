@@ -84,9 +84,10 @@ class App.Auth
       App.Session.set( key, value )
 
     # refresh default collections
-    for key, value of data.default_collections
-      App[key].refresh( value, options: { clear: true } )
+    if data.collections
+      App.Event.trigger 'resetCollection', data.collections
 
+    # trigger auth ok with new session data
     App.Event.trigger( 'auth', data.session )
 
     # init of i18n

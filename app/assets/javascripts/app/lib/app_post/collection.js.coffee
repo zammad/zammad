@@ -31,13 +31,14 @@ class _collectionSingleton extends Spine.Module
 
     # add trigger - bind new events
     App.Event.bind 'resetCollection', (data) =>
+      if !data
+        @log 'error', 'resetCollection:trigger, got no data, cant for collections'
+        return
 
       # load collections
-      if data.collections
-        for type of data.collections
-
-          @log 'debug', 'resetCollection:trigger', type, data.collections[type]
-          @reset( localStorage: data.localStorage, type: type, data: data.collections[type] )
+      for type, collection of data
+        @log 'debug', 'resetCollection:trigger', type, collection
+        @reset( localStorage: data.localStorage, type: type, data: collection )
 
     # find collections to load
     @_loadObjectsFromLocalStore()
