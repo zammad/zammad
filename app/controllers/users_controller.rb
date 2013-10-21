@@ -352,6 +352,25 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
     render :json => users
   end
 
+  # GET /api/v1/users/history/1
+  def history
+
+    # permissin check
+    if !is_role('Admin') && !is_role('Agent')
+      response_access_deny
+      return
+    end
+
+    # get user data
+    user = User.find( params[:id] )
+
+    # get history of user
+    history = user.history_get(true)
+
+    # return result
+    render :json => history
+  end
+
 =begin
 
 Resource:

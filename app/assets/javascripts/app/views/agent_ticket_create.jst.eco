@@ -1,6 +1,6 @@
 <div class="content-two">
   <div class="sidebar">
-    <div class="ticket-widgets">
+    <div class="widgets">
       <div class="customer_info"></div>
       <div class="ticket_template"></div>
       <div class="text_module"></div>

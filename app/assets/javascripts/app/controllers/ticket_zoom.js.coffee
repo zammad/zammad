@@ -140,7 +140,7 @@ class App.TicketZoom extends App.Controller
     @frontendTimeUpdate()
 
     @TicketTitle()
-    @TicketWidgets()
+    @Widgets()
     @TicketAction()
     @ArticleView()
 
@@ -196,20 +196,20 @@ class App.TicketZoom extends App.Controller
       ui:         @
     )
 
-  TicketWidgets: =>
+  Widgets: =>
     # show ticket action row
-    new TicketWidgets(
+    new Widgets(
       ticket:     @ticket
       task_key:   @task_key
-      el:         @el.find('.ticket-widgets')
+      el:         @el.find('.widgets')
       ui:         @
     )
 
   TicketAction: =>
     # start action controller
     if !@isRole('Customer')
-      new TicketActionRow(
-        el:      @el.find('.ticket-action')
+      new ActionRow(
+        el:      @el.find('.action')
         ticket:  @ticket
         ui:      @
       )
@@ -271,7 +271,7 @@ class TicketInfo extends App.ControllerDrox
         object:        @ticket
       )
 
-class TicketWidgets extends App.Controller
+class Widgets extends App.Controller
   constructor: ->
     super
     @render()
@@ -779,7 +779,7 @@ class Article extends App.Controller
       for attachment in @article.attachments
         attachment.size = @humanFileSize(attachment.size)
 
-class TicketActionRow extends App.Controller
+class ActionRow extends App.Controller
   events:
     'click [data-type=history]':  'history_dialog'
     'click [data-type=merge]':    'merge_dialog'

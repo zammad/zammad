@@ -366,3 +366,60 @@ class App.ControllerNavSidbar extends App.ControllerContent
       @el.find('li').removeClass('active')
       @el.find('a[href="' + selectedItem.target + '"]').parent().addClass('active')
 
+class App.GenericHistory extends App.ControllerModal
+  events:
+    'click [data-type=sortorder]': 'sortorder',
+    'click .cancel': 'modalHide',
+    'click .close':  'modalHide',
+
+  constructor: ->
+    super
+
+  render: ( items, orderClass = '' ) ->
+
+    for item in items
+
+      item.link  = ''
+      item.title = '???'
+
+      if item.object is 'Ticket::Article'
+        item.object = 'Article'
+        article = App.TicketArticle.find( item.o_id )
+        ticket  = App.Ticket.find( article.ticket_id )
+        item.title = article.subject || ticket.title
+        item.link  = article.uiUrl()
+
+      if App[item.object]
+        object     = App[item.object].find( item.o_id )
+        item.link  = object.uiUrl()
+        item.title = object.displayName()
+
+      item.created_by = App.User.find( item.created_by_id )
+
+    # set cache
+    @historyListCache = items
+
+    @html App.view('generic/history')(
+      items: items
+      orderClass: orderClass
+
+      @historyListCache
+    )
+
+    @modalShow()
+
+    # enable user popups
+    @userPopups()
+
+    # show frontend times
+    @delay( @frontendTimeUpdate, 300, 'ui-time-update' )
+
+  sortorder: (e) ->
+    e.preventDefault()
+    isDown = @el.find('[data-type="sortorder"]').hasClass('down')
+
+    if isDown
+      @render( @historyListCache, 'up' )
+    else
+      @render( @historyListCache.reverse(), 'down' )
+

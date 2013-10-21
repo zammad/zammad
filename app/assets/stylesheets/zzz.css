@@ -680,7 +680,7 @@ footer {
   width: 100%;
 }
 
-.ticket-action {
+.sidebar .action {
   padding: 6px 8px 6px;
   position: fixed;
   bottom: 0px;
@@ -692,17 +692,17 @@ footer {
   margin-left: 4px;
 }
 @media (min-width: 800px) {
-  .ticket-action {
+  .sidebar .action {
     width: 234px;
   }
 }
 @media (min-width: 1024px) {
-  .ticket-action {
+  .sidebar .action {
     width: 254px;
   }
 }
 @media (min-width: 1200px) {
-  .ticket-action {
+  .sidebar .action {
     width: 274px;
   }
 }
