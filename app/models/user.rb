@@ -25,7 +25,11 @@ class User < ApplicationModel
       :last_login => true,
     }
   )
-  history_support
+  history_support(
+    :ignore_attributes => {
+      :password => true,
+    }
+  )
 
 =begin
 
@@ -442,7 +446,7 @@ returns
 
 =begin
 
-update last login date (is automatically done by auth and sso backend)
+update last login date and reset login_failed (is automatically done by auth and sso backend)
 
   user = User.find(123)
   result = user.update_last_login
@@ -455,6 +459,13 @@ returns
 
   def update_last_login
     self.last_login = Time.now
+
+    # reset login failed
+    self.login_failed = 0
+
+    # set updated by user
+    self.updated_by_id = self.id
+
     self.save
   end
 

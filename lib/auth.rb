@@ -50,10 +50,6 @@ returns
         # remember last login date
         user_auth.update_last_login
 
-        # reset login failed
-        user_auth.login_failed = 0
-        user_auth.save
-
         return user_auth
       end
     }

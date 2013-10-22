@@ -55,26 +55,45 @@ returns
     },
   ]
 
+to get history log for this object with all assets
+
+  organization = Organization.find(123)
+  result = organization.history_get(true)
+
+returns
+
+  result = {
+    :history => [
+      { ... },
+      { ... },
+    ],
+    :assets => {
+      ...
+    }
+  }
+
 =end
 
   def history_get(fulldata = false)
-    list = History.list( self.class.name, self['id'] )
-    return list if !fulldata
+    if !fulldata
+      return History.list( self.class.name, self['id'] )
+    end
 
     # get related objects
-    assets = {}
-    list.each {|item|
+    history = History.list( self.class.name, self['id'], nil, true )
+    history[:list].each {|item|
       record = Kernel.const_get( item['object'] ).find( item['o_id'] )
-      assets = record.assets(assets)
+
+      history[:assets] = record.assets( history[:assets] )
 
       if item['related_object']
         record = Kernel.const_get( item['related_object'] ).find( item['related_o_id'] )
-        assets = record.assets(assets)
+        history[:assets] = record.assets( history[:assets] )
       end
     }
     return {
-      :history => list,
-      :assets  => assets,
+      :history => history[:list],
+      :assets  => history[:assets],
     }
   end
 

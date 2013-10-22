@@ -111,9 +111,44 @@ return all history entries of an object
 
   history_list = History.list( 'Ticket', 123 )
 
+returns
+
+  history_list = [
+    { ... },
+    { ... },
+    { ... },
+    { ... },
+  ]
+
+
+return all history entries of an object and it's related history objects
+
+  history_list = History.list( 'Ticket', 123, true )
+
+returns
+
+  history_list = [
+    { ... },
+    { ... },
+    { ... },
+    { ... },
+  ]
+
+
+return all history entries of an object and it's assets
+
+  history = History.list( 'Ticket', 123, nil, true )
+
+returns
+
+  history = {
+    :list   => list,
+    :assets => assets,
+  }
+
 =end
 
-  def self.list( requested_object, requested_object_id, related_history_object = nil )
+  def self.list( requested_object, requested_object_id, related_history_object = nil, assets = nil )
     if !related_history_object
       history_object = self.object_lookup( requested_object )
       history = History.where( :history_object_id => history_object.id ).
@@ -131,8 +166,14 @@ return all history entries of an object
       ).
       order('created_at ASC, id ASC')
     end
+    asset_list = {}
     list = []
     history.each do |item|
+
+      if assets
+        asset_list = item.assets( asset_list )
+      end
+
       data = item.attributes
       data['object']    = self.object_lookup_id( data['history_object_id'] ).name
       data['type']      = self.type_lookup_id( data['history_type_id'] ).name
@@ -163,6 +204,12 @@ return all history entries of an object
       end
 
       list.push data
+    end
+    if assets
+      return {
+        :list   => list,
+        :assets => asset_list,
+      }
     end
     list
   end
