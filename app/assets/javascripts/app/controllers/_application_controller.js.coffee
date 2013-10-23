@@ -311,6 +311,14 @@ class App.Controller extends Spine.Controller
     # remove old popovers
     $('.popover').remove()
 
+    # open user in new task if user isn't customer
+    if !@isRole('Customer')
+      @el.find('.user-popover').bind('click', (e) =>
+        user_id = $(e.target).data('id')
+        @navigate "#user/zoom/#{user_id}"
+        $('.popover').remove()
+      );
+
     # show user popup
     @el.find('.user-popover').popover(
       trigger:    'hover'
