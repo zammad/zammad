@@ -1,5 +1,5 @@
 <div class="btn-group dropup">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><%- @T('Action') %> <span class="caret"></span>
+  <button type="button" class="btn btn-default dropdown-toggle actions" data-toggle="dropdown"><%- @T('Action') %> <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
     <li><a href="#" data-type="history"><%- @T( 'History' ) %></a></li>

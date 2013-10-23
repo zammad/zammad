@@ -137,7 +137,7 @@ class AgentTicketActionLevel1Test < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => '.active .action',
+            :css     => '.active .actions',
           },
           {
             :execute => 'click',
