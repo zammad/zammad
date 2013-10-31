@@ -69,12 +69,22 @@ class Channel::EmailParser
       data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
     }
 
+    # get sender
+    from = nil
+    ['from', 'reply-to', 'return-path'].each { |item|
+      if !from
+        if mail[ item.to_sym ]
+          from = mail[ item.to_sym ].value
+        end
+      end
+    }
+
     # set extra headers
-    data[:from_email]        = Mail::Address.new( mail[:from].value ).address
-    data[:from_local]        = Mail::Address.new( mail[:from].value ).local
-    data[:from_domain]       = Mail::Address.new( mail[:from].value ).domain
-    data[:from_display_name] = Mail::Address.new( mail[:from].value ).display_name ||
-    ( Mail::Address.new( mail[:from].value ).comments && Mail::Address.new( mail[:from].value ).comments[0] )
+    data[:from_email]        = Mail::Address.new( from ).address
+    data[:from_local]        = Mail::Address.new( from ).local
+    data[:from_domain]       = Mail::Address.new( from ).domain
+    data[:from_display_name] = Mail::Address.new( from ).display_name ||
+    ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] = Mail::Field.new( 'X-From', data[:from_display_name] ).to_s

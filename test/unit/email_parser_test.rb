@@ -314,6 +314,18 @@ Hof
           :to                 => 'info42@znuny.com',
         },
       },
+      # spam email
+      {
+        :data         => IO.read('test/fixtures/mail16.box'),
+        :body_md5     => 'b255fb5620db3b63131924513061d974',
+        :params   => {
+          :from               => nil,
+          :from_email         => 'vipyimin@126.com',
+          :from_display_name  => "",
+          :subject            => '【 直通美国排名第49大学 成功后付费 】',
+          :to                 => '"enterprisemobility.apacservice" <enterprisemobility.apacservice@motorola.com>',
+        },
+      },
     ]
 
     files.each { |file|
