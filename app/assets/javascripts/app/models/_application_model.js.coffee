@@ -114,13 +114,11 @@ class App.Model extends Spine.Model
       if callback
 
         # execute callback if record got loaded
-        col = @
-        App[ @className ].one 'refresh', (record) ->
-          delay = =>
-            data = App[ @className ].find( id )
-            if callback
+        App[ @className ].one 'refresh', (records) ->
+          for record in records
+            if record.id.toString() is id.toString()
+              data = App[ @className ].find( record.id )
               callback( data )
-          window.setTimeout(delay, 200)
 
         # fetch object
         console.log 'debug', 'loading..' + @className +  '..', id
