@@ -21,8 +21,6 @@ class App.WidgetUser extends App.ControllerDrox
     App.User.unsubscribe(@subscribeId)
 
   render: (user) =>
-    if !user
-      user = @u
 
     # get display data
     userData = []

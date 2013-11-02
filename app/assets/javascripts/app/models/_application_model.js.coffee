@@ -131,6 +131,7 @@ class App.Model extends Spine.Model
             if @RETRIEVE_CALLBACK[ record.id ]
               for key, callback of @RETRIEVE_CALLBACK[ record.id ]
                 data = App[ @className ].find( record.id )
+                data = @_fillUp( data )
                 callback( data )
                 delete @RETRIEVE_CALLBACK[ record.id ][ key ]
               if _.isEmpty @RETRIEVE_CALLBACK[ record.id ]

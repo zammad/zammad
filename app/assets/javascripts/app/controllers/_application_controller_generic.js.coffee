@@ -42,7 +42,8 @@ class App.ControllerGenericNew extends App.ControllerModal
     object.save(
       success: ->
         if ui.callback
-          ui.callback( @ )
+          item = App[ ui.genericObject ].retrieve(@id)
+          ui.callback( item )
         ui.modalHide()
 
       error: ->
@@ -88,7 +89,8 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @item.save(
       success: ->
         if ui.callback
-          ui.callback( @ )
+          item = App[ ui.genericObject ].retrieve(@id)
+          ui.callback( item )
         ui.modalHide()
 
       error: =>

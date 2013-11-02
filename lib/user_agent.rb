@@ -116,9 +116,10 @@ returns
 
       when Net::HTTPOK
         return Result.new(
-          :body    => response.body,
-          :success => true,
-          :code    => response.code,
+          :body         => response.body,
+          :content_type => response['Content-Type'],
+          :success      => true,
+          :code         => response.code,
         )
       end
 
@@ -171,10 +172,11 @@ returns
 
   class Result
     def initialize(options)
-      @success = options[:success]
-      @body    = options[:body]
-      @code    = options[:code]
-      @error   = options[:error]
+      @success      = options[:success]
+      @body         = options[:body]
+      @code         = options[:code]
+      @content_type = options[:content_type]
+      @error        = options[:error]
     end
     def error
       @error
@@ -187,6 +189,9 @@ returns
     end
     def code
       @code
+    end
+    def content_type
+      @content_type
     end
   end
 end

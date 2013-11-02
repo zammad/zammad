@@ -570,4 +570,51 @@ curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "C
     render :json => { :message => 'ok' }, :status => :ok
   end
 
+=begin
+
+Resource:
+GET /api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7
+
+Response:
+<IMAGE>
+
+Test:
+curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u #{login}:#{password}
+
+=end
+
+  def image
+
+    # cache image
+    response.headers['Expires'] = 1.year.from_now.httpdate
+    response.headers["Cache-Control"] = "cache, store, max-age=31536000, must-revalidate"
+    response.headers["Pragma"] = "cache"
+
+    # serve user image
+    user = User.where( :image => params[:hash] ).first
+    if user
+      # find file
+      list = Store.list( :object => 'User::Image', :o_id => user.id )
+      if list && list[0]
+        file = Store.find( list[0] )
+        send_data(
+          file.store_file.data,
+          :filename    => file.filename,
+          :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+          :disposition => 'inline'
+        )
+        return
+      end
+    end
+
+    # serve defalt image
+    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
+    send_data(
+      Base64.decode64(image),
+      :filename    => 'image.gif',
+      :type        => 'image/gif',
+      :disposition => 'inline',
+    )
+  end
+
 end

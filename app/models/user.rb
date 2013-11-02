@@ -1,13 +1,15 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
+require 'digest/md5'
+
 class User < ApplicationModel
   include User::Assets
   extend User::Search
 
   before_create   :check_name, :check_email, :check_login, :check_image, :check_password
   before_update   :check_password, :check_image, :check_email, :check_login_update
-  after_create    :notify_clients_after_create
-  after_update    :notify_clients_after_update
+  after_create    :check_image_load, :notify_clients_after_create
+  after_update    :check_image_load, :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
 
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
@@ -22,12 +24,15 @@ class User < ApplicationModel
   activity_stream_support(
     :role              => 'Admin',
     :ignore_attributes => {
-      :last_login => true,
-    }
+      :last_login   => true,
+      :image        => true,
+      :image_source => true,    }
   )
   history_support(
     :ignore_attributes => {
-      :password => true,
+      :password     => true,
+      :image        => true,
+      :image_source => true,
     }
   )
 
@@ -530,13 +535,47 @@ returns
   end
 
   def check_image
-    require 'digest/md5'
-    if !self.image || self.image == ''
+    if !self.image_source || self.image_source == '' || self.image_source =~ /gravatar.com/i
       if self.email
         hash = Digest::MD5.hexdigest(self.email)
-        self.image = "http://www.gravatar.com/avatar/#{hash}?s=48"
+        self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
       end
     end
+  end
+
+  def check_image_load
+
+    return if !self.image_source
+    return if self.image_source !~ /http/i
+
+    # download image
+    response = UserAgent.request( self.image_source )
+    if !response.success?
+      self.update_column( :image, 'none' )
+      puts "WARNING: Can't fetch '#{url}', http code: #{response.code.to_s}"
+      #raise "Can't fetch '#{url}', http code: #{response.code.to_s}"
+      return
+    end
+
+    # store image local
+    hash = Digest::MD5.hexdigest( response.body )
+
+    # check if image has changed
+    return if self.image != hash
+
+    # save new image
+    self.update_column( :image, hash )
+    Store.remove( :object => 'User::Image', :o_id => self.id )
+    Store.add(
+      :object      => 'User::Image',
+      :o_id        => self.id,
+      :data        => response.body,
+      :filename    => 'image',
+      :preferences => {
+        'Content-Type' => response.content_type
+      },
+      :created_by_id => self.updated_by_id,
+    )
   end
 
   def check_password

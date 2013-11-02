@@ -24,9 +24,9 @@ class App.TicketArticle extends App.Model
 
     # add created & updated
     if data.created_by_id
-      data.created_by = App.User.find( data.created_by_id )
+      data.created_by = App.User.retrieve( data.created_by_id )
     if data.updated_by_id
-      data.updated_by = App.User.find( data.updated_by_id )
+      data.updated_by = App.User.retrieve( data.updated_by_id )
 
     # add relations
     data.article_type   = App.TicketArticleType.find( data.ticket_article_type_id )

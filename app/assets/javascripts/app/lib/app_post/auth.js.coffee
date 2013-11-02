@@ -72,8 +72,7 @@ class App.Auth
       return false;
 
     # set avatar
-    if !data.session.image
-      data.session.image = 'http://placehold.it/48x48'
+    data.session.image = App.Config.get('api_path') + '/users/image/' + data.session.image
 
     # update config
     for key, value of data.config

@@ -44,8 +44,7 @@ class App.User extends App.Model
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
 
     # set image url
-    if !data.image
-      data.image = 'http://placehold.it/48x48'
+    data.image = @apiPath + '/users/image/' + data.image
 
     data
 
