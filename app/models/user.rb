@@ -26,7 +26,8 @@ class User < ApplicationModel
     :ignore_attributes => {
       :last_login   => true,
       :image        => true,
-      :image_source => true,    }
+      :image_source => true,
+    }
   )
   history_support(
     :ignore_attributes => {
