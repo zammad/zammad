@@ -106,25 +106,41 @@ class App.Model extends Spine.Model
       if callback
         callback( data )
       return data
+
+    if force
+      console.log 'debug', 'find forced to load!', @className, id
     else
-      if force
-        console.log 'debug', 'find forced to load!', @className, id
-      else
-        console.log 'debug', 'find not loaded!', @className, id
-      if callback
+      console.log 'debug', 'find not loaded, load now!', @className, id
+    if callback
 
-        # execute callback if record got loaded
-        App[ @className ].one 'refresh', (records) ->
+      # store callback and requested id
+      if !@RETRIEVE_CALLBACK
+        @RETRIEVE_CALLBACK = {}
+      if !@RETRIEVE_CALLBACK[id]
+        @RETRIEVE_CALLBACK[id] = {}
+      key = @className + '-' + Math.floor( Math.random() * 99999 )
+      @RETRIEVE_CALLBACK[id][key] = callback
+
+      # bind refresh event
+      if !@RETRIEVE_BIND
+        @RETRIEVE_BIND = true
+
+        # check if bind for requested id exists
+        App[ @className ].bind 'refresh', (records) ->
           for record in records
-            if record.id.toString() is id.toString()
-              data = App[ @className ].find( record.id )
-              callback( data )
+            if @RETRIEVE_CALLBACK[ record.id ]
+              for key, callback of @RETRIEVE_CALLBACK[ record.id ]
+                data = App[ @className ].find( record.id )
+                callback( data )
+                delete @RETRIEVE_CALLBACK[ record.id ][ key ]
+              if _.isEmpty @RETRIEVE_CALLBACK[ record.id ]
+                delete @RETRIEVE_CALLBACK[ record.id ]
 
-        # fetch object
-        console.log 'debug', 'loading..' + @className +  '..', id
-        App[ @className ].fetch( id: id )
-        return true
-      return false
+      # fetch object
+      console.log 'debug', 'loading..' + @className +  '..', id
+      App[ @className ].fetch( id: id )
+      return true
+    return false
 
   @subscribe: (callback, param = {}) ->
     if !@SUBSCRIPTION_COLLECTION
@@ -134,8 +150,8 @@ class App.Model extends Spine.Model
       @bind(
         'refresh change'
         =>
-          for key, callbackSingle of @SUBSCRIPTION_COLLECTION
-            callbackSingle()
+          for key, callback of @SUBSCRIPTION_COLLECTION
+            callback()
       )
 
       # trigger deleteAll() and fetch() on network notify
@@ -144,16 +160,10 @@ class App.Model extends Spine.Model
         events
         =>
           @deleteAll()
-#          callbacks = =>
-#            for key, callbackSingle of @SUBSCRIPTION_COLLECTION
-#              callbackSingle()
-#          @one 'refresh', (collection) =>
-#            callbacks(collection)
           @fetch()
 
         'Collection::Subscribe::' + @className
       )
-
 
     key = @className + '-' + Math.floor( Math.random() * 99999 )
     @SUBSCRIPTION_COLLECTION[key] = callback
@@ -167,26 +177,26 @@ class App.Model extends Spine.Model
     return key
 
   subscribe: (callback) ->
+
+    # init bind
     if !App[ @constructor.className ]['SUBSCRIPTION_ITEM']
       App[ @constructor.className ]['SUBSCRIPTION_ITEM'] = {}
-    if !App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id]
-      App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id] = {}
 
       events = "#{@constructor.className}:created #{@constructor.className}:updated #{@constructor.className}:destroy"
       App.Event.bind(
         events
         (record) =>
           if @id.toString() is record.id.toString()
-            App[ @constructor.className ].one 'refresh', (record) =>
-              user = App[ @constructor.className ].find(@id)
-              for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id]
-                callback(user)
-            App[ @constructor.className ].fetch( id: @id )
+            for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
+              App[ @constructor.className ].retrieve( @id, callback, true )
         'Item::Subscribe::' + @constructor.className
       )
 
+    # remember record id and callback
+    if !App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
+      App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ] = {}
     key = @constructor.className + '-' + Math.floor( Math.random() * 99999 )
-    App[ @constructor.className ]['SUBSCRIPTION_ITEM'][@id][key] = callback
+    App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ][key] = callback
     return key
 
   @unsubscribe: (data) ->
