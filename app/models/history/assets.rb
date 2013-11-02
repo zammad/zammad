@@ -29,17 +29,6 @@ returns
       data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
     end
 
-    # fetch meta relations
-    if !data[ History::Object.to_app_model ]
-      data[ History::Object.to_app_model ] = History::Object.all()
-    end
-    if !data[ History::Type.to_app_model ]
-      data[ History::Type.to_app_model ] = History::Type.all()
-    end
-    if !data[ History::Attribute.to_app_model ]
-      data[ History::Attribute.to_app_model ] = History::Attribute.all()
-    end
-
     data
   end
 
