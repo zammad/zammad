@@ -552,8 +552,8 @@ returns
     response = UserAgent.request( self.image_source )
     if !response.success?
       self.update_column( :image, 'none' )
-      puts "WARNING: Can't fetch '#{url}', http code: #{response.code.to_s}"
-      #raise "Can't fetch '#{url}', http code: #{response.code.to_s}"
+      puts "WARNING: Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
+      #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
       return
     end
 
