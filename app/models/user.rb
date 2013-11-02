@@ -552,7 +552,8 @@ returns
     response = UserAgent.request( self.image_source )
     if !response.success?
       self.update_column( :image, 'none' )
-      puts "WARNING: Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
+      self.cache_delete
+      #puts "WARNING: Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
       #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
       return
     end
@@ -565,6 +566,7 @@ returns
 
     # save new image
     self.update_column( :image, hash )
+    self.cache_delete
     Store.remove( :object => 'User::Image', :o_id => self.id )
     Store.add(
       :object      => 'User::Image',
