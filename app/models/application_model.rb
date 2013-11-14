@@ -6,9 +6,8 @@ class ApplicationModel < ActiveRecord::Base
 
   self.abstract_class = true
 
-  before_create  :check_attributes_protected, :cache_delete, :fill_up_user_create
-  before_create  :cache_delete, :fill_up_user_create
-  before_update  :cache_delete_before, :fill_up_user_update
+  before_create  :check_attributes_protected, :check_limits, :cache_delete, :fill_up_user_create
+  before_update  :check_limits, :cache_delete_before, :fill_up_user_update
   before_destroy :cache_delete_before, :destroy_dependencies
 
   after_create  :cache_delete
@@ -454,6 +453,29 @@ class OwnModel < ApplicationModel
   end
 
   private
+
+=begin
+
+check string/varchar size and cut them if needed
+
+=end
+
+  def check_limits
+    self.attributes.each {|attribute|
+      next if !self[ attribute[0] ]
+      next if self[ attribute[0] ].class != String
+      next if self[ attribute[0] ].empty?
+      column = self.class.columns_hash[ attribute[0] ]
+      limit = column.limit
+      if column && limit
+        current_length = attribute[1].to_s.length
+        if limit < current_length
+          puts "WARNING: cut string because of database length #{self.class.to_s}#{attribute[0]}(#{limit} but is #{current_length})"
+          self[attribute[0]] = attribute[1][ 0, limit ]
+        end
+      end
+    }
+  end
 
 =begin
 
