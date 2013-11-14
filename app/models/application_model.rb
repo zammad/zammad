@@ -470,7 +470,7 @@ check string/varchar size and cut them if needed
       if column && limit
         current_length = attribute[1].to_s.length
         if limit < current_length
-          puts "WARNING: cut string because of database length #{self.class.to_s}#{attribute[0]}(#{limit} but is #{current_length})"
+          puts "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
           self[attribute[0]] = attribute[1][ 0, limit ]
         end
       end
