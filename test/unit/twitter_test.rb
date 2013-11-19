@@ -138,7 +138,7 @@ class TwitterTest < ActiveSupport::TestCase
     )
     dms = client.direct_messages( :count => 200 )
     dms.each {|dm|
-      client.direct_message_destroy(dm.id)
+      client.destroy_direct_message(dm.id)
     }
     sleep 5
 
