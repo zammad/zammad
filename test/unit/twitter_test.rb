@@ -91,8 +91,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = user2_token
       config.access_token_secret = user2_token_secret
     end
-    tweets = client.search( hash )
-    tweets.results.map do |tweet|
+    client.search(hash, :count => 50, :result_type => "recent").collect do |tweet|
       assert_equal( tweet.id, article.message_id )
     end
 

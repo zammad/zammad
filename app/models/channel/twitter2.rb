@@ -21,7 +21,10 @@ class Channel::Twitter2
     if channel[:options][:search]
       channel[:options][:search].each { |search|
         puts " - searching for #{search[:item]}"
-        tweets = @client.search( search[:item] )
+        tweets = []
+        client.search( search[:item], :count => 50, :result_type => "recent" ).collect do |tweet|
+          tweets.push tweet
+        end
         @article_type = 'twitter status'
         fetch_loop(tweets, channel, search[:group])
       }
@@ -30,7 +33,7 @@ class Channel::Twitter2
     # mentions
     if channel[:options][:mentions]
       puts " - searching for mentions"
-      tweets = @client.mentions
+      tweets = @client.mentions_timeline
       @article_type = 'twitter status'
       fetch_loop(tweets, channel, channel[:options][:mentions][:group])
     end
