@@ -126,7 +126,7 @@ class TwitterTest < ActiveSupport::TestCase
     end
     dms = client.direct_messages( :count => 200 )
     dms.each {|dm|
-      client.direct_message_destroy(dm.id)
+      client.destroy_direct_message(dm.id)
     }
 
     # direct message to @armin_theo
@@ -144,7 +144,7 @@ class TwitterTest < ActiveSupport::TestCase
 
     hash  = '#citheo44' + rand(9999).to_s
     text  = 'How about the details? ' + hash
-    dm = client.direct_message_create(
+    dm = client.create_direct_message(
       'armin_theo',
       text,
     )

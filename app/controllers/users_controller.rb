@@ -16,7 +16,7 @@ Example:
   "firstname":"Marti",
   "lastname":"Ede",
   "email":"m@edenhofer.de",
-  "image":"http://www.gravatar.com/avatar/1c38b099f2344976005de69965733465?s=48",
+  "image_source":"http://www.gravatar.com/avatar/1c38b099f2344976005de69965733465?s=48",
   "web":"http://127.0.0.1",
   "password":"123",
   "phone":"112",
