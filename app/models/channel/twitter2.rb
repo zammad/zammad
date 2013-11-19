@@ -22,7 +22,7 @@ class Channel::Twitter2
       channel[:options][:search].each { |search|
         puts " - searching for #{search[:item]}"
         tweets = []
-        client.search( search[:item], :count => 50, :result_type => "recent" ).collect do |tweet|
+        @client.search( search[:item], :count => 50, :result_type => "recent" ).collect do |tweet|
           tweets.push tweet
         end
         @article_type = 'twitter status'
