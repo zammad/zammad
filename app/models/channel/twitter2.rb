@@ -4,12 +4,12 @@ require 'twitter'
 
 class Channel::Twitter2
   def connect(channel)
-    @client = Twitter::Client.new(
-      :consumer_key       => channel[:options][:consumer_key],
-      :consumer_secret    => channel[:options][:consumer_secret],
-      :oauth_token        => channel[:options][:oauth_token],
-      :oauth_token_secret => channel[:options][:oauth_token_secret]
-    )
+    @client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = channel[:options][:consumer_key]
+      config.consumer_secret     = channel[:options][:consumer_secret]
+      config.access_token        = channel[:options][:oauth_token]
+      config.access_token_secret = channel[:options][:oauth_token_secret]
+    end
   end
 
   def fetch (channel)
@@ -265,15 +265,15 @@ class Channel::Twitter2
     #    logger.debug('tweeeeettttt!!!!!!')
     channel = Channel.where( :area => 'Twitter::Inbound', :active => true ).first
 
-    client = Twitter::Client.new(
-      :consumer_key       => channel[:options][:consumer_key],
-      :consumer_secret    => channel[:options][:consumer_secret],
-      :oauth_token        => channel[:options][:oauth_token],
-      :oauth_token_secret => channel[:options][:oauth_token_secret]
-    )
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = channel[:options][:consumer_key]
+      config.consumer_secret     = channel[:options][:consumer_secret]
+      config.access_token        = channel[:options][:oauth_token]
+      config.access_token_secret = channel[:options][:oauth_token_secret]
+    end
     if attr[:type] == 'twitter direct-message'
       puts 'to:' + attr[:to].to_s
-      dm = client.direct_message_create(
+      dm = client.create_direct_message(
         attr[:to].to_s,
         attr[:body].to_s,
         {}

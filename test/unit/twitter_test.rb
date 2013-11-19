@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
- 
+
 class TwitterTest < ActiveSupport::TestCase
 
   # app config
@@ -85,12 +85,12 @@ class TwitterTest < ActiveSupport::TestCase
     sleep 10
 
     # reply by me_bauer
-    client = Twitter::Client.new(
-      :consumer_key       => consumer_key,
-      :consumer_secret    => consumer_secret,
-      :oauth_token        => user2_token,
-      :oauth_token_secret => user2_token_secret
-    )
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = user2_token
+      config.access_token_secret = user2_token_secret
+    end
     tweets = client.search( hash )
     tweets.results.map do |tweet|
       assert_equal( tweet.id, article.message_id )
@@ -119,19 +119,19 @@ class TwitterTest < ActiveSupport::TestCase
 
   test 'new by direct message inbound' do
     # cleanup direct messages of system
-    client = Twitter::Client.new(
-      :consumer_key       => consumer_key,
-      :consumer_secret    => consumer_secret,
-      :oauth_token        => user1_token,
-      :oauth_token_secret => user1_token_secret
-    )   
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = user1_token
+      config.access_token_secret = user1_token_secret
+    end
     dms = client.direct_messages( :count => 200 )
     dms.each {|dm|
       client.direct_message_destroy(dm.id)
     }
 
     # direct message to @armin_theo
-    client = Twitter::Client.new(
+    client = Twitter::REST::Client.new(
       :consumer_key       => consumer_key,
       :consumer_secret    => consumer_secret,
       :oauth_token        => user2_token,
