@@ -1,0 +1,124 @@
+From MAILER-DAEMON  Fri Nov 15 14:16:10 2013
+Return-Path: <>
+X-Original-To: sales@znuny.org
+Delivered-To: znuny-sales@arber.znuny.com
+Received: from mx.example.com (mx.example.com [193.193.167.149])
+	by arber.znuny.com (Postfix) with ESMTP id 3648560264
+	for <sales@znuny.org>; Fri, 15 Nov 2013 14:16:09 +0100 (CET)
+Received: from h2o-exchange.lan.h2o (h2o-exchange.lan.h2o [10.10.2.32])
+	by mx.example.com (Postfix) with ESMTP id 796C815FEC
+	for <sales@znuny.org>; Fri, 15 Nov 2013 14:16:07 +0100 (CET)
+From: postmaster@example.com
+To: sales@znuny.org
+Date: Fri, 15 Nov 2013 14:16:06 +0100
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="9B095B5ADSN=_01CEE204B352E82A0000000Ch2o?exchange.lan"
+X-DSNContext: 7ce717b1 - 1194 - 00000002 - 00000000
+Message-ID: <3xbYiMCIq00000048@h2o-exchange.lan.h2o>
+Subject: Benachrichtung  
+	zum  
+	=?unicode-1-1-utf-7?Q?+ANw-bermittlungsstatus  
+	(Fehlgeschlagen)?=
+X-UID: 292                                                  
+Status: O
+Content-Length: 3382
+Lines: 96
+
+This is a MIME-formatted message.  
+Portions of this message may be unreadable without a MIME-capable mail program.
+
+--9B095B5ADSN=_01CEE204B352E82A0000000Ch2o?exchange.lan
+Content-Type: text/plain; charset=unicode-1-1-utf-7
+
+Dies ist eine automatisch erstellte Benachrichtigung +APw-ber den Zustellstatus.
+
++ANw-bermittlung an folgende Empf+AOQ-nger fehlgeschlagen.
+
+       m.smith@example.com
+
+
+
+
+--9B095B5ADSN=_01CEE204B352E82A0000000Ch2o?exchange.lan
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns;h2o-exchange.lan.h2o
+Received-From-MTA: dns;mx.example.com
+Arrival-Date: Fri, 15 Nov 2013 13:55:09 +0100
+
+Original-Recipient: rfc822;m.smith@example.com
+Final-Recipient: rfc822;m.smith@example.com
+Action: failed
+Status: 5.7.1
+Diagnostic-Code: smtp;550 5.7.1 Unable to relay for m.smith@example.com
+X-Display-Name: Smith, Matthias
+
+
+--9B095B5ADSN=_01CEE204B352E82A0000000Ch2o?exchange.lan
+Content-Type: message/rfc822
+
+Received: from mx.example.com ([10.81.0.6]) by h2o-exchange.lan.h2o with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 15 Nov 2013 13:55:09 +0100
+Received-SPF: none (znuny.com: No applicable sender policy available) receiver=unknown; identity=mailfrom; envelope-from="sales@znuny.org"; helo=arber.znuny.com; client-ip=88.198.51.81
+Received: from arber.znuny.com (arber.znuny.com [88.198.51.81])
+	by mx.example.com (Postfix) with ESMTP id 9495215FEB
+	for <m.smith@example.com>; Fri, 15 Nov 2013 13:55:09 +0100 (CET)
+Received: from lusen.znuny.com (lusen.znuny.com [5.9.88.201])
+	by arber.znuny.com (Postfix) with ESMTP id 6733B60264
+	for <m.smith@example.com>; Fri, 15 Nov 2013 13:55:11 +0100 (CET)
+Received: by lusen.znuny.com (Postfix, from userid 1000)
+	id 876CF14C17AD; Fri, 15 Nov 2013 13:55:08 +0100 (CET)
+Date: Fri, 15 Nov 2013 13:55:08 +0100
+From: Martin Edenhofer via Znuny Sales <sales@znuny.org>
+To: "Smith, Matthias" <m.smith@example.com>
+Message-ID: <20131115125507.4636.975502@portal.znuny.com>
+In-Reply-To: <3712107A5728554CAECB416EA305D78C19040C2698@h2o-exchange2.lan.h2o>
+Subject: =?UTF-8?Q?Angebot_f=C3=BCr_OTRS-Anpassung_[Ticket#113588]?=
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="--==_mimepart_528619ac6f802_62be3fcebe9a32c0738b9";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Organization: Znuny GmbH
+X-Powered-BY: OTRS - Open Ticket Request System (http://otrs.org/)
+X-Mailer: OTRS Mail Service (3.x)
+Return-Path: sales@znuny.org
+X-OriginalArrivalTime: 15 Nov 2013 12:55:09.0879 (UTC) FILETIME=[EA94D470:01CEE201]
+
+
+----==_mimepart_528619ac6f802_62be3fcebe9a32c0738b9
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hallo Herr Smith,
+
+leider konnte wir Herrn Hoht nicht erreichen (er ist wohl gesundheitlich =
+verhindert).
+
+Melden Sie ich einfach am Montag/Dienstag wenn Sie vom Urlaub wieder zur=C3=
+=BCck sind, um das weitere Vorgehen zu besprechen.
+
+Soweit viele Gr=C3=BC=C3=9Fe!
+
+  Martin Edenhofer
+
+--
+Enterprise Services for OTRS
+
+Znuny GmbH // Marienstra=C3=9Fe 11 // 10117 Berlin // Germany
+
+P: +49 (0) 30 60 98 54 18-0
+F: +49 (0) 30 60 98 54 18-8
+W: http://znuny.com =
+
+
+Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg
+Managing Director: Martin Edenhofer
+
+----==_mimepart_528619ac6f802_62be3fcebe9a32c0738b9--
+
+
+--9B095B5ADSN=_01CEE204B352E82A0000000Ch2o?exchange.lan--
+

@@ -338,6 +338,17 @@ Hof
           :to                 => 'info@znuny.com',
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail18.box'),
+        :body_md5     => '66f20e8557095762ccad9a6cb6f59c3a',
+        :params   => {
+          :from               => 'postmaster@example.com',
+          :from_email         => 'postmaster@example.com',
+          :from_display_name  => '',
+          :subject            => 'Benachrichtung zum =?unicode-1-1-utf-7?Q?+ANw-bermittlungsstatus (Fehlgeschlagen)?=',
+          :to                 => 'sales@znuny.org',
+        },
+      },
     ]
 
     files.each { |file|
