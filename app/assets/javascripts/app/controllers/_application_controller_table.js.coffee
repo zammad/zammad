@@ -84,7 +84,8 @@ class App.ControllerTable extends App.Controller
     # collect data of col. types
     dataTypesForCols = []
     for row in overview
-      if attributes
+
+      if !_.isEmpty(attributes)
         for attribute in attributes
           found = false
           if row is attribute.name
@@ -102,7 +103,8 @@ class App.ControllerTable extends App.Controller
       else
         dataTypesForCols.push {
           name: row
-          link: true
+          type: 'link'
+          dataType: 'edit'
         }
 
     # extended table format

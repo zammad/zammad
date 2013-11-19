@@ -51,26 +51,23 @@ class App.ChannelEmailFilter extends App.Controller
   constructor: ->
     super
 
-    App.PostmasterFilter.bind 'refresh change', @render
-    App.PostmasterFilter.fetch()
+    App.PostmasterFilter.subscribe( @render, initFetch: true )
 
   render: =>
-    data = App.PostmasterFilter.all()
+    data = App.PostmasterFilter.search( sortBy: 'name' )
 
-    html = $('<div></div>')
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
-      el:       html,
+      el:       template.find('.overview'),
       model:    App.PostmasterFilter,
       objects:  data,
     )
-
-    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
-    @html html
+    @html template
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailFilterEdit()
+    new App.ChannelEmailFilterEdit( {} )
 
   edit: (e) =>
     e.preventDefault()
@@ -143,26 +140,24 @@ class App.ChannelEmailAddress extends App.Controller
   constructor: ->
     super
 
-    App.EmailAddress.bind 'refresh change', @render
-    App.EmailAddress.fetch()
+    App.EmailAddress.subscribe( @render, initFetch: true )
 
   render: =>
-    data = App.EmailAddress.all()
+    data = App.EmailAddress.search( sortBy: 'realname' )
 
-    html = $('<div></div>')
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
-      el:       html,
-      model:    App.EmailAddress,
-      objects:  data,
+      el:       template.find('.overview')
+      model:    App.EmailAddress
+      objects:  data
     )
 
-    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
-    @html html
+    @html template
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailAddressEdit()
+    new App.ChannelEmailAddressEdit( {} )
 
   edit: (e) =>
     e.preventDefault()
@@ -180,10 +175,10 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
         head: 'Email-Address'
       )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_edit'),
-        model:     App.EmailAddress,
-        params:    @object,
-        autofocus: true,
+        el:        @el.find('#object_edit')
+        model:     App.EmailAddress
+        params:    @object
+        autofocus: true
       )
     else
       @html App.view('generic/admin/new')(
@@ -233,26 +228,23 @@ class App.ChannelEmailSignature extends App.Controller
   constructor: ->
     super
 
-    App.Signature.bind 'refresh change', @render
-    App.Signature.fetch()
+    App.Signature.subscribe( @render, initFetch: true )
 
   render: =>
-    data = App.Signature.all()
+    data = App.Signature.search( sortBy: 'name' )
 
-    html = $('<div></div>')
-
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
     new App.ControllerTable(
-      el:       html,
-      model:    App.Signature,
-      objects:  data,
+      el:       template.find('.overview')
+      model:    App.Signature
+      objects:  data
     )
 
-    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
-    @html html
+    @html template
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailSignatureEdit()
+    new App.ChannelEmailSignatureEdit( {} )
 
   edit: (e) =>
     e.preventDefault()
@@ -270,19 +262,19 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
         head: 'Signature'
       )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_edit'),
-        model:     App.Signature,
-        params:    @object,
-        autofocus: true,
+        el:        @el.find('#object_edit')
+        model:     App.Signature
+        params:    @object
+        autofocus: true
       )
     else
       @html App.view('generic/admin/new')(
         head: 'Signature'
       )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_new'),
-        model:     App.Signature,
-        autofocus: true,
+        el:        @el.find('#object_new')
+        model:     App.Signature
+        autofocus: true
       )
     @modalShow()
 
@@ -323,8 +315,7 @@ class App.ChannelEmailInbound extends App.Controller
   constructor: ->
     super
 
-    App.Channel.bind 'refresh change', @render
-    App.Channel.fetch()
+    App.Channel.subscribe( @render, initFetch: true )
 
   render: =>
     channels = App.Channel.all()
@@ -336,21 +327,20 @@ class App.ChannelEmailInbound extends App.Controller
         channel.user = channel.options['user']
         data.push channel
 
-    html = $('<div></div>')
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
-      el:       html,      header:   ['Host', 'User', 'Adapter', 'Active'],
+      el:       template.find('.overview'),
+      header:   ['Host', 'User', 'Adapter', 'Active'],
       overview: ['host', 'user', 'adapter', 'active'],
       model:    App.Channel,
       objects:  data,
     )
-
-    html.append( '<a data-type="new" class="btn">' + App.i18n.translateContent('New') + '</a>' )
-    @html html
+    @html template
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailInboundEdit()
+    new App.ChannelEmailInboundEdit( {} )
 
   edit: (e) =>
     e.preventDefault()
@@ -385,18 +375,18 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
         head: 'Email Channel'
       )
       @form = new App.ControllerForm(
-        el: @el.find('#object_edit'),
-        model: { configure_attributes: configure_attributes, className: '' },
-        autofocus: true,
+        el: @el.find('#object_edit')
+        model: { configure_attributes: configure_attributes, className: '' }
+        autofocus: true
       )
     else
       @html App.view('generic/admin/new')(
         head: 'Email Channel'
       )
       @form = new App.ControllerForm(
-        el: @el.find('#object_new'),
-        model: { configure_attributes: configure_attributes, className: '' },
-        autofocus: true,
+        el: @el.find('#object_new')
+        model: { configure_attributes: configure_attributes, className: '' }
+        autofocus: true
       )
     @modalShow()
 
@@ -408,17 +398,17 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
 
     object = @object || new App.Channel
     object.load(
-      area:    'Email::Inbound',
-      adapter:  params['adapter'],
-      group_id: params['group_id'],
+      area:    'Email::Inbound'
+      adapter:  params['adapter']
+      group_id: params['group_id']
       options: {
-        host:     params['host'],
-        user:     params['user'],
-        password: params['password'],
-        ssl:      params['ssl'],
-        folder:   params['folder'],
+        host:     params['host']
+        user:     params['user']
+        password: params['password']
+        ssl:      params['ssl']
+        folder:   params['folder']
       },
-      active: params['active'],
+      active: params['active']
     )
 
     # validate form
@@ -449,8 +439,7 @@ class App.ChannelEmailOutbound extends App.Controller
   constructor: ->
     super
 
-    App.Channel.bind 'refresh change', @render
-    App.Channel.fetch()
+    App.Channel.subscribe( @render, initFetch: true )
 
   render: =>
 
@@ -504,11 +493,13 @@ class App.ChannelEmailOutbound extends App.Controller
     # get params
     params = @formParam(e.target)
 
-    # set selected adapter
-    @adapter_used = params['adapter']
-
     # render page with new selected adapter
-    @render()
+    if @adapter_used isnt params['adapter']
+
+      # set selected adapter
+      @adapter_used = params['adapter']
+
+      @render()
 
   update: (e) =>
     e.preventDefault()
@@ -537,5 +528,3 @@ class App.ChannelEmailOutbound extends App.Controller
       if channel.area is 'Email::Outbound' && channel.adapter isnt params['adapter']
         channel.updateAttributes( active: false )
 
-    # rerender page
-    @render()
