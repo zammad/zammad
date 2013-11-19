@@ -151,7 +151,7 @@ class Channel::Twitter2
         :lastname       => '',
         :email          => '',
         :password       => '',
-        :image_source   => sender.profile_image_url.request_uri,
+        :image_source   => sender.profile_image_url.to_s,
         :note           => sender.description,
         :active         => true,
         :roles          => roles,
