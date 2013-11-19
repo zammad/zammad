@@ -156,6 +156,10 @@ class TwitterTest < ActiveSupport::TestCase
 
     # check if ticket and article has been created
     article = Ticket::Article.where( :message_id => dm.id ).last
+puts "----------------------------------------"
+puts "DM: " + dm.inspect
+puts "AT: " + article.inspect
+puts "----------------------------------------"
     assert( article, "inbound article created" )
 #    ticket  = Ticket.find( article.ticket.id )
     ticket  = article.ticket
