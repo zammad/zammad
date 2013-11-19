@@ -29,7 +29,7 @@ class Authorization < ApplicationModel
       if hash['info']['image']
         user = User.find( auth.user_id )
         user.update_attributes(
-          :image => hash['info']['image']
+          :image_source => hash['info']['image']
         )
       end
     end
@@ -40,7 +40,7 @@ class Authorization < ApplicationModel
     if user then
       user.update_attributes(
         #        :username => hash['username'],
-        :image => hash['info']['image']
+        :image_source => hash['info']['image']
       )
 
       # fillup empty attributes
