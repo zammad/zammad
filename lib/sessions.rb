@@ -215,13 +215,13 @@ module Sessions
         # start user thread
         start_user_thread = false
         if !@@user_threads[user.id]
-          start_user_thread = true
+          @@user_threads[user.id] = true
           @@user_threads[user.id] = Thread.new {
-            Sessions::Worker.new(user.id)
+            thread_worker(user.id, 0)
             @@user_threads[user.id] = nil
-            puts "close user(#{user.id}) thread"
-#            raise "Exception from thread"
+            puts "close user (#{user.id}) thread"
           }
+          start_user_thread = true
         end
 
         # wait with client thread unil user thread has done some little work
@@ -231,11 +231,11 @@ module Sessions
 
         # start client thread
         if !@@client_threads[client_id]
+          @@client_threads[client_id] = true
           @@client_threads[client_id] = Thread.new {
-            Sessions::Client.new(client_id)
+            thread_client(client_id, 0)
             @@client_threads[client_id] = nil
-            puts "close client(#{client_id}) thread"
-#            raise "Exception from thread"
+            puts "close client (#{client_id}) thread"
           }
         end
       }
@@ -243,6 +243,50 @@ module Sessions
       # system settings
       sleep 0.5
     end
+  end
+
+  def self.thread_worker(user_id, count)
+      puts "LOOP WORKER #{user_id} - #{count}"
+      begin
+          Sessions::Worker.new(user_id)
+      rescue => e
+        puts "thread_client exited with error #{ e.inspect }"
+        sleep 5
+        begin
+          ActiveRecord::Base.connection.reconnect!
+        rescue => e
+          puts "Can't reconnect to database #{ e.inspect }"
+        end
+        ct = count++1
+        if ct < 10
+          thread_worker(user_id, ct)
+        else
+          raise "STOP thread_worker for user #{user_id} after 10 tries"
+        end
+      end
+      puts "/LOOP WORKER #{user_id} - #{count}"
+  end
+
+  def self.thread_client(client_id, count)
+      puts "LOOP #{client_id} - #{count}"
+      begin
+        Sessions::Client.new(client_id)
+      rescue => e
+        puts "thread_client exited with error #{ e.inspect }"
+        sleep 5
+        begin
+          ActiveRecord::Base.connection.reconnect!
+        rescue => e
+          puts "Can't reconnect to database #{ e.inspect }"
+        end
+        ct = count++1
+        if ct < 10
+          thread_client(client_id, ct)
+        else
+          raise "STOP thread_client for client #{client_id} after 10 tries"
+        end
+      end
+      puts "/LOOP #{client_id} - #{count}"
   end
 
   def self.sessions
