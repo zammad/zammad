@@ -349,6 +349,17 @@ Hof
           :to                 => 'sales@znuny.org',
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail19.box'),
+        :body_md5     => '2fa47e9122f4c1b9c5057400529c7567',
+        :params   => {
+          :from               => '"我" <>',
+          :from_email         => '"=?GB2312?B?ztI=?=" <>',
+          :from_display_name  => '',
+          :subject            => '《欧美简讯》',
+          :to                 => '377861373 <377861373@qq.com>',
+        },
+      },
     ]
 
     files.each { |file|
@@ -367,7 +378,7 @@ Hof
 #          puts '++' + file[:params][key.to_sym].to_s + '++'
           assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[:body].to_s ) )
         else
-          assert_equal( file[:params][key.to_sym], data[key.to_sym] )
+          assert_equal( file[:params][key.to_sym], data[key.to_sym], "check #{key}" )
         end
       }
 

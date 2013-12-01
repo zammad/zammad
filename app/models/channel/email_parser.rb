@@ -80,11 +80,17 @@ class Channel::EmailParser
     }
 
     # set extra headers
-    data[:from_email]        = Mail::Address.new( from ).address
-    data[:from_local]        = Mail::Address.new( from ).local
-    data[:from_domain]       = Mail::Address.new( from ).domain
-    data[:from_display_name] = Mail::Address.new( from ).display_name ||
-    ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
+    begin
+      data[:from_email]        = Mail::Address.new( from ).address
+      data[:from_local]        = Mail::Address.new( from ).local
+      data[:from_domain]       = Mail::Address.new( from ).domain
+      data[:from_display_name] = Mail::Address.new( from ).display_name ||
+      ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
+    rescue
+      data[:from_email]        = from
+      data[:from_local]        = from
+      data[:from_domain]       = from
+    end
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] = Mail::Field.new( 'X-From', data[:from_display_name] ).to_s
