@@ -75,8 +75,8 @@
 
 ### Get Zammad
 * cd /var/www/zammad
-* wget http://zammad.org/zammad-1.0.1.tar.gz
-* tar -xzf zammad-1.0.1.tar.gz
+* wget http://zammad.org/zammad-latest.tar.gz
+* tar -xzf zammad-latest.tar.gz
 
 ### Edit Gemfile
 * vi Gemfile
