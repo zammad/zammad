@@ -209,11 +209,6 @@ class SessionsController < ApplicationController
     }
   end
 
-  def delete_old
-    SessionHelper::cleanup_expired
-    render :json => {}
-  end
-
   def delete
     return if deny_if_not_role('Admin')
     SessionHelper::destroy( params[:id] )
