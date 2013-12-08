@@ -68,7 +68,7 @@ class SessionsController < ApplicationController
 
     # check logon session
     if params['logon_session']
-      session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
+      session = SessionHelper::get( params['logon_session'] )
       if session
         user_id = session.data[:user_id]
       end
@@ -193,10 +193,9 @@ class SessionsController < ApplicationController
 
   def list
     return if deny_if_not_role('Admin')
-    sessions = ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(10000)
     assets = {}
     sessions_clean = []
-    sessions.each {|session|
+    SessionHelper.list.each {|session|
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']
@@ -211,17 +210,13 @@ class SessionsController < ApplicationController
   end
 
   def delete_old
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 90.days ).delete_all
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.now - 2.days ).delete_all
+    SessionHelper::cleanup_expired
     render :json => {}
   end
 
   def delete
     return if deny_if_not_role('Admin')
-    session = ActiveRecord::SessionStore::Session.where( :id => params[:id] ).first
-    if session
-      session.destroy
-    end
+    SessionHelper::destroy( params[:id] )
     render :json => {}
   end
 end

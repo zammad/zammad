@@ -29,4 +29,27 @@ module SessionHelper
 
     return push_collections
   end
+
+  def self.cleanup_expired
+
+    # web sessions
+    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 90.days ).delete_all
+
+    # http basic auth calls
+    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.now - 2.days ).delete_all
+  end
+
+  def self.get(id)
+    ActiveRecord::SessionStore::Session.where( :id => id ).first
+  end
+
+  def self.list(limit = 10000)
+    ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(limit)
+  end
+
+  def self.destroy(id)
+    session = ActiveRecord::SessionStore::Session.where( :id => id ).first
+    return if !session
+    session.destroy
+  end
 end
