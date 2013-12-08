@@ -3,6 +3,7 @@ require 'setting'
 class SchedulerUpdate < ActiveRecord::Migration
   def up
     add_column :schedulers, :prio,     :integer,  :null => true
+    Scheduler.reset_column_information
     Scheduler.create_or_update(
       :name           => 'Import OTRS diff load',
       :method         => 'Import::OTRS.diff_worker',
