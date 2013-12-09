@@ -26,7 +26,7 @@ class Channel::Twitter2
           tweets.push tweet
         end
         @article_type = 'twitter status'
-        fetch_loop(tweets, channel, search[:group])
+        fetch_loop( tweets, channel, search[:group] )
       }
     end
 
@@ -35,7 +35,7 @@ class Channel::Twitter2
       puts " - searching for mentions"
       tweets = @client.mentions_timeline
       @article_type = 'twitter status'
-      fetch_loop(tweets, channel, channel[:options][:mentions][:group])
+      fetch_loop( tweets, channel, channel[:options][:mentions][:group] )
     end
 
     # direct messages
@@ -43,12 +43,12 @@ class Channel::Twitter2
       puts " - searching for direct_messages"
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
-      fetch_loop(tweets, channel, channel[:options][:direct_messages][:group])
+      fetch_loop( tweets, channel, channel[:options][:direct_messages][:group] )
     end
     puts 'done'
   end
 
-  def fetch_loop(tweets, channel, group)
+  def fetch_loop( tweets, channel, group )
 
     # get all tweets
     all_tweets = []
@@ -229,16 +229,14 @@ class Channel::Twitter2
       )
     end
 
-    return ticket
+    ticket
   end
 
-  def fetch_article_create(user,ticket,tweet, sender)
+  def fetch_article_create( user, ticket, tweet, sender )
 
     # find if record already exists
     article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
-    if article
-      return article
-    end
+    return article if article
 
     # set ticket state to open if not new
     if ticket.ticket_state.name != 'new'
