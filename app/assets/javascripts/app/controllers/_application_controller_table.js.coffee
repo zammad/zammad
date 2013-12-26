@@ -134,8 +134,9 @@ class App.ControllerTable extends App.Controller
           for attribute in attributes
             if rowWithoutId is attribute.name
               if attribute.relation && App[ attribute.relation ]
-                record = App[ attribute.relation ].find( object[rowWithoutId] )
-                object[row.name] = record.name
+                if App[ attribute.relation ].exists( object[rowWithoutId] )
+                  record = App[ attribute.relation ].find( object[rowWithoutId] )
+                  object[row.name] = record.name
 
     @log 'debug', 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
     table = App.view('generic/table')(
