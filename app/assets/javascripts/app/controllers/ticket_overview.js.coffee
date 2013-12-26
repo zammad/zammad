@@ -41,7 +41,7 @@ class Table extends App.ControllerContent
 
     # set title
     @title ''
-    @navupdate '#ticket_view/' + @view
+    @navupdate '#ticket/view/' + @view
 
     @meta = {}
     @bulk = {}
@@ -542,7 +542,7 @@ class Navbar extends App.Controller
 
     # add new views
     for item in data
-      item.target = '#ticket_view/' + item.link
+      item.target = '#ticket/view/' + item.link
       if item.link is @view
         item.active = true
       else
@@ -605,12 +605,8 @@ class Router extends App.Controller
       else
         @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
 
-App.Config.set( 'ticket_view', Index, 'Routes' )
-App.Config.set( 'ticket_view/:view', Index, 'Routes' )
-#App.Config.set( 'ticket_view/:view/:position/:direction', Router, 'Routes' )
+App.Config.set( 'ticket/view', Index, 'Routes' )
+App.Config.set( 'ticket/view/:view', Index, 'Routes' )
+#App.Config.set( 'ticket/view/:view/:position/:direction', Router, 'Routes' )
 
-App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket_view', role: ['Agent', 'Customer'] }, 'NavBar' )
-#App.Config.set( '', { prio: 1000, parent: '#ticket_view', name: 'My assigned Tickets (51)', target: '#ticket_view/my_assigned', role: ['Agent'] }
-#App.Config.set( '', { prio: 1000, parent: '#ticket_view', name: 'Unassigned Tickets (133)', target: '#ticket_view/all_unassigned', role: ['Agent'] }
-
-#App.Config.set( 'TicketOverview', { prio: 1700, parent: '', name: 'Overviews', target: '#ticket_view', role: ['Customer'] }, 'NavBar' )
+App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'] }, 'NavBar' )

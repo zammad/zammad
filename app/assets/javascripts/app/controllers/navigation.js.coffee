@@ -276,7 +276,7 @@ class App.Navigation extends App.Controller
     # remove old views
     NavBar = @Config.get( 'NavBar' ) || {}
     for key of NavBar
-      if NavBar[key].parent is '#ticket_view'
+      if NavBar[key].parent is '#ticket/view'
         delete NavBar[key]
 
     # add new views

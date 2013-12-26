@@ -9,7 +9,7 @@ class Index extends App.Controller
 
     # check role
     if @isRole('Customer')
-      @navigate '#ticket_view/my_tickets'
+      @navigate '#ticket/view/my_tickets'
       return
 
     if @Config.get('default_controller')
