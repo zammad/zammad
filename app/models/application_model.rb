@@ -1,6 +1,7 @@
 # Copyright (C) 2013-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationModel < ActiveRecord::Base
+  include ApplicationModel::Assets
   include ApplicationModel::HistoryLogBase
   include ApplicationModel::ActivityStreamBase
 
