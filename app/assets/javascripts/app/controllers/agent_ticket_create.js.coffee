@@ -42,11 +42,11 @@ class App.TicketCreate extends App.Controller
 
     # if no map entry exists, route to default
     if !@article_attributes
-      @navigate '#ticket_create/' + default_type + split
+      @navigate '#ticket/create/' + default_type + split
       return
 
     # update navbar highlighting
-    @navupdate '#ticket_create/' + @type + '/id/' + @id + split
+    @navupdate '#ticket/create/' + @type + '/id/' + @id + split
 
     @fetch(params)
 
@@ -67,7 +67,7 @@ class App.TicketCreate extends App.Controller
       id:    @type
 
   url: =>
-    '#ticket_create/' + @type + '/id/' + @id
+    '#ticket/create/' + @type + '/id/' + @id
 
   activate: =>
     @navupdate '#'
@@ -381,7 +381,7 @@ class UserNew extends App.ControllerModal
         ui.modalHide()
     )
 
-class TicketCreateRouter extends App.ControllerPermanent
+class Router extends App.ControllerPermanent
   constructor: (params) ->
     super
 
@@ -393,7 +393,7 @@ class TicketCreateRouter extends App.ControllerPermanent
         split = "/#{params['ticket_id']}/#{params['article_id']}"
 
       id = Math.floor( Math.random() * 99999 )
-      @navigate "#ticket_create/#{params['type']}/id/#{id}#{split}" 
+      @navigate "#ticket/create/#{params['type']}/id/#{id}#{split}" 
       return
 
     # cleanup params
@@ -405,18 +405,18 @@ class TicketCreateRouter extends App.ControllerPermanent
 
     App.TaskManager.add( 'TicketCreateScreen-' + params['type'] + '-' + params['id'], 'TicketCreate', clean_params )
 
-# create new ticket routs/controller
-App.Config.set( 'ticket_create', TicketCreateRouter, 'Routes' )
-App.Config.set( 'ticket_create/:type', TicketCreateRouter, 'Routes' )
-App.Config.set( 'ticket_create/:type/id/:id', TicketCreateRouter, 'Routes' )
+# create new ticket routes/controller
+App.Config.set( 'ticket/create', Router, 'Routes' )
+App.Config.set( 'ticket/create/:type', Router, 'Routes' )
+App.Config.set( 'ticket/create/:type/id/:id', Router, 'Routes' )
 
 
 # split ticket
-App.Config.set( 'ticket_create/:type/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
-App.Config.set( 'ticket_create/:type/id/:id/:ticket_id/:article_id', TicketCreateRouter, 'Routes' )
+App.Config.set( 'ticket/create/:type/:ticket_id/:article_id', Router, 'Routes' )
+App.Config.set( 'ticket/create/:type/id/:id/:ticket_id/:article_id', Router, 'Routes' )
 
 # set new task actions
-App.Config.set( 'TicketNewCallOutbound', { prio: 8001, name: 'Call Outbound', target: '#ticket_create/call_outbound', role: ['Agent'] }, 'TaskActions' )
-App.Config.set( 'TicketNewCallInbound', { prio: 8002, name: 'Call Inbound', target: '#ticket_create/call_inbound', role: ['Agent'] }, 'TaskActions' )
-App.Config.set( 'TicketNewEmail', { prio: 8003, name: 'Email', target: '#ticket_create/email', role: ['Agent'] }, 'TaskActions' )
+App.Config.set( 'TicketNewCallOutbound', { prio: 8001, name: 'Call Outbound', target: '#ticket/create/call_outbound', role: ['Agent'] }, 'TaskActions' )
+App.Config.set( 'TicketNewCallInbound', { prio: 8002, name: 'Call Inbound', target: '#ticket/create/call_inbound', role: ['Agent'] }, 'TaskActions' )
+App.Config.set( 'TicketNewEmail', { prio: 8003, name: 'Email', target: '#ticket/create/email', role: ['Agent'] }, 'TaskActions' )
 
