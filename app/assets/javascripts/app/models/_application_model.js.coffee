@@ -248,18 +248,32 @@ class App.Model extends Spine.Model
     if params.order
       all_complied = @_order( all_complied, params.order )
 
-    return all_complied
+    all_complied
 
   @_sortBy: ( collection, attribute ) ->
     _.sortBy( collection, (item) ->
-      return '' if item[ attribute ] is undefined || item[ attribute ] is null
-      return item[ attribute ].toLowerCase()
+
+      # set displayName as default sort attribute
+      if !attribute
+        attribute = 'displayName'
+
+      # check if displayName exists
+      if attribute is 'displayName' && item.displayName
+        return item.displayName().toLowerCase()
+      else
+        attribute = 'name'
+
+      return '' if item[ attribute ] is undefined
+      return '' if item[ attribute ] is null
+
+      # return value
+      item[ attribute ].toLowerCase()
     )
 
   @_order: ( collection, attribute ) ->
     if attribute is 'DESC'
       return collection.reverse()
-    return collection
+    collection
 
   @_filter: ( collection, filter ) ->
     for key, value of filter
@@ -267,7 +281,7 @@ class App.Model extends Spine.Model
         if item[ key ] is value
           return item
       )
-    return collection
+    collection
 
   @_filterExtended: ( collection, filters ) ->
     collection = _.filter( collection, (item) ->
@@ -292,6 +306,6 @@ class App.Model extends Spine.Model
 
       return
     )
-    return collection
+    collection
 
   
