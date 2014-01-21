@@ -39,7 +39,7 @@ class _storeSingleton
 
     # clear store on every login/logout
     if @support
-      App.Event.bind 'auth', =>
+      App.Event.bind 'clearStore', =>
         @clear('all')
 
   # write to local storage

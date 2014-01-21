@@ -30,7 +30,7 @@ class App.Auth
       success: (data, status, xhr) =>
 
         # set login (config, session, ...)
-        @_login(data)
+        @_login(data, 'check')
 
       error: (xhr, statusText, error) =>
         @_loginError()
@@ -51,7 +51,7 @@ class App.Auth
         @_loginError()
     )
 
-  @_login: (data) ->
+  @_login: (data, type) ->
     App.Log.notice 'Auth', '_login:success', data
 
     # if session is not valid
@@ -70,6 +70,10 @@ class App.Auth
       App.Event.trigger( 'ui:rerender' )
 
       return false;
+
+    # clear local store
+    if type isnt 'check'
+      App.Event.trigger( 'clearStore' )
 
     # set avatar
     data.session.image = App.Config.get('api_path') + '/users/image/' + data.session.image
@@ -110,6 +114,7 @@ class App.Auth
     App.Event.trigger( 'auth' )
     App.Event.trigger( 'auth:logout' )
     App.Event.trigger( 'ui:rerender' )
+    App.Event.trigger( 'clearStore' )
 
   @_loginError: (xhr, statusText, error) ->
     App.Log.notice 'Auth', '_loginError:error'
@@ -121,3 +126,5 @@ class App.Auth
     App.Event.trigger( 'auth' )
     App.Event.trigger( 'auth:logout' )
     App.Event.trigger( 'ui:rerender' )
+    App.Event.trigger( 'clearStore' )
+
