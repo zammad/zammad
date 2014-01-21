@@ -1864,7 +1864,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Here you can crea
 Translation.create_if_not_exists( :locale => 'de', :source => "Fold in", :target => "Einklappen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "from", :target => "von" )
 Translation.create_if_not_exists( :locale => 'de', :source => "to", :target => "nach" )
-
+Translation.create_if_not_exists( :locale => 'de', :source => "Linked Accunts", :target => "Verknüpfte Accounts")
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "" )
 
 # install all packages in auto_install
