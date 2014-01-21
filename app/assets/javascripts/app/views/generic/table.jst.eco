@@ -61,7 +61,7 @@
 -->
 <% if @destroy: %>
     <td>    
-      <a class="glyphicon glyphicon-trash" data-type="destroy">x</a>
+      <a href="#" class="glyphicon glyphicon-trash" data-type="destroy"></a>
     </td>
 <% end %>
   </tr>
