@@ -21,7 +21,7 @@ class App.ControllerForm extends App.Controller
   formGen: ->
     App.Log.debug 'ControllerForm', 'formGen', @model.configure_attributes
 
-    fieldset = $('<fieldset>')
+    fieldset = $('<fieldset></fieldset>')
 
     for attribute_clean in @model.configure_attributes
       attribute = _.clone( attribute_clean )
@@ -48,6 +48,11 @@ class App.ControllerForm extends App.Controller
             attribute.name = attribute.name + '_confirm';
             item = @formGenItem( attribute, @model.className, fieldset )
             item.appendTo(fieldset)
+
+    if @fullForm
+      if !@formClass
+        @formClass = ''
+      fieldset = $('<form class="' + @formClass + '"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend( fieldset )
 
     # return form
     return fieldset
@@ -345,7 +350,7 @@ class App.ControllerForm extends App.Controller
 
     # radio
     else if attribute.tag is 'radio'
-      item = App.view('generic/radio')( attribute: attribute )
+      item = $( App.view('generic/radio')( attribute: attribute ) )
 
     # textarea
     else if attribute.tag is 'textarea'
@@ -374,6 +379,11 @@ class App.ControllerForm extends App.Controller
             debug: false
           )
         App.Delay.set( u, 80, undefined, 'form_upload' )
+
+    # article
+    else if attribute.tag is 'article'
+      item = $( App.view('generic/article')( attribute: attribute ) )
+
 
     # tag
     else if attribute.tag is 'tag'
@@ -414,8 +424,8 @@ class App.ControllerForm extends App.Controller
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )
 
       a = =>
-        @local_attribute = '#' + attribute.id
-        @local_attribute_full = '#' + attribute.id + '_autocompletion'
+        local_attribute = '#' + attribute.id
+        local_attribute_full = '#' + attribute.id + '_autocompletion'
         @callback = attribute.callback
 
         # call calback on init
@@ -424,8 +434,8 @@ class App.ControllerForm extends App.Controller
 
         b = (event, item) =>
           # set html form attribute
-          $(@local_attribute).val(item.id)
-          $(@local_attribute + '_autocompletion_value_shown').val(item.value)
+          $(local_attribute).val(item.id)
+          $(local_attribute + '_autocompletion_value_shown').val(item.value)
 
           # call calback
           if @callback
@@ -445,7 +455,7 @@ class App.ControllerForm extends App.Controller
           }
         )
         ###
-        $(@local_attribute_full).autocomplete(
+        $(local_attribute_full).autocomplete(
           source: attribute.source,
           minLength: attribute.minLengt || 3,
           select: ( event, ui ) =>
@@ -1127,7 +1137,7 @@ class App.ControllerForm extends App.Controller
       if typeof attribute.filter is 'function'
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-function'
 
-        all = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+        all = App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
         list = attribute.filter( all, 'collection' )
 
@@ -1138,7 +1148,7 @@ class App.ControllerForm extends App.Controller
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data', filter
 
         # check all records
-        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
           # check all filter attributes
           for key in filter
@@ -1151,10 +1161,10 @@ class App.ControllerForm extends App.Controller
       # no data filter matched
       else
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data no filter matched'
-        list = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+        list = App[ attribute.relation ].search( sortBy: attribute.sortBy )
     else
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-no filter defined'
-      list = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+      list = App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
     App.Log.debug 'ControllerForm', '_getRelationOptionList', attribute, list
 
