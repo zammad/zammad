@@ -174,7 +174,7 @@ class _i18nSingleton extends Spine.Module
     s = ( num, digits ) ->
       while num.toString().length < digits
         num = "0" + num
-      return num
+      num
 
     timeObject = new Date(time)
     d = timeObject.getDate()
