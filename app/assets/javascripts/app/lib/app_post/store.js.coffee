@@ -33,7 +33,7 @@ class _storeSingleton
   store: {}
   constructor: ->
     @support = true
-    if !window.localStorage
+    if !window.sessionStorage
       @support = false
 #    @support = false
 
@@ -47,7 +47,7 @@ class _storeSingleton
     @store[key] = value
     return if !@support
     try
-      localStorage.setItem( key, JSON.stringify( value ) )
+      sessionStorage.setItem( key, JSON.stringify( value ) )
     catch e
       if e is QUOTA_EXCEEDED_ERR
         # do something nice to notify your users
@@ -56,7 +56,7 @@ class _storeSingleton
   # get item
   get: (key) ->
     return @store[key] if !@support
-    value = localStorage.getItem( key )
+    value = sessionStorage.getItem( key )
     return if !value
     object = JSON.parse( value )
     return object
@@ -65,12 +65,12 @@ class _storeSingleton
   delete: (key) ->
     delete @store[key]
     return if !@support
-    localStorage.removeItem( key )
+    sessionStorage.removeItem( key )
 
   # clear local storage
   clear: ->
     @store = {}
-    localStorage.clear()
+    sessionStorage.clear()
 
   # return list of all keys
   list: ->
@@ -80,11 +80,11 @@ class _storeSingleton
         list.push key
       return list
 
-#    logLength = localStorage.length-1;
+#    logLength = sessionStorage.length-1;
 #    for count in [0..logLength]
-#      key = localStorage.key( count )
+#      key = sessionStorage.key( count )
 #      if key
 #        list.push key
-    for key of window.localStorage
+    for key of window.sessionStorage
       list.push key
     list
