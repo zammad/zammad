@@ -35,7 +35,7 @@
         <% for area in @result: %>
           <li class="divider" style="padding: 2px 10px; height: auto; margin: 4px 0px;"><%- @T( area.name ) %></li>
           <% for item in area.result: %>
-            <li><a href="<%- item.url %>" class="<%= item.class %>" data-id="<%= item.id %>" style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= item.display %></a></li>
+            <li><a href="<%- item.url %>" class="<%= item.class %>" data-id="<%= item.id %>"><%= item.display %></a></li>
           <% end %>
         <% end %>
       </ul>

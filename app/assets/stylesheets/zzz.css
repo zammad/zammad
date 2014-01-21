@@ -484,6 +484,10 @@ h5 {
 
 .dropdown-menu > li > a {
   font-weight: 200;
+  max-width: 340px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dropdown-menu .count {
