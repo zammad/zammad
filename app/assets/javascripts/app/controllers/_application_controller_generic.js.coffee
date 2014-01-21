@@ -183,6 +183,11 @@ class App.ControllerGenericIndex extends App.Controller
   edit: (e) =>
     e.preventDefault()
     item = $(e.target).item( App[ @genericObject ] )
+
+    if @editCallback
+      @editCallback(item)
+      return
+
     new App.ControllerGenericEdit(
       id:            item.id
       pageData:      @pageData
@@ -190,6 +195,7 @@ class App.ControllerGenericIndex extends App.Controller
     )
 
   destroy: (e) ->
+    e.preventDefault()
     item = $(e.target).item( App[ @genericObject ] )
     new DestroyConfirm(
       item: item
