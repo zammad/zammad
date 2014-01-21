@@ -434,6 +434,12 @@ h5 {
   width: 130px;
   margin-top: 7px;
 }
+.form-horizontal .form-group .checkbox label {
+  text-align: left;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
 
 /*
  * bootstrap changes

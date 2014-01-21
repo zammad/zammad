@@ -1,5 +1,5 @@
 <div class="<%= @attribute.class %>">
 <% for row in @attribute.options: %>
-    <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>> <%= row.name %> <% if row.note: %>- <%= row.note %><% end %><br/>
+    <label><input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>> <%= row.name %> <% if row.note: %>- <%= row.note %><% end %></label>
 <% end %>
 </div>

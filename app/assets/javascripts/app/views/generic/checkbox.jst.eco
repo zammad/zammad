@@ -1,5 +1,5 @@
-<div class="<%= @attribute.class %>">
+<div class="<%= @attribute.class %> checkbox">
 <% for row in @attribute.options: %>
-    <input type="checkbox" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>> <%= row.name %> <% if row.note: %>- <%= row.note %><% end %><br/>
+    <label><input type="checkbox" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>> <%= row.name %> <% if row.note: %>- <%= row.note %><% end %></label>
 <% end %>
 </div>
