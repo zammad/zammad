@@ -4,7 +4,7 @@ class App.Organization extends App.Model
   @url: @apiPath + '/organizations'
   @configure_attributes = [
     { name: 'name',       display: 'Name',                tag: 'input',     type: 'text', limit: 100, 'null': false, info: true, 'class': 'span4' },
-    { name: 'shared',     display: 'Shared organiztion',  tag: 'boolean',   note: 'Customers in the organiztion can view each other items.', type: 'boolean', 'default': true, 'null': false, info: false, 'class': 'span4' },
+    { name: 'shared',     display: 'Shared organization', tag: 'boolean',   note: 'Customers in the organization can view each other items.', type: 'boolean', 'default': true, 'null': false, info: false, 'class': 'span4' },
     { name: 'note',       display: 'Note',                tag: 'textarea',  note: 'Notes are visible to agents only, never to customers.', limit: 250, 'null': true, info: true, 'class': 'span4' },
     { name: 'updated_at', display: 'Updated',             type: 'time', readonly: 1, info: false },
     { name: 'active',     display: 'Active',              tag: 'boolean',   note: 'boolean', 'default': true, 'null': false, info: false, 'class': 'span4' },
