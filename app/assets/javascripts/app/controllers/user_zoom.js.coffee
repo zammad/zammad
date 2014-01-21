@@ -11,7 +11,7 @@ class App.UserZoom extends App.Controller
       @user = user
       @render()
 
-    App.User.retrieve( @user_id, start )
+    App.User.retrieve( @user_id, start, true )
 
   meta: =>
     meta =
