@@ -1,8 +1,11 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket::Article < ApplicationModel
+  require 'ticket/article/assets'
   include Ticket::Article::Assets
+  require 'ticket/article/history_log'
   include Ticket::Article::HistoryLog
+  require 'ticket/article/activity_stream_log'
   include Ticket::Article::ActivityStreamLog
 
   belongs_to    :ticket

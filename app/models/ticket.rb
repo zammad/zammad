@@ -4,8 +4,11 @@ class Ticket < ApplicationModel
   include Ticket::Escalation
   include Ticket::Subject
   include Ticket::Permission
+  require 'ticket/assets'
   include Ticket::Assets
+  require 'ticket/history_log'
   include Ticket::HistoryLog
+  require 'ticket/activity_stream_log'
   include Ticket::ActivityStreamLog
   extend Ticket::Search
 
