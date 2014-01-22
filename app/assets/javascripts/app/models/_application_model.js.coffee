@@ -236,15 +236,18 @@ class App.Model extends Spine.Model
       item_new = @find( item.id )
       all_complied.push @_fillUp(item_new)
 
+    # filter search
     if params.filter
       all_complied = @_filter( all_complied, params.filter )
 
+    # use extend filter search
     if params.filterExtended
       all_complied = @_filterExtended( all_complied, params.filterExtended )
 
-    if params.sortBy
-      all_complied = @_sortBy( all_complied, params.sortBy )
+    # sort by
+    all_complied = @_sortBy( all_complied, params.sortBy )
 
+    # order
     if params.order
       all_complied = @_order( all_complied, params.order )
 
