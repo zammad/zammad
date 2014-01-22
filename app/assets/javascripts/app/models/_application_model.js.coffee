@@ -258,10 +258,11 @@ class App.Model extends Spine.Model
         attribute = 'displayName'
 
       # check if displayName exists
-      if attribute is 'displayName' && item.displayName
-        return item.displayName().toLowerCase()
-      else
-        attribute = 'name'
+      if attribute is 'displayName'
+        if item.displayName
+          return item.displayName().toLowerCase()
+        else
+          attribute = 'name'
 
       return '' if item[ attribute ] is undefined
       return '' if item[ attribute ] is null
