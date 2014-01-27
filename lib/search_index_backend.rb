@@ -2,7 +2,7 @@
 
 class SearchIndexBackend
   @@index = "zammad_#{Rails.env}"
-  @@url   = 'http://127.0.0.1:9000'
+  @@url   = 'http://217.111.80.181'
   @@user  = 'elasticsearch'
   @@pw    = 'zammad'
 
