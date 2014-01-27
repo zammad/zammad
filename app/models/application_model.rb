@@ -4,6 +4,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::Assets
   include ApplicationModel::HistoryLogBase
   include ApplicationModel::ActivityStreamBase
+  include ApplicationModel::SearchIndexBase
 
   self.abstract_class = true
 
@@ -23,9 +24,13 @@ class ApplicationModel < ActiveRecord::Base
   after_update  :history_update
   after_destroy :history_destroy
 
+  after_create  :search_index_update
+  after_update  :search_index_update
+  after_destroy :search_index_destroy
+
   # create instance accessor
   class << self
-    attr_accessor :activity_stream_support_config, :history_support_config
+    attr_accessor :activity_stream_support_config, :history_support_config, :search_index_support_config
   end
 
   attr_accessor :history_changes_last_done
@@ -453,28 +458,65 @@ class OwnModel < ApplicationModel
     )
   end
 
-  private
-
 =begin
 
-check string/varchar size and cut them if needed
+serve methode to configure and enable search index support for this model
+
+class Model < ApplicationModel
+  search_index_support :ignore_attributes => {
+    :create_article_type_id   => true,
+    :create_article_sender_id => true,
+    :article_count            => true,
+  }
+
+end
 
 =end
 
-  def check_limits
-    self.attributes.each {|attribute|
-      next if !self[ attribute[0] ]
-      next if self[ attribute[0] ].class != String
-      next if self[ attribute[0] ].empty?
-      column = self.class.columns_hash[ attribute[0] ]
-      limit = column.limit
-      if column && limit
-        current_length = attribute[1].to_s.length
-        if limit < current_length
-          puts "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
-          self[attribute[0]] = attribute[1][ 0, limit ]
-        end
-      end
+  def self.search_index_support(data = {})
+    @search_index_support_config = data
+  end
+
+=begin
+
+update search index, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.search_index_update
+
+=end
+
+  def search_index_update
+    return if !self.class.search_index_support_config
+    search_index_update_backend
+  end
+
+=begin
+
+delete search index object, will be executed automatically
+
+  model = Model.find(123)
+  model.search_index_destroy
+
+=end
+
+  def search_index_destroy
+    return if !self.class.search_index_support_config
+    SearchIndexBackend.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
+reload search index with full data
+
+  Model.search_index_reload
+
+=end
+
+  def self.search_index_reload
+    return if !@search_index_support_config
+    self.all.each { |item|
+      item.search_index_update_backend
     }
   end
 
@@ -557,7 +599,7 @@ delete object activity stream, will be executed automatically
 =end
 
   def activity_stream_destroy
-    return if !@activity_stream_support_config
+    return if !self.class.activity_stream_support_config
     ActivityStream.remove( self.class.to_s, self.id )
   end
 
@@ -703,8 +745,33 @@ delete object history, will be executed automatically
 =end
 
   def history_destroy
-    return if !@history_support_config
+    return if !self.class.history_support_config
     History.remove( self.class.to_s, self.id )
+  end
+
+  private
+
+=begin
+
+check string/varchar size and cut them if needed
+
+=end
+
+  def check_limits
+    self.attributes.each {|attribute|
+      next if !self[ attribute[0] ]
+      next if self[ attribute[0] ].class != String
+      next if self[ attribute[0] ].empty?
+      column = self.class.columns_hash[ attribute[0] ]
+      limit = column.limit
+      if column && limit
+        current_length = attribute[1].to_s.length
+        if limit < current_length
+          puts "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
+          self[attribute[0]] = attribute[1][ 0, limit ]
+        end
+      end
+    }
   end
 
 =begin

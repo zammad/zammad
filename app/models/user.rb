@@ -36,6 +36,17 @@ class User < ApplicationModel
       :image_source => true,
     }
   )
+  search_index_support(
+    :ignore_attributes => {
+      :password     => true,
+      :image        => true,
+      :image_source => true,
+      :source       => true,
+      :login_failed => true,
+      :preferences  => true,
+      :locale       => true,
+    }
+  )
 
 =begin
 

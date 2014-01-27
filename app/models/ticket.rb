@@ -10,6 +10,8 @@ class Ticket < ApplicationModel
   include Ticket::HistoryLog
   require 'ticket/activity_stream_log'
   include Ticket::ActivityStreamLog
+  require 'ticket/search_index'
+  include Ticket::SearchIndex
   extend Ticket::Search
 
   before_create   :check_generate, :check_defaults
@@ -26,6 +28,12 @@ class Ticket < ApplicationModel
   }
 
   history_support :ignore_attributes => {
+    :create_article_type_id   => true,
+    :create_article_sender_id => true,
+    :article_count            => true,
+  }
+
+  search_index_support :ignore_attributes => {
     :create_article_type_id   => true,
     :create_article_sender_id => true,
     :article_count            => true,

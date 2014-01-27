@@ -9,5 +9,6 @@ class Organization < ApplicationModel
 
   activity_stream_support  :role => 'Admin'
   history_support
+  search_index_support
 
 end
