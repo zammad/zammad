@@ -5,6 +5,7 @@ require 'digest/md5'
 class User < ApplicationModel
   include User::Assets
   extend User::Search
+  include User::SearchIndex
 
   before_create   :check_name, :check_email, :check_login, :check_image, :check_password
   before_update   :check_password, :check_image, :check_email, :check_login_update

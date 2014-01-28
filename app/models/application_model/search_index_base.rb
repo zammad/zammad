@@ -55,6 +55,28 @@ returns
     end
   end
 
+=begin
+
+get data to store in search index
+
+  ticket = Ticket.find(123)
+  result = ticket.search_index_data
+
+returns
+
+  result = true # false
+
+=end
+
+  def search_index_data
+    data = []
+    ['name', 'note'].each { |key|
+      data.push self[key] if self[key]
+    }
+    return data[0] if !data[1]
+    data
+  end
+
   private
 
 =begin
@@ -92,10 +114,8 @@ returns
 
       # get name of ref object
       value = nil
-      if relation_model['name']
-        value = relation_model['name']
-      elsif relation_model.respond_to?('fullname')
-        value = relation_model.send('fullname')
+      if relation_model.respond_to?('search_index_data')
+        value = relation_model.send('search_index_data')
       end
       next if !value
 
