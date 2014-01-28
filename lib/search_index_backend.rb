@@ -69,7 +69,7 @@ return all activity entries of an user
   private
 
   def self.build_url( type, o_id = nil )
-    index = Setting.get('es_index') + "_#{Rails.env}"
+    index = Setting.get('es_index').to_s + "_#{Rails.env}"
     url   = Setting.get('es_url')
     return if !url
     if o_id
