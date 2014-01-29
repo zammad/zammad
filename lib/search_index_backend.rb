@@ -57,25 +57,78 @@ remove whole data from index
 
 =begin
 
-return all activity entries of an user
+return search result
 
-  result = SearchIndexBackend.search( user )
+  result = SearchIndexBackend.search( 'search query', limit, 'User' )
 
 =end
 
-  def self.search(user,limit)
+  def self.search( query, limit = 10, index = nil )
+    return [] if !query
+
+    url = build_url()
+    return if !url
+    if index 
+      url += "/#{index}/_search"
+    else
+      url += '/_search'
+    end
+    data = {}
+    data['from'] = 0
+    data['size'] = 10
+    data['query'] = {}
+#    data['query']['text_phrase'] = {}
+#    data['query']['text_phrase']['to'] = query
+#    data['query']['bool'] = {}
+#    data['query']['bool']['must'] = {}
+#    data['query']['bool']['must']['term'] = {}
+#    data['query']['bool']['must']['term']['title'] = '*z*'
+    data['query']['query_string'] = {}
+    data['query']['query_string']['query'] = query
+
+#    data['filtered'] = {}
+#    data['filtered']['query'] = {}
+#    data['filtered']['query']['match'] = {}
+#    data['filtered']['query']['match']['_all'] = query
+
+    puts "# curl -X POST \"#{url}\" -d '#{data.to_json}'"
+
+    conn     = connection( url )
+    response = conn.get do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = data.to_json
+    end
+#    puts response.body.to_s
+    puts "# #{response.status.to_s}"
+    puts response.body
+#    return true if response.success?
+    data = JSON.parse( response.body )
+#    return { :data => data, :response => response }
+    ids = []
+    return ids if !data
+    return ids if !data['hits']
+    return ids if !data['hits']['hits']
+    data['hits']['hits'].each { |item|
+      puts "... #{item['_type'].to_s} #{item['_id'].to_s}"
+      ids.push item['_id']
+    }
+    return ids
   end
 
   private
 
-  def self.build_url( type, o_id = nil )
+  def self.build_url( type = nil, o_id = nil )
     index = Setting.get('es_index').to_s + "_#{Rails.env}"
     url   = Setting.get('es_url')
     return if !url
-    if o_id
-      url = "#{url}/#{index}/#{type}/#{o_id}"
+    if type
+      if o_id
+        url = "#{url}/#{index}/#{type}/#{o_id}"
+      else
+        url = "#{url}/#{index}/#{type}"
+      end
     else
-      url = "#{url}/#{index}/#{type}"
+      url = "#{url}/#{index}"
     end
     url
   end
@@ -89,4 +142,5 @@ return all activity entries of an user
     end
     conn
   end
+
 end
