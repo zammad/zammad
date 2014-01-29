@@ -28,6 +28,17 @@ returns
     # enable search only for agents and admins
     return [] if !current_user.is_role('Agent') && !current_user.is_role('Admin')
 
+    # try search index backend
+    if Setting.get('es_url')
+      ids = SearchIndexBackend.search( query, limit, 'Organization' )
+      organizations = []
+      ids.each { |id|
+        organizations.push Organization.lookup( :id => id )
+      }
+      return organizations
+    end
+
+    # fallback do sql query
     # do query
     organizations = Organization.find(
       :all,

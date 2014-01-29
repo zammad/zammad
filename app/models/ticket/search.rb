@@ -40,6 +40,17 @@ returns
       end
     end
 
+    # try search index backend
+    if Setting.get('es_url')
+      ids = SearchIndexBackend.search( query, limit, 'Ticket' )
+      tickets = []
+      ids.each { |id|
+        tickets.push Ticket.lookup( :id => id )
+      }
+      return tickets
+    end
+
+    # fallback do sql query
     # do query
     tickets_all = Ticket.select('DISTINCT(tickets.id)').
     where(conditions).
