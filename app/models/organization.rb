@@ -3,9 +3,11 @@
 class Organization < ApplicationModel
   include Organization::Assets
   extend Organization::Search
+  include Organization::SearchIndex
 
   has_and_belongs_to_many  :users
-  validates                :name, :presence => true
+  has_many                 :members,  :class_name => 'User'
+  validates                :name,     :presence => true
 
   activity_stream_support  :role => 'Admin'
   history_support
