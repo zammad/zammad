@@ -16,11 +16,13 @@ returns
 =end
 
   def search_index_data
-    data = []
-    data.push "#{ self['firstname'] } #{ self['lastname'] }"
+    attributes = { 'fullname' => "#{ self['firstname'] } #{ self['lastname'] }" }
     ['login', 'firstname', 'lastname', 'phone', 'email', 'city', 'country', 'note'].each { |key|
-      data.push self[key] if self[key]
+      if self[key] && !self[key].empty?
+        attributes[key] = self[key]
+      end
     }
-    data
+    return if attributes.empty?
+    attributes
   end
 end
