@@ -69,12 +69,16 @@ returns
 =end
 
   def search_index_data
-    data = []
+        puts 'aaaaa'
+
+    attributes = {}
     ['name', 'note'].each { |key|
-      data.push self[key] if self[key]
+      if self[key] && !self[key].empty?
+        attributes[key] = self[key]
+      end
     }
-    return data[0] if !data[1]
-    data
+    return if attributes.empty?
+    attributes
   end
 
   private
