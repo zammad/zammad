@@ -69,8 +69,6 @@ returns
 =end
 
   def search_index_data
-        puts 'aaaaa'
-
     attributes = {}
     ['name', 'note'].each { |key|
       if self[key] && !self[key].empty?
