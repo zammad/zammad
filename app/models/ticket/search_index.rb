@@ -4,7 +4,7 @@ module Ticket::SearchIndex
 
 =begin
 
-log activity for this object
+build and send data for search index to backend
 
   ticket = Ticket.find(123)
   result = ticket.search_index_update_backend

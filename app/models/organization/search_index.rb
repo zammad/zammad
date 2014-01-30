@@ -47,6 +47,7 @@ returns
       attributes.delete(key)
     }
 
+    # add org member for search index data
     attributes['member'] = []
     users = User.where( :organization_id => self.id )
     users.each { |user|
