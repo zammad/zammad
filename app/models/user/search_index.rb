@@ -17,8 +17,8 @@ returns
 
   def search_index_data
     attributes = { 'fullname' => "#{ self['firstname'] } #{ self['lastname'] }" }
-    ['login', 'firstname', 'lastname', 'phone', 'email', 'city', 'country', 'note'].each { |key|
-      if self[key] && !self[key].empty?
+    ['login', 'firstname', 'lastname', 'phone', 'email', 'city', 'country', 'note', 'created_at'].each { |key|
+      if self[key] && (!self.respond_to?('empty?') || !self[key].empty?)
         attributes[key] = self[key]
       end
     }

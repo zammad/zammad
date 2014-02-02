@@ -20,8 +20,6 @@ returns
 
     # default ignored attributes
     ignore_attributes = {
-      :created_at               => true,
-      :updated_at               => true,
       :created_by_id            => true,
       :updated_by_id            => true,
       :active                   => true,
@@ -94,12 +92,22 @@ returns
 =end
 
   def search_index_attribute_lookup(attributes, ref_object)
+
+    # default keep attributes
+    keep_attributes = {}
+    if self.class.search_index_support_config[:keep_attributes]
+      self.class.search_index_support_config[:keep_attributes].each {|key, value|
+        keep_attributes[key] = value
+      }
+    end
+
     attributes_new = {}
     attributes.each {|key, value|
       next if !value
 
       # get attribute name
-      attribute_name = key.to_s
+      attribute_name_with_id = key.to_s
+      attribute_name         = key.to_s
       next if attribute_name[-3,3] != '_id'
       attribute_name = attribute_name[ 0, attribute_name.length-3 ]
 
@@ -123,7 +131,9 @@ returns
 
       # save name of ref object
       attributes_new[ attribute_name ] = value
-      attributes.delete(key)
+      if !keep_attributes[ attribute_name_with_id.to_sym ]
+        attributes.delete(key)
+      end
     }
     attributes_new.merge(attributes)
   end

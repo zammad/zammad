@@ -29,7 +29,7 @@ returns
     return [] if !current_user.is_role('Agent') && !current_user.is_role('Admin')
 
     # try search index backend
-    if Setting.get('es_url')
+    if SearchIndexBackend.enabled?
       ids = SearchIndexBackend.search( query, limit, 'Organization' )
       organizations = []
       ids.each { |id|

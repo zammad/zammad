@@ -63,7 +63,7 @@ return search result
 
 =end
 
-  def self.search( query, limit = 10, index = nil )
+  def self.search( query, limit = 10, index = nil, query_extention = {} )
     return [] if !query
 
     url = build_url()
@@ -76,16 +76,40 @@ return search result
     data = {}
     data['from'] = 0
     data['size'] = 10
-    data['query'] = {}
+    data['sort'] = 
+    [
+      {
+        'updated_at' => {
+          'order' => 'desc'
+        }
+      },
+      "_score"
+    ]
+    data['query'] = query_extention || {}
+    if !data['query']['bool']
+      data['query']['bool'] = {}
+    end
 #    data['query']['text_phrase'] = {}
 #    data['query']['text_phrase']['to'] = query
 #    data['query']['bool'] = {}
 #    data['query']['bool']['must'] = {}
 #    data['query']['bool']['must']['term'] = {}
 #    data['query']['bool']['must']['term']['title'] = '*z*'
-    data['query']['query_string'] = {}
-    data['query']['query_string']['query'] = query
+    if !data['query']['bool']['must']
+      data['query']['bool']['must'] = []
+    end
 
+#    if !data['query']['query_string']
+#      data['query']['query_string'] = {}
+#    end
+    condition = {
+      'query_string' => {
+        'query' => query
+      }
+    }
+    data['query']['bool']['must'].push condition
+#    data['query']['query_string']['query'] = query
+#query_string":{"query":"10005
 #    data['filtered'] = {}
 #    data['filtered']['query'] = {}
 #    data['filtered']['query']['match'] = {}
@@ -115,12 +139,27 @@ return search result
     return ids
   end
 
+=begin
+
+return true if backend is configured 
+
+  result = SearchIndexBackend.enabled?
+
+=end
+
+  def self.enabled?
+    return if !Setting.get('es_url')
+    return if Setting.get('es_url').empty?
+    true
+  end
+
+
   private
 
   def self.build_url( type = nil, o_id = nil )
+    return if !SearchIndexBackend.enabled?
     index = Setting.get('es_index').to_s + "_#{Rails.env}"
     url   = Setting.get('es_url')
-    return if !url
     if type
       if o_id
         url = "#{url}/#{index}/#{type}/#{o_id}"

@@ -33,11 +33,17 @@ class Ticket < ApplicationModel
     :article_count            => true,
   }
 
-  search_index_support :ignore_attributes => {
-    :create_article_type_id   => true,
-    :create_article_sender_id => true,
-    :article_count            => true,
-  }
+  search_index_support(
+    :ignore_attributes => {
+      :create_article_type_id   => true,
+      :create_article_sender_id => true,
+      :article_count            => true,
+    },
+    :keep_attributes => {
+      :customer_id              => true,
+      :organization_id          => true,
+    },
+  )
 
   belongs_to    :group
   has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
