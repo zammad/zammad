@@ -20,8 +20,6 @@ returns
 
     # default ignored attributes
     ignore_attributes = {
-      :created_at               => true,
-      :updated_at               => true,
       :created_by_id            => true,
       :updated_by_id            => true,
       :active                   => true,
@@ -54,6 +52,21 @@ returns
       article_attributes.delete('in_reply_to')
       article_attributes.delete('ticket_id')
       article_attributes = search_index_attribute_lookup( article_attributes, article )
+
+      # lookup attachments
+      attachments = Store.list( :object => 'Ticket::Article', :o_id => article.id )
+      attachments.each {|attachment|
+        if !article_attributes['attachments']
+          article_attributes['attachments'] = []
+        end
+        file = Store.find( attachment.id )
+        data = {
+            "_name"   => file.filename,
+#            "_content_type" => file.preferences['Mime-Type'],
+            "content" => Base64.encode64( file.store_file.data )
+        }
+        article_attributes['attachments'].push data
+      }
       attributes['articles_all'].push article_attributes
       if !article.internal
         attributes['articles_external'].push article_attributes
