@@ -41,7 +41,7 @@ namespace :searchindex do
 
   task :reload, [:opts] => :environment do |t, args|
 
-    puts "create data..."
+    puts "reload data..."
     User.search_index_reload
     Organization.search_index_reload
     Ticket.search_index_reload
