@@ -166,7 +166,8 @@ return search result
     puts "# #{response.status.to_s}"
     data = JSON.parse( response.body )
     if !response.success?
-      raise data.inspect
+      return []
+#      raise data.inspect
     end
 
     ids = []
