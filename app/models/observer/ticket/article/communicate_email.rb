@@ -17,7 +17,8 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
     type = Ticket::Article::Type.lookup( :id => record.ticket_article_type_id )
     return if type['name'] != 'email'
 
-    Delayed::Job.enqueue( Observer::Ticket::Article::CommunicateEmail::Send.new( record.id )
+    # send background job
+    Delayed::Job.enqueue( Observer::Ticket::Article::CommunicateEmail::Send.new( record.id ) )
   end
 
   class Send < Struct.new( :id )
