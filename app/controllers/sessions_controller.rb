@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class SessionsController < ApplicationController
 
@@ -40,12 +40,12 @@ class SessionsController < ApplicationController
     logon_session_key = nil
     if params['logon_session']
       logon_session_key = Digest::MD5.hexdigest( rand(999999).to_s + Time.new.to_s )
-#      session = ActiveRecord::SessionStore::Session.create(
-#        :session_id => logon_session_key,
-#        :data => {
-#          :user_id => user['id']
-#        }
-#      )
+      #      session = ActiveRecord::SessionStore::Session.create(
+      #        :session_id => logon_session_key,
+      #        :data => {
+      #          :user_id => user['id']
+      #        }
+      #      )
     end
 
     # return new session data

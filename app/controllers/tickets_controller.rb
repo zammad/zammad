@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TicketsController < ApplicationController
   before_filter :authentication_check
@@ -153,7 +153,7 @@ class TicketsController < ApplicationController
     .limit(6)
 
     # get related assets
-    ticket_ids_by_customer = [] 
+    ticket_ids_by_customer = []
     ticket_list.each {|ticket|
       ticket_ids_by_customer.push ticket.id
       assets = ticket.assets(assets)

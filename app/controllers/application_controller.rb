@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationController < ActionController::Base
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
