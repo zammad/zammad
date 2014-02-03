@@ -51,12 +51,10 @@ create/update/delete index
       req.headers['Content-Type'] = 'application/json'
       req.body = data[:data].to_json
     end
-#    puts response.body.to_s
     puts "# #{response.status.to_s}"
     return true if response.success?
     data = JSON.parse( response.body )
     raise data.inspect
-    #return { :data => data, :response => response }
   end
 
 =begin
@@ -80,11 +78,10 @@ add new object to search index
       req.headers['Content-Type'] = 'application/json'
       req.body = data.to_json
     end
-#    puts response.body.to_s
     puts "# #{response.status.to_s}"
     return true if response.success?
     data = JSON.parse( response.body )
-    return { :data => data, :response => response }
+    raise data.inspect
   end
 
 =begin
@@ -105,10 +102,10 @@ remove whole data from index
 
     conn     = connection( url )
     response = conn.delete( url )
-#    puts response.body.to_s
     puts "# #{response.status.to_s}"
-    return true if response.success?
+    return false if !response.success?
     data = JSON.parse( response.body )
+#    raise data.inspect
     return { :data => data, :response => response }
   end
 
@@ -166,12 +163,12 @@ return search result
       req.headers['Content-Type'] = 'application/json'
       req.body = data.to_json
     end
-#    puts response.body.to_s
     puts "# #{response.status.to_s}"
-    puts response.body
-#    return true if response.success?
     data = JSON.parse( response.body )
-#    return { :data => data, :response => response }
+    if !response.success?
+      raise data.inspect
+    end
+
     ids = []
     return ids if !data
     return ids if !data['hits']
@@ -180,7 +177,7 @@ return search result
       puts "... #{item['_type'].to_s} #{item['_id'].to_s}"
       ids.push item['_id']
     }
-    return ids
+    ids
   end
 
 =begin
