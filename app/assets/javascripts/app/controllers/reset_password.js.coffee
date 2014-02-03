@@ -21,7 +21,7 @@ class Index extends App.ControllerContent
     @render()
 
   render: (params) ->
-   configure_attributes = [
+    configure_attributes = [
       { name: 'username', display: 'Enter your username or email address', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4',  },
     ]
 
@@ -94,7 +94,7 @@ class Verify extends App.ControllerContent
     )
 
   render_success: =>
-   configure_attributes = [
+    configure_attributes = [
       { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input span4',  },
     ]
 
