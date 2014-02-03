@@ -488,7 +488,10 @@ update search index, if configured - will be executed automatically
 
   def search_index_update
     return if !self.class.search_index_support_config
-    search_index_update_backend
+
+    # start background job to transfer data to search index
+    return if !SearchIndexBackend.enabled?
+    Delayed::Job.enqueue( ApplicationModel::Job.new( self.class.to_s, self.id ) )
   end
 
 =begin
@@ -781,6 +784,13 @@ destory object dependencies, will be executed automatically
 =end
 
   def destroy_dependencies
+  end
+
+  # perform background job
+  class ApplicationModel::Job < Struct.new( :object, :o_id )
+    def perform
+      Object.const_get(object).find(o_id).search_index_update_backend
+    end
   end
 
 end
