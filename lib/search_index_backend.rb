@@ -4,6 +4,63 @@ class SearchIndexBackend
 
 =begin
 
+create/update/delete index
+
+  SearchIndexBackend.index(
+    :action => 'create',  # create/update/delete
+    :data   => {
+      :mappings => {
+        :Ticket => {
+          :properties => {
+            :articles_all => {
+              :type       => 'nested',
+              :properties => {
+                'attachments' => { :type => 'attachment' }
+              } 
+            }
+          } 
+        }  
+      }
+    }
+  )
+
+  SearchIndexBackend.index(
+    :action => 'delete',  # create/update/delete
+    :name   => 'Ticket',    # optional
+  )
+
+  SearchIndexBackend.index(
+    :action => 'delete',  # create/update/delete
+  )
+=end
+
+  def self.index(data)
+
+    url = build_url( data[:name] )
+    return if !url
+
+    if data[:action] && data[:action] == 'delete'
+      return SearchIndexBackend.remove( data[:name] )
+    end
+
+    puts "# curl -X PUT \"#{url}\" -d '#{data[:data].to_json}'"
+
+    conn     = connection( url )
+    response = conn.put do |req|
+      req.url url
+      req.headers['Content-Type'] = 'application/json'
+      req.body = data[:data].to_json
+    end
+#    puts response.body.to_s
+    puts "# #{response.status.to_s}"
+    return true if response.success?
+    data = JSON.parse( response.body )
+    raise data.inspect
+    #return { :data => data, :response => response }
+  end
+
+=begin
+
 add new object to search index
 
   SearchIndexBackend.add( 'Ticket', some_data_object )
@@ -79,41 +136,28 @@ return search result
     data['sort'] = 
     [
       {
-        'updated_at' => {
-          'order' => 'desc'
+        :updated_at => {
+          :order => 'desc'
         }
       },
       "_score"
     ]
+
     data['query'] = query_extention || {}
     if !data['query']['bool']
       data['query']['bool'] = {}
     end
-#    data['query']['text_phrase'] = {}
-#    data['query']['text_phrase']['to'] = query
-#    data['query']['bool'] = {}
-#    data['query']['bool']['must'] = {}
-#    data['query']['bool']['must']['term'] = {}
-#    data['query']['bool']['must']['term']['title'] = '*z*'
     if !data['query']['bool']['must']
       data['query']['bool']['must'] = []
     end
 
-#    if !data['query']['query_string']
-#      data['query']['query_string'] = {}
-#    end
+    # real search condition
     condition = {
       'query_string' => {
         'query' => query
       }
     }
     data['query']['bool']['must'].push condition
-#    data['query']['query_string']['query'] = query
-#query_string":{"query":"10005
-#    data['filtered'] = {}
-#    data['filtered']['query'] = {}
-#    data['filtered']['query']['match'] = {}
-#    data['filtered']['query']['match']['_all'] = query
 
     puts "# curl -X POST \"#{url}\" -d '#{data.to_json}'"
 

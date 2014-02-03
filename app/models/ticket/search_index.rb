@@ -62,7 +62,6 @@ returns
         file = Store.find( attachment.id )
         data = {
             "_name"   => file.filename,
-#            "_content_type" => file.preferences['Mime-Type'],
             "content" => Base64.encode64( file.store_file.data )
         }
         article_attributes['attachments'].push data
