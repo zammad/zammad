@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Ticket::SearchIndex
 
@@ -61,8 +61,8 @@ returns
         end
         file = Store.find( attachment.id )
         data = {
-            "_name"   => file.filename,
-            "content" => Base64.encode64( file.store_file.data )
+          "_name"   => file.filename,
+          "content" => Base64.encode64( file.store_file.data )
         }
         article_attributes['attachments'].push data
       }

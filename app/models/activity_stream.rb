@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class ActivityStream < ApplicationModel
   self.table_name = 'activity_streams'
@@ -45,10 +45,10 @@ add a new activity entry for an object
     # check if entry is needed
     result = ActivityStream.where(
       :o_id                        => data[:o_id],
- #     :activity_stream_type_id     => type.id,
+      #     :activity_stream_type_id     => type.id,
       :role_id                     => role_id,
       :activity_stream_object_id   => object.id,
-      :created_by_id               => data[:created_by_id]      
+      :created_by_id               => data[:created_by_id]
     ).last
 
     # resturn if old entry is really freash

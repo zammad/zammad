@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Ticket::Search
 
@@ -33,29 +33,29 @@ returns
 
       if current_user.is_role('Agent')
         groups = Group.joins(:users).
-          where( 'groups_users.user_id = ?', current_user.id ).
-          where( 'groups.active = ?', true )
-          group_condition = []
-          groups.each {|group|
-            group_condition.push group.name
-          }
+        where( 'groups_users.user_id = ?', current_user.id ).
+        where( 'groups.active = ?', true )
+        group_condition = []
+        groups.each {|group|
+          group_condition.push group.name
+        }
         condition = {
-         'query_string' => { 'default_field' => 'Ticket.group.name', 'query' => "\"#{group_condition.join('" OR "')}\"" }
+          'query_string' => { 'default_field' => 'Ticket.group.name', 'query' => "\"#{group_condition.join('" OR "')}\"" }
         }
         query_extention['bool']['must'].push condition
       else
         if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
           condition = {
-           'query_string' => { 'default_field' => 'Ticket.customer_id', 'query' => current_user.id }
+            'query_string' => { 'default_field' => 'Ticket.customer_id', 'query' => current_user.id }
           }
-        #  customer_id: XXX
-#          conditions = [ 'customer_id = ?', current_user.id ]
+          #  customer_id: XXX
+          #          conditions = [ 'customer_id = ?', current_user.id ]
         else
           condition = {
-           'query_string' => { 'query' => "Ticket.customer_id:#{current_user.id} OR Ticket.organization_id:#{current_user.organization.id}" }
+            'query_string' => { 'query' => "Ticket.customer_id:#{current_user.id} OR Ticket.organization_id:#{current_user.organization.id}" }
           }
-        # customer_id: XXX OR organization_id: XXX
-#          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
+          # customer_id: XXX OR organization_id: XXX
+          #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
         end
         query_extention['bool']['must'].push condition
       end

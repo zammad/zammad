@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Scheduler < ApplicationModel
 
@@ -62,27 +62,27 @@ class Scheduler < ApplicationModel
   end
 
   def self.worker
-      wait = 10
-      puts "*** Starting worker #{Delayed::Job.to_s}"
+    wait = 10
+    puts "*** Starting worker #{Delayed::Job.to_s}"
 
-      loop do
-        result = nil
+    loop do
+      result = nil
 
-        realtime = Benchmark.realtime do
-          result = Delayed::Worker.new.work_off
-        end
-
-        count = result.sum
-
-        break if $exit
-
-        if count.zero?
-          sleep(wait)
-          puts "*** worker loop"
-        else
-          printf "*** #{count} jobs processed at %.4f j/s, %d failed ...\n" % [count / realtime, result.last]
-        end
+      realtime = Benchmark.realtime do
+        result = Delayed::Worker.new.work_off
       end
+
+      count = result.sum
+
+      break if $exit
+
+      if count.zero?
+        sleep(wait)
+        puts "*** worker loop"
+      else
+        printf "*** #{count} jobs processed at %.4f j/s, %d failed ...\n" % [count / realtime, result.last]
+      end
+    end
   end
 
   def self.check( name, time_warning = 10, time_critical = 20 )
@@ -93,7 +93,7 @@ class Scheduler < ApplicationModel
       puts "CRITICAL - no such scheduler jobs '#{name}'"
       return true
     end
-#puts "S " + scheduler.inspect
+    #puts "S " + scheduler.inspect
     if !scheduler.last_run
       puts "CRITICAL - scheduler jobs never started '#{name}'"
       exit 2

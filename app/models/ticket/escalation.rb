@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Ticket::Escalation
 
@@ -163,7 +163,7 @@ returns
 
 =end
 
-def escalation_calculation_get_sla
+  def escalation_calculation_get_sla
     sla_selected = nil
     sla_list = Cache.get( 'SLA::List::Active' )
     if sla_list == nil
@@ -201,115 +201,115 @@ def escalation_calculation_get_sla
 
   private
 
-    #type could be:
-    # real - time without supsend state
-    # relative - only suspend time
+  #type could be:
+  # real - time without supsend state
+  # relative - only suspend time
 
-    def escalation_suspend (start_time, end_time, type, sla_selected, sla_time = 0)
-      if type == 'relative'
-        end_time += sla_time * 60
+  def escalation_suspend (start_time, end_time, type, sla_selected, sla_time = 0)
+    if type == 'relative'
+      end_time += sla_time * 60
+    end
+    total_time_without_pending = 0
+    total_time = 0
+    #get history for ticket
+    history_list = self.history_get
+
+    #loop through hist. changes and get time
+    last_state            = nil
+    last_state_change     = nil
+    last_state_is_pending = false
+    history_list.each { |history_item|
+
+      # ignore if it isn't a state change
+      next if !history_item['attribute']
+      next if history_item['attribute'] != 'ticket_state'
+
+      # ignore all newer state before start_time
+      next if history_item['created_at'] < start_time
+
+      # ignore all older state changes after end_time
+      next if last_state_change && last_state_change > end_time
+
+      # if created_at is later then end_time, use end_time as last time
+      if history_item['created_at'] > end_time
+        history_item['created_at'] = end_time
       end
-      total_time_without_pending = 0
-      total_time = 0
-      #get history for ticket
-      history_list = self.history_get
 
-      #loop through hist. changes and get time
-      last_state            = nil
-      last_state_change     = nil
-      last_state_is_pending = false
-      history_list.each { |history_item|
+      # get initial state and time
+      if !last_state
+        last_state        = history_item['value_from']
+        last_state_change = start_time
+      end
 
-        # ignore if it isn't a state change
-        next if !history_item['attribute']
-        next if history_item['attribute'] != 'ticket_state'
+      # check if time need to be counted
+      counted = true
+      if history_item['value_from'] == 'pending'
+        counted = false
+      elsif history_item['value_from'] == 'close'
+        counted = false
+      end
 
-        # ignore all newer state before start_time
-        next if history_item['created_at'] < start_time
-
-        # ignore all older state changes after end_time
-        next if last_state_change && last_state_change > end_time
-
-        # if created_at is later then end_time, use end_time as last time
-        if history_item['created_at'] > end_time
-          history_item['created_at'] = end_time
-        end
-
-        # get initial state and time
-        if !last_state
-          last_state        = history_item['value_from']
-          last_state_change = start_time
-        end
-
-        # check if time need to be counted
-        counted = true
-        if history_item['value_from'] == 'pending'
-          counted = false
-        elsif history_item['value_from'] == 'close'
-          counted = false
-        end
-
-        diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
-        if counted
-          puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
-          total_time_without_pending = total_time_without_pending + diff
-        else
-          puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
-        end
-        total_time = total_time + diff
-
-        if history_item['value_to'] == 'pending'
-          last_state_is_pending = true
-        else
-          last_state_is_pending = false
-        end
-
-        # remember for next loop last state
-        last_state        = history_item['value_to']
-        last_state_change = history_item['created_at']
-      }
-
-      # if last state isnt pending, count rest
-      if !last_state_is_pending && last_state_change && last_state_change < end_time
-        diff = escalation_time_diff( last_state_change, end_time, sla_selected )
-        puts "Diff count last state was not pending #{diff.to_s} - #{last_state_change} - #{end_time}"
+      diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
+      if counted
+        puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
         total_time_without_pending = total_time_without_pending + diff
-        total_time = total_time + diff
-      end
-
-      # if we have not had any state change
-      if !last_state_change
-        diff = escalation_time_diff( start_time, end_time, sla_selected )
-        puts 'Diff state has not changed ' + diff.to_s
-        total_time_without_pending = total_time_without_pending + diff
-        total_time = total_time + diff
-      end
-
-      #return sum
-      if type == 'real'
-        return total_time_without_pending
-      elsif type == 'relative'
-        relative = total_time - total_time_without_pending
-        return relative
       else
-        raise "ERROR: Unknown type #{type}"
+        puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
       end
-    end
+      total_time = total_time + diff
 
-    def escalation_time_diff( start_time, end_time, sla_selected )
-      if sla_selected
-        diff = TimeCalculation.business_time_diff( start_time, end_time, sla_selected.data, sla_selected.timezone)
+      if history_item['value_to'] == 'pending'
+        last_state_is_pending = true
       else
-        diff = TimeCalculation.business_time_diff( start_time, end_time )
+        last_state_is_pending = false
       end
-      diff
+
+      # remember for next loop last state
+      last_state        = history_item['value_to']
+      last_state_change = history_item['created_at']
+    }
+
+    # if last state isnt pending, count rest
+    if !last_state_is_pending && last_state_change && last_state_change < end_time
+      diff = escalation_time_diff( last_state_change, end_time, sla_selected )
+      puts "Diff count last state was not pending #{diff.to_s} - #{last_state_change} - #{end_time}"
+      total_time_without_pending = total_time_without_pending + diff
+      total_time = total_time + diff
     end
 
-    def calculation_higher_time(escalation_time, check_time, done_time)
-      return escalation_time if done_time
-      return check_time if !escalation_time
-      return escalation_time if !check_time
-      return check_time if escalation_time > check_time
-      return escalation_time
+    # if we have not had any state change
+    if !last_state_change
+      diff = escalation_time_diff( start_time, end_time, sla_selected )
+      puts 'Diff state has not changed ' + diff.to_s
+      total_time_without_pending = total_time_without_pending + diff
+      total_time = total_time + diff
     end
+
+    #return sum
+    if type == 'real'
+      return total_time_without_pending
+    elsif type == 'relative'
+      relative = total_time - total_time_without_pending
+      return relative
+    else
+      raise "ERROR: Unknown type #{type}"
+    end
+  end
+
+  def escalation_time_diff( start_time, end_time, sla_selected )
+    if sla_selected
+      diff = TimeCalculation.business_time_diff( start_time, end_time, sla_selected.data, sla_selected.timezone)
+    else
+      diff = TimeCalculation.business_time_diff( start_time, end_time )
+    end
+    diff
+  end
+
+  def calculation_higher_time(escalation_time, check_time, done_time)
+    return escalation_time if done_time
+    return check_time if !escalation_time
+    return escalation_time if !check_time
+    return check_time if escalation_time > check_time
+    return escalation_time
+  end
 end

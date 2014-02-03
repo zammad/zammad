@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket::Number < ApplicationLib
 
@@ -15,7 +15,7 @@ returns
 =end
 
   def self.generate
-    
+
     # generate number
     (1..50_000).each { |i|
       number = adapter.generate

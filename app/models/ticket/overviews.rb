@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Ticket::Overviews
 
@@ -187,62 +187,62 @@ returns
   end
 
   private
-    def self._condition(condition)
-      sql  = ''
-      bind = [nil]
-      condition.each {|key, value|
-        if sql != ''
-          sql += ' AND '
-        end
-        if value.class == Array
-          sql += " #{key} IN (?)"
-          bind.push value
-        elsif value.class == Hash || value.class == ActiveSupport::HashWithIndifferentAccess
-          time = Time.now
-          if value['area'] == 'minute'
-            if value['direction'] == 'last'
-              time -= value['count'].to_i * 60
-            else
-              time += value['count'].to_i * 60
-            end
-          elsif value['area'] == 'hour'
-            if value['direction'] == 'last'
-              time -= value['count'].to_i * 60 * 60
-            else
-              time += value['count'].to_i * 60 * 60
-            end
-          elsif value['area'] == 'day'
-            if value['direction'] == 'last'
-              time -= value['count'].to_i * 60 * 60 * 24
-            else
-              time += value['count'].to_i * 60 * 60 * 24
-            end
-          elsif value['area'] == 'month'
-            if value['direction'] == 'last'
-              time -= value['count'].to_i * 60 * 60 * 24 * 31
-            else
-              time += value['count'].to_i * 60 * 60 * 24 * 31
-            end
-          elsif value['area'] == 'year'
-            if value['direction'] == 'last'
-              time -= value['count'].to_i * 60 * 60 * 24 * 365
-            else
-              time += value['count'].to_i * 60 * 60 * 24 * 365
-            end
-          end
+  def self._condition(condition)
+    sql  = ''
+    bind = [nil]
+    condition.each {|key, value|
+      if sql != ''
+        sql += ' AND '
+      end
+      if value.class == Array
+        sql += " #{key} IN (?)"
+        bind.push value
+      elsif value.class == Hash || value.class == ActiveSupport::HashWithIndifferentAccess
+        time = Time.now
+        if value['area'] == 'minute'
           if value['direction'] == 'last'
-            sql += " #{key} > ?"
-            bind.push time
+            time -= value['count'].to_i * 60
           else
-            sql += " #{key} < ?"
-            bind.push time
+            time += value['count'].to_i * 60
           end
-        else
-          sql += " #{key} = ?"
-          bind.push value
+        elsif value['area'] == 'hour'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60
+          else
+            time += value['count'].to_i * 60 * 60
+          end
+        elsif value['area'] == 'day'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60 * 24
+          else
+            time += value['count'].to_i * 60 * 60 * 24
+          end
+        elsif value['area'] == 'month'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60 * 24 * 31
+          else
+            time += value['count'].to_i * 60 * 60 * 24 * 31
+          end
+        elsif value['area'] == 'year'
+          if value['direction'] == 'last'
+            time -= value['count'].to_i * 60 * 60 * 24 * 365
+          else
+            time += value['count'].to_i * 60 * 60 * 24 * 365
+          end
         end
-      }
-      bind[0] = sql
-      return bind
-    end
+        if value['direction'] == 'last'
+          sql += " #{key} > ?"
+          bind.push time
+        else
+          sql += " #{key} < ?"
+          bind.push time
+        end
+      else
+        sql += " #{key} = ?"
+        bind.push value
+      end
+    }
+    bind[0] = sql
+    return bind
+  end
 end

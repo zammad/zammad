@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class History < ApplicationModel
   include History::Assets
@@ -313,7 +313,7 @@ returns
 
 =begin
 
-nothing to do on destroying history entries 
+nothing to do on destroying history entries
 
 =end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class RecentView < ApplicationModel
   belongs_to :recent_view_object,           :class_name => 'RecentView::Object'

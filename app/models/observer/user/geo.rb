@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::User::Geo < ActiveRecord::Observer
   observe 'user'
@@ -18,7 +18,7 @@ class Observer::User::Geo < ActiveRecord::Observer
     # check if geo update is needed based on old/new location
     if record.id
       current = User.where( :id => record.id ).first
-	  return if !current
+      return if !current
 
       current_location = {}
       location.each { |item|
