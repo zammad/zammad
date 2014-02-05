@@ -54,15 +54,13 @@ returns
       article_attributes = search_index_attribute_lookup( article_attributes, article )
 
       # lookup attachments
-      attachments = Store.list( :object => 'Ticket::Article', :o_id => article.id )
-      attachments.each {|attachment|
+      article.attachments.each {|attachment|
         if !article_attributes['attachments']
           article_attributes['attachments'] = []
         end
-        file = Store.find( attachment.id )
         data = {
-          "_name"   => file.filename,
-          "content" => Base64.encode64( file.store_file.data )
+          "_name"   => attachment.filename,
+          "content" => Base64.encode64( attachment.store_file.data )
         }
         article_attributes['attachments'].push data
       }

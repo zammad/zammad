@@ -110,7 +110,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    list = Store.list( :object => 'Ticket::Article', :o_id => params[:article_id] ) || []
+    list = article.attachments || []
     access = false
     list.each {|item|
       if item.id.to_i == params[:id].to_i

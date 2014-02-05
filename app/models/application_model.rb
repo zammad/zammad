@@ -16,6 +16,9 @@ class ApplicationModel < ActiveRecord::Base
   after_update  :cache_delete
   after_destroy :cache_delete
 
+  after_create  :attachments_buffer_check
+  after_update  :attachments_buffer_check
+
   after_create  :activity_stream_create
   after_update  :activity_stream_update
   after_destroy :activity_stream_destroy
@@ -752,7 +755,69 @@ delete object history, will be executed automatically
     History.remove( self.class.to_s, self.id )
   end
 
+=begin
+
+get list of attachments of this object
+
+  item = Model.find(123)
+  list = item.attachments
+
+returns
+
+  # array with Store model objects
+
+=end
+
+  def attachments
+    Store.list( :object => self.class.to_s, :o_id => self.id )
+  end
+
+=begin
+
+store attachments for this object
+
+  item = Model.find(123)
+  item.attachments = [ Store-Object1, Store-Object2 ]
+
+=end
+
+  def attachments=(attachments)
+    self.attachments_buffer = attachments
+
+    # update if object already exists
+    if self.id && self.id != 0
+      attachments_buffer_check
+    end
+  end
+
   private
+
+  def attachments_buffer
+    @attachments_buffer_data
+  end
+  def attachments_buffer=(attachments)
+    @attachments_buffer_data = attachments
+  end
+
+  def attachments_buffer_check
+
+    # do nothing if no attachment exists
+    return 1 if attachments_buffer == nil
+
+    # store attachments
+    article_store = []
+    attachments_buffer.each do |attachment|
+      article_store.push Store.add(
+        :object        => self.class.to_s,
+        :o_id          => self.id,
+        :data          => attachment.store_file.data,
+        :filename      => attachment.filename,
+        :preferences   => attachment.preferences,
+        :created_by_id => self.created_by_id,
+      )
+    end
+    attachments_buffer = nil
+  end
 
 =begin
 

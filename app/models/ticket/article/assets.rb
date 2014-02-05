@@ -38,7 +38,7 @@ returns
       data[ Ticket::Article.to_app_model ][ self.id ] = self.attributes
 
       # add attachment list to article
-      data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = Store.list( :object => 'Ticket::Article', :o_id => self.id )
+      data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = self.attachments
     end
 
     if !data[ User.to_app_model ]
