@@ -35,6 +35,13 @@ returns
       next if value != true
       attributes.delete( key.to_s )
     }
+
+    # add tags
+    tags = Tag.tag_list( :object=> 'Ticket', :o_id => self.id )
+    if tags && !tags.empty?
+      attributes[:tag] = tags
+    end
+
     attributes = search_index_attribute_lookup( attributes, self )
 
     # add article data
