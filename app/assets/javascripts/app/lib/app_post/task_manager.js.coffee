@@ -341,8 +341,8 @@ class _taskManagerSingleton extends App.Controller
             success: ->
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
-            error: (task) =>
-              ui.log 'error', "can't update task '#{task.id}'"
+            error: ->
+              ui.log 'error', "can't update task", @
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
           )
