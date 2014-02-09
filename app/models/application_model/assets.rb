@@ -20,7 +20,7 @@ returns
 
 =end
 
-  def assets (data)
+  def assets (data = {})
 
     if !data[ self.class.to_app_model ]
       data[ self.class.to_app_model ] = {}
