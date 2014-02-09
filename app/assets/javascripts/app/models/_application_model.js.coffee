@@ -136,10 +136,13 @@ class App.Model extends Spine.Model
                 delete @RETRIEVE_CALLBACK[ record.id ][ key ]
               if _.isEmpty @RETRIEVE_CALLBACK[ record.id ]
                 delete @RETRIEVE_CALLBACK[ record.id ]
+          @fetchActive = false
 
       # fetch object
       console.log 'debug', 'loading..' + @className +  '..', id
-      App[ @className ].fetch( id: id )
+      if !@fetchActive
+        @fetchActive = true
+        App[ @className ].fetch( id: id )
       return true
     return false
 
@@ -183,11 +186,22 @@ class App.Model extends Spine.Model
     if !App[ @constructor.className ]['SUBSCRIPTION_ITEM']
       App[ @constructor.className ]['SUBSCRIPTION_ITEM'] = {}
 
+      # subscribe and render data after local change
+      @bind(
+        'refresh change'
+        =>
+          for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
+            callback(@)
+      )
+
+      # subscribe and render data after server change
       events = "#{@constructor.className}:created #{@constructor.className}:updated #{@constructor.className}:destroy"
       App.Event.bind(
         events
         (record) =>
           if @id.toString() is record.id.toString()
+
+            # load only once from server
             for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
               App[ @constructor.className ].retrieve( @id, callback, true )
         'Item::Subscribe::' + @constructor.className
