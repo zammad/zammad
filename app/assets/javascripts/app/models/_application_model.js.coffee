@@ -187,11 +187,11 @@ class App.Model extends Spine.Model
       App[ @constructor.className ]['SUBSCRIPTION_ITEM'] = {}
 
       # subscribe and render data after local change
-      @bind(
+      App[ @constructor.className ].bind(
         'refresh change'
-        =>
-          for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
-            callback(@)
+        (item) =>
+          for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
+            callback(item)
       )
 
       # subscribe and render data after server change
