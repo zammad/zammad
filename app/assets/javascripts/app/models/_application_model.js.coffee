@@ -200,8 +200,6 @@ class App.Model extends Spine.Model
         events
         (record) =>
           if @id.toString() is record.id.toString()
-
-            # load only once from server
             for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
               App[ @constructor.className ].retrieve( @id, callback, true )
         'Item::Subscribe::' + @constructor.className
