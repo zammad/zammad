@@ -156,7 +156,7 @@ class App.Model extends Spine.Model
             callback(items)
       )
 
-      # trigger deleteAll() and fetch() on network notify
+      # fetch() all on network notify
       events = "#{@className}:created #{@className}:updated #{@className}:destroy"
       App.Event.bind(
         events
