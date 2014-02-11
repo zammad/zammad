@@ -39,7 +39,8 @@ returns
     end
 
     # fallback do sql query
-    # do query
+    # - stip out * we already search for *query* -
+    query.gsub! '*', ''
     organizations = Organization.find(
       :all,
       :limit      => limit,

@@ -55,7 +55,8 @@ returns
     end
 
     # fallback do sql query
-    # do query
+    # - stip out * we already search for *query* -
+    query.gsub! '*', ''
     users = User.find(
       :all,
       :limit      => limit,
