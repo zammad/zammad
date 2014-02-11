@@ -259,7 +259,7 @@ class TestCase < Test::Unit::TestCase
       return
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
-      instance.find_element( { :css => 'a[href="#ticket_create/call_inbound"]' } ).click
+      instance.find_element( { :css => 'a[href="#ticket/create/call_inbound"]' } ).click
       element = instance.find_element( { :css => '.active .ticket_create' } )
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )

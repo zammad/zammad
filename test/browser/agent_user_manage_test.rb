@@ -21,7 +21,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket_create/call_inbound"]',
+            :css     => 'a[href="#ticket/create/call_inbound"]',
           },
           {
             :execute => 'click',
@@ -96,7 +96,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket_create/call_inbound"]',
+            :css     => 'a[href="#ticket/create/call_inbound"]',
           },
           {
             :execute => 'wait',

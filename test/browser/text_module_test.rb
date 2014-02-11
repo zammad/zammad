@@ -112,7 +112,7 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket_create/call_outbound"]',
+            :css     => 'a[href="#ticket/create/call_outbound"]',
           },
           {
             :execute => 'wait',
@@ -179,7 +179,7 @@ class TextModuleTest < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket_create/call_inbound"]',
+            :css     => '.taskbar-new a[href="#ticket/create/call_inbound"]',
           },
           {
             :where   => :instance2,
@@ -195,7 +195,7 @@ class TextModuleTest < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket_create/call_outbound"]',
+            :css     => '.taskbar-new a[href="#ticket/create/call_outbound"]',
           },
           {
             :where   => :instance2,
