@@ -33,10 +33,10 @@ class AddSearchIndex < ActiveRecord::Migration
       :frontend => false
     )
 
-    Setting.set('es_url', 'http://217.111.80.181')
-    Setting.set('es_user', 'elasticsearch')
-    Setting.set('es_password', 'zammad')
-    Setting.set('es_index', Socket.gethostname + '_zammad')
+#    Setting.set('es_url', 'http://217.111.80.181')
+#    Setting.set('es_user', 'elasticsearch')
+#    Setting.set('es_password', 'zammad')
+#    Setting.set('es_index', Socket.gethostname + '_zammad')
 
     Ticket.search_index_reload
     User.search_index_reload
