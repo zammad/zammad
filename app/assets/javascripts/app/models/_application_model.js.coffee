@@ -130,9 +130,7 @@ class App.Model extends Spine.Model
           for record in records
             if @RETRIEVE_CALLBACK[ record.id ]
               for key, callback of @RETRIEVE_CALLBACK[ record.id ]
-                data = App[ @className ].find( record.id )
-                data = @_fillUp( data )
-                callback( data )
+                data = callback( @_fillUp( App[ @className ].find( record.id ) ) )
                 delete @RETRIEVE_CALLBACK[ record.id ][ key ]
               if _.isEmpty @RETRIEVE_CALLBACK[ record.id ]
                 delete @RETRIEVE_CALLBACK[ record.id ]
@@ -153,9 +151,9 @@ class App.Model extends Spine.Model
       # subscribe and render data / fetch new data if triggered
       @bind(
         'refresh change'
-        =>
+        (items) =>
           for key, callback of @SUBSCRIPTION_COLLECTION
-            callback()
+            callback(items)
       )
 
       # trigger deleteAll() and fetch() on network notify
@@ -163,8 +161,7 @@ class App.Model extends Spine.Model
       App.Event.bind(
         events
         =>
-          @deleteAll()
-          @fetch()
+          @fetch( {}, { clear: true } )
 
         'Collection::Subscribe::' + @className
       )
@@ -176,7 +173,7 @@ class App.Model extends Spine.Model
     if param['initFetch'] is true
       @one 'refresh', (collection) =>
         callback(collection)
-      @fetch()
+      @fetch( {}, { clear: true } )
 
     return key
 
