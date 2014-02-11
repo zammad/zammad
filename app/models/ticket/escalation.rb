@@ -251,10 +251,10 @@ returns
 
       diff = escalation_time_diff( last_state_change, history_item['created_at'], sla_selected )
       if counted
-        puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
+#        puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
         total_time_without_pending = total_time_without_pending + diff
       else
-        puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
+#        puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
       end
       total_time = total_time + diff
 
@@ -272,7 +272,7 @@ returns
     # if last state isnt pending, count rest
     if !last_state_is_pending && last_state_change && last_state_change < end_time
       diff = escalation_time_diff( last_state_change, end_time, sla_selected )
-      puts "Diff count last state was not pending #{diff.to_s} - #{last_state_change} - #{end_time}"
+#      puts "Diff count last state was not pending #{diff.to_s} - #{last_state_change} - #{end_time}"
       total_time_without_pending = total_time_without_pending + diff
       total_time = total_time + diff
     end
@@ -280,7 +280,7 @@ returns
     # if we have not had any state change
     if !last_state_change
       diff = escalation_time_diff( start_time, end_time, sla_selected )
-      puts 'Diff state has not changed ' + diff.to_s
+#      puts 'Diff state has not changed ' + diff.to_s
       total_time_without_pending = total_time_without_pending + diff
       total_time = total_time + diff
     end
