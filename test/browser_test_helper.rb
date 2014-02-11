@@ -268,7 +268,7 @@ class TestCase < Test::Unit::TestCase
       sleep 2
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.clear
-      element.send_keys( 'nico' )
+      element.send_keys( 'nico*' )
       sleep 4
       element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
       element.send_keys( :arrow_down )
@@ -291,7 +291,7 @@ class TestCase < Test::Unit::TestCase
         assert( true, "(#{test[:name]}) ticket created without submit" )
         return
       end
-      sleep 0.1
+      sleep 0.5
       instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
       (1..14).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
