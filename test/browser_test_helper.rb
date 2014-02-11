@@ -1,6 +1,5 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
 require 'selenium-webdriver'
 
 class TestCase < Test::Unit::TestCase
@@ -293,6 +292,7 @@ class TestCase < Test::Unit::TestCase
       end
       sleep 0.5
       instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
+      sleep 2
       (1..14).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
           assert( true, "(#{test[:name]}) ticket created" )
