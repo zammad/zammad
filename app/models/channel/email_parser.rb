@@ -502,6 +502,12 @@ class Channel::EmailParser
     # strip all other tags
     string.gsub!( /\<.+?\>/, '' )
 
+    # strip all &amp; &lt; &gt; &quot;
+    string.gsub!( '&amp;', '&' )
+    string.gsub!( '&lt;', '<' )
+    string.gsub!( '&gt;', '>' )
+    string.gsub!( '&quot;', '"' )
+
     # encode html entities like "&#8211;"
     string.gsub!( /(&\#(\d+);?)/x ) { |item|
       $2.chr
@@ -514,13 +520,23 @@ class Channel::EmailParser
       if hex
         chr = hex.chr
         if chr
-          chr
+          chr_orig = chr
         else
           chr_orig
         end
       else
         chr_orig
       end
+
+      # check valid encoding
+      begin
+        if !chr_orig.encode('UTF-8').valid_encoding?
+          chr_orig = '?'
+        end
+      rescue
+        chr_orig = '?'
+      end
+      chr_orig
     }
 
     # remove empty lines

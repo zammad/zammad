@@ -76,7 +76,7 @@ Liebe Grüße!
       },
       {
         :data     => IO.read('test/fixtures/mail6.box'),
-        :body_md5 => 'fb6654b0171261e0cc103e63af75407b',
+        :body_md5 => '88c0c9e004021a4ed2a0c1e5f6b3455d',
         :params   => {
           :from               => '"Hans BÄKOSchönland" <me@bogen.net>',
           :from_email         => 'me@bogen.net',
@@ -86,11 +86,11 @@ Liebe Grüße!
 
 Test1:8
 
-Test2:&amp;
+Test2:&
 
 Test3:&ni;
 
-Test4:&amp;
+Test4:&
 
 Test5:=
 
@@ -102,7 +102,7 @@ Test5:=
       },
       {
         :data     => IO.read('test/fixtures/mail7.box'),
-        :body_md5 => '775a69acf8ba0495712a3953f2ecff6a',
+        :body_md5 => '6029e6b6106a6dd11ed887ec31f118ac',
         :params   => {
           :from               => 'Eike.Ehringer@example.com',
           :from_email         => 'Eike.Ehringer@example.com',
@@ -115,11 +115,11 @@ Lass uns evtl morgen Tel.
 Mfg eike 
 
 Martin Edenhofer via Znuny Team --- Installation [Ticket#11392] --- 
-Von:&quot;Martin Edenhofer via Znuny Team&quot; &lt;support@example.com&gt;Aneike.xx@xx-corpxx.comDatum:Mi., 13.06.2012 14:30BetreffInstallation [Ticket#11392]
+Von:\"Martin Edenhofer via Znuny Team\" <support@example.com>Aneike.xx@xx-corpxx.comDatum:Mi., 13.06.2012 14:30BetreffInstallation [Ticket#11392]
 Hi Eike,
 anbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.
 a) Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.
-b) Installation von &quot;mysqld&quot; und &quot;perl-DBD-MySQL&quot;.
+b) Installation von \"mysqld\" und \"perl-DBD-MySQL\".
 Das wäre es zur Vorbereitung!
 Bei Fragen nur zu!
 -Martin
@@ -360,6 +360,17 @@ Hof
           :to                 => '377861373 <377861373@qq.com>',
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail20.box'),
+        :body_md5     => 'd2b65203aaf2bbbd50fc73cb14d781bc',
+        :params   => {
+          :from               => 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
+          :from_email         => 'drugs-cheapest8@sicor.com',
+          :from_display_name  => 'Health and Care-Mall',
+          :subject            => 'The Highest Grade Drugs And EXTRA LOW Price .',
+          :to                 => 'info2@znuny.com',
+        },
+      },
     ]
 
     files.each { |file|
@@ -373,9 +384,9 @@ Hof
       # check params
       file[:params].each { |key, value|
         if key.to_s == 'body_md5'
-#          puts 'md5'
-#          puts '++' + data[:body].to_s + '++'
-#          puts '++' + file[:params][key.to_sym].to_s + '++'
+          puts 'md5'
+          puts '++' + data[:body].to_s + '++'
+          puts '++' + file[:params][key.to_sym].to_s + '++'
           assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[:body].to_s ) )
         else
           assert_equal( file[:params][key.to_sym], data[key.to_sym], "check #{key}" )
