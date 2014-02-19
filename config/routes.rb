@@ -12,7 +12,11 @@ Zammad::Application.routes.draw do
   dir = File.expand_path('../', __FILE__)
   files = Dir.glob( "#{dir}/routes/*.rb" )
   for file in files
-    require file
+    if Rails.configuration.cache_classes
+      require file
+    else
+      load file
+    end
   end
 
 end
