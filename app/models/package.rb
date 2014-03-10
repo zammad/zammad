@@ -50,7 +50,7 @@ class Package < ApplicationModel
     return if ! File.exist?( path )
     data = []
     Dir.foreach( path ) do |entry|
-      if entry =~ /\.zpm/
+      if entry =~ /\.zpm/ && entry !~ /^\./
         data.push entry
       end
     end
