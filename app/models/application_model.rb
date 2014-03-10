@@ -41,7 +41,7 @@ class ApplicationModel < ActiveRecord::Base
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
   def check_attributes_protected
-    if Setting.get('import_mode') && @@import_class_list.include?( self.name.to_s )
+    if Setting.get('import_mode') && @@import_class_list.include?( self.class.to_s )
       # do noting, use id as it is
     else
       self[:id] = nil
