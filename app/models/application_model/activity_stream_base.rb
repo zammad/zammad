@@ -19,6 +19,10 @@ returns
 =end
 
   def activity_stream_log (type, user_id, force = false)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     role       = self.class.activity_stream_support_config[:role]
     updated_at = self.updated_at
     if force

@@ -16,6 +16,10 @@ returns
 =end
 
   def activity_stream_log (type, user_id)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     return if !self.class.activity_stream_support_config
     role = self.class.activity_stream_support_config[:role]
     ActivityStream.add(
