@@ -25,6 +25,7 @@ module Import::OTRS
       url,
       {
         :method   => 'post',
+        :data     => data,
         :user     => Setting.get('import_otrs_user'),
         :password => Setting.get('import_otrs_password'),
       },
