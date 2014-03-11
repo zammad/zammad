@@ -25,11 +25,15 @@ rake db:create
 rake db:migrate
 rake db:seed
 
-#thin stop
+# modify production.rb to serve assets
+cat config/environments/production.rb | sed -e 's/config.serve_static_assets = false/config.serve_static_assets = true/' > /tmp/production.rb && cp /tmp/production.rb config/environments/production.rb
+
+# mofidy auth backend
+cat lib/auth/test.rb | sed 's/development/production/' > /tmp/test.rb && cp /tmp/test.rb lib/auth/test.rb
+
 pumactl --pidfile tmp/pids/puma.pid stop
 script/websocket-server.rb stop
 
-#thin start --threaded -d -p 4444
 pumactl start --pidfile tmp/pids/puma.pid -d -p 4444 -e $RAILS_ENV
 script/websocket-server.rb start -d
 
@@ -43,7 +47,6 @@ rake test:browser["BROWSER_URL=http://localhost:4444"]
 
 script/websocket-server.rb stop
 pumactl --pidfile tmp/pids/puma.pid stop
-#thin stop
 
 rm -f public/assets/*.css*
 rm -f public/assets/*.js*
