@@ -141,6 +141,7 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_articles, [:message_id_md5]
     add_index :ticket_articles, [:message_id_md5, :ticket_article_type_id], :name => 'index_ticket_articles_message_id_md5_type_id'
     add_index :ticket_articles, [:created_by_id]
+    add_index :ticket_articles, [:created_at]
     add_index :ticket_articles, [:internal]
     add_index :ticket_articles, [:ticket_article_type_id]
     add_index :ticket_articles, [:ticket_article_sender_id]
