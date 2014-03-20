@@ -46,7 +46,7 @@ input[type="color"],
 
 .spinner {
   float: left;
-  background:url("/assets/spinner.gif") no-repeat;
+  background:url("/assets/images/spinner.gif") no-repeat;
   background-position: center center;
   padding: 44px 10px 0 10px;
   width: 10px;
@@ -106,6 +106,41 @@ table th, table td {
   .content-one {
     width: 1024px;
   }
+}
+
+.content-fix {
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -5000;
+}
+
+.content-fix .sidebar {
+  padding: 8px 10px 42px;
+  width: 260px;
+  height: 100%;
+  float: left;
+  border-right: 1px solid #eeeeee;
+}
+.content-fix .sidebar.nav-manage {
+  padding-left: 16px;
+}
+
+.content-fix .main {
+  z-index: -5000;
+  width: auto;
+  min-width: 760px;
+  height: 100%;
+  float: left;
+  margin-left: 264px;
+  padding-right: 16px;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  position: absolute;
+
+  right: 0;
+  left: 0;
 }
 
 .content-two {
@@ -170,6 +205,11 @@ table th, table td {
 .content-two .meta {
   display: none;
 }
+
+.panel-title {
+  font-size: 14px;
+}
+
 @media (min-width: 800px) {
   .content-two .sidebar {
     width: 240px;
