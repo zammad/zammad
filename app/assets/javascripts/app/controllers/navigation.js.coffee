@@ -39,6 +39,11 @@ class App.Navigation extends App.Controller
     @bind 'bell', (data) =>
       if data is 'on'
         @el.find('.bell').addClass('show')
+        App.Audio.play( 'https://www.sounddogs.com/previews/2193/mp3/219024_SOUNDDOGS__be.mp3' )
+        @delay(
+          -> App.Event.trigger('bell', 'off' )
+          3000
+        )
       else
         @el.find('.bell').removeClass('show')
 
