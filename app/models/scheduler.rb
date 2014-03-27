@@ -10,6 +10,13 @@ class Scheduler < ApplicationModel
     while true
       puts "Scheduler running (runner #{runner} of #{runner_count})..."
 
+      # reconnect in case db connection is lost
+      begin
+        ActiveRecord::Base.connection.reconnect!
+      rescue => e
+        puts "Can't reconnect to database #{ e.inspect }"
+      end
+
       # read/load jobs and check if it is alredy started
       jobs = Scheduler.where( 'active = ? AND prio = ?', true, runner )
       jobs.each {|job|
@@ -17,7 +24,7 @@ class Scheduler < ApplicationModel
         jobs_started[ job.id ] = true
         self.start_job( job, runner, runner_count )
       }
-      sleep 45
+      sleep 90
     end
   end
 
@@ -29,7 +36,7 @@ class Scheduler < ApplicationModel
       if job.period
         while true
           self._start_job( job, runner, runner_count )
-          job = Scheduler.where( :id => job.id ).first
+          job = Scheduler.lookup( :id => job.id )
 
           # exit is job got deleted
           break if !job
@@ -53,12 +60,40 @@ class Scheduler < ApplicationModel
     }
   end
 
-  def self._start_job( job, runner, runner_count )
-    puts "execute #{job.method} (runner #{runner} of #{runner_count})..."
-    job.last_run = Time.now
-    job.pid = Thread.current.object_id
-    job.save
-    eval job.method()
+  def self._start_job( job, runner, runner_count, try_count = 0, try_run_time = Time.now )
+    sleep 5
+    begin
+      job.last_run = Time.now
+      job.pid = Thread.current.object_id
+      job.save
+      puts "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count})..."
+      eval job.method()
+    rescue => e
+      puts "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count}) exited with error #{ e.inspect }"
+
+      # reconnect in case db connection is lost
+      begin
+        ActiveRecord::Base.connection.reconnect!
+      rescue => e
+        puts "Can't reconnect to database #{ e.inspect }"
+      end
+
+      try_run_max = 10
+      try_count += 1
+
+      # reset error counter if to old
+      if try_run_time + ( 60 * 5 ) < Time.now
+        try_count = 0
+      end 
+      try_run_time = Time.now
+
+      # restart job again
+      if try_run_max > try_count
+        self._start_job( job, runner, runner_count, try_count, try_run_time)
+      else
+        raise "STOP thread for #{job.method} (runner #{runner} of #{runner_count} after #{try_count} tries"
+      end
+    end
   end
 
   def self.worker

@@ -251,7 +251,7 @@ module Sessions
           Sessions::Worker.new(user_id)
       rescue => e
         puts "thread_client exited with error #{ e.inspect }"
-        sleep 5
+        sleep 10
         begin
           ActiveRecord::Base.connection.reconnect!
         rescue => e
@@ -273,7 +273,7 @@ module Sessions
         Sessions::Client.new(client_id)
       rescue => e
         puts "thread_client exited with error #{ e.inspect }"
-        sleep 5
+        sleep 10
         begin
           ActiveRecord::Base.connection.reconnect!
         rescue => e
