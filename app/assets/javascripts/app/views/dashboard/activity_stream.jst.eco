@@ -3,7 +3,7 @@
     <dl>
     <% for item in @items: %>
       <dt><span class="user-popover" data-id="<%= item.created_by_id %>">"<%= item.created_by.displayName() %>"</span></dt>
-      <dd><%- @T( item.type ) %> <a href="<%- item.link %>"><%= item.object %><% if item.title: %> (<%= item.title %>)<% end %></a> <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span> <%- @T('ago') %>.</dd>
+      <dd><%- @T( item.type ) %> <a href="<%- item.link %>"><%= item.object_name %><% if item.title: %> (<%= item.title %>)<% end %></a> <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span> <%- @T('ago') %>.</dd>
     <% end %>
     </dl>
 </div>
