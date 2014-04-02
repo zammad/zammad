@@ -9,7 +9,7 @@ class App.TicketMerge extends App.ControllerModal
     @ajax(
       id:    'ticket_merge_list'
       type:  'GET'
-      url:   @apiPath + '/ticket_merge_list/' + @ticket_id
+      url:   @apiPath + '/ticket_merge_list/' + @ticket.id
       processData: true,
       success: (data, status, xhr) =>
 
@@ -28,7 +28,7 @@ class App.TicketMerge extends App.ControllerModal
 
     list = []
     for ticket_id in @ticket_ids_by_customer
-      if ticket_id isnt @ticket_id
+      if ticket_id isnt @ticket.id
         ticketItem = App.Ticket.retrieve( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
@@ -55,7 +55,7 @@ class App.TicketMerge extends App.ControllerModal
 
     list = []
     for ticket_id in @ticket_ids_recent_viewed
-      if ticket_id isnt @ticket_id
+      if ticket_id isnt @ticket.id
         ticketItem = App.Ticket.retrieve( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
@@ -105,7 +105,7 @@ class App.TicketMerge extends App.ControllerModal
     @ajax(
       id:    'ticket_merge',
       type:  'GET',
-      url:   @apiPath +  '/ticket_merge/' + @ticket_id + '/' + params['master_ticket_number'],
+      url:   @apiPath +  '/ticket_merge/' + @ticket.id + '/' + params['master_ticket_number'],
       data:  {
 #        view: @view
       }

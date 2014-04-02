@@ -25,19 +25,17 @@ class App.TicketCustomer extends App.ControllerModal
 
     params = @formParam(e.target)
 
-    # update ticket
-    ticket = App.Ticket.find(@ticket_id)
-    ticket.updateAttributes(
-      customer_id: params['customer_id']
-    )
+    @customer_id = params['customer_id']
 
     callback = =>
 
       # close modal
       @modalHide()
 
-      # reload zoom view
-      @ui.render()
+      # update ticket
+      @ticket.updateAttributes(
+        customer_id: @customer_id
+      )
 
     # load user if not already exists
-    App.User.retrieve( params['customer_id'], callback )
+    App.User.retrieve( @customer_id, callback )

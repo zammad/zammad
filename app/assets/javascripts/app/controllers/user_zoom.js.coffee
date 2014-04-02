@@ -92,11 +92,11 @@ class ActionRow extends App.Controller
 
   merge_dialog: (e) ->
     e.preventDefault()
-    new App.TicketMerge( ticket_id: @ticket.id, task_key: @ui.task_key )
+    new App.TicketMerge( ticket: @ticket, task_key: @ui.task_key )
 
   customer_dialog: (e) ->
     e.preventDefault()
-    new App.TicketCustomer( ticket_id: @ticket.id, ui: @ui )
+    new App.TicketCustomer( ticket: @ticket, ui: @ui )
 
 
 class Router extends App.ControllerPermanent

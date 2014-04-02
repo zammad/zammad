@@ -28,8 +28,8 @@ class App.TicketZoom extends App.Controller
         update = =>
           if data.id.toString() is @ticket_id.toString()
             ticket = App.Ticket.find( @ticket_id )
-            @log 'notice', 'TRY', data.updated_at, ticket.updated_at
-            if data.updated_at isnt ticket.updated_at
+            @log 'notice', 'TRY', Date(data.updated_at), Date(ticket.updated_at)
+            if Date(data.updated_at) isnt Date(ticket.updated_at)
               @fetch( @ticket_id, false )
         @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
     )
@@ -282,15 +282,17 @@ class TicketInfo extends App.ControllerDrox
 class Widgets extends App.Controller
   constructor: ->
     super
-    @render()
 
-  render: ->
+    @subscribeId = @ticket.subscribe(@render)
+    @render(@ticket)
+
+  render: (ticket) =>
 
     @html App.view('ticket_zoom/widgets')()
 
     # show ticket info
     new TicketInfo(
-      ticket:  @ticket
+      ticket:  ticket
       el:      @el.find('.ticket_info')
     )
 
@@ -298,8 +300,8 @@ class Widgets extends App.Controller
     if !@isRole('Customer')
       new App.WidgetUser(
         el:      @el.find('.customer_info')
-        user_id: @ticket.customer_id
-        ticket:  @ticket
+        user_id: ticket.customer_id
+        ticket:  ticket
       )
 
     # start link info controller
@@ -307,8 +309,11 @@ class Widgets extends App.Controller
       new App.WidgetLink(
         el:           @el.find('.link_info')
         object_type:  'Ticket'
-        object:       @ticket
+        object:       ticket
       )
+
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
 
 class Edit extends App.Controller
   events:
@@ -802,15 +807,15 @@ class ActionRow extends App.Controller
 
   history_dialog: (e) ->
     e.preventDefault()
-    new App.TicketHistory( ticket_id: @ticket.id )
+    new App.TicketHistory( ticket: @ticket )
 
   merge_dialog: (e) ->
     e.preventDefault()
-    new App.TicketMerge( ticket_id: @ticket.id, task_key: @ui.task_key )
+    new App.TicketMerge( ticket: @ticket, task_key: @ui.task_key )
 
   customer_dialog: (e) ->
     e.preventDefault()
-    new App.TicketCustomer( ticket_id: @ticket.id, ui: @ui )
+    new App.TicketCustomer( ticket: @ticket )
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->
