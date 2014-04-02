@@ -16,19 +16,14 @@ class App.Navigation extends App.Controller
       @log 'Navigation', 'notice', 'navbar rebuild', user
 
       if !_.isEmpty( user )
-        cache = App.Store.get( 'navupdate_ticket_overview' )
-        @ticket_overview_build( cache ) if cache
-
-      if !_.isEmpty( user )
         cache = App.Store.get( 'update_recent_viewed' )
         @recent_viewed_build( cache ) if cache
 
       @render()
 
-    # rebuild ticket overview data
+    # remember ticket overview data
     @bind 'navupdate_ticket_overview', (data) =>
-      @ticket_overview_build(data)
-      @render()
+      App.Store.write( 'navupdate_ticket_overview', data )
 
     # rebuild recent viewed data
     @bind 'update_recent_viewed', (data) =>
@@ -46,6 +41,33 @@ class App.Navigation extends App.Controller
         )
       else
         @el.find('.bell').removeClass('show')
+
+  renderResult: (result = []) =>
+    el = @el.find('#global-search-result')
+
+    # remove result if not result exists
+    if _.isEmpty( result )
+      @el.find('#global-search').parents('li').removeClass('open')
+      el.html( '' )
+      return
+
+    # show result list
+    @el.find('#global-search').parents('li').addClass('open')
+
+    # build markup
+    html = App.view('navigation/result')(
+      result: result
+    )
+    el.html( html )
+
+    # start ticket popups
+    @ticketPopups('left')
+
+    # start user popups
+    @userPopups('left')
+
+    # start oorganization popups
+    @organizationPopups('left')
 
   render: () ->
     user      = App.Session.all()
@@ -77,15 +99,6 @@ class App.Navigation extends App.Controller
       search:       search
     )
 
-    # start ticket popups
-    @ticketPopups('left')
-
-    # start user popups
-    @userPopups('left')
-
-    # start oorganization popups
-    @organizationPopups('left')
-
     # set focus to search box
     if @searchFocus
       @searchFocusSet = true
@@ -107,8 +120,8 @@ class App.Navigation extends App.Controller
           # load assets
           App.Collection.loadAssets( data.assets )
 
-          @result = data.result
-          for area in @result
+          result = data.result
+          for area in result
             if area.name is 'Ticket'
               area.result = []
               for id in area.ids
@@ -141,8 +154,7 @@ class App.Navigation extends App.Controller
                   url:      organization.uiUrl()
                 area.result.push data
 
-          if @result
-            @render(user)
+          @renderResult(result)
       )
 
     # observer search box
@@ -163,8 +175,7 @@ class App.Navigation extends App.Controller
       @delay(
         =>
           @searchFocus = false
-          @result = []
-          @render(user)
+          @renderResult()
         320
       )
     )
@@ -273,29 +284,6 @@ class App.Navigation extends App.Controller
   update: (url) =>
     @el.find('li').removeClass('active')
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
-
-  ticket_overview_build: (data) =>
-    App.Store.write( 'navupdate_ticket_overview', data )
-    return
-
-    # remove old views
-    NavBar = @Config.get( 'NavBar' ) || {}
-    for key of NavBar
-      if NavBar[key].parent is '#ticket/view'
-        delete NavBar[key]
-
-    # add new views
-    for item in data
-      NavBar['TicketOverview' + item.link] = {
-        prio:   item.prio,
-        parent: '#ticket_view',
-        name:   item.name,
-        count:  item.count,
-        target: '#ticket_view/' + item.link,
-#        role:   ['Agent', 'Customer'],
-      }
-
-    @Config.set( 'NavBar', NavBar )
 
   recent_viewed_build: (data) =>
 
