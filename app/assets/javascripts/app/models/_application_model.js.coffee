@@ -188,6 +188,7 @@ class App.Model extends Spine.Model
         'refresh change'
         (item) =>
           for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
+            item = App[ @constructor.className ]._fillUp( item )
             callback(item)
       )
 
