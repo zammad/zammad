@@ -225,7 +225,6 @@ class App.WidgetTextModuleOld extends App.Controller
     )
 
     # remove old popovers
-#    @el.find('.popover-inner').parent().remove()
     $('.popover').remove()
 
     # show user popup
