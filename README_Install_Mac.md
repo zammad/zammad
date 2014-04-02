@@ -32,13 +32,24 @@ Install Zammad
     rake db:seed
 ````
 
+Database connect
+--------------
+
+````shell
+    cd zammad-latest
+    cp config/database.yml.dist config/database.yml
+    rake db:create
+    rake db:migrate
+    rake db:seed
+````
+
 Start Zammad
 ------------
 
 ````shell
-    rails server # rails web server
-    ruby script/websocket-server.rb # non blocking websocket server
-    rails runner 'Session.jobs' # generate overviews on demand, just send changed data to browser
+    puma -p 3000 # application web server
+    script/websocket-server.rb start # non blocking websocket server
+    script/scheduler.rb start # generate overviews on demand, just send changed data to browser
 ````
 
 Start init page

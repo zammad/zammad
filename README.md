@@ -51,9 +51,9 @@ Getting Started
 
 ```
      zammad@shell> rake assets:precompile
-     zammad@shell> rails server # rails web server
-     zammad@shell> ruby script/websocket-server.rb # non blocking websocket server
-     zammad@shell> rails runner 'Session.jobs' # generate overviews on demand, just send changed data to browser
+     zammad@shell> puma -p 3000 # application web server
+     zammad@shell> script/websocket-server.rb start # non blocking websocket server
+     zammad@shell> script/scheduler.rb start # generate overviews on demand, just send changed data to browser
 ```
 
 6. Go to http://localhost:3000/#getting_started and you'll see:
