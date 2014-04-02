@@ -19,7 +19,7 @@ class App.TicketZoom extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false )
-    @interval( update, 300000, 'pull_check' )
+    @interval( update, 450000, 'pull_check' )
 
     # fetch new data if triggered
     @bind(
@@ -173,8 +173,8 @@ class App.TicketZoom extends App.Controller
   TicketTitle: =>
     # show ticket title
     new TicketTitle(
-      ticket:   @ticket
-      el:       @el.find('.ticket-title')
+      ticket: @ticket
+      el:     @el.find('.ticket-title')
     )
 
   ArticleView: =>
@@ -220,11 +220,12 @@ class TicketTitle extends App.Controller
 
   constructor: ->
     super
-    @render()
+    @subscribeId = @ticket.subscribe(@render)
+    @render(@ticket)
 
-  render: ->
+  render: (ticket) =>
     @html App.view('ticket_zoom/title')(
-      ticket: @ticket
+      ticket: ticket
     )
 
   update: (e) =>
@@ -241,26 +242,30 @@ class TicketTitle extends App.Controller
       title = ''
 
     # update title
-    ticket = App.Ticket.retrieve( @ticket.id )
-    ticket.title = title
-    ticket.load( title: title )
-    ticket.save()
+    @ticket.title = title
+    @ticket.load( title: title )
+    @ticket.save()
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
 
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
 
 class TicketInfo extends App.ControllerDrox
   constructor: ->
     super
-    @render()
 
-  render: ->
+    @subscribeId = @ticket.subscribe(@render)
+
+    @render(@ticket)
+
+  render: (ticket) =>
     @html @template(
       file:   'ticket_zoom/info'
-      header: '#' + @ticket.number
+      header: '#' + ticket.number
       params:
-        ticket: @ticket
+        ticket: ticket
     )
 
     # start tag controller
@@ -268,8 +273,11 @@ class TicketInfo extends App.ControllerDrox
       new App.WidgetTag(
         el:           @el.find('.tag_info')
         object_type:  'Ticket'
-        object:        @ticket
+        object:        ticket
       )
+
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
 
 class Widgets extends App.Controller
   constructor: ->
@@ -282,8 +290,8 @@ class Widgets extends App.Controller
 
     # show ticket info
     new TicketInfo(
-      ticket:   @ticket
-      el:       @el.find('.ticket_info')
+      ticket:  @ticket
+      el:      @el.find('.ticket_info')
     )
 
     # start customer info controller
