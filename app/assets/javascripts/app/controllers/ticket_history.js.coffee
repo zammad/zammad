@@ -12,8 +12,8 @@ class App.TicketHistory extends App.GenericHistory
       url:   @apiPath + '/ticket_history/' + @ticket_id,
       success: (data, status, xhr) =>
 
-        # load collections
-        App.Event.trigger 'loadAssets', data.assets
+        # load assets
+        App.Collection.loadAssets( data.assets )
 
         # render page
         @render(data.history)

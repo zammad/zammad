@@ -9,10 +9,20 @@ class App.Collection
       _instance ?= new _collectionSingleton
     _instance.load( args )
 
+  @loadAssets: ( args ) ->
+    if _instance == undefined
+      _instance ?= new _collectionSingleton
+    _instance.loadAssets( args )
+
   @reset: ( args ) ->
     if _instance == undefined
       _instance ?= new _collectionSingleton
     _instance.reset( args )
+
+  @resetCollection: ( args ) ->
+    if _instance == undefined
+      _instance ?= new _collectionSingleton
+    _instance.resetCollection( args )
 
 class _collectionSingleton extends Spine.Module
   @include App.LogInclude
@@ -25,9 +35,7 @@ class _collectionSingleton extends Spine.Module
         @log 'error', 'loadAssets:trigger, got no data, cant load assets'
         return
 
-      for type, collections of data
-        @log 'debug', 'loadCollection:trigger', type, collections
-        @load( localStorage: data.localStorage, type: type, data: collections )
+      @loadAssets( data )
 
     # add trigger - bind new events
     App.Event.bind 'resetCollection', (data) =>
@@ -35,10 +43,7 @@ class _collectionSingleton extends Spine.Module
         @log 'error', 'resetCollection:trigger, got no data, cant for collections'
         return
 
-      # load collections
-      for type, collection of data
-        @log 'debug', 'resetCollection:trigger', type, collection
-        @reset( localStorage: data.localStorage, type: type, data: collection )
+      @resetCollections( data )
 
     # find collections to load
     @_loadObjectsFromLocalStore()
@@ -54,6 +59,12 @@ class _collectionSingleton extends Spine.Module
 
         @log 'debug', 'load INIT', data
         @load( data )
+
+  resetCollections: (data) ->
+      # load assets
+      for type, collection of data
+        @log 'debug', 'resetCollection:trigger', type, collection
+        @reset( localStorage: data.localStorage, type: type, data: collection )
 
   reset: (params) ->
     if !App[ params.type ]
@@ -71,6 +82,11 @@ class _collectionSingleton extends Spine.Module
     # remember in store if not already requested from local storage
     for object in params.data
       @localStore( params.type, object )
+
+  loadAssets: (assets) ->
+    @log 'debug', 'loadAssets', assets
+    for type, collections of assets
+      @load( localStorage: false, type: type, data: collections )
 
   load: (params) ->
     @log 'debug', 'load', params

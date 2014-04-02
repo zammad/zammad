@@ -104,8 +104,8 @@ class App.Navigation extends App.Controller
         processData: true,
         success: (data, status, xhr) =>
 
-          # load collections
-          App.Event.trigger 'loadAssets', data.assets
+          # load assets
+          App.Collection.loadAssets( data.assets )
 
           @result = data.result
           for area in @result
@@ -303,8 +303,8 @@ class App.Navigation extends App.Controller
 
     items = data.recent_viewed
 
-    # load collections
-    App.Event.trigger 'loadAssets', data.assets
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     # remove old views
     NavBarRight = @Config.get( 'NavBarRight' ) || {}

@@ -115,8 +115,8 @@ class App.TicketZoom extends App.Controller
     # get signature
     @signature = data.signature
 
-    # load collections
-    App.Event.trigger 'loadAssets', data.assets
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     # get data
     @ticket = App.Ticket.retrieve( @ticket_id )

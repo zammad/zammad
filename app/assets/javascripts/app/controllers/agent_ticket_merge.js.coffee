@@ -13,8 +13,8 @@ class App.TicketMerge extends App.ControllerModal
       processData: true,
       success: (data, status, xhr) =>
 
-        # load collections
-        App.Event.trigger 'loadAssets', data.assets
+        # load assets
+        App.Collection.loadAssets( data.assets )
 
         @ticket_ids_by_customer    = data.ticket_ids_by_customer
         @ticket_ids_recent_viewed  = data.ticket_ids_recent_viewed

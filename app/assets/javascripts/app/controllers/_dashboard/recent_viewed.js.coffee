@@ -16,8 +16,8 @@ class App.DashboardRecentViewed extends App.Controller
       success: (data, status, xhr) =>
         @items = data.recent_viewed
 
-        # load collections
-        App.Event.trigger 'loadAssets', data.assets
+        # load assets
+        App.Collection.loadAssets( data.assets )
 
         @render()
     )

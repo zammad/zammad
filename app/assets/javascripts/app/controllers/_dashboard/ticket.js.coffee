@@ -38,18 +38,16 @@ class App.DashboardTicket extends App.Controller
         }
         processData: true,
         success: (data) =>
-          data.ajax = true
-          @load(data)
+          @load( data, true )
       )
 
-  load: (data) =>
+  load: (data, ajax = false) =>
 
-    if data.ajax
-      data.ajax = false
+    if ajax
       App.Store.write( @key, data )
 
-      # load collections
-      App.Event.trigger 'loadAssets', data.assets
+      # load assets
+      App.Collection.loadAssets( data.assets )
 
     # get meta data
     App.Overview.refresh( data.overview, options: { clear: true } )

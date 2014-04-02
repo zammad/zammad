@@ -103,8 +103,8 @@ class App.TicketCreate extends App.Controller
       # get edit form attributes
       @edit_form = cache.edit_form
 
-      # load collections
-      App.Event.trigger 'loadAssets', cache.assets
+      # load assets
+      App.Collection.loadAssets( cache.assets )
 
       @render()
     else
@@ -124,8 +124,8 @@ class App.TicketCreate extends App.Controller
           # get edit form attributes
           @edit_form = data.edit_form
 
-          # load collections
-          App.Event.trigger 'loadAssets', data.assets
+          # load assets
+          App.Collection.loadAssets( data.assets )
 
           # split ticket
           if data.split && data.split.ticket_id && data.split.article_id

@@ -12,8 +12,8 @@ class App.UserHistory extends App.GenericHistory
       url:   @apiPath + '/users/history/' + @user_id,
       success: (data, status, xhr) =>
 
-        # load collections
-        App.Event.trigger 'loadAssets', data.assets
+        # load assets
+        App.Collection.loadAssets( data.assets )
 
         # render page
         @render(data.history)

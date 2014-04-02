@@ -32,8 +32,8 @@ class App.DashboardActivityStream extends App.Controller
   load: (data) =>
     items = data.activity_stream
 
-    # load collections
-    App.Event.trigger 'loadAssets', data.assets
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     @render(items)
 

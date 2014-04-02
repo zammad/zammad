@@ -23,8 +23,8 @@ class App.WidgetLink extends App.ControllerDrox
       success: (data, status, xhr) =>
         @links = data.links
 
-        # load collections
-        App.Event.trigger 'loadAssets', data.assets
+        # load assets
+        App.Collection.loadAssets( data.assets )
 
         @render()
 

@@ -91,8 +91,8 @@ class Table extends App.ControllerContent
       data.ajax = false
       App.Store.write( @key, data )
 
-      # load collections
-      App.Event.trigger 'loadAssets', data.assets
+      # load assets
+      App.Collection.loadAssets( data.assets )
 
     # get meta data
     @overview = data.overview

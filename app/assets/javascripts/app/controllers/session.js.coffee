@@ -27,8 +27,8 @@ class Index extends App.ControllerContent
 
   render: (data) ->
 
-    # load collections
-    App.Event.trigger 'loadAssets', data.assets
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     # fill users
     for session in data.sessions
