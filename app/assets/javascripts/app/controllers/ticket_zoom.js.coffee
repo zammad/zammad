@@ -39,6 +39,7 @@ class App.TicketZoom extends App.Controller
       url: @url()
       id:  @ticket_id
     if @ticket
+      @ticket = App.Ticket.retrieve( @ticket.id )
       meta.head  = @ticket.title
       meta.title = '#' + @ticket.number + ' - ' + @ticket.title
     meta
@@ -135,12 +136,9 @@ class App.TicketZoom extends App.Controller
         nav:        @nav
         isCustomer: @isRole('Customer')
       )
+      @TicketTitle()
+      @Widgets()
 
-    # show frontend times
-    @frontendTimeUpdate()
-
-    @TicketTitle()
-    @Widgets()
     @TicketAction()
     @ArticleView()
 
@@ -220,6 +218,8 @@ class TicketTitle extends App.Controller
 
   constructor: ->
     super
+
+    @ticket      = App.Ticket.retrieve( @ticket.id )
     @subscribeId = @ticket.subscribe(@render)
     @render(@ticket)
 
@@ -243,7 +243,6 @@ class TicketTitle extends App.Controller
 
     # update title
     @ticket.title = title
-    @ticket.load( title: title )
     @ticket.save()
 
     # update taskbar with new meta data
@@ -257,7 +256,6 @@ class TicketInfo extends App.ControllerDrox
     super
 
     @subscribeId = @ticket.subscribe(@render)
-
     @render(@ticket)
 
   render: (ticket) =>
@@ -282,7 +280,6 @@ class TicketInfo extends App.ControllerDrox
 class Widgets extends App.Controller
   constructor: ->
     super
-
     @subscribeId = @ticket.subscribe(@render)
     @render(@ticket)
 
@@ -311,6 +308,9 @@ class Widgets extends App.Controller
         object_type:  'Ticket'
         object:       ticket
       )
+
+    # show frontend times
+    @frontendTimeUpdate()
 
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
