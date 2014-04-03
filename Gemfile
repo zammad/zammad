@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.3'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -25,7 +25,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 
-gem 'twitter'
+gem 'twitter', '~> 5.8'
 gem 'koala'
 gem 'mail'
 
