@@ -30,16 +30,16 @@ class App.WidgetTag extends App.Controller
       tags: tags || [],
       tag_id: @attribute_id
     )
-    @el.find('#' + @attribute_id ).tagsInput(
-      width:       '100%'
-      defaultText: App.i18n.translateContent('add a Tag')
-      onAddTag:    @onAddTag
-      onRemoveTag: @onRemoveTag
-      height:      '45px'
+    @el.find('#' + @attribute_id ).tokenfield().on(
+      'tokenfield:createtoken'
+      (e) =>
+        @onAddTag( e.token.value )
+    ).on(
+      'tokenfield:removetoken'
+      (e) =>
+        @onRemoveTag( e.token.value )
     )
-    @delay @siteUpdate, 250
-
-#    @el.find('#tags').elastic()
+    @el.find('#' + @attribute_id ).parent().css('height', 'auto')
 
   onAddTag: (item) =>
     @ajax(
@@ -50,8 +50,6 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id,
         item:   item
       processData: true,
-      success: (data, status, xhr) =>
-        @siteUpdate()
     )
 
   onRemoveTag: (item) =>
@@ -63,14 +61,4 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id
         item:   item
       processData: true
-      success: (data, status, xhr) =>
-        @siteUpdate(true)
     )
-
-  siteUpdate: (reorder) =>
-    container = document.getElementById( @attribute_id + '_tagsinput' )
-    if reorder
-      $('#' + @attribute_id + '_tagsinput').height( 20 )
-    return if !container
-    height = container.scrollHeight
-    $('#' + @attribute_id + '_tagsinput').height( height - 10 )

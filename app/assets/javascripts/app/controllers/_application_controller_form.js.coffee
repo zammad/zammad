@@ -389,35 +389,9 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'tag'
       item = $( App.view('generic/input')( attribute: attribute ) )
       a = =>
-        siteUpdate = (reorder) =>
-          container = document.getElementById( attribute.id + "_tagsinput" )
-          if reorder
-            $('#' + attribute.id + "_tagsinput" ).height( 20 )
-          height = container.scrollHeight || 45
-          console.log('siteUpdate', height)
-          $('#' + attribute.id + "_tagsinput" ).height( height - 16 )
-
-        onAddTag = =>
-          siteUpdate()
-
-        onRemoveTag = =>
-          siteUpdate(true)
-
-        $('#' + attribute.id + '_tagsinput').remove()
-        h = $('#' + attribute.id).height()
-        $('#' + attribute.id).tagsInput(
-          width: '100%'
-#          height: (h + 30 )+ 'px'
-          onAddTag:    onAddTag
-          onRemoveTag: onRemoveTag
-        )
-        siteUpdate(true)
-
-        # update box size
-        App.Event.bind 'ui:rerender:content', =>
-          siteUpdate(true)
-
-      App.Delay.set( a, 80, undefined, 'form_tags' )
+        $('#' + attribute.id ).tokenfield()
+        $('#' + attribute.id ).parent().css('height', 'auto')
+      App.Delay.set( a, 120, undefined, 'tags' )
 
     # autocompletion
     else if attribute.tag is 'autocompletion'
