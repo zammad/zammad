@@ -385,51 +385,66 @@ class App.Controller extends Spine.Controller
         )
     )
 
-  userTicketPopups: (data) ->
+  userTicketPopups: (params) ->
 
     # remove old popovers
     $('.popover').remove()
 
+    show = (data, tickets) =>
+
+      if !data.position
+        data.position = 'left'
+
+      # show user popup
+      controller = @
+      @el.find(data.selector).popover(
+        trigger:    'hover'
+        container:  'body'
+        html:       true
+        delay:      { show: 500, hide: 5200 }
+        placement:  data.position
+        title: ->
+          $(@).find('[title="*"]').val()
+
+        content: ->
+          type = $(@).filter('[data-type]').data('type')
+          data = tickets[type] || []
+
+          # set human time
+          for ticket in data
+            ticket.humanTime = controller.humanTime(ticket.created_at)
+
+          # insert data
+          App.view('popover/user_ticket_list')(
+            tickets: data,
+          )
+      )
+
+    fetch = (params) =>
+      @ajax(
+        type:  'GET',
+        url:   @Config.get('api_path') + '/ticket_customer',
+        data:  {
+          customer_id: params.user_id,
+        }
+        processData: true,
+        success: (data, status, xhr) =>
+          App.Store.write( "user-ticket-popover::#{params.user_id}",  data.tickets )
+          show( params, data.tickets )
+      )
+
     # get data
-    tickets = {}
-    App.Ajax.request(
-      type:  'GET',
-      url:   @Config.get('api_path') + '/ticket_customer',
-      data:  {
-        customer_id: data.user_id,
-      }
-      processData: true,
-      success: (data, status, xhr) =>
-        tickets = data.tickets
-    )
-
-    if !data.position
-      data.position = 'left'
-
-    # show user popup
-    controller = @
-    @el.find(data.selector).popover(
-      trigger:    'hover'
-      container:  'body'
-      html:       true
-      delay:      { show: 500, hide: 5200 }
-      placement:  data.position
-      title: ->
-        $(@).find('[title="*"]').val()
-
-      content: ->
-        type = $(@).filter('[data-type]').data('type')
-        data = tickets[type] || []
-
-        # set human time
-        for ticket in data
-          ticket.humanTime = controller.humanTime(ticket.created_at)
-
-        # insert data
-        App.view('popover/user_ticket_list')(
-          tickets: data,
-        )
-    )
+    tickets = App.Store.get( "user-ticket-popover::#{params.user_id}" )
+    if tickets
+      show( params, tickets )
+      @delay(
+        =>
+          fetch(params)
+        1000
+        'fetch'
+      )
+    else
+      fetch(params)
 
   ws_send: (data) ->
     App.Event.trigger( 'ws:send', JSON.stringify(data) )
