@@ -354,10 +354,17 @@ class App.ControllerForm extends App.Controller
 
     # textarea
     else if attribute.tag is 'textarea'
-      item = $( App.view('generic/textarea')( attribute: attribute ) )
+      fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+      item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
+
+      a = =>
+        $( item[0] ).expanding()
+        $( item[0] ).on('focus', ->
+          $( item[0] ).expanding()
+        )
+      App.Delay.set( a, 80 )
+
       if attribute.upload
-        fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
-        item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
 
         # add file uploader
         u = =>
@@ -378,7 +385,7 @@ class App.ControllerForm extends App.Controller
               fail:    ''
             debug: false
           )
-        App.Delay.set( u, 80, undefined, 'form_upload' )
+        App.Delay.set( u, 100, undefined, 'form_upload' )
 
     # article
     else if attribute.tag is 'article'
@@ -954,9 +961,6 @@ class App.ControllerForm extends App.Controller
 #            if attribute.onchange[]
 
     ui = @
-#    item.bind('focus', ->
-#      ui.log 'focus', attribute
-#    );
     item.bind('change', ->
       if ui.form_data
         params = App.ControllerForm.params(@)

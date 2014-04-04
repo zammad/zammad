@@ -108,12 +108,6 @@ class Index extends App.ControllerContent
       form_data: @edit_form
     )
 
-    # add elastic to textarea
-    @el.find('textarea').elastic()
-
-    # update textarea size
-    @el.find('textarea').trigger('change')
-
     new App.ControllerDrox(
       el:   @el.find('.sidebar')
       data:

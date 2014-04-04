@@ -71,7 +71,6 @@ class App.TicketCreate extends App.Controller
 
   activate: =>
     @navupdate '#'
-    @el.find('textarea').elastic()
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-create') )
@@ -183,12 +182,6 @@ class App.TicketCreate extends App.Controller
       form_data: @edit_form
       params:    params
     )
-
-    # add elastic to textarea
-    @el.find('textarea').elastic()
-
-    # update textarea size
-    @el.find('textarea').trigger('change')
 
     # show template UI
     new App.WidgetTemplate(
