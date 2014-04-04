@@ -27,9 +27,8 @@ class App.TicketZoom extends App.Controller
       (data) =>
         update = =>
           if data.id.toString() is @ticket_id.toString()
-            ticket = App.Ticket.find( @ticket_id )
-            @log 'notice', 'TRY', Date(data.updated_at), Date(ticket.updated_at)
-            if Date(data.updated_at) isnt Date(ticket.updated_at)
+            @log 'notice', 'TRY', new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
+            if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
               @fetch( @ticket_id, false )
         @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
     )
