@@ -1,16 +1,21 @@
 class App.WidgetTag extends App.Controller
   constructor: ->
     super
-    @load()
 
-    # update box size
-    @bind 'ui:rerender:content', =>
-      @siteUpdate()
-    @bind 'ui:rerender:task', =>
-      @siteUpdate()
-
-  load: =>
     @attribute_id = 'tags_' + @object.id + '_' + @object_type
+    tags = App.Store.get( "tags::#{@attribute_id}" )
+    if tags
+      @render( tags )
+      @delay(
+        =>
+          @fetch()
+        1000
+        'fetch'
+      )
+    else
+      @fetch()
+
+  fetch: =>
     @ajax(
       id:    @attribute_id
       type:  'GET'
@@ -20,6 +25,7 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id
       processData: true
       success: (data, status, xhr) =>
+        App.Store.write( "tags::#{@attribute_id}", data.tags )
         @render(data.tags)
     )
 
@@ -50,6 +56,11 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id,
         item:   item
       processData: true,
+      success: (data, status, xhr) =>
+        tags = @el.find('#' + @attribute_id ).val()
+        if tags
+          tags = tags.split(',')
+        App.Store.write( "tags::#{@attribute_id}",  tags )
     )
 
   onRemoveTag: (item) =>
@@ -61,4 +72,9 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id
         item:   item
       processData: true
+      success: (data, status, xhr) =>
+        tags = @el.find('#' + @attribute_id ).val()
+        if tags
+          tags = tags.split(',')
+        App.Store.write( "tags::#{@attribute_id}",  tags )
     )
