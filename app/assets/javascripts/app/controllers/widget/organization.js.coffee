@@ -49,6 +49,13 @@ class App.WidgetOrganization extends App.Controller
       organizationData: organizationData
     )
 
+    a = =>
+      @el.find('textarea').expanding()
+      @el.find('textarea').on('focus', =>
+        @el.find('textarea').expanding()
+      )
+    @delay( a, 80 )
+
     ###
     @userTicketPopups(
       selector: '.user-tickets'

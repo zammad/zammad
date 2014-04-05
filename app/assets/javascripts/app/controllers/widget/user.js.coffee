@@ -51,12 +51,18 @@ class App.WidgetUser extends App.ControllerDrox
         userData: userData
     )
 
+    a = =>
+      @el.find('textarea').expanding()
+      @el.find('textarea').on('focus', =>
+        @el.find('textarea').expanding()
+      )
+    @delay( a, 80 )
+
     @userTicketPopups(
       selector: '.user-tickets'
       user_id:  user.id
       position: 'right'
     )
-
 
     if user.organization_id
       @el.append('<div class="org-info"></div>')
