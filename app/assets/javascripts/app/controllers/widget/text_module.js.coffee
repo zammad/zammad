@@ -295,12 +295,12 @@ class App.WidgetTextModuleOld extends App.Controller
     else
       ui = @
       text_module.save(
-        success: ->
+        done: ->
           ui.el.find('#text_module_name').val('')
           ui.renderTable()
           ui.log 'save success!'
 
-        error: ->
+        fail: ->
           ui.log 'save failed!'
       )
 

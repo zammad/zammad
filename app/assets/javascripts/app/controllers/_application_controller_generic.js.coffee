@@ -40,13 +40,13 @@ class App.ControllerGenericNew extends App.ControllerModal
     # save object
     ui = @
     object.save(
-      success: ->
+      done: ->
         if ui.callback
           item = App[ ui.genericObject ].retrieve(@id)
           ui.callback( item )
         ui.modalHide()
 
-      error: ->
+      fail: ->
         ui.log 'errors'
         ui.modalHide()
     )
@@ -87,13 +87,13 @@ class App.ControllerGenericEdit extends App.ControllerModal
     # save object
     ui = @
     @item.save(
-      success: ->
+      done: ->
         if ui.callback
           item = App[ ui.genericObject ].retrieve(@id)
           ui.callback( item )
         ui.modalHide()
 
-      error: =>
+      fail: =>
         ui.log 'errors'
         ui.modalHide()
     )
@@ -170,6 +170,7 @@ class App.ControllerGenericIndex extends App.Controller
       objects:    objects
       overview:   overview
       attributes: attributes
+      groupBy:    'state'
     )
 
     binds = {}

@@ -75,7 +75,7 @@ class App.SettingsAreaItem extends App.Controller
     @setting['state'] = state
     ui = @
     @setting.save(
-      success: =>
+      done: =>
 
         App.Event.trigger 'notify', {
           type:    'success'

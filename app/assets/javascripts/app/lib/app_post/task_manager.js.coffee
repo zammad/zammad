@@ -138,7 +138,7 @@ class _taskManagerSingleton extends App.Controller
       # save new task and update task collection
       ui = @
       task.save(
-        success: ->
+        done: ->
           for taskPosition of ui.allTasks
             if ui.allTasks[taskPosition] && ui.allTasks[taskPosition]['key'] is @key
               task = @attributes()
@@ -338,10 +338,10 @@ class _taskManagerSingleton extends App.Controller
         if taskUpdate.isOnline()
           ui = @
           taskUpdate.save(
-            success: ->
+            done: ->
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
-            error: ->
+            fail: ->
               ui.log 'error', "can't update task", @
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]

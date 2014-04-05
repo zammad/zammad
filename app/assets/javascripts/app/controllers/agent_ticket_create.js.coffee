@@ -282,7 +282,7 @@ class App.TicketCreate extends App.Controller
       @formDisable(e)
       ui = @
       object.save(
-        success: ->
+        done: ->
 
           # notify UI
           ui.notify
@@ -306,8 +306,7 @@ class App.TicketCreate extends App.Controller
           # if not, show start screen
           ui.navigate "#"
 
-
-        error: ->
+        fail: ->
           ui.log 'save failed!'
           ui.formEnable(e)
       )
@@ -357,7 +356,7 @@ class UserNew extends App.ControllerModal
     # save user
     ui = @
     user.save(
-      success: ->
+      done: ->
 
         # force to reload object
         callbackReload = (user) ->
@@ -370,7 +369,7 @@ class UserNew extends App.ControllerModal
           ui.modalHide()
         App.User.retrieve( @id, callbackReload , true )
 
-      error: ->
+      fail: ->
         ui.modalHide()
     )
 

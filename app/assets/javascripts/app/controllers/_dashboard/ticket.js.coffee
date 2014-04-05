@@ -260,7 +260,7 @@ class Settings extends App.ControllerModal
     @overview.view['d'] = params['attributes']
 
     @overview.save(
-      success: =>
+      done: =>
         if @reload_needed
           @overview.trigger('local:refetch')
         else

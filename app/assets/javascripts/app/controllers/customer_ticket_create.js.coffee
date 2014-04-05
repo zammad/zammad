@@ -178,12 +178,12 @@ class Index extends App.ControllerContent
       @formDisable(e)
       ui = @
       object.save(
-        success: ->
+        done: ->
 
           # redirect to zoom
           ui.navigate '#ticket/zoom/' + this.id
 
-        error: ->
+        fail: ->
           ui.log 'CustomerTicketCreate', 'error', 'can not create'
           ui.formEnable(e)
       )

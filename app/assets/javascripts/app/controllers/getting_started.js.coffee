@@ -94,7 +94,7 @@ class Index extends App.ControllerContent
 
     # save user
     user.save(
-      success: (r) =>
+      done: (r) =>
 
         if @master_user
           @master_user = false
@@ -123,7 +123,7 @@ class Index extends App.ControllerContent
 
           # rerender page
           @render()
-      error: (data) ->
+      fail: (data) ->
 
           App.Event.trigger 'notify', {
             type:    'error'

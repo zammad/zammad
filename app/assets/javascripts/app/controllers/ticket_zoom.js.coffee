@@ -530,17 +530,17 @@ class Edit extends App.Controller
         return
 
     ticket.save(
-      success: (r) =>
+      done: (r) =>
 
         # reset form after save
         if article
           article.save(
-            success: (r) =>
+            done: (r) =>
               @ui.fetch( ticket.id, true )
 
               # reset form after save
               App.TaskManager.update( @task_key, { 'state': {} })
-            error: (r) =>
+            fail: (r) =>
               @log 'error', 'update article', r
           )
         else

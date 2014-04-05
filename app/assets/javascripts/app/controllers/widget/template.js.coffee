@@ -80,10 +80,10 @@ class App.WidgetTemplate extends App.ControllerDrox
     else
       ui = @
       template.save(
-        success: ->
+        done: ->
           ui.template_id = @.id
           ui.render()
 
-        error: =>
+        fail: =>
           @log 'error', 'save failed!'
       )

@@ -311,7 +311,7 @@ class Table extends App.ControllerContent
 
       ticket.load(ticket_update)
       ticket.save(
-        success: (r) =>
+        done: (r) =>
           @bulk_count_index++
 
           # refresh view after all tickets are proceeded
@@ -501,7 +501,7 @@ class Settings extends App.ControllerModal
     @overview.view[@view_mode] = params['attributes']
 
     @overview.save(
-      success: =>
+      done: =>
         if @reload_needed
           @overview.trigger('local:refetch')
         else

@@ -125,9 +125,9 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
 
     # save object
     object.save(
-      success: =>
+      done: =>
         @modalHide()
-      error: =>
+      fail: =>
         @modalHide()
     )
 
@@ -214,9 +214,9 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
 
     # save object
     object.save(
-      success: =>
+      done: =>
         @modalHide()
-      error: =>
+      fail: =>
         @modalHide()
     )
 
@@ -301,9 +301,9 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
 
     # save object
     object.save(
-      success: =>
+      done: =>
         @modalHide()
-      error: =>
+      fail: =>
         @modalHide()
     )
 
@@ -425,9 +425,9 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
 
     # save object
     object.save(
-      success: =>
+      done: =>
         @modalHide()
-      error: =>
+      fail: =>
         @modalHide()
     )
 
