@@ -10,7 +10,7 @@
       <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
     <% else: %>
       <div class="customer-info" title="<%- @Ti( row.display ) %>">
-        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update-user" placeholder="<%- @T( row.display ) %>"><%= @user[row.name] %></textarea>
+        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update" placeholder="<%- @T( row.display ) %>"><%= @user[row.name] %></textarea>
       </div>
     <% end %>
   <% end %>
