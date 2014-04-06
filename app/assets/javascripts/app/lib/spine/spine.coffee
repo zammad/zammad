@@ -157,21 +157,21 @@ class Model extends Module
   @exists: (id) ->
     return if @irecords[id] then true else false
 
-  @addRecord: (record) ->
+  @addRecord: (record, options = {}) ->
     if record.id and @irecords[record.id]
-      @irecords[record.id].remove()
-
+      @irecords[record.id].remove(options)
+      record = @irecords[record.id].load(record) unless options.clear
     record.id or= record.cid
+    @irecords[record.id]  ?= record
+    @irecords[record.cid] ?= record
     @records.push(record)
-    @irecords[record.id]  = record
-    @irecords[record.cid] = record
 
   @refresh: (values, options = {}) ->
     @deleteAll() if options.clear
 
     records = @fromJSON(values)
     records = [records] unless isArray(records)
-    @addRecord(record) for record in records
+    @addRecord(record, options) for record in records
     @sort()
 
     result = @cloneArray(records)
@@ -252,8 +252,13 @@ class Model extends Module
     if typeof objects is 'string'
       objects = JSON.parse(objects)
     if isArray(objects)
-      (new @(value) for value in objects)
+      for value in objects
+        if value instanceof this
+          value
+        else
+          new @(value)
     else
+      return objects if objects instanceof this
       new @(objects)
 
   @fromForm: ->
@@ -298,7 +303,8 @@ class Model extends Module
   load: (atts) ->
     if atts.id then @id = atts.id
     for key, value of atts
-      if atts.hasOwnProperty(key) and typeof @[key] is 'function'
+      if typeof @[key] is 'function'
+        continue if typeof value is 'function'
         @[key](value)
       else
         @[key] = value
@@ -354,20 +360,22 @@ class Model extends Module
     @id = id
     @save()
 
-  remove: ->
+  remove: (options = {}) ->
     # Remove record from model
     records = @constructor.records.slice(0)
     for record, i in records when @eql(record)
       records.splice(i, 1)
       break
     @constructor.records = records
-    # Remove the ID and CID
-    delete @constructor.irecords[@id]
-    delete @constructor.irecords[@cid]
+    if options.clear
+      # Remove the ID and CID indexes
+      delete @constructor.irecords[@id]
+      delete @constructor.irecords[@cid]
 
   destroy: (options = {}) ->
+    options.clear ?= true
     @trigger('beforeDestroy', options)
-    @remove()
+    @remove(options)
     @destroyed = true
     # handle events
     @trigger('destroy', options)
@@ -626,7 +634,7 @@ makeArray = (args) ->
 Spine = @Spine   = {}
 module?.exports  = Spine
 
-Spine.version    = '1.3.0'
+Spine.version    = '1.3.1'
 Spine.isArray    = isArray
 Spine.isBlank    = isBlank
 Spine.$          = $

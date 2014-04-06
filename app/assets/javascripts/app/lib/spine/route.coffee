@@ -6,12 +6,46 @@ namedParam   = /:([\w\d]+)/g
 splatParam   = /\*([\w\d]+)/g
 escapeRegExp = /[-[\]{}()+?.,\\^$|#\s]/g
 
-class Spine.Route extends Spine.Module
+
+class Path extends Spine.Module
+
+  constructor: (@path, @callback) ->
+    @names = []
+
+    if typeof path is 'string'
+      namedParam.lastIndex = 0
+      while (match = namedParam.exec(path)) != null
+        @names.push(match[1])
+
+      splatParam.lastIndex = 0
+      while (match = splatParam.exec(path)) != null
+        @names.push(match[1])
+
+      path = path.replace(escapeRegExp, '\\$&')
+                 .replace(namedParam, '([^\/]*)')
+                 .replace(splatParam, '(.*?)')
+
+      @route = new RegExp("^#{path}$")
+    else
+      @route = path
+
+  match: (path, options = {}) ->
+    return false unless match = @route.exec(path)
+    options.match = match
+    params = match.slice(1)
+
+    if @names.length
+      for param, i in params
+        options[@names[i]] = param
+
+    Route.trigger('before', this)
+    @callback.call(null, options) isnt false
+
+
+class Route extends Spine.Module
   @extend Spine.Events
 
   @historySupport: window.history?.pushState?
-
-  @routes: []
 
   @options:
     trigger: true
@@ -20,16 +54,12 @@ class Spine.Route extends Spine.Module
     replace: false
     redirect: false
 
-  @add: (path, callback) ->
-    if (typeof path is 'object' and path not instanceof RegExp)
-      @add(key, value) for key, value of path
-    else
-      @routes.push(new @(path, callback))
+  @routers: []
 
   @setup: (options = {}) ->
     @options = $.extend({}, @options, options)
 
-    if (@options.history)
+    if @options.history
       @history = @historySupport and @options.history
 
     return if @options.shim
@@ -65,11 +95,11 @@ class Spine.Route extends Spine.Module
 
     @trigger('navigate', @path)
 
-    route = @matchRoute(@path, options) if options.trigger
+    routes = @matchRoutes(@path, options) if options.trigger
 
     return if options.shim
 
-    if !route
+    unless routes.length
       if typeof options.redirect is 'function'
         return options.redirect.apply this, [@path, options]
       else
@@ -82,6 +112,25 @@ class Spine.Route extends Spine.Module
       history.pushState({}, document.title, @path)
     else
       window.location.hash = @path
+
+  @create: ->
+    router = new this
+    @routers.push router
+    router
+
+  @add: (path, callback) ->
+    #@router ?= new this
+    @router.add path, callback
+
+  add: (path, callback) ->
+    if typeof path is 'object' and path not instanceof RegExp
+      @add(key, value) for key, value of path
+    else
+      @routes.push(new Path(path, callback))
+
+  destroy: ->
+    @routes.length = 0
+    @constructor.routers = (r for r in @constructor.routers when r isnt this)
 
   # Private
 
@@ -97,58 +146,43 @@ class Spine.Route extends Spine.Module
   @getHost: ->
     "#{window.location.protocol}//#{window.location.host}"
 
-  @change: ->
+  @change: =>
     path = @getPath()
     return if path is @path
     @path = path
-    @matchRoute(@path)
+    @matchRoutes(@path)
 
-  @matchRoute: (path, options) ->
-    for route in @routes when route.match(path, options)
-      @trigger('change', route, path)
-      return route
+  @matchRoutes: (path, options)->
+    matches = []
+    for router in @routers.concat [@router]
+      match = router.matchRoute path, options
+      matches.push match if match
+    @trigger('change', matches, path) if matches.length
+    matches
 
   @redirect: (path) ->
     window.location = path
 
-  constructor: (@path, @callback) ->
-    @names = []
+  constructor: ->
+    @routes = []
 
-    if typeof path is 'string'
-      namedParam.lastIndex = 0
-      while (match = namedParam.exec(path)) != null
-        @names.push(match[1])
+  matchRoute: (path, options) ->
+    for route in @routes when route.match(path, options)
+      return route
 
-      splatParam.lastIndex = 0
-      while (match = splatParam.exec(path)) != null
-        @names.push(match[1])
+  trigger: (args...) ->
+    args.splice(1, 0, this)
+    @constructor.trigger(args...)
 
-      path = path.replace(escapeRegExp, '\\$&')
-                 .replace(namedParam, '([^\/]*)')
-                 .replace(splatParam, '(.*?)')
+Route.router = new Route
 
-      @route = new RegExp("^#{path}$")
-    else
-      @route = path
-
-  match: (path, options = {}) ->
-    match = @route.exec(path)
-    return false unless match
-    options.match = match
-    params = match.slice(1)
-
-    if @names.length
-      for param, i in params
-        options[@names[i]] = param
-    @.constructor.trigger('before', @)
-    @callback.call(null, options) isnt false
-
-# Coffee-script bug
-Spine.Route.change = Spine.Route.proxy(Spine.Route.change)
 
 Spine.Controller.include
   route: (path, callback) ->
-    Spine.Route.add(path, @proxy(callback))
+    if @router instanceof Spine.Route
+      @router.add(path, @proxy(callback))
+    else
+      Spine.Route.add(path, @proxy(callback))
 
   routes: (routes) ->
     @route(key, value) for key, value of routes
@@ -156,4 +190,6 @@ Spine.Controller.include
   navigate: ->
     Spine.Route.navigate.apply(Spine.Route, arguments)
 
-module?.exports = Spine.Route
+Route.Path      = Path
+Spine.Route     = Route
+module?.exports = Route

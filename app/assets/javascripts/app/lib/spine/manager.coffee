@@ -1,5 +1,6 @@
-Spine  = @Spine or require('spine')
-$      = Spine.$
+Spine = @Spine or require('spine')
+$     = Spine.$
+
 
 class Spine.Manager extends Spine.Module
   @include Spine.Events
@@ -31,6 +32,7 @@ class Spine.Manager extends Spine.Module
 
     current.activate(args...) if current
 
+
 Spine.Controller.include
   active: (args...) ->
     if typeof args[0] is 'function'
@@ -45,11 +47,12 @@ Spine.Controller.include
 
   activate: ->
     @el.addClass('active')
-    @
+    this
 
   deactivate: ->
     @el.removeClass('active')
-    @
+    this
+
 
 class Spine.Stack extends Spine.Controller
   controllers: {}
@@ -61,10 +64,11 @@ class Spine.Stack extends Spine.Controller
     super
 
     @manager = new Spine.Manager
+    @router  = Spine.Route?.create()
 
     for key, value of @controllers
-      throw Error "'@#{ key }' already assigned - choose a different name" if @[key]?
-      @[key] = new value(stack: @)
+      throw Error "'@#{ key }' already assigned" if @[key]?
+      @[key] = new value(stack: this)
       @add(@[key])
 
     for key, value of @routes
@@ -79,5 +83,10 @@ class Spine.Stack extends Spine.Controller
     @manager.add(controller)
     @append(controller)
 
-module?.exports = Spine.Manager
+  release: =>
+    @router?.destroy()
+    super
+
+
+module?.exports       = Spine.Manager
 module?.exports.Stack = Spine.Stack

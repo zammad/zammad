@@ -9,13 +9,13 @@ Ajax =
       @generateURL(object)
     else
       @generateURL(object, encodeURIComponent(object.id))
-    
+
   getCollectionURL: (object) ->
     @generateURL(object)
-  
+
   getScope: (object) ->
     object.scope?() or object.scope
-  
+
   getCollection: (object) ->
     if object.url isnt object.generateURL
       if typeof object.url is 'function'
@@ -59,6 +59,12 @@ Ajax =
 
   clearQueue: ->
     @queue []
+
+  config:
+    loadMethod: 'GET'
+    updateMethod: 'PUT'
+    createMethod: 'POST'
+    destroyMethod: 'DELETE'
 
 class Base
   defaults:
@@ -104,7 +110,7 @@ class Base
         [promise, statusText, '']
       )
       promise
-    
+
     @queue request
     promise
 
@@ -118,7 +124,7 @@ class Collection extends Base
     record = new @model(id: id)
     @ajaxQueue(
       params, {
-        type: 'GET'
+        type: options.method or Ajax.config.loadMethod
         url: options.url or Ajax.getURL(record)
         parallel: options.parallel
       }
@@ -128,7 +134,7 @@ class Collection extends Base
   all: (params, options = {}) ->
     @ajaxQueue(
       params, {
-        type: 'GET'
+        type: options.method or Ajax.config.loadMethod
         url: options.url or Ajax.getURL(@model)
         parallel: options.parallel
       }
@@ -159,7 +165,7 @@ class Singleton extends Base
   reload: (params, options = {}) ->
     @ajaxQueue(
       params, {
-        type: 'GET'
+        type: options.method or Ajax.config.loadMethod
         url: options.url
         parallel: options.parallel
       }, @record
@@ -169,7 +175,7 @@ class Singleton extends Base
   create: (params, options = {}) ->
     @ajaxQueue(
       params, {
-        type: 'POST'
+        type: options.method or Ajax.config.createMethod
         contentType: 'application/json'
         data: @record.toJSON()
         url: options.url or Ajax.getCollectionURL(@record)
@@ -181,7 +187,7 @@ class Singleton extends Base
   update: (params, options = {}) ->
     @ajaxQueue(
       params, {
-        type: 'PUT'
+        type: options.method or Ajax.config.updateMethod
         contentType: 'application/json'
         data: @record.toJSON()
         url: options.url
@@ -193,7 +199,7 @@ class Singleton extends Base
   destroy: (params, options = {}) ->
     @ajaxQueue(
       params, {
-        type: 'DELETE'
+        type: options.method or Ajax.config.destroyMethod
         url: options.url
         parallel: options.parallel
       }, @record
@@ -233,16 +239,16 @@ GenerateURL =
 
 Include =
   ajax: -> new Singleton(this)
-  
+
   generateURL: GenerateURL.include
-  
+
   url: GenerateURL.include
-  
+
 Extend =
   ajax: -> new Collection(this)
-  
+
   generateURL: GenerateURL.extend
-  
+
   url: GenerateURL.extend
 
 Model.Ajax =
