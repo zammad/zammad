@@ -86,10 +86,9 @@ class AgentTicketActionLevel1Test < TestCase
 
           # check ticket
           {
-            :execute      => 'match',
-            :css          => '.content_permanent.active',
+            :execute      => 'watch_for',
+            :area         => '.content_permanent.active',
             :value        => 'some body 123äöü 222',
-            :match_result => true,
           },
 
           # update ticket
@@ -113,14 +112,9 @@ class AgentTicketActionLevel1Test < TestCase
             :css     => '.content_permanent.active button.submit',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.content_permanent.active .ticket-answer',
+            :execute      => 'watch_for',
+            :area         => '.content_permanent.active .ticket-answer',
             :value        => 'some body 1234 äöüß 222',
-            :match_result => true,
           },
 
           # check if task is shown
