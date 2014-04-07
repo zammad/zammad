@@ -54,6 +54,10 @@ class AgentTicketActionsLevel3Test < TestCase
 
           # open ticket in second browser
           {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
             :where   => :instance2,
             :execute => 'set',
             :css     => '#global-search',
@@ -68,34 +72,6 @@ class AgentTicketActionsLevel3Test < TestCase
             :execute => 'click',
             :link    => '###stack###',
 #            :css     => 'a:contains(\'###stack###\')',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").val("")',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").focus()',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").blur()',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").parent().parent().removeClass("open")',
           },
           {
             :execute => 'wait',

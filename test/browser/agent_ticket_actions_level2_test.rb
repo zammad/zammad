@@ -71,34 +71,6 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").val("")',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").focus()',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").blur()',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").parent().parent().removeClass("open")',
-          },
-          {
-            :execute => 'wait',
             :value   => 3,
           },
           {
