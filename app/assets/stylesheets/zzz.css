@@ -91,7 +91,7 @@ table th, table td {
 }
 
 .content-one {
-  top: 80px;
+  top: 78px;
   margin-left: 20px;
   margin-right: 20px;
 /*
@@ -109,7 +109,7 @@ table th, table td {
 }
 
 .content-fix {
-  top: 80px;
+  top: 78px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -144,7 +144,7 @@ table th, table td {
 }
 
 .content-two {
-  top: 80px;
+  top: 78px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -481,6 +481,10 @@ h5 {
   margin-bottom: 4px;
 }
 
+/* to show checkboxes below in getting_started */
+.form-stacked .form-group .checkbox label {
+  display: block
+}
 /*
  * bootstrap changes
  */
@@ -869,6 +873,7 @@ footer {
 }
 
 .navbar-brand {
+  height: auto;
   line-height: 18px;
   font-weight: 200;
   padding-top: 13px;
