@@ -401,7 +401,7 @@ class OwnModel < ApplicationModel
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':created',
+      :event => class_name + ':create',
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
   end
@@ -429,7 +429,7 @@ class OwnModel < ApplicationModel
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':updated',
+      :event => class_name + ':update',
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
   end
@@ -705,7 +705,7 @@ log object update history with all updated attributes, if configured - will be e
         value_id[0] = value[0]
         value_id[1] = value[1]
 
-        if self.respond_to?( attribute_name )
+        if self.respond_to?( attribute_name ) && self.send(attribute_name)
           relation_class = self.send(attribute_name).class
           if relation_class && value_id[0]
             relation_model = relation_class.lookup( :id => value_id[0] )
