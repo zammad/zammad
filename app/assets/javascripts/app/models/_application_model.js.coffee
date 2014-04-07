@@ -175,7 +175,8 @@ class App.Model extends Spine.Model
         callback(collection)
       @fetch( {}, { clear: true } )
 
-    return key
+    # return key
+    key
 
   subscribe: (callback) ->
 
@@ -187,19 +188,22 @@ class App.Model extends Spine.Model
       App[ @constructor.className ].bind(
         'refresh change'
         (item) =>
+          console.log('BIND', item)
           for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
             item = App[ @constructor.className ]._fillUp( item )
             callback(item)
       )
 
       # subscribe and render data after server change
-      events = "#{@constructor.className}:created #{@constructor.className}:updated #{@constructor.className}:destroy"
+      events = "#{@constructor.className}:create #{@constructor.className}:update #{@constructor.className}:destroy"
       App.Event.bind(
         events
-        (record) =>
-          if @id.toString() is record.id.toString()
-            for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
-              App[ @constructor.className ].retrieve( @id, callback, true )
+        (item) =>
+          console.log('SERVER BIND try', item)
+          if App[ @constructor.className ]['SUBSCRIPTION_ITEM'] && App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
+            console.log('SERVER BIND', item)
+            for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
+              App[ @constructor.className ].retrieve( item.id, callback, true )
         'Item::Subscribe::' + @constructor.className
       )
 
@@ -208,7 +212,9 @@ class App.Model extends Spine.Model
       App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ] = {}
     key = @constructor.className + '-' + Math.floor( Math.random() * 99999 )
     App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ][key] = callback
-    return key
+
+    # return key
+    key
 
   @unsubscribe: (data) ->
     if @SUBSCRIPTION_ITEM
