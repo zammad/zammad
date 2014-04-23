@@ -31,7 +31,7 @@ class _trackSingleton
 
     # start initial submit 30 sec. later to avoid ie10 cookie issues
     delay = =>
-      App.Interval.set @send, 80000
+      App.Interval.set @send, 60000
     App.Delay.set delay, 30000
 
     # log clicks
