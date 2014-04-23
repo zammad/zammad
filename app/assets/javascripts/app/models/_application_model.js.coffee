@@ -157,7 +157,7 @@ class App.Model extends Spine.Model
       )
 
       # fetch() all on network notify
-      events = "#{@className}:created #{@className}:updated #{@className}:destroy"
+      events = "#{@className}:create #{@className}:update #{@className}:destroy"
       App.Event.bind(
         events
         =>
