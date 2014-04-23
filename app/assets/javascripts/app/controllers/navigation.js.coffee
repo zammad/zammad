@@ -74,6 +74,9 @@ class App.Navigation extends App.Controller
     nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )
     nav_right = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 
+    # remove old popovers
+    $('.popover').remove()
+
     # get open tabs to repopen on rerender
     open_tab = {}
     @el.find('.open').children('a').each( (i,d) =>
