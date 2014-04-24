@@ -217,7 +217,7 @@ module Sessions
         if !@@user_threads[user.id]
           @@user_threads[user.id] = true
           @@user_threads[user.id] = Thread.new {
-            thread_worker(user.id, 0)
+            thread_worker(user.id)
             @@user_threads[user.id] = nil
             puts "close user (#{user.id}) thread"
           }
@@ -233,7 +233,7 @@ module Sessions
         if !@@client_threads[client_id]
           @@client_threads[client_id] = true
           @@client_threads[client_id] = Thread.new {
-            thread_client(client_id, 0)
+            thread_client(client_id)
             @@client_threads[client_id] = nil
             puts "close client (#{client_id}) thread"
           }
@@ -245,31 +245,40 @@ module Sessions
     end
   end
 
-  def self.thread_worker(user_id, count)
-      puts "LOOP WORKER #{user_id} - #{count}"
+  def self.thread_worker(user_id, try_count = 0, try_run_time = Time.now)
+      puts "LOOP WORKER #{user_id} - #{try_count}"
       begin
           Sessions::Worker.new(user_id)
       rescue => e
-        puts "thread_client exited with error #{ e.inspect }"
+        puts "thread_worker exited with error #{ e.inspect }"
         sleep 10
         begin
           ActiveRecord::Base.connection.reconnect!
         rescue => e
           puts "Can't reconnect to database #{ e.inspect }"
         end
-        ct = count++1
-        if ct < 10
-          thread_worker(user_id, ct)
+
+        try_run_max = 10
+        try_count += 1
+
+        # reset error counter if to old
+        if try_run_time + ( 60 * 5 ) < Time.now
+          try_count = 0
+        end
+        try_run_time = Time.now
+
+        # restart worker again
+        if try_run_max > try_count
+          thread_worker(user_id, try_count, try_run_time)
         else
-          raise "STOP thread_worker for user #{user_id} after 10 tries"
+          raise "STOP thread_worker for user #{user_id} after #{try_run_max} tries"
         end
       end
-      puts "/LOOP WORKER #{user_id} - #{count}"
+      puts "/LOOP WORKER #{user_id} - #{try_count}"
   end
 
-  def self.thread_client(client_id, count, try_count = 0, try_run_time = Time.now)
-      puts "LOOP #{client_id} - #{count}"
-
+  def self.thread_client(client_id, try_count = 0, try_run_time = Time.now)
+      puts "LOOP #{client_id} - #{try_count}"
       begin
         Sessions::Client.new(client_id)
       rescue => e
@@ -287,12 +296,12 @@ module Sessions
         # reset error counter if to old
         if try_run_time + ( 60 * 5 ) < Time.now
           try_count = 0
-        end 
+        end
         try_run_time = Time.now
 
         # restart job again
         if try_run_max > try_count
-          thread_client(client_id, ct, try_count, try_run_time)
+          thread_client(client_id, try_count, try_run_time)
         else
           raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
         end
