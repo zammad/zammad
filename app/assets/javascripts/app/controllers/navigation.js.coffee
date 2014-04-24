@@ -49,6 +49,9 @@ class App.Navigation extends App.Controller
     if _.isEmpty( result )
       @el.find('#global-search').parents('li').removeClass('open')
       el.html( '' )
+
+      # remove old popovers
+      $('.popover').remove()
       return
 
     # show result list
