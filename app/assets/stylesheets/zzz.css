@@ -496,7 +496,7 @@ h5 {
 }
 /* improved spacing */
 
-.pagination .count {
+.pagination-count {
   padding: 6px 6px;
   float: left;
   color: #999;
