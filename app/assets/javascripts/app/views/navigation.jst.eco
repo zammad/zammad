@@ -13,7 +13,7 @@
           <% if item.navheader: %>
             <li class="dropdown-header"><%- @T( item.navheader ) %></li>
           <% end %>
-          <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count pull-right"><%= item['count'] %></span><% end %></a></li>
+          <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %></a></li>
         <% end %>
       </ul>
     </li>
@@ -25,7 +25,7 @@
   </ul>
   <div class="spinner"/>
 <% if !_.isEmpty(@user): %>
-  <ul class="nav navbar-nav pull-right">
+  <ul class="nav navbar-nav navbar-right">
 
     <li class="dropdown">
       <form class="navbar-form">
@@ -48,7 +48,7 @@
               <% if item.navheader: %>
                 <li class="dropdown-header"><%- @T( item.navheader ) %></li>
               <% end %>
-              <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count pull-right"><%= item['count'] %>)</span><% end %></a></li>
+              <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %>)</span><% end %></a></li>
             <% end %>
           </ul>
         </li>
@@ -59,7 +59,7 @@
   </ul>
 <% else: %>
   <!--
-  <ul class="nav navbar-nav pull-right">
+  <ul class="nav navbar-nav navbar-right">
     <li><a href="#login"><%- @T( 'Sign in' ) %></a></li>
   </ul>
   -->

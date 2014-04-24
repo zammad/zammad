@@ -896,6 +896,10 @@ footer {
   color: #fff;
 }
 
+.nav.navbar-nav.navbar-right {
+  padding-right: 15px;
+}
+
 .nav.nav-tabs.nav-stacked > li > a > span {
   visibility: hidden;
 }
