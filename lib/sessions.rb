@@ -267,8 +267,9 @@ module Sessions
       puts "/LOOP WORKER #{user_id} - #{count}"
   end
 
-  def self.thread_client(client_id, count)
+  def self.thread_client(client_id, count, try_count = 0, try_run_time = Time.now)
       puts "LOOP #{client_id} - #{count}"
+
       begin
         Sessions::Client.new(client_id)
       rescue => e
@@ -279,11 +280,21 @@ module Sessions
         rescue => e
           puts "Can't reconnect to database #{ e.inspect }"
         end
-        ct = count++1
-        if ct < 10
-          thread_client(client_id, ct)
+
+        try_run_max = 10
+        try_count += 1
+
+        # reset error counter if to old
+        if try_run_time + ( 60 * 5 ) < Time.now
+          try_count = 0
+        end 
+        try_run_time = Time.now
+
+        # restart job again
+        if try_run_max > try_count
+          thread_client(client_id, ct, try_count, try_run_time)
         else
-          raise "STOP thread_client for client #{client_id} after 10 tries"
+          raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
         end
       end
       puts "/LOOP #{client_id} - #{count}"
