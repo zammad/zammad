@@ -306,7 +306,7 @@ module Sessions
           raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
         end
       end
-      puts "/LOOP #{client_id} - #{count}"
+      puts "/LOOP #{client_id} - #{try_count}"
   end
 
   def self.sessions
