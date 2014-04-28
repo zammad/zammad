@@ -16,10 +16,10 @@ create/update/delete index
               :type       => 'nested',
               :properties => {
                 'attachments' => { :type => 'attachment' }
-              } 
+              }
             }
-          } 
-        }  
+          }
+        }
       }
     }
   )
@@ -122,7 +122,7 @@ return search result
 
     url = build_url()
     return if !url
-    if index 
+    if index
       url += "/#{index}/_search"
     else
       url += '/_search'
@@ -130,7 +130,7 @@ return search result
     data = {}
     data['from'] = 0
     data['size'] = 10
-    data['sort'] = 
+    data['sort'] =
     [
       {
         :updated_at => {
@@ -183,7 +183,7 @@ return search result
 
 =begin
 
-return true if backend is configured 
+return true if backend is configured
 
   result = SearchIndexBackend.enabled?
 

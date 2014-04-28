@@ -29,10 +29,10 @@ namespace :searchindex do
                   :attachments => {
                     :type   => 'attachment',
                   }
-                } 
+                }
               }
-            } 
-          }  
+            }
+          }
         }
       }
     )
