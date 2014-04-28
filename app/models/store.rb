@@ -158,7 +158,7 @@ class Store::File < ApplicationModel
 
     # generate directory
     base = Rails.root.to_s + "/storage/fs/"
-    path = self.md5.scan(/./).join('/')
+    path = self.md5.scan(/.../).join('/')
     location = "#{ base }/#{path}"
 
     # create directory if not exists
