@@ -152,6 +152,7 @@ end
 class Store::File < ApplicationModel
   before_validation :add_md5
   before_create     :check_location
+  after_destroy     :unlink_location
 
   # generate file location
   def get_locaton
@@ -166,6 +167,14 @@ class Store::File < ApplicationModel
       FileUtils.mkdir_p( location )
     end
     location += "/file"
+  end
+
+  # read file from fs
+  def unlink_location
+    if File.exist?( self.get_locaton )
+      puts "NOTICE: storge remove '#{self.get_locaton}'"
+      File.delete( self.get_locaton )
+    end
   end
 
   # read file from fs
@@ -236,10 +245,7 @@ class Store::File < ApplicationModel
     Store::File.where( :file_system => true ).each {|item|
       item.write_to_db
       item.update_attribute( :file_system, false )
-      if File.exist?( item.get_locaton )
-        puts "NOTICE: storge remove '#{item.get_locaton}'"
-        File.delete( item.get_locaton )
-      end
+      item.unlink_location
     }
   end
 

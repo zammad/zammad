@@ -19,6 +19,11 @@ class StoreTest < ActiveSupport::TestCase
         :filename    => 'test.pdf',
         :o_id        => 3,
       },
+      {
+        :data        => IO.read('test/fixtures/test1.pdf'),
+        :filename    => 'test-again.pdf',
+        :o_id        => 4,
+      },
     ]
 
     files.each { |file|
@@ -89,19 +94,15 @@ class StoreTest < ActiveSupport::TestCase
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
-    }
 
-    # delete attachments
-    files.each { |file|
+      # delete attachments
       success = Store.remove(
         :object => 'Test',
         :o_id   => file[:o_id],
       )
       assert success
-    }
 
-    # check attachments again
-    files.each { |file|
+      # check attachments again
       attachments = Store.list(
         :object => 'Test',
         :o_id   => file[:o_id],
