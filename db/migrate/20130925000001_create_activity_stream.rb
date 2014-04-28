@@ -1,6 +1,5 @@
 class CreateActivityStream < ActiveRecord::Migration
   def up
-    
     create_table :activity_streams do |t|
       t.references :activity_stream_type,                   :null => false
       t.references :activity_stream_object,                 :null => false

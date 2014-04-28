@@ -598,7 +598,7 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
       if list && list[0]
         file = Store.find( list[0] )
         send_data(
-          file.store_file.data,
+          file.content,
           :filename    => file.filename,
           :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
           :disposition => 'inline'

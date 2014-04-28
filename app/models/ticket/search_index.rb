@@ -67,7 +67,7 @@ returns
         end
         data = {
           "_name"   => attachment.filename,
-          "content" => Base64.encode64( attachment.store_file.data )
+          "content" => Base64.encode64( attachment.content )
         }
         article_attributes['attachments'].push data
       }

@@ -41,7 +41,7 @@ class Channel::EmailBuild
         mail.attachments[attachment.filename] = {
           :content_type => attachment.preferences['Content-Type'],
           :mime_type    => attachment.preferences['Mime-Type'],
-          :content      => attachment.store_file.data
+          :content      => attachment.content
         }
       end
     end

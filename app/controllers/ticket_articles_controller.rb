@@ -125,7 +125,7 @@ class TicketArticlesController < ApplicationController
     # find file
     file = Store.find(params[:id])
     send_data(
-      file.store_file.data,
+      file.content,
       :filename    => file.filename,
       :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
       :disposition => 'inline'
@@ -148,7 +148,7 @@ class TicketArticlesController < ApplicationController
     if list
       file = Store.find(list.first)
       send_data(
-        file.store_file.data,
+        file.content,
         :filename    => file.filename,
         :type        => 'message/rfc822',
         :disposition => 'inline'

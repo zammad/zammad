@@ -352,11 +352,10 @@ class Package < ApplicationModel
     if !list || !list.first
       raise "No such file in storage list #{name} #{version}"
     end
-    store_file = list.first.store_file
-    if !store_file
+    if !list.first.content
       raise "No such file in storage #{name} #{version}"
     end
-    store_file.data
+    list.first.content
   end
 
   def self._read_file(file, fullpath = false)
@@ -374,7 +373,7 @@ class Package < ApplicationModel
     rescue => e
       raise 'ERROR: ' + e.inspect
     end
-    return contents
+    contents
   end
 
   def self._write_file(file, permission, data)
@@ -411,7 +410,7 @@ class Package < ApplicationModel
     rescue => e
       raise 'ERROR: ' + e.inspect
     end
-    return true
+    true
   end
 
   def self._delete_file(file, permission, data)

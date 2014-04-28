@@ -810,7 +810,7 @@ store attachments for this object
       article_store.push Store.add(
         :object        => self.class.to_s,
         :o_id          => self.id,
-        :data          => attachment.store_file.data,
+        :data          => attachment.content,
         :filename      => attachment.filename,
         :preferences   => attachment.preferences,
         :created_by_id => self.created_by_id,
