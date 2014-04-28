@@ -158,15 +158,17 @@ class Store::File < ApplicationModel
   def get_locaton
 
     # generate directory
-    base = Rails.root.to_s + "/storage/fs/"
-    path = self.md5.scan(/.../).join('/')
-    location = "#{ base }/#{path}"
+    base = Rails.root.to_s + '/storage/fs/'
+    parts = self.md5.scan(/.{1,3}/)
+    path = parts[ 1 .. 7 ].join('/') + '/'
+    file = parts[ 8 .. parts.count ].join('')
+    location = "#{base}/#{path}"
 
     # create directory if not exists
     if !File.exist?( location )
       FileUtils.mkdir_p( location )
     end
-    location += "/file"
+    location += file
   end
 
   # read file from fs
@@ -230,6 +232,20 @@ class Store::File < ApplicationModel
       raise "ERROR: Corrupt file in db #{self.get_locaton}, md5 should be #{self.md5} but is #{md5}"
     end
 
+    true
+  end
+
+  # check database data and md5, in case fix it
+  def self.db_check_md5(fix_it = nil)
+    Store::File.where( :file_system => false ).each {|item|
+      md5 = Digest::MD5.hexdigest( item.data )
+      if md5 != item.md5
+        puts "DIFF: md5 diff of Store::File.find(#{item.id}) "
+        if fix_it
+          item.update_attribute( :md5, md5 )
+        end
+      end
+    }
     true
   end
 
