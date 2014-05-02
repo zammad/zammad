@@ -45,6 +45,8 @@ returns
     md5 = Digest::MD5.hexdigest( data['data'] )
     data['size'] = data['data'].to_s.bytesize
 
+    # file = Store::Provider::DB.create( data['data'], md5 )
+
     file = Store::File.where( :md5 => md5 ).first
 
     # store attachment
@@ -126,6 +128,7 @@ returns
       # check backend for references
       files = Store.where( :store_file_id => store.store_file_id )
       if files.count == 1 && files.first.id == store.id
+        # file = Store::Provider::DB.delete( store.store_file_id )
         Store::File.find( store.store_file_id ).destroy
       end
 
@@ -136,6 +139,7 @@ returns
 
   # get attachment
   def content
+    # Store::Provider::DB.content( store.store_file_id )
     file = Store::File.where( :id => self.store_file_id ).first
     return if !file
     if file.file_system
@@ -239,6 +243,19 @@ class Store::File < ApplicationModel
   def self.db_check_md5(fix_it = nil)
     Store::File.where( :file_system => false ).each {|item|
       md5 = Digest::MD5.hexdigest( item.data )
+      if md5 != item.md5
+        puts "DIFF: md5 diff of Store::File.find(#{item.id}) "
+        if fix_it
+          item.update_attribute( :md5, md5 )
+        end
+      end
+    }
+    true
+  end
+
+  def self.fs_check_md5(fix_it = nil)
+    Store::File.where( :file_system => true ).each {|item|
+      md5 = Digest::MD5.hexdigest( item.read_from_fs )
       if md5 != item.md5
         puts "DIFF: md5 diff of Store::File.find(#{item.id}) "
         if fix_it
