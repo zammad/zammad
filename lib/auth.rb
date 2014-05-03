@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-class Auth < ApplicationLib
+class Auth
+  include ApplicationLib
 
 =begin
 

@@ -27,7 +27,9 @@ module Sessions::Backend::Collections
         end
         push_collection_cache = Sessions::CacheIn.get( cache_key, { :re_expire => true } )
         worker.log 'notice', "---user - fetch push_collection data " + cache_key
-        if !push_collection[key] || !push_collection_cache || push_collection[key] != push_collection_cache || !push_collection[ key ].zip( push_collection_cache ).all? { |x, y| x.attributes == y.attributes }
+#        if !push_collection[key] || !push_collection_cache || push_collection[key] != push_collection_cache || !push_collection[ key ].zip( push_collection_cache ).all? { |x, y| x.attributes == y.attributes }
+        if !push_collection[key] || !push_collection_cache || push_collection[key] != push_collection_cache || !push_collection[ key ].zip( push_collection_cache ).all? { |x, y| return false if !x; return false if !y; x.attributes == y.attributes }
+
           worker.log 'notify', 'fetch push_collection changed - ' + cache_key
           Sessions::CacheIn.set( cache_key, push_collection[key], { :expires_in => 1.minutes } )
         end

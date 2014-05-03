@@ -54,9 +54,14 @@ class StoreTest < ActiveSupport::TestCase
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
 
+      # provider check
+      assert_equal( 'DB', attachments[0].provider )
     }
 
-    Store::File.move_to_fs
+    success = Store::File.check_md5
+    assert success, "check_md5 ok"
+
+    Store::File.move( 'DB', 'File' )
 
     files.each { |file|
       md5 = Digest::MD5.hexdigest( file[:data] )
@@ -74,9 +79,15 @@ class StoreTest < ActiveSupport::TestCase
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
+
+      # provider check
+      assert_equal( 'File', attachments[0].provider )
     }
 
-    Store::File.move_to_db
+    success = Store::File.check_md5
+    assert success, "check_md5 ok"
+
+    Store::File.move( 'File', 'DB' )
 
     files.each { |file|
       md5 = Digest::MD5.hexdigest( file[:data] )
@@ -94,6 +105,9 @@ class StoreTest < ActiveSupport::TestCase
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
+
+      # provider check
+      assert_equal( 'DB', attachments[0].provider )
 
       # delete attachments
       success = Store.remove(
