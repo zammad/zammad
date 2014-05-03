@@ -6,8 +6,9 @@ class Store::File < ApplicationModel
 
   # add new file
   def self.add(data)
-    md5 = Digest::MD5.hexdigest( data )
-    file = Store::File.where( :md5 => md5 ).first
+    sha = Digest::SHA256.hexdigest( data )
+
+    file = Store::File.where( :sha => sha ).first
     if file == nil
 
       # load backend based on config
@@ -16,10 +17,10 @@ class Store::File < ApplicationModel
         raise "Missing storage_provider setting option"
       end
       adapter = self.load_adapter( "Store::Provider::#{ adapter_name }" )
-      adapter.add( data, md5 )
+      adapter.add( data, sha )
       file = Store::File.create(
         :provider => adapter_name,
-        :md5      => md5,
+        :sha      => sha,
       )
     end
     file
@@ -27,24 +28,22 @@ class Store::File < ApplicationModel
 
   # read content
   def content
-    puts "get #{self.id} #{self.provider}"
     adapter = self.class.load_adapter("Store::Provider::#{ self.provider }")
-    adapter.get( self.md5 )
+    adapter.get( self.sha )
   end
 
-
-  # check data and md5, in case fix it
-  def self.check_md5(fix_it = nil)
+  # check data and sha, in case fix it
+  def self.verify(fix_it = nil)
     success = true
     Store::File.all.each {|item|
       content = item.content
-      md5 = Digest::MD5.hexdigest( content )
+      sha = Digest::SHA256.hexdigest( content )
       puts "CHECK: Store::File.find(#{item.id}) "
-      if md5 != item.md5
+      if sha != item.sha
         success = false
-        puts "DIFF: md5 diff of Store::File.find(#{item.id}) "
+        puts "DIFF: sha diff of Store::File.find(#{item.id}) "
         if fix_it
-          item.update_attribute( :md5, md5 )
+          item.update_attribute( :sha, sha )
         end
       end
     }
@@ -61,22 +60,23 @@ class Store::File < ApplicationModel
       content = item.content
 
       # add to new provider
-      adapter_target.add( content, item.md5 )
+      adapter_target.add( content, item.sha )
 
       # update meta data
       item.update_attribute( :provider, target )
 
       # remove from old provider
-      adapter_source.delete( item.md5 )
+      adapter_source.delete( item.sha )
 
-      puts "NOTICE: Moved file #{item.md5} from #{source} to #{target}"
+      puts "NOTICE: Moved file #{item.sha} from #{source} to #{target}"
     }
+    true
   end
 
   private
 
   def destroy_provider
     adapter = self.class.load_adapter("Store::Provider::#{ self.provider }")
-    adapter.delete( md5 )
+    adapter.delete( self.sha )
   end
 end

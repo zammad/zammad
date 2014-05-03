@@ -27,7 +27,7 @@ class StoreTest < ActiveSupport::TestCase
     ]
 
     files.each { |file|
-      md5 = Digest::MD5.hexdigest( file[:data] )
+      sha = Digest::SHA256.hexdigest( file[:data] )
 
       # add attachments
       store = Store.add(
@@ -47,9 +47,9 @@ class StoreTest < ActiveSupport::TestCase
       )
       assert attachments
 
-      # md5 check
-      md5_new = Digest::MD5.hexdigest( attachments[0].content )
-      assert_equal( md5, md5_new,  "check file #{ file[:filename] }")
+      # sha check
+      sha_new = Digest::SHA256.hexdigest( attachments[0].content )
+      assert_equal( sha, sha_new,  "check file #{ file[:filename] }")
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
@@ -58,13 +58,13 @@ class StoreTest < ActiveSupport::TestCase
       assert_equal( 'DB', attachments[0].provider )
     }
 
-    success = Store::File.check_md5
-    assert success, "check_md5 ok"
+    success = Store::File.verify
+    assert success, "verify ok"
 
     Store::File.move( 'DB', 'File' )
 
     files.each { |file|
-      md5 = Digest::MD5.hexdigest( file[:data] )
+      sha = Digest::SHA256.hexdigest( file[:data] )
 
       # get list of attachments
       attachments = Store.list(
@@ -73,9 +73,9 @@ class StoreTest < ActiveSupport::TestCase
       )
       assert attachments
 
-      # md5 check
-      md5_new = Digest::MD5.hexdigest( attachments[0].content )
-      assert_equal( md5, md5_new,  "check file #{ file[:filename] }")
+      # sha check
+      sha_new = Digest::SHA256.hexdigest( attachments[0].content )
+      assert_equal( sha, sha_new,  "check file #{ file[:filename] }")
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
@@ -84,13 +84,13 @@ class StoreTest < ActiveSupport::TestCase
       assert_equal( 'File', attachments[0].provider )
     }
 
-    success = Store::File.check_md5
-    assert success, "check_md5 ok"
+    success = Store::File.verify
+    assert success, "verify ok"
 
     Store::File.move( 'File', 'DB' )
 
     files.each { |file|
-      md5 = Digest::MD5.hexdigest( file[:data] )
+      sha = Digest::SHA256.hexdigest( file[:data] )
 
       # get list of attachments
       attachments = Store.list(
@@ -99,9 +99,9 @@ class StoreTest < ActiveSupport::TestCase
       )
       assert attachments
 
-      # md5 check
-      md5_new = Digest::MD5.hexdigest( attachments[0].content )
-      assert_equal( md5, md5_new,  "check file #{ file[:filename] }")
+      # sha check
+      sha_new = Digest::SHA256.hexdigest( attachments[0].content )
+      assert_equal( sha, sha_new,  "check file #{ file[:filename] }")
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )

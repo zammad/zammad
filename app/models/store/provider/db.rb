@@ -3,22 +3,22 @@
 class Store::Provider::DB < ApplicationModel
   self.table_name = 'store_provider_dbs'
 
-  def self.add(data, md5)
+  def self.add(data, sha)
     Store::Provider::DB.create(
       :data => data,
-      :md5  => md5,
+      :sha  => sha,
     )
     true
   end
 
-  def self.get(md5)
-    file = Store::Provider::DB.where( :md5 => md5 ).first
+  def self.get(sha)
+    file = Store::Provider::DB.where( :sha => sha ).first
     return if !file
     file.data
   end
 
-  def self.delete(md5)
-    Store::Provider::DB.where( :md5 => md5 ).destroy_all
+  def self.delete(sha)
+    Store::Provider::DB.where( :sha => sha ).destroy_all
     true
   end
 

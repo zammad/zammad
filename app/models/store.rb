@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-require 'digest/md5'
-
-
 class Store < ApplicationModel
   require 'store/object'
   require 'store/file'
