@@ -29,7 +29,13 @@ class Store::File < ApplicationModel
   # read content
   def content
     adapter = self.class.load_adapter("Store::Provider::#{ self.provider }")
-    adapter.get( self.sha )
+    if self.sha
+      c = adapter.get( self.sha )
+    else
+      # fallback until migration is done
+      c = Store::Provider::DB.where( :md5 => self.md5 ).first.data
+    end
+    c
   end
 
   # check data and sha, in case fix it

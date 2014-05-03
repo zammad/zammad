@@ -12,9 +12,15 @@ class UpdateStorage3 < ActiveRecord::Migration
       sha = Digest::SHA256.hexdigest( file.content )
       file.update_attribute( :sha, sha )
     }
-    Store::Provider::DB.all.each {|file|
+    Store::File.all.each {|file|
       next if file.sha
       sha = Digest::SHA256.hexdigest( file.content )
+      file.update_attribute( :sha, sha )
+    }
+
+    Store::Provider::DB.all.each {|file|
+      next if file.sha
+      sha = Digest::SHA256.hexdigest( file.data )
       file.update_attribute( :sha, sha )
     }
 

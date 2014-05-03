@@ -22,7 +22,7 @@ class Store::Provider::File
 
     # generate directory
     base = Rails.root.to_s + '/storage/fs/'
-    parts = sha.scan(/.{1,3}/)
+    parts = sha.scan(/.{1,4}/)
     path = parts[ 1 .. 10 ].join('/') + '/'
     file = parts[ 11 .. parts.count ].join('')
     location = "#{base}/#{path}"
