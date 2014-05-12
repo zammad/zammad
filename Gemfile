@@ -52,6 +52,8 @@ gem 'mysql2'
 
 gem 'net-ldap'
 
+gem 'writeexcel'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
