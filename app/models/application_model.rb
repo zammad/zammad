@@ -83,7 +83,8 @@ returns
 
 set rellations of model based on params
 
-  result = Model.param_set_associations(params)
+  model = Model.find(1)
+  result = model.param_set_associations(params)
 
 returns
 
@@ -108,6 +109,32 @@ returns
         self.send( assoc.name.to_s + '=', list )
       end
     }
+  end
+
+=begin
+
+get rellations of model based on params
+
+  model = Model.find(1)
+  attributes = model.attributes_with_associations
+
+returns
+
+  hash with attributes and association ids
+
+=end
+
+  def attributes_with_associations
+
+    # set relations
+    attributes = self.attributes
+    self.class.reflect_on_all_associations.map { |assoc|
+      real_key = assoc.name.to_s[0,assoc.name.to_s.length-1] + '_ids'
+      if self.respond_to?( real_key )
+        attributes[ real_key ] = self.send( real_key )
+      end
+    }
+    attributes
   end
 
 =begin

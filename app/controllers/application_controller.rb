@@ -275,7 +275,7 @@ class ApplicationController < ActionController::Base
     end
   end
   def model_create_render_item (generic_object)
-    render :json => generic_object, :status => :created
+    render :json => generic_object.attributes_with_associations, :status => :created
   end
 
   def model_update_render (object, params)
@@ -298,7 +298,7 @@ class ApplicationController < ActionController::Base
     end
   end
   def model_update_render_item (generic_object)
-    render :json => generic_object, :status => :ok
+    render :json => generic_object.attributes_with_associations, :status => :ok
   end
 
   def model_destory_render (object, params)
@@ -327,13 +327,13 @@ class ApplicationController < ActionController::Base
     end
   end
   def model_show_render_item (generic_object)
-    render :json => generic_object, :status => :ok
+    render :json => generic_object.attributes_with_associations, :status => :ok
   end
 
   def model_index_render (object, params)
     begin
-      generic_object = object.all
-      model_index_render_result( generic_object )
+      generic_objects = object.all
+      model_index_render_result( generic_objects )
     rescue Exception => e
       logger.error e.message
       logger.error e.backtrace.inspect
