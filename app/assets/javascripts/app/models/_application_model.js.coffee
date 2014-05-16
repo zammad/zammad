@@ -188,7 +188,7 @@ class App.Model extends Spine.Model
       App[ @constructor.className ].bind(
         'refresh change'
         (item) =>
-          console.log('BIND', item)
+          #console.log('BIND', item)
           for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
             item = App[ @constructor.className ]._fillUp( item )
             callback(item)
@@ -199,9 +199,9 @@ class App.Model extends Spine.Model
       App.Event.bind(
         events
         (item) =>
-          console.log('SERVER BIND try', item)
+          #console.log('SERVER BIND try', item)
           if App[ @constructor.className ]['SUBSCRIPTION_ITEM'] && App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
-            console.log('SERVER BIND', item)
+            #console.log('SERVER BIND', item)
             for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
               App[ @constructor.className ].retrieve( item.id, callback, true )
         'Item::Subscribe::' + @constructor.className
