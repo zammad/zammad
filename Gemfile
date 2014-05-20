@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.1.0'
+gem 'rails', '4.1.1'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -72,7 +72,7 @@ gem 'em-websocket'
 group :development, :test do
 
     gem 'test-unit'
-
+    gem 'spring'
     gem 'sqlite3'
 
     # code coverage
