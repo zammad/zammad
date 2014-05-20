@@ -93,8 +93,8 @@ class Channel::Twitter2
     sender = nil
 
     # status (full user data is included)
-    if tweet['user']
-      sender = tweet['user']
+    if tweet.user
+      sender = tweet.user
 
       # direct message (full user data is included)
     elsif tweet['sender']
@@ -115,7 +115,7 @@ class Channel::Twitter2
 
     # check if parent exists
     user = nil, ticket = nil, article = nil
-    if tweet['in_reply_to_status_id']
+    if tweet.in_reply_to_status_id
       puts 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
       tweet_sub = @client.status(tweet.in_reply_to_status_id)
       #        puts tweet_sub.inspect
@@ -179,7 +179,7 @@ class Channel::Twitter2
 
     #    puts '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
-    if tweet['in_reply_to_status_id']
+    if tweet.in_reply_to_status_id
       puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
       article = Ticket::Article.where( :message_id => tweet.in_reply_to_status_id.to_s ).first
       if article
@@ -246,7 +246,7 @@ class Channel::Twitter2
 
     # import tweet
     to = nil
-    if tweet['recipient']
+    if tweet.recipient
       to = tweet.recipient.name
     end
     article = Ticket::Article.create(
