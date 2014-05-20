@@ -33,37 +33,37 @@ class ManageTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'input[name=login]',
+            :css     => '.modal input[name=login]',
             :value   => 'some login' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="firstname"]',
+            :css     => '.modal input[name="firstname"]',
             :value   => 'Manage Firstname' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="lastname"]',
+            :css     => '.modal input[name="lastname"]',
             :value   => 'Manage Lastname' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="email"]',
+            :css     => '.modal input[name="email"]',
             :value   => user_email,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="password"]',
+            :css     => '.modal input[name="password"]',
             :value   => 'some-pass',
           },
           {
             :execute => 'set',
-            :css     => 'input[name="password_confirm"]',
+            :css     => '.modal input[name="password_confirm"]',
             :value   => 'some-pass',
           },
           {
             :execute => 'click',
-            :css     => 'input[name="role_ids"][value="3"]',
+            :css     => '.modal input[name="role_ids"][value="3"]',
           },
           {
             :execute => 'click',
@@ -84,7 +84,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'input[name="lastname"]',
+            :css     => '.modal input[name="lastname"]',
             :value   => '2Manage Lastname' + random,
           },
           {
@@ -127,12 +127,12 @@ class ManageTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'input[name=name]',
+            :css     => '.modal input[name=name]',
             :value   => 'some sla' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="first_response_time"]',
+            :css     => '.modal input[name="first_response_time"]',
             :value   => 61,
           },
           {
@@ -154,12 +154,12 @@ class ManageTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'input[name=name]',
+            :css     => '.modal input[name=name]',
             :value   => 'some sla update ' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="first_response_time"]',
+            :css     => '.modal input[name="first_response_time"]',
             :value   => 121,
           },
           {
