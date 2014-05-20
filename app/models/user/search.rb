@@ -57,12 +57,9 @@ returns
     # fallback do sql query
     # - stip out * we already search for *query* -
     query.gsub! '*', ''
-    users = User.find(
-      :all,
-      :limit      => limit,
-      :conditions => ['(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%"],
-      :order      => 'firstname'
-    )
+    users = User.where(
+      '(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
+    ).order('firstname').limit(limit)
     return users
   end
 
