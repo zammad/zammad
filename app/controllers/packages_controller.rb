@@ -6,7 +6,7 @@ class PackagesController < ApplicationController
   # GET /api/v1/packages
   def index
     return if deny_if_not_role('Admin')
-    packages = Package.all( :order => 'name' )
+    packages = Package.all().order('name')
     render :json => {
       :packages => packages
     }
