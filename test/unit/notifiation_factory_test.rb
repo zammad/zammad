@@ -1,8 +1,18 @@
 # encoding: utf-8
 require 'test_helper'
- 
+
 class NotificationFactoryTest < ActiveSupport::TestCase
   test 'notifications' do
+    ticket = Ticket.create(
+      :title           => 'some title äöüß',
+      :group           => Group.lookup( :name => 'Users'),
+      :customer_id     => 2,
+      :ticket_state    => Ticket::State.lookup( :name => 'new' ),
+      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :updated_by_id   => 1,
+      :created_by_id   => 1,
+    )
+
     tests = [
       {
         :locale => 'en',
@@ -39,12 +49,14 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       result = NotificationFactory.build(
         :string  => test[:string],
         :objects => {
-          :ticket    => Ticket.find(1),
+          :ticket    => ticket,
           :recipient => User.find(2),
         },
         :locale  => test[:locale]
       )
       assert_equal( result, test[:result], "verify result" )
     }
+
+    ticket.destroy
   end
 end

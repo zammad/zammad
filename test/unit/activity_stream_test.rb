@@ -349,14 +349,14 @@ class ActivityStreamTest < ActiveSupport::TestCase
   def activity_stream_check( activity_stream_list, checks )
     puts 'AS ' + activity_stream_list.inspect
     checks.each { |check_item|
-#        puts '+++++++++++'
-#        puts check_item.inspect
+        puts '+++++++++++'
+        puts check_item.inspect
       match = false
       activity_stream_list.each { |item|
         next if match
-#          puts '--------'
-#          puts item.inspect
-#          puts item.object
+          puts '--------'
+          puts item.inspect
+        #  puts item.object
         next if item['object'] != check_item[:object]
         next if item['type'] != check_item[:type]
         next if item['o_id'] != check_item[:o_id]
@@ -366,7 +366,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         assert( match, "activity stream check not matched! #{check_item.inspect}")
       else
         assert( !match, "activity stream check matched but should not! #{check_item.inspect}")
-      end        
+      end
     }
   end
 
