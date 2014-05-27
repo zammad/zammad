@@ -93,19 +93,16 @@ class Channel::Twitter2
     sender = nil
 
     # status (full user data is included)
-    if tweet.user
+    if tweet.respond_to?('user')
       sender = tweet.user
 
-      # direct message (full user data is included)
-    elsif tweet['sender']
-      sender = tweet['sender']
+    # direct message (full user data is included)
+    elsif tweet.respond_to?('sender')
+      sender = tweet.sender
 
-      # search (no user data is included, do extra lookup)
-    elsif tweet['from_user_id']
+    # search (no user data is included, do extra lookup)
+    elsif tweet.respond_to?('from_user_id')
       begin
-
-        # reconnect for #<Twitter::Error::NotFound: Sorry, that page does not exist> workaround
-        #        @client = connect(channel)
         sender = @client.user(tweet.from_user_id)
       rescue Exception => e
         puts "Exception: twitter: " + e.inspect
@@ -115,9 +112,9 @@ class Channel::Twitter2
 
     # check if parent exists
     user = nil, ticket = nil, article = nil
-    if tweet.in_reply_to_status_id
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id
       puts 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
-      tweet_sub = @client.status(tweet.in_reply_to_status_id)
+      tweet_sub = @client.status( tweet.in_reply_to_status_id )
       #        puts tweet_sub.inspect
       (user, ticket, article) = fetch_import(tweet_sub, channel, group)
     end
@@ -179,11 +176,11 @@ class Channel::Twitter2
 
     #    puts '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
-    if tweet.in_reply_to_status_id
-      puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id
+      puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
       article = Ticket::Article.where( :message_id => tweet.in_reply_to_status_id.to_s ).first
       if article
-        puts 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
+        puts 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
         return article.ticket
       end
     end
@@ -246,9 +243,10 @@ class Channel::Twitter2
 
     # import tweet
     to = nil
-    if tweet.recipient
+    if tweet.respond_to?('recipient')
       to = tweet.recipient.name
     end
+
     article = Ticket::Article.create(
       :ticket_id                => ticket.id,
       :ticket_article_type_id   => Ticket::Article::Type.where( :name => @article_type ).first.id,

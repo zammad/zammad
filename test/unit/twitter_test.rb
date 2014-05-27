@@ -10,7 +10,7 @@ class TwitterTest < ActiveSupport::TestCase
   # user1: armin_theo (is system and is following marion_bauer)
   user1_token        = '1405469528-WQ6XHizgrbYasUwjp0I0TUONhftNkrfrpgFLrdc'
   user1_token_secret = '0LHChGFlQx9jSxM8tkBsuDOMhbJMSXTL2zKJJO5Xk'
-  
+
   # user2: me_bauer (is following armin_theo)
   user2_token        = '1406098795-XQTjg1Zj5uVW0C11NNpNA4xopyclRJJoriWis0I'
   user2_token_secret = 'T8ph5afeSDjGDA9X1ZBlzEvoSiXfN266ZZUMj5UaY'
@@ -131,10 +131,10 @@ class TwitterTest < ActiveSupport::TestCase
 
     # direct message to @armin_theo
     client = Twitter::REST::Client.new(
-      :consumer_key       => consumer_key,
-      :consumer_secret    => consumer_secret,
-      :oauth_token        => user2_token,
-      :oauth_token_secret => user2_token_secret
+      :consumer_key         => consumer_key,
+      :consumer_secret      => consumer_secret,
+      :access_token         => user2_token,
+      :access_token_secret  => user2_token_secret
     )
     dms = client.direct_messages( :count => 200 )
     dms.each {|dm|
