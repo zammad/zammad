@@ -424,7 +424,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-
+    puts "#{ self.class.name }.find(#{ self.id }) notify created " + self.created_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -452,7 +452,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    puts "#{self.class.name.downcase} UPDATED " + self.updated_at.to_s
+    puts "#{ self.class.name }.find(#{ self.id }) notify UPDATED " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -479,7 +479,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    puts "#{self.class.name.downcase} DESTOY " + self.updated_at.to_s
+    puts "#{ self.class.name }.find(#{ self.id }) notify DESTOY " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(

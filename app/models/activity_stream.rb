@@ -49,10 +49,10 @@ add a new activity entry for an object
       :role_id                     => role_id,
       :activity_stream_object_id   => object.id,
       :created_by_id               => data[:created_by_id]
-    ).last
+    ).order('created_at DESC, id ASC').last
 
-    # resturn if old entry is really freash
-    return result if result && result.created_at >= (data[:created_at] - 10.seconds)
+    # resturn if old entry is really fresh
+    return result if result && result.created_at.to_i >= ( data[:created_at].to_i - 12 )
 
     # create history
     record = {

@@ -77,35 +77,33 @@ class ActivityStreamTest < ActiveSupport::TestCase
       ticket = nil
       article = nil
 
-      # use transaction
-      ActiveRecord::Base.transaction do
-        ticket = Ticket.create( test[:create][:ticket] )
-        test[:check][0][:o_id]          = ticket.id
-        test[:check][0][:created_at]    = ticket.created_at
-        test[:check][0][:created_by_id] = current_user.id
-        sleep 2
 
-        test[:create][:article][:ticket_id] = ticket.id
-        article = Ticket::Article.create( test[:create][:article] )
-        test[:check][1][:o_id]          = article.id
-        test[:check][1][:created_at]    = article.created_at
-        test[:check][1][:created_by_id] = current_user.id
+      ticket = Ticket.create( test[:create][:ticket] )
+      test[:check][0][:o_id]          = ticket.id
+      test[:check][0][:created_at]    = ticket.created_at
+      test[:check][0][:created_by_id] = current_user.id
+      sleep 2
 
-        assert_equal( ticket.class.to_s, 'Ticket' )
-        assert_equal( article.class.to_s, 'Ticket::Article' )
+      test[:create][:article][:ticket_id] = ticket.id
+      article = Ticket::Article.create( test[:create][:article] )
+      test[:check][1][:o_id]          = article.id
+      test[:check][1][:created_at]    = article.created_at
+      test[:check][1][:created_by_id] = current_user.id
 
-        # update ticket
-        if test[:update][:ticket]
-          ticket.update_attributes( test[:update][:ticket] )
+      assert_equal( ticket.class.to_s, 'Ticket' )
+      assert_equal( article.class.to_s, 'Ticket::Article' )
 
-          # check updated user
-          test[:check][2][:o_id]          = current_user.id
-          test[:check][2][:created_at]    = ticket.created_at
-          test[:check][2][:created_by_id] = current_user.id
-        end
-        if test[:update][:article]
-          article.update_attributes( test[:update][:article] )
-        end
+      # update ticket
+      if test[:update][:ticket]
+        ticket.update_attributes( test[:update][:ticket] )
+
+        # check updated user
+        test[:check][2][:o_id]          = current_user.id
+        test[:check][2][:created_at]    = ticket.created_at
+        test[:check][2][:created_by_id] = current_user.id
+      end
+      if test[:update][:article]
+        article.update_attributes( test[:update][:article] )
       end
 
       # remember ticket
@@ -167,7 +165,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       test[:check][0][:o_id]          = organization.id
       test[:check][0][:created_at]    = organization.created_at
       test[:check][0][:created_by_id] = current_user.id
-      sleep 11
+      sleep 2
 
       assert_equal( organization.class.to_s, 'Organization' )
 
@@ -176,7 +174,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         test[:check][1][:o_id]          = organization.id
         test[:check][1][:updated_at]    = organization.updated_at
         test[:check][1][:created_by_id] = current_user.id
-        sleep 2
+        sleep 13
       end
 
       if test[:update2][:organization]
@@ -266,8 +264,6 @@ class ActivityStreamTest < ActiveSupport::TestCase
     }
   end
 
-
-
   test 'user with update check true' do
     tests = [
 
@@ -347,25 +343,24 @@ class ActivityStreamTest < ActiveSupport::TestCase
   end
 
   def activity_stream_check( activity_stream_list, checks )
-    puts 'AS ' + activity_stream_list.inspect
+    #puts 'AS ' + activity_stream_list.inspect
     checks.each { |check_item|
-        puts '+++++++++++'
-        puts check_item.inspect
+      #puts '+++++++++++'
+      #puts check_item.inspect
       match = false
       activity_stream_list.each { |item|
         next if match
-          puts '--------'
-          puts item.inspect
-        #  puts item.object
+          #puts '--------'
+          #puts item.inspect
         next if item['object'] != check_item[:object]
         next if item['type'] != check_item[:type]
         next if item['o_id'] != check_item[:o_id]
         match = true
       }
       if check_item[:result]
-        assert( match, "activity stream check not matched! #{check_item.inspect}")
+        assert( match, "activity stream check not matched! #{ check_item.inspect } not in #{ activity_stream_list.inspect }")
       else
-        assert( !match, "activity stream check matched but should not! #{check_item.inspect}")
+        assert( !match, "activity stream check matched but should not! #{ check_item.inspect } not in #{ activity_stream_list.inspect }")
       end
     }
   end
