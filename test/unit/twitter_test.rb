@@ -149,17 +149,23 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert( dm, "dm with ##{hash} created" )
-    sleep 25
 
     # fetch check system account
-    Channel.fetch
+    article = nil
+    (1..4).each {|loop|
+      next if article
+      sleep 15
 
-    # check if ticket and article has been created
-    article = Ticket::Article.where( :message_id => dm.id ).last
-puts "----------------------------------------"
-puts "DM: " + dm.inspect
-puts "AT: " + article.inspect
-puts "----------------------------------------"
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.where( :message_id => dm.id ).last
+    }
+    puts "----------------------------------------"
+    puts "DM: " + dm.inspect
+    puts "AT: " + article.inspect
+    puts "----------------------------------------"
+
     assert( article, "inbound article created" )
 #    ticket  = Ticket.find( article.ticket.id )
     ticket  = article.ticket
