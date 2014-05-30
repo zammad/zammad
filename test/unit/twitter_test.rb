@@ -149,7 +149,7 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert( dm, "dm with ##{hash} created" )
-    sleep 20
+    sleep 25
 
     # fetch check system account
     Channel.fetch
