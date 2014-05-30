@@ -41,6 +41,10 @@ returns
     # set escalation off if ticket is already closed
     ticket_state = Ticket::State.lookup( :id => self.ticket_state_id )
     if ticket_state.ignore_escalation?
+
+      # nothing to change
+      return true if !self.escalation_time
+
       self.escalation_time            = nil
       #      self.first_response_escal_date  = nil
       #      self.close_time_escal_date      = nil
@@ -54,6 +58,10 @@ returns
 
     # reset escalation if no sla is set
     if !sla_selected
+
+      # nothing to change
+      return true if !self.escalation_time
+
       self.escalation_time            = nil
       #      self.first_response_escal_date  = nil
       #      self.close_time_escal_date      = nil
@@ -146,8 +154,10 @@ returns
     if sla_selected.close_time && self.close_time_in_min
       self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
     end
-    self.callback_loop = true
-    self.save
+    if self.changed?
+      self.callback_loop = true
+      self.save
+    end
   end
 
 =begin
