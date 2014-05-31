@@ -203,20 +203,20 @@ App.Interval.set( function() {
   'interval-test1'
 );
 App.Delay.set( function() {
-    test( "interval - test 1 - 1/1", function() {
+    test( "interval - test 1 - 1/2", function() {
 
       // check
-      equal( window.testInterval1, 6, 'interval - test 1' );
+      equal( window.testInterval1, 4, 'interval - test 1' );
       App.Interval.clear('interval-test1')
     });
   },
   2400
 );
 App.Delay.set( function() {
-    test( "interval - test 1 - 1/1", function() {
+    test( "interval - test 1 - 2/2", function() {
 
       // check
-      equal( window.testInterval1, 6, 'interval - test after clear' );
+      equal( window.testInterval1, 4, 'interval - test after clear' );
     });
   },
   3500
@@ -228,28 +228,28 @@ window.testInterval2 = 1
 App.Interval.set( function() {
     window.testInterval2 += 1;
   },
-  500,
+  1000,
   undefined,
-  'page'
+  'someLevel'
 );
 App.Delay.set( function() {
-    test( "interval - test 2 - 1/1", function() {
+    test( "interval - test 2 - 1/2", function() {
 
       // check
-      equal( window.testInterval2, 6, 'interval - test 2' );
-      App.Interval.clearLevel('page')
+      equal( window.testInterval2, 4, 'interval - test 2' );
+      App.Interval.clearLevel('someLevel')
     });
   },
-  2400
+  4900
 );
 App.Delay.set( function() {
-    test( "interval - test 2 - 1/1", function() {
+    test( "interval - test 2 - 2/2", function() {
 
       // check
-      equal( window.testInterval2, 6, 'interval - test 2 - after clear' );
+      equal( window.testInterval2, 4, 'interval - test 2 - after clear' );
     });
   },
-  3500
+  6000
 );
 
 

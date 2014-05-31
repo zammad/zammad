@@ -2,7 +2,12 @@ class Index extends App.Controller
 
   constructor: ->
     super
-    
+
+    # no default routing on test pages
+    if window.location.pathname.substr(0,5) is '/test'
+      return
+
+    # route to getting started screen
     if !@Config.get('system_init_done')
       @navigate '#getting_started'
       return

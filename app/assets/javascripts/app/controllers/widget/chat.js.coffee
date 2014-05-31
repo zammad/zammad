@@ -177,7 +177,9 @@ class Widget extends App.Controller
       messages: @messageLog
       isShown:  shown
     )
-    document.getElementById('chat_log_container').scrollTop = 10000
+
+    if document.getElementById('chat_log_container')
+      document.getElementById('chat_log_container').scrollTop = 10000
 
     # focus in input box
     if @focus

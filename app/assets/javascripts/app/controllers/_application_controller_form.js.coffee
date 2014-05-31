@@ -1239,6 +1239,10 @@ class App.ControllerForm extends App.Controller
       form = form.children().parents('form')
 
     # find form based on parents next <form>
+    else if form.is('form')
+      form = form
+
+    # find form based on parents next <form>
     else if form.parents('form')[0]
       form = form.parents('form')
 
