@@ -108,7 +108,7 @@ class CreateBase < ActiveRecord::Migration
       t.integer :user_id
       t.integer :role_id
     end
-    
+
     create_table :groups_users, :id => false do |t|
       t.integer :user_id
       t.integer :group_id
