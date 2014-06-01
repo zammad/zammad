@@ -109,12 +109,10 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     Channel.fetch
 
-    reply_text = reply_text.utf8_to_3bytesutf8
-
     # check if follow up article has been created
     assert_equal( article.ticket.articles.count, 2 )
     reply_article = article.ticket.articles.last
-    assert_equal( reply_article.body,  )
+    assert_equal( reply_article.body, reply_text.utf8_to_3bytesutf8 )
 
   end
 
