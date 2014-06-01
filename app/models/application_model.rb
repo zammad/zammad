@@ -863,8 +863,13 @@ check string/varchar size and cut them if needed
         current_length = attribute[1].to_s.length
         if limit < current_length
           puts "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
-          self[attribute[0]] = attribute[1][ 0, limit ]
+          self[ attribute[0] ] = attribute[1][ 0, limit ]
         end
+      end
+
+      # strip 4 bytes utf8 chars if needed
+      if column && self[ attribute[0] ]
+        self[attribute[0]] = self[ attribute[0] ].utf8_to_3bytesutf8
       end
     }
   end

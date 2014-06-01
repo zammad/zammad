@@ -23,4 +23,19 @@ class String
     camel_cased_word = self.to_s
     camel_cased_word.gsub(/::/, '/').downcase
   end
+
+  # because of mysql inno_db limitations, strip 4 bytes utf8 chars (e. g. emojis)
+  # unfortunaly UTF8mb4 will raise other limitaions of max varchar and lower index sizes
+  # More details: http://pjambet.github.io/blog/emojis-and-mysql/
+  def utf8_to_3bytesutf8
+    return if ActiveRecord::Base.connection_config[:adapter] != 'mysql2'
+    self.each_char.select {|c|
+      if c.bytes.count > 3
+        puts "WARNING: strip out 4 bytes utf8 chars '#{c}' of '#{ self }'"
+        next
+      end
+      c
+    }
+    .join('')
+  end
 end

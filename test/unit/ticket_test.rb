@@ -25,13 +25,15 @@ class TicketTest < ActiveSupport::TestCase
       :to                     => 'some_recipient@example.com',
       :subject                => 'some subject',
       :message_id             => 'some@id',
-      :body                   => 'some message',
+      :body                   => 'some message article_inbound 😍😍😍',
       :internal               => false,
       :ticket_article_sender  => Ticket::Article::Sender.where(:name => 'Customer').first,
       :ticket_article_type    => Ticket::Article::Type.where(:name => 'email').first,
       :updated_by_id          => 1,
       :created_by_id          => 1,
     )
+    assert_equal( article_inbound.body, 'some message article_inbound 😍😍😍'.utf8_to_3bytesutf8, 'article_inbound.body verify - inbound' )
+
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.article_count, 1, 'ticket.article_count verify - inbound' )
     assert_equal( ticket.last_contact.to_s, article_inbound.created_at.to_s, 'ticket.last_contact verify - inbound' )

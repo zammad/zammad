@@ -96,7 +96,7 @@ class TwitterTest < ActiveSupport::TestCase
     end
 
     reply_hash = '#weather' + rand(9999).to_s
-    reply_text = '@armin_theo on my side the weather is also nice! ' + reply_hash
+    reply_text = '@armin_theo on my side the weather is also nice! 😍😍😍 ' + reply_hash
     tweet = client.update(
       reply_text,
       {
@@ -109,10 +109,12 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     Channel.fetch
 
+    reply_text = reply_text.utf8_to_3bytesutf8
+
     # check if follow up article has been created
     assert_equal( article.ticket.articles.count, 2 )
     reply_article = article.ticket.articles.last
-    assert_equal( reply_article.body, reply_text )
+    assert_equal( reply_article.body,  )
 
   end
 
