@@ -52,12 +52,8 @@ add a new activity entry for an object
     ).order('created_at DESC, id ASC').last
 
     # resturn if old entry is really fresh
-puts "--- #{data[:object]} #{data[:type]} #{data[:role]} #{data[:created_by_id]} #{data[:created_at]}"
-if result
-  puts "-- previos done at #{result.created_at} #{ data[:created_at] - 10.seconds } #{ data[:created_at] }"
-end
     return result if result && result.created_at.to_i >= ( data[:created_at].to_i - 12 )
-puts "add"
+
     # create history
     record = {
       :o_id                        => data[:o_id],
