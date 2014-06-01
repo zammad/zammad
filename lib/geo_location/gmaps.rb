@@ -9,6 +9,10 @@ class GeoLocation::Gmaps
 
     result = JSON.parse( response.body )
 
+    return if !result
+    return if !result['results']
+    return if !result['results'].first
+
     lat = result['results'].first['geometry']['location']['lat']
     lng = result['results'].first['geometry']['location']['lng']
     latlng = [lat,lng]
