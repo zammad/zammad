@@ -19,10 +19,10 @@ class App.i18n
       _instance ?= new _i18nSingleton
     _instance.translateInline( string, args )
 
-  @translateTimestamp: ( args ) ->
+  @translateTimestamp: ( args, offset = 0 ) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton
-    _instance.timestamp( args )
+    _instance.timestamp( args, offset )
 
   @get: ->
     if _instance == undefined
@@ -170,13 +170,18 @@ class _i18nSingleton extends Spine.Module
       .replace(/>/g, '&gt;')
       .replace(/\x22/g, '&quot;')
 
-  timestamp: ( time ) =>
+  timestamp: ( time, offset ) =>
     s = ( num, digits ) ->
       while num.toString().length < digits
         num = "0" + num
       num
 
     timeObject = new Date(time)
+
+    # add timezone diff, needed for unit tests
+    if offset
+      timeObject = new Date( timeObject.getTime() + (timeObject.getTimezoneOffset() * 60000) )
+
     d = timeObject.getDate()
     m = timeObject.getMonth() + 1
     y = timeObject.getFullYear()

@@ -207,17 +207,17 @@ App.Delay.set( function() {
     test( "interval - test 1 - 1/2", function() {
 
       // check
-      equal( window.testInterval1, 3, 'interval - test 1' );
+      equal( window.testInterval1, 4, 'interval - test 1' );
       App.Interval.clear('interval-test1')
     });
   },
-  4400
+  5200
 );
 App.Delay.set( function() {
     test( "interval - test 1 - 2/2", function() {
 
       // check
-      equal( window.testInterval1, 3, 'interval - test after clear' );
+      equal( window.testInterval1, 4, 'interval - test after clear' );
     });
   },
   6500
@@ -237,17 +237,17 @@ App.Delay.set( function() {
     test( "interval - test 2 - 1/2", function() {
 
       // check
-      equal( window.testInterval2, 3, 'interval - test 2' );
+      equal( window.testInterval2, 4, 'interval - test 2' );
       App.Interval.clearLevel('someLevel')
     });
   },
-  4500
+  5200
 );
 App.Delay.set( function() {
     test( "interval - test 2 - 2/2", function() {
 
       // check
-      equal( window.testInterval2, 3, 'interval - test 2 - after clear' );
+      equal( window.testInterval2, 4, 'interval - test 2 - after clear' );
     });
   },
   6900
@@ -265,8 +265,10 @@ test( "i18n", function() {
   translated = App.i18n.translateContent('<test&now>//*äöüß');
   equal( translated, '&lt;test&amp;now&gt;//*äöüß', 'de - <test&now>//*äöüß' );
 
-  var timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z');
-  equal( timestamp, '06.11.2012 22:07', 'de - timestamp translated correctly' );
+  var time_local = new Date();
+  var offset = time_local.getTimezoneOffset();
+  var timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
+  equal( timestamp, '06.11.2012 21:07', 'de - timestamp translated correctly' );
 
   // en
   App.i18n.set('en');
@@ -276,8 +278,8 @@ test( "i18n", function() {
   translated = App.i18n.translateContent('<test&now>');
   equal( translated, '&lt;test&amp;now&gt;', 'en - <test&now>' );
 
-  timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z');
-  equal( timestamp, '2012-11-06 22:07', 'en - timestamp translated correctly' );
+  timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
+  equal( timestamp, '2012-11-06 21:07', 'en - timestamp translated correctly' );
 });
 
 // events
