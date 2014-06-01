@@ -1,3 +1,4 @@
+window.onload = function() {
 
 // ajax
 App.Ajax.request({
@@ -464,3 +465,4 @@ var authWithSession = function() {
   });
 }
 
+}
