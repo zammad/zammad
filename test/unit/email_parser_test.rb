@@ -371,6 +371,17 @@ Hof
           :to                 => 'info2@znuny.com',
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail21.box'),
+        :body_md5     => '9c08ff6ac8817e7dbea6d2ef04dc7bc3',
+        :params   => {
+          :from               => 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
+          :from_email         => 'pharmacy_affordable1@ertelecom.ru',
+          :from_display_name  => 'Viagra Super Force Online',
+          :subject            => 'World Best DRUGS Mall For a Reasonable Price.',
+          :to                 => 'info@znuny.nix',
+        },
+      },
     ]
 
     files.each { |file|
@@ -395,7 +406,7 @@ Hof
 
       # check attachments
       if file[:attachments]
-        attachment_count_config = file[:attachments].length 
+        attachment_count_config = file[:attachments].length
         attachment_count_email = 0
         file[:attachments].each { |attachment|
           attachment_count_email += 1
