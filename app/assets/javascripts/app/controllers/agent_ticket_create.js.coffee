@@ -361,6 +361,8 @@ class UserNew extends App.ControllerModal
         # force to reload object
         callbackReload = (user) ->
           realname = user.displayName()
+          if user.email
+            realname = "#{ realname } <#{ user.email }>"
           ui.create_screen.el.find('[name=customer_id]').val( user.id )
           ui.create_screen.el.find('[name=customer_id_autocompletion]').val( realname )
 

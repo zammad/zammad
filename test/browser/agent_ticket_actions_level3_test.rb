@@ -106,7 +106,7 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 5,
           },
           {
             :where        => :instance2,
@@ -122,7 +122,7 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 8,
+            :value   => 10,
           },
           {
             :where        => :instance2,
@@ -173,7 +173,7 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 8,
+            :value   => 14,
           },
 
           # check content in instance 2

@@ -4,6 +4,9 @@ require 'browser_test_helper'
 class AgentUserManageTest < TestCase
   def test_agent_user
     customer_user_email = 'customer-test-' + rand(999999).to_s + '@example.com'
+    firstname           = 'Customer Firstname'
+    lastname            = 'Customer Lastname'
+    fullname            = "#{ firstname } #{ lastname } <#{ customer_user_email }>"
     tests = [
       {
         :name     => 'create customer',
@@ -34,12 +37,12 @@ class AgentUserManageTest < TestCase
           {
             :execute => 'set',
             :css     => '.modal input[name="firstname"]',
-            :value   => 'Customer Firstname',
+            :value   => firstname,
           },
           {
             :execute => 'set',
             :css     => '.modal input[name="lastname"]',
-            :value   => 'Customer Lastname',
+            :value   => lastname,
           },
           {
             :execute => 'set',
@@ -66,7 +69,28 @@ class AgentUserManageTest < TestCase
           {
             :execute      => 'match',
             :css          => '.active input[name="customer_id_autocompletion"]',
-            :value        => 'Customer',
+            :value        => firstname,
+            :no_quote     => true,
+            :match_result => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.active input[name="customer_id_autocompletion"]',
+            :value        => lastname,
+            :no_quote     => true,
+            :match_result => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.active input[name="customer_id_autocompletion"]',
+            :value        => customer_user_email,
+            :no_quote     => true,
+            :match_result => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.active input[name="customer_id_autocompletion"]',
+            :value        => fullname,
             :no_quote     => true,
             :match_result => true,
           },
@@ -112,7 +136,7 @@ class AgentUserManageTest < TestCase
           {
             :execute      => 'match',
             :css          => '.active input[name="customer_id_autocompletion"]',
-            :value        => 'Customer',
+            :value        => firstname,
             :no_quote     => true,
             :match_result => false,
           },
@@ -149,7 +173,21 @@ class AgentUserManageTest < TestCase
           {
             :execute      => 'match',
             :css          => '.active input[name="customer_id_autocompletion"]',
-            :value        => 'Customer',
+            :value        => firstname,
+            :no_quote     => true,
+            :match_result => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.active input[name="customer_id_autocompletion"]',
+            :value        => lastname,
+            :no_quote     => true,
+            :match_result => true,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.active input[name="customer_id_autocompletion"]',
+            :value        => fullname,
             :no_quote     => true,
             :match_result => true,
           },
