@@ -25,7 +25,7 @@ Some Text',
         :data => 'From: me@example.com
 To: customer@example.com
 Subject: some subject
-X-Zammad-Priority: 3 high
+X-Zammad-Ticket-Priority: 3 high
 X-Zammad-Article-Sender: system
 x-Zammad-Article-Type: phone
 

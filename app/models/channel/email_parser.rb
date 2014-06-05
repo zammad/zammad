@@ -44,10 +44,10 @@ class Channel::EmailParser
     :x-zammad-customer-lastname  => '',
 
     # ticket headers
-    :x-zammad-group    => 'some_group',
-    :x-zammad-state    => 'some_state',
-    :x-zammad-priority => 'some_priority',
-    :x-zammad-owner    => 'some_owner_login',
+    :x-zammad-ticket-group    => 'some_group',
+    :x-zammad-ticket-state    => 'some_state',
+    :x-zammad-ticket-priority => 'some_priority',
+    :x-zammad-ticket-owner    => 'some_owner_login',
 
     # article headers
     :x-zammad-article-visibility => 'internal',
@@ -381,10 +381,10 @@ class Channel::EmailParser
 
         # x-headers lookup
         map = [
-          [ 'x-zammad-group',    Group,            'group_id',           'name'  ],
-          [ 'x-zammad-state',    Ticket::State,    'ticket_state_id',    'name'  ],
-          [ 'x-zammad-priority', Ticket::Priority, 'ticket_priority_id', 'name'  ],
-          [ 'x-zammad-owner',    User,             'owner_id',           'login' ],
+          [ 'x-zammad-ticket-group',    Group,            'group_id',           'name'  ],
+          [ 'x-zammad-ticket-state',    Ticket::State,    'ticket_state_id',    'name'  ],
+          [ 'x-zammad-ticket-priority', Ticket::Priority, 'ticket_priority_id', 'name'  ],
+          [ 'x-zammad-ticket-owner',    User,             'owner_id',           'login' ],
         ]
         object_lookup( ticket_attributes, map, mail )
 
