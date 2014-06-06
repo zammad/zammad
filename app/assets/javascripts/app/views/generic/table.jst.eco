@@ -11,7 +11,7 @@
       <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- @T( row.display ) %></th>
 <% end %>
 <% if @destroy: %>
-      <th class="span2"><%- @T('Destroy') %></th>
+      <th class="span2"><%- @T('Delete') %></th>
 <% end %>
     </tr>
   </thead>
@@ -60,7 +60,7 @@
     <td><%= object.updated_at %></td>
 -->
 <% if @destroy: %>
-    <td>    
+    <td>
       <a href="#" class="glyphicon glyphicon-trash" data-type="destroy"></a>
     </td>
 <% end %>
