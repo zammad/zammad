@@ -12,6 +12,7 @@ class App.PostmasterFilter extends App.Model
     { name: 'updated_at',   display: 'Updated',           type: 'time', readonly: 1 },
     { name: 'active',       display: 'Active',            tag: 'boolean', type: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
   ]
+  @configure_delete = true
   @configure_overview = [
     'name',
   ]

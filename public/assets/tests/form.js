@@ -386,7 +386,7 @@ test( "form postmaster filter", function() {
       subject: 'some subject',
     },
     set: {
-      to: 'some@address',
+      'x-zammad-ticket-priority': '3 high',
       'x-zammad-ticket-group': 'some group',
     },
   }
@@ -411,12 +411,12 @@ test( "form postmaster filter", function() {
       subject: 'some subject',
     },
     set: {
-      to: 'some@address',
+      'x-zammad-ticket-priority': '3 high',
       'x-zammad-ticket-group': 'some group',
     },
   };
   deepEqual( params, test_params, 'form param check' );
-  el.find('[name="set::to"]').next().click()
+  el.find('[name="set::x-zammad-ticket-priority"]').next().click()
   App.Delay.set( function() {
       test( "form param check after remove click", function() {
         params = App.ControllerForm.params( el )

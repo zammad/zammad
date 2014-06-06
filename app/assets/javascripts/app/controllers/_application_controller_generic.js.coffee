@@ -101,7 +101,6 @@ class App.ControllerGenericEdit extends App.ControllerModal
 class App.ControllerGenericIndex extends App.Controller
   events:
     'click [data-type=edit]':    'edit'
-    'click [data-type=destroy]': 'destroy'
     'click [data-type=new]':     'new'
 
   constructor: ->
@@ -195,13 +194,6 @@ class App.ControllerGenericIndex extends App.Controller
       genericObject: @genericObject
     )
 
-  destroy: (e) ->
-    e.preventDefault()
-    item = $(e.target).item( App[ @genericObject ] )
-    new DestroyConfirm(
-      item: item
-    )
-
   new: (e) ->
     e.preventDefault()
     new App.ControllerGenericNew(
@@ -209,7 +201,7 @@ class App.ControllerGenericIndex extends App.Controller
       genericObject: @genericObject
     )
 
-class DestroyConfirm extends App.ControllerModal
+class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   constructor: ->
     super
     @render()

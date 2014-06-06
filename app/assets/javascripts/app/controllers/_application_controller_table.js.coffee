@@ -79,7 +79,7 @@ class App.ControllerTable extends App.Controller
           header.push {
             name:    row
             display: row
-          }     
+          }
 
     # collect data of col. types
     dataTypesForCols = []
@@ -151,6 +151,17 @@ class App.ControllerTable extends App.Controller
 
     # convert to jquery object
     table = $(table)
+
+    # bind on delete dialog
+    if data.model && destroy
+      table.delegate('[data-type="destroy"]', 'click', (e) ->
+        e.preventDefault()
+        itemId = $(e.target).parents('tr').data('id')
+        item   = data.model.find(itemId)
+        new App.ControllerGenericDestroyConfirm(
+          item: item
+        )
+      )
 
     # enable checkbox bulk selection
     if data.checkbox

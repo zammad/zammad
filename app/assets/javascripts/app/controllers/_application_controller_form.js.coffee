@@ -258,7 +258,7 @@ class App.ControllerForm extends App.Controller
     # postmaster_match
     else if attribute.tag is 'postmaster_match'
       addItem = (key, displayName, el, defaultValue = '') =>
-        itemInput = $("<div>#{ displayName }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\"/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
+        itemInput = $("<div>#{ App.i18n.translateInline(displayName) }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\" required/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
 
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
@@ -307,11 +307,104 @@ class App.ControllerForm extends App.Controller
           value:    'body'
           name:     'Body'
         },
-        #{
-        #  value:    '-'
-        #  name:     ''
-        #  disable:  true
-        #},
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-any-recipient'
+          name:     'Any Recipient'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    ''
+          name:     '- ' + App.i18n.translateInline('expert settings') + ' -'
+          disable:  true
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-spam-flag'
+          name:     'X-Spam-Flag'
+        },
+        {
+          value:    'x-spam-level'
+          name:     'X-Spam-Level'
+        },
+        {
+          value:    'x-spam-score'
+          name:     'X-Spam-Score'
+        },
+        {
+          value:    'x-spam-status'
+          name:     'X-Spam-Status'
+        },
+        {
+          value:    'importance'
+          name:     'Importance'
+        },
+        {
+          value:    'x-priority'
+          name:     'X-Priority'
+        },
+
+        {
+          value:    'organization'
+          name:     'Organization'
+        },
+
+        {
+          value:    'x-original-to'
+          name:     'X-Original-To'
+        },
+        {
+          value:    'delivered-to'
+          name:     'Delivered-To'
+        },
+        {
+          value:    'envelope-to'
+          name:     'Envelope-To'
+        },
+        {
+          value:    'delivered-to'
+          name:     'Delivered-To'
+        },
+        {
+          value:    'return-path'
+          name:     'Return-Path'
+        },
+        {
+          value:    'mailing-list'
+          name:     'Mailing-List'
+        },
+        {
+          value:    'list-id'
+          name:     'List-Id'
+        },
+        {
+          value:    'list-archive'
+          name:     'List-Archive'
+        },
+        {
+          value:    'mailing-list'
+          name:     'Mailing-List'
+        },
+        {
+          value:    'auto-submitted'
+          name:     'Auto-Submitted'
+        },
+        {
+          value:    'x-loop'
+          name:     'X-Loop'
+        },
       ]
       for listItem in loopData
         listItem.value = "#{ attribute.name }::#{listItem.value}"
@@ -339,7 +432,7 @@ class App.ControllerForm extends App.Controller
     # postmaster_set
     else if attribute.tag is 'postmaster_set'
       addItem = (key, displayName, el, defaultValue = '') =>
-        itemInput = $("<div>#{ displayName }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\"/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
+        itemInput = $("<div>#{ App.i18n.translateInline(displayName) }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\"/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
 
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
@@ -369,31 +462,6 @@ class App.ControllerForm extends App.Controller
 
       # select shown attributes
       loopData = [
-        {
-          value:    'from'
-          name:     'From'
-        },
-        {
-          value:    'to'
-          name:     'To'
-        },
-        {
-          value:    'cc'
-          name:     'Cc'
-        },
-        {
-          value:    'subject'
-          name:     'Subject'
-        },
-        {
-          value:    'body'
-          name:     'Body'
-        },
-        {
-          value:    ''
-          name:     '-'
-          disable:  true
-        },
         {
           value:    'x-zammad-ticket-priority'
           name:     'Ticket Priority'
