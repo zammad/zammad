@@ -15,7 +15,7 @@ class App.ChannelEmail extends App.ControllerTabs
       },
       {
         name:       'Outbound',
-        target:     'c-outbound', 
+        target:     'c-outbound',
         controller: App.ChannelEmailOutbound,
       },
       {

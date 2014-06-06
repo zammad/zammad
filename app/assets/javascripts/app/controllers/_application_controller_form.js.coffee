@@ -255,6 +255,214 @@ class App.ControllerForm extends App.Controller
 
       item = $( App.view('generic/select')( attribute: attribute ) )
 
+    # postmaster_match
+    else if attribute.tag is 'postmaster_match'
+      addItem = (key, displayName, el, defaultValue = '') =>
+        itemInput = $("<div>#{ displayName }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\"/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
+
+        # remove on click
+        itemInput.find('.remove').bind('click', (e) ->
+          e.preventDefault()
+          key = $(e.target).prev().attr('name')
+          return if !key
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().remove()
+        )
+
+        # add new item
+        el.parent().parent().parent().find('.list').append(itemInput)
+        el.parent().parent().parent().find('.addSelection select').val('')
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+
+      # scaffold of match elements
+      item = $('
+        <div class="postmaster_match" style="margin-left: 40px;">
+          <div class="list"></div>
+          <hr>
+          <div>
+            <div class="addSelection"></div>
+            <div class="add"><a href="#" class="glyphicon glyphicon-plus"></a></div>
+          </div>
+        </div>')
+
+      # select shown attributes
+      loopData = [
+        {
+          value:    'from'
+          name:     'From'
+        },
+        {
+          value:    'to'
+          name:     'To'
+        },
+        {
+          value:    'cc'
+          name:     'Cc'
+        },
+        {
+          value:    'subject'
+          name:     'Subject'
+        },
+        {
+          value:    'body'
+          name:     'Body'
+        },
+        #{
+        #  value:    '-'
+        #  name:     ''
+        #  disable:  true
+        #},
+      ]
+      for listItem in loopData
+        listItem.value = "#{ attribute.name }::#{listItem.value}"
+      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true }
+      item.find('.addSelection').append( @formGenItem( add ) )
+
+      # bind add click
+      item.find('.add').bind('click', (e) ->
+        e.preventDefault()
+        name        = $(@).parent().parent().find('.addSelection').find('select').val()
+        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        return if !name
+        addItem( name, displayName, $(@) )
+      )
+
+      # show default values
+      loopDataValue = {}
+      if attribute.value
+        for key, value of attribute.value
+          displayName = key
+          for listItem in loopData
+            if listItem.value is "#{ attribute.name }::#{key}"
+              addItem( "#{ attribute.name }::#{key}", listItem.name, item.find('.add a'), value )
+
+    # postmaster_set
+    else if attribute.tag is 'postmaster_set'
+      addItem = (key, displayName, el, defaultValue = '') =>
+        itemInput = $("<div>#{ displayName }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\"/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
+
+        # remove on click
+        itemInput.find('.remove').bind('click', (e) ->
+          e.preventDefault()
+          key = $(e.target).prev().attr('name')
+          return if !key
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().remove()
+        )
+
+        # add new item
+        el.parent().parent().parent().find('.list').append(itemInput)
+        el.parent().parent().parent().find('.addSelection select').val('')
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+
+      # scaffold of perform elements
+      item = $('
+        <div class="perform_set" style="margin-left: 40px;">
+          <div class="list"></div>
+          <hr>
+          <div>
+            <div class="addSelection"></div>
+            <div class="add"><a href="#" class="glyphicon glyphicon-plus"></a></div>
+          </div>
+        </div>')
+
+
+      # select shown attributes
+      loopData = [
+        {
+          value:    'from'
+          name:     'From'
+        },
+        {
+          value:    'to'
+          name:     'To'
+        },
+        {
+          value:    'cc'
+          name:     'Cc'
+        },
+        {
+          value:    'subject'
+          name:     'Subject'
+        },
+        {
+          value:    'body'
+          name:     'Body'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-zammad-ticket-priority'
+          name:     'Ticket Priority'
+        },
+        {
+          value:    'x-zammad-ticket-state'
+          name:     'Ticket State'
+        },
+        {
+          value:    'x-zammad-ticket-customer'
+          name:     'Ticket Customer'
+        },
+        {
+          value:    'x-zammad-ticket-group'
+          name:     'Ticket Group'
+        },
+        {
+          value:    'x-zammad-ticket-owner'
+          name:     'Ticket Owner'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-zammad-article-visibility'
+          name:     'Article Visibility'
+        },
+        {
+          value:    'x-zammad-article-type'
+          name:     'Article Type'
+        },
+        {
+          value:    'x-zammad-article-sender'
+          name:     'Article Sender'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-zammad-ignore'
+          name:     'Ignore Message'
+        },
+      ]
+      for listItem in loopData
+        listItem.value = "#{ attribute.name }::#{listItem.value}"
+      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true }
+      item.find('.addSelection').append( @formGenItem( add ) )
+
+      item.find('.add').bind('click', (e) ->
+        e.preventDefault()
+        name        = $(@).parent().parent().find('.addSelection').find('select').val()
+        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        return if !name
+        addItem( name, displayName, $(@) )
+      )
+
+      # show default values
+      loopDataValue = {}
+      if attribute.value
+        for key, value of attribute.value
+          displayName = key
+          for listItem in loopData
+            if listItem.value is "#{ attribute.name }::#{key}"
+              addItem( "#{ attribute.name }::#{key}", listItem.name, item.find('.add a'), value )
+
     # select
     else if attribute.tag is 'input_select'
       item = $('<div class="input_select"></div>')
@@ -1231,27 +1439,27 @@ class App.ControllerForm extends App.Controller
     param = {}
 
     # create jquery object if not already exists
-    if typeof form isnt 'function'
+    if form instanceof jQuery
+      # do nothing
+    else
       form = $(form)
 
-    # find form based on sub elements
-    if form.children()[0]
-      form = form.children().parents('form')
-
-    # find form based on parents next <form>
-    else if form.is('form')
+    # find form if current is <form>
+    if form.is('form')
       form = form
+
+    # find form based on sub elements
+    else if form.find('form')[0]
+      form = $( form.find('form')[0] )
 
     # find form based on parents next <form>
     else if form.parents('form')[0]
-      form = form.parents('form')
+      form = $( form.parents('form')[0] )
 
-    # find form based on parents next <form>, not really good!
-    else if form.parents().find('form')[0]
-      form = form.parents().find('form')
     else
       App.Log.error 'ControllerForm', 'no form found!', form
 
+    # get form elements
     array = form.serializeArray()
 
     # 1:1 and boolean params

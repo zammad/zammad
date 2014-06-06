@@ -367,3 +367,105 @@ test( "form dependend fields check", function() {
   deepEqual( params, test_params, 'form param check' );
 });
 
+test( "form postmaster filter", function() {
+
+// check match area
+
+// check set area
+
+// add match rule
+
+// add set rule
+
+  $('#forms').append('<hr><h1>form postmaster filter</h1><form id="form5"></form>')
+  var el = $('#form5')
+  var defaults = {
+    input2: 'some name',
+    match: {
+      from: 'some@address',
+      subject: 'some subject',
+    },
+    set: {
+      to: 'some@address',
+      'x-zammad-ticket-group': 'some group',
+    },
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default' },
+        { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default' },
+        { name: 'match',  display: 'Match',  tag: 'postmaster_match', null: false, default: false},
+        { name: 'set',    display: 'Set',    tag: 'postmaster_set', null: false, default: false},
+      ],
+    },
+    params: defaults,
+  });
+  params = App.ControllerForm.params( el )
+  test_params = {
+    input1: "some not used default",
+    input2: "some name",
+    match: {
+      from: 'some@address',
+      subject: 'some subject',
+    },
+    set: {
+      to: 'some@address',
+      'x-zammad-ticket-group': 'some group',
+    },
+  };
+  deepEqual( params, test_params, 'form param check' );
+  el.find('[name="set::to"]').next().click()
+  App.Delay.set( function() {
+      test( "form param check after remove click", function() {
+        params = App.ControllerForm.params( el )
+        test_params = {
+          input1: "some not used default",
+          input2: "some name",
+          match: {
+            from: 'some@address',
+            subject: 'some subject',
+          },
+          set: {
+            'x-zammad-ticket-group': 'some group',
+          },
+        };
+        deepEqual( params, test_params, 'form param check' );
+      });
+    },
+    1000
+  );
+
+});
+
+test( "form selector", function() {
+  $('#forms').append('<hr><h1>form selector</h1><div><form id="form6"></form></div>')
+  var el = $('#form6')
+  var defaults = {
+    input2: 'some name66',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default33' },
+        { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default' },
+      ],
+    },
+    params: defaults,
+  });
+  test_params = {
+    input1: "some not used default33",
+    input2: "some name66",
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+
+  params = App.ControllerForm.params( el.find('input') )
+  deepEqual( params, test_params, 'form param check via $("#form").find("input")' );
+
+  params = App.ControllerForm.params( el.parent() )
+  deepEqual( params, test_params, 'form param check via $("#form").parent()' );
+
+});
