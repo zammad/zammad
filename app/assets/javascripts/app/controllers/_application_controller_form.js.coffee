@@ -90,13 +90,13 @@ class App.ControllerForm extends App.Controller
 
   # colection as relation
   attribute_config = {
-    name:       'ticket_priority_id'
+    name:       'priority_id'
     display:    'Priority'
     tag:        'select'
     multiple:   false
     null:       false
     relation:   'TicketPriority'
-    default:    defaults['ticket_priority_id']
+    default:    defaults['priority_id']
     translate:  true
     class:      'medium'
   }
@@ -104,7 +104,7 @@ class App.ControllerForm extends App.Controller
 
   # colection as options
   attribute_config = {
-    name:       'ticket_priority_id'
+    name:       'priority_id'
     display:    'Priority'
     tag:        'select'
     multiple:   false
@@ -476,12 +476,12 @@ class App.ControllerForm extends App.Controller
       # select shown attributes
       loopData = [
         {
-          value:    'x-zammad-ticket-ticket_priority_id'
+          value:    'x-zammad-ticket-priority_id'
           name:     'Ticket Priority'
           relation: 'TicketPriority'
         },
         {
-          value:    'x-zammad-ticket-ticket_state_id'
+          value:    'x-zammad-ticket-state_id'
           name:     'Ticket State'
           relation: 'TicketState'
         },
@@ -509,12 +509,12 @@ class App.ControllerForm extends App.Controller
           options:  { true: 'Yes', false: 'No'}
         },
         {
-          value:    'x-zammad-article-ticket_article_type_id'
+          value:    'x-zammad-article-type_id'
           name:     'Article Type'
           relation: 'TicketArticleType'
         },
         {
-          value:    'x-zammad-article-ticket_article_sender_id'
+          value:    'x-zammad-article-sender_id'
           name:     'Article Sender'
           relation: 'TicketArticleSender'
         },
@@ -866,9 +866,9 @@ class App.ControllerForm extends App.Controller
               } )
               all
           }
-        else if key is 'tickets.ticket_state_id'
+        else if key is 'tickets.state_id'
           attribute_config = {
-            name:       attribute.name + '::tickets.ticket_state_id'
+            name:       attribute.name + '::tickets.state_id'
             display:    'State'
             tag:        'select'
             multiple:   true
@@ -880,9 +880,9 @@ class App.ControllerForm extends App.Controller
             class:      'medium'
             remove:     true
           }
-        else if key is 'tickets.ticket_priority_id'
+        else if key is 'tickets.priority_id'
           attribute_config = {
-            name:       attribute.name + '::tickets.ticket_priority_id'
+            name:       attribute.name + '::tickets.priority_id'
             display:    'Priority'
             tag:        'select'
             multiple:   true
@@ -1033,13 +1033,13 @@ class App.ControllerForm extends App.Controller
             disable:  false
           },
           {
-            value:    'tickets.ticket_state_id'
+            value:    'tickets.state_id'
             name:     'State'
             selected: false
             disable:  false
           },
           {
-            value:    'tickets.ticket_priority_id'
+            value:    'tickets.priority_id'
             name:     'Priority'
             selected: true
             disable:  false

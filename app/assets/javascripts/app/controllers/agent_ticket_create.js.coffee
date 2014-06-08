@@ -145,19 +145,19 @@ class App.TicketCreate extends App.Controller
 
     # set defaults
     defaults =
-      ticket_state_id:    App.TicketState.findByAttribute( 'name', 'open' ).id
-      ticket_priority_id: App.TicketPriority.findByAttribute( 'name', '2 normal' ).id
+      state_id:    App.TicketState.findByAttribute( 'name', 'open' ).id
+      priority_id: App.TicketPriority.findByAttribute( 'name', '2 normal' ).id
 
     # generate form
     configure_attributes = [
-      { name: 'customer_id',        display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo, source: @apiPath + '/users/search', minLengt: 2 },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
-      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
-      { name: 'tags',               display: 'Tags',     tag: 'tag',      type: 'text', null: true, default: defaults['tags'], class: 'span7', },
-      { name: 'subject',            display: 'Subject',  tag: 'input',    type: 'text', limit: 200, null: false, default: defaults['subject'], class: 'span7', },
-      { name: 'body',               display: 'Text',     tag: 'textarea', rows: 8,                  null: false, default: defaults['body'],    class: 'span7', upload: true },
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['ticket_state_id'],    translate: true, class: 'medium' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['ticket_priority_id'], translate: true, class: 'medium' },
+      { name: 'customer_id',  display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo, source: @apiPath + '/users/search', minLengt: 2 },
+      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
+      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
+      { name: 'tags',         display: 'Tags',     tag: 'tag',      type: 'text', null: true, default: defaults['tags'], class: 'span7', },
+      { name: 'subject',      display: 'Subject',  tag: 'input',    type: 'text', limit: 200, null: false, default: defaults['subject'], class: 'span7', },
+      { name: 'body',         display: 'Text',     tag: 'textarea', rows: 8,                  null: false, default: defaults['body'],    class: 'span7', upload: true },
+      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['state_id'],    translate: true, class: 'medium' },
+      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['priority_id'], translate: true, class: 'medium' },
     ]
     @html App.view('agent_ticket_create')(
       head:  'New Ticket'
@@ -246,23 +246,23 @@ class App.TicketCreate extends App.Controller
     # create article
     if sender.name is 'Customer'
       params['article'] = {
-        to:                       (group && group.name) || ''
-        from:                     params.customer_id_autocompletion
-        subject:                  params.subject
-        body:                     params.body
-        ticket_article_type_id:   type.id
-        ticket_article_sender_id: sender.id
-        form_id:                  @form_id
+        to:         (group && group.name) || ''
+        from:       params.customer_id_autocompletion
+        subject:    params.subject
+        body:       params.body
+        type_id:    type.id
+        sender_id:  sender.id
+        form_id:    @form_id
       }
     else
       params['article'] = {
-        from:                     (group && group.name) || ''
-        to:                       params.customer_id_autocompletion
-        subject:                  params.subject
-        body:                     params.body
-        ticket_article_type_id:   type.id
-        ticket_article_sender_id: sender.id
-        form_id:                  @form_id
+        from:       (group && group.name) || ''
+        to:         params.customer_id_autocompletion
+        subject:    params.subject
+        body:       params.body
+        type_id:    type.id
+        sender_id:  sender.id
+        form_id:    @form_id
       }
 
     object.load(params)

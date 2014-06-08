@@ -197,7 +197,7 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where   => :instance1,
             :execute => 'select',
-            :css     => '.active .ticket-answer select[name="ticket_article_type_id"]',
+            :css     => '.active .ticket-answer select[name="type_id"]',
             :value   => 'note',
           },
           {

@@ -57,10 +57,10 @@ class Index extends App.ControllerContent
 
     # set defaults
     defaults = template['options'] || {}
-    if !( 'ticket_state_id' of defaults )
-      defaults['ticket_state_id'] = App.TicketState.findByAttribute( 'name', 'new' )
-    if !( 'ticket_priority_id' of defaults )
-      defaults['ticket_priority_id'] = App.TicketPriority.findByAttribute( 'name', '2 normal' )
+    if !( 'state_id' of defaults )
+      defaults['state_id'] = App.TicketState.findByAttribute( 'name', 'new' )
+    if !( 'priority_id' of defaults )
+      defaults['priority_id'] = App.TicketPriority.findByAttribute( 'name', '2 normal' )
 
     groupFilter = (collection, type) =>
 
@@ -87,14 +87,14 @@ class Index extends App.ControllerContent
           return item if item && _.contains( group_ids, item.id.toString() )
       )
 
-    # generate form    
+    # generate form
     configure_attributes = [
       { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, filter: groupFilter, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
 #      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
       { name: 'subject',            display: 'Subject',  tag: 'input',    type: 'text', limit: 100, null: false, default: defaults['subject'], class: 'span7', },
       { name: 'body',               display: 'Text',     tag: 'textarea', rows: 10,                  null: false, default: defaults['body'],    class: 'span7', upload: true },
-#      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['ticket_state_id'],    translate: true, class: 'medium' },
-#      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['ticket_priority_id'], translate: true, class: 'medium' },
+#      { name: 'state_id',    display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['state_id'],    translate: true, class: 'medium' },
+#      { name: 'priority_id', display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['priority_id'], translate: true, class: 'medium' },
     ]
     @html App.view('customer_ticket_create')( head: 'New Ticket' )
 
@@ -129,11 +129,11 @@ class Index extends App.ControllerContent
 
     # set prio
     priority = App.TicketPriority.findByAttribute( 'name', '2 normal' )
-    params.ticket_priority_id = priority.id
+    params.priority_id = priority.id
 
     # set state
     state = App.TicketState.findByAttribute( 'name', 'new' )
-    params.ticket_state_id = state.id
+    params.state_id = state.id
 
     # fillup params
     if !params.title
@@ -147,17 +147,17 @@ class Index extends App.ControllerContent
     sender = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
     type   = App.TicketArticleType.findByAttribute( 'name', 'web' )
     if params.group_id
-      group  = App.Group.find( params.group_id )
+      group = App.Group.find( params.group_id )
 
     # create article
     params['article'] = {
-      from:                     "#{ @Session.get('firstname') } #{ @Session.get('lastname') }"
-      to:                       (group && group.name) || ''
-      subject:                  params.subject
-      body:                     params.body
-      ticket_article_type_id:   type.id
-      ticket_article_sender_id: sender.id
-      form_id:                  @form_id
+      from:       "#{ @Session.get('firstname') } #{ @Session.get('lastname') }"
+      to:         (group && group.name) || ''
+      subject:    params.subject
+      body:       params.body
+      type_id:    type.id
+      sender_id:  sender.id
+      form_id:    @form_id
     }
 
     object.load(params)
@@ -172,7 +172,7 @@ class Index extends App.ControllerContent
       @formValidate( form: e.target, errors: errors )
 
     # save ticket, create article
-    else 
+    else
 
       # disable form
       @formDisable(e)

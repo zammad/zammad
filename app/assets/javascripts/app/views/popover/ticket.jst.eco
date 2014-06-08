@@ -5,10 +5,10 @@
   </tr>
   <tr>
     <td><%- @P( @ticket.group ) %></td>
-    <td><%- @T( @ticket.ticket_state.name ) %></td>
+    <td><%- @T( @ticket.state.name ) %></td>
   </tr>
   <tr>
-    <td><%- @T( @ticket.ticket_priority.name ) %></td>
+    <td><%- @T( @ticket.priority.name ) %></td>
     <td></td>
   </tr>
   <tr>

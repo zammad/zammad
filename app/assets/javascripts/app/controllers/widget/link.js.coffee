@@ -41,7 +41,7 @@ class App.WidgetLink extends App.ControllerDrox
 
       if item['link_object'] is 'Ticket'
         ticket = App.Ticket.retrieve( item['link_object_value'] )
-        if ticket.ticket_state.name is 'merged'
+        if ticket.state.name is 'merged'
           ticket.css = 'merged'
         list[ item['link_type'] ].push ticket
 

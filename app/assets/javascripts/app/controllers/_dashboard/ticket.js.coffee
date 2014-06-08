@@ -143,10 +143,10 @@ class Settings extends App.ControllerModal
       overview: @overview,
     )
     @configure_attributes_article = [
-#      { name: 'from',                     display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
-#      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-#      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'pull-left' },
-#      { name: 'internal',                 display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'pull-left' },
+#      { name: 'from',      display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
+#      { name: 'to',        display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+#      { name: 'type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'pull-left' },
+#      { name: 'internal',  display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'pull-left' },
       {
         name:     'per_page',
         display:  'Items per page',
@@ -163,7 +163,7 @@ class Settings extends App.ControllerModal
         class: 'medium',
 #        item_class: 'pull-left',
       },
-      { 
+      {
         name:    'attributes',
         display: 'Attributes',
         tag:     'checkbox',
@@ -174,8 +174,8 @@ class Settings extends App.ControllerModal
           number:                 'Number'
           title:                  'Title'
           customer:               'Customer'
-          ticket_state:           'State'
-          ticket_priority:        'Priority'
+          state:                  'State'
+          priority:               'Priority'
           group:                  'Group'
           owner:                  'Owner'
           created_at:             'Age'
@@ -190,7 +190,7 @@ class Settings extends App.ControllerModal
         class:      'medium',
 #        item_class: 'pull-left',
       },
-      { 
+      {
         name:    'order_by',
         display: 'Order',
         tag:     'select',
@@ -201,8 +201,8 @@ class Settings extends App.ControllerModal
           number:                 'Number'
           title:                  'Title'
           customer:               'Customer'
-          ticket_state:           'State'
-          ticket_priority:        'Priority'
+          state:                  'State'
+          priority:               'Priority'
           group:                  'Group'
           owner:                  'Owner'
           created_at:             'Age'
@@ -216,7 +216,7 @@ class Settings extends App.ControllerModal
         },
         class:      'medium',
       },
-      { 
+      {
         name:    'order_by_direction',
         display: 'Direction',
         tag:     'select',

@@ -336,25 +336,25 @@ class Edit extends App.Controller
     )
 
     @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left'  },
-      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left'  },
+      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left' },
     ]
     if @isRole('Customer')
       @configure_attributes_ticket = [
-        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+        { name: 'state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
+        { name: 'priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
       ]
 
     @configure_attributes_article = [
-      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium' },
-      { name: 'internal',                 display: 'Visibility',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
-      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-      { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-#      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-      { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
+      { name: 'type_id',      display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium' },
+      { name: 'internal',     display: 'Visibility',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
+      { name: 'to',           display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+      { name: 'cc',           display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+#      { name: 'subject',      display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
+      { name: 'in_reply_to',  display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+      { name: 'body',         display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
     ]
     if @isRole('Customer')
       @configure_attributes_article = [
@@ -390,7 +390,7 @@ class Edit extends App.Controller
       dependency: [
         {
           bind: {
-            name:     'ticket_article_type_id'
+            name:     'type_id'
             relation: 'TicketArticleType'
             value:    ['email']
           },
@@ -401,7 +401,7 @@ class Edit extends App.Controller
         },
         {
           bind: {
-            name:     'ticket_article_type_id'
+            name:     'type_id'
             relation: 'TicketArticleType'
             value:    ['note', 'twitter status', 'twitter direct-message']
           },
@@ -450,14 +450,14 @@ class Edit extends App.Controller
 
     # find sender_id
     if @isRole('Customer')
-      sender       = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-      article_type = App.TicketArticleType.findByAttribute( 'name', 'web' )
-      params.ticket_article_type_id   = article_type.id
-      params.ticket_article_sender_id = sender.id
+      sender            = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+      article_type      = App.TicketArticleType.findByAttribute( 'name', 'web' )
+      params.type_id    = article_type.id
+      params.sender_id  = sender.id
     else
-      sender       = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-      article_type = App.TicketArticleType.find( params['ticket_article_type_id'] )
-      params.ticket_article_sender_id = sender.id
+      sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+      article_type      = App.TicketArticleType.find( params['type_id'] )
+      params.sender_id  = sender.id
 
     # update ticket
     ticket_update = {}
@@ -641,16 +641,16 @@ class ArticleView extends App.Controller
     e.preventDefault()
     article_id   = $(e.target).parents('[data-id]').data('id')
     article      = App.TicketArticle.find( article_id )
-    article_type = App.TicketArticleType.find( article.ticket_article_type_id )
+    article_type = App.TicketArticleType.find( article.type_id )
     customer     = App.User.find( article.created_by_id )
 
     # update form
     @checkIfSignatureIsNeeded(article_type)
 
     # preselect article type
-    @ui.el.find('[name="ticket_article_type_id"]').find('option:selected').removeAttr('selected')
-    @ui.el.find('[name="ticket_article_type_id"]').find('[value="' + article_type.id + '"]').attr('selected',true)
-    @ui.el.find('[name="ticket_article_type_id"]').trigger('change')
+    @ui.el.find('[name="type_id"]').find('option:selected').removeAttr('selected')
+    @ui.el.find('[name="type_id"]').find('[value="' + article_type.id + '"]').attr('selected',true)
+    @ui.el.find('[name="type_id"]').trigger('change')
 
     # empty form
     #@ui.el.find('[name="to"]').val('')

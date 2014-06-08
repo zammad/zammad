@@ -68,4 +68,4 @@ module Sessions::Backend::Collections
     }
   end
 
-end 
+end

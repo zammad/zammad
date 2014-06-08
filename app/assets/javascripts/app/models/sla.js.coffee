@@ -25,11 +25,11 @@ class App.Sla extends App.Model
       nulloption: true
       translate:  true
       options:
-        customer:         'Customer'
-        ticket_state:     'State'
-        ticket_priority:  'Priority'
-        group:            'Group'
-        owner:            'Owner'
+        customer:  'Customer'
+        state:     'State'
+        priority:  'Priority'
+        group:     'Group'
+        owner:     'Owner'
       class:   'span4'
     },
     { name: 'updated_at',          display: 'Updated',             type: 'time', readonly: 1 },

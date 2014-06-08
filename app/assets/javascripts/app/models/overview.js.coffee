@@ -15,15 +15,15 @@ class App.Overview extends App.Model
       name:    'view::s'
       display: 'Attributes'
       tag:     'checkbox'
-      default: ['number', 'title', 'ticket_state', 'created_at']
+      default: ['number', 'title', 'state', 'created_at']
       null:    false
       translate: true
       options:
         number:                 'Number'
         title:                  'Title'
         customer:               'Customer'
-        ticket_state:           'State'
-        ticket_priority:        'Priority'
+        state:                  'State'
+        priority:               'Priority'
         group:                  'Group'
         owner:                  'Owner'
         created_at:             'Age'
@@ -47,8 +47,8 @@ class App.Overview extends App.Model
         number:                 'Number'
         title:                  'Title'
         customer:               'Customer'
-        ticket_state:           'State'
-        ticket_priority:        'Priority'
+        state:                  'State'
+        priority:               'Priority'
         group:                  'Group'
         owner:                  'Owner'
         created_at:             'Age'
@@ -82,8 +82,8 @@ class App.Overview extends App.Model
       translate:  true
       options:
         customer:               'Customer'
-        ticket_state:           'State'
-        ticket_priority:        'Priority'
+        state:                  'State'
+        priority:               'Priority'
         group:                  'Group'
         owner:                  'Owner'
       class:   'span4'

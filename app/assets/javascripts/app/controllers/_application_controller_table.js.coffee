@@ -23,8 +23,8 @@ class App.ControllerTable extends App.Controller
         { name: 'number',                 link: true }
         { name: 'title',                  link: true }
         { name: 'customer',               class: 'user-popover', data: { id: true } }
-        { name: 'ticket_state',           translate: true }
-        { name: 'ticket_priority',        translate: true }
+        { name: 'state',                  translate: true }
+        { name: 'priority',               translate: true }
         { name: 'group' },
         { name: 'owner',                  class: 'user-popover', data: { id: true } }
         { name: 'created_at',             callback: @frontendTime }

@@ -218,7 +218,7 @@ class Table extends App.ControllerContent
     if @el.find('.table-overview').find('[name="bulk"]:checked').length isnt 0
         @el.find('.bulk-action').removeClass('hide')
 
-    # show/hide bulk action    
+    # show/hide bulk action
     @el.find('.table-overview').delegate('[name="bulk"], [name="bulk_all"]', 'click', (e) =>
       if @el.find('.table-overview').find('[name="bulk"]:checked').length == 0
 
@@ -253,10 +253,10 @@ class Table extends App.ControllerContent
 
   bulk_form: =>
     @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left'  },
-      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
+      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
+      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left'  },
+      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left' },
     ]
 
     # render init page
@@ -359,10 +359,10 @@ class Settings extends App.ControllerModal
       overview: @overview,
     )
     @configure_attributes_article = [
-#      { name: 'from',                     display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
-#      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-#      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'pull-left' },
-#      { name: 'internal',                 display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'pull-left' },
+#      { name: 'from',        display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
+#      { name: 'to',          display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
+#      { name: 'type_id',     display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'pull-left' },
+#      { name: 'internal',    display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'pull-left' },
       {
         name:     'per_page'
         display:  'Items per page'
@@ -392,8 +392,8 @@ class Settings extends App.ControllerModal
           number:                 'Number'
           title:                  'Title'
           customer:               'Customer'
-          ticket_state:           'State'
-          ticket_priority:        'Priority'
+          state:                  'State'
+          priority:               'Priority'
           group:                  'Group'
           owner:                  'Owner'
           created_at:             'Age'
@@ -406,7 +406,7 @@ class Settings extends App.ControllerModal
           article_count:          'Article Count'
         class:      'medium'
       },
-      { 
+      {
         name:    'order_by'
         display: 'Order'
         tag:     'select'
@@ -417,8 +417,8 @@ class Settings extends App.ControllerModal
           number:                 'Number'
           title:                  'Title'
           customer:               'Customer'
-          ticket_state:           'State'
-          ticket_priority:        'Priority'
+          state:                  'State'
+          priority:               'Priority'
           group:                  'Group'
           owner:                  'Owner'
           created_at:             'Age'
@@ -431,7 +431,7 @@ class Settings extends App.ControllerModal
           article_count:          'Article Count'
         class:   'medium'
       },
-      { 
+      {
         name:    'order_by_direction'
         display: 'Direction'
         tag:     'select'
@@ -443,7 +443,7 @@ class Settings extends App.ControllerModal
           DESC:  'down'
         class:   'medium'
       },
-      { 
+      {
         name:    'group_by'
         display: 'Group by'
         tag:     'select'
@@ -453,8 +453,8 @@ class Settings extends App.ControllerModal
         translate:  true
         options:
           customer:               'Customer'
-          ticket_state:           'State'
-          ticket_priority:        'Priority'
+          state:           'State'
+          priority:        'Priority'
           group:                  'Group'
           owner:                  'Owner'
         class:   'medium'
@@ -467,7 +467,7 @@ class Settings extends App.ControllerModal
 #        null: false,
 #        relation: 'TicketArticleType',
 #        default: '9',
-#        class: 'medium', 
+#        class: 'medium',
 #        item_class: 'pull-left',
 #      },
     ]

@@ -39,7 +39,7 @@ class AgentTicketActionLevel1Test < TestCase
           # update ticket
           {
             :execute => 'select',
-            :css     => '.active select[name="ticket_article_type_id"]',
+            :css     => '.active select[name="type_id"]',
             :value   => 'note',
           },
           {
@@ -94,7 +94,7 @@ class AgentTicketActionLevel1Test < TestCase
           # update ticket
           {
             :execute => 'select',
-            :css     => '.content_permanent.active select[name="ticket_article_type_id"]',
+            :css     => '.content_permanent.active select[name="type_id"]',
             :value   => 'note',
           },
           {
