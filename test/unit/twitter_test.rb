@@ -140,7 +140,7 @@ class TwitterTest < ActiveSupport::TestCase
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
-    sleep 5
+    sleep 10
 
     hash  = '#citheo44' + rand(9999).to_s
     text  = 'How about the details? ' + hash
@@ -154,7 +154,7 @@ class TwitterTest < ActiveSupport::TestCase
     article = nil
     (1..4).each {|loop|
       next if article
-      sleep 15
+      sleep 25
 
       Channel.fetch
 

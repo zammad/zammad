@@ -203,6 +203,11 @@ Some Text',
   end
 
   test 'process with postmaster filter' do
+    group = Group.create_if_not_exists(
+      :name => 'Test Group',
+      :created_by_id => 1,
+      :updated_by_id => 1,
+    )
     PostmasterFilter.destroy_all
     PostmasterFilter.create(
       :name => 'not used',
@@ -223,7 +228,7 @@ Some Text',
         :from => 'me@example.com',
       },
       :perform => {
-        'X-Zammad-Ticket-group_id' => 2,
+        'X-Zammad-Ticket-group_id' => group.id,
         'x-Zammad-Article-Internal' => true,
       },
       :channel       => 'email',
@@ -256,7 +261,7 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :group                => 'Twitter',
+            :group                => group.name,
             :ticket_priority       => '2 normal',
             :title                 => 'some subject',
           },
