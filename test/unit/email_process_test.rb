@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class EmailProcessTest < ActiveSupport::TestCase
-  test 'process trusted' do
+  test 'process simple' do
     files = [
       {
         :data => 'From: me@example.com
@@ -10,39 +10,8 @@ To: customer@example.com
 Subject: some subject
 
 Some Text',
+        :trusted => false,
         :success => true,
-      },
-      {
-        :data => 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-X-Zammad-Ignore: true
-
-Some Text',
-        :success => false,
-      },
-      {
-        :data => 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-X-Zammad-Ticket-Ticket_Priority: 3 high
-X-Zammad-Article-Ticket_Article_Sender: System
-x-Zammad-Article-Ticket_Article_Type: phone
-x-Zammad-Article-Internal: true
-
-Some Text',
-        :success => true,
-        :result => {
-          0 => {
-            :ticket_priority       => '3 high',
-            :title                 => 'some subject',
-          },
-          1 => {
-            :ticket_article_sender => 'System',
-            :ticket_article_type   => 'phone',
-            :internal              => true,
-          },
-        },
       },
       {
         :data => "From: me@example.com
@@ -50,6 +19,7 @@ To: customer@example.com
 Subject: äöü some subject
 
 Some Textäöü",
+        :trusted => false,
         :success => true,
         :result => {
           0 => {
@@ -145,6 +115,7 @@ Subject: Subject: =?utf-8?B?44CQ5LiT5Lia5Li65oKo5rOo5YaM6aaZ5riv5Y+K5rW35aSW5YWs
         =?utf-8?B?5YWs5Y+46Zmi5aOr5bel5L2c56uZ5pel5YmN5q2j5byP5bu6Li4uW+ivpue7hl0=?=
 
 Some Text",
+        :trusted => false,
         :success => true,
         :result => {
           0 => {
@@ -159,33 +130,46 @@ Some Text",
         },
       },
     ]
+    process(files)
+  end
+  test 'process trusted' do
+    files = [
+      {
+        :data => 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+X-Zammad-Ignore: true
 
-    files.each { |file|
-      parser = Channel::EmailParser.new
-      result = parser.process( { :trusted => true }, file[:data] )
-      if file[:success] && result[1]
-        assert( true )
-        if file[:result]
-          [ 0, 1, 2 ].each { |level|
-            if file[:result][level]
-              file[:result][level].each { |key, value|
-                if result[level].send(key).respond_to?('name')
-                  assert_equal( result[level].send(key).name, value.to_s)
-                else
-                  assert_equal( result[level].send(key), value)
-                end
-              }
-            end
-          }
-        end
-      elsif !file[:success] && result == true
-        assert( true )
-      elsif !file[:success] && result[1]
-        assert( false, 'ticket should not be created' )
-      else
-        assert( false, 'UNKNOWN!' )
-      end
-    }
+Some Text',
+        :trusted => true,
+        :success => false,
+      },
+      {
+        :data => 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+X-Zammad-Ticket-Ticket_Priority: 3 high
+X-Zammad-Article-Ticket_Article_Sender: System
+x-Zammad-Article-Ticket_Article_Type: phone
+x-Zammad-Article-Internal: true
+
+Some Text',
+        :trusted => true,
+        :success => true,
+        :result => {
+          0 => {
+            :ticket_priority       => '3 high',
+            :title                 => 'some subject',
+          },
+          1 => {
+            :ticket_article_sender => 'System',
+            :ticket_article_type   => 'phone',
+            :internal              => true,
+          },
+        },
+      },
+    ]
+    process(files)
   end
 
   test 'process not trusted' do
@@ -200,6 +184,7 @@ x-Zammad-Article-Ticket_Article_Type: phone
 x-Zammad-Article-Internal: true
 
 Some Text',
+        :trusted => false,
         :success => true,
         :result => {
           0 => {
@@ -214,28 +199,131 @@ Some Text',
         },
       },
     ]
+    process(files)
+  end
+
+  test 'process with postmaster filter' do
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create(
+      :name => 'not used',
+      :match => {
+        :from => 'nobody@example.com',
+      },
+      :perform => {
+        'X-Zammad-Ticket-Ticket_Priority' => '3 high',
+      },
+      :channel       => 'email',
+      :active        => true,
+      :created_by_id => 1,
+      :updated_by_id => 1,
+    )
+    PostmasterFilter.create(
+      :name => 'used',
+      :match => {
+        :from => 'me@example.com',
+      },
+      :perform => {
+        'X-Zammad-Ticket-group_id' => 2,
+        'x-Zammad-Article-Internal' => true,
+      },
+      :channel       => 'email',
+      :active        => true,
+      :created_by_id => 1,
+      :updated_by_id => 1,
+    )
+    PostmasterFilter.create(
+      :name => 'used x-any-recipient',
+      :match => {
+        'x-any-recipient' => 'any@example.com',
+      },
+      :perform => {
+        'X-Zammad-Ticket-group_id' => 2,
+        'x-Zammad-Article-Internal' => true,
+      },
+      :channel       => 'email',
+      :active        => true,
+      :created_by_id => 1,
+      :updated_by_id => 1,
+    )
+    files = [
+      {
+        :data => 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+
+Some Text',
+        :trusted => false,
+        :success => true,
+        :result => {
+          0 => {
+            :group                => 'Twitter',
+            :ticket_priority       => '2 normal',
+            :title                 => 'some subject',
+          },
+          1 => {
+            :ticket_article_sender => 'Customer',
+            :ticket_article_type   => 'email',
+            :internal              => true,
+          },
+        },
+      },
+      {
+        :data => 'From: somebody@example.com
+To: bod@example.com
+Cc: any@example.com
+Subject: some subject
+
+Some Text',
+        :trusted => false,
+        :success => true,
+        :result => {
+          0 => {
+            :group                => 'Twitter',
+            :ticket_priority       => '2 normal',
+            :title                 => 'some subject',
+          },
+          1 => {
+            :ticket_article_sender => 'Customer',
+            :ticket_article_type   => 'email',
+            :internal              => true,
+          },
+        },
+      },
+    ]
+    process(files)
+    PostmasterFilter.destroy_all
+  end
+
+  def process(files)
     files.each { |file|
       parser = Channel::EmailParser.new
-      result = parser.process( { :trusted => false }, file[:data] )
-      if file[:success] && result[1]
-        assert( true )
-        if file[:result]
-          [ 0, 1, 2 ].each { |level|
-            if file[:result][level]
-              file[:result][level].each { |key, value|
-                if result[level].send(key).respond_to?('name')
-                  assert_equal( result[level].send(key).name, value.to_s)
-                else
-                  assert_equal( result[level].send(key), value)
-                end
-              }
-            end
-          }
+      result = parser.process( { :trusted => file[:trusted] }, file[:data] )
+      if file[:success]
+        if result && result.class == Array && result[1]
+          assert( true )
+          if file[:result]
+            [ 0, 1, 2 ].each { |level|
+              if file[:result][level]
+                file[:result][level].each { |key, value|
+                  if result[level].send(key).respond_to?('name')
+                    assert_equal( result[level].send(key).name, value.to_s)
+                  else
+                    assert_equal( result[level].send(key), value)
+                  end
+                }
+              end
+            }
+          end
+        else
+          assert( false, 'ticket not created', file )
         end
-      elsif !file[:success] && result == true
-        assert( true )
-      elsif !file[:success] && result[1]
-        assert( false, 'ticket should not be created' )
+      elsif !file[:success]
+        if result && result.class == Array && result[1]
+        puts result.inspect
+          assert( false, 'ticket should not be created but is created' )
+        else
+          assert( true, 'ticket not created - nice' )
+        end
       else
         assert( false, 'UNKNOWN!' )
       end

@@ -50,7 +50,7 @@ class Channel::EmailParser
     :x-zammad-ticket-owner    => 'some_owner_login',
 
     # article headers
-    :x-zammad-article-visibility => 'internal',
+    :x-zammad-article-internal   => false,
     :x-zammad-article-type       => 'agent',
     :x-zammad-article-sender     => 'customer',
 
@@ -76,6 +76,17 @@ class Channel::EmailParser
         if mail[ item.to_sym ]
           from = mail[ item.to_sym ].value
         end
+      end
+    }
+
+    # set x-any-recipient
+    data['x-any-recipient'.to_sym] = ''
+    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
+      if mail[item.to_sym]
+        if data['x-any-recipient'.to_sym] != ''
+          data['x-any-recipient'.to_sym] += ', '
+        end
+        data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
       end
     }
 
@@ -379,7 +390,7 @@ class Channel::EmailParser
           :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
         )
 
-        object_lookup( ticket, 'ticket', mail )
+        set_attributes_by_x_headers( ticket, 'ticket', mail )
 
         # create ticket
         ticket.save
@@ -388,10 +399,6 @@ class Channel::EmailParser
       # import mail
 
       # set attributes
-      internal = false
-      if mail[ 'X-Zammad-Article-Visibility'.to_sym ] && mail[ 'X-Zammad-Article-Visibility'.to_sym ] == 'internal'
-        internal = true
-      end
       article = Ticket::Article.new(
         :ticket_id                => ticket.id,
         :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
@@ -402,11 +409,11 @@ class Channel::EmailParser
         :cc                       => mail[:cc],
         :subject                  => mail[:subject],
         :message_id               => mail[:message_id],
-        :internal                 => internal,
+        :internal                 => false,
       )
 
       # x-headers lookup
-      object_lookup( article, 'article', mail )
+      set_attributes_by_x_headers( article, 'article', mail )
 
       # create article
       article.save
@@ -456,7 +463,7 @@ class Channel::EmailParser
     return ticket, article, user
   end
 
-  def object_lookup( item_object, header_name, mail )
+  def set_attributes_by_x_headers( item_object, header_name, mail )
 
     # loop all x-zammad-hedaer-* headers
     item_object.attributes.each{|key,value|

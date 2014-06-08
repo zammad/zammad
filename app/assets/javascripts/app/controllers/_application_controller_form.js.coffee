@@ -459,7 +459,6 @@ class App.ControllerForm extends App.Controller
         )
 
         # add new item
-        console.log(1111222, key, el, el.parent().parent().parent().find('.addSelection select'))
         el.parent().parent().parent().find('.list').append(itemInput)
         el.parent().parent().parent().find('.addSelection select').val('')
         el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
@@ -509,8 +508,9 @@ class App.ControllerForm extends App.Controller
           disable:  true
         },
         {
-          value:    'x-zammad-article-ticket_article_internal'
+          value:    'x-zammad-article-internal'
           name:     'Article Internal'
+          options:  { true: 'Yes', false: 'No'}
         },
         {
           value:    'x-zammad-article-ticket_article_type_id'
