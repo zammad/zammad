@@ -258,25 +258,29 @@ class App.ControllerForm extends App.Controller
     # postmaster_match
     else if attribute.tag is 'postmaster_match'
       addItem = (key, displayName, el, defaultValue = '') =>
-        itemInput = $("<div>#{ App.i18n.translateInline(displayName) }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\" required/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
+        add = { name: key, display: displayName, tag: 'input', null: false, default: defaultValue }
+        itemInput = $( @formGenItem( add ).append('<a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a>' ) )
 
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
           e.preventDefault()
-          key = $(e.target).prev().attr('name')
+          key = $(e.target).parent().find('select, input').attr('name')
           return if !key
           $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
-          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().remove()
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
         )
 
         # add new item
         el.parent().parent().parent().find('.list').append(itemInput)
         el.parent().parent().parent().find('.addSelection select').val('')
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
         el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
 
       # scaffold of match elements
       item = $('
-        <div class="postmaster_match" style="margin-left: 40px;">
+        <div class="postmaster_match">
+          <hr>
           <div class="list"></div>
           <hr>
           <div>
@@ -408,7 +412,7 @@ class App.ControllerForm extends App.Controller
       ]
       for listItem in loopData
         listItem.value = "#{ attribute.name }::#{listItem.value}"
-      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true }
+      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true, required: false }
       item.find('.addSelection').append( @formGenItem( add ) )
 
       # bind add click
@@ -432,25 +436,39 @@ class App.ControllerForm extends App.Controller
     # postmaster_set
     else if attribute.tag is 'postmaster_set'
       addItem = (key, displayName, el, defaultValue = '') =>
-        itemInput = $("<div>#{ App.i18n.translateInline(displayName) }: <input name=\"#{ key }\" type=\"input\" value=\"#{ defaultValue }\" class=\"form-control\"/><a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a></div>")
+        collection = undefined
+        for listItem in loopData
+          if listItem.value is key
+            collection = listItem
+        if collection.relation
+          add = { name: key, display: displayName, tag: 'select', multiple: false, null: false, nulloption: true, relation: collection.relation, translate: true, default: defaultValue }
+        else if collection.options
+          add = { name: key, display: displayName, tag: 'select', multiple: false, null: false, nulloption: true, options: collection.options, translate: true, default: defaultValue }
+        else
+          add = { name: key, display: displayName, tag: 'input', null: false, default: defaultValue }
+        itemInput = $( @formGenItem( add ).append('<a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a>' ) )
 
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
           e.preventDefault()
-          key = $(e.target).prev().attr('name')
+          key = $(e.target).parent().find('select, input').attr('name')
           return if !key
           $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
-          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().remove()
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
         )
 
         # add new item
+        console.log(1111222, key, el, el.parent().parent().parent().find('.addSelection select'))
         el.parent().parent().parent().find('.list').append(itemInput)
         el.parent().parent().parent().find('.addSelection select').val('')
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
         el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
 
       # scaffold of perform elements
       item = $('
-        <div class="perform_set" style="margin-left: 40px;">
+        <div class="perform_set">
+          <hr>
           <div class="list"></div>
           <hr>
           <div>
@@ -463,20 +481,23 @@ class App.ControllerForm extends App.Controller
       # select shown attributes
       loopData = [
         {
-          value:    'x-zammad-ticket-priority'
+          value:    'x-zammad-ticket-ticket_priority_id'
           name:     'Ticket Priority'
+          relation: 'TicketPriority'
         },
         {
-          value:    'x-zammad-ticket-state'
+          value:    'x-zammad-ticket-ticket_state_id'
           name:     'Ticket State'
+          relation: 'TicketState'
         },
         {
           value:    'x-zammad-ticket-customer'
           name:     'Ticket Customer'
         },
         {
-          value:    'x-zammad-ticket-group'
+          value:    'x-zammad-ticket-group_id'
           name:     'Ticket Group'
+          relation: 'Group'
         },
         {
           value:    'x-zammad-ticket-owner'
@@ -488,16 +509,18 @@ class App.ControllerForm extends App.Controller
           disable:  true
         },
         {
-          value:    'x-zammad-article-visibility'
-          name:     'Article Visibility'
+          value:    'x-zammad-article-ticket_article_internal'
+          name:     'Article Internal'
         },
         {
-          value:    'x-zammad-article-type'
+          value:    'x-zammad-article-ticket_article_type_id'
           name:     'Article Type'
+          relation: 'TicketArticleType'
         },
         {
-          value:    'x-zammad-article-sender'
+          value:    'x-zammad-article-ticket_article_sender_id'
           name:     'Article Sender'
+          relation: 'TicketArticleSender'
         },
         {
           value:    ''
@@ -507,11 +530,12 @@ class App.ControllerForm extends App.Controller
         {
           value:    'x-zammad-ignore'
           name:     'Ignore Message'
+          options:  { true: 'Yes', false: 'No'}
         },
       ]
       for listItem in loopData
         listItem.value = "#{ attribute.name }::#{listItem.value}"
-      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true }
+      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true, required: false }
       item.find('.addSelection').append( @formGenItem( add ) )
 
       item.find('.add').bind('click', (e) ->

@@ -371,25 +371,18 @@ class Channel::EmailParser
       if !ticket
 
         # set attributes
-        ticket_attributes = {
+        ticket = Ticket.new(
           :group_id           => channel[:group_id] || 1,
           :customer_id        => user.id,
           :title              => mail[:subject] || '',
           :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
           :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
-        }
+        )
 
-        # x-headers lookup
-        map = [
-          [ 'x-zammad-ticket-group',    Group,            'group_id',           'name'  ],
-          [ 'x-zammad-ticket-state',    Ticket::State,    'ticket_state_id',    'name'  ],
-          [ 'x-zammad-ticket-priority', Ticket::Priority, 'ticket_priority_id', 'name'  ],
-          [ 'x-zammad-ticket-owner',    User,             'owner_id',           'login' ],
-        ]
-        object_lookup( ticket_attributes, map, mail )
+        object_lookup( ticket, 'ticket', mail )
 
         # create ticket
-        ticket = Ticket.create( ticket_attributes )
+        ticket.save
       end
 
       # import mail
@@ -399,7 +392,7 @@ class Channel::EmailParser
       if mail[ 'X-Zammad-Article-Visibility'.to_sym ] && mail[ 'X-Zammad-Article-Visibility'.to_sym ] == 'internal'
         internal = true
       end
-      article_attributes = {
+      article = Ticket::Article.new(
         :ticket_id                => ticket.id,
         :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
         :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
@@ -410,17 +403,13 @@ class Channel::EmailParser
         :subject                  => mail[:subject],
         :message_id               => mail[:message_id],
         :internal                 => internal,
-      }
+      )
 
       # x-headers lookup
-      map = [
-        [ 'x-zammad-article-type',    Ticket::Article::Type,   'ticket_article_type_id',   'name' ],
-        [ 'x-zammad-article-sender',  Ticket::Article::Sender, 'ticket_article_sender_id', 'name' ],
-      ]
-      object_lookup( article_attributes, map, mail )
+      object_lookup( article, 'article', mail )
 
       # create article
-      article = Ticket::Article.create(article_attributes)
+      article.save
 
       # store mail plain
       Store.add(
@@ -467,15 +456,51 @@ class Channel::EmailParser
     return ticket, article, user
   end
 
-  def object_lookup( attributes, map, mail )
-    map.each { |item|
-      if mail[ item[0].to_sym ]
-        new_object = item[1].where( "lower(#{item[3]}) = ?", mail[ item[0].to_sym ].downcase ).first
-        if new_object
-          attributes[ item[2].to_sym ] = new_object.id
+  def object_lookup( item_object, header_name, mail )
+
+    # loop all x-zammad-hedaer-* headers
+    item_object.attributes.each{|key,value|
+
+      # ignore read only attributes
+      next if key == 'updated_at'
+      next if key == 'created_at'
+      next if key == 'updated_by_id'
+      next if key == 'created_by_id'
+
+      # check if id exists
+      key_short = key[ key.length-3 , key.length ]
+      if key_short == '_id'
+        key_short = key[ 0, key.length-3 ]
+        header = "x-zammad-#{header_name}-#{key_short}"
+        if mail[ header.to_sym ]
+          puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+          item_object.class.reflect_on_all_associations.map { |assoc|
+            if assoc.name.to_s == key_short
+              puts "NOTICE: ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
+              item = assoc.class_name.constantize
+
+              if item.respond_to?(:name)
+                if item.lookup( :name => mail[ header.to_sym ] )
+                  item_object[key] = item.lookup( :name => mail[ header.to_sym ] ).id
+                end
+              elsif item.respond_to?(:login)
+                if item.lookup( :login => mail[ header.to_sym ] )
+                  item_object[key] = item.lookup( :login => mail[ header.to_sym ] ).id
+                end
+              end
+            end
+          }
         end
       end
+
+      # check if attribute exists
+      header = "x-zammad-#{header_name}-#{key}"
+      if mail[ header.to_sym ]
+        puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+        item_object[key] = mail[ header.to_sym ]
+      end
     }
+
   end
 
   def html2ascii(string)

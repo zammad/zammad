@@ -376,6 +376,26 @@ test( "form postmaster filter", function() {
 // add match rule
 
 // add set rule
+  App.TicketPriority.refresh( [
+    {
+      id:   1,
+      name: 'prio 1',
+    },
+    {
+      id:   2,
+      name: 'prio 2',
+    },
+  ] )
+  App.Group.refresh( [
+    {
+      id:   1,
+      name: 'group 1',
+    },
+    {
+      id:   2,
+      name: 'group 2',
+    },
+  ] )
 
   $('#forms').append('<hr><h1>form postmaster filter</h1><form id="form5"></form>')
   var el = $('#form5')
@@ -386,8 +406,10 @@ test( "form postmaster filter", function() {
       subject: 'some subject',
     },
     set: {
-      'x-zammad-ticket-priority': '3 high',
-      'x-zammad-ticket-group': 'some group',
+      'x-zammad-ticket-owner': 'owner',
+      'x-zammad-ticket-customer': 'customer',
+      'x-zammad-ticket-ticket_priority_id': 2,
+      'x-zammad-ticket-group_id': 1,
     },
   }
   new App.ControllerForm({
@@ -411,12 +433,15 @@ test( "form postmaster filter", function() {
       subject: 'some subject',
     },
     set: {
-      'x-zammad-ticket-priority': '3 high',
-      'x-zammad-ticket-group': 'some group',
+      'x-zammad-ticket-owner': 'owner',
+      'x-zammad-ticket-customer': 'customer',
+      'x-zammad-ticket-ticket_priority_id': "2",
+      'x-zammad-ticket-group_id': "1",
     },
   };
   deepEqual( params, test_params, 'form param check' );
-  el.find('[name="set::x-zammad-ticket-priority"]').next().click()
+  el.find('[name="set::x-zammad-ticket-ticket_priority_id"]').parent().next().click()
+  el.find('[name="set::x-zammad-ticket-customer"]').parent().next().click()
   App.Delay.set( function() {
       test( "form param check after remove click", function() {
         params = App.ControllerForm.params( el )
@@ -428,7 +453,8 @@ test( "form postmaster filter", function() {
             subject: 'some subject',
           },
           set: {
-            'x-zammad-ticket-group': 'some group',
+            'x-zammad-ticket-owner': 'owner',
+            'x-zammad-ticket-group_id': "1",
           },
         };
         deepEqual( params, test_params, 'form param check' );
