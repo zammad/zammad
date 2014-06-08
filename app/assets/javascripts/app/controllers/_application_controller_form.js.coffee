@@ -378,10 +378,6 @@ class App.ControllerForm extends App.Controller
           name:     'Envelope-To'
         },
         {
-          value:    'delivered-to'
-          name:     'Delivered-To'
-        },
-        {
           value:    'return-path'
           name:     'Return-Path'
         },
