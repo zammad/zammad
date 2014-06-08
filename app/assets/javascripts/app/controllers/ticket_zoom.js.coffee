@@ -451,12 +451,12 @@ class Edit extends App.Controller
     # find sender_id
     if @isRole('Customer')
       sender            = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-      article_type      = App.TicketArticleType.findByAttribute( 'name', 'web' )
-      params.type_id    = article_type.id
+      type              = App.TicketArticleType.findByAttribute( 'name', 'web' )
+      params.type_id    = type.id
       params.sender_id  = sender.id
     else
       sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-      article_type      = App.TicketArticleType.find( params['type_id'] )
+      type              = App.TicketArticleType.find( params['type_id'] )
       params.sender_id  = sender.id
 
     # update ticket
@@ -475,7 +475,7 @@ class Edit extends App.Controller
       return
 
     # validate email params
-    if article_type.name is 'email'
+    if type.name is 'email'
 
       # check if recipient exists
       if !params['to'] && !params['cc']
@@ -624,10 +624,10 @@ class ArticleView extends App.Controller
         $(e.target).text( App.i18n.translateContent('See more') )
         $(e.target).next('div').addClass('hide')
 
-  checkIfSignatureIsNeeded: (article_type) =>
+  checkIfSignatureIsNeeded: (type) =>
 
     # add signature
-    if @ui.signature && @ui.signature.body && article_type.name is 'email'
+    if @ui.signature && @ui.signature.body && type.name is 'email'
       body   = @ui.el.find('[name="body"]').val() || ''
       regexp = new RegExp( escapeRegExp( @ui.signature.body ) , 'i')
       if !body.match(regexp)
@@ -641,15 +641,15 @@ class ArticleView extends App.Controller
     e.preventDefault()
     article_id   = $(e.target).parents('[data-id]').data('id')
     article      = App.TicketArticle.find( article_id )
-    article_type = App.TicketArticleType.find( article.type_id )
+    type         = App.TicketArticleType.find( article.type_id )
     customer     = App.User.find( article.created_by_id )
 
     # update form
-    @checkIfSignatureIsNeeded(article_type)
+    @checkIfSignatureIsNeeded(type)
 
     # preselect article type
     @ui.el.find('[name="type_id"]').find('option:selected').removeAttr('selected')
-    @ui.el.find('[name="type_id"]').find('[value="' + article_type.id + '"]').attr('selected',true)
+    @ui.el.find('[name="type_id"]').find('[value="' + type.id + '"]').attr('selected',true)
     @ui.el.find('[name="type_id"]').trigger('change')
 
     # empty form
@@ -661,19 +661,19 @@ class ArticleView extends App.Controller
     if article.message_id
       @ui.el.find('[name="in_reply_to"]').val(article.message_id)
 
-    if article_type.name is 'twitter status'
+    if type.name is 'twitter status'
 
       # set to in body
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       @ui.el.find('[name="body"]').val('@' + to)
 
-    else if article_type.name is 'twitter direct-message'
+    else if type.name is 'twitter direct-message'
 
       # show to
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       @ui.el.find('[name="to"]').val(to)
 
-    else if article_type.name is 'email'
+    else if type.name is 'email'
       @ui.el.find('[name="to"]').val(article.from)
 
     # add quoted text if needed
@@ -762,10 +762,10 @@ class Article extends App.Controller
           type: 'internal'
         }
       ]
-    if @article.article_type.name is 'note'
+    if @article.type.name is 'note'
 #        actions.push []
     else
-      if @article.article_sender.name is 'Customer'
+      if @article.sender.name is 'Customer'
         actions.push {
           name: 'reply'
           type: 'reply'
