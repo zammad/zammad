@@ -7,8 +7,8 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       :title           => 'some title äöüß',
       :group           => Group.lookup( :name => 'Users'),
       :customer_id     => 2,
-      :ticket_state    => Ticket::State.lookup( :name => 'new' ),
-      :ticket_priority => Ticket::Priority.lookup( :name => '2 normal' ),
+      :state           => Ticket::State.lookup( :name => 'new' ),
+      :priority        => Ticket::Priority.lookup( :name => '2 normal' ),
       :updated_by_id   => 1,
       :created_by_id   => 1,
     )
@@ -41,7 +41,7 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       },
       {
         :locale => 'de',
-        :string => '\'i18n(#{ticket.ticket_state.name})\' ticket state',
+        :string => '\'i18n(#{ticket.state.name})\' ticket state',
         :result => '\'neu\' ticket state',
       },
     ]

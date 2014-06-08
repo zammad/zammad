@@ -32,12 +32,12 @@ list attributes
 returns
 
   result = {
-    :ticket_article_type_id => ticket_article_type_ids,
-    :ticket_state_id        => ticket_state_ids,
-    :ticket_priority_id     => ticket_priority_ids,
-    :owner_id               => owner_ids,
-    :group_id               => group_ids,
-    :group_id__owner_id     => groups_users,
+    :type_id              => type_ids,
+    :state_id             => state_ids,
+    :priority_id          => priority_ids,
+    :owner_id             => owner_ids,
+    :group_id             => group_ids,
+    :group_id__owner_id   => groups_users,
   }
 
 =end
@@ -51,19 +51,19 @@ returns
     end
 
     # get ticket states
-    ticket_state_ids = []
+    state_ids = []
     if params[:ticket]
-      ticket_state_type = params[:ticket].ticket_state.state_type
+      state_type = params[:ticket].state.state_type
     end
-    ticket_state_types = ['open', 'closed', 'pending action', 'pending reminder']
-    if ticket_state_type && !ticket_state_types.include?(ticket_state_type.name)
-      ticket_state_ids.push params[:ticket].ticket_state.id
+    state_types = ['open', 'closed', 'pending action', 'pending reminder']
+    if state_type && !state_types.include?(state_type.name)
+      state_ids.push params[:ticket].state.id
     end
-    ticket_state_types.each {|type|
-      ticket_state_type = Ticket::StateType.where( :name => type ).first
-      if ticket_state_type
-        ticket_state_type.states.each {|ticket_state|
-          ticket_state_ids.push ticket_state.id
+    state_types.each {|type|
+      state_type = Ticket::StateType.where( :name => type ).first
+      if state_type
+        state_type.states.each {|state|
+          state_ids.push state.id
         }
       end
     }
@@ -97,32 +97,32 @@ returns
     }
 
     # get priorities
-    ticket_priority_ids = []
+    priority_ids = []
     Ticket::Priority.where( :active => true ).each { |priority|
-      ticket_priority_ids.push priority.id
+      priority_ids.push priority.id
     }
 
-    ticket_article_type_ids = []
+    type_ids = []
     if params[:ticket]
-      ticket_article_types = ['note', 'phone']
+      types = ['note', 'phone']
       if params[:ticket].group.email_address_id
-        ticket_article_types.push 'email'
+        types.push 'email'
       end
-      ticket_article_types.each {|ticket_article_type_name|
-        ticket_article_type = Ticket::Article::Type.lookup( :name => ticket_article_type_name )
-        if ticket_article_type
-          ticket_article_type_ids.push ticket_article_type.id
+      types.each {|type_name|
+        type = Ticket::Article::Type.lookup( :name => type_name )
+        if type
+          type_ids.push type.id
         end
       }
     end
 
     return {
-      :ticket_article_type_id => ticket_article_type_ids,
-      :ticket_state_id        => ticket_state_ids,
-      :ticket_priority_id     => ticket_priority_ids,
-      :owner_id               => owner_ids,
-      :group_id               => group_ids,
-      :group_id__owner_id     => groups_users,
+      :type_id              => type_ids,
+      :state_id             => state_ids,
+      :priority_id          => priority_ids,
+      :owner_id             => owner_ids,
+      :group_id             => group_ids,
+      :group_id__owner_id   => groups_users,
     }
   end
 
@@ -147,18 +147,18 @@ returns
   def self.list_by_customer(data)
 
     # get closed/open states
-    ticket_state_list_open   = Ticket::State.by_category( 'open' )
-    ticket_state_list_closed = Ticket::State.by_category( 'closed' )
+    state_list_open   = Ticket::State.by_category( 'open' )
+    state_list_closed = Ticket::State.by_category( 'closed' )
 
     # get tickets
     tickets_open = Ticket.where(
       :customer_id     => data[:customer_id],
-      :ticket_state_id => ticket_state_list_open
+      :state_id => state_list_open
     ).limit( data[:limit] || 15 ).order('created_at DESC')
 
     tickets_closed = Ticket.where(
       :customer_id     => data[:customer_id],
-      :ticket_state_id => ticket_state_list_closed
+      :state_id => state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
 
     return {

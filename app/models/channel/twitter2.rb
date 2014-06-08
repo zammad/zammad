@@ -195,8 +195,8 @@ class Channel::Twitter2
     if @article_type == 'twitter direct-message'
       ticket = Ticket.where( :customer_id => user.id ).first
       if ticket
-        ticket_state_type = Ticket::StateType.where( ticket.ticket_state.state_type_id )
-        if ticket_state_type.name == 'closed' || ticket_state_type.name == 'closed'
+        state_type = Ticket::StateType.where( ticket.state.state_type_id )
+        if state_type.name == 'closed' || state_type.name == 'closed'
           ticket = nil
         end
       end
@@ -218,11 +218,11 @@ class Channel::Twitter2
         priority_id = priority.id
       end
       ticket = Ticket.create(
-        :group_id           => group_id,
-        :customer_id        => user.id,
-        :title              => tweet.text[0,40],
-        :ticket_state_id    => state_id,
-        :ticket_priority_id => priority_id,
+        :group_id    => group_id,
+        :customer_id => user.id,
+        :title       => tweet.text[0,40],
+        :state_id    => state_id,
+        :priority_id => priority_id,
       )
     end
 
@@ -236,8 +236,8 @@ class Channel::Twitter2
     return article if article
 
     # set ticket state to open if not new
-    if ticket.ticket_state.name != 'new'
-      ticket.ticket_state = Ticket::State.where( :name => 'open' ).first
+    if ticket.state.name != 'new'
+      ticket.state = Ticket::State.where( :name => 'open' ).first
       ticket.save
     end
 
@@ -248,14 +248,14 @@ class Channel::Twitter2
     end
 
     article = Ticket::Article.create(
-      :ticket_id                => ticket.id,
-      :ticket_article_type_id   => Ticket::Article::Type.where( :name => @article_type ).first.id,
-      :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-      :body                     => tweet.text,
-      :from                     => sender.name,
-      :to                       => to,
-      :message_id               => tweet.id,
-      :internal                 => false,
+      :ticket_id  => ticket.id,
+      :type_id    => Ticket::Article::Type.where( :name => @article_type ).first.id,
+      :sender_id  => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
+      :body       => tweet.text,
+      :from       => sender.name,
+      :to         => to,
+      :message_id => tweet.id,
+      :internal   => false,
     )
 
   end

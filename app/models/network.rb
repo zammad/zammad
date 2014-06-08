@@ -2,8 +2,8 @@
 
 class Network < ApplicationModel
   #  belongs_to :group
-  #  belongs_to :ticket_state, :class_name => 'Ticket::State'
-  #  belongs_to :ticket_priority, :class_name => 'Ticket::Priority'
+  #  belongs_to :state,    :class_name => 'Ticket::State'
+  #  belongs_to :priority, :class_name => 'Ticket::Priority'
 
   class Category < ApplicationModel
     self.table_name = 'network_categories'

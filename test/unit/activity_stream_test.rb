@@ -25,30 +25,30 @@ class ActivityStreamTest < ActiveSupport::TestCase
       {
         :create => {
           :ticket => {
-            :group_id           => Group.lookup( :name => 'Users' ).id,
-            :customer_id        => current_user.id,
-            :owner_id           => User.lookup( :login => '-' ).id,
-            :title              => 'Unit Test 1 (äöüß)!',
-            :ticket_state_id    => Ticket::State.lookup( :name => 'new' ).id,
-            :ticket_priority_id => Ticket::Priority.lookup( :name => '2 normal' ).id,
-            :updated_by_id      => current_user.id,
-            :created_by_id      => current_user.id,
+            :group_id       => Group.lookup( :name => 'Users' ).id,
+            :customer_id    => current_user.id,
+            :owner_id       => User.lookup( :login => '-' ).id,
+            :title          => 'Unit Test 1 (äöüß)!',
+            :state_id       => Ticket::State.lookup( :name => 'new' ).id,
+            :priority_id    => Ticket::Priority.lookup( :name => '2 normal' ).id,
+            :updated_by_id  => current_user.id,
+            :created_by_id  => current_user.id,
           },
           :article => {
-              :updated_by_id            => current_user.id,
-              :created_by_id            => current_user.id,
-              :ticket_article_type_id   => Ticket::Article::Type.lookup( :name => 'phone' ).id,
-              :ticket_article_sender_id => Ticket::Article::Sender.lookup( :name => 'Customer' ).id,
-              :from                     => 'Unit Test <unittest@example.com>',
-              :body                     => 'Unit Test 123',
-              :internal                 => false
+              :updated_by_id  => current_user.id,
+              :created_by_id  => current_user.id,
+              :type_id        => Ticket::Article::Type.lookup( :name => 'phone' ).id,
+              :sender_id      => Ticket::Article::Sender.lookup( :name => 'Customer' ).id,
+              :from           => 'Unit Test <unittest@example.com>',
+              :body           => 'Unit Test 123',
+              :internal       => false
           },
         },
         :update => {
           :ticket => {
-            :title              => 'Unit Test 1 (äöüß) - update!',
-            :ticket_state_id    => Ticket::State.lookup( :name => 'open' ).id,
-            :ticket_priority_id => Ticket::Priority.lookup( :name => '1 low' ).id,
+            :title       => 'Unit Test 1 (äöüß) - update!',
+            :state_id    => Ticket::State.lookup( :name => 'open' ).id,
+            :priority_id => Ticket::Priority.lookup( :name => '1 low' ).id,
           },
         },
         :check => [
@@ -286,7 +286,8 @@ class ActivityStreamTest < ActiveSupport::TestCase
         :update2 => {
           :user => {
             :firstname    => 'Bob',
-            :lastname     => 'Smith',          },
+            :lastname     => 'Smith',
+          },
         },
         :check => [
           {

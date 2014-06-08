@@ -33,9 +33,9 @@ returns:
 
 check if state is ignored for escalation
 
-  ticket_state = Ticket::State.lookup( :name => 'state name' )
+  state = Ticket::State.lookup( :name => 'state name' )
 
-  result = ticket_state.ignore_escalation?
+  result = state.ignore_escalation?
 
 returns:
 

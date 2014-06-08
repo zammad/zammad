@@ -49,11 +49,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-            a new Ticket (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+            a new Ticket (#{ticket.title}) via i18n(#{article.type.name}).
 
             Group: #{ticket.group.name}
             Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-            State: i18n(#{ticket.ticket_state.name})
+            State: i18n(#{ticket.state.name})
 
             From: #{article.from}
             <snip>
@@ -72,7 +72,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       if event[:name] == 'Ticket' && event[:type] == 'create'
 
         # only for incoming emails
-        next if article.ticket_article_type.name != 'email'
+        next if article.type.name != 'email'
 
         puts 'send new ticket notify to customer'
         send_notify(
@@ -107,7 +107,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
         puts 'send new ticket::article notify'
 
-        if article.ticket_article_sender.name == 'Customer'
+        if article.sender.name == 'Customer'
           send_notify(
             {
               :event     => event,
@@ -115,11 +115,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
               :subject   => 'Follow Up (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-              a follow Up (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+              a follow Up (#{ticket.title}) via i18n(#{article.type.name}).
 
               Group: #{ticket.group.name}
               Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-              State: i18n(#{ticket.ticket_state.name})
+              State: i18n(#{ticket.state.name})
 
               From: #{article.from}
               <snip>
@@ -136,7 +136,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
         # send new note notification to owner
         # if agent == created.id
-        if article.ticket_article_sender.name == 'Agent' && article.created_by_id != article.ticket.owner_id
+        if article.sender.name == 'Agent' && article.created_by_id != article.ticket.owner_id
           send_notify(
             {
               :event     => event,
@@ -144,11 +144,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
               :subject   => 'Updated (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-              updated (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+              updated (#{ticket.title}) via i18n(#{article.type.name}).
 
               Group: #{ticket.group.name}
               Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-              State: i18n(#{ticket.ticket_state.name})
+              State: i18n(#{ticket.state.name})
 
               From: #{article.from}
               <snip>

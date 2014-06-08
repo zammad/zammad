@@ -145,8 +145,8 @@ class TicketsController < ApplicationController
 
     # open tickets by customer
     ticket_list = Ticket.where(
-      :customer_id     => ticket.customer_id,
-      :ticket_state_id => Ticket::State.by_category( 'open' )
+      :customer_id  => ticket.customer_id,
+      :state_id     => Ticket::State.by_category( 'open' )
     )
     .where( 'id != ?', [ ticket.id ] )
     .order('created_at DESC')

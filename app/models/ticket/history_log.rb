@@ -45,7 +45,7 @@ returns
     {
       :type           => 'updated',
       :object         => 'Ticket',
-      :attribute      => 'ticket_priority',
+      :attribute      => 'priority',
       :o_id           => 1,
       :id_to          => 3,
       :id_from        => 2,

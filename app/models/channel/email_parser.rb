@@ -364,16 +364,16 @@ class Channel::EmailParser
 
       # set ticket state to open if not new
       if ticket
-        ticket_state      = Ticket::State.find( ticket.ticket_state_id )
-        ticket_state_type = Ticket::StateType.find( ticket_state.state_type_id )
+        state      = Ticket::State.find( ticket.state_id )
+        state_type = Ticket::StateType.find( state.state_type_id )
 
         # if tickte is merged, find linked ticket
-        if ticket_state_type.name == 'merged'
+        if state_type.name == 'merged'
 
         end
 
-        if ticket_state_type.name != 'new'
-          ticket.ticket_state = Ticket::State.where( :name => 'open' ).first
+        if state_type.name != 'new'
+          ticket.state = Ticket::State.where( :name => 'open' ).first
           ticket.save
         end
       end
@@ -386,8 +386,8 @@ class Channel::EmailParser
           :group_id           => channel[:group_id] || 1,
           :customer_id        => user.id,
           :title              => mail[:subject] || '',
-          :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
-          :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+          :state_id    => Ticket::State.where( :name => 'new' ).first.id,
+          :priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
         )
 
         set_attributes_by_x_headers( ticket, 'ticket', mail )
@@ -400,16 +400,16 @@ class Channel::EmailParser
 
       # set attributes
       article = Ticket::Article.new(
-        :ticket_id                => ticket.id,
-        :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
-        :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-        :body                     => mail[:body],
-        :from                     => mail[:from],
-        :to                       => mail[:to],
-        :cc                       => mail[:cc],
-        :subject                  => mail[:subject],
-        :message_id               => mail[:message_id],
-        :internal                 => false,
+        :ticket_id    => ticket.id,
+        :type_id      => Ticket::Article::Type.where( :name => 'email' ).first.id,
+        :sender_id    => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
+        :body         => mail[:body],
+        :from         => mail[:from],
+        :to           => mail[:to],
+        :cc           => mail[:cc],
+        :subject      => mail[:subject],
+        :message_id   => mail[:message_id],
+        :internal     => false,
       )
 
       # x-headers lookup

@@ -15,9 +15,9 @@ returns
 =end
 
   def self.rebuild_all
-    ticket_state_list_open = Ticket::State.by_category( 'open' )
+    state_list_open = Ticket::State.by_category( 'open' )
 
-    tickets = Ticket.where( :ticket_state_id => ticket_state_list_open )
+    tickets = Ticket.where( :state_id => state_list_open )
     tickets.each {|ticket|
       ticket.escalation_calculation
     }
@@ -39,8 +39,8 @@ returns
   def escalation_calculation
 
     # set escalation off if ticket is already closed
-    ticket_state = Ticket::State.lookup( :id => self.ticket_state_id )
-    if ticket_state.ignore_escalation?
+    state = Ticket::State.lookup( :id => self.state_id )
+    if state.ignore_escalation?
 
       # nothing to change
       return true if !self.escalation_time
@@ -186,7 +186,7 @@ returns
       elsif sla.condition
         hit = false
         map = [
-          [ 'tickets.ticket_priority_id', 'ticket_priority_id' ],
+          [ 'tickets.priority_id', 'priority_id' ],
           [ 'tickets.group_id', 'group_id' ]
         ]
         map.each {|item|
@@ -232,7 +232,7 @@ returns
 
       # ignore if it isn't a state change
       next if !history_item['attribute']
-      next if history_item['attribute'] != 'ticket_state'
+      next if history_item['attribute'] != 'state'
 
       # ignore all newer state before start_time
       next if history_item['created_at'] < start_time

@@ -11,30 +11,30 @@ class HistoryTest < ActiveSupport::TestCase
       {
         :ticket_create => {
           :ticket => {
-            :group_id           => Group.lookup( :name => 'Users' ).id,
-            :customer_id        => current_user.id,
-            :owner_id           => User.lookup( :login => '-' ).id,
-            :title              => 'Unit Test 1 (äöüß)!',
-            :ticket_state_id    => Ticket::State.lookup( :name => 'new' ).id,
-            :ticket_priority_id => Ticket::Priority.lookup( :name => '2 normal' ).id,
-            :updated_by_id      => current_user.id,
-            :created_by_id      => current_user.id,
+            :group_id       => Group.lookup( :name => 'Users' ).id,
+            :customer_id    => current_user.id,
+            :owner_id       => User.lookup( :login => '-' ).id,
+            :title          => 'Unit Test 1 (äöüß)!',
+            :state_id       => Ticket::State.lookup( :name => 'new' ).id,
+            :priority_id    => Ticket::Priority.lookup( :name => '2 normal' ).id,
+            :updated_by_id  => current_user.id,
+            :created_by_id  => current_user.id,
           },
           :article => {
-              :updated_by_id            => current_user.id,
-              :created_by_id            => current_user.id,
-              :ticket_article_type_id   => Ticket::Article::Type.lookup( :name => 'phone' ).id,
-              :ticket_article_sender_id => Ticket::Article::Sender.lookup( :name => 'Customer' ).id,
-              :from                     => 'Unit Test <unittest@example.com>',
-              :body                     => 'Unit Test 123',
-              :internal                 => false
+              :updated_by_id  => current_user.id,
+              :created_by_id  => current_user.id,
+              :type_id        => Ticket::Article::Type.lookup( :name => 'phone' ).id,
+              :sender_id      => Ticket::Article::Sender.lookup( :name => 'Customer' ).id,
+              :from           => 'Unit Test <unittest@example.com>',
+              :body           => 'Unit Test 123',
+              :internal       => false
           },
         },
         :ticket_update => {
           :ticket => {
-            :title              => 'Unit Test 1 (äöüß) - update!',
-            :ticket_state_id    => Ticket::State.lookup( :name => 'open' ).id,
-            :ticket_priority_id => Ticket::Priority.lookup( :name => '1 low' ).id,
+            :title        => 'Unit Test 1 (äöüß) - update!',
+            :state_id     => Ticket::State.lookup( :name => 'open' ).id,
+            :priority_id  => Ticket::Priority.lookup( :name => '1 low' ).id,
           },
         },
         :history_check => [
@@ -55,7 +55,7 @@ class HistoryTest < ActiveSupport::TestCase
             :result            => true,
             :history_object    => 'Ticket',
             :history_type      => 'updated',
-            :history_attribute => 'ticket_state',
+            :history_attribute => 'state',
             :value_from        => 'new',
             :value_to          => 'open',
             :id_from           => Ticket::State.lookup( :name => 'new' ).id,
@@ -78,33 +78,33 @@ class HistoryTest < ActiveSupport::TestCase
       {
         :ticket_create => {
           :ticket => {
-            :group_id           => Group.lookup( :name => 'Users' ).id,
-            :customer_id        => current_user.id,
-            :owner_id           => User.lookup( :login => '-' ).id,
-            :title              => 'Unit Test 2 (äöüß)!',
-            :ticket_state_id    => Ticket::State.lookup( :name => 'new' ).id,
-            :ticket_priority_id => Ticket::Priority.lookup( :name => '2 normal' ).id,
-            :updated_by_id      => current_user.id,
-            :created_by_id      => current_user.id,
+            :group_id       => Group.lookup( :name => 'Users' ).id,
+            :customer_id    => current_user.id,
+            :owner_id       => User.lookup( :login => '-' ).id,
+            :title          => 'Unit Test 2 (äöüß)!',
+            :state_id       => Ticket::State.lookup( :name => 'new' ).id,
+            :priority_id    => Ticket::Priority.lookup( :name => '2 normal' ).id,
+            :updated_by_id  => current_user.id,
+            :created_by_id  => current_user.id,
           },
           :article => {
-              :created_by_id            => current_user.id,
-              :updated_by_id            => current_user.id,
-              :ticket_article_type_id   => Ticket::Article::Type.lookup(:name => 'phone' ).id,
-              :ticket_article_sender_id => Ticket::Article::Sender.lookup(:name => 'Customer' ).id,
-              :from                     => 'Unit Test <unittest@example.com>',
-              :body                     => 'Unit Test 123',
-              :internal                 => false
+              :created_by_id  => current_user.id,
+              :updated_by_id  => current_user.id,
+              :type_id        => Ticket::Article::Type.lookup(:name => 'phone' ).id,
+              :sender_id      => Ticket::Article::Sender.lookup(:name => 'Customer' ).id,
+              :from           => 'Unit Test <unittest@example.com>',
+              :body           => 'Unit Test 123',
+              :internal       => false
           },
         },
         :ticket_update => {
           :ticket => {
-            :title              => 'Unit Test 2 (äöüß) - update!',
-            :ticket_state_id    => Ticket::State.lookup( :name => 'open' ).id,
-            :owner_id           => current_user.id,
+            :title    => 'Unit Test 2 (äöüß) - update!',
+            :state_id => Ticket::State.lookup( :name => 'open' ).id,
+            :owner_id => current_user.id,
           },
           :article => {
-            :from               => 'Unit 2 Test 2 <unittest@example.com>',
+            :from     => 'Unit 2 Test 2 <unittest@example.com>',
           },
         },
         :history_check => [
@@ -132,9 +132,9 @@ class HistoryTest < ActiveSupport::TestCase
             :id_to             => current_user.id,
           },
           {
-            :result            => true,
-            :history_object => 'Ticket::Article',
-            :history_type   => 'created',
+            :result             => true,
+            :history_object     => 'Ticket::Article',
+            :history_type       => 'created',
           },
           {
             :result            => true,
@@ -302,9 +302,9 @@ class HistoryTest < ActiveSupport::TestCase
         },
         :history_check => [
           {
-            :result            => true,
-            :history_object => 'Organization',
-            :history_type   => 'created',
+            :result           => true,
+            :history_object   => 'Organization',
+            :history_type     => 'created',
           },
           {
             :result            => true,

@@ -4,13 +4,13 @@ class Ticket < ApplicationModel
   include Ticket::Escalation
   include Ticket::Subject
   include Ticket::Permission
-  require 'ticket/assets'
+  load 'ticket/assets.rb'
   include Ticket::Assets
-  require 'ticket/history_log'
+  load 'ticket/history_log.rb'
   include Ticket::HistoryLog
-  require 'ticket/activity_stream_log'
+  load 'ticket/activity_stream_log.rb'
   include Ticket::ActivityStreamLog
-  require 'ticket/search_index'
+  load 'ticket/search_index.rb'
   include Ticket::SearchIndex
   extend Ticket::Search
 
@@ -48,8 +48,8 @@ class Ticket < ApplicationModel
   belongs_to    :group
   has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
   belongs_to    :organization
-  belongs_to    :ticket_state,          :class_name => 'Ticket::State'
-  belongs_to    :ticket_priority,       :class_name => 'Ticket::Priority'
+  belongs_to    :state,                 :class_name => 'Ticket::State'
+  belongs_to    :priority,              :class_name => 'Ticket::Priority'
   belongs_to    :owner,                 :class_name => 'User'
   belongs_to    :customer,              :class_name => 'User'
   belongs_to    :created_by,            :class_name => 'User'
@@ -99,11 +99,11 @@ returns
 
     # create new merge article
     Ticket::Article.create(
-      :ticket_id                => self.id,
-      :ticket_article_type_id   => Ticket::Article::Type.lookup( :name => 'note' ).id,
-      :ticket_article_sender_id => Ticket::Article::Sender.lookup( :name => 'Agent' ).id,
-      :body                     => 'merged',
-      :internal                 => false
+      :ticket_id  => self.id,
+      :type_id    => Ticket::Article::Type.lookup( :name => 'note' ).id,
+      :sender_id  => Ticket::Article::Sender.lookup( :name => 'Agent' ).id,
+      :body       => 'merged',
+      :internal   => false
     )
 
     # add history to both
@@ -118,7 +118,7 @@ returns
     )
 
     # set state to 'merged'
-    self.ticket_state_id = Ticket::State.lookup( :name => 'merged' ).id
+    self.state_id = Ticket::State.lookup( :name => 'merged' ).id
 
     # rest owner
     self.owner_id = User.where( :login => '-' ).first.id

@@ -57,7 +57,7 @@ module NotificationFactory
         :from       => sender,
         :to         => data[:recipient][:email],
         :subject    => data[:subject],
-        :body       => data[:body], 
+        :body       => data[:body],
       },
       true
     )

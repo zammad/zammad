@@ -127,10 +127,10 @@ module Import::OTRS
 #self.ticket('156115')
 #return
     # create states
-    ticket_state
+    state
 
     # create priorities
-    ticket_priority
+    priority
 
     # create groups
     ticket_group
@@ -185,10 +185,10 @@ module Import::OTRS
     end
 
     # create states
-    ticket_state
+    state
 
     # create priorities
-    ticket_priority
+    priority
 
     # create groups
     ticket_group
@@ -233,8 +233,8 @@ module Import::OTRS
         :CreateBy                         => :created_by_id,
         :TicketNumber                     => :number,
         :QueueID                          => :group_id,
-        :StateID                          => :ticket_state_id,
-        :PriorityID                       => :ticket_priority_id,
+        :StateID                          => :state_id,
+        :PriorityID                       => :priority_id,
         :Owner                            => :owner,
         :CustomerUserID                   => :customer,
         :Title                            => :title,
@@ -249,8 +249,8 @@ module Import::OTRS
 #        :CloseTimeDiffInMin               => :close_time_diff_in_min,
       },
       :Article => {
-        :SenderType  => :ticket_article_sender,
-        :ArticleType => :ticket_article_type,
+        :SenderType  => :sender,
+        :ArticleType => :type,
         :TicketID    => :ticket_id,
         :ArticleID   => :id,
         :Body        => :body,
@@ -338,7 +338,7 @@ module Import::OTRS
             end
           }
           # create customer/sender if needed
-          if article_new[:ticket_article_sender] == 'customer' && article_new[:created_by_id].to_i == 1 && !article_new[:from].empty?
+          if article_new[:sender] == 'customer' && article_new[:created_by_id].to_i == 1 && !article_new[:from].empty?
             # set extra headers
             begin
               email = Mail::Address.new( article_new[:from] ).address
@@ -379,41 +379,41 @@ module Import::OTRS
             article_new[:created_by_id] = user.id
           end
 
-          if article_new[:ticket_article_sender] == 'customer'
-            article_new[:ticket_article_sender_id] = Ticket::Article::Sender.lookup( :name => 'Customer' ).id
-            article_new.delete( :ticket_article_sender )
+          if article_new[:sender] == 'customer'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Customer' ).id
+            article_new.delete( :sender )
           end
-          if article_new[:ticket_article_sender] == 'agent'
-            article_new[:ticket_article_sender_id] = Ticket::Article::Sender.lookup( :name => 'Agent' ).id
-            article_new.delete( :ticket_article_sender )
+          if article_new[:sender] == 'agent'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Agent' ).id
+            article_new.delete( :sender )
           end
-          if article_new[:ticket_article_sender] == 'system'
-            article_new[:ticket_article_sender_id] = Ticket::Article::Sender.lookup( :name => 'System' ).id
-            article_new.delete( :ticket_article_sender )
+          if article_new[:sender] == 'system'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'System' ).id
+            article_new.delete( :sender )
           end
 
-          if article_new[:ticket_article_type] == 'email-external'
-            article_new[:ticket_article_type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
+          if article_new[:type] == 'email-external'
+            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
             article_new[:internal] = false
-          elsif article_new[:ticket_article_type] == 'email-internal'
-            article_new[:ticket_article_type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
+          elsif article_new[:type] == 'email-internal'
+            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
             article_new[:internal] = true
-          elsif article_new[:ticket_article_type] == 'note-external'
-            article_new[:ticket_article_type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
+          elsif article_new[:type] == 'note-external'
+            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
             article_new[:internal] = false
-          elsif article_new[:ticket_article_type] == 'note-internal'
-            article_new[:ticket_article_type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
+          elsif article_new[:type] == 'note-internal'
+            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
             article_new[:internal] = true
-          elsif article_new[:ticket_article_type] == 'phone'
-            article_new[:ticket_article_type_id] = Ticket::Article::Type.lookup( :name => 'phone' ).id
+          elsif article_new[:type] == 'phone'
+            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'phone' ).id
             article_new[:internal] = false
-          elsif article_new[:ticket_article_type] == 'webrequest'
-            article_new[:ticket_article_type_id] = Ticket::Article::Type.lookup( :name => 'web' ).id
+          elsif article_new[:type] == 'webrequest'
+            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'web' ).id
             article_new[:internal] = false
           else
-            article_new[:ticket_article_type_id] = 9
+            article_new[:type_id] = 9
           end
-          article_new.delete( :ticket_article_type )
+          article_new.delete( :type )
           article_old = Ticket::Article.where( :id => article_new[:id] ).first
     #puts 'ARTICLE OLD ' + article_old.inspect
           # set state types
@@ -466,7 +466,7 @@ module Import::OTRS
               :o_id               => history['TicketID'],
               :history_type       => 'updated',
               :history_object     => 'Ticket',
-              :history_attribute  => 'ticket_state',
+              :history_attribute  => 'state',
               :value_from         => from,
               :id_from            => from_id,
               :value_to           => to,
@@ -516,7 +516,7 @@ module Import::OTRS
               :o_id               => history['TicketID'],
               :history_type       => 'updated',
               :history_object     => 'Ticket',
-              :history_attribute  => 'ticket_priority',
+              :history_attribute  => 'priority',
               :value_from         => from,
               :value_to           => to,
               :id_from            => from_id,
@@ -542,7 +542,7 @@ module Import::OTRS
     }
   end
 
-  def self.ticket_state
+  def self.state
     response = request( "public.pl?Action=Export;Type=State" )
     return if !response
     return if !response.success?
@@ -587,8 +587,8 @@ module Import::OTRS
       if state['TypeName'] == 'pending auto'
         state['TypeName'] = 'pending action'
       end
-      ticket_state_type = Ticket::StateType.where( :name =>  state['TypeName'] ).first
-      state_new[:state_type_id] = ticket_state_type.id
+      state_type = Ticket::StateType.where( :name =>  state['TypeName'] ).first
+      state_new[:state_type_id] = state_type.id
       if state_old
 #        puts 'TS: ' + state_new.inspect
         state_old.update_attributes(state_new)
@@ -599,7 +599,7 @@ module Import::OTRS
       end
     }
   end
-  def self.ticket_priority
+  def self.priority
     response = request( "public.pl?Action=Export;Type=Priority" )
     return if !response
     return if !response.success?

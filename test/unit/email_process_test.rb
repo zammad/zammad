@@ -23,14 +23,14 @@ Some Textäöü",
         :success => true,
         :result => {
           0 => {
-            :ticket_priority       => '2 normal',
-            :title                 => 'äöü some subject',
+            :priority => '2 normal',
+            :title    => 'äöü some subject',
           },
           1 => {
-            :body                  => 'Some Textäöü',
-            :ticket_article_sender => 'Customer',
-            :ticket_article_type   => 'email',
-            :internal              => false,
+            :body     => 'Some Textäöü',
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => false,
           },
         },
       },
@@ -43,14 +43,14 @@ Some Textäöü".encode("ISO-8859-1"),
         :success => true,
         :result => {
           0 => {
-            :ticket_priority       => '2 normal',
-            :title                 => '', # should be äöü some subject, but can not be parsed from mime tools
+            :priority   => '2 normal',
+            :title      => '', # should be äöü some subject, but can not be parsed from mime tools
           },
           1 => {
-            :body                  => 'Some Textäöü',
-            :ticket_article_sender => 'Customer',
-            :ticket_article_type   => 'email',
-            :internal              => false,
+            :body       => 'Some Textäöü',
+            :sender     => 'Customer',
+            :type       => 'email',
+            :internal   => false,
           },
         },
       },
@@ -119,13 +119,13 @@ Some Text",
         :success => true,
         :result => {
           0 => {
-            :ticket_priority       => '2 normal',
-            :title                 => '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
+            :priority   => '2 normal',
+            :title      => '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
           },
           1 => {
-            :body                  => 'Some Text',
-            :ticket_article_sender => 'Customer',
-            :ticket_article_type   => 'email',
+            :body       => 'Some Text',
+            :sender     => 'Customer',
+            :type       => 'email',
           },
         },
       },
@@ -148,9 +148,9 @@ Some Text',
         :data => 'From: me@example.com
 To: customer@example.com
 Subject: some subject
-X-Zammad-Ticket-Ticket_Priority: 3 high
-X-Zammad-Article-Ticket_Article_Sender: System
-x-Zammad-Article-Ticket_Article_Type: phone
+X-Zammad-Ticket-priority: 3 high
+X-Zammad-Article-sender: System
+x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
 
 Some Text',
@@ -158,13 +158,13 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :ticket_priority       => '3 high',
-            :title                 => 'some subject',
+            :priority     => '3 high',
+            :title        => 'some subject',
           },
           1 => {
-            :ticket_article_sender => 'System',
-            :ticket_article_type   => 'phone',
-            :internal              => true,
+            :sender       => 'System',
+            :type         => 'phone',
+            :internal     => true,
           },
         },
       },
@@ -178,9 +178,9 @@ Some Text',
         :data => 'From: me@example.com
 To: customer@example.com
 Subject: some subject
-X-Zammad-Ticket-Ticket_Priority: 3 high
-X-Zammad-Article-Ticket_Article_Sender: System
-x-Zammad-Article-Ticket_Article_Type: phone
+X-Zammad-Ticket-Priority: 3 high
+X-Zammad-Article-Sender: System
+x-Zammad-Article-Type: phone
 x-Zammad-Article-Internal: true
 
 Some Text',
@@ -188,13 +188,13 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :ticket_priority       => '2 normal',
-            :title                 => 'some subject',
+            :priority     => '2 normal',
+            :title        => 'some subject',
           },
           1 => {
-            :ticket_article_sender => 'Customer',
-            :ticket_article_type   => 'email',
-            :internal              => false,
+            :sender       => 'Customer',
+            :type         => 'email',
+            :internal     => false,
           },
         },
       },
@@ -204,7 +204,7 @@ Some Text',
 
   test 'process with postmaster filter' do
     group = Group.create_if_not_exists(
-      :name => 'Test Group',
+      :name          => 'Test Group',
       :created_by_id => 1,
       :updated_by_id => 1,
     )
@@ -215,7 +215,7 @@ Some Text',
         :from => 'nobody@example.com',
       },
       :perform => {
-        'X-Zammad-Ticket-Ticket_Priority' => '3 high',
+        'X-Zammad-Ticket-priority' => '3 high',
       },
       :channel       => 'email',
       :active        => true,
@@ -261,14 +261,14 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :group                => group.name,
-            :ticket_priority       => '2 normal',
-            :title                 => 'some subject',
+            :group        => group.name,
+            :priority     => '2 normal',
+            :title        => 'some subject',
           },
           1 => {
-            :ticket_article_sender => 'Customer',
-            :ticket_article_type   => 'email',
-            :internal              => true,
+            :sender       => 'Customer',
+            :type         => 'email',
+            :internal     => true,
           },
         },
       },
@@ -283,14 +283,14 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :group                => 'Twitter',
-            :ticket_priority       => '2 normal',
-            :title                 => 'some subject',
+            :group          => 'Twitter',
+            :priority       => '2 normal',
+            :title          => 'some subject',
           },
           1 => {
-            :ticket_article_sender => 'Customer',
-            :ticket_article_type   => 'email',
-            :internal              => true,
+            :sender         => 'Customer',
+            :type           => 'email',
+            :internal       => true,
           },
         },
       },

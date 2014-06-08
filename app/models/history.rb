@@ -21,7 +21,7 @@ add a new history entry for an object
   History.add(
     :history_type      => 'updated',
     :history_object    => 'Ticket',
-    :history_attribute => 'ticket_state',
+    :history_attribute => 'state',
     :o_id              => ticket.id,
     :id_to             => 3,
     :id_from           => 2,

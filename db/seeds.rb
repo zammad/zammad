@@ -16,7 +16,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'product_name', 
+        :name     => 'product_name',
         :tag      => 'input',
       },
     ],
@@ -35,7 +35,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'organization', 
+        :name     => 'organization',
         :tag      => 'input',
       },
     ],
@@ -54,7 +54,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'system_id', 
+        :name     => 'system_id',
         :tag      => 'select',
         :options  => {
           '10' => '10',
@@ -78,7 +78,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'fqdn', 
+        :name     => 'fqdn',
         :tag      => 'input',
       },
     ],
@@ -96,7 +96,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'http_type', 
+        :name     => 'http_type',
         :tag      => 'select',
         :options  => {
           'https' => 'https',
@@ -121,7 +121,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'storage', 
+        :name     => 'storage',
         :tag      => 'select',
         :options  => {
           'DB' => 'Database',
@@ -188,7 +188,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'user_create_account', 
+        :name     => 'user_create_account',
         :tag      => 'boolean',
         :options     => {
           true  => 'yes',
@@ -210,7 +210,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'user_lost_password', 
+        :name     => 'user_lost_password',
         :tag      => 'boolean',
         :options     => {
           true  => 'yes',
@@ -232,7 +232,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'switch_to_user', 
+        :name     => 'switch_to_user',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -300,7 +300,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'auth_twitter', 
+        :name     => 'auth_twitter',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -322,13 +322,13 @@ Setting.create_if_not_exists(
       {
         :display  => 'Twitter Key',
         :null     => true,
-        :name     => 'key', 
+        :name     => 'key',
         :tag      => 'input',
       },
       {
         :display  => 'Twitter Secret',
         :null     => true,
-        :name     => 'secret', 
+        :name     => 'secret',
         :tag      => 'input',
       },
     ],
@@ -346,7 +346,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'auth_facebook', 
+        :name     => 'auth_facebook',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -369,13 +369,13 @@ Setting.create_if_not_exists(
       {
         :display   => 'App ID',
         :null      => true,
-        :name      => 'app_id', 
+        :name      => 'app_id',
         :tag       => 'input',
       },
       {
         :display   => 'App Secret',
         :null      => true,
-        :name      => 'app_secret', 
+        :name      => 'app_secret',
         :tag       => 'input',
       },
     ],
@@ -394,7 +394,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'auth_google_oauth2', 
+        :name      => 'auth_google_oauth2',
         :tag       => 'boolean',
         :options   => {
           true  => 'yes',
@@ -416,13 +416,13 @@ Setting.create_if_not_exists(
       {
         :display   => 'Client ID',
         :null      => true,
-        :name      => 'client_id', 
+        :name      => 'client_id',
         :tag       => 'input',
       },
       {
         :display   => 'Client Secret',
         :null      => true,
-        :name      => 'client_secret', 
+        :name      => 'client_secret',
         :tag       => 'input',
       },
     ],
@@ -441,7 +441,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'auth_linkedin', 
+        :name      => 'auth_linkedin',
         :tag       => 'boolean',
         :options   => {
           true  => 'yes',
@@ -463,13 +463,13 @@ Setting.create_if_not_exists(
       {
         :display   => 'App ID',
         :null      => true,
-        :name      => 'app_id', 
+        :name      => 'app_id',
         :tag       => 'input',
       },
       {
         :display   => 'App Secret',
         :null      => true,
-        :name      => 'app_secret', 
+        :name      => 'app_secret',
         :tag       => 'input',
       },
     ],
@@ -488,7 +488,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'password_min_size', 
+        :name      => 'password_min_size',
         :tag       => 'select',
         :options     => {
           4 => 4,
@@ -517,7 +517,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'password_min_2_lower_2_upper_characters', 
+        :name      => 'password_min_2_lower_2_upper_characters',
         :tag       => 'select',
         :options     => {
           1 => 'yes',
@@ -539,7 +539,7 @@ Setting.create_if_not_exists(
       {
         :display   => 'Needed',
         :null      => true,
-        :name      => 'password_need_digit', 
+        :name      => 'password_need_digit',
         :tag       => 'select',
         :options     => {
           1 => 'yes',
@@ -561,7 +561,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'password_max_login_failed', 
+        :name      => 'password_max_login_failed',
         :tag       => 'select',
         :options     => {
           4 => 4,
@@ -598,7 +598,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => false,
-        :name      => 'ticket_hook', 
+        :name      => 'ticket_hook',
         :tag       => 'input',
       },
     ],
@@ -616,7 +616,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_hook_divider', 
+        :name      => 'ticket_hook_divider',
         :tag       => 'input',
       },
     ],
@@ -634,7 +634,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_hook_position', 
+        :name      => 'ticket_hook_position',
         :tag       => 'select',
         :options     => {
           'left'  => 'Left',
@@ -657,7 +657,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => false,
-        :name      => 'ticket_subject_size', 
+        :name      => 'ticket_subject_size',
         :tag       => 'input',
       },
     ],
@@ -675,7 +675,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_subject_re', 
+        :name      => 'ticket_subject_re',
         :tag       => 'input',
       },
     ],
@@ -709,7 +709,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_number', 
+        :name      => 'ticket_number',
         :tag       => 'select',
         :options   => {
           'Ticket::Number::Increment' => 'Increment (SystemID.Counter)',
@@ -731,7 +731,7 @@ Setting.create_if_not_exists(
       {
         :display  => 'Checksum',
         :null     => true,
-        :name     => 'checksum', 
+        :name     => 'checksum',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -741,7 +741,7 @@ Setting.create_if_not_exists(
       {
         :display  => 'Min. size of number',
         :null     => true,
-        :name     => 'min_size', 
+        :name     => 'min_size',
         :tag      => 'select',
         :options  => {
           1 => 1,
@@ -784,7 +784,7 @@ Setting.create_if_not_exists(
       {
         :display  => 'Checksum',
         :null     => true,
-        :name     => 'checksum', 
+        :name     => 'checksum',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -809,7 +809,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'customer_ticket_create', 
+        :name     => 'customer_ticket_create',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -832,7 +832,7 @@ Setting.create_if_not_exists(
       {
         :display    => '',
         :null       => true,
-        :name       => 'group_ids', 
+        :name       => 'group_ids',
         :tag        => 'select',
         :multiple   => true,
         :null       => false,
@@ -856,7 +856,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'customer_ticket_view', 
+        :name     => 'customer_ticket_view',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -879,7 +879,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_define_email_from', 
+        :name      => 'ticket_define_email_from',
         :tag       => 'select',
         :options   => {
           :SystemAddressName          => 'System Address Display Name',
@@ -902,7 +902,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'ticket_define_email_from_seperator', 
+        :name     => 'ticket_define_email_from_seperator',
         :tag      => 'input',
       },
     ],
@@ -921,7 +921,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'postmaster_max_size', 
+        :name      => 'postmaster_max_size',
         :tag       => 'select',
         :options   => {
           1 => 1,
@@ -962,7 +962,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'postmaster_follow_up_search_in', 
+        :name     => 'postmaster_follow_up_search_in',
         :tag      => 'checkbox',
         :options  => {
           'references' => 'References',
@@ -987,7 +987,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'notification_sender', 
+        :name     => 'notification_sender',
         :tag      => 'input',
       },
     ],
@@ -1006,7 +1006,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'send_no_auto_response_reg_exp', 
+        :name     => 'send_no_auto_response_reg_exp',
         :tag      => 'input',
       },
     ],
@@ -1025,7 +1025,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'chat', 
+        :name     => 'chat',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -1058,7 +1058,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_mode', 
+        :name     => 'import_mode',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -1080,7 +1080,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_ignore_sla', 
+        :name     => 'import_ignore_sla',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -1097,13 +1097,13 @@ Setting.create_if_not_exists(
   :title       => 'Import Endpoint',
   :name        => 'import_otrs_endpoint',
   :area        => 'Import::OTRS',
-  :description => 'Defines OTRS endpoint to import users, ticket, ticket_states and articles.',
+  :description => 'Defines OTRS endpoint to import users, ticket, states and articles.',
   :options     => {
     :form => [
       {
         :display  => '',
         :null     => false,
-        :name     => 'import_otrs_endpoint', 
+        :name     => 'import_otrs_endpoint',
         :tag      => 'input',
       },
     ],
@@ -1121,7 +1121,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'import_otrs_endpoint_key', 
+        :name     => 'import_otrs_endpoint_key',
         :tag      => 'input',
       },
     ],
@@ -1140,7 +1140,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_otrs_user', 
+        :name     => 'import_otrs_user',
         :tag      => 'input',
       },
     ],
@@ -1159,7 +1159,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_otrs_password', 
+        :name     => 'import_otrs_password',
         :tag      => 'input',
       },
     ],
@@ -1302,19 +1302,19 @@ Ticket::Article::Sender.create_if_not_exists( :name => 'System' )
 
 UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
-  :group_id           => Group.where( :name => 'Users' ).first.id,
-  :customer_id        => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
-  :owner_id           => User.where( :login => '-' ).first.id,
-  :title              => 'Welcome to Zammad!',
-  :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
-  :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+  :group_id    => Group.where( :name => 'Users' ).first.id,
+  :customer_id => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
+  :owner_id    => User.where( :login => '-' ).first.id,
+  :title       => 'Welcome to Zammad!',
+  :state_id    => Ticket::State.where( :name => 'new' ).first.id,
+  :priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
 )
 Ticket::Article.create(
-  :ticket_id                => ticket.id, 
-  :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
-  :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
-  :from                     => 'Zammad Feedback <feedback@zammad.org>',
-  :body                     => 'Welcome!
+  :ticket_id => ticket.id,
+  :type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
+  :sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
+  :from      => 'Zammad Feedback <feedback@zammad.org>',
+  :body      => 'Welcome!
 
 Thank you for installing Zammad.
 
@@ -1337,17 +1337,17 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [ 1,2,3 ],
-    'tickets.owner_id'        => 'current_user.id',
+    'tickets.state_id' => [ 1,2,3 ],
+    'tickets.owner_id' => 'current_user.id',
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1358,17 +1358,17 @@ Overview.create_if_not_exists(
   :prio       => 1001,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [1,2,3],
-    'tickets.owner_id'        => 1,
+    'tickets.state_id' => [1,2,3],
+    'tickets.owner_id' => 1,
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1379,16 +1379,16 @@ Overview.create_if_not_exists(
   :prio       => 1002,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [1,2,3],
+    'tickets.state_id' => [1,2,3],
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1406,9 +1406,9 @@ Overview.create_if_not_exists(
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'owner', 'escalation_time' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'escalation_time' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'escalation_time' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'owner', 'escalation_time' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'owner', 'escalation_time' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'owner', 'escalation_time' ],
     :view_mode_default => 's',
   },
 )
@@ -1419,17 +1419,17 @@ Overview.create_if_not_exists(
   :prio       => 1020,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [3],
-    'tickets.owner_id'        => 'current_user.id',        
+    'tickets.state_id' => [3],
+    'tickets.owner_id' => 'current_user.id',
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1440,17 +1440,17 @@ Overview.create_if_not_exists(
   :prio       => 9003,
   :role_id    => overview_role.id,
   :condition  => {
-#      'tickets.ticket_state_id' => [3],
-#      'tickets.owner_id'        => current_user.id,        
+#      'tickets.state_id' => [3],
+#      'tickets.owner_id'        => current_user.id,
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :s => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :s => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1462,7 +1462,7 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [ 1,2,3,4,6 ],
+    'tickets.state_id' => [ 1,2,3,4,6 ],
     'tickets.customer_id'     => 'current_user.id',
   },
   :order => {
@@ -1470,9 +1470,9 @@ Overview.create_if_not_exists(
     :direction => 'DESC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'created_at' ],
-    :s => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
-    :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'created_at' ],
+    :s => [ 'number', 'title', 'state', 'priority', 'created_at' ],
+    :m => [ 'number', 'title', 'state', 'priority', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1483,7 +1483,7 @@ Overview.create_if_not_exists(
   :role_id             => overview_role.id,
   :organization_shared => true,
   :condition => {
-    'tickets.ticket_state_id' => [ 1,2,3,4,6 ],
+    'tickets.state_id' => [ 1,2,3,4,6 ],
     'tickets.organization_id' => 'current_user.organization_id',
   },
   :order => {
@@ -1491,9 +1491,9 @@ Overview.create_if_not_exists(
     :direction => 'DESC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'created_at' ],
-    :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'created_at' ],
+    :m => [ 'number', 'title', 'state', 'priority', 'created_at' ],
     :view_mode_default => 's',
   },
 )

@@ -59,26 +59,26 @@ class TwitterTest < ActiveSupport::TestCase
     hash  = '#citheo42' + rand(9999).to_s
     text  = 'Today the weather is really nice... ' + hash
     ticket = Ticket.create(
-      :group_id           => group.id,
-      :customer_id        => user.id,
-      :title              => text[0,40],
-      :ticket_state_id    => state.id,
-      :ticket_priority_id => priority.id,
-      :updated_by_id      => 1,
-      :created_by_id      => 1,
+      :group_id       => group.id,
+      :customer_id    => user.id,
+      :title          => text[0,40],
+      :state_id       => state.id,
+      :priority_id    => priority.id,
+      :updated_by_id  => 1,
+      :created_by_id  => 1,
     )
     assert( ticket, "outbound ticket created" )
     article = Ticket::Article.create(
-      :ticket_id                => ticket.id,
-      :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'twitter status' ).first.id,
-      :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
-      :body                     => text,
-#      :from                     => sender.name,
-#      :to                       => to,
-#      :message_id               => tweet.id,
-      :internal                 => false,
-      :updated_by_id            => 1,
-      :created_by_id            => 1,
+      :ticket_id      => ticket.id,
+      :type_id        => Ticket::Article::Type.where( :name => 'twitter status' ).first.id,
+      :sender_id      => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
+      :body           => text,
+#      :from          => sender.name,
+#      :to            => to,
+#      :message_id    => tweet.id,
+      :internal       => false,
+      :updated_by_id  => 1,
+      :created_by_id  => 1,
     )
     assert( article, "outbound article created" )
     assert_equal( article.ticket.articles.count, 1 )
@@ -173,19 +173,19 @@ class TwitterTest < ActiveSupport::TestCase
     assert( ticket.articles, "ticket.articles exists" )
     article_count = ticket.articles.count
     assert( article_count )
-#    assert_equal( ticket.ticket_state.name, 'new' )
+#    assert_equal( ticket.state.name, 'new' )
 
     # reply via ticket
     outbound_article = Ticket::Article.create(
-      :ticket_id                => ticket.id,
-      :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'twitter direct-message' ).first.id,
-      :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
-      :body                     => text,
-#      :from                     => sender.name,
-      :to                       => 'me_bauer',
-      :internal                 => false,
-      :updated_by_id            => 1,
-      :created_by_id            => 1,
+      :ticket_id      => ticket.id,
+      :type_id        => Ticket::Article::Type.where( :name => 'twitter direct-message' ).first.id,
+      :sender_id      => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
+      :body           => text,
+#      :from           => sender.name,
+      :to             => 'me_bauer',
+      :internal       => false,
+      :updated_by_id  => 1,
+      :created_by_id  => 1,
     )
     assert( outbound_article, "outbound article created" )
     assert_equal( outbound_article.ticket.articles.count, article_count + 1 )
