@@ -408,7 +408,7 @@ test( "form postmaster filter", function() {
     set: {
       'x-zammad-ticket-owner': 'owner',
       'x-zammad-ticket-customer': 'customer',
-      'x-zammad-ticket-ticket_priority_id': 2,
+      'x-zammad-ticket-priority_id': 2,
       'x-zammad-ticket-group_id': 1,
     },
   }
@@ -435,12 +435,12 @@ test( "form postmaster filter", function() {
     set: {
       'x-zammad-ticket-owner': 'owner',
       'x-zammad-ticket-customer': 'customer',
-      'x-zammad-ticket-ticket_priority_id': "2",
+      'x-zammad-ticket-priority_id': "2",
       'x-zammad-ticket-group_id': "1",
     },
   };
   deepEqual( params, test_params, 'form param check' );
-  el.find('[name="set::x-zammad-ticket-ticket_priority_id"]').parent().next().click()
+  el.find('[name="set::x-zammad-ticket-priority_id"]').parent().next().click()
   el.find('[name="set::x-zammad-ticket-customer"]').parent().next().click()
   App.Delay.set( function() {
       test( "form param check after remove click", function() {

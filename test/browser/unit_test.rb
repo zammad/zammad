@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class CoreTest < TestCase
+class UnitTest < TestCase
   def test_core
     tests = [
       {
