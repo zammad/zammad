@@ -88,7 +88,7 @@ class App.Auth
 
     # refresh default collections
     if data.collections
-      App.Event.trigger 'resetCollection', data.collections
+      App.Collection.resetCollections( data.collections )
 
     # trigger auth ok with new session data
     App.Event.trigger( 'auth', data.session )

@@ -19,10 +19,10 @@ class App.Collection
       _instance ?= new _collectionSingleton
     _instance.reset( args )
 
-  @resetCollection: ( args ) ->
+  @resetCollections: ( args ) ->
     if _instance == undefined
       _instance ?= new _collectionSingleton
-    _instance.resetCollection( args )
+    _instance.resetCollections( args )
 
 class _collectionSingleton extends Spine.Module
   @include App.LogInclude
