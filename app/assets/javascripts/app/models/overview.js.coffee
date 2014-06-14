@@ -18,21 +18,64 @@ class App.Overview extends App.Model
       default: ['number', 'title', 'state', 'created_at']
       null:    false
       translate: true
-      options:
-        number:                 'Number'
-        title:                  'Title'
-        customer:               'Customer'
-        state:                  'State'
-        priority:               'Priority'
-        group:                  'Group'
-        owner:                  'Owner'
-        created_at:             'Age'
-        last_contact:           'Last Contact'
-        last_contact_agent:     'Last Contact Agent'
-        last_contact_customer:  'Last Contact Customer'
-        first_response:         'First Response'
-        close_time:             'Close Time'
-        article_count:          'Article Count'
+      options: [
+        {
+          value:  'number'
+          name:   'Number'
+        },
+        {
+          value:  'title'
+          name:   'Title'
+        },
+        {
+          value:  'customer'
+          name:   'Customer'
+        },
+        {
+          value:  'state'
+          name:   'State'
+        },
+        {
+          value:  'priority'
+          name:   'Priority'
+        },
+        {
+          value:  'group'
+          name:   'Group'
+        },
+        {
+          value:  'owner'
+          name:   'Owner'
+        },
+        {
+          value:  'created_at'
+          name:   'Age'
+        },
+        {
+          value:  'last_contact'
+          name:   'Last Contact'
+        },
+        {
+          value:  'last_contact_agent'
+          name:   'Last Contact Agent'
+        },
+        {
+          value:  'last_contact_customer'
+          name:   'Last Contact Customer'
+        },
+        {
+          value:  'first_response'
+          name:   'First Response'
+        },
+        {
+          value:  'close_time'
+          name:   'Close Time'
+        },
+        {
+          value:  'article_count'
+          name:   'Article Count'
+        },
+      ]
       class:      'medium'
     },
 

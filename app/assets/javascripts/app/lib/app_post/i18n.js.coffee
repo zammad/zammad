@@ -144,7 +144,10 @@ class _i18nSingleton extends Spine.Module
   translate: ( string, args... ) =>
 
     # return '' on undefined
+    if typeof string is 'boolean'
+      string = string.toString()
     return '' if string is undefined
+    return '' if string is ''
 
     # return translation
     if @map[string] isnt undefined

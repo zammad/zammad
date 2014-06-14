@@ -7,8 +7,8 @@
     <% if @radio: %>
       <th style="width: 22px"></th>
     <% end %>
-<% for row in @header: %>
-      <th <% if row.style: %>style="<%= row.style %>"<% end %>><%- @T( row.display ) %></th>
+<% for item in @header: %>
+      <th <% if item.style: %>style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
 <% end %>
 <% if @destroy: %>
       <th class="span2"><%- @T('Delete') %></th>
@@ -16,17 +16,25 @@
     </tr>
   </thead>
   <tbody>
+<% position = 0 %>
 <% length = @header.length %>
 <% if @checkbox || @radio: %>
 <%   length++ %>
 <% end %>
-<% position = 0 %>
 <% groupLast = '' %>
 <% for object in @objects: %>
   <% if @groupBy: %>
-  <%   if groupLast isnt object[@groupBy.id]: %>
-  <tr class=""><td colspan="<%= length %>"><b><%- @P( object[@groupBy.name] ) %></b></td></tr>
-  <%     groupLast = object[@groupBy.id] %>
+  <%   if object[@groupBy] && object[@groupBy].displayName: %>
+  <%     groupByName = object[@groupBy].displayName() %>
+  <%     if object[@groupBy].translate(): %>
+  <%       groupByName = @T(groupByName) %>
+  <%     end %>
+  <%   else: %>
+  <%     groupByName = object[@groupBy] || '-' %>
+  <%   end %>
+  <%   if groupLast isnt groupByName: %>
+  <tr class=""><td colspan="<%= length %>"><b><%- @P( groupByName ) %></b></td></tr>
+  <%     groupLast = groupByName %>
   <%   end %>
   <% end %>
   <% position++ %>
@@ -37,33 +45,53 @@
     <% if @radio: %>
       <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
     <% end %>
-    <% for row in @overview: %>
-      <% displayName = @P( object[row.name], row ) %>
-      <% if row.translate: %><%  displayName = @T( displayName ) %><% end %>
-      <% if row.title: %>
-        <% displayNameTitle = displayName %>
-        <% if object[row.title]: %>
-          <% displayNameTitle = @P( object[row.title], row ) %>
-        <% end %>
+    <% for item in @header: %>
+      <% translation = false %>
+      <% value = object[item.name] %>
+      <% item_id = item.name.substr(item.name.length-3, item.name.length) %>
+      <% if item_id is '_id' && object[ item.name.substr(0, item.name.length-3) ]: %>
+      <%   value     = object[ item.name.substr(0, item.name.length-3) ] %>
+      <%   refObject = object[ item.name.substr(0, item.name.length-3) ] %>
       <% end %>
-      <td <% if row.title: %>title="<%= displayNameTitle %>"<% end %>>
-        <% if row.type is 'link': %>
-          <a href="#" data-type="<%= row.dataType %>" <% if row.class: %>class="<%= row.class %>"<% end %>>
-        <% else: %>
-          <span <% if row.class: %>class="<%= row.class %>"<% end %> <% if row.data && row.data.id: %>data-id="<%= object[row.name].id %>"<% end %>>
-        <% end %>
-        <% if row.translate || row.callback: %><%- displayName %><% else: %><%= displayName %><% end %>
-        <% if row.type is 'link': %></a><% else: %></span><% end %>
+      <% if !value: %>
+      <%   parts = item.name.split '::' %>
+      <%   if parts[0] && parts[1] && object[ parts[0] ]: %>
+      <%     value = object[ parts[0] ][ parts[1] ] %>
+      <%   end %>
+      <% end %>
+      <% if value && value.displayNameLong : %>
+      <%   translation = true %>
+      <%   value = value.displayNameLong() %>
+      <% else if value && value.displayName : %>
+      <%   translation = true %>
+      <%   value = value.displayName() %>
+      <% end %>
+      <% item_clone = item %>
+      <% if @callbacks: %>
+      <%   for attribute, callbacksAll of @callbacks: %>
+      <%     if attribute is item.name || attribute is item_id: %>
+      <%       for callback in callbacksAll: %>
+      <%         callback( value, object, item_clone, @header, refObject ) %>
+      <%       end %>
+      <%     end %>
+      <%   end %>
+      <% end %>
+      <% #console.log('HH', item_clone.name, item_clone.type, item_clone.translate, item_clone, object.translate(), refObject, translation) %>
+      <td>
+      <% if item_clone.link: %><a href="<%- item_clone.link %>"><% end %>
+      <% if item_clone.translate || ( translation && !refObject && object.translate && object.translate() ) || ( translation && refObject && refObject.translate && refObject.translate() ) : %>
+        <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %>><%- @T( @P( value, item_clone ) ) %></span>
+      <% else if item_clone.type is 'time': %>
+        <span class="humanTimeFromNow <% if item_clone.class: %><%= item_clone.class %><% end %>" data-time="<%- object[item_clone.name] %>">?</span>
+      <% else: %>
+        <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %> <% if item_clone.title: %>title="<%= item_clone.title %>"<% end %> <% if item_clone.data: %>data-id="<%= item_clone.data.id %><% end %>"><%= @P(value) %></span>
+      <% end %>
+      <% if item_clone.link: %></a><% end %>
       </td>
-  <% end %>
-<!--
-    <td><%= object.updated_at %></td>
--->
-<% if @destroy: %>
-    <td>
-      <a href="#" class="glyphicon glyphicon-trash" data-type="destroy"></a>
-    </td>
-<% end %>
+    <% end %>
+    <% if @destroy: %>
+      <td><a href="#" class="glyphicon glyphicon-trash" data-type="destroy"></a></td>
+    <% end %>
   </tr>
 <% end %>
   </tbody>

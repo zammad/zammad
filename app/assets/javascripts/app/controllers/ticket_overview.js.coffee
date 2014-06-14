@@ -1,7 +1,6 @@
 class Index extends App.Controller
   constructor: ->
     super
-
     @render()
 
   render: ->
@@ -55,11 +54,11 @@ class Table extends App.ControllerContent
     # render
     @fetch()
 
-  fetch: =>
+  fetch: (force) =>
 
     # use cache of first page
     cache = App.Store.get( @key )
-    if cache
+    if !force && cache
       @load(cache)
 
     # init fetch via ajax, all other updates on time via websockets
@@ -106,7 +105,7 @@ class Table extends App.ControllerContent
     App.Overview.unbind('local:refetch')
     App.Overview.bind 'local:refetch', (record) =>
       @log 'notice', 'refetch...', record
-      @fetch()
+      @fetch(true)
 
     @ticket_list_show = []
     for ticket_id in @ticket_ids
@@ -123,6 +122,8 @@ class Table extends App.ControllerContent
 
   render: ->
 
+
+
     # if customer and no ticket exists, show the following message only
     if !@ticket_list_show[0] && @isRole('Customer')
       @html App.view('customer_not_ticket_exists')()
@@ -131,6 +132,7 @@ class Table extends App.ControllerContent
     @selected = @bulkGetSelected()
 
     # set page title
+    @overview = App.Overview.find( @overview.id )
     @title @overview.name
 
     # render init page
@@ -182,27 +184,51 @@ class Table extends App.ControllerContent
       )
       @el.find('.table-overview').append(table)
     else
-      shown_all_attributes = @ticketTableAttributes( App.Overview.find( @overview.id ).view.s )
-      groupBy = undefined
-      if @overview.group_by
-        group_by =
-          name: @overview.group_by
-          id:   @overview.group_by + '_id'
+      openTicket = (id,e) =>
+        ticket = App.Ticket.retrieve(id)
+        @navigate ticket.uiUrl()
+      callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
+        attribute.title = object.title
+      callbackLinkToTicket = (value, object, attribute, attributes, refObject) =>
+        attribute.link = object.uiUrl()
+      callbackResetLink = (value, object, attribute, attributes, refObject) =>
+        attribute.link = undefined
+      callbackUserPopover = (value, object, attribute, attributes, refObject) =>
+        attribute.class = 'user-popover'
+        attribute.data =
+          id: refObject.id
+      callbackCheckbox = (id, checked, e) =>
+        if @el.find('table').find('input[name="bulk"]:checked').length == 0
+          @el.find('.bulk-action').addClass('hide')
+        else
+          @el.find('.bulk-action').removeClass('hide')
 
-        # remove group by attribute from show attributes list
-        shown_all_attributes = _.filter(
-          shown_all_attributes
-          (item) =>
-            return item if item.name isnt @overview.group_by
-            return
-        )
       new App.ControllerTable(
-        el:                @el.find('.table-overview')
-        overview_extended: shown_all_attributes
-        model:             App.Ticket
-        objects:           @ticket_list_show
-        checkbox:          checkbox
-        groupBy:           group_by
+        overview:     @overview.view.s
+        el:           @el.find('.table-overview')
+        model:        App.Ticket
+        objects:      @ticket_list_show
+        checkbox:     checkbox
+        groupBy:      @overview.group_by
+        bindRow:
+          events:
+            'click':  openTicket
+        #bindCol:
+        #  customer_id:
+        #    events:
+        #      'mouseover': popOver
+        callbackAttributes:
+          customer_id:
+            [ callbackResetLink, callbackUserPopover ]
+          owner_id:
+            [ callbackResetLink, callbackUserPopover ]
+          title:
+            [ callbackLinkToTicket, callbackTicketTitleAdd ]
+          number:
+            [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        bindCheckbox:
+          events:
+            'click':  callbackCheckbox
       )
 
     @bulkSetSelected( @selected )
@@ -215,12 +241,13 @@ class Table extends App.ControllerContent
 
     # start bulk action observ
     @el.find('.bulk-action').append( @bulk_form() )
-    if @el.find('.table-overview').find('[name="bulk"]:checked').length isnt 0
+    if @el.find('.table-overview').find('input[name="bulk"]:checked').length isnt 0
         @el.find('.bulk-action').removeClass('hide')
 
     # show/hide bulk action
-    @el.find('.table-overview').delegate('[name="bulk"], [name="bulk_all"]', 'click', (e) =>
-      if @el.find('.table-overview').find('[name="bulk"]:checked').length == 0
+    @el.find('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
+      console.log('YES')
+      if @el.find('.table-overview').find('input[name="bulk"]:checked').length == 0
 
         # hide
         @el.find('.bulk-action').addClass('hide')
@@ -324,6 +351,7 @@ class Table extends App.ControllerContent
             @fetch()
       )
     )
+    @el.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
     App.Event.trigger 'notify', {
       type: 'success'
       msg: App.i18n.translateContent('Bulk-Action executed!')
@@ -343,14 +371,15 @@ class Table extends App.ControllerContent
 
   settings: (e) =>
     e.preventDefault()
-    new Settings(
-      overview: App.Overview.find(@overview.id),
-      view_mode: @view_mode,
+    new App.OverviewSettings(
+      overview_id: @overview.id
+      view_mode:   @view_mode
     )
 
-class Settings extends App.ControllerModal
+class App.OverviewSettings extends App.ControllerModal
   constructor: ->
     super
+    @overview = App.Overview.find(@overview_id)
     @render()
 
   render: ->
@@ -358,119 +387,154 @@ class Settings extends App.ControllerModal
     @html App.view('dashboard/ticket_settings')(
       overview: @overview,
     )
-    @configure_attributes_article = [
-#      { name: 'from',        display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
-#      { name: 'to',          display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-#      { name: 'type_id',     display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'pull-left' },
-#      { name: 'internal',    display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'pull-left' },
-      {
-        name:     'per_page'
-        display:  'Items per page'
-        tag:      'select'
-        multiple: false
-        null:     false
-#        default: @overview.view[@view_mode].per_page
-        options:
-          15: 15
-          20: 20
-          25: 25
-          30: 30
-          35: 35
-        class: 'medium'
-#        item_class: 'pull-left'
-      },
-      {
-        name:    'attributes'
-        display: 'Attributes'
-        tag:     'checkbox'
-        default: @overview.view[@view_mode]
-        null:    false
-        translate: true
-        options:
-#          true:  'internal'
-#          false: 'public'
-          number:                 'Number'
-          title:                  'Title'
-          customer:               'Customer'
-          state:                  'State'
-          priority:               'Priority'
-          group:                  'Group'
-          owner:                  'Owner'
-          created_at:             'Age'
-          last_contact:           'Last Contact'
-          last_contact_agent:     'Last Contact Agent'
-          last_contact_customer:  'Last Contact Customer'
-          first_response:         'First Response'
-          close_time:             'Close Time'
-          escalation_time:        'Escalation in'
-          article_count:          'Article Count'
-        class:      'medium'
-      },
-      {
-        name:    'order_by'
-        display: 'Order'
-        tag:     'select'
-        default: @overview.order.by
-        null:    false
-        translate: true
-        options:
-          number:                 'Number'
-          title:                  'Title'
-          customer:               'Customer'
-          state:                  'State'
-          priority:               'Priority'
-          group:                  'Group'
-          owner:                  'Owner'
-          created_at:             'Age'
-          last_contact:           'Last Contact'
-          last_contact_agent:     'Last Contact Agent'
-          last_contact_customer:  'Last Contact Customer'
-          first_response:         'First Response'
-          close_time:             'Close Time'
-          escalation_time:        'Escalation in'
-          article_count:          'Article Count'
-        class:   'medium'
-      },
-      {
-        name:    'order_by_direction'
-        display: 'Direction'
-        tag:     'select'
-        default: @overview.order.direction
-        null:    false
-        translate: true
-        options:
-          ASC:   'up'
-          DESC:  'down'
-        class:   'medium'
-      },
-      {
-        name:    'group_by'
-        display: 'Group by'
-        tag:     'select'
-        default: @overview.group_by
-        null:    true
-        nulloption: true
-        translate:  true
-        options:
-          customer:               'Customer'
-          state:           'State'
-          priority:        'Priority'
-          group:                  'Group'
-          owner:                  'Owner'
-        class:   'medium'
-      },
-#      {
-#        name: 'condition',
-#        display: 'Conditions',
-#        tag: 'select',
-#        multiple: false,
-#        null: false,
-#        relation: 'TicketArticleType',
-#        default: '9',
-#        class: 'medium',
-#        item_class: 'pull-left',
-#      },
-    ]
+    @configure_attributes_article = []
+    if @view_mode is 'd'
+      @configure_attributes_article.push({
+        name:     'view::per_page',
+        display:  'Items per page',
+        tag:      'select',
+        multiple: false,
+        null:     false,
+        default: @overview.view.per_page
+        options: {
+          5: ' 5'
+          10: '10'
+          15: '15'
+          20: '20'
+          25: '25'
+        },
+        class: 'medium',
+      })
+    @configure_attributes_article.push({
+      name:    "view::#{@view_mode}"
+      display: 'Attributes'
+      tag:     'checkbox'
+      default: @overview.view[@view_mode]
+      null:    false
+      translate: true
+      options: [
+        {
+          value:  'number'
+          name:   'Number'
+        },
+        {
+          value:  'title'
+          name:   'Title'
+        },
+        {
+          value:  'customer'
+          name:   'Customer'
+        },
+        {
+          value:  'organization'
+          name:   'Organization'
+        },
+        {
+          value:  'state'
+          name:   'State'
+        },
+        {
+          value:  'priority'
+          name:   'Priority'
+        },
+        {
+          value:  'group'
+          name:   'Group'
+        },
+        {
+          value:  'owner'
+          name:   'Owner'
+        },
+        {
+          value:  'created_at'
+          name:   'Age'
+        },
+        {
+          value:  'last_contact'
+          name:   'Last Contact'
+        },
+        {
+          value:  'last_contact_agent'
+          name:   'Last Contact Agent'
+        },
+        {
+          value:  'last_contact_customer'
+          name:   'Last Contact Customer'
+        },
+        {
+          value:  'first_response'
+          name:   'First Response'
+        },
+        {
+          value:  'close_time'
+          name:   'Close Time'
+        },
+        {
+          value:  'escalation_time'
+          name:   'Escalation in'
+        },
+        {
+          value:  'article_count'
+          name:   'Article Count'
+        },
+      ]
+      class:      'medium'
+    },
+    {
+      name:    'order::by'
+      display: 'Order'
+      tag:     'select'
+      default: @overview.order.by
+      null:    false
+      translate: true
+      options:
+        number:                 'Number'
+        title:                  'Title'
+        customer:               'Customer'
+        organization:           'Organization'
+        state:                  'State'
+        priority:               'Priority'
+        group:                  'Group'
+        owner:                  'Owner'
+        created_at:             'Age'
+        last_contact:           'Last Contact'
+        last_contact_agent:     'Last Contact Agent'
+        last_contact_customer:  'Last Contact Customer'
+        first_response:         'First Response'
+        close_time:             'Close Time'
+        escalation_time:        'Escalation in'
+        article_count:          'Article Count'
+      class:   'medium'
+    },
+    {
+      name:    'order::direction'
+      display: 'Direction'
+      tag:     'select'
+      default: @overview.order.direction
+      null:    false
+      translate: true
+      options:
+        ASC:   'up'
+        DESC:  'down'
+      class:   'medium'
+    },
+    {
+      name:    'group_by'
+      display: 'Group by'
+      tag:     'select'
+      default: @overview.group_by
+      null:    true
+      nulloption: true
+      translate:  true
+      options:
+        customer:       'Customer'
+        organization:   'Organization'
+        state:          'State'
+        priority:       'Priority'
+        group:          'Group'
+        owner:          'Owner'
+      class:   'medium'
+    })
 
     new App.ControllerForm(
       el:        @el.find('#form-setting')
@@ -486,19 +550,18 @@ class Settings extends App.ControllerModal
 
     # check if refetch is needed
     @reload_needed = 0
-    if @overview.order['by'] isnt params['order_by']
-      @overview.order['by'] = params['order_by']
+    if @overview.order.by isnt params.order.by
+      @overview.order.by = params.order.by
       @reload_needed = 1
 
-    if @overview.order['direction'] isnt params['order_by_direction']
-      @overview.order['direction'] = params['order_by_direction']
+    if @overview.order.direction isnt params.order.direction
+      @overview.order.direction = params.order.direction
       @reload_needed = 1
 
-    if @overview['group_by'] isnt params['group_by']
-      @overview['group_by'] = params['group_by']
-      @reload_needed = 1
+    for key, value of params.view
+      @overview.view[key] = value
 
-    @overview.view[@view_mode] = params['attributes']
+    @overview.group_by = params.group_by
 
     @overview.save(
       done: =>

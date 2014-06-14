@@ -71,7 +71,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
 
   submit: (e) ->
     e.preventDefault()
-    params = @formParam(e.target) 
+    params = @formParam(e.target)
     @item.load(params)
 
     # validate
@@ -169,20 +169,14 @@ class App.ControllerGenericIndex extends App.Controller
       objects:    objects
       overview:   overview
       attributes: attributes
-      groupBy:    'state'
+      bindRow:
+        events:
+          'click': @edit
     )
 
-    binds = {}
-    for item in attributes
-      if item.dataType
-        if !binds[item.dataType]
-          callback = item.callback || @edit
-          @el.on( 'click', "[data-type=#{item.dataType}]", callback )
-          binds[item.dataType] = true
-
-  edit: (e) =>
+  edit: (id, e) =>
     e.preventDefault()
-    item = $(e.target).item( App[ @genericObject ] )
+    item = App[ @genericObject ].find(id)
 
     if @editCallback
       @editCallback(item)

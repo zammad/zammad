@@ -16,6 +16,13 @@ class TestsController < ApplicationController
     end
   end
 
+  # GET /tests/table
+  def table
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+
   # GET /test/wait
   def wait
     sleep params[:sec].to_i

@@ -1,6 +1,5 @@
 class App.DashboardTicket extends App.Controller
   events:
-    'click [data-type=edit]':     'zoom'
     'click [data-type=settings]': 'settings'
     'click [data-type=page]':     'page'
 
@@ -18,11 +17,11 @@ class App.DashboardTicket extends App.Controller
     # render
     @fetch()
 
-  fetch: =>
+  fetch: (force) =>
 
     # use cache of first page
     cache = App.Store.get( @key )
-    if cache
+    if !force && cache
       @load( cache )
 
     # init fetch via ajax, all other updates on time via websockets
@@ -55,12 +54,13 @@ class App.DashboardTicket extends App.Controller
     App.Overview.unbind('local:rerender')
     App.Overview.bind 'local:rerender', (record) =>
       @log 'notice', 'rerender...', record
+      data.overview = record
       @render(data)
 
     App.Overview.unbind('local:refetch')
     App.Overview.bind 'local:refetch', (record) =>
       @log 'notice', 'refetch...', record
-      @fetch()
+      @fetch(true)
 
     @render( data )
 
@@ -72,8 +72,8 @@ class App.DashboardTicket extends App.Controller
     @overview      = data.overview
     @tickets_count = data.tickets_count
     @ticket_ids    = data.ticket_ids
-    # FIXME 10
-    pages_total =  parseInt( ( @tickets_count / 10 ) + 0.99999 ) || 1
+    per_page    = @overview.view.per_page || 10
+    pages_total =  parseInt( ( @tickets_count / per_page ) + 0.99999 ) || 1
     html = App.view('dashboard/ticket')(
       overview:    @overview,
       pages_total: pages_total,
@@ -92,13 +92,39 @@ class App.DashboardTicket extends App.Controller
       if @ticket_ids[ i - 1 ]
         @tickets_in_table.push App.Ticket.retrieve( @ticket_ids[ i - 1 ] )
 
-    shown_all_attributes = @ticketTableAttributes( App.Overview.find(@overview.id).view.d )
+    openTicket = (id,e) =>
+      ticket = App.Ticket.retrieve(id)
+      @navigate ticket.uiUrl()
+    callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
+      attribute.title = object.title
+    callbackLinkToTicket = (value, object, attribute, attributes, refObject) =>
+      attribute.link = object.uiUrl()
+    callbackResetLink = (value, object, attribute, attributes, refObject) =>
+      attribute.link = undefined
+    callbackUserPopover = (value, object, attribute, attributes, refObject) =>
+      attribute.class = 'user-popover'
+      attribute.data =
+        id: refObject.id
+
     new App.ControllerTable(
+      overview:          @overview.view.d
       el:                html.find('.table-overview'),
-      overview_extended: shown_all_attributes,
-      model:             App.Ticket,
+      model:             App.Ticket
       objects:           @tickets_in_table,
-      checkbox:          false,
+      checkbox:          false
+      groupBy:           @overview.group_by
+      bindRow:
+        events:
+          'click': openTicket
+      callbackAttributes:
+        customer_id:
+          [ callbackResetLink, callbackUserPopover ]
+        owner_id:
+          [ callbackResetLink, callbackUserPopover ]
+        title:
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        number:
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
     )
 
     @html html
@@ -122,8 +148,9 @@ class App.DashboardTicket extends App.Controller
 
   settings: (e) =>
     e.preventDefault()
-    new Settings(
-      overview: App.Overview.find(@overview.id)
+    new App.OverviewSettings(
+      overview_id: @overview.id
+      view_mode:   'd'
     )
 
   page: (e) =>
@@ -132,139 +159,3 @@ class App.DashboardTicket extends App.Controller
     @start_page = id
     @fetch()
 
-class Settings extends App.ControllerModal
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-
-    @html App.view('dashboard/ticket_settings')(
-      overview: @overview,
-    )
-    @configure_attributes_article = [
-#      { name: 'from',      display: 'From',     tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8',  },
-#      { name: 'to',        display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-#      { name: 'type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', default: '9', class: 'medium', item_class: 'pull-left' },
-#      { name: 'internal',  display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: 'pull-left' },
-      {
-        name:     'per_page',
-        display:  'Items per page',
-        tag:      'select',
-        multiple: false,
-        null:     false,
-#        default: @overview.view.d.per_page,
-        options: {
-          5: 5,
-          10: 10,
-          15: 15,
-          20: 20,
-        },
-        class: 'medium',
-#        item_class: 'pull-left',
-      },
-      {
-        name:    'attributes',
-        display: 'Attributes',
-        tag:     'checkbox',
-        default: @overview.view.d,
-        null:    false,
-        translate:  true
-        options: {
-          number:                 'Number'
-          title:                  'Title'
-          customer:               'Customer'
-          state:                  'State'
-          priority:               'Priority'
-          group:                  'Group'
-          owner:                  'Owner'
-          created_at:             'Age'
-          last_contact:           'Last Contact'
-          last_contact_agent:     'Last Contact Agent'
-          last_contact_customer:  'Last Contact Customer'
-          first_response:         'First Response'
-          close_time:             'Close Time'
-          escalation_time:        'Escalation in'
-          article_count:          'Article Count'
-        },
-        class:      'medium',
-#        item_class: 'pull-left',
-      },
-      {
-        name:    'order_by',
-        display: 'Order',
-        tag:     'select',
-        default: @overview.order.by,
-        null:    false,
-        translate:  true
-        options: {
-          number:                 'Number'
-          title:                  'Title'
-          customer:               'Customer'
-          state:                  'State'
-          priority:               'Priority'
-          group:                  'Group'
-          owner:                  'Owner'
-          created_at:             'Age'
-          last_contact:           'Last Contact'
-          last_contact_agent:     'Last Contact Agent'
-          last_contact_customer:  'Last Contact Customer'
-          first_response:         'First Response'
-          close_time:             'Close Time'
-          escalation_time:        'Escalation in'
-          article_count:          'Article Count'
-        },
-        class:      'medium',
-      },
-      {
-        name:    'order_by_direction',
-        display: 'Direction',
-        tag:     'select',
-        default: @overview.order.direction,
-        null:    false,
-        translate: true
-        options: {
-          ASC:   'up',
-          DESC:  'down',
-        },
-        class:      'medium',
-      },
-    ]
-
-    new App.ControllerForm(
-      el: @el.find('#form-setting'),
-      model: { configure_attributes: @configure_attributes_article },
-      autofocus: false,
-    )
-
-    @modalShow()
-
-  submit: (e) =>
-    e.preventDefault()
-    params = @formParam(e.target)
-
-    # check if refetch is needed
-    @reload_needed = 0
-    if @overview.view['d']['per_page'] isnt params['per_page']
-      @overview.view['d']['per_page'] = params['per_page']
-      @reload_needed = 1
-
-    if @overview.order['by'] isnt params['order_by']
-      @overview.order['by'] = params['order_by']
-      @reload_needed = 1
-
-    if @overview.order['direction'] isnt params['order_by_direction']
-      @overview.order['direction'] = params['order_by_direction']
-      @reload_needed = 1
-
-    @overview.view['d'] = params['attributes']
-
-    @overview.save(
-      done: =>
-        if @reload_needed
-          @overview.trigger('local:refetch')
-        else
-          @overview.trigger('local:rerender')
-    )
-
-    @modalHide()

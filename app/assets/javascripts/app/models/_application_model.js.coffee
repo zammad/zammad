@@ -16,6 +16,9 @@ class App.Model extends Spine.Model
   uiUrl: ->
     '#'
 
+  translate: ->
+    App[ @constructor.className ].configure_translate
+
   objectDisplayName: ->
     @constructor.className
 
@@ -67,11 +70,24 @@ class App.Model extends Spine.Model
       if !attribute.readonly
 
         # check required // if null is defined && null is false
-        if 'null' of attribute && !attribute[null] 
+        if 'null' of attribute && !attribute[null]
 
-          # key exists not in hash || value is '' || value is undefined 
-          if !( attribute.name of data['params'] ) || data['params'][attribute.name] is '' || data['params'][attribute.name] is undefined
-            errors[attribute.name] = 'is required'
+          # check :: fields
+          parts = attribute.name.split '::'
+          if parts[0] && !parts[1]
+
+            # key exists not in hash || value is '' || value is undefined
+            if !( attribute.name of data['params'] ) || data['params'][attribute.name] is '' || data['params'][attribute.name] is undefined
+              errors[attribute.name] = 'is required'
+
+          else if parts[0] && parts[1] && !parts[2]
+
+            # key exists not in hash || value is '' || value is undefined
+            if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined
+              errors[attribute.name] = 'is required'
+
+          else
+            throw "can't parse '#{attribute.name}'"
 
         # check confirm password
         if attribute.type is 'password' && data['params'][attribute.name] && "#{attribute.name}_confirm" of data['params']
@@ -82,7 +98,9 @@ class App.Model extends Spine.Model
             errors["#{attribute.name}_confirm"] = ''
 
     # return error object
-    return errors if !_.isEmpty(errors)
+    if !_.isEmpty(errors)
+      console.log 'error', 'validation vailed', errors
+      return errors
 
     # return no errors
     return
@@ -327,5 +345,3 @@ class App.Model extends Spine.Model
       return
     )
     collection
-
-  
