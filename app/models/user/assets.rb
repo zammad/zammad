@@ -28,11 +28,18 @@ returns
     if !data[ User.to_app_model ][ self.id ]
       data[ User.to_app_model ][ self.id ] = User.user_data_full( self.id )
     end
-    if !data[ User.to_app_model ][ self['created_by_id'] ]
-      data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
+    if self.organization_id
+      if !data[ Organization.to_app_model ]
+        data[ Organization.to_app_model ] = {}
+      end
+      if !data[ Organization.to_app_model ][ self.organization_id ]
+      data[ Organization.to_app_model ][ self.organization_id ] = Organization.find( self.organization_id )
     end
-    if !data[ User.to_app_model ][ self['updated_by_id'] ]
-      data[ User.to_app_model ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
+    if !data[ User.to_app_model ][ self.created_by_id ]
+      data[ User.to_app_model ][ self.created_by_id ] = User.user_data_full( self.created_by_id )
+    end
+    if !data[ User.to_app_model ][ self.updated_by_id ]
+      data[ User.to_app_model ][ self.updated_by_id ] = User.user_data_full( self.updated_by_id )
     end
     data
   end

@@ -46,5 +46,8 @@ class App.User extends App.Model
     # set image url
     data.image = @apiPath + '/users/image/' + data.image
 
+    if data.organization_id
+      data.organization = App.Organization.find(data.organization_id)
+
     data
 
