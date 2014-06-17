@@ -5,6 +5,27 @@ class Index extends App.Controller
     # check authentication
     return if !@authenticate()
 
+    callbackHeader = (header) ->
+      attribute =
+        name:       'switch_to'
+        display:    'Switch to'
+        translation: true
+      header.push attribute
+      header
+
+    callbackAttributes = (value, object, attribute, header, refObject) ->
+      value = ' '
+      attribute.class  = 'glyphicon glyphicon-user'
+      attribute.link   = '#'
+      attribute.title  = App.i18n.translateInline('Switch to')
+      value
+
+    switchTo = (id,e) =>
+      e.preventDefault()
+      @disconnectClient()
+      App.Auth._logout()
+      window.location = App.Config.get('api_path') + '/sessions/switch/' + id
+
     new App.ControllerGenericIndex(
       el: @el
       id: @id
@@ -21,26 +42,18 @@ class Index extends App.Controller
           'Users are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers.'
         ]
         buttons: [
-#          { name: 'List', 'data-type': '', class: 'active' },
           { name: 'New User', 'data-type': 'new', class: 'primary' }
         ]
-        addCol:
-          overview: ['switch_to']
-          attributes: [
-            {
-              name:     'switch_to'
-              display:  'Switch to'
-              type:     'link'
-              class:    'glyphicon glyphicon-user'
-              dataType: 'switch_to'
-              callback: (e) =>
-                e.preventDefault()
-                user_id = $(e.target).parent().parent().data('id')
-                @disconnectClient()
-                App.Auth._logout()
-                window.location = App.Config.get('api_path') + '/sessions/switch/' + user_id
-            }
-          ]
+        tableExtend:
+          callbackHeader:   callbackHeader
+          callbackAttributes:
+            switch_to: [
+              callbackAttributes
+            ]
+          bindCol:
+            switch_to:
+              events:
+                'click': switchTo
     )
 
 App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

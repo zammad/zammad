@@ -10,28 +10,42 @@ class App.ControllerTable extends App.Controller
 
   ###
 
-    # table simple based on model
+    # table based on model
 
-    rowClick = -> (id, e)
+    rowClick = (id, e) ->
       e.preventDefault()
       console.log('rowClick', id)
-    rowMouseover = -> (id, e)
+    rowMouseover = (id, e) ->
       e.preventDefault()
       console.log('rowMouseover', id)
-    rowMouseout = -> (id, e)
+    rowMouseout = (id, e) ->
       e.preventDefault()
       console.log('rowMouseout', id)
-    rowDblClick = -> (id, e)
+    rowDblClick = (id, e) ->
       e.preventDefault()
       console.log('rowDblClick', id)
 
-    colClick = -> (id, e)
+    colClick = (id, e) ->
       e.preventDefault()
       console.log('colClick', e.target)
 
-    checkboxClick = -> (id, e)
+    checkboxClick = (id, e) ->
       e.preventDefault()
       console.log('checkboxClick', e.target)
+
+    callbackHeader = (header) ->
+      console.log('current header is', header)
+      # add new header item
+      attribute =
+        name: 'some name'
+        display: 'Some Name'
+      header.push attribute
+      console.log('new header is', header)
+
+    callbackAttributes = (value, object, attribute, header, refObject) ->
+      console.log('data of item col', value, object, attribute, header, refObject)
+      value = 'New Data To Show'
+      value
 
     new App.ControllerTable(
       overview: ['host', 'user', 'adapter', 'active']
@@ -56,6 +70,11 @@ class App.ControllerTable extends App.Controller
           'mouseover':  rowMouseover
           'mouseout':   rowMouseout
           'dblclick':   rowDblClick
+      callbackHeader:   callbackHeader
+      callbackAttributes:
+        attributeName: [
+          callbackAttributes
+        ]
     )
   ###
 
@@ -119,6 +138,10 @@ class App.ControllerTable extends App.Controller
             headerFound = true
             header.push attribute
 
+    # execute header callback
+    if data.callbackHeader
+      header = data.callbackHeader(header)
+
     # get content
     @log 'debug', 'table', 'header', header, 'overview', 'objects', data.objects
     table = App.view('generic/table')(
@@ -158,8 +181,8 @@ class App.ControllerTable extends App.Controller
             for event, callback of item.events
               do (table, event, callback) =>
                 if cursorMap[event]
-                  table.find("tbody > tr > td:nth-child(#{position}) > span").css( 'cursor', cursorMap[event] )
-                table.on( event, "tbody > tr > td:nth-child(#{position}) > span",
+                  table.find("tbody > tr > td:nth-child(#{position}) span").css( 'cursor', cursorMap[event] )
+                table.on( event, "tbody > tr > td:nth-child(#{position}) span",
                   (e) =>
                     e.stopPropagation()
                     id = $(e.target).parents('tr').data('id')
@@ -205,6 +228,14 @@ class App.ControllerTable extends App.Controller
 
     # enable checkbox bulk selection
     if data.checkbox
+
+      # click first tr>td, click checkbox / improve usability
+      table.delegate('tr > td:nth-child(1)', event, (e) ->
+        e.stopPropagation()
+        $(e.target).find('[name="bulk"]').click()
+      )
+
+      # bind on full bulk click
       table.delegate('input[name="bulk_all"]', 'click', (e) ->
         e.stopPropagation()
         if $(e.target).prop('checked')

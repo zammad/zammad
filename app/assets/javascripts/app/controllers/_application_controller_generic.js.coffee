@@ -153,26 +153,19 @@ class App.ControllerGenericIndex extends App.Controller
       menus:   @pageData.menus
     )
 
-    # append additional col. link switch to
-    overview = _.clone( App[ @genericObject ].configure_overview )
-    attributes = _.clone( App[ @genericObject ].configure_attributes )
-    if @pageData.addCol
-      for item in @pageData.addCol.overview
-        overview.push item
-      for item in @pageData.addCol.attributes
-        attributes.push item
-
     # append content table
-    new App.ControllerTable(
-      el:         @el.find('.table-overview')
-      model:      App[ @genericObject ]
-      objects:    objects
-      overview:   overview
-      attributes: attributes
-      bindRow:
-        events:
-          'click': @edit
+    params = _.extend(
+      {
+        el:         @el.find('.table-overview')
+        model:      App[ @genericObject ]
+        objects:    objects
+        bindRow:
+          events:
+            'click': @edit
+      },
+      @pageData.tableExtend
     )
+    new App.ControllerTable(params)
 
   edit: (id, e) =>
     e.preventDefault()

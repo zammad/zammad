@@ -71,7 +71,7 @@
       <%   for attribute, callbacksAll of @callbacks: %>
       <%     if attribute is item.name || attribute is item_id: %>
       <%       for callback in callbacksAll: %>
-      <%         callback( value, object, item_clone, @header, refObject ) %>
+      <%         value = callback( value, object, item_clone, @header, refObject ) %>
       <%       end %>
       <%     end %>
       <%   end %>

@@ -189,14 +189,15 @@ class Table extends App.ControllerContent
         @navigate ticket.uiUrl()
       callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
         attribute.title = object.title
+        value
       callbackLinkToTicket = (value, object, attribute, attributes, refObject) =>
         attribute.link = object.uiUrl()
-      callbackResetLink = (value, object, attribute, attributes, refObject) =>
-        attribute.link = undefined
+        value
       callbackUserPopover = (value, object, attribute, attributes, refObject) =>
         attribute.class = 'user-popover'
         attribute.data =
           id: refObject.id
+        value
       callbackCheckbox = (id, checked, e) =>
         if @el.find('table').find('input[name="bulk"]:checked').length == 0
           @el.find('.bulk-action').addClass('hide')
@@ -219,9 +220,9 @@ class Table extends App.ControllerContent
         #      'mouseover': popOver
         callbackAttributes:
           customer_id:
-            [ callbackResetLink, callbackUserPopover ]
+            [ callbackUserPopover ]
           owner_id:
-            [ callbackResetLink, callbackUserPopover ]
+            [ callbackUserPopover ]
           title:
             [ callbackLinkToTicket, callbackTicketTitleAdd ]
           number:
