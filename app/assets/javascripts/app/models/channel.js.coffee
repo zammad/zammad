@@ -17,10 +17,3 @@ class App.Channel extends App.Model
   @configure_overview = [
     'adapter', 'options::host', 'options::user', 'group'
   ]
-
-  @_fillUp: (data) ->
-
-    # group
-    data.group = App.Group.find( data.group_id )
-
-    data
