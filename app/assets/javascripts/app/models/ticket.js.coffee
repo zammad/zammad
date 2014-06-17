@@ -4,7 +4,7 @@ class App.Ticket extends App.Model
   @url: @apiPath + '/tickets'
   @configure_attributes = [
       { name: 'number',                display: '#',        tag: 'input',    type: 'text', limit: 100, null: true, read_only: true,  style: 'width: 8%'  },
-      { name: 'customer_id',           display: 'Customer', tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>' },
+      { name: 'customer_id',           display: 'Customer', tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', helpLink: '<a href="" class="customer_new">&raquo;</a>' },
       { name: 'organization_id',       display: 'Organization', tagreadonly: 1 },
       { name: 'group_id',              display: 'Group',    tag: 'select',   multiple: false, limit: 100, null: false, class: 'span8', relation: 'Group', style: 'width: 10%' },
       { name: 'owner_id',              display: 'Owner',    tag: 'select',   multiple: false, limit: 100, null: true, class: 'span8', relation: 'User', style: 'width: 12%' },

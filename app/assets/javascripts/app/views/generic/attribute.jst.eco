@@ -5,6 +5,6 @@
 	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>
 	<% if @attribute.add: %><span><a href="#" class="glyphicon glyphicon-plus"></a></span><% end %>
     <span class="help-inline"></span>
-    <span class="help-block"><% if @attribute.help: %><%- @T( @attribute.help ) + ' ' %><% end %><%- @attribute.link %></span>
+    <span class="help-block"><% if @attribute.help: %><%- @T( @attribute.help ) + ' ' %><% end %><%- @attribute.helpLink %></span>
   </div>
 </div>

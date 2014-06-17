@@ -83,7 +83,7 @@ class App.ControllerForm extends App.Controller
     relation:       'User'
     autocapitalize: false
     help:           'Select the customer of the Ticket or create one.'
-    link:           '<a href="" class="customer_new">&raquo;</a>'
+    helpLink:       '<a href="" class="customer_new">&raquo;</a>'
     callback:       @userInfo
     class:          'span7'
   }
