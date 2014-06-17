@@ -78,13 +78,13 @@
       <% end %>
       <% #console.log('HH', item_clone.name, item_clone.type, item_clone.translate, item_clone, object.translate(), refObject, translation) %>
       <td>
-      <% if item_clone.link: %><a href="<%- item_clone.link %>"><% end %>
+      <% if item_clone.link: %><a href="<%- item_clone.link %>" <% if item_clone.target: %>target="<%= item_clone.target %>"<% end %>><% end %>
       <% if item_clone.translate || ( translation && !refObject && object.translate && object.translate() ) || ( translation && refObject && refObject.translate && refObject.translate() ) : %>
         <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %>><%- @T( @P( value, item_clone ) ) %></span>
       <% else if item_clone.type is 'time': %>
         <span class="humanTimeFromNow <% if item_clone.class: %><%= item_clone.class %><% end %>" data-time="<%- object[item_clone.name] %>">?</span>
       <% else: %>
-        <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %> <% if item_clone.title: %>title="<%= item_clone.title %>"<% end %> <% if item_clone.data: %>data-id="<%= item_clone.data.id %><% end %>"><%= @P(value) %></span>
+        <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %> <% if item_clone.title: %>title="<%= item_clone.title %>"<% end %> <% if item_clone.data: %><% for data_key, data_item of item_clone.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>><%= @P(value) %></span>
       <% end %>
       <% if item_clone.link: %></a><% end %>
       </td>

@@ -63,7 +63,7 @@ class App.ControllerTable extends App.Controller
       bindCol:
         host:
           events:
-            'click': colEvent
+            'click': colClick
       bindCheckbox:
         events:
           'click':      rowClick

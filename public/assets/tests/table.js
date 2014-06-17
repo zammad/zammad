@@ -459,6 +459,18 @@ test( "table test 3", function() {
     attribute.class = 'glyphicon glyphicon-user'
     attribute.link  = '#'
     attribute.title  = App.i18n.translateInline('Switch to')
+    if (object.id == 55) {
+      attribute.data = {
+        some: 'value55',
+        xxx: 55,
+      }
+    }
+    else {
+      attribute.data = {
+        some: 'value56',
+        xxx: 56,
+      }
+    }
     return value
   }
   var switchTo = function(id, e) {
@@ -494,6 +506,8 @@ test( "table test 3", function() {
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').attr('title'), 'Switch to', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('some'), 'value55', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('xxx'), '55', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1)').text().trim(), 'realname 56', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'email 56', 'check row 2')
@@ -501,5 +515,7 @@ test( "table test 3", function() {
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').attr('title'), 'Switch to', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('some'), 'value56', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('xxx'), '56', 'check row 2')
 
 });
