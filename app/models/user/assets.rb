@@ -33,7 +33,8 @@ returns
         data[ Organization.to_app_model ] = {}
       end
       if !data[ Organization.to_app_model ][ self.organization_id ]
-      data[ Organization.to_app_model ][ self.organization_id ] = Organization.find( self.organization_id )
+        data[ Organization.to_app_model ][ self.organization_id ] = Organization.find( self.organization_id )
+      end
     end
     if !data[ User.to_app_model ][ self.created_by_id ]
       data[ User.to_app_model ][ self.created_by_id ] = User.user_data_full( self.created_by_id )
