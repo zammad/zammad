@@ -162,6 +162,18 @@ class App.Model extends Spine.Model
       return true
     return false
 
+  ###
+
+  methodWhichIsCalledAtLocalOrServerSiteChange = (changedItems) ->
+    console.log("Collection has changed", changedItems, localOrServer)
+
+  params =
+    initFetch: true # fetch inital collection
+
+  @subscribeId = App.Model.subscribe( methodWhichIsCalledAtLocalOrServerSiteChange )
+
+  ###
+
   @subscribe: (callback, param = {}) ->
     if !@SUBSCRIPTION_COLLECTION
       @SUBSCRIPTION_COLLECTION = {}
@@ -188,7 +200,7 @@ class App.Model extends Spine.Model
     @SUBSCRIPTION_COLLECTION[key] = callback
 
     # fetch init collection
-    if param['initFetch'] is true
+    if param.initFetch is true
       @one 'refresh', (collection) =>
         callback(collection)
       @fetch( {}, { clear: true } )
@@ -196,7 +208,17 @@ class App.Model extends Spine.Model
     # return key
     key
 
-  subscribe: (callback) ->
+  ###
+
+  methodWhichIsCalledAtLocalOrServerSiteChange = (changedItem, localOrServer) ->
+    console.log("Item has changed", changedItem, localOrServer)
+
+  model = App.Model.find(1)
+  @subscribeId = model.subscribe( methodWhichIsCalledAtLocalOrServerSiteChange )
+
+  ###
+
+  subscribe: (callback, type) ->
 
     # init bind
     if !App[ @constructor.className ]['SUBSCRIPTION_ITEM']
@@ -209,7 +231,7 @@ class App.Model extends Spine.Model
           #console.log('BIND', item)
           for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
             item = App[ @constructor.className ]._fillUp( item )
-            callback(item)
+            callback(item, 'local')
       )
 
       # subscribe and render data after server change
@@ -221,7 +243,9 @@ class App.Model extends Spine.Model
           if App[ @constructor.className ]['SUBSCRIPTION_ITEM'] && App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
             #console.log('SERVER BIND', item)
             for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
-              App[ @constructor.className ].retrieve( item.id, callback, true )
+              callbackRetrieve = (item) ->
+                callback(item, 'server')
+              App[ @constructor.className ].retrieve( item.id, callbackRetrieve, true )
         'Item::Subscribe::' + @constructor.className
       )
 
@@ -233,6 +257,14 @@ class App.Model extends Spine.Model
 
     # return key
     key
+
+  ###
+
+  unsubscribe from model or collection
+
+  App.Model.unsubscribe( @subscribeId )
+
+  ###
 
   @unsubscribe: (data) ->
     if @SUBSCRIPTION_ITEM
