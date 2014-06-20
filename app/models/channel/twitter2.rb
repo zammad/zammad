@@ -112,7 +112,7 @@ class Channel::Twitter2
 
     # check if parent exists
     user = nil, ticket = nil, article = nil
-    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
       puts 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
       tweet_sub = @client.status( tweet.in_reply_to_status_id )
       #        puts tweet_sub.inspect
@@ -176,7 +176,7 @@ class Channel::Twitter2
 
     #    puts '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
-    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
       puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
       article = Ticket::Article.where( :message_id => tweet.in_reply_to_status_id.to_s ).first
       if article
