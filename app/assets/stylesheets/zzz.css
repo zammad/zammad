@@ -102,11 +102,13 @@ table th, table td {
 */
   z-index: -5000;
 }
+/*
 @media (min-width: 1024px) {
   .content-one {
     width: 1024px;
   }
 }
+*/
 
 .content-fix {
   top: 78px;
