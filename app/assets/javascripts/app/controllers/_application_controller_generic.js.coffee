@@ -1,8 +1,3 @@
-$.fn.item = (genericObject) ->
-  elementID   = $(@).data('id')
-  elementID or= $(@).parents('[data-id]').data('id')
-  genericObject.find(elementID)
-
 class App.ControllerGenericNew extends App.ControllerModal
   constructor: (params) ->
     super
