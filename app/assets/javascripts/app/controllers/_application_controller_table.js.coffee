@@ -48,6 +48,7 @@ class App.ControllerTable extends App.Controller
       value
 
     new App.ControllerTable(
+      el:       element
       overview: ['host', 'user', 'adapter', 'active']
       model:    App.Channel
       objects:  data
@@ -76,9 +77,26 @@ class App.ControllerTable extends App.Controller
           callbackAttributes
         ]
     )
+
+    new App.ControllerTable(
+      el:       element
+      overview: ['time', 'area', 'level', 'browser', 'location', 'data']
+      attributes: [
+        { name: 'time',     display: 'Time',      type: 'time' },
+        { name: 'area',     display: 'Area',      type: 'text' },
+        { name: 'level',    display: 'Level',     type: 'text' },
+        { name: 'browser',  display: 'Browser',   type: 'text' },
+        { name: 'location', display: 'Location',  type: 'text' },
+        { name: 'data',     display: 'Data',      type: 'text' },
+      ]
+      objects:  data
+    )
+
   ###
 
   tableGen: (data) ->
+    if !data.model
+      data.model = {}
     overview   = data.overview || data.model.configure_overview || []
     attributes = data.attributes || data.model.configure_attributes || {}
     destroy    = data.model.configure_delete
