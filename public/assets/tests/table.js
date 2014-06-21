@@ -519,3 +519,39 @@ test( "table test 3", function() {
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('xxx'), '56', 'check row 2')
 
 });
+
+test( "table test 4", function() {
+  App.i18n.set('de')
+
+  $('#table').append('<hr><h1>table with data</h1><div id="table-data1"></div>')
+  var el = $('#table-data1')
+
+  data = [
+    { name: 'some name 1', data: 'some data 1', active: true },
+    { name: 'some name 2', data: 'some data 2', active: false },
+    { name: 'some name 3', data: 'some data 3', active: true },
+  ]
+  new App.ControllerTable({
+    el:       el,
+    overview: ['name', 'data', 'active'],
+    attributes: [
+      { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%' },
+      { name: 'data',     display: 'Data',      type: 'text' },
+      { name: 'active',   display: 'Active',    type: 'text' },
+    ],
+    objects: data
+  });
+
+  equal( el.find('table > thead > tr').length, 1, 'row count')
+  equal( el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal( el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Data', 'check header')
+  equal( el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal( el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:first').text().trim(), 'some name 1', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'some data 1', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:first').text().trim(), 'some name 2', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'some data 2', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'false', 'check row 2')
+});
