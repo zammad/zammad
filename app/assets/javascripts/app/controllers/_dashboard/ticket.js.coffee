@@ -97,14 +97,18 @@ class App.DashboardTicket extends App.Controller
       @navigate ticket.uiUrl()
     callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
       attribute.title = object.title
+      value
     callbackLinkToTicket = (value, object, attribute, attributes, refObject) =>
       attribute.link = object.uiUrl()
+      value
     callbackResetLink = (value, object, attribute, attributes, refObject) =>
       attribute.link = undefined
+      value
     callbackUserPopover = (value, object, attribute, attributes, refObject) =>
       attribute.class = 'user-popover'
       attribute.data =
         id: refObject.id
+      value
 
     new App.ControllerTable(
       overview:          @overview.view.d
