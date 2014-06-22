@@ -9,6 +9,12 @@ class Channel::Facebook
 
 
   end
+
+  def disconnect
+
+
+  end
+
   def send
 
     logger.debug('face!!!!!!!!!!!!!!')

@@ -14,42 +14,49 @@ class Channel::IMAP < Channel::EmailParser
 
     puts "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
 
-    imap = Net::IMAP.new( channel[:options][:host], port, ssl, nil, false )
+    @imap = Net::IMAP.new( channel[:options][:host], port, ssl, nil, false )
 
     # try LOGIN, if not - try plain
     begin
-      imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
+      @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
     rescue Exception => e
       if e.to_s !~ /unsupported\sauthentication\smechanism/i
         raise e
       end
-      imap.login( channel[:options][:user], channel[:options][:password] )
+      @imap.login( channel[:options][:user], channel[:options][:password] )
     end
     if !channel[:options][:folder] || channel[:options][:folder].empty?
-      imap.select('INBOX')
+      @imap.select('INBOX')
     else
-      imap.select( channel[:options][:folder] )
+      @imap.select( channel[:options][:folder] )
     end
     count     = 0
-    count_all = imap.search(['ALL']).count
-    imap.search(['ALL']).each do |message_id|
+    count_all = @imap.search(['ALL']).count
+    @imap.search(['ALL']).each do |message_id|
       count += 1
       puts " - message #{count.to_s}/#{count_all.to_s}"
-      msg = imap.fetch(message_id,'RFC822')[0].attr['RFC822']
+      msg = @imap.fetch(message_id,'RFC822')[0].attr['RFC822']
       #      puts msg.to_s
 
       # delete email from server after article was created
       if process(channel, msg)
-        imap.store(message_id, "+FLAGS", [:Deleted])
+        @imap.store(message_id, "+FLAGS", [:Deleted])
       end
     end
-    imap.expunge()
-    imap.disconnect()
+    @imap.expunge()
+    disconnect
     if count == 0
       puts " - no message"
     end
     puts "done"
   end
+
+  def disconnect
+    if @imap
+      @imap.disconnect()
+    end
+  end
+
   def send(attr, notification = false)
     channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
     begin

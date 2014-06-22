@@ -14,14 +14,14 @@ class Channel::POP3 < Channel::EmailParser
 
     puts "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
 
-    pop = Net::POP3.new( channel[:options][:host], port )
+    @pop = Net::POP3.new( channel[:options][:host], port )
     if ssl
-      pop.enable_ssl
+      @pop.enable_ssl
     end
-    pop.start( channel[:options][:user], channel[:options][:password] )
+    @pop.start( channel[:options][:user], channel[:options][:password] )
     count     = 0
-    count_all = pop.mails.size
-    pop.each_mail do |m|
+    count_all = @pop.mails.size
+    @pop.each_mail do |m|
       count += 1
       puts " - message #{count.to_s}/#{count_all.to_s}"
 
@@ -30,12 +30,19 @@ class Channel::POP3 < Channel::EmailParser
         m.delete
       end
     end
-    pop.finish
+    disconnect
     if count == 0
       puts " - no message"
     end
     puts "done"
   end
+
+  def disconnect
+    if @pop
+      @pop.finish
+    end
+  end
+
   def send(attr, notification = false)
     channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
     begin

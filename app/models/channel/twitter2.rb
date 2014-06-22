@@ -12,6 +12,12 @@ class Channel::Twitter2
     end
   end
 
+  def disconnect
+    if @client
+      @client = nil
+    end
+  end
+
   def fetch (channel)
 
     puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
@@ -46,6 +52,7 @@ class Channel::Twitter2
       fetch_loop( tweets, channel, channel[:options][:direct_messages][:group] )
     end
     puts 'done'
+    disconnect
   end
 
   def fetch_loop( tweets, channel, group )
