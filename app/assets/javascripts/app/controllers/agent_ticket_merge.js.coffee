@@ -32,22 +32,8 @@ class App.TicketMerge extends App.ControllerModal
         ticketItem = App.Ticket.retrieve( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:                @el.find('#ticket-merge-customer-tickets'),
-      overview_extended: [
-        { name: 'number',                 link: true },
-        { name: 'title',                  link: true },
-#        { name: 'customer',               class: 'user-popover', data: { id: true } },
-        { name: 'state',                  translate: true },
-#        { name: 'priority',               translate: true },
-        { name: 'group' },
-#        { name: 'owner',                  class: 'user-popover', data: { id: true } },
-        { name: 'created_at',             callback: @humanTime },
-#        { name: 'last_contact',           callback: @frontendTime },
-#        { name: 'last_contact_agent',     callback: @frontendTime },
-#        { name: 'last_contact_customer',  callback: @frontendTime },
-#        { name: 'first_response',         callback: @frontendTime },
-#        { name: 'close_time',             callback: @frontendTime },
-      ],
+      el:       @el.find('#ticket-merge-customer-tickets'),
+      overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
       model:    App.Ticket,
       objects:  list,
       radio:    true,
@@ -59,22 +45,8 @@ class App.TicketMerge extends App.ControllerModal
         ticketItem = App.Ticket.retrieve( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:                @el.find('#ticket-merge-recent-tickets'),
-      overview_extended: [
-        { name: 'number',                 link: true },
-        { name: 'title',                  link: true },
-#        { name: 'customer',               class: 'user-popover', data: { id: true } },
-        { name: 'state',                  translate: true },
-#        { name: 'priority',               translate: true },
-        { name: 'group' },
-#        { name: 'owner',                  class: 'user-popover', data: { id: true } },
-        { name: 'created_at',             callback: @humanTime },
-#        { name: 'last_contact',           callback: @frontendTime },
-#        { name: 'last_contact_agent',     callback: @frontendTime },
-#        { name: 'last_contact_customer',  callback: @frontendTime },
-#        { name: 'first_response',         callback: @frontendTime },
-#        { name: 'close_time',             callback: @frontendTime },
-      ],
+      el:       @el.find('#ticket-merge-recent-tickets'),
+      overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
       model:    App.Ticket,
       objects:  list,
       radio:    true,
