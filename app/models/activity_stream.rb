@@ -42,14 +42,14 @@ add a new activity entry for an object
       role_id = role.id
     end
 
-    # check if entry is needed
+    # check newest entry - is needed
     result = ActivityStream.where(
       :o_id                        => data[:o_id],
       #     :activity_stream_type_id     => type.id,
       :role_id                     => role_id,
       :activity_stream_object_id   => object.id,
       :created_by_id               => data[:created_by_id]
-    ).order('created_at DESC, id ASC').last
+    ).order('created_at DESC, id DESC').first
 
     # resturn if old entry is really fresh
     return result if result && result.created_at.to_i >= ( data[:created_at].to_i - 12 )

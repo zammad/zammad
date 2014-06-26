@@ -51,15 +51,26 @@ class ActivityStreamTest < ActiveSupport::TestCase
             :priority_id => Ticket::Priority.lookup( :name => '1 low' ).id,
           },
         },
+        :update2 => {
+          :ticket => {
+            :title       => 'Unit Test 2 (äöüß) - update!',
+            :priority_id => Ticket::Priority.lookup( :name => '2 normal' ).id,
+          },
+        },
         :check => [
-          {
+         {
             :result => true,
             :object => 'Ticket',
-            :type   => 'created',
+            :type   => 'updated',
           },
           {
             :result => true,
             :object => 'Ticket::Article',
+            :type   => 'created',
+          },
+          {
+            :result => true,
+            :object => 'Ticket',
             :type   => 'created',
           },
           {
@@ -80,8 +91,9 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
       ticket = Ticket.create( test[:create][:ticket] )
       test[:check][0][:o_id]          = ticket.id
-      test[:check][0][:created_at]    = ticket.created_at
-      test[:check][0][:created_by_id] = current_user.id
+      test[:check][2][:o_id]          = ticket.id
+      test[:check][2][:created_at]    = ticket.created_at
+      test[:check][2][:created_by_id] = current_user.id
       sleep 2
 
       test[:create][:article][:ticket_id] = ticket.id
@@ -98,12 +110,24 @@ class ActivityStreamTest < ActiveSupport::TestCase
         ticket.update_attributes( test[:update][:ticket] )
 
         # check updated user
-        test[:check][2][:o_id]          = current_user.id
-        test[:check][2][:created_at]    = ticket.created_at
-        test[:check][2][:created_by_id] = current_user.id
+        test[:check][3][:o_id]          = current_user.id
+        test[:check][3][:created_at]    = ticket.created_at
+        test[:check][3][:created_by_id] = current_user.id
+      end
+      if test[:update2][:ticket]
+        ticket = Ticket.find( ticket.id )
+        ticket.update_attributes( test[:update2][:ticket] )
       end
       if test[:update][:article]
         article.update_attributes( test[:update][:article] )
+      end
+
+      sleep 15
+      if test[:update][:ticket]
+        ticket.update_attributes( test[:update][:ticket] )
+      end
+      if test[:update2][:ticket]
+        ticket.update_attributes( test[:update2][:ticket] )
       end
 
       # remember ticket
@@ -148,12 +172,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
           {
             :result => true,
             :object => 'Organization',
-            :type   => 'created',
+            :type   => 'updated',
           },
           {
             :result => true,
             :object => 'Organization',
-            :type   => 'updated',
+            :type   => 'created',
           },
         ]
       },
@@ -252,7 +276,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       users.push user
 
       # check activity_stream
-      activity_stream_check( admin_user.activity_stream(2), test[:check] )
+      activity_stream_check( admin_user.activity_stream(3), test[:check] )
     }
 
     # delete tickets
@@ -293,12 +317,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
           {
             :result => true,
             :object => 'User',
-            :type   => 'created',
+            :type   => 'updated',
           },
           {
             :result => true,
             :object => 'User',
-            :type   => 'updated',
+            :type   => 'created',
           },
         ]
       },
@@ -344,25 +368,30 @@ class ActivityStreamTest < ActiveSupport::TestCase
   end
 
   def activity_stream_check( activity_stream_list, checks )
+    #activity_stream_list = activity_stream_list.reverse
     #puts 'AS ' + activity_stream_list.inspect
+    check_count = 0
     checks.each { |check_item|
+      check_count += 1
+
       #puts '+++++++++++'
       #puts check_item.inspect
-      match = false
+      check_list = 0
       activity_stream_list.each { |item|
-        next if match
-          #puts '--------'
-          #puts item.inspect
-        next if item['object'] != check_item[:object]
-        next if item['type'] != check_item[:type]
-        next if item['o_id'] != check_item[:o_id]
-        match = true
+        check_list += 1
+        next if check_list != check_count
+#        next if match
+        #puts '--------'
+        #puts item.inspect
+        #puts check_item.inspect
+        if check_item[:result]
+          assert_equal( check_item[:object], item['object'] )
+          assert_equal( check_item[:type], item['type'] )
+          assert_equal( check_item[:o_id], item['o_id'] )
+        else
+          assert_not_equal( check_item[:object], item['object'] )
+        end
       }
-      if check_item[:result]
-        assert( match, "activity stream check not matched! #{ check_item.inspect } not in #{ activity_stream_list.inspect }")
-      else
-        assert( !match, "activity stream check matched but should not! #{ check_item.inspect } not in #{ activity_stream_list.inspect }")
-      end
     }
   end
 
