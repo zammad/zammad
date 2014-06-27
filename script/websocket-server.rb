@@ -311,14 +311,10 @@ EventMachine.run {
       end
     }
 
-    # ajax
-    clients = Sessions.list
-    clients.each { |client_id, client|
-      next if client[:meta][:type] == 'websocket'
-      if ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
-        log 'notice', "closing idle ajax connection", client_id
-        Sessions.destory( client_id )
-      end
+    # close unused sessions
+    clients = Sessions.destory_idle_sessions(idle_time_in_min)
+    clients.each { |client_id|
+      log 'notice', "closing idle connection", client_id
     }
   end
 

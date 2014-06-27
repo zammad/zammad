@@ -18,6 +18,18 @@ module Sessions
   @@user_threads = {}
   @@client_threads = {}
 
+=begin
+
+start new session
+
+  Sessions.create( client_id, session_data, { :type => 'websocket' } )
+
+returns
+
+  true|false
+
+=end
+
   def self.create( client_id, session, meta )
     path = @path + '/' + client_id.to_s
     FileUtils.mkpath path
@@ -29,7 +41,6 @@ module Sessions
         },
         :meta => meta,
       }
-#      puts 'CREATE' + Marshal.dump(data)
       file.write Marshal.dump(data)
     }
 
@@ -42,6 +53,307 @@ module Sessions
     end
   end
 
+=begin
+
+list of all session
+
+  client_ids = Sessions.sessions
+
+returns
+
+  ['4711', '4712']
+
+=end
+
+  def self.sessions
+    path = @path + '/'
+
+    # just make sure that spool path exists
+    if !File::exists?( path )
+      FileUtils.mkpath path
+    end
+
+    data = []
+    Dir.foreach( path ) do |entry|
+      next if entry == '.' || entry == '..' || entry == 'spool'
+      data.push entry.to_s
+    end
+    data
+  end
+
+=begin
+
+list of all session
+
+  Sessions.session_exists?(client_id)
+
+returns
+
+  true|false
+
+=end
+
+  def self.session_exists?(client_id)
+    client_ids = self.sessions
+    client_ids.include? client_id.to_s
+  end
+
+=begin
+
+list of all session with data
+
+  client_ids_with_data = Sessions.list
+
+returns
+
+  {
+    '4711' => {
+      :user => {
+        :id => 123,
+      },
+      :meta => {
+        :type      => 'websocket',
+        :last_ping => time_of_last_ping,
+      }
+    },
+    '4712' => {
+      :user => {
+        :id => 124,
+      },
+      :meta => {
+        :type      => 'ajax',
+        :last_ping => time_of_last_ping,
+      }
+    },
+  }
+
+=end
+
+  def self.list
+    client_ids = self.sessions
+    session_list = {}
+    client_ids.each { |client_id|
+      data = self.get(client_id)
+      next if !data
+      session_list[client_id] = data
+    }
+    session_list
+  end
+
+=begin
+
+destroy session
+
+  Sessions.destory?(client_id)
+
+returns
+
+  true|false
+
+=end
+
+  def self.destory( client_id )
+    path = @path + '/' + client_id.to_s
+    FileUtils.rm_rf path
+  end
+
+=begin
+
+destroy idle session
+
+  list_of_client_ids = Sessions.destory_idle_sessions
+
+returns
+
+  ['4711', '4712']
+
+=end
+
+  def self.destory_idle_sessions(idle_time_in_min = 4)
+    list_of_closed_sessions = []
+    clients = Sessions.list
+    clients.each { |client_id, client|
+      if ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
+        list_of_closed_sessions.push client_id
+        Sessions.destory( client_id )
+      end
+    }
+    list_of_closed_sessions
+  end
+
+=begin
+
+touch session
+
+  Sessions.touch(client_id)
+
+returns
+
+  true|false
+
+=end
+
+  def self.touch( client_id )
+    data = self.get(client_id)
+    return false if !data
+    path = @path + '/' + client_id.to_s
+    data[:meta][:last_ping] = Time.new.to_i.to_s
+    File.open( path + '/session', 'wb' ) { |file|
+      file.write Marshal.dump(data)
+    }
+    true
+  end
+
+=begin
+
+get session data
+
+  data = Sessions.get(client_id)
+
+returns
+
+  {
+    :user => {
+      :id => 123,
+    },
+    :meta => {
+      :type      => 'websocket',
+      :last_ping => time_of_last_ping,
+    }
+  }
+
+=end
+
+  def self.get( client_id )
+    session_file = @path + '/' + client_id.to_s + '/session'
+    data = nil
+    return if !File.exist? session_file
+    begin
+      File.open( session_file, 'rb' ) { |file|
+        file.flock( File::LOCK_EX )
+        all = file.read
+        file.flock( File::LOCK_UN )
+        data = Marshal.load( all )
+      }
+    rescue Exception => e
+      File.delete(session_file)
+      puts "Error reading '#{session_file}':"
+      puts e.inspect
+      return
+    end
+    data
+  end
+
+=begin
+
+send message to client
+
+  Sessions.send(client_id_of_recipient, data)
+
+returns
+
+  true|false
+
+=end
+
+  def self.send( client_id, data )
+    path = @path + '/' + client_id.to_s + '/'
+    filename = 'send-' + Time.new().to_f.to_s# + '-' + rand(99999999).to_s
+    check = true
+    count = 0
+    while check
+      if File::exists?( path + filename )
+        count += 1
+        filename = filename  + '-' + count
+      else
+        check = false
+      end
+    end
+    return false if !File.directory? path
+    File.open( path + 'a-' + filename, 'wb' ) { |file|
+      file.flock( File::LOCK_EX )
+      file.write data.to_json
+      file.flock( File::LOCK_UN )
+      file.close
+    }
+    return false if !File.exists?( path + 'a-' + filename )
+    FileUtils.mv( path + 'a-' + filename, path + filename )
+    true
+  end
+
+=begin
+
+send message to all client
+
+  Sessions.broadcast(data)
+
+returns
+
+  true|false
+
+=end
+
+  def self.broadcast( data )
+
+    # list all current clients
+    client_list = self.sessions
+    client_list.each {|client_id|
+      Sessions.send( client_id, data )
+    }
+    true
+  end
+
+=begin
+
+get messages for client
+
+  messages = Sessions.queue(client_id_of_recipient)
+
+returns
+
+  [
+    {
+      key1 => 'some data of message 1',
+      key2 => 'some data of message 1',
+    },
+    {
+      key1 => 'some data of message 2',
+      key2 => 'some data of message 2',
+    },
+  ]
+
+=end
+
+  def self.queue( client_id )
+    path = @path + '/' + client_id.to_s + '/'
+    data = []
+    files = []
+    Dir.foreach( path ) {|entry|
+      next if entry == '.' || entry == '..'
+      files.push entry
+    }
+    files.sort.each {|entry|
+      filename = path + '/' + entry
+      if /^send/.match( entry )
+        data.push Sessions.queue_file_read( path, entry )
+      end
+    }
+    data
+  end
+
+  def self.queue_file_read( path, filename )
+    file_old = path + filename
+    file_new = path + 'a-' + filename
+    FileUtils.mv( file_old, file_new )
+    data = nil
+    all = ''
+    File.open( file_new, 'rb' ) { |file|
+      all = file.read
+    }
+    File.delete( file_new )
+    JSON.parse( all )
+  end
+
   def self.spool_create( msg )
     path = @path + '/spool/'
     FileUtils.mkpath path
@@ -51,7 +363,6 @@ module Sessions
         :msg        => msg,
         :timestamp  => Time.now.to_i,
       }
-#      puts 'CREATE' + Marshal.dump(data)
       file.write data.to_json
     }
   end
@@ -120,75 +431,6 @@ module Sessions
     return data
   end
 
-  def self.list
-    client_ids = self.sessions
-    session_list = {}
-    client_ids.each { |client_id|
-      data = self.get(client_id)
-      next if !data
-      session_list[client_id] = data
-    }
-    return session_list
-  end
-
-  def self.touch( client_id )
-    data = self.get(client_id)
-    return if !data
-    path = @path + '/' + client_id.to_s
-    data[:meta][:last_ping] = Time.new.to_i.to_s
-    File.open( path + '/session', 'wb' ) { |file|
-      file.write Marshal.dump(data)
-    }
-    return true
-  end
-
-  def self.get( client_id )
-    session_file = @path + '/' + client_id.to_s + '/session'
-    data = nil
-    return if !File.exist? session_file
-    begin
-      File.open( session_file, 'rb' ) { |file|
-        file.flock( File::LOCK_EX )
-        all = file.read
-        file.flock( File::LOCK_UN )
-        data = Marshal.load( all )
-      }
-    rescue Exception => e
-      File.delete(session_file)
-      puts "Error reading '#{session_file}':"
-      puts e.inspect
-      return
-    end
-    return data
-  end
-
-  def self.send( client_id, data )
-    path = @path + '/' + client_id.to_s + '/'
-    filename = 'send-' + Time.new().to_f.to_s# + '-' + rand(99999999).to_s
-    check = true
-    count = 0
-    while check
-      if File::exists?( path + filename )
-        count += 1
-        filename = filename  + '-' + count
-#        filename = filename  + '-' + rand(99999).to_s
-#        filename = filename  + '-' + rand(99999).to_s
-      else
-        check = false
-      end
-    end
-    return false if !File.directory? path
-    File.open( path + 'a-' + filename, 'wb' ) { |file|
-      file.flock( File::LOCK_EX )
-      file.write data.to_json
-      file.flock( File::LOCK_UN )
-      file.close
-    }
-    return false if !File.exists?( path + 'a-' + filename )
-    FileUtils.mv( path + 'a-' + filename, path + filename )
-    return true
-  end
-
   def self.jobs
 
     # just make sure that spool path exists
@@ -248,12 +490,13 @@ module Sessions
   def self.thread_worker(user_id, try_count = 0, try_run_time = Time.now)
       puts "LOOP WORKER #{user_id} - #{try_count}"
       begin
-          Sessions::Worker.new(user_id)
+        Sessions::Worker.new(user_id)
       rescue => e
         puts "thread_worker exited with error #{ e.inspect }"
         sleep 10
         begin
-          ActiveRecord::Base.connection.reconnect!
+#          ActiveRecord::Base.remove_connection
+          ActiveRecord::Base.connection_pool.reap
         rescue => e
           puts "Can't reconnect to database #{ e.inspect }"
         end
@@ -285,7 +528,8 @@ module Sessions
         puts "thread_client exited with error #{ e.inspect }"
         sleep 10
         begin
-          ActiveRecord::Base.connection.reconnect!
+#          ActiveRecord::Base.remove_connection
+          ActiveRecord::Base.connection_pool.reap
         rescue => e
           puts "Can't reconnect to database #{ e.inspect }"
         end
@@ -307,68 +551,6 @@ module Sessions
         end
       end
       puts "/LOOP #{client_id} - #{try_count}"
-  end
-
-  def self.sessions
-    path = @path + '/'
-
-    # just make sure that spool path exists
-    if !File::exists?( path )
-      FileUtils.mkpath path
-    end
-
-    data = []
-    Dir.foreach( path ) do |entry|
-      next if entry == '.' || entry == '..' || entry == 'spool'
-      data.push entry.to_s
-    end
-    return data
-  end
-
-  def self.queue( client_id )
-    path = @path + '/' + client_id.to_s + '/'
-    data = []
-    files = []
-    Dir.foreach( path ) {|entry|
-      next if entry == '.' || entry == '..'
-      files.push entry
-    }
-    files.sort.each {|entry|
-      filename = path + '/' + entry
-      if /^send/.match( entry )
-        data.push Sessions.queue_file( path, entry )
-      end
-    }
-    return data
-  end
-
-  def self.queue_file( path, filename )
-    file_old = path + filename
-    file_new = path + 'a-' + filename
-    FileUtils.mv( file_old, file_new )
-    data = nil
-    all = ''
-    File.open( file_new, 'rb' ) { |file|
-      all = file.read
-    }
-    File.delete( file_new )
-    data = JSON.parse( all )
-    return data
-  end
-
-  def self.broadcast( data )
-
-    # list all current clients
-    client_list = self.list
-    client_list.each {|local_client_id, local_client|
-      Sessions.send( local_client_id, data )
-    }
-    return true
-  end
-
-  def self.destory( client_id )
-    path = @path + '/' + client_id.to_s
-    FileUtils.rm_rf path
   end
 
 end
