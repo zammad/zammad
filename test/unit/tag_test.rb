@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
- 
+
 class TagTest < ActiveSupport::TestCase
   test 'tags' do
     tests = [
