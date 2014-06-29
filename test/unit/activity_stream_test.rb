@@ -389,7 +389,9 @@ class ActivityStreamTest < ActiveSupport::TestCase
           assert_equal( check_item[:type], item['type'] )
           assert_equal( check_item[:o_id], item['o_id'] )
         else
-          assert_not_equal( check_item[:object], item['object'] )
+          if check_item[:object] == item['object'] && check_item[:type] == item['type'] && check_item[:o_id] == item['o_id']
+            assert( false, "entry should not exist #{ item['object'] }/#{ item['type'] }/#{ item['o_id'] }" )
+          end
         end
       }
     }
