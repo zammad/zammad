@@ -1,3 +1,4 @@
+require 'rss'
 module Sessions::Backend::Rss
 
   def self.worker( user, worker )
@@ -37,4 +38,4 @@ module Sessions::Backend::Rss
     end
   end
 
-end 
+end

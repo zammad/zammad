@@ -35,4 +35,4 @@ module Sessions::Backend::TicketOverviewIndex
     end
   end
 
-end 
+end

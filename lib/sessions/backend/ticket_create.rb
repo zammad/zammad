@@ -44,4 +44,4 @@ module Sessions::Backend::TicketCreate
     end
   end
 
-end 
+end

@@ -162,4 +162,4 @@ class Sessions::Client
     return if level == 'notice'
     puts "#{Time.now}:client(#{ @client_id }) #{ data }"
   end
-end 
+end

@@ -37,7 +37,7 @@ module Sessions::CacheIn
     end
 
     # return false if key was set without expires_in
-    return false
+    false
   end
 
   def self.get_time( key, params = {} )
@@ -45,7 +45,7 @@ module Sessions::CacheIn
     if data
       return @@data_time[key]
     end
-    return nil
+    nil
   end
 
   def self.get( key, params = {} )

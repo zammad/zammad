@@ -1,5 +1,4 @@
 require 'json'
-require 'rss'
 require 'session_helper'
 
 module Sessions
@@ -354,6 +353,11 @@ returns
     JSON.parse( all )
   end
 
+  def self.spool_cleanup
+    path = @path + '/spool/'
+    FileUtils.rm_rf path
+  end
+
   def self.spool_create( msg )
     path = @path + '/spool/'
     FileUtils.mkpath path
@@ -443,7 +447,7 @@ returns
       client_ids = self.sessions
       client_ids.each { |client_id|
 
-        # connection already open
+        # connection already open, ignore
         next if @@client_threads[client_id]
 
         # get current user
@@ -487,70 +491,128 @@ returns
     end
   end
 
-  def self.thread_worker(user_id, try_count = 0, try_run_time = Time.now)
-      puts "LOOP WORKER #{user_id} - #{try_count}"
-      begin
-        Sessions::Worker.new(user_id)
-      rescue => e
-        puts "thread_worker exited with error #{ e.inspect }"
-        sleep 10
-        begin
-#          ActiveRecord::Base.remove_connection
-          ActiveRecord::Base.connection_pool.reap
-        rescue => e
-          puts "Can't reconnect to database #{ e.inspect }"
-        end
+=begin
 
-        try_run_max = 10
-        try_count += 1
+check if worker for user is running
 
-        # reset error counter if to old
-        if try_run_time + ( 60 * 5 ) < Time.now
-          try_count = 0
-        end
-        try_run_time = Time.now
+  Sessions.thread_worker_exists?(user)
 
-        # restart worker again
-        if try_run_max > try_count
-          thread_worker(user_id, try_count, try_run_time)
-        else
-          raise "STOP thread_worker for user #{user_id} after #{try_run_max} tries"
-        end
-      end
-      puts "/LOOP WORKER #{user_id} - #{try_count}"
+returns
+
+  thread
+
+=end
+
+  def self.thread_worker_exists?(user)
+    @@user_threads[user.id]
   end
 
-  def self.thread_client(client_id, try_count = 0, try_run_time = Time.now)
-      puts "LOOP #{client_id} - #{try_count}"
+=begin
+
+start worker for user
+
+  Sessions.thread_worker(user.id)
+
+returns
+
+  thread
+
+=end
+
+  def self.thread_worker(user_id, try_count = 0, try_run_time = Time.now)
+    puts "LOOP WORKER #{user_id} - #{try_count}"
+    begin
+      Sessions::Worker.new(user_id)
+    rescue => e
+      puts "thread_worker exited with error #{ e.inspect }"
+      sleep 10
       begin
-        Sessions::Client.new(client_id)
+#        ActiveRecord::Base.remove_connection
+#        ActiveRecord::Base.connection_pool.reap
+        ActiveRecord::Base.connection_pool.release_connection
       rescue => e
-        puts "thread_client exited with error #{ e.inspect }"
-        sleep 10
-        begin
-#          ActiveRecord::Base.remove_connection
-          ActiveRecord::Base.connection_pool.reap
-        rescue => e
-          puts "Can't reconnect to database #{ e.inspect }"
-        end
-
-        try_run_max = 10
-        try_count += 1
-
-        # reset error counter if to old
-        if try_run_time + ( 60 * 5 ) < Time.now
-          try_count = 0
-        end
-        try_run_time = Time.now
-
-        # restart job again
-        if try_run_max > try_count
-          thread_client(client_id, try_count, try_run_time)
-        else
-          raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
-        end
+        puts "Can't reconnect to database #{ e.inspect }"
       end
-      puts "/LOOP #{client_id} - #{try_count}"
+
+      try_run_max = 10
+      try_count += 1
+
+      # reset error counter if to old
+      if try_run_time + ( 60 * 5 ) < Time.now
+        try_count = 0
+      end
+      try_run_time = Time.now
+
+      # restart worker again
+      if try_run_max > try_count
+        thread_worker(user_id, try_count, try_run_time)
+      else
+        raise "STOP thread_worker for user #{user_id} after #{try_run_max} tries"
+      end
+    end
+    puts "/LOOP WORKER #{user_id} - #{try_count}"
+  end
+
+=begin
+
+check if thread for client_id is running
+
+  Sessions.thread_client_exists?(client_id)
+
+returns
+
+  thread
+
+=end
+
+  def self.thread_client_exists?(client_id)
+    @@client_threads[client_id]
+  end
+
+=begin
+
+start client for browser
+
+  Sessions.thread_client(client_id)
+
+returns
+
+  thread
+
+=end
+
+  def self.thread_client(client_id, try_count = 0, try_run_time = Time.now)
+    puts "LOOP #{client_id} - #{try_count}"
+    begin
+      Sessions::Client.new(client_id)
+    rescue => e
+      puts "thread_client exited with error #{ e.inspect }"
+      sleep 10
+      begin
+#        ActiveRecord::Base.remove_connection
+#        ActiveRecord::Base.connection_pool.reap
+        ActiveRecord::Base.connection_pool.release_connection
+      rescue => e
+        puts "Can't reconnect to database #{ e.inspect }"
+      end
+
+      try_run_max = 10
+      try_count += 1
+
+      # reset error counter if to old
+      if try_run_time + ( 60 * 5 ) < Time.now
+        try_count = 0
+      end
+      try_run_time = Time.now
+
+      # restart job again
+      if try_run_max > try_count
+        thread_client(client_id, try_count, try_run_time)
+      else
+        raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
+      end
+    end
+    puts "/LOOP #{client_id} - #{try_count}"
   end
 
 end

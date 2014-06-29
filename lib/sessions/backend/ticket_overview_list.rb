@@ -91,4 +91,4 @@ module Sessions::Backend::TicketOverviewList
     }
   end
 
-end 
+end
