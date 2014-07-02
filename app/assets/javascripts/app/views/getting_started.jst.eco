@@ -1,36 +1,22 @@
 <div class="hero-unit">
   <h1><%- @T( 'Getting started!' ) %><small></small></h1>
-  <div class="container">
-    <div class="row">
-      <div class="span12">
-        <ol>
-          <li><%- @T( 'Create Admin' ) %></li>
-          <li><%- @T( 'Invite Agents' ) %></li>
-          <li><%- @T( 'Configure Channels' ) %></li>
-        </ol>
-      </div>
-    </div>
-    <div class="hero-two clearfix">
-    <% if @master_user: %>
-      <div class="master_user hero-left">
-        <h2><%- @T( 'Create Admin' ) %></h2>
-        <form class="form-stacked form-large" id="form-master">
-          <button type="submit" class="btn btn-primary submit"><%- @T( 'Next...' ) %></button>
-        </form>
-      </div>
-    <% end %>
-      <div class="agent_user hero-left hide">
-        <h2><%- @T( 'Invite Agents' ) %></h2>
-        <form class="form-stacked form-large" id="form-agent">
-          <button type="submit" class="btn btn-primary submit"><%- @T( 'Send invitation' ) %></button>
-        </form>
-      </div>
-      <div class="hero-right">
-        <h2><%- @T( 'Tour' ) %></h2>
-        <p>
-          <%- @T( 'Learn all about ...' ) %>
-        </p>
-      </div>
-    </div>
+  <ol class="horizontal tabs tabs-condensed">
+    <li class="tab contain-text active"><%- @T( 'Create Admin' ) %></li>
+    <li class="tab contain-text"><%- @T( 'Invite Agents' ) %></li>
+    <li class="tab contain-text"><%- @T( 'Configure Channels' ) %></li>
+  </ol>
+  <% if @master_user: %>
+  <div class="master_user hero-left">
+    <h2><%- @T( 'Create Admin' ) %></h2>
+    <form class="form-stacked" id="form-master">
+      <button type="submit" class="btn btn-primary submit"><%- @T( 'Next...' ) %></button>
+    </form>
+  </div>
+  <% end %>
+  <div class="agent_user hero-left hide">
+    <h2><%- @T( 'Invite Agents' ) %></h2>
+    <form class="form-stacked" id="form-agent">
+      <button type="submit" class="btn btn-primary submit"><%- @T( 'Send invitation' ) %></button>
+    </form>
   </div>
 </div>
