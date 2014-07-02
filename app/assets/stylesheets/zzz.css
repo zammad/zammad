@@ -598,6 +598,10 @@ ol.tabs li {
     padding-right: 5px;
   }
 
+  .progress-tabs .tab {
+    cursor: default;
+  }
+
   .tab {
     padding: 10px;
     text-align: center;
@@ -610,6 +614,7 @@ ol.tabs li {
     color: white;
     background: #444a4f;
   }
+
   .tab:first-child {
     border-radius: 3px 0 0 3px;
   }
@@ -618,6 +623,7 @@ ol.tabs li {
     border-radius: 0 3px 3px 0;
     border-right: none;
   }
+
 
 .contain-text {
   white-space: nowrap;
