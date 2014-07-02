@@ -1,6 +1,6 @@
 <div class="hero-unit">
   <h1><%- @T( 'Getting started!' ) %><small></small></h1>
-  <ol class="horizontal tabs progress-tabs tabs-condensed">
+  <ol class="horizontal tabs tabs-condensed">
     <li class="tab contain-text active"><%- @T( 'Create Admin' ) %></li>
     <li class="tab contain-text"><%- @T( 'Invite Agents' ) %></li>
     <li class="tab contain-text"><%- @T( 'Configure Channels' ) %></li>
