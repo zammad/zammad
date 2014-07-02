@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-fixed-top navbar-inverse">
   <a class="navbar-brand" href="#/"><%- @C( 'product_name' ) %></a>
   <ul class="nav navbar-nav">
   <% for item in @navbar_left: %>

@@ -1,6 +1,4 @@
 class Index extends App.ControllerContent
-  className: 'login fit vertical center justified'
-  
   events:
     'submit #login': 'login'
 

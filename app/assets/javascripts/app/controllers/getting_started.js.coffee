@@ -1,5 +1,5 @@
 class Index extends App.ControllerContent
-  className: 'getstarted fit vertical center justified'
+  className: 'container getstarted'
 
   events:
     'submit form':   'submit',
