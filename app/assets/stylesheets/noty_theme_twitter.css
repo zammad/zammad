@@ -1,13 +1,5 @@
 
 /* CORE STYLES*/
-
-	/* noty bar */
-	.noty_bar.noty_theme_twitter {
-    font-size: 13px;
-    line-height: 18px;
-    text-shadow: 0 1px 0 #fff;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	}
 	
 	/* custom container */
 	.noty_custom_container.noty_theme_twitter.noty_layout_inline {
