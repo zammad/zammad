@@ -1,5 +1,5 @@
 class Index extends App.ControllerContent
-  className: 'container'
+  className: 'reset_password fit'
 
   events:
     'submit form':   'submit'

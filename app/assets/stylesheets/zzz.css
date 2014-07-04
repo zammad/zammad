@@ -395,6 +395,7 @@ h1 {
 }
 h2 {
   font-size: 19px;
+  line-height: 25px;
   color: rgba(0,8,14,.73);
 }
 h3 {
@@ -444,7 +445,6 @@ label {
 
   .help-inline {
     color: red;
-    padding: 0 2px;
     font-size: 13px;
   }
 
@@ -590,7 +590,8 @@ label {
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-  .hero-unit h1 {
+  .hero-unit h1,
+  .hero-unit h2 {
     margin-top: 0;
   }
 
