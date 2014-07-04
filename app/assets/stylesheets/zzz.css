@@ -1,3 +1,13 @@
+body {
+  font-family: "FiraSansOT", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.7;
+}
+
+#app > nav {
+  position: relative;
+  z-index: 1;
+}
+
 .glyphicon {
   font-size: 13px;
 }
@@ -404,7 +414,7 @@ label {
   font-size: 12px;
   font-weight: normal;
   letter-spacing: 0.1em;
-  padding-left: 2px;
+  padding: 0 2px;
 }
 
 .form-group .help-message {
@@ -434,6 +444,8 @@ label {
 
   .help-inline {
     color: red;
+    padding: 0 2px;
+    font-size: 13px;
   }
 
 .content {
@@ -443,6 +455,7 @@ label {
 
   .content.fit {
     background: #2c2d36;
+    z-index: 1;
   }
 
 .form-large {
@@ -479,10 +492,16 @@ label {
   margin-bottom: 4px;
 }
 
-/* to show checkboxes below in getting_started */
-.form-stacked .form-group .checkbox label {
-  display: block
+.form-stacked .checkbox label {
+  color: inherit;
+  font-size: 13px;
+  text-transform: inherit;
+  vertical-align: baseline;
+  letter-spacing: inherit;
+  display: block;
 }
+
+
 /*
  * bootstrap changes
  */
@@ -555,28 +574,61 @@ label {
 }
 
 /*
- *
+ * hero-unit (used on getstarted, login, signup)
  */
 
 .hero-unit {
   width: 500px;
-  padding: 3px 25px 23px;
+  margin: 10px 0 25px;
+  padding: 23px 25px;
   border: 1px solid #e5f0f5;
   color: inherit;
   background-color: white;
   border-radius: 6px;
+  box-shadow: 
+    0 8px 17px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.hero-unit p {
-  font-size: 16px;
-  line-height: 22px;
+  .hero-unit h1 {
+    margin-top: 0;
+  }
+
+.login .hero-unit {
+  width: 430px;
 }
 
-.hero-unit .small {
-  font-size: 12px;
-  line-height: 20px;
-  color: #999999;
-}
+  .login .logo {
+    margin: 30px auto;
+    display: block;
+  }
+
+  .login p {
+    max-width: 400px;
+    color: hsl(210,8%,42%);
+    text-align: center;
+  }
+
+  .login hr {
+    margin: 12px 0 23px;
+    border-top-color: rgba(255,255,255,.15);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .login p a {
+    color: hsl(210,8%,54%);
+    text-decoration: underline;
+  }
+
+  .subtle-link {
+    color: rgba(0,0,0,.32);
+    text-decoration: underline;
+  }
+
+  .subtle-link:hover {
+    color: rgba(0,0,0,.5);
+  }
 
 ol.tabs {
   padding: 0;
@@ -588,6 +640,7 @@ ol.tabs li {
 }
 
 .tabs {
+  margin-bottom: 20px;
   color: #b8b8b8;
   border: 1px solid rgba(0,8,14,.08);
   border-radius: 3px;
@@ -603,16 +656,19 @@ ol.tabs li {
   }
 
   .tab {
+    height: 43px;
     padding: 10px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
     cursor: pointer;
     flex-grow: 1;
+    box-shadow: 0 2px rgba(0,0,0,.03);
   }
 
   .tab.active {
     color: white;
     background: #444a4f;
+    box-shadow: none;
   }
 
   .tab:first-child {
@@ -623,7 +679,6 @@ ol.tabs li {
     border-radius: 0 3px 3px 0;
     border-right: none;
   }
-
 
 .contain-text {
   white-space: nowrap;
@@ -636,6 +691,15 @@ ol.tabs li {
  */
 form {
   margin: 0 0 0 0;
+}
+
+.form-controls {
+  margin-top: 10px;
+}
+
+form a.standalone {
+  line-height: 40px;
+  margin: 0 5px;
 }
 
 form.form-inline select,
@@ -1080,7 +1144,7 @@ footer {
 
 .btn {
   font-size: 14px;
-  padding: 10px 14px 9px;
+  padding: 9px 14px;
 }
 
 .btn-primary {

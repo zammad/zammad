@@ -1,5 +1,5 @@
 class Index extends App.ControllerContent
-  className: 'login fit vertical center justified'
+  className: 'login fit'
   
   events:
     'submit #login': 'login'
@@ -113,7 +113,7 @@ class Index extends App.ControllerContent
 
     # login shake
     @delay(
-      => @shake( @el.find('#login') ),
+      => @shake( @el.find('.hero-unit') ),
       600
     )
 

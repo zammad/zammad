@@ -1,5 +1,5 @@
 class Index extends App.ControllerContent
-  className: 'container signup'
+  className: 'signup fit'
 
   events:
     'submit form': 'submit'
@@ -30,7 +30,7 @@ class Index extends App.ControllerContent
     @html App.view('signup')()
 
     new App.ControllerForm(
-      el:        @el.find('#form-signup')
+      el:        @el.find('form')
       model:     App.User
       required:  'signup'
       autofocus: true

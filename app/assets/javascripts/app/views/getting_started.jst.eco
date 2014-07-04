@@ -1,22 +1,23 @@
-<div class="hero-unit">
-  <h1><%- @T( 'Getting started!' ) %><small></small></h1>
-  <ol class="horizontal tabs progress-tabs tabs-condensed">
-    <li class="tab contain-text active"><%- @T( 'Create Admin' ) %></li>
-    <li class="tab contain-text"><%- @T( 'Invite Agents' ) %></li>
-    <li class="tab contain-text"><%- @T( 'Configure Channels' ) %></li>
-  </ol>
-  <% if @master_user: %>
-  <div class="master_user hero-left">
-    <h2><%- @T( 'Create Admin' ) %></h2>
-    <form class="form-stacked" id="form-master">
-      <button type="submit" class="btn btn-primary submit"><%- @T( 'Next...' ) %></button>
-    </form>
-  </div>
-  <% end %>
-  <div class="agent_user hero-left hide">
-    <h2><%- @T( 'Invite Agents' ) %></h2>
-    <form class="form-stacked" id="form-agent">
-      <button type="submit" class="btn btn-primary submit"><%- @T( 'Send invitation' ) %></button>
-    </form>
+<div class="fullHeight vertical center justified">
+  <div class="hero-unit">
+    <ol class="horizontal tabs progress-tabs tabs-condensed">
+      <li class="create_admin tab contain-text active"><%- @T( 'Create Admin' ) %></li>
+      <li class="invite_agents tab contain-text"><%- @T( 'Invite Agents' ) %></li>
+      <li class="configure_channels tab contain-text"><%- @T( 'Configure Channels' ) %></li>
+    </ol>
+    <% if @master_user: %>
+    <div class="master_user hero-left">
+      <form class="form-stacked clearfix" id="form-master">
+        <button type="submit" class="btn btn-primary submit pull-right"><%- @T( 'Next Step' ) %></button>
+      </form>
+    </div>
+    <% end %>
+    <div class="agent_user hero-left hide">
+      <form class="form-stacked clearfix" id="form-agent">
+        <div class="form-controls">
+          <button type="submit" class="btn btn-primary submit pull-right"><%- @T( 'Send Invitation' ) %></button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

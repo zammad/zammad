@@ -1,46 +1,56 @@
-<p>Login with zeughaus.znuny.com:</p> <!-- how do you pass @T a parameter? @T( 'Login with %s', zeughaus.znuny.com )? -->
+<div class="fullHeight vertical center justified">
+  <p>Login with zeughaus.znuny.com:</p> <!-- how do you pass @T a parameter? @T( 'Login with %s', zeughaus.znuny.com )? -->
 
-<div class="hero-unit">
-  <form id="login">
-    <label for="username"><%- @Ti( 'Username / email' ) %></label>
-    <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
+  <div class="hero-unit">
+    <img class="logo" src="http://znuny.com/assets/logo_small.png" alt="<%= @C( 'product_name' ) %>">
+    <form id="login">
+      <div class="form-group">
+        <label for="username"><%- @Ti( 'Username / email' ) %></label>
+        <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
+      </div>
+   
+      <div class="form-group">
+        <label for="password"><%- @Ti( 'Password' ) %></label>
+        <input id="password" name="password" type="password" class="form-control"/>
+      </div>
 
-    <label for="password"><%- @Ti( 'Password' ) %></label>
-    <input id="password" name="password" type="password" class="form-control"/>
+      <div class="form-controls">
+        <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
 
-    <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
+        <% if @C('user_lost_password'): %>
+        <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
+        <% end %>
+      </div>
+    </form>
+  </div>
 
-    <div>
-      <% if @C('user_lost_password'): %>
-      <span class="small">&middot;</span>
-      <a href="#reset_password" class="small"><%- @T( 'Forgot password?' ) %></a>
-      <% end %>
+  <p>
+    <%- @T( "You're already registered with your E-Mail adress if you've been in touch with our support team.") %><br>
+    <%- @T( "You can request your password") %> <a href="#"><%- @T( "here") %></a>.
+  </p>
+
+  <% if @C('user_create_account'): %>
+  <hr>
+
+  <p>
+    <a href="#signup"><%- @T( 'Register as a new customer' ) %></a>
+  </p>
+  <% end %>
+
+  <% if !_.isEmpty( @auth_providers ): %>
+  <hr>
+
+    <div class="col-12">
+      <p>--- <%- @T( 'or' ) %> ---</p>
     </div>
-  </form>
+
+    <div class="col-12">
+      <p><%- @T( 'Sign in using' ) %></p>
+      <ul>
+      <% for auth_provider in @auth_providers: %>
+        <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>
-
-<% if !_.isEmpty( @auth_providers ): %>
-  <div class="col-12">
-    <p>--- <%- @T( 'or' ) %> ---</p>
-  </div>
-
-  <div class="col-12">
-    <p><%- @T( 'Sign in using' ) %></p>
-    <ul>
-    <% for auth_provider in @auth_providers: %>
-      <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<% if @C('user_create_account'): %>
-  <div class="col-12">
-    <p>--- <%- @T( 'or' ) %> ---</p>
-  </div>
-
-  <div class="col-12">
-    <p><%- @T( 'New to %s join today!',  @C( 'product_name' ) ) %></p>
-    <p><a href="#signup" class="btn btn-default"><%- @T( 'Sign up' ) %></a>
-  </div>
-<% end %>

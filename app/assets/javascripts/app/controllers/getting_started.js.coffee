@@ -1,5 +1,5 @@
 class Index extends App.ControllerContent
-  className: 'getstarted fit vertical center justified'
+  className: 'getstarted fit'
 
   events:
     'submit form':   'submit',
@@ -144,6 +144,8 @@ class Index extends App.ControllerContent
 
     @el.find('.master_user').addClass('hide')
     @el.find('.agent_user').removeClass('hide')
+    @el.find('.tabs .tab.active').removeClass('active')
+    @el.find('.tabs .invite_agents').addClass('active')
 #    @el.find('.master_user').fadeOut('slow', =>
 #      @el.find('.agent_user').fadeIn()
 #    )

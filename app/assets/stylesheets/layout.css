@@ -38,6 +38,10 @@
   flex-direction: column-reverse;
 }
 
+.fullHeight {
+  min-height: 100%;
+}
+
 .relative {
   position: relative;
 }
