@@ -1145,16 +1145,16 @@ footer {
     float: none;
   }
 
-  .nav > li.active > a,
-  .nav > li > a:hover,
-  .nav > li > a:focus {
+  .navigation .nav > li.active > a,
+  .navigation .nav > li > a:hover,
+  .navigation .nav > li > a:focus {
     background: none;
     color: #F0FAFF;
   }
 
-  .nav > li.active > a:before,
-  .nav > li > a:hover:before,
-  .nav > li > a:focus:before {
+  .navigation .nav > li.active > a:before,
+  .navigation .nav > li > a:hover:before,
+  .navigation .nav > li > a:focus:before {
     opacity: 1;
   }
 
@@ -1209,12 +1209,43 @@ footer {
 
 .sidebar {
   width: 270px;
-  padding: 10px 20px;
+  min-height: 100%;
+  height: 100%;
+  padding: 1px 20px;
   background: white;
   border-right: 1px solid #e6e6e6;
+  overflow: auto;
 }
+
+  .nav-stacked > li + li {
+    margin-top: 0;
+  }
+
+  .nav-stacked > li:first-child a {
+    border-top: 1px solid #f2f2f3;
+  }
+
+  .nav-pills > li > a {
+    color: #0f94d6;
+    border-radius: 0;
+    padding: 8px 10px;
+    margin-left: -10px;
+    border-bottom: 1px solid #f2f2f3;
+  }
+
+  .nav-pills > li:hover > a {
+    background: #f2f2f3;
+  }
+
+  .nav-pills > li.active > a,
+  .nav-pills > li.active > a:hover,
+  .nav-pills > li.active > a:focus {
+    color: white;
+    background: #2c2d36;
+  }
 
 .main {
   padding: 10px 20px;
   background: #f8f9fa;
+  overflow: auto;
 }
