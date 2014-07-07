@@ -85,6 +85,12 @@ group :development, :test do
     # rest client lib for unit tests
     gem 'faraday'
 
+    # livereload on template changes (html, js, css)
+    gem 'guard', '>= 2.2.2', :require => false
+    gem 'guard-livereload',  :require => false
+    gem 'rack-livereload'
+    gem 'rb-fsevent',        :require => false
+
     # websocket unit tests
 #    gem 'em-websocket-client'
 end
