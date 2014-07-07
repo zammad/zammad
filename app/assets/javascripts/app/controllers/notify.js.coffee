@@ -1,5 +1,4 @@
 class App.Notify extends Spine.Controller
-  className: 'container'
   events:
     'click .alert': 'destroy'
 

@@ -22,13 +22,13 @@ class App.Run extends App.Controller
     App.Auth.loginCheck()
 
     # start navbars
-    @setupWidget( 'Navigations', 'nav', @el.find('nav') )
+    @setupWidget( 'Navigations', 'nav', @el.find('#nav') )
 
     # start widgets
-    @setupWidget( 'Widgets', 'widget', @el.find('section') )
+    @setupWidget( 'Widgets', 'widget', @el )
 
     # start widgets
-    @setupWidget( 'Footers', 'footer', @el.find('footer') )
+    # @setupWidget( 'Footers', 'footer', @el.find('footer') )
 
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
@@ -47,7 +47,7 @@ class App.Run extends App.Controller
     App.Event.trigger( event + ':ready')
 
 class App.Content extends App.Controller
-  className: 'content'
+  className: 'content flex'
 
   constructor: ->
     super

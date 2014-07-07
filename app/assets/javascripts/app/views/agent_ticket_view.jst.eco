@@ -1,4 +1,4 @@
-<div class="content-two">
+<div class="horizontal">
   <div class="sidebar"></div>
-  <div class="main"></div>
+  <div class="main flex"></div>
 </div>

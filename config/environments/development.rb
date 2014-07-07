@@ -34,7 +34,6 @@ Zammad::Application.configure do
   config.middleware.use(Rack::LiveReload,
     :min_delay        => 500,    # default 1000
     :max_delay        => 10_000, # default 60_000
-    :live_reload_port => 67789,  # default 35729
     :source => :vendored
   )
 end

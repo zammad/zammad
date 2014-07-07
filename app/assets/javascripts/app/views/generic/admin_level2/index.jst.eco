@@ -1,4 +1,4 @@
-<div class="content-two">
+<div class="horizontal">
   <div class="sidebar">
 
     <ul class="nav nav-pills nav-stacked">
@@ -10,7 +10,7 @@
     </ul>
 
   </div>
-  <div class="main">
+  <div class="main flex">
 
     <div class="page-header">
       <h1><%- @T( @page.head ) %> <small><%- @T( @page.sub_head ) %></small></h1>

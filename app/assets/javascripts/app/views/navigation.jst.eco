@@ -1,38 +1,38 @@
-<div class="navbar navbar-inverse">
-  <a class="navbar-brand" href="#/"><%- @C( 'product_name' ) %></a>
-  <ul class="nav navbar-nav">
-  <% for item in @navbar_left: %>
-    <% if item.child: %>
-    <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
-      <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <% for item in item.child: %>
-          <% if item.divider: %>
-            <li class="divider"></li>
-          <% end %>
-          <% if item.navheader: %>
-            <li class="dropdown-header"><%- @T( item.navheader ) %></li>
-          <% end %>
-          <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %></a></li>
+<form class="search horizontal">
+  <input id="global-search" class="flex" type="search" autocomplete="off">
+  <div class="logo" title="<%- @C( 'product_name' ) %>"></div>
+  <ul id="global-search-result" class="dropdown-menu"></ul>
+</form>
+<ul class="nav navbar-nav">
+  <li class="dashboard active"><a href="#">Dashboard</a></li>
+<% for item in @navbar_left: %>
+  <% if item.child: %>
+  <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
+    <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <% for item in item.child: %>
+        <% if item.divider: %>
+          <li class="divider"></li>
         <% end %>
-      </ul>
-    </li>
-    <% else: %>
-      <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
-    <% end %>
+        <% if item.navheader: %>
+          <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+        <% end %>
+        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %></a></li>
+      <% end %>
+    </ul>
+  </li>
+  <% else: %>
+    <li class="overviews <% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
   <% end %>
+<% end %>
+  <li class="customers"><a href="#">Customers</a></li>
+</ul>
 
-  </ul>
-  <div class="spinner"/>
+<div class="tabs flex"></div>
+<!-- <div class="spinner"></div> -->
+
 <% if !_.isEmpty(@user): %>
-  <ul class="nav navbar-nav navbar-right">
-
-    <li class="dropdown">
-      <form class="navbar-form">
-        <input id="global-search" class="form-control" type="search" value="<%= @search %>" placeholder="<%- @Ti( 'Search' ) %>" autocomplete="off"/>
-      </form>
-      <ul id="global-search-result" class="dropdown-menu"></ul>
-    </li>
+  <ul class="nav navbar-nav">
 
     <li class="bell"><a href="#bell" class="glyphicon glyphicon-bell"></a></li>
 
@@ -64,4 +64,3 @@
   </ul>
   -->
 <% end %>
-</div>

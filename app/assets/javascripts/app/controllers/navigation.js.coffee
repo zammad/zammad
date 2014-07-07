@@ -1,4 +1,6 @@
 class App.Navigation extends App.Controller
+  className: 'navigation flex vertical'
+  
   constructor: ->
     super
     @render()

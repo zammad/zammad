@@ -1,4 +1,4 @@
-<div class="content-two">
+<div class="horizontal">
   <div class="sidebar">
     <div class="widgets">
       <div class="customer_info"></div>
@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <div class="main">
+  <div class="main flex">
 
     <div class="page-header">
       <h1><%- @T( 'New Ticket' ) %> <small>(<%- @T( @title ) %>)<% if @admin: %> <a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a><% end %></small></h1>

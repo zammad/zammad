@@ -1,7 +1,7 @@
-<div class="content-two">
+<div class="horizontal">
   <div class="sidebar">
   </div>
-  <div class="main">
+  <div class="main flex">
     <div class="page-header">
       <h1><%- @T( @head ) %> <small><%- @T( @sub_head ) %></small></h1>
     </div>

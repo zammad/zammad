@@ -1,4 +1,4 @@
-<div class="content-two">
+<div class="horizontal">
   <div class="sidebar <%= @className %>">
 
     <% if @groups: %>
@@ -15,5 +15,5 @@
     <% end %>
 
   </div>
-  <div class="main"></div>
+  <div class="main flex"></div>
 </div>
