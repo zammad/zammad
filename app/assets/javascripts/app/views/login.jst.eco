@@ -21,6 +21,30 @@
         <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
         <% end %>
       </div>
+
+      <% if true or !_.isEmpty( @auth_providers ): %>
+      <div class="separator">
+        <span class="separator-text"><%- @T( 'or sign in using' ) %></span>
+      </div>
+
+      <div class="auth_providers horizontal stretch">
+        <!--<% for auth_provider in @auth_providers: %>
+          <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
+        <% end %>-->
+        <a class="auth_provider facebook horizontal">
+          <span class="provider_icon"></span>
+          <span class="provider_name flex">Facebook</span>
+        </a>
+        <a class="auth_provider google horizontal">
+          <span class="provider_icon"></span>
+          <span class="provider_name flex">Google+</span>
+        </a>
+        <a class="auth_provider twitter horizontal">
+          <span class="provider_icon"></span>
+          <span class="provider_name flex">Twitter</span>
+        </a>
+      </div>
+      <% end %>
     </form>
   </div>
 
@@ -35,22 +59,5 @@
   <p>
     <a href="#signup"><%- @T( 'Register as a new customer' ) %></a>
   </p>
-  <% end %>
-
-  <% if !_.isEmpty( @auth_providers ): %>
-  <hr>
-
-    <div class="col-12">
-      <p>--- <%- @T( 'or' ) %> ---</p>
-    </div>
-
-    <div class="col-12">
-      <p><%- @T( 'Sign in using' ) %></p>
-      <ul>
-      <% for auth_provider in @auth_providers: %>
-        <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
-      <% end %>
-      </ul>
-    </div>
   <% end %>
 </div>

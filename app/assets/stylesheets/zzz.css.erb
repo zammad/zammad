@@ -579,7 +579,7 @@ label {
 
 .hero-unit {
   width: 500px;
-  margin: 10px 0 25px;
+  margin: 10px 0;
   padding: 23px 25px;
   border: 1px solid #e5f0f5;
   color: inherit;
@@ -605,13 +605,14 @@ label {
   }
 
   .login p {
+    margin: 10px 0;
     max-width: 400px;
     color: hsl(210,8%,42%);
     text-align: center;
   }
 
   .login hr {
-    margin: 12px 0 23px;
+    margin: 10px 0;
     border-top-color: rgba(255,255,255,.15);
     width: 100%;
     max-width: 400px;
@@ -686,6 +687,81 @@ ol.tabs li {
   overflow: hidden;
   text-overflow: ellipsis
 }
+
+.separator {
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+}
+
+  .separator:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    left: 0;
+    margin-top: -1px;
+    background: #e6e6e6;
+  }
+
+  .separator-text {
+    padding: 0 10px;
+    color: #999;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: white;
+    display: inline-block;
+    position: relative;
+  }
+
+.auth_provider {
+  padding: 9px 7px 8px;
+  color: white;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+  .auth_provider:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  .auth_provider:hover {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .auth_provider.facebook {
+    background-color: #4f699c;
+  }
+
+  .auth_provider.google {
+    background-color: #d8543c;
+  }
+
+  .auth_provider.twitter {
+    background-color: #2eaee1;
+  }
+
+.provider_icon {
+  width: 29px;
+  height: 22px;
+}
+
+  .facebook .provider_icon {
+    background-image: url(<%= asset_path "facebook.svg" %>);
+  }
+
+  .google .provider_icon {
+    background-image: url(<%= asset_path "google.svg" %>);
+  }
+
+  .twitter .provider_icon {
+    background-image: url(<%= asset_path "twitter.svg" %>);
+  }
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
