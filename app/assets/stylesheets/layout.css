@@ -38,6 +38,15 @@
   flex-direction: column-reverse;
 }
 
+.vertical.stretch > *,
+.horizontal.stretch > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  -moz-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
 .fullHeight {
   min-height: 100%;
 }
@@ -105,7 +114,6 @@ body.fit {
   -webkit-flex: 3;
   flex: 3;
 }
-
 
 .justify-start {
   -webkit-box-pack: start;
