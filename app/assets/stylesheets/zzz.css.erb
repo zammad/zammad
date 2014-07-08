@@ -1190,13 +1190,13 @@ footer {
   }
 
 .search {
-  padding: 10px;
+  padding: 10px 15px 10px 10px;
   border-bottom: 1px solid rgba(240, 250, 255, .05);
 }
 
 .search input {
   padding: 5px 10px 5px 33px;
-  margin-right: 10px;
+  margin-right: 15px;
   width: 100px;
   height: 30px;
   color: #ECECEC;
@@ -1207,11 +1207,18 @@ footer {
   border-radius: 15px;
 }
 
+.search .logo {
+  cursor: pointer;
+}
+
+.navbar_l2 {
+  overflow: hidden;
+  height: 100%;
+}
+
 .sidebar {
   width: 270px;
-  min-height: 100%;
-  height: 100%;
-  padding: 1px 20px;
+  padding: 1px 20px 20px;
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
@@ -1221,20 +1228,24 @@ footer {
     margin-top: 0;
   }
 
-  .nav-stacked > li:first-child a {
-    border-top: 1px solid #f2f2f3;
+  .nav-stacked > li:last-child a {
+    border-bottom: 1px solid #f2f2f3;
   }
 
   .nav-pills > li > a {
     color: #0f94d6;
     border-radius: 0;
-    padding: 8px 10px;
-    margin-left: -10px;
-    border-bottom: 1px solid #f2f2f3;
+    padding: 8px 0;
+    border-top: 1px solid #f2f2f3;
   }
 
   .nav-pills > li:hover > a {
     background: #f2f2f3;
+  }
+
+  .nav-pills > li:hover > a,
+  .nav-pills > li:hover + li > a {
+    border-color: transparent;
   }
 
   .nav-pills > li.active > a,
@@ -1242,6 +1253,16 @@ footer {
   .nav-pills > li.active > a:focus {
     color: white;
     background: #2c2d36;
+  }
+
+  .nav-pills > li:hover > a,
+  .nav-pills > li.active > a,
+  .nav-pills > li.active > a:hover,
+  .nav-pills > li.active > a:focus {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
   }
 
 .main {
