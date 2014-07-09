@@ -49,15 +49,12 @@ class App.Navigation extends App.Controller
 
     # remove result if not result exists
     if _.isEmpty( result )
-      @el.find('#global-search').parents('li').removeClass('open')
+      @el.find('.dropdown').removeClass('open')
       el.html( '' )
 
       # remove old popovers
       $('.popover').remove()
       return
-
-    # show result list
-    @el.find('#global-search').parents('li').addClass('open')
 
     # build markup
     html = App.view('navigation/result')(
@@ -65,14 +62,17 @@ class App.Navigation extends App.Controller
     )
     el.html( html )
 
+    # show result list
+    @el.find('.dropdown').addClass('open')
+
     # start ticket popups
-    @ticketPopups('left')
+    @ticketPopups()
 
     # start user popups
-    @userPopups('left')
+    @userPopups()
 
     # start oorganization popups
-    @organizationPopups('left')
+    @organizationPopups()
 
   render: () ->
     user      = App.Session.all()

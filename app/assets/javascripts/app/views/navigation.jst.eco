@@ -1,7 +1,20 @@
-<form class="search horizontal">
+<form class="search horizontal dropdown">
   <input id="global-search" class="flex" type="search" autocomplete="off">
   <div class="logo" title="<%- @C( 'product_name' ) %>"></div>
-  <ul id="global-search-result" class="dropdown-menu"></ul>
+  <ul id="global-search-result" class="dropdown-menu" role="menu">
+    
+  <li class="divider" style="padding: 2px 10px; height: auto; margin: 4px 0px;">Ticket</li>
+  
+    <li><a href="#ticket/zoom/1" class="ticket-popover" data-id="1" data-original-title="" title="">#10001 - Welcome to Zammad! - 5 d 19 h</a></li>
+  
+
+  <li class="divider" style="padding: 2px 10px; height: auto; margin: 4px 0px;">User</li>
+  
+    <li><a href="#user/zoom/2" class="user-popover" data-id="2" data-original-title="" title="">Nicole Braun</a></li>
+  
+
+
+  </ul>
 </form>
 <ul class="nav navbar-nav">
   <li class="dashboard active"><a href="#">Dashboard</a></li>
@@ -28,35 +41,74 @@
   <li class="customers"><a href="#">Customers</a></li>
 </ul>
 
-<div class="tabs flex"></div>
+<div class="tasks flex"></div>
 <!-- <div class="spinner"></div> -->
 
 <% if !_.isEmpty(@user): %>
-  <ul class="nav navbar-nav">
+<ul class="user-menu horizontal stretch">
 
-    <li class="bell"><a href="#bell" class="glyphicon glyphicon-bell"></a></li>
+  <!--<a href="#bell" class="glyphicon glyphicon-bell"></a>-->
+  <li class="user dropup">
+    <div class="list-button horizontal centered">
+      <span class="dropdown-nose"></span>
+      <span class="user avatar" style="background-image: url(https://pbs.twimg.com/profile_images/3510491848/156dbaec406561cb3e680dc3795b0f86.jpeg)"></span>
+    </div>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#profile"><%- @Ti( 'Edit profile' ) %></a></li>
+      <li class="divider"></li>
+      <li><a href="#shortcuts"><%- @Ti( 'My Shortcuts' ) %></a></li>
+      <li class="divider"></li>
+      <li>
+        <a href="#logout" class="horizontal">
+          <span class="flex"><%- @Ti( 'Sign out' ) %></span>
+          <span class="signout icon"></span>
+        </a>
+      </li>
+    </ul>
+  </li>
 
-    <% for item in @navbar_right: %>
-      <% if item.child: %>
-        <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
-          <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <% for item in item.child: %>
-              <% if item.divider: %>
-                <li class="divider"></li>
-              <% end %>
-              <% if item.navheader: %>
-                <li class="dropdown-header"><%- @T( item.navheader ) %></li>
-              <% end %>
-              <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %>)</span><% end %></a></li>
+  <li class="settings active">
+    <a class="list-button fit horizontal centered" href="#manage">
+      <span class="light cog icon"></span>
+      <span class="dark cog icon"></span>
+    </a>
+  </li>
+
+  <li class="add dropup">
+    <div class="list-button horizontal centered">
+      <span class="dropdown-nose"></span>
+      <span class="green plus icon"></span>
+      <span class="white plus icon"></span>
+    </div>
+    <ul class="dropdown-menu" role="menu">
+      <li><a><%- @Ti( 'New Ticket' ) %></a></li>
+      <li class="divider"></li>
+      <li><a><%- @Ti( 'New Organisation' ) %></a></li>
+      <li class="divider"></li>
+      <li><a><%- @Ti( 'New Customer' ) %></a></li>
+    </ul>
+  </li>
+  <!--<% for item in @navbar_right: %>
+    <% if item.child: %>
+      <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
+        <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <% for item in item.child: %>
+            <% if item.divider: %>
+              <li class="divider"></li>
             <% end %>
-          </ul>
-        </li>
-      <% else: %>
-        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
-      <% end %>
+            <% if item.navheader: %>
+              <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+            <% end %>
+            <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %>)</span><% end %></a></li>
+          <% end %>
+        </ul>
+      </li>
+    <% else: %>
+      <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
     <% end %>
-  </ul>
+  <% end %>-->
+</ul>
 <% else: %>
   <!--
   <ul class="nav navbar-nav navbar-right">
