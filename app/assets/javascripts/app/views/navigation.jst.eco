@@ -41,7 +41,124 @@
   <li class="customers"><a href="#">Customers</a></li>
 </ul>
 
-<div class="tasks flex"></div>
+<div class="tasks flex">
+  <div class="task level-1 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Klischee nicht sauber ausgearbeitet</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-2 horizontal center">
+    <div class="modified priority icon"></div>
+    <div class="name contain-text flex">Probleme mit Siebdruck</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-3 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Programmfehler</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-2 horizontal center">
+    <div class="modified priority icon"></div>
+    <div class="name contain-text flex">Tonerstaub unter Glasplatte</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-1 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Programmfehler</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-1 horizontal center">
+    <div class="modified priority icon"></div>
+    <div class="name contain-text flex">Super Service!</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-2 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Probleme mit Siebdruck</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-3 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Programmfehler</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-2 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Tonerstaub unter Glasplatte</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-1 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Programmfehler</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-1 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Super Service!</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-2 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Probleme mit Siebdruck</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-3 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Programmfehler</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-2 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Tonerstaub unter Glasplatte</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-1 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Programmfehler</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+  <div class="task level-1 horizontal center">
+    <div class="priority icon"></div>
+    <div class="name contain-text flex">Super Service!</div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.task').click(function(){ $(this).toggleClass('active') })
+</script>
 <!-- <div class="spinner"></div> -->
 
 <% if !_.isEmpty(@user): %>

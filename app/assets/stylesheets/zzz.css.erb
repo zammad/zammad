@@ -669,7 +669,7 @@ ol.tabs li {
 .contain-text {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis
+  text-overflow: ellipsis;
 }
 
 .separator {
@@ -774,6 +774,75 @@ ol.tabs li {
     width: 15px;
     height: 19px;
     background-position: 0 -96px;
+  }
+
+  .priority.icon {
+    background: none;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    position: relative;
+  }
+
+
+  .modified.priority.icon {
+    width: 12px;
+    height: 12px;
+    background: none !important;
+    border: 1px solid;
+  }
+
+    .priority.icon:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -3px 0 0 -3px;
+      width: 6px;
+      height: 6px;
+      border-radius: 100%;
+      background: #2c2d36;
+    }
+
+    .modified.priority.icon:after {
+      -webkit-animation: fade 1s ease 2s infinite alternate;
+         -moz-animation: fade 1s ease 2s infinite alternate;
+          -ms-animation: fade 1s ease 2s infinite alternate;
+              animation: fade 1s ease 2s infinite alternate;
+    }
+
+    @-webkit-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+       @-moz-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+        @-ms-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+            @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+
+  .close-task.icon {
+    background: #2c2d36;
+    border-radius: 100%;
+    position: relative;
+  }
+
+  .close-task.icon:before,
+  .close-task.icon:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    margin-left: -1px;
+    top: 20%;
+    height: 60%;
+    width: 2px;
+    background: #586066;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+  }
+
+  .close-task.icon:after {
+    -webkit-transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
   }
 
 /*
@@ -1202,8 +1271,92 @@ footer {
   }
 
 .tasks {
-  background: #2c2d36; 
+  background: #2c2d36;
+  overflow: auto;
 }
+
+  .task {
+    height: 38px;
+    padding: 10px 15px 10px 8px;
+    color: #808080;
+    border-bottom: 1px solid #33363e;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .task .priority.icon {
+    margin-top: -2px;
+    margin-right: 10px;
+  }
+
+  .task .modified.priority.icon {
+    margin-right: 8px;
+  }
+
+  .task:hover {
+    background: #26272e;
+  }
+
+  .task.active {
+    color: white;
+  }
+
+  .task.active .priority.icon,
+  .task.active .modified.priority.icon,
+  .task.active .modified.priority.icon:after {
+    background: white;
+    border-color: white;
+  }
+
+  .level-1 .priority.icon,
+  .level-1.active,
+  .level-1.active .priority.icon:after,
+  .level-1 .modified.priority.icon,
+  .level-1 .modified.priority.icon:after {
+    background-color: #38ae6a;
+    border-color: #38ae6a;
+  }
+
+  .level-2 .priority.icon,
+  .level-2.active,
+  .level-2.active .priority.icon:after,
+  .level-2 .modified.priority.icon,
+  .level-2 .modified.priority.icon:after {
+    background-color: #f35910;
+    border-color: #f35910;
+  }
+
+  .level-3 .priority.icon,
+  .level-3.active,
+  .level-3.active .priority.icon:after,
+  .level-3 .modified.priority.icon,
+  .level-3 .modified.priority.icon:after {
+    background-color: #faab00;
+    border-color: #faab00;
+  }
+
+  .task .close-task.button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    padding-left: 12px;
+    height: 100%;
+    visibility: hidden;
+  }
+
+  .task:hover .close-task.button {
+    visibility: visible;
+  }
+
+  .close-task.button:hover .icon {
+    background: #972e29;
+  }
+
+  .close-task.button:hover .icon:after,
+  .close-task.button:hover .icon:before {
+    background: white;
+  }
 
 .search {
   padding: 10px 15px 10px 10px;
