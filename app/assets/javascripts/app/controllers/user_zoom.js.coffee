@@ -5,8 +5,6 @@ class App.UserZoom extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    @navupdate '#'
-
     start = (user) =>
       @user = user
       @render()
@@ -17,6 +15,8 @@ class App.UserZoom extends App.Controller
     meta =
       url: @url()
       id:  @user_id
+      class: "level-1"
+
     if @user
       meta.head  = @user.displayName()
       meta.title = @user.displayName()

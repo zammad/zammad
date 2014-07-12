@@ -673,4 +673,4 @@ App.Config.set( 'ticket/view', Index, 'Routes' )
 App.Config.set( 'ticket/view/:view', Index, 'Routes' )
 #App.Config.set( 'ticket/view/:view/:position/:direction', Router, 'Routes' )
 
-App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'] }, 'NavBar' )
+App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar' )
