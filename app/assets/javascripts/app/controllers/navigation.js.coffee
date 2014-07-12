@@ -204,16 +204,13 @@ class App.Navigation extends App.Controller
     # start search
     @el.find('#global-search').bind( 'keyup', (e) =>
       @term = @el.find('#global-search').val()
-      
+
       return if !@term
       return if @term is search
       @delay( searchFunction, 220, 'search' )
     )
 
-
-    if !@taskBar
-      @taskBar = true
-      new App.TaskbarWidget( el: @el.find('.tasks') )
+    @taskbar = new App.TaskbarWidget( el: @el.find('.tasks') )
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)

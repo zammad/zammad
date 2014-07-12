@@ -3,13 +3,13 @@ module Sessions::Backend::RecentViewed
   def self.worker( user, worker )
     cache_key = 'user_' + user.id.to_s + '_recent_viewed'
     if Sessions::CacheIn.expired(cache_key)
-      recent_viewed = RecentView.list_fulldata( user, 10 )
+      recent_viewed = RecentView.list_fulldata( user, 6 )
       recent_viewed_cache = Sessions::CacheIn.get( cache_key, { :re_expire => true } )
       worker.log 'notice', 'fetch recent_viewed - ' + cache_key
       if recent_viewed != recent_viewed_cache
         worker.log 'notify', 'fetch recent_viewed changed - ' + cache_key
 
-        recent_viewed_full = RecentView.list_fulldata( user, 10 )
+        recent_viewed_full = RecentView.list_fulldata( user, 6 )
         Sessions::CacheIn.set( cache_key, recent_viewed, { :expires_in => 5.seconds } )
         Sessions::CacheIn.set( cache_key + '_push', recent_viewed_full )
       end

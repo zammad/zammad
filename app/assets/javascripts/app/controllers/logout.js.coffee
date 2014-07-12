@@ -12,10 +12,10 @@ class Index extends App.ControllerContent
     @Session.init()
     App.Event.trigger( 'ui:rerender' )
 
-    # redirect to login 
+    # redirect to login
     redirect = =>
       @navigate 'login'
     @delay redirect, 150
 
 App.Config.set( 'logout', Index, 'Routes' )
-App.Config.set( 'Logout', { prio: 1800, parent: '#current_user', name: 'Sign out', target: '#logout', divider: true, role: [ 'Agent', 'Customer' ] }, 'NavBarRight' )
+App.Config.set( 'Logout', { prio: 1800, parent: '#current_user', name: 'Sign out', target: '#logout', divider: true, iconClass: 'signout', role: [ 'Agent', 'Customer' ] }, 'NavBarRight' )

@@ -410,7 +410,7 @@ App.Config.set( 'ticket/create/:type/:ticket_id/:article_id', Router, 'Routes' )
 App.Config.set( 'ticket/create/:type/id/:id/:ticket_id/:article_id', Router, 'Routes' )
 
 # set new task actions
-App.Config.set( 'TicketNewCallOutbound', { prio: 8001, name: 'Call Outbound', target: '#ticket/create/call_outbound', role: ['Agent'] }, 'TaskActions' )
-App.Config.set( 'TicketNewCallInbound', { prio: 8002, name: 'Call Inbound', target: '#ticket/create/call_inbound', role: ['Agent'] }, 'TaskActions' )
-App.Config.set( 'TicketNewEmail', { prio: 8003, name: 'Email', target: '#ticket/create/email', role: ['Agent'] }, 'TaskActions' )
+App.Config.set( 'TicketNewCallOutbound', { prio: 8001, parent: '#new', name: 'Call Outbound', target: '#ticket/create/call_outbound', role: ['Agent'] }, 'NavBarRight' )
+App.Config.set( 'TicketNewCallInbound', { prio: 8002, parent: '#new', name: 'Call Inbound', target: '#ticket/create/call_inbound', role: ['Agent'] }, 'NavBarRight' )
+App.Config.set( 'TicketNewEmail', { prio: 8003, parent: '#new', name: 'Email', target: '#ticket/create/email', role: ['Agent'] }, 'NavBarRight' )
 
