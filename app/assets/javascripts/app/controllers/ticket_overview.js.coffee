@@ -40,7 +40,7 @@ class Table extends App.ControllerContent
 
     # set title
     @title ''
-    @navupdate '#ticket/view/' + @view
+    @navupdate '#ticket/view'
 
     @meta = {}
     @bulk = {}
