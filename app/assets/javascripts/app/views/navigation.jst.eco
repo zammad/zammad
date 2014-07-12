@@ -39,8 +39,9 @@
 <ul class="user-menu horizontal stretch">
 
   <!--<a href="#bell" class="glyphicon glyphicon-bell"></a>-->
+
   <li class="user dropup">
-    <div class="list-button horizontal centered">
+    <div class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown">
       <span class="dropdown-nose"></span>
       <span class="user avatar" style="background-image: url(https://pbs.twimg.com/profile_images/3510491848/156dbaec406561cb3e680dc3795b0f86.jpeg)"></span>
     </div>
@@ -65,8 +66,15 @@
     </a>
   </li>
 
+  <li class="settings">
+    <a class="list-button fit horizontal centered" href="#manage">
+      <span class="light cog icon"></span>
+      <span class="dark cog icon"></span>
+    </a>
+  </li>
+
   <li class="add dropup">
-    <div class="list-button horizontal centered">
+    <div class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown">
       <span class="dropdown-nose"></span>
       <span class="green plus icon"></span>
       <span class="white plus icon"></span>
