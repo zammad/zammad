@@ -49,7 +49,7 @@ class App.Navigation extends App.Controller
 
     # remove result if not result exists
     if _.isEmpty( result )
-      @el.find('.dropdown').removeClass('open')
+      @el.find('.search').removeClass('open')
       el.html( '' )
 
       # remove old popovers
@@ -63,7 +63,7 @@ class App.Navigation extends App.Controller
     el.html( html )
 
     # show result list
-    @el.find('.dropdown').addClass('open')
+    @el.find('.search').addClass('open')
 
     # start ticket popups
     @ticketPopups()
@@ -136,30 +136,34 @@ class App.Navigation extends App.Controller
                 ticket = App.Ticket.find( id )
                 ticket.humanTime = @humanTime(ticket.created_at)
                 data =
-                  display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
-                  id:       ticket.id
-                  class:    "ticket-popover"
-                  url:      ticket.uiUrl()
+                  display:    "##{ticket.number} - #{ticket.title}"
+                  createt_at: "#{ticket.created_at}"
+                  humanTime:  "#{ticket.humanTime}"
+                  id:         ticket.id
+                  class:      "task level-1 ticket-popover"
+                  url:        ticket.uiUrl()
+                  iconClass:  "priority"
                 area.result.push data
             else if area.name is 'User'
               area.result = []
               for id in area.ids
                 user = App.User.find( id )
                 data =
-                  display:  "#{user.displayName()}"
-                  id:       user.id
-                  class:    "user-popover"
-                  url:      user.uiUrl()
+                  display:    "#{user.displayName()}"
+                  id:         user.id
+                  class:      "user user-popover"
+                  iconClass:  "user"
                 area.result.push data
             else if area.name is 'Organization'
               area.result = []
               for id in area.ids
                 organization = App.Organization.find( id )
                 data =
-                  display:  "#{organization.displayName()}"
-                  id:       organization.id
-                  class:    "organization-popover"
-                  url:      organization.uiUrl()
+                  display:    "#{organization.displayName()}"
+                  id:         organization.id
+                  class:      "organisation organization-popover"
+                  url:        organization.uiUrl()
+                  iconClass:  "organisation"
                 area.result.push data
 
           @renderResult(result)
@@ -171,6 +175,8 @@ class App.Navigation extends App.Controller
       # remember to set search box
       @searchFocus = true
 
+      @el.find('.search').addClass('focused')
+
       # check if search is needed
       @term = @el.find('#global-search').val()
       return if @searchFocusSet
@@ -180,6 +186,8 @@ class App.Navigation extends App.Controller
 
     # remove search result
     @el.find('#global-search').bind( 'focusout', (e) =>
+      @el.find('.search').removeClass('focused')
+
       @delay(
         =>
           @searchFocus = false
@@ -189,13 +197,14 @@ class App.Navigation extends App.Controller
     )
 
     # prevent submit of search box
-    @el.find('#global-search').parent().bind( 'submit', (e) =>
+    @el.find('form.search').bind( 'submit', (e) =>
       e.preventDefault()
     )
 
     # start search
     @el.find('#global-search').bind( 'keyup', (e) =>
       @term = @el.find('#global-search').val()
+      
       return if !@term
       return if @term is search
       @delay( searchFunction, 220, 'search' )
