@@ -1,6 +1,6 @@
 class App.Navigation extends App.Controller
   className: 'navigation flex vertical'
-  
+
   constructor: ->
     super
     @render()
@@ -200,6 +200,11 @@ class App.Navigation extends App.Controller
       return if @term is search
       @delay( searchFunction, 220, 'search' )
     )
+
+
+    if !@taskBar
+      @taskBar = true
+      new App.TaskbarWidget( el: @el.find('.tasks') )
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)

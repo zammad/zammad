@@ -147,7 +147,7 @@ class _taskManagerSingleton extends App.Controller
 
     # create div for permanent content
     if !$("#content_permanent")[0]
-      $('#app section').append('<div id="content_permanent" class="content"></div>')
+      $('#app').append('<div id="content_permanent" class="content"></div>')
 
     # empty static content if task is shown
     if active

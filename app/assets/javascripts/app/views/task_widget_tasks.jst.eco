@@ -1,3 +1,9 @@
 <% for item in @item_list: %>
-  <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="btn btn-small <% if item.task.active: %>active btn-primary<% else if item.task.notify: %>active btn-warning<% else: %>btn-default<% end %>" data-key="<%- item.task.key %>"><span class="task"><%= item.data.head %></span><span data-type="close" class="glyphicon glyphicon-remove-circle" title="<%- @T('close') %>"></a>
+  <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="task <%= item.data.class %> horizontal center <% if item.task.active: %>active<% end %>" data-key="<%- item.task.key %>">
+    <div class="priority icon <% if item.task.notify: %>modified<% end %>"></div>
+    <div class="name contain-text flex"><%= item.data.head %></div>
+    <div class="close-task button horizontal centered">
+      <div class="close-task icon" title="<%- @T('close') %>" data-type="close"></div>
+    </div>
+  </a>
 <% end %>
