@@ -2,7 +2,7 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    
+
     # check authentication
     return if !@authenticate()
 
@@ -88,3 +88,5 @@ class Index extends App.ControllerContent
     @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
 App.Config.set( 'dashboard', Index, 'Routes' )
+App.Config.set( 'Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', role: ['Agent'], class: 'dashboard' }, 'NavBar' )
+

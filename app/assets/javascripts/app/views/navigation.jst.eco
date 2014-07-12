@@ -7,67 +7,9 @@
   </div>
   <div class="logo" title="<%- @C( 'product_name' ) %>"></div>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu">
-    
-  
-  
-    <li>
-      <a href="#ticket/zoom/1" class="task level-1 ticket-popover horizontal center icon-switch" data-id="1" data-original-title="" title="">
-        <div class="priority icon"></div>
-        <div class="flex contain-text">
-        
-        
-          #10001 - Welcome to Zammad! -
-          <time datetime="2014-07-02T19:18:54.000Z">7 d 13 h</time>
-        
-        </div>
-      </a>
-    </li>
-  
-
-   <li class="divider"></li> 
-  
-    <li>
-      <a href="" class="user user-popover horizontal center icon-switch" data-id="3" data-original-title="" title="">
-        <div class="user icon"></div>
-        <div class="flex contain-text">
-        
-        
-          Felix Niklas
-        
-        </div>
-      </a>
-    </li>
-  
-    <li>
-      <a href="" class="user user-popover horizontal center icon-switch" data-id="4" data-original-title="" title="">
-        <div class="user icon"></div>
-        <div class="flex contain-text">
-        
-        
-          Franz Lautner
-        
-        </div>
-      </a>
-    </li>
-  
-    <li>
-      <a href="" class="user user-popover horizontal center icon-switch" data-id="2" data-original-title="" title="">
-        <div class="user icon icon"></div>
-        <div class="flex contain-text">
-        
-        
-          Nicole Braun
-        
-        </div>
-      </a>
-    </li>
-  
-
-
   </ul>
 </form>
 <ul class="nav navbar-nav">
-  <li class="dashboard active"><a href="#">Dashboard</a></li>
 <% for item in @navbar_left: %>
   <% if item.child: %>
   <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
@@ -85,131 +27,13 @@
     </ul>
   </li>
   <% else: %>
-    <li class="overviews <% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
+    <li class="<%= item.class %> <% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
   <% end %>
 <% end %>
-  <li class="customers"><a href="#">Customers</a></li>
+  <li class="customers"><a href="#to_somewhere">Customers</a></li>
 </ul>
 
-<div class="tasks flex">
-  <div class="task level-1 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Klischee nicht sauber ausgearbeitet</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-2 horizontal center">
-    <div class="modified priority icon"></div>
-    <div class="name contain-text flex">Probleme mit Siebdruck</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-3 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Programmfehler</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-2 horizontal center">
-    <div class="modified priority icon"></div>
-    <div class="name contain-text flex">Tonerstaub unter Glasplatte</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-1 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Programmfehler</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-1 horizontal center">
-    <div class="modified priority icon"></div>
-    <div class="name contain-text flex">Super Service!</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-2 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Probleme mit Siebdruck</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-3 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Programmfehler</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-2 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Tonerstaub unter Glasplatte</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-1 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Programmfehler</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-1 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Super Service!</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-2 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Probleme mit Siebdruck</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-3 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Programmfehler</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-2 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Tonerstaub unter Glasplatte</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-1 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Programmfehler</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-  <div class="task level-1 horizontal center">
-    <div class="priority icon"></div>
-    <div class="name contain-text flex">Super Service!</div>
-    <div class="close-task button horizontal centered">
-      <div class="close icon close-task"></div>
-    </div>
-  </div>
-</div>
-
-<script>
-  $('.task').click(function(){ $(this).toggleClass('active') })
-</script>
-<!-- <div class="spinner"></div> -->
+<div class="tasks flex"></div>
 
 <% if !_.isEmpty(@user): %>
 <ul class="user-menu horizontal stretch">

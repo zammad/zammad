@@ -6,7 +6,6 @@ class App.DashboardTicket extends App.Controller
   constructor: ->
     super
     @start_page = 1
-    @navupdate '#'
 
     # set new key
     @key = 'ticket_overview_' + @view

@@ -5,8 +5,6 @@ class App.TicketZoom extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    @navupdate '#'
-
     @edit_form      = undefined
     @ticket_id      = params.ticket_id
     @article_id     = params.article_id
@@ -41,6 +39,7 @@ class App.TicketZoom extends App.Controller
       @ticket = App.Ticket.retrieve( @ticket.id )
       meta.head  = @ticket.title
       meta.title = '#' + @ticket.number + ' - ' + @ticket.title
+      meta.class = "level-#{@ticket.priority_id}"
     meta
 
   url: =>
