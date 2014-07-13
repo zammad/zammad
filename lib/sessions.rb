@@ -465,6 +465,7 @@ returns
             @@client_threads[client_id] = nil
             puts "close client (#{client_id}) thread"
           }
+          sleep 0.5
         end
       }
 
@@ -506,7 +507,7 @@ returns
     begin
       Sessions::Client.new(client_id)
     rescue => e
-      puts "thread_client exited with error #{ e.inspect }"
+      puts "thread_client #{client_id} exited with error #{ e.inspect }"
       puts e.backtrace.join("\n  ")
       sleep 10
       begin

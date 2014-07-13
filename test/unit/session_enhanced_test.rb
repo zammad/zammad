@@ -19,6 +19,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       :roles         => roles,
       :groups        => groups,
     )
+    agent1.roles = roles
+    agent1.save
     agent2 = User.create_or_update(
       :login         => 'session-agent-2',
       :firstname     => 'Session',
@@ -29,6 +31,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       :roles         => roles,
       :groups        => groups,
     )
+    agent2.roles = roles
+    agent2.save
     agent3 = User.create_or_update(
       :login         => 'session-agent-3',
       :firstname     => 'Session',
@@ -39,6 +43,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       :roles         => roles,
       :groups        => groups,
     )
+    agent3.roles = roles
+    agent3.save
 
     # create sessions
     client_id1 = '1234'
@@ -174,6 +180,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       :roles         => roles,
       :groups        => groups,
     )
+    agent1.roles = roles
+    agent1.save
     agent2 = User.create_or_update(
       :login         => 'session-agent-2',
       :firstname     => 'Session',
@@ -184,6 +192,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       :roles         => roles,
       :groups        => groups,
     )
+    agent2.roles = roles
+    agent2.save
+    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true )
 
     # create sessions
     client_id1_0 = '1234-1'
@@ -220,6 +231,26 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     check_if_collection_reset_message_exists(client_id1_1, collections, 'init')
     check_if_collection_reset_message_exists(client_id2, collections, 'init')
 
+    collections = {
+      'Group' => nil,
+      'Organization' => nil,
+      'User' => nil,
+    }
+    check_if_collection_reset_message_exists(client_id1_0, collections, 'init2')
+    check_if_collection_reset_message_exists(client_id1_1, collections, 'init2')
+    check_if_collection_reset_message_exists(client_id2, collections, 'init2')
+
+    sleep 20
+
+    collections = {
+      'Group' => nil,
+      'Organization' => nil,
+      'User' => nil,
+    }
+    check_if_collection_reset_message_exists(client_id1_0, collections, 'init3')
+    check_if_collection_reset_message_exists(client_id1_1, collections, 'init3')
+    check_if_collection_reset_message_exists(client_id2, collections, 'init3')
+
     # change collection
     group = Group.first
     group.touch
@@ -249,25 +280,25 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
   def check_if_collection_reset_message_exists(client_id, collections_orig, type)
     messages = Sessions.queue(client_id)
-    puts "cid: #{client_id}"
+    #puts "cid: #{client_id}"
     #puts "m: #{messages.inspect}"
     collections_result = {}
     messages.each {|message|
       #puts ""
       #puts "message: #{message.inspect}"
       if message['event'] == 'resetCollection'
-        puts "rc: "
+        #puts "rc: "
         if message['data']
           message['data'].each {|key, value|
-            puts "rc: #{key}"
+            #puts "rc: #{key}"
             collections_result[key] = true
           }
         end
       end
     }
-    puts "c: #{collections_result.inspect}"
+    #puts "c: #{collections_result.inspect}"
     collections_orig.each {|key, value|
-      assert_equal( collections_orig[key], collections_result[key], "collection message for #{key} #{type}-check" )
+      assert_equal( collections_orig[key], collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})" )
     }
   end
 end

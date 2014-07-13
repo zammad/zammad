@@ -34,6 +34,14 @@ class Sessions::Client
 
       # init new backends
       if user_id_last_run != user.id
+        user_id_last_run = user.id
+
+        # release old objects
+        backend_pool.each {|pool|
+          pool = nil
+        }
+
+        # create new pool
         backend_pool = []
         backends.each {|backend|
           item = backend.constantize.new(user, self, @client_id)
