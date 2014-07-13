@@ -1,37 +1,59 @@
-module Sessions::Backend::RecentViewed
+class Sessions::Backend::RecentViewed
 
-  def self.worker( user, worker )
-    cache_key = 'user_' + user.id.to_s + '_recent_viewed'
-    if Sessions::CacheIn.expired(cache_key)
-      recent_viewed = RecentView.list_fulldata( user, 10 )
-      recent_viewed_cache = Sessions::CacheIn.get( cache_key, { :re_expire => true } )
-      worker.log 'notice', 'fetch recent_viewed - ' + cache_key
-      if recent_viewed != recent_viewed_cache
-        worker.log 'notify', 'fetch recent_viewed changed - ' + cache_key
-
-        recent_viewed_full = RecentView.list_fulldata( user, 10 )
-        Sessions::CacheIn.set( cache_key, recent_viewed, { :expires_in => 5.seconds } )
-        Sessions::CacheIn.set( cache_key + '_push', recent_viewed_full )
-      end
-    end
-
+  def initialize( user, client = nil, client_id = nil )
+    @user         = user
+    @client       = client
+    @client_id    = client_id
+    @last_change  = nil
   end
 
-  def self.push( user, client )
-    cache_key = 'user_' + user.id.to_s + '_recent_viewed'
-    recent_viewed_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-    if recent_viewed_time && client.last_change['recent_viewed'] != recent_viewed_time
-      client.last_change['recent_viewed'] = recent_viewed_time
-      recent_viewed = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
-      client.log 'notify', "push recent_viewed for user #{user.id}"
+  def load
 
-      # send update to browser
-      r = Sessions::CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
-      client.send({
+    # get whole collection
+    recent_viewed = RecentView.list( @user, 10 )
+
+    # no data exists
+    return if !recent_viewed
+    return if recent_viewed.empty?
+
+    # no change exists
+    return if @last_change == recent_viewed
+
+    # remember last state
+    @last_change = recent_viewed
+
+    RecentView.list_fulldata( @user, 10 )
+  end
+
+  def client_key
+    "as::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+  end
+
+  def push
+
+    # check timeout
+    timeout = Sessions::CacheIn.get( self.client_key )
+    return if timeout
+
+    # set new timeout
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 15.seconds } )
+
+    data = self.load
+
+    return if !data||data.empty?
+
+    if !@client
+      return {
         :event      => 'update_recent_viewed',
-        :data       => r,
-      })
+        :data       => data,
+      }
     end
+
+    @client.log 'notify', "push recent_viewed for user #{ @user.id }"
+    @client.send({
+      :event      => 'update_recent_viewed',
+      :data       => data,
+    })
   end
 
-end 
+end

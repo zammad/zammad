@@ -4,6 +4,11 @@ module Sessions::CacheIn
   @@expires_in = {}
   @@expires_in_ttl = {}
 
+  def self.delete( key )
+    @@data.delete( key )
+    @@data_time.delete( key )
+  end
+
   def self.set( key, value, params = {} )
 #    puts 'CacheIn.set:' + key + '-' + value.inspect
     if params[:expires_in]

@@ -37,7 +37,7 @@ class RecentView < ApplicationModel
       data.delete( 'history_object_id' )
       list.push data
     }
-    return list
+    list
   end
 
   def self.list_fulldata( user, limit = 10 )

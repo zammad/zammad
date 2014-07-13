@@ -14,7 +14,6 @@ module Sessions
   @pid  = @root + '/tmp/pids/sessionworker.pid'
 
   # create global vars for threads
-  @@user_threads = {}
   @@client_threads = {}
 
 =begin
@@ -458,23 +457,6 @@ returns
         user = User.find( session_data[:user][:id] )
         next if !user
 
-        # start user thread
-        start_user_thread = false
-        if !@@user_threads[user.id]
-          @@user_threads[user.id] = true
-          @@user_threads[user.id] = Thread.new {
-            thread_worker(user.id)
-            @@user_threads[user.id] = nil
-            puts "close user (#{user.id}) thread"
-          }
-          start_user_thread = true
-        end
-
-        # wait with client thread unil user thread has done some little work
-        if start_user_thread
-          sleep 0.5
-        end
-
         # start client thread
         if !@@client_threads[client_id]
           @@client_threads[client_id] = true
@@ -489,68 +471,6 @@ returns
       # system settings
       sleep 0.5
     end
-  end
-
-=begin
-
-check if worker for user is running
-
-  Sessions.thread_worker_exists?(user)
-
-returns
-
-  thread
-
-=end
-
-  def self.thread_worker_exists?(user)
-    @@user_threads[user.id]
-  end
-
-=begin
-
-start worker for user
-
-  Sessions.thread_worker(user.id)
-
-returns
-
-  thread
-
-=end
-
-  def self.thread_worker(user_id, try_count = 0, try_run_time = Time.now)
-    puts "LOOP WORKER #{user_id} - #{try_count}"
-    begin
-      Sessions::Worker.new(user_id)
-    rescue => e
-      puts "thread_worker exited with error #{ e.inspect }"
-      sleep 10
-      begin
-#        ActiveRecord::Base.remove_connection
-#        ActiveRecord::Base.connection_pool.reap
-        ActiveRecord::Base.connection_pool.release_connection
-      rescue => e
-        puts "Can't reconnect to database #{ e.inspect }"
-      end
-
-      try_run_max = 10
-      try_count += 1
-
-      # reset error counter if to old
-      if try_run_time + ( 60 * 5 ) < Time.now
-        try_count = 0
-      end
-      try_run_time = Time.now
-
-      # restart worker again
-      if try_run_max > try_count
-        thread_worker(user_id, try_count, try_run_time)
-      else
-        raise "STOP thread_worker for user #{user_id} after #{try_run_max} tries"
-      end
-    end
-    puts "/LOOP WORKER #{user_id} - #{try_count}"
   end
 
 =begin
@@ -587,6 +507,7 @@ returns
       Sessions::Client.new(client_id)
     rescue => e
       puts "thread_client exited with error #{ e.inspect }"
+      puts e.backtrace.join("\n  ")
       sleep 10
       begin
 #        ActiveRecord::Base.remove_connection
