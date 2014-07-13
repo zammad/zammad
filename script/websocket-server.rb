@@ -175,6 +175,7 @@ EventMachine.run {
 
         # remember ping, send pong back
       elsif data['action'] == 'ping'
+        Sessions.touch(client_id)
         @clients[client_id][:last_ping] = Time.now
         @clients[client_id][:websocket].send( '[{"action":"pong"}]' )
 
