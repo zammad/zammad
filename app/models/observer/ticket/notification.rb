@@ -237,13 +237,17 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
     # add history record
     if recipient_list != ''
+      created_by_id = 1
+      if article && article.created_by_id
+        created_by_id = article.created_by_id
+      end
       History.add(
         :o_id                   => ticket.id,
         :history_type           => 'notification',
         :history_object         => 'Ticket',
         :value_from             => notification_subject,
         :value_to               => recipient_list,
-        :created_by_id          => article.created_by_id || 1
+        :created_by_id          => created_by_id
       )
     end
   end
