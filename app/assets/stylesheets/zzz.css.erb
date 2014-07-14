@@ -841,8 +841,8 @@ ol.tabs li {
             transform: rotate(-45deg);
   }
 
-  .close-task:before,
-  .close-task:after {
+  .close-task.icon:before,
+  .close-task.icon:after {
     top: 20%;
     height: 60%;
     background: #586066;
@@ -1310,6 +1310,10 @@ footer {
     border-bottom: 1px solid #33363e;
     cursor: pointer;
     position: relative;
+  }
+
+  .task:hover {
+    text-decoration: none;
   }
 
   .task .priority.icon {
