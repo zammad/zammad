@@ -57,7 +57,6 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = client1.push
-    puts "RR: #{result1.inspect}"
     assert( result1, "check ticket_overview_list - recall 3" )
   end
 end
