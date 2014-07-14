@@ -47,6 +47,8 @@ class SessionBasicTest < ActiveSupport::TestCase
 
   test 'b collections group' do
     require 'sessions/backend/collections/group.rb'
+
+    UserInfo.current_user_id = 1
     user = User.lookup(:id => 1)
     collection_client1 = Sessions::Backend::Collections::Group.new(user, false, '123-1')
     collection_client2 = Sessions::Backend::Collections::Group.new(user, false, '234-2')
@@ -88,7 +90,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( result1, result2, "check collections" )
 
     # change collection
-    group = Group.create( :name => 'SomeGroup::' + rand(999999).to_s, :active => true, :created_by_id => 1, :updated_by_id => 1 )
+    group = Group.create( :name => 'SomeGroup::' + rand(999999).to_s, :active => true )
     sleep 12
 
     # get whole collections
@@ -137,6 +139,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
   test 'b collections organization' do
     require 'sessions/backend/collections/organization.rb'
+    UserInfo.current_user_id = 1
     Organization.destroy_all
     user = User.lookup(:id => 1)
 
@@ -159,7 +162,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result2, "check collections - recall" )
 
     # change collection
-    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true, :created_by_id => 1, :updated_by_id => 1 )
+    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true )
     sleep 16
 
     # get whole collections
@@ -209,6 +212,8 @@ class SessionBasicTest < ActiveSupport::TestCase
 
   test 'b activity stream' do
 
+    UserInfo.current_user_id = 1
+
     # create users
     roles  = Role.where( :name => [ 'Agent', 'Admin'] )
     groups = Group.all
@@ -244,7 +249,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result1, "check as - recall 2" )
 
     agent1.update_attribute( :email, 'activity-stream-agent11@example.com' )
-    ticket = Ticket.create(:title => '12323', :updated_by_id => 1, :created_by_id => 1, :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1)
+    ticket = Ticket.create(:title => '12323', :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1 )
 
     sleep 32
 
@@ -285,6 +290,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
   test 'b ticket_create' do
 
+    UserInfo.current_user_id = 1
     user = User.lookup(:id => 1)
     ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, false, '123-1')
 
@@ -302,41 +308,13 @@ class SessionBasicTest < ActiveSupport::TestCase
     result1 = ticket_create_client1.push
     assert( !result1, "check ticket_create - recall 2" )
 
-    Group.create( :name => 'SomeTicketCreateGroup::' + rand(999999).to_s, :active => true, :created_by_id => 1, :updated_by_id => 1 )
+    Group.create( :name => 'SomeTicketCreateGroup::' + rand(999999).to_s, :active => true )
 
     sleep 26
 
     # get as stream
     result1 = ticket_create_client1.push
     assert( result1, "check ticket_create - recall 3" )
-  end
-
-  test 'b ticket_overview_index' do
-
-    user = User.lookup(:id => 1)
-    ticket_overview_index_client1 = Sessions::Backend::TicketOverviewIndex.new(user, false, '123-1')
-
-    # get as stream
-    result1 = ticket_overview_index_client1.push
-    assert( result1, "check ticket_overview_index" )
-    sleep 1
-
-    # next check should be empty
-    result1 = ticket_overview_index_client1.push
-    assert( !result1, "check ticket_overview_index - recall" )
-
-    # next check should be empty
-    sleep 10
-    result1 = ticket_overview_index_client1.push
-    assert( !result1, "check ticket_overview_index - recall 2" )
-
-    ticket = Ticket.create( :title => '12323', :updated_by_id => 1, :created_by_id => 1, :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1)
-
-    sleep 10
-
-    # get as stream
-    result1 = ticket_overview_index_client1.push
-    assert( result1, "check ticket_overview_index - recall 3" )
   end
 
 end

@@ -12,17 +12,27 @@ class Sessions::Backend::TicketOverviewList
     overviews = Ticket::Overviews.all(
       :current_user => @user,
     )
+    result = []
+    overviews.each { |overview|
+      overview_data = Ticket::Overviews.list(
+        :view         => overview.link,
+        :current_user => @user,
+        :array        => true,
+      )
+      data = { :list => overview_data, :index => overview }
+      result.push data
+    }
 
     # no data exists
-    return if !overviews
+    return if !result || result.empty?
 
     # no change exists
-    return if @last_change == overviews
+    return if @last_change == result
 
     # remember last state
-    @last_change = overviews
+    @last_change = result
 
-    overviews
+    result
   end
 
   def client_key
@@ -36,20 +46,17 @@ class Sessions::Backend::TicketOverviewList
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 5.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 6.seconds } )
 
-    overviews = self.load
+    items = self.load
 
-    return if !overviews
+    return if !items
 
     # push overviews
-    overviews.each { |overview|
+    results = []
+    items.each { |item|
 
-      overview_data = Ticket::Overviews.list(
-        :view         => overview.link,
-        :current_user => @user,
-        :array        => true,
-      )
+      overview_data = item[:list]
 
       assets = {}
       overview_data[:ticket_ids].each {|ticket_id|
@@ -82,33 +89,37 @@ class Sessions::Backend::TicketOverviewList
       }
 
       if !@client
-        return {
+        result = {
           :event  => 'navupdate_ticket_overview',
-          :data   => overview,
+          :data   => item[:index],
         }
-      end
+        results.push result
+      else
 
-      @client.log 'notify', "push overview_list for user #{ @user.id }"
+        @client.log 'notify', "push overview_list for user #{ @user.id }"
 
-      # send update to browser
-      @client.send({
-        :data   => assets,
-        :event  => [ 'loadAssets' ]
-      })
-      @client.send({
-        :data   => {
-          :overview      => overview_data[:overview],
-          :ticket_ids    => overview_data[:ticket_ids],
-          :tickets_count => overview_data[:tickets_count],
-          :bulk => {
-            :group_id__owner_id => groups_users,
-            :owner_id           => [],
+        # send update to browser
+        @client.send({
+          :data   => assets,
+          :event  => [ 'loadAssets' ]
+        })
+        @client.send({
+          :data   => {
+            :overview      => overview_data[:overview],
+            :ticket_ids    => overview_data[:ticket_ids],
+            :tickets_count => overview_data[:tickets_count],
+            :bulk => {
+              :group_id__owner_id => groups_users,
+              :owner_id           => [],
+            },
           },
-        },
-        :event      => [ 'ticket_overview_rebuild' ],
-        :collection => 'ticket_overview_' + overview.link.to_s,
-      })
+          :event      => [ 'ticket_overview_rebuild' ],
+          :collection => 'ticket_overview_' + item[:index].link.to_s,
+        })
+      end
     }
+    return results if !@client
+    nil
   end
 
 end
