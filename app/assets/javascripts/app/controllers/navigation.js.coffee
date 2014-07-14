@@ -1,6 +1,9 @@
 class App.Navigation extends App.Controller
   className: 'navigation flex vertical'
 
+  events:
+    'click .empty-search': 'emptySearch'
+
   constructor: ->
     super
     @render()
@@ -205,12 +208,18 @@ class App.Navigation extends App.Controller
     @el.find('#global-search').bind( 'keyup', (e) =>
       @term = @el.find('#global-search').val()
 
+      @el.find('.search').toggleClass('filled', !!@term)
+
       return if !@term
       return if @term is search
       @delay( searchFunction, 220, 'search' )
     )
 
     @taskbar = new App.TaskbarWidget( el: @el.find('.tasks') )
+
+  emptySearch: (event) =>
+    @el.find('#global-search').val("")
+    @el.find('.search').removeClass('filled')
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)
