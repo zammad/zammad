@@ -184,3 +184,14 @@ body.fit {
   -webkit-align-items: flex-end;
   align-items: flex-end;
 }
+
+.two-column {
+  -ms-box-lines: multiple;
+  -moz-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.two-column > .column {
+  width: 50%;
+}
