@@ -13,27 +13,27 @@
       <div class="column">
         <div class="time stat-widget vertical">
           <h3>∅ Waiting time today</h3>
-          <div class="stat-visualisation flex horizontal centered">
+          <div class="stat-graphic flex horizontal centered">
             <div class="stopwatch icon"></div>
           </div>
-          <div class="stat-label">My handling time: 25 minutes</div>
-          <div class="stat-detail">Average: 13%</div>
+          <div class="stat-label contain-text">My handling time: 25 minutes</div>
+          <div class="stat-detail contain-text">Average: 13%</div>
         </div>
       </div>
       <div class="column">
         <div class="mood stat-widget vertical">
-          <h3>Stimmung</h3>
-          <div class="stat-visualisation flex horizontal centered">
+          <h3>Mood</h3>
+          <div class="stat-graphic flex horizontal centered">
             <div class="mood icon bad-state"></div>
           </div>
-          <div class="stat-label">3% of my tickets escalated.</div>
-          <div class="stat-detail">Average: 17%</div>
+          <div class="stat-label contain-text">3% of my tickets escalated.</div>
+          <div class="stat-detail contain-text">Average: 17%</div>
         </div>
       </div>
       <div class="column">
         <div class="channel-distribution stat-widget vertical centered">
           <h3>Channel Distribution</h3>
-          <div class="stat-visualisation flex horizontal centered">
+          <div class="stat-graphic flex horizontal centered">
             <div class="stats-channel email-channel vertical center">
               <div class="email channel icon"></div>
               <div class="channel-bars flex horizontal end justify-center">
@@ -80,7 +80,7 @@
       <div class="column">
         <div class="status stat-widget vertical">
           <h3>Status</h3>
-          <div class="stat-visualisation flex horizontal centered">
+          <div class="stat-graphic flex horizontal centered">
             <div class="stat-tickets vertical reverse end">
               <div class="stat-ticket icon supergood-state"></div>
               <div class="stat-ticket icon supergood-state"></div>
@@ -91,28 +91,28 @@
             </div>
             <div class="stat-all-tickets icon"></div>
           </div>
-          <div class="stat-label">Tickets of my Group: 78 of 234</div>
-          <div class="stat-detail">Average: 22%</div>
+          <div class="stat-label contain-text">Tickets of my Group: 78 of 234</div>
+          <div class="stat-detail contain-text">Average: 22%</div>
         </div>
       </div>
       <div class="column">
         <div class="in-process stat-widget vertical">
           <h3>Tickets in process</h3>
-          <div class="stat-visualisation flex horizontal centered">
+          <div class="stat-graphic flex horizontal centered">
             <div class="in-process icon supergood-state"></div>
           </div>
-          <div class="stat-label">74% are currently in process</div>
-          <div class="stat-detail">Average: 62%</div>
+          <div class="stat-label contain-text">74% are currently in process</div>
+          <div class="stat-detail contain-text">Average: 62%</div>
         </div>
       </div>
       <div class="column">
         <div class="reopening stat-widget vertical">
           <h3>Reopening rate</h3>
-          <div class="stat-visualisation flex horizontal centered">
+          <div class="stat-graphic flex horizontal centered">
             <div class="reopening icon ok-state"></div>
           </div>
-          <div class="stat-label">7% are being reopened</div>
-          <div class="stat-detail">Average: 6%</div>
+          <div class="stat-label contain-text">7% are being reopened</div>
+          <div class="stat-detail contain-text">Average: 6%</div>
         </div>
       </div>
     </div>
