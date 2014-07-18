@@ -1,5 +1,5 @@
 class App.Navigation extends App.Controller
-  className: 'navigation flex vertical'
+  className: 'navigation vertical'
 
   constructor: ->
     super
