@@ -185,13 +185,18 @@ body.fit {
   align-items: flex-end;
 }
 
-.two-column {
+.two-columns,
+.three-columns {
   -ms-box-lines: multiple;
   -moz-flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 
-.two-column > .column {
+.two-columns > .column {
   width: 50%;
+}
+
+.three-columns > .column {
+  width: 33.33%;
 }
