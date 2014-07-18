@@ -1,4 +1,4 @@
-.horizontal, .vertical {
+.horizontal, .vertical, .centered {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: -moz-flex !important;

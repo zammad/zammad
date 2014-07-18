@@ -1,6 +1,7 @@
 body {
   font-family: "Fira Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.7;
+  font-weight: normal;
   background: #2c2d36;
 }
 
@@ -637,13 +638,12 @@ ol.tabs li {
   }
 
   .tab {
-    height: 43px;
-    padding: 10px;
+    height: 39px;
+    padding: 9px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
     cursor: pointer;
     flex-grow: 1;
-    box-shadow: 0 2px rgba(0,0,0,.03);
   }
 
   .tab.active {
@@ -659,6 +659,23 @@ ol.tabs li {
   .tab:last-child {
     border-radius: 0 3px 3px 0;
     border-right: none;
+  }
+
+  .wide-tabs {
+    width: 60%;
+    margin: 25px auto 20px;
+    font-size: 15px;
+    font-weight: 300;
+    background: white;
+    border-radius: 8px;
+  }
+
+  .wide-tabs .tab:first-child {
+    border-radius: 8px 0 0 8px;
+  }
+
+  .wide-tabs .tab:last-child {
+    border-radius: 0 8px 8px 0;
   }
 
 .contain-text {
@@ -779,7 +796,6 @@ ol.tabs li {
     position: relative;
   }
 
-
   .modified.priority.icon {
     width: 12px;
     height: 12px;
@@ -871,6 +887,139 @@ ol.tabs li {
   .icon-switch:hover .user.icon {
     background-position: -14px -128px;
   }
+
+  .channel.icon {
+    width: 17px;
+    height: 16px;
+  }
+
+  .email.channel.icon {
+    background-position: 0 -141px;
+  }
+
+  .received-calls.channel.icon {
+    background-position: -17px -141px;
+  }
+
+  .outbound-calls.channel.icon {
+    background-position: -34px -141px;
+  }
+
+  .facebook.channel.icon {
+    background-position: -51px -141px;
+  }
+
+  .twitter.channel.icon {
+    background-position: -68px -141px;
+  }
+
+  .mood.icon {
+    width: 60px;
+    height: 59px;
+  }
+
+  .mood.icon.superbad-state {
+    background-position: 0 -157px;
+  }
+
+  .mood.icon.bad-state {
+    background-position: -60px -157px;
+  }
+
+  .mood.icon.ok-state {
+    background-position: -120px -157px;
+  }
+
+  .mood.icon.good-state {
+    background-position: -180px -157px;
+  }
+
+  .mood.icon.supergood-state {
+    background-position: -240px -157px;
+  }
+
+  .stopwatch.icon {
+    width: 77px;
+    height: 83px;
+    background-position: 0 -216px;
+  }
+
+  .in-process.icon {
+    width: 64px;
+    height: 64px;
+    background-position: -77px -216px;
+  }
+
+  .in-process.superbad-state,
+  .reopening.superbad-state {
+    background-color: #f35910;
+  }
+
+  .in-process.bad-state,
+  .reopening.bad-state {
+    background-color: #f6820b;
+  }
+
+  .in-process.ok-state,
+  .reopening.ok-state {
+    background-color: #faab00;
+  }
+
+  .in-process.good-state,
+  .reopening.good-state {
+    background-color: #a9ac41;
+  }
+
+  .in-process.supergood-state,
+  .reopening.supergood-state {
+    background-color: #38ae6a;
+  }
+
+  .reopening.icon {
+    width: 68px;
+    height: 47px;
+    background-position: -141px -216px;
+  }
+
+  .stat-all-tickets.icon {
+    width: 48px;
+    height: 83px;
+    background-position: -209px -216px;
+  }
+
+  .stat-tickets {
+    height: 83px;
+    margin-right: 4px;
+    margin-bottom: -9px;
+  }
+
+  .stat-ticket.icon {
+    width: 48px;
+    height: 10px;
+    margin-top: -7px;
+    margin-bottom: 2px;
+  }
+
+  .stat-ticket.superbad-state {
+    background-position: -257px -256px;
+  }
+
+  .stat-ticket.bad-state {
+    background-position: -257px -246px;
+  }
+
+  .stat-ticket.ok-state {
+    background-position: -257px -236px;
+  }
+
+  .stat-ticket.good-state {
+    background-position: -257px -226px;
+  }
+
+  .stat-ticket.supergood-state {
+    background-position: -257px -216px;
+  }
+
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
@@ -1763,3 +1912,86 @@ footer {
   .popover .column {
     margin-bottom: 8px;
   }
+
+.stat-widgets {
+  margin: 0 -7px;
+}
+
+  .stat-widget {
+    height: 200px;
+    margin: 7px; 
+    padding: 13px;
+    text-align: center;
+    line-height: 20px;
+    background: white;
+    border: 1px solid #e5f0f5;
+    border-radius: 1px;
+    box-shadow: 0 1px rgba(0,8,14,.02);
+  }
+
+    .stat-widget h3 {
+      margin: 2px 0 8px;
+      color: #444a4f;
+      letter-spacing: 0;
+      font-weight: normal;
+    }
+
+    .stat-widget .stat-label {
+      color: #444a4f;
+    }
+
+    .stat-widget .stat-detail {
+      color: #b4b7b9;
+    }
+
+    .channel-distribution.stat-widget {
+      color: #a1a4a7;
+    }
+
+.stats-channel {
+  padding: 8px 0 7px;
+  margin-bottom: -7px;
+  border-radius: 3px;
+}
+
+.stats-channel:hover {
+  background: rgba(0,8,14,.03);
+}
+
+  .stats-channel .channel-bars {
+    height: 73px;
+    margin: 16px 0 15px;
+    padding: 2px 12px;
+    width: 100%;
+    background: linear-gradient(to top, #f2f2f3, #f2f2f3 1px, transparent 1px);
+    background-position: center bottom;
+    background-size: 100% 12px;
+  }
+
+  .channel-bars .channel-bar {
+    border-radius: 5px;
+    width: 10px;
+    background: #a9bcc4;
+  }
+
+  .channel-bars .channel-bar.secondary {
+    opacity: .38;
+  }
+
+.activity.sidebar {
+  border-left: 1px solid #e8e8e8;
+}
+
+/* 
+
+  ----------------
+   normal screens
+  ----------------
+
+*/
+
+@media only screen and (max-width: 1280px) {
+  .activity.sidebar {
+    display: none;
+  }
+}
