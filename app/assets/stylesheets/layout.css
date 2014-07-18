@@ -1,4 +1,4 @@
-.horizontal, .vertical {
+.horizontal, .vertical, .centered {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: -moz-flex !important;
@@ -183,4 +183,20 @@ body.fit {
   -moz-align-items: flex-end;
   -webkit-align-items: flex-end;
   align-items: flex-end;
+}
+
+.two-columns,
+.three-columns {
+  -ms-box-lines: multiple;
+  -moz-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.two-columns > .column {
+  width: 50%;
+}
+
+.three-columns > .column {
+  width: 33.33%;
 }

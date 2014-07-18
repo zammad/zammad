@@ -89,3 +89,43 @@
   </ul>
   -->
 <% end %>
+<div class="popover right" style="left: 255px; top: 20px; display: block;">
+  <div class="arrow"></div>
+  <h2 class="popover-title">Neuer Statuscheck, so sieht das mit zwei Zeilen Headline aus</h2>
+  <div class="popover-content">
+    <div class="level-2">
+      <div class="priority icon"></div>
+      eskalierend
+    </div>
+    <hr>
+    <h3>Personen</h3>
+    <div class="person">
+      Doreen Kubiak <span class="company">Steuerbüro C. Kaik</span>
+    </div>
+    <div class="person">
+      Martin Edenhofer <span class="company">Znuny GmbH</span>
+    </div>
+    <div class="person">
+      Oliver Ruhm <span class="company">Zeughaus GmbH</span>
+    </div>
+    <hr>
+    <div class="horizontal two-columns wrap">
+      <div class="column">
+        <h3>ID</h3>
+        <div class="contain-text">#10009</div>
+      </div>
+      <div class="column">
+        <h3>Priorität</h3>
+        <div class="contain-text">2 normal</div>
+      </div>
+      <div class="column">
+        <h3>Erstellt vor</h3>
+        <div class="contain-text">60 Tagen (02. Feb. 2013)</div>
+      </div>
+      <div class="column">
+        <h3>Gruppe</h3>
+        <div class="contain-text">Billing</div>
+      </div>
+    </div>
+  </div>
+</div>

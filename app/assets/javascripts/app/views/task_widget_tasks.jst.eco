@@ -3,7 +3,7 @@
     <div class="priority icon <% if item.task.notify: %>modified<% end %>"></div>
     <div class="name contain-text flex"><%= item.data.head %></div>
     <div class="close-task button horizontal centered">
-      <div class="close-task icon" title="<%- @T('close') %>" data-type="close"></div>
+      <div class="close close-task icon" title="<%- @T('close') %>" data-type="close"></div>
     </div>
   </a>
 <% end %>

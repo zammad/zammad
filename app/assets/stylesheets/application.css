@@ -12,6 +12,7 @@
  *= require ./sew.css
  *= require ./layout.css
  *= require ./zzz.css
+ *= require ./fonts/fira-sans.css
  *
  *= require_tree ./custom/
  *
