@@ -1,5 +1,5 @@
-<div class="fullHeight vertical center justified">
-  <p>Login with zeughaus.znuny.com:</p> <!-- how do you pass @T a parameter? @T( 'Login with %s', zeughaus.znuny.com )? -->
+<div class="fullHeight vertical center justified login fit">
+  <p><%- @T( 'Login with %s', @C( 'fqdn' ) ) %></p>
 
   <div class="hero-unit">
     <img class="logo" src="http://znuny.com/assets/logo_small.png" alt="<%= @C( 'product_name' ) %>">
@@ -8,7 +8,7 @@
         <label for="username"><%- @Ti( 'Username / email' ) %></label>
         <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
       </div>
-   
+
       <div class="form-group">
         <label for="password"><%- @Ti( 'Password' ) %></label>
         <input id="password" name="password" type="password" class="form-control"/>
@@ -49,7 +49,7 @@
   </div>
 
   <p>
-    <%- @T( "You're already registered with your E-Mail adress if you've been in touch with our support team.") %><br>
+    <%- @T( "You're already registered with your email adress if you've been in touch with our support team.") %><br>
     <%- @T( "You can request your password") %> <a href="#"><%- @T( "here") %></a>.
   </p>
 

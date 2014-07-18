@@ -452,13 +452,14 @@ class App.Controller extends Spine.Controller
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
-    $('#content_permanent').show()
-    @el.find('#content').empty()
+    $('.content').hide()
+
 
 class App.ControllerContent extends App.Controller
   constructor: ->
     super
-    $('#content_permanent').hide()
+    $('.content').hide()
+    $('#content').show()
 
 class App.ControllerModal extends App.Controller
   className: 'modal fade',

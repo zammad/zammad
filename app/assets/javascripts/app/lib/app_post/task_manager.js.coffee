@@ -145,22 +145,18 @@ class _taskManagerSingleton extends App.Controller
               ui.allTasks[taskPosition] = task
       )
 
-    # create div for permanent content
-    if !$("#content_permanent")[0]
-      $('#app').append('<div id="content_permanent" class="content"></div>')
-
     # empty static content if task is shown
     if active
       @activeTask = key
       $('#content').empty()
 
       # hide all tasks
-      $('.content_permanent').hide()
-      $('.content_permanent').removeClass('active')
+      $('.content').hide()
+      $('.content').removeClass('active')
 
     # create div for task if not exists
     if !$("#content_permanent_#{key}")[0]
-      $('#content_permanent').append('<div id="content_permanent_' + key + '" class="content_permanent"></div>')
+      $('#app').append('<div id="content_permanent_' + key + '" class="content flex"></div>')
 
     # set task to shown and active
     if @activeTask is key

@@ -1,6 +1,4 @@
 class Index extends App.ControllerContent
-  className: 'login fit'
-  
   events:
     'submit #login': 'login'
 

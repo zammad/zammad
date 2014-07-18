@@ -22,7 +22,7 @@ class App.Run extends App.Controller
     App.Auth.loginCheck()
 
     # start navbars
-    @setupWidget( 'Navigations', 'nav', @el.find('#nav') )
+    @setupWidget( 'Navigations', 'nav', @el )
 
     # start widgets
     @setupWidget( 'Widgets', 'widget', @el )
@@ -47,7 +47,7 @@ class App.Run extends App.Controller
     App.Event.trigger( event + ':ready')
 
 class App.Content extends App.Controller
-  className: 'content flex horizontal stretch'
+  className: 'content flex'
 
   constructor: ->
     super
