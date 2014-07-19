@@ -15,7 +15,9 @@ class App.UserZoom extends App.Controller
     meta =
       url: @url()
       id:  @user_id
-      class: "level-1"
+      class: ""
+      iconClass: "user"
+
 
     if @user
       meta.head  = @user.displayName()
