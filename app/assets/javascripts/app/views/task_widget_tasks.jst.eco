@@ -1,6 +1,8 @@
 <% for item in @item_list: %>
   <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="task <%= item.data.class %> horizontal center <% if item.task.active: %>active<% end %>" data-key="<%- item.task.key %>">
-    <div class="priority icon <% if item.task.notify: %>modified<% end %>"></div>
+    <div class="icon-holder centered">
+      <div class="priority icon<% if item.task.notify: %> modified<% end %>"></div>
+    </div>
     <div class="name contain-text flex"><%= item.data.head %></div>
     <div class="close-task button horizontal centered">
       <div class="close close-task icon" title="<%- @T('close') %>" data-type="close"></div>

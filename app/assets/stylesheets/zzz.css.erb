@@ -1459,7 +1459,7 @@ footer {
 
   .task {
     height: 38px;
-    padding: 10px 15px 7px 8px;
+    padding: 10px 15px 7px 0;
     border-bottom: 1px solid #33363e;
     cursor: pointer;
     position: relative;
@@ -1473,9 +1473,13 @@ footer {
     text-decoration: none;
   }
 
-  .task .priority.icon {
-    margin-top: -2px;
-    margin-right: 10px;
+  .task .icon-holder {
+    width: 30px;
+  }
+
+  .task .icon-holder .icon {
+    margin-right: 3px;
+    margin-top: -3px;
   }
 
   .task .modified.priority.icon {
