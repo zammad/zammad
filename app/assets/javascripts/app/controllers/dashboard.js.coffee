@@ -99,6 +99,8 @@ class Index extends App.ControllerContent
     canvas.attr 'width', 2 * radius
     canvas.attr 'height', 2 * radius
 
+    time = 60 if time > 60
+
     handlingTimeColors =
       5: '#38AE6A' # supergood
       10: '#A9AC41' # good
