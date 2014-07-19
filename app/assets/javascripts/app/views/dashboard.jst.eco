@@ -14,7 +14,10 @@
         <div class="time stat-widget vertical">
           <h3>∅ Waiting time today</h3>
           <div class="stat-graphic flex horizontal centered">
-            <div class="stopwatch icon"></div>
+            <div class="stopwatch icon centered">
+              <canvas class="stat-dial"></canvas>
+              <div class="stat-amount"></div>
+            </div>
           </div>
           <div class="stat-label contain-text">My handling time: 25 minutes</div>
           <div class="stat-detail contain-text">Average: 13%</div>
