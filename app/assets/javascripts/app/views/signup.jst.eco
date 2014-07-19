@@ -1,4 +1,4 @@
-<div class="fullHeight vertical center justified">
+<div class="fullHeight vertical center justified signup fit">
   <div class="hero-unit">
     <h1><%- @T( 'Join' ) %> <%= @C( 'product_name' ) %></h1>
       <form>

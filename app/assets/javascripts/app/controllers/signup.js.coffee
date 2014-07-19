@@ -1,6 +1,4 @@
 class Index extends App.ControllerContent
-  className: 'signup fit'
-
   events:
     'submit form': 'submit'
     'click .submit': 'submit'

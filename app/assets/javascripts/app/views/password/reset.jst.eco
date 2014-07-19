@@ -1,18 +1,18 @@
-<div class="fullHeight vertical center justified">
+<div class="fullHeight vertical center justified reset_password fit">
   <div class="hero-unit">
     <% if @sent: %>
       <h2><%- @T('We\'ve sent password reset instructions to your email address.') %><small></small></h2>
       <p><%- @T('If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.') %></p>
       <a href="#" class="subtle retry">&raquo; <%- @T('again') %> &laquo;</a>
-    <% end %>
-    <div id="form-password">
+    <% else: %>
       <h2><%- @T( 'Forgot your password?' ) %><small></small></h2>
-      <form id="form-password-item">
+      <form class="form-password">
+        <div class="form-password-item"></div>
         <div class="form-controls">
           <a class="subtle-link standalone pull-left cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
           <button class="btn btn-primary submit pull-right"><%- @T( 'Submit' ) %></button>
         </div>
       </form>
-    </div>
+    <% end %>
   </div>
 </div>
