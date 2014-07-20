@@ -18,31 +18,23 @@
         <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
 
         <% if @C('user_lost_password'): %>
-        <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
+          <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
         <% end %>
       </div>
 
-      <% if true or !_.isEmpty( @auth_providers ): %>
+      <% if !_.isEmpty( @auth_providers ): %>
       <div class="separator">
         <span class="separator-text"><%- @T( 'or sign in using' ) %></span>
       </div>
 
       <div class="auth_providers horizontal stretch">
-        <!--<% for auth_provider in @auth_providers: %>
-          <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
-        <% end %>-->
-        <a class="auth_provider facebook horizontal">
-          <span class="provider_icon"></span>
-          <span class="provider_name flex">Facebook</span>
-        </a>
-        <a class="auth_provider google horizontal">
-          <span class="provider_icon"></span>
-          <span class="provider_name flex">Google+</span>
-        </a>
-        <a class="auth_provider twitter horizontal">
-          <span class="provider_icon"></span>
-          <span class="provider_name flex">Twitter</span>
-        </a>
+        <% for auth_provider in @auth_providers: %>
+          <a class="auth_provider <%= auth_provider.class %> horizontal" href="<%= auth_provider.url %>">
+            <span class="provider_icon"></span>
+            <span class="provider_name flex"><%- @T( auth_provider.name ) %></span>
+          </a>
+          <li><a href="<%= auth_provider.url %>"></a></li>
+        <% end %>
       </div>
       <% end %>
     </form>
@@ -50,14 +42,15 @@
 
   <p>
     <%- @T( "You're already registered with your email adress if you've been in touch with our support team.") %><br>
-    <%- @T( "You can request your password") %> <a href="#"><%- @T( "here") %></a>.
+    <% if @C('user_lost_password'): %>
+      <%- @T( "You can request your password") %> <a href="#reset_password"><%- @T( "here") %></a>.
+    <% end %>
   </p>
 
   <% if @C('user_create_account'): %>
-  <hr>
-
-  <p>
-    <a href="#signup"><%- @T( 'Register as a new customer' ) %></a>
-  </p>
+    <hr>
+    <p>
+      <a href="#signup"><%- @T( 'Register as a new customer' ) %></a>
+    </p>
   <% end %>
 </div>

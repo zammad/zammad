@@ -1,20 +1,35 @@
-<table style="width: 100%;">
-  <tr>
-    <td>#<%- @P( @ticket.number ) %></td>
-    <td><%- @P( @ticket.humanTime ) %></td>
-  </tr>
-  <tr>
-    <td><%- @P( @ticket.group ) %></td>
-    <td><%- @T( @ticket.state.name ) %></td>
-  </tr>
-  <tr>
-    <td><%- @T( @ticket.priority.name ) %></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td colspan="2"><%- @P( @ticket.owner ) %></td>
-  </tr>
-  <tr>
-    <td colspan="2"><%- @P( @ticket.customer ) %></td>
-  </tr>
-</table>
+<div class="level-2">
+  <div class="priority icon"></div>
+  eskalierend
+</div>
+<hr>
+<h3>Personen</h3>
+<div class="person">
+  <%- @P( @ticket.owner ) %>
+</div>
+<div class="person">
+  <%- @P( @ticket.customer ) %>
+</div>
+<hr>
+<div class="horizontal two-columns wrap">
+  <div class="column">
+    <h3>#</h3>
+    <div class="contain-text"><%- @P( @ticket.number ) %></div>
+  </div>
+  <div class="column">
+    <h3><%- @T( 'State' ) %></h3>
+    <div class="contain-text"><%- @P( @ticket.state.name ) %></div>
+  </div>
+  <div class="column">
+    <h3><%- @T( 'Priority' ) %></h3>
+    <div class="contain-text"><%- @T( @ticket.priority.name ) %></div>
+  </div>
+  <div class="column">
+    <h3><%- @T( 'Age' ) %></h3>
+    <div class="contain-text"><%- @P( @ticket.humanTime ) %></div>
+  </div>
+  <div class="column">
+    <h3><%- @T( 'Group' ) %></h3>
+    <div class="contain-text"><%- @P( @ticket.group ) %></div>
+  </div>
+</div>

@@ -1,10 +1,8 @@
 class Index extends App.ControllerContent
-  className: 'reset_password fit'
-
   events:
     'submit form':   'submit'
     'click .submit': 'submit'
-    'click .retry':  'rerender'
+    'click .retry':  'retry'
 
   constructor: ->
     super
@@ -28,14 +26,14 @@ class Index extends App.ControllerContent
     @html App.view('password/reset')(params)
 
     @form = new App.ControllerForm(
-      el:        @el.find('#form-password-item')
+      el:        @el.find('.form-password-item')
       model:     { configure_attributes: configure_attributes }
       autofocus: true
     )
 
-  rerender: (e) ->
+  retry: (e) ->
     e.preventDefault()
-    @el.find('#form-password').show()
+    @render()
 
   submit: (e) ->
     e.preventDefault()
@@ -55,20 +53,17 @@ class Index extends App.ControllerContent
 
   success: (data, status, xhr) =>
     @render( sent: true )
-    @el.find('#form-password').hide()
 
   error: (data, status, xhr) =>
     @notify(
       type: 'error'
       msg:  App.i18n.translateContent( 'Username or email address invalid, please try again.' )
     )
-    @formEnable( @el.find('#form-password') )
+    @formEnable( @el.find('.form-password') )
 
 App.Config.set( 'reset_password', Index, 'Routes' )
 
 class Verify extends App.ControllerContent
-  className: 'container'
-
   events:
     'submit form': 'submit'
     'click .submit': 'submit'

@@ -155,6 +155,7 @@ class App.Navigation extends App.Controller
                   display:    "#{user.displayName()}"
                   id:         user.id
                   class:      "user user-popover"
+                  url:        user.uiUrl()
                   iconClass:  "user"
                 area.result.push data
             else if area.name is 'Organization'

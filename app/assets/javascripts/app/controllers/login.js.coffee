@@ -20,21 +20,25 @@ class Index extends App.ControllerContent
         url:    '/auth/facebook',
         name:   'Facebook',
         config: 'auth_facebook',
+        class:  'facebook',
       },
       twitter: {
         url:    '/auth/twitter',
         name:   'Twitter',
         config: 'auth_twitter',
+        class:  'twitter',
       },
       linkedin: {
         url:    '/auth/linkedin',
         name:   'LinkedIn',
         config: 'auth_linkedin',
+        class:  'linkedin',
       },
       google_oauth2: {
         url:    '/auth/google_oauth2',
         name:   'Google',
         config: 'auth_google_oauth2',
+        class:  'google',
       },
     }
     auth_providers = []

@@ -33,13 +33,14 @@ class App.TicketZoom extends App.Controller
 
   meta: =>
     meta =
-      url: @url()
-      id:  @ticket_id
+      url:        @url()
+      id:         @ticket_id
+      iconClass:  "priority"
     if @ticket
-      @ticket = App.Ticket.retrieve( @ticket.id )
-      meta.head  = @ticket.title
-      meta.title = '#' + @ticket.number + ' - ' + @ticket.title
-      meta.class = "level-#{@ticket.priority_id}"
+      @ticket     = App.Ticket.retrieve( @ticket.id )
+      meta.head   = @ticket.title
+      meta.title  = '#' + @ticket.number + ' - ' + @ticket.title
+      meta.class  = "level-#{@ticket.priority_id}"
     meta
 
   url: =>
