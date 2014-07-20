@@ -12,6 +12,8 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
+    @navHide()
+
     # set title
     @title 'Reset Password'
     @navupdate '#reset_password'

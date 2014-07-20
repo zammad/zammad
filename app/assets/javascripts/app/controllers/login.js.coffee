@@ -10,6 +10,8 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
+    @navHide()
+
     @title 'Sign in'
     @render()
     @navupdate '#login'

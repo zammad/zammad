@@ -95,6 +95,16 @@ class App.Controller extends Spine.Controller
   navupdate: (url) ->
     App.Event.trigger 'navupdate', url
 
+  # show navigation
+  navShow: ->
+    return if $('#navigation').is(':visible')
+    $('#navigation').attr('style', 'display: flex!important')
+
+  # hide navigation
+  navHide: ->
+    return if !$('#navigation').is(':visible')
+    $('#navigation').attr('style', 'display: none!important')
+
   scrollTo: ( x = 0, y = 0, delay = 0 ) ->
     a = ->
       window.scrollTo( x, y )
@@ -460,6 +470,7 @@ class App.ControllerContent extends App.Controller
     super
     $('.content').hide()
     $('#content').show()
+    @navShow()
 
 class App.ControllerModal extends App.Controller
   className: 'modal fade',
