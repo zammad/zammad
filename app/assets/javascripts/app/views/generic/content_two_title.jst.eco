@@ -1,10 +1,8 @@
-<div class="horizontal">
-  <div class="sidebar">
+<div class="sidebar">
+</div>
+<div class="main flex">
+  <div class="page-header">
+    <h1><%- @T( @head ) %> <small><%- @T( @sub_head ) %></small></h1>
   </div>
-  <div class="main flex">
-    <div class="page-header">
-      <h1><%- @T( @head ) %> <small><%- @T( @sub_head ) %></small></h1>
-    </div>
-    <div class="page-content"></div>
-  </div>
+  <div class="page-content"></div>
 </div>

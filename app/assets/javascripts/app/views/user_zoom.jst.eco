@@ -1,21 +1,18 @@
-<div class="horizontal">
-  <div class="sidebar">
-    <div class="widgets"></div>
-    <div class="action"></div>
-  </div>
-  <div class="main flex">
-
-    <div class="page-header user-zoom clearfix">
-      <div class="page-header-title">
-        <div class="ticket-title"></div>
-      </div>
-    </div>
-
-    <div class="ticket-answer">
-      <div class="article-view"></div>
-      <div class="edit"></div>
-    </div>
-
-  </div>
+<div class="sidebar">
+  <div class="widgets"></div>
+  <div class="action"></div>
 </div>
+<div class="main flex">
 
+  <div class="page-header user-zoom">
+    <div class="page-header-title">
+      <div class="ticket-title"></div>
+    </div>
+  </div>
+
+  <div class="ticket-answer">
+    <div class="article-view"></div>
+    <div class="edit"></div>
+  </div>
+
+</div>

@@ -1,4 +1,2 @@
-<div class="horizontal">
-  <div class="sidebar"></div>
-  <div class="main flex"></div>
-</div>
+<div class="sidebar"></div>
+<div class="main flex"></div>

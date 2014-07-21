@@ -462,14 +462,13 @@ class App.Controller extends Spine.Controller
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
-    $('.content').hide()
-
+    $('.content').attr('style', 'display: none!important')
 
 class App.ControllerContent extends App.Controller
   constructor: ->
     super
-    $('.content').hide()
-    $('#content').show()
+    $('.content').attr('style', 'display: none!important')
+    $('#content').attr('style', 'display: flex!important')
     @navShow()
 
 class App.ControllerModal extends App.Controller

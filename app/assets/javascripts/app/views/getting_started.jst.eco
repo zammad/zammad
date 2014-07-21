@@ -7,13 +7,13 @@
     </ol>
     <% if @master_user: %>
     <div class="master_user hero-left">
-      <form class="form-stacked clearfix" id="form-master">
+      <form class="form-stacked" id="form-master">
         <button type="submit" class="btn btn-primary submit pull-right"><%- @T( 'Next Step' ) %></button>
       </form>
     </div>
     <% end %>
     <div class="agent_user hero-left hide">
-      <form class="form-stacked clearfix" id="form-agent">
+      <form class="form-stacked" id="form-agent">
         <div class="form-controls">
           <button type="submit" class="btn btn-primary submit pull-right"><%- @T( 'Send Invitation' ) %></button>
         </div>

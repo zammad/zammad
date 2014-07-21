@@ -1,126 +1,124 @@
-<div class="horizontal reverse">
-  <div class="activity sidebar">
-    <div class="side-overviews" id="sortable-sidebar"></div>
+<div class="main flex center">
+  <div class="tabs wide-tabs horizontal">
+    <div class="tab my-stats active">My Stats</div>
+    <div class="tab my-groups">My Group</div>
+    <div class="tab all-stats">All</div>
   </div>
-  <div class="main flex center">
-    <div class="tabs wide-tabs horizontal">
-      <div class="tab my-stats active">My Stats</div>
-      <div class="tab my-groups">My Group</div>
-      <div class="tab all-stats">All</div>
-    </div>
 
-    <div class="stat-widgets three-columns horizontal">
-      <div class="column">
-        <div class="time stat-widget vertical">
-          <h3>∅ Waiting time today</h3>
-          <div class="stat-graphic flex horizontal centered">
-            <div class="stopwatch icon centered">
-              <canvas class="stat-dial"></canvas>
-              <div class="stat-amount"></div>
-            </div>
-          </div>
-          <div class="stat-label contain-text">My handling time: 25 minutes</div>
-          <div class="stat-detail contain-text">Average: 13%</div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="mood stat-widget vertical">
-          <h3>Mood</h3>
-          <div class="stat-graphic flex horizontal centered">
-            <div class="mood icon bad-state"></div>
-          </div>
-          <div class="stat-label contain-text">3% of my tickets escalated.</div>
-          <div class="stat-detail contain-text">Average: 17%</div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="channel-distribution stat-widget vertical centered">
-          <h3>Channel Distribution</h3>
-          <div class="stat-graphic flex horizontal centered">
-            <div class="stats-channel email-channel vertical center">
-              <div class="email channel icon"></div>
-              <div class="channel-bars flex horizontal end justify-center">
-                <div class="channel-bar primary" style="height: 80%"></div>
-                <div class="channel-bar secondary" style="height: 100%"></div>
-              </div>
-              <div class="channel-percentage">34%</div>
-            </div>
-            <div class="stats-channel received-calls-channel vertical center">
-              <div class="received-calls channel icon"></div>
-              <div class="channel-bars flex horizontal end justify-center">
-                <div class="channel-bar primary" style="height: 53%"></div>
-                <div class="channel-bar secondary" style="height: 47%"></div>
-              </div>
-              <div class="channel-percentage">26%</div>
-            </div>
-            <div class="stats-channel outbound-calls-channel vertical center">
-              <div class="outbound-calls channel icon"></div>
-              <div class="channel-bars flex horizontal end justify-center">
-                <div class="channel-bar primary" style="height: 46%"></div>
-                <div class="channel-bar secondary" style="height: 53%"></div>
-              </div>
-              <div class="channel-percentage">24%</div>
-            </div>
-            <div class="stats-channel facebook-channel vertical center">
-              <div class="facebook channel icon"></div>
-              <div class="channel-bars flex horizontal end justify-center">
-                <div class="channel-bar primary" style="height: 24%"></div>
-                <div class="channel-bar secondary" style="height: 18%"></div>
-              </div>
-              <div class="channel-percentage">12%</div>
-            </div>
-            <div class="stats-channel twitter-channel vertical center">
-              <div class="twitter channel icon"></div>
-              <div class="channel-bars flex horizontal end justify-center">
-                <div class="channel-bar primary" style="height: 13%"></div>
-                <div class="channel-bar secondary" style="height: 16%"></div>
-              </div>
-              <div class="channel-percentage">4%</div>
-            </div>
+  <div class="stat-widgets three-columns horizontal">
+    <div class="column">
+      <div class="time stat-widget vertical">
+        <h3>∅ Waiting time today</h3>
+        <div class="stat-graphic flex horizontal centered">
+          <div class="stopwatch icon centered">
+            <canvas class="stat-dial"></canvas>
+            <div class="stat-amount"></div>
           </div>
         </div>
+        <div class="stat-label contain-text">My handling time: 25 minutes</div>
+        <div class="stat-detail contain-text">Average: 13%</div>
       </div>
-      <div class="column">
-        <div class="status stat-widget vertical">
-          <h3>Status</h3>
-          <div class="stat-graphic flex horizontal centered">
-            <div class="stat-tickets vertical reverse end">
-              <div class="stat-ticket icon supergood-state"></div>
-              <div class="stat-ticket icon supergood-state"></div>
-              <div class="stat-ticket icon supergood-state"></div>
-              <div class="stat-ticket icon supergood-state"></div>
-              <div class="stat-ticket icon supergood-state"></div>
-              <div class="stat-ticket icon supergood-state"></div>
+    </div>
+    <div class="column">
+      <div class="mood stat-widget vertical">
+        <h3>Mood</h3>
+        <div class="stat-graphic flex horizontal centered">
+          <div class="mood icon bad-state"></div>
+        </div>
+        <div class="stat-label contain-text">3% of my tickets escalated.</div>
+        <div class="stat-detail contain-text">Average: 17%</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="channel-distribution stat-widget vertical centered">
+        <h3>Channel Distribution</h3>
+        <div class="stat-graphic flex horizontal centered">
+          <div class="stats-channel email-channel vertical center">
+            <div class="email channel icon"></div>
+            <div class="channel-bars flex horizontal end justify-center">
+              <div class="channel-bar primary" style="height: 80%"></div>
+              <div class="channel-bar secondary" style="height: 100%"></div>
             </div>
-            <div class="stat-all-tickets icon"></div>
+            <div class="channel-percentage">34%</div>
           </div>
-          <div class="stat-label contain-text">Tickets of my Group: 78 of 234</div>
-          <div class="stat-detail contain-text">Average: 22%</div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="in-process stat-widget vertical">
-          <h3>Tickets in process</h3>
-          <div class="stat-graphic flex horizontal centered">
-            <div class="in-process icon supergood-state"></div>
+          <div class="stats-channel received-calls-channel vertical center">
+            <div class="received-calls channel icon"></div>
+            <div class="channel-bars flex horizontal end justify-center">
+              <div class="channel-bar primary" style="height: 53%"></div>
+              <div class="channel-bar secondary" style="height: 47%"></div>
+            </div>
+            <div class="channel-percentage">26%</div>
           </div>
-          <div class="stat-label contain-text">74% are currently in process</div>
-          <div class="stat-detail contain-text">Average: 62%</div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="reopening stat-widget vertical">
-          <h3>Reopening rate</h3>
-          <div class="stat-graphic flex horizontal centered">
-            <div class="reopening icon ok-state"></div>
+          <div class="stats-channel outbound-calls-channel vertical center">
+            <div class="outbound-calls channel icon"></div>
+            <div class="channel-bars flex horizontal end justify-center">
+              <div class="channel-bar primary" style="height: 46%"></div>
+              <div class="channel-bar secondary" style="height: 53%"></div>
+            </div>
+            <div class="channel-percentage">24%</div>
           </div>
-          <div class="stat-label contain-text">7% are being reopened</div>
-          <div class="stat-detail contain-text">Average: 6%</div>
+          <div class="stats-channel facebook-channel vertical center">
+            <div class="facebook channel icon"></div>
+            <div class="channel-bars flex horizontal end justify-center">
+              <div class="channel-bar primary" style="height: 24%"></div>
+              <div class="channel-bar secondary" style="height: 18%"></div>
+            </div>
+            <div class="channel-percentage">12%</div>
+          </div>
+          <div class="stats-channel twitter-channel vertical center">
+            <div class="twitter channel icon"></div>
+            <div class="channel-bars flex horizontal end justify-center">
+              <div class="channel-bar primary" style="height: 13%"></div>
+              <div class="channel-bar secondary" style="height: 16%"></div>
+            </div>
+            <div class="channel-percentage">4%</div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="container-fluid main-overviews" id="sortable">
+    <div class="column">
+      <div class="status stat-widget vertical">
+        <h3>Status</h3>
+        <div class="stat-graphic flex horizontal centered">
+          <div class="stat-tickets vertical reverse end">
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+          </div>
+          <div class="stat-all-tickets icon"></div>
+        </div>
+        <div class="stat-label contain-text">Tickets of my Group: 78 of 234</div>
+        <div class="stat-detail contain-text">Average: 22%</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="in-process stat-widget vertical">
+        <h3>Tickets in process</h3>
+        <div class="stat-graphic flex horizontal centered">
+          <div class="in-process icon supergood-state"></div>
+        </div>
+        <div class="stat-label contain-text">74% are currently in process</div>
+        <div class="stat-detail contain-text">Average: 62%</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="reopening stat-widget vertical">
+        <h3>Reopening rate</h3>
+        <div class="stat-graphic flex horizontal centered">
+          <div class="reopening icon ok-state"></div>
+        </div>
+        <div class="stat-label contain-text">7% are being reopened</div>
+        <div class="stat-detail contain-text">Average: 6%</div>
+      </div>
     </div>
   </div>
+
+  <div class="container-fluid main-overviews" id="sortable">
+  </div>
+</div>
+<div class="activity sidebar">
+  <div class="side-overviews" id="sortable-sidebar"></div>
 </div>

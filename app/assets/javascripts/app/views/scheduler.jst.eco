@@ -8,7 +8,7 @@
       <li><a href="#">Jobs</a></li>
     </ul>
   </div>
-  <div class="span9 table-overview">
+  <div class="table-overview">
   
     <div class="tabbable">
       <ul class="nav nav-tabs">

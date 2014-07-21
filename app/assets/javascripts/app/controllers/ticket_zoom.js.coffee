@@ -178,7 +178,7 @@ class App.TicketZoom extends App.Controller
     new ArticleView(
       ticket:             @ticket
       ticket_article_ids: @ticket_article_ids
-      el:                 @el.find('.article-view')
+      el:                 @el.find('.ticket-article')
       ui:                 @
     )
 
@@ -186,7 +186,7 @@ class App.TicketZoom extends App.Controller
     # show edit
     new Edit(
       ticket:     @ticket
-      el:         @el.find('.edit')
+      el:         @el.find('.ticket-edit')
       edit_form:  @edit_form
       task_key:   @task_key
       ui:         @
@@ -433,9 +433,9 @@ class Edit extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = currentData
         @log 'notice', 'form hash changed', diff, currentData
-        @el.find('.ticket-edit').addClass('form-changed')
-        @el.find('.ticket-edit').find('.reset-message').show()
-        @el.find('.ticket-edit').find('.reset-message').removeClass('hide')
+        @el.find('.edit').addClass('form-changed')
+        @el.find('.edit').find('.reset-message').show()
+        @el.find('.edit').find('.reset-message').removeClass('hide')
         App.TaskManager.update( @task_key, { 'state': currentData })
     @interval( update, 3000, 'autosave' )
 

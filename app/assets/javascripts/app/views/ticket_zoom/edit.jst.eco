@@ -1,23 +1,21 @@
-<div class="ticket-article-view">
-  <div class="ticket-article well ticket-edit <% if @formChanged: %>form-changed<% end %>">
-    <div class="avatar">
-      <img class="thumbnail user-popover" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
+<div class="horizontal well edit <% if @formChanged: %>form-changed<% end %>">
+  <div class="avatar">
+    <img class="thumbnail user-popover" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
+  </div>
+  <div class="ticket-article-message flex">
+    <div class="edit-title">
+      <h4><%- @T('Edit') %>
+      <small class="reset-message<% if !@formChanged: %> hide<% end %>">
+        <a href="#" data-type="reset"><%- @T('Discard your unsaved changes.') %></a> <href="#" class="glyphicon glyphicon-repeat" data-type="reset"></a>
+      </small>
+      </h4>
     </div>
-    <div class="ticket-article-message">
-      <div class="edit-title">
-        <h4><%- @T('Edit') %>
-        <small class="reset-message<% if !@formChanged: %> hide<% end %>">
-          <a href="#" data-type="reset"><%- @T('Discard your unsaved changes.') %></a> <href="#" class="glyphicon glyphicon-repeat" data-type="reset"></a>
-        </small>
-        </h4>
-      </div>
-      <div class="edit-content">
-        <form class="form-stacked ticket-update">
-          <div class="form-ticket-update"></div>
-          <div class="form-article-update"></div>
-          <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-        </form>
-      <div>
-    </div>
+    <div class="edit-content">
+      <form class="form-stacked ticket-update">
+        <div class="form-ticket-update"></div>
+        <div class="form-article-update"></div>
+        <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
+      </form>
+    <div>
   </div>
 </div>

@@ -9,31 +9,31 @@ class App.Browser
     data = @detection()
 
     # disable Crome 13 and older
-    if data.browser == 'Chrome' && data.version <= 13
+    if data.browser == 'Chrome' && data.version <= 20
       @message(data)
       console.log('Browser not supported')
       return false
 
     # disable Firefox 9 and older
-    else if data.browser == 'Firefox' && data.version <= 9
+    else if data.browser == 'Firefox' && data.version <= 27
       @message(data)
       console.log('Browser not supported')
       return false
 
     # disable IE 8 and older
-    else if data.browser == 'Explorer' && data.version <= 8
+    else if data.browser == 'Explorer' && data.version <= 9
       @message(data)
       console.log('Browser not supported')
       return false
 
     # disable Safari 3 and older
-    else if data.browser == 'Safari' && data.version <= 3
+    else if data.browser == 'Safari' && data.version <= 6
       @message(data)
       console.log('Browser not supported')
       return false
 
     # disable Opera 10 and older
-    else if data.browser == 'Opera' && data.version <= 10
+    else if data.browser == 'Opera' && data.version <= 21
       @message(data)
       console.log('Browser not supported')
       return false
