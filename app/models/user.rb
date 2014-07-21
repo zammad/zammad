@@ -575,7 +575,7 @@ returns
     hash = Digest::MD5.hexdigest( response.body )
 
     # check if image has changed
-    return if self.image != hash
+    return if self.image == hash
 
     # save new image
     self.update_column( :image, hash )
