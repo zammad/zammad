@@ -1,11 +1,3 @@
-<div class="sidebar">
-  <div class="widgets">
-    <div class="customer_info"></div>
-    <div class="ticket_template"></div>
-    <div class="text_module"></div>
-  </div>
-</div>
-
 <div class="main flex">
 
   <div class="page-header">
@@ -21,4 +13,12 @@
   </form>
 
  </div>
+</div>
+
+<div class="sidebar">
+  <div class="widgets">
+    <div class="customer_info"></div>
+    <div class="ticket_template"></div>
+    <div class="text_module"></div>
+  </div>
 </div>

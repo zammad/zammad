@@ -1,12 +1,8 @@
-<div class="sidebar">
-</div>
 <div class="main flex">
 
-  <div class="ticket-create">
+  <div class="ticket-create vertical">
     <div class="page-header">
-      <div class="page-header-title">
-        <h1 class="pull-left"><%- @T( 'New Ticket' ) %></h1>
-      </div>
+      <h1 class="pull-left"><%- @T( 'New Ticket' ) %></h1>
     </div>
     <div class="page-content">
       <form class="form-horizontal form-large">
@@ -21,3 +17,5 @@
   </div>
 
 </div>
+
+<div class="sidebar"></div>
