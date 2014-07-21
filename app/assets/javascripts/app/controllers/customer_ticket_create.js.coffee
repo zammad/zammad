@@ -189,7 +189,4 @@ class Index extends App.ControllerContent
       )
 
 App.Config.set( 'customer_ticket_new', Index, 'Routes' )
-
-#App.Config.set( 'CustomerTicketNew', { prio: 1600, parent: '', name: 'New Ticket', target: '#customer_ticket_new', role: ['Customer'] }, 'NavBar' )
-App.Config.set( 'CustomerTicketNew', { prio: 8000, parent: '', name: 'New', target: '#customer_ticket_new', role: ['Customer'] }, 'NavBarRight' )
-
+App.Config.set( 'CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', target: '#customer_ticket_new', role: ['Customer'], divider: true }, 'NavBarRight' )

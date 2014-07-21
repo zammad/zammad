@@ -10,7 +10,7 @@ class Index extends App.Controller
   render: =>
     auth_provider_all = {
       facebook: {
-        key:    'facebook' 
+        key:    'facebook'
         url:    '/auth/facebook',
         name:   'Facebook',
         config: 'auth_facebook',
