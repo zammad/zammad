@@ -1,71 +1,47 @@
-module Sessions::Backend::Collections
-  @@last_change = {}
+class Sessions::Backend::Collections
 
-  def self.worker( user, worker )
-
-    worker.log 'notice', "---user - fetch push_collection data"
-
-    # get available collections
-    cache_key = 'user_' + user.id.to_s + '_push_collections'
-    collections = Sessions::CacheIn.get( cache_key )
-    if !collections
-      collections = {}
-      push_collection = SessionHelper::push_collections(user)
-      push_collection.each { | key, value |
-        collections[ key ] = true
-      }
-      Sessions::CacheIn.set( cache_key, collections, { :expires_in => 2.minutes } )
-    end
-
-    # check all collections to push
-    push_collection = {}
-    collections.each { | key, v |
-      cache_key = 'user_' + user.id.to_s + '_push_collections_' + key.to_s
-      if Sessions::CacheIn.expired(cache_key)
-        if push_collection.empty?
-          push_collection = SessionHelper::push_collections(user)
-        end
-        push_collection_cache = Sessions::CacheIn.get( cache_key, { :re_expire => true } )
-        worker.log 'notice', "---user - fetch push_collection data " + cache_key
-#        if !push_collection[key] || !push_collection_cache || push_collection[key] != push_collection_cache || !push_collection[ key ].zip( push_collection_cache ).all? { |x, y| x.attributes == y.attributes }
-        if !push_collection[key] || !push_collection_cache || push_collection[key] != push_collection_cache || !push_collection[ key ].zip( push_collection_cache ).all? { |x, y| return false if !x; return false if !y; x.attributes == y.attributes }
-
-          worker.log 'notify', 'fetch push_collection changed - ' + cache_key
-          Sessions::CacheIn.set( cache_key, push_collection[key], { :expires_in => 1.minutes } )
-        end
-      end
-    }
-
+  def initialize( user, client, client_id )
+    @user       = user
+    @client     = client
+    @client_id  = client_id
+    @backends   = self.backend
   end
 
-  def self.push( user, client )
 
-    cache_key = 'user_' + user.id.to_s + '_push_collections'
-    if !client.last_change['push_collections']
-      client.last_change['push_collections'] = {}
-    end
-
-    collections = Sessions::CacheIn.get( cache_key ) || {}
-    collections.each { | key, v |
-      collection_cache_key = 'user_' + user.id.to_s + '_push_collections_' + key.to_s
-      collection_time = Sessions::CacheIn.get_time( collection_cache_key, { :ignore_expire => true } )
-      if collection_time && client.last_change['push_collections'][ key ] != collection_time
-
-        client.last_change['push_collections'][ key ] = collection_time
-        push_collections = Sessions::CacheIn.get( collection_cache_key, { :ignore_expire => true } )
-
-        client.log 'notify', "push push_collections #{key} for user #{user.id}"
-
-        # send update to browser
-        data = {}
-        data[key] = push_collections
-        client.send({
-          :event  => 'resetCollection',
-          :data   => data,
-        })
-
+  def push
+    results = []
+    @backends.each {|backend|
+      #puts "B: #{backend.inspect}"
+      result = backend.push
+      #puts "R: #{result.inspect}"
+      if result
+        results.push result
       end
     }
+    results
+  end
+
+  def backend
+
+    # auto population collections
+    backends = []
+
+    # load collections to deliver from external files
+    dir = File.expand_path('../../../../', __FILE__)
+    files = Dir.glob( "#{dir}/lib/sessions/backend/collections/*.rb" )
+    for file in files
+      file.gsub!("#{dir}/lib/", '')
+      file.gsub!(/\.rb$/, '')
+      next if file.classify == 'Sessions::Backend::Collections::Base'
+      #puts "LOAD #{file.classify}---"
+      #next if file == ''
+      backend = file.classify.constantize.new(@user, @client, @client_id)
+      if backend
+        backends.push backend
+      end
+    end
+
+    backends
   end
 
 end

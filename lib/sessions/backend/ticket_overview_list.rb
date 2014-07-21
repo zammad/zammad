@@ -1,80 +1,109 @@
-module Sessions::Backend::TicketOverviewList
-
-  def self.worker( user, worker )
-    overviews = Ticket::Overviews.all(
-      :current_user => user,
-    )
-    overviews.each { |overview|
-      cache_key = 'user_' + user.id.to_s + '_overview_data_' + overview.link
-      if Sessions::CacheIn.expired(cache_key)
-        overview_data = Ticket::Overviews.list(
-          :view         => overview.link,
-          :current_user => user,
-          :array        => true,
-        )
-        overview_data_cache = Sessions::CacheIn.get( cache_key, { :re_expire => true } )
-        worker.log 'notice', 'fetch overview_data - ' + cache_key
-        if overview_data != overview_data_cache
-          worker.log 'notify', 'fetch overview_data changed - ' + cache_key
-          Sessions::CacheIn.set( cache_key, overview_data, { :expires_in => 5.seconds } )
-        end
-      end
-    }
+class Sessions::Backend::TicketOverviewList
+  def initialize( user, client = nil, client_id = nil )
+    @user         = user
+    @client       = client
+    @client_id    = client_id
+    @last_change  = nil
   end
 
-  def self.push( user, client )
+  def load
+
+    # get whole collection
     overviews = Ticket::Overviews.all(
-      :current_user => user,
+      :current_user => @user,
     )
+    result = []
     overviews.each { |overview|
-      cache_key = 'user_' + user.id.to_s + '_overview_data_' + overview.link
+      overview_data = Ticket::Overviews.list(
+        :view         => overview.link,
+        :current_user => @user,
+        :array        => true,
+      )
+      data = { :list => overview_data, :index => overview }
+      result.push data
+    }
 
-      if !client.last_change['overview_list']
-        client.last_change['overview_list'] = {}
-      end
+    # no data exists
+    return if !result || result.empty?
 
-      overview_data_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-      if overview_data_time && client.last_change['overview_list'][overview.link] != overview_data_time
-        client.last_change['overview_list'][overview.link] = overview_data_time
-        overview_data = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
-        client.log 'notify', "push overview_data #{overview.link} for user #{user.id}"
-        users = {}
-        tickets = {}
-        overview_data[:ticket_ids].each {|ticket_id|
-          client.ticket( ticket_id, tickets, users )
-        }
+    # no change exists
+    return if @last_change == result
 
-        # get groups
-        group_ids = []
-        Group.where( :active => true ).each { |group|
-          group_ids.push group.id
+    # remember last state
+    @last_change = result
+
+    result
+  end
+
+  def client_key
+    "as::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+  end
+
+  def push
+
+    # check timeout
+    timeout = Sessions::CacheIn.get( self.client_key )
+    return if timeout
+
+    # set new timeout
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 6.seconds } )
+
+    items = self.load
+
+    return if !items
+
+    # push overviews
+    results = []
+    items.each { |item|
+
+      overview_data = item[:list]
+
+      assets = {}
+      overview_data[:ticket_ids].each {|ticket_id|
+        ticket = Ticket.find( ticket_id )
+        assets = ticket.assets(assets)
+      }
+
+      # get groups
+      group_ids = []
+      Group.where( :active => true ).each { |group|
+        group_ids.push group.id
+      }
+      agents = {}
+      Ticket::ScreenOptions.agents.each { |user|
+        agents[ user.id ] = 1
+      }
+      users = {}
+      groups_users = {}
+      groups_users[''] = []
+      group_ids.each {|group_id|
+        groups_users[ group_id ] = []
+        Group.find(group_id).users.each {|user|
+          next if !agents[ user.id ]
+          groups_users[ group_id ].push user.id
+          if !users[user.id]
+            users[user.id] = User.find(user.id)
+            assets = users[user.id].assets(assets)
+          end
         }
-        agents = {}
-        Ticket::ScreenOptions.agents.each { |user|
-          agents[ user.id ] = 1
+      }
+
+      if !@client
+        result = {
+          :event  => 'navupdate_ticket_overview',
+          :data   => item[:index],
         }
-        groups_users = {}
-        groups_users[''] = []
-        group_ids.each {|group_id|
-            groups_users[ group_id ] = []
-            Group.find(group_id).users.each {|user|
-                next if !agents[ user.id ]
-                groups_users[ group_id ].push user.id
-                if !users[user.id]
-                  users[user.id] = User.user_data_full(user.id)
-                end
-            }
-        }
+        results.push result
+      else
+
+        @client.log 'notify', "push overview_list for user #{ @user.id }"
 
         # send update to browser
-        client.send({
-          :data => {
-            User.to_app_model    => users,
-            Ticket.to_app_model  => tickets,
-          },
-          :event => [ 'loadAssets' ]
+        @client.send({
+          :data   => assets,
+          :event  => [ 'loadAssets' ]
         })
-        client.send({
+        @client.send({
           :data   => {
             :overview      => overview_data[:overview],
             :ticket_ids    => overview_data[:ticket_ids],
@@ -85,10 +114,12 @@ module Sessions::Backend::TicketOverviewList
             },
           },
           :event      => [ 'ticket_overview_rebuild' ],
-          :collection => 'ticket_overview_' + overview.link.to_s,
+          :collection => 'ticket_overview_' + item[:index].link.to_s,
         })
       end
     }
+    return results if !@client
+    nil
   end
 
 end

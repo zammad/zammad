@@ -1,38 +1,63 @@
-module Sessions::Backend::ActivityStream
+class Sessions::Backend::ActivityStream
 
-  def self.worker( user, worker )
-    cache_key = 'user_' + user.id.to_s + '_activity_stream'
-    if Sessions::CacheIn.expired(cache_key)
-      activity_stream = user.activity_stream( 20 )
-      activity_stream_cache = Sessions::CacheIn.get( cache_key, { :re_expire => true } )
-      worker.log 'notice', 'fetch activity_stream - ' + cache_key
-      if activity_stream != activity_stream_cache
-        worker.log 'notify', 'fetch activity_stream changed - ' + cache_key
-
-        activity_stream_full = user.activity_stream( 20, true )
-        Sessions::CacheIn.set( cache_key, activity_stream, { :expires_in => 0.75.minutes } )
-        Sessions::CacheIn.set( cache_key + '_push', activity_stream_full )
-      end
-    end
+  def initialize( user, client = nil, client_id = nil )
+    @user         = user
+    @client       = client
+    @client_id    = client_id
+    @last_change  = nil
   end
 
-  def self.push( user, client )
-    cache_key = 'user_' + user.id.to_s + '_activity_stream'
+  def load
 
-    activity_stream_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-    if activity_stream_time && client.last_change['activity_stream'] != activity_stream_time
-      client.last_change['activity_stream'] = activity_stream_time
-      activity_stream = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
-      client.log 'notify', "push activity_stream for user #{user.id}"
-
-      # send update to browser
-      r = Sessions::CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
-      client.send({
-        :event      => 'activity_stream_rebuild',
-        :collection => 'activity_stream', 
-        :data       => r,
-      })
+    # get whole collection
+    activity_stream = @user.activity_stream( 25 )
+    if activity_stream && !activity_stream.first
+      return
     end
+
+    if activity_stream && activity_stream.first && activity_stream.first['created_at'] == @last_change
+      return
+    end
+
+    # update last changed
+    if activity_stream && activity_stream.first
+       @last_change = activity_stream.first['created_at']
+    end
+
+    @user.activity_stream( 25, true )
+  end
+
+  def client_key
+    "as::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+  end
+
+  def push
+
+    # check timeout
+    timeout = Sessions::CacheIn.get( self.client_key )
+    return if timeout
+
+    # set new timeout
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 0.5.minutes } )
+
+    data = self.load
+
+    return if !data||data.empty?
+
+    if !@client
+      return {
+        :event      => 'activity_stream_rebuild',
+        :collection => 'activity_stream',
+        :data       => data,
+      }
+    end
+
+    @client.log 'notify', "push activity_stream #{ data.first.class.to_s } for user #{ @user.id }"
+    @client.send({
+      :event      => 'activity_stream_rebuild',
+      :collection => 'activity_stream',
+      :data       => data,
+    })
   end
 
 end

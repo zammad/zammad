@@ -1,41 +1,63 @@
 require 'rss'
-module Sessions::Backend::Rss
 
-  def self.worker( user, worker )
-    cache_key = 'user_' + user.id.to_s + '_rss'
-    if Sessions::CacheIn.expired(cache_key)
-      url = 'http://www.heise.de/newsticker/heise-atom.xml'
-      rss_items = Rss.fetch( url, 8 )
-      rss_items_cache = Sessions::CacheIn.get( cache_key, { :re_expire => true } )
-      worker.log 'notice', 'fetch rss - ' + cache_key
-      if rss_items != rss_items_cache
-        worker.log 'notify', 'fetch rss changed - ' + cache_key
-        Sessions::CacheIn.set( cache_key, rss_items, { :expires_in => 2.minutes } )
-        Sessions::CacheIn.set( cache_key + '_push', {
-          head:  'Heise ATOM',
-          items: rss_items,
-        })
-      end
-    end
+class Sessions::Backend::Rss
+
+  def initialize( user, client, client_id )
+    @user         = user
+    @client       = client
+    @client_id    = client_id
   end
 
-  def self.push( user, client )
-    cache_key = 'user_' + user.id.to_s + '_rss'
+  def collection_key
+    "rss::load::#{ self.class.to_s }::#{ @user.id }"
+  end
 
-    rss_items_time = Sessions::CacheIn.get_time( cache_key, { :ignore_expire => true } )
-    if rss_items_time && client.last_change['rss'] != rss_items_time
-      client.last_change['rss'] = rss_items_time
-      rss_items = Sessions::CacheIn.get( cache_key, { :ignore_expire => true } )
-      client.log 'notify', "push rss for user #{user.id}"
+  def load
 
-      # send update to browser
-      r = Sessions::CacheIn.get( cache_key + '_push', { :ignore_expire => true } )
-      client.send({
+    # check timeout
+    cache = Sessions::CacheIn.get( self.collection_key )
+    return cache if cache
+
+    url = 'http://www.heise.de/newsticker/heise-atom.xml'
+    rss_items = Rss.fetch( url, 8 )
+
+    # set new timeout
+    Sessions::CacheIn.set( self.collection_key, rss_items, { :expires_in => 1.hours } )
+
+    rss_items
+  end
+
+  def client_key
+    "rss::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+  end
+
+  def push
+
+    # check timeout
+    timeout = Sessions::CacheIn.get( self.client_key )
+    return if timeout
+
+    # set new timeout
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 5.minutes } )
+
+    data = self.load
+
+    return if !data||data.empty?
+
+    if !@client
+      return {
         :event      => 'rss_rebuild',
         :collection => 'dashboard_rss',
-        :data       => r,
-      })
+        :data       => data,
+      }
     end
+
+    @client.log 'notify', "push rss for user #{@user.id}"
+    @client.send({
+      :event      => 'rss_rebuild',
+      :collection => 'dashboard_rss',
+      :data       => data,
+    })
   end
 
 end

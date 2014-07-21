@@ -93,7 +93,7 @@ returns
     self.roles.each { |role|
       return role if role.name == role_name
     }
-    return false
+    false
   end
 
 =begin

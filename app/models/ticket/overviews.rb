@@ -31,6 +31,7 @@ returns
 
     # get agent overviews
     role = data[:current_user].is_role( 'Agent' )
+    return if !role
     Overview.where( :role_id => role.id, :active => true )
   end
 
@@ -56,6 +57,7 @@ returns
   def self.list (data)
 
     overviews = self.all(data)
+    return if !overviews
 
     # build up attributes hash
     overview_selected     = nil

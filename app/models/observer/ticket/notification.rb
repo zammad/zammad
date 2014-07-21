@@ -34,6 +34,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         next if !ticket
 
         article = ticket.articles[-1]
+        next if !article
       else
         raise "unknown object for notification #{event[:name]}"
       end
@@ -243,7 +244,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         :history_object         => 'Ticket',
         :value_from             => notification_subject,
         :value_to               => recipient_list,
-        :created_by_id          => article.created_by_id || 1
+        :created_by_id          => article.created_by_id || 1
       )
     end
   end
