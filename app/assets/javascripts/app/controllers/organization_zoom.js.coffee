@@ -1,4 +1,4 @@
-class App.UserZoom extends App.Controller
+class App.OrganizationZoom extends App.Controller
   constructor: (params) ->
     super
 
@@ -7,23 +7,23 @@ class App.UserZoom extends App.Controller
 
     @navupdate '#'
 
-    start = (user) =>
-      @user = user
+    start = (organization) =>
+      @organization = organization
       @render()
 
-    App.User.retrieve( @user_id, start, true )
+    App.Organization.retrieve( @organization_id, start, true )
 
   meta: =>
     meta =
       url: @url()
-      id:  @user_id
-    if @user
-      meta.head  = @user.displayName()
-      meta.title = @user.displayName()
+      id:  @organization_id
+    if @organization
+      meta.head  = @organization.displayName()
+      meta.title = @organization.displayName()
     meta
 
   url: =>
-    '#user/zoom/' + @user_id
+    '#organization/zoom/' + @organization_id
 
   activate: =>
     @navupdate '#'
@@ -41,23 +41,22 @@ class App.UserZoom extends App.Controller
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
 
-    @html App.view('user_zoom')(
-      user:  @user
+    @html App.view('organization_zoom')(
+      organization:  @organization
     )
 
     # start action controller
     new ActionRow(
-      el:   @el.find('.action')
-      user: @user
-      ui:   @
+      el:           @el.find('.action')
+      organization: @organization
+      ui:           @
     )
 
     new Widgets(
-      el:   @el.find('.widgets')
-      user: @user
-      ui:   @
+      el:           @el.find('.widgets')
+      organization: @organization
+      ui:           @
     )
-
 
 class Widgets extends App.Controller
   constructor: ->
@@ -66,15 +65,14 @@ class Widgets extends App.Controller
 
   render: ->
 
-    new App.WidgetUser(
-      el:      @el
-      user_id: @user.id
+    new App.WidgetOrganization(
+      el:               @el
+      organization_id:  @organization.id
     )
 
 class ActionRow extends App.Controller
   events:
     'click [data-type=history]':  'history_dialog'
-    'click [data-type=merge]':    'merge_dialog'
 
   constructor: ->
     super
@@ -85,16 +83,7 @@ class ActionRow extends App.Controller
 
   history_dialog: (e) ->
     e.preventDefault()
-    new App.UserHistory( user_id: @user.id )
-
-  merge_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketMerge( ticket: @ticket, task_key: @ui.task_key )
-
-  customer_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketCustomer( ticket: @ticket, ui: @ui )
-
+    new App.OrganizationHistory( organization_id: @organization.id )
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->
@@ -102,8 +91,8 @@ class Router extends App.ControllerPermanent
 
     # cleanup params
     clean_params =
-      user_id:  params.user_id
+      organization_id:  params.organization_id
 
-    App.TaskManager.add( 'User-' + @user_id, 'UserZoom', clean_params )
+    App.TaskManager.add( 'Organization-' + @organization_id, 'OrganizationZoom', clean_params )
 
-App.Config.set( 'user/zoom/:user_id', Router, 'Routes' )
+App.Config.set( 'organization/zoom/:organization_id', Router, 'Routes' )
