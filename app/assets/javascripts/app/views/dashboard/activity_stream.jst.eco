@@ -1,9 +1,15 @@
-<div class="span3">
-    <h2 class="can-move"><%- @T( @head ) %></h2>
-    <dl>
-    <% for item in @items: %>
-      <dt><span class="user-popover" data-id="<%= item.created_by_id %>">"<%= item.created_by.displayName() %>"</span></dt>
-      <dd><%- @T( item.type ) %> <a href="<%- item.link %>"><%= item.object_name %><% if item.title: %> (<%= item.title %>)<% end %></a> <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span> <%- @T('ago') %>.</dd>
-    <% end %>
-    </dl>
+<h2 class="can-move"><%- @T( @head ) %></h2>
+<% for item in @items: %>
+<div class="level-1 activity-entry horizontal">
+  <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/3510491848/156dbaec406561cb3e680dc3795b0f86.jpeg)"></div>
+  <div class="activity-body flex horizontal">
+    <div class="activity-message flex">
+      <span class="user-popover" data-id="<%= item.created_by_id %>"><%= item.created_by.displayName() %></span> <%- @T( item.type ) %> <a href="<%- item.link %>"><%= item.object_name %><% if item.title: %> (<%= item.title %>)<% end %></a>
+      <div class="activity-time humanTimeFromNow" data-time="<%- item.created_at %>">?</div>
+    </div>
+    <div class="activity-icon">
+      <span class="priority icon"></span>
+    </div>
+  </div>
 </div>
+<% end %>
