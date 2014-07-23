@@ -93,7 +93,12 @@
             <path d="M85.5,10 L48,10 L58,3 L95.5,3 L85.5,10 Z" id="Shape-copy" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
             <path d="M85.5,8 L48,8 L58,0 L95.5,0 L85.5,8 Z" id="Shape-copy" fill="#38AE6A" sketch:type="MSShapeGroup"></path>
         </g>
-        <path d="M6.9,309.9 L2,305 L6.9,300" id="Shape" stroke="#000000" stroke-width="2" sketch:type="MSShapeGroup"></path>
-        <path d="M9,300 L13.9,304.9 L9,309.9" id="Shape" stroke="#000000" stroke-width="2" sketch:type="MSShapeGroup"></path>
+        <path d="M6.9,309.9 L2,305 L6.9,300" id="left-arrow" stroke="#000000" stroke-width="2" sketch:type="MSShapeGroup"></path>
+        <path d="M9,300 L13.9,304.9 L9,309.9" id="right-arrow" stroke="#000000" stroke-width="2" sketch:type="MSShapeGroup"></path>
+        <path d="M16.5,299.5 L25.5,299.5 L25.5,308.5 L16.5,308.5 L16.5,299.5 Z" id="checkbox" stroke="#CBCBCB" sketch:type="MSShapeGroup"></path>
+        <g id="checkbox-checked" sketch:type="MSLayerGroup" transform="translate(26.000000, 300.000000)">
+            <path d="M0.5,-0.5 L9.5,-0.5 L9.5,8.5 L0.5,8.5 L0.5,-0.5 Z" id="checkbox" stroke="#000000" sketch:type="MSShapeGroup"></path>
+            <path d="M3.79999999,4.89999999 L2.09999999,3.39999999 L1.39999999,4.09999999 L4.29999999,7.59999999 C4.79999999,6.09999999 6.39999999,3.19999999 8.29999999,1.09999999 L8.09999999,0.499999993 C5.99999999,1.99999999 4.39999999,3.89999999 3.79999999,4.89999999 Z" id="Shape" fill="#1A1A1A" sketch:type="MSShapeGroup"></path>
+        </g>
     </g>
 </svg>

@@ -2,11 +2,17 @@
   <thead>
     <tr>
     <% if @checkbox: %>
-      <th style="width: 22px"><input type="checkbox" value="" name="bulk_all"/></th>
+      <th style="width: 40px" class="no-padding">
+        <label class="checkbox-replacement centered">
+          <input type="checkbox" value="" name="bulk_all"/>
+          <span class="white checkbox icon"></span>
+        </label>
+      </th>
     <% end %>
     <% if @radio: %>
       <th style="width: 22px"></th>
     <% end %>
+      <th style="width: 28px"></th>
 <% for item in @header: %>
       <th <% if item.style: %>style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
 <% end %>
@@ -38,10 +44,18 @@
   <%   end %>
   <% end %>
   <% position++ %>
-  <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
+  <tr class="item <% if object.active is false: %>not-active<% end %> level-1" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
-      <td><input type="checkbox" value="<%= object.id %>" name="bulk"/></td>
+      <td class="no-padding">
+        <label class="checkbox-replacement centered">
+          <input type="checkbox" value="<%= object.id %>" name="bulk"/>
+          <span class="checkbox icon"></span>
+        </label>
+      </td>
     <% end %>
+      <td class="status">
+        <span class="priority icon"></span>
+      </td>
     <% if @radio: %>
       <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
     <% end %>

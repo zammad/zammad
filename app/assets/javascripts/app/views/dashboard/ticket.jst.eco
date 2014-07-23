@@ -13,8 +13,8 @@
           <span class="left arrow icon"></span>
         </a>
       <% else: %>
-        <a class="inactive centered" href="#" data-id="<%= @start_page %>" data-type="page">
-          <span class="inactive left arrow icon"></span>
+        <a class="disabled centered" href="#" data-id="<%= @start_page %>" data-type="page">
+          <span class="disabled left arrow icon"></span>
         </a>
       <% end %>
       </li>
@@ -26,8 +26,8 @@
           <span class="right arrow icon"></span>
         </a>
       <% else: %>
-        <a class="centered" href="#" data-id="<%= @start_page %>" data-type="page">
-          <span class="right arrow icon"></span>
+        <a class="disabled centered" href="#" data-id="<%= @start_page %>" data-type="page">
+          <span class="disabled right arrow icon"></span>
         </a>
       </li>
       <% end %>

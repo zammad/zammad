@@ -44,8 +44,9 @@ table {
   white-space: nowrap;
 }
 
+.table > thead:first-child > tr:first-child > th,
 .table > thead > tr > th {
-  padding: 12px 9px 9px;
+  padding: 12px 9px 10px;
   border-bottom: none;
   border-top: 1px solid #ececec;
   background: #f0f1f2;
@@ -54,12 +55,40 @@ table {
   font-size: 12px;
   text-transform: uppercase;
 }
- 
-.table > thead > tr > td, 
-.table > tbody > tr > td, 
-.table > tfoot > tr > td {
-  padding: 9px;
-  border-top-color: #f2f2f2;
+
+.table > tbody > tr > td {
+  padding: 10px 9px 9px;
+  border: none;
+  box-shadow: 0 1px rgba(0,0,0,.02) inset;
+}
+
+.table > tbody > tr:first-child > td {
+  box-shadow: none;
+}
+
+.table-hover > tbody > tr:hover > td, 
+.table-hover > tbody > tr:hover > th {
+  background: rgba(0,8,14,.015);
+}
+
+.table > thead:first-child > tr:first-child > th.no-padding,
+.table > thead > tr > th.no-padding,
+.table > tbody > tr > td.no-padding {
+  padding: 0;
+}
+
+.table .checkbox-replacement {
+  padding: 0;
+  margin: 0;
+  height: 38px;
+}
+
+.table .checkbox-replacement input[type=checkbox] {
+  display: none;
+}
+
+.table .priority.icon:after {
+  background: #f8f9fa;
 }
 
 .table .table-cell {
@@ -540,7 +569,7 @@ label {
 }
 
 .page-header-title {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .page-header-meta {
@@ -1053,8 +1082,8 @@ ol.tabs li {
     opacity: .39;
   }
 
-  .inactive.left.arrow.icon,
-  .inactive.right.arrow.icon {
+  .disabled.left.arrow.icon,
+  .disabled.right.arrow.icon {
     opacity: .23;
   }
 
@@ -1064,6 +1093,22 @@ ol.tabs li {
 
   .right.arrow.icon {
     background-position: -8px -299px;
+  }
+
+  .checkbox.icon {
+    min-height: 0; /* overwriting bootstrap */
+    margin: 0; /* overwriting bootstrap */
+    width: 10px;
+    height: 10px;
+    background-position: -16px -299px;
+  }
+
+  .white.checkbox.icon {
+    background-color: white;
+  }
+
+  :checked + .checkbox.icon {
+    background-position: -26px -299px;
   }
 
 
