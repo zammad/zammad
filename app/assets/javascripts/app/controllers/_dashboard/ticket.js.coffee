@@ -71,12 +71,17 @@ class App.DashboardTicket extends App.Controller
     @overview      = data.overview
     @tickets_count = data.tickets_count
     @ticket_ids    = data.ticket_ids
-    per_page    = @overview.view.per_page || 10
+    per_page    = Math.min(@overview.view.per_page || 10, @tickets_count)
+    tickets_from = @start_page * per_page
+    tickets_till = Math.max(tickets_from + per_page-1, 0)
     pages_total =  parseInt( ( @tickets_count / per_page ) + 0.99999 ) || 1
     html = App.view('dashboard/ticket')(
-      overview:    @overview,
-      pages_total: pages_total,
-      start_page:  @start_page,
+      overview:      @overview,
+      pages_total:   pages_total,
+      start_page:    @start_page,
+      tickets_from:  tickets_from,
+      tickets_till:  tickets_till,
+      tickets_count: @tickets_count
     )
     html = $(html)
     html.find('li').removeClass('active')

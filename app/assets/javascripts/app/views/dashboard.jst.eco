@@ -116,7 +116,7 @@
     </div>
   </div>
 
-  <div class="container-fluid main-overviews" id="sortable">
+  <div class="main-overviews" id="sortable">
   </div>
 </div>
 <div class="activity sidebar">

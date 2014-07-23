@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="horizontal">
   <div class="page-header-title">
     <h1><%- @T( @overview.name ) %> <% if @edit: %><small><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a></small><% end %></h1>
   </div>
@@ -6,7 +6,7 @@
     <ul class="pagination">
     <% for item in @view_modes: %>
       <li class="<%= item.class %>">
-        <a href="#" data-type="viewmode" data-mode="<%= item.type %>"><%= item.name %></a>
+        <a class="centered" href="#" data-type="viewmode" data-mode="<%= item.type %>"><%= item.name %></a>
       </li>
     <% end %>
     </ul>

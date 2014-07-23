@@ -27,22 +27,47 @@ body {
 table {
   table-layout: fixed;
 }
-table th, table td {
+
+.table {
+  display: table;
+  color: #a9bcc4;
+}
+
+.table .table-row {
+  display: table-row;
+}
+
+.table th,
+.table td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.table {
-  display: table;
+
+.table > thead > tr > th {
+  padding: 12px 9px 9px;
+  border-bottom: none;
+  border-top: 1px solid #ececec;
+  background: #f0f1f2;
+  color: #444a4f;
+  font-weight: normal;
+  font-size: 12px;
+  text-transform: uppercase;
 }
-.table .table-row {
-  display: table-row;
+ 
+.table > thead > tr > td, 
+.table > tbody > tr > td, 
+.table > tfoot > tr > td {
+  padding: 9px;
+  border-top-color: #f2f2f2;
 }
-.table .table-cell{
+
+.table .table-cell {
   vertical-align: top;
   display: table-cell;
   border-bottom: 1px solid #eeeeee;
 }
+
 .hero-two {
   width: 100%;
 }
@@ -492,39 +517,35 @@ label {
 }
 
 
-/*
- * bootstrap changes
- */
-/* improve pagination if only one page is shown */
-.pagination li:only-child a {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-/* improved spacing */
-
-.pagination-count {
-  padding: 6px 6px;
-  float: left;
-  color: #999;
-  border: none;
-  line-height: 17px;
+.pagination {
+  margin: 0;
 }
 
-.page-header {
-  margin: 0 0 12px;
-  padding-bottom: 5px;
+.pagination > li > a, 
+.pagination > li > span {
+  padding: 0;
+  width: 31px;
+  height: 28px;
+  border-color: #ececec;
+}
+
+.pagination-counter {
+  margin-right: 19px;
+  line-height: 28px;
+  color: #9c9c9b;
+}
+
+.pagination-items-range {
+  color: #706f6f;
 }
 
 .page-header-title {
-  float: left;
+  margin-bottom: 20px;
 }
+
 .page-header-meta {
-  float: right;
-  padding-top: 20px;
-}
-.page-header .page-header-meta ul.pagination {
-  margin: 0;
+  margin-top: 18px;
+  margin-left: auto;
 }
 
 .dropdown-menu .count {
@@ -1023,6 +1044,26 @@ ol.tabs li {
 
   .stat-ticket.supergood-state {
     background-position: -257px -216px;
+  }
+
+  .left.arrow.icon,
+  .right.arrow.icon {
+    width: 8px;
+    height: 12px;
+    opacity: .39;
+  }
+
+  .inactive.left.arrow.icon,
+  .inactive.right.arrow.icon {
+    opacity: .23;
+  }
+
+  .left.arrow.icon {
+    background-position: 0 -299px;
+  }
+
+  .right.arrow.icon {
+    background-position: -8px -299px;
   }
 
 
@@ -1905,6 +1946,7 @@ footer {
 
 .stat-widgets {
   margin: 0 -7px;
+  display: none !important;
 }
 
   .stat-widget {
