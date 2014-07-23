@@ -16,6 +16,7 @@
 <% for item in @header: %>
       <th <% if item.style: %>style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
 <% end %>
+      <th style="width: 35px"></th>
 <% if @destroy: %>
       <th class="span2"><%- @T('Delete') %></th>
 <% end %>
@@ -103,6 +104,9 @@
       <% if item_clone.link: %></a><% end %>
       </td>
     <% end %>
+      <td class="channel">
+        <span class="gray facebook channel icon"></span>
+      </td>
     <% if @destroy: %>
       <td><a href="#" class="glyphicon glyphicon-trash" data-type="destroy"></a></td>
     <% end %>
