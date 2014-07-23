@@ -5,29 +5,27 @@
     </div>
     <div class="page-header-meta horizontal">
       <div class="pagination-counter">
-        <span class="pagination-items-range"><%- @tickets_from %>-<%- @tickets_till %></span> <%- @T("of") %> <span class="pagination-total-items"><%- @tickets_count %></span>
+        <span class="pagination-items-range"><%- @items_from %>-<%- @items_till %></span> <%- @T("of") %> <span class="pagination-total-items"><%- @items_total %></span>
       </div>
       <ul class="pagination">
         <li>
-        <% if @start_page != 1: %>
-          <a class="centered" href="#" data-id="<%= @start_page - 1 %>" data-type="page">
+        <% if @items_from != 1: %>
+          <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
             <span class="left arrow icon"></span>
           </a>
         <% else: %>
-          <a class="disabled centered" href="#" data-id="<%= @start_page %>" data-type="page">
+          <a class="disabled centered" href="#" data-from="" data-type="page">
             <span class="disabled left arrow icon"></span>
           </a>
         <% end %>
         </li>
-        <% for item in [1..@pages_total]: %>
-        <% end %>
         <li>
-        <% if @start_page != @pages_total: %>
-          <a class="centered" href="#" data-id="<%= @start_page + 1 %>" data-type="page">
+        <% if @items_till != @items_total: %>
+          <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
             <span class="right arrow icon"></span>
           </a>
         <% else: %>
-          <a class="disabled centered" href="#" data-id="<%= @start_page %>" data-type="page">
+          <a class="disabled centered" href="#" data-from="" data-type="page">
             <span class="disabled right arrow icon"></span>
           </a>
         </li>

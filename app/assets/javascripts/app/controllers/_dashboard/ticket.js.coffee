@@ -5,7 +5,7 @@ class App.DashboardTicket extends App.Controller
 
   constructor: ->
     super
-    @start_page = 1
+    @item_from = 1
 
     # set new key
     @key = 'ticket_overview_' + @view
@@ -71,30 +71,29 @@ class App.DashboardTicket extends App.Controller
     @overview      = data.overview
     @tickets_count = data.tickets_count
     @ticket_ids    = data.ticket_ids
-    per_page    = Math.min(@overview.view.per_page || 10, @tickets_count)
-    tickets_from = @start_page * per_page
-    tickets_till = Math.max(tickets_from + per_page-1, 0)
-    pages_total =  parseInt( ( @tickets_count / per_page ) + 0.99999 ) || 1
+    items_total    = @tickets_count
+    items_per_page = Math.min(@overview.view.per_page || 10, @tickets_count)
+    items_from     = @item_from
+    items_till     = items_from-1 + items_per_page
+    if items_till > items_total
+      items_till = items_total
     html = App.view('dashboard/ticket')(
-      overview:      @overview,
-      pages_total:   pages_total,
-      start_page:    @start_page,
-      tickets_from:  tickets_from,
-      tickets_till:  tickets_till,
-      tickets_count: @tickets_count
+      overview:       @overview
+      items_per_page: items_per_page
+      items_from:     items_from
+      items_till:     items_till
+      items_total:    items_total
     )
     html = $(html)
     html.find('li').removeClass('active')
     html.find(".page [data-id=\"#{@start_page}\"]").parents('li').addClass('active')
 
     @tickets_in_table = []
-    start = ( @start_page-1 ) * 5
-    end = ( @start_page ) * 5
-    i = start
-    while i < end
+    i = items_from - 1
+    while i < items_till
+      if @ticket_ids[ i ]
+        @tickets_in_table.push App.Ticket.retrieve( @ticket_ids[ i ] )
       i = i + 1
-      if @ticket_ids[ i - 1 ]
-        @tickets_in_table.push App.Ticket.retrieve( @ticket_ids[ i - 1 ] )
 
     openTicket = (id,e) =>
       ticket = App.Ticket.retrieve(id)
@@ -183,7 +182,8 @@ class App.DashboardTicket extends App.Controller
 
   page: (e) =>
     e.preventDefault()
-    id = $(e.target).data('id')
-    @start_page = id
+    @item_from = $(e.target).data('from')
+    if !@item_from
+      @item_from = $(e.target).parent().data('from')
+    return if !@item_from
     @fetch()
-
