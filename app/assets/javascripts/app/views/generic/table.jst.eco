@@ -12,7 +12,6 @@
     <% if @radio: %>
       <th style="width: 22px"></th>
     <% end %>
-      <th style="width: 28px"></th>
 <% for item in @header: %>
       <th <% if item.style: %>style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
 <% end %>
@@ -44,7 +43,7 @@
   <%   end %>
   <% end %>
   <% position++ %>
-  <tr class="item <% if object.active is false: %>not-active<% end %> level-1" data-id="<%= object.id %>" data-position="<%= position %>" >
+  <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
       <td class="no-padding">
         <label class="checkbox-replacement centered">
@@ -53,9 +52,6 @@
         </label>
       </td>
     <% end %>
-      <td class="status">
-        <span class="priority icon"></span>
-      </td>
     <% if @radio: %>
       <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
     <% end %>
