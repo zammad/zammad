@@ -877,7 +877,8 @@ ol.tabs li {
     background-position: 0 -115px;
   }
 
-  .icon-switch:hover .organisation.icon {
+  .icon-switch:hover .organisation.icon,
+  .task.active .organisation.icon {
     background-position: 0 -128px;
   }
 
@@ -887,7 +888,8 @@ ol.tabs li {
     background-position: -14px -115px;
   }
 
-  .icon-switch:hover .user.icon {
+  .icon-switch:hover .user.icon,
+  .task.active .user.icon {
     background-position: -14px -128px;
   }
 
@@ -1406,7 +1408,7 @@ footer {
     border-bottom: 1px solid rgba(240, 250, 255, .05);
   }
 
-  .navbar-nav > li.active a {
+  .navigation .nav > li.active > a {
     background: #389ed9;
   }
 
@@ -1467,6 +1469,10 @@ footer {
 
   .task:hover {
     background: #26272e;
+  }
+
+  .task.active {
+    background: #389ed9;
   }
 
   .task.active .name {
