@@ -168,4 +168,24 @@ Test:
     return if deny_if_not_role('Agent')
     model_destory_render(Organization, params)
   end
+
+  # GET /api/v1/organizations/history/1
+  def history
+
+    # permissin check
+    if !is_role('Admin') && !is_role('Agent')
+      response_access_deny
+      return
+    end
+
+    # get organization data
+    organization = Organization.find( params[:id] )
+
+    # get history of organization
+    history = organization.history_get(true)
+
+    # return result
+    render :json => history
+  end
+
 end

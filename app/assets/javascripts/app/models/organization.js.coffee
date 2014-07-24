@@ -17,6 +17,9 @@ class App.Organization extends App.Model
   uiUrl: ->
     '#organization/zoom/' + @id
 
+  icon: (user) ->
+    "organisation icon"
+
   @_fillUp: (data) ->
 
     # addd users of organization

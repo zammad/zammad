@@ -15,13 +15,11 @@ class App.UserZoom extends App.Controller
     meta =
       url: @url()
       id:  @user_id
-      class: ""
-      iconClass: @user.icon()
-
 
     if @user
-      meta.head  = @user.displayName()
-      meta.title = @user.displayName()
+      meta.head       = @user.displayName()
+      meta.title      = @user.displayName()
+      meta.iconClass  = @user.icon()
     meta
 
   url: =>
@@ -68,10 +66,8 @@ class Widgets extends App.Controller
 
   render: ->
 
-    @html App.view('user_zoom/widgets')()
-
     new App.WidgetUser(
-      el:      @el.find('.user_info')
+      el:      @el
       user_id: @user.id
     )
 
