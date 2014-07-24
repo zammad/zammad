@@ -16,7 +16,7 @@ class App.UserZoom extends App.Controller
       url: @url()
       id:  @user_id
       class: ""
-      iconClass: "user"
+      iconClass: @user.icon()
 
 
     if @user
