@@ -112,22 +112,20 @@ class App.DashboardTicket extends App.Controller
       attribute.data =
         id: refObject.id
       value
-    callbackPriorityIconHeader = (header) ->
+    callbackIconHeader = (header) ->
       attribute =
-        name:       'priority_icon'
+        name:       'icon'
         display:    ''
         translation: false
         style:      'width: 28px'
       header.unshift(0)
       header[0] = attribute
       header
-    callbackPriorityIcon = (value, object, attribute, header, refObject) ->
+    callbackIcon = (value, object, attribute, header, refObject) ->
       value = ' '
-      attribute.class  = 'priority icon'
-      if object && object.priority_id
-        attribute.class += " level-#{object.priority_id}"
+      attribute.class  = object.icon()
       attribute.link   = ''
-      attribute.title  = App.i18n.translateInline( object.priority.displayName() )
+      attribute.title  = App.i18n.translateInline( object.iconTitle() )
       value
 
     new App.ControllerTable(
@@ -137,13 +135,13 @@ class App.DashboardTicket extends App.Controller
       objects:           @tickets_in_table,
       checkbox:          false
       groupBy:           @overview.group_by
-      callbackHeader:    callbackPriorityIconHeader
+      callbackHeader:    callbackIconHeader
       bindRow:
         events:
           'click': openTicket
       callbackAttributes:
-        priority_icon:
-          [ callbackPriorityIcon ]
+        icon:
+          [ callbackIcon ]
         customer_id:
           [ callbackResetLink, callbackUserPopover ]
         owner_id:

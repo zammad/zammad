@@ -203,22 +203,20 @@ class Table extends App.ControllerContent
           @el.find('.bulk-action').addClass('hide')
         else
           @el.find('.bulk-action').removeClass('hide')
-      callbackPriorityIconHeader = (header) ->
+      callbackIconHeader = (header) ->
         attribute =
-          name:       'priority_icon'
+          name:       'icon'
           display:    ''
           translation: false
           style:      'width: 28px'
         header.unshift(0)
         header[0] = attribute
         header
-      callbackPriorityIcon = (value, object, attribute, header, refObject) ->
+      callbackIcon = (value, object, attribute, header, refObject) ->
         value = ' '
-        attribute.class  = 'priority icon'
-        if object && object.priority_id
-          attribute.class += " level-#{object.priority_id}"
+        attribute.class  = object.icon()
         attribute.link   = ''
-        attribute.title  = App.i18n.translateInline( object.priority.displayName() )
+        attribute.title  = App.i18n.translateInline( object.iconTitle() )
         value
 
       new App.ControllerTable(
@@ -235,10 +233,10 @@ class Table extends App.ControllerContent
         #  customer_id:
         #    events:
         #      'mouseover': popOver
-        callbackHeader:    callbackPriorityIconHeader
+        callbackHeader:    callbackIconHeader
         callbackAttributes:
-          priority_icon:
-            [ callbackPriorityIcon ]
+          icon:
+            [ callbackIcon ]
           customer_id:
             [ callbackUserPopover ]
           owner_id:

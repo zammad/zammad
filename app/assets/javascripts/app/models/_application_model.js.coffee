@@ -59,6 +59,15 @@ class App.Model extends Spine.Model
       return name
     return '???'
 
+  icon: (user) ->
+    ''
+
+  iconTitle: (user) ->
+    ''
+
+  iconActivity: (user) ->
+    ''
+
   @validate: ( data = {} ) ->
     return if !data['model'].configure_attributes
 

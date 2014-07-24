@@ -32,3 +32,9 @@ class App.TicketArticle extends App.Model
     if ticket
       return ticket.title
     '???'
+
+  iconActivity: (user) ->
+    ticket = App.Ticket.find(@ticket_id)
+    if ticket.owner_id == user.id
+      return 'user'
+    'group'

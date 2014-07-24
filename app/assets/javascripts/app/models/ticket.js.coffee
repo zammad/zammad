@@ -26,3 +26,14 @@ class App.Ticket extends App.Model
 
   uiUrl: ->
     '#ticket/zoom/' + @id
+
+  icon: (user) ->
+    "priority icon level-#{ @priority_id }"
+
+  iconTitle: (user) ->
+    App.TicketPriority.find( @priority_id ).displayName()
+
+  iconActivity: (user) ->
+    if @owner_id == user.id
+      return 'user'
+    'group'
