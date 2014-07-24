@@ -48,7 +48,7 @@
         <a class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @T( item.name ) %>">
           <span class="dropdown-nose"></span>
           <% if item.class is 'user': %>
-            <span class="user avatar" style="background-image: url(https://pbs.twimg.com/profile_images/3510491848/156dbaec406561cb3e680dc3795b0f86.jpeg)"></span>
+            <span class="user avatar" style="background-image: url(<%- item.image %>)"></span>
           <% else: %>
             <span class="green plus icon"></span>
             <span class="white plus icon"></span>

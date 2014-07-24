@@ -4,6 +4,7 @@ App.Config.set( 'User', {
   callback: ->
     item = {}
     item['name'] = App.Session.get( 'login' )
+    item['image'] = App.Session.get( 'image' )
     return item
   target: '#current_user',
   class:  'user'

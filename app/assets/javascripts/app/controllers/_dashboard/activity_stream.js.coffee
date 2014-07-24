@@ -54,7 +54,7 @@ class App.DashboardActivityStream extends App.Controller
         item.title       = object.displayName()
         item.object_name = object.objectDisplayName()
 
-      item.created_by = App.User.find( item.created_by_id )
+      item.created_by = App.User.retrieve( item.created_by_id )
 
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',

@@ -1,7 +1,7 @@
 <h2 class="can-move"><%- @T( @head ) %></h2>
 <% for item in @items: %>
 <div class="level-1 activity-entry horizontal">
-  <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/3510491848/156dbaec406561cb3e680dc3795b0f86.jpeg)"></div>
+  <div class="avatar" style="background-image: url(<%- item.created_by.image %>)"></div>
   <div class="activity-body flex horizontal">
     <div class="activity-message flex">
       <span class="user-popover" data-id="<%= item.created_by_id %>"><%= item.created_by.displayName() %></span> <%- @T( item.type ) %> <a href="<%- item.link %>"><%= item.object_name %><% if item.title: %> (<%= item.title %>)<% end %></a>
