@@ -1,5 +1,5 @@
 <div>
-  <div class="page-header horizontal">
+  <div class="horizontal">
     <div class="page-header-title">
       <h2 class="can-move"><%- @T( @overview.name ) %> <small><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a></small></h2>
     </div>
