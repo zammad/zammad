@@ -11,7 +11,7 @@
 </div>
 <div class="main flex">
 
-  <div class="page-header">
+  <div class="page-header horizontal">
     <h1><%- @T( @page.head ) %> <small><%- @T( @page.sub_head ) %></small></h1>
   </div>
   <div class="nav-tab-content"></div>

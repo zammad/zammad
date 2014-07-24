@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="page-header horizontal">
   <div class="page-header-title">
     <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
   </div>
@@ -41,7 +41,7 @@
 <!--
   </div>
 -->
-  <div class="span9 table-overview"></div>
+  <div class="table-overview"></div>
 
 <!--
 </div>
