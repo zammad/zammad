@@ -65,6 +65,7 @@ class App.TicketCreate extends App.Controller
       head:  text
       title: text
       id:    @type
+      iconClass: 'pen'
 
   url: =>
     '#ticket/create/' + @type + '/id/' + @id
