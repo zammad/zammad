@@ -576,8 +576,12 @@ label {
   margin-bottom: 15px;
 }
 
+.page-header-title h2 {
+  margin-top: 10px;
+}
+
 .page-header-meta {
-  margin-top: 18px;
+  margin-top: 5px;
   margin-left: auto;
 }
 
@@ -990,7 +994,7 @@ ol.tabs li {
   }
 
   .twitter.channel.icon {
-    background-position: -68px -141px;
+    background-position: -67px -141px;
   }
 
   .gray.email.channel.icon {
@@ -1913,11 +1917,17 @@ footer {
 }
 
 .sidebar {
-  width: 270px;
-  padding: 1px 20px 20px;
+  width: 32%;
+  max-width: 353px;
+  padding: 20px;
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
+}
+
+.NavBarAdmin.sidebar {
+  padding-top: 1px;
+  width: 270px;
 }
 
   .nav-stacked > li + li {
@@ -1959,6 +1969,29 @@ footer {
     padding-right: 10px;
     margin-left: -10px;
     margin-right: -10px;
+  }
+
+  .sidebar:not(.NavBarAdmin) .nav-pills > li:first-child > a {
+    border-top: none;
+  }
+
+  .badge {
+    padding: 0;
+    font-size: inherit;
+    font-weight: normal;
+    color: #d0d2d3;
+    background: none;
+    border-radius: 0;
+  }
+
+  .nav-pills > li > a > .badge {
+    margin-left: auto;
+  }
+
+  a.list-group-item.active > .badge, 
+  .nav-pills > .active > a > .badge {
+    color: #96969b;
+    background: none;
   }
 
 .main {
@@ -2038,7 +2071,7 @@ footer {
   }
 
 .stat-widgets {
-  margin: 0 -7px;
+  margin: 0 -7px 20px;
 }
 
   .stat-widget {
