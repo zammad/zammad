@@ -35,5 +35,5 @@ class App.Ticket extends App.Model
 
   iconActivity: (user) ->
     if @owner_id == user.id
-      return 'user'
-    'group'
+      return 'important'
+    ''

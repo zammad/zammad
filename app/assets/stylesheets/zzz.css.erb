@@ -971,6 +971,25 @@ ol.tabs li {
     background-position: -42px -128px;
   }
 
+ .important.icon {
+    height: 13px;
+    width: 14px;
+    background-position: -56px -115px;
+  }
+  .icon-switch:hover .important.icon,
+  .task.active .important.icon {
+    background-position: -56px -128px;
+  }
+
+  .tools.icon {
+    height: 13px;
+    width: 14px;
+    background-position: -70px -115px;
+  }
+  .icon-switch:hover .tools.icon,
+  .task.active .tools.icon {
+    background-position: -70px -128px;
+  }
 
   .channel.icon {
     width: 17px;
@@ -1284,6 +1303,10 @@ footer {
     margin-bottom: 5px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .customer_info {
 }
 
@@ -1549,6 +1572,8 @@ footer {
 
   li.dashboard a:before,
   li.overviews a:before,
+  li.message a:before,
+  li.tools a:before,
   li.customers a:before {
     content: '';
     width: 24px;
@@ -1566,6 +1591,14 @@ footer {
 
   li.customers a:before {
     background-position: -48px 0;
+  }
+
+  li.message a:before {
+    background-position: -72px 0;
+  }
+
+  li.tools a:before {
+    background-position: -96px 0;
   }
 
 .tasks {

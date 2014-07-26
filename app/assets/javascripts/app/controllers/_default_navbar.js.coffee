@@ -14,4 +14,4 @@ App.Config.set( 'User', {
 App.Config.set( 'Admin', { prio: 9000, parent: '', name: 'Admin', target: '#manage', role: ['Admin'] }, 'NavBarRight' )
 App.Config.set( 'New', { prio: 20000, parent: '', name: 'New', target: '#new', class: 'add' }, 'NavBarRight' )
 
-App.Config.set( 'Misc', { prio: 90000, parent: '', name: 'Tools', target: '#tools', child: true }, 'NavBar' )
+App.Config.set( 'Misc', { prio: 90000, parent: '', name: 'Tools', target: '#tools', child: true, class: 'tools' }, 'NavBar' )
