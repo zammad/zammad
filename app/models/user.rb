@@ -487,6 +487,48 @@ returns
     self.save
   end
 
+=begin
+
+get image of user
+
+  user = User.find(123)
+  result = user.get_image
+
+returns
+
+  result = {
+    :filename     => 'some filename',
+    :content_type => 'image/png',
+    :content      => bin_string,
+  }
+
+=end
+
+  def get_image
+
+    # find file
+    list = Store.list( :object => 'User::Image', :o_id => self.id )
+      puts list.inspect
+    if list && list[0]
+      file = Store.find( list[0] )
+      result = {
+        :content      => file.content,
+        :filename     => file.filename,
+        :content_type => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+      }
+      return result
+    end
+
+    # serve defalt image
+    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
+    result = {
+      :content      => Base64.decode64(image),
+      :filename     => 'image.gif',
+      :content_type => 'image/gif',
+    }
+    return result
+  end
+
   private
 
   def check_name
@@ -552,6 +594,7 @@ returns
       if self.email
         hash = Digest::MD5.hexdigest(self.email)
         self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
+        #puts "#{self.email}: http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
       end
     end
   end
@@ -566,20 +609,20 @@ returns
     if !response.success?
       self.update_column( :image, 'none' )
       self.cache_delete
-      #puts "WARNING: Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
+      #puts "WARNING: Can't fetch '#{self.image_source}' (maybe no avatar available), http code: #{response.code.to_s}"
       #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
       return
     end
+    #puts "NOTICE: Fetch '#{self.image_source}', http code: #{response.code.to_s}"
 
     # store image local
     hash = Digest::MD5.hexdigest( response.body )
 
     # check if image has changed
     return if self.image == hash
-
+    #puts "NOTICE: update image in store"
     # save new image
     self.update_column( :image, hash )
-    self.cache_delete
     Store.remove( :object => 'User::Image', :o_id => self.id )
     Store.add(
       :object      => 'User::Image',
@@ -591,6 +634,7 @@ returns
       },
       :created_by_id => self.updated_by_id,
     )
+    self.cache_delete
   end
 
   def check_password
