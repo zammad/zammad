@@ -1700,7 +1700,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Close time", :tar
 Translation.create_if_not_exists( :locale => 'de', :source => "First response", :target => "Erste Reaktion" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Ticket %s created!", :target => "Ticket %s erstellt!" )
 Translation.create_if_not_exists( :locale => 'de', :source => "day", :target => "Tag" )
-Translation.create_if_not_exists( :locale => 'de', :source => "days", :target => "Tage" )
+Translation.create_if_not_exists( :locale => 'de', :source => "days", :target => "Tagen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "hour", :target => "Stunde" )
 Translation.create_if_not_exists( :locale => 'de', :source => "hours", :target => "Stunden" )
 Translation.create_if_not_exists( :locale => 'de', :source => "minute", :target => "Minute" )
@@ -1864,6 +1864,8 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Here you can crea
 Translation.create_if_not_exists( :locale => 'de', :source => "Fold in", :target => "Einklappen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "from", :target => "von" )
 Translation.create_if_not_exists( :locale => 'de', :source => "to", :target => "nach" )
+Translation.create_if_not_exists( :locale => 'de', :source => "%s ago", :target => "vor %s" )
+Translation.create_if_not_exists( :locale => 'de', :source => "in %s", :target => "in %s" )
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "" )
 
 # install all packages in auto_install

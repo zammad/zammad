@@ -9,6 +9,13 @@ class TestsController < ApplicationController
     end
   end
 
+  # GET /tests/ui
+  def ui
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+
   # GET /tests/from
   def form
     respond_to do |format|

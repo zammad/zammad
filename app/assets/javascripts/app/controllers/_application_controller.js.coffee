@@ -151,32 +151,6 @@ class App.Controller extends Spine.Controller
   formValidate: (data) ->
     App.ControllerForm.validate(data)
 
-  ticketTableAttributes: (attributes) =>
-    all_attributes = [
-      { name: 'number',                 type: 'link', title: 'title', dataType: 'edit' },
-      { name: 'title',                  type: 'link', title: 'title', dataType: 'edit' },
-      { name: 'customer',               class: 'user-popover', data: { id: true } },
-      { name: 'state',                  translate: true, title: true },
-      { name: 'priority',               translate: true, title: true },
-      { name: 'group',                  title: 'group' },
-      { name: 'owner',                  class: 'user-popover', data: { id: true } },
-      { name: 'created_at',             callback: @frontendTime },
-      { name: 'last_contact',           callback: @frontendTime },
-      { name: 'last_contact_agent',     callback: @frontendTime },
-      { name: 'last_contact_customer',  callback: @frontendTime },
-      { name: 'first_response',         callback: @frontendTime },
-      { name: 'close_time',             callback: @frontendTime },
-      { name: 'escalation_time',        callback: @frontendTime, subclass: 'escalation' },
-      { name: 'article_count',          },
-    ]
-    shown_all_attributes = []
-    for all_attribute in all_attributes
-      for attribute in attributes
-        if all_attribute['name'] is attribute
-          shown_all_attributes.push all_attribute
-          break
-    return shown_all_attributes
-
 #  redirectToLogin: (data) ->
 #
 
@@ -188,66 +162,11 @@ class App.Controller extends Spine.Controller
       size = Math.round( size / 1024 ) + ' KBytes'
     else
       size = size + ' Bytes'
-    return size
+    size
 
   # human readable time
-  humanTime: ( time, escalation ) =>
-    current = new Date()
-    created = new Date(time)
-    string = ''
-    diff = ( current - created ) / 1000
-    escalated = ''
-    if escalation
-      if diff > 0
-        escalated = '-'
-      if diff >= 0
-        style = "class=\"label label-danger\""
-      else if diff > -60 * 60
-        style = "class=\"label label-warning\""
-      else
-        style = "class=\"label label-success\""
-
-    if diff.toString().match('-')
-      diff = diff.toString().replace('-', '')
-      diff = parseFloat(diff)
-
-    if diff >= 86400
-      unit = Math.floor( ( diff / 86400 ) )
-#      if unit > 1
-#        return unit + ' ' + App.i18n.translateContent('days')
-#      else
-#        return unit + ' ' + App.i18n.translateContent('day')
-      string = unit + ' ' + App.i18n.translateInline('d')
-    if diff >= 3600
-      unit = Math.floor( ( diff / 3600 ) % 24 )
-#      if unit > 1
-#        return unit + ' ' + App.i18n.translateContent('hours')
-#      else
-#        return unit + ' ' + App.i18n.translateContent('hour')
-      if string isnt ''
-        string = string + ' ' + unit + ' ' + App.i18n.translateInline('h')
-        if escalation
-          string = "<span #{style}>#{escalated}#{string}</b>"
-        return string
-      else
-        string = unit + ' ' + App.i18n.translateInline('h')
-    if diff <= 86400
-      unit = Math.floor( ( diff / 60 ) % 60 )
-#      if unit > 1
-#        return unit + ' ' + App.i18n.translateContent('minutes')
-#      else
-#        return unit + ' ' + App.i18n.translateContent('minute')
-      if string isnt ''
-        string = string + ' ' + unit + ' ' + App.i18n.translateInline('m')
-        if escalation
-          string = "<span #{style}>#{escalated}#{string}</b>"
-        return string
-      else
-        string = unit + ' ' + App.i18n.translateInline('m')
-
-    if escalation
-      string = "<span #{style}>#{escalated}#{string}</b>"
-    return string
+  humanTime: ( time, escalation, long = true ) =>
+    App.PrettyDate.humanTime( time, escalation, long )
 
   userInfo: (data) =>
     el = data.el || $('[data-id="customer_info"]')
