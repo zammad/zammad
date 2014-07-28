@@ -987,7 +987,7 @@ class App.ControllerForm extends App.Controller
             remove:     true
           }
         itemSub = @formGenItem( attribute_config )
-        itemSub.find('.icon-minus').bind('click', (e) ->
+        itemSub.find('.glyphicon-minus').bind('click', (e) ->
           e.preventDefault()
           $(@).parent().parent().parent().remove()
         )
@@ -1016,18 +1016,18 @@ class App.ControllerForm extends App.Controller
             selected: false
             disable:  true
           },
-#          {
-#            value:    'tickets.number'
-#            name:     'Number'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.title'
-#            name:     'Title'
-#            selected: true
-#            disable:  false
-#          },
+          {
+            value:    'tickets.number'
+            name:     'Number'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.title'
+            name:     'Title'
+            selected: true
+            disable:  false
+          },
           {
             value:    'tickets.group_id'
             name:     'Group'
@@ -1217,7 +1217,7 @@ class App.ControllerForm extends App.Controller
       }
       list = @formGenItem( attribute_config )
 
-      list.find('.icon-plus').bind('click', (e) ->
+      list.find('.glyphicon-plus').bind('click', (e) ->
         e.preventDefault()
 
         value = $(e.target).parents().find('[name=ticket_attribute_list]').val()
