@@ -10,6 +10,7 @@ class System extends App.ControllerTabs
   #    { name: 'Log',      'target': 'log',       controller: App.SettingsSystem, params: { area: 'System::Log' } },
       { name: 'Storage',      'target': 'storage',  controller: App.SettingsArea, params: { area: 'System::Storage' } },
       { name: 'Geo Services', 'target': 'geo',      controller: App.SettingsArea, params: { area: 'System::Geo' } },
+      { name: 'Frontend',     'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } },
     ]
 
     # render page

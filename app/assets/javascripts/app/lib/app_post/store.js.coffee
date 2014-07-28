@@ -46,6 +46,7 @@ class _storeSingleton
   write: (key, value) ->
     @store[key] = value
     return if !@support
+    return if !App.Config.get('ui_client_storage')
     try
       sessionStorage.setItem( key, JSON.stringify( value ) )
     catch e
@@ -56,6 +57,7 @@ class _storeSingleton
   # get item
   get: (key) ->
     return @store[key] if !@support
+    return @store[key] if !App.Config.get('ui_client_storage')
     value = sessionStorage.getItem( key )
     return if !value
     object = JSON.parse( value )
@@ -65,6 +67,7 @@ class _storeSingleton
   delete: (key) ->
     delete @store[key]
     return if !@support
+    return if !App.Config.get('ui_client_storage')
     sessionStorage.removeItem( key )
 
   # clear local storage
@@ -75,7 +78,7 @@ class _storeSingleton
   # return list of all keys
   list: ->
     list = []
-    if !@support
+    if !@support || !App.Config.get('ui_client_storage')
       for key of @store
         list.push key
       return list

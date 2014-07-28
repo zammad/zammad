@@ -89,8 +89,8 @@ class _trackSingleton
         return
     )
 
-
   log: ( area, level, args ) ->
+    return if !App.Config.get('ui_send_client_stats')
     info =
       time:     Math.round( new Date().getTime() / 1000 )
       area:     area
@@ -100,10 +100,11 @@ class _trackSingleton
     @data.push info
 
   send: (async = true) =>
+    return if !App.Config.get('ui_send_client_stats')
     return if _.isEmpty @data
     newData = _.clone( @data )
     @data = []
-    newDataNew = [] 
+    newDataNew = []
     for item in newData
       try
         itemNew = _.clone( item )
