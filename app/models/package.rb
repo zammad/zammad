@@ -317,7 +317,7 @@ class Package < ApplicationModel
           rescue => e
             puts "TRIED TO RELOAD '#{entry}'"
             puts 'ERROR: ' + e.inspect
-            puts 'Traceback: ' + e.backtrace
+            puts 'Traceback: ' + e.backtrace.inspect
           end
         end
       }
