@@ -311,7 +311,6 @@ class App.ControllerNavSidbar extends App.ControllerContent
 
       group.items = _.sortBy( itemsUnsorted, (item) -> return item.prio )
 
-
     # set active item
     selectedItem = undefined
     for group in @groupsSorted
@@ -328,11 +327,6 @@ class App.ControllerNavSidbar extends App.ControllerContent
 
     @render(selectedItem)
 
-    if selectedItem
-      new selectedItem.controller(
-        el: @el.find('.main')
-      )
-
     @bind(
       'ui:rerender'
       =>
@@ -348,6 +342,10 @@ class App.ControllerNavSidbar extends App.ControllerContent
     if selectedItem
       @el.find('li').removeClass('active')
       @el.find('a[href="' + selectedItem.target + '"]').parent().addClass('active')
+
+      new selectedItem.controller(
+        el: @el.find('.main')
+      )
 
 class App.GenericHistory extends App.ControllerModal
   events:

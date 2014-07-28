@@ -10,11 +10,11 @@ class App.SettingsArea extends App.Controller
 
   render: =>
     settings = App.Setting.all()
-    
+
     html = $('<div></div>')
     for setting in settings
       if setting.area is @area
-        item = new App.SettingsAreaItem( setting: setting ) 
+        item = new App.SettingsAreaItem( setting: setting )
         html.append( item.el )
 
     @html html
@@ -67,10 +67,12 @@ class App.SettingsAreaItem extends App.Controller
       state = {
         value: params
       }
+      #App.Config.set((@setting.name, params)
     else
       state = {
         value: directData
       }
+      #App.Config.set(@setting.name, directData)
 
     @setting['state'] = state
     ui = @
@@ -83,6 +85,7 @@ class App.SettingsAreaItem extends App.Controller
           timeout: 1500
         }
         ui.render()
+        #App.Event.trigger( 'ui:rerender' )
         # login check
-#        App.Auth.loginCheck()
+        App.Auth.loginCheck()
     )
