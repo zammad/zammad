@@ -12,7 +12,7 @@ class Index extends App.ControllerContent
     @Session.init()
     App.Event.trigger( 'ui:rerender' )
 
-    # redirect to login 
+    # redirect to login
     redirect = =>
       @navigate 'login'
     @delay redirect, 150
