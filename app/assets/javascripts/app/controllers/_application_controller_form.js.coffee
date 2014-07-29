@@ -1016,18 +1016,19 @@ class App.ControllerForm extends App.Controller
             selected: false
             disable:  true
           },
-          {
-            value:    'tickets.number'
-            name:     'Number'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.title'
-            name:     'Title'
-            selected: true
-            disable:  false
-          },
+          #
+          #{
+          #  value:    'tickets.number'
+          #  name:     'Number'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.title'
+          #  name:     'Title'
+          #  selected: true
+          #  disable:  false
+          #},
           {
             value:    'tickets.group_id'
             name:     'Group'
@@ -1052,68 +1053,55 @@ class App.ControllerForm extends App.Controller
             selected: true
             disable:  false
           },
-          {
-            value:    'tickets.customer_id'
-            name:     'Customer'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.organization_id'
-            name:     'Organization'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.created_at::<>'
-            name:     'Created (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.created_at::><'
-            name:     'Created (between)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.close_time::<>'
-            name:     'Closed (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.close_time::><'
-            name:     'Closed (between)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.updated_at::<>'
-            name:     'Updated (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.updated_at::><'
-            name:     'Updated (between)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.escalation_time::<>'
-            name:     'Escalation (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.escalation_time::><'
-            name:     'Escalation (between)'
-            selected: true
-            disable:  false
-          },
-
-#          {
+          #{
+          #  value:    'tickets.created_at::<>'
+          #  name:     'Created (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.created_at::><'
+          #  name:     'Created (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.close_time::<>'
+          #  name:     'Closed (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.close_time::><'
+          #  name:     'Closed (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.updated_at::<>'
+          #  name:     'Updated (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.updated_at::><'
+          #  name:     'Updated (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.escalation_time::<>'
+          #  name:     'Escalation (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.escalation_time::><'
+          #  name:     'Escalation (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+#         # {
 #            value:    'tag'
 #            name:     'Tag'
 #            selected: true
@@ -1191,24 +1179,24 @@ class App.ControllerForm extends App.Controller
 #            selected: true
 #            disable:  false
 #          },
-#          {
-#            value:    '-c'
-#            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
-#            selected: false
-#            disable:  true
-#          },
-#          {
-#            value:    'customers.id'
-#            name:     'Kunde'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'organization.id'
-#            name:     'Organization'
-#            selected: true
-#            disable:  false
-#          },
+          {
+            value:    '-c'
+            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'customers.id'
+            name:     'Customer'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'organization.id'
+            name:     'Organization'
+            selected: true
+            disable:  false
+          },
         ]
         default:    ''
         translate:  true
