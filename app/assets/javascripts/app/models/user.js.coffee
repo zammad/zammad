@@ -49,5 +49,18 @@ class App.User extends App.Model
     if data.organization_id
       data.organization = App.Organization.find(data.organization_id)
 
-    data
+    if data['role_ids']
+      data['roles'] = []
+      for role_id in data['role_ids']
+        if App.Role.exists( role_id )
+          role = App.Role.find( role_id )
+          data['roles'].push role
 
+    if data['group_ids']
+      data['groups'] = []
+      for group_id in data['group_ids']
+        if App.Group.exists( group_id )
+          group = App.Group.find( group_id )
+          data['groups'].push group
+
+    data
