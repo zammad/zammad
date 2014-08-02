@@ -29,14 +29,24 @@ returns
       data[ User.to_app_model ] = {}
     end
     if !data[ Organization.to_app_model ][ self.id ]
-      data[ Organization.to_app_model ][ self.id ] = self.attributes
-      data[ Organization.to_app_model ][ self.id ][:user_ids] = []
-      users = User.where( :organization_id => self.id ).limit(10)
-      users.each {|user|
-        data[ User.to_app_model ][ user.id ] = User.user_data_full( user.id )
-        data[ Organization.to_app_model ][ self.id ][:user_ids].push user.id
-      }
+      data[ Organization.to_app_model ][ self.id ] = self.attributes_with_associations
+      if data[ Organization.to_app_model ][ self.id ]['member_ids']
+        data[ Organization.to_app_model ][ self.id ]['member_ids'].each {|user_id|
+          if !data[ User.to_app_model ][ user_id ]
+            user = User.find( user_id )
+            data = user.assets( data )
+          end
+        }
+      end
     end
+    ['created_by_id', 'updated_by_id'].each {|item|
+      if self[ item ]
+        if !data[ User.to_app_model ][ self[ item ] ]
+          user = User.find( self[ item ] )
+          data = user.assets( data )
+        end
+      end
+    }
     data
   end
 

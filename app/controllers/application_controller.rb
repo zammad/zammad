@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user,
   :authentication_check,
   :config_frontend,
-  :user_data_full,
   :is_role,
   :model_create_render,
   :model_update_render,

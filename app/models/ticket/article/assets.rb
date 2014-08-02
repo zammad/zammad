@@ -41,15 +41,14 @@ returns
       data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = self.attachments
     end
 
-    if !data[ User.to_app_model ]
-      data[ User.to_app_model ] = {}
-    end
-    if !data[ User.to_app_model ][ self['created_by_id'] ]
-      data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
-    end
-    if !data[ User.to_app_model ][ self['updated_by_id'] ]
-      data[ User.to_app_model ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
-    end
+    ['created_by_id', 'updated_by_id'].each {|item|
+      if self[ item ]
+        if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
+          user = User.find( self[ item ] )
+          data = user.assets( data )
+        end
+      end
+    }
     data
   end
 

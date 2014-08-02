@@ -3,6 +3,7 @@
 require 'digest/md5'
 
 class User < ApplicationModel
+  require 'user/assets'
   include User::Assets
   extend User::Search
   include User::SearchIndex

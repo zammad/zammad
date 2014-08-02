@@ -68,7 +68,7 @@ class _collectionSingleton extends Spine.Module
 
   reset: (params) ->
     if !App[ params.type ]
-      @log 'error', 'reset', 'no such collection', params
+      @log 'error', 'reset', "no such collection #{params.type}", params
       return
 
     @log 'debug', 'reset', params

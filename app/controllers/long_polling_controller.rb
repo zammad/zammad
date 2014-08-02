@@ -59,7 +59,7 @@ class LongPollingController < ApplicationController
       user_id = session[:user_id]
       user = {}
       if user_id
-        user = User.user_data_full( user_id )
+        user = User.find( user_id )
       end
       log 'notice', "send auth login (user_id #{user_id})", client_id
       Sessions.create( client_id, user, { :type => 'ajax' } )

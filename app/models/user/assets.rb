@@ -12,7 +12,7 @@ get all assets / related models for this user
 returns
 
   result = {
-    :users => {
+    :User => {
       123  => user_model_123,
       1234 => user_model_1234,
     }
@@ -26,22 +26,61 @@ returns
       data[ User.to_app_model ] = {}
     end
     if !data[ User.to_app_model ][ self.id ]
-      data[ User.to_app_model ][ self.id ] = User.user_data_full( self.id )
+      attributes = self.attributes_with_associations
+
+      # do not transfer crypted pw
+      attributes['password'] = ''
+
+      # get linked accounts
+      attributes['accounts'] = {}
+      authorizations = self.authorizations()
+      authorizations.each do | authorization |
+        attributes['accounts'][authorization.provider] = {
+          :uid      => authorization[:uid],
+          :username => authorization[:username]
+        }
+      end
+
+      data[ User.to_app_model ][ self.id ] = attributes
+
+      # get roles
+      if attributes['role_ids']
+        attributes['role_ids'].each {|role_id|
+          role = Role.find(role_id)
+          data = role.assets( data )
+        }
+      end
+
+      # get groups
+      if attributes['group_ids']
+        attributes['group_ids'].each {|group_id|
+          group = Group.find(group_id)
+          data = group.assets( data )
+        }
+      end
+
+      # get groups
+      if attributes['organization_ids']
+        attributes['organization_ids'].each {|organization_id|
+          organization = Organization.find(organization_id)
+          data = organization.assets( data )
+        }
+      end
     end
     if self.organization_id
-      if !data[ Organization.to_app_model ]
-        data[ Organization.to_app_model ] = {}
-      end
-      if !data[ Organization.to_app_model ][ self.organization_id ]
-        data[ Organization.to_app_model ][ self.organization_id ] = Organization.find( self.organization_id )
+      if !data[ Organization.to_app_model ] || !data[ Organization.to_app_model ][ self.organization_id ]
+        organization = Organization.find( self.organization_id )
+        data = organization.assets( data )
       end
     end
-    if !data[ User.to_app_model ][ self.created_by_id ]
-      data[ User.to_app_model ][ self.created_by_id ] = User.user_data_full( self.created_by_id )
-    end
-    if !data[ User.to_app_model ][ self.updated_by_id ]
-      data[ User.to_app_model ][ self.updated_by_id ] = User.user_data_full( self.updated_by_id )
-    end
+    ['created_by_id', 'updated_by_id'].each {|item|
+      if self[ item ]
+        if !data[ User.to_app_model ][ self[ item ] ]
+          user = User.find( self[ item ] )
+          data = user.assets( data )
+        end
+      end
+    }
     data
   end
 
