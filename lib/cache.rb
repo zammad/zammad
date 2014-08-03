@@ -16,6 +16,9 @@ module Cache
   end
   def self.clear
 #    puts 'Cache.clear...'
+    # workaround, set test cache before clear whole cache, Rails.cache.clear complains about not existing cache dir
+    Cache.write('test',1 )
+
     Rails.cache.clear
   end
 end
