@@ -140,18 +140,18 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'b collections organization' do
     require 'sessions/backend/collections/organization.rb'
     UserInfo.current_user_id = 1
-    Organization.destroy_all
     user = User.lookup(:id => 1)
+    org = Organization.create( :name => 'SomeOrg1::' + rand(999999).to_s, :active => true )
 
     collection_client1 = Sessions::Backend::Collections::Organization.new(user, false, '123-1')
     collection_client2 = Sessions::Backend::Collections::Organization.new(user, false, '234-2')
 
     # get whole collections - should be nil, no org exists!
     result1 = collection_client1.push
-    assert( !result1, "check collections" )
+    assert( !result1.empty?, "check collections" )
     sleep 1
     result2 = collection_client2.push
-    assert( !result2, "check collections" )
+    assert( !result2.empty?, "check collections" )
     assert_equal( result1, result2, "check collections" )
 
     # next check - should still be nil, no org exists!
@@ -162,7 +162,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result2, "check collections - recall" )
 
     # change collection
-    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true )
+    org = Organization.create( :name => 'SomeOrg2::' + rand(999999).to_s, :active => true )
     sleep 16
 
     # get whole collections
@@ -191,7 +191,6 @@ class SessionBasicTest < ActiveSupport::TestCase
     result2 = collection_client2.push
     assert( !result1.empty?, "check collections - after touch" )
     assert_equal( result1, result2, "check collections" )
-
   end
 
   test 'b rss' do
