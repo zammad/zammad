@@ -435,7 +435,7 @@ h1 {
 
 h2,
 h2.popover-title {
-  font-size: 22px;
+  font-size: 19px;
   line-height: 25px;
   color: rgba(0,8,14,.73);
 }
@@ -576,12 +576,16 @@ label {
   margin-bottom: 15px;
 }
 
-.page-header-title h2 {
-  margin-top: 10px;
+.page-header-title h1 {
+  margin-top: 13px;
 }
 
 .page-header-meta {
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-left: auto;
+}
+
+.page-header-meta.horizontal .pagination {
   margin-left: auto;
 }
 
@@ -1338,9 +1342,17 @@ footer {
   border-color: #eee;
 }
 
+.overview {
+  padding: 10px 20px;
+}
+
 .bulk-action {
-  position: absolute;
-  width: 100%;
+  background: white;
+  z-index: 1;
+  box-shadow: 
+    0 -1px rgba(0,0,0,.05),
+    0 -2px rgba(0,0,0,.03),
+    0 -3px rgba(0,0,0,.01);
 }
 
 .sidebar .action {
@@ -1537,7 +1549,9 @@ footer {
   padding: 9px 14px;
 }
 
+.btn.primary,
 .btn-primary {
+  color: white;
   background: #419ed7;
   border-color: #419ed7;
 }
@@ -2041,6 +2055,7 @@ footer {
   padding: 10px 20px;
   background: #f8f9fa;
   overflow: auto;
+  position: relative;
 }
 
 .popover {
@@ -2259,6 +2274,44 @@ footer {
 
   .activity .priority.icon:after {
     background: white;
+  }
+
+.form-inline .input-group-addon,
+.form-inline .form-control {
+  background: white;
+  border: none;
+  line-height: 1;
+}
+
+  .form-inline .form-group {
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .form-inline .form-group:not(:last-child) {
+    border-right: 1px solid #f0f0f0;
+  }
+
+  .form-inline .input-group-addon {
+    padding: 0 10px 2px;
+    font-size: 13px;
+    text-align: left;
+    letter-spacing: 0.05em;
+    color: #ccc;
+    display: block;
+  }
+
+  .form-inline .form-control {
+    margin: 0 10px;
+    display: block;
+    padding: 0 0 2px;
+    float: none;
+    height: auto;
+    border-radius: 0;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+        -ms-appearance: none;
+            appearance: none;
   }
 
 /* 

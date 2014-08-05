@@ -49,6 +49,9 @@ class App.ControllerForm extends App.Controller
             item = @formGenItem( attribute, @model.className, fieldset )
             item.appendTo(fieldset)
 
+    if @no_fieldset
+      fieldset = fieldset.children()
+
     if @fullForm
       if !@formClass
         @formClass = ''

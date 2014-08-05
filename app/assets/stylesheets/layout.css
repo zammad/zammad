@@ -67,6 +67,10 @@ body.fit {
   margin: 0;
 }
 
+.scrollable {
+  overflow: auto;
+}
+
 .flex {
   -webkit-box-flex: 1;
   -ms-flex: 1;
@@ -186,7 +190,8 @@ body.fit {
 }
 
 .two-columns,
-.three-columns {
+.three-columns,
+.wrap {
   -ms-box-lines: multiple;
   -moz-flex-wrap: wrap;
   -webkit-flex-wrap: wrap;

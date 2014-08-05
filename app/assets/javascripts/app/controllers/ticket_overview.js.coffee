@@ -299,22 +299,23 @@ class Table extends App.ControllerContent
 
   bulk_form: =>
     @configure_attributes_ticket = [
-      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
-      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
-      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left'  },
-      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
+      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
+      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: '', item_class: ''  },
+      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' },
     ]
 
     # render init page
     html = $( App.view('agent_ticket_view/bulk')() )
-    new App.ControllerForm(
-      el: html.find('#form-ticket-bulk'),
-      model: {
-        configure_attributes: @configure_attributes_ticket,
-        className:            'create',
-      },
-      form_data: @bulk,
-    )
+    # new App.ControllerForm(
+    #   el: html.find('#form-ticket-bulk'),
+    #   model: {
+    #     configure_attributes: @configure_attributes_ticket,
+    #     className:            'create'
+    #   },
+    #   form_data: @bulk,
+    #   no_fieldset: true
+    # )
 #    html.delegate('.bulk-action-form', 'submit', (e) =>
     html.bind('submit', (e) =>
       e.preventDefault()
