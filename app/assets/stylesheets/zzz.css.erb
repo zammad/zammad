@@ -1798,7 +1798,25 @@ footer {
     background: url(<%= asset_path "logo.svg" %>);
     transition: 240ms;
     cursor: pointer;
+    position: relative;
   }
+
+    .logo .activity-counter {
+      height: 19px;
+      min-width: 19px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: 0 3px;
+      font-size: 11px;
+      line-height: 17px;
+      text-align: center;
+      color: white;
+      text-shadow: 0 1px 1px rgba(0,0,0,.21);
+      background: hsl(360,71%,60%);
+      border-radius: 10px;
+      border: 2px solid hsl(232,10%,16%);
+    }
 
   .search .custom-dropdown-menu {
     margin: 0;
