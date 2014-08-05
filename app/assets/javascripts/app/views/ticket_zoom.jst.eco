@@ -1,7 +1,11 @@
 <div class="main flex">
 
-  <div class="page-header ticket-zoom">
-    <h1 class="ticket-title"></h1>
+  <div class="page-header ticket-zoom horizontal">
+    <div class="flex vertical center">
+      <div class="big avatar" style="background-image: url(http://berta9.express.ge/31/performer/Paul%20van%20Dyk/.photo/34_paul_van_dyk_01.jpg)"></div>
+      <div class="ticket-title"></div>
+      <div class="task-meta">ID #10098 - Dienstag, <time datetime="2014-01-07T15:26:31">07. Januar 2014 um 15:26</time></div>
+    </div>
     <div class="page-header-meta">
       <% if @C( 'LastOverview' ) && @nav: %>
         <div class="pull-right">
@@ -17,8 +21,9 @@
   </div>
 
 <div class="ticket-article"></div>
-<div class="ticket-edit"></div>
 
+<div class="ticket-edit"></div>
+  
 </div>
 
 <div class="sidebar">

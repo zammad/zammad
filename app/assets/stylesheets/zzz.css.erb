@@ -1382,36 +1382,6 @@ footer {
   }
 }
 
-.message {
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-
-.ticket-update {
-  width: 100%;
-}
-.ticket-update .span2 {
-  width: 152px;
-  margin-right: 4px;
-}
-.ticket-update .medium {
-  width: 160px;
-}
-
-.ticket-article .avatar {
-  width: 80px;
-}
-
-.ticket-article .avatar ul {
-  margin-left: -22px;
-}
-
-.ticket-article-item {
-  min-height: 100px;
-}
-
-
 .show_toogle {
   font-size: 10px;
   line-height: 12px;
@@ -1991,6 +1961,11 @@ footer {
   vertical-align: bottom;
 }
 
+  .big.avatar {
+    width: 50px;
+    height: 50px;
+  }
+
 .sidebar {
   width: 32%;
   max-width: 353px;
@@ -1999,6 +1974,11 @@ footer {
   border-right: 1px solid #e6e6e6;
   overflow: auto;
 }
+
+  .main + .sidebar {
+    border-right: none;
+    border-left: 1px solid #e6e6e6;
+  }
 
 .NavBarAdmin.sidebar {
   padding-top: 1px;
@@ -2331,6 +2311,100 @@ footer {
         -ms-appearance: none;
             appearance: none;
   }
+
+.ticket-zoom {
+  margin-top: 52px;
+  margin-bottom: 46px;
+  border-bottom: none;
+}
+
+  .ticket-title {
+    max-width: 400px;
+  }
+
+    .ticket-title h1 {
+      margin-top: 15px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+  .task-meta {
+    color: #c6c6c5;
+    font-size: 12px;
+  }
+
+.ticket-article-item {
+  max-width: 800px;
+  margin: 33px auto;
+}
+
+  .ticket-article-item .avatar {
+    margin: 0 15px;
+  }
+
+  .article-message {
+    padding: 10px 20px;
+    margin-right: 70px;
+    white-space: pre-wrap;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid hsl(240,4%,95%);
+    box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
+    position: relative;
+  }
+
+  .customer.ticket-article-item .article-message {
+    background: #e5f0f5;
+    margin-right: 0;
+    margin-left: 70px;
+    border-color: hsl(199,38%,92%);
+    box-shadow: none;
+  }
+
+    .article-message-arrow {
+      position: absolute;
+      width: 7px;
+      height: 9px;
+      left: -6px;
+      top: 15px;
+      overflow: hidden;
+    }
+    
+    .article-message-arrow:after {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 2px;
+      width: 11px;
+      height: 11px;
+      background: white;
+      border: 1px solid hsl(240,4%,95%);
+      box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
+      transform: rotate(-45deg);
+    }
+
+    .customer.ticket-article-item .article-message-arrow {
+      left: auto;
+      right: -6px;
+    }
+
+    .customer.ticket-article-item .article-message-arrow:after {
+      background: #e5f0f5;
+      left: auto;
+      right: 2px;
+      border-color: hsl(199,38%,92%);
+      box-shadow: none;
+    }
+
+  .ticket-article-item .task-meta {
+    margin-top: 12px;
+    text-align: center;
+    display: block;
+  }
+
+.ticket-edit {
+  display: none;
+}
 
 /* 
 
