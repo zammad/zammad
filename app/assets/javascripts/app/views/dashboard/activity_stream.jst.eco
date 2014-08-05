@@ -1,15 +1,19 @@
 <h2 class="can-move"><%- @T( @head ) %></h2>
 <% for item in @items: %>
 <div class="activity-entry horizontal">
-  <a href="<%- item.created_by.uiUrl() %>"><div class="avatar" style="background-image: url(<%- item.created_by.image %>)"></div></a>
-  <div class="activity-body flex horizontal">
-    <div class="activity-message flex">
-      <a href="<%- item.link %>"><%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> (<%= item.title %>)<% end %></a>
-      <div class="activity-time humanTimeFromNow" data-time="<%- item.created_at %>">?</div>
-    </div>
-    <div class="activity-icon">
+  <a class="activity-avatar" href="<%- item.created_by.uiUrl() %>">
+    <span class="avatar" style="background-image: url(<%- item.created_by.image %>)"></span>
+  </a>
+  <a href="<%- item.link %>" class="activity-body flex horizontal">
+    <span class="activity-message flex">
+      <span class="activity-text">
+        <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> (<%= item.title %>)<% end %>
+      </span>
+      <span class="activity-time humanTimeFromNow" data-time="<%- item.created_at %>">?</span>
+    </span>
+    <span class="activity-icon">
       <span class="<%- item.cssIcon %> icon"></span>
-    </div>
-  </div>
+    </span>
+  </a>
 </div>
 <% end %>

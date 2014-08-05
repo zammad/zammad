@@ -2199,23 +2199,53 @@ footer {
 
 .activity.sidebar {
   width: 370px;
-  padding: 0 26px 0 14px;
+  padding: 0;
   border-left: 1px solid #e8e8e8;
 }
 
   .activity h2 {
-    margin-left: 5px;
+    margin-left: 19px;
     margin-bottom: 15px;
+    margin-right: 26px;
   }
 
-  .activity-entry {
-    padding-top: 16px;
+  .activity-entry.state--read {
+    opacity: 0.5;
   }
+
+  .activity-avatar {
+    padding-top: 16px;
+    padding-left: 14px;
+    padding-right: 2px;
+    margin-right: 10px;
+  }
+
+    .activity-avatar:hover .avatar {
+    }
 
   .activity-body {
-    padding: 0 0 12px 14px;
-    border-bottom: 1px solid #f2f2f3;
+    color: #444a4f;
+    padding: 16px 26px 16px 2px;
+    position: relative;
   }
+
+    .activity-body:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 30px;
+      left: 8px;
+      border-bottom: 1px solid #f2f2f3;
+    }
+
+  .activity-body:hover {
+    color: #444a4f;
+    text-decoration: none;
+  }
+
+    .activity-body:hover .activity-text {
+      text-decoration: underline;
+    }
 
   .activity-message {
     padding-right: 20px;
@@ -2224,6 +2254,7 @@ footer {
   .activity-time {
     margin-top: 2px;
     color: #a1a4a7;
+    display: block;
   }
 
   .activity .priority.icon:after {
@@ -2240,6 +2271,6 @@ footer {
 
 @media only screen and (max-width: 1280px) {
   .activity.sidebar {
-    display: none;
+    /*display: none;*/
   }
 }
