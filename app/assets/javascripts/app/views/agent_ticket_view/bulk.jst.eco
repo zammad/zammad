@@ -3,7 +3,6 @@
     <div class="form-group">
       <div class="input-group">
         <label for="create_state_id" class="input-group-addon">Status</label>
-        <!-- label and select have to be siblings -->
         <select id="create_state_id" class="form-control" name="state_id">
           <option value="" selected="">-</option>
           <option value="4">geschlossen</option>
@@ -26,8 +25,6 @@
         </select>        
         <!-- 
           there can't be any other elements in .input-group
-          otherwise we loose the rounded borders on the dropdown
-          (bootstrap css)
         -->
         <!-- 
           <span class="help-inline"></span>
