@@ -1,29 +1,30 @@
-<div class="main flex no-padding">
+<div class="main flex relative no-padding">
+  <div class="flex-overflow vertical">
+    <div class="page-header ticket-zoom horizontal">
+      <div class="flex vertical center">
+        <div class="big avatar" style="background-image: url(http://berta9.express.ge/31/performer/Paul%20van%20Dyk/.photo/34_paul_van_dyk_01.jpg)"></div>
+        <div class="ticket-title"></div>
+        <div class="task-meta">ID #10098 - Dienstag, <time datetime="2014-01-07T15:26:31">07. Januar 2014 um 15:26</time></div>
+      </div>
+      <div class="page-header-meta">
+        <% if @C( 'LastOverview' ) && @nav: %>
+          <div class="pull-right">
+            <span class="pagination-count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
+            <% base_url ="#ticket/view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
+            <ul class="pagination pagination-sm">
+              <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
+              <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
 
-  <div class="page-header ticket-zoom horizontal">
-    <div class="flex vertical center">
-      <div class="big avatar" style="background-image: url(http://berta9.express.ge/31/performer/Paul%20van%20Dyk/.photo/34_paul_van_dyk_01.jpg)"></div>
-      <div class="ticket-title"></div>
-      <div class="task-meta">ID #10098 - Dienstag, <time datetime="2014-01-07T15:26:31">07. Januar 2014 um 15:26</time></div>
-    </div>
-    <div class="page-header-meta">
-      <% if @C( 'LastOverview' ) && @nav: %>
-        <div class="pull-right">
-          <span class="pagination-count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
-          <% base_url ="#ticket/view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
-          <ul class="pagination pagination-sm">
-            <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
-            <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
-          </ul>
-        </div>
-      <% end %>
-    </div>
+    <div class="ticket-article"></div>
+
+    <div class="ticket-edit"></div>
+
   </div>
-
-<div class="ticket-article"></div>
-
-<div class="ticket-edit"></div>
-  
 </div>
 
 <div class="sidebar">

@@ -2295,10 +2295,10 @@ footer {
 
   .form-inline .form-control {
     margin: 0 10px;
-    display: block;
     padding: 0 0 2px;
-    float: none;
     height: auto;
+    float: none;
+    display: block;
     border-radius: 0;
     -webkit-appearance: none;
        -moz-appearance: none;
@@ -2330,10 +2330,16 @@ footer {
 .bubble-grid {
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 21px;
 }
 
   .bubble-grid .avatar {
-    margin: 0 15px;
+    margin-right: 15px;
+  }
+
+  .customer.ticket-article-item .avatar {
+    margin-right: 0;
+    margin-left: 15px;
   }
 
   .ticket-article-item {
@@ -2367,11 +2373,18 @@ footer {
   }
 
     .edit textarea {
+      width: 100%;
+      height: 38px;
+      padding: 10px 20px;
+      vertical-align: bottom;
       border: none;
       background: none;
-      padding: 10px 20px;
       outline: none;
-      height: 38px;
+      transition: 500ms;
+    }
+
+    .edit textarea:focus {
+      height: 105px;
     }
 
     .edit textarea:focus + .bubble-placeholder {
@@ -2432,14 +2445,14 @@ footer {
     display: block;
   }
 
-.edit-ticket-properties {
-  margin-top: 36px;
-  background: white;
+.ticket-edit {
+  margin-top: auto;
 }
 
-.sidebar {
-  display: none;
-}
+  .edit-ticket-properties {
+    margin-top: 37px;
+    background: white;
+  }
 
 /* 
 
