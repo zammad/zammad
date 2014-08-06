@@ -1,60 +1,52 @@
 <form class="form-inline update-box bulk-action-form" role="form">
   <div id="form-ticket-bulk" class="horizontal">
     <div class="form-group">
-      <div class="input-group">
-        <label for="create_state_id" class="input-group-addon">Status</label>
-        <select id="create_state_id" class="form-control" name="state_id">
-          <option value="" selected="">-</option>
-          <option value="4">geschlossen</option>
-          <option value="5">zusammengefügt</optin>
-          <option value="1">neu</option>
-          <option value="2">offen</option>
-          <option value="3">warten</option>
-          <option value="6">zurück gezogen</option>
-        </select>
-      </div>
+      <label for="create_state_id" class="input-group-addon">Status</label>
+      <select id="create_state_id" class="form-control" name="state_id">
+        <option value="" selected="">-</option>
+        <option value="4">geschlossen</option>
+        <option value="5">zusammengefügt</optin>
+        <option value="1">neu</option>
+        <option value="2">offen</option>
+        <option value="3">warten</option>
+        <option value="6">zurück gezogen</option>
+      </select>
     </div>
     <div class="form-group">
-      <div class="input-group">
-        <label for="create_priority_id" class="input-group-addon">Priorität</label>
-        <select id="create_priority_id" class="form-control" name="priority_id">
-          <option value="" selected="">-</option>
-          <option value="1">1 niedrig</option>
-          <option value="2">2 normal</option>
-          <option value="3">3 hoch</option>
-        </select>        
-        <!-- 
-          there can't be any other elements in .input-group
-        -->
-        <!-- 
-          <span class="help-inline"></span>
-          <span class="help-block"></span> 
-        -->
-      </div>
+      <label for="create_priority_id" class="input-group-addon">Priorität</label>
+      <select id="create_priority_id" class="form-control" name="priority_id">
+        <option value="" selected="">-</option>
+        <option value="1">1 niedrig</option>
+        <option value="2">2 normal</option>
+        <option value="3">3 hoch</option>
+      </select>        
+      <!-- 
+        there can't be any other elements in .input-group
+      -->
+      <!-- 
+        <span class="help-inline"></span>
+        <span class="help-block"></span> 
+      -->
     </div>
     <div class="form-group">
-      <div class="input-group">
-        <label for="create_group_id" class="input-group-addon">Gruppe</label>
-        <select id="create_group_id" class="form-control" name="group_id">
-          <option value="">-</option>
-          <option value="4">FillGroup:450863</option>
-          <option value="3">FillGroup::918672</option>
-          <option value="2">Twitter</option>
-          <option value="1">Users</option>
-        </select>
-      </div>
+      <label for="create_group_id" class="input-group-addon">Gruppe</label>
+      <select id="create_group_id" class="form-control" name="group_id">
+        <option value="">-</option>
+        <option value="4">FillGroup:450863</option>
+        <option value="3">FillGroup::918672</option>
+        <option value="2">Twitter</option>
+        <option value="1">Users</option>
+      </select>
     </div>
     <div class="form-group">
-      <div class="input-group">
-        <label for="create_owner_id" class="input-group-addon">Besitzer</label>
-        <select id="create_owner_id" class="form-control" name="owner_id">
-          <option value="">-</option>
-          <option value="5">customer 838 customer 1838</option>
-          <option value="3">Felix Niklas</option>
-          <option value="2">Nicole Braun</option>
-          <option value="4">Robert Zammad</option>
-        </select>
-      </div>
+      <label for="create_owner_id" class="input-group-addon">Besitzer</label>
+      <select id="create_owner_id" class="form-control" name="owner_id">
+        <option value="">-</option>
+        <option value="5">customer 838 customer 1838</option>
+        <option value="3">Felix Niklas</option>
+        <option value="2">Nicole Braun</option>
+        <option value="4">Robert Zammad</option>
+      </select>
     </div>
     <div class="form-group">
       <input type="submit" class="btn primary submit" value="update">
