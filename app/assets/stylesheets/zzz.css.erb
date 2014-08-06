@@ -5,6 +5,10 @@ body {
   background: #2c2d36;
 }
 
+.highlight {
+  color: hsl(202,68%,54%);
+}
+
 #app > nav {
   position: relative;
   z-index: 1;
@@ -1265,25 +1269,6 @@ form.form-inline input[type="password"] {
 }
 
 
-.edit {
-}
-.edit .form-group {
-  margin-bottom: 2px;
-}
-.edit select, .edit input {
-  height: 30px;
-}
-.edit:focus {
-  color: #000000;
-  outline: 0;
-}
-.edit-title {
-}
-.edit-title small {
-  font-size: 12px;
-}
-
-
 .delete {
   background:url("../assets/close.png") no-repeat;
   text-indent: -9999em;
@@ -2056,6 +2041,10 @@ footer {
   position: relative;
 }
 
+  .main.no-padding {
+    padding: 0;
+  }
+
 .popover {
   width: 372px;
   max-width: 9999px;
@@ -2284,6 +2273,11 @@ footer {
   .form-inline .form-group {
     padding: 10px;
     overflow: hidden;
+    flex-grow: 1;
+  }
+
+  .form-inline .form-group .btn {
+    width: 100%;
   }
 
   .form-inline .form-group:not(:last-child) {
@@ -2313,7 +2307,7 @@ footer {
   }
 
 .ticket-zoom {
-  margin-top: 52px;
+  margin-top: 62px;
   margin-bottom: 46px;
   border-bottom: none;
 }
@@ -2333,16 +2327,21 @@ footer {
     font-size: 12px;
   }
 
-.ticket-article-item {
+.bubble-grid {
   max-width: 800px;
-  margin: 33px auto;
+  margin: 0 auto;
 }
 
-  .ticket-article-item .avatar {
+  .bubble-grid .avatar {
     margin: 0 15px;
   }
 
-  .article-message {
+  .ticket-article-item {
+    margin-top: 33px;
+    margin-bottom: 33px;
+  }
+
+  .text-bubble {
     padding: 10px 20px;
     margin-right: 70px;
     white-space: pre-wrap;
@@ -2353,7 +2352,7 @@ footer {
     position: relative;
   }
 
-  .customer.ticket-article-item .article-message {
+  .customer.ticket-article-item .text-bubble {
     background: #e5f0f5;
     margin-right: 0;
     margin-left: 70px;
@@ -2361,7 +2360,38 @@ footer {
     box-shadow: none;
   }
 
-    .article-message-arrow {
+  .edit .text-bubble {
+    padding: 0;
+    border-color: #b3b3b3;
+    white-space: normal;
+  }
+
+    .edit textarea {
+      border: none;
+      background: none;
+      padding: 10px 20px;
+      outline: none;
+      height: 38px;
+    }
+
+    .edit textarea:focus + .bubble-placeholder {
+      display: none;
+    }
+
+    .edit .bubble-arrow:after {
+      border-color: #b3b3b3;
+      box-shadow: none;
+    }
+
+    .bubble-placeholder {
+      position: absolute;
+      color: #b3b3b3;
+      left: 20px;
+      top: 10px;
+      pointer-events: none;
+    }
+
+    .bubble-arrow {
       position: absolute;
       width: 7px;
       height: 9px;
@@ -2370,7 +2400,7 @@ footer {
       overflow: hidden;
     }
     
-    .article-message-arrow:after {
+    .bubble-arrow:after {
       content: "";
       position: absolute;
       top: -1px;
@@ -2383,12 +2413,12 @@ footer {
       transform: rotate(-45deg);
     }
 
-    .customer.ticket-article-item .article-message-arrow {
+    .customer.ticket-article-item .bubble-arrow {
       left: auto;
       right: -6px;
     }
 
-    .customer.ticket-article-item .article-message-arrow:after {
+    .customer.ticket-article-item .bubble-arrow:after {
       background: #e5f0f5;
       left: auto;
       right: 2px;
@@ -2402,7 +2432,12 @@ footer {
     display: block;
   }
 
-.ticket-edit {
+.edit-ticket-properties {
+  margin-top: 36px;
+  background: white;
+}
+
+.sidebar {
   display: none;
 }
 

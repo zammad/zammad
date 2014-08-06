@@ -1,9 +1,9 @@
 <% for article in @articles: %>
-<div class="ticket-article-item <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
+<div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
   <div class="horizontal<%= ' reverse' if article.sender.name is 'Customer' %>">
     <div class="avatar" style="background-image: url(<%= article.created_by.image %>)"></div>
     <div class="flex">
-      <div class="article-message"><div class="article-message-arrow"></div><%- article.html %></div>
+      <div class="text-bubble"><div class="bubble-arrow"></div><%- article.html %></div>
     </div>
   </div>
   <time class="task-meta humanTimeFromNow" datetime="<%- article.created_at %>" data-time="<%- article.created_at %>">?</time>

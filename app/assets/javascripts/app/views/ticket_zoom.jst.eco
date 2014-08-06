@@ -1,4 +1,4 @@
-<div class="main flex">
+<div class="main flex no-padding">
 
   <div class="page-header ticket-zoom horizontal">
     <div class="flex vertical center">
