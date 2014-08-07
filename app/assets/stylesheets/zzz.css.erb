@@ -502,6 +502,7 @@ label {
 
 .content {
   overflow: auto;
+  position: relative;
 }
 
   .content.fit {
@@ -1235,6 +1236,30 @@ ol.tabs li {
     background-position: -26px -299px;
   }
 
+  .arrow-right.icon {
+    width: 12px;
+    height: 11px;
+    background-position: -36px -299px;
+  }
+
+  .dark.group.icon {
+    width: 23px;
+    height: 24px;
+    background-position: 0 -311px;
+  }
+
+  .dark.message.icon {
+    width: 19px;
+    height: 19px;
+    background-position: -23px -311px;
+  }
+
+  .dark.person.icon {
+    width: 11px;
+    height: 24px;
+    background-position: -42px -311px;
+  }
+
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
@@ -1376,33 +1401,6 @@ footer {
     0 -1px rgba(0,0,0,.05),
     0 -2px rgba(0,0,0,.03),
     0 -3px rgba(0,0,0,.01);
-}
-
-.sidebar .action {
-  padding: 6px 8px 6px;
-  position: fixed;
-  bottom: 60px;
-  background-color: #fff;
-  width: 100%;
-  right: 0px;
-  border-top: 1px solid #eeeeee;
-  width: 120px;
-  margin-left: 4px;
-}
-@media (min-width: 800px) {
-  .sidebar .action {
-    width: 234px;
-  }
-}
-@media (min-width: 1024px) {
-  .sidebar .action {
-    width: 254px;
-  }
-}
-@media (min-width: 1200px) {
-  .sidebar .action {
-    width: 274px;
-  }
 }
 
 .show_toogle {
@@ -2321,6 +2319,24 @@ footer {
   }
 
 .ticket-zoom {
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.ticket-zoom .main {
+  right: 280px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  transition: 500ms;
+}
+
+  .ticket-zoom.state--sidebar-hidden .main {
+    right: 0;
+  }
+
+.ticket-zoom .page-header {
   margin-top: 62px;
   margin-bottom: 46px;
   border-bottom: none;
@@ -2363,7 +2379,7 @@ footer {
 
   .text-bubble {
     padding: 10px 20px;
-    margin-right: 70px;
+    margin-right: 55px;
     white-space: pre-wrap;
     background: white;
     border-radius: 5px;
@@ -2375,18 +2391,18 @@ footer {
   .customer.ticket-article-item .text-bubble {
     background: #e5f0f5;
     margin-right: 0;
-    margin-left: 70px;
+    margin-left: 55px;
     border-color: hsl(199,38%,92%);
     box-shadow: none;
   }
 
-  .edit .text-bubble {
+  .new-article .text-bubble {
     padding: 0;
     border-color: #b3b3b3;
     white-space: normal;
   }
 
-    .edit textarea {
+    .new-article textarea {
       width: 100%;
       height: 38px;
       padding: 10px 20px;
@@ -2397,15 +2413,15 @@ footer {
       transition: 500ms;
     }
 
-    .edit textarea:focus {
+    .new-article textarea:focus {
       height: 105px;
     }
 
-    .edit textarea:focus + .bubble-placeholder {
+    .new-article textarea:focus + .bubble-placeholder {
       display: none;
     }
 
-    .edit .bubble-arrow:after {
+    .new-article .bubble-arrow:after {
       border-color: #b3b3b3;
       box-shadow: none;
     }
@@ -2461,11 +2477,87 @@ footer {
 
 .ticket-edit {
   margin-top: auto;
+  margin-bottom: 37px;
 }
 
-  .edit-ticket-properties {
-    margin-top: 37px;
+  .bottom-form {
     background: white;
+  }
+
+.ticket-zoom .sidebar {
+  width: 280px;
+  border-left: 1px solid #e6e6e6;
+}
+
+  .ticket-zoom .sidebar h2 {
+    margin: 5px 0 0;
+  }
+
+  .close-sidebar {
+    padding: 20px;
+    margin: -15px;
+  }
+
+  .sidebar.bottom-form-shadow {
+    box-shadow: 
+      0 -1px rgba(0,0,0,.005) inset,
+      0 -2px rgba(0,0,0,.005) inset,
+      0 -3px rgba(0,0,0,.005) inset,
+      0 -4px rgba(0,0,0,.005) inset;
+  }
+
+  .sidebar-holder {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: 500ms;
+  }
+
+  .ticket-zoom.state--sidebar-hidden .sidebar-holder {
+    transform: translateX(280px);
+  }
+
+  .sidebar-tabs {
+    position: absolute;
+    left: -55px;
+    top: 0;
+    bottom: 0;
+  }
+
+  .sidebar-tabs--spacing {
+    padding-right: 62px;
+  }
+
+  .test {
+    position: absolute;
+    width: 100%;
+  }
+
+  .sidebar-tab {
+    width: 56px;
+    height: 60px;
+    background: hsl(197,20%,93%);
+    border-top: 1px solid hsl(202,12%,87%);
+    border-left: 1px solid hsl(202,12%,87%);
+    cursor: pointer;
+  }
+
+  .sidebar-tab:first-child {
+    border-top-left-radius: 8px;
+  }
+
+  .sidebar-tab:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom: 1px solid hsl(202,12%,87%);
+  }
+
+  .sidebar-tab .icon {
+    opacity: 0.3;
+  }
+
+  .sidebar-tab.active .icon {
+    opacity: 1;
   }
 
 /* 

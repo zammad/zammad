@@ -1,4 +1,4 @@
-<div class="horizontal bubble-grid edit <% if @formChanged: %>form-changed<% end %>">
+<div class="horizontal bubble-grid new-article <% if @formChanged: %>form-changed<% end %>">
   <div class="avatar user-popover" data-id="<%= @S('id') %>" style="background-image: url(<%- @S('image') %>)"></div>
   <div class="flex text-bubble">
     <div class="bubble-arrow"></div>
@@ -6,44 +6,3 @@
     <span class="bubble-placeholder">Antwort eingeben oder <span class="highlight">Dateien wählen</span></span>
   </div>
 </div>
-
-<form class="edit-ticket-properties form-inline" role="form">
-  <div class="horizontal">
-    <div class="form-group">
-      <label for="update_ticket_1_state_id" class="input-group-addon">State</label>
-      <select id="update_ticket_1_state_id" class="form-control" name="state_id">
-        <option value="4">closed</option>
-        <option value="1" selected="">new</option>
-        <option value="2">open</option>
-        <option value="3">pending</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="update_ticket_1_priority_id" class="input-group-addon">Priority</label>
-      <select id="update_ticket_1_priority_id" class="form-control" name="priority_id">
-        <option value="1">1 low</option>
-        <option value="2" selected="">2 normal</option>
-        <option value="3">3 high</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="update_ticket_1_group_id" class="input-group-addon">Group</label>
-      <select id="update_ticket_1_group_id" class="form-control" name="group_id">
-        <option value="4">FillGroup::450863</option>
-        <option value="3">FillGroup::918672</option>
-        <option value="2">Twitter</option>
-        <option value="1" selected="">Users</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="update_ticket_1_owner_id" class="input-group-addon">Owner</label>
-      <select id="update_ticket_1_owner_id" class="form-control" name="owner_id">
-        <option value="">-</option>
-        <option value="3">Felix Niklas</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="submit" class="btn primary submit" value="update">
-    </div>
-  </div>
-</form>
