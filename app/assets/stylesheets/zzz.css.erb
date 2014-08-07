@@ -835,6 +835,42 @@ ol.tabs li {
   background-position: 20px 20px; /* make icon empty */
 }
 
+  .dashboard.icon,
+  .overviews.icon,
+  .customers.icon,
+  .group.icon,
+  .message.icon,
+  .tools.icon,
+  .person.icon {
+    width: 24px;
+    height: 25px;
+  }
+
+  .dashboard.icon {
+    background-position: 0 0;
+  }
+
+  .overviews.icon {
+    background-position: -24px 0;
+  }
+
+  .group.icon,
+  .customers.icon {
+    background-position: -48px 0;
+  }
+
+  .message.icon {
+    background-position: -72px 0;
+  }
+
+  .tools.icon {
+    background-position: -96px 0;
+  }
+
+  .person.icon {
+    background-position: -120px 0;
+  }
+
   .light.cog.icon {
     background-position: 0 -56px;
   }
@@ -964,6 +1000,7 @@ ol.tabs li {
     width: 14px;
     background-position: -28px -115px;
   }
+
   .icon-switch:hover .note.icon,
   .task.active .note.icon {
     background-position: -28px -128px;
@@ -974,6 +1011,7 @@ ol.tabs li {
     width: 14px;
     background-position: -42px -115px;
   }
+
   .icon-switch:hover .pen.icon,
   .task.active .pen.icon {
     background-position: -42px -128px;
@@ -1533,14 +1571,9 @@ footer {
     color: #F0FAFF;
   }
 
-  .navigation .nav > li.active > a:before,
-  .navigation .nav > li > a:hover:before,
-  .navigation .nav > li > a:focus:before {
-    opacity: 1;
-  }
-
   .navbar-nav > li > a {
-    padding: 11px 15px;
+    padding: 0 15px;
+    height: 48px;
     color: rgba(240, 250, 255, .25);
     border-bottom: 1px solid rgba(240, 250, 255, .05);
   }
@@ -1549,35 +1582,16 @@ footer {
     background: #389ed9;
   }
 
-  li.dashboard a:before,
-  li.overviews a:before,
-  li.message a:before,
-  li.tools a:before,
-  li.customers a:before {
-    content: '';
-    width: 24px;
-    height: 25px;
+  .navigation .nav-item-icon .icon {
     margin-right: 15px;
-    display: inline-block;
-    background: url(<%= asset_path "sprite.svg" %>) no-repeat;
+    opacity: 0.25;
     vertical-align: bottom;
-    opacity: .25;
   }
 
-  li.overviews a:before {
-    background-position: -24px 0;
-  }
-
-  li.customers a:before {
-    background-position: -48px 0;
-  }
-
-  li.message a:before {
-    background-position: -72px 0;
-  }
-
-  li.tools a:before {
-    background-position: -96px 0;
+  .navigation .nav > li.active > .icon,
+  .navigation .nav > li > a:hover .icon,
+  .navigation .nav > li > a:focus .icon {
+    opacity: 1;
   }
 
 .tasks {
