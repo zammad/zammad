@@ -1,4 +1,11 @@
 class App.TicketZoom extends App.Controller
+  events:
+    'click .sidebar-tabs': 'toggleSidebar'
+    'click .close-sidebar': 'toggleSidebar'
+
+  toggleSidebar: ->
+    @el.find('.ticket-zoom').toggleClass('state--sidebar-hidden')
+
   constructor: (params) ->
     super
 
