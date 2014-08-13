@@ -76,11 +76,11 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[data-type="edit"]:last-child',
+            :css     => '.table-overview tr:last-child td',
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
           {
             :execute => 'set',
@@ -146,7 +146,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[data-type="edit"]:last-child',
+            :css     => '.table-overview tr:last-child td',
           },
           {
             :execute => 'wait',
