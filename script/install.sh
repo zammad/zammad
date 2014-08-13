@@ -17,7 +17,22 @@ function check_requirements() {
     done
 }
 
+function check_os()
+{
+    # Debian
+    if [ -f /etc/debian_version ]; then
+        MAJOR=$(cut -d. /etc/debian_version -f1)
+        if [ $MAJOR -lt 7 ]; then
+            echo Please check the supported operating systems
+            exit 1
+        fi
+    fi
+}
+
 check_requirements
+
+check_os
+
 
 #
 # @TODO Should the mysql user be created?
@@ -81,3 +96,4 @@ sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && RAILS_ENV=production rake db:cre
 sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && RAILS_ENV=production rake db:migrate'
 sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && RAILS_ENV=production rake db:seed'
 sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && RAILS_ENV=production rake assets:precompile'
+
