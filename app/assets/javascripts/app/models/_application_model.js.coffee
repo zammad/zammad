@@ -117,6 +117,65 @@ class App.Model extends Spine.Model
     return true if @id[0] isnt 'c'
     return false
 
+  @full: (id, callback = false, force = false, bind = false) ->
+    url = "#{@url}/#{id}?full=true"
+    console.log('FULL', id, url, bind)
+
+    # subscribe and reload data / fetch new data if triggered
+    #@subscribeId = organization.subscribe(@render)
+    subscribeId = undefined
+    if bind
+      subscribeId = App[ @className ].subscribe_item(id, callback)
+
+    # execute if object already exists
+    if !force && App[ @className ].exists( id )
+      data = App[ @className ].find( id )
+      data = @_fillUp( data )
+      if callback
+        callback( data )
+      return subscribeId
+
+    # store callback and requested id
+    if !@FULL_CALLBACK
+      @FULL_CALLBACK = {}
+    if !@FULL_CALLBACK[id]
+      @FULL_CALLBACK[id] = {}
+    if callback
+      key = @className + '-' + Math.floor( Math.random() * 99999 )
+      @FULL_CALLBACK[id][key] = callback
+
+    if !@FULL_FETCH
+      @FULL_FETCH = {}
+    if !@FULL_FETCH[id]
+      @FULL_FETCH[id] = true
+      App.Ajax.request(
+        type:  'GET'
+        url:   url
+        processData: true,
+        success: (data, status, xhr) =>
+          @FULL_FETCH[ data.id ] = false
+
+          # full / load assets
+          if data.assets
+            App.Collection.loadAssets( data.assets )
+
+          # find / load object
+          else
+            App[ @className ].refresh( data )
+
+          # execute callbacks
+          if @FULL_CALLBACK[ data.id ]
+            for key, callback of @FULL_CALLBACK[ data.id ]
+              callback( @_fillUp( App[ @className ].find( data.id ) ) )
+              delete @FULL_CALLBACK[ data.id ][ key ]
+            if _.isEmpty @FULL_CALLBACK[ data.id ]
+              delete @FULL_CALLBACK[ data.id ]
+
+        error: (xhr, statusText, error) =>
+          console.log(statusText, error)
+      )
+    subscribeId
+
   @retrieve: ( id, callback, force ) ->
     if !force && App[ @className ].exists( id )
       data = App[ @className ].find( id )
@@ -220,42 +279,49 @@ class App.Model extends Spine.Model
 
   subscribe: (callback, type) ->
 
-    # init bind
-    if !App[ @constructor.className ]['SUBSCRIPTION_ITEM']
-      App[ @constructor.className ]['SUBSCRIPTION_ITEM'] = {}
+    # remember record id and callback
+    App[ @constructor.className ].subscribe_item(@id, callback)
+
+  @_subscribe_bind: ->
+    if !@_bindDone
+      @_bindDone = true
 
       # subscribe and render data after local change
-      App[ @constructor.className ].bind(
+      @bind(
         'refresh change'
-        (item) =>
-          #console.log('BIND', item)
-          for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
-            item = App[ @constructor.className ]._fillUp( item )
-            callback(item, 'local')
+        (items) =>
+
+          # check if result is array or singel item
+          if !_.isArray(items)
+            items = [items]
+
+          for item in items
+            for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
+              item = App[ @className ]._fillUp( item )
+              callback(item)
       )
 
       # subscribe and render data after server change
-      events = "#{@constructor.className}:create #{@constructor.className}:update #{@constructor.className}:destroy"
+      events = "#{@className}:create #{@className}:update #{@className}:destroy"
       App.Event.bind(
         events
         (item) =>
-          #console.log('SERVER BIND try', item)
-          if App[ @constructor.className ]['SUBSCRIPTION_ITEM'] && App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
-            #console.log('SERVER BIND', item)
-            for key, callback of App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ item.id ]
-              callbackRetrieve = (item) ->
-                callback(item, 'server')
-              App[ @constructor.className ].retrieve( item.id, callbackRetrieve, true )
-        'Item::Subscribe::' + @constructor.className
+          if @SUBSCRIPTION_ITEM && @SUBSCRIPTION_ITEM[ item.id ]
+            @full( item.id, false, true )
+        'Item::Subscribe::' + @className
       )
 
-    # remember record id and callback
-    if !App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ]
-      App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ] = {}
-    key = @constructor.className + '-' + Math.floor( Math.random() * 99999 )
-    App[ @constructor.className ]['SUBSCRIPTION_ITEM'][ @id ][key] = callback
+  @subscribe_item: (id, callback) ->
+    # init bind
+    @_subscribe_bind()
 
-    # return key
+    # remember item callback
+    if !@SUBSCRIPTION_ITEM
+      @SUBSCRIPTION_ITEM = {}
+    if !@SUBSCRIPTION_ITEM[id]
+      @SUBSCRIPTION_ITEM[id] = {}
+    key = @className + '-' + Math.floor( Math.random() * 99999 )
+    @SUBSCRIPTION_ITEM[id][key] = callback
     key
 
   ###
@@ -266,15 +332,15 @@ class App.Model extends Spine.Model
 
   ###
 
-  @unsubscribe: (data) ->
+  @unsubscribe: (subscribeId) ->
     if @SUBSCRIPTION_ITEM
       for id, keys of @SUBSCRIPTION_ITEM
-        if keys[data]
-          delete keys[data]
+        if keys[subscribeId]
+          delete keys[subscribeId]
 
     if @SUBSCRIPTION_COLLECTION
-      if @SUBSCRIPTION_COLLECTION[data]
-        delete @SUBSCRIPTION_COLLECTION[data]
+      if @SUBSCRIPTION_COLLECTION[subscribeId]
+        delete @SUBSCRIPTION_COLLECTION[subscribeId]
 
   @_bindsEmpty: ->
     if @SUBSCRIPTION_ITEM

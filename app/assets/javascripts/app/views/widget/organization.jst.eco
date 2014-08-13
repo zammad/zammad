@@ -21,6 +21,15 @@
     <% end %>
   <% end %>
 
+  <% if @organization.members: %>
+    <h4><%- @T('Member') %></h4>
+    <ul>
+    <% for user in @organization.members: %>
+      <li><a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a></li>
+    <% end %>
+    </ul>
+  <% end %>
+
   </div>
 </div>
 

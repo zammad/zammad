@@ -329,10 +329,10 @@ class App.Controller extends Spine.Controller
       title: ->
         user_id = $(@).data('id')
         user = App.User.find( user_id )
-        App.i18n.escape( user.displayName() ) 
+        App.i18n.escape( user.displayName() )
       content: ->
         user_id = $(@).data('id')
-        user = App.User.find( user_id )
+        user = App.User.retrieve( user_id )
 
         # get display data
         data = []
@@ -378,7 +378,7 @@ class App.Controller extends Spine.Controller
         App.i18n.escape( organization.name )
       content: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.find( organization_id )
+        organization = App.Organization.retrieve( organization_id )
         # insert data
         App.view('popover/organization')(
           organization: organization,

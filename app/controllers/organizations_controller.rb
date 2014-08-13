@@ -90,6 +90,11 @@ curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
         return
       end
     end
+    if params[:full]
+      full = Organization.full( params[:id] )
+      render :json => full
+      return
+    end
     model_show_render(Organization, params)
   end
 

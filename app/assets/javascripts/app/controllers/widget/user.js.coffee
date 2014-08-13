@@ -6,16 +6,8 @@ class App.WidgetUser extends App.ControllerDrox
   constructor: ->
     super
 
-    # show user
-    callback = (user) =>
-      @render(user)
-      if @callback
-        @callback(user)
-
-      # subscribe and reload data / fetch new data if triggered
-      @subscribeId = user.subscribe(@render)
-
-    App.User.retrieve( @user_id, callback )
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.User.full( @user_id, @render, false, true )
 
   release: =>
     App.User.unsubscribe(@subscribeId)
@@ -40,6 +32,34 @@ class App.WidgetUser extends App.ControllerDrox
         if item.name isnt 'firstname' && item.name isnt 'lastname'
           if item.info
             userData.push item
+
+    if user.preferences
+      items = []
+      if user.preferences.tickets_open > 0
+        item =
+          url: ''
+          name: 'open'
+          count: user.preferences.tickets_open
+          title: 'Open Tickets'
+          class: 'user-tickets'
+          data:  'open'
+        items.push item
+      if user.preferences.tickets_closed > 0
+        item =
+          url: ''
+          name: 'closed'
+          count: user.preferences.tickets_closed
+          title: 'Closed Tickets'
+          class: 'user-tickets'
+          data:  'closed'
+        items.push item
+
+      if items[0]
+        topic =
+          title: 'Tickets'
+          items: items
+        user['links'] = []
+        user['links'].push topic
 
     # insert userData
     @html @template(
@@ -72,7 +92,7 @@ class App.WidgetUser extends App.ControllerDrox
       )
 
   update: (e) =>
-    note = $(e.target).parent().find('[data-type=update]').val()
+    note = $(e.target).val()
     user = App.User.find( @user_id )
     if user.note isnt note
       user.updateAttributes( note: note )

@@ -7,11 +7,11 @@ class App.OrganizationZoom extends App.Controller
 
     @navupdate '#'
 
-    start = (organization) =>
-      @organization = organization
-      @render()
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.Organization.full( @organization_id, @render, false, true )
 
-    App.Organization.retrieve( @organization_id, start, true )
+  release: =>
+    App.Organization.unsubscribe(@subscribeId)
 
   meta: =>
     meta =
@@ -34,10 +34,9 @@ class App.OrganizationZoom extends App.Controller
     return false if !diff || _.isEmpty( diff )
     return true
 
-  release: =>
-    # nothing
+  render: (organization) =>
+    @organization = organization
 
-  render: =>
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
 

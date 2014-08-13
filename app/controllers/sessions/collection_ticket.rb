@@ -4,37 +4,37 @@ module ExtraCollection
   def session( collections, assets, user )
 
     # all ticket stuff
-    collections[ Ticket::StateType.to_app_model ]       = Ticket::StateType.all
-    collections[ Ticket::StateType.to_app_model ].each {|item|
+    collections[ Ticket::StateType.to_app_model ] = []
+    Ticket::StateType.all.each {|item|
       assets = item.assets(assets)
     }
-    collections[ Ticket::State.to_app_model ]           = Ticket::State.all
-    collections[ Ticket::State.to_app_model ].each {|item|
+    collections[ Ticket::State.to_app_model ] = []
+    Ticket::State.all.each {|item|
       assets = item.assets(assets)
     }
-    collections[ Ticket::Priority.to_app_model ]        = Ticket::Priority.all
-    collections[ Ticket::Priority.to_app_model ].each {|item|
+    collections[ Ticket::Priority.to_app_model ] = []
+    Ticket::Priority.all.each {|item|
       assets = item.assets(assets)
     }
-    collections[ Ticket::Article::Type.to_app_model ]   = Ticket::Article::Type.all
-    collections[ Ticket::Article::Type.to_app_model ].each {|item|
+    collections[ Ticket::Article::Type.to_app_model ] = []
+    Ticket::Article::Type.all.each {|item|
       assets = item.assets(assets)
     }
-    collections[ Ticket::Article::Sender.to_app_model ] = Ticket::Article::Sender.all
-    collections[ Ticket::Article::Sender.to_app_model ].each {|item|
+    collections[ Ticket::Article::Sender.to_app_model ] = []
+    Ticket::Article::Sender.all.each {|item|
       assets = item.assets(assets)
     }
     if !user.is_role('Customer')
 
       # all signatures
-      collections[ Signature.to_app_model ]     = Signature.all
-      collections[ Signature.to_app_model ].each {|item|
+      collections[ Signature.to_app_model ] = []
+      Signature.all.each {|item|
         assets = item.assets(assets)
       }
 
       # all email addresses
-      collections[ EmailAddress.to_app_model ]  = EmailAddress.all
-      collections[ EmailAddress.to_app_model ].each {|item|
+      collections[ EmailAddress.to_app_model ] = []
+      EmailAddress.all.each {|item|
         assets = item.assets(assets)
       }
     end

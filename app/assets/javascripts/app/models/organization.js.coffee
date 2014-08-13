@@ -20,10 +20,10 @@ class App.Organization extends App.Model
   @_fillUp: (data) ->
 
     # addd users of organization
-    if data['user_ids']
-      data['user_ids'] = []
-      for user_id in data['user_ids']
+    if data['member_ids']
+      data['members'] = []
+      for user_id in data['member_ids']
         if App.User.exists( user_id )
           user = App.User.find( user_id )
-          data['user_ids'].push user
+          data['members'].push user
     data

@@ -79,13 +79,13 @@ class App.Auth
     for key, value of data.config
       App.Config.set( key, value )
 
-    # load assets
-    if data.assets
-      App.Collection.loadAssets( data.assets )
-
     # refresh default collections
     if data.collections
       App.Collection.resetCollections( data.collections )
+
+    # load assets
+    if data.assets
+      App.Collection.loadAssets( data.assets )
 
     # store user data
     session = App.User.retrieve(data.session.id)

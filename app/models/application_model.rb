@@ -883,4 +883,25 @@ destory object dependencies, will be executed automatically
   def destroy_dependencies
   end
 
+=begin
+
+return object and assets
+
+  data = Model.full(123)
+  data = {
+    :id     => 123,
+    :assets => assets,
+  }
+
+=end
+
+  def self.full(id)
+    object = self.find(id)
+    assets = object.assets({})
+    {
+      :id     => id,
+      :assets => assets,
+    }
+  end
+
 end

@@ -7,11 +7,12 @@ class App.UserZoom extends App.Controller
 
     @navupdate '#'
 
-    start = (user) =>
-      @user = user
-      @render()
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.User.full( @user_id, @render, false, true )
 
-    App.User.retrieve( @user_id, start, true )
+
+  release: =>
+    App.User.unsubscribe(@subscribeId)
 
   meta: =>
     meta =
@@ -34,10 +35,9 @@ class App.UserZoom extends App.Controller
     return false if !diff || _.isEmpty( diff )
     return true
 
-  release: =>
-    # nothing
+  render: (user) =>
+    @user = user
 
-  render: =>
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
 
