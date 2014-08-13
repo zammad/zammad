@@ -42,11 +42,15 @@ class App.WidgetOrganization extends App.Controller
     )
 
     a = =>
-      @el.find('textarea').expanding()
-      @el.find('textarea').on('focus', =>
+      visible = @el.find('textarea').is(":visible")
+      if visible && !@el.find('textarea').expanding('active')
         @el.find('textarea').expanding()
+      @el.find('textarea').on('focus', (e) =>
+        visible = @el.find('textarea').is(":visible")
+        if visible && !@el.find('textarea').expanding('active')
+          @el.find('textarea').expanding()
       )
-    @delay( a, 80 )
+    @delay( a, 40 )
 
     # enable user popups
     @userPopups()
