@@ -31,8 +31,6 @@ check_daemons() {
       PUMA_PID=$(pgrep -F $WEB_SERVER_PID)
       PUMA_OK=$?
     fi
-    MISC_OK=0
-    MISC_PID=0
 }
 
 execute() {
@@ -68,7 +66,7 @@ stop() {
 restart() {
   cd $APP_ROOT
   check_daemons
-  if [ "$PUMA_OK" -ne 0 -a "$MISC" -ne 0 ]; then
+  if [ "$PUMA_OK" -eq 0 ]; then
     echo "Restarting $DESC..."
     kill -USR2 $PUMA_PID
     echo "$DESC restarted."
