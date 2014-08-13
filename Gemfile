@@ -37,9 +37,9 @@ gem 'daemons'
 gem 'simple-rss'
 
 # e. g. on linux we need a javascript execution
-# gem 'libv8', '~> 3.11.8'
-# gem 'execjs'
-# gem 'therubyracer'
+gem 'libv8', '~> 3.11.8'
+gem 'execjs'
+gem 'therubyracer'
 
 # e. g. for mysql you need to load mysql
 gem 'mysql2'
