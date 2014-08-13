@@ -15,10 +15,12 @@ APP_ROOT="/home/zammad/zammad"
 PID_PATH="$APP_ROOT/tmp/pids"
 WEB_SERVER_PID="$PID_PATH/puma.pid"
 WEBSOCKET_SERVER_PID="$PID_PATH/websocket.pid"
+SCHEDULER_SERVER_PID="$PID_PATH/websocket.pid"
 
 APP_USER="zammad"
 PUMA_OPTS="-p 3000 -d -e production --pidfile $WEB_SERVER_PID"
 WEBSOCKET_OPTS="-d"
+SCHEDULER_OPTS=""
 
 NAME="zammad"
 DESC="Zammad application"
@@ -36,6 +38,12 @@ check_daemons() {
     if [ -f $WEBSOCKET_SERVER_PID ]; then
       WEBSOCKET_PID=$(pgrep -F $WEBSOCKET_SERVER_PID)
       WEBSOCKET_OK=$?
+    fi
+    SCHEDULER_PID=1
+    SCHEDULER_OK=1
+    if [ -f $SCHEDULER_SERVER_PID ]; then
+      SCHEDULER_PID=$(pgrep -F $SCHEDULER_SERVER_PID)
+      SCHEDULER_OK=$?
     fi
 }
 
@@ -56,6 +64,7 @@ start() {
   else
     execute "RAILS_ENV=production script/websocket-server.rb start $WEBSOCKET_OPTS"
   fi
+  execute "RAILS_ENV=production script/scheduler.rb start $SCHEDULER_OPTS"
   echo "$DESC started"
 }
 
@@ -72,6 +81,7 @@ stop() {
       execute "RAILS_ENV=production script/websocket-server.rb stop $WEBSOCKET_OPTS"
       test -f "$WEBSOCKET_SERVER_PID" && rm -f "$WEBSOCKET_SERVER_PID" 
     fi 
+    execute "RAILS_ENV=production script/scheduler.rb stop $SCHEDULER_OPTS"
     echo "$DESC stopped"
   else
     ## Program is not running, exit with error.
@@ -88,6 +98,7 @@ restart() {
     kill -USR2 $PUMA_PID
     execute "RAILS_ENV=production script/websocket-server.rb stop $WEBSOCKET_OPTS"
     execute "RAILS_ENV=production script/websocket-server.rb start $WEBSOCKET_OPTS"
+    execute "RAILS_ENV=production script/scheduler.rb restart $SCHEDULER_OPTS"
     echo "$DESC restarted."
   else
     echo "Error, $NAME not running!"
@@ -108,6 +119,7 @@ status() {
   else
     echo "Websocket server (pid $WEBSOCKET_PID) is not running."
   fi
+  execute "RAILS_ENV=production script/scheduler.rb status $SCHEDULER_OPTS"
 }
 
 ## Check to see if we are running as root first.
