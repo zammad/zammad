@@ -14,11 +14,11 @@
 APP_ROOT="/home/zammad/zammad"
 PID_PATH="$APP_ROOT/tmp/pids"
 WEB_SERVER_PID="$PID_PATH/puma.pid"
-SOCKET_PATH="$APP_ROOT/tmp/sockets"
-SOCKET_FILE="$SOCKET_PATH/zammad.socket"
+WEBSOCKET_SERVER_PID="$PID_PATH/websocket.pid"
 
 APP_USER="zammad"
-DAEMON_OPTS="-p 3000 -d -e production --pidfile $WEB_SERVER_PID"
+PUMA_OPTS="-p 3000 -d -e production --pidfile $WEB_SERVER_PID"
+WEBSOCKET_OPTS="-d"
 
 NAME="zammad"
 DESC="Zammad application"
@@ -31,6 +31,12 @@ check_daemons() {
       PUMA_PID=$(pgrep -F $WEB_SERVER_PID)
       PUMA_OK=$?
     fi
+    WEBSOCKET_PID=-1
+    WEBSOCKET_OK=1
+    if [ -f $WEBSOCKET_SERVER_PID ]; then
+      WEBSOCKET_PID=$(pgrep -F $WEBSOCKET_SERVER_PID)
+      WEBSOCKET_OK=$?
+    fi
 }
 
 execute() {
@@ -42,19 +48,30 @@ start() {
   check_daemons
   if [ $PUMA_OK -eq 0 ]; then
     echo Puma is already running
-    exit 1
+  else
+    execute "RAILS_ENV=production puma $PUMA_OPTS"
   fi
-  execute "RAILS_ENV=production puma $DAEMON_OPTS"
+  if [ $WEBSOCKET_OK -eq 0 ]; then
+    echo Websocket server is already running
+  else
+    execute "RAILS_ENV=production script/websocket-server.rb start $WEBSOCKET_OPTS"
+  fi
   echo "$DESC started"
 }
 
 stop() {
   cd $APP_ROOT
   check_daemons
-  if [ "$PUMA_OK" -eq 0 ]; then
+  if [ "$PUMA_OK" -eq 0 -o $WEBSOCKET_OK -eq 0 ]; then
     ## Program is running, stop it.
-    kill -QUIT $PUMA_PID
-    test -f "$WEB_SERVER_PID" && rm -f "$WEB_SERVER_PID" 
+    if [ $PUMA_OK -eq 0 ]; then
+      kill -QUIT $PUMA_PID
+      test -f "$WEB_SERVER_PID" && rm -f "$WEB_SERVER_PID" 
+    fi
+    if [ $WEBSOCKET_OK -eq 0 ]; then
+      execute "RAILS_ENV=production script/websocket-server.rb stop $WEBSOCKET_OPTS"
+      test -f "$WEBSOCKET_SERVER_PID" && rm -f "$WEBSOCKET_SERVER_PID" 
+    fi 
     echo "$DESC stopped"
   else
     ## Program is not running, exit with error.
@@ -66,9 +83,11 @@ stop() {
 restart() {
   cd $APP_ROOT
   check_daemons
-  if [ "$PUMA_OK" -eq 0 ]; then
+  if [ "$PUMA_OK" -eq 0 -o WEBSOCKET_OK -eq 0 ]; then
     echo "Restarting $DESC..."
     kill -USR2 $PUMA_PID
+    execute "RAILS_ENV=production script/websocket-server.rb stop $WEBSOCKET_OPTS"
+    execute "RAILS_ENV=production script/websocket-server.rb start $WEBSOCKET_OPTS"
     echo "$DESC restarted."
   else
     echo "Error, $NAME not running!"
@@ -80,10 +99,14 @@ status() {
   cd $APP_ROOT
   check_daemons
   if [ $PUMA_OK -eq 0 ]; then
-    echo "$DESC / Puma with PID $PUMA_PID is running."
+    echo "$DESC / Puma (pid $PUMA_PID) is running."
   else
-    echo "$DESC is not running."
-    exit 1
+    echo "$DESC / Puma (pid $PUMA_PID) is not running."
+  fi
+  if [ $WEBSOCKET_OK -eq 0 ]; then
+    echo "Websocket server (pid $WEBSOCKET_PID) is running."
+  else
+    echo "Websocket server (pid $WEBSOCKET_PID) is not running."
   fi
 }
 
