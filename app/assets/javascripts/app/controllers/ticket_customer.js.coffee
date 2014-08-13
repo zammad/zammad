@@ -38,4 +38,4 @@ class App.TicketCustomer extends App.ControllerModal
       )
 
     # load user if not already exists
-    App.User.retrieve( @customer_id, callback )
+    App.User.full( @customer_id, callback )

@@ -1,7 +1,7 @@
 <div class="ticket-article-view">
   <div class="ticket-article well ticket-edit <% if @formChanged: %>form-changed<% end %>">
     <div class="avatar">
-      <img class="thumbnail user-popover" data-id="<%= @S('id') %>" src="<%- @S('image') %>" alt="">
+      <img class="thumbnail user-popover" data-id="<%= @S('id') %>" src="<%- @S('imageUrl') %>" alt="">
     </div>
     <div class="ticket-article-message">
       <div class="edit-title">

@@ -88,7 +88,7 @@ class App.Auth
       App.Collection.loadAssets( data.assets )
 
     # store user data
-    session = App.User.retrieve(data.session.id)
+    session = App.User.fullLocal(data.session.id)
     for key, value of session
       App.Session.set( key, value )
 

@@ -117,6 +117,9 @@ class App.Model extends Spine.Model
     return true if @id[0] isnt 'c'
     return false
 
+  @fullLocal: (id) ->
+    @_fillUp( App[ @className ].find( id ) )
+
   @full: (id, callback = false, force = false, bind = false) ->
     url = "#{@url}/#{id}?full=true"
     console.log('FULL', id, url, bind)
@@ -282,9 +285,11 @@ class App.Model extends Spine.Model
     # remember record id and callback
     App[ @constructor.className ].subscribe_item(@id, callback)
 
-  @_subscribe_bind: ->
-    if !@_bindDone
-      @_bindDone = true
+  @subscribe_item: (id, callback) ->
+
+    # init bind
+    if !@_subscribe_item_bindDone
+      @_subscribe_item_bindDone = true
 
       # subscribe and render data after local change
       @bind(
@@ -307,13 +312,18 @@ class App.Model extends Spine.Model
         events
         (item) =>
           if @SUBSCRIPTION_ITEM && @SUBSCRIPTION_ITEM[ item.id ]
-            @full( item.id, false, true )
+            genericObject = undefined
+            if App[ @className ].exists( item.id )
+              genericObject = App[ @className ].find( item.id )
+
+            callback = =>
+              if !genericObject || ( new Date(item.updated_at).toString() isnt new Date(genericObject.updated_at).toString() )
+                @full( item.id, false, true )
+
+            App.Delay.set(callback, 800, item.id, "full-#{@className}")
+
         'Item::Subscribe::' + @className
       )
-
-  @subscribe_item: (id, callback) ->
-    # init bind
-    @_subscribe_bind()
 
     # remember item callback
     if !@SUBSCRIPTION_ITEM

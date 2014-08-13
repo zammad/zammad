@@ -7,20 +7,17 @@ class App.UserZoom extends App.Controller
 
     @navupdate '#'
 
-    # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.User.full( @user_id, @render, false, true )
-
-
-  release: =>
-    App.User.unsubscribe(@subscribeId)
+    App.User.full( @user_id, @render )
 
   meta: =>
     meta =
       url: @url()
       id:  @user_id
-    if @user
-      meta.head  = @user.displayName()
-      meta.title = @user.displayName()
+
+    user = App.User.find( @user_id )
+    if user
+      meta.head  = user.displayName()
+      meta.title = user.displayName()
     meta
 
   url: =>
@@ -36,28 +33,32 @@ class App.UserZoom extends App.Controller
     return true
 
   render: (user) =>
-    @user = user
-
-    # update taskbar with new meta data
-    App.Event.trigger 'task:render'
 
     @html App.view('user_zoom')(
-      user:  @user
+      user:  user
+    )
+
+    new App.UpdateTastbar(
+      genericObject: user
+    )
+
+    new App.UpdateHeader(
+      el:            @el
+      genericObject: user
     )
 
     # start action controller
     new ActionRow(
       el:   @el.find('.action')
-      user: @user
+      user: user
       ui:   @
     )
 
     new Widgets(
       el:   @el.find('.widgets')
-      user: @user
+      user: user
       ui:   @
     )
-
 
 class Widgets extends App.Controller
   constructor: ->

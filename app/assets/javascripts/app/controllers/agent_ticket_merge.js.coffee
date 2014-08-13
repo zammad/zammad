@@ -29,7 +29,7 @@ class App.TicketMerge extends App.ControllerModal
     list = []
     for ticket_id in @ticket_ids_by_customer
       if ticket_id isnt @ticket.id
-        ticketItem = App.Ticket.retrieve( ticket_id )
+        ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
       el:       @el.find('#ticket-merge-customer-tickets'),
@@ -42,7 +42,7 @@ class App.TicketMerge extends App.ControllerModal
     list = []
     for ticket_id in @ticket_ids_recent_viewed
       if ticket_id isnt @ticket.id
-        ticketItem = App.Ticket.retrieve( ticket_id )
+        ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
       el:       @el.find('#ticket-merge-recent-tickets'),
@@ -59,7 +59,7 @@ class App.TicketMerge extends App.ControllerModal
     @el.delegate('[name="radio"]', 'click', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
-        ticket    = App.Ticket.retrieve( ticket_id )
+        ticket    = App.Ticket.fullLocal( ticket_id )
         $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
     )
 

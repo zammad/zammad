@@ -45,7 +45,7 @@ class Index extends App.Controller
     )
 
   success: (data, status, xhr) =>
-    App.User.retrieve(
+    App.User.full(
       App.Session.get( 'id' ),
       =>
         App.i18n.set( @locale )

@@ -90,10 +90,10 @@ class App.DashboardTicket extends App.Controller
     while i < end
       i = i + 1
       if @ticket_ids[ i - 1 ]
-        @tickets_in_table.push App.Ticket.retrieve( @ticket_ids[ i - 1 ] )
+        @tickets_in_table.push App.Ticket.fullLocal( @ticket_ids[ i - 1 ] )
 
     openTicket = (id,e) =>
-      ticket = App.Ticket.retrieve(id)
+      ticket = App.Ticket.fullLocal(id)
       @navigate ticket.uiUrl()
     callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
       attribute.title = object.title

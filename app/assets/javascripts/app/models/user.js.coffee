@@ -44,7 +44,7 @@ class App.User extends App.Model
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
 
     # set image url
-    data.image = @apiPath + '/users/image/' + data.image
+    data.imageUrl = @apiPath + '/users/image/' + data.image
 
     if data.organization_id
       data.organization = App.Organization.find(data.organization_id)

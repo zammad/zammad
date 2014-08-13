@@ -109,7 +109,7 @@ class Table extends App.ControllerContent
 
     @ticket_list_show = []
     for ticket_id in @ticket_ids
-      @ticket_list_show.push App.Ticket.retrieve( ticket_id )
+      @ticket_list_show.push App.Ticket.fullLocal( ticket_id )
 
     # remeber bulk attributes
     @bulk = data.bulk
@@ -185,7 +185,7 @@ class Table extends App.ControllerContent
       @el.find('.table-overview').append(table)
     else
       openTicket = (id,e) =>
-        ticket = App.Ticket.retrieve(id)
+        ticket = App.Ticket.fullLocal(id)
         @navigate ticket.uiUrl()
       callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
         attribute.title = object.title

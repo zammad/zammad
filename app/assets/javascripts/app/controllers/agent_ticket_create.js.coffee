@@ -369,7 +369,7 @@ class UserNew extends App.ControllerModal
           # start customer info controller
           ui.userInfo( user_id: user.id )
           ui.modalHide()
-        App.User.retrieve( @id, callbackReload , true )
+        App.User.full( @id, callbackReload , true )
 
       fail: ->
         ui.modalHide()

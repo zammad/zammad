@@ -11,7 +11,7 @@
       <input type="checkbox" value="<%= ticket.id %>" name="bulk" class="pull-left"/>
     </td>
     <td class="span1">
-      <img class="thumbnail user-popover" data-id="<%= ticket.customer_id %>" src="<%= ticket.customer.image %>" alt="">
+      <img class="thumbnail user-popover" data-id="<%= ticket.customer_id %>" src="<%= ticket.customer.imageUrl %>" alt="">
     </td>
     <td class="span10">
       <h3><a href="#" data-type="edit"><%= ticket.title %></a> <small><%= ticket.number %> <span class="humanTimeFromNow" data-time="<%= ticket.created_at %>">?</span></small></h3>
