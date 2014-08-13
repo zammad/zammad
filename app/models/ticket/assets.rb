@@ -27,12 +27,12 @@ returns
       data[ Ticket.to_app_model ] = {}
     end
     if !data[ Ticket.to_app_model ][ self.id ]
-      data[ Ticket.to_app_model ][ self.id ] = self.attributes
+      data[ Ticket.to_app_model ][ self.id ] = self.attributes_with_associations
     end
     ['created_by_id', 'updated_by_id', 'owner_id', 'customer_id'].each {|item|
       if self[ item ]
         if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
-          user = User.find( self[ item ] )
+          user = User.lookup( :id => self[ item ] )
           data = user.assets( data )
         end
       end

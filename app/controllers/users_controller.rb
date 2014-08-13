@@ -70,7 +70,7 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password}
     end
     users_all = []
     users.each {|user|
-      users_all.push User.find( user.id ).attributes_with_associations
+      users_all.push User.lookup( :id => user.id ).attributes_with_associations
     }
     render :json => users_all, :status => :ok
   end

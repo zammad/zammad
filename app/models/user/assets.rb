@@ -46,7 +46,7 @@ returns
       # get roles
       if attributes['role_ids']
         attributes['role_ids'].each {|role_id|
-          role = Role.find(role_id)
+          role = Role.lookup( :id => role_id )
           data = role.assets( data )
         }
       end
@@ -54,7 +54,7 @@ returns
       # get groups
       if attributes['group_ids']
         attributes['group_ids'].each {|group_id|
-          group = Group.find(group_id)
+          group = Group.lookup( :id => group_id )
           data = group.assets( data )
         }
       end
@@ -62,21 +62,21 @@ returns
       # get groups
       if attributes['organization_ids']
         attributes['organization_ids'].each {|organization_id|
-          organization = Organization.find(organization_id)
+          organization = Organization.lookup( :id => organization_id )
           data = organization.assets( data )
         }
       end
     end
     if self.organization_id
       if !data[ Organization.to_app_model ] || !data[ Organization.to_app_model ][ self.organization_id ]
-        organization = Organization.find( self.organization_id )
+        organization = Organization.lookup( :id => self.organization_id )
         data = organization.assets( data )
       end
     end
     ['created_by_id', 'updated_by_id'].each {|item|
       if self[ item ]
         if !data[ User.to_app_model ][ self[ item ] ]
-          user = User.find( self[ item ] )
+          user = User.lookup( :id => self[ item ] )
           data = user.assets( data )
         end
       end
