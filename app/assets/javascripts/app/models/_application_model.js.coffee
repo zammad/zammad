@@ -122,10 +122,8 @@ class App.Model extends Spine.Model
 
   @full: (id, callback = false, force = false, bind = false) ->
     url = "#{@url}/#{id}?full=true"
-    console.log('FULL', id, url, bind)
 
     # subscribe and reload data / fetch new data if triggered
-    #@subscribeId = organization.subscribe(@render)
     subscribeId = undefined
     if bind
       subscribeId = App[ @className ].subscribe_item(id, callback)
