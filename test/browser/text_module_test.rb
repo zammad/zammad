@@ -2,6 +2,25 @@
 require 'browser_test_helper'
 
 class TextModuleTest < TestCase
+
+  # create users
+  roles  = Role.where( :name => [ 'Agent' ] )
+  groups = Group.all
+
+  agent1 = User.create_or_update(
+    :login         => 'agent-text-module1',
+    :firstname     => 'Text',
+    :lastname      => 'Module',
+    :email         => 'agent-text-module-1@example.com',
+    :password      => 'agentpw',
+    :active        => true,
+    :roles         => roles,
+    :groups        => groups,
+    :updated_by_id => 1,
+    :created_by_id => 1,
+  )
+  agent1.save
+
   def test_I
     random = 'text_module_test_' + rand(999999).to_s
     random2 = 'text_module_test_' + rand(999999).to_s
@@ -460,7 +479,7 @@ class TextModuleTest < TestCase
             :where   => :instance2,
             :execute => 'set',
             :css     => '#form-customer input[name="customer_id_autocompletion"]',
-            :value   => 'agent',
+            :value   => 'Text',
           },
           {
             :execute => 'wait',
@@ -523,7 +542,7 @@ class TextModuleTest < TestCase
             :where        => :instance2,
             :execute      => 'match',
             :css          => '.active textarea[name=body]',
-            :value        => 'some content .+?Manag.+?' + random,
+            :value        => 'some content Module' + random,
             :no_quote     => true,
             :match_result => true,
           },
