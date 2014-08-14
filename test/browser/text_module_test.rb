@@ -433,6 +433,105 @@ class TextModuleTest < TestCase
           },
         ],
       },
+      {
+        :name     => 'change customer',
+        :action   => [
+
+          # create ticket
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '.active .action button',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '.active .action [data-type="customer"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'set',
+            :css     => '#form-customer input[name="customer_id_autocompletion"]',
+            :value   => 'agent',
+          },
+          {
+            :execute => 'wait',
+            :value   => 4,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'sendkey',
+            :css     => '#form-customer input[name="customer_id_autocompletion"]',
+            :value   => :arrow_down,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'sendkey',
+            :css     => '#form-customer input[name="customer_id_autocompletion"]',
+            :value   => :tab,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '.modal-content [type="submit"]',
+          },
+          {
+            :where   => :instance2,
+            :execute => 'wait',
+            :value   => 4,
+          },
+          {
+            :where    => :instance2,
+            :execute => 'set',
+            :css     => '.active textarea[name=body]',
+            :value   => '::' + random,
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => random,
+            :match_result => true,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '.-sew-list-item.selected',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where        => :instance2,
+            :execute      => 'match',
+            :css          => '.active textarea[name=body]',
+            :value        => 'some content .+?Manag.+?' + random,
+            :no_quote     => true,
+            :match_result => true,
+          },
+
+        ],
+      },
+
+
     ]
     browser_double_test(tests)
   end

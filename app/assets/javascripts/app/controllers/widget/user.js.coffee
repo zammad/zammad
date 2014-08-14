@@ -14,6 +14,10 @@ class App.WidgetUser extends App.ControllerDrox
 
   render: (user) =>
 
+    # execute callback on render/rerender
+    if @callback
+      @callback(user)
+
     # get display data
     userData = []
     for item2 in App.User.configure_attributes
