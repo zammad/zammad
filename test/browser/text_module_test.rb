@@ -2,25 +2,6 @@
 require 'browser_test_helper'
 
 class TextModuleTest < TestCase
-
-  # create users
-  roles  = Role.where( :name => [ 'Agent' ] )
-  groups = Group.all
-
-  agent1 = User.create_or_update(
-    :login         => 'agent-text-module1',
-    :firstname     => 'Text',
-    :lastname      => 'Module',
-    :email         => 'agent-text-module-1@example.com',
-    :password      => 'agentpw',
-    :active        => true,
-    :roles         => roles,
-    :groups        => groups,
-    :updated_by_id => 1,
-    :created_by_id => 1,
-  )
-  agent1.save
-
   def test_I
     random = 'text_module_test_' + rand(999999).to_s
     random2 = 'text_module_test_' + rand(999999).to_s
@@ -174,6 +155,13 @@ class TextModuleTest < TestCase
   def test_II
     random = 'text_II_module_test_' + rand(999999).to_s
 
+    user_rand = rand(999999).to_s
+    login     = 'agent-text-module-' + user_rand
+    firstname = 'Text' + user_rand
+    lastname  = 'Module' + user_rand
+    email     = 'agent-text-module-' + user_rand + '@example.com'
+    password  = 'agentpw'
+
     # user
     tests = [
       {
@@ -275,6 +263,22 @@ class TextModuleTest < TestCase
           },
 
 
+        ],
+      },
+
+      # create user
+      {
+        :name     => 'create user',
+        :action   => [
+          {
+            :where      => :instance1,
+            :execute    => 'create_user',
+            :login      => login,
+            :firstname  => firstname,
+            :lastname   => lastname,
+            :email      => email,
+            :password   => password,
+          },
         ],
       },
       {
@@ -542,7 +546,7 @@ class TextModuleTest < TestCase
             :where        => :instance2,
             :execute      => 'match',
             :css          => '.active textarea[name=body]',
-            :value        => 'some content Module' + random,
+            :value        => 'some content ' + lastname,
             :no_quote     => true,
             :match_result => true,
           },
