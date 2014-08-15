@@ -388,6 +388,12 @@ class TextModuleTest < TestCase
         :name     => 'verify zoom',
         :action   => [
 
+          {
+            :where   => :instance1,
+            :execute => 'click',
+            :css     => 'a[href="#manage"]',
+          },
+
           # create ticket
           {
             :where   => :instance2,
@@ -459,6 +465,12 @@ class TextModuleTest < TestCase
       {
         :name     => 'change customer',
         :action   => [
+
+          {
+            :where   => :instance1,
+            :execute => 'click',
+            :css     => 'a[href="#manage"]',
+          },
 
           # create ticket
           {
