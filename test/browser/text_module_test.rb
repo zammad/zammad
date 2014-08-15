@@ -483,7 +483,7 @@ class TextModuleTest < TestCase
             :where   => :instance2,
             :execute => 'set',
             :css     => '#form-customer input[name="customer_id_autocompletion"]',
-            :value   => 'Text',
+            :value   => firstname,
           },
           {
             :execute => 'wait',
@@ -547,10 +547,12 @@ class TextModuleTest < TestCase
             :execute      => 'match',
             :css          => '.active textarea[name=body]',
             :value        => 'some content ' + lastname,
-            :no_quote     => true,
             :match_result => true,
           },
-
+          {
+            :execute => 'wait',
+            :value   => 2,
+          },
         ],
       },
 
