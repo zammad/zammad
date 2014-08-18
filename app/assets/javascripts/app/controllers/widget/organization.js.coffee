@@ -6,16 +6,8 @@ class App.WidgetOrganization extends App.Controller
   constructor: ->
     super
 
-    # show organization
-    callback = (organization) =>
-      @render(organization)
-      if @callback
-        @callback(organization)
-
-      # subscribe and reload data / fetch new data if triggered
-      @subscribeId = organization.subscribe(@render)
-
-    App.Organization.retrieve( @organization_id, callback )
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.Organization.full( @organization_id, @render, false, true )
 
   release: =>
     App.Organization.unsubscribe(@subscribeId)
@@ -56,6 +48,9 @@ class App.WidgetOrganization extends App.Controller
       )
     @delay( a, 80 )
 
+    # enable user popups
+    @userPopups()
+
     ###
     @userTicketPopups(
       selector: '.user-tickets'
@@ -65,7 +60,7 @@ class App.WidgetOrganization extends App.Controller
     ###
 
   update: (e) =>
-    note   = $(e.target).parent().find('[data-type=update]').val()
+    note   = $(e.target).val()
     organization = App.Organization.find( @organization_id )
     if organization.note isnt note
       organization.updateAttributes( note: note )

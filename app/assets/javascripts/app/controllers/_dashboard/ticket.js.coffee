@@ -96,7 +96,7 @@ class App.DashboardTicket extends App.Controller
       i = i + 1
 
     openTicket = (id,e) =>
-      ticket = App.Ticket.retrieve(id)
+      ticket = App.Ticket.fullLocal(id)
       @navigate ticket.uiUrl()
     callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
       attribute.title = object.title

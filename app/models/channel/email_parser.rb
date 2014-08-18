@@ -122,6 +122,10 @@ class Channel::EmailParser
         data[:body] = mail.text_part.body.decoded
         data[:body] = Encode.conv( mail.text_part.charset, data[:body] )
 
+        if !data[:body].valid_encoding?
+          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+        end
+
         # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
@@ -129,7 +133,11 @@ class Channel::EmailParser
           filename = 'html-email'
           data[:body] = mail.html_part.body.to_s
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
-          data[:body] = html2ascii( data[:body] )
+          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+
+          if !data[:body].valid_encoding?
+            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          end
 
           # any other attachments
         else
@@ -188,6 +196,10 @@ class Channel::EmailParser
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
+        if !data[:body].valid_encoding?
+          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+        end
+
         # html part
       else
         filename = '-no name-'
@@ -195,7 +207,11 @@ class Channel::EmailParser
           filename = 'html-email'
           data[:body] = mail.body.decoded
           data[:body] = Encode.conv( mail.charset, data[:body] )
-          data[:body] = html2ascii( data[:body] )
+          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+
+          if !data[:body].valid_encoding?
+            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          end
 
           # any other attachments
         else

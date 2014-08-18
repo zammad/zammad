@@ -44,9 +44,9 @@ class App.TicketZoom extends App.Controller
       id:         @ticket_id
       iconClass:  "priority"
     if @ticket
-      @ticket     = App.Ticket.retrieve( @ticket.id )
-      meta.head   = @ticket.title
-      meta.title  = '#' + @ticket.number + ' - ' + @ticket.title
+      @ticket = App.Ticket.fullLocal( @ticket.id )
+      meta.head  = @ticket.title
+      meta.title = '#' + @ticket.number + ' - ' + @ticket.title
       meta.class  = "level-#{@ticket.priority_id}"
     meta
 
@@ -125,7 +125,7 @@ class App.TicketZoom extends App.Controller
     App.Collection.loadAssets( data.assets )
 
     # get data
-    @ticket = App.Ticket.retrieve( @ticket_id )
+    @ticket = App.Ticket.fullLocal( @ticket_id )
 
     # render page
     @render(force)
@@ -224,7 +224,7 @@ class TicketTitle extends App.Controller
   constructor: ->
     super
 
-    @ticket      = App.Ticket.retrieve( @ticket.id )
+    @ticket      = App.Ticket.fullLocal( @ticket.id )
     @subscribeId = @ticket.subscribe(@render)
     @render(@ticket)
 
@@ -334,7 +334,7 @@ class Edit extends App.Controller
 
   render: ->
 
-    ticket = App.Ticket.retrieve( @ticket.id )
+    ticket = App.Ticket.fullLocal( @ticket.id )
 
     @html App.view('ticket_zoom/edit')(
       ticket:     ticket
@@ -451,7 +451,7 @@ class Edit extends App.Controller
     @autosaveStop()
     params = @formParam(e.target)
 
-    ticket = App.Ticket.retrieve( @ticket.id )
+    ticket = App.Ticket.fullLocal( @ticket.id )
 
     @log 'notice', 'update', params, ticket
 
@@ -581,7 +581,7 @@ class ArticleView extends App.Controller
     # get all articles
     @articles = []
     for article_id in @ticket_article_ids
-      article = App.TicketArticle.retrieve( article_id )
+      article = App.TicketArticle.fullLocal( article_id )
       @articles.push article
 
     # rework articles

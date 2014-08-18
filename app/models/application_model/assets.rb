@@ -12,7 +12,7 @@ get all assets / related models for this user
 returns
 
   result = {
-    :users => {
+    :User => {
       123  => user_model_123,
       1234 => user_model_1234,
     }
@@ -26,23 +26,18 @@ returns
       data[ self.class.to_app_model ] = {}
     end
     if !data[ self.class.to_app_model ][ self.id ]
-      data[ self.class.to_app_model ][ self.id ] = self.attributes
+      data[ self.class.to_app_model ][ self.id ] = self.attributes_with_associations
     end
 
     return data if !self['created_by_id'] && !self['updated_by_id']
-    if !data[ User.to_app_model ]
-      data[ User.to_app_model ] = {}
-    end
-    if self['created_by_id']
-      if !data[ User.to_app_model ][ self['created_by_id'] ]
-        data[ User.to_app_model ][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
+    ['created_by_id', 'updated_by_id'].each {|item|
+      if self[ item ]
+        if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
+          user = User.lookup( :id => self[ item ] )
+          data = user.assets( data )
+        end
       end
-    end
-    if self['updated_by_id']
-      if !data[ User.to_app_model ][ self['updated_by_id'] ]
-        data[ User.to_app_model ][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
-      end
-    end
+    }
     data
   end
 

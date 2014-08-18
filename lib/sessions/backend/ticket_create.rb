@@ -45,7 +45,7 @@ class Sessions::Backend::TicketCreate
     users = {}
     create_attributes[:owner_id].each {|user_id|
       if !users[user_id]
-        users[user_id] = User.user_data_full(user_id)
+        users[user_id] = User.find(user_id).attributes
       end
     }
     data = {

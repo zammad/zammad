@@ -7,21 +7,17 @@ class App.OrganizationZoom extends App.Controller
 
     @navupdate '#'
 
-    start = (organization) =>
-      @organization = organization
-      @render()
-
-    App.Organization.retrieve( @organization_id, start, true )
+    App.Organization.full( @organization_id, @render )
 
   meta: =>
     meta =
       url: @url()
       id:  @organization_id
 
-    if @organization
-      meta.head       = @organization.displayName()
-      meta.title      = @organization.displayName()
-      meta.iconClass  = @organization.icon()
+    organization = App.Organization.find( @organization_id )
+    if organization
+      meta.head  = organization.displayName()
+      meta.title = organization.displayName()
     meta
 
   url: =>
@@ -36,27 +32,31 @@ class App.OrganizationZoom extends App.Controller
     return false if !diff || _.isEmpty( diff )
     return true
 
-  release: =>
-    # nothing
-
-  render: =>
-    # update taskbar with new meta data
-    App.Event.trigger 'task:render'
+  render: (organization) =>
 
     @html App.view('organization_zoom')(
-      organization:  @organization
+      organization:  organization
+    )
+
+    new App.UpdateTastbar(
+      genericObject: organization
+    )
+
+    new App.UpdateHeader(
+      el:            @el
+      genericObject: organization
     )
 
     # start action controller
     new ActionRow(
       el:           @el.find('.action')
-      organization: @organization
+      organization: organization
       ui:           @
     )
 
     new Widgets(
       el:           @el.find('.widgets')
-      organization: @organization
+      organization: organization
       ui:           @
     )
 

@@ -75,20 +75,22 @@ class App.Auth
     if type isnt 'check'
       App.Event.trigger( 'clearStore' )
 
-    # set avatar
-    data.session.image = App.Config.get('api_path') + '/users/image/' + data.session.image
-
     # update config
     for key, value of data.config
       App.Config.set( key, value )
 
-    # store user data
-    for key, value of data.session
-      App.Session.set( key, value )
-
     # refresh default collections
     if data.collections
       App.Collection.resetCollections( data.collections )
+
+    # load assets
+    if data.assets
+      App.Collection.loadAssets( data.assets )
+
+    # store user data
+    session = App.User.fullLocal(data.session.id)
+    for key, value of session
+      App.Session.set( key, value )
 
     # trigger auth ok with new session data
     App.Event.trigger( 'auth', data.session )

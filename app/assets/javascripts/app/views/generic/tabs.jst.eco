@@ -1,6 +1,6 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" role="tablist">
   <% for tab in @tabs: %>
-    <li><a href="#<%= tab.target %>" data-toggle="tab"><%- @T( tab.name ) %></a></li>
+    <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
   <% end %>
 </ul>
 <div class="tab-content"></div>

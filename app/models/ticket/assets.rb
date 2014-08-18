@@ -27,24 +27,16 @@ returns
       data[ Ticket.to_app_model ] = {}
     end
     if !data[ Ticket.to_app_model ][ self.id ]
-      data[ Ticket.to_app_model ][ self.id ] = self.attributes
+      data[ Ticket.to_app_model ][ self.id ] = self.attributes_with_associations
     end
-
-    if !data[ User.to_app_model ]
-      data[ User.to_app_model ] = {}
-    end
-    if !data[ User.to_app_model ][ self.owner_id ]
-      data[ User.to_app_model ][ self.owner_id ] = User.user_data_full( self.owner_id )
-    end
-    if !data[ User.to_app_model ][ self.customer_id ]
-      data[ User.to_app_model ][ self.customer_id ] = User.user_data_full( self.customer_id )
-    end
-    if !data[ User.to_app_model ][ self.created_by_id ]
-      data[ User.to_app_model ][ self.created_by_id ] = User.user_data_full( self.created_by_id )
-    end
-    if !data[ User.to_app_model ][ self.updated_by_id ]
-      data[ User.to_app_model ][ self.updated_by_id ] = User.user_data_full( self.updated_by_id )
-    end
+    ['created_by_id', 'updated_by_id', 'owner_id', 'customer_id'].each {|item|
+      if self[ item ]
+        if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
+          user = User.lookup( :id => self[ item ] )
+          data = user.assets( data )
+        end
+      end
+    }
     data
   end
 

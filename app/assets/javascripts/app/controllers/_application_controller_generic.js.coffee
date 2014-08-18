@@ -37,7 +37,7 @@ class App.ControllerGenericNew extends App.ControllerModal
     object.save(
       done: ->
         if ui.callback
-          item = App[ ui.genericObject ].retrieve(@id)
+          item = App[ ui.genericObject ].fullLocal(@id)
           ui.callback( item )
         ui.modalHide()
 
@@ -84,7 +84,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @item.save(
       done: ->
         if ui.callback
-          item = App[ ui.genericObject ].retrieve(@id)
+          item = App[ ui.genericObject ].fullLocal(@id)
           ui.callback( item )
         ui.modalHide()
 
@@ -269,14 +269,17 @@ class App.ControllerLevel2 extends App.ControllerContent
 #    window.scrollTo(0,0)
 
 class App.ControllerTabs extends App.Controller
+  events:
+    'click .nav-tabs [data-toggle="tab"]': 'tabRemember',
+
   constructor: ->
     super
 
   render: ->
+
     @html App.view('generic/tabs')(
       tabs: @tabs
     )
-    @el.find('.nav-tabs li:first').addClass('active')
 
     for tab in @tabs
       @el.find('.tab-content').append('<div class="tab-pane" id="' + tab.target + '"></div>')
@@ -285,7 +288,15 @@ class App.ControllerTabs extends App.Controller
         params.el = @el.find( '#' + tab.target )
         new tab.controller( params )
 
-    @el.find('.tab-content .tab-pane:first').addClass('active')
+    @lastActiveTab = @Config.get('lastTab')
+    if @lastActiveTab &&  @el.find('.nav-tabs li a[href="' + @lastActiveTab + '"]')[0]
+      @el.find('.nav-tabs li a[href="' + @lastActiveTab + '"]').tab('show')
+    else
+      @el.find('.nav-tabs li:first a').tab('show')
+
+  tabRemember: (e) =>
+    @lastActiveTab = $(e.target).attr('href')
+    @Config.set('lastTab', @lastActiveTab)
 
 class App.ControllerNavSidbar extends App.ControllerContent
   constructor: (params) ->

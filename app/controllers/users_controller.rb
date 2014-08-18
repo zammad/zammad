@@ -70,7 +70,7 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password}
     end
     users_all = []
     users.each {|user|
-      users_all.push User.user_data_full( user.id )
+      users_all.push User.lookup( :id => user.id ).attributes_with_associations
     }
     render :json => users_all, :status => :ok
   end
@@ -101,7 +101,14 @@ curl http://localhost/api/v1/users/#{id}.json -v -u #{login}:#{password}
         return
       end
     end
-    user = User.user_data_full( params[:id] )
+
+    if params[:full]
+      full = User.full( params[:id] )
+      render :json => full
+      return
+    end
+
+    user = User.find( params[:id] )
     render :json => user
   end
 
@@ -245,7 +252,7 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-T
         )
       end
 
-      user_new = User.user_data_full( user.id )
+      user_new = User.find( user.id )
       render :json => user_new, :status => :created
     rescue Exception => e
       render :json => { :error => e.message }, :status => :unprocessable_entity
@@ -309,7 +316,7 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
       end
 
       # get new data
-      user_new = User.user_data_full( params[:id] )
+      user_new = User.find( params[:id] )
       render :json => user_new, :status => :ok
     rescue Exception => e
       render :json => { :error => e.message }, :status => :unprocessable_entity

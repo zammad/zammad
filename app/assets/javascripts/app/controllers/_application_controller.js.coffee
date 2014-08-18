@@ -223,11 +223,11 @@ class App.Controller extends Spine.Controller
       placement:  position
       title: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.retrieve( ticket_id )
+        ticket = App.Ticket.fullLocal( ticket_id )
         App.i18n.escape( ticket.title )
       content: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.retrieve( ticket_id )
+        ticket = App.Ticket.fullLocal( ticket_id )
         ticket.humanTime = ui.humanTime(ticket.created_at)
         # insert data
         App.view('popover/ticket')(
@@ -257,11 +257,11 @@ class App.Controller extends Spine.Controller
       placement:  position
       title: ->
         user_id = $(@).data('id')
-        user = App.User.find( user_id )
-        App.i18n.escape( user.displayName() ) 
+        user = App.User.fullLocal( user_id )
+        App.i18n.escape( user.displayName() )
       content: ->
         user_id = $(@).data('id')
-        user = App.User.find( user_id )
+        user = App.User.fullLocal( user_id )
 
         # get display data
         data = []
@@ -303,11 +303,11 @@ class App.Controller extends Spine.Controller
       placement:  position
       title: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.find( organization_id )
+        organization = App.Organization.fullLocal( organization_id )
         App.i18n.escape( organization.name )
       content: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.find( organization_id )
+        organization = App.Organization.fullLocal( organization_id )
         # insert data
         App.view('popover/organization')(
           organization: organization,
@@ -523,3 +523,31 @@ class App.SessionMessage extends App.ControllerModal
 
     throw "Cant reload page!"
 
+class App.UpdateHeader extends App.Controller
+  constructor: ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = @genericObject.subscribe( @render )
+
+  release: =>
+    App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
+
+  render: (genericObject) =>
+    @el.find( '.page-header h1' ).html( genericObject.displayName() )
+
+
+class App.UpdateTastbar extends App.Controller
+  constructor: ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = @genericObject.subscribe( @update )
+
+  release: =>
+    App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
+
+  update: (genericObject) =>
+
+    # update taskbar with new meta data
+    App.Event.trigger 'task:render'

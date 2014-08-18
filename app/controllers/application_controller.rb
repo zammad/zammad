@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user,
   :authentication_check,
   :config_frontend,
-  :user_data_full,
   :is_role,
   :model_create_render,
   :model_update_render,
@@ -77,6 +76,7 @@ class ApplicationController < ActionController::Base
 
   # update session updated_at
   def session_update
+    #sleep 0.6
 
     # on many paralell requests, session got reinitialised if Time. is used, as workaround use DateTime.
     #session[:ping] = Time.now.utc.iso8601
@@ -318,6 +318,13 @@ class ApplicationController < ActionController::Base
 
   def model_show_render (object, params)
     begin
+
+      if params[:full]
+        generic_object_full = object.full( params[:id] )
+        render :json => generic_object_full, :status => :ok
+        return
+      end
+
       generic_object = object.find( params[:id] )
       model_show_render_item(generic_object)
     rescue Exception => e

@@ -3,6 +3,7 @@
 require 'digest/md5'
 
 class User < ApplicationModel
+  require 'user/assets'
   include User::Assets
   extend User::Search
   include User::SearchIndex
@@ -357,108 +358,6 @@ returns
 
     # delete token
     Token.where( :action => 'PasswordReset', :name => token ).first.destroy
-    return user
-  end
-
-  def self.find_fulldata(user_id)
-
-    cache = self.cache_get(user_id, true)
-    return cache if cache
-
-    # get user
-    user = User.find(user_id)
-    data = user.attributes
-
-    # do not show password
-    user['password'] = ''
-
-    # get linked accounts
-    data['accounts'] = {}
-    authorizations = user.authorizations() || []
-    authorizations.each do | authorization |
-      data['accounts'][authorization.provider] = {
-        :uid      => authorization[:uid],
-        :username => authorization[:username]
-      }
-    end
-
-    # set roles
-    roles = []
-    user.roles.select('id, name').where( :active => true ).each { |role|
-      roles.push role.attributes
-    }
-    data['roles'] = roles
-    data['role_ids'] = user.role_ids
-
-    groups = []
-    user.groups.select('id, name').where( :active => true ).each { |group|
-      groups.push group.attributes
-    }
-    data['groups'] = groups
-    data['group_ids'] = user.group_ids
-
-    organization = user.organization
-    if organization
-      data['organization'] = organization.attributes
-    end
-
-    organizations = []
-    user.organizations.select('id, name').where( :active => true ).each { |organization|
-      organizations.push organization.attributes
-    }
-    data['organizations'] = organizations
-    data['organization_ids'] = user.organization_ids
-
-    self.cache_set(user.id, data, true)
-
-    return data
-  end
-
-  def self.user_data_full (user_id)
-
-    # get user
-    user = User.find_fulldata(user_id)
-
-    # do not show password
-    user['password'] = ''
-
-    # TEMP: compat. reasons
-    user['preferences'] = {} if user['preferences'] == nil
-
-    items = []
-    if user['preferences'][:tickets_open].to_i > 0
-      item = {
-        :url   => '',
-        :name  => 'open',
-        :count => user['preferences'][:tickets_open] || 0,
-        :title => 'Open Tickets',
-        :class => 'user-tickets',
-        :data  => 'open'
-      }
-      items.push item
-    end
-    if user['preferences'][:tickets_closed].to_i > 0
-      item = {
-        :url   => '',
-        :name  => 'closed',
-        :count => user['preferences'][:tickets_closed] || 0,
-        :title => 'Closed Tickets',
-        :class => 'user-tickets',
-        :data  => 'closed'
-      }
-      items.push item
-    end
-
-    # show linked topics and items
-    if items.count > 0
-      topic = {
-        :title => 'Tickets',
-        :items => items,
-      }
-      user['links'] = []
-      user['links'].push topic
-    end
-
     return user
   end
 

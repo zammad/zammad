@@ -5,20 +5,20 @@ class App.UserZoom extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    start = (user) =>
-      @user = user
-      @render()
 
-    App.User.retrieve( @user_id, start, true )
+    @navupdate '#'
+
+    App.User.full( @user_id, @render )
 
   meta: =>
     meta =
       url: @url()
       id:  @user_id
 
-    if @user
-      meta.head       = @user.displayName()
-      meta.title      = @user.displayName()
+    user = App.User.find( @user_id )
+    if user
+      meta.head       = user.displayName()
+      meta.title      = user.displayName()
       meta.iconClass  = @user.icon()
     meta
 
@@ -34,30 +34,33 @@ class App.UserZoom extends App.Controller
     return false if !diff || _.isEmpty( diff )
     return true
 
-  release: =>
-    # nothing
-
-  render: =>
-    # update taskbar with new meta data
-    App.Event.trigger 'task:render'
+  render: (user) =>
 
     @html App.view('user_zoom')(
-      user:  @user
+      user:  user
+    )
+
+    new App.UpdateTastbar(
+      genericObject: user
+    )
+
+    new App.UpdateHeader(
+      el:            @el
+      genericObject: user
     )
 
     # start action controller
     new ActionRow(
       el:   @el.find('.action')
-      user: @user
+      user: user
       ui:   @
     )
 
     new Widgets(
       el:   @el.find('.widgets')
-      user: @user
+      user: user
       ui:   @
     )
-
 
 class Widgets extends App.Controller
   constructor: ->

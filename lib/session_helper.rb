@@ -3,31 +3,17 @@ module SessionHelper
 
     # auto population collections, store all here
     default_collection = {}
+    assets             = {}
 
     # load collections to deliver from external files
     dir = File.expand_path('../../', __FILE__)
     files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb" )
     for file in files
       load file
-      ExtraCollection.session( default_collection, user )
+      ExtraCollection.session( default_collection, assets, user )
     end
 
-    return default_collection
-  end
-  def self.push_collections(user)
-
-    # auto population collections, store all here
-    push_collections = {}
-
-    # load collections to deliver from external files
-    dir = File.expand_path('../../', __FILE__)
-    files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb" )
-    for file in files
-      load file
-      ExtraCollection.push( push_collections, user )
-    end
-
-    return push_collections
+    return default_collection, assets
   end
 
   def self.cleanup_expired
