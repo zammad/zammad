@@ -15,11 +15,12 @@ class App.UserZoom extends App.Controller
       url: @url()
       id:  @user_id
 
-    user = App.User.find( @user_id )
-    if user
+    if App.User.exists( @user_id )
+      user = App.User.find( @user_id )
+
       meta.head       = user.displayName()
       meta.title      = user.displayName()
-      meta.iconClass  = @user.icon()
+      meta.iconClass  = user.icon()
     meta
 
   url: =>

@@ -14,10 +14,13 @@ class App.OrganizationZoom extends App.Controller
       url: @url()
       id:  @organization_id
 
-    organization = App.Organization.find( @organization_id )
-    if organization
-      meta.head  = organization.displayName()
-      meta.title = organization.displayName()
+    if App.Organization.exists( @organization_id )
+      organization = App.Organization.find( @organization_id )
+
+      meta.head       = organization.displayName()
+      meta.title      = organization.displayName()
+      meta.iconClass  = organization.icon()
+
     meta
 
   url: =>
