@@ -1,10 +1,10 @@
-<form class="form-stacked pull-left update-box bulk-action-form">
+<form class="pull-left update-box bulk-action-form">
   <div id="form-ticket-bulk"></div>
   <input type="submit" class="btn primary submit" value="update">
 </form>
 <!--
 <form class="form-inline update-box bulk-action-form" role="form">
-  <div id="form-ticket-bulk" class="horizontal">
+  <div id="form-ticket-bulk2" class="horizontal">
     <div class="form-group">
       <label for="create_state_id" class="input-group-addon">Status</label>
       <select id="create_state_id" class="form-control" name="state_id">
