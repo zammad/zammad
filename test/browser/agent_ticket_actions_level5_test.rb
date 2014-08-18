@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class TextModuleTest < TestCase
+class AgentTicketActionLevel5Test < TestCase
   def test_I
     random = 'text_module_test_' + rand(999999).to_s
     random2 = 'text_module_test_' + rand(999999).to_s
@@ -435,7 +435,7 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 0.5,
           },
           {
             :where        => :instance2,
@@ -536,15 +536,15 @@ class TextModuleTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 0.2,
           },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
-          },
+#          {
+#            :where        => :instance2,
+#            :execute      => 'match',
+#            :css          => 'body',
+#            :value        => random,
+#            :match_result => true,
+#          },
           {
             :where   => :instance2,
             :execute => 'click',
