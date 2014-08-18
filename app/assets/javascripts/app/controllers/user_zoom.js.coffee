@@ -36,8 +36,14 @@ class App.UserZoom extends App.Controller
 
   render: (user) =>
 
+
     @html App.view('user_zoom')(
       user:  user
+    )
+
+    new Overviews(
+      el:   @el
+      user: user
     )
 
     new App.UpdateTastbar(
@@ -61,6 +67,74 @@ class App.UserZoom extends App.Controller
       user: user
       ui:   @
     )
+
+class Overviews extends App.Controller
+  constructor: ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.User.full( @user.id, @render, false, true )
+
+  release: =>
+    App.User.unsubscribe(@subscribeId)
+
+  render: (user) =>
+
+    plugins = {
+      main: {
+        my_assigned: {
+          controller: App.DashboardTicketSearch,
+          params: {
+            name: 'Tickets of User'
+            condition:
+              'tickets.state_id': [ 1,2,3,4,6 ]
+              'tickets.customer_id': user.id
+            order:
+              by:        'created_at'
+              direction: 'DESC'
+            view:
+              d: [ 'number', 'title', 'state', 'priority', 'created_at' ]
+              view_mode_default: 'd'
+          },
+        },
+      },
+    }
+    if user.organization_id
+      plugins.main.my_organization = {
+        controller: App.DashboardTicketSearch,
+        params: {
+          name: 'Tickets of Organization'
+          condition:
+            'tickets.state_id': [ 1,2,3,4,6 ]
+            'tickets.organization_id': user.organization_id
+          order:
+            by:        'created_at'
+            direction: 'DESC'
+          view:
+            d: [ 'number', 'title', 'customer', 'state', 'priority', 'created_at' ]
+            view_mode_default: 'd'
+        },
+      }
+
+    for area, plugins of plugins
+      for name, plugin of plugins
+        target = area + '_' + name
+        @el.find('.' + area + '-overviews').append('<div class="" id="' + target + '"></div>')
+        if plugin.controller
+          params = plugin.params || {}
+          params.el = @el.find( '#' + target )
+          new plugin.controller( params )
+
+    dndOptions =
+      handle:               'h2.can-move'
+      placeholder:          'can-move-plcaeholder'
+      tolerance:            'pointer'
+      distance:             15
+      opacity:              0.6
+      forcePlaceholderSize: true
+
+    @el.find( '#sortable' ).sortable( dndOptions )
+    @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
 class Widgets extends App.Controller
   constructor: ->

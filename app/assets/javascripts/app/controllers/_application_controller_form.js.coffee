@@ -657,9 +657,13 @@ class App.ControllerForm extends App.Controller
       item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
 
       a = =>
-        $( item[0] ).expanding()
-        $( item[0] ).on('focus', ->
+        visible = $( item[0] ).is(":visible")
+        if visible && !$( item[0] ).expanding('active')
           $( item[0] ).expanding()
+        $( item[0] ).on('focus', ->
+          visible = $( item[0] ).is(":visible")
+          if visible && !$( item[0] ).expanding('active')
+            $( item[0] ).expanding()
         )
       App.Delay.set( a, 80 )
 

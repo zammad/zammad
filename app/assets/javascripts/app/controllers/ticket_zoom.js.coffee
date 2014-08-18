@@ -157,14 +157,6 @@ class App.TicketZoom extends App.Controller
       if !@editWidget || _.isEmpty( App.TaskManager.get(@task_key).state )
         @editWidget = @Edit()
 
-    # show text module UI
-    if !@isRole('Customer')
-      new App.WidgetTextModule(
-        el:   @el.find('textarea')
-        data:
-          ticket: @ticket
-      )
-
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )
       offset = document.getElementById( 'article-' + @article_id ).offsetTop
@@ -331,6 +323,8 @@ class Edit extends App.Controller
 
   release: =>
     @autosaveStop()
+    if @subscribeIdTextModule
+      App.Ticket.unsubscribe(@subscribeIdTextModule)
 
   render: ->
 
@@ -428,6 +422,19 @@ class Edit extends App.Controller
 
     # enable user popups
     @userPopups()
+
+    # show text module UI
+    if !@isRole('Customer')
+      textModule = new App.WidgetTextModule(
+        el:   @el.find('textarea')
+        data:
+          ticket: ticket
+      )
+      callback = (ticket) =>
+        textModule.reload(
+          ticket: ticket
+        )
+      @subscribeIdTextModule = ticket.subscribe( callback )
 
   autosaveStop: =>
     @clearInterval( 'autosave' )

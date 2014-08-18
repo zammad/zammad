@@ -300,7 +300,7 @@ class App.Model extends Spine.Model
 
       # subscribe and render data after local change
       @bind(
-        'refresh change'
+        'change'
         (items) =>
 
           # check if result is array or singel item
@@ -310,7 +310,26 @@ class App.Model extends Spine.Model
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
               item = App[ @className ]._fillUp( item )
-              callback(item)
+              callback(item, 'change')
+      )
+
+      @changeTable = {}
+      @bind(
+        'refresh'
+        (items) =>
+
+          # check if result is array or singel item
+          if !_.isArray(items)
+            items = [items]
+
+          for item in items
+            for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
+
+              # only trigger callbacks if object has changed
+              if !@changeTable[key] || @changeTable[key] isnt item.updated_at
+                @changeTable[key] = item.updated_at
+                item = App[ @className ]._fillUp( item )
+                callback(item, 'refresh')
       )
 
       # subscribe and render data after server change
