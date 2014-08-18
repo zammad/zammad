@@ -1,3 +1,8 @@
+<form class="form-stacked pull-left update-box bulk-action-form">
+  <div id="form-ticket-bulk"></div>
+  <input type="submit" class="btn primary submit" value="update">
+</form>
+<!--
 <form class="form-inline update-box bulk-action-form" role="form">
   <div id="form-ticket-bulk" class="horizontal">
     <div class="form-group">
@@ -19,14 +24,15 @@
         <option value="1">1 niedrig</option>
         <option value="2">2 normal</option>
         <option value="3">3 hoch</option>
-      </select>        
-      <!-- 
+      </select>
+
+
         there can't be any other elements in .input-group
-      -->
-      <!-- 
+
         <span class="help-inline"></span>
         <span class="help-block"></span> 
-      -->
+
+
     </div>
     <div class="form-group">
       <label for="create_group_id" class="input-group-addon">Gruppe</label>
@@ -53,3 +59,4 @@
     </div>
   </div>
 </form>
+-->

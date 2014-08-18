@@ -297,26 +297,34 @@ class Table extends App.ControllerContent
     @fetch()
     @render()
 
+  articleTypeFilter = (items) =>
+    for item in items
+      if item.name is 'note'
+        return [item]
+    items
+
   bulk_form: =>
     @configure_attributes_ticket = [
       { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
       { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
       { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: '', item_class: ''  },
       { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' },
+      { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: articleTypeFilter, default: '9', translate: true, class: 'medium' },
+      { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
+      { name: 'body',         display: 'Text',     tag: 'textarea', rows: 8, null: true, upload: false },
     ]
 
     # render init page
     html = $( App.view('agent_ticket_view/bulk')() )
-    # new App.ControllerForm(
-    #   el: html.find('#form-ticket-bulk'),
-    #   model: {
-    #     configure_attributes: @configure_attributes_ticket,
-    #     className:            'create'
-    #   },
-    #   form_data: @bulk,
-    #   no_fieldset: true
-    # )
-#    html.delegate('.bulk-action-form', 'submit', (e) =>
+    new App.ControllerForm(
+      el: html.find('#form-ticket-bulk')
+      model:
+        configure_attributes: @configure_attributes_ticket
+        className:            'create'
+      form_data:   @bulk
+      no_fieldset: true
+    )
+    #html.delegate('.bulk-action-form', 'submit', (e) =>
     html.bind('submit', (e) =>
       e.preventDefault()
       @bulk_submit(e)
@@ -356,10 +364,39 @@ class Table extends App.ControllerContent
 
 #      @log 'notice', 'update', params, ticket_update, ticket
 
+      # validate article
+      if params['body']
+        article = new App.TicketArticle
+        params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
+        params.ticket_id = ticket.id
+        params.form_id   = @form_id
+
+        sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+        type              = App.TicketArticleType.find( params['type_id'] )
+        params.sender_id  = sender.id
+
+        if !params['internal']
+          params['internal'] = false
+
+        @log 'notice', 'update article', params, sender
+        article.load(params)
+        errors = article.validate()
+        if errors
+          @log 'error', 'update article', errors
+          @formEnable(e)
+          return
+
       ticket.load(ticket_update)
       ticket.save(
         done: (r) =>
           @bulk_count_index++
+
+          # reset form after save
+          if article
+            article.save(
+              fail: (r) =>
+                @log 'error', 'update article', r
+            )
 
           # refresh view after all tickets are proceeded
           if @bulk_count_index == @bulk_count
