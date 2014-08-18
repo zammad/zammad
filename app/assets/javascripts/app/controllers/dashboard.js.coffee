@@ -2,7 +2,7 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    
+
     # check authentication
     return if !@authenticate()
 

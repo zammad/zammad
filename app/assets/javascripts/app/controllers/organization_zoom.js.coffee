@@ -38,6 +38,11 @@ class App.OrganizationZoom extends App.Controller
       organization:  organization
     )
 
+    new Overviews(
+      el:   @el
+      organization: organization
+    )
+
     new App.UpdateTastbar(
       genericObject: organization
     )
@@ -59,6 +64,55 @@ class App.OrganizationZoom extends App.Controller
       organization: organization
       ui:           @
     )
+
+class Overviews extends App.Controller
+  constructor: ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.Organization.full( @organization.id, @render, false, true )
+
+  release: =>
+    App.Organization.unsubscribe(@subscribeId)
+
+  render: (organization) =>
+
+    plugins =
+      main:
+        my_organization:
+          controller: App.DashboardTicketSearch,
+          params:
+            name: 'Tickets of Organization'
+            condition:
+              'tickets.state_id': [ 1,2,3,4,6 ]
+              'tickets.organization_id': organization.id
+            order:
+              by:        'created_at'
+              direction: 'DESC'
+            view:
+              d: [ 'number', 'title', 'customer', 'state', 'priority', 'created_at' ]
+              view_mode_default: 'd'
+
+    for area, plugins of plugins
+      for name, plugin of plugins
+        target = area + '_' + name
+        @el.find('.' + area + '-overviews').append('<div class="" id="' + target + '"></div>')
+        if plugin.controller
+          params = plugin.params || {}
+          params.el = @el.find( '#' + target )
+          new plugin.controller( params )
+
+    dndOptions =
+      handle:               'h2.can-move'
+      placeholder:          'can-move-plcaeholder'
+      tolerance:            'pointer'
+      distance:             15
+      opacity:              0.6
+      forcePlaceholderSize: true
+
+    @el.find( '#sortable' ).sortable( dndOptions )
+    @el.find( '#sortable-sidebar' ).sortable( dndOptions )
+
 
 class Widgets extends App.Controller
   constructor: ->

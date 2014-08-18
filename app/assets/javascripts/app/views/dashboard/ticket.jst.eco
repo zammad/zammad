@@ -1,7 +1,7 @@
   <div class="span9">
     <div class="page-header clearfix">
       <div class="page-header-title">
-        <h2 class="can-move"><%- @T( @overview.name ) %> <small><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a></small></h2>
+        <h2 class="can-move"><%- @T( @overview.name ) %> <small><% if @overview.id: %><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a><% end %></small></h2>
       </div>
       <div class="page-header-meta">
           <ul class="pagination">
