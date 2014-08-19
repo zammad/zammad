@@ -1,49 +1,57 @@
 <% for article in @articles: %>
-<!--
 <div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
-  <div class="horizontal<%= ' reverse' if article.sender.name is 'Customer' %>">
-    <div class="avatar" style="background-image: url(<%= article.created_by.image %>)"></div>
-    <div class="flex">
-      <div class="text-bubble"><div class="bubble-arrow"></div><%- article.html %></div>
--->
-  <div class="ticket-article ticket-article-item <% if article.internal is true: %> internal<% end %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
-    <div class="avatar">
-      <img class="thumbnail user-popover" data-id="<%= article.created_by_id %>" src="<%= article.created_by.imageUrl %>" alt="">
+  <div class="horizontal<%= ' reverse' if article.sender.name isnt 'Agent' %>">
+    <div class="avatar" style="background-image: url(<%= article.created_by.imageUrl %>)">
+
       <ul>
         <li style="font-size: 10px;"><%- @T(article.type.name) %></li>
         <% if article.type.name is 'email': %><li style="font-size: 10px;"><a href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= article.id %>"><%- @T( 'raw' ) %></a></li><% end %>
       </ul>
+
+      <% if article.actions: %>
+        <% for action in article.actions: %>
+          -
+          <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%- @T( action.name ) %></a>
+        <% end %>
+      <% end %>
     </div>
-    <div class="ticket-article-message">
-      <div class="ticket-article-meta">
+    <div class="flex">
+
+
+      <div class="show-on-text-bubble-hover">
         <% if article.from: %>
-          <strong title="<%- @Ti( 'From' ) %>: <%= article.from %>"><%= article.from %></strong>
-          <% if article.actions: %>
-            <% for action in article.actions: %>
-              -
-              <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%- @T( action.name ) %></a>
-            <% end %>
-          <% end %>
-         - <span class="humanTimeFromNow" data-time="<%- article.created_at %>">?</span>
+          <div title="<%- @Ti( 'From' ) %>: <%= article.from %>"><%- @T( 'From' ) %>: <%= article.from %></div>
         <% end %>
         <% if article.to: %>
-          <div title="<%- @Ti( 'To' ) %>: <%= article.to %>"><%= article.to %></div>
+          <div title="<%- @Ti( 'To' ) %>: <%= article.to %>"><%- @T( 'To' ) %>: <%= article.to %></div>
         <% end %>
         <% if article.cc: %>
-          <div title="<%- @Ti( 'Cc' ) %>: <%= article.cc %>"><%= article.cc %></div>
+          <div title="<%- @Ti( 'Cc' ) %>: <%= article.cc %>"><%- @T( 'Cc' ) %>: <%= article.cc %></div>
         <% end %>
         <% if article.subject: %>
-          <div title="<%- @Ti( 'Subject' ) %>: <%= article.subject %>"><%= article.subject %></div>
-        <% end %>
-        <% if article.attachments: %>
-          <div>
-          <% for attachment in article.attachments: %>
-            <a href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment" class="attachment" title="<%= attachment.size %>"><%= attachment.filename %></a>
-          <% end %>
-          </div>
+          <div title="<%- @Ti( 'Subject' ) %>: <%= article.subject %>"><%- @T( 'Subject' ) %>: <%= article.subject %></div>
         <% end %>
       </div>
+
+      <% if article.attachments: %>
+        <div class="always-shown">
+        <% for attachment in article.attachments: %>
+          <a href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment" class="attachment" title="<%= attachment.size %>"><%= attachment.filename %></a>
+        <% end %>
+        </div>
+      <% end %>
+
+      <div class="text-bubble"><div class="bubble-arrow"></div><%- article.html %></div>
+<!--
+  <div class="ticket-article ticket-article-item <% if article.internal is true: %> internal<% end %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
+    <div class="avatar">
+      <img class="thumbnail user-popover" data-id="<%= article.created_by_id %>" src="<%= article.created_by.imageUrl %>" alt="">
+
+    </div>
+    <div class="ticket-article-message">
+
       <div style="white-space:pre-wrap;" class="message"><%- article.html %></div>
+-->
     </div>
   </div>
   <time class="task-meta humanTimeFromNow" datetime="<%- article.created_at %>" data-time="<%- article.created_at %>">?</time>

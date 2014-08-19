@@ -209,6 +209,9 @@ class App.TicketZoom extends App.Controller
         ui:      @
       )
 
+    # enable user popups
+    @userPopups()
+
 class TicketTitle extends App.Controller
   events:
     'blur .ticket-title-update': 'update'
