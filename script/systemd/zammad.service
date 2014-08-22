@@ -1,0 +1,12 @@
+[Unit]
+Description=Zammad Application
+
+[Service]
+Type=forking
+User=zammad
+WorkingDirectory=/homer/zammad/zammad
+Environment=RAILS_ENV=production
+ExecStart=puma -p 3000 -d -e production
+
+[Install]
+WantedBy=multi-user.target
