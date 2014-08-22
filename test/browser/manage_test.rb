@@ -20,54 +20,12 @@ class ManageTest < TestCase
             :css     => 'a[href="#manage/users"]',
           },
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name=login]',
-            :value   => 'some login' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="firstname"]',
-            :value   => 'Manage Firstname' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="lastname"]',
-            :value   => 'Manage Lastname' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="email"]',
-            :value   => user_email,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="password"]',
-            :value   => 'some-pass',
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="password_confirm"]',
-            :value   => 'some-pass',
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal input[name="role_ids"][value="3"]',
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.submit',
+            :execute    => 'create_user',
+            :login      => 'some login' + random,
+            :firstname  => 'Manage Firstname' + random,
+            :lastname   => 'Manage Lastname' + random,
+            :email      => user_email,
+            :password   => 'some-pass',
           },
           {
             :execute  => 'watch_for',
@@ -145,12 +103,16 @@ class ManageTest < TestCase
             :value   => random,
           },
           {
+            :execute => 'wait',
+            :value   => 3,
+          },
+          {
             :execute => 'click',
             :css     => '.table-overview tr:last-child td',
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute => 'set',
@@ -168,12 +130,12 @@ class ManageTest < TestCase
           },
           {
             :execute  => 'watch_for',
-            :area     => 'body',
+            :area     => 'body table',
             :value    => 'some sla update ' + random,
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 4,
           },
           {
             :execute => 'click',
@@ -189,7 +151,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 3,
           },
           {
             :execute      => 'match',

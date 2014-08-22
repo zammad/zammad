@@ -364,7 +364,9 @@ class TicketsController < ApplicationController
     tickets = Ticket.search(
       :limit        => params[:limit],
       :query        => params[:term],
+      :condition    => params[:condition],
       :current_user => current_user,
+      :detail       => params[:detail]
     )
     assets = {}
     ticket_result = []
@@ -375,8 +377,9 @@ class TicketsController < ApplicationController
 
     # return result
     render :json => {
-      :tickets => ticket_result,
-      :assets  => assets,
+      :tickets       => ticket_result,
+      :tickets_count => tickets.count,
+      :assets        => assets,
     }
   end
 

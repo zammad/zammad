@@ -253,8 +253,46 @@ class TestCase < Test::Unit::TestCase
           return
         end
         sleep 0.33
-      } 
+      }
       assert( false, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+      return
+    elsif action[:execute] == 'create_user'
+
+      instance.find_element( { :css => 'a[href="#manage"]' } ).click
+      instance.find_element( { :css => 'a[href="#manage/users"]' } ).click
+      sleep 2
+      instance.find_element( { :css => 'a[data-type="new"]' } ).click
+      sleep 2
+      element = instance.find_element( { :css => '.modal input[name=login]' } )
+      element.clear
+      element.send_keys( action[:login] )
+      element = instance.find_element( { :css => '.modal input[name=firstname]' } )
+      element.clear
+      element.send_keys( action[:firstname] )
+      element = instance.find_element( { :css => '.modal input[name=lastname]' } )
+      element.clear
+      element.send_keys( action[:lastname] )
+      element = instance.find_element( { :css => '.modal input[name=email]' } )
+      element.clear
+      element.send_keys( action[:email] )
+      element = instance.find_element( { :css => '.modal input[name=password]' } )
+      element.clear
+      element.send_keys( action[:password] )
+      element = instance.find_element( { :css => '.modal input[name=password_confirm]' } )
+      element.clear
+      element.send_keys( action[:password] )
+      instance.find_element( { :css => '.modal input[name="role_ids"][value="3"]' } ).click
+      instance.find_element( { :css => '.modal button.submit' } ).click
+      (1..14).each {|loop|
+        element = instance.find_element( { :css => 'body' } )
+        text = element.text
+        if text =~ /#{Regexp.quote(action[:lastname])}/
+          assert( true, "(#{test[:name]}) user created" )
+          return
+        end
+        sleep 0.5
+      }
+      assert( true, "(#{test[:name]}) user creation failed" )
       return
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
