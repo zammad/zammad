@@ -261,7 +261,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     user = User.lookup(:id => 1)
     ticket = Ticket.all.last
-    RecentView.log( ticket, user )
+    RecentView.log( ticket.class.to_s, ticket.id user )
     recent_viewed_client1 = Sessions::Backend::RecentViewed.new(user, false, '123-1')
 
     # get as stream
@@ -278,7 +278,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     result1 = recent_viewed_client1.push
     assert( !result1, "check recent_viewed - recall 2" )
 
-    RecentView.log( ticket, user )
+    RecentView.log( ticket.class.to_s, ticket.id, user )
 
     sleep 20
 

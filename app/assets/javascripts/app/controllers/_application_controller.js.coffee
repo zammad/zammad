@@ -446,6 +446,18 @@ class App.Controller extends Spine.Controller
     else
       fetch(params)
 
+  recentView: (object, o_id) =>
+    params =
+      object: object
+      o_id:   o_id
+    App.Ajax.request(
+      id:    "recent_view_#{object}_#{o_id}"
+      type:  'POST'
+      url:   @Config.get('api_path') + '/recent_viewed'
+      data:  JSON.stringify(params)
+      processData: true
+    )
+
   ws_send: (data) ->
     App.Event.trigger( 'ws:send', JSON.stringify(data) )
 

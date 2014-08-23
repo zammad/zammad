@@ -34,6 +34,9 @@ class App.UserZoom extends App.Controller
 
   render: (user) =>
 
+    if !@doNotLog
+      @doNotLog = 1
+      @recentView( 'User', @user_id )
 
     @html App.view('user_zoom')(
       user:  user

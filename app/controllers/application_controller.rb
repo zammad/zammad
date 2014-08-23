@@ -223,10 +223,6 @@ class ApplicationController < ActionController::Base
     return false
   end
 
-  def log_view (object)
-    RecentView.log( object, current_user )
-  end
-
   def config_frontend
 
     # config

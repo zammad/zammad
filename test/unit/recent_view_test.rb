@@ -29,13 +29,13 @@ class RecentViewTest < ActiveSupport::TestCase
     RecentView.user_log_destroy(user1)
 
 
-    RecentView.log( ticket1, user1 )
+    RecentView.log( ticket1.class.to_s, ticket1.id, user1 )
     sleep 1
-    RecentView.log( ticket2, user1 )
+    RecentView.log( ticket2.class.to_s, ticket2.id,, user1 )
     sleep 1
-    RecentView.log( ticket1, user1 )
+    RecentView.log( ticket1.class.to_s, ticket1.id, user1 )
     sleep 1
-    RecentView.log( ticket1, user1 )
+    RecentView.log( ticket1.class.to_s, ticket1.id, user1 )
 
     list = RecentView.list( user1 )
     assert( list[0]['o_id'], ticket1.id )

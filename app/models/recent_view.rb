@@ -3,14 +3,14 @@
 class RecentView < ApplicationModel
   belongs_to :object_lookup,           :class_name => 'ObjectLookup'
 
-  def self.log( object, user )
+  def self.log( object, o_id, user )
 
     # lookups
-    object_lookup_id = ObjectLookup.by_name( object.class.to_s )
+    object_lookup_id = ObjectLookup.by_name( object )
 
     # create entry
     record = {
-      :o_id              => object.id,
+      :o_id              => o_id,
       :object_lookup_id  => object_lookup_id.to_i,
       :created_by_id     => user.id,
     }
