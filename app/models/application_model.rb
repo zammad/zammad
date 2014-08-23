@@ -31,6 +31,8 @@ class ApplicationModel < ActiveRecord::Base
   after_update  :search_index_update
   after_destroy :search_index_destroy
 
+  after_destroy :recent_view_destroy
+
   # create instance accessor
   class << self
     attr_accessor :activity_stream_support_config, :history_support_config, :search_index_support_config
@@ -817,6 +819,27 @@ store attachments for this object
     end
   end
 
+=begin
+
+return object and assets
+
+  data = Model.full(123)
+  data = {
+    :id     => 123,
+    :assets => assets,
+  }
+
+=end
+
+  def self.full(id)
+    object = self.find(id)
+    assets = object.assets({})
+    {
+      :id     => id,
+      :assets => assets,
+    }
+  end
+
   private
 
   def attachments_buffer
@@ -844,6 +867,19 @@ store attachments for this object
       )
     end
     attachments_buffer = nil
+  end
+
+=begin
+
+delete object recent viewed list, will be executed automatically
+
+  model = Model.find(123)
+  model.recent_view_destroy
+
+=end
+
+  def recent_view_destroy
+    RecentView.log_destroy( self.class.to_s, self.id )
   end
 
 =begin
@@ -881,27 +917,6 @@ destory object dependencies, will be executed automatically
 =end
 
   def destroy_dependencies
-  end
-
-=begin
-
-return object and assets
-
-  data = Model.full(123)
-  data = {
-    :id     => 123,
-    :assets => assets,
-  }
-
-=end
-
-  def self.full(id)
-    object = self.find(id)
-    assets = object.assets({})
-    {
-      :id     => id,
-      :assets => assets,
-    }
   end
 
 end

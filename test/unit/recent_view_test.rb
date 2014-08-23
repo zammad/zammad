@@ -26,7 +26,7 @@ class RecentViewTest < ActiveSupport::TestCase
     )
     assert( ticket2, "ticket created" )
     user1   = User.find(2)
-    #RecentView.user_log_destroy(user1)
+    RecentView.user_log_destroy(user1)
 
 
     RecentView.log( ticket1, user1 )
@@ -39,21 +39,21 @@ class RecentViewTest < ActiveSupport::TestCase
 
     list = RecentView.list( user1 )
     assert( list[0]['o_id'], ticket1.id )
-    assert( list[0]['recent_view_object'], 'Ticket' )
+    assert( list[0]['object'], 'Ticket' )
 
     assert( list[1]['o_id'], ticket1.id )
-    assert( list[1]['recent_view_object'], 'Ticket' )
+    assert( list[1]['object'], 'Ticket' )
 
     assert( list[2]['o_id'], ticket2.id )
-    assert( list[2]['recent_view_object'], 'Ticket' )
+    assert( list[2]['object'], 'Ticket' )
 
     assert( list[3]['o_id'], ticket1.id )
-    assert( list[3]['recent_view_object'], 'Ticket' )
+    assert( list[3]['object'], 'Ticket' )
 
     ticket1.destroy
     ticket2.destroy
 
-    #list = RecentView.list( user1 )
-    #assert( !list[0], 'check if recent view list is empty' )
+    list = RecentView.list( user1 )
+    assert( !list[0], 'check if recent view list is empty' )
   end
 end
