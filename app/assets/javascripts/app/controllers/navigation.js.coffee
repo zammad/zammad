@@ -316,13 +316,28 @@ class App.Navigation extends App.Controller
       if prio is 8000
         divider   = true
         navheader = 'Recent Viewed'
-      ticket = App.Ticket.find( item.o_id )
+
+      item.link  = ''
+      item.title = '???'
+
+      # convert backend name space to local name space
+      item.object = item.object.replace("::", '')
+
+      # lookup real data
+      if App[item.object]
+        object           = App[item.object].find( item.o_id )
+        item.link        = object.uiUrl()
+        item.title       = object.displayName()
+        item.object_name = object.objectDisplayName()
+
+      item.created_by = App.User.find( item.created_by_id )
+
       prio++
-      NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
+      NavBarRight['RecendViewed::' + item.o_id + item.object + '-' + prio ] = {
         prio:      prio
         parent:    '#current_user'
-        name:      item.recent_view_object + ' (' + ticket.title + ')'
-        target:    ticket.uiUrl()
+        name:      item.object + ' (' + item.title + ')'
+        target:    item.link
         divider:   divider
         navheader: navheader
       }
