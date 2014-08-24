@@ -79,7 +79,6 @@ class ObjectTypeLookupTest < ActiveSupport::TestCase
 
     assert_not_equal( object_lookup_name, type_lookup_name, 'verify lookups' )
 
-puts "ll #{ObjectLookup.cache_object.inspect}"
   end
 
 end
