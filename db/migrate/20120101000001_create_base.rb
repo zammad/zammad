@@ -144,6 +144,11 @@ class CreateBase < ActiveRecord::Migration
     add_index :translations, [:source]
     add_index :translations, [:locale]
 
+    create_table :object_lookups do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :object_lookups, [:name],   :unique => true
   end
 end
 

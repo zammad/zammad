@@ -7,8 +7,8 @@ class UpdateActivityStreamObjectLookup < ActiveRecord::Migration
       entry.update_attribute( :activity_stream_object_id, lookup_id )
       entry.cache_delete
     }
-
     drop_table :activity_stream_objects
+    Cache.clear
   end
 
   def down

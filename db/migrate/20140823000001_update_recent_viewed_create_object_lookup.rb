@@ -1,11 +1,13 @@
 class UpdateRecentViewedCreateObjectLookup < ActiveRecord::Migration
   def up
 
-    create_table :object_lookups do |t|
-      t.column :name,         :string, :limit => 250,   :null => false
-      t.timestamps
+    if !ActiveRecord::Base.connection.table_exists? 'object_lookups'
+      create_table :object_lookups do |t|
+        t.column :name,         :string, :limit => 250,   :null => false
+        t.timestamps
+      end
+      add_index :object_lookups, [:name],   :unique => true
     end
-    add_index :object_lookups, [:name],   :unique => true
     RecentView.all.each {|entry|
       ro = RecentView::Object.find(entry.recent_view_object_id)
       lookup_id = ObjectLookup.by_name( ro.name )
@@ -15,6 +17,8 @@ class UpdateRecentViewedCreateObjectLookup < ActiveRecord::Migration
 
     rename_column :recent_views, :recent_view_object_id, :object_lookup_id
     drop_table :recent_view_objects
+
+    Cache.clear
   end
 
   def down
