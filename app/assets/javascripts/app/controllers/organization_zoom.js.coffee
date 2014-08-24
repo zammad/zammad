@@ -37,6 +37,10 @@ class App.OrganizationZoom extends App.Controller
 
   render: (organization) =>
 
+    if !@doNotLog
+      @doNotLog = 1
+      @recentView( 'Organization', @organization_id )
+
     @html App.view('organization_zoom')(
       organization:  organization
     )

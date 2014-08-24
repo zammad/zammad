@@ -2,11 +2,8 @@
 
 class ActivityStream < ApplicationModel
   self.table_name = 'activity_streams'
-  belongs_to :activity_stream_type,     :class_name => 'ActivityStream::Type'
-  belongs_to :activity_stream_object,   :class_name => 'ActivityStream::Object'
-
-  @@cache_type = {}
-  @@cache_object = {}
+  belongs_to :activity_stream_type,     :class_name => 'TypeLookup'
+  belongs_to :activity_stream_object,   :class_name => 'ObjectLookup'
 
 =begin
 
@@ -27,10 +24,10 @@ add a new activity entry for an object
 
     # lookups
     if data[:type]
-      type = self.type_lookup( data[:type] )
+      type_id = TypeLookup.by_name( data[:type] )
     end
     if data[:object]
-      object = self.object_lookup( data[:object] )
+      object_id = ObjectLookup.by_name( data[:object] )
     end
 
     role_id = nil
@@ -45,9 +42,9 @@ add a new activity entry for an object
     # check newest entry - is needed
     result = ActivityStream.where(
       :o_id                        => data[:o_id],
-      #     :activity_stream_type_id     => type.id,
+      #     :activity_stream_type_id     => type_id,
       :role_id                     => role_id,
-      :activity_stream_object_id   => object.id,
+      :activity_stream_object_id   => object_id,
       :created_by_id               => data[:created_by_id]
     ).order('created_at DESC, id DESC').first
 
@@ -57,8 +54,8 @@ add a new activity entry for an object
     # create history
     record = {
       :o_id                        => data[:o_id],
-      :activity_stream_type_id     => type.id,
-      :activity_stream_object_id   => object.id,
+      :activity_stream_type_id     => type_id,
+      :activity_stream_object_id   => object_id,
       :role_id                     => role_id,
       :group_id                    => data[:group_id],
       :created_at                  => data[:created_at],
@@ -77,9 +74,9 @@ remove whole activity entries of an object
 =end
 
   def self.remove( object_name, o_id )
-    object = self.object_lookup( object_name )
+    object_id = ObjectLookup.by_name( object_name )
     ActivityStream.where(
-      :activity_stream_object_id  => object.id,
+      :activity_stream_object_id  => object_id,
       :o_id                       => o_id,
     ).destroy_all
   end
@@ -112,8 +109,8 @@ return all activity entries of an user
     list = []
     stream.each do |item|
       data = item.attributes
-      data['object']  = self.object_lookup_id( data['activity_stream_object_id'] ).name
-      data['type']    = self.type_lookup_id( data['activity_stream_type_id'] ).name
+      data['object']  = ObjectLookup.by_id( data['activity_stream_object_id'] )
+      data['type']    = TypeLookup.by_id( data['activity_stream_type_id'] )
       data.delete('activity_stream_object_id')
       data.delete('activity_stream_type_id')
       list.push data
@@ -122,68 +119,6 @@ return all activity entries of an user
   end
 
   private
-
-  def self.type_lookup_id( id )
-
-    # use cache
-    return @@cache_type[ id ] if @@cache_type[ id ]
-
-    # lookup
-    type = ActivityStream::Type.lookup( :id => id )
-    @@cache_type[ id ] = type
-    type
-  end
-
-  def self.type_lookup( name )
-
-    # use cache
-    return @@cache_type[ name ] if @@cache_type[ name ]
-
-    # lookup
-    type = ActivityStream::Type.lookup( :name => name )
-    if type
-      @@cache_type[ name ] = type
-      return type
-    end
-
-    # create
-    type = ActivityStream::Type.create(
-      :name   => name
-    )
-    @@cache_type[ name ] = type
-    type
-  end
-
-  def self.object_lookup_id( id )
-
-    # use cache
-    return @@cache_object[ id ] if @@cache_object[ id ]
-
-    # lookup
-    object = ActivityStream::Object.lookup( :id => id )
-    @@cache_object[ id ] = object
-    object
-  end
-
-  def self.object_lookup( name )
-
-    # use cache
-    return @@cache_object[ name ] if @@cache_object[ name ]
-
-    # lookup
-    object = ActivityStream::Object.lookup( :name => name )
-    if object
-      @@cache_object[ name ] = object
-      return object
-    end
-
-    # create
-    object = ActivityStream::Object.create(
-      :name   => name
-    )
-    @@cache_object[ name ] = object
-    object
-  end
 
   class Object < ApplicationModel
   end

@@ -57,6 +57,10 @@ class App.Model extends Spine.Model
       else if @department
         name = "#{name} (#{@department})"
       return name
+    if @email
+      return @email
+    if @title
+      return @title
     return '???'
 
   icon: (user) ->

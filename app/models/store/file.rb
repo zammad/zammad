@@ -57,6 +57,8 @@ class Store::File < ApplicationModel
   end
 
   # move file from one to other provider
+  # e. g. Store::File.move('File', 'DB')
+  # e. g. Store::File.move('DB', 'File')
   def self.move(source, target)
     adapter_source = load_adapter("Store::Provider::#{ source }")
     adapter_target = load_adapter("Store::Provider::#{ target }")

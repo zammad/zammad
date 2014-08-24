@@ -16,7 +16,6 @@ class App.TicketZoom extends App.Controller
     @ticket_id      = params.ticket_id
     @article_id     = params.article_id
     @signature      = undefined
-    @doNotLog       = params['doNotLog'] || 0
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
@@ -73,7 +72,7 @@ class App.TicketZoom extends App.Controller
     @ajax(
       id:    'ticket_zoom_' + ticket_id
       type:  'GET'
-      url:   @apiPath + '/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
+      url:   @apiPath + '/ticket_full/' + ticket_id
       processData: true
       success: (data, status, xhr) =>
 
@@ -108,7 +107,10 @@ class App.TicketZoom extends App.Controller
         # remove task
         App.TaskManager.remove( @task_key )
     )
-    @doNotLog = 1
+
+    if !@doNotLog
+      @doNotLog = 1
+      @recentView( 'Ticket', ticket_id )
 
   load: (data, force) =>
 

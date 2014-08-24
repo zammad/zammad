@@ -239,11 +239,6 @@ class TicketsController < ApplicationController
     ticket = Ticket.find( params[:id] )
     return if !ticket_permission( ticket )
 
-    # log object as viewed
-    if !params[:do_not_log] || params[:do_not_log].to_i == 0
-      log_view( ticket )
-    end
-
     # get signature
     signature = {}
     if ticket.group.signature

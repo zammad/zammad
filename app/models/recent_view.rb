@@ -1,28 +1,30 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class RecentView < ApplicationModel
-  belongs_to :recent_view_object,           :class_name => 'RecentView::Object'
+  belongs_to :object_lookup,           :class_name => 'ObjectLookup'
 
-  @@cache_object = {}
-
-  def self.log( object, user )
+  def self.log( object, o_id, user )
 
     # lookups
-    recent_view_object = self.object_lookup( object.class.to_s )
+    object_lookup_id = ObjectLookup.by_name( object )
 
     # create entry
     record = {
-      :o_id                   => object.id,
-      :recent_view_object_id  => recent_view_object.id,
+      :o_id                   => o_id,
+      :recent_view_object_id  => object_lookup_id.to_i,
       :created_by_id          => user.id,
     }
     RecentView.create(record)
   end
 
   def self.log_destroy( requested_object, requested_object_id )
-    RecentView.where( :recent_view_object_id => RecentView::Object.where( :name => requested_object ) ).
+    RecentView.where( :recent_view_object_id => ObjectLookup.by_name( requested_object ) ).
     where( :o_id => requested_object_id ).
     destroy_all
+  end
+
+  def self.user_log_destroy( user )
+    RecentView.where( :created_by_id => user.id ).destroy_all
   end
 
   def self.list( user, limit = 10 )
@@ -33,8 +35,8 @@ class RecentView < ApplicationModel
     list = []
     recent_views.each { |item|
       data = item.attributes
-      data['recent_view_object'] = self.object_lookup_id( data['recent_view_object_id'] ).name
-      data.delete( 'history_object_id' )
+      data['object'] = ObjectLookup.by_id( data['recent_view_object_id'] )
+      data.delete( 'recent_view_object_id' )
       list.push data
     }
     list
@@ -48,61 +50,17 @@ class RecentView < ApplicationModel
     ticket_ids = []
     recent_viewed.each {|item|
 
-      # load article ids
-      #      if item.recent_view_object == 'Ticket'
-      ticket = Ticket.find( item['o_id'] )
-      ticket_ids.push ticket.id
-      #      end
-      #      if item.recent_view_object 'Ticket::Article'
-      #        tickets.push Ticket::Article.find(item.o_id)
-      #      end
-      #      if item.recent_view_object 'User'
-      #        tickets.push User.find(item.o_id)
-      #      end
+      # get related objects
+      require item['object'].to_filename
+      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      assets = record.assets(assets)
 
-      assets = ticket.assets(assets)
     }
     return {
       :recent_viewed => recent_viewed,
-      :ticket_ids    => ticket_ids,
       :assets        => assets,
     }
   end
-
-  private
-
-  def self.object_lookup_id( id )
-
-    # use cache
-    return @@cache_object[ id ] if @@cache_object[ id ]
-
-    # lookup
-    history_object = RecentView::Object.lookup( :id => id )
-    @@cache_object[ id ] = history_object
-    history_object
-  end
-
-  def self.object_lookup( name )
-
-    # use cache
-    return @@cache_object[ name ] if @@cache_object[ name ]
-
-    # lookup
-    recent_view_object = RecentView::Object.lookup( :name => name )
-    if recent_view_object
-      @@cache_object[ name ] = recent_view_object
-      return recent_view_object
-    end
-
-    # create
-    recent_view_object = RecentView::Object.create(
-      :name => name
-    )
-    @@cache_object[ name ] = recent_view_object
-    recent_view_object
-  end
-
   class Object < ApplicationModel
   end
-
 end
