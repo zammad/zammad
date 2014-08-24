@@ -10,15 +10,15 @@ class RecentView < ApplicationModel
 
     # create entry
     record = {
-      :o_id              => o_id,
-      :object_lookup_id  => object_lookup_id.to_i,
-      :created_by_id     => user.id,
+      :o_id                   => o_id,
+      :recent_view_object_id  => object_lookup_id.to_i,
+      :created_by_id          => user.id,
     }
     RecentView.create(record)
   end
 
   def self.log_destroy( requested_object, requested_object_id )
-    RecentView.where( :object_lookup_id => ObjectLookup.by_name( requested_object ) ).
+    RecentView.where( :recent_view_object_id => ObjectLookup.by_name( requested_object ) ).
     where( :o_id => requested_object_id ).
     destroy_all
   end
@@ -35,8 +35,8 @@ class RecentView < ApplicationModel
     list = []
     recent_views.each { |item|
       data = item.attributes
-      data['object'] = ObjectLookup.by_id( data['object_lookup_id'] )
-      data.delete( 'object_lookup_id' )
+      data['object'] = ObjectLookup.by_id( data['recent_view_object_id'] )
+      data.delete( 'recent_view_object_id' )
       list.push data
     }
     list

@@ -15,9 +15,7 @@ class UpdateRecentViewedCreateObjectLookup < ActiveRecord::Migration
       entry.cache_delete
     }
 
-    rename_column :recent_views, :recent_view_object_id, :object_lookup_id
     drop_table :recent_view_objects
-
     Cache.clear
   end
 
