@@ -1,6 +1,6 @@
 class CreateBase < ActiveRecord::Migration
   def up
-    
+
     create_table :sessions do |t|
       t.string :session_id, :null => false
       t.text :data
@@ -149,6 +149,13 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps
     end
     add_index :object_lookups, [:name],   :unique => true
+
+    create_table :type_lookups do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :type_lookups, [:name],   :unique => true
+
   end
 end
 

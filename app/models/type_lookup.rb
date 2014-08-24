@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class ObjectLookup < ApplicationModel
+class TypeLookup < ApplicationModel
   @@cache_object = {}
 
   def self.by_id( id )
