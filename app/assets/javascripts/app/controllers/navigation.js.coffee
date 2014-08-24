@@ -336,7 +336,7 @@ class App.Navigation extends App.Controller
       NavBarRight['RecendViewed::' + item.o_id + item.object + '-' + prio ] = {
         prio:      prio
         parent:    '#current_user'
-        name:      item.object + ' (' + item.title + ')'
+        name:      App.i18n.translateInline(item.object) + ' (' + item.title + ')'
         target:    item.link
         divider:   divider
         navheader: navheader
