@@ -31,7 +31,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     RecentView.log( ticket1.class.to_s, ticket1.id, user1 )
     sleep 1
-    RecentView.log( ticket2.class.to_s, ticket2.id,, user1 )
+    RecentView.log( ticket2.class.to_s, ticket2.id, user1 )
     sleep 1
     RecentView.log( ticket1.class.to_s, ticket1.id, user1 )
     sleep 1
