@@ -1,9 +1,11 @@
 <% for article in @articles: %>
-<div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
+<div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
   <div class="horizontal<%= ' reverse' if article.sender.name isnt 'Agent' %>">
     <div class="avatar" style="background-image: url(<%= article.created_by.imageUrl %>)"></div>
     <div class="article-content flex">
-      <div class="article-meta top">
+      <div class="more"><%- @T('more') %></div>
+      <div class="close-details hide"><%- @T('close details') %></div>
+      <div class="article-meta top hide">
       <% if article.from: %>
         <div class="horizontal article-meta-row" title="<%- @Ti( 'From' ) %>: <%= article.from %>">
           <div class="article-meta-key contain-text"><%- @T( 'From' ) %></div>
@@ -29,8 +31,8 @@
         </div>
       <% end %>
       </div>
-      <div class="text-bubble"><div class="bubble-arrow"></div><%- article.html %></div>
-      <div class="article-meta bottom">
+      <div class="text-bubble <%= ' internal' if article.internal is true %>"><div class="bubble-arrow"></div><%- article.html %></div>
+      <div class="article-meta bottom hide">
         <div class="horizontal article-meta-row">
           <div class="article-meta-key"><%- @T( 'Kanal' ) %></div>
           <div class="article-meta-value">

@@ -582,6 +582,8 @@ class ArticleView extends App.Controller
     'click [data-type=internal]':   'public_internal'
     'click .show_toogle':           'show_toogle'
     'click [data-type=reply]':      'reply'
+    'click .more':                  'more_toogle'
+    'click .close-details':         'more_toogle'
 #    'click [data-type=reply-all]':  'replyall'
 
   constructor: ->
@@ -642,6 +644,19 @@ class ArticleView extends App.Controller
       else
         $(e.target).text( App.i18n.translateContent('See more') )
         $(e.target).next('div').addClass('hide')
+
+  more_toogle: (e) ->
+    e.preventDefault()
+    if !$(e.target).parent().find('.article-meta.top').hasClass('hide')
+      $(e.target).parent().find('.more').removeClass('hide')
+      $(e.target).parent().find('.close-details').addClass('hide')
+      $(e.target).parent().find('.article-meta.top').addClass('hide')
+      $(e.target).parent().find('.article-meta.bottom').addClass('hide')
+    else
+      $(e.target).parent().find('.more').addClass('hide')
+      $(e.target).parent().find('.close-details').removeClass('hide')
+      $(e.target).parent().find('.article-meta.top').removeClass('hide')
+      $(e.target).parent().find('.article-meta.bottom').removeClass('hide')
 
   checkIfSignatureIsNeeded: (type) =>
 

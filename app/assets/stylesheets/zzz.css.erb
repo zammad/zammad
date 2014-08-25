@@ -2440,6 +2440,12 @@ footer {
     box-shadow: none;
   }
 
+  .ticket-article-item .text-bubble.internal {
+    background: #f2def2;
+    border-color: #eed3d7;
+    box-shadow: none;
+  }
+
   .new-article .text-bubble {
     padding: 0;
     border-color: #b3b3b3;
@@ -2486,7 +2492,7 @@ footer {
       top: 15px;
       overflow: hidden;
     }
-    
+
     .bubble-arrow:after {
       content: "";
       position: absolute;
@@ -2498,6 +2504,11 @@ footer {
       border: 1px solid hsl(240,4%,95%);
       box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
       transform: rotate(-45deg);
+    }
+
+    .ticket-article-item .text-bubble.internal .bubble-arrow:after {
+      background: #f2def2;
+      border: #eed3d7;
     }
 
     .customer.ticket-article-item .bubble-arrow {
