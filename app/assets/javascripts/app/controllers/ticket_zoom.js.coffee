@@ -627,12 +627,11 @@ class ArticleView extends App.Controller
       internal: internal
     )
 
-    # runtime update
-    for article in @articles
-      if article_id is article.id
-        article['internal'] = internal
-
-    @render()
+    # runntime update
+    if internal
+      $(e.target).closest('.article-content').find('.text-bubble').addClass('internal')
+    else
+      $(e.target).closest('.article-content').find('.text-bubble').removeClass('internal')
 
   show_toogle: (e) ->
     e.preventDefault()
@@ -647,16 +646,16 @@ class ArticleView extends App.Controller
 
   more_toogle: (e) ->
     e.preventDefault()
-    if !$(e.target).parent().find('.article-meta.top').hasClass('hide')
-      $(e.target).parent().find('.more').removeClass('hide')
-      $(e.target).parent().find('.close-details').addClass('hide')
-      $(e.target).parent().find('.article-meta.top').addClass('hide')
-      $(e.target).parent().find('.article-meta.bottom').addClass('hide')
+    if !$(e.target).closest('.article-content').find('.article-meta.top').hasClass('hide')
+      $(e.target).closest('.article-content').find('.more').removeClass('hide')
+      $(e.target).closest('.article-content').find('.close-details').addClass('hide')
+      $(e.target).closest('.article-content').find('.article-meta.top').addClass('hide')
+      $(e.target).closest('.article-content').find('.article-meta.bottom').addClass('hide')
     else
-      $(e.target).parent().find('.more').addClass('hide')
-      $(e.target).parent().find('.close-details').removeClass('hide')
-      $(e.target).parent().find('.article-meta.top').removeClass('hide')
-      $(e.target).parent().find('.article-meta.bottom').removeClass('hide')
+      $(e.target).closest('.article-content').find('.more').addClass('hide')
+      $(e.target).closest('.article-content').find('.close-details').removeClass('hide')
+      $(e.target).closest('.article-content').find('.article-meta.top').removeClass('hide')
+      $(e.target).closest('.article-content').find('.article-meta.bottom').removeClass('hide')
 
   checkIfSignatureIsNeeded: (type) =>
 
