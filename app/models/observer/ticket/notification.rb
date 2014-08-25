@@ -169,84 +169,13 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
   def self.send_notify(data, ticket, article)
 
-    # find recipients
-    recipients = []
-
-    # group of agents to work on
-    if data[:recipient] == 'group'
-      recipients = ticket.agent_of_group()
-
-      # owner
-    elsif data[:recipient] == 'owner'
-      if ticket.owner_id != 1
-        recipients.push ticket.owner
-      end
-
-      # customer
-    elsif data[:recipient] == 'customer'
-      if ticket.customer_id != 1
-        # temporarily disabled
-        #        recipients.push ticket.customer
-      end
-
-      # owner or group of agents to work on
-    elsif data[:recipient] == 'to_work_on'
-      if ticket.owner_id != 1
-        recipients.push ticket.owner
-      else
-        recipients = ticket.agent_of_group()
-      end
-    end
-
-    # send notifications
-    recipient_list = ''
-    notification_subject = ''
-    recipients.each do |user|
-      next if !user.email || user.email == ''
-
-      # add recipient_list
-      if recipient_list != ''
-        recipient_list += ','
-      end
-      recipient_list += user.email.to_s
-
-      # prepare subject & body
-      notification = {}
-      [:subject, :body].each { |key|
-        notification[key.to_sym] = NotificationFactory.build(
-          :locale  => user.locale,
-          :string  => data[key.to_sym],
-          :objects => {
-            :ticket    => ticket,
-            :article   => article,
-            :recipient => user,
-          }
-        )
-      }
-      notification_subject = notification[:subject]
-
-      # rebuild subject
-      notification[:subject] = ticket.subject_build( notification[:subject] )
-
-      # send notification
-      NotificationFactory.send(
-        :recipient => user,
-        :subject   => notification[:subject],
-        :body      => notification[:body]
-      )
-    end
-
-    # add history record
-    if recipient_list != ''
-      History.add(
-        :o_id                   => ticket.id,
-        :history_type           => 'notification',
-        :history_object         => 'Ticket',
-        :value_from             => notification_subject,
-        :value_to               => recipient_list,
-        :created_by_id          => article.created_by_id || 1
-      )
-    end
+    # send background job
+    params = {
+      :ticket_id => ticket.id,
+      :article   => article.id,
+      :data      => data,
+    }
+    Delayed::Job.enqueue( Observer::Ticket::Article::Notification::BackgroundJob.new( params ) )
   end
 
   def after_create(record)
