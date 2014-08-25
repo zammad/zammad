@@ -130,6 +130,17 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_equal( messages.count, 1, 'messages count')
     assert_equal( 'ooo123123123123123123', messages[0]['msg'], 'messages broadcast 1')
 
+    # send dedicated message to user
+    Sessions.send_to( agent1.id, { :msg => 'ooo1231231231231231234'} )
+    messages = Sessions.queue(client_id1)
+    assert_equal( messages.count, 1, 'messages count')
+    assert_equal( 'ooo1231231231231231234', messages[0]['msg'], 'messages send 1')
+
+    messages = Sessions.queue(client_id2)
+    assert_equal( messages.count, 0, 'messages count')
+
+    messages = Sessions.queue(client_id3)
+    assert_equal( messages.count, 0, 'messages count')
 
     # start jobs
     jobs = Thread.new {
