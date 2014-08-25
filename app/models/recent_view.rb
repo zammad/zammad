@@ -3,6 +3,10 @@
 class RecentView < ApplicationModel
   belongs_to :object_lookup,           :class_name => 'ObjectLookup'
 
+  after_create    :notify_clients
+  after_update    :notify_clients
+  after_destroy   :notify_clients
+
   def self.log( object, o_id, user )
 
     # lookups
@@ -61,6 +65,18 @@ class RecentView < ApplicationModel
       :assets        => assets,
     }
   end
+
+  def notify_clients
+    data = RecentView.list_fulldata( User.find(self.created_by_id), 10 )
+    Sessions.send_to(
+      self.created_by_id,
+      {
+        :event      => 'update_recent_viewed',
+        :data       => data,
+      }
+    )
+  end
+
   class Object < ApplicationModel
   end
 end

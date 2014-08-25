@@ -281,6 +281,33 @@ returns
 
 =begin
 
+send message to recipient client
+
+  Sessions.send_to(user_id, data)
+
+returns
+
+  true|false
+
+=end
+
+  def self.send_to( user_id, data )
+
+    # list all current clients
+    client_list = self.sessions
+    client_list.each {|client_id|
+      session = Sessions.get(client_id)
+      next if !session
+      next if !session[:user]
+      next if !session[:user][:id]
+      next if session[:user][:id].to_i != user_id.to_i
+      Sessions.send( client_id, data )
+    }
+    true
+  end
+
+=begin
+
 send message to all client
 
   Sessions.broadcast(data)
