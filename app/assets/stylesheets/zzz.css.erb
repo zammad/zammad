@@ -5,6 +5,11 @@ body {
   background: #2c2d36;
 }
 
+small {
+  color: #c6c6c5;
+  font-size: 12px;
+}
+
 .highlight {
   color: hsl(202,68%,54%);
 }
@@ -2352,10 +2357,9 @@ footer {
       text-align: center;
     }
 
-  .task-meta {
-    color: #c6c6c5;
-    font-size: 12px;
+  .task-subline {
     text-align: center;
+    display: block;
   }
 
 .bubble-grid {
@@ -2378,9 +2382,50 @@ footer {
     margin-bottom: 33px;
   }
 
+  .article-content {
+    margin-right: 55px;
+  }
+
+    .customer.ticket-article-item .article-content {
+      margin-right: 0;
+      margin-left: 55px;
+    }
+
+  .article-meta {
+    background: #2c2d36;
+    color: white;
+    padding: 21px 25px 11px;
+    margin: 0 12px;
+  }
+
+    .article-meta.bottom {
+      padding-top: 17px;
+      padding-bottom: 8px;
+    }
+
+    .article-meta-row {
+      margin-bottom: 5px;
+    }
+
+    .article-meta-key {
+      width: 13%;
+      text-transform: uppercase;
+    }
+
+    .article-meta-value {
+      margin-left: 8px;
+    }
+
+    .article-meta .icon {
+      vertical-align: bottom;
+    }
+
+    .article-meta .text-muted {
+      color: #96969b;
+    }
+
   .text-bubble {
     padding: 10px 20px;
-    margin-right: 55px;
     white-space: pre-wrap;
     background: white;
     border-radius: 5px;
@@ -2391,8 +2436,6 @@ footer {
 
   .customer.ticket-article-item .text-bubble {
     background: #e5f0f5;
-    margin-right: 0;
-    margin-left: 55px;
     border-color: hsl(199,38%,92%);
     box-shadow: none;
   }
@@ -2470,10 +2513,12 @@ footer {
       box-shadow: none;
     }
 
-  .ticket-article-item .task-meta {
+  .ticket-article-item .task-subline {
     margin-top: 12px;
+  }
+
+  .article-actions {
     text-align: center;
-    display: block;
   }
 
 .ticket-edit {
