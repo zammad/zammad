@@ -5,9 +5,7 @@
       <div class="close icon"></div>
     </div>
   </div>
-  <div class="logo" title="<%- @C( 'product_name' ) %>">
-    <div class="activity-counter">12</div>
-  </div>
+  <div class="logo" title="<%- @C( 'product_name' ) %>"></div>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu">
   </ul>
 </form>

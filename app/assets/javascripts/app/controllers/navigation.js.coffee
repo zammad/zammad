@@ -216,6 +216,10 @@ class App.Navigation extends App.Controller
       @delay( searchFunction, 220, 'search' )
     )
 
+    new App.OnlineNotificationWidget(
+      el: @el
+    )
+
     @taskbar = new App.TaskbarWidget( el: @el.find('.tasks') )
 
   emptySearch: (event) =>
@@ -318,8 +322,6 @@ class App.Navigation extends App.Controller
 
     App.Store.write( 'update_recent_viewed', data )
 
-    items = data.recent_viewed
-
     # load assets
     App.Collection.loadAssets( data.assets )
 
@@ -332,6 +334,8 @@ class App.Navigation extends App.Controller
           delete NavBarRight[key]
 
     # add new views
+    items = data.recent_viewed
+    items = @prepareForObjectList(items)
     prio = 8000
     for item in items
       divider   = false
@@ -339,21 +343,6 @@ class App.Navigation extends App.Controller
       if prio is 8000
         divider   = true
         navheader = 'Recent Viewed'
-
-      item.link  = ''
-      item.title = '???'
-
-      # convert backend name space to local name space
-      item.object = item.object.replace("::", '')
-
-      # lookup real data
-      if App[item.object]
-        object           = App[item.object].find( item.o_id )
-        item.link        = object.uiUrl()
-        item.title       = object.displayName()
-        item.object_name = object.objectDisplayName()
-
-      item.created_by = App.User.find( item.created_by_id )
 
       prio++
       NavBarRight['RecendViewed::' + item.o_id + item.object + '-' + prio ] = {

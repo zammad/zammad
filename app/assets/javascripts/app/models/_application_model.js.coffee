@@ -382,6 +382,37 @@ class App.Model extends Spine.Model
       if @SUBSCRIPTION_COLLECTION[subscribeId]
         delete @SUBSCRIPTION_COLLECTION[subscribeId]
 
+  ###
+
+  fetch full collection (with assets)
+
+  App.Model.fetchFull( @callback )
+
+  ###
+  @fetchFull: (callback) ->
+    url = "#{@url}/?full=true"
+
+    App.Ajax.request(
+      type:  'GET'
+      url:   url
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # full / load assets
+        if data.assets
+          App.Collection.loadAssets( data.assets )
+
+        # find / load object
+        else
+          App[ @className ].refresh( data )
+
+        # execute callbacks
+        callback(data.stream)
+
+      error: (xhr, statusText, error) =>
+        console.log(statusText, error)
+    )
+
   @_bindsEmpty: ->
     if @SUBSCRIPTION_ITEM
       for id, keys of @SUBSCRIPTION_ITEM

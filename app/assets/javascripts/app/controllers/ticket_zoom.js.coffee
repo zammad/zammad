@@ -53,6 +53,7 @@ class App.TicketZoom extends App.Controller
     '#ticket/zoom/' + @ticket_id
 
   activate: =>
+    App.OnlineNotification.seen( 'Ticket', @ticket_id )
     @navupdate '#'
 
   changed: =>

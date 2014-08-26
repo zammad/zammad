@@ -38,24 +38,7 @@ class App.DashboardActivityStream extends App.Controller
     @render(items)
 
   render: (items) ->
-
-    for item in items
-
-      item.link  = ''
-      item.title = '???'
-
-      # convert backend name space to local name space
-      item.object = item.object.replace("::", '')
-
-      # lookup real data
-      if App[item.object]
-        object            = App[item.object].find( item.o_id )
-        item.link         = object.uiUrl()
-        item.title        = object.displayName()
-        item.object_name  = object.objectDisplayName()
-        item.cssIcon      = object.iconActivity( @Session.all() )
-
-      item.created_by = App.User.retrieve( item.created_by_id )
+    items = @prepareForObjectList(items)
 
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',

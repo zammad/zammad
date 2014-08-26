@@ -27,6 +27,7 @@ class App.UserZoom extends App.Controller
     '#user/zoom/' + @user_id
 
   activate: =>
+    App.OnlineNotification.seen( 'User', @user_id )
     @navupdate '#'
 
   changed: =>

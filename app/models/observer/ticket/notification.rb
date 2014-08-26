@@ -65,7 +65,8 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             '
           },
           ticket,
-          article
+          article,
+          'new ticket'
         )
       end
 
@@ -96,7 +97,8 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             '
           },
           ticket,
-          article
+          article,
+          'new ticket'
         )
       end
 
@@ -131,7 +133,8 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
               '
             },
             ticket,
-            article
+            article,
+            'follow up'
           )
         end
 
@@ -160,14 +163,15 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
               '
             },
             ticket,
-            article
+            article,
+            'follow up',
           )
         end
       end
     }
   end
 
-  def self.send_notify(data, ticket, article)
+  def self.send_notify(data, ticket, article, type)
 
     # find recipients
     recipients = []
@@ -202,6 +206,16 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     recipient_list = ''
     notification_subject = ''
     recipients.each do |user|
+
+      OnlineNotification.add(
+        :type             => type,
+        :object           => 'Ticket',
+        :o_id             => ticket.id,
+        :seen             => false,
+        :created_by_id    => UserInfo.current_user_id || 1,
+        :user_id          => user.id,
+      )
+
       next if !user.email || user.email == ''
 
       # add recipient_list

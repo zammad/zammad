@@ -387,6 +387,26 @@ class App.Controller extends Spine.Controller
       processData: true
     )
 
+  prepareForObjectList: (items) ->
+    for item in items
+
+      item.link  = ''
+      item.title = '???'
+
+      # convert backend name space to local name space
+      item.object = item.object.replace("::", '')
+
+      # lookup real data
+      if App[item.object]
+        object            = App[item.object].find( item.o_id )
+        item.link         = object.uiUrl()
+        item.title        = object.displayName()
+        item.object_name  = object.objectDisplayName()
+        item.cssIcon      = object.iconActivity( @Session.all() )
+
+      item.created_by = App.User.retrieve( item.created_by_id )
+    items
+
   ws_send: (data) ->
     App.Event.trigger( 'ws:send', JSON.stringify(data) )
 
