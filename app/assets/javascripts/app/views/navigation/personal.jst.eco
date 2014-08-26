@@ -1,6 +1,6 @@
 <% for item in @items: %>
   <% if item.child: %>
-    <li class="dropdown <% if @open_tab[item.target] : %>open<% end %> navbar-private">
+    <li class="dropdown <% if @open_tab[item.target] : %>open<% end %> navbar-personal">
       <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown"><%- @T( item.name ) %> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% for item in item.child: %>

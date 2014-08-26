@@ -6,7 +6,7 @@ class App.Navigation extends App.Controller
     # rerender view
     @bind 'ui:rerender', (data) =>
       @renderMenu()
-      @renderPrivate()
+      @renderPersonal()
 
     # update selected item
     @bind 'navupdate', (data) =>
@@ -25,7 +25,7 @@ class App.Navigation extends App.Controller
     # rebuild recent viewed data
     @bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
-      @renderPrivate()
+      @renderPersonal()
 
     # bell on / bell off
     @bind 'bell', (data) =>
@@ -61,7 +61,7 @@ class App.Navigation extends App.Controller
       active_tab: active_tab
     )
 
-  renderPrivate: =>
+  renderPersonal: =>
     items = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 
     # get open tabs to repopen on rerender
@@ -78,9 +78,9 @@ class App.Navigation extends App.Controller
       active_tab[href] = true
     )
 
-    @el.find('.navbar-items-right .navbar-private').remove()
+    @el.find('.navbar-items-right .navbar-personal').remove()
 
-    @el.find('.navbar-items-right').append App.view('navigation/private')(
+    @el.find('.navbar-items-right').append App.view('navigation/personal')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab
@@ -133,8 +133,8 @@ class App.Navigation extends App.Controller
     # renderMenu
     @renderMenu()
 
-    # renderPrivate
-    @renderPrivate()
+    # renderPersonal
+    @renderPersonal()
 
     # set focus to search box
     if @searchFocus
