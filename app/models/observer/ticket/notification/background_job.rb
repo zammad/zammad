@@ -1,4 +1,4 @@
-class Observer::Ticket::Article::Notification::BackgroundJob
+class Observer::Ticket::Notification::BackgroundJob
   def initialize(params)
     @ticket_id  = params[:ticket_id]
     @article_id = params[:article_id]
