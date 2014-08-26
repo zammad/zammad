@@ -1079,7 +1079,7 @@ ol.tabs li {
   }
 
   .twitter.channel.icon {
-    background-position: -67px -141px;
+    background-position: -68px -141px;
   }
 
   .gray.email.channel.icon {
@@ -1100,6 +1100,26 @@ ol.tabs li {
 
   .gray.twitter.channel.icon {
     background-position: -153px -141px;
+  }
+
+  .white.email.channel.icon {
+    background-position: -170px -141px;
+  }
+
+  .white.received-calls.channel.icon {
+    background-position: -187px -141px;
+  }
+
+  .white.outbound-calls.channel.icon {
+    background-position: -204px -141px;
+  }
+
+  .white.facebook.channel.icon {
+    background-position: -221px -141px;
+  }
+
+  .white.twitter.channel.icon {
+    background-position: -238px -141px;
   }
 
   .mood.icon {
@@ -2333,16 +2353,17 @@ footer {
 }
 
 .ticket-zoom .main {
-  right: 280px;
+  right: 0;
   left: 0;
   top: 0;
   bottom: 0;
+  margin-right: 280px;
   position: absolute;
   transition: 500ms;
 }
 
   .ticket-zoom.state--sidebar-hidden .main {
-    right: 0;
+    margin-right: 0;
   }
 
 .ticket-zoom .page-header {
@@ -2580,7 +2601,8 @@ footer {
   }
 
   .ticket-zoom.state--sidebar-hidden .sidebar-holder {
-    transform: translateX(280px);
+    -webkit-transform: translateX(280px);
+            transform: translateX(280px);
   }
 
   .sidebar-tabs {
