@@ -177,6 +177,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     params = {
       :ticket_id  => ticket.id,
       :article_id => article.id,
+      :type       => type,
       :data       => data,
     }
     Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( params ) )
