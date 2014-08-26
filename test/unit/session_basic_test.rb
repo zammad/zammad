@@ -257,36 +257,6 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( result1, "check as - recall 3" )
   end
 
-  test 'b recent_viewed' do
-
-    user = User.lookup(:id => 1)
-    ticket = Ticket.all.last
-    RecentView.log( ticket.class.to_s, ticket.id, user )
-    recent_viewed_client1 = Sessions::Backend::RecentViewed.new(user, false, '123-1')
-
-    # get as stream
-    result1 = recent_viewed_client1.push
-    assert( result1, "check recent_viewed" )
-    sleep 1
-
-    # next check should be empty
-    result1 = recent_viewed_client1.push
-    assert( !result1, "check recent_viewed - recall" )
-
-    # next check should be empty
-    sleep 20
-    result1 = recent_viewed_client1.push
-    assert( !result1, "check recent_viewed - recall 2" )
-
-    RecentView.log( ticket.class.to_s, ticket.id, user )
-
-    sleep 20
-
-    # get as stream
-    result1 = recent_viewed_client1.push
-    assert( result1, "check recent_viewed - recall 3" )
-  end
-
   test 'b ticket_create' do
 
     UserInfo.current_user_id = 1
