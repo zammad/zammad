@@ -583,7 +583,7 @@ class ArticleView extends App.Controller
     'click [data-type=internal]':   'public_internal'
     'click .show_toogle':           'show_toogle'
     'click [data-type=reply]':      'reply'
-    'click .more':                  'more_toogle'
+    'click .text-bubble':           'more_toogle'
     'click .close-details':         'more_toogle'
 #    'click [data-type=reply-all]':  'replyall'
 
@@ -635,6 +635,7 @@ class ArticleView extends App.Controller
       $(e.target).closest('.ticket-article-item').find('.text-bubble').removeClass('internal')
 
   show_toogle: (e) ->
+    e.stopPropagation()
     e.preventDefault()
     #$(e.target).hide()
     if $(e.target).next('div')[0]
@@ -647,16 +648,23 @@ class ArticleView extends App.Controller
 
   more_toogle: (e) ->
     e.preventDefault()
+    articleMetaTop = $(e.target).closest('.ticket-article-item').find('.article-meta.top')
+
     if !$(e.target).closest('.ticket-article-item').find('.article-meta.top').hasClass('hide')
-      $(e.target).closest('.ticket-article-item').find('.more').removeClass('hide')
+      # scroll back up
+      articleMetaTop.scrollParent().scrollTop( articleMetaTop.scrollParent().scrollTop() - 2* articleMetaTop.outerHeight() )
+
+      $(e.target).closest('.ticket-article-item').removeClass('state--folde-out')
       $(e.target).closest('.ticket-article-item').find('.close-details').addClass('hide')
-      $(e.target).closest('.ticket-article-item').find('.article-meta.top').addClass('hide')
-      $(e.target).closest('.ticket-article-item').find('.article-meta.bottom').addClass('hide')
+      $(e.target).closest('.ticket-article-item').find('.article-content-meta.bottom').addClass('hide')
+      articleMetaTop.addClass('hide')
     else
-      $(e.target).closest('.ticket-article-item').find('.more').addClass('hide')
+      $(e.target).closest('.ticket-article-item').addClass('state--folde-out')
       $(e.target).closest('.ticket-article-item').find('.close-details').removeClass('hide')
-      $(e.target).closest('.ticket-article-item').find('.article-meta.top').removeClass('hide')
-      $(e.target).closest('.ticket-article-item').find('.article-meta.bottom').removeClass('hide')
+      $(e.target).closest('.ticket-article-item').find('.article-content-meta.bottom').removeClass('hide')
+      articleMetaTop.removeClass('hide')
+      # balance out the top meta height by scrolling down
+      articleMetaTop.scrollParent().scrollTop( articleMetaTop.scrollParent().scrollTop() + articleMetaTop.outerHeight() )
 
   checkIfSignatureIsNeeded: (type) =>
 

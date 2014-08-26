@@ -3,8 +3,6 @@
 
 
   <div class="article-content-meta">
-    <div class="more"><%- @T('more') %></div>
-    <div class="close-details hide"><%- @T('close details') %></div>
     <div class="article-meta top hide">
     <% if article.from: %>
       <div class="horizontal article-meta-row" title="<%- @Ti( 'From' ) %>: <%= article.from %>">
@@ -39,12 +37,12 @@
     <div class="flex text-bubble <%= ' internal' if article.internal is true %>"><div class="bubble-arrow"></div><%- article.html %></div>
   </div>
 
-  <div class="article-content-meta">
-    <div class="article-meta bottom hide">
+  <div class="article-content-meta bottom hide">
+    <div class="article-meta bottom">
       <div class="horizontal article-meta-row">
         <div class="article-meta-key"><%- @T( 'Kanal' ) %></div>
         <div class="article-meta-value">
-          <span class="icon <%- article.type.name %> channel"></span>
+          <span class="white <%- article.type.name %> channel icon"></span>
           <%- @T(article.type.name) %>
           <% if article.type.name is 'email': %>
           <a class="text-muted" href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= article.id %>"><%- @T( 'raw' ) %></a>
@@ -52,7 +50,6 @@
         </div>
       </div>
     </div>
-
     <% if article.attachments: %>
       <div class="always-shown">
       <% for attachment in article.attachments: %>
@@ -60,14 +57,17 @@
       <% end %>
       </div>
     <% end %>
-
+    
     <% if article.actions: %>
     <div class="article-actions horizontal stretch">
       <% for action in article.actions: %>
-        <a href="<%= action.href %>" data-type="<%= action.type %>" class="<% if action.class: %><%= action.class %><% end %>"><%- @T( action.name ) %></a>
+        <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action<% if action.class: %> <%= action.class %><% end %>">
+          <span class="<%= action.type %> icon"></span><%- @T( action.name ) %>
+        </a>
       <% end %>
     </div>
     <% end %>
+    <div class="close-details hide"><%- @T('close details') %></div>
   </div>
 
   <small class="task-subline"><time class="humanTimeFromNow" datetime="<%- article.created_at %>" data-time="<%- article.created_at %>">?</time></small>
