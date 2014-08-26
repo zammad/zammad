@@ -46,20 +46,20 @@ class RecentView < ApplicationModel
     list
   end
 
-  def self.list_fulldata( user, limit = 10 )
+  def self.list_full( user, limit = 10 )
     recent_viewed = self.list( user, limit )
 
     # get related object
     assets = ApplicationModel.assets_of_object_list(recent_viewed)
 
     return {
-      :recent_viewed => recent_viewed,
-      :assets        => assets,
+      :stream => recent_viewed,
+      :assets => assets,
     }
   end
 
   def notify_clients
-    data = RecentView.list_fulldata( User.find(self.created_by_id), 10 )
+    data = RecentView.list_full( User.find(self.created_by_id), 10 )
     Sessions.send_to(
       self.created_by_id,
       {
