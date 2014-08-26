@@ -80,6 +80,6 @@ class App.OnlineNotificationWidget extends App.Controller
 
   fetch: =>
     load = (items) =>
-      App.OnlineNotification.refresh(items)
+      App.OnlineNotification.refresh( items, { clear: true } )
       @start()
     App.OnlineNotification.fetchFull(load)
