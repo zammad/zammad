@@ -45,17 +45,9 @@ class RecentView < ApplicationModel
   def self.list_fulldata( user, limit = 10 )
     recent_viewed = self.list( user, limit )
 
-    # get related users
-    assets = {}
-    ticket_ids = []
-    recent_viewed.each {|item|
+    # get related object
+    assets = ApplicationModel.assets_of_object_list(recent_viewed)
 
-      # get related objects
-      require item['object'].to_filename
-      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
-      assets = record.assets(assets)
-
-    }
     return {
       :recent_viewed => recent_viewed,
       :assets        => assets,

@@ -132,12 +132,8 @@ returns
     return activity_stream if !fulldata
 
     # get related objects
-    assets = {}
-    activity_stream.each {|item|
-      require item['object'].to_filename
-      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
-      assets = record.assets(assets)
-    }
+    assets = ApplicationModel.assets_of_object_list(activity_stream)
+
     return {
       :activity_stream => activity_stream,
       :assets          => assets,

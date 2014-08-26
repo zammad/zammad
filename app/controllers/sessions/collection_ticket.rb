@@ -38,6 +38,7 @@ module ExtraCollection
         assets = item.assets(assets)
       }
     end
+    [collections, assets]
   end
   module_function :session
 end

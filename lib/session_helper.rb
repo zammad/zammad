@@ -10,7 +10,7 @@ module SessionHelper
     files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb" )
     for file in files
       load file
-      ExtraCollection.session( default_collection, assets, user )
+      (default_collection, assets ) = ExtraCollection.session( default_collection, assets, user )
     end
 
     return default_collection, assets

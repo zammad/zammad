@@ -840,6 +840,42 @@ return object and assets
     }
   end
 
+=begin
+
+get assets of object list
+
+  list = [
+    {
+      object => 'Ticket',
+      o_id   => 1,
+    },
+    {
+      object => 'User',
+      o_id   => 121,
+    },
+  ]
+
+  assets = Model.assets_of_object_list(list, assets)
+
+=end
+
+  def self.assets_of_object_list(list, assets = {})
+    list.each {|item|
+      require item['object'].to_filename
+      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      assets = record.assets(assets)
+      if item['created_by_id']
+        user = User.find( item['created_by_id'] )
+        assets = user.assets(assets)
+      end
+      if item['updated_by_id']
+        user = User.find( item['updated_by_id'] )
+        assets = user.assets(assets)
+      end
+    }
+    assets
+  end
+
   private
 
   def attachments_buffer

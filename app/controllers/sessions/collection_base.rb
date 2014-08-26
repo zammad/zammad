@@ -10,6 +10,9 @@ module ExtraCollection
       assets = item.assets(assets)
     }
 
+    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 20)
+    assets = ApplicationModel.assets_of_object_list(collections[ OnlineNotification.to_app_model ], assets)
+
     collections[ Role.to_app_model ] = []
     Role.all.each {|item|
       assets = item.assets(assets)
@@ -32,6 +35,7 @@ module ExtraCollection
         }
       end
     end
+    [collections, assets]
   end
   module_function :session
 end

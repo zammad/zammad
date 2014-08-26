@@ -7,7 +7,7 @@ module ExtraCollection
     collections[ Network::Category.to_app_model ]       = Network::Category.all
     collections[ Network::Category::Type.to_app_model ] = Network::Category::Type.all
     collections[ Network::Privacy.to_app_model ]        = Network::Privacy.all
-
+    [collections, assets]
   end
 
   module_function :session
