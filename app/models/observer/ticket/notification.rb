@@ -171,11 +171,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
     # send background job
     params = {
-      :ticket_id => ticket.id,
-      :article   => article.id,
-      :data      => data,
+      :ticket_id  => ticket.id,
+      :article_id => article.id,
+      :data       => data,
     }
-    Delayed::Job.enqueue( Observer::Ticket::Article::Notification::BackgroundJob.new( params ) )
+    Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( params ) )
   end
 
   def after_create(record)
