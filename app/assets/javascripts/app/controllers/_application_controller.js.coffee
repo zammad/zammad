@@ -413,7 +413,7 @@ class App.Controller extends Spine.Controller
       item.object = item.object.replace("::", '')
 
       # lookup real data
-      if App[item.object]
+      if App[item.object] && App[item.object].exists( item.o_id )
         object            = App[item.object].find( item.o_id )
         item.link         = object.uiUrl()
         item.title        = object.displayName()
