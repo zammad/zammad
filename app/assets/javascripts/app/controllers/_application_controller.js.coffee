@@ -366,7 +366,6 @@ class App.Controller extends Spine.Controller
     )
 
   userPopupsDestroy: =>
-    console.log('userPopupsDestroy',  @userPopupsList)
     if @userPopupsList
       @userPopupsList.popover('destroy')
 
