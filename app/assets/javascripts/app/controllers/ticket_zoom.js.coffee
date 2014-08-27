@@ -648,23 +648,34 @@ class ArticleView extends App.Controller
 
   more_toogle: (e) ->
     e.preventDefault()
-    articleMetaTop = $(e.target).closest('.ticket-article-item').find('.article-meta.top')
+    article = $(e.target).closest('.ticket-article-item')
+    metaTopClip = article.find('.article-meta-clip.top')
+    metaBottomClip = article.find('.article-meta-clip.bottom')
+    metaTop = article.find('.article-content-meta.top')
+    metaBottom = article.find('.article-content-meta.bottom')
 
-    if !$(e.target).closest('.ticket-article-item').find('.article-meta.top').hasClass('hide')
+    if !metaTop.hasClass('hide')
+      article.removeClass('state--folde-out')
+
       # scroll back up
-      articleMetaTop.scrollParent().scrollTop( articleMetaTop.scrollParent().scrollTop() - 2* articleMetaTop.outerHeight() )
+      TweenLite.to(article.scrollParent(), 0.5, { scrollTo: article.scrollParent().scrollTop() - metaTop.outerHeight() })
 
-      $(e.target).closest('.ticket-article-item').removeClass('state--folde-out')
-      $(e.target).closest('.ticket-article-item').find('.close-details').addClass('hide')
-      $(e.target).closest('.ticket-article-item').find('.article-content-meta.bottom').addClass('hide')
-      articleMetaTop.addClass('hide')
+      TweenLite.to(metaTop, 0.5, { y: 0, opacity: 0, onComplete: -> metaTop.addClass('hide') })
+      TweenLite.to(metaBottom, 0.5, { y: -metaBottom.outerHeight(), opacity: 0, onComplete: -> metaTop.addClass('hide') })
+      TweenLite.to(metaTopClip, 0.5, { height: 0 })
+      TweenLite.to(metaBottomClip, 0.5, { height: 0 })
     else
-      $(e.target).closest('.ticket-article-item').addClass('state--folde-out')
-      $(e.target).closest('.ticket-article-item').find('.close-details').removeClass('hide')
-      $(e.target).closest('.ticket-article-item').find('.article-content-meta.bottom').removeClass('hide')
-      articleMetaTop.removeClass('hide')
+      article.addClass('state--folde-out')
+      metaBottom.removeClass('hide')
+      metaTop.removeClass('hide')
+
       # balance out the top meta height by scrolling down
-      articleMetaTop.scrollParent().scrollTop( articleMetaTop.scrollParent().scrollTop() + articleMetaTop.outerHeight() )
+      TweenLite.to(article.scrollParent(), 0.5, { scrollTo: article.scrollParent().scrollTop() + metaTop.outerHeight() })
+
+      TweenLite.fromTo(metaTop, 0.5, { y: metaTop.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
+      TweenLite.fromTo(metaBottom, 0.5, { y: -metaBottom.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
+      TweenLite.to(metaTopClip, 0.5, { height: metaTop.outerHeight() })
+      TweenLite.to(metaBottomClip, 0.5, { height: metaBottom.outerHeight() })
 
   checkIfSignatureIsNeeded: (type) =>
 

@@ -30,6 +30,8 @@
 
 //= require_tree ./app/lib/base
 
+//= require_tree ./app/lib/gsap
+
 //= require ./app/index.js.coffee
 
 // IE8 workaround for missing console.log
