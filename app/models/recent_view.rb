@@ -60,12 +60,11 @@ class RecentView < ApplicationModel
   end
 
   def notify_clients
-    data = RecentView.list_full( User.find(self.created_by_id), 10 )
     Sessions.send_to(
       self.created_by_id,
       {
-        :event      => 'update_recent_viewed',
-        :data       => data,
+        :event => 'RecentView::changed',
+        :data => {}
       }
     )
   end

@@ -6,9 +6,9 @@ class App.DashboardRecentViewed extends App.Controller
 
     # get data
     @ajax(
-      id:    'dashboard_recent_viewed',
+      id:    'dashboard_recent_view',
       type:  'GET',
-      url:   @apiPath + '/recent_viewed',
+      url:   @apiPath + '/recent_view',
       data:  {
         limit: 5,
       }

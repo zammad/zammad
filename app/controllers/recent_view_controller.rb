@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class RecentViewedController < ApplicationController
+class RecentViewController < ApplicationController
   before_filter :authentication_check
 
 =begin
@@ -14,7 +14,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/recent_viewed -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
+curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
 
 =end
 
@@ -40,7 +40,7 @@ Response:
 {}
 
 Test:
-curl http://localhost/api/v1/recent_viewed -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"object": "Ticket","o_id": 123}'
+curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"object": "Ticket","o_id": 123}'
 
 =end
 

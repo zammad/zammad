@@ -382,7 +382,7 @@ class App.Controller extends Spine.Controller
     App.Ajax.request(
       id:    "recent_view_#{object}_#{o_id}"
       type:  'POST'
-      url:   @Config.get('api_path') + '/recent_viewed'
+      url:   @Config.get('api_path') + '/recent_view'
       data:  JSON.stringify(params)
       processData: true
     )

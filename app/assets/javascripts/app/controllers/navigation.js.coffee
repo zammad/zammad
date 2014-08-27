@@ -21,16 +21,15 @@ class App.Navigation extends App.Controller
     @bind 'auth', (user) =>
       @log 'Navigation', 'notice', 'navbar rebuild', user
 
-      if !_.isEmpty( user )
-        cache = App.Store.get( 'update_recent_viewed' )
-        @recent_viewed_build( cache ) if cache
-
       @render()
 
-    # rebuild recent viewed data
-    @bind 'update_recent_viewed', (data) =>
-      @recent_viewed_build(data)
-      @renderPersonal()
+    # fetch new recent viewed after collection change
+    @bind 'RecentView::changed', =>
+      @delay(
+        => @fetchRecentView()
+        1000
+        'recent-view-changed'
+      )
 
     # bell on / bell off
     @bind 'bell', (data) =>
@@ -67,6 +66,7 @@ class App.Navigation extends App.Controller
     )
 
   renderPersonal: =>
+    @recentViewNavbarItemsRebuild()
     items = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 
     # get open tabs to repopen on rerender
@@ -332,6 +332,16 @@ class App.Navigation extends App.Controller
     inordervalue = []
     for num in inorder
       inordervalue.push newlist[ num ]
+
+    # add differ to after recent viewed item
+    found = false
+    for value in inordervalue
+      if value.type is 'recentViewed'
+        found = true
+      if found && value.type isnt 'recentViewed'
+        value.divider = true
+        found = false
+
     return inordervalue
 
   sortit: (a,b) ->
@@ -347,12 +357,7 @@ class App.Navigation extends App.Controller
     @el.find('li').removeClass('active')
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
 
-  recent_viewed_build: (data) =>
-
-    App.Store.write( 'update_recent_viewed', data )
-
-    # load assets
-    App.Collection.loadAssets( data.assets )
+  recentViewNavbarItemsRebuild: =>
 
     # remove old views
     NavBarRight = @Config.get( 'NavBarRight' ) || {}
@@ -363,13 +368,13 @@ class App.Navigation extends App.Controller
           delete NavBarRight[key]
 
     # add new views
-    items = data.recent_viewed || []
+    items = App.RecentView.search(sortBy: 'created_at', order: 'DESC' )
     items = @prepareForObjectList(items)
-    prio = 8000
+    prio = 80
     for item in items
       divider   = false
       navheader = false
-      if prio is 8000
+      if prio is 80
         divider   = true
         navheader = 'Recent Viewed'
 
@@ -381,8 +386,15 @@ class App.Navigation extends App.Controller
         target:    item.link
         divider:   divider
         navheader: navheader
+        type:      'recentViewed'
       }
 
     @Config.set( 'NavBarRight', NavBarRight )
+
+  fetchRecentView: =>
+    load = (items) =>
+      App.RecentView.refresh( items, { clear: true } )
+      @renderPersonal()
+    App.RecentView.fetchFull(load)
 
 App.Config.set( 'navigation', App.Navigation, 'Navigations' )

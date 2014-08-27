@@ -3,7 +3,11 @@ class App.OnlineNotificationWidget extends App.Controller
     super
 
     @bind 'OnlineNotification::changed', =>
-      @fetch()
+      @delay(
+        => @fetch()
+        1000
+        'online-notification-changed'
+      )
 
     # rebuild widget on auth
     @bind 'auth', (user) =>
@@ -23,7 +27,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
   release: =>
     @stop()
-    App.Model.unsubscribe( @subscribeId )
+    App.OnlineNotification.unsubscribe( @subscribeId )
 
   access: ->
     return false if _.isEmpty( @Session.all() )
@@ -76,7 +80,6 @@ class App.OnlineNotificationWidget extends App.Controller
       # show frontend times
       @frontendTimeUpdate()
     )
-
 
   fetch: =>
     load = (items) =>

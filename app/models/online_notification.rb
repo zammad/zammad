@@ -133,11 +133,12 @@ returns:
   end
 
   def notify_clients_after_change
-
-    puts "#{ self.class.name } changed " + self.created_at.to_s
-    Sessions.broadcast(
-      :event => 'OnlineNotification::changed',
-      :data => {}
+    Sessions.send_to(
+      self.user_id,
+      {
+        :event => 'OnlineNotification::changed',
+        :data => {}
+      }
     )
   end
 
