@@ -62,6 +62,10 @@ class App.Controller extends Spine.Controller
     if @ajaxCalls
       for callId in @ajaxCalls
         App.Ajax.abort(callId)
+    @userTicketPopupsDestroy()
+    @ticketPopupsDestroy()
+    @userPopupsDestroy()
+    @organizationPopupsDestroy()
 
   release: =>
     # release custom bindings after it got removed from dom
@@ -281,16 +285,15 @@ class App.Controller extends Spine.Controller
 
   ticketPopups: (position = 'right') ->
 
-    # remove old popovers
-    $('.popover').remove()
+    @ticketPopupsDestroy()
 
     # show ticket popup
     ui = @
-    @el.find('.ticket-popover').popover(
+    @ticketPopupsList = @el.find('.ticket-popover').popover(
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 500, hide: 1200 }
+      delay:      { show: 400, hide: 400 }
       placement:  position
       title: ->
         ticket_id = $(@).data('id')
@@ -306,25 +309,27 @@ class App.Controller extends Spine.Controller
         )
     )
 
-  userPopups: (position = 'right') ->
+  ticketPopupsDestroy: =>
+    if @ticketPopupsList
+      @ticketPopupsList.popover('destroy')
 
-    # remove old popovers
-    $('.popover').remove()
+  userPopups: (position = 'right') ->
 
     # open user in new task if user isn't customer
     if !@isRole('Customer')
       @el.find('.user-popover').bind('click', (e) =>
         user_id = $(e.target).data('id')
         @navigate "#user/zoom/#{user_id}"
-        $('.popover').remove()
       );
 
+    @userPopupsDestroy()
+
     # show user popup
-    @el.find('.user-popover').popover(
+    @userPopupsList = @el.find('.user-popover').popover(
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 500, hide: 1200 }
+      delay:      { show: 400, hide: 400 }
       placement:  position
       title: ->
         user_id = $(@).data('id')
@@ -360,17 +365,21 @@ class App.Controller extends Spine.Controller
         )
     )
 
+  userPopupsDestroy: =>
+    console.log('userPopupsDestroy',  @userPopupsList)
+    if @userPopupsList
+      @userPopupsList.popover('destroy')
+
   organizationPopups: (position = 'right') ->
 
-    # remove old popovers
-    $('.popover').remove()
+    @organizationPopupsDestroy()
 
     # show organization popup
-    @el.find('.organization-popover').popover(
+    @organizationPopupsList = @el.find('.organization-popover').popover(
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 500, hide: 1200 }
+      delay:      { show: 400, hide: 400 }
       placement:  position
       title: ->
         organization_id = $(@).data('id')
@@ -385,19 +394,22 @@ class App.Controller extends Spine.Controller
         )
     )
 
-  userTicketPopups: (params) ->
+  organizationPopupsDestroy: =>
+    if @organizationPopupsList
+      @organizationPopupsList.popover('destroy')
 
-    # remove old popovers
-    $('.popover').remove()
+  userTicketPopups: (params) ->
 
     show = (data, tickets) =>
 
       if !data.position
         data.position = 'left'
 
+      @userTicketPopupsDestroy()
+
       # show user popup
       controller = @
-      @el.find(data.selector).popover(
+      @userTicketPopupsList = @el.find(data.selector).popover(
         trigger:    'hover'
         container:  'body'
         html:       true
@@ -445,6 +457,10 @@ class App.Controller extends Spine.Controller
       )
     else
       fetch(params)
+
+  userTicketPopupsDestroy: =>
+    if @userTicketPopupsList
+      @userTicketPopupsList.popover('destroy')
 
   recentView: (object, o_id) =>
     params =
