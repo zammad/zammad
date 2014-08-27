@@ -1,7 +1,7 @@
 <h2 class="can-move"><%- @T( @head ) %></h2>
 <% for item in @items: %>
 <div class="activity-entry horizontal">
-  <a class="activity-avatar" href="<%- item.created_by.uiUrl() %>">
+  <a class="activity-avatar user-popover" data-id="<%= item.created_by_id %>" href="<%- item.created_by.uiUrl() %>">
     <span class="avatar" style="background-image: url(<%- item.created_by.imageUrl %>)"></span>
   </a>
   <a href="<%- item.link %>" class="activity-body flex horizontal">
