@@ -322,6 +322,9 @@ class Edit extends App.Controller
   events:
     'click .submit':             'update'
     'click [data-type="reset"]': 'reset'
+    'click .visibility.toggle':  'toggle_visibility'
+    'click .pop-selectable':     'select_type'
+    'click .pop-selected':       'show_selectable_types'
 
   constructor: ->
     super
@@ -336,8 +339,14 @@ class Edit extends App.Controller
 
     ticket = App.Ticket.fullLocal( @ticket.id )
 
+    console.log ticket
+
+    # gets referenced in @set_type
+    @type = 'email'
+
     @html App.view('ticket_zoom/edit')(
       ticket:     ticket
+      type:       @type
       isCustomer: @isRole('Customer')
       formChanged: !_.isEmpty( App.TaskManager.get(@task_key).state )
     )
@@ -441,6 +450,28 @@ class Edit extends App.Controller
           ticket: ticket
         )
       @subscribeIdTextModule = ticket.subscribe( callback )
+
+  toggle_visibility: ->
+    if @el.hasClass('state--public')
+      @el.removeClass('state--public')
+      @el.addClass('state--internal')
+    else
+      @el.addClass('state--public')
+      @el.removeClass('state--internal')
+
+  show_selectable_types: =>
+    @el.find('.pop-selector').removeClass('hide')
+
+  select_type: (e) =>
+    @set_type $(e.target).data('value')
+    @el.find('.pop-selector').addClass('hide')
+
+  set_type: (type) ->
+    typeIcon = @el.find('.pop-selected .icon')
+    if @type
+      typeIcon.removeClass @type
+    @type = type
+    typeIcon.addClass @type
 
   autosaveStop: =>
     @clearInterval( 'autosave' )

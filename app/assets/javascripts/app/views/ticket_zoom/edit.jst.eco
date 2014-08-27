@@ -1,31 +1,43 @@
-<!--
-<div class="horizontal bubble-grid new-article <% if @formChanged: %>form-changed<% end %>">
-  <div class="avatar user-popover" data-id="<%= @S('id') %>" style="background-image: url(<%- @S('image') %>)"></div>
-  <div class="flex text-bubble">
-    <div class="bubble-arrow"></div>
-    <textarea></textarea>
-    <span class="bubble-placeholder">Antwort eingeben oder <span class="highlight">Dateien wählen</span></span>
--->
-<div class="ticket-article-view">
-  <div class="ticket-article well ticket-edit <% if @formChanged: %>form-changed<% end %>">
-    <div class="avatar">
-      <img class="thumbnail user-popover" data-id="<%= @S('id') %>" src="<%- @S('imageUrl') %>" alt="">
-    </div>
-    <div class="ticket-article-message">
-      <div class="edit-title">
-        <h4><%- @T('Edit') %>
-        <small class="reset-message<% if !@formChanged: %> hide<% end %>">
-          <a href="#" data-type="reset"><%- @T('Discard your unsaved changes.') %></a> <href="#" class="glyphicon glyphicon-repeat" data-type="reset"></a>
-        </small>
-        </h4>
+<form class="ticket-update <% if @formChanged: %>form-changed<% end %>">
+  <div class="bubble-grid horizontal">
+    <div class="vertical center">
+      <div class="avatar user-popover" data-id="<%= @S('id') %>" style="background-image: url(<%- @S('image') %>)"></div>
+      <div class="dark pop-select">
+        <div class="pop-selected clickable centered">
+          <div class="gray <%- @type %> channel icon"></div>
+        </div>
+        <div class="pop-selector hide">
+          <div class="horizontal">
+            <div class="pop-selectable clickable centered" data-value="email">
+              <div class="white email channel icon"></div>
+            </div>
+            <div class="pop-selectable clickable centered" data-value="facebook">
+              <div class="white facebook channel icon"></div>
+            </div>
+            <div class="pop-selectable clickable centered" data-value="twitter">
+              <div class="white twitter channel icon"></div>
+            </div>
+            <div class="pop-selectable clickable centered" data-value="phone">
+              <div class="white phone channel icon"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="edit-content">
-        <form class="form-stacked ticket-update">
-          <div class="form-ticket-update"></div>
-          <div class="form-article-update"></div>
-          <button type="submit" class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-        </form>
-      <div>
+      <hr>
+      <div class="visibility toggle clickable centered">
+        <div class="public visibility icon"></div>
+        <div class="internal visibility icon"></div>
+      </div>
+    </div>
+    <div class="flex article-content bubble-gap">
+      <div class="internal-border">
+        <div class="text-bubble">
+          <div class="bubble-arrow"></div>
+          <textarea></textarea>
+          <span class="bubble-placeholder">Antwort eingeben oder <span class="highlight">Dateien wählen</span></span>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary submit"><%- @T( 'Send' ) %></button>
     </div>
   </div>
-</div>
+</form>

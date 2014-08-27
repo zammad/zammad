@@ -1102,7 +1102,6 @@ ol.tabs li {
     background-position: -170px -141px;
   }
 
-  .white.phone.channel.icon,
   .white.received-calls.channel.icon {
     background-position: -187px -141px;
   }
@@ -1121,6 +1120,14 @@ ol.tabs li {
 
   .white.note.channel.icon {
     background-position: -255px -141px;
+  }
+
+  .white.phone.channel.icon {
+    background-position: -272px -141px;
+  }
+
+  .gray.phone.channel.icon {
+    background-position: -289px -141px;
   }
 
   .mood.icon {
@@ -1290,22 +1297,34 @@ ol.tabs li {
     background-position: -42px -311px;
   }
 
-  .split.icon {
+  .split.action.icon {
     width: 24px;
     height: 20px;
     background-position: 0 -336px;
   }
 
-  .reply.icon {
+  .reply.action.icon {
     width: 19px;
     height: 20px;
     background-position: -24px -336px;
   }
 
-  .internal.icon {
+  .internal.action.icon {
     width: 16px;
     height: 20px;
     background-position: -44px -336px;
+  }
+
+  .public.visibility.icon {
+    width: 14px;
+    height: 19px;
+    background-position: 0 -356px;
+  }
+
+  .internal.visibility.icon {
+    width: 14px;
+    height: 19px;
+    background-position: -14px -356px;
   }
 
 
@@ -1415,6 +1434,8 @@ footer {
 
 .clickable {
   cursor: pointer;
+  -webkit-user-select: none;
+          user-select: none;
 }
 
 .customer_info {
@@ -1554,12 +1575,6 @@ footer {
 }
 .sub_attribute .controls {
   margin-left: 80px;
-}
-
-.form-changed {
-  border: 1px solid #fbeed5;
-  border-radius: 4px;
-  background-color: #fcf8e3;
 }
 
 #splash {
@@ -1995,6 +2010,7 @@ footer {
   height: 40px;
   background-size: cover;
   background-position: center;
+  background-color: rgba(0,0,0,.05);
   border-radius: 100%;
   display: inline-block;
   vertical-align: bottom;
@@ -2406,23 +2422,21 @@ footer {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 21px;
-  overflow: hidden;
 }
 
-  .bubble-grid .avatar {
+  .bubble-gap {
+    margin-left: 15px;
+  }
+
+  .customer.ticket-article-item .bubble-gap {
+    margin-left: 0;
     margin-right: 15px;
-    background: rgba(0,0,0,.05);
   }
 
 .ticket-article-item {
   padding-bottom: 33px;
   position: relative;
 }
-
-  .customer.ticket-article-item .avatar {
-    margin-right: 0;
-    margin-left: 15px;
-  }
 
   /* 
     clip the article-meta to not stand out on the other side 
@@ -2522,14 +2536,14 @@ footer {
       border-color: hsl(300,43%,84%);
     }
 
-  .new-article .text-bubble {
+  .ticket-edit .text-bubble {
     padding: 0;
     border-color: #b3b3b3;
     white-space: normal;
     border-radius: 5px;
   }
 
-    .new-article textarea {
+    .ticket-edit textarea {
       width: 100%;
       height: 38px;
       padding: 10px 20px;
@@ -2540,15 +2554,15 @@ footer {
       transition: 500ms;
     }
 
-    .new-article textarea:focus {
+    .ticket-edit textarea:focus {
       height: 105px;
     }
 
-    .new-article textarea:focus + .bubble-placeholder {
+    .ticket-edit textarea:focus + .bubble-placeholder {
       display: none;
     }
 
-    .new-article .bubble-arrow:after {
+    .ticket-edit .bubble-arrow:after {
       border-color: #b3b3b3;
       box-shadow: none;
     }
@@ -2636,6 +2650,92 @@ footer {
 
   .bottom-form {
     background: white;
+  }
+
+  .ticket-edit .internal-border {
+    padding: 5px;
+    border-radius: 8px;
+    margin: -5px -5px 0;
+  }
+
+  .ticket-edit.state--internal .internal-border {
+    background: repeating-linear-gradient(45deg, hsl(18,79%,89%), hsl(18,79%,89%) 5px, transparent 5px, transparent 6px);
+    background-size: 8px 8px;
+  }
+
+  .ticket-edit .avatar {
+    margin-bottom: 3px;
+  }
+
+  .ticket-edit .pop-selectable .icon {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .ticket-edit .pop-selectable:hover .icon {
+    opacity: 1;
+  }
+
+  .ticket-edit button[type=submit] {
+    margin-top: 5px;
+    float: right;
+  }
+
+  .ticket-edit hr {
+    border-color: #e6e6e6;
+    width: 38px;
+    margin: 0;
+  }
+
+  .visibility.toggle {
+    width: 38px;
+    height: 34px;
+    opacity: 0.2;
+  }
+
+  .state--public .internal.icon {
+    display: none;
+  }
+
+  .state--internal .visibility.toggle {
+    opacity: 1;
+  }
+
+  .state--internal .public.icon {
+    display: none;
+  }
+
+.pop-select {
+  position: relative;
+  z-index: 2;
+}
+
+  .pop-selector {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .pop-selected,
+  .pop-selectable {
+    width: 36px;
+    height: 36px;
+  }
+
+  .pop-selectable {
+    background: hsl(234,10%,19%);
+  }
+
+  .pop-selectable:hover {
+    background: hsl(234,10%,29%);
+  }
+
+  .pop-selectable:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .pop-selectable:last-child {
+    border-radius: 0 4px 4px 0;
   }
 
 .ticket-zoom .sidebar {
