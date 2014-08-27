@@ -92,13 +92,15 @@ class App.Navigation extends App.Controller
   renderResult: (result = []) =>
     el = @el.find('#global-search-result')
 
+    # destroy existing popovers
+    @ticketPopupsDestroy()
+    @userPopupsDestroy()
+    @organizationPopupsDestroy()
+
     # remove result if not result exists
     if _.isEmpty( result )
       @el.find('.search').removeClass('open')
       el.html( '' )
-
-      # remove old popovers
-      $('.popover').remove()
       return
 
     # build markup
@@ -120,9 +122,6 @@ class App.Navigation extends App.Controller
     @organizationPopups()
 
   render: () ->
-
-    # remove old popovers
-    $('.popover').remove()
 
     # remember old search query
     search = @el.find('#global-search').val()
