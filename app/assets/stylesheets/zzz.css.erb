@@ -1627,7 +1627,7 @@ footer {
     vertical-align: bottom;
   }
 
-  .navigation .nav > li.active > .icon,
+  .navigation .nav > li.active > a .icon,
   .navigation .nav > li > a:hover .icon,
   .navigation .nav > li > a:focus .icon {
     opacity: 1;
@@ -2511,9 +2511,13 @@ footer {
 
   .ticket-article-item .text-bubble.internal {
     background: #f2def2;
-    border-color: #eed3d7;
+    border-color: hsl(300,43%,90%);
     box-shadow: none;
   }
+
+    .customer.ticket-article-item.state--folde-out .text-bubble.internal {
+      border-color: hsl(300,43%,84%);
+    }
 
   .new-article .text-bubble {
     padding: 0;
