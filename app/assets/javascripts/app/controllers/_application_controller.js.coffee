@@ -235,7 +235,7 @@ class App.Controller extends Spine.Controller
         )
     )
 
-  userPopups: (position = 'right') ->
+  userPopups: (position) ->
 
     # remove old popovers
     $('.popover').remove()
