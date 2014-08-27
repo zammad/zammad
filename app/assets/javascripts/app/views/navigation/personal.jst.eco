@@ -20,7 +20,7 @@
           <% end %>
           <li class="<% if @active_tab[item.target] : %>active<% end %>">
             <a href="<%= item.target %>" class="horizontal">
-              <span class="flex"><%- @T( item.name ) %></span>
+              <span class="flex contain-text"><%- @T( item.name ) %></span>
               <% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %>
               <% if item.iconClass: %><span class="<%= item.iconClass %> icon"></span><% end %>
             </a>
