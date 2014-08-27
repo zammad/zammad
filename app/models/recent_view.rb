@@ -22,9 +22,10 @@ class RecentView < ApplicationModel
   end
 
   def self.log_destroy( requested_object, requested_object_id )
+    return if requested_object == 'RecentView'
     RecentView.where( :recent_view_object_id => ObjectLookup.by_name( requested_object ) ).
-    where( :o_id => requested_object_id ).
-    destroy_all
+      where( :o_id => requested_object_id ).
+      destroy_all
   end
 
   def self.user_log_destroy( user )

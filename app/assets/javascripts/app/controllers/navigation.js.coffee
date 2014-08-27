@@ -10,7 +10,8 @@ class App.Navigation extends App.Controller
 
     # rerender view
     @bind 'ui:rerender', (data) =>
-      @render()
+      @renderMenu()
+      @renderPersonal()
 
     # update selected item
     @bind 'navupdate', (data) =>
@@ -26,14 +27,10 @@ class App.Navigation extends App.Controller
 
       @render()
 
-    # remember ticket overview data
-    @bind 'navupdate_ticket_overview', (data) =>
-      App.Store.write( 'navupdate_ticket_overview', data )
-
     # rebuild recent viewed data
     @bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
-      @render()
+      @renderPersonal()
 
     # bell on / bell off
     @bind 'bell', (data) =>
@@ -46,6 +43,51 @@ class App.Navigation extends App.Controller
         )
       else
         @el.find('.bell').removeClass('show')
+
+  renderMenu: =>
+    items = @getItems( navbar: @Config.get( 'NavBar' ) )
+
+    # get open tabs to repopen on rerender
+    open_tab = {}
+    @el.find('.open').children('a').each( (i,d) =>
+      href = $(d).attr('href')
+      open_tab[href] = true
+    )
+
+    # get active tabs to reactivate on rerender
+    active_tab = {}
+    @el.find('.active').children('a').each( (i,d) =>
+      href = $(d).attr('href')
+      active_tab[href] = true
+    )
+    @el.find('.navbar-items-menu').html App.view('navigation/menu')(
+      items:      items
+      open_tab:   open_tab
+      active_tab: active_tab
+    )
+
+  renderPersonal: =>
+    items = @getItems( navbar: @Config.get( 'NavBarRight' ) )
+
+    # get open tabs to repopen on rerender
+    open_tab = {}
+    @el.find('.open').children('a').each( (i,d) =>
+      href = $(d).attr('href')
+      open_tab[href] = true
+    )
+
+    # get active tabs to reactivate on rerender
+    active_tab = {}
+    @el.find('.active').children('a').each( (i,d) =>
+      href = $(d).attr('href')
+      active_tab[href] = true
+    )
+
+    @el.find('.navbar-items-personal').html App.view('navigation/personal')(
+      items:      items
+      open_tab:   open_tab
+      active_tab: active_tab
+    )
 
   renderResult: (result = []) =>
     el = @el.find('#global-search-result')
@@ -78,37 +120,24 @@ class App.Navigation extends App.Controller
     @organizationPopups()
 
   render: () ->
-    user      = App.Session.all()
-    nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )
-    nav_right = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 
     # remove old popovers
     $('.popover').remove()
 
-    # get open tabs to repopen on rerender
-    open_tab = {}
-    @el.find('.open').children('a').each( (i,d) =>
-      href = $(d).attr('href')
-      open_tab[href] = true
-    )
-
-    # get active tabs to reactivate on rerender
-    active_tab = {}
-    @el.find('.active').children('a').each( (i,d) =>
-      href = $(d).attr('href')
-      active_tab[href] = true
-    )
-
+    # remember old search query
     search = @el.find('#global-search').val()
+
+    user   = App.Session.all()
     @html App.view('navigation')(
-      navbar_left:  nav_left
-      navbar_right: nav_right
-      open_tab:     open_tab
-      active_tab:   active_tab
       user:         user
-      result:       @result || []
       search:       search
     )
+
+    # renderMenu
+    @renderMenu()
+
+    # renderPersonal
+    @renderPersonal()
 
     # set focus to search box
     if @searchFocus
@@ -334,7 +363,7 @@ class App.Navigation extends App.Controller
           delete NavBarRight[key]
 
     # add new views
-    items = data.recent_viewed
+    items = data.recent_viewed || []
     items = @prepareForObjectList(items)
     prio = 8000
     for item in items

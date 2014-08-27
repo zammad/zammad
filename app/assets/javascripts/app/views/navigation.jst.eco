@@ -6,106 +6,15 @@
     </div>
   </div>
   <div class="logo" title="<%- @C( 'product_name' ) %>"></div>
-  <ul id="global-search-result" class="custom-dropdown-menu" role="menu">
-  </ul>
+  <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
 </form>
-<ul class="nav navbar-nav">
-<% for item in @navbar_left: %>
-  <% if item.child: %>
-  <li class="dropdown <%= item.class %> <% if @open_tab[item.target] : %>open<% end %>">
-    <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown">
-      <%- @T( item.name ) %> <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <% for item in item.child: %>
-        <% if item.divider: %>
-          <li class="divider"></li>
-        <% end %>
-        <% if item.navheader: %>
-          <li class="dropdown-header"><%- @T( item.navheader ) %></li>
-        <% end %>
-        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %></a></li>
-      <% end %>
-    </ul>
-  </li>
-  <% else: %>
-    <li class="<%= item.class %> <% if @active_tab[item.target] : %>active<% end %>">
-      <a class="horizontal center" href="<%= item.target %>">
-        <span class="nav-item-icon">
-          <span class="<%= item.class %> icon"></span>
-        </span>
-        <span class="nav-item-name flex">
-          <%- @T( item.name ) %>
-        </span>
-      </a>
-    </li>
-  <% end %>
-<% end %>
 
-  <li class="customers">
-    <a class="horizontal center" href="#to_somewhere">
-      <span class="nav-item-icon">
-        <span class="customers icon"></span>
-      </span>
-      <span class="nav-item-name flex">
-        Customers
-      </span>
-    </a>
-  </li>
-
-</ul>
+<ul class="nav navbar-nav navbar-items-menu"></ul>
 
 <div class="tasks flex"></div>
 
 <% if !_.isEmpty(@user): %>
-<ul class="user-menu horizontal stretch">
-
   <!--<a href="#bell" class="glyphicon glyphicon-bell"></a>-->
 
-  <% for item in @navbar_right: %>
-    <% if item.child: %>
-      <li class="<% if item.class: %><%- item.class %><% end %> dropup <% if @open_tab[item.target] : %>open<% end %>">
-        <a class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @T( item.name ) %>">
-          <span class="dropdown-nose"></span>
-          <% if item.class is 'user': %>
-            <span class="user avatar" style="background-image: url(<%- item.image %>)"></span>
-          <% else: %>
-            <span class="green plus icon"></span>
-            <span class="white plus icon"></span>
-          <% end %>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <% for item in item.child: %>
-            <% if item.divider: %>
-              <li class="divider"></li>
-            <% end %>
-            <% if item.navheader: %>
-              <li class="dropdown-header"><%- @T( item.navheader ) %></li>
-            <% end %>
-            <li class="<% if @active_tab[item.target] : %>active<% end %>">
-              <a href="<%= item.target %>" class="horizontal">
-                <span class="flex"><%- @T( item.name ) %></span>
-                <% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %>
-                <% if item.iconClass: %><span class="<%= item.iconClass %> icon"></span><% end %>
-              </a>
-            </li>
-          <% end %>
-        </ul>
-      </li>
-    <% else: %>
-      <li class="settings <% if @active_tab[item.target] : %>active<% end %>">
-        <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @T( item.name ) %>">
-          <span class="light cog icon"></span>
-          <span class="dark cog icon"></span>
-        </a>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
-<% else: %>
-  <!--
-  <ul class="nav navbar-nav navbar-right">
-    <li><a href="#login"><%- @T( 'Sign in' ) %></a></li>
-  </ul>
-  -->
+  <ul class="user-menu horizontal stretch navbar-items-personal"></ul>
 <% end %>

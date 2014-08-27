@@ -21,7 +21,7 @@ class ApplicationModel < ActiveRecord::Base
 
   after_create  :activity_stream_create
   after_update  :activity_stream_update
-  after_destroy :activity_stream_destroy
+  before_destroy :activity_stream_destroy
 
   after_create  :history_create
   after_update  :history_update
@@ -31,7 +31,7 @@ class ApplicationModel < ActiveRecord::Base
   after_update  :search_index_update
   after_destroy :search_index_destroy
 
-  after_destroy :recent_view_destroy
+  before_destroy :recent_view_destroy
 
   # create instance accessor
   class << self

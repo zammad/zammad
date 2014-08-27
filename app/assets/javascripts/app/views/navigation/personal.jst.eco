@@ -1,0 +1,39 @@
+<% for item in @items: %>
+  <% if item.child: %>
+    <li class="<% if item.class: %><%- item.class %><% end %> dropup <% if @open_tab[item.target] : %>open<% end %>">
+      <a class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @T( item.name ) %>">
+        <span class="dropdown-nose"></span>
+        <% if item.class is 'user': %>
+          <span class="user avatar" style="background-image: url(<%- item.image %>)"></span>
+        <% else: %>
+          <span class="green plus icon"></span>
+          <span class="white plus icon"></span>
+        <% end %>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <% for item in item.child: %>
+          <% if item.divider: %>
+            <li class="divider"></li>
+          <% end %>
+          <% if item.navheader: %>
+            <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+          <% end %>
+          <li class="<% if @active_tab[item.target] : %>active<% end %>">
+            <a href="<%= item.target %>" class="horizontal">
+              <span class="flex"><%- @T( item.name ) %></span>
+              <% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %>
+              <% if item.iconClass: %><span class="<%= item.iconClass %> icon"></span><% end %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% else: %>
+    <li class="settings <% if @active_tab[item.target] : %>active<% end %>">
+      <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @T( item.name ) %>">
+        <span class="light cog icon"></span>
+        <span class="dark cog icon"></span>
+      </a>
+    </li>
+  <% end %>
+<% end %>

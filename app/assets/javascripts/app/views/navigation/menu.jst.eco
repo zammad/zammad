@@ -1,0 +1,31 @@
+<% for item in @items: %>
+  <% if item.child: %>
+  <li class="dropdown <%= item.class %> <% if @open_tab[item.target] : %>open<% end %>">
+    <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown">
+      <%- @T( item.name ) %> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <% for item in item.child: %>
+        <% if item.divider: %>
+          <li class="divider"></li>
+        <% end %>
+        <% if item.navheader: %>
+          <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+        <% end %>
+        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %></a></li>
+      <% end %>
+    </ul>
+  </li>
+  <% else: %>
+    <li class="<%= item.class %> <% if @active_tab[item.target] : %>active<% end %>">
+      <a class="horizontal center" href="<%= item.target %>">
+        <span class="nav-item-icon">
+          <span class="<%= item.class %> icon"></span>
+        </span>
+        <span class="nav-item-name flex">
+          <%- @T( item.name ) %>
+        </span>
+      </a>
+    </li>
+  <% end %>
+<% end %>
