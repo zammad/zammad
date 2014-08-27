@@ -1,11 +1,4 @@
 class App.TicketZoom extends App.Controller
-  events:
-    'click .sidebar-tabs': 'toggleSidebar'
-    'click .close-sidebar': 'toggleSidebar'
-
-  toggleSidebar: ->
-    @el.find('.ticket-zoom').toggleClass('state--sidebar-hidden')
-
   constructor: (params) ->
     super
 
@@ -145,7 +138,39 @@ class App.TicketZoom extends App.Controller
         isCustomer: @isRole('Customer')
       )
       @TicketTitle()
-      @Widgets()
+      new Sidebar(el: @el)
+      required = 'edit'
+      if @isRole('Customer')
+        required = 'customer'
+      new App.ControllerForm(
+        el:         @el.find('.edit')
+        model:      App.Ticket
+        required:   required
+        params:     App.Ticket.find(@ticket.id)
+      )
+      # start link info controller
+      if !@isRole('Customer')
+        new App.WidgetTag(
+          el:           @el.find('.tags')
+          object_type:  'Ticket'
+          object:        @ticket
+        )
+        new App.WidgetLink(
+          el:           @el.find('.links')
+          object_type:  'Ticket'
+          object:       @ticket
+        )
+        new App.ControllerForm(
+          el:         @el.find('.customer-edit')
+          model:      App.User
+          required:   'quick'
+          params:     App.User.find(@ticket.customer_id)
+        )
+        new App.ControllerForm(
+          el:         @el.find('.organization-edit')
+          model:      App.Organization
+          params:     App.Organization.find(@ticket.organitaion_id)
+        )
 
     @TicketAction()
     @ArticleView()
@@ -191,15 +216,6 @@ class App.TicketZoom extends App.Controller
       el:         @el.find('.ticket-edit')
       edit_form:  @edit_form
       task_key:   @task_key
-      ui:         @
-    )
-
-  Widgets: =>
-    # show ticket action row
-    new Widgets(
-      ticket:     @ticket
-      task_key:   @task_key
-      el:         @el.find('.widgets')
       ui:         @
     )
 
@@ -254,69 +270,46 @@ class TicketTitle extends App.Controller
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
 
-class TicketInfo extends App.ControllerDrox
+class Sidebar extends App.Controller
+  events:
+    'click .sidebar-tabs': 'toggleTab'
+    'click .close-sidebar': 'toggleSidebar'
+
   constructor: ->
     super
+    name = @el.find('.sidebar-content').first().data('content')
+    @toggleContent(name)
 
-    @subscribeId = @ticket.subscribe(@render)
-    @render(@ticket)
+#  render: =>
+#    @html App.view('ticket_zoom/sidebar')()
 
-  render: (ticket) =>
-    @html @template(
-      file:   'ticket_zoom/info'
-      header: '#' + ticket.number
-      params:
-        ticket: ticket
-    )
+  toggleSidebar: ->
+    @el.find('.ticket-zoom').toggleClass('state--sidebar-hidden')
 
-    # start tag controller
-    if !@isRole('Customer')
-      new App.WidgetTag(
-        el:           @el.find('.tag_info')
-        object_type:  'Ticket'
-        object:        ticket
-      )
+  showSidebar: ->
+    # show sidebar if not shown
+    if @el.find('.ticket-zoom').hasClass('state--sidebar-hidden')
+      @el.find('.ticket-zoom').removeClass('state--sidebar-hidden')
 
-  release: =>
-    App.Ticket.unsubscribe( @subscribeId )
+  toggleTab: (e) ->
 
-class Widgets extends App.Controller
-  constructor: ->
-    super
-    @subscribeId = @ticket.subscribe(@render)
-    @render(@ticket)
+    name = $(e.target).closest('.sidebar-tab').data('content')
+    if name
+      @el.find('.ticket-zoom .sidebar-tab').removeClass('active')
+      $(e.target).closest('.sidebar-tab').addClass('active')
 
-  render: (ticket) =>
+      @toggleContent(name)
 
-    @html App.view('ticket_zoom/widgets')()
+      @showSidebar()
 
-    # show ticket info
-    new TicketInfo(
-      ticket:  ticket
-      el:      @el.find('.ticket_info')
-    )
 
-    # start customer info controller
-    if !@isRole('Customer')
-      new App.WidgetUser(
-        el:      @el.find('.customer_info')
-        user_id: ticket.customer_id
-        ticket:  ticket
-      )
+  toggleContent: (name) ->
+    return if !name
+    @el.find('.sidebar-content').addClass('hide')
+    @el.find('.sidebar-content[data-content=' + name + ']').removeClass('hide')
+    title = @el.find('.sidebar-content[data-content=' + name + ']').data('title')
+    @el.find('.sidebar h2').html(title)
 
-    # start link info controller
-    if !@isRole('Customer')
-      new App.WidgetLink(
-        el:           @el.find('.link_info')
-        object_type:  'Ticket'
-        object:       ticket
-      )
-
-    # show frontend times
-    @frontendTimeUpdate()
-
-  release: =>
-    App.Ticket.unsubscribe( @subscribeId )
 
 class Edit extends App.Controller
   events:

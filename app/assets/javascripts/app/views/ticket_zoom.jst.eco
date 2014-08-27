@@ -32,7 +32,7 @@
     <div class="sidebar-holder vertical">
       <div class="sidebar bottom-form-shadow flex">
         <div class="horizontal center">
-          <h2 class="flex contain-text">Ticket Einstellungen</h2>
+          <h2 class="flex contain-text"></h2>
           <div class="close-sidebar centered clickable">
             <div class="arrow-right icon"></div>
           </div>
@@ -41,19 +41,34 @@
         <form>
 
         </form>
-        <div class="widgets"></div>
-        <div class="action"></div>
+        <div class="sidebar-content" data-content="ticket" data-title="<%- @T('Ticket Settings') %>">
+          <div class="edit"></div>
+          <div class="tags"></div>
+          <div class="links"></div>
+          <div class="action"></div>
+        </div>
+        <div class="sidebar-content" data-content="customer" data-title="<%- @T('Customer Settings') %>">
+          <div class="customer-edit"></div>
+        </div>
+        <div class="sidebar-content" data-content="organization" data-title="<%- @T('Organization Settings') %>">
+          <div class="organization-edit"></div>
+        </div>
+
       </div>
       <div class="sidebar-tabs vertical justified">
-        <div class="active sidebar-tab centered">
+        <div class="active sidebar-tab centered" data-content="ticket">
           <div class="dark message icon"></div>
         </div>
-        <div class="sidebar-tab centered">
+        <% if !@isCustomer: %>
+        <div class="sidebar-tab centered" data-content="customer">
           <div class="dark person icon"></div>
         </div>
-        <div class="sidebar-tab centered">
+        <% if @ticket.organization_id: %>
+        <div class="sidebar-tab centered" data-content="organization">
           <div class="dark group icon"></div>
         </div>
+        <% end %>
+        <% end %>
       </div>
     </div>
   </div>
