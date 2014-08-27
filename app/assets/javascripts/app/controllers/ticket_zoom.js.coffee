@@ -583,8 +583,8 @@ class ArticleView extends App.Controller
     'click [data-type=internal]':   'public_internal'
     'click .show_toogle':           'show_toogle'
     'click [data-type=reply]':      'reply'
-    'click .text-bubble':           'more_toogle'
-    'click .close-details':         'more_toogle'
+    'click .text-bubble':           'toggle_meta'
+    'click .text-bubble a':         'stopPropagation'
 #    'click [data-type=reply-all]':  'replyall'
 
   constructor: ->
@@ -646,36 +646,61 @@ class ArticleView extends App.Controller
         $(e.target).text( App.i18n.translateContent('See more') )
         $(e.target).next('div').addClass('hide')
 
-  more_toogle: (e) ->
+  stopPropagation: (e) ->
+    e.stopPropagation()
+
+  toggle_meta: (e) ->
     e.preventDefault()
+
+    animSpeed = 0.25
     article = $(e.target).closest('.ticket-article-item')
     metaTopClip = article.find('.article-meta-clip.top')
     metaBottomClip = article.find('.article-meta-clip.bottom')
     metaTop = article.find('.article-content-meta.top')
     metaBottom = article.find('.article-content-meta.bottom')
 
+    if @elementContainsSelection( article.get(0) )
+      @stopPropagation(e)
+      return false
+
     if !metaTop.hasClass('hide')
       article.removeClass('state--folde-out')
 
       # scroll back up
-      TweenLite.to(article.scrollParent(), 0.5, { scrollTo: article.scrollParent().scrollTop() - metaTop.outerHeight() })
+      TweenLite.to(article.scrollParent(), animSpeed, { scrollTo: article.scrollParent().scrollTop() - metaTop.outerHeight() })
 
-      TweenLite.to(metaTop, 0.5, { y: 0, opacity: 0, onComplete: -> metaTop.addClass('hide') })
-      TweenLite.to(metaBottom, 0.5, { y: -metaBottom.outerHeight(), opacity: 0, onComplete: -> metaTop.addClass('hide') })
-      TweenLite.to(metaTopClip, 0.5, { height: 0 })
-      TweenLite.to(metaBottomClip, 0.5, { height: 0 })
+      TweenLite.to(metaTop, animSpeed, { y: 0, opacity: 0, onComplete: -> metaTop.addClass('hide') })
+      TweenLite.to(metaBottom, animSpeed, { y: -metaBottom.outerHeight(), opacity: 0, onComplete: -> metaTop.addClass('hide') })
+      TweenLite.to(metaTopClip, animSpeed, { height: 0 })
+      TweenLite.to(metaBottomClip, animSpeed, { height: 0 })
     else
       article.addClass('state--folde-out')
       metaBottom.removeClass('hide')
       metaTop.removeClass('hide')
 
       # balance out the top meta height by scrolling down
-      TweenLite.to(article.scrollParent(), 0.5, { scrollTo: article.scrollParent().scrollTop() + metaTop.outerHeight() })
+      TweenLite.to(article.scrollParent(), animSpeed, { scrollTo: article.scrollParent().scrollTop() + metaTop.outerHeight() })
 
-      TweenLite.fromTo(metaTop, 0.5, { y: metaTop.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
-      TweenLite.fromTo(metaBottom, 0.5, { y: -metaBottom.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
-      TweenLite.to(metaTopClip, 0.5, { height: metaTop.outerHeight() })
-      TweenLite.to(metaBottomClip, 0.5, { height: metaBottom.outerHeight() })
+      TweenLite.fromTo(metaTop, animSpeed, { y: metaTop.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
+      TweenLite.fromTo(metaBottom, animSpeed, { y: -metaBottom.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
+      TweenLite.to(metaTopClip, animSpeed, { height: metaTop.outerHeight() })
+      TweenLite.to(metaBottomClip, animSpeed, { height: metaBottom.outerHeight() })
+
+  isOrContains: (node, container) ->
+    while node
+      if node is container
+        return true
+      node = node.parentNode
+    false
+
+  elementContainsSelection: (el) ->
+    sel = window.getSelection()
+    if sel.rangeCount > 0 && sel.toString()
+      for i in [0..sel.rangeCount-1]
+        if !@isOrContains(sel.getRangeAt(i).commonAncestorContainer, el)
+          return false
+      return true
+    false
 
   checkIfSignatureIsNeeded: (type) =>
 
