@@ -205,3 +205,7 @@ body.fit {
 .three-columns > .column {
   width: 33.33%;
 }
+
+.align-right {
+  margin-left: auto;
+}

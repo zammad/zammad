@@ -325,10 +325,17 @@ class Edit extends App.Controller
     'click .pop-selected':       'show_selectable_types'
     'focus textarea':            'show_controls'
     'blur textarea':             'hide_controls'
+    'click .recipient-picker':   'toggle_recipients'
+    'click .recipient-list':     'stopPropagation'
+    'click .list-entry-type div':  'change_recipient_type'
+    'submit .recipient-list form': 'add_recipient'
 
   constructor: ->
     super
     @render()
+
+  stopPropagation: (e) ->
+    e.stopPropagation()
 
   release: =>
     @autosaveStop()
@@ -338,8 +345,6 @@ class Edit extends App.Controller
   render: ->
 
     ticket = App.Ticket.fullLocal( @ticket.id )
-
-    console.log ticket
 
     # gets referenced in @set_type
     @type = 'email'
@@ -450,6 +455,40 @@ class Edit extends App.Controller
           ticket: ticket
         )
       @subscribeIdTextModule = ticket.subscribe( callback )
+
+  toggle_recipients: =>
+    padding = 15
+    toggle = @el.find('.recipient-picker')
+    list = @el.find('.recipient-list')
+    arrow = list.find('.list-arrow')
+
+    if toggle.hasClass('state--open')
+      toggle.removeClass('state--open')
+    else
+      toggle.addClass('state--open')
+
+      toggleDimensions = toggle.get(0).getBoundingClientRect()
+      listDimensions = list.get(0).getBoundingClientRect()
+      availableHeight = toggle.scrollParent().outerHeight()
+
+      top = toggleDimensions.height/2 - listDimensions.height/2
+      bottomDistance = availableHeight - padding - (toggleDimensions.top + top + listDimensions.height)
+
+      if bottomDistance < 0
+        top += bottomDistance
+
+      arrow.css('top', -top + toggleDimensions.height/2)
+      list.css('top', top)
+
+  change_recipient_type: (e) ->
+    $(e.target).addClass('active').siblings('.active').removeClass('active')
+    # store $(this).data('value')
+
+  add_recipient: (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    console.log "add recipient", e
+    # store recipient 
 
   toggle_visibility: ->
     if @el.hasClass('state--public')

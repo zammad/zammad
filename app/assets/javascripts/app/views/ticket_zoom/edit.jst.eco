@@ -25,9 +25,44 @@
           </div>
         </div>
         <hr>
-        <div class="visibility toggle clickable centered">
-          <div class="public visibility icon"></div>
-          <div class="internal visibility icon"></div>
+        <div class="recipient-picker clickable horizontal centered">
+          <div class="recipients icon"></div>
+          <div class="recipient-count">3</div>
+          <div class="recipient-list">
+            <div class="list-arrow"></div>
+            <div class="list-head horizontal">
+              <%- @T('Recipients') %>
+              <div class="align-right"><%- @T('type') %></div>
+            </div>
+            <div class="list-entry horizontal centered">
+              <div class="avatar"  style="background-image: url(http://berta9.express.ge/31/performer/Paul%20van%20Dyk/.photo/34_paul_van_dyk_01.jpg)"></div>
+              <div class="list-entry-name flex">Hans Peter Baxxter</div>
+              <div class="list-entry-type clickable horizontal">
+                <div class="active" data-value="to">To</div>
+                <div data-value="cc" title="<%- @T('carbon copy') %>">Cc</div>
+              </div>
+            </div>
+            <!-- <div class="list-entry horizontal centered">
+              <div class="avatar"  style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/48.jpg)"></div>
+              <div class="list-entry-name flex">Julia Maier</div>
+              <div class="list-entry-type clickable horizontal">
+                <div class="active" data-value="to">To</div>
+                <div data-value="cc" title="<%- @T('carbon copy') %>">Cc</div>
+              </div>
+            </div>
+            <div class="list-entry horizontal centered">
+              <div class="avatar"  style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/sindresorhus/48.jpg)"></div>
+              <div class="list-entry-name flex">Remo Batlogg</div>
+              <div class="list-entry-type clickable horizontal">
+                <div class="active" data-value="to">To</div>
+                <div data-value="cc" title="<%- @T('carbon copy') %>">Cc</div>
+              </div>
+            </div> -->
+            <form class="list-edit">
+              <input type="email" class="list-entry" placeholder="<%- @T('Add recipients..') %>"></input>
+              <input type="submit" tabindex="-1"></input>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -39,7 +74,21 @@
           <span class="bubble-placeholder">Antwort eingeben oder <span class="highlight">Dateien wählen</span></span>
         </div>
       </div>
-      <button type="submit" class="edit-controls btn btn-primary submit"><%- @T( 'Send' ) %></button>
+      <div class="edit-controls">
+        <div class="horizontal justify-end center">
+          <div class="visibility toggle clickable centered">
+            <div class="internal-visibility">
+              <div class="internal visibility icon"></div>
+              <div class="visibility-label">internal</div>
+            </div>
+            <div class="public-visibility">
+              <div class="public visibility icon"></div>
+              <div class="visibility-label">public</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary submit"><%- @T( 'Send' ) %></button>
+        </div>
+      </div>
     </div>
   </div>
 </form>
