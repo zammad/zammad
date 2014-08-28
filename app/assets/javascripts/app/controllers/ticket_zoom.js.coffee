@@ -731,7 +731,7 @@ class ArticleView extends App.Controller
   toggle_meta: (e) ->
     e.preventDefault()
 
-    animSpeed = 0.25
+    animSpeed = 250
     article = $(e.target).closest('.ticket-article-item')
     metaTopClip = article.find('.article-meta-clip.top')
     metaBottomClip = article.find('.article-meta-clip.bottom')
@@ -746,24 +746,38 @@ class ArticleView extends App.Controller
       article.removeClass('state--folde-out')
 
       # scroll back up
-      TweenLite.to(article.scrollParent(), animSpeed, { scrollTo: article.scrollParent().scrollTop() - metaTop.outerHeight() })
+      article.velocity("scroll",
+        container: article.scrollParent()
+        offset: -article.offset().top - metaTop.outerHeight()
+        duration: animSpeed
+        easing: 'easeOutQuad'
+      )
 
-      TweenLite.to(metaTop, animSpeed, { y: 0, opacity: 0, onComplete: -> metaTop.addClass('hide') })
-      TweenLite.to(metaBottom, animSpeed, { y: -metaBottom.outerHeight(), opacity: 0, onComplete: -> metaTop.addClass('hide') })
-      TweenLite.to(metaTopClip, animSpeed, { height: 0 })
-      TweenLite.to(metaBottomClip, animSpeed, { height: 0 })
+      metaTop.velocity({ top: 0, opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
+      metaBottom.velocity({ top: -metaBottom.outerHeight(), opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
+      metaTopClip.velocity({ height: 0 }, animSpeed, 'easeOutQuad')
+      metaBottomClip.velocity({ height: 0 }, animSpeed, 'easeOutQuad')
     else
       article.addClass('state--folde-out')
       metaBottom.removeClass('hide')
       metaTop.removeClass('hide')
 
       # balance out the top meta height by scrolling down
-      TweenLite.to(article.scrollParent(), animSpeed, { scrollTo: article.scrollParent().scrollTop() + metaTop.outerHeight() })
+      article.velocity("scroll", 
+        container: article.scrollParent()
+        offset: -article.offset().top + metaTop.outerHeight()
+        duration: animSpeed
+        easing: 'easeOutQuad'
+      )
 
-      TweenLite.fromTo(metaTop, animSpeed, { y: metaTop.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
-      TweenLite.fromTo(metaBottom, animSpeed, { y: -metaBottom.outerHeight(), opacity: 0 }, { y: 0, opacity: 1 })
-      TweenLite.to(metaTopClip, animSpeed, { height: metaTop.outerHeight() })
-      TweenLite.to(metaBottomClip, animSpeed, { height: metaBottom.outerHeight() })
+      metaTop
+        .velocity({ top: metaTop.outerHeight(), opacity: 0 }, 0)
+        .velocity({ top: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
+      metaBottom
+        .velocity({ top: -metaBottom.outerHeight(), opacity: 0 }, 0)
+        .velocity({ top: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
+      metaTopClip.velocity({ height: metaTop.outerHeight() }, animSpeed, 'easeOutQuad')
+      metaBottomClip.velocity({ height: metaBottom.outerHeight() }, animSpeed, 'easeOutQuad')
 
   isOrContains: (node, container) ->
     while node
