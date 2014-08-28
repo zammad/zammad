@@ -294,13 +294,17 @@ class Sidebar extends App.Controller
   toggleTab: (e) ->
 
     name = $(e.target).closest('.sidebar-tab').data('content')
+
     if name
-      @el.find('.ticket-zoom .sidebar-tab').removeClass('active')
-      $(e.target).closest('.sidebar-tab').addClass('active')
+      if name is @currentTab
+        @toggleSidebar()
+      else 
+        @el.find('.ticket-zoom .sidebar-tab').removeClass('active')
+        $(e.target).closest('.sidebar-tab').addClass('active')
 
-      @toggleContent(name)
+        @toggleContent(name)
 
-      @showSidebar()
+        @showSidebar()
 
 
   toggleContent: (name) ->
@@ -309,6 +313,7 @@ class Sidebar extends App.Controller
     @el.find('.sidebar-content[data-content=' + name + ']').removeClass('hide')
     title = @el.find('.sidebar-content[data-content=' + name + ']').data('title')
     @el.find('.sidebar h2').html(title)
+    @currentTab = name
 
 
 class Edit extends App.Controller
