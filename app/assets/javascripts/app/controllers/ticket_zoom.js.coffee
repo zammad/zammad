@@ -318,6 +318,8 @@ class Edit extends App.Controller
     'click .visibility.toggle':  'toggle_visibility'
     'click .pop-selectable':     'select_type'
     'click .pop-selected':       'show_selectable_types'
+    'focus textarea':            'show_controls'
+    'blur textarea':             'hide_controls'
 
   constructor: ->
     super
@@ -465,6 +467,15 @@ class Edit extends App.Controller
       typeIcon.removeClass @type
     @type = type
     typeIcon.addClass @type
+
+  show_controls: =>
+    @el.addClass('mode--edit')
+    # scroll to bottom
+    @el.scrollParent().scrollTop(99999)
+
+  hide_controls: =>
+    if !@el.find('textarea').val()
+      @el.removeClass('mode--edit')
 
   autosaveStop: =>
     @clearInterval( 'autosave' )

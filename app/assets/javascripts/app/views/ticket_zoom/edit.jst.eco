@@ -2,31 +2,33 @@
   <div class="bubble-grid horizontal">
     <div class="vertical center">
       <div class="avatar user-popover" data-id="<%= @S('id') %>" style="background-image: url(<%- @S('image') %>)"></div>
-      <div class="dark pop-select">
-        <div class="pop-selected clickable centered">
-          <div class="gray <%- @type %> channel icon"></div>
-        </div>
-        <div class="pop-selector hide">
-          <div class="horizontal">
-            <div class="pop-selectable clickable centered" data-value="email">
-              <div class="white email channel icon"></div>
-            </div>
-            <div class="pop-selectable clickable centered" data-value="facebook">
-              <div class="white facebook channel icon"></div>
-            </div>
-            <div class="pop-selectable clickable centered" data-value="twitter">
-              <div class="white twitter channel icon"></div>
-            </div>
-            <div class="pop-selectable clickable centered" data-value="phone">
-              <div class="white phone channel icon"></div>
+      <div class="edit-controls">
+        <div class="dark pop-select">
+          <div class="pop-selected clickable centered">
+            <div class="gray <%- @type %> channel icon"></div>
+          </div>
+          <div class="pop-selector hide">
+            <div class="horizontal">
+              <div class="pop-selectable clickable centered" data-value="email">
+                <div class="white email channel icon"></div>
+              </div>
+              <div class="pop-selectable clickable centered" data-value="facebook">
+                <div class="white facebook channel icon"></div>
+              </div>
+              <div class="pop-selectable clickable centered" data-value="twitter">
+                <div class="white twitter channel icon"></div>
+              </div>
+              <div class="pop-selectable clickable centered" data-value="phone">
+                <div class="white phone channel icon"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <hr>
-      <div class="visibility toggle clickable centered">
-        <div class="public visibility icon"></div>
-        <div class="internal visibility icon"></div>
+        <hr>
+        <div class="visibility toggle clickable centered">
+          <div class="public visibility icon"></div>
+          <div class="internal visibility icon"></div>
+        </div>
       </div>
     </div>
     <div class="flex article-content bubble-gap">
@@ -37,7 +39,7 @@
           <span class="bubble-placeholder">Antwort eingeben oder <span class="highlight">Dateien wählen</span></span>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary submit"><%- @T( 'Send' ) %></button>
+      <button type="submit" class="edit-controls btn btn-primary submit"><%- @T( 'Send' ) %></button>
     </div>
   </div>
 </form>

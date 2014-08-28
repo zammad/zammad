@@ -1593,7 +1593,7 @@ footer {
 
 .btn {
   font-size: 14px;
-  padding: 9px 14px;
+  padding: 9px 24px 8px;
 }
 
 .btn.primary,
@@ -2536,45 +2536,6 @@ footer {
       border-color: hsl(300,43%,84%);
     }
 
-  .ticket-edit .text-bubble {
-    padding: 0;
-    border-color: #b3b3b3;
-    white-space: normal;
-    border-radius: 5px;
-  }
-
-    .ticket-edit textarea {
-      width: 100%;
-      height: 38px;
-      padding: 10px 20px;
-      vertical-align: bottom;
-      border: none;
-      background: none;
-      outline: none;
-      transition: 500ms;
-    }
-
-    .ticket-edit textarea:focus {
-      height: 105px;
-    }
-
-    .ticket-edit textarea:focus + .bubble-placeholder {
-      display: none;
-    }
-
-    .ticket-edit .bubble-arrow:after {
-      border-color: #b3b3b3;
-      box-shadow: none;
-    }
-
-    .bubble-placeholder {
-      position: absolute;
-      color: #b3b3b3;
-      left: 20px;
-      top: 10px;
-      pointer-events: none;
-    }
-
     .bubble-arrow {
       position: absolute;
       width: 7px;
@@ -2648,6 +2609,10 @@ footer {
   margin-bottom: 37px;
 }
 
+  .ticket-edit.mode--edit {
+    margin-bottom: 12px;
+  }
+
   .bottom-form {
     background: white;
   }
@@ -2665,6 +2630,14 @@ footer {
 
   .ticket-edit .avatar {
     margin-bottom: 3px;
+  }
+
+  .ticket-edit .edit-controls {
+    display: none;
+  }
+
+  .ticket-edit.mode--edit .edit-controls {
+    display: block;
   }
 
   .ticket-edit .pop-selectable .icon {
@@ -2705,6 +2678,44 @@ footer {
     display: none;
   }
 
+  .ticket-edit .text-bubble {
+    padding: 0;
+    border-color: #b3b3b3;
+    white-space: normal;
+    border-radius: 5px;
+  }
+
+    .ticket-edit textarea {
+      width: 100%;
+      height: 38px;
+      padding: 10px 20px;
+      vertical-align: bottom;
+      border: none;
+      background: none;
+      outline: none;
+    }
+
+    .ticket-edit.mode--edit textarea {
+      height: 115px;
+    }
+
+    .ticket-edit.mode--edit .bubble-placeholder {
+      display: none;
+    }
+
+    .ticket-edit .bubble-arrow:after {
+      border-color: #b3b3b3;
+      box-shadow: none;
+    }
+
+    .bubble-placeholder {
+      position: absolute;
+      color: #b3b3b3;
+      left: 20px;
+      top: 10px;
+      pointer-events: none;
+    }
+
 .pop-select {
   position: relative;
   z-index: 2;
@@ -2718,7 +2729,7 @@ footer {
 
   .pop-selected,
   .pop-selectable {
-    width: 36px;
+    width: 38px;
     height: 36px;
   }
 
