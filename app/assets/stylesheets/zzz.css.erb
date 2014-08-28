@@ -19,6 +19,50 @@ small {
   z-index: 1;
 }
 
+/* tooltip */
+a[data-tooltip],
+time[data-tooltip],
+span[data-tooltip] {
+  position: relative;
+  z-index: 99000;
+}
+a[data-tooltip]:before,
+time[data-tooltip]:before,
+span[data-tooltip]:before {
+  position: absolute;
+  left: 0;
+  top: -34px;
+  background-color: #c6c6c5;
+  color: #ffffff;
+  height: 26px;
+  line-height: 27px;
+  border-radius: 5px;
+  padding: 0 13px;
+  content: attr(data-tooltip);
+  white-space: nowrap;
+  display: none;
+}
+a[data-tooltip]:after,
+time[data-tooltip]:after,
+span[data-tooltip]:after {
+  position: absolute;
+  left: 13px;
+  top: -8px;
+  border-top: 7px solid #c6c6c5;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  content: "";
+  display: none;
+}
+a[data-tooltip]:hover:after,
+a[data-tooltip]:hover:before,
+time[data-tooltip]:hover:after,
+time[data-tooltip]:hover:before,
+span[data-tooltip]:hover:after,
+span[data-tooltip]:hover:before {
+  display: block;
+}
+
 .glyphicon {
   font-size: 13px;
 }

@@ -207,7 +207,7 @@ class App.Controller extends Spine.Controller
 #        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
         timestamp = $(this).data('time')
         time = ui.humanTime( timestamp, $(this).hasClass('escalation') )
-        $(this).attr( 'title', App.i18n.translateTimestamp(timestamp) )
+        $(this).attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
         $(this).html( time )
       )
     App.Interval.set( update, 30000, 'frontendTimeUpdate', 'ui' )
