@@ -753,8 +753,8 @@ class ArticleView extends App.Controller
         easing: 'easeOutQuad'
       )
 
-      metaTop.velocity({ top: 0, opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
-      metaBottom.velocity({ top: -metaBottom.outerHeight(), opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
+      metaTop.velocity({ translateY: 0, opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
+      metaBottom.velocity({ translateY: -metaBottom.outerHeight(), opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
       metaTopClip.velocity({ height: 0 }, animSpeed, 'easeOutQuad')
       metaBottomClip.velocity({ height: 0 }, animSpeed, 'easeOutQuad')
     else
@@ -771,11 +771,11 @@ class ArticleView extends App.Controller
       )
 
       metaTop
-        .velocity({ top: metaTop.outerHeight(), opacity: 0 }, 0)
-        .velocity({ top: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
+        .velocity({ translateY: metaTop.outerHeight(), opacity: 0 }, 0)
+        .velocity({ translateY: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
       metaBottom
-        .velocity({ top: -metaBottom.outerHeight(), opacity: 0 }, 0)
-        .velocity({ top: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
+        .velocity({ translateY: -metaBottom.outerHeight(), opacity: 0 }, 0)
+        .velocity({ translateY: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
       metaTopClip.velocity({ height: metaTop.outerHeight() }, animSpeed, 'easeOutQuad')
       metaBottomClip.velocity({ height: metaBottom.outerHeight() }, animSpeed, 'easeOutQuad')
 
