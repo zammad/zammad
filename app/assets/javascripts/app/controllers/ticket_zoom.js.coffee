@@ -294,13 +294,17 @@ class Sidebar extends App.Controller
   toggleTab: (e) ->
 
     name = $(e.target).closest('.sidebar-tab').data('content')
+
     if name
-      @el.find('.ticket-zoom .sidebar-tab').removeClass('active')
-      $(e.target).closest('.sidebar-tab').addClass('active')
+      if name is @currentTab
+        @toggleSidebar()
+      else 
+        @el.find('.ticket-zoom .sidebar-tab').removeClass('active')
+        $(e.target).closest('.sidebar-tab').addClass('active')
 
-      @toggleContent(name)
+        @toggleContent(name)
 
-      @showSidebar()
+        @showSidebar()
 
 
   toggleContent: (name) ->
@@ -309,6 +313,7 @@ class Sidebar extends App.Controller
     @el.find('.sidebar-content[data-content=' + name + ']').removeClass('hide')
     title = @el.find('.sidebar-content[data-content=' + name + ']').data('title')
     @el.find('.sidebar h2').html(title)
+    @currentTab = name
 
 
 class Edit extends App.Controller
@@ -318,6 +323,8 @@ class Edit extends App.Controller
     'click .visibility.toggle':  'toggle_visibility'
     'click .pop-selectable':     'select_type'
     'click .pop-selected':       'show_selectable_types'
+    'focus textarea':            'show_controls'
+    'blur textarea':             'hide_controls'
 
   constructor: ->
     super
@@ -465,6 +472,15 @@ class Edit extends App.Controller
       typeIcon.removeClass @type
     @type = type
     typeIcon.addClass @type
+
+  show_controls: =>
+    @el.addClass('mode--edit')
+    # scroll to bottom
+    @el.scrollParent().scrollTop(99999)
+
+  hide_controls: =>
+    if !@el.find('textarea').val()
+      @el.removeClass('mode--edit')
 
   autosaveStop: =>
     @clearInterval( 'autosave' )
