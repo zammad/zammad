@@ -75,8 +75,8 @@
 
   <form class="bottom-form form-inline horizontal" role="form">
     <div class="form-group">
-      <label for="update_ticket_1_state_id" class="input-group-addon">State</label>
-      <select id="update_ticket_1_state_id" class="form-control" name="state_id">
+      <label for="update_ticket_1_state_id123" class="input-group-addon clickable">State</label>
+      <select id="update_ticket_1_state_id123" class="form-control" name="state_id">
         <option value="4">closed</option>
         <option value="1" selected="">new</option>
         <option value="2">open</option>
@@ -84,16 +84,16 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="update_ticket_1_priority_id" class="input-group-addon">Priority</label>
-      <select id="update_ticket_1_priority_id" class="form-control" name="priority_id">
+      <label for="update_ticket_1_priority_id123" class="input-group-addon clickable">Priority</label>
+      <select id="update_ticket_1_priority_id123" class="form-control" name="priority_id">
         <option value="1">1 low</option>
         <option value="2" selected="">2 normal</option>
         <option value="3">3 high</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="update_ticket_1_group_id" class="input-group-addon">Group</label>
-      <select id="update_ticket_1_group_id" class="form-control" name="group_id">
+      <label for="update_ticket_1_group_id123" class="input-group-addon clickable">Group</label>
+      <select id="update_ticket_1_group_id123" class="form-control" name="group_id">
         <option value="4">FillGroup::450863</option>
         <option value="3">FillGroup::918672</option>
         <option value="2">Twitter</option>
@@ -101,8 +101,8 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="update_ticket_1_owner_id" class="input-group-addon">Owner</label>
-      <select id="update_ticket_1_owner_id" class="form-control" name="owner_id">
+      <label for="update_ticket_1_owner_id123" class="input-group-addon clickable">Owner</label>
+      <select id="update_ticket_1_owner_id123" class="form-control" name="owner_id">
         <option value="">-</option>
         <option value="3">Felix Niklas</option>
       </select>
