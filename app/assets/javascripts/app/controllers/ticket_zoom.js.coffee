@@ -463,22 +463,41 @@ class Edit extends App.Controller
     arrow = list.find('.list-arrow')
 
     if toggle.hasClass('state--open')
-      toggle.removeClass('state--open')
+      list.velocity
+        properties:
+          scale: [ 0, 1 ]
+          opacity: [ 0, 1 ]
+        options:
+          speed: 300
+          easing: [ 0.34, 1.61, 0.7, 1 ]
+          complete: -> toggle.removeClass('state--open')
     else
       toggle.addClass('state--open')
 
       toggleDimensions = toggle.get(0).getBoundingClientRect()
-      listDimensions = list.get(0).getBoundingClientRect()
       availableHeight = toggle.scrollParent().outerHeight()
 
-      top = toggleDimensions.height/2 - listDimensions.height/2
-      bottomDistance = availableHeight - padding - (toggleDimensions.top + top + listDimensions.height)
+      top = toggleDimensions.height/2 - list.height()/2
+      bottomDistance = availableHeight - padding - (toggleDimensions.top + top + list.height())
 
       if bottomDistance < 0
         top += bottomDistance
 
-      arrow.css('top', -top + toggleDimensions.height/2)
+      arrowCenter = -top + toggleDimensions.height/2
+
+      arrow.css('top', arrowCenter)
       list.css('top', top)
+
+      $.Velocity.hook(list, 'transformOriginX', "0")
+      $.Velocity.hook(list, 'transformOriginY', "#{ arrowCenter }px")
+
+      list.velocity
+        properties:
+          scale: [ 1, 0 ]
+          opacity: [ 1, 0 ]
+        options:
+          speed: 300
+          easing: [ 0.34, 1.61, 0.7, 1 ]
 
   change_recipient_type: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
@@ -731,7 +750,7 @@ class ArticleView extends App.Controller
   toggle_meta: (e) ->
     e.preventDefault()
 
-    animSpeed = 250
+    animSpeed = 300
     article = $(e.target).closest('.ticket-article-item')
     metaTopClip = article.find('.article-meta-clip.top')
     metaBottomClip = article.find('.article-meta-clip.bottom')
@@ -746,15 +765,30 @@ class ArticleView extends App.Controller
       article.removeClass('state--folde-out')
 
       # scroll back up
-      article.velocity("scroll",
+      article.velocity "scroll",
         container: article.scrollParent()
         offset: -article.offset().top - metaTop.outerHeight()
         duration: animSpeed
         easing: 'easeOutQuad'
-      )
 
-      metaTop.velocity({ translateY: 0, opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
-      metaBottom.velocity({ translateY: -metaBottom.outerHeight(), opacity: 0 }, animSpeed, 'easeOutQuad', -> metaTop.addClass('hide'))
+      metaTop.velocity
+        properties:
+          translateY: 0
+          opacity: [ 0, 1 ]
+        options:
+          speed: animSpeed
+          easing: 'easeOutQuad'
+          complete: -> metaTop.addClass('hide')
+
+      metaBottom.velocity
+        properties:
+          translateY: [ -metaBottom.outerHeight(), 0 ]
+          opacity: [ 0, 1 ]
+        options:
+          speed: animSpeed
+          easing: 'easeOutQuad'
+          complete: -> metaBottom.addClass('hide')
+
       metaTopClip.velocity({ height: 0 }, animSpeed, 'easeOutQuad')
       metaBottomClip.velocity({ height: 0 }, animSpeed, 'easeOutQuad')
     else
@@ -770,12 +804,22 @@ class ArticleView extends App.Controller
         easing: 'easeOutQuad'
       )
 
-      metaTop
-        .velocity({ translateY: metaTop.outerHeight(), opacity: 0 }, 0)
-        .velocity({ translateY: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
-      metaBottom
-        .velocity({ translateY: -metaBottom.outerHeight(), opacity: 0 }, 0)
-        .velocity({ translateY: 0, opacity: 1 }, animSpeed, 'easeOutQuad')
+      metaTop.velocity
+        properties:
+          translateY: [ 0, metaTop.outerHeight() ]
+          opacity: [ 1, 0 ]
+        options:
+          speed: animSpeed
+          easing: 'easeOutQuad'
+
+      metaBottom.velocity
+        properties:
+          translateY: [ 0, -metaBottom.outerHeight() ]
+          opacity: [ 1, 0 ]
+        options:
+          speed: animSpeed
+          easing: 'easeOutQuad'
+
       metaTopClip.velocity({ height: metaTop.outerHeight() }, animSpeed, 'easeOutQuad')
       metaBottomClip.velocity({ height: metaBottom.outerHeight() }, animSpeed, 'easeOutQuad')
 
