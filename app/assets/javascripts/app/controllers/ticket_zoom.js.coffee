@@ -463,16 +463,18 @@ class Edit extends App.Controller
     arrow = list.find('.list-arrow')
 
     if toggle.hasClass('state--open')
+      toggle.removeClass('state--open')
       list.velocity
         properties:
           scale: [ 0, 1 ]
           opacity: [ 0, 1 ]
         options:
           speed: 300
-          easing: [ 0.34, 1.61, 0.7, 1 ]
-          complete: -> toggle.removeClass('state--open')
+          easing: [ 500, 20 ]
+          complete: -> list.addClass('hide')
     else
       toggle.addClass('state--open')
+      list.removeClass('hide')
 
       toggleDimensions = toggle.get(0).getBoundingClientRect()
       availableHeight = toggle.scrollParent().outerHeight()

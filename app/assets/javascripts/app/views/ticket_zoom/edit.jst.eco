@@ -28,7 +28,7 @@
         <div class="recipient-picker clickable horizontal centered">
           <div class="recipients icon"></div>
           <div class="recipient-count">3</div>
-          <div class="recipient-list">
+          <div class="recipient-list hide">
             <div class="list-arrow"></div>
             <div class="list-head horizontal">
               <%- @T('Recipients') %>
