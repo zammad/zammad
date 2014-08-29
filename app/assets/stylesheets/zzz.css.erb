@@ -2405,6 +2405,43 @@ footer {
     height: 65px;
   }
 
+    .form-group.is-changed {
+      position: relative;
+    }
+
+    .form-group.is-changed:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 3px;
+      background: repeating-linear-gradient(-45deg, hsl(193,18%,90%), hsl(193,18%,90%) 4px, transparent 4px, transparent 7px) repeat center;
+      background-size: 9px 9px;
+    }
+
+    .form-inline .form-group.is-changed:before {
+      width: 100%;
+      height: 3px;
+    }
+
+    .form-group.is-changed label {
+      color: hsl(198,19%,72%);
+      position: relative;
+    }
+
+    .form-group.is-changed label:before {
+      position: absolute;
+      content: '';
+      left: -10px;
+      width: 5px;
+      height: 5px;
+      top: 50%;
+      margin-top: -4px;
+      border-radius: 100%;
+      background: hsl(198,19%,72%);
+    }
+
   .form-inline .form-group .btn {
     width: 100%;
   }
@@ -2417,10 +2454,10 @@ footer {
     padding: 0;
     margin: 15px 18px;
     font-size: 13px;
-    text-align: left;
     letter-spacing: 0.05em;
     color: #ccc;
     display: block;
+    position: relative;
   }
 
   .form-inline .form-control {
@@ -2992,18 +3029,31 @@ footer {
     width: 56px;
     height: 60px;
     background: hsl(197,20%,93%);
-    border-top: 1px solid hsl(202,12%,87%);
-    border-left: 1px solid hsl(202,12%,87%);
     cursor: pointer;
+    position: relative;
+    border-top: 1px solid hsl(202,12%,87%);
   }
+
+    .sidebar-tab.is-changed:before {
+      position: absolute;
+      content: '';
+      left: -3px;
+      width: 6px;
+      height: 6px;
+      top: 50%;
+      margin-top: -3px;
+      border-radius: 100%;
+      background: hsl(198,19%,72%);
+      box-shadow: 0 0 0 2px hsl(210,17%,98%);
+    }
 
   .sidebar-tab:first-child {
     border-top-left-radius: 8px;
+    border-top: none;
   }
 
   .sidebar-tab:last-child {
     border-bottom-left-radius: 8px;
-    border-bottom: 1px solid hsl(202,12%,87%);
   }
 
   .sidebar-tab .icon {
@@ -3012,6 +3062,11 @@ footer {
 
   .sidebar-tab.active .icon {
     opacity: 1;
+  }
+
+  .sidebar .form-group {
+    margin: 0 -20px;
+    padding: 0 20px;
   }
 
 /* 

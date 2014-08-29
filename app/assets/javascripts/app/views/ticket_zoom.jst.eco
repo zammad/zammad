@@ -83,7 +83,7 @@
         <option value="3">pending</option>
       </select>
     </div>
-    <div class="form-group">
+    <div class="form-group is-changed">
       <label for="update_ticket_1_priority_id123" class="input-group-addon clickable">Priority</label>
       <select id="update_ticket_1_priority_id123" class="form-control" name="priority_id">
         <option value="1">1 low</option>
