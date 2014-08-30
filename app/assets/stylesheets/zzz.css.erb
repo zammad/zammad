@@ -534,6 +534,11 @@ label {
   font-weight: normal;
   letter-spacing: 0.1em;
   padding: 0 2px;
+  margin-bottom: 4px;
+}
+
+.form-group + .form-group {
+  margin-top: 0;
 }
 
 .form-group .help-message {
@@ -3059,9 +3064,40 @@ footer {
   }
 
   .sidebar .form-group {
-    margin: 0 -20px;
-    padding: 0 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
+
+  .sidebar .text-muted {
+    color: hsl(204,3%,72%);
+  }
+
+.tags {
+  margin-bottom: 20px;
+}
+
+.tagList {
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+  .tagList li {
+    border-bottom: 1px solid hsl(240,4%,95%);
+  }
+
+  .tagList .tag-delete {
+    height: 29px;
+    padding: 0 10px;
+    margin-right: -4px;
+    display: block;
+    opacity: 0.2;
+  }
+
+    .tagList .tag-delete:hover {
+      opacity: 0.5;
+    }
 
 /* 
 
