@@ -76,7 +76,7 @@
   <form class="bottom-form form-inline horizontal" role="form">
     <div class="form-group">
       <label for="update_ticket_1_state_id123" class="input-group-addon clickable">State</label>
-      <select id="update_ticket_1_state_id123" class="form-control" name="state_id">
+      <select id="update_ticket_1_state_id123" class="form-control level-1" name="state_id">
         <option value="4">closed</option>
         <option value="1" selected="">new</option>
         <option value="2">open</option>
