@@ -1,6 +1,5 @@
 Spine   = @Spine or require('spine')
 isArray = Spine.isArray
-require = @require or ((value) -> eval(value))
 
 class Collection extends Spine.Module
   constructor: (options = {}) ->
@@ -111,8 +110,14 @@ underscore = (str) ->
      .replace(/-/g, '_')
      .toLowerCase()
 
+requireModel = (model) ->
+  if typeof model is 'string'
+    require?(model) or eval(model)
+  else
+    model
+
 association = (name, model, record, fkey, Ctor) ->
-  model = require(model) if typeof model is 'string'
+  model = requireModel(model) if typeof model is 'string'
   new Ctor(name: name, model: model, record: record, fkey: fkey)
 
 Spine.Model.extend

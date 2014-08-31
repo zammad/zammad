@@ -71,6 +71,9 @@ class Route extends Spine.Module
     @change()
 
   @unbind: ->
+    unbindResult = Spine.Events.unbind.apply this, arguments
+    return unbindResult if arguments.length > 0
+
     return if @options.shim
 
     if @history
@@ -80,33 +83,30 @@ class Route extends Spine.Module
 
   @navigate: (args...) ->
     options = {}
-
     lastArg = args[args.length - 1]
     if typeof lastArg is 'object'
       options = args.pop()
     else if typeof lastArg is 'boolean'
       options.trigger = args.pop()
-
     options = $.extend({}, @options, options)
 
     path = args.join('/')
     return if @path is path
     @path = path
 
-    @trigger('navigate', @path)
+    if options.trigger
+      @trigger('navigate', @path)
+      routes = @matchRoutes(@path, options)
+      unless routes.length
+        if typeof options.redirect is 'function'
+          return options.redirect.apply this, [@path, options]
+        else
+          if options.redirect is true
+            @redirect(@path)
 
-    routes = @matchRoutes(@path, options) if options.trigger
-
-    return if options.shim
-
-    unless routes.length
-      if typeof options.redirect is 'function'
-        return options.redirect.apply this, [@path, options]
-      else
-        if options.redirect is true
-          @redirect(@path)
-
-    if @history and options.replace
+    if options.shim
+      true
+    else if @history and options.replace
       history.replaceState({}, document.title, @path)
     else if @history
       history.pushState({}, document.title, @path)

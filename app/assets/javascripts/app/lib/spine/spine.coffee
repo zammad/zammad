@@ -149,13 +149,14 @@ class Model extends Module
   @toString: -> "#{@className}(#{@attributes.join(", ")})"
 
   @find: (id, notFound = @notFound) ->
-    record = @irecords[id]?.clone()
-    return record or notFound?(id)
+    @irecords[id]?.clone() or notFound?(id)
 
-  @notFound: (id) -> return null
+  @findAll: (ids, notFound) ->
+    (@find(id) for id in ids when @find(id, notFound))
 
-  @exists: (id) ->
-    return if @irecords[id] then true else false
+  @notFound: (id) -> null
+
+  @exists: (id) -> Boolean @irecords[id]
 
   @addRecord: (record, options = {}) ->
     if record.id and @irecords[record.id]
@@ -321,8 +322,8 @@ class Model extends Module
     result
 
   eql: (rec) ->
-    !!(rec and rec.constructor is @constructor and
-        ((rec.cid is @cid) or (rec.id and rec.id is @id)))
+    rec and rec.constructor is @constructor and
+      ((rec.cid is @cid) or (rec.id and rec.id is @id))
 
   save: (options = {}) ->
     unless options.validate is false
@@ -634,7 +635,7 @@ makeArray = (args) ->
 Spine = @Spine   = {}
 module?.exports  = Spine
 
-Spine.version    = '1.3.1'
+Spine.version    = '1.3.2'
 Spine.isArray    = isArray
 Spine.isBlank    = isBlank
 Spine.$          = $
