@@ -14,6 +14,16 @@ small {
   color: hsl(202,68%,54%);
 }
 
+.u-unclickable {
+  pointer-events: none;
+}
+
+.u-clickable {
+  cursor: pointer;
+  -webkit-user-select: none;
+          user-select: none;
+}
+
 #app > nav {
   position: relative;
   z-index: 1;
@@ -1483,12 +1493,6 @@ footer {
     margin-bottom: 5px;
 }
 
-.clickable {
-  cursor: pointer;
-  -webkit-user-select: none;
-          user-select: none;
-}
-
 .customer_info {
 }
 
@@ -2937,7 +2941,6 @@ footer {
       color: #b3b3b3;
       left: 20px;
       top: 10px;
-      pointer-events: none;
     }
 
 .pop-select {

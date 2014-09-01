@@ -5,21 +5,21 @@
     <li class="horizontal center">
       <span class="flex">Midi Notes</span>
       <span>3</span>
-      <span class="tag-delete js-delete centered clickable">
+      <span class="tag-delete js-delete centered u-clickable">
         <span class="delete icon"></span>
       </span>
     <li class="horizontal center">
       <span class="flex">Transitions</span>
       <span>23</span>
-      <span class="tag-delete js-delete centered clickable">
+      <span class="tag-delete js-delete centered u-clickable">
         <span class="delete icon"></span>
       </span>
     <li class="horizontal center">
       <span class="flex">New UI</span>
       <span>3</span>
-      <span class="tag-delete js-delete centered clickable">
+      <span class="tag-delete js-delete centered u-clickable">
         <span class="delete icon"></span>
       </span>
   </ul>
-  <div class="text-muted js-newTag clickable">+ <%- @T('Add Tag') %></div>
+  <div class="text-muted js-newTag u-clickable">+ <%- @T('Add Tag') %></div>
 </div>

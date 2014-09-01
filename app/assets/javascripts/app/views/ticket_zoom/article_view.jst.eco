@@ -63,7 +63,7 @@
       <% if article.actions: %>
       <div class="article-actions horizontal stretch">
         <% for action in article.actions: %>
-          <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action clickable<% if action.class: %> <%= action.class %><% end %>">
+          <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action u-clickable<% if action.class: %> <%= action.class %><% end %>">
             <span class="<%= action.type %> action icon"></span><%- @T( action.name ) %>
           </a>
         <% end %>
