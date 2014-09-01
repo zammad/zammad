@@ -355,6 +355,9 @@ class TicketsController < ApplicationController
   # GET /api/v1/tickets/search
   def search
 
+    # permit nested conditions
+    params.require(:condition).permit!
+
     # build result list
     tickets = Ticket.search(
       :limit        => params[:limit],
