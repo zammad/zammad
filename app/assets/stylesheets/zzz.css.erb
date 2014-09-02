@@ -1460,21 +1460,21 @@ ol.tabs li {
   }
 
   .public.visibility.icon {
-    width: 14px;
-    height: 19px;
+    width: 11px;
+    height: 15px;
     background-position: 0 -356px;
   }
 
   .internal.visibility.icon {
-    width: 14px;
-    height: 19px;
-    background-position: -14px -356px;
+    width: 11px;
+    height: 15px;
+    background-position: -11px -356px;
   }
 
   .recipients.icon {
-    width: 17px;
-    height: 17px;
-    background-position: -28px -358px;
+    width: 15px;
+    height: 12px;
+    background-position: -22px -359px;
   }
 
 
@@ -2798,12 +2798,16 @@ footer {
     margin-bottom: 3px;
   }
 
-  .ticket-edit .edit-controls {
-    display: none;
+  .ticket-edit .js-edit-control {
+    width: 38px;
+    height: 36px;
+    position: absolute;
+    top: 0;
+    transform: scale(0);
   }
 
-  .ticket-edit.mode--edit .edit-controls {
-    display: block;
+  .ticket-edit .js-edit-control:not(:last-child) {
+    border-bottom: 1px solid #e6e6e6;
   }
 
   .ticket-edit .pop-selectable .icon {
@@ -2820,32 +2824,31 @@ footer {
     float: right;
   }
 
-  .ticket-edit hr {
-    border-color: #e6e6e6;
+  .visibility-toggle > * {
+    height: 36px;
     width: 38px;
-    margin: 0;
+    position: absolute;
   }
 
-  .visibility-toggle {
-    height: 38px;
-    width: 38px;
+  .visibility-toggle .icon {
+    display: block;
   }
 
-  .visibility-toggle,
+  .visibility-toggle .icon,
   .recipient-picker {
     opacity: 0.2;
   }
 
   .ticket-edit.is-public .internal-visibility {
-    display: none;
+    visibility: hidden;
   }
 
-  .ticket-edit.is-internal .visibility-toggle {
+  .ticket-edit.is-internal .visibility-toggle .icon {
     opacity: 1;
   }
 
   .ticket-edit.is-internal .public-visibility {
-    display: none;
+    visibility: hidden;
   }
 
   .ticket-edit .recipient-picker {
@@ -2859,12 +2862,12 @@ footer {
   }
 
     .recipient-picker .icon {
-      margin-top: -3px;
+      margin-top: -2px;
     }
 
     .recipient-count {
-      margin-top: 5px;
       margin-left: 3px;
+      margin-top: 1px;
       line-height: 1;
     }
 
@@ -2979,12 +2982,8 @@ footer {
       outline: none;
     }
 
-    .ticket-edit.mode--edit textarea {
-      height: 155px;
-    }
-
     .ticket-edit.mode--edit .bubble-placeholder {
-      display: none;
+      opacity: 0;
     }
 
     .ticket-edit .bubble-arrow:after {

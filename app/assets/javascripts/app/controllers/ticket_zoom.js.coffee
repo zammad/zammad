@@ -319,6 +319,7 @@ class Sidebar extends App.Controller
 class Edit extends App.Controller
   elements:
     'textarea' : 'textarea'
+    '.js-edit-control' : 'editControls'
 
   events:
     'click .submit':             'update'
@@ -326,7 +327,7 @@ class Edit extends App.Controller
     'click .visibility-toggle':  'toggle_visibility'
     'click .pop-selectable':     'select_type'
     'click .pop-selected':       'show_selectable_types'
-    'focus textarea':            'show_controls'
+    'focus textarea':            'open_textarea'
     'input textarea':            'detect_empty_textarea'
     'click .recipient-picker':   'show_recipients'
     'click .recipient-list':     'stopPropagation'
@@ -335,6 +336,11 @@ class Edit extends App.Controller
 
   constructor: ->
     super
+
+    @textareaHeight =
+      open: 148
+      closed: 38
+
     @render()
 
   stopPropagation: (e) ->
@@ -559,17 +565,44 @@ class Edit extends App.Controller
     else 
       @remove_textarea_catcher()
 
-  show_controls: =>
+  open_textarea: =>
     if !@textareaCatcher and !@textarea.val()
       @el.addClass('mode--edit')
+
       # scroll to bottom
-      @el.scrollParent().scrollTop(99999)
+      @textarea.velocity "scroll",
+        container: @textarea.scrollParent()
+        offset: @textareaHeight.open - @textareaHeight.closed
+        duration: 300
+        easing: 'easeOutQuad'
+
+      @textarea.velocity
+        properties:
+          height: "#{ @textareaHeight.open }px"
+        options:
+          speed: 300
+          easing: 'easeOutQuad'
+          queue: false
+
+      @editControls.velocity
+        properties:
+          translateY: [ 
+            (i) -> (i+1) * 38, 
+            'easeOutQuad', 
+            0
+          ]
+          opacity: [ 1, [ 0.34, 1.61, 0.7, 1 ], 0]
+          scale: [ 1, 'easeOutQuad', 0 ]
+        options:
+          speed: 300
+          stagger: (i) -> i*100
+
       @add_textarea_catcher()
 
   add_textarea_catcher: ->
     @textareaCatcher = new App.clickCatcher
       holder: @el.offsetParent()
-      callback: @hide_controls
+      callback: @close_textarea
       zIndexScale: 4
 
   remove_textarea_catcher: ->
@@ -577,10 +610,31 @@ class Edit extends App.Controller
     @textareaCatcher.remove()
     @textareaCatcher = null
 
-  hide_controls: =>
+  close_textarea: =>
     @remove_textarea_catcher()
     if !@textarea.val()
       @el.removeClass('mode--edit')
+
+      @textarea.velocity
+        properties:
+          height: "#{ @textareaHeight.closed }px"
+        options:
+          speed: 300
+          easing: 'easeOutQuad'
+
+      @editControls.velocity
+        properties:
+          translateY: [ 
+            0, 
+            'easeOutQuad', 
+            (i) -> (i+1) * 38
+          ]
+          scale: [ 0, [ 0.34, 1.61, 0.7, 1 ], 1 ]
+          opacity: [ 0, 'easeOutQuad', 1 ]
+        options:
+          speed: 300
+          stagger: 300
+          backwards: true
 
   autosaveStop: =>
     @clearInterval( 'autosave' )
