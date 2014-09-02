@@ -19,9 +19,76 @@ small {
 }
 
 .u-clickable {
+  pointer-events: auto;
   cursor: pointer;
   -webkit-user-select: none;
           user-select: none;
+}
+
+.u-positionOrigin {
+  position: relative;
+}
+
+.zIndex-1,
+.zIndex-2,
+.zIndex-3,
+.zIndex-4,
+.zIndex-5,
+.zIndex-6,
+.zIndex-7,
+.zIndex-8,
+.zIndex-9,
+.zIndex-10 {
+  position: relative;
+}
+
+.zIndex-1 {
+  z-index: 100;
+}
+.zIndex-2 {
+  z-index: 200;
+}
+.zIndex-3 {
+  z-index: 300;
+}
+.zIndex-4 {
+  z-index: 400;
+}
+.zIndex-5 {
+  z-index: 500;
+}
+.zIndex-6 {
+  z-index: 600;
+}
+.zIndex-7 {
+  z-index: 700;
+}
+.zIndex-8 {
+  z-index: 800;
+}
+.zIndex-9 {
+  z-index: 900;
+}
+.zIndex-10 {
+  z-index: 1000;
+}
+
+.clickCatcher {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: default;
+  background: rgba(255,255,0,.13);
+}
+
+.clickCatcher + .clickCatcher {
+  background: rgba(255,0,255,.13);
+}
+
+.clickCatcher + .clickCatcher + .clickCatcher {
+  background: rgba(0,255,128,.21);
 }
 
 #app > nav {
@@ -34,7 +101,6 @@ a[data-tooltip],
 time[data-tooltip],
 span[data-tooltip] {
   position: relative;
-  z-index: 99000;
 }
 a[data-tooltip]:before,
 time[data-tooltip]:before,
@@ -2495,6 +2561,11 @@ footer {
   transition: 500ms;
 }
 
+.ticket-zoom .flex-overflow {
+  overflow: hidden;
+  min-height: 100%;
+}
+
   .ticket-zoom.state--sidebar-hidden .main {
     margin-right: 0;
   }
@@ -2552,6 +2623,7 @@ footer {
   }
 
   .article-content {
+    position: relative;
     margin-right: 55px;
   }
 
@@ -2564,10 +2636,6 @@ footer {
     padding: 0 55px;
     position: absolute;
     width: 100%;
-  }
-  .article-content {
-    position: relative;
-    z-index: 1;
   }
 
   .article-meta {
@@ -2708,12 +2776,8 @@ footer {
 
 .ticket-edit {
   margin-top: auto;
-  margin-bottom: 37px;
+  margin-bottom: 36px;
 }
-
-  .ticket-edit.mode--edit {
-    margin-bottom: 8px;
-  }
 
   .bottom-form {
     background: white;
@@ -2722,10 +2786,10 @@ footer {
   .ticket-edit .internal-border {
     padding: 5px;
     border-radius: 8px;
-    margin: -5px -5px 0;
+    margin: -5px;
   }
 
-  .ticket-edit.state--internal .internal-border {
+  .ticket-edit.is-internal .internal-border {
     background: repeating-linear-gradient(45deg, hsl(18,79%,89%), hsl(18,79%,89%) 5px, transparent 5px, transparent 6px);
     background-size: 8px 8px;
   }
@@ -2762,53 +2826,45 @@ footer {
     margin: 0;
   }
 
-  .visibility.toggle {
-    margin-right: 10px;
+  .visibility-toggle {
+    height: 38px;
+    width: 38px;
   }
 
-  .visibility.toggle,
+  .visibility-toggle,
   .recipient-picker {
     opacity: 0.2;
   }
 
-  .visibility-label {
-    margin-left: 5px;
-    min-width: 53px;
-    line-height: 19px;
-    display: inline-block;
-    vertical-align: text-top;
-  }
-
-  .state--public .internal-visibility {
+  .ticket-edit.is-public .internal-visibility {
     display: none;
   }
 
-  .state--internal .visibility.toggle {
+  .ticket-edit.is-internal .visibility-toggle {
     opacity: 1;
   }
 
-  .state--internal .public-visibility {
+  .ticket-edit.is-internal .public-visibility {
     display: none;
   }
 
   .ticket-edit .recipient-picker {
-    height: 38px;
+    height: 36px;
     position: relative;
-    z-index: 3;
     transition: 300ms;
   }
 
-  .ticket-edit .recipient-picker.state--open {
+  .ticket-edit .recipient-picker.is-open {
     opacity: 1;
   }
 
     .recipient-picker .icon {
-      margin-top: -8px;
+      margin-top: -3px;
     }
 
     .recipient-count {
+      margin-top: 5px;
       margin-left: 3px;
-      margin-top: 2px;
       line-height: 1;
     }
 
@@ -2819,7 +2875,7 @@ footer {
       color: white;
     }
 
-      .recipient-picker.state--open .recipient-list {
+      .recipient-picker.is-open .recipient-list {
         display: block;
       }
 
@@ -2924,7 +2980,7 @@ footer {
     }
 
     .ticket-edit.mode--edit textarea {
-      height: 115px;
+      height: 155px;
     }
 
     .ticket-edit.mode--edit .bubble-placeholder {
@@ -2945,7 +3001,6 @@ footer {
 
 .pop-select {
   position: relative;
-  z-index: 2;
 }
 
   .pop-selector {

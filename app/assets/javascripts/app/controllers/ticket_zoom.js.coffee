@@ -317,15 +317,18 @@ class Sidebar extends App.Controller
 
 
 class Edit extends App.Controller
+  elements:
+    'textarea' : 'textarea'
+
   events:
     'click .submit':             'update'
     'click [data-type="reset"]': 'reset'
-    'click .visibility.toggle':  'toggle_visibility'
+    'click .visibility-toggle':  'toggle_visibility'
     'click .pop-selectable':     'select_type'
     'click .pop-selected':       'show_selectable_types'
     'focus textarea':            'show_controls'
-    'blur textarea':             'hide_controls'
-    'click .recipient-picker':   'toggle_recipients'
+    'input textarea':            'detect_empty_textarea'
+    'click .recipient-picker':   'show_recipients'
     'click .recipient-list':     'stopPropagation'
     'click .list-entry-type div':  'change_recipient_type'
     'submit .recipient-list form': 'add_recipient'
@@ -446,7 +449,7 @@ class Edit extends App.Controller
     # show text module UI
     if !@isRole('Customer')
       textModule = new App.WidgetTextModule(
-        el:   @el.find('textarea')
+        el:   @textarea
         data:
           ticket: ticket
       )
@@ -456,50 +459,58 @@ class Edit extends App.Controller
         )
       @subscribeIdTextModule = ticket.subscribe( callback )
 
-  toggle_recipients: =>
+  show_recipients: =>
     padding = 15
     toggle = @el.find('.recipient-picker')
     list = @el.find('.recipient-list')
     arrow = list.find('.list-arrow')
 
-    if toggle.hasClass('state--open')
-      toggle.removeClass('state--open')
-      list.velocity
-        properties:
-          scale: [ 0, 1 ]
-          opacity: [ 0, 1 ]
-        options:
-          speed: 300
-          easing: [ 500, 20 ]
-          complete: -> list.addClass('hide')
-    else
-      toggle.addClass('state--open')
-      list.removeClass('hide')
+    toggle.addClass('is-open')
+    list.removeClass('hide')
 
-      toggleDimensions = toggle.get(0).getBoundingClientRect()
-      availableHeight = toggle.scrollParent().outerHeight()
+    toggleDimensions = toggle.get(0).getBoundingClientRect()
+    availableHeight = toggle.scrollParent().outerHeight()
 
-      top = toggleDimensions.height/2 - list.height()/2
-      bottomDistance = availableHeight - padding - (toggleDimensions.top + top + list.height())
+    top = toggleDimensions.height/2 - list.height()/2
+    bottomDistance = availableHeight - padding - (toggleDimensions.top + top + list.height())
 
-      if bottomDistance < 0
-        top += bottomDistance
+    if bottomDistance < 0
+      top += bottomDistance
 
-      arrowCenter = -top + toggleDimensions.height/2
+    arrowCenter = -top + toggleDimensions.height/2
 
-      arrow.css('top', arrowCenter)
-      list.css('top', top)
+    arrow.css('top', arrowCenter)
+    list.css('top', top)
 
-      $.Velocity.hook(list, 'transformOriginX', "0")
-      $.Velocity.hook(list, 'transformOriginY', "#{ arrowCenter }px")
+    $.Velocity.hook(list, 'transformOriginX', "0")
+    $.Velocity.hook(list, 'transformOriginY', "#{ arrowCenter }px")
 
-      list.velocity
-        properties:
-          scale: [ 1, 0 ]
-          opacity: [ 1, 0 ]
-        options:
-          speed: 300
-          easing: [ 0.34, 1.61, 0.7, 1 ]
+    list.velocity
+      properties:
+        scale: [ 1, 0 ]
+        opacity: [ 1, 0 ]
+      options:
+        speed: 300
+        easing: [ 0.34, 1.61, 0.7, 1 ]
+
+    @selectTypeCatcher = new App.clickCatcher
+      holder: @el.offsetParent()
+      callback: @hide_recipients
+      zIndexScale: 6
+
+  hide_recipients: =>
+    list = @el.find('.recipient-list')
+
+    @el.find('.recipient-picker').removeClass('is-open')
+
+    list.velocity
+      properties:
+        scale: [ 0, 1 ]
+        opacity: [ 0, 1 ]
+      options:
+        speed: 300
+        easing: [ 500, 20 ]
+        complete: -> list.addClass('hide')
 
   change_recipient_type: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
@@ -512,18 +523,27 @@ class Edit extends App.Controller
     # store recipient 
 
   toggle_visibility: ->
-    if @el.hasClass('state--public')
-      @el.removeClass('state--public')
-      @el.addClass('state--internal')
+    if @el.hasClass('is-public')
+      @el.removeClass('is-public')
+      @el.addClass('is-internal')
     else
-      @el.addClass('state--public')
-      @el.removeClass('state--internal')
+      @el.addClass('is-public')
+      @el.removeClass('is-internal')
 
   show_selectable_types: =>
     @el.find('.pop-selector').removeClass('hide')
 
+    @selectTypeCatcher = new App.clickCatcher
+      holder: @el.offsetParent()
+      callback: @hide_type
+      zIndexScale: 6
+
   select_type: (e) =>
     @set_type $(e.target).data('value')
+    @hide_type()
+    @selectTypeCatcher.remove()
+
+  hide_type: =>
     @el.find('.pop-selector').addClass('hide')
 
   set_type: (type) ->
@@ -533,13 +553,33 @@ class Edit extends App.Controller
     @type = type
     typeIcon.addClass @type
 
+  detect_empty_textarea: =>
+    if !@textarea.val()
+      @add_textarea_catcher()
+    else 
+      @remove_textarea_catcher()
+
   show_controls: =>
-    @el.addClass('mode--edit')
-    # scroll to bottom
-    @el.scrollParent().scrollTop(99999)
+    if !@textareaCatcher and !@textarea.val()
+      @el.addClass('mode--edit')
+      # scroll to bottom
+      @el.scrollParent().scrollTop(99999)
+      @add_textarea_catcher()
+
+  add_textarea_catcher: ->
+    @textareaCatcher = new App.clickCatcher
+      holder: @el.offsetParent()
+      callback: @hide_controls
+      zIndexScale: 4
+
+  remove_textarea_catcher: ->
+    return if !@textareaCatcher
+    @textareaCatcher.remove()
+    @textareaCatcher = null
 
   hide_controls: =>
-    if !@el.find('textarea').val()
+    @remove_textarea_catcher()
+    if !@textarea.val()
       @el.removeClass('mode--edit')
 
   autosaveStop: =>
