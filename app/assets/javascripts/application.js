@@ -9,7 +9,7 @@
 //= require ./app/lib/core/jquery-ui-1.8.23.custom.min.js
 //= require ./app/lib/core/underscore-1.6.0.js
 
-//= require ./app/lib/animations/jquery.velocity.min.js
+//= require ./app/lib/animations/velocity.min.js
 //= require ./app/lib/animations/velocity.ui.js
 
 //not_used= require_tree ./app/lib/spine

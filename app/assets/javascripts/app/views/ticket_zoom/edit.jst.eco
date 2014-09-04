@@ -1,8 +1,8 @@
 <form class="ticket-update <% if @formChanged: %>form-changed<% end %>">
   <div class="bubble-grid horizontal">
-    <div class="vertical center u-positionOrigin">
+    <div class="vertical center edit-controls">
       <div class="avatar user-popover zIndex-5" data-id="<%= @S('id') %>" style="background-image: url(<%- @S('image') %>)"></div>
-      <div class="dark pop-select zIndex-7 js-edit-control">
+      <div class="dark pop-select zIndex-7 edit-control-item">
         <div class="pop-selected u-clickable centered">
           <div class="gray <%- @type %> channel icon"></div>
         </div>
@@ -23,12 +23,12 @@
           </div>
         </div>
       </div>
-      <div class="u-positionOrigin js-edit-control">
-        <div class="recipient-picker zIndex-5 u-clickable horizontal centered">
+      <div class="u-positionOrigin zIndex-7 edit-control-item">
+        <div class="recipient-picker u-clickable horizontal centered">
           <div class="recipients icon"></div>
           <div class="recipient-count">3</div>
         </div>
-        <div class="recipient-list zIndex-7 hide">
+        <div class="recipient-list hide">
           <div class="list-arrow"></div>
           <div class="list-head horizontal">
             <%- @T('Recipients') %>
@@ -64,7 +64,7 @@
           </form>
         </div>
       </div>
-      <div class="visibility-toggle zIndex-7 u-clickable js-edit-control">
+      <div class="visibility-toggle zIndex-7 u-clickable edit-control-item">
         <div class="internal-visibility centered" title="<%- @T("unset internal") %>">
           <div class="internal visibility icon"></div>
         </div>
@@ -78,9 +78,13 @@
         <div class="text-bubble">
           <div class="bubble-arrow"></div>
           <textarea></textarea>
-          <div class="bubble-placeholder u-unclickable">
-            Antwort eingeben oder
-            <span class="highlight u-clickable js-upload">Dateien wählen</span>
+          <!-- .text-bubble grows with textarea (and expanding clone) -->
+          <div class="article-attachment js-attachment u-unclickable">
+            <span class="bubble-placeholder-hint">Antwort eingeben oder</span>
+            <span class="highlight u-clickable edit-upload-button js-attachment-text">
+              Dateien wählen..
+              <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+            </span>
           </div>
         </div>
       </div>

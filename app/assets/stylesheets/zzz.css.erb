@@ -80,15 +80,14 @@ small {
   height: 100%;
   position: absolute;
   cursor: default;
-  background: rgba(255,255,0,.13);
 }
 
-.clickCatcher + .clickCatcher {
-  background: rgba(255,0,255,.13);
+.debug .clickCatcher {
+  background: hsla(0,100%,50%,.13);
 }
 
-.clickCatcher + .clickCatcher + .clickCatcher {
-  background: rgba(0,255,128,.21);
+.debug .clickCatcher + .clickCatcher {
+  background: hsla(50,100%,50%,.13);
 }
 
 #app > nav {
@@ -2798,30 +2797,37 @@ footer {
     margin-bottom: 3px;
   }
 
-  .ticket-edit .js-edit-control {
+.edit-controls {
+  position: relative;
+}
+
+  .edit-control-item {
     width: 38px;
     height: 36px;
     position: absolute;
-    top: 0;
-    transform: scale(0);
+    top: 38px;
+    display: none;
   }
 
-  .ticket-edit .js-edit-control:not(:last-child) {
+  .edit-control-item:nth-child(3) {
+    top: 74px;
+  }
+
+  .edit-control-item:nth-child(4) {
+    top: 110px;
+  }
+
+  .edit-control-item:not(:last-child) {
     border-bottom: 1px solid #e6e6e6;
   }
 
-  .ticket-edit .pop-selectable .icon {
+  .pop-selectable .icon {
     opacity: 0.3;
     pointer-events: none;
   }
 
-  .ticket-edit .pop-selectable:hover .icon {
+  .pop-selectable:hover .icon {
     opacity: 1;
-  }
-
-  .ticket-edit button[type=submit] {
-    margin: 5px 0;
-    float: right;
   }
 
   .visibility-toggle > * {
@@ -2970,20 +2976,18 @@ footer {
     border-color: #b3b3b3;
     white-space: normal;
     border-radius: 5px;
+    overflow: hidden;
   }
 
     .ticket-edit textarea {
       width: 100%;
       height: 38px;
-      padding: 10px 20px;
+      padding: 10px;
       vertical-align: bottom;
       border: none;
       background: none;
       outline: none;
-    }
-
-    .ticket-edit.mode--edit .bubble-placeholder {
-      opacity: 0;
+      resize: none;
     }
 
     .ticket-edit .bubble-arrow:after {
@@ -2991,22 +2995,28 @@ footer {
       box-shadow: none;
     }
 
-    .bubble-placeholder {
-      position: absolute;
-      color: #b3b3b3;
-      left: 20px;
-      top: 10px;
+  .article-attachment {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 100%;
+    height: 38px;
+    padding: 10px 0;
+    color: #b3b3b3;
+  }
+
+    .edit-upload-button {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
     }
 
-.pop-select {
-  position: relative;
+.pop-selector {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-
-  .pop-selector {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
 
   .pop-selected,
   .pop-selectable {
