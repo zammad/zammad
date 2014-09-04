@@ -4,7 +4,7 @@
     <li>
       <a href="<%- item.url %>" class="<%= item.class %> horizontal center icon-switch" data-id="<%= item.id %>">
         <div class="<%= item.iconClass %> icon"></div>
-        <div class="flex contain-text">
+        <div class="flex u-textTruncate">
         <% console.log area.name %>
         <% if area.name is "Ticket": %>
           <%= item.display %> -

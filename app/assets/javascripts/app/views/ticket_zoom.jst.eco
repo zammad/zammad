@@ -32,7 +32,7 @@
     <div class="sidebar-holder vertical">
       <div class="sidebar bottom-form-shadow flex">
         <div class="horizontal center">
-          <h2 class="flex contain-text"></h2>
+          <h2 class="flex u-textTruncate"></h2>
           <div class="close-sidebar centered u-clickable">
             <div class="arrow-right icon"></div>
           </div>

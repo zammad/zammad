@@ -3,7 +3,7 @@
     <% for item in @items: %>
       <li <% if item.active: %>class="active"<% end %>>
         <a class="horizontal center" href="<%= item.target %>">
-          <span class="local contain-text"><%- @T(item.name) %></span>
+          <span class="local u-textTruncate"><%- @T(item.name) %></span>
           <span class="badge"><%= item.count %></span>
         </a>
       </li>

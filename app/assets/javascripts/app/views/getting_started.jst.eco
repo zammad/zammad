@@ -1,9 +1,9 @@
 <div class="fullHeight vertical center justified">
   <div class="hero-unit">
     <ol class="horizontal tabs progress-tabs tabs-condensed">
-      <li class="create_admin tab contain-text active"><%- @T( 'Create Admin' ) %></li>
-      <li class="invite_agents tab contain-text"><%- @T( 'Invite Agents' ) %></li>
-      <li class="configure_channels tab contain-text"><%- @T( 'Configure Channels' ) %></li>
+      <li class="create_admin tab u-textTruncate active"><%- @T( 'Create Admin' ) %></li>
+      <li class="invite_agents tab u-textTruncate"><%- @T( 'Invite Agents' ) %></li>
+      <li class="configure_channels tab u-textTruncate"><%- @T( 'Configure Channels' ) %></li>
     </ol>
     <% if @master_user: %>
     <div class="master_user hero-left">
