@@ -1,18 +1,90 @@
-<div class="main flex">
-
-  <div class="page-header">
-    <h1><%- @T( 'New Ticket' ) %> <small>(<%- @T( @title ) %>)<% if @admin: %> <a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a><% end %></small></h1>
-  </div>
-
-  <form class="form-horizontal form-large ticket-create">
-    <input type="hidden" value="" name="article_type"/>
-    <div class="ticket_create"></div>
-    <div class="form-actions">
-      <button type="reset" class="btn cancel"><%- @T( 'Cancel' ) %></button>&nbsp;<button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
+<div class="create-new main flex">
+  <div class="box">
+    <div class="page-header">
+      <h1><%- @T( 'Create New Ticket' ) %></h1>
     </div>
-  </form>
 
- </div>
+    <ul class="horizontal tabs type-tabs">
+
+      <li class="tab u-textTruncate active">
+        <div class="white email channel icon"></div>
+        <%- @T( 'E-Mail' ) %>
+
+      <li class="tab u-textTruncate">
+        <div class="gray received-calls channel icon"></div>
+        <%- @T( 'Received Call' ) %>
+
+      <li class="tab u-textTruncate">
+        <div class="gray outbound-calls channel icon"></div>
+        <%- @T( 'Outbound Call' ) %>
+
+    </ul>
+
+    <form role="form">
+
+      <div class="form-group">
+        <label for="customer"><%- @T('Customer') %></label>
+        <input class="form-control" id="customer" placeholder="<%- @T('Enter Person or Organisation/Company') %>">
+      </div>
+
+      <div class="form-group">
+        <label for="subject"><%- @T('Subject') %></label>
+        <input class="form-control" id="subject">
+      </div>
+
+      <div class="form-group">
+        <label for="text"><%- @T('Text') %></label>
+        <textarea class="form-control" id="text" rows="4"></textarea>
+      </div>
+
+      <div class="formset-inset">
+        <div class="horizontal two-columns">
+          <div class="form-group column">
+            <label for="owner"><%- @T('Owner') %></label>
+            <select class="form-control" id="owner">
+              <option>Support -> Oliver Ruhm</option>
+              <option>Engineering -> Web-Dev</option>
+            </select>
+          </div>
+          <div class="form-group column">
+            <label for="type"><%- @T('Type') %></label>
+            <select class="form-control" id="type">
+              <option>Inquiry</option>
+              <option>Support</option>
+              <option selected>Question</option>
+            </select>
+          </div>
+          <div class="form-group column">
+            <label for="status"><%- @T('Status') %></label>
+            <select class="form-control" id="status">
+              <option selected>open</option>
+              <option>closed</option>
+            </select>
+          </div>
+          <div class="form-group column">
+            <label for="proprity"><%- @T('Priority') %></label>
+            <select class="form-control" id="proprity">
+              <option>low</option>
+              <option selected>normal</option>
+              <option>high</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tags"><%- @T('Tags') %></label>
+          <input class="form-control" id="tags" placeholder="<%- @T('Tag hinzufügen') %>" value="New Website, Feedback">
+        </div>
+
+      </div>
+
+      <input type="hidden" value="" name="article_type"/>
+      <div class="form-actions horizontal">
+        <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+        <button type="submit" class="btn btn-create submit align-right"><%- @T( 'Create Ticket' ) %></button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div class="sidebar">

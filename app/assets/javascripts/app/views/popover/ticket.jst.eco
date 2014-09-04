@@ -11,7 +11,7 @@
   <%- @P( @ticket.customer ) %>
 </div>
 <hr>
-<div class="horizontal two-columns wrap">
+<div class="horizontal two-columns">
   <div class="column">
     <h3>#</h3>
     <div class="u-textTruncate"><%- @P( @ticket.number ) %></div>

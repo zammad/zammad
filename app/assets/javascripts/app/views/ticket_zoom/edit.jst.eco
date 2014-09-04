@@ -77,7 +77,7 @@
       <div class="internal-border">
         <div class="text-bubble">
           <div class="bubble-arrow"></div>
-          <textarea></textarea>
+          <textarea rows="1"></textarea>
           <!-- .text-bubble grows with textarea (and expanding clone) -->
           <div class="article-attachment js-attachment u-unclickable">
             <span class="bubble-placeholder-hint">Antwort eingeben oder</span>

@@ -197,6 +197,8 @@ class App.TicketCreate extends App.Controller
       el: @el.find('.ticket-create').find('textarea')
     )
 
+    $('#tags').tokenfield()
+
     # start auto save
     @autosave()
 

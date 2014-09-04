@@ -157,6 +157,13 @@ span[data-tooltip]:hover:before {
   transition: transform 300ms 1.5s cubic-bezier(0.34,1.6,0.71,1), opacity 300ms 1.5s;
 }
 
+.form-control::-webkit-input-placeholder,
+.token-input::-webkit-input-placeholder {    color: hsl(0,0%,80%); }
+.form-control::-moz-placeholder,
+.token-input::-moz-placeholder { opacity: 1; color: hsl(0,0%,80%); }
+.form-control:-ms-input-placeholder,
+.token-input:-ms-input-placeholder {         color: hsl(0,0%,80%); }
+
 .glyphicon {
   font-size: 13px;
 }
@@ -630,13 +637,15 @@ label {
 
 .form-control {
   height: 41px;
+  line-height: 22px;
   font-weight: normal;
   box-shadow: none;
   border-radius: 3px;
   transition: none;
 }
 
-  .form-control:focus {
+  .form-control:focus,
+  .tokenfield.focus {
     box-shadow: none;
     border-color: #419ed7;
   }
@@ -662,25 +671,6 @@ label {
     background: #2c2d36;
     z-index: 1;
   }
-
-.form-large {
-  width: 85%;
-  max-width: 700px;
-}
-.form-normal {
-  width: 70%;
-  max-width: 400px;
-}
-.form-small {
-  width: 50%;
-  max-width: 250px;
-}
-.form-normal fieldset {
-  margin-bottom: 10px;
-}
-.sidebar fieldset {
-  margin-bottom: 10px;
-}
 
 .form-horizontal label {
   text-align: right;
@@ -831,6 +821,11 @@ label {
   .subtle-link:hover {
     color: rgba(0,0,0,.5);
   }
+
+ul.tabs {
+  padding: 0;
+  list-style: none;
+}
 
 ol.tabs {
   padding: 0;
@@ -1716,11 +1711,16 @@ footer {
   padding: 9px 24px 8px;
 }
 
-.btn.primary,
 .btn-primary {
   color: white;
   background: #419ed7;
   border-color: #419ed7;
+}
+
+.btn-create,
+.btn-create:hover {
+  color: white;
+  background: hsl(145,51%,45%);
 }
 
 .navigation {
@@ -3165,6 +3165,108 @@ footer {
     .tagList .tag-delete:hover {
       opacity: 0.5;
     }
+
+.create-new {
+  padding: 34px;
+}
+
+.box {
+  background: white;
+  margin: 0 auto;
+  border: 1px solid #e6e6e6;
+  padding: 12px 24px 20px;
+}
+
+  .box .page-header {
+    text-align: center;
+    border-bottom: none;
+    margin: 0;
+    padding-bottom: 12px;
+  }
+
+  .box h1 {
+    color: hsl(60,1%,34%);
+  }
+
+  .box .subtle-link {
+    color: hsl(0,0%,89%);
+  }
+
+  .box .form-control:not(:focus):not(.focus) {
+    border-color: hsl(0,0%,90%);
+  }
+
+  .box .two-columns {
+    margin-left: -4px;
+    margin-right: -4px;
+  }
+
+  .box .two-columns .column {
+    margin-left: 4px;
+    margin-right: 4px;
+    width: calc(50% - 8px);
+  }
+
+.formset-inset {
+  margin: 31px -24px 24px;
+  padding: 19px 24px 4px;
+  background: hsl(197,20%,93%);
+  border-top: 1px solid hsl(0,0%,90%);
+  border-bottom: 1px solid hsl(0,0%,90%);
+}
+
+.type-tabs .tab {
+  line-height: 40px;
+  padding: 0;
+}
+
+.type-tabs .icon {
+  vertical-align: top;
+  margin-right: 9px;
+  margin-top: 10px;
+  transform: scale(1.2);
+}
+
+.tokenfield .token {
+  padding: 0 0 0 10px;
+  margin: -1px 5px 0 0;
+  height: 26px;
+  line-height: 27px;
+  color: white;
+  background: hsl(198,19%,72%);
+  border: none;
+  float: none;
+}
+
+  .tokenfield .token-input {
+    vertical-align: top;
+    margin: 2px 0 0 5px;
+  }
+
+  .tokenfield .token .token-label {
+    padding: 0; 
+  }
+
+  .tokenfield.form-control {
+    padding-top: 8px;
+  }
+
+  .tokenfield .token .close {
+    margin: 0;
+    padding: 0 10px 0 5px;
+    font-family: inherit;
+    font-weight: 100;
+    font-size: 30px;
+    line-height: 1;
+    color: white;
+    text-shadow: none;
+    opacity: .3;
+    outline: none;
+  }
+
+  .tokenfield .token .close:hover {
+    opacity: .5;
+  }
 
 /* 
 
