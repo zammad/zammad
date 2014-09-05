@@ -185,10 +185,10 @@ class App.TicketCreate extends App.Controller
     )
 
     # show template UI
-    new App.WidgetTemplate(
-      el:          @el.find('.ticket_template')
-      template_id: template['id']
-    )
+    # new App.WidgetTemplate(
+    #   el:          @el.find('.ticket_template')
+    #   template_id: template['id']
+    # )
 
     @formDefault = @formParam( @el.find('.ticket-create') )
 

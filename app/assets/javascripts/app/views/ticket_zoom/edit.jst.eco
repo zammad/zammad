@@ -81,7 +81,7 @@
           <!-- .text-bubble grows with textarea (and expanding clone) -->
           <div class="article-attachment js-attachment u-unclickable">
             <span class="bubble-placeholder-hint">Antwort eingeben oder</span>
-            <span class="highlight u-clickable edit-upload-button js-attachment-text">
+            <span class="u-highlight u-clickable edit-upload-button js-attachment-text">
               Dateien wählen..
               <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
             </span>

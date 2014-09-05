@@ -1,11 +1,11 @@
 <div class="drox">
   <div class="drox-header">
-    <h3>
+    <h2>
       <%- @T( @header ) %>
       <% if @edit: %>
       <a href="" data-type="edit" class="pull-right glyphicon glyphicon-edit" title="<%- @Ti( 'edit' ) %>"></a>
       <% end %>
-    </h3>
+    </h2>
   </div>
   <div class="drox-body">
   </div>
