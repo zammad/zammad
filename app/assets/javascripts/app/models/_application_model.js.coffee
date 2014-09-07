@@ -64,17 +64,47 @@ class App.Model extends Spine.Model
     return '???'
 
   @validate: ( data = {} ) ->
-    return if !data['model'].configure_attributes
+    attributes = _.clone( data['model'].configure_attributes )
+    return if !attributes
+
+    # check params of screen if screen is requested
+    if data['screen']
+      for attribute in attributes
+        if attribute.screen
+          if attribute && attribute.screen && attribute.screen[ data['screen'] ] && !_.isEmpty(attribute.screen[ data['screen'] ])
+            for item, value of attribute.screen[ data['screen'] ]
+              attribute[item] = value
+
+    # check required_if attributes
+    for attribute in attributes
+      if attribute['required_if']
+
+        for key, values of attribute['required_if']
+
+          localValues = data['params'][key]
+          if !_.isArray( localValues )
+            localValues = [ localValues ]
+
+          match = false
+          for value in values
+            if localValues
+              for localValue in localValues
+                if value && localValue && value.toString() is localValue.toString()
+                  match = true
+          if match is true
+            attribute['null'] = false
+          else
+            attribute['null'] = true
 
     # check attributes/each attribute of object
     errors = {}
-    for attribute in data['model'].configure_attributes
+    for attribute in attributes
 
       # only if attribute is not read only
       if !attribute.readonly
 
         # check required // if null is defined && null is false
-        if 'null' of attribute && !attribute[null]
+        if 'null' of attribute && !attribute['null']
 
           # check :: fields
           parts = attribute.name.split '::'
@@ -103,16 +133,17 @@ class App.Model extends Spine.Model
 
     # return error object
     if !_.isEmpty(errors)
-      console.log 'error', 'validation vailed', errors
+      console.log 'error', 'validation failed', errors
       return errors
 
     # return no errors
     return
 
-  validate: ->
+  validate: (params = {}) ->
     App.Model.validate(
-      model: @constructor,
-      params: @,
+      model: @constructor
+      params: @
+      screen: params.screen
     )
 
   isOnline: ->
