@@ -15,6 +15,6 @@
       </ul>
     </li>
   <% else: %>
-    <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
+    <li class="<% if @active_tab[item.target] : %>active<% end %> navbar-personal"><a href="<%= item.target %>"><%- @T( item.name ) %></a></li>
   <% end %>
 <% end %>
