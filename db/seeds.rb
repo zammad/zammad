@@ -1683,7 +1683,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Direction", :targ
 Translation.create_if_not_exists( :locale => 'de', :source => "Owner", :target => "Besitzer" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Subject", :target => "Betreff" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Priority", :target => "Priorität" )
-Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "Wähle den Kundn f�r das Ticket oder erstell einen neuen." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the ticket or create one.", :target => "Wähle den Kunden f�r das Ticket oder erstelle einen Neuen." )
 Translation.create_if_not_exists( :locale => 'de', :source => "New Ticket", :target => "Neues Ticket" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Firstname", :target => "Vorname" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Lastname", :target => "Nachname" )

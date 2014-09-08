@@ -150,7 +150,7 @@ class App.TicketCreate extends App.Controller
 
     # generate form
     configure_attributes = [
-      { name: 'customer_id',  display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', helpLink: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo, source: @apiPath + '/users/search', minLengt: 2 },
+      { name: 'customer_id',  display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the ticket or create one.', helpLink: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo, source: @apiPath + '/users/search', minLengt: 2 },
       { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
       { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
       { name: 'tags',         display: 'Tags',     tag: 'tag',      type: 'text', null: true, default: defaults['tags'], class: 'span7', },
