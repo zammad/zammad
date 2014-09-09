@@ -14,7 +14,7 @@ class App.TicketCreate extends App.Controller
     # set title
     @form_id = App.ControllerForm.formId()
 
-    @edit_form = undefined
+    @form_meta = undefined
 
     # set article attributes
     default_type = 'call_inbound'
@@ -25,14 +25,17 @@ class App.TicketCreate extends App.Controller
         sender:  'Customer'
         article: 'phone'
         title:   'Call Inbound'
+        screen:  'create_phone_in'
       call_outbound:
         sender:  'Agent'
         article: 'phone'
         title:   'Call Outbound'
+        screen:  'create_phone_out'
       email:
         sender:  'Agent'
         article: 'email'
         title:   'Email'
+        screen:  'create_email_out'
     @article_attributes = article_sender_type_map[@type]
 
     # remember split info if exists
@@ -57,9 +60,9 @@ class App.TicketCreate extends App.Controller
 
   meta: =>
     text = App.i18n.translateInline( @article_attributes['title'] )
-    subject = @el.find('[name=subject]').val()
-    if subject
-      text = "#{text}: #{subject}"
+    title = @el.find('[name=title]').val()
+    if title
+      text = "#{text}: #{title}"
     meta =
       url:   @url()
       head:  text
@@ -100,7 +103,7 @@ class App.TicketCreate extends App.Controller
     if cache && !params.ticket_id && !params.article_id
 
       # get edit form attributes
-      @edit_form = cache.edit_form
+      @form_meta = cache.form_meta
 
       # load assets
       App.Collection.loadAssets( cache.assets )
@@ -108,7 +111,7 @@ class App.TicketCreate extends App.Controller
       @render()
     else
       @ajax(
-        id:    'ticket_create'
+        id:    'ticket_create' + @task_key
         type:  'GET'
         url:   @apiPath + '/ticket_create'
         data:
@@ -121,7 +124,7 @@ class App.TicketCreate extends App.Controller
           App.Store.write( 'ticket_create_attributes', data )
 
           # get edit form attributes
-          @edit_form = data.edit_form
+          @form_meta = data.form_meta
 
           # load assets
           App.Collection.loadAssets( data.assets )
@@ -143,22 +146,6 @@ class App.TicketCreate extends App.Controller
 
   render: (template = {}) ->
 
-    # set defaults
-    defaults =
-      state_id:    App.TicketState.findByAttribute( 'name', 'open' ).id
-      priority_id: App.TicketPriority.findByAttribute( 'name', '2 normal' ).id
-
-    # generate form
-    configure_attributes = [
-      { name: 'customer_id',  display: 'Customer', tag: 'autocompletion', type: 'text', limit: 200, null: false, relation: 'User', class: 'span7', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', helpLink: '<a href="" class="customer_new">&raquo;</a>', callback: @localUserInfo, source: @apiPath + '/users/search', minLengt: 2 },
-      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: false, filter: @edit_form, nulloption: true, relation: 'Group', default: defaults['group_id'], class: 'span7',  },
-      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true,  filter: @edit_form, nulloption: true, relation: 'User',  default: defaults['owner_id'], class: 'span7',  },
-      { name: 'tags',         display: 'Tags',     tag: 'tag',      type: 'text', null: true, default: defaults['tags'], class: 'span7', },
-      { name: 'subject',      display: 'Subject',  tag: 'input',    type: 'text', limit: 200, null: false, default: defaults['subject'], class: 'span7', },
-      { name: 'body',         display: 'Text',     tag: 'textarea', rows: 8,                  null: false, default: defaults['body'],    class: 'span7', upload: true },
-      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketState',    default: defaults['state_id'],    translate: true, class: 'medium' },
-      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: false, filter: @edit_form, relation: 'TicketPriority', default: defaults['priority_id'], translate: true, class: 'medium' },
-    ]
     @html App.view('agent_ticket_create')(
       head:  'New Ticket'
       title: @article_attributes['title']
@@ -172,14 +159,50 @@ class App.TicketCreate extends App.Controller
     else if App.TaskManager.get(@task_key) && !_.isEmpty( App.TaskManager.get(@task_key).state )
       params = App.TaskManager.get(@task_key).state
 
+    formChanges = (params, attribute, attributes, classname, form, ui) =>
+      if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
+        dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+        if dependency
+
+          for fieldNameToChange of dependency
+            filter = []
+            if dependency[fieldNameToChange]
+              filter = dependency[fieldNameToChange]
+
+            # find element to replace
+            for item in attributes
+              if item.name is fieldNameToChange
+                item.display = false
+                item['filter'] = {}
+                item['filter'][ fieldNameToChange ] = filter
+                item.default = params[item.name]
+                #if !item.default
+                #  delete item['default']
+                newElement = ui.formGenItem( item, classname, form )
+
+            # replace new option list
+            form.find('[name="' + fieldNameToChange + '"]').replaceWith( newElement )
+
     new App.ControllerForm(
-      el: @el.find('.ticket_create')
-      form_id: @form_id
-      model:
-        configure_attributes: configure_attributes
-        className:            'create_' + @type + '_' + @id
+      el:       @el.find('.ticket-form')
+      form_id:  @form_id
+      model:    App.Ticket
+      screen:   @article_attributes['screen']
+      events:
+        'change [name=customer_id]': @localUserInfo
+      handlers: [
+        formChanges
+      ]
+      filter:     @form_meta.filter
       autofocus: true
-      form_data: @edit_form
+      params:    params
+    )
+
+    new App.ControllerForm(
+      el:       @el.find('.article-form')
+      form_id:  @form_id
+      model:    App.TicketArticle
+      screen:   @article_attributes['screen']
       params:    params
     )
 
@@ -193,20 +216,23 @@ class App.TicketCreate extends App.Controller
 
     # show text module UI
     @textModule = new App.WidgetTextModule(
-      el: @el.find('.ticket-create').find('textarea')
+      el: @el.find('form').find('textarea')
     )
 
     # start auto save
     @autosave()
 
-  localUserInfo: (params) =>
+  localUserInfo: (e) =>
+
+    params = App.ControllerForm.params( $(e.target).closest('form') )
 
     # update text module UI
     callback = (user) =>
-      @textModule.reload(
-        ticket:
-          customer: user
-      )
+      if @textModule
+        @textModule.reload(
+          ticket:
+            customer: user
+        )
 
     @userInfo(
       user_id:  params.customer_id
@@ -234,7 +260,7 @@ class App.TicketCreate extends App.Controller
       params.title = params.subject
 
     # create ticket
-    object = new App.Ticket
+    ticket = new App.Ticket
 
     # find sender_id
     sender = App.TicketArticleSender.findByAttribute( 'name', @article_attributes['sender'] )
@@ -248,6 +274,7 @@ class App.TicketCreate extends App.Controller
       params['article'] = {
         to:         (group && group.name) || ''
         from:       params.customer_id_autocompletion
+        cc:         params.cc
         subject:    params.subject
         body:       params.body
         type_id:    type.id
@@ -258,6 +285,7 @@ class App.TicketCreate extends App.Controller
       params['article'] = {
         from:       (group && group.name) || ''
         to:         params.customer_id_autocompletion
+        cc:         params.cc
         subject:    params.subject
         body:       params.body
         type_id:    type.id
@@ -265,15 +293,30 @@ class App.TicketCreate extends App.Controller
         form_id:    @form_id
       }
 
-    object.load(params)
+    ticket.load(params)
 
     # validate form
-    errors = object.validate()
+    ticketErrors = ticket.validate(
+      screen: @article_attributes['screen']
+    )
+    article = new App.TicketArticle
+    article.load(params['article'])
+    articleErrors = article.validate(
+      screen: @article_attributes['screen']
+    )
+    for key, value of articleErrors
+      if !ticketErrors
+        ticketErrors = {}
+      ticketErrors[key] = value
 
     # show errors in form
-    if errors
-      @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+    if ticketErrors
+      @log 'error', ticketErrors
+      @formValidate(
+        form: e.target
+        errors: ticketErrors
+        screen: @article_attributes['screen']
+      )
 
     # save ticket, create article
     else
@@ -281,7 +324,7 @@ class App.TicketCreate extends App.Controller
       # disable form
       @formDisable(e)
       ui = @
-      object.save(
+      ticket.save(
         done: ->
 
           # notify UI
@@ -322,10 +365,10 @@ class UserNew extends App.ControllerModal
     @html App.view('agent_user_create')( head: 'New User' )
 
     new App.ControllerForm(
-      el: @el.find('#form-user'),
-      model: App.User,
-      required: 'quick',
-      autofocus: true,
+      el:         @el.find('#form-user')
+      model:      App.User
+      screen:     'edit'
+      autofocus:  true
     )
 
     @modalShow()

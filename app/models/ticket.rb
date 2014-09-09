@@ -56,6 +56,8 @@ class Ticket < ApplicationModel
   belongs_to    :create_article_type,   :class_name => 'Ticket::Article::Type'
   belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
 
+  self.inheritance_column = nil
+
   attr_accessor :callback_loop
 
 =begin

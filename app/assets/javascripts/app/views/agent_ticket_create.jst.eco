@@ -14,8 +14,8 @@
     </div>
 
     <form class="form-horizontal form-large ticket-create">
-      <input type="hidden" value="" name="article_type"/>
-      <div class="span9 ticket_create"></div>
+      <div class="ticket-form"></div>
+      <div class="article-form"></div>
       <div class="form-actions">
         <button type="reset" class="btn cancel"><%- @T( 'Cancel' ) %></button>&nbsp;<button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
       </div>

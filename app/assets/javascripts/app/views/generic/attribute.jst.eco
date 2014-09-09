@@ -1,5 +1,5 @@
 <div class="form-group <%= @attribute.item_class %>">
-  <label for="<%= @attribute.id %>"><%- @T( @attribute.display ) %><% if !@attribute.null: %> *<% end %></label>
+  <label for="<%= @attribute.id %>"><%- @T( @attribute.display ) %> <span><% if !@attribute.null: %>*<% end %></span></label>
   <div class="controls">
     <%- @item %><% if @attribute.note: %><span class="glyphicon glyphicon-question-sign help-message" title="<%- @Ti( @attribute.note ) + ' ' %>"></span><% end %>
 	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>

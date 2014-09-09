@@ -64,19 +64,17 @@ class App.Model extends Spine.Model
     return '???'
 
   @validate: ( data = {} ) ->
-    attributes = _.clone( data['model'].configure_attributes )
-    return if !attributes
 
-    # check params of screen if screen is requested
-    if data['screen']
-      for attribute in attributes
-        if attribute.screen
-          if attribute && attribute.screen && attribute.screen[ data['screen'] ] && !_.isEmpty(attribute.screen[ data['screen'] ])
-            for item, value of attribute.screen[ data['screen'] ]
-              attribute[item] = value
+    # based on model attrbutes
+    if App[ data['model'] ] && App[ data['model'] ].attributesGet
+      attributes = App[ data['model'] ].attributesGet( data['screen'] )
+
+    # based on custom attributes
+    else if data['model'].configure_attributes
+      attributes = App.Model.attributesGet( data['screen'], data['model'].configure_attributes )
 
     # check required_if attributes
-    for attribute in attributes
+    for attributeName, attribute of attributes
       if attribute['required_if']
 
         for key, values of attribute['required_if']
@@ -98,7 +96,7 @@ class App.Model extends Spine.Model
 
     # check attributes/each attribute of object
     errors = {}
-    for attribute in attributes
+    for attributeName, attribute of attributes
 
       # only if attribute is not read only
       if !attribute.readonly
@@ -111,25 +109,25 @@ class App.Model extends Spine.Model
           if parts[0] && !parts[1]
 
             # key exists not in hash || value is '' || value is undefined
-            if !( attribute.name of data['params'] ) || data['params'][attribute.name] is '' || data['params'][attribute.name] is undefined
-              errors[attribute.name] = 'is required'
+            if !( attributeName of data['params'] ) || data['params'][attributeName] is '' || data['params'][attributeName] is undefined
+              errors[attributeName] = 'is required'
 
           else if parts[0] && parts[1] && !parts[2]
 
             # key exists not in hash || value is '' || value is undefined
             if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined
-              errors[attribute.name] = 'is required'
+              errors[attributeName] = 'is required'
 
           else
             throw "can't parse '#{attribute.name}'"
 
         # check confirm password
-        if attribute.type is 'password' && data['params'][attribute.name] && "#{attribute.name}_confirm" of data['params']
+        if attribute.type is 'password' && data['params'][attributeName] && "#{attributeName}_confirm" of data['params']
 
           # get confirm password
-          if data['params'][attribute.name] isnt data['params']["#{attribute.name}_confirm"]
-            errors[attribute.name] = 'didn\'t match'
-            errors["#{attribute.name}_confirm"] = ''
+          if data['params'][attributeName] isnt data['params']["#{attributeName}_confirm"]
+            errors[attributeName] = 'didn\'t match'
+            errors["#{attributeName}_confirm"] = ''
 
     # return error object
     if !_.isEmpty(errors)
@@ -139,9 +137,41 @@ class App.Model extends Spine.Model
     # return no errors
     return
 
+  ###
+
+  attributes = App.Model.attributesGet(optionalScreen, optionalAttributesList)
+
+  ###
+
+  @attributesGet: (screen = undefined, attributes = false) ->
+    if !attributes
+      attributes = clone( App[ @.className ].configure_attributes )
+    else
+      attributes = clone( attributes )
+
+    # in case if no configure_attributes exist
+    return if !attributes
+    attributesNew = {}
+
+    # check params of screen if screen is requested
+    if screen
+      for attribute in attributes
+        if attribute.screen
+          if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty( attribute.screen[ screen ] )
+            for item, value of attribute.screen[ screen ]
+              attribute[item] = value
+            attributesNew[ attribute.name ] = attribute
+
+    if !screen || _.isEmpty( attributesNew )
+      console.log(attributesNew)
+      for attribute in attributes
+        attributesNew[ attribute.name ] = attribute
+
+    attributesNew
+
   validate: (params = {}) ->
     App.Model.validate(
-      model: @constructor
+      model:  @constructor.className
       params: @
       screen: params.screen
     )

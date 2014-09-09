@@ -69,11 +69,25 @@ class App.Auth
       App.Event.trigger( 'auth:logout' )
       App.Event.trigger( 'ui:rerender' )
 
+      # update model definition
+      if data.models
+        for model, attributes of data.models
+          for attribute in attributes
+            App[model].attributes.push attribute.name
+            App[model].configure_attributes.push attribute
+
       return false;
 
     # clear local store
     if type isnt 'check'
       App.Event.trigger( 'clearStore' )
+
+    # update model definition
+    if data.models
+      for model, attributes of data.models
+        for attribute in attributes
+          App[model].attributes.push attribute.name
+          App[model].configure_attributes.push attribute
 
     # update config
     for key, value of data.config
@@ -129,4 +143,3 @@ class App.Auth
     App.Event.trigger( 'auth:logout' )
     App.Event.trigger( 'ui:rerender' )
     App.Event.trigger( 'clearStore' )
-

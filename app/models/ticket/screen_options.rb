@@ -50,6 +50,9 @@ returns
       params[:article] = self.find( params[:article_id] )
     end
 
+    filter = {}
+    assets = {}
+
     # get ticket states
     state_ids = []
     if params[:ticket]
@@ -63,44 +66,21 @@ returns
       state_type = Ticket::StateType.where( :name => type ).first
       if state_type
         state_type.states.each {|state|
+          assets = state.assets(assets)
           state_ids.push state.id
         }
       end
     }
-
-    # get owner
-    owner_ids = []
-    if params[:ticket]
-      params[:ticket].agent_of_group.each { |user|
-        owner_ids.push user.id
-      }
-    end
-
-    # get group
-    group_ids = []
-    Group.where( :active => true ).each { |group|
-      group_ids.push group.id
-    }
-
-    # get group / user relations
-    agents = {}
-    Ticket::ScreenOptions.agents.each { |user|
-      agents[ user.id ] = 1
-    }
-    groups_users = {}
-    group_ids.each {|group_id|
-      groups_users[ group_id ] = []
-      Group.find( group_id ).users.each {|user|
-        next if !agents[ user.id ]
-        groups_users[ group_id ].push user.id
-      }
-    }
+    filter[:state_id] = state_ids
 
     # get priorities
     priority_ids = []
     Ticket::Priority.where( :active => true ).each { |priority|
+      assets = priority.assets(assets)
       priority_ids.push priority.id
     }
+    filter[:priority_id] = priority_ids
+
 
     type_ids = []
     if params[:ticket]
@@ -115,14 +95,29 @@ returns
         end
       }
     end
+    filter[:type_id] = type_ids
+
+    # get group / user relations
+    agents = {}
+    Ticket::ScreenOptions.agents.each { |user|
+      agents[ user.id ] = 1
+    }
+
+    dependencies = { :group_id => { '' => [] } }
+    Group.where( :active => true ).each { |group|
+      assets = group.assets(assets)
+      dependencies[:group_id][group.id] = { :owner_id => [] }
+      group.users.each {|user|
+        next if !agents[ user.id ]
+        assets = user.assets(assets)
+        dependencies[:group_id][ group.id ][ :owner_id ].push user.id
+      }
+    }
 
     return {
-      :type_id              => type_ids,
-      :state_id             => state_ids,
-      :priority_id          => priority_ids,
-      :owner_id             => owner_ids,
-      :group_id             => group_ids,
-      :group_id__owner_id   => groups_users,
+      :assets               => assets,
+      :filter               => filter,
+      :dependencies         => dependencies,
     }
   end
 
@@ -131,8 +126,8 @@ returns
 list tickets by customer groupd in state categroie open and closed
 
   result = Ticket::ScreenOptions.list_by_customer(
-    :customer_id     => 123,
-    :limit           => 15, # optional, default 15
+    :customer_id  => 123,
+    :limit        => 15, # optional, default 15
   )
 
 returns
@@ -152,13 +147,13 @@ returns
 
     # get tickets
     tickets_open = Ticket.where(
-      :customer_id     => data[:customer_id],
-      :state_id => state_list_open
+      :customer_id  => data[:customer_id],
+      :state_id     => state_list_open
     ).limit( data[:limit] || 15 ).order('created_at DESC')
 
     tickets_closed = Ticket.where(
-      :customer_id     => data[:customer_id],
-      :state_id => state_list_closed
+      :customer_id  => data[:customer_id],
+      :state_id     => state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
 
     return {

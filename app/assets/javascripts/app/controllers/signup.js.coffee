@@ -32,7 +32,7 @@ class Index extends App.ControllerContent
     new App.ControllerForm(
       el:        @el.find('#form-signup')
       model:     App.User
-      required:  'signup'
+      screen:    'signup'
       autofocus: true
     )
 

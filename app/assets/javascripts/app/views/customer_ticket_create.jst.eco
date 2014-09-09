@@ -11,8 +11,8 @@
       </div>
       <div class="page-content">
         <form class="form-horizontal form-large">
-          <input type="hidden" value="" name="article_type"/>
-          <div id="form_create"></div>
+          <div class="ticket-form"></div>
+          <div class="article-form"></div>
           <div class="form-actions">
             <button type="reset" class="btn btn-default cancel"><%- @T( 'Cancel' ) %></button>
             <button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
