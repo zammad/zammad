@@ -66,6 +66,13 @@ function difference(object1, object2) {
   return changes;
 }
 
+function clone(object) {
+  if (!object) {
+    return object
+  }
+  return JSON.parse(JSON.stringify(object));
+}
+
 jQuery.event.special.remove = {
   remove: function(e) {
     if (e.handler) e.handler();
