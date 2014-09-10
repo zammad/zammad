@@ -185,10 +185,10 @@ class App.TicketCreate extends App.Controller
     )
 
     # show template UI
-    new App.WidgetTemplate(
-      el:          @el.find('.ticket_template')
-      template_id: template['id']
-    )
+    # new App.WidgetTemplate(
+    #   el:          @el.find('.ticket_template')
+    #   template_id: template['id']
+    # )
 
     @formDefault = @formParam( @el.find('.ticket-create') )
 
@@ -196,6 +196,8 @@ class App.TicketCreate extends App.Controller
     @textModule = new App.WidgetTextModule(
       el: @el.find('.ticket-create').find('textarea')
     )
+
+    $('#tags').tokenfield()
 
     # start auto save
     @autosave()

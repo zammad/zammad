@@ -317,21 +317,37 @@ class Sidebar extends App.Controller
 
 
 class Edit extends App.Controller
+  elements:
+    'textarea' :                    'textarea'
+    '.edit-control-item' :          'editControlItem'
+    '.edit-controls':               'editControls'
+    '.recipient-picker':            'recipientPicker'
+    '.recipient-list':              'recipientList'
+    '.recipient-list .list-arrow':  'recipientListArrow'
+    '.js-attachment':               'attachmentHolder'
+    '.js-attachment-text':          'attachmentText'
+    '.bubble-placeholder-hint':     'bubblePlaceholderHint'
+
   events:
     'click .submit':             'update'
     'click [data-type="reset"]': 'reset'
-    'click .visibility.toggle':  'toggle_visibility'
+    'click .visibility-toggle':  'toggle_visibility'
     'click .pop-selectable':     'select_type'
     'click .pop-selected':       'show_selectable_types'
-    'focus textarea':            'show_controls'
-    'blur textarea':             'hide_controls'
+    'focus textarea':            'open_textarea'
+    'input textarea':            'detect_empty_textarea'
     'click .recipient-picker':   'toggle_recipients'
     'click .recipient-list':     'stopPropagation'
-    'click .list-entry-type div':  'change_recipient_type'
+    'click .list-entry-type div':  'change_type'
     'submit .recipient-list form': 'add_recipient'
 
   constructor: ->
     super
+
+    @textareaHeight =
+      open: 148
+      closed: 38
+
     @render()
 
   stopPropagation: (e) ->
@@ -446,7 +462,7 @@ class Edit extends App.Controller
     # show text module UI
     if !@isRole('Customer')
       textModule = new App.WidgetTextModule(
-        el:   @el.find('textarea')
+        el:   @textarea
         data:
           ticket: ticket
       )
@@ -457,51 +473,63 @@ class Edit extends App.Controller
       @subscribeIdTextModule = ticket.subscribe( callback )
 
   toggle_recipients: =>
-    padding = 15
-    toggle = @el.find('.recipient-picker')
-    list = @el.find('.recipient-list')
-    arrow = list.find('.list-arrow')
-
-    if toggle.hasClass('state--open')
-      toggle.removeClass('state--open')
-      list.velocity
-        properties:
-          scale: [ 0, 1 ]
-          opacity: [ 0, 1 ]
-        options:
-          speed: 300
-          easing: [ 500, 20 ]
-          complete: -> list.addClass('hide')
+    if !@pickRecipientsCatcher
+      @show_recipients()
     else
-      toggle.addClass('state--open')
-      list.removeClass('hide')
+      @hide_recipients()
 
-      toggleDimensions = toggle.get(0).getBoundingClientRect()
-      availableHeight = toggle.scrollParent().outerHeight()
+  show_recipients: ->
+    padding = 15
 
-      top = toggleDimensions.height/2 - list.height()/2
-      bottomDistance = availableHeight - padding - (toggleDimensions.top + top + list.height())
+    @recipientPicker.addClass('is-open')
+    @recipientList.removeClass('hide')
 
-      if bottomDistance < 0
-        top += bottomDistance
+    pickerDimensions = @recipientPicker.get(0).getBoundingClientRect()
+    availableHeight = @recipientPicker.scrollParent().outerHeight()
 
-      arrowCenter = -top + toggleDimensions.height/2
+    top = pickerDimensions.height/2 - @recipientList.height()/2
+    bottomDistance = availableHeight - padding - (pickerDimensions.top + top + @recipientList.height())
 
-      arrow.css('top', arrowCenter)
-      list.css('top', top)
+    if bottomDistance < 0
+      top += bottomDistance
 
-      $.Velocity.hook(list, 'transformOriginX', "0")
-      $.Velocity.hook(list, 'transformOriginY', "#{ arrowCenter }px")
+    arrowCenter = -top + pickerDimensions.height/2
 
-      list.velocity
-        properties:
-          scale: [ 1, 0 ]
-          opacity: [ 1, 0 ]
-        options:
-          speed: 300
-          easing: [ 0.34, 1.61, 0.7, 1 ]
+    @recipientListArrow.css('top', arrowCenter)
+    @recipientList.css('top', top)
 
-  change_recipient_type: (e) ->
+    $.Velocity.hook(@recipientList, 'transformOriginX', "0")
+    $.Velocity.hook(@recipientList, 'transformOriginY', "#{ arrowCenter }px")
+
+    @recipientList.velocity
+      properties:
+        scale: [ 1, 0 ]
+        opacity: [ 1, 0 ]
+      options:
+        speed: 300
+        easing: [ 0.34, 1.61, 0.7, 1 ]
+
+    @pickRecipientsCatcher = new App.clickCatcher
+      holder: @el.offsetParent()
+      callback: @hide_recipients
+      zIndexScale: 6
+
+  hide_recipients: =>
+    @pickRecipientsCatcher.remove()
+    @pickRecipientsCatcher = null
+
+    @recipientPicker.removeClass('is-open')
+
+    @recipientList.velocity
+      properties:
+        scale: [ 0, 1 ]
+        opacity: [ 0, 1 ]
+      options:
+        speed: 300
+        easing: [ 500, 20 ]
+        complete: -> @recipientList.addClass('hide')
+
+  change_type: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
     # store $(this).data('value')
 
@@ -512,18 +540,28 @@ class Edit extends App.Controller
     # store recipient 
 
   toggle_visibility: ->
-    if @el.hasClass('state--public')
-      @el.removeClass('state--public')
-      @el.addClass('state--internal')
+    if @el.hasClass('is-public')
+      @el.removeClass('is-public')
+      @el.addClass('is-internal')
     else
-      @el.addClass('state--public')
-      @el.removeClass('state--internal')
+      @el.addClass('is-public')
+      @el.removeClass('is-internal')
 
   show_selectable_types: =>
     @el.find('.pop-selector').removeClass('hide')
 
+    @selectTypeCatcher = new App.clickCatcher
+      holder: @el.offsetParent()
+      callback: @hide_type
+      zIndexScale: 6
+
   select_type: (e) =>
     @set_type $(e.target).data('value')
+    @hide_type()
+    @selectTypeCatcher.remove()
+    @selectTypeCatcher = null
+
+  hide_type: =>
     @el.find('.pop-selector').addClass('hide')
 
   set_type: (type) ->
@@ -533,14 +571,92 @@ class Edit extends App.Controller
     @type = type
     typeIcon.addClass @type
 
-  show_controls: =>
-    @el.addClass('mode--edit')
-    # scroll to bottom
-    @el.scrollParent().scrollTop(99999)
+  detect_empty_textarea: =>
+    if !@textarea.val()
+      @add_textarea_catcher()
+    else 
+      @remove_textarea_catcher()
 
-  hide_controls: =>
-    if !@el.find('textarea').val()
-      @el.removeClass('mode--edit')
+  open_textarea: =>
+    if !@textareaCatcher and !@textarea.val()
+      @el.addClass('is-open')
+
+      @textarea.velocity
+        properties:
+          height: "#{ @textareaHeight.open - 38 }px"
+          marginBottom: 38
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+
+      # scroll to bottom
+      @textarea.velocity "scroll",
+        container: @textarea.scrollParent()
+        offset: 99999
+        duration: 300
+        easing: 'easeOutQuad'
+        queue: false
+
+      @editControlItem.velocity "transition.slideRightIn",
+        duration: 300
+        stagger: 50
+        drag: true
+
+      # move attachment text to the left bottom (bottom happens automatically)
+
+      @attachmentHolder.velocity
+        properties:
+          translateX: -@attachmentText.position().left + "px"
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+
+      @bubblePlaceholderHint.velocity 
+        properties:
+          opacity: 0
+        options:
+          duration: 300
+
+      @add_textarea_catcher()
+
+  add_textarea_catcher: ->
+    @textareaCatcher = new App.clickCatcher
+      holder: @el.offsetParent()
+      callback: @close_textarea
+      zIndexScale: 4
+
+  remove_textarea_catcher: ->
+    return if !@textareaCatcher
+    @textareaCatcher.remove()
+    @textareaCatcher = null
+
+  close_textarea: =>
+    @remove_textarea_catcher()
+    if !@textarea.val()
+
+      @textarea.velocity
+        properties:
+          height: "#{ @textareaHeight.closed }px"
+          marginBottom: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+          complete: => @el.removeClass('is-open')
+
+      @attachmentHolder.velocity
+        properties:
+          translateX: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+
+      @bubblePlaceholderHint.velocity 
+        properties:
+          opacity: 1
+        options:
+          duration: 300
+
+      @editControlItem.css('display', 'none')
 
   autosaveStop: =>
     @clearInterval( 'autosave' )

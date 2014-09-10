@@ -11,7 +11,7 @@
 
 <ul class="nav navbar-nav navbar-items-menu"></ul>
 
-<div class="tasks flex"></div>
+<div class="tasks tasks-navigation flex"></div>
 
 <% if !_.isEmpty(@user): %>
   <!--<a href="#bell" class="glyphicon glyphicon-bell"></a>-->

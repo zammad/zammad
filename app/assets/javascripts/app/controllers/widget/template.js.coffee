@@ -23,7 +23,7 @@ class App.WidgetTemplate extends App.ControllerDrox
     # insert data
     @html @template(
       file:   'widget/template'
-      header: 'Templates'
+      header: 'Select Template:'
       params:
         template: template
     )

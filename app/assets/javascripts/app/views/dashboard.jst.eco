@@ -15,8 +15,8 @@
             <div class="stat-amount"></div>
           </div>
         </div>
-        <div class="stat-label contain-text">My handling time: 25 minutes</div>
-        <div class="stat-detail contain-text">Average: 13%</div>
+        <div class="stat-label u-textTruncate">My handling time: 25 minutes</div>
+        <div class="stat-detail u-textTruncate">Average: 13%</div>
       </div>
     </div>
     <div class="column">
@@ -25,8 +25,8 @@
         <div class="stat-graphic flex horizontal centered">
           <div class="mood icon bad-state"></div>
         </div>
-        <div class="stat-label contain-text">3% of my tickets escalated.</div>
-        <div class="stat-detail contain-text">Average: 17%</div>
+        <div class="stat-label u-textTruncate">3% of my tickets escalated.</div>
+        <div class="stat-detail u-textTruncate">Average: 17%</div>
       </div>
     </div>
     <div class="column">
@@ -90,8 +90,8 @@
           </div>
           <div class="stat-all-tickets icon"></div>
         </div>
-        <div class="stat-label contain-text">Tickets of my Group: 78 of 234</div>
-        <div class="stat-detail contain-text">Average: 22%</div>
+        <div class="stat-label u-textTruncate">Tickets of my Group: 78 of 234</div>
+        <div class="stat-detail u-textTruncate">Average: 22%</div>
       </div>
     </div>
     <div class="column">
@@ -100,8 +100,8 @@
         <div class="stat-graphic flex horizontal centered">
           <div class="in-process icon supergood-state"></div>
         </div>
-        <div class="stat-label contain-text">74% are currently in process</div>
-        <div class="stat-detail contain-text">Average: 62%</div>
+        <div class="stat-label u-textTruncate">74% are currently in process</div>
+        <div class="stat-detail u-textTruncate">Average: 62%</div>
       </div>
     </div>
     <div class="column">
@@ -110,8 +110,8 @@
         <div class="stat-graphic flex horizontal centered">
           <div class="reopening icon ok-state"></div>
         </div>
-        <div class="stat-label contain-text">7% are being reopened</div>
-        <div class="stat-detail contain-text">Average: 6%</div>
+        <div class="stat-label u-textTruncate">7% are being reopened</div>
+        <div class="stat-detail u-textTruncate">Average: 6%</div>
       </div>
     </div>
   </div>
