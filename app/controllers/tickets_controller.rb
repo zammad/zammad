@@ -296,8 +296,8 @@ class TicketsController < ApplicationController
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       :user       => current_user,
-      #      :ticket_id  => params[:ticket_id],
-      #      :article_id => params[:article_id]
+      :ticket_id  => params[:ticket_id],
+      :article_id => params[:article_id]
     )
 
     assets = attributes_to_change[:assets]
@@ -318,7 +318,10 @@ class TicketsController < ApplicationController
     render :json => {
       :split     => split,
       :assets    => assets,
-      :form_meta => attributes_to_change,
+      :form_meta => {
+        :filter       => attributes_to_change[:filter],
+        :dependencies => attributes_to_change[:dependencies],
+      }
     }
   end
 
