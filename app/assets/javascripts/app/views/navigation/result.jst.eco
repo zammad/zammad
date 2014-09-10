@@ -4,15 +4,7 @@
     <li>
       <a href="<%- item.url %>" class="<%= item.class %> horizontal center icon-switch" data-id="<%= item.id %>">
         <div class="<%= item.iconClass %> icon"></div>
-        <div class="flex contain-text">
-        <% console.log area.name %>
-        <% if area.name is "Ticket": %>
-          <%= item.display %> -
-          <time datetime="<%= item.createt_at %>"><%= item.humanTime %></time>
-        <% else: %>
-          <%= item.display %>
-        <% end %>
-        </div>
+        <div class="flex contain-text"><%= item.display %></div>
       </a>
     </li>
   <% end %>
