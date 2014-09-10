@@ -43,6 +43,19 @@ test( "check pretty date", function() {
   result = App.PrettyDate.humanTime( current - ( 60000 * 60 * 24 * 10.5 ) );
   equal( result, '10 days ago', '10.5 days')
 
+  result = App.PrettyDate.humanTime( current - ( 60000 * 60 * 24 * 30 ) );
+  var pastDate = new Date(current - ( 60000 * 60 * 24 * 30 ))
+  var dd = pastDate.getDate();
+  if( dd<10 ) {
+      dd = '0' + dd
+  }
+  var mm = pastDate.getMonth() + 1;
+  if( mm<10 ) {
+      mm = '0' + mm
+  }
+  var yyyy = pastDate.getFullYear();
+  equal( result, yyyy+'-'+mm+'-'+dd, '30 days')
+
   // future
   current = new Date()
   result = App.PrettyDate.humanTime( current );
@@ -72,5 +85,10 @@ test( "check pretty date", function() {
   result = App.PrettyDate.humanTime( current.getTime() + ( 60050 * 60 * 24 * 2.5 ) );
   equal( result, 'in 2 days 12 hours', 'in 2.5 days')
 
+  result = App.PrettyDate.humanTime( current.getTime() + ( 60050 * 60 * 24 * 5.5 ) );
+  equal( result, 'in 5 days 12 hours', 'in 30.5 days')
+
+  result = App.PrettyDate.humanTime( current.getTime() + ( 60050 * 60 * 24 * 30.5 ) );
+  equal( result, 'in 30 days', 'in 30.5 days')
 
 });

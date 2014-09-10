@@ -31,9 +31,17 @@ class Translation < ApplicationModel
       :de => 'dd.mm.yyyy HH:MM',
     }
     timestamp = timestamp_map[ locale.to_sym ] || timestamp_map_default
+
+    date_map_default = 'yyyy-mm-dd'
+    date_map = {
+      :de => 'dd.mm.yyyy',
+    }
+    date = date_map[ locale.to_sym ] || date_map_default
+
     return {
       :list            => list,
       :timestampFormat => timestamp,
+      :dateFormat      => date,
     }
   end
 

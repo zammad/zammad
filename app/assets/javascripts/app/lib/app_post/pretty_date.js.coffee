@@ -28,6 +28,9 @@ class App.PrettyDate
       diff = diff.toString().replace('-', '')
       diff = parseFloat(diff)
 
+    if direction is 'past' && !escalation && diff > ( 60 * 60 * 24 * 14 )
+      return App.i18n.translateDate(time)
+
     # days
     string = ''
     count = 0

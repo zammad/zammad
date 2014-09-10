@@ -24,6 +24,11 @@ class App.i18n
       _instance ?= new _i18nSingleton
     _instance.timestamp( args, offset )
 
+  @translateDate: ( args, offset = 0 ) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton
+    _instance.date( args, offset )
+
   @get: ->
     if _instance == undefined
       _instance ?= new _i18nSingleton
@@ -44,6 +49,7 @@ class _i18nSingleton extends Spine.Module
 
   constructor: ( locale ) ->
     @map = {}
+    @dateFormat      = 'yyyy-mm-dd'
     @timestampFormat = 'yyyy-mm-dd HH:MM'
 
     # observe if text has been translated
@@ -114,6 +120,10 @@ class _i18nSingleton extends Spine.Module
         if data.timestampFormat
           @timestampFormat = data.timestampFormat
 
+        # set date format
+        if data.dateFormat
+          @dateFormat = data.dateFormat
+
         # load translation collection
         for object in data.list
 
@@ -176,7 +186,13 @@ class _i18nSingleton extends Spine.Module
       .replace(/>/g, '&gt;')
       .replace(/\x22/g, '&quot;')
 
+  date: ( time, offset ) =>
+    @convert(time, offset, @dateFormat)
+
   timestamp: ( time, offset ) =>
+    @convert(time, offset, @timestampFormat)
+
+  convert: ( time, offset, format ) =>
     s = ( num, digits ) ->
       while num.toString().length < digits
         num = "0" + num
@@ -194,7 +210,6 @@ class _i18nSingleton extends Spine.Module
     S = timeObject.getSeconds()
     M = timeObject.getMinutes()
     H = timeObject.getHours()
-    format = @timestampFormat
     format = format.replace /dd/, s( d, 2 )
     format = format.replace /d/, d
     format = format.replace /mm/, s( m, 2 )
