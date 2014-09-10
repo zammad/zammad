@@ -93,24 +93,38 @@ class TagTest < ActiveSupport::TestCase
 
     ]
     tests.each { |test|
-      success = Tag.tag_add( test[:tag_add] )
-      assert( success, "Tag.tag_add successful")
-      list = Tag.tag_list( test[:tag_add] )
+      tags = nil
+      if test[:tag_add]
+        tags    = test[:tag_add]
+        success = Tag.tag_add( tags )
+        assert( success, "Tag.tag_add successful")
+      else
+        tags    = test[:tag_remove]
+        success = Tag.tag_remove( tags )
+        assert( success, "Tag.tag_remove successful")
+      end
+      list = Tag.tag_list( tags )
       test[:verify][:items].each {|key, value|
         if value == true
-          assert( list.include?( key ), "Tag verify #{ test[:tag_add][:item] }")
+          assert( list.include?( key ), "Tag verify - should exists but exists #{ key }")
         else
-          assert( !list.include?( key ), "Tag verify #{ test[:tag_add][:item] }")
+          assert( !list.include?( key ), "Tag verify - exists but should not #{ key }")
         end
       }
     }
 
     # delete tags
     tests.each { |test|
-      success = Tag.tag_remove( test[:tag_add] )
+      tags = nil
+      if test[:tag_add]
+        tags = test[:tag_add]
+      else
+        tags = test[:tag_remove]
+      end
+      success = Tag.tag_remove( tags )
       assert( success, "Tag.tag_remove successful")
-      list = Tag.tag_list( test[:tag_add] )
-      assert( !list.include?( test[:tag_add][:item] ), "Tag entry destroyed")
+      list = Tag.tag_list( tags )
+      assert( !list.include?( tags[:item] ), "Tag entry destroyed")
     }
   end
 end
