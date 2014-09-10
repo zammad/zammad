@@ -72,6 +72,6 @@
     </div>
   </div>
 
-  <small class="task-subline"><time class="humanTimeFromNow" datetime="<%- article.created_at %>" data-time="<%- article.created_at %>">?</time></small>
+  <small class="task-subline"><time class="humanTimeFromNow" data-time="<%- article.created_at %>">?</time></small>
 </div>
 <% end %>
