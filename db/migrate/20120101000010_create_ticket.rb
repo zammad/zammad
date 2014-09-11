@@ -131,7 +131,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :message_id_md5,       :string, :limit => 32,      :null => true
       t.column :in_reply_to,          :string, :limit => 3000,    :null => true
       t.column :references,           :string, :limit => 3200,    :null => true
-      t.column :body,                 :text,                      :null => true
+      t.column :body,                 :text,   :limit => 4.megabytes + 1
       t.column :internal,             :boolean,                   :null => false, :default => false
       t.column :updated_by_id,        :integer,                   :null => false
       t.column :created_by_id,        :integer,                   :null => false
