@@ -5,7 +5,9 @@ class App.TicketZoom extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    @edit_form      = undefined
+    @navupdate '#'
+
+    @form_meta      = undefined
     @ticket_id      = params.ticket_id
     @article_id     = params.article_id
     @signature      = undefined
@@ -112,7 +114,7 @@ class App.TicketZoom extends App.Controller
     @ticket_article_ids = data.ticket_article_ids
 
     # get edit form attributes
-    @edit_form = data.edit_form
+    @form_meta = data.form_meta
 
     # get signature
     @signature = data.signature
@@ -145,7 +147,7 @@ class App.TicketZoom extends App.Controller
       new App.ControllerForm(
         el:         @el.find('.edit')
         model:      App.Ticket
-        required:   required
+        screen:   'edit'
         params:     App.Ticket.find(@ticket.id)
       )
       # start link info controller
@@ -163,13 +165,14 @@ class App.TicketZoom extends App.Controller
         new App.ControllerForm(
           el:         @el.find('.customer-edit')
           model:      App.User
-          required:   'quick'
+          screen:   'edit'
           params:     App.User.find(@ticket.customer_id)
         )
         new App.ControllerForm(
           el:         @el.find('.organization-edit')
           model:      App.Organization
           params:     App.Organization.find(@ticket.organitaion_id)
+          screen:   'edit'
         )
 
     @TicketAction()
@@ -214,7 +217,8 @@ class App.TicketZoom extends App.Controller
     new Edit(
       ticket:     @ticket
       el:         @el.find('.ticket-edit')
-      edit_form:  @edit_form
+      #el:         @el.find('.edit')
+      form_meta:  @form_meta
       task_key:   @task_key
       ui:         @
     )
@@ -244,8 +248,12 @@ class TicketTitle extends App.Controller
 
   render: (ticket) =>
     @html App.view('ticket_zoom/title')(
-      ticket: ticket
+      ticket:     ticket
+      isCustomer: @isRole('Customer')
     )
+
+    # show frontend times
+    @frontendTimeUpdate()
 
   update: (e) =>
     $this = $(e.target)
@@ -298,7 +306,7 @@ class Sidebar extends App.Controller
     if name
       if name is @currentTab
         @toggleSidebar()
-      else 
+      else
         @el.find('.ticket-zoom .sidebar-tab').removeClass('active')
         $(e.target).closest('.sidebar-tab').addClass('active')
 
@@ -372,57 +380,55 @@ class Edit extends App.Controller
       formChanged: !_.isEmpty( App.TaskManager.get(@task_key).state )
     )
 
-    @configure_attributes_ticket = [
-      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left'  },
-      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left' },
-    ]
-    if @isRole('Customer')
-      @configure_attributes_ticket = [
-        { name: 'state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-        { name: 'priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      ]
-
-    @configure_attributes_article = [
-      { name: 'type_id',      display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium' },
-      { name: 'internal',     display: 'Visibility',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
-      { name: 'to',           display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-      { name: 'cc',           display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-#      { name: 'subject',      display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-      { name: 'in_reply_to',  display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'body',         display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
-    ]
-    if @isRole('Customer')
-      @configure_attributes_article = [
-        { name: 'to',           display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-        { name: 'cc',           display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-#        { name: 'subject',     display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-        { name: 'in_reply_to',  display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-        { name: 'body',         display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
-      ]
-
     @form_id = App.ControllerForm.formId()
-    defaults = ticket
+    defaults = ticket.attributes()
+    if @isRole('Customer')
+      delete defaults['state_id']
+      delete defaults['state']
     if !_.isEmpty( App.TaskManager.get(@task_key).state )
       defaults = App.TaskManager.get(@task_key).state
-    new App.ControllerForm(
-      el:        @el.find('.form-ticket-update')
-      form_id:   @form_id
-      model:
-        configure_attributes: @configure_attributes_ticket
-        className:            'update_ticket_' + ticket.id
-      params:    defaults
-      form_data: @edit_form
-    )
+    formChanges = (params, attribute, attributes, classname, form, ui) =>
+      if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
+        dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+        if dependency
 
+          for fieldNameToChange of dependency
+            filter = []
+            if dependency[fieldNameToChange]
+              filter = dependency[fieldNameToChange]
+
+            # find element to replace
+            for item in attributes
+              if item.name is fieldNameToChange
+                item.display = false
+                item['filter'] = {}
+                item['filter'][ fieldNameToChange ] = filter
+                item.default = params[item.name]
+                #if !item.default
+                #  delete item['default']
+                newElement = ui.formGenItem( item, classname, form )
+
+            # replace new option list
+            form.find('[name="' + fieldNameToChange + '"]').replaceWith( newElement )
+
+    new App.ControllerForm(
+      el:       @el.find('.form-ticket-update')
+      form_id:  @form_id
+      model:    App.Ticket
+      screen:   'edit'
+      handlers: [
+        formChanges
+      ]
+      filter:    @form_meta.filter
+      params:    defaults
+    )
     new App.ControllerForm(
       el:        @el.find('.form-article-update')
       form_id:   @form_id
-      model:
-        configure_attributes: @configure_attributes_article
-        className:            'update_ticket_' + ticket.id
-      form_data: @edit_form
+      model:     App.TicketArticle
+      screen:   'edit'
+      filter:
+        type_id: [1,9,5]
       params:    defaults
       dependency: [
         {
@@ -440,11 +446,22 @@ class Edit extends App.Controller
           bind: {
             name:     'type_id'
             relation: 'TicketArticleType'
-            value:    ['note', 'twitter status', 'twitter direct-message']
+            value:    ['note', 'phone', 'twitter status']
           },
           change: {
             action: 'hide'
             name: ['to', 'cc'],
+          },
+        },
+        {
+          bind: {
+            name:     'type_id'
+            relation: 'TicketArticleType'
+            value:    ['twitter direct-message']
+          },
+          change: {
+            action: 'show'
+            name: ['to'],
           },
         },
       ]
@@ -680,9 +697,15 @@ class Edit extends App.Controller
     @autosaveStop()
     params = @formParam(e.target)
 
+    # get ticket
     ticket = App.Ticket.fullLocal( @ticket.id )
 
     @log 'notice', 'update', params, ticket
+
+    # update local ticket
+
+    # create local article
+
 
     # find sender_id
     if @isRole('Customer')
@@ -696,17 +719,16 @@ class Edit extends App.Controller
       params.sender_id  = sender.id
 
     # update ticket
-    ticket_update = {}
-    for item in @configure_attributes_ticket
-      ticket_update[item.name] = params[item.name]
+    for key, value of params
+      ticket[key] = value
 
     # check owner assignment
     if !@isRole('Customer')
-      if !ticket_update['owner_id']
-        ticket_update['owner_id'] = 1
+      if !ticket['owner_id']
+        ticket['owner_id'] = 1
 
     # check if title exists
-    if !ticket_update['title'] && !ticket.title
+    if !ticket['title']
       alert( App.i18n.translateContent('Title needed') )
       return
 
@@ -732,22 +754,32 @@ class Edit extends App.Controller
           @autosaveStart()
           return
 
-    ticket.load( ticket_update )
-    @log 'notice', 'update ticket', ticket_update, ticket
+    # submit ticket & article
+    @log 'notice', 'update ticket', ticket
 
     # disable form
     @formDisable(e)
 
     # validate ticket
-    errors = ticket.validate()
+    errors = ticket.validate(
+      screen: 'edit'
+    )
     if errors
       @log 'error', 'update', errors
+
+      @log 'error', errors
+      @formValidate(
+        form:   e.target
+        errors: errors
+        screen: 'edit'
+      )
       @formEnable(e)
       @autosaveStart()
       return
 
     # validate article
-    if params['body']
+    articleAttributes = App.TicketArticle.attributesGet( 'edit' )
+    if params['body'] || ( articleAttributes['body'] && articleAttributes['body']['null'] is false )
       article = new App.TicketArticle
       params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
       params.ticket_id = ticket.id
@@ -761,6 +793,11 @@ class Edit extends App.Controller
       errors = article.validate()
       if errors
         @log 'error', 'update article', errors
+        @formValidate(
+          form:   e.target
+          errors: errors
+          screen: 'edit'
+        )
         @formEnable(e)
         @autosaveStart()
         return

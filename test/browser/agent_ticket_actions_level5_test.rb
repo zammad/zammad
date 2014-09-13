@@ -3,8 +3,8 @@ require 'browser_test_helper'
 
 class AgentTicketActionLevel5Test < TestCase
   def test_I
-    random = 'text_module_test_' + rand(999999).to_s
-    random2 = 'text_module_test_' + rand(999999).to_s
+    random = 'text_module_test_' + rand(99999999).to_s
+    random2 = 'text_module_test_' + rand(99999999).to_s
 
     # user
     tests = [
@@ -153,9 +153,9 @@ class AgentTicketActionLevel5Test < TestCase
     browser_signle_test_with_login(tests, { :username => 'master@example.com' })
   end
   def test_II
-    random = 'text_II_module_test_' + rand(999999).to_s
+    random = 'text_II_module_test_' + rand(99999999).to_s
 
-    user_rand = rand(999999).to_s
+    user_rand = rand(99999999).to_s
     login     = 'agent-text-module-' + user_rand
     firstname = 'Text' + user_rand
     lastname  = 'Module' + user_rand
@@ -191,7 +191,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active input[name=subject]',
+            :css     => '.active input[name=title]',
             :value   => 'A',
           },
           {
@@ -207,7 +207,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active input[name=subject]',
+            :css     => '.active input[name=title]',
             :value   => 'B',
           },
 
@@ -330,7 +330,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
             :value   => 'nicole',
           },
           {
@@ -340,13 +340,13 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
             :value   => :arrow_down,
           },
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .ticket_create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
             :value   => :tab,
           },
           {
@@ -425,7 +425,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 2,
           },
           {
             :where    => :instance2,
@@ -536,7 +536,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 0.2,
+            :value   => 0.5,
           },
 #          {
 #            :where        => :instance2,

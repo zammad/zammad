@@ -27,7 +27,7 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.ticket-create input[name="subject"]',
+            :css     => '.ticket-create input[name="title"]',
             :value   => 'some subject 123äöü',
           },
           {

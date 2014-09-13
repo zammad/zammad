@@ -2,7 +2,11 @@ class App.ControllerForm extends App.Controller
   constructor: (params) ->
     for key, value of params
       @[key] = value
-    @attribute_count = 0
+
+    if !@handlers
+      @handlers = []
+    @handlers.push @_showHideToggle
+    @handlers.push @_requiredMandantoryToggle
 
     if !@form
       @form = @formGen()
@@ -23,39 +27,64 @@ class App.ControllerForm extends App.Controller
 
     fieldset = $('<fieldset></fieldset>')
 
-    for attribute_clean in @model.configure_attributes
-      attribute = _.clone( attribute_clean )
+    # collect form attributes
+    @attributes = []
+    if @model.attributesGet
+      attributesClean = @model.attributesGet(@screen)
+    else
+      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes )
 
-      if !attribute.readonly && ( !@required || @required && attribute[@required] )
+    for attributeName, attribute of attributesClean
 
-        @attribute_count = @attribute_count + 1
+      # ignore read only attributes
+      if !attribute.readonly
 
-        # add item
-        item = @formGenItem( attribute, @model.className, fieldset )
-        item.appendTo(fieldset)
+        # check generic filter
+        if @filter && !attribute.filter
+          if @filter[ attributeName ]
+            attribute.filter = @filter[ attributeName ]
 
-        # if password, add confirm password item
-        if attribute.type is 'password'
+        @attributes.push attribute
 
-          # set selected value passed on current params
-          if @params
-            if attribute.name of @params
-              attribute.value = @params[attribute.name]
+    attribute_count = 0
+    className       = @model.className + '_' + Math.floor( Math.random() * 999999 ).toString()
 
-          # rename display and name to _confirm
-          if !attribute.single
-            attribute.display = attribute.display + ' (confirm)'
-            attribute.name = attribute.name + '_confirm';
-            item = @formGenItem( attribute, @model.className, fieldset )
-            item.appendTo(fieldset)
+    for attribute in @attributes
+      attribute_count = attribute_count + 1
 
-    if @no_fieldset
+      # add item
+      item = @formGenItem( attribute, className, fieldset, attribute_count )
+      item.appendTo(fieldset)
+
+      # if password, add confirm password item
+      if attribute.type is 'password'
+
+        # set selected value passed on current params
+        if @params
+          if attribute.name of @params
+            attribute.value = @params[attribute.name]
+
+        # rename display and name to _confirm
+        if !attribute.single
+          attribute.display = attribute.display + ' (confirm)'
+          attribute.name = attribute.name + '_confirm';
+          item = @formGenItem( attribute, className, fieldset, attribute_count )
+          item.appendTo(fieldset)
+
+    if @noFieldset
       fieldset = fieldset.children()
 
     if @fullForm
       if !@formClass
         @formClass = ''
       fieldset = $('<form class="' + @formClass + '"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend( fieldset )
+
+    # bind form events
+    if @events
+      for eventSelector, callback of @events
+        do (eventSelector, callback) =>
+          evs = eventSelector.split(' ')
+          fieldset.find( evs[1] ).bind(evs[0], (e) => callback(e) )
 
     # return form
     return fieldset
@@ -85,7 +114,7 @@ class App.ControllerForm extends App.Controller
     null:           false
     relation:       'User'
     autocapitalize: false
-    help:           'Select the customer of the Ticket or create one.'
+    help:           'Select the customer of the ticket or create one.'
     helpLink:       '<a href="" class="customer_new">&raquo;</a>'
     callback:       @userInfo
     class:          'span7'
@@ -134,14 +163,14 @@ class App.ControllerForm extends App.Controller
 
   ###
 
-  formGenItem: (attribute_config, classname, form ) ->
-    attribute = _.clone( attribute_config )
+  formGenItem: (attribute_config, classname, form, attribute_count ) ->
+    attribute = clone( attribute_config )
 
     # create item id
     attribute.id = classname + '_' + attribute.name
 
     # set autofocus
-    if @autofocus && @attribute_count is 1
+    if @autofocus && attribute_count is 1
       attribute.autofocus = 'autofocus'
 
     # set required option
@@ -236,6 +265,22 @@ class App.ControllerForm extends App.Controller
     # select
     else if attribute.tag is 'select'
       item = $( App.view('generic/select')( attribute: attribute ) )
+
+    # date
+    else if attribute.tag is 'date'
+      attribute.type = 'text'
+      item = $( App.view('generic/date')( attribute: attribute ) )
+      #item.datetimepicker({
+      #  format: 'Y.m.d'
+      #});
+
+    # date
+    else if attribute.tag is 'datetime'
+      attribute.type = 'text'
+      item = $( App.view('generic/date')( attribute: attribute ) )
+      #item.datetimepicker({
+      #  format: 'Y.m.d H:i'
+      #});
 
     # timezone
     else if attribute.tag is 'timezone'
@@ -720,7 +765,7 @@ class App.ControllerForm extends App.Controller
 
         b = (event, item) =>
           # set html form attribute
-          $(local_attribute).val(item.id)
+          $(local_attribute).val(item.id).trigger('change')
           $(local_attribute + '_autocompletion_value_shown').val(item.value)
 
           # call calback
@@ -741,8 +786,11 @@ class App.ControllerForm extends App.Controller
           }
         )
         ###
+        source = attribute.source
+        if typeof(source) is 'string'
+          source = source.replace('#{@apiPath}', App.Config.get('api_path') );
         $(local_attribute_full).autocomplete(
-          source: attribute.source,
+          source: source,
           minLength: attribute.minLengt || 3,
           select: ( event, ui ) =>
             b(event, ui.item)
@@ -1224,63 +1272,12 @@ class App.ControllerForm extends App.Controller
     else
       item = $( App.view('generic/input')( attribute: attribute ) )
 
-    if attribute.onchange
-      if typeof attribute.onchange is 'function'
-        attribute.onchange(attribute)
-      else
-        for i of attribute.onchange
-          a = i.split(/__/)
-          if a[1]
-            if a[0] is attribute.name
-              @attribute = attribute
-              @classname = classname
-              @attributes_clean = attributes_clean
-              @change = a
-              b = =>
-#                console.log 'aaa', @attribute
-                attribute = @attribute
-                change = @change
-                classname = @classname
-                attributes_clean = @attributes_clean
-                ui = @
-                $( '#' + @attribute.id ).bind('change', ->
-                  ui.log 'change', @, attribute, change
-                  ui.log change[0] + ' has changed - changing ' + change[1]
-
-                  item = $( ui.formGenItem(attribute, classname, attributes_clean) )
-                  ui.log item, classname
-                )
-              App.Delay.set( b, 100, undefined, 'form_change' )
-#            if attribute.onchange[]
-
-    ui = @
-    item.bind('change', ->
-      if ui.form_data
-        params = App.ControllerForm.params(@)
-        for i of ui.form_data
-          a = i.split(/__/)
-          if a[1] && a[0] is attribute.name
-            newListAttribute  = i
-            changedAttribute  = a[0]
-            toChangeAttribute = a[1]
-
-            # get new option list
-            newListAttributes = ui['form_data'][newListAttribute][ params['group_id'] ]
-
-            # find element to replace
-            for item in ui.model.configure_attributes
-              if item.name is toChangeAttribute
-                item.display = false
-                item['filter'][toChangeAttribute] = newListAttributes
-                if params[changedAttribute]
-                  item.default = params[toChangeAttribute]
-                if !item.default
-                  delete item['default']
-                newElement = ui.formGenItem( item, classname, form )
-
-            # replace new option list
-            form.find('[name="' + toChangeAttribute + '"]').replaceWith( newElement )
-    )
+    if @handlers
+      item.bind('change', (e) =>
+        params = App.ControllerForm.params( $(e.target) )
+        for handler in @handlers
+          handler(params, attribute, @attributes, classname, form, @)
+      )
 
     # bind dependency
     if @dependency
@@ -1342,6 +1339,44 @@ class App.ControllerForm extends App.Controller
       el.find('[name="' + key + '"]').parents('.form-group').addClass('hide')
       el.find('[name="' + key + '"]').addClass('is-hidden')
 
+  _mandantory: (name, el = @el) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      el.find('[name="' + key + '"]').attr('required', true)
+      el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('*')
+
+  _optional: (name, el = @el) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      el.find('[name="' + key + '"]').attr('required', false)
+      el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('')
+
+  _showHideToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+    for attribute in attributes
+      if attribute.shown_if
+        hit = false
+        for refAttribute, refValue of attribute.shown_if
+          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
+            hit = true
+        if hit
+          ui._show(attribute.name)
+        else
+          ui._hide(attribute.name)
+
+  _requiredMandantoryToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+    for attribute in attributes
+      if attribute.required_if
+        hit = false
+        for refAttribute, refValue of attribute.required_if
+          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
+            hit = true
+        if hit
+          ui._mandantory(attribute.name)
+        else
+          ui._optional(attribute.name)
+
   # sort attribute.options
   _sortOptions: (attribute) ->
 
@@ -1402,6 +1437,7 @@ class App.ControllerForm extends App.Controller
 
     list = []
     if attribute.filter
+
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter', attribute.filter
 
       # function based filter
@@ -1423,6 +1459,22 @@ class App.ControllerForm extends App.Controller
 
           # check all filter attributes
           for key in filter
+
+            # check all filter values as array
+            # if it's matching, use it for selection
+            if record['id'] is key
+              list.push record
+
+      # data based filter
+      else if attribute.filter && _.isArray attribute.filter
+
+        App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-array', attribute.filter
+
+        # check all records
+        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy )
+
+          # check all filter attributes
+          for key in attribute.filter
 
             # check all filter values as array
             # if it's matching, use it for selection
@@ -1515,9 +1567,10 @@ class App.ControllerForm extends App.Controller
 
   validate: (params) ->
     App.Model.validate(
-      model: @model,
-      params: params,
-    )
+      model:  @model
+      params: params
+      screen: @screen
+  )
 
   # get all params of the form
   @params: (form) ->
@@ -1640,13 +1693,8 @@ class App.ControllerForm extends App.Controller
 
     # show new errors
     for key, msg of data.errors
-      $(data.form).parents().find('[name*="' + key + '"]').parents('div .form-group').addClass('has-error')
-      $(data.form).parents().find('[name*="' + key + '"]').parent().find('.help-inline').html(msg)
+      $(data.form).parents('form').find('[name="' + key + '"]').parents('div .form-group').addClass('has-error')
+      $(data.form).parents('form').find('[name="' + key + '"]').parent().find('.help-inline').html(msg)
 
     # set autofocus
-    $(data.form).parents().find('.has-error').find('input, textarea').first().focus()
-
-#    # enable form again
-#    if $(data.form).parents().find('.has-error').html()
-#      @formEnable(data.form)
-
+    $(data.form).parents('form').find('.has-error').find('input, textarea').first().focus()

@@ -322,7 +322,7 @@ class Table extends App.ControllerContent
         configure_attributes: @configure_attributes_ticket
         className:            'create'
       form_data:   @bulk
-      no_fieldset: true
+      noFieldset: true
     )
     #html.delegate('.bulk-action-form', 'submit', (e) =>
     html.bind('submit', (e) =>

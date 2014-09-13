@@ -109,13 +109,12 @@ class App.WidgetUser extends App.ControllerDrox
   edit: (e) =>
     e.preventDefault()
     new App.ControllerGenericEdit(
-      id: @user_id,
-      genericObject: 'User',
-      required: 'quick',
-      pageData: {
-        title: 'Users',
-        object: 'User',
-        objects: 'Users',
-      },
+      id: @user_id
+      genericObject: 'User'
+      screen: 'edit'
+      pageData:
+        title: 'Users'
+        object: 'User'
+        objects: 'Users'
       callback: @render
     )

@@ -99,6 +99,7 @@ class App.ControllerTable extends App.Controller
       data.model = {}
     overview   = data.overview || data.model.configure_overview || []
     attributes = data.attributes || data.model.configure_attributes || {}
+    attributes = App.Model.attributesGet(false, attributes)
     destroy    = data.model.configure_delete
 
     # check if table is empty
@@ -146,13 +147,13 @@ class App.ControllerTable extends App.Controller
     header = []
     for item in overview
       headerFound = false
-      for attribute in attributes
-        if attribute.name is item
+      for attributeName, attribute of attributes
+        if attributeName is item
           headerFound = true
           header.push attribute
         else
           rowWithoutId = item + '_id'
-          if attribute.name is rowWithoutId
+          if attributeName is rowWithoutId
             headerFound = true
             header.push attribute
 

@@ -111,8 +111,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
           {
@@ -127,8 +128,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
 
@@ -150,8 +152,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
 
@@ -204,8 +207,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
           {
@@ -219,8 +223,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
 
@@ -246,8 +251,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
           {
@@ -261,8 +267,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
 
@@ -280,8 +287,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
           {
@@ -298,8 +306,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
           {
@@ -315,7 +324,9 @@ class AgentTicketActionsLevel3Test < TestCase
             :where        => :instance2,
             :execute      => 'match',
             :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
           {

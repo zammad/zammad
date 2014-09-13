@@ -5,9 +5,9 @@
 // the compiled file.
 //
 
-//= require ./app/lib/core/jquery-1.11.0.js
+//= require ./app/lib/core/jquery-2.1.1.js
 //= require ./app/lib/core/jquery-ui-1.8.23.custom.min.js
-//= require ./app/lib/core/underscore-1.6.0.js
+//= require ./app/lib/core/underscore-1.7.0.js
 
 //= require ./app/lib/animations/velocity.min.js
 //= require ./app/lib/animations/velocity.ui.js
@@ -67,6 +67,13 @@ function difference(object1, object2) {
     }
   }
   return changes;
+}
+
+function clone(object) {
+  if (!object) {
+    return object
+  }
+  return JSON.parse(JSON.stringify(object));
 }
 
 jQuery.event.special.remove = {

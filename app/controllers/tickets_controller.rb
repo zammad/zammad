@@ -255,24 +255,12 @@ class TicketsController < ApplicationController
       )
     end
 
-    # get related users
-    assets = {}
-    assets = ticket.assets(assets)
-
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
 
-    attributes_to_change[:owner_id].each { |user_id|
-      user = User.find(user_id)
-      assets = user.assets(assets)
-    }
-
-    attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
-      user_ids.each {|user_id|
-        user = User.find(user_id)
-        assets = user.assets(assets)
-      }
-    }
+    # get related users
+    assets = attributes_to_change[:assets]
+    assets = ticket.assets(assets)
 
     # get related articles
     articles = Ticket::Article.where( :ticket_id => params[:id] )
@@ -297,6 +285,7 @@ class TicketsController < ApplicationController
       :ticket_article_ids => article_ids,
       :signature          => signature,
       :assets             => assets,
+      :form_meta          => attributes_to_change,
       :edit_form          => attributes_to_change,
     }
   end
@@ -307,36 +296,17 @@ class TicketsController < ApplicationController
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       :user       => current_user,
-      #      :ticket_id  => params[:ticket_id],
-      #      :article_id => params[:article_id]
+      :ticket_id  => params[:ticket_id],
+      :article_id => params[:article_id]
     )
 
-    assets = {}
-    assets[ User.to_app_model ] = {}
-    attributes_to_change[:owner_id].each { |user_id|
-      user = User.find(user_id)
-      assets = user.assets(assets)
-    }
-
-    attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
-      user_ids.each {|user_id|
-        user = User.find(user_id)
-        assets = user.assets(assets)
-      }
-    }
-
+    assets = attributes_to_change[:assets]
     # split data
     split = {}
     if params[:ticket_id] && params[:article_id]
       ticket = Ticket.find( params[:ticket_id] )
       split[:ticket_id] = ticket.id
       assets = ticket.assets(assets)
-
-      owner_ids = []
-      ticket.agent_of_group.each { |user|
-        owner_ids.push user.id
-        assets = user.assets(assets)
-      }
 
       # get related articles
       article = Ticket::Article.find( params[:article_id] )
@@ -348,12 +318,18 @@ class TicketsController < ApplicationController
     render :json => {
       :split     => split,
       :assets    => assets,
-      :edit_form => attributes_to_change,
+      :form_meta => {
+        :filter       => attributes_to_change[:filter],
+        :dependencies => attributes_to_change[:dependencies],
+      }
     }
   end
 
   # GET /api/v1/tickets/search
   def search
+
+    # permit nested conditions
+    params.require(:condition).permit!
 
     # build result list
     tickets = Ticket.search(

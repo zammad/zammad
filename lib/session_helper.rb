@@ -16,6 +16,16 @@ module SessionHelper
     return default_collection, assets
   end
 
+  def self.models(user = nil)
+    models = {}
+    objects = ObjectManager.listObjects
+    objects.each {|object|
+      attributes = ObjectManager::Attribute.by_object(object, user)
+      models[object] = attributes
+    }
+    models
+  end
+
   def self.cleanup_expired
 
     # web sessions

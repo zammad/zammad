@@ -2,87 +2,41 @@
   <div class="create-new main flex">
     <div class="box">
       <div class="page-header">
-        <h1><%- @T( 'Create New Ticket' ) %></h1>
+        <h1><%- @T( @head ) %></h1>
       </div>
 
       <ul class="horizontal tabs type-tabs">
 
-        <li class="tab u-textTruncate active">
-          <div class="white email channel icon"></div>
-          <%- @T( 'E-Mail' ) %>
-
-        <li class="tab u-textTruncate">
+        <li class="tab u-textTruncate" data-type="phone-in">
           <div class="gray received-calls channel icon"></div>
           <%- @T( 'Received Call' ) %>
+        </li>
 
-        <li class="tab u-textTruncate">
+        <li class="tab u-textTruncate" data-type="phone-out">
           <div class="gray outbound-calls channel icon"></div>
           <%- @T( 'Outbound Call' ) %>
+        </li>
 
+       <li class="tab u-textTruncate" data-type="email-out">
+          <div class="gray email channel icon"></div>
+          <%- @T( 'Send E-Mail' ) %>
+        </li>
       </ul>
 
-      <form role="form">
-
-        <div class="form-group">
-          <label for="customer"><%- @T('Customer') %></label>
-          <input class="form-control" id="customer" placeholder="<%- @T('Enter Person or Organisation/Company') %>">
-        </div>
-
-        <div class="form-group">
-          <label for="subject"><%- @T('Subject') %></label>
-          <input class="form-control" id="subject">
-        </div>
-
-        <div class="form-group">
-          <label for="text"><%- @T('Text') %></label>
-          <textarea class="form-control" id="text" rows="4"></textarea>
-        </div>
+      <form role="form" class="form-large ticket-create">
+        <input type="hidden" name="formSenderType"/>
+        <div class="ticket-form-top"></div>
+        <div class="article-form-top"></div>
 
         <div class="formset-inset">
-          <div class="horizontal two-columns">
-            <div class="form-group column">
-              <label for="owner"><%- @T('Owner') %></label>
-              <select class="form-control" id="owner">
-                <option>Support -> Oliver Ruhm</option>
-                <option>Engineering -> Web-Dev</option>
-              </select>
-            </div>
-            <div class="form-group column">
-              <label for="type"><%- @T('Type') %></label>
-              <select class="form-control" id="type">
-                <option>Inquiry</option>
-                <option>Support</option>
-                <option selected>Question</option>
-              </select>
-            </div>
-            <div class="form-group column">
-              <label for="status"><%- @T('Status') %></label>
-              <select class="form-control" id="status">
-                <option selected>open</option>
-                <option>closed</option>
-              </select>
-            </div>
-            <div class="form-group column">
-              <label for="proprity"><%- @T('Priority') %></label>
-              <select class="form-control" id="proprity">
-                <option>low</option>
-                <option selected>normal</option>
-                <option>high</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="tags"><%- @T('Tags') %></label>
-            <input class="form-control" id="tags" placeholder="<%- @T('Tag hinzufügen') %>" value="New Website, Feedback">
-          </div>
-
+          <div class="ticket-form-middle horizontal two-columns"></div>
+          <div class="ticket-form-bottom"></div>
         </div>
 
-        <input type="hidden" value="" name="article_type"/>
+
         <div class="form-actions horizontal">
           <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-          <button type="submit" class="btn btn-create submit align-right"><%- @T( 'Create Ticket' ) %></button>
+          <button type="submit" class="btn btn-create submit align-right"><%- @T( 'Create' ) %></button>
         </div>
       </form>
     </div>

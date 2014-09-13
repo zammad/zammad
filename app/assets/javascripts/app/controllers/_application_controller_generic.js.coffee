@@ -7,11 +7,11 @@ class App.ControllerGenericNew extends App.ControllerModal
 
     @html App.view('generic/admin/new')( head: @pageData.object )
     new App.ControllerForm(
-      el:         @el.find('#object_new'),
-      model:      App[ @genericObject ],
-      params:     @item,
-      required:   @required,
-      autofocus:  true,
+      el:         @el.find('#object_new')
+      model:      App[ @genericObject ]
+      params:     @item
+      screen:     @screen || 'edit'
+      autofocus:  true
     )
     @modalShow()
 
@@ -59,7 +59,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
       el:         @el.find('#object_edit')
       model:      App[ @genericObject ]
       params:     @item
-      required:   @required
+      screen:     @screen || 'edit'
       autofocus:  true
     )
     @modalShow()

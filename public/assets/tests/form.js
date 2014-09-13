@@ -495,3 +495,54 @@ test( "form selector", function() {
   deepEqual( params, test_params, 'form param check via $("#form").parent()' );
 
 });
+
+test( "form required_if + shown_if", function() {
+  $('#forms').append('<hr><h1>form required_if + shown_if</h1><div><form id="form7"></form></div>')
+  var el = $('#form7')
+  var defaults = {
+    input2: 'some name66',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default33' },
+        { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: true }, shown_if: { active: true } },
+        { name: 'active', display: 'Active',  tag: 'boolean', type: 'boolean', 'default': true, null: false },
+      ],
+    },
+    params: defaults,
+  });
+  test_params = {
+    input1: "some not used default33",
+    input2: "some name66",
+    active: true
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+  equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
+  equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
+
+  el.find('[name="active"]').val('{boolean}::false').trigger('change')
+  test_params = {
+    input1: "some not used default33",
+    active: false
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+  equal( el.find('[name="input2"]').attr('required'), undefined, 'check required attribute of input2 ')
+  equal( el.find('[name="input2"]').is(":visible"), false, 'check visible attribute of input2 ')
+
+
+  el.find('[name="active"]').val('{boolean}::true').trigger('change')
+  test_params = {
+    input1: "some not used default33",
+    input2: "some name66",
+    active: true
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+  equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
+  equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
+
+});

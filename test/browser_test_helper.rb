@@ -297,40 +297,40 @@ class TestCase < Test::Unit::TestCase
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
       instance.find_element( { :css => 'a[href="#ticket/create/call_inbound"]' } ).click
-      element = instance.find_element( { :css => '.active .ticket_create' } )
+      element = instance.find_element( { :css => '.active .ticket-create' } )
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
         return
       end
       sleep 2
-      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
       element.clear
       element.send_keys( 'nico*' )
       sleep 4
-      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
       element.send_keys( :arrow_down )
       sleep 0.2
-      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
       element.send_keys( :tab )
       sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket_create select[name="group_id"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create select[name="group_id"]' } )
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by( :text, action[:group])
       sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket_create input[name="subject"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="title"]' } )
       element.clear
       element.send_keys( action[:subject] )
       sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket_create textarea[name="body"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create textarea[name="body"]' } )
       element.clear
       element.send_keys( action[:body] )
       if action[:do_not_submit]
         assert( true, "(#{test[:name]}) ticket created without submit" )
         return
       end
-      sleep 0.5
+      sleep 0.8
       instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
-      sleep 2
+      sleep 1
       (1..14).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
           assert( true, "(#{test[:name]}) ticket created" )
@@ -338,7 +338,7 @@ class TestCase < Test::Unit::TestCase
         end
         sleep 0.5
       }
-      assert( true, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
+      assert( false, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
       return
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100

@@ -33,7 +33,11 @@ class SessionsController < ApplicationController
     # auto population of default collections
     collections, assets = SessionHelper::default_collections(user)
 
+    # add session user assets
     assets = user.assets(assets)
+
+    # get models
+    models = SessionHelper::models(user)
 
     # check logon session
     logon_session_key = nil
@@ -50,6 +54,7 @@ class SessionsController < ApplicationController
     # return new session data
     render :json => {
       :session       => user,
+      :models        => models,
       :collections   => collections,
       :assets        => assets,
       :logon_session => logon_session_key,
@@ -75,9 +80,13 @@ class SessionsController < ApplicationController
     end
 
     if !user_id
+      # get models
+      models = SessionHelper::models()
+
       render :json => {
         :error  => 'no valid session',
         :config => config_frontend,
+        :models => models,
       }
       return
     end
@@ -89,13 +98,18 @@ class SessionsController < ApplicationController
     # auto population of default collections
     collections, assets = SessionHelper::default_collections(user)
 
+    # add session user assets
     assets = user.assets(assets)
+
+    # get models
+    models = SessionHelper::models(user)
 
     # return current session
     render :json => {
       :session      => user,
+      :models       => models,
       :collections  => collections,
-      :assets        => assets,
+      :assets       => assets,
       :config       => config_frontend,
     }
   end

@@ -658,13 +658,13 @@ label {
   .form-control:focus,
   .tokenfield.focus {
     box-shadow: none;
-    border-color: #419ed7;
+    border-color: #419ed7 !important;
   }
 
   .has-error .form-control,
   .has-error .form-control:focus {
     box-shadow: none;
-    border-color: red;
+    border-color: red !important;
   }
 
   .help-inline {
@@ -752,6 +752,9 @@ label {
   margin-left: 10px;
 }
 
+.help-block {
+  color: #bcbcbc;
+}
 .form-horizontal .help-inline, .form-horizontal .help-block {
   font-size: 12px;
   margin-top: 4px;
@@ -3240,7 +3243,7 @@ footer {
 
 .tokenfield .token {
   padding: 0 0 0 10px;
-  margin: -1px 5px 0 0;
+  margin: -1px 5px 8px 0;
   height: 26px;
   line-height: 27px;
   color: white;
@@ -3255,7 +3258,7 @@ footer {
   }
 
   .tokenfield .token .token-label {
-    padding: 0; 
+    padding: 0;
   }
 
   .tokenfield.form-control {
