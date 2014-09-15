@@ -10,9 +10,11 @@
  *= require ./bootstrap-tokenfield.css
  *= require ./noty_theme_twitter.css
  *= require ./sew.css
- *= require ./layout.css
  *= require ./zzz.css
  *= require ./fonts/fira-sans.css
+ *= require ./layout.css
+ *
+ * layout.css after zzz.css because .fix's position absolute should overwrite others
  *
  *= require_tree ./custom/
  *

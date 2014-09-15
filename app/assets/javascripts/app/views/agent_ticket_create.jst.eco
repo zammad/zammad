@@ -1,174 +1,168 @@
-<div class="fit ticket-zoom vertical">
-  <div class="flex u-positionOrigin">
-    <div class="main no-padding">
-      <div class="flex-overflow u-positionOrigin sidebar-tabs--spacing">
+<div class="main no-padding fit tabsSidebarSpace">
+  <div class="newTicket">
+    <div class="box">
+      <div class="page-header">
+        <h1><%- @T( @head ) %></h1>
+      </div>
 
-        <div class="box">
-          <div class="page-header">
-            <h1><%- @T( @head ) %></h1>
+      <ul class="horizontal tabs type-tabs">
+
+        <li class="tab u-textTruncate" data-type="phone-in">
+          <div class="gray received-calls channel icon"></div>
+          <%- @T( 'Received Call' ) %>
+        </li>
+
+        <li class="tab u-textTruncate" data-type="phone-out">
+          <div class="gray outbound-calls channel icon"></div>
+          <%- @T( 'Outbound Call' ) %>
+        </li>
+
+       <li class="tab u-textTruncate" data-type="email-out">
+          <div class="gray email channel icon"></div>
+          <%- @T( 'Send E-Mail' ) %>
+        </li>
+      </ul>
+
+      <form role="form" class="form-large ticket-create">
+        <input type="hidden" name="formSenderType"/>
+        <div class="ticket-form-top"></div>
+        <div class="article-form-top"></div>
+
+        <div class="formset-inset">
+          <div class="ticket-form-middle horizontal two-columns"></div>
+          <div class="ticket-form-bottom"></div>
+        </div>
+
+
+        <div class="form-actions horizontal">
+          <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+          <button type="submit" class="btn btn-create submit align-right"><%- @T( 'Create' ) %></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="tabsSidebar vertical"></div>
+<!--
+<div class="sidebar">
+  <div class="widgets">
+    <div class="customer_info">
+      <div class="drox"><!-- Customer Info -/->
+        <div class="drox-header">
+          <h2>Customer Info</h2>
+        </div>
+        <div class="drox-body">
+          <p>
+            <span class="customer-name">Benjamin Wahlers</span>
+            <span class="customer-email u-highlight">benjamin@wahlers.de</span>
+          </p>
+          <div class="form-group">
+            <label for="customer-info-note"><%- @T('Note') %></label>
+            <textarea class="form-control" id="customer-info-note" rows="5">Not assigned</textarea>
           </div>
-
-          <ul class="horizontal tabs type-tabs">
-
-            <li class="tab u-textTruncate" data-type="phone-in">
-              <div class="gray received-calls channel icon"></div>
-              <%- @T( 'Received Call' ) %>
-            </li>
-
-            <li class="tab u-textTruncate" data-type="phone-out">
-              <div class="gray outbound-calls channel icon"></div>
-              <%- @T( 'Outbound Call' ) %>
-            </li>
-
-           <li class="tab u-textTruncate" data-type="email-out">
-              <div class="gray email channel icon"></div>
-              <%- @T( 'Send E-Mail' ) %>
-            </li>
-          </ul>
-
-          <form role="form" class="form-large ticket-create">
-            <input type="hidden" name="formSenderType"/>
-            <div class="ticket-form-top"></div>
-            <div class="article-form-top"></div>
-
-            <div class="formset-inset">
-              <div class="ticket-form-middle horizontal two-columns"></div>
-              <div class="ticket-form-bottom"></div>
+          <label><%- @T('Tickets') %></label>
+          <ol class="tasks tasks-standalone"> <!-- vaguely based on task_widget_tasks.jst.eco -/->
+            <li class="task level-1 horizontal">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="u-highlight name u-textTruncate">Micro-SIM doesn't work</div>
+                <div class="time">23 minutes ago</div>
+              </div>
+            <li class="task level-3 horizontal">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="u-highlight name u-textTruncate">Superb Service!</div>
+                <div class="time">43 minutes ago</div>
+              </div>
+            <li class="task level-2 horizontal">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="u-highlight name u-textTruncate">Print sheets strip off</div>
+                <div class="time">1 hour ago</div>
+              </div>
+            <li class="task level-3 horizontal">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="u-highlight name u-textTruncate">Block not properly wrought</div>
+                <div class="time">2 hour ago</div>
+              </div>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="ticket_template">
+      <div class="drox hide"><!-- Template Wizard Step One -/->
+        <div class="drox-header">
+          <h2>Choose Template:</h2>
+        </div>
+        <div class="drox-body">
+          <p>No template created yet.</p>
+          <p>With templates you can pre-fill ticket attributes.</p>
+          <p>Choose attributes and then save them as a new template.</p>
+          <p><a class="create u-clickable">Save new template</a></p>
+        </div>
+      </div>
+      <div class="drox hide"><!-- Template Wizard Step Two -/->
+        <div class="drox-header">
+          <h2>Create Template:</h2>
+        </div>
+        <div class="drox-body">
+          <form>
+            <div class="form-group">
+              <label for="template-title"><%- @T('Template Title') %>:</label>
+              <input class="form-control" id="template-title" placeholder="<%- @T('Enter Template Name') %>">
             </div>
-
-
-            <div class="form-actions horizontal">
-              <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-              <button type="submit" class="btn btn-create submit align-right"><%- @T( 'Create' ) %></button>
+            <p>This template saves the following attributes:</p>
+            <ul class="template-attributes">
+              <li class="template-attribute horizontal">
+                <div class="key">Owner</div> | <div class="value flex u-textTruncate">Web-Dev</div>
+                <div class="delete u-clickable">&times;</div>
+              <li class="template-attribute horizontal">
+                <div class="key">Type</div> | <div class="value flex u-textTruncate">Question</div>
+                <div class="delete u-clickable">&times;</div>
+              <li class="template-attribute horizontal">
+                <div class="key">Status</div> | <div class="value flex u-textTruncate">open</div>
+                <div class="delete u-clickable">&times;</div>
+              <li class="template-attribute horizontal">
+                <div class="key">Priority</div> | <div class="value flex u-textTruncate">high</div>
+                <div class="delete u-clickable">&times;</div>
+              <li class="template-attribute horizontal">
+                <div class="key">Tag</div> | <div class="value flex u-textTruncate">New Website</div>
+                <div class="delete u-clickable">&times;</div>
+              <li class="template-attribute horizontal">
+                <div class="key">Tag</div> | <div class="value flex u-textTruncate">Feedback</div>
+                <div class="delete u-clickable">&times;</div>
+            </ul>
+            <div class="horizontal">
+              <button class="btn btn-primary" type="submit"><%- @T('Save Template') %></button>
+              <a class="subtle-link standalone cancel align-right u-clickable"><%- @T('Cancel') %></a>
             </div>
           </form>
         </div>
       </div>
-
-    </div>
-  </div>
-
-  <div class="sidebar-holder vertical"></div>
-<!--
-  <div class="sidebar">
-    <div class="widgets">
-      <div class="customer_info">
-        <div class="drox"><!-- Customer Info -/->
-          <div class="drox-header">
-            <h2>Customer Info</h2>
-          </div>
-          <div class="drox-body">
-            <p>
-              <span class="customer-name">Benjamin Wahlers</span>
-              <span class="customer-email u-highlight">benjamin@wahlers.de</span>
-            </p>
-            <div class="form-group">
-              <label for="customer-info-note"><%- @T('Note') %></label>
-              <textarea class="form-control" id="customer-info-note" rows="5">Not assigned</textarea>
-            </div>
-            <label><%- @T('Tickets') %></label>
-            <ol class="tasks tasks-standalone"> <!-- vaguely based on task_widget_tasks.jst.eco -/->
-              <li class="task level-1 horizontal">
-                <div class="icon-holder">
-                  <div class="priority icon"></div>
-                </div>
-                <div class="flex">
-                  <div class="u-highlight name u-textTruncate">Micro-SIM doesn't work</div>
-                  <div class="time">23 minutes ago</div>
-                </div>
-              <li class="task level-3 horizontal">
-                <div class="icon-holder">
-                  <div class="priority icon"></div>
-                </div>
-                <div class="flex">
-                  <div class="u-highlight name u-textTruncate">Superb Service!</div>
-                  <div class="time">43 minutes ago</div>
-                </div>
-              <li class="task level-2 horizontal">
-                <div class="icon-holder">
-                  <div class="priority icon"></div>
-                </div>
-                <div class="flex">
-                  <div class="u-highlight name u-textTruncate">Print sheets strip off</div>
-                  <div class="time">1 hour ago</div>
-                </div>
-              <li class="task level-3 horizontal">
-                <div class="icon-holder">
-                  <div class="priority icon"></div>
-                </div>
-                <div class="flex">
-                  <div class="u-highlight name u-textTruncate">Block not properly wrought</div>
-                  <div class="time">2 hour ago</div>
-                </div>
-            </ol>
-          </div>
+      <div class="drox hide"><!-- Template Chooser, shown instead of Template Wizard Step One when there are templates there -/->
+        <div class="drox-header">
+          <h2>Choose Template:</h2>
+        </div>
+        <div class="drox-body">
+          <ul class="templates">
+            <li class="u-clickable u-highlight">Feedback New Website
+          </ul>
+          <p>Choose attributes and then save them as a new template.</p>
+          <p><a class="create u-clickable">Save new template</a></p>
         </div>
       </div>
-      <div class="ticket_template">
-        <div class="drox hide"><!-- Template Wizard Step One -/->
-          <div class="drox-header">
-            <h2>Choose Template:</h2>
-          </div>
-          <div class="drox-body">
-            <p>No template created yet.</p>
-            <p>With templates you can pre-fill ticket attributes.</p>
-            <p>Choose attributes and then save them as a new template.</p>
-            <p><a class="create u-clickable">Save new template</a></p>
-          </div>
-        </div>
-        <div class="drox hide"><!-- Template Wizard Step Two -/->
-          <div class="drox-header">
-            <h2>Create Template:</h2>
-          </div>
-          <div class="drox-body">
-            <form>
-              <div class="form-group">
-                <label for="template-title"><%- @T('Template Title') %>:</label>
-                <input class="form-control" id="template-title" placeholder="<%- @T('Enter Template Name') %>">
-              </div>
-              <p>This template saves the following attributes:</p>
-              <ul class="template-attributes">
-                <li class="template-attribute horizontal">
-                  <div class="key">Owner</div> | <div class="value flex u-textTruncate">Web-Dev</div>
-                  <div class="delete u-clickable">&times;</div>
-                <li class="template-attribute horizontal">
-                  <div class="key">Type</div> | <div class="value flex u-textTruncate">Question</div>
-                  <div class="delete u-clickable">&times;</div>
-                <li class="template-attribute horizontal">
-                  <div class="key">Status</div> | <div class="value flex u-textTruncate">open</div>
-                  <div class="delete u-clickable">&times;</div>
-                <li class="template-attribute horizontal">
-                  <div class="key">Priority</div> | <div class="value flex u-textTruncate">high</div>
-                  <div class="delete u-clickable">&times;</div>
-                <li class="template-attribute horizontal">
-                  <div class="key">Tag</div> | <div class="value flex u-textTruncate">New Website</div>
-                  <div class="delete u-clickable">&times;</div>
-                <li class="template-attribute horizontal">
-                  <div class="key">Tag</div> | <div class="value flex u-textTruncate">Feedback</div>
-                  <div class="delete u-clickable">&times;</div>
-              </ul>
-              <div class="horizontal">
-                <button class="btn btn-primary" type="submit"><%- @T('Save Template') %></button>
-                <a class="subtle-link standalone cancel align-right u-clickable"><%- @T('Cancel') %></a>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="drox hide"><!-- Template Chooser, shown instead of Template Wizard Step One when there are templates there -/->
-          <div class="drox-header">
-            <h2>Choose Template:</h2>
-          </div>
-          <div class="drox-body">
-            <ul class="templates">
-              <li class="u-clickable u-highlight">Feedback New Website
-            </ul>
-            <p>Choose attributes and then save them as a new template.</p>
-            <p><a class="create u-clickable">Save new template</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="text_module"></div>
     </div>
+    <div class="text_module"></div>
   </div>
-  -->
 </div>
+-->

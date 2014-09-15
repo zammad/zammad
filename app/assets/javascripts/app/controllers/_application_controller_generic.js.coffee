@@ -417,15 +417,15 @@ class App.GenericHistory extends App.ControllerModal
 
 class App.Sidebar extends App.Controller
   events:
-    'click .sidebar-tabs':  'toggleTab'
-    'click .close-sidebar': 'toggleSidebar'
+    'click .tabsSidebar-tab':  'toggleTab'
+    'click .tabsSidebar-close': 'toggleSidebar'
 
   constructor: ->
     super
     @render()
 
     # get first tab
-    name = @el.find('.sidebar-tab').first().data('content')
+    name = @el.find('.tabsSidebar-tab').first().data('content')
 
     # activate first tab
     @toggleTabAction(name)
@@ -439,17 +439,17 @@ class App.Sidebar extends App.Controller
         item.callback( @el.find( '.sidebar-content[data-content=' + item.name + ']' ) )
 
   toggleSidebar: ->
-    $('.content.active > div').toggleClass('state--sidebar-hidden')
+    $('.content.active .tabsSidebarSpace').toggleClass('is-closed')
+    $('.content.active .tabsSidebar').toggleClass('is-closed')
 
   showSidebar: ->
-    # show sidebar if not shown
-    if $('.content.active > div').hasClass('state--sidebar-hidden')
-      $('.content.active > div').removeClass('state--sidebar-hidden')
+    $('.content.active .tabsSidebarSpace').removeClass('is-closed')
+    $('.content.active .tabsSidebar').removeClass('is-closed')
 
   toggleTab: (e) ->
 
     # get selected tab
-    name = $(e.target).closest('.sidebar-tab').data('content')
+    name = $(e.target).closest('.tabsSidebar-tab').data('content')
 
     if name
 
@@ -466,10 +466,10 @@ class App.Sidebar extends App.Controller
     return if !name
 
     # remove active state
-    @el.find('.sidebar-tab').removeClass('active')
+    @el.find('.tabsSidebar-tab').removeClass('active')
 
     # add active state
-    @el.find('.sidebar-tab[data-content=' + name + ']').addClass('active')
+    @el.find('.tabsSidebar-tab[data-content=' + name + ']').addClass('active')
 
     # hide all content tabs
     @el.find('.sidebar-content').addClass('hide')
@@ -483,7 +483,7 @@ class App.Sidebar extends App.Controller
     @el.find('.sidebar h2').html(title)
 
     # set tab actions
-    @el.find('.sidebar-tab-actions').html('')
+    @el.find('.tabsSidebar-tabActions').html('')
 
     # add item acctions
     for item in @items
@@ -491,7 +491,7 @@ class App.Sidebar extends App.Controller
         if item.actions
           for action in item.actions
             do (action) =>
-              @el.find('.sidebar-tab-actions').append("<div class='sidebar-tab-action #{action.class}'></div>").find(".sidebar-tab-action").last().bind(
+              @el.find('.tabsSidebar-tabActions').append("<div class='tabsSidebar-tabAction #{action.class}'></div>").find(".tabsSidebar-tabAction").last().bind(
                 'click'
                 (e) =>
                   e.stopPropagation()

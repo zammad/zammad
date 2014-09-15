@@ -1,7 +1,7 @@
-<div class="fit ticket-zoom vertical">
+<div class="flex vertical">
   <div class="flex u-positionOrigin">
-    <div class="main no-padding">
-      <div class="flex-overflow u-positionOrigin sidebar-tabs--spacing">
+    <div class="main no-padding fit tabsSidebarSpace">
+      <div class="ticketZoom">
         <div class="page-header horizontal">
           <div class="flex vertical center">
             <div class="big avatar user-popover" data-id="<%- @ticket.customer.id %>" style="background-image: url(<%- @ticket.customer.imageUrl %>)"></div>
@@ -26,10 +26,9 @@
         <div class="ticket-edit is-public"></div>
 
       </div>
-
     </div>
 
-    <div class="sidebar-holder vertical">
+    <div class="tabsSidebar vertical">
 
     </div>
   </div>

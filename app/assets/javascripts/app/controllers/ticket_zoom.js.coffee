@@ -235,7 +235,7 @@ class App.TicketZoom extends App.Controller
           }
 
       new App.Sidebar(
-        el:     @el.find('.sidebar-holder')
+        el:     @el.find('.tabsSidebar')
         items:  items
       )
 
