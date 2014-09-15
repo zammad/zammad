@@ -1,6 +1,6 @@
 class App.TaskbarWidget extends App.Controller
   events:
-    'click [data-type="close"]': 'remove'
+    'click .js-close': 'remove'
 
   constructor: ->
     super

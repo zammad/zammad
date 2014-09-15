@@ -865,11 +865,6 @@ ol.tabs li {
         @-ms-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
             @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
 
-  .close-task.icon {
-    background: #2c2d36;
-    border-radius: 100%;
-  }
-
   .organisation.icon {
     height: 13px;
     width: 14px;
@@ -1591,30 +1586,42 @@ footer {
   .level-3 .modified.priority.icon:after {
     background-color: #faab00;
     border-color: #faab00;
-  }
+  }    
 
-  .task .close-task.button {
+  .task .closeTask {
     position: absolute;
     right: 0;
     top: 0;
-    width: 40px;
+    width: 50px;
     padding-left: 12px;
     height: 100%;
     visibility: hidden;
   }
 
-  .task:hover .close-task.button {
-    visibility: visible;
-  }
+    .task:hover .closeTask {
+      visibility: visible;
+    }
 
-  .close-task.button:hover .icon {
-    background: #972e29;
-  }
+    .closeTask-inner {
+      width: 21px;
+      height: 21px;
+      background-color: #2c2d36;
+      border-radius: 100%;
+    }
 
-  .close-task.button:hover .icon:after,
-  .close-task.button:hover .icon:before {
-    background: white;
-  }
+    .closeTask:hover .closeTask-inner {
+      background-color: #972e29;
+    }
+
+    .closeTask .icon {
+      opacity: 0.3;
+      -webkit-transform: scale(0.7);
+              transform: scale(0.7);
+    }
+
+    .closeTask:hover .icon {
+      opacity: 1;
+    } 
 
 .search {
   padding: 14px 15px 10px 10px;
