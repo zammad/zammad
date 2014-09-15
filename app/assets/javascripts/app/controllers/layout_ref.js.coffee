@@ -43,7 +43,7 @@ App.Config.set( 'layout_ref/content_sidebar_right_sidebar_optional', ContentSide
 
 
 class ContentSidebarTabsRight extends App.ControllerContent
-  elements: 
+  elements:
     '.tabsSidebar'  : 'sidebar'
 
   constructor: ->
@@ -51,22 +51,22 @@ class ContentSidebarTabsRight extends App.ControllerContent
     @render()
 
     items = [
-      head: 'Ticket Settings'
-      name: 'ticket'
-      icon: 'message'
+        head: 'Ticket Settings'
+        name: 'ticket'
+        icon: 'message'
       ,
-      head: 'Customer'
-      name: 'customer'
-      icon: 'person'
+        head: 'Customer'
+        name: 'customer'
+        icon: 'person'
       ,
-      head: 'Organization'
-      name: 'organization'
-      icon: 'group'
+        head: 'Organization'
+        name: 'organization'
+        icon: 'group'
     ]
 
     new App.Sidebar(
-      el:     sidebar
-      items:  items 
+      el:     @sidebar
+      items:  items
     )
 
   render: ->

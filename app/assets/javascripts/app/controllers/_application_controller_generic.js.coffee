@@ -439,12 +439,13 @@ class App.Sidebar extends App.Controller
         item.callback( @el.find( '.sidebar-content[data-content=' + item.name + ']' ) )
 
   toggleSidebar: ->
-    $('.content.active .tabsSidebarSpace').toggleClass('is-closed')
-    $('.content.active .tabsSidebar').toggleClass('is-closed')
+    console.log('toggleSidebar', @el.parent() )
+    @el.parent().find('.tabsSidebarSpace').toggleClass('is-closed')
+    @el.parent().find('.tabsSidebar').toggleClass('is-closed')
 
   showSidebar: ->
-    $('.content.active .tabsSidebarSpace').removeClass('is-closed')
-    $('.content.active .tabsSidebar').removeClass('is-closed')
+    @el.parent().find('.tabsSidebarSpace').removeClass('is-closed')
+    @el.parent().find('.tabsSidebar').removeClass('is-closed')
 
   toggleTab: (e) ->
 
