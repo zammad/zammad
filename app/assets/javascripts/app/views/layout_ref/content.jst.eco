@@ -4,6 +4,16 @@
 
   <hr>
 
+
+  <h2>Tabs</h2>
+  <div class="tabs wide-tabs horizontal">
+    <div class="tab my-stats active">My Stats</div>
+    <div class="tab my-groups">My Group</div>
+    <div class="tab all-stats">All</div>
+  </div>
+
+  <hr>
+
   <h2>Headlines</h2>
   <h1>h1. Bootstrap heading</h1>
   <h2>h2. Bootstrap heading</h2>
