@@ -1,0 +1,14 @@
+<div class="main flex">
+
+  <h1>Layout Reference</h1>
+
+
+  <ul>
+    <li>Content <a href="#layout_ref/content">Example</a></li>
+    <li>Content + Sidebar Right <a href="#layout_ref/content_sidebar_right">Example</a></li>
+    <li>Content + Sidebar Right not shown if screen resulution is lower then 1280px <a href="#layout_ref/content_sidebar_right_sidebar_optional">Example</a></li>
+    <li>Content + Sidebar Left <a href="#layout_ref/content_sidebar_left">Example</a></li>
+    <li>Content + Sidebar Tabs Right <a href="#layout_ref/content_sidebar_tabs_right">Example</a></li>
+  </ul>
+
+</div>

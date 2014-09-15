@@ -119,6 +119,6 @@
   <div class="main-overviews" id="sortable">
   </div>
 </div>
-<div class="activity sidebar">
+<div class="sidebar-optional sidebar">
   <div class="side-overviews" id="sortable-sidebar"></div>
 </div>
