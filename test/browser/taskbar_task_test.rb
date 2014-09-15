@@ -24,7 +24,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_inbound"]',
+            :css     => 'a[href="#ticket/create"]',
           },
           {
             :execute => 'wait',
@@ -73,8 +73,7 @@ class TaskbarTaskTest < TestCase
             :match_result => true,
           },
           {
-            :execute => 'click',
-            :css     => '.taskbar [data-type="close"]',
+            :execute => 'close_all_tasks',
           },
           {
             :execute      => 'match',
@@ -105,7 +104,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_inbound"]',
+            :css     => 'a[href="#ticket/create"]',
           },
           {
             :execute => 'wait',
@@ -131,7 +130,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_outbound"]',
+            :css     => 'a[href="#ticket/create"]',
           },
           {
             :execute => 'wait',

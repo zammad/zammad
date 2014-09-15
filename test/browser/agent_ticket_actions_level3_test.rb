@@ -46,7 +46,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket_info h3',
+            :css          => '.active .ticket-number',
             :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,

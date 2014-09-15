@@ -44,10 +44,10 @@ returns
 
   def self.attributes_to_change(params)
     if params[:ticket_id]
-      params[:ticket] = self.find( params[:ticket_id] )
+      params[:ticket] = Ticket.find( params[:ticket_id] )
     end
     if params[:article_id]
-      params[:article] = self.find( params[:article_id] )
+      params[:article] = Ticket::Article.find( params[:article_id] )
     end
 
     filter = {}

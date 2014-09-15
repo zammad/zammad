@@ -229,6 +229,12 @@ class TestCase < Test::Unit::TestCase
       element.send_keys( action[:password] )
       instance.find_element( { :css => '#login button' } ).click
       sleep 4
+      login = instance.find_element( { :css => '.user-menu .user a' } ).attribute('title')
+      if login != action[:username]
+        assert( false, "(#{test[:name]}) login failed" )
+        return
+      end
+      assert( true, "(#{test[:name]}) login success" )
       return
     elsif action[:execute] == 'logout'
       instance.find_element( { :css => 'a[href="#current_user"]' } ).click
@@ -250,6 +256,7 @@ class TestCase < Test::Unit::TestCase
         text = element.text
         if text =~ /#{action[:value]}/i
           assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+          sleep 0.4
           return
         end
         sleep 0.33
@@ -296,7 +303,7 @@ class TestCase < Test::Unit::TestCase
       return
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
-      instance.find_element( { :css => 'a[href="#ticket/create/call_inbound"]' } ).click
+      instance.find_element( { :css => 'a[href="#ticket/create"]' } ).click
       element = instance.find_element( { :css => '.active .ticket-create' } )
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
@@ -343,14 +350,20 @@ class TestCase < Test::Unit::TestCase
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100
         begin
-          element = instance.find_element( { :css => '.taskbar [data-type="close"]' } )
-          if element
-            element.click
-            sleep 0.8
+          sleep 0.8
+          hover_element = instance.find_element( { :css => '.navigation .tasks .task:first-child' } )
+          if hover_element
+            instance.mouse.move_to(hover_element)
+            click_element = instance.find_element( { :css => '.navigation .tasks .task:first-child [data-type="close"]' } )
+            if click_element
+              click_element.click
+              sleep 0.2
+            end
           else
             break
           end
-        rescue
+        rescue => e
+          puts e.message
           break
         end
       end
@@ -433,7 +446,9 @@ class TestCase < Test::Unit::TestCase
           end
         end
       else
-        if action[:css] =~ /(input|textarea)/i
+        if action[:attribute]
+          text = element.attribute( action[:attribute] )
+        elsif action[:css] =~ /(input|textarea)/i
           text = element.attribute('value')
         else
           text = element.text

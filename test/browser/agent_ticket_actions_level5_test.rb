@@ -112,7 +112,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_outbound"]',
+            :css     => 'a[href="#ticket/create"]',
           },
           {
             :execute => 'wait',
@@ -186,7 +186,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket/create/call_inbound"]',
+            :css     => '.taskbar-new a[href="#ticket/create"]',
           },
           {
             :where   => :instance2,
@@ -202,7 +202,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket/create/call_outbound"]',
+            :css     => '.taskbar-new a[href="#ticket/create"]',
           },
           {
             :where   => :instance2,

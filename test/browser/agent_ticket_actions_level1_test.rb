@@ -30,8 +30,8 @@ class AgentTicketActionLevel1Test < TestCase
           # remember old ticket where we want to merge to
           {
             :execute      => 'match',
-            :css          => '.active .ticket_info h3',
-            :value        => '^#(.*)$',
+            :css          => '.active .ticket-number',
+            :value        => '^(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
@@ -158,7 +158,7 @@ class AgentTicketActionLevel1Test < TestCase
           # check if megred to ticket is shown now
           {
             :execute      => 'match',
-            :css          => '.active .ticket_info h3',
+            :css          => '.active .ticket-number',
             :value        => '###stack###',
             :match_result => true,
           },

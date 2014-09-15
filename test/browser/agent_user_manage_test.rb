@@ -24,7 +24,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_inbound"]',
+            :css     => 'a[href="#ticket/create"]',
           },
           {
             :execute => 'click',
@@ -97,8 +97,7 @@ class AgentUserManageTest < TestCase
 
           # call new ticket screen again
           {
-            :execute => 'click',
-            :css     => '.taskbar span[data-type="close"]',
+            :execute => 'close_all_tasks',
           },
           {
             :execute => 'wait',
@@ -120,7 +119,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_inbound"]',
+            :css     => 'a[href="#ticket/create"]',
           },
           {
             :execute => 'wait',

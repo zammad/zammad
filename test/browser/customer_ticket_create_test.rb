@@ -9,16 +9,20 @@ class CustomerTicketCreateTest < TestCase
         :action   => [
           {
             :execute => 'click',
+            :css     => 'a[href="#new"]',
+          },
+          {
+            :execute => 'click',
             :css     => 'a[href="#customer_ticket_new"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 2,
           },
           {
             :execute => 'check',
             :css     => '.ticket-create',
             :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
           },
           {
             :execute => 'select',
