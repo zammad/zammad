@@ -1,6 +1,6 @@
 class Widget extends App.Controller
   events:
-    'click    .close':    'switchBack'
+    'click    .js-close':    'switchBack'
 
   constructor: ->
     super
@@ -19,12 +19,12 @@ class Widget extends App.Controller
     # if no switch to user is active
     if !App.Config.get('switch_back_to_possible') || _.isEmpty( App.Session.all() )
       @el.html('')
-      $('#app').removeClass('switch-back-to-user-space')
+      $('#app').removeClass('switchBackToUserSpace')
       return
 
     # show switch back widget
     @html App.view('widget/switch_back_to_user')()
-    $('#app').addClass('switch-back-to-user-space')
+    $('#app').addClass('switchBackToUserSpace')
 
   switchBack: (e) =>
     e.preventDefault()
