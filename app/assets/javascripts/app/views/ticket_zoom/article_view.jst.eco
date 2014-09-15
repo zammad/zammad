@@ -1,5 +1,5 @@
 <% for article in @articles: %>
-<div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
+<div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' is-internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
 
 
   <div class="article-meta-clip top">
@@ -35,7 +35,9 @@
 
   <div class="article-content zIndex-1 horizontal<%= ' reverse' if article.sender.name isnt 'Agent' %>">
     <div class="avatar user-popover" data-placement="<% if article.sender.name isnt 'Agent': %>left<% else: %>right<% end %>" data-id="<%= article.created_by_id %>" style="background-image: url(<%= article.created_by.imageUrl %>)"></div>
-    <div class="flex bubble-gap text-bubble <%= ' internal' if article.internal is true %>"><div class="bubble-arrow"></div><%- article.html %></div>
+    <div class="flex bubble-gap internal-border">
+      <div class="text-bubble"><div class="bubble-arrow"></div><%- article.html %></div>
+    </div>
   </div>
 
   <div class="article-meta-clip bottom">
@@ -72,6 +74,6 @@
     </div>
   </div>
 
-  <small class="task-subline"><time class="humanTimeFromNow" data-time="<%- article.created_at %>">?</time></small>
+  <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="<%- article.created_at %>">?</time></small>
 </div>
 <% end %>

@@ -1446,39 +1446,35 @@ ol.tabs li {
   }
 
   .split.action.icon {
-    width: 24px;
-    height: 20px;
+    width: 18px;
+    height: 15px;
     background-position: 0 -336px;
   }
 
   .reply.action.icon {
-    width: 19px;
-    height: 20px;
-    background-position: -24px -336px;
+    width: 14px;
+    height: 15px;
+    background-position: -18px -336px;
   }
 
-  .internal.action.icon {
-    width: 16px;
-    height: 20px;
-    background-position: -44px -336px;
-  }
-
+  .internal.action.icon,
   .public.visibility.icon {
     width: 11px;
     height: 15px;
-    background-position: 0 -356px;
+    background-position: -32px -336px;
   }
 
+  .public.action.icon,
   .internal.visibility.icon {
     width: 11px;
     height: 15px;
-    background-position: -11px -356px;
+    background-position: -43px -336px;
   }
 
   .recipients.icon {
     width: 15px;
     height: 12px;
-    background-position: -22px -359px;
+    background-position: -54px -336px;
   }
 
 
@@ -2609,12 +2605,12 @@ footer {
 }
 
   .bubble-gap {
-    margin-left: 15px;
+    margin-left: 15px !important;
   }
 
   .customer.ticket-article-item .bubble-gap {
-    margin-left: 0;
-    margin-right: 15px;
+    margin-left: 0 !important;
+    margin-right: 15px !important;
   }
 
 .ticket-article-item {
@@ -2683,6 +2679,21 @@ footer {
       color: #96969b;
     }
 
+  .internal-border {
+    padding: 5px;
+    border-radius: 8px;
+    margin: -5px;
+  }
+
+  .is-internal .internal-border {
+    background: repeating-linear-gradient(45deg, hsl(18,79%,89%), hsl(18,79%,89%) 5px, hsl(210,17%,98%) 5px, hsl(210,17%,98%) 6px);
+    background-size: 8px 8px;
+  }
+
+  .is-internal .bubble-arrow {
+    display: none;
+  }
+
   .text-bubble {
     padding: 10px 20px;
     white-space: pre-wrap;
@@ -2705,16 +2716,6 @@ footer {
 
     .customer.ticket-article-item.state--folde-out .text-bubble {
       border-color: hsl(199,44%,85%);
-    }
-
-  .ticket-article-item .text-bubble.internal {
-    background: #f2def2;
-    border-color: hsl(300,43%,90%);
-    box-shadow: none;
-  }
-
-    .customer.ticket-article-item.state--folde-out .text-bubble.internal {
-      border-color: hsl(300,43%,84%);
     }
 
     .bubble-arrow {
@@ -2740,7 +2741,7 @@ footer {
               transform: rotate(-45deg);
     }
 
-    .ticket-article-item .text-bubble.internal .bubble-arrow:after {
+    .ticket-article-item.is-internal .bubble-arrow:after {
       background: #f2def2;
       border: #eed3d7;
     }
@@ -2782,7 +2783,7 @@ footer {
 
     .article-action .icon {
       margin-right: 10px;
-      vertical-align: bottom;
+      vertical-align: top;
     }
 
 .ticket-edit {
@@ -2792,17 +2793,6 @@ footer {
 
   .bottom-form {
     background: white;
-  }
-
-  .ticket-edit .internal-border {
-    padding: 5px;
-    border-radius: 8px;
-    margin: -5px;
-  }
-
-  .ticket-edit.is-internal .internal-border {
-    background: repeating-linear-gradient(45deg, hsl(18,79%,89%), hsl(18,79%,89%) 5px, transparent 5px, transparent 6px);
-    background-size: 8px 8px;
   }
 
   .ticket-edit .avatar {
