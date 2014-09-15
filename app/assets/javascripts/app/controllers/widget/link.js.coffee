@@ -1,7 +1,6 @@
-class App.WidgetLink extends App.ControllerDrox
+class App.WidgetLink extends App.Controller
   events:
     'click [data-type=add]': 'add',
-    'click [data-type=edit]': 'toggle',
     'click [data-type=remove]': 'remove',
 
   constructor: ->
@@ -27,9 +26,6 @@ class App.WidgetLink extends App.ControllerDrox
         App.Collection.loadAssets( data.assets )
 
         @render()
-
-        if _.isEmpty(data.links)
-          @toggle()
     )
 
   render: =>
@@ -46,35 +42,9 @@ class App.WidgetLink extends App.ControllerDrox
         list[ item['link_type'] ].push ticket
 
     # insert data
-    @html @template(
-      file:   'link/info'
-      header: 'Links'
-      edit:   true
-      params:
-        links: list
+    @html App.view('link/info')(
+      links: list
     )
-
-    # show edit mode once enabled
-    if @edit_mode
-      @el.find('[data-type=remove]').removeClass('hide')
-      @el.find('[data-type=add]').removeClass('hide')
-
-#    @ticketPopups(
-#      selector: '.user-tickets',
-#      user_id:  user_id,
-#    )
-
-  # enable/disable edit mode
-  toggle: (e) =>
-    if e
-      e.preventDefault()
-    @edit_mode = true
-    if @el.find('[data-type=add]').hasClass('hide')
-      @el.find('[data-type=remove]').removeClass('hide')
-      @el.find('[data-type=add]').removeClass('hide')
-    else
-      @el.find('[data-type=remove]').addClass('hide')
-      @el.find('[data-type=add]').addClass('hide')
 
   remove: (e) =>
     e.preventDefault()

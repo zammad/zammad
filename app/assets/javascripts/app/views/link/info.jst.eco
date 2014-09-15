@@ -1,11 +1,12 @@
+<label><%- @T('Links') %></label>
+<p>
 <% for type of @links: %>
-  <strong><%- @T( type ) %></strong>
+  <label><%- @T( type ) %></label>
   <ul>
     <% for item in @links[type]: %>
-    <li><a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>" class="<%= item.css %>">T:<%= item.number %> <%= item.title %></a> <a href="" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove" class="glyphicon glyphicon-remove hide" title="<%- @Ti('remove') %>"></a></li>
+    <li><a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>" class="<%= item.css %>">T:<%= item.number %> <%= item.title %></a> <a href="" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove" class="glyphicon glyphicon-remove" title="<%- @Ti('remove') %>"></a></li>
     <% end %>
   </ul>
 <% end %>
-<div>
-  <a href="" data-type="add" class="glyphicon glyphicon-plus hide" title="<%- @Ti('add') %>"></a>
-</div>
+</p>
+<a href="" data-type="add" class="glyphicon glyphicon-plus" title="<%- @Ti('add') %>"></a>

@@ -1,4 +1,4 @@
-class App.WidgetUser extends App.ControllerDrox
+class App.WidgetUser extends App.Controller
   events:
     'focusout [data-type=update]': 'update',
     'click [data-type=edit]':      'edit'
@@ -66,13 +66,11 @@ class App.WidgetUser extends App.ControllerDrox
         user['links'].push topic
 
     # insert userData
-    @html @template(
-      file:   'widget/user'
+    @html App.view('widget/user')(
       header: 'Customer'
       edit:   true
-      params:
-        user:     user
-        userData: userData
+      user:     user
+      userData: userData
     )
 
     a = =>
@@ -92,12 +90,14 @@ class App.WidgetUser extends App.ControllerDrox
       position: 'right'
     )
 
+    ###
     if user.organization_id
       @el.append('<div class="org-info"></div>')
       new App.WidgetOrganization(
         organization_id: user.organization_id
         el:              @el.find('.org-info')
       )
+    ###
 
   update: (e) =>
     note = $(e.target).val()

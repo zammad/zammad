@@ -1,11 +1,4 @@
 <div class="drox">
-  <div class="drox-header">
-    <h3>
-      <%- @T( 'Organization' ) %>
-      <a href="#" data-type="edit-org" data-id="<%- @organization.id %>" class="pull-right glyphicon glyphicon-edit"></a>
-    </h3>
-  </div>
-  <div class="drox-body">
 
   <%= @organization.displayName() %>
 
@@ -22,7 +15,7 @@
   <% end %>
 
   <% if @organization.members: %>
-    <h4><%- @T('Member') %></h4>
+    <h3><%- @T('Member') %></h3>
     <ul>
     <% for user in @organization.members: %>
       <li><a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a></li>
@@ -30,6 +23,4 @@
     </ul>
   <% end %>
 
-  </div>
 </div>
-

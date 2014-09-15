@@ -1,7 +1,7 @@
 <form class="ticket-update <% if @formChanged: %>form-changed<% end %>">
   <div class="bubble-grid horizontal">
     <div class="vertical center edit-controls">
-      <div class="avatar user-popover zIndex-5" data-id="<%= @S('id') %>" style="background-image: url(<%- @S('image') %>)"></div>
+      <div class="avatar user-popover zIndex-5" data-id="<%= @S('id') %>" style="background-image: url(<%- @S('imageUrl') %>)"></div>
       <div class="dark pop-select zIndex-7 edit-control-item">
         <div class="pop-selected u-clickable centered">
           <div class="gray <%- @type %> channel icon"></div>

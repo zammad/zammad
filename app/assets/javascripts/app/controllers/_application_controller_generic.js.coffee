@@ -415,3 +415,92 @@ class App.GenericHistory extends App.ControllerModal
     else
       @render( @historyListCache.reverse(), 'down' )
 
+class App.Sidebar extends App.Controller
+  events:
+    'click .sidebar-tabs':  'toggleTab'
+    'click .close-sidebar': 'toggleSidebar'
+
+  constructor: ->
+    super
+    @render()
+
+    # get first tab
+    name = @el.find('.sidebar-tab').first().data('content')
+
+    # activate first tab
+    @toggleTabAction(name)
+
+  render: =>
+    @html App.view('generic/sidebar_tabs')( items: @items )
+
+    # init content callback
+    for item in @items
+      if item.callback
+        item.callback( @el.find( '.sidebar-content[data-content=' + item.name + ']' ) )
+
+  toggleSidebar: ->
+    $('.content.active > div').toggleClass('state--sidebar-hidden')
+
+  showSidebar: ->
+    # show sidebar if not shown
+    if $('.content.active > div').hasClass('state--sidebar-hidden')
+      $('.content.active > div').removeClass('state--sidebar-hidden')
+
+  toggleTab: (e) ->
+
+    # get selected tab
+    name = $(e.target).closest('.sidebar-tab').data('content')
+
+    if name
+
+      # if current tab is selected again, toggle side bar
+      if name is @currentTab
+        @toggleSidebar()
+
+      # toggle content tab
+      else
+        @toggleTabAction(name)
+
+
+  toggleTabAction: (name) ->
+    return if !name
+
+    # remove active state
+    @el.find('.sidebar-tab').removeClass('active')
+
+    # add active state
+    @el.find('.sidebar-tab[data-content=' + name + ']').addClass('active')
+
+    # hide all content tabs
+    @el.find('.sidebar-content').addClass('hide')
+
+    # show active tab content
+    tabContent = @el.find('.sidebar-content[data-content=' + name + ']')
+    tabContent.removeClass('hide')
+
+    # set content tab title
+    title = tabContent.data('title')
+    @el.find('.sidebar h2').html(title)
+
+    # set tab actions
+    @el.find('.sidebar-tab-actions').html('')
+
+    # add item acctions
+    for item in @items
+      if item.name is name
+        if item.actions
+          for action in item.actions
+            do (action) =>
+              @el.find('.sidebar-tab-actions').append("<div class='sidebar-tab-action #{action.class}'></div>").find(".sidebar-tab-action").last().bind(
+                'click'
+                (e) =>
+                  e.stopPropagation()
+                  e.preventDefault()
+                  action.callback(e)
+              )
+
+    # remember current tab
+    @currentTab = name
+
+    # show sidebar if not shown
+    @showSidebar()

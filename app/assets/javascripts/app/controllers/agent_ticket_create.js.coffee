@@ -245,7 +245,7 @@ class App.TicketCreate extends App.Controller
         formChanges
       ]
       filter:     @form_meta.filter
-      params:    params
+      params:     params
       noFieldset: true
     )
     new App.ControllerForm(
@@ -258,8 +258,8 @@ class App.TicketCreate extends App.Controller
       handlers: [
         formChanges
       ]
-      filter:     @form_meta.filter
-      params:    params
+      filter:   @form_meta.filter
+      params:   params
     )
 
     # show template UI
@@ -279,6 +279,11 @@ class App.TicketCreate extends App.Controller
       el: @el.find('form').find('textarea')
     )
 
+    new Sidebar(
+      el:     @el
+      params: @formDefault
+    )
+
     $('#tags').tokenfield()
 
     # start auto save
@@ -288,18 +293,9 @@ class App.TicketCreate extends App.Controller
 
     params = App.ControllerForm.params( $(e.target).closest('form') )
 
-    # update text module UI
-    callback = (user) =>
-      if @textModule
-        @textModule.reload(
-          ticket:
-            customer: user
-        )
-
-    @userInfo(
-      user_id:  params.customer_id
-      el:       @el.find('.customer_info')
-      callback: callback
+    new Sidebar(
+      el:     @el
+      params: params
     )
 
   userNew: (e) =>
@@ -425,6 +421,57 @@ class App.TicketCreate extends App.Controller
           ui.formEnable(e)
       )
 
+class Sidebar extends App.Controller
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+
+
+    items = []
+    if @params['customer_id']
+
+      showCustomer = (el) =>
+        # update text module UI
+        callback = (user) =>
+          if @textModule
+            @textModule.reload(
+              ticket:
+                customer: user
+            )
+
+        @userInfo(
+          user_id:  @params.customer_id
+          el:       el
+          callback: callback
+        )
+
+      items.push {
+        head: 'Customer'
+        name: 'customer'
+        icon: 'person'
+        actions: [
+          {
+            class: 'glyphicon glyphicon-edit'
+            #callback: editCustomer
+          },
+        ]
+        callback: showCustomer
+      }
+
+
+    items.push {
+      head: 'Templates'
+      name: 'template'
+      icon: 'templates'
+      #callback: showCustomer
+    }
+
+    new App.Sidebar(
+      el:     @el.find('.sidebar-holder')
+      items:  items
+    )
 
 class UserNew extends App.ControllerModal
   constructor: ->

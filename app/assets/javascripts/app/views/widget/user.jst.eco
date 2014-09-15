@@ -1,7 +1,7 @@
 <div class="user-info">
 
 <% if @user.imageUrl: %>
-  <img class="thumbnail" src="<%- @user.imageUrl %>" alt="">
+  <div class="big avatar" style="background-image: url(<%- @user.imageUrl %>)"></div>
 <% end %>
   <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></div>
 <% for row in @userData: %>

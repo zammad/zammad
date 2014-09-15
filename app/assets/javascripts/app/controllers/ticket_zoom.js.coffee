@@ -140,10 +140,106 @@ class App.TicketZoom extends App.Controller
         isCustomer: @isRole('Customer')
       )
       @TicketTitle()
-      new Sidebar(el: @el)
-      required = 'edit'
-      if @isRole('Customer')
-        required = 'customer'
+
+      editTicket = (el) =>
+        el.append('<div class="edit"></div>')
+        new App.ControllerForm(
+          el:         el.find('.edit')
+          model:      App.Ticket
+          screen:     'edit'
+          params:     App.Ticket.find(@ticket.id)
+        )
+        if !@isRole('Customer')
+          el.append('<div class="tags"></div>')
+          new App.WidgetTag(
+            el:           el.find('.tags')
+            object_type:  'Ticket'
+            object:       @ticket
+          )
+          el.append('<div class="links"></div>')
+          new App.WidgetLink(
+            el:           el.find('.links')
+            object_type:  'Ticket'
+            object:       @ticket
+          )
+      items = [
+        {
+          head: 'Ticket Settings'
+          name: 'ticket'
+          icon: 'message'
+          callback: editTicket
+        }
+      ]
+      if !@isRole('Customer')
+        editCustomer = (e, el) =>
+          new App.ControllerGenericEdit(
+            id: @ticket.customer_id
+            genericObject: 'User'
+            screen: 'edit'
+            pageData:
+              title: 'Users'
+              object: 'User'
+              objects: 'Users'
+          )
+        changeCustomer = (e, el) =>
+          new App.TicketCustomer(
+            ticket: @ticket
+          )
+        showCustomer = (el) =>
+          new App.WidgetUser(
+            el:       el
+            user_id:  @ticket.customer_id
+          )
+        items.push {
+          head: 'Customer'
+          name: 'customer'
+          icon: 'person'
+          actions: [
+            {
+              class: 'glyphicon glyphicon-transfer'
+              callback: changeCustomer
+            },
+            {
+              class: 'glyphicon glyphicon-edit'
+              callback: editCustomer
+            },
+          ]
+          callback: showCustomer
+        }
+        if @ticket.organization_id
+          editOrganization = (e, el) =>
+            new App.ControllerGenericEdit(
+              id: @ticket.organization_id,
+              genericObject: 'Organization'
+              pageData:
+                title: 'Organizations'
+                object: 'Organization'
+                objects: 'Organizations'
+            )
+          showOrganization = (el) =>
+            new App.WidgetOrganization(
+              el:               el
+              organization_id:  @ticket.organization_id
+            )
+          items.push {
+            head: 'Organization'
+            name: 'organization'
+            icon: 'group'
+            actions: [
+              {
+                class: 'glyphicon glyphicon-edit'
+                callback: editOrganization
+              },
+            ]
+            callback: showOrganization
+          }
+
+      new App.Sidebar(
+        el:     @el.find('.sidebar-holder')
+        items:  items
+      )
+
+      ###
       new App.ControllerForm(
         el:         @el.find('.edit')
         model:      App.Ticket
@@ -174,6 +270,7 @@ class App.TicketZoom extends App.Controller
           params:     App.Organization.find(@ticket.organitaion_id)
           screen:   'edit'
         )
+        ###
 
     @TicketAction()
     @ArticleView()
@@ -277,52 +374,6 @@ class TicketTitle extends App.Controller
 
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
-
-class Sidebar extends App.Controller
-  events:
-    'click .sidebar-tabs': 'toggleTab'
-    'click .close-sidebar': 'toggleSidebar'
-
-  constructor: ->
-    super
-    name = @el.find('.sidebar-content').first().data('content')
-    @toggleContent(name)
-
-#  render: =>
-#    @html App.view('ticket_zoom/sidebar')()
-
-  toggleSidebar: ->
-    @el.find('.ticket-zoom').toggleClass('state--sidebar-hidden')
-
-  showSidebar: ->
-    # show sidebar if not shown
-    if @el.find('.ticket-zoom').hasClass('state--sidebar-hidden')
-      @el.find('.ticket-zoom').removeClass('state--sidebar-hidden')
-
-  toggleTab: (e) ->
-
-    name = $(e.target).closest('.sidebar-tab').data('content')
-
-    if name
-      if name is @currentTab
-        @toggleSidebar()
-      else
-        @el.find('.ticket-zoom .sidebar-tab').removeClass('active')
-        $(e.target).closest('.sidebar-tab').addClass('active')
-
-        @toggleContent(name)
-
-        @showSidebar()
-
-
-  toggleContent: (name) ->
-    return if !name
-    @el.find('.sidebar-content').addClass('hide')
-    @el.find('.sidebar-content[data-content=' + name + ']').removeClass('hide')
-    title = @el.find('.sidebar-content[data-content=' + name + ']').data('title')
-    @el.find('.sidebar h2').html(title)
-    @currentTab = name
-
 
 class Edit extends App.Controller
   elements:
@@ -1149,7 +1200,7 @@ class Article extends App.Controller
         actions.push {
           name: 'split'
           type: 'split'
-          href: '#ticket_create/call_inbound/' + @article.ticket_id + '/' + @article.id
+          href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
         }
     @article.actions = actions
 
@@ -1162,7 +1213,6 @@ class ActionRow extends App.Controller
   events:
     'click [data-type=history]':  'history_dialog'
     'click [data-type=merge]':    'merge_dialog'
-    'click [data-type=customer]': 'customer_dialog'
 
   constructor: ->
     super
@@ -1178,10 +1228,6 @@ class ActionRow extends App.Controller
   merge_dialog: (e) ->
     e.preventDefault()
     new App.TicketMerge( ticket: @ticket, task_key: @ui.task_key )
-
-  customer_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketCustomer( ticket: @ticket )
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->
