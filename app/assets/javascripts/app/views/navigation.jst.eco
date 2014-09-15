@@ -2,7 +2,7 @@
   <div class="search-holder flex">
     <input id="global-search" type="search" autocomplete="off">
     <div class="empty-search horizontal centered">
-      <div class="close icon"></div>
+      <div class="white close icon"></div>
     </div>
   </div>
   <div class="logo" title="<%- @C( 'product_name' ) %>"></div>
