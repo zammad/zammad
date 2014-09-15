@@ -883,9 +883,9 @@ class ArticleView extends App.Controller
 
     # runntime update
     if internal
-      $(e.target).closest('.ticket-article-item').find('.text-bubble').addClass('internal')
+      $(e.target).closest('.ticket-article-item').addClass('is-internal')
     else
-      $(e.target).closest('.ticket-article-item').find('.text-bubble').removeClass('internal')
+      $(e.target).closest('.ticket-article-item').removeClass('is-internal')
 
   show_toogle: (e) ->
     e.stopPropagation()
