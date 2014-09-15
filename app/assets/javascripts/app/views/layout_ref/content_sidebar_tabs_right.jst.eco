@@ -1,5 +1,4 @@
-
-<div class="main flex">
+<div class="main fit">
 
   <h1>content</h1>
 
@@ -17,12 +16,75 @@ Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit no
 
 </div>
 
-<div class="sidebar">
+<div class="sidebar-holder">
 
- <h2>sidebar tabs right</h2>
+  <!-- ticket information content -->
+  <div class="sidebar flex" data-tab="ticket">
 
-  <p>
-Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
-  </p>
+    <div class="horizontal center">
+      <h2 class="flex u-textTruncate">Ticket Settings</h2>
+      <div class="close-sidebar centered u-clickable">
+        <div class="arrow-right icon"></div>
+      </div>
+    </div>
 
+    <hr>
+
+    <p>
+  Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+    </p>
+
+  </div>
+
+  <!-- customer information content -->
+  <div class="sidebar flex hide" data-tab="customer">
+
+    <div class="horizontal center">
+      <h2 class="flex u-textTruncate">Customer</h2>
+      <div class="close-sidebar centered u-clickable">
+        <div class="arrow-right icon"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <p>
+  Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+    </p>
+
+  </div>
+
+  <!-- organization information content -->
+  <div class="sidebar flex hide" data-tab="organization">
+
+    <div class="horizontal center">
+      <h2 class="flex u-textTruncate">Organization</h2>
+      <div class="close-sidebar centered u-clickable">
+        <div class="arrow-right icon"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <p>
+  Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+    </p>
+
+  </div>
+
+  <div class="sidebar-tabs vertical justified">
+
+    <div class="sidebar-tab centered active" data-tab="ticket">
+      <div class="dark icon message"></div>
+    </div>
+
+    <div class="sidebar-tab centered" data-tab="customer">
+      <div class="dark icon person"></div>
+    </div>
+
+    <div class="sidebar-tab centered" data-tab="organization">
+      <div class="dark icon group"></div>
+    </div>
+
+  </div>
 </div>
