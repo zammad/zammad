@@ -107,6 +107,12 @@ small {
   background: hsla(50,100%,50%,.13);
 }
 
+.close,
+.close:hover {
+  float: none;
+  opacity: 1;
+}
+
 #app > nav {
   position: relative;
   z-index: 1;
@@ -814,6 +820,12 @@ ol.tabs li {
     background-position: 0 -96px;
   }
 
+  .switchView.icon {
+    width: 19px;
+    height: 18px;
+    background-position: -15px -96px;
+  }
+
   .priority.icon {
     background: none;
     border-radius: 100%;
@@ -853,41 +865,9 @@ ol.tabs li {
         @-ms-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
             @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
 
-  .close.icon {
-    position: relative;
-    background: none;
-    opacity: 1 !important;
-  }
-
   .close-task.icon {
     background: #2c2d36;
     border-radius: 100%;
-  }
-
-  .close.icon:before,
-  .close.icon:after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    margin-left: -1px;
-    top: 10%;
-    height: 80%;
-    width: 2px;
-    background: #85888a;
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-  }
-
-  .close.icon:after {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-  }
-
-  .close-task.icon:before,
-  .close-task.icon:after {
-    top: 20%;
-    height: 60%;
-    background: #586066;
   }
 
   .organisation.icon {
@@ -1244,6 +1224,12 @@ ol.tabs li {
     width: 16px;
     height: 12px;
     background-position: -54px -339px;
+  }
+
+  .white.close.icon {
+    width: 13px;
+    height: 13px;
+    background-position: -70px -338px;
   }
 
 
