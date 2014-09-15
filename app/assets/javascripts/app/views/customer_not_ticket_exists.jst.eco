@@ -1,4 +1,4 @@
-<div class="hero-unit">
+<div class="">
   <h1><%- @T('Welcome!') %><small></small></h1>
   <div class="container">
     <div class="row">
@@ -6,7 +6,7 @@
         <p><%- @T('You have not created a Ticket yet.') %></p>
         <p><%- @T('The way to communicate with us is this thing called "Ticket".') %></p>
         <p><%- @T('Please click the button below to create your first one.') %></p>
-  
+
         <p><a class="btn btn-primary" href="#customer_ticket_new"><%- @T('Create your first Ticket') %></a></p>
       </div>
     </div>
