@@ -23,6 +23,7 @@ class Index extends App.Controller
     switchTo = (id,e) =>
       e.preventDefault()
       @disconnectClient()
+      $('#app').hide().attr('style', 'display: none!important')
       App.Auth._logout()
       window.location = App.Config.get('api_path') + '/sessions/switch/' + id
 

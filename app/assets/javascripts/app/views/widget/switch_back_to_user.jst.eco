@@ -1,0 +1,4 @@
+<div class="switch-back-to-user fit">
+  <%- @T('Zammad looks like this for "%s"', @S('firstname') + ' ' + @S('lastname')  ) %>
+  <a href="#" class="close icon "></a>
+</div>

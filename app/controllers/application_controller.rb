@@ -246,7 +246,11 @@ class ApplicationController < ActionController::Base
       config['timezones'][ t.name ] = diff
     }
 
-    return config
+    if session[:switched_from_user_id]
+      config['switch_back_to_possible'] = true
+    end
+
+    config
   end
 
   # model helper

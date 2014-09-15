@@ -1922,7 +1922,7 @@ footer {
 .sidebar {
   width: 32%;
   max-width: 300px;
-  padding: 20px;
+  padding: 8px 20px 20px 20px;
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
@@ -2186,7 +2186,7 @@ footer {
 
   .activity-avatar {
     padding-top: 16px;
-    padding-left: 14px;
+    padding-left: 2px;
     padding-right: 2px;
     margin-right: 10px;
   }
@@ -2196,7 +2196,7 @@ footer {
 
   .activity-body {
     color: #444a4f;
-    padding: 16px 26px 16px 2px;
+    padding: 16px 0 16px 2px;
     position: relative;
   }
 
@@ -2219,7 +2219,7 @@ footer {
     }
 
   .activity-message {
-    padding-right: 20px;
+    padding-right: 0;
   }
 
   .activity-time {
@@ -3114,6 +3114,19 @@ footer {
   display: block;
 }
 
+.switch-back-to-user {
+  position: absolute;
+  background-color: #389ed9;
+  color: #fff;
+  height: 34px;
+  z-index: 1;
+  padding: 8px 9px;
+  top: -34px;
+}
+.switch-back-to-user-space {
+  top: 34px;
+}
+
 /*
 
   ----------------
@@ -3123,7 +3136,7 @@ footer {
 */
 
 @media only screen and (max-width: 1280px) {
-  .sidebar-optional.sidebar {
+  .sidebar.optional {
     display: none;
   }
 }

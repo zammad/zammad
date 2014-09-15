@@ -5,6 +5,9 @@ class SessionsController < ApplicationController
   # "Create" a login, aka "log the user in"
   def create
 
+    # in case, remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
     # authenticate user
     user = User.authenticate( params[:username], params[:password] )
 
@@ -128,6 +131,10 @@ class SessionsController < ApplicationController
   end
 
   def create_omniauth
+
+    # in case, remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
     auth = request.env['omniauth.auth']
 
     if !auth
@@ -158,6 +165,10 @@ class SessionsController < ApplicationController
   end
 
   def create_sso
+
+    # in case, remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
     user = User.sso(params)
 
     # Log the authorizing user in.
@@ -199,10 +210,43 @@ class SessionsController < ApplicationController
       return false
     end
 
+    # remember old user
+    session[:switched_from_user_id] = current_user.id
+
     # log new session
     user.activity_stream_log( 'switch to', current_user.id, true )
 
     # set session user
+    current_user_set(user)
+
+    redirect_to '/#'
+  end
+
+  # "switch" back to user
+  def switch_back_to_user
+
+    # check if it's a swich back
+    if !session[:switched_from_user_id]
+      response_access_deny
+      return false
+    end
+
+    user = User.lookup( :id => session[:switched_from_user_id] )
+    if !user
+      render(
+        :json   => {},
+        :status => :not_found
+      )
+      return false
+    end
+
+    # log end session
+    current_user.activity_stream_log( 'ended switch to', user.id, true )
+
+    # remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
+    # set old session user again
     current_user_set(user)
 
     redirect_to '/#'
