@@ -16,7 +16,7 @@ class SignupTest < TestCase
           },
           {
             :execute => 'check',
-            :css     => '#form-signup',
+            :css     => '.signup',
             :result  => true,
           },
         ],
@@ -61,12 +61,13 @@ class SignupTest < TestCase
           # check action
           {
             :execute => 'check',
-            :css     => '#form-signup',
+            :css     => '.signup',
             :result  => false,
           },
           {
             :execute      => 'match',
-            :css          => 'body',
+            :css          => '.user-menu .user a',
+            :attribute    => 'title',
             :value        => signup_user_email,
             :match_result => true,
           },
