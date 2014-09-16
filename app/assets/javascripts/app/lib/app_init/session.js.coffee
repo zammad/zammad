@@ -31,7 +31,7 @@ class _sessionSingleton extends Spine.Module
 
   get: ( key ) ->
     @log 'debug', key, @data[key]
-    return @data[key]
+    @data[key]
 
   set: ( key, value ) ->
     @log 'debug', 'set', key, value
