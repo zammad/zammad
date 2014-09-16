@@ -1,4 +1,4 @@
-<div class="main no-padding fit tabsSidebarSpace">
+<div class="main no-padding flex tabsSidebarSpace">
   <div class="newTicket">
     <div class="box">
       <div class="page-header">
