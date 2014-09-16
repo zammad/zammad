@@ -459,21 +459,6 @@ label {
     z-index: 1;
   }
 
-.form-horizontal label {
-  text-align: right;
-  float: left;
-  margin-left: 0;
-  margin-right: 0;
-  width: 130px;
-  margin-top: 7px;
-}
-.form-horizontal .form-group .checkbox label {
-  text-align: left;
-  width: 100%;
-  margin-top: 0;
-  margin-bottom: 4px;
-}
-
 .form-stacked .checkbox label {
   color: inherit;
   font-size: 13px;
@@ -530,17 +515,6 @@ label {
 
 .help-block {
   color: #bcbcbc;
-}
-.form-horizontal .help-inline, .form-horizontal .help-block {
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-.form-horizontal .control-label {
-  width: 130px;
-}
-.form-horizontal .controls {
-  margin-left: 150px;
 }
 
 /* replace music icon with attachment */
@@ -1227,6 +1201,12 @@ ol.tabs li {
     background-position: -70px -338px;
   }
 
+  .close.icon {
+    width: 13px;
+    height: 13px;
+    background-position: -83px -338px;
+  }
+
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
@@ -1247,23 +1227,6 @@ form a.standalone {
   form a.standalone.align-right {
     margin-left: auto;
   }
-
-.modal-header {
-  padding: 10px 15px;
-}
-
-.modal .form-group .controls {
-  width: 65%;
-}
-
-.modal .form-group {
-  margin-bottom: 2px;
-}
-
-.modal-footer {
-  margin-top: 0;
-  padding: 14px 20px 20px;
-}
 
 footer {
   clear: both;
@@ -3098,6 +3061,50 @@ footer {
 #app.switchBackToUserSpace {
   top: 45px;
 }
+
+.modal-dialog {
+  width: 660px;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.modal-content {
+  border-radius: 0;
+  border: 1px solid hsl(0,0%,90%);
+  box-shadow: none;
+}
+
+  .modal-header {
+    padding: 30px 23px 23px;
+    border: none;
+  }
+
+  .modal-header h1 {
+    text-align: center;
+  }
+
+  .modal-close {
+    padding: 23px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+            user-select: none;
+  }
+
+  .modal-close .close.icon {
+    opacity: 0.18;
+  }
+
+  .modal-body {
+    padding: 0 23px;
+  }
+
+  .modal-footer {
+    padding: 23px 23px 20px;
+    border: none;
+  }
 
 /*
 

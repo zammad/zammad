@@ -1,8 +1,10 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <a href="#" class="close">&times;</a>
-      <h2 class="modal-title"><%- @T( 'History' ) %></h2>
+      <div class="modal-close js-close">
+        <div class="close icon"></div>
+      </div>
+      <h1 class="modal-title"><%- @T( 'History' ) %></h1>
       <a href="#" data-type="sortorder" class="<%= @orderClass %>"><%- @T( 'Change order' ) %></a>
     </div>
     <div class="modal-body">

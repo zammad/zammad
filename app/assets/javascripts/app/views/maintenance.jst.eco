@@ -1,7 +1,7 @@
 <div class="page-header">
   <h1><%- @T('Maintenance Message') %><small></small></h1>
 </div>
-<form class="form-horizontal form-large" id="maintenanceForm">
+<form class="form-large" id="maintenanceForm">
   <fieldset>
   <div class="form-group">
     <label for="title"><%- @T('Title') %></label>

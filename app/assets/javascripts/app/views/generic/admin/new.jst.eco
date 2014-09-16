@@ -1,14 +1,16 @@
-<form class="form-horizontal">
+<form>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <a href="#" class="close" title="<%- @Ti( 'close' ) %>">&times;</a>
-        <h2 class="modal-title"><%- @T( 'Neu' ) %>: <%- @T( @head ) %></h2>
+        <div class="modal-close js-close">
+          <div class="close icon"></div>
+        </div>
+        <h1 class="modal-title"><%- @T( 'Neu' ) %>: <%- @T( @head ) %></h1>
       </div>
       <div class="modal-body" id="object_new"></div>
-      <div class="modal-footer">
-        <button class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-        <button class="btn cancel"><%- @T( 'Cancel' ) %></button>
+      <div class="modal-footer horizontal">
+        <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+        <button type="submit" class="btn btn-create js-submit align-right"><%- @T('Submit') %></button>
       </div>
     </div>
   </div>

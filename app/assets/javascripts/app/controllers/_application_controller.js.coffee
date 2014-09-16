@@ -438,14 +438,13 @@ class App.ControllerContent extends App.Controller
     @navShow()
 
 class App.ControllerModal extends App.Controller
-  className: 'modal fade',
-  tag: 'div',
+  className: 'modal fade'
 
   events:
-    'submit form':   'submit',
-    'click .submit': 'submit',
-    'click .cancel': 'modalHide',
-    'click .close':  'modalHide',
+    'submit form':   'submit'
+    'click .js-submit': 'submit'
+    'click .js-cancel': 'modalHide'
+    'click .js-close':  'modalHide'
 
   constructor: (options) ->
 
@@ -466,21 +465,21 @@ class App.ControllerModal extends App.Controller
 
   render: ->
     @html App.view('modal')(
-      title:   @title,
+      title:   @title
       message: @message
       detail:  @detail
       close:   @close
     )
     @modalShow(
-      backdrop: @backdrop,
-      keyboard: @keyboard,
+      backdrop: @backdrop
+      keyboard: @keyboard
     )
 
   modalShow: (params) ->
     defaults = {
-      backdrop: true,
-      keyboard: true,
-      show: true,
+      backdrop: true
+      keyboard: true
+      show: true
     }
     data = $.extend({}, defaults, params)
     @el.modal(data)

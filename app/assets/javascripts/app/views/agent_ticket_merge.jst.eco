@@ -2,8 +2,10 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <a href="#" class="close">&times;</a>
-      <h2 class="modal-title"><%- @T( 'Merge' ) %></h2>
+      <div class="modal-close js-close">
+        <div class="close icon"></div>
+      </div>
+      <h1 class="modal-title"><%- @T( 'Merge' ) %></h1>
     </div>
     <div class="modal-body">
       <h4><%- @T( 'Merge to Ticket#' ) %></h4>
@@ -15,8 +17,9 @@
       <h4><%- @T( 'Recent Views Tickets' ) %></h4>
       <div id="ticket-merge-recent-tickets"></div>
     </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary"><%- @T( 'Submit' ) %></button>
+    <div class="modal-footer horizontal">
+      <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+      <button type="submit" class="btn btn-create js-submit align-right"><%- @T( 'Submit' ) %></button>
     </div>
   </div>
 </div>
