@@ -23,7 +23,7 @@
         </li>
       </ul>
 
-      <form role="form" class="form-large ticket-create">
+      <form role="form" class="ticket-create">
         <input type="hidden" name="formSenderType"/>
         <div class="ticket-form-top"></div>
         <div class="article-form-top"></div>
