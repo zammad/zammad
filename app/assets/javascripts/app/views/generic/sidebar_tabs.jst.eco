@@ -1,21 +1,27 @@
-<div class="sidebar bottom-form-shadow flex">
+<% for item in @items: %>
+<div class="sidebar bottom-form-shadow flex hide" data-tab="<%= item.name %>">
   <div class="horizontal center">
-    <h2 class="flex u-textTruncate"></h2>
+    <h2 class="flex u-textTruncate"><%- @T( item.head ) %></h2>
     <div class="tabsSidebar-close centered u-clickable">
-      <div class="tabsSidebar-tabActions"></div>
+      <div class="tabsSidebar-tabActions">
+      <% if item.actions: %>
+        <% for action in item.actions: %>
+          <div class="tabsSidebar-tabAction <%- action.class %>" data-name="<%- action.name %>"></div>
+        <% end %>
+      <% end %>
+      </div>
       <div class="arrow-right icon"></div>
     </div>
   </div>
   <hr>
 
-  <% for item in @items: %>
-    <div class="sidebar-content" data-content="<%= item.name %>" data-title="<%= @T( item.head ) %>"></div>
-  <% end %>
+  <div class="sidebar-content"></div>
 
 </div>
+<% end %>
 <div class="tabsSidebar-tabs vertical justified">
 <% for item in @items: %>
-  <div class="tabsSidebar-tab centered" data-content="<%= item.name %>">
+  <div class="tabsSidebar-tab centered" data-tab="<%= item.name %>">
     <div class="dark icon <%= item.icon %>"></div>
   </div>
 <% end %>

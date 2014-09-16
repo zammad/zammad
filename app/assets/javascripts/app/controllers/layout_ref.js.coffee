@@ -41,6 +41,7 @@ class ContentSidebarRightSidebarOptional extends App.ControllerContent
 
 App.Config.set( 'layout_ref/content_sidebar_right_sidebar_optional', ContentSidebarRightSidebarOptional, 'Routes' )
 
+
 class ModalForm extends App.ControllerModal
   constructor: ->
     super
@@ -63,8 +64,8 @@ class ModalForm extends App.ControllerModal
     params = App.ControllerForm.params( $(e.target).closest('form') )
     console.log('params', params)
 
-
 App.Config.set( 'layout_ref/modal_form', ModalForm, 'Routes' )
+
 
 class ModalText extends App.ControllerModal
   constructor: ->
@@ -78,8 +79,6 @@ class ModalText extends App.ControllerModal
   onHide: =>
     window.history.back()
 
-
-
 App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
 
 
@@ -92,14 +91,49 @@ class ContentSidebarTabsRight extends App.ControllerContent
     super
     @render()
 
+    changeCustomerTicket = ->
+      alert('change customer ticket')
+
+    editCustomerTicket = ->
+      alert('edit customer ticket')
+
+    changeCustomerCustomer = ->
+      alert('change customer customer')
+
+    editCustomerCustomer = ->
+      alert('edit customer customer')
+
+
     items = [
         head: 'Ticket Settings'
         name: 'ticket'
         icon: 'message'
+        callback: (el) ->
+          el.html('some ticket')
+        actions: [
+            name:  'Change Customer'
+            class: 'glyphicon glyphicon-transfer'
+            callback: changeCustomerTicket
+          ,
+            name:  'Edit Customer'
+            class: 'glyphicon glyphicon-edit'
+            callback: editCustomerTicket
+        ]
       ,
         head: 'Customer'
         name: 'customer'
         icon: 'person'
+        callback: (el) ->
+          el.html('some customer')
+        actions: [
+            name:  'Change Customer'
+            class: 'glyphicon glyphicon-transfer'
+            callback: changeCustomerCustomer
+          ,
+            name:  'Edit Customer'
+            class: 'glyphicon glyphicon-edit'
+            callback: editCustomerCustomer
+        ]
       ,
         head: 'Organization'
         name: 'organization'

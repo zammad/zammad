@@ -196,10 +196,12 @@ class App.TicketZoom extends App.Controller
           icon: 'person'
           actions: [
             {
+              name:  'Change Customer'
               class: 'glyphicon glyphicon-transfer'
               callback: changeCustomer
             },
             {
+              name:  'Edit Customer'
               class: 'glyphicon glyphicon-edit'
               callback: editCustomer
             },
