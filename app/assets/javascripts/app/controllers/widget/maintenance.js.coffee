@@ -19,7 +19,7 @@ class Widget extends App.Controller
     new App.SessionMessage(
       head:        message.head
       message:     message.message
-      keyboard:    false
+      keyboard:    true
       backdrop:    true
       close:       true
       button:      button

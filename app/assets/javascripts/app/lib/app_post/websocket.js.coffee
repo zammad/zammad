@@ -238,7 +238,7 @@ class _webSocketSingleton extends App.Controller
 
           # show reconnect message
           @error = new App.ControllerModal(
-            title:   'Lost network connection!'
+            head:    'Lost network connection!'
             message: 'Lost network connection to system, trying to reconnect...'
             backdrop: false
             keyboard: false

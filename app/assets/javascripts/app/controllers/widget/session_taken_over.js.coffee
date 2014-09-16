@@ -43,7 +43,7 @@ class Widget extends App.Controller
               message:     'Session taken over... please reload page or work with other browser window.'
               keyboard:    false
               backdrop:    true
-              close:       true
+              close:       false
               button:      'Reload application'
               forceReload: true
             )

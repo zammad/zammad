@@ -451,9 +451,9 @@ class App.ControllerModal extends App.Controller
       backdrop: true
       keyboard: true
       close:    true
-      title:    '?'
+      head:     '?'
 
-    options = _.extend( options, defaults )
+    options = _.extend( defaults, options )
 
     # do not use @el, because it's inserted by js
     delete options.el
@@ -476,12 +476,17 @@ class App.ControllerModal extends App.Controller
     )
     if content
       @el.find('.modal-body').html content
-    @el.modal('show')
+    @el.modal(
+      keyboard: @keyboard
+      show:     true
+      backdrop: @backdrop
+    )
 
-  modalHide: (e) ->
-    if e
-      e.preventDefault()
-    @el.modal('hide')
+    @el.bind('hidden.bs.modal', =>
+      @onHide()
+      # remove modal from dom
+      $('.modal').remove();
+    )
 
   hide: (e) ->
     if e
@@ -508,9 +513,6 @@ class App.ErrorModal extends App.ControllerModal
 class App.SessionMessage extends App.ControllerModal
   constructor: ->
     super
-
-    console.log('SM', @)
-
     @show()
 
   # reload page on modal hidden
