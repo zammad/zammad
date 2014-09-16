@@ -248,17 +248,16 @@ table {
   padding: 0;
 }
 
-.table .checkbox-replacement {
+.checkbox-replacement {
   padding: 0;
   margin: 0;
   height: 38px;
   cursor: pointer;
   -webkit-user-select: none;
-     -moz-user-select: none;
           user-select: none;
 }
 
-.table .checkbox-replacement input[type=checkbox] {
+.checkbox-replacement input[type=checkbox] {
   display: none;
 }
 
@@ -433,7 +432,7 @@ label {
   .form-control:focus,
   .tokenfield.focus {
     box-shadow: none;
-    border-color: #419ed7 !important;
+    border-color: hsl(0,0%,90%);
   }
 
   .has-error .form-control,
@@ -3120,6 +3119,82 @@ footer {
   .modal-footer {
     padding: 23px 23px 20px;
     border: none;
+  }
+
+.caret {
+  position: absolute;
+  top: 50%;
+  margin-top: -3px;
+  right: 10px;
+}
+
+.recipientList .dropdown-menu {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  color: white;
+  background: hsl(234,10%,19%);
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+  .recipientList .dropdown-menu ul {
+    margin: 0;
+  }
+
+  .recipientList-entry {
+    height: 40px;
+    padding-left: 5px;
+  }
+
+  .recipientList-entry .checkbox-replacement {
+    width: 30px;
+    opacity: 0.7;
+  }
+
+  .recipientList-icon {
+    width: 30px;
+  }
+
+  .recipientList-entry:not(.recipientList-new) .recipientList-icon {
+    opacity: 0.2;
+  }
+
+  .recipientList-name {
+    margin-left: 5px;
+    margin-top: 2px;
+  }
+
+  .recipientList-entry:not(:last-child):not(:first-child) {
+    box-shadow: 0 1px rgba(255,255,255,.13) inset;
+  }
+
+  .recipientList-entry:hover {
+    background: hsl(205,90%,60%);
+  }
+
+    .recipientList-entry:hover + :not(:last-child):not(:first-child) {
+      box-shadow: none;
+    }
+
+    .recipientList-entry:hover .recipientList-icon {
+      opacity: 1;
+    }
+
+  .recipientList-detail {
+    opacity: 0.5;
+  }
+
+  .recipientList-icon.plus {
+    margin-left: 13px;
+  }
+
+  .recipientList-new {
+    background: hsl(145,51%,45%);
+  }
+
+  .recipientList-new:hover {
+    background: hsl(147,52%,43%);
   }
 
 /*
