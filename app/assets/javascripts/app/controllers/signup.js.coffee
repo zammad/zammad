@@ -70,8 +70,6 @@ class Index extends App.ControllerContent
           success: @success
           error: @error
         )
-#      fail: =>
-#        @modalHide()
     )
 
   success: (data, status, xhr) =>

@@ -63,7 +63,7 @@ class App.TicketMerge extends App.ControllerModal
         $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
     )
 
-    @modalShow()
+    @hide()
 
   submit: (e) =>
     e.preventDefault()
@@ -91,7 +91,7 @@ class App.TicketMerge extends App.ControllerModal
           App.Collection.load( type: 'Ticket', data: [data.slave_ticket] )
 
           # hide dialog
-          @modalHide()
+          @hide()
 
           # view ticket
           @log 'notice', 'nav...', App.Ticket.find( data.master_ticket['id'] )

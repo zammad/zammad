@@ -479,22 +479,20 @@ class Sidebar extends App.Controller
 class UserNew extends App.ControllerModal
   constructor: ->
     super
-    @render()
+    @head   = 'New User'
+    @cancel = true
+    @button = true
 
-  render: ->
-
-    @html App.view('agent_user_create')( head: 'New User' )
-
-    new App.ControllerForm(
+    controller = new App.ControllerForm(
       el:         @el.find('#form-user')
       model:      App.User
       screen:     'edit'
       autofocus:  true
     )
 
-    @modalShow()
+    @show( controller.form )
 
-  submit: (e) ->
+  onSubmit: (e) ->
 
     e.preventDefault()
     params = @formParam(e.target)
@@ -503,12 +501,13 @@ class UserNew extends App.ControllerModal
     if !params.login && params.email
       params.login = params.email
 
-    user = new App.User
-
     # find role_id
-    role = App.Role.findByAttribute( 'name', 'Customer' )
-    params.role_ids = role.id
+    if !params.role_ids || _.isEmpty( params.role_ids )
+      role = App.Role.findByAttribute( 'name', 'Customer' )
+      params.role_ids = role.id
     @log 'notice', 'updateAttributes', params
+
+    user = new App.User
     user.load(params)
 
     errors = user.validate()
@@ -532,11 +531,11 @@ class UserNew extends App.ControllerModal
 
           # start customer info controller
           ui.userInfo( user_id: user.id )
-          ui.modalHide()
+          ui.hide()
         App.User.full( @id, callbackReload , true )
 
       fail: ->
-        ui.modalHide()
+        ui.hide()
     )
 
 class Router extends App.ControllerPermanent

@@ -1,13 +1,4 @@
-<form>
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-close js-close">
-        <div class="close icon"></div>
-      </div>
-      <h1 class="modal-title"><%- @T( 'Link' ) %></h1>
-    </div>
-    <div class="modal-body">
+<fieldset>
   <%- @T( 'Link' ) %>
   <%- @T( @link_object ) %>
   <input type="text" name="ticket_number" value="" class="span2" required/>
@@ -28,11 +19,4 @@
     <li>Recent Customer Tickets</li>
   </ul>
 -->
-    </div>
-    <div class="modal-footer horizontal">
-      <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-      <button type="submit" class="btn btn-create js-submit align-right"><%- @T('Submit') %></button>
-    </div>
-  </div>
-</div>
-</form>
+</fieldset>

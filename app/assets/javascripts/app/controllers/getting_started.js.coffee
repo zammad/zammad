@@ -130,7 +130,6 @@ class Index extends App.ControllerContent
             msg:     App.i18n.translateContent( 'Can\'t create user!' )
             timeout: 2500
           }
-#        @modalHide()
     )
 
   relogin: (data, status, xhr) =>

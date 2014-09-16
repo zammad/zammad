@@ -441,125 +441,91 @@ class App.ControllerModal extends App.Controller
   className: 'modal fade'
 
   events:
-    'submit form':   'submit'
-    'click .js-submit': 'submit'
-    'click .js-cancel': 'modalHide'
-    'click .js-close':  'modalHide'
+    'submit form':      'onSubmit'
+    'click .js-submit': 'onSubmit'
+    'click .js-cancel': 'hide'
+    'click .js-close':  'hide'
 
-  constructor: (options) ->
+  constructor: (options = {}) ->
+    defaults =
+      backdrop: true
+      keyboard: true
+      close:    true
+      title:    '?'
+
+    options = _.extend( options, defaults )
 
     # do not use @el, because it's inserted by js
-    if options
-      delete options.el
-
-      # callbacks
-#      @callback = {}
-#      if options.success
-#        @callback.success = options.success
-#      if options.error
-#        @callback.error = options.error
+    delete options.el
 
     super(options)
-    if options.show
-      @render()
 
-  render: ->
+    @show()
+
+  show: (content) ->
+    console.log('M', @message)
+    if @button is true
+      @button = 'Submit'
     @html App.view('modal')(
-      title:   @title
+      head:    @head
       message: @message
       detail:  @detail
       close:   @close
+      cancel:  @cancel
+      button:  @button
     )
-    @modalShow(
-      backdrop: @backdrop
-      keyboard: @keyboard
-    )
-
-  modalShow: (params) ->
-    defaults = {
-      backdrop: true
-      keyboard: true
-      show: true
-    }
-    data = $.extend({}, defaults, params)
-    @el.modal(data)
-
-    @el.bind('hidden.bs.modal', =>
-
-      # navigate back to home page
-#      if @pageData && @pageData.home
-#        @navigate @pageData.home
-
-      # navigate back
-      if params && params.navigateBack
-        window.history.back()
-
-      # remove modal from dom
-      $('.modal').remove();
-    )
+    if content
+      @el.find('.modal-body').html content
+    @el.modal('show')
 
   modalHide: (e) ->
     if e
       e.preventDefault()
     @el.modal('hide')
 
-  submit: (e) ->
+  hide: (e) ->
+    if e
+      e.preventDefault()
+    @el.modal('hide')
+
+  onShow: ->
+    console.log('no nothing')
+    # do nothing
+
+  onHide: ->
+    console.log('no nothing')
+    # do nothing
+
+  onSubmit: (e) ->
     e.preventDefault()
-    @log 'error', 'You need to implement your own "submit" method!'
+    @log 'error', 'You need to implement your own "onSubmit" method!'
 
 class App.ErrorModal extends App.ControllerModal
   constructor: ->
     super
-    @render()
-
-  render: ->
-    @html App.view('modal')(
-      title:   'Error',
-      message: @message
-      detail:  @detail
-      close:   @close
-    )
-    @modalShow(
-      backdrop: false,
-      keyboard: false,
-    )
+    @show()
 
 class App.SessionMessage extends App.ControllerModal
   constructor: ->
     super
-    @render()
 
-  render: ->
-    @html App.view('modal')(
-      title:   @title || '?'
-      message: @message || '?'
-      detail:  @detail
-      close:   @close
-      button:  @button
-    )
-    @modalShow(
-      backdrop: @backdrop,
-      keyboard: @keyboard,
-    )
+    console.log('SM', @)
 
-    # reload page on modal hidden
-    if @forceReload
-      @el.on('hidden', =>
-        @reload()
-      )
+    @show()
 
-  modalHide: (e) =>
+  # reload page on modal hidden
+  onHide: (e) =>
     if @forceReload
       @reload(e)
-    @el.modal('hide')
 
-  submit: (e) =>
+  onSubmit: (e) =>
     if @forceReload
       @reload(e)
 
   reload: (e) ->
     if e
       e.preventDefault()
+    $('#app').hide().attr('style', 'display: none!important')
     if window.location.reload
       window.location.reload()
       return true

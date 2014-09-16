@@ -39,7 +39,7 @@ class Widget extends App.Controller
           # only if new client id isnt own client id
           if data.taskbar_id isnt App.TaskManager.TaskbarId()
             @error = new App.SessionMessage(
-              title:       'Session'
+              head:        'Session'
               message:     'Session taken over... please reload page or work with other browser window.'
               keyboard:    false
               backdrop:    true

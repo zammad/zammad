@@ -83,17 +83,18 @@ class App.WidgetLink extends App.Controller
 class App.LinkAdd extends App.ControllerModal
   constructor: ->
     super
-    @render()
+    @head   = 'Links'
+    @button = true
+    @cancel = true
 
-  render: =>
-    @html App.view('link/add')(
+    form = App.view('link/add')(
       link_object:    @link_object,
       link_object_id: @link_object_id,
       object:         @object,
     )
-    @modalShow()
+    @show( form )
 
-  submit: (e) =>
+  onSubmit: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
 
@@ -111,6 +112,6 @@ class App.LinkAdd extends App.ControllerModal
       }
       processData: true,
       success: (data, status, xhr) =>
-        @modalHide()
+        @hide()
         @parent.fetch()
     )

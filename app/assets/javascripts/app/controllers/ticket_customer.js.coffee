@@ -18,7 +18,7 @@ class App.TicketCustomer extends App.ControllerModal
       },
       autofocus: true,
     )
-    @modalShow()
+    @hide()
 
   submit: (e) =>
     e.preventDefault()
@@ -30,7 +30,7 @@ class App.TicketCustomer extends App.ControllerModal
     callback = =>
 
       # close modal
-      @modalHide()
+      @hide()
 
       # update ticket
       @ticket.updateAttributes(

@@ -1,28 +1,30 @@
 <div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-<% if @close: %>
-      <div class="modal-close js-close">
-        <div class="close icon"></div>
+  <form>
+    <div class="modal-content">
+      <div class="modal-header">
+  <% if @close: %>
+        <div class="modal-close js-close">
+          <div class="close icon"></div>
+        </div>
+  <% end %>
+        <h1 class="modal-title"><%- @T( @head ) %></h1>
       </div>
-<% end %>
-      <h1 class="modal-title"><%- @T( @title ) %></h1>
+      <div class="modal-body">
+      <% if @message: %>
+          <p><%= @message %></p>
+      <% end %>
+      <% if @detail: %>
+          <pre><%= @detail %></p>
+      <% end %>
+      </div>
+      <div class="modal-footer horizontal">
+  <% if @cancel: %>
+        <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+  <% end %>
+  <% if @button: %>
+        <button type="submit" class="btn btn-create js-submit align-right"><%- @T( @button ) %></button>
+  <% end %>
+      </div>
     </div>
-    <div class="modal-body">
-      <form>
-        <p><%= @message %></p>
-    <% if @detail: %>
-        <pre><%= @detail %></p>
-    <% end %>
-      </form>
-    </div>
-    <div class="modal-footer horizontal">
-<% if @cancel: %>
-      <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-<% end %>
-<% if @button: %>
-      <button type="submit" class="btn btn-create js-submit align-right"><%- @T( @button ) %></button>
-<% end %>
-    </div>
-  </div>
+  </form>
 </div>

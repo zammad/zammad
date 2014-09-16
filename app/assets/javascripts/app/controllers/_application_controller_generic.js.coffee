@@ -1,21 +1,22 @@
 class App.ControllerGenericNew extends App.ControllerModal
   constructor: (params) ->
     super
-    @render()
 
-  render: ->
+    @head  = App.i18n.translateContent( 'New' ) + ': ' + App.i18n.translateContent( @pageData.object )
+    @cancel = true
+    @button = true
 
-    @html App.view('generic/admin/new')( head: @pageData.object )
-    new App.ControllerForm(
+    controller = new App.ControllerForm(
       el:         @el.find('#object_new')
       model:      App[ @genericObject ]
       params:     @item
       screen:     @screen || 'edit'
       autofocus:  true
     )
-    @modalShow()
 
-  submit: (e) ->
+    @show(controller.form)
+
+  onSubmit: (e) ->
     e.preventDefault()
     params = @formParam( e.target )
 
@@ -39,32 +40,33 @@ class App.ControllerGenericNew extends App.ControllerModal
         if ui.callback
           item = App[ ui.genericObject ].fullLocal(@id)
           ui.callback( item )
-        ui.modalHide()
+        ui.hide()
 
       fail: ->
         ui.log 'errors'
-        ui.modalHide()
+        ui.hide()
     )
 
 class App.ControllerGenericEdit extends App.ControllerModal
   constructor: (params) ->
     super
     @item = App[ @genericObject ].find( params.id )
-    @render()
 
-  render: ->
+    @head  = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @pageData.object )
+    @cancel = true
+    @button = true
 
-    @html App.view('generic/admin/edit')( head: @pageData.object )
-    new App.ControllerForm(
-      el:         @el.find('#object_edit')
+    controller = new App.ControllerForm(
+      el:         @el.find('#object_new')
       model:      App[ @genericObject ]
       params:     @item
       screen:     @screen || 'edit'
       autofocus:  true
     )
-    @modalShow()
 
-  submit: (e) ->
+    @show(controller.form)
+
+  onSubmit: (e) ->
     e.preventDefault()
     params = @formParam(e.target)
     @item.load(params)
@@ -86,11 +88,11 @@ class App.ControllerGenericEdit extends App.ControllerModal
         if ui.callback
           item = App[ ui.genericObject ].fullLocal(@id)
           ui.callback( item )
-        ui.modalHide()
+        ui.hide()
 
       fail: =>
         ui.log 'errors'
-        ui.modalHide()
+        ui.hide()
     )
 
 class App.ControllerGenericIndex extends App.Controller
@@ -186,22 +188,15 @@ class App.ControllerGenericIndex extends App.Controller
 class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   constructor: ->
     super
-    @render()
+    @head    = 'Confirm'
+    @cancel  = true
+    @button  = 'Yes'
+    @message = 'Sure to delete this object?'
+    @show(@message)
 
-  render: ->
-    @html App.view('modal')(
-      title:   'Confirm'
-      message: 'Sure to delete this object?'
-      cancel:  true
-      button:  'Yes'
-    )
-    @modalShow(
-      backdrop: true
-      keyboard: true
-    )
-
-  submit: (e) =>
-    @modalHide()
+  onSubmit: (e) ->
+    e.preventDefault()
+    @hide()
     @item.destroy()
 
 class App.ControllerDrox extends App.Controller
@@ -398,7 +393,7 @@ class App.GenericHistory extends App.ControllerModal
       @historyListCache
     )
 
-    @modalShow()
+    @hide()
 
     # enable user popups
     @userPopups()

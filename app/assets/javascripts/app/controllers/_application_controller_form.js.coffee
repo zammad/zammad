@@ -19,6 +19,9 @@ class App.ControllerForm extends App.Controller
       @form.find('textarea').trigger('change')
       @form.find('select').trigger('change')
 
+    @finishForm = true
+    @form
+
   html: =>
     @form.html()
 
@@ -1594,6 +1597,9 @@ class App.ControllerForm extends App.Controller
     else if form.parents('form')[0]
       form = $( form.parents('form')[0] )
 
+    # use current content as form if form isn't already finished
+    else if !@finishForm
+      from = form
     else
       App.Log.error 'ControllerForm', 'no form found!', form
 

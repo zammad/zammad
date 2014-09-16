@@ -6,7 +6,7 @@
   <div class="form-group">
     <label for="title"><%- @T('Title') %></label>
     <div class="controls">
-      <input type="text" name="title" class="form-control" placeholder="<%- @Ti('some title') %>" required>
+      <input type="text" name="head" class="form-control" placeholder="<%- @Ti('some title') %>" required>
     </div>
   </div>
   <div class="form-group">

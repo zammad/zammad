@@ -6,23 +6,18 @@ class Widget extends App.Controller
     App.Event.bind(
       'session:maintenance'
       (data) =>
-        new Message( message: data )
+        console.log('session:maintenance', data)
+        @showMessage( data )
       'maintenance'
     )
 
-class Message extends App.ControllerModal
-  constructor: ->
-    super
-    @render(@message)
-
-  render: (message = {}) ->
-
+  showMessage: (message = {}) =>
     if message.reload
       @disconnectClient()
       button = 'Reload application'
 
     new App.SessionMessage(
-      title:       message.title
+      head:        message.head
       message:     message.message
       keyboard:    false
       backdrop:    true

@@ -75,7 +75,7 @@ class App.TaskbarWidget extends App.Controller
   remove: (e, key = false, force = false) =>
     e.preventDefault()
     if !key
-      key = $(e.target).parent().parent().data('key')
+      key = $(e.target).parents('a').data('key')
     if !key
       throw "No such key attributes found for task item"
 
@@ -117,20 +117,14 @@ class App.TaskbarWidget extends App.Controller
 class Remove extends App.ControllerModal
   constructor: ->
     super
-    @render()
+    @head     = 'Confirm'
+    @message  = 'Tab has changed, you really want to close it?'
+    @cancel   = true
+    @close    = true
+    @button   = 'Close'
+    @show()
 
-  render: ->
-    @html App.view('modal')(
-      title:   'Confirm'
-      message: 'Tab has changed, you really want to close it?'
-      close:   true
-      button:  'Close'
-    )
-    @modalShow(
-      backdrop: true,
-      keyboard: true,
-    )
-
-  submit: (e) =>
-    @modalHide()
+  onSubmit: (e) =>
+    e.preventDefault()
+    @hide()
     @ui.remove(e, @key, true)

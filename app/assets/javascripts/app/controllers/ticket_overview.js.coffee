@@ -437,13 +437,7 @@ class App.OverviewSettings extends App.ControllerModal
   constructor: ->
     super
     @overview = App.Overview.find(@overview_id)
-    @render()
 
-  render: ->
-
-    @html App.view('dashboard/ticket_settings')(
-      overview: @overview,
-    )
     @configure_attributes_article = []
     if @view_mode is 'd'
       @configure_attributes_article.push({
@@ -593,15 +587,20 @@ class App.OverviewSettings extends App.ControllerModal
       class:   'medium'
     })
 
-    new App.ControllerForm(
-      el:        @el.find('#form-setting')
+    form = App.view('dashboard/ticket_settings')(
+      overview: @overview,
+    )
+    @head   = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @overview.name )
+    @close  = true
+    @cancel = true
+    @button = true
+    controller = new App.ControllerForm(
       model:     { configure_attributes: @configure_attributes_article }
       autofocus: false
     )
+    @show( controller.form )
 
-    @modalShow()
-
-  submit: (e) =>
+  onSubmit: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
 
@@ -627,7 +626,7 @@ class App.OverviewSettings extends App.ControllerModal
         else
           @overview.trigger('local:rerender')
     )
-    @modalHide()
+    @hide()
 
 class Navbar extends App.Controller
   constructor: ->

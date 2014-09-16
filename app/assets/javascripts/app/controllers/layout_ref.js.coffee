@@ -41,6 +41,48 @@ class ContentSidebarRightSidebarOptional extends App.ControllerContent
 
 App.Config.set( 'layout_ref/content_sidebar_right_sidebar_optional', ContentSidebarRightSidebarOptional, 'Routes' )
 
+class ModalForm extends App.ControllerModal
+  constructor: ->
+    super
+    @head  = '123 some title'
+    @cancel = true
+    @button = true
+
+    controller = new App.ControllerForm(
+      model: App.User
+      autofocus: true
+    )
+
+    @show(controller.form)
+
+  onHide: =>
+    window.history.back()
+
+  onSubmit: (e) =>
+    e.preventDefault()
+    params = App.ControllerForm.params( $(e.target).closest('form') )
+    console.log('params', params)
+
+
+App.Config.set( 'layout_ref/modal_form', ModalForm, 'Routes' )
+
+class ModalText extends App.ControllerModal
+  constructor: ->
+    super
+    @head = '123 some title'
+
+    form = App.view('layout_ref/content')()
+
+    @show(form)
+
+  onHide: =>
+    window.history.back()
+
+
+
+App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
+
+
 
 class ContentSidebarTabsRight extends App.ControllerContent
   elements:
