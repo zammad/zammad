@@ -431,7 +431,6 @@ class Sidebar extends App.Controller
 
   render: ->
 
-
     items = []
     if @params['customer_id']
 
@@ -450,6 +449,16 @@ class Sidebar extends App.Controller
           callback: callback
         )
 
+      editCustomer = (e, el) =>
+        new App.ControllerGenericEdit(
+          id: @params.customer_id
+          genericObject: 'User'
+          screen: 'edit'
+          pageData:
+            title: 'Users'
+            object: 'User'
+            objects: 'Users'
+        )
       items.push {
         head: 'Customer'
         name: 'customer'
@@ -458,7 +467,7 @@ class Sidebar extends App.Controller
           {
             name:  'Edit Customer'
             class: 'glyphicon glyphicon-edit'
-            #callback: editCustomer
+            callback: editCustomer
           },
         ]
         callback: showCustomer
