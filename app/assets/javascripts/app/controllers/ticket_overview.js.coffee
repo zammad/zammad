@@ -587,9 +587,6 @@ class App.OverviewSettings extends App.ControllerModal
       class:   'medium'
     })
 
-    form = App.view('dashboard/ticket_settings')(
-      overview: @overview,
-    )
     @head   = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @overview.name )
     @close  = true
     @cancel = true
