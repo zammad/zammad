@@ -28,9 +28,7 @@
       </div>
     </div>
 
-    <div class="tabsSidebar vertical">
-
-    </div>
+    <div class="tabsSidebar vertical"></div>
   </div>
 
   <form class="bottom-form form-inline horizontal" role="form">

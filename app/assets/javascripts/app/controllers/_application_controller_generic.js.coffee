@@ -439,7 +439,6 @@ class App.Sidebar extends App.Controller
         item.callback( @el.find( '.sidebar-content[data-content=' + item.name + ']' ) )
 
   toggleSidebar: ->
-    console.log('toggleSidebar', @el.parent() )
     @el.parent().find('.tabsSidebarSpace').toggleClass('is-closed')
     @el.parent().find('.tabsSidebar').toggleClass('is-closed')
 

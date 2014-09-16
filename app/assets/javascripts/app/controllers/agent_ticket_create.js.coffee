@@ -1,4 +1,7 @@
 class App.TicketCreate extends App.Controller
+  elements:
+    '.tabsSidebar'  : 'sidebar'
+
   events:
     'click .type-tabs .tab':  'changeFormType'
     'click .customer_new':    'userNew'
@@ -280,7 +283,7 @@ class App.TicketCreate extends App.Controller
     )
 
     new Sidebar(
-      el:     @el
+      el:     @sidebar
       params: @formDefault
     )
 
@@ -294,7 +297,7 @@ class App.TicketCreate extends App.Controller
     params = App.ControllerForm.params( $(e.target).closest('form') )
 
     new Sidebar(
-      el:     @el
+      el:     @sidebar
       params: params
     )
 
@@ -469,7 +472,7 @@ class Sidebar extends App.Controller
     }
 
     new App.Sidebar(
-      el:     @el.find('.tabsSidebar')
+      el:     @el
       items:  items
     )
 
