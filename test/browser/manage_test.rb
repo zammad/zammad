@@ -47,7 +47,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal button.submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'watch_for',
@@ -95,7 +95,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal button.submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'watch_for',
@@ -126,7 +126,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal button.submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute  => 'watch_for',
@@ -147,7 +147,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal .submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'wait',

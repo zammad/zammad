@@ -43,7 +43,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal button.submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'wait',
@@ -89,7 +89,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal button.submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'wait',
@@ -248,7 +248,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => '.modal button.submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'wait',

@@ -289,7 +289,7 @@ class TestCase < Test::Unit::TestCase
       element.clear
       element.send_keys( action[:password] )
       instance.find_element( { :css => '.modal input[name="role_ids"][value="3"]' } ).click
-      instance.find_element( { :css => '.modal button.submit' } ).click
+      instance.find_element( { :css => '.modal button.js-submit' } ).click
       (1..14).each {|loop|
         element = instance.find_element( { :css => 'body' } )
         text = element.text
@@ -354,7 +354,8 @@ class TestCase < Test::Unit::TestCase
           hover_element = instance.find_element( { :css => '.navigation .tasks .task:first-child' } )
           if hover_element
             instance.mouse.move_to(hover_element)
-            click_element = instance.find_element( { :css => '.navigation .tasks .task:first-child [data-type="close"]' } )
+            sleep 0.1
+            click_element = instance.find_element( { :css => '.navigation .tasks .task:first-child .js-close' } )
             if click_element
               click_element.click
               sleep 0.2

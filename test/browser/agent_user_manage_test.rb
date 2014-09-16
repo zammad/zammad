@@ -51,7 +51,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.modal button.submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'wait',
@@ -107,7 +107,7 @@ class AgentUserManageTest < TestCase
           # accept task close warning
           {
             :execute => 'click',
-            :css     => '.modal .submit',
+            :css     => '.modal button.js-submit',
           },
           {
             :execute => 'wait',
