@@ -265,12 +265,6 @@ class App.TicketCreate extends App.Controller
       params:   params
     )
 
-    # show template UI
-    # new App.WidgetTemplate(
-    #   el:          @el.find('.ticket_template')
-    #   template_id: template['id']
-    # )
-
     # set type selector
     @setFormTypeInUi( params['formSenderType'] )
 
@@ -473,12 +467,19 @@ class Sidebar extends App.Controller
         callback: showCustomer
       }
 
+    showTemplates = (el) =>
+
+      # show template UI
+      new App.WidgetTemplate(
+        el:          el
+        #template_id: template['id']
+      )
 
     items.push {
       head: 'Templates'
       name: 'template'
       icon: 'templates'
-      #callback: showCustomer
+      callback: showTemplates
     }
 
     new App.Sidebar(
