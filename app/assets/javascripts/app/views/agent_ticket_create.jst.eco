@@ -27,127 +27,152 @@
         <input type="hidden" name="formSenderType"/>
         <div class="form-group">
           <label for="customer_id">Customer</label>
-          <div class="recipientList dropdown">
+          <div class="dropdown">
             <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
               <input id="customer_id" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organisation/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
               <span class="caret"></span>
             </div>
             <div class="dropdown-menu" aria-labelledby="customer_id">
-              <ul role="menu">
-                <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+              <ul class="recipientList zIndex-1" role="menu">
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Albrecht &amp; Bertschler GmbH
                     <span class="recipientList-detail">- 4 Personen</span>
                   </div>
-                <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+                  <div class="white right arrow icon"></div>
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     BENCHMARK human resources
                     <span class="recipientList-detail">- 2 Personen</span>
                   </div>
+                  <div class="white right arrow icon"></div>
+
                 <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white user icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Belinda Matt
                     <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
                   </div>
+
                 <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white user icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Benjamin Wahlers
                     <span class="recipientList-detail">- Wahlers Würste GmbH</span>
                   </div>
+
                 <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white user icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat ">
                     Benjamin Weiß
                     <span class="recipientList-detail">- Zeughaus Werbeagentur GmbH</span>
                   </div>
+
                 <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Benteler SGL Composite Technology GmbH
                     <span class="recipientList-detail"></span>
                   </div>
-                <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white team icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Support Team Berlin
                     <span class="recipientList-detail">- 5 Personen</span>
                   </div>
-                <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+                  <div class="white right arrow icon"></div>
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Bernecker + Rainer Industrie-Elektronik Ges.m.b.H.
                     <span class="recipientList-detail">- 3 Personen</span>
                   </div>
-                <li class="recipientList-entry u-clickable horizontal center">
-                  <label class="checkbox-replacement centered">
-                    <input type="checkbox" value="" name="select"/>
-                    <span class="checkbox icon"></span>
-                  </label>
-                  <div class="recipientList-icon centered">
+                  <div class="white right arrow icon"></div>
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Bertsch Ecopower GmbH
                     <span class="recipientList-detail">- 1 Person</span>
                   </div>
+                  <div class="white right arrow icon"></div>
+
                 <li class="recipientList-entry recipientList-new u-clickable horizontal center">
-                  <div class="recipientList-icon centered">
+                  <div class="recipientList-iconSpacer centered">
                     <div class="white plus icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     <%- @T('Create new Customer') %>
+                  </div>
+              </ul>
+
+
+              <ul class="recipientList-organisationMembers zIndex-3 hide">
+                <li class="recipientList-controls u-clickable js-back">
+                  <div class="recipientList-backClickArea centered">
+                    <div class="recipientList-backButton">
+                      <div class="white arrow left icon"></div>
+                      <%- @T('Back') %>
+                    </div>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Andreas Kramer
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Belinda Matt
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Damian Sprengler
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Katharina Nussman
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
                   </div>
               </ul>
             </div>
