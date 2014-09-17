@@ -8,6 +8,7 @@ class App.TicketCreate extends App.Controller
     'submit form':            'submit'
     'click .submit':          'submit'
     'click .cancel':          'cancel'
+    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
     'click .js-organisation': 'showOrganisationMembers'
     'click .js-back':         'hideOrganisationMembers'
 

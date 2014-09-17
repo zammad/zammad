@@ -27,7 +27,7 @@
         <input type="hidden" name="formSenderType"/>
         <div class="form-group">
           <label for="customer_id">Customer</label>
-          <div class="dropdown">
+          <div class="dropdown js-recipientDropdown">
             <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
               <input id="customer_id" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organisation/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
               <span class="caret"></span>
