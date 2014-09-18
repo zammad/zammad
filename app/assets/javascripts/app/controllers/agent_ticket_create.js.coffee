@@ -43,15 +43,18 @@ class App.TicketCreate extends App.Controller
   showOrganisationMembers: (e) =>
     e.stopPropagation()
 
-    list = @$('.recipientList')
-    organisationList = @$('.recipientList-organisationMembers')
+    listEntry = $(e.currentTarget)
+    organisationId = listEntry.data('organisation')
+
+    @recipientList = @$('.recipientList')
+    @organisationList = @$("##{ organisationId }")
 
     # move organisation-list to the right and slide it in
 
-    $.Velocity.hook(organisationList, 'translateX', '100%')
-    organisationList.removeClass('hide')
+    $.Velocity.hook(@organisationList, 'translateX', '100%')
+    @organisationList.removeClass('hide')
 
-    organisationList.velocity
+    @organisationList.velocity
       properties:
         translateX: 0
       options:
@@ -59,21 +62,21 @@ class App.TicketCreate extends App.Controller
 
     # fade out list
 
-    list.velocity
+    @recipientList.velocity
       properties:
         translateX: '-100%'
       options:
         speed: 300
-        complete: -> list.height(organisationList.height())
+        complete: => @recipientList.height(@organisationList.height())
 
   hideOrganisationMembers: (e) =>
     e && e.stopPropagation()
-    list = @$('.recipientList')
-    organisationList = @$('.recipientList-organisationMembers')
+
+    return if !@organisationList
 
     # fade list back in
 
-    list.velocity
+    @recipientList.velocity
       properties:
         translateX: 0
       options:
@@ -81,16 +84,16 @@ class App.TicketCreate extends App.Controller
 
     # reset list height
 
-    list.height('')
+    @recipientList.height('')
 
     # slide out organisation-list and hide it
 
-    organisationList.velocity
+    @organisationList.velocity
       properties:
         translateX: '100%'
       options:
         speed: 300
-        complete: -> organisationList.addClass('hide')
+        complete: => @organisationList.addClass('hide')
 
   changeFormType: (e) =>
     type = $(e.target).data('type')

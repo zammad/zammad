@@ -33,8 +33,8 @@
               <span class="caret"></span>
             </div>
             <div class="dropdown-menu" aria-labelledby="customer_id">
-              <ul class="recipientList zIndex-1" role="menu">
-                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+              <ul class="recipientList" role="menu">
+                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation="AlbrechtBertschlerGmbG">
                   <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
@@ -44,7 +44,7 @@
                   </div>
                   <div class="white right arrow icon"></div>
 
-                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation="BENCHMARKhumanresources">
                   <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
@@ -130,7 +130,7 @@
               </ul>
 
 
-              <ul class="recipientList-organisationMembers zIndex-3 hide">
+              <ul class="recipientList-organisationMembers hide" id="AlbrechtBertschlerGmbG">
                 <li class="recipientList-controls u-clickable js-back">
                   <div class="recipientList-backClickArea centered">
                     <div class="recipientList-backButton">
@@ -173,6 +173,36 @@
                   <div class="recipientList-name flex u-textTruncat ">
                     Katharina Nussman
                     <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+              </ul>
+
+
+
+              <ul class="recipientList-organisationMembers hide" id="BENCHMARKhumanresources">
+                <li class="recipientList-controls u-clickable js-back">
+                  <div class="recipientList-backClickArea centered">
+                    <div class="recipientList-backButton">
+                      <div class="white arrow left icon"></div>
+                      <%- @T('Back') %>
+                    </div>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Hubert Lang
+                    <span class="recipientList-detail">- BENCHMARK human resources</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Mario Steibel
+                    <span class="recipientList-detail">- BENCHMARK human resources</span>
                   </div>
               </ul>
             </div>
