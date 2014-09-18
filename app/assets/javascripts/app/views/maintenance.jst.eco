@@ -22,5 +22,5 @@
     </div>
   </div>
   </fieldset>
-  <button type="submit" class="btn btn-primary submit"><%- @T('Send to clients') %></button>
+  <button type="submit" class="btn btn--primary submit"><%- @T('Send to clients') %></button>
 </form>

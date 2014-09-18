@@ -22,7 +22,7 @@
         <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
   <% end %>
   <% if @button: %>
-        <button type="submit" class="btn btn-create js-submit align-right"><%- @T( @button ) %></button>
+        <button type="submit" class="btn btn--create js-submit align-right"><%- @T( @button ) %></button>
   <% end %>
       </div>
     </div>

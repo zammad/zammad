@@ -15,7 +15,7 @@
       </div>
 
       <div class="form-controls">
-        <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
+        <button class="btn btn--primary" type="submit"><%- @T( 'Sign in' ) %></button>
 
         <% if @C('user_lost_password'): %>
           <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
