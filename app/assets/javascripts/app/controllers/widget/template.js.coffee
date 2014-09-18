@@ -54,6 +54,10 @@ class App.WidgetTemplate extends App.Controller
 
     # get params
     params = @formParam(e.target)
+
+    # check if template is selected
+    return if !params['template_id']
+
     template = App.Template.find( params['template_id'] )
     if confirm('Sure?')
       @template_id = false
@@ -65,7 +69,12 @@ class App.WidgetTemplate extends App.Controller
     # get params
     params = @formParam(e.target)
 
+    # check if template is selected
+    return if !params['template_id']
+
+    # remember template (to select it after rerender)
     @template_id = params['template_id']
+
     template = App.Template.find( params['template_id'] )
     App.Event.trigger 'ticket_create_rerender', template.attributes()
 
@@ -98,7 +107,7 @@ class App.WidgetTemplate extends App.Controller
       ui = @
       template.save(
         done: ->
-          ui.template_id = @.id
+          ui.template_id = @id
 
         fail: =>
           @log 'error', 'save failed!'
