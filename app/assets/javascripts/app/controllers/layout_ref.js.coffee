@@ -14,6 +14,24 @@ class Content extends App.ControllerContent
     super
     @render()
 
+    for avatar in @$('.user.avatar')
+      avatar = $(avatar)
+      size = if avatar.hasClass('big') then 50 else 40
+      @createUniqueAvatar avatar, size, avatar.data('firstname'), avatar.data('lastname'), avatar.data('userid')
+
+  createUniqueAvatar: (holder, size, firstname, lastname, id) ->
+    width = 300
+    height = 226
+
+    holder.addClass 'unique'
+
+    rng = new Math.seedrandom(id);
+    x = rng() * (width - size)
+    y = rng() * (height - size)
+    holder.css('background-position', "-#{ x }px -#{ y }px")
+
+    holder.text(firstname[0] + lastname[0])
+
   render: ->
     @html App.view('layout_ref/content')()
 

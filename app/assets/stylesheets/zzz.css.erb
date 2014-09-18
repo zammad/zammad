@@ -7,8 +7,6 @@ body {
 
 ol,
 ul {
-  list-style: none;
-  padding: 0;
 }
 
 a.create {
@@ -595,6 +593,7 @@ ol.tabs li {
 }
 
 .tabs {
+  padding: 0;
   margin-bottom: 20px;
   color: #b8b8b8;
   border: 1px solid rgba(0,8,14,.08);
@@ -1862,6 +1861,23 @@ footer {
   .big.avatar {
     width: 50px;
     height: 50px;
+  }
+
+  .unique.avatar {
+    background-image: url(<%= asset_path "avatar-bg.png" %>);
+    background-size: auto;
+    color: white;
+    line-height: 42px;
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 1px rgba(0,0,0,.2);
+  }
+
+  .unique.big.avatar {
+    font-size: 16px;
+    line-height: 52px;
   }
 
 .sidebar {
@@ -3174,76 +3190,82 @@ footer {
       box-shadow: none;
     }
 
-.recipientList-entry .recipientList-iconSpacer {
-  width: 20px;
-  margin-left: -5px;
-}
-
-.recipientList-entry .icon:not(.plus) {
-  opacity: 0.2;
-}
-
-.recipientList-entry:hover .icon {
-  opacity: 1;
-}
-
-.recipientList-name {
-  margin-left: 10px;
-  margin-top: 2px;
-}
-
-.recipientList-detail {
-  opacity: 0.5;
-}
-
-.recipientList-icon.plus {
-  margin-left: 13px;
-}
-
-.recipientList-new {
-  background: hsl(145,51%,45%);
-}
-
-.dropdown .recipientList-new:hover {
-  background: hsl(147,52%,43%);
-}
-
-li.recipientList-controls,
-li.recipientList-controls:hover {
-  padding: 0;
-  background: hsl(206,7%,28%);
-}
-
-.recipientList-backClickArea {
-  height: 100%;
-  float: left;
-  padding: 0 10px;
-}
-
-.recipientList-backButton {
-  padding: 5px 10px;
-  font-size: 12px;
-  color: white;
-  border-radius: 3px;
-  border: 1px solid hsl(234,10%,10%);
-  box-shadow: 0 1px rgba(255,255,255,.03) inset;
-}
-
-.recipientList-backClickArea:active .recipientList-backButton {
-  background: hsl(206,7%,25%);
-  box-shadow: 0 1px rgba(0,0,0,.1) inset;
-}
-
-.recipientList-backButton .icon {
-  margin-bottom: -2px;
-}
-
+.recipientList,
 .recipientList-organisationMembers {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  list-style: none;
+  padding: 0;
 }
+
+  .recipientList-entry .recipientList-iconSpacer {
+    width: 20px;
+    margin-left: -5px;
+  }
+
+  .recipientList-entry .icon:not(.plus) {
+    opacity: 0.2;
+  }
+
+  .recipientList-entry:hover .icon {
+    opacity: 1;
+  }
+
+  .recipientList-name {
+    margin-left: 10px;
+    margin-top: 2px;
+  }
+
+  .recipientList-detail {
+    opacity: 0.5;
+  }
+
+  .recipientList-icon.plus {
+    margin-left: 13px;
+  }
+
+  .recipientList-new {
+    background: hsl(145,51%,45%);
+  }
+
+  .dropdown .recipientList-new:hover {
+    background: hsl(147,52%,43%);
+  }
+
+  li.recipientList-controls,
+  li.recipientList-controls:hover {
+    padding: 0;
+    background: hsl(206,7%,28%);
+  }
+
+  .recipientList-backClickArea {
+    height: 100%;
+    float: left;
+    padding: 0 10px;
+  }
+
+  .recipientList-backButton {
+    padding: 5px 10px;
+    font-size: 12px;
+    color: white;
+    border-radius: 3px;
+    border: 1px solid hsl(234,10%,10%);
+    box-shadow: 0 1px rgba(255,255,255,.03) inset;
+  }
+
+  .recipientList-backClickArea:active .recipientList-backButton {
+    background: hsl(206,7%,25%);
+    box-shadow: 0 1px rgba(0,0,0,.1) inset;
+  }
+
+  .recipientList-backButton .icon {
+    margin-bottom: -2px;
+  }
+
+  .recipientList-organisationMembers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 
 /*
 
