@@ -1132,12 +1132,20 @@ ol.tabs li {
     background-position: -8px -299px;
   }
 
+  .white.left.arrow.icon {
+    background-position: -16px -299px;
+  }
+
+  .white.right.arrow.icon {
+    background-position: -24px -299px;
+  }
+
   .checkbox.icon {
     min-height: 0; /* overwriting bootstrap */
     margin: 0; /* overwriting bootstrap */
     width: 10px;
     height: 10px;
-    background-position: -16px -299px;
+    background-position: -32px -299px;
   }
 
   .white.checkbox.icon {
@@ -1145,19 +1153,19 @@ ol.tabs li {
   }
 
   :checked + .checkbox.icon {
-    background-position: -26px -299px;
+    background-position: -42px -299px;
   }
 
   .arrow-right.icon {
     width: 12px;
     height: 11px;
-    background-position: -36px -299px;
+    background-position: -52px -299px;
   }
 
   .delete.icon {
     width: 9px;
     height: 9px;
-    background-position: -48px -300px;
+    background-position: -64px -300px;
   }
 
   .dark.group.icon {
@@ -3128,74 +3136,112 @@ footer {
   right: 10px;
 }
 
-.recipientList .dropdown-menu {
+.dropdown-menu {
   margin: 0;
   padding: 0;
   width: 100%;
   color: white;
-  background: hsl(234,10%,19%);
+  background: none;
   border-radius: 0;
   border: none;
   box-shadow: none;
+  overflow-x: hidden;
 }
-  .recipientList .dropdown-menu ul {
+
+  .dropdown ul {
     margin: 0;
+    background: hsl(234,10%,19%);
   }
 
-  .recipientList-entry {
+  .dropdown li {
     height: 40px;
-    padding-left: 5px;
+    padding: 0 15px;
   }
 
-  .recipientList-entry .checkbox-replacement {
-    width: 30px;
-    opacity: 0.7;
-  }
-
-  .recipientList-icon {
-    width: 30px;
-  }
-
-  .recipientList-entry:not(.recipientList-new) .recipientList-icon {
-    opacity: 0.2;
-  }
-
-  .recipientList-name {
-    margin-left: 5px;
-    margin-top: 2px;
-  }
-
-  .recipientList-entry:not(:last-child):not(:first-child) {
+  .dropdown li:not(:first-child) {
     box-shadow: 0 1px rgba(255,255,255,.13) inset;
   }
 
-  .recipientList-entry:hover {
+  .dropdown li:hover,
+  .dropdown li.is-active {
     background: hsl(205,90%,60%);
   }
 
-    .recipientList-entry:hover + :not(:last-child):not(:first-child) {
+    .dropdown li:not(.recipientList-controls):hover + li,
+    .dropdown li.is-active + li {
       box-shadow: none;
     }
 
-    .recipientList-entry:hover .recipientList-icon {
-      opacity: 1;
-    }
+.recipientList-entry .recipientList-iconSpacer {
+  width: 20px;
+  margin-left: -5px;
+}
 
-  .recipientList-detail {
-    opacity: 0.5;
-  }
+.recipientList-entry .icon:not(.plus) {
+  opacity: 0.2;
+}
 
-  .recipientList-icon.plus {
-    margin-left: 13px;
-  }
+.recipientList-entry:hover .icon {
+  opacity: 1;
+}
 
-  .recipientList-new {
-    background: hsl(145,51%,45%);
-  }
+.recipientList-name {
+  margin-left: 10px;
+  margin-top: 2px;
+}
 
-  .recipientList-new:hover {
-    background: hsl(147,52%,43%);
-  }
+.recipientList-detail {
+  opacity: 0.5;
+}
+
+.recipientList-icon.plus {
+  margin-left: 13px;
+}
+
+.recipientList-new {
+  background: hsl(145,51%,45%);
+}
+
+.dropdown .recipientList-new:hover {
+  background: hsl(147,52%,43%);
+}
+
+li.recipientList-controls,
+li.recipientList-controls:hover {
+  padding: 0;
+  background: hsl(206,7%,28%);
+}
+
+.recipientList-backClickArea {
+  height: 100%;
+  float: left;
+  padding: 0 10px;
+}
+
+.recipientList-backButton {
+  padding: 5px 10px;
+  font-size: 12px;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid hsl(234,10%,10%);
+  box-shadow: 0 1px rgba(255,255,255,.03) inset;
+}
+
+.recipientList-backClickArea:active .recipientList-backButton {
+  background: hsl(206,7%,25%);
+  box-shadow: 0 1px rgba(0,0,0,.1) inset;
+}
+
+.recipientList-backButton .icon {
+  margin-bottom: -2px;
+}
+
+.recipientList-organisationMembers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
 
 /*
 

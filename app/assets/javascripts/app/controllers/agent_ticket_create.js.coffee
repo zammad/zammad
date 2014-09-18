@@ -1,6 +1,6 @@
 class App.TicketCreate extends App.Controller
   elements:
-    '.tabsSidebar'  : 'sidebar'
+    '.tabsSidebar'      : 'sidebar'
 
   events:
     'click .type-tabs .tab':  'changeFormType'
@@ -8,6 +8,9 @@ class App.TicketCreate extends App.Controller
     'submit form':            'submit'
     'click .submit':          'submit'
     'click .cancel':          'cancel'
+    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
+    'click .js-organisation': 'showOrganisationMembers'
+    'click .js-back':         'hideOrganisationMembers'
 
   constructor: (params) ->
     super
@@ -36,6 +39,58 @@ class App.TicketCreate extends App.Controller
     @bind 'ticket_create_rerender', (defaults) =>
       @log 'notice', 'error', defaults
       @render(defaults)
+
+  showOrganisationMembers: (e) =>
+    e.stopPropagation()
+
+    list = @$('.recipientList')
+    organisationList = @$('.recipientList-organisationMembers')
+
+    # move organisation-list to the right and slide it in
+
+    $.Velocity.hook(organisationList, 'translateX', '100%')
+    organisationList.removeClass('hide')
+
+    organisationList.velocity
+      properties:
+        translateX: 0
+      options:
+        speed: 300
+
+    # fade out list
+
+    list.velocity
+      properties:
+        translateX: '-100%'
+      options:
+        speed: 300
+        complete: -> list.height(organisationList.height())
+
+  hideOrganisationMembers: (e) =>
+    e && e.stopPropagation()
+    list = @$('.recipientList')
+    organisationList = @$('.recipientList-organisationMembers')
+
+    # fade list back in
+
+    list.velocity
+      properties:
+        translateX: 0
+      options:
+        speed: 300
+
+    # reset list height
+
+    list.height('')
+
+    # slide out organisation-list and hide it
+
+    organisationList.velocity
+      properties:
+        translateX: '100%'
+      options:
+        speed: 300
+        complete: -> organisationList.addClass('hide')
 
   changeFormType: (e) =>
     type = $(e.target).data('type')
