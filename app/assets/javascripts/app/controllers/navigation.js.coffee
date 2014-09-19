@@ -59,7 +59,7 @@ class App.Navigation extends App.Controller
       href = $(d).attr('href')
       active_tab[href] = true
     )
-    @el.find('.navbar-items-menu').html App.view('navigation/menu')(
+    @el.find('.main-navigation').html App.view('navigation/menu')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab

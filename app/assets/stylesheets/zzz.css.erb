@@ -1412,26 +1412,34 @@ footer {
     display: none !important;
   }
 
-  .navigation .navbar-nav,
-  .navigation .navbar-nav > li {
-    float: none;
-  }
+.main-navigation {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
 
-  .navigation .nav > li.active > a,
-  .navigation .nav > li > a:hover,
-  .navigation .nav > li > a:focus {
-    background: none;
-    color: #F0FAFF;
-  }
-
-  .navbar-nav > li > a {
+  .main-navigation a {
     padding: 0 15px;
     height: 48px;
     color: rgba(240, 250, 255, .25);
     border-bottom: 1px solid rgba(240, 250, 255, .05);
+    text-decoration: none;
   }
 
-  .navigation .nav > li.active > a {
+  .main-navigation > li.active > a,
+  .main-navigation > li > a:hover,
+  .main-navigation > li > a:focus {
+    background: none;
+    color: #F0FAFF;
+  }
+  
+  .main-navigation > li.active > a .icon,
+  .main-navigation > li > a:hover .icon,
+  .main-navigation > li > a:focus .icon {
+    opacity: 1;
+  }
+
+  .main-navigation li.active > a {
     background: #389ed9;
   }
 
@@ -1439,12 +1447,6 @@ footer {
     margin-right: 15px;
     opacity: 0.25;
     vertical-align: bottom;
-  }
-
-  .navigation .nav > li.active > a .icon,
-  .navigation .nav > li > a:hover .icon,
-  .navigation .nav > li > a:focus .icon {
-    opacity: 1;
   }
 
 .tasks {
