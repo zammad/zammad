@@ -270,6 +270,8 @@ class Table extends App.ControllerContent
 
         # hide
         @el.find('.bulk-action').addClass('hide')
+
+        @resetBulkForm()
       else
 
         # show
@@ -281,6 +283,21 @@ class Table extends App.ControllerContent
       if !$(e.target).attr('checked')
         $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
     )
+
+    # bind bulk form buttons
+    @$('.js-confirm').click(@bulkFormConfirm)
+    @$('.js-cancel').click(@resetBulkForm)
+
+  bulkFormConfirm: =>
+    @$('.js-action-step').addClass('hide')
+    @$('.js-confirm-step').removeClass('hide')
+
+    # need a delay because of the click event
+    setTimeout ( => @$('.textarea.form-group textarea').focus() ), 0
+
+  resetBulkForm: =>
+    @$('.js-action-step').removeClass('hide')
+    @$('.js-confirm-step').addClass('hide')
 
   page: (e) =>
     e.preventDefault()
@@ -310,8 +327,7 @@ class Table extends App.ControllerContent
       { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: '', item_class: ''  },
       { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' },
       { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: articleTypeFilter, default: '9', translate: true, class: 'medium' },
-      { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
-      { name: 'body',         display: 'Text',     tag: 'textarea', rows: 8, null: true, upload: false },
+      { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
     ]
 
     # render init page
@@ -321,6 +337,16 @@ class Table extends App.ControllerContent
       model:
         configure_attributes: @configure_attributes_ticket
         className:            'create'
+        labelClass:           'input-group-addon'
+      form_data:   @bulk
+      noFieldset: true
+    )
+    new App.ControllerForm(
+      el: html.find('#form-ticket-bulk-text')
+      model:
+        configure_attributes: [{ name: 'body', display: 'Comment', tag: 'textarea', rows: 1, null: true, upload: false, item_class: 'flex' }]
+        className:            'create'
+        labelClass:           'input-group-addon'
       form_data:   @bulk
       noFieldset: true
     )

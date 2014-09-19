@@ -578,6 +578,7 @@ label {
   .subtle-link {
     color: rgba(0,0,0,.32);
     text-decoration: underline;
+    cursor: pointer;
   }
 
   .subtle-link:hover {
@@ -1302,6 +1303,14 @@ footer {
     0 -3px rgba(0,0,0,.01);
 }
 
+  .bulk-action .btn {
+    margin: 0 10px;
+  }
+
+  .bulkAction-labelOffset {
+    margin-top: 14px;
+  }
+
 .show_toogle {
   font-size: 10px;
   line-height: 12px;
@@ -1390,7 +1399,8 @@ footer {
   padding: 9px 24px 8px;
 }
 
-.btn--primary {
+.btn--primary,
+.btn--primary:hover {
   color: white;
   background: #419ed7;
   border-color: #419ed7;
@@ -1432,7 +1442,7 @@ footer {
     background: none;
     color: #F0FAFF;
   }
-  
+
   .main-navigation > li.active > a .icon,
   .main-navigation > li > a:hover .icon,
   .main-navigation > li > a:focus .icon {
@@ -2196,7 +2206,7 @@ footer {
   }
 
 .form-inline .input-group-addon,
-.form-inline .form-control {
+.form-inline .form-control:not(textarea) {
   background: white;
   border: none;
   line-height: 1;
@@ -2254,7 +2264,8 @@ footer {
     margin: 10px;
   }
 
-  .form-inline .form-group:not(:last-child) {
+  .form-inline .form-group:not(:last-child),
+  .form-inline.form-inline--enclosed .form-group {
     border-right: 1px solid #f0f0f0;
   }
 
@@ -2268,7 +2279,7 @@ footer {
     position: relative;
   }
 
-  .form-inline .form-control {
+  .form-inline .form-control:not(textarea) {
     width: 100%;
     height: 100%;
     left: 0;
@@ -2284,6 +2295,24 @@ footer {
         -ms-appearance: none;
             appearance: none;
   }
+
+  .form-inline .textarea.form-group {
+    padding: 0 18px;
+    height: auto;
+    flex-grow: 1;
+  }
+
+    .form-inline .textarea.form-group  .input-group-addon {
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 5px;
+    }
+
+    .form-inline textarea.form-control {
+      display: block;
+      width: 100%;
+      resize: vertical;
+    }
 
 .ticketZoom {
   background: #f8f9fa;

@@ -1,9 +1,18 @@
-<form class="pull-left update-box bulk-action-form">
-  <div id="form-ticket-bulk"></div>
-  <input type="submit" class="btn primary submit" value="update">
+<form class="update-box bulk-action-form" role="form">
+  <div class="horizontal center js-action-step">
+    <div id="form-ticket-bulk" class="form-inline form-inline--enclosed flex horizontal"></div>
+    <div class="btn btn--primary js-confirm"><%- @T('Confirm') %></div>
+  </div>
+  <div class="horizontal center hide js-confirm-step">
+    <div id="form-ticket-bulk-text" class="form-inline flex horizontal"></div>
+    <div class="bulkAction-labelOffset">
+      <a class="subtle-link standalone js-cancel"><%- @T( 'Cancel' ) %></a>
+      <input type="submit" class="btn btn--primary submit" value="<%- @T('Update') %>">
+    </div>
+  </div>
 </form>
 <!--
-<form class="form-inline update-box bulk-action-form" role="form">
+<form class="form-inline update-box bulk-action-form">
   <div id="form-ticket-bulk2" class="horizontal">
     <div class="form-group">
       <label for="create_state_id" class="input-group-addon">Status</label>
