@@ -13,7 +13,7 @@
     <p>
       <form action="<%= App.Config.get('api_path') %>/packages" method="post" enctype="multipart/form-data">
         <input type="file" name="file_upload"/>
-        <button class="btn btn-primary" type="submit"><%- @T('Install Package') %></button>
+        <button class="btn btn--primary" type="submit"><%- @T('Install Package') %></button>
       </form>
     </p>
   </div>

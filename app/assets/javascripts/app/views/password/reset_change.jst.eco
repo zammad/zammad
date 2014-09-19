@@ -2,7 +2,7 @@
   <div class="hero-unit">
     <h2><%- @T( 'Choose your new password.' ) %><small></small></h2>
     <form id="form-password-change">
-      <button class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
+      <button class="btn btn--primary submit"><%- @T( 'Submit' ) %></button>
     </form>
   </div>
 </div>

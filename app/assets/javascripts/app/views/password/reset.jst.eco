@@ -10,7 +10,7 @@
         <div class="form-password-item"></div>
         <div class="form-controls">
           <a class="subtle-link standalone pull-left cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-          <button class="btn btn-primary submit pull-right"><%- @T( 'Submit' ) %></button>
+          <button class="btn btn--primary submit pull-right"><%- @T( 'Submit' ) %></button>
         </div>
       </form>
     <% end %>
