@@ -229,7 +229,8 @@ class App.TicketZoom extends App.Controller
             icon: 'group'
             actions: [
               {
-                class: 'glyphicon glyphicon-edit'
+                name:     'Edit Organization'
+                class:    'glyphicon glyphicon-edit'
                 callback: editOrganization
               },
             ]
