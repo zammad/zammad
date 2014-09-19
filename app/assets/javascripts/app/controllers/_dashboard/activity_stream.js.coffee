@@ -49,7 +49,7 @@ class App.DashboardActivityStream extends App.Controller
     @html html
 
     # start user popups
-    @userPopups('right')
+    @userPopups('left')
 
     # update time
     @frontendTimeUpdate()

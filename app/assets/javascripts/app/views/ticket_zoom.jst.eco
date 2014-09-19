@@ -4,7 +4,7 @@
       <div class="ticketZoom">
         <div class="page-header horizontal">
           <div class="flex vertical center">
-            <div class="big avatar user-popover" data-id="<%- @ticket.customer.id %>" style="background-image: url(<%- @ticket.customer.imageUrl %>)"></div>
+            <%- @ticket.customer.avatar(true) %>
             <div class="ticket-title"></div>
           </div>
           <div class="page-header-meta">

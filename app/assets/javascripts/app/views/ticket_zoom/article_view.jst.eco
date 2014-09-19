@@ -34,7 +34,12 @@
   </div>
 
   <div class="article-content zIndex-1 horizontal<%= ' reverse' if article.sender.name isnt 'Agent' %>">
-    <div class="avatar user-popover" data-placement="<% if article.sender.name isnt 'Agent': %>left<% else: %>right<% end %>" data-id="<%= article.created_by_id %>" style="background-image: url(<%= article.created_by.imageUrl %>)"></div>
+    <% if article.sender.name isnt 'Agent': %>
+    <%    position = 'left' %>
+    <% else: %>
+    <%    position = 'right' %>
+    <% end %>
+    <%- article.created_by.avatar(false, position) %>
     <div class="flex bubble-gap internal-border">
       <div class="text-bubble"><div class="bubble-arrow"></div><%- article.html %></div>
     </div>

@@ -36,6 +36,28 @@ class App.User extends App.Model
   icon: (user) ->
     "user icon"
 
+  initials: ->
+    @firstname[0] + @lastname[0]
+
+  avatar: (big = false, placement = '', cssClass = '') ->
+    if big
+      cssClass = ' big'
+    if placement
+      placement = "data-placement=\"#{placement}\""
+
+    if @image is 'none'
+      width  = 300
+      height = 226
+      size   = if big then 50 else 40
+
+      rng = new Math.seedrandom(@id)
+      x = rng() * (width - size)
+      y = rng() * (height - size)
+
+      "<span class=\"avatar unique user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
+    else
+      "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
+
   @_fillUp: (data) ->
 
     # set socal media links
