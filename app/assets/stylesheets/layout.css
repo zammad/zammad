@@ -1,9 +1,9 @@
 .horizontal, .vertical, .centered {
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
-  display: -moz-flex !important;
-  display: -webkit-flex !important;
-  display: flex !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
 }
 
 .horizontal {
