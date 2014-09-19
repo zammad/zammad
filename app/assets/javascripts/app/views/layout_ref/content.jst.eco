@@ -40,6 +40,203 @@
   <span class="big user avatar" data-firstname="Luisa" data-lastname="Hofner" data-userid="10"></span>
   <span class="big user avatar" data-firstname="Clara" data-lastname="Altman" data-userid="11"></span>
 
+
+  <hr>
+
+  <h2>User Selection</h2>
+
+    <form>
+      <div class="form-group">
+
+          <label for="customer_id">Customer</label>
+
+          <div class="dropdown js-recipientDropdown">
+
+            <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
+              <input id="customer_id_autocompletion2" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organisation/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+              <span class="caret"></span>
+            </div>
+
+            <div class="dropdown-menu" aria-labelledby="customer_id">
+
+              <ul class="recipientList" role="menu">
+                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="AlbrechtBertschlerGmbG">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white organisation icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    Albrecht &amp; Bertschler GmbH
+                    <span class="recipientList-detail">- 4 Personen</span>
+                  </div>
+                  <div class="white right arrow icon"></div>
+
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="BENCHMARKhumanresources">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white organisation icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    BENCHMARK human resources
+                    <span class="recipientList-detail">- 2 Personen</span>
+                  </div>
+                  <div class="white right arrow icon"></div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    Belinda Matt
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    Benjamin Wahlers
+                    <span class="recipientList-detail">- Wahlers Würste GmbH</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Benjamin Weiß
+                    <span class="recipientList-detail">- Zeughaus Werbeagentur GmbH</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white organisation icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    Benteler SGL Composite Technology GmbH
+                    <span class="recipientList-detail"></span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white team icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    Support Team Berlin
+                    <span class="recipientList-detail">- 5 Personen</span>
+                  </div>
+                  <div class="white right arrow icon"></div>
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white organisation icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    Bernecker + Rainer Industrie-Elektronik Ges.m.b.H.
+                    <span class="recipientList-detail">- 3 Personen</span>
+                  </div>
+                  <div class="white right arrow icon"></div>
+
+                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white organisation icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    Bertsch Ecopower GmbH
+                    <span class="recipientList-detail">- 1 Person</span>
+                  </div>
+                  <div class="white right arrow icon"></div>
+
+                <li class="recipientList-entry recipientList-new u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white plus icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat">
+                    <%- @T('Create new Customer') %>
+                  </div>
+              </ul>
+
+
+              <ul class="recipientList-organisationMembers hide" id="AlbrechtBertschlerGmbG">
+                <li class="recipientList-controls u-clickable js-back">
+                  <div class="recipientList-backClickArea centered">
+                    <div class="recipientList-backButton">
+                      <div class="white arrow left icon"></div>
+                      <%- @T('Back') %>
+                    </div>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Andreas Kramer
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Belinda Matt
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Damian Sprengler
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Katharina Nussman
+                    <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
+                  </div>
+              </ul>
+
+
+
+              <ul class="recipientList-organisationMembers hide" id="BENCHMARKhumanresources">
+                <li class="recipientList-controls u-clickable js-back">
+                  <div class="recipientList-backClickArea centered">
+                    <div class="recipientList-backButton">
+                      <div class="white arrow left icon"></div>
+                      <%- @T('Back') %>
+                    </div>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Hubert Lang
+                    <span class="recipientList-detail">- BENCHMARK human resources</span>
+                  </div>
+
+                <li class="recipientList-entry u-clickable horizontal center">
+                  <div class="recipientList-iconSpacer centered">
+                    <div class="white user icon"></div>
+                  </div>
+                  <div class="recipientList-name flex u-textTruncat ">
+                    Mario Steibel
+                    <span class="recipientList-detail">- BENCHMARK human resources</span>
+                  </div>
+              </ul>
+            </div>
+          </div>
+      </div>
+    <form>
+
   <hr>
 
   <h2>Headlines</h2>

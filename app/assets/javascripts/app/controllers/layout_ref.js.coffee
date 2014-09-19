@@ -10,6 +10,11 @@ App.Config.set( 'layout_ref', Index, 'Routes' )
 
 
 class Content extends App.ControllerContent
+  events:
+    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
+    'click .js-organisation': 'showOrganisationMembers'
+    'click .js-back':         'hideOrganisationMembers'
+
   constructor: ->
     super
     @render()
@@ -34,6 +39,60 @@ class Content extends App.ControllerContent
 
   render: ->
     @html App.view('layout_ref/content')()
+
+  showOrganisationMembers: (e) =>
+    e.stopPropagation()
+
+    listEntry = $(e.currentTarget)
+    organisationId = listEntry.data('organisation-id')
+
+    @recipientList = @$('.recipientList')
+    @organisationList = @$("##{ organisationId }")
+
+    # move organisation-list to the right and slide it in
+
+    $.Velocity.hook(@organisationList, 'translateX', '100%')
+    @organisationList.removeClass('hide')
+
+    @organisationList.velocity
+      properties:
+        translateX: 0
+      options:
+        speed: 300
+
+    # fade out list
+
+    @recipientList.velocity
+      properties:
+        translateX: '-100%'
+      options:
+        speed: 300
+        complete: => @recipientList.height(@organisationList.height())
+
+  hideOrganisationMembers: (e) =>
+    e && e.stopPropagation()
+
+    return if !@organisationList
+
+    # fade list back in
+
+    @recipientList.velocity
+      properties:
+        translateX: 0
+      options:
+        speed: 300
+
+    # reset list height
+
+    @recipientList.height('')
+
+    # slide out organisation-list and hide it
+    @organisationList.velocity
+      properties:
+        translateX: '100%'
+      options:
+        speed: 300
+        complete: => @organisationList.addClass('hide')
 
 App.Config.set( 'layout_ref/content', Content, 'Routes' )
 

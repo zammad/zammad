@@ -113,7 +113,24 @@ remove whole data from index
 
 return search result
 
+  result = SearchIndexBackend.search( 'search query', limit, ['User', 'Organization'] )
+
   result = SearchIndexBackend.search( 'search query', limit, 'User' )
+
+  result = [
+    {
+      :id   => 123,
+      :type => 'User',
+    },
+    {
+      :id   => 125,
+      :type => 'User',
+    },
+    {
+      :id   => 15,
+      :type => 'Organization',
+    }
+  ]
 
 =end
 
@@ -123,7 +140,11 @@ return search result
     url = build_url()
     return if !url
     if index
-      url += "/#{index}/_search"
+      if index.class == Array
+        url += "/#{index.join(',')}/_search"
+      else
+        url += "/#{index}/_search"
+      end
     else
       url += '/_search'
     end
@@ -176,7 +197,11 @@ return search result
     return ids if !data['hits']['hits']
     data['hits']['hits'].each { |item|
       puts "... #{item['_type'].to_s} #{item['_id'].to_s}"
-      ids.push item['_id']
+      data = {
+        :id   => item['_id'],
+        :type => item['_type'],
+      }
+      ids.push data
     }
     ids
   end

@@ -3,6 +3,70 @@
 class SearchController < ApplicationController
   before_filter :authentication_check
 
+  # GET /api/v1/search_user_org
+  def search_user_org
+
+    # enable search only for agents and admins
+    if !current_user.is_role('Agent') && !current_user.is_role('Admin')
+      response_access_deny
+      return true
+    end
+
+    # get params
+    query = params[:query]
+    limit = params[:limit] || 10
+
+    # try search index backend
+    assets = {}
+    result = []
+    if SearchIndexBackend.enabled?
+      items = SearchIndexBackend.search( query, limit, ['User', 'Organization'] )
+      items.each { |item|
+        require item[:type].to_filename
+        record = Kernel.const_get( item[:type] ).find( item[:id] )
+        assets = record.assets(assets)
+        result.push item
+      }
+    else
+      # do query
+      users = User.search(
+        :query        => query,
+        :limit        => limit,
+        :current_user => current_user,
+      )
+      user_result = []
+      users.each do |user|
+        item = {
+          :id   => user.id,
+          :type => user.class.to_s
+        }
+        result.push item
+        assets = user.assets(assets)
+      end
+
+      organizations = Organization.search(
+        :query        => query,
+        :limit        => limit,
+        :current_user => current_user,
+      )
+
+      organization_result = []
+      organizations.each do |organization|
+        item = {
+          :id   => organization.id,
+          :type => organization.class.to_s
+        }
+        result.push item
+        assets = organization.assets(assets)
+      end
+    end
+
+    render :json => {
+      :assets => assets,
+      :result => result,
+    }
+  end
+
   # GET /api/v1/search
   def search
 

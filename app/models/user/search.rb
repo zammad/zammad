@@ -4,22 +4,6 @@ module User::Search
 
 =begin
 
-search tickets
-
-  result = Ticket.search(
-    :current_user => User.find(123),
-    :query        => 'search something',
-    :limit        => 15,
-  )
-
-returns
-
-  result = [ticket_model1, ticket_model2]
-
-=end
-
-=begin
-
 search user
 
   result = User.search(
@@ -46,10 +30,10 @@ returns
 
     # try search index backend
     if SearchIndexBackend.enabled?
-      ids = SearchIndexBackend.search( query, limit, 'User' )
+      items = SearchIndexBackend.search( query, limit, 'User' )
       users = []
-      ids.each { |id|
-        users.push User.lookup( :id => id )
+      items.each { |item|
+        users.push User.lookup( :id => item[:id] )
       }
       return users
     end

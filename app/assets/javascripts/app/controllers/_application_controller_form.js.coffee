@@ -753,6 +753,11 @@ class App.ControllerForm extends App.Controller
         $('#' + attribute.id ).parent().css('height', 'auto')
       App.Delay.set( a, 120, undefined, 'tags' )
 
+    # user
+    else if attribute.tag is 'user_autocompletion'
+      completion = new App.UserOrganizationAutocompletion( attribute: attribute )
+      item = completion.element()
+
     # autocompletion
     else if attribute.tag is 'autocompletion'
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )

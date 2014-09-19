@@ -30,10 +30,10 @@ returns
 
     # try search index backend
     if SearchIndexBackend.enabled?
-      ids = SearchIndexBackend.search( query, limit, 'Organization' )
+      items = SearchIndexBackend.search( query, limit, 'Organization' )
       organizations = []
-      ids.each { |id|
-        organizations.push Organization.lookup( :id => id )
+      items.each { |item|
+        organizations.push Organization.lookup( :id => item[:id] )
       }
       return organizations
     end

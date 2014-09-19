@@ -4,13 +4,9 @@ class App.TicketCreate extends App.Controller
 
   events:
     'click .type-tabs .tab':  'changeFormType'
-    'click .customer_new':    'userNew'
     'submit form':            'submit'
     'click .submit':          'submit'
     'click .cancel':          'cancel'
-    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
-    'click .js-organisation': 'showOrganisationMembers'
-    'click .js-back':         'hideOrganisationMembers'
 
   constructor: (params) ->
     super
@@ -39,61 +35,6 @@ class App.TicketCreate extends App.Controller
     @bind 'ticket_create_rerender', (defaults) =>
       @log 'notice', 'error', defaults
       @render(defaults)
-
-  showOrganisationMembers: (e) =>
-    e.stopPropagation()
-
-    listEntry = $(e.currentTarget)
-    organisationId = listEntry.data('organisation')
-
-    @recipientList = @$('.recipientList')
-    @organisationList = @$("##{ organisationId }")
-
-    # move organisation-list to the right and slide it in
-
-    $.Velocity.hook(@organisationList, 'translateX', '100%')
-    @organisationList.removeClass('hide')
-
-    @organisationList.velocity
-      properties:
-        translateX: 0
-      options:
-        speed: 300
-
-    # fade out list
-
-    @recipientList.velocity
-      properties:
-        translateX: '-100%'
-      options:
-        speed: 300
-        complete: => @recipientList.height(@organisationList.height())
-
-  hideOrganisationMembers: (e) =>
-    e && e.stopPropagation()
-
-    return if !@organisationList
-
-    # fade list back in
-
-    @recipientList.velocity
-      properties:
-        translateX: 0
-      options:
-        speed: 300
-
-    # reset list height
-
-    @recipientList.height('')
-
-    # slide out organisation-list and hide it
-
-    @organisationList.velocity
-      properties:
-        translateX: '100%'
-      options:
-        speed: 300
-        complete: => @organisationList.addClass('hide')
 
   changeFormType: (e) =>
     type = $(e.target).data('type')
@@ -353,12 +294,6 @@ class App.TicketCreate extends App.Controller
       params: params
     )
 
-  userNew: (e) =>
-    e.preventDefault()
-    new UserNew(
-      create_screen: @
-    )
-
   cancel: (e) ->
     e.preventDefault()
     @navigate '#'
@@ -543,68 +478,6 @@ class Sidebar extends App.Controller
     new App.Sidebar(
       el:     @el
       items:  items
-    )
-
-class UserNew extends App.ControllerModal
-  constructor: ->
-    super
-    @head   = 'New User'
-    @cancel = true
-    @button = true
-
-    controller = new App.ControllerForm(
-      el:         @el.find('#form-user')
-      model:      App.User
-      screen:     'edit'
-      autofocus:  true
-    )
-
-    @show( controller.form )
-
-  onSubmit: (e) ->
-
-    e.preventDefault()
-    params = @formParam(e.target)
-
-    # if no login is given, use emails as fallback
-    if !params.login && params.email
-      params.login = params.email
-
-    # find role_id
-    if !params.role_ids || _.isEmpty( params.role_ids )
-      role = App.Role.findByAttribute( 'name', 'Customer' )
-      params.role_ids = role.id
-    @log 'notice', 'updateAttributes', params
-
-    user = new App.User
-    user.load(params)
-
-    errors = user.validate()
-    if errors
-      @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
-      return
-
-    # save user
-    ui = @
-    user.save(
-      done: ->
-
-        # force to reload object
-        callbackReload = (user) ->
-          realname = user.displayName()
-          if user.email
-            realname = "#{ realname } <#{ user.email }>"
-          ui.create_screen.el.find('[name=customer_id]').val( user.id )
-          ui.create_screen.el.find('[name=customer_id_autocompletion]').val( realname )
-
-          # start customer info controller
-          ui.userInfo( user_id: user.id )
-          ui.hide()
-        App.User.full( @id, callbackReload , true )
-
-      fail: ->
-        ui.hide()
     )
 
 class Router extends App.ControllerPermanent

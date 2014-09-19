@@ -2,15 +2,13 @@ class App.TicketCustomer extends App.ControllerModal
   constructor: ->
     super
     configure_attributes = [
-      { name: 'customer_id', display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span5', autocapitalize: false, help: 'Select the new customer of the Ticket.', source: @apiPath + '/users/search', minLengt: 2 },
+      { name: 'customer_id', display: 'Customer', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organisation/Company', minLengt: 2, disableCreateUser: true },
     ]
 
     controller = new App.ControllerForm(
-      model: {
+      model:
         configure_attributes: configure_attributes,
-        className:            'update',
-      },
-      autofocus: true,
+      autofocus: true
     )
     @head   = 'Change Customer'
     @close  = true

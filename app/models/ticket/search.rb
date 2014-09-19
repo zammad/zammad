@@ -78,13 +78,17 @@ returns
         query_extention['bool']['must'].push access_condition
       end
 
-      ids = SearchIndexBackend.search( query, limit, 'Ticket', query_extention )
+      items = SearchIndexBackend.search( query, limit, 'Ticket', query_extention )
       if !full
+        ids = []
+        items.each {|item|
+          ids.push item[:id]
+        }
         return ids
       end
       tickets = []
-      ids.each { |id|
-        tickets.push Ticket.lookup( :id => id )
+      items.each { |item|
+        tickets.push Ticket.lookup( :id => item[:id] )
       }
       return tickets
     end

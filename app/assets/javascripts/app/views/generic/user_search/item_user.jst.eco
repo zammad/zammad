@@ -1,0 +1,11 @@
+<li class="recipientList-entry u-clickable horizontal center js-user" data-user-id="<%= @user.id %>"">
+  <div class="recipientList-iconSpacer centered">
+    <div class="white user icon"></div>
+  </div>
+  <div class="recipientList-name flex u-textTruncat">
+    <%= @user.displayName() %>
+    <% if @user.organization: %>
+      <span class="recipientList-detail">- <%= @user.organization.displayName() %></span>
+    <% end %>
+  </div>
+</li>

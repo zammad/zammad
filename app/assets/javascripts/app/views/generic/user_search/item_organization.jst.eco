@@ -1,0 +1,10 @@
+<li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="<%- @organization.id %>">
+  <div class="recipientList-iconSpacer centered">
+    <div class="white organisation icon"></div>
+  </div>
+  <div class="recipientList-name flex u-textTruncat">
+    <%= @organization.displayName() %>
+    <span class="recipientList-detail">- <%= @organization.member_ids.length %> <%- @T('People') %></span>
+  </div>
+  <div class="white right arrow icon"></div>
+</li>
