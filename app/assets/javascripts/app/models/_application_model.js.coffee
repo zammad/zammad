@@ -175,7 +175,7 @@ class App.Model extends Spine.Model
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
-    console.log(attributesNew)
+    #console.log(attributesNew)
     attributesNew
 
   validate: (params = {}) ->
