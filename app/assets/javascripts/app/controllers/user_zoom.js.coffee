@@ -1,10 +1,12 @@
 class App.UserZoom extends App.Controller
+  elements:
+    '.tabsSidebar'      : 'sidebar'
+
   constructor: (params) ->
     super
 
     # check authentication
     return if !@authenticate()
-
 
     @navupdate '#'
 
@@ -67,10 +69,10 @@ class App.UserZoom extends App.Controller
       ui:   @
     )
 
-    new Widgets(
-      el:   @el.find('.widgets')
-      user: user
-      ui:   @
+    new Sidebar(
+      el:         @sidebar
+      user:       user
+      textModule: @textModule
     )
 
 class Overviews extends App.Controller
@@ -141,16 +143,79 @@ class Overviews extends App.Controller
     @el.find( '#sortable' ).sortable( dndOptions )
     @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
-class Widgets extends App.Controller
+class Sidebar extends App.Controller
   constructor: ->
     super
+
+    # render ui
     @render()
 
   render: ->
 
-    new App.WidgetUser(
-      el:      @el
-      user_id: @user.id
+    items = []
+
+    showCustomer = (el) =>
+      new App.WidgetUser(
+        el:       el
+        user_id:  @user.id
+      )
+
+    editCustomer = (e, el) =>
+      new App.ControllerGenericEdit(
+        id: @user.id
+        genericObject: 'User'
+        screen: 'edit'
+        pageData:
+          title: 'Users'
+          object: 'User'
+          objects: 'Users'
+      )
+    items.push {
+      head: 'Customer'
+      name: 'customer'
+      icon: 'person'
+      actions: [
+        {
+          name:  'Edit Customer'
+          class: 'glyphicon glyphicon-edit'
+          callback: editCustomer
+        },
+      ]
+      callback: showCustomer
+    }
+
+    if @user.organization_id
+      editOrganization = (e, el) =>
+        new App.ControllerGenericEdit(
+          id: @user.organization_id
+          genericObject: 'Organization'
+          pageData:
+            title: 'Organizations'
+            object: 'Organization'
+            objects: 'Organizations'
+        )
+      showOrganization = (el) =>
+        new App.WidgetOrganization(
+          el:               el
+          organization_id:  @user.organization_id
+        )
+      items.push {
+        head: 'Organization'
+        name: 'organization'
+        icon: 'group'
+        actions: [
+          {
+            name:     'Edit Organization'
+            class:    'glyphicon glyphicon-edit'
+            callback: editOrganization
+          },
+        ]
+        callback: showOrganization
+      }
+
+    new App.Sidebar(
+      el:     @el
+      items:  items
     )
 
 class ActionRow extends App.Controller

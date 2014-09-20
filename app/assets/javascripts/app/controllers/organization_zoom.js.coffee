@@ -1,4 +1,7 @@
 class App.OrganizationZoom extends App.Controller
+  elements:
+    '.tabsSidebar'      : 'sidebar'
+
   constructor: (params) ->
     super
 
@@ -67,10 +70,9 @@ class App.OrganizationZoom extends App.Controller
       ui:           @
     )
 
-    new Widgets(
-      el:           @el.find('.widgets')
+    new Sidebar(
+      el:           @sidebar
       organization: organization
-      ui:           @
     )
 
 class Overviews extends App.Controller
@@ -122,16 +124,48 @@ class Overviews extends App.Controller
     @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
 
-class Widgets extends App.Controller
+class Sidebar extends App.Controller
   constructor: ->
     super
+
+    # render ui
     @render()
 
   render: ->
 
-    new App.WidgetOrganization(
-      el:               @el
-      organization_id:  @organization.id
+    items = []
+
+    editOrganization = (e, el) =>
+      new App.ControllerGenericEdit(
+        id: @organization.id
+        genericObject: 'Organization'
+        pageData:
+          title: 'Organizations'
+          object: 'Organization'
+          objects: 'Organizations'
+      )
+    showOrganization = (el) =>
+      new App.WidgetOrganization(
+        el:               el
+        organization_id:  @organization.id
+      )
+    items.push {
+      head: 'Organization'
+      name: 'organization'
+      icon: 'group'
+      actions: [
+        {
+          name:     'Edit Organization'
+          class:    'glyphicon glyphicon-edit'
+          callback: editOrganization
+        },
+      ]
+      callback: showOrganization
+    }
+
+    new App.Sidebar(
+      el:     @el
+      items:  items
     )
 
 class ActionRow extends App.Controller
