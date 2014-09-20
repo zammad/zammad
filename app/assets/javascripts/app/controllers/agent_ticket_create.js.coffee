@@ -276,8 +276,9 @@ class App.TicketCreate extends App.Controller
     )
 
     new Sidebar(
-      el:     @sidebar
-      params: @formDefault
+      el:         @sidebar
+      params:     @formDefault
+      textModule: @textModule
     )
 
     $('#tags').tokenfield()
@@ -290,8 +291,9 @@ class App.TicketCreate extends App.Controller
     params = App.ControllerForm.params( $(e.target).closest('form') )
 
     new Sidebar(
-      el:     @sidebar
-      params: params
+      el:         @sidebar
+      params:     params
+      textModule: @textModule
     )
 
   cancel: (e) ->
@@ -414,26 +416,31 @@ class App.TicketCreate extends App.Controller
 class Sidebar extends App.Controller
   constructor: ->
     super
+
+    # load user
+    if @params['customer_id']
+      App.User.full( @params['customer_id'], @render )
+      return
+
+    # render ui
     @render()
 
-  render: ->
+  render: (user) =>
 
     items = []
-    if @params['customer_id']
+    if user
 
       showCustomer = (el) =>
         # update text module UI
-        callback = (user) =>
-          if @textModule
-            @textModule.reload(
-              ticket:
-                customer: user
-            )
+        if @textModule
+          @textModule.reload(
+            ticket:
+              customer: user
+          )
 
-        @userInfo(
-          user_id:  @params.customer_id
+        new App.WidgetUser(
           el:       el
-          callback: callback
+          user_id:  user.id
         )
 
       editCustomer = (e, el) =>
@@ -459,6 +466,35 @@ class Sidebar extends App.Controller
         ]
         callback: showCustomer
       }
+
+      if user.organization_id
+        editOrganization = (e, el) =>
+          new App.ControllerGenericEdit(
+            id: user.organization_id
+            genericObject: 'Organization'
+            pageData:
+              title: 'Organizations'
+              object: 'Organization'
+              objects: 'Organizations'
+          )
+        showOrganization = (el) =>
+          new App.WidgetOrganization(
+            el:               el
+            organization_id:  user.organization_id
+          )
+        items.push {
+          head: 'Organization'
+          name: 'organization'
+          icon: 'group'
+          actions: [
+            {
+              name:     'Edit Organization'
+              class:    'glyphicon glyphicon-edit'
+              callback: editOrganization
+            },
+          ]
+          callback: showOrganization
+        }
 
     showTemplates = (el) =>
 

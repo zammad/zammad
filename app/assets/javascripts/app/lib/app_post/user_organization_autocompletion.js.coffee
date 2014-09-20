@@ -28,6 +28,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
   setUser: ->
     userId = @el.find('[name="' + @attribute.name + '"]').val()
     return if !userId
+    return if !App.User.exists(userId)
     user = App.User.find(userId)
     name = user.displayName()
     if user.email
