@@ -4,8 +4,10 @@ class App.DashboardTicketSearch extends App.Controller
 
   constructor: ->
     super
-    @start_page = 1
+    @item_from = 1
     @navupdate '#'
+
+    @key = @name + @Session.get('id')
 
     # render
     @fetch()
@@ -13,7 +15,7 @@ class App.DashboardTicketSearch extends App.Controller
   fetch: (force) =>
 
     @ajax(
-      id:    'dashboard_ticket_search' + @name,
+      id:    'dashboard_ticket_search' + @key,
       type:  'GET',
       url:   @apiPath + '/tickets/search',
       data:
@@ -30,7 +32,7 @@ class App.DashboardTicketSearch extends App.Controller
   load: (data = false, ajax = false) =>
 
     if ajax
-      App.Store.write( 'dashboard_ticket_search' + @name, data )
+      App.Store.write( 'dashboard_ticket_search' + @key, data )
 
       # load assets
       App.Collection.loadAssets( data.assets )
@@ -38,7 +40,7 @@ class App.DashboardTicketSearch extends App.Controller
       @render( data )
 
     else
-      data = App.Store.get( 'dashboard_ticket_search' + @name )
+      data = App.Store.get( 'dashboard_ticket_search' + @key )
       if data
         @render( data )
 
@@ -52,24 +54,30 @@ class App.DashboardTicketSearch extends App.Controller
     @tickets_count = data.tickets_count
     @ticket_ids    = data.tickets
     per_page    = @per_page || 5
-    pages_total =  parseInt( ( @tickets_count / per_page ) + 0.99999 ) || 1
+
+    items_total    = @tickets_count
+    items_per_page = Math.min(per_page || 10, @tickets_count)
+    items_from     = @item_from
+    items_till     = items_from-1 + items_per_page
+    if items_till > items_total
+      items_till = items_total
     html = App.view('dashboard/ticket')(
-      overview:    @overview,
-      pages_total: pages_total,
-      start_page:  @start_page,
+      overview:       @overview
+      items_per_page: items_per_page
+      items_from:     items_from
+      items_till:     items_till
+      items_total:    items_total
     )
     html = $(html)
     html.find('li').removeClass('active')
     html.find(".page [data-id=\"#{@start_page}\"]").parents('li').addClass('active')
 
     @tickets_in_table = []
-    start = ( @start_page-1 ) * 5
-    end = ( @start_page ) * 5
-    i = start
-    while i < end
+    i = items_from - 1
+    while i < items_till
+      if @ticket_ids[ i ]
+        @tickets_in_table.push App.Ticket.retrieve( @ticket_ids[ i ] )
       i = i + 1
-      if @ticket_ids[ i - 1 ]
-        @tickets_in_table.push App.Ticket.fullLocal( @ticket_ids[ i - 1 ] )
 
     openTicket = (id,e) =>
       ticket = App.Ticket.fullLocal(id)
@@ -127,6 +135,13 @@ class App.DashboardTicketSearch extends App.Controller
   page: (e) =>
     e.preventDefault()
     id = $(e.target).data('id')
-    @start_page = id
+    @item_from = id
     @load()
 
+  page: (e) =>
+    e.preventDefault()
+    @item_from = $(e.target).data('from')
+    if !@item_from
+      @item_from = $(e.target).parent().data('from')
+    return if !@item_from
+    @load()
