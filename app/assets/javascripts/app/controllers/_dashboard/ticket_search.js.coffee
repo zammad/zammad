@@ -96,7 +96,21 @@ class App.DashboardTicketSearch extends App.Controller
       attribute.data =
         id: refObject.id
       value
-
+    callbackIconHeader = (header) ->
+      attribute =
+        name:       'icon'
+        display:    ''
+        translation: false
+        style:      'width: 28px'
+      header.unshift(0)
+      header[0] = attribute
+      header
+    callbackIcon = (value, object, attribute, header, refObject) ->
+      value = ' '
+      attribute.class  = object.icon()
+      attribute.link   = ''
+      attribute.title  = App.i18n.translateInline( object.iconTitle() )
+      value
     new App.ControllerTable(
       overview:          @view.d
       el:                html.find('.table-overview'),
@@ -107,7 +121,10 @@ class App.DashboardTicketSearch extends App.Controller
       bindRow:
         events:
           'click': openTicket
+      callbackHeader:    callbackIconHeader
       callbackAttributes:
+        icon:
+          [ callbackIcon ]
         customer_id:
           [ callbackResetLink, callbackUserPopover ]
         owner_id:
