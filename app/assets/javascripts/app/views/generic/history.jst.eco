@@ -1,13 +1,7 @@
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-close js-close">
-        <div class="close icon"></div>
-      </div>
-      <h1 class="modal-title"><%- @T( 'History' ) %></h1>
-      <a href="#" data-type="sortorder" class="<%= @orderClass %>"><%- @T( 'Change order' ) %></a>
-    </div>
-    <div class="modal-body">
+<div>
+<a href="#" data-type="sortorder" class="<%= @orderClass %>"><%- @T( 'Change order' ) %></a>
+
+<hr>
 
 <% open = false %>
 <% for item in @items: %>
@@ -27,7 +21,7 @@
     <% if ( item['type'] is 'notification' || item['type'] is 'email' ): %>
       <%- @T( item['type'] ) %>
       <% if item['value_from']: %>
-        "<%= item['value_from'] %>" <%- @T( 'sent to' ) %> 
+        "<%= item['value_from'] %>" <%- @T( 'sent to' ) %>
       <% end %>
       <% if item['value_to']: %>
         "<%= item['value_to'] %>"
@@ -52,10 +46,4 @@
 <% if open: %>
   </ul>
 <% end %>
-
-    </div>
-
-    <div class="modal-footer">
-    </div>
-  </div>
 </div>

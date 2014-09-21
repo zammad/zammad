@@ -63,9 +63,9 @@ class App.TicketMerge extends App.ControllerModal
         $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
     )
 
-    @hide()
+    @show()
 
-  submit: (e) =>
+  onSubmit: (e) =>
     e.preventDefault()
 
     # disable form

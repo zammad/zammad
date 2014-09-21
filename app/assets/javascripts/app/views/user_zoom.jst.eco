@@ -1,16 +1,19 @@
-<div class="main flex tabsSidebarSpace">
-  <div class="userZoom">
-    <div class="page-header">
-      <h1><%- @T( @head ) %></h1>
+<div class="flex vertical">
+  <div class="flex u-positionOrigin horizontal">
+    <div class="main flex tabsSidebarSpace">
+      <div class="userZoom">
+        <div class="page-header">
+          <h1><%- @T( @head ) %></h1>
+        </div>
+
+        <div class="main-overviews" id="sortable"></div>
+
+      </div>
     </div>
 
-    <div class="main-overviews" id="sortable"></div>
-
+    <div class="tabsSidebar vertical"></div>
   </div>
+  <form class="bottom-form form-inline horizontal" role="form">
+    <div class="action"></div>
+  </form>
 </div>
-
-<div class="tabsSidebar vertical"></div>
-
-<!--
-  <div class="action"></div>
--->

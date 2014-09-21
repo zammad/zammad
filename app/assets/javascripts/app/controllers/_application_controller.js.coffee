@@ -438,14 +438,6 @@ class App.ControllerContent extends App.Controller
     @navShow()
 
 class App.ControllerModal extends App.Controller
-  className: 'modal fade'
-
-  events:
-    'submit form':      'onSubmit'
-    'click .js-submit': 'onSubmit'
-    'click .js-cancel': 'hide'
-    'click .js-close':  'hide'
-
   constructor: (options = {}) ->
     defaults =
       backdrop: true
@@ -460,38 +452,47 @@ class App.ControllerModal extends App.Controller
 
     super(options)
 
-    @show()
+    if @shown
+      @show()
 
-  show: (content) ->
-    console.log('M', @message)
+  show: ->
+    console.log('M', @message,  @el.length)
     if @button is true
       @button = 'Submit'
-    @html App.view('modal')(
+
+    @modalElement = $( '<div class="modal fade"></div>' )
+    @modalElement.append $( App.view('modal')(
       head:    @head
       message: @message
       detail:  @detail
       close:   @close
       cancel:  @cancel
       button:  @button
-    )
-    if content
-      @el.find('.modal-body').html content
-    @el.modal(
+    ) )
+    if @el && !@message && !@detail
+      @modalElement.find('.modal-body').html @el
+
+    @modalElement.find('form').on('submit', (e) => @onSubmit(e) )
+    @modalElement.find('.js-submit').on('click', (e) => @onSubmit(e) )
+    @modalElement.find('.js-cancel').on('click', (e) => @hide(e)  )
+    @modalElement.find('.js-close').on('click', (e) => @hide(e) )
+
+    @modalElement.modal(
       keyboard: @keyboard
       show:     true
       backdrop: @backdrop
-    )
-
-    @el.bind('hidden.bs.modal', =>
+    ).on('show.bs.modal', =>
+      @onShow()
+    ).on('hidden.bs.modal', =>
       @onHide()
       # remove modal from dom
-      $('.modal').remove();
-    )
+      $('.modal').remove()
+    ).find('.js-close').bind('submit', (e) => @hide(e) )
 
   hide: (e) ->
     if e
       e.preventDefault()
-    @el.modal('hide')
+    @modalElement.modal('hide')
 
   onShow: ->
     console.log('no nothing')

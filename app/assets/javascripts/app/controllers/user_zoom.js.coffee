@@ -221,7 +221,6 @@ class Sidebar extends App.Controller
 class ActionRow extends App.Controller
   events:
     'click [data-type=history]':  'history_dialog'
-    'click [data-type=merge]':    'merge_dialog'
 
   constructor: ->
     super
@@ -233,14 +232,6 @@ class ActionRow extends App.Controller
   history_dialog: (e) ->
     e.preventDefault()
     new App.UserHistory( user_id: @user.id )
-
-  merge_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketMerge( ticket: @ticket, task_key: @ui.task_key )
-
-  customer_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketCustomer( ticket: @ticket, ui: @ui )
 
 
 class Router extends App.ControllerPermanent

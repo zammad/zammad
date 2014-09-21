@@ -73,6 +73,12 @@ class App.ChannelEmailFilter extends App.Controller
 class App.ChannelEmailFilterEdit extends App.ControllerModal
   constructor: ->
     super
+
+    @head   = 'Postmaster Filter'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
       @form = new App.ControllerForm(
         model:     App.PostmasterFilter,
@@ -84,11 +90,9 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
         model:     App.PostmasterFilter,
         autofocus: true,
       )
-    @head   = 'Postmaster Filter'
-    @button = true
-    @close  = true
-    @cancel = true
-    @show( @form.form )
+
+    @el = @form.form
+    @show()
 
   onSubmit: (e) =>
     e.preventDefault()
@@ -158,6 +162,12 @@ class App.ChannelEmailAddress extends App.Controller
 class App.ChannelEmailAddressEdit extends App.ControllerModal
   constructor: ->
     super
+
+    @head   = 'Email-Address'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
       @form = new App.ControllerForm(
         model:     App.EmailAddress
@@ -169,11 +179,10 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
         model:     App.EmailAddress,
         autofocus: true,
       )
-    @head   = 'Email-Address'
-    @button = true
-    @close  = true
-    @cancel = true
-    @show( @form.form )
+
+    @el = @form.form
+
+    @show()
 
   onSubmit: (e) =>
     e.preventDefault()
@@ -239,6 +248,12 @@ class App.ChannelEmailSignature extends App.Controller
 class App.ChannelEmailSignatureEdit extends App.ControllerModal
   constructor: ->
     super
+
+    @head   = 'Signature'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
       @form = new App.ControllerForm(
         model:     App.Signature
@@ -250,11 +265,10 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
         model:     App.Signature
         autofocus: true
       )
-    @head   = 'Signature'
-    @button = true
-    @close  = true
-    @cancel = true
-    @show( @form.form )
+
+    @el = @form.form
+
+    @show()
 
   onSubmit: (e) =>
     e.preventDefault()
@@ -321,6 +335,12 @@ class App.ChannelEmailInbound extends App.Controller
 class App.ChannelEmailInboundEdit extends App.ControllerModal
   constructor: ->
     super
+
+    @head   = 'Email Channel'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
       @form = new App.ControllerForm(
         model:     App.Channel
@@ -332,11 +352,10 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
         model:     App.Channel
         autofocus: true
       )
-    @head   = 'Email Channel'
-    @button = true
-    @close  = true
-    @cancel = true
-    @show( @form.form )
+
+    @el = @form.form
+
+    @show()
 
   onSubmit: (e) =>
     e.preventDefault()

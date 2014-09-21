@@ -7,14 +7,14 @@ class App.ControllerGenericNew extends App.ControllerModal
     @button = true
 
     controller = new App.ControllerForm(
-      el:         @el.find('#object_new')
       model:      App[ @genericObject ]
       params:     @item
       screen:     @screen || 'edit'
       autofocus:  true
     )
+    @el = controller.form
 
-    @show(controller.form)
+    @show()
 
   onSubmit: (e) ->
     e.preventDefault()
@@ -57,14 +57,14 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @button = true
 
     controller = new App.ControllerForm(
-      el:         @el.find('#object_new')
       model:      App[ @genericObject ]
       params:     @item
       screen:     @screen || 'edit'
       autofocus:  true
     )
+    @el = controller.form
 
-    @show(controller.form)
+    @show()
 
   onSubmit: (e) ->
     e.preventDefault()
@@ -192,7 +192,7 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
     @cancel  = true
     @button  = 'Yes'
     @message = 'Sure to delete this object?'
-    @show(@message)
+    @show()
 
   onSubmit: (e) ->
     e.preventDefault()
@@ -354,13 +354,10 @@ class App.ControllerNavSidbar extends App.ControllerContent
       )
 
 class App.GenericHistory extends App.ControllerModal
-  events:
-    'click [data-type=sortorder]': 'sortorder',
-    'click .cancel': 'modalHide',
-    'click .close':  'modalHide',
-
   constructor: ->
     super
+    @head  = 'History'
+    @close = true
 
   render: ( items, orderClass = '' ) ->
 
@@ -392,14 +389,22 @@ class App.GenericHistory extends App.ControllerModal
 
       @historyListCache
     )
+    @el.find('a[data-type="sortorder"]').bind(
+      'click',
+      (e) =>
+        e.preventDefault()
+        @sortorder(e)
+    )
+    if !@isShown
+      @isShown = true
+      @show()
 
-    @hide()
-
+  onShow: =>
     # enable user popups
     @userPopups()
 
     # show frontend times
-    @delay( @frontendTimeUpdate, 300, 'ui-time-update' )
+    @delay( @frontendTimeUpdate, 100, 'ui-time-update' )
 
   sortorder: (e) ->
     e.preventDefault()

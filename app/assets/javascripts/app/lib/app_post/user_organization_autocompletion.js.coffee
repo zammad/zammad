@@ -208,13 +208,14 @@ class UserNew extends App.ControllerModal
     @button = true
 
     controller = new App.ControllerForm(
-      el:         @el.find('#form-user')
       model:      App.User
       screen:     'edit'
       autofocus:  true
     )
 
-    @show( controller.form )
+    @el = controller.form
+
+    @show()
 
   onSubmit: (e) ->
 

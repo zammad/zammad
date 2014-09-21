@@ -47,6 +47,7 @@ class App.Browser
       close:    false
       backdrop: false
       keyboard: false
+      shown:    true
     )
 
   @searchString: (data) ->

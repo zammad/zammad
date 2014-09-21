@@ -36,7 +36,6 @@ class App.OnlineNotificationWidget extends App.Controller
     return false
 
   counterUpdate: (count) =>
-    console.log('counter update', count)
     if !count
       @el.find('.activity-counter').remove()
       return

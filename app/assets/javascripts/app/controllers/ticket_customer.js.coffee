@@ -1,6 +1,12 @@
 class App.TicketCustomer extends App.ControllerModal
   constructor: ->
     super
+
+    @head   = 'Change Customer'
+    @close  = true
+    @cancel = true
+    @button = true
+
     configure_attributes = [
       { name: 'customer_id', display: 'Customer', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organisation/Company', minLengt: 2, disableCreateUser: true },
     ]
@@ -10,11 +16,10 @@ class App.TicketCustomer extends App.ControllerModal
         configure_attributes: configure_attributes,
       autofocus: true
     )
-    @head   = 'Change Customer'
-    @close  = true
-    @cancel = true
-    @button = true
-    @show( controller.form )
+
+    @el = controller.form
+
+    @show()
 
   onSubmit: (e) =>
     e.preventDefault()

@@ -87,12 +87,12 @@ class App.LinkAdd extends App.ControllerModal
     @button = true
     @cancel = true
 
-    form = App.view('link/add')(
+    @html App.view('link/add')(
       link_object:    @link_object,
       link_object_id: @link_object_id,
       object:         @object,
     )
-    @show( form )
+    @show()
 
   onSubmit: (e) =>
     e.preventDefault()
