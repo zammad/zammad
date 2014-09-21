@@ -63,10 +63,19 @@ class App.UserZoom extends App.Controller
     )
 
     # start action controller
-    new ActionRow(
-      el:   @el.find('.action')
-      user: user
-      ui:   @
+    showHistory = =>
+      new App.UserHistory( user_id: user.id )
+
+    actions = [
+      {
+        name:     'history'
+        title:    'History'
+        callback: showHistory
+      }
+    ]
+    new App.ActionRow(
+      el:    @el.find('.action')
+      items: actions
     )
 
     new Sidebar(
@@ -217,22 +226,6 @@ class Sidebar extends App.Controller
       el:     @el
       items:  items
     )
-
-class ActionRow extends App.Controller
-  events:
-    'click [data-type=history]':  'history_dialog'
-
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-    @html App.view('user_zoom/actions')()
-
-  history_dialog: (e) ->
-    e.preventDefault()
-    new App.UserHistory( user_id: @user.id )
-
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

@@ -1,15 +1,18 @@
 class App.TicketMerge extends App.ControllerModal
   constructor: ->
     super
+    @head = 'Merge'
+    @button = true
+    @cancel = true
     @fetch()
 
   fetch: ->
 
     # merge tickets
     @ajax(
-      id:    'ticket_merge_list'
+      id:    'ticket_related'
       type:  'GET'
-      url:   @apiPath + '/ticket_merge_list/' + @ticket.id
+      url:   @apiPath + '/ticket_related/' + @ticket.id
       processData: true,
       success: (data, status, xhr) =>
 
@@ -18,7 +21,6 @@ class App.TicketMerge extends App.ControllerModal
 
         @ticket_ids_by_customer    = data.ticket_ids_by_customer
         @ticket_ids_recent_viewed  = data.ticket_ids_recent_viewed
-
         @render()
     )
 

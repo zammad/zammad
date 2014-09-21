@@ -9,12 +9,14 @@ class App.TicketHistory extends App.GenericHistory
     @ajax(
       id:    'ticket_history',
       type:  'GET',
-      url:   @apiPath + '/ticket_history/' + @ticket.id,
+      url:   @apiPath + '/ticket_history/' + @ticket_id,
       success: (data, status, xhr) =>
 
         # load assets
         App.Collection.loadAssets( data.assets )
 
+        @items = data.history
+
         # render page
-        @render(data.history)
+        @render()
     )

@@ -1,6 +1,8 @@
 <div class="dropdown dropup actions">
   <button class="btn" data-toggle="dropdown"><%- @T('Action') %> <span class="caret"></span></button>
   <ul class="dropdown-menu">
-    <li><a href="#" data-type="history"><%- @T( 'History' ) %></a></li>
+    <% for item in @items: %>
+    <li><a href="#" data-type="<%= item.name %>"><%- @T( item.title ) %></a></li>
+    <% end %>
   </ul>
 </div>

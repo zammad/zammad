@@ -1,49 +1,17 @@
 <div>
-<a href="#" data-type="sortorder" class="<%= @orderClass %>"><%- @T( 'Change order' ) %></a>
+<a href="#" data-type="sortorder"><%- @T( 'Change order' ) %></a>
 
 <hr>
 
-<% open = false %>
 <% for item in @items: %>
-  <% if lasttime isnt item['created_at'] || last_user isnt item['created_by_id']: %>
-    <% if open: %>
-      </ul>
-      <hr>
+  <span class="user-popover" data-id="<%= item.created_by.id %>"><%= item.created_by.displayName() %></span> -
+  <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span>
+  <ul>
+    <% for content in item.records: %>
+    <li><%- content %></li>
     <% end %>
-    <% open = true %>
-    <% last_user = item['created_by_id'] %>
-    <% lasttime = item['created_at'] %>
-    <span class="user-popover" data-id="<%= item.created_by.id %>"><%= item.created_by.displayName() %></span> -
-    <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span>
-    <ul>
-  <% end %>
-    <li>
-    <% if ( item['type'] is 'notification' || item['type'] is 'email' ): %>
-      <%- @T( item['type'] ) %>
-      <% if item['value_from']: %>
-        "<%= item['value_from'] %>" <%- @T( 'sent to' ) %>
-      <% end %>
-      <% if item['value_to']: %>
-        "<%= item['value_to'] %>"
-      <% end %>
-    <% else: %>
-      <%- @T( item['type'] ) %> <%= item['object'] %> <% if item['attribute']: %>"<%= item['attribute'] %>"<% end %>
-      <% if item['value_from']: %>
-        <% if item['value_to']: %>
-          <%- @T( 'from' ) %>
-        <% end %>
-        "<%= item['value_from'] %>"
-      <% end %>
-      <% if item['value_to']: %>
-        <% if item['value_from']: %>
-          <%- @T( 'to' ) %>
-        <% end %>
-        "<%= item['value_to'] %>"
-      <% end %>
-    <% end %>
-    </li>
-<% end %>
-<% if open: %>
   </ul>
+  <hr>
 <% end %>
+
 </div>

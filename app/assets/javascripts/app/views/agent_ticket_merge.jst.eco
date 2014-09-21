@@ -1,26 +1,10 @@
-<form class="form-horizontal">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-close js-close">
-        <div class="close icon"></div>
-      </div>
-      <h1 class="modal-title"><%- @T( 'Merge' ) %></h1>
-    </div>
-    <div class="modal-body">
-      <h4><%- @T( 'Merge to Ticket#' ) %></h4>
-      <input type="text" name="master_ticket_number" class="form-control" value=""/>
-      <hr>
-      <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
-      <div id="ticket-merge-customer-tickets"></div>
-      <hr>
-      <h4><%- @T( 'Recent Views Tickets' ) %></h4>
-      <div id="ticket-merge-recent-tickets"></div>
-    </div>
-    <div class="modal-footer horizontal">
-      <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-      <button type="submit" class="btn btn--create js-submit align-right"><%- @T( 'Submit' ) %></button>
-    </div>
-  </div>
+<div>
+  <h4><%- @T( 'Merge to Ticket#' ) %></h4>
+  <input type="text" name="master_ticket_number" class="form-control" value=""/>
+  <hr>
+  <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
+  <div id="ticket-merge-customer-tickets"></div>
+  <hr>
+  <h4><%- @T( 'Recent viewed Tickets' ) %></h4>
+  <div id="ticket-merge-recent-tickets"></div>
 </div>
-</form>

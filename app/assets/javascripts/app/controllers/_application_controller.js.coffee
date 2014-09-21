@@ -456,7 +456,6 @@ class App.ControllerModal extends App.Controller
       @show()
 
   show: ->
-    console.log('M', @message,  @el.length)
     if @button is true
       @button = 'Submit'
 

@@ -12,11 +12,11 @@
   <%- @T( 'of' ) %>
   Ticket#
   <%= @object.number %>.
-<!--
-  <ul>
-    <li>Ticket#</li>
-    <li>Recent Views Tickets</li>
-    <li>Recent Customer Tickets</li>
-  </ul>
--->
+
+  <hr>
+  <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
+  <div id="ticket-merge-customer-tickets"></div>
+  <hr>
+  <h4><%- @T( 'Recent viewed Tickets' ) %></h4>
+  <div id="ticket-merge-recent-tickets"></div>
 </fieldset>

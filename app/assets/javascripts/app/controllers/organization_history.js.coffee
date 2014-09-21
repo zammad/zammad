@@ -15,6 +15,8 @@ class App.OrganizationHistory extends App.GenericHistory
         # load assets
         App.Collection.loadAssets( data.assets )
 
+        @items = data.history
+
         # render page
-        @render(data.history)
+        @render()
     )

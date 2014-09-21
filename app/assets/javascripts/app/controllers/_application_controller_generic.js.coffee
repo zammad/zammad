@@ -359,41 +359,21 @@ class App.GenericHistory extends App.ControllerModal
     @head  = 'History'
     @close = true
 
-  render: ( items, orderClass = '' ) ->
+  render: ->
 
-    for item in items
-
-      item.link  = ''
-      item.title = '???'
-
-      if item.object is 'Ticket::Article'
-        item.object = 'Article'
-        article = App.TicketArticle.find( item.o_id )
-        ticket  = App.Ticket.find( article.ticket_id )
-        item.title = article.subject || ticket.title
-        item.link  = article.uiUrl()
-
-      if App[item.object]
-        object     = App[item.object].find( item.o_id )
-        item.link  = object.uiUrl()
-        item.title = object.displayName()
-
-      item.created_by = App.User.find( item.created_by_id )
-
-    # set cache
-    @historyListCache = items
+    localItem = @reworkItems( @items )
 
     @html App.view('generic/history')(
-      items: items
-      orderClass: orderClass
-
-      @historyListCache
+      items: localItem
     )
+
+    @onShow()
+
     @el.find('a[data-type="sortorder"]').bind(
       'click',
       (e) =>
         e.preventDefault()
-        @sortorder(e)
+        @sortorder()
     )
     if !@isShown
       @isShown = true
@@ -404,16 +384,95 @@ class App.GenericHistory extends App.ControllerModal
     @userPopups()
 
     # show frontend times
-    @delay( @frontendTimeUpdate, 100, 'ui-time-update' )
+    @delay( @frontendTimeUpdate, 800, 'ui-time-update' )
 
-  sortorder: (e) ->
-    e.preventDefault()
-    isDown = @el.find('[data-type="sortorder"]').hasClass('down')
+  sortorder: =>
+    @items = @items.reverse()
 
-    if isDown
-      @render( @historyListCache, 'up' )
-    else
-      @render( @historyListCache.reverse(), 'down' )
+    @render()
+
+  T: (name) ->
+    App.i18n.translateInline(name)
+
+  reworkItems: (items) ->
+    newItems = []
+    newItem = {}
+    lastUserId = undefined
+    lastTime   = undefined
+    items = clone(items)
+    for item in items
+
+      if item.object is 'Ticket::Article'
+        item.object = 'Article'
+
+      data = item
+      data.created_by = App.User.find( item.created_by_id )
+
+      currentItemTime = new Date( item.created_at )
+      lastItemTime    = new Date( new Date( lastTime ).getTime() + (15 * 1000) )
+
+      # start new section if user or time has changed
+      if lastUserId isnt item.created_by_id || currentItemTime > lastItemTime
+        lastTime   = item.created_at
+        lastUserId = item.created_by_id
+        if !_.isEmpty(newItem)
+          newItems.push newItem
+        newItem =
+          created_at: item.created_at
+          created_by: App.User.find( item.created_by_id )
+          records: []
+
+      # build content
+      content = ''
+      if item.type is 'notification' || item.type is 'email'
+        content = "#{ @T( item.type ) } #{ @T( 'sent to' ) } #{ item.value_to }"
+      else
+        content = "#{ @T( item.type ) } #{ @T(item.object) } "
+        if item.attribute
+          content += "#{ @T(item.attribute) }"
+
+          # convert time stamps
+          if item.object is 'User' && item.attribute is 'last_login'
+            if item.value_from
+              item.value_from = App.i18n.translateTimestamp( item.value_from )
+            if item.value_to
+              item.value_to = App.i18n.translateTimestamp( item.value_to )
+
+        if item.value_from
+          if item.value_to
+            content += " #{ @T( 'from' ) }"
+          content += " '#{ item.value_from }'"
+
+        if item.value_to
+          if item.value_from
+            content += " #{ @T( 'to' ) }"
+          content += " '#{ item.value_to }'"
+
+      newItem.records.push content
+
+    if !_.isEmpty(newItem)
+      newItems.push newItem
+
+    newItems
+
+class App.ActionRow extends App.Controller
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('generic/actions')(
+      items: @items
+    )
+
+    for item in @items
+      do (item) =>
+        @el.find('[data-type="' + item.name + '"]').on(
+          'click',
+          (e) =>
+            e.preventDefault()
+            item.callback()
+        )
 
 class App.Sidebar extends App.Controller
   events:

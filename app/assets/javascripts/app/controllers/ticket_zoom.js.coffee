@@ -162,6 +162,28 @@ class App.TicketZoom extends App.Controller
             object_type:  'Ticket'
             object:       @ticket
           )
+          el.append('<div class="action"></div>')
+          showHistory = =>
+            new App.TicketHistory( ticket_id: @ticket.id )
+          showMerge = =>
+            new App.TicketMerge( ticket: @ticket, task_key: @task_key )
+          actions = [
+            {
+              name:     'history'
+              title:    'History'
+              callback: showHistory
+            },
+            {
+              name:     'merge'
+              title:    'Merge'
+              callback: showMerge
+            },
+          ]
+          new App.ActionRow(
+            el:    @el.find('.action')
+            items: actions
+          )
+
       items = [
         {
           head: 'Ticket Settings'
@@ -275,7 +297,6 @@ class App.TicketZoom extends App.Controller
         )
         ###
 
-    @TicketAction()
     @ArticleView()
 
     if force || !@editDone
@@ -322,18 +343,6 @@ class App.TicketZoom extends App.Controller
       task_key:   @task_key
       ui:         @
     )
-
-  TicketAction: =>
-    # start action controller
-    if !@isRole('Customer')
-      new ActionRow(
-        el:      @el.find('.action')
-        ticket:  @ticket
-        ui:      @
-      )
-
-    # enable user popups
-    @userPopups()
 
 class TicketTitle extends App.Controller
   events:
@@ -1211,26 +1220,6 @@ class Article extends App.Controller
     if @article.attachments
       for attachment in @article.attachments
         attachment.size = @humanFileSize(attachment.size)
-
-class ActionRow extends App.Controller
-  events:
-    'click [data-type=history]':  'history_dialog'
-    'click [data-type=merge]':    'merge_dialog'
-
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-    @html App.view('ticket_zoom/actions')()
-
-  history_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketHistory( ticket: @ticket )
-
-  merge_dialog: (e) ->
-    e.preventDefault()
-    new App.TicketMerge( ticket: @ticket, task_key: @ui.task_key )
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->

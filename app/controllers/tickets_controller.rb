@@ -137,17 +137,24 @@ class TicketsController < ApplicationController
     render :json => history
   end
 
-  # GET /api/v1/ticket_merge_list/1
-  def ticket_merge_list
+  # GET /api/v1/ticket_related/1
+  def ticket_related
 
     ticket = Ticket.find( params[:ticket_id] )
     assets = ticket.assets({})
 
     # open tickets by customer
+    group_ids = Group.select( 'groups.id' ).joins(:users).
+    where( 'groups_users.user_id = ?', current_user.id ).
+    where( 'groups.active = ?', true ).
+    map( &:id )
+    access_condition = [ 'group_id IN (?)', group_ids ]
     ticket_list = Ticket.where(
       :customer_id  => ticket.customer_id,
       :state_id     => Ticket::State.by_category( 'open' )
+
     )
+    .where(access_condition)
     .where( 'id != ?', [ ticket.id ] )
     .order('created_at DESC')
     .limit(6)
@@ -161,9 +168,9 @@ class TicketsController < ApplicationController
 
 
     ticket_ids_recent_viewed = []
-    ticket_recent_view = RecentView.list( current_user, 8 )
+    ticket_recent_view = RecentView.list( current_user, 8, 'Ticket' )
     ticket_recent_view.each {|item|
-      if item['recent_view_object'] == 'Ticket'
+      if item['object'] == 'Ticket'
         ticket_ids_recent_viewed.push item['o_id']
         ticket = Ticket.find( item['o_id'] )
         assets = ticket.assets(assets)
