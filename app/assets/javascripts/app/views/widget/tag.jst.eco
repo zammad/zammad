@@ -1,25 +1,17 @@
 <div class="">
   <label><%- @T( 'Tags' ) %></label>
-  <!--<input type="text" name="tags" id="<%- @tag_id %>" class="form-control" value="<% for tag in @tags: %><%= tag %>,<% end %>"/>-->
   <ul class="tagList">
+    <% for tag in @tags: %>
     <li class="horizontal center">
-      <span class="flex">Midi Notes</span>
-      <span>3</span>
+      <span class="flex tag"><%= tag %></span>
+      <!--<span>3</span>-->
       <span class="tag-delete js-delete centered u-clickable">
         <span class="delete icon"></span>
       </span>
-    <li class="horizontal center">
-      <span class="flex">Transitions</span>
-      <span>23</span>
-      <span class="tag-delete js-delete centered u-clickable">
-        <span class="delete icon"></span>
-      </span>
-    <li class="horizontal center">
-      <span class="flex">New UI</span>
-      <span>3</span>
-      <span class="tag-delete js-delete centered u-clickable">
-        <span class="delete icon"></span>
-      </span>
+    <% end %>
   </ul>
-  <div class="text-muted js-newTag u-clickable">+ <%- @T('Add Tag') %></div>
+  <div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
+  <form>
+    <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
+  </form>
 </div>
