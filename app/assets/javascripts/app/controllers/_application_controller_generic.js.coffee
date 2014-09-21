@@ -425,7 +425,7 @@ class App.GenericHistory extends App.ControllerModal
       # build content
       content = ''
       if item.type is 'notification' || item.type is 'email'
-        content = "#{ @T( item.type ) } #{ @T( 'sent to' ) } #{ item.value_to }"
+        content = "#{ @T( item.type ) } #{ @T( 'sent to' ) } '#{ item.value_to }'"
       else
         content = "#{ @T( item.type ) } #{ @T(item.object) } "
         if item.attribute
@@ -441,12 +441,12 @@ class App.GenericHistory extends App.ControllerModal
         if item.value_from
           if item.value_to
             content += " #{ @T( 'from' ) }"
-          content += " '#{ item.value_from }'"
+          content += " '#{ App.i18n.escape(item.value_from) }'"
 
         if item.value_to
           if item.value_from
             content += " #{ @T( 'to' ) }"
-          content += " '#{ item.value_to }'"
+          content += " '#{ App.i18n.escape(item.value_to) }'"
 
       newItem.records.push content
 
