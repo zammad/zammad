@@ -7,7 +7,7 @@ class App.DashboardTicketSearch extends App.Controller
     @item_from = 1
     @navupdate '#'
 
-    @key = @name + @Session.get('id')
+    @key = @name + Math.floor( Math.random() * 999999 ).toString()
 
     # render
     @fetch()
