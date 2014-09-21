@@ -19,7 +19,7 @@ class App.TaskbarWidget extends App.Controller
     @bind 'auth:logout', => @render()
 
   render: ->
-    return if _.isEmpty( @Session.all() )
+    return if !@Session.get()
 
     tasks = App.TaskManager.all()
     item_list = []

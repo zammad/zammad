@@ -21,16 +21,14 @@ class App.OnlineNotificationWidget extends App.Controller
 
     if @access()
       @start()
-
-    @start()
-    @subscribeId = App.OnlineNotification.subscribe( @start )
+      @subscribeId = App.OnlineNotification.subscribe( @start )
 
   release: =>
     @stop()
     App.OnlineNotification.unsubscribe( @subscribeId )
 
   access: ->
-    return false if _.isEmpty( @Session.all() )
+    return false if !@Session.get()
     return true if @isRole('Agent')
     return true if @isRole('Admin')
     return false

@@ -393,7 +393,7 @@ class Table extends App.ControllerContent
       # validate article
       if params['body']
         article = new App.TicketArticle
-        params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
+        params.from      = @Session.get().displayName()
         params.ticket_id = ticket.id
         params.form_id   = @form_id
 

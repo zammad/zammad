@@ -17,7 +17,7 @@ class Widget extends App.Controller
   render: (user) ->
 
     # if no switch to user is active
-    if !App.Config.get('switch_back_to_possible') || _.isEmpty( App.Session.all() )
+    if !App.Config.get('switch_back_to_possible') || !App.Session.get()
       @el.html('')
       $('#app').removeClass('switchBackToUserSpace')
       return

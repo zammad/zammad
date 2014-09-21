@@ -29,21 +29,23 @@ returns
 =end
 
   def self.create( client_id, session, meta )
+    data = {}
+    if session
+      data[:id] = session[:id]
+    end
     path = @path + '/' + client_id.to_s
     FileUtils.mkpath path
     meta[:last_ping] = Time.new.to_i.to_s
     File.open( path + '/session', 'wb' ) { |file|
       data = {
-        :user => {
-          :id => session['id'],
-        },
+        :user => data,
         :meta => meta,
       }
       file.write Marshal.dump(data)
     }
 
     # send update to browser
-    if session['id']
+    if session && session['id']
       self.send( client_id, {
         :event  => 'ws:login',
         :data   => { :success => true },

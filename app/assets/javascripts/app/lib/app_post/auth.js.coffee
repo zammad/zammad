@@ -102,9 +102,8 @@ class App.Auth
       App.Collection.loadAssets( data.assets )
 
     # store user data
-    session = App.User.fullLocal(data.session.id)
-    for key, value of session
-      App.Session.set( key, value )
+    sessionUser = App.User.fullLocal(data.session.id)
+    App.Session.set( sessionUser )
 
     # trigger auth ok with new session data
     App.Event.trigger( 'auth', data.session )

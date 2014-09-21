@@ -40,7 +40,7 @@ class Index extends App.Controller
         auth_providers.push provider
 
     @html App.view('profile/linked_accounts')(
-      user:           App.Session.all()
+      user:           App.Session.get()
       auth_providers: auth_providers
     )
 

@@ -203,7 +203,7 @@ class Index extends App.ControllerContent
 
     # create article
     params['article'] = {
-      from:       "#{ @Session.get('firstname') } #{ @Session.get('lastname') }"
+      from:       "#{ @Session.get().displayName() }"
       to:         (group && group.name) || ''
       subject:    params.subject
       body:       params.body

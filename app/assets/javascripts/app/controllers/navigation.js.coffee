@@ -126,7 +126,7 @@ class App.Navigation extends App.Controller
     # remember old search query
     search = @el.find('#global-search').val()
 
-    user   = App.Session.all()
+    user   = App.Session.get()
     @html App.view('navigation')(
       user:         user
       search:       search
@@ -365,6 +365,10 @@ class App.Navigation extends App.Controller
         part = key.split '::'
         if part[0] is 'RecendViewed'
           delete NavBarRight[key]
+
+    if !@Session.get()
+      @Config.set( 'NavBarRight', NavBarRight )
+      return
 
     # add new views
     items = App.RecentView.search(sortBy: 'created_at', order: 'DESC' )

@@ -6,7 +6,7 @@ class Index extends App.ControllerContent
     super
 
     # navigate to # if session if exists
-    if @Session.get( 'id' )
+    if @Session.get()
       @navigate '#'
       return
 

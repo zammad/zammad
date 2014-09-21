@@ -62,7 +62,7 @@ class App.TicketZoom extends App.Controller
 
   fetch: (ticket_id, force) ->
 
-    return if !@Session.all()
+    return if !@Session.get()
 
     # get data
     @ajax(
@@ -80,7 +80,7 @@ class App.TicketZoom extends App.Controller
           return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at
 
           # notify if ticket changed not by my self
-          if newTicketRaw.updated_by_id isnt @Session.all().id
+          if newTicketRaw.updated_by_id isnt @Session.get('id')
             App.TaskManager.notify( @task_key )
 
           # rerender edit box
@@ -835,7 +835,7 @@ class Edit extends App.Controller
     articleAttributes = App.TicketArticle.attributesGet( 'edit' )
     if params['body'] || ( articleAttributes['body'] && articleAttributes['body']['null'] is false )
       article = new App.TicketArticle
-      params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
+      params.from      = @Session.get().displayName()
       params.ticket_id = ticket.id
       params.form_id   = @form_id
 

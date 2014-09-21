@@ -5,7 +5,8 @@ App.Config.set( 'User', {
     item = {}
     item['name']   = App.Session.get( 'login' )
     item['image']  = App.Session.get( 'imageUrl' )
-    item['avatar'] = App.User.fullLocal( App.Session.get('id') ).avatar()
+    if App.Session.get()
+      item['avatar'] = App.Session.get().avatar()
     return item
   target: '#current_user',
   class:  'user'

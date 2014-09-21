@@ -10,15 +10,10 @@ class App.Session
       _instance ?= new _sessionSingleton
     _instance.get( key )
 
-  @set: ( key, value ) ->
+  @set: ( user ) ->
     if _instance == undefined
       _instance ?= new _sessionSingleton
-    _instance.set( key, value )
-
-  @all: ->
-    if _instance == undefined
-      _instance ?= new _sessionSingleton
-    _instance.all()
+    _instance.set( user )
 
 class _sessionSingleton extends Spine.Module
   @include App.LogInclude
@@ -27,15 +22,13 @@ class _sessionSingleton extends Spine.Module
     @clear()
 
   clear: ->
-    @data = {}
+    @user = undefined
 
   get: ( key ) ->
-    @log 'debug', key, @data[key]
-    @data[key]
+    return if !@user
+    if key
+      return @user[key]
+    @user
 
-  set: ( key, value ) ->
-    @log 'debug', 'set', key, value
-    @data[key] = value
-
-  all: ->
-    @data
+  set: ( user ) ->
+    @user = user

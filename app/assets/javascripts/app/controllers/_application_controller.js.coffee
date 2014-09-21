@@ -185,8 +185,8 @@ class App.Controller extends Spine.Controller
 
   authenticate: ->
 
-    # return rtue if session exists
-    return true if @Session.get( 'id' )
+    # return true if session exists
+    return true if @Session.get()
 
     # remember requested url
     @Config.set( 'requested_url', window.location.hash )
@@ -417,7 +417,7 @@ class App.Controller extends Spine.Controller
         item.link         = object.uiUrl()
         item.title        = object.displayName()
         item.object_name  = object.objectDisplayName()
-        item.cssIcon      = object.iconActivity( @Session.all() )
+        item.cssIcon      = object.iconActivity( @Session.get() )
 
       item.created_by = App.User.retrieve( item.created_by_id )
     items
