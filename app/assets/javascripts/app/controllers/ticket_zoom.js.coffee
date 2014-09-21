@@ -41,7 +41,7 @@ class App.TicketZoom extends App.Controller
       @ticket = App.Ticket.fullLocal( @ticket.id )
       meta.head  = @ticket.title
       meta.title = '#' + @ticket.number + ' - ' + @ticket.title
-      meta.class  = "level-#{@ticket.priority_id}"
+      meta.class  = "level-#{@ticket.level()}"
     meta
 
   url: =>

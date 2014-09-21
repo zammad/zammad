@@ -27,11 +27,20 @@ class App.Ticket extends App.Model
   uiUrl: ->
     '#ticket/zoom/' + @id
 
+  level: (user) ->
+    state = App.TicketState.find( @state_id )
+    level = 1
+    if state.name is 'new' || state.name is 'open'
+      level = 2
+    else if state.name is 'pending'
+      level = 3
+    level
+
   icon: (user) ->
-    "priority icon level-#{ @priority_id }"
+    "priority icon level-#{ @level() }"
 
   iconTitle: (user) ->
-    App.TicketPriority.find( @priority_id ).displayName()
+    App.TicketState.find( @state_id ).displayName()
 
   iconActivity: (user) ->
     if @owner_id == user.id
