@@ -240,14 +240,17 @@ class SessionsController < ApplicationController
       return false
     end
 
-    # log end session
-    current_user.activity_stream_log( 'ended switch to', user.id, true )
+    # rememeber current user
+    current_session_user = current_user
 
     # remove switched_from_user_id
     session[:switched_from_user_id] = nil
 
     # set old session user again
     current_user_set(user)
+
+    # log end session
+    current_session_user.activity_stream_log( 'ended switch to', user.id, true )
 
     redirect_to '/#'
   end
