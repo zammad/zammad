@@ -16,7 +16,7 @@ class App.Ticket extends App.Model
       { name: 'last_contact_customer', display: 'Last contact (Customer)', type: 'time', null: true, style: 'width: 12%' },
       { name: 'first_response',        display: 'First response',          type: 'time', null: true, style: 'width: 12%' },
       { name: 'close_time',            display: 'Close time',              type: 'time', null: true, style: 'width: 12%' },
-      { name: 'escalation_time',       display: 'Escalation in',           type: 'time', null: true, style: 'width: 12%', class: 'escalation' },
+      { name: 'escalation_time',       display: 'Escalation',              type: 'time', null: true, style: 'width: 12%', class: 'escalation' },
       { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
       { name: 'created_by_id',         display: 'Created by', relation: 'User', readonly: 1 },
       { name: 'created_at',            display: 'Created', type: 'time', style: 'width: 12%', readonly: 1 },
