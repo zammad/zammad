@@ -72,7 +72,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @el.find('[name="' + @attribute.name + '_completion"]').on(
       'keyup',
       (e) =>
-        item = $(e.target).val()
+        item = $(e.target).val().trim()
 
         #@log('CC', e.keyCode, item)
 
