@@ -57,35 +57,12 @@ class Index extends App.ControllerContent
 
     # set defaults
     defaults = template['options'] || {}
-    if !( 'state_id' of defaults )
-      defaults['state_id'] = App.TicketState.findByAttribute( 'name', 'new' )
-    if !( 'priority_id' of defaults )
-      defaults['priority_id'] = App.TicketPriority.findByAttribute( 'name', '2 normal' )
 
-    groupFilter = (collection, type) =>
-
-      # only filter on collections
-      return collection if type isnt 'collection'
-
-      # get configured ids
-      group_ids = App.Config.get('customer_ticket_create_group_ids')
-
-      # return all groups if no one is selected
-      return collection if !group_ids
-      return collection if !_.isArray( group_ids ) && group_ids is ''
-      return collection if _.isEmpty( group_ids )
-
-      if !_.isArray( group_ids )
-         group_ids = [group_ids]
-
-      # filter selected groups
-      if _.isEmpty( group_ids )
-        return collection
-      _.filter(
-        collection
-        (item) ->
-          return item if item && _.contains( group_ids, item.id.toString() )
-      )
+    groupFilter = App.Config.get('customer_ticket_create_group_ids')
+    if groupFilter
+      if !_.isArray(groupFilter)
+        groupFilter = [groupFilter]
+      @form_meta.filter.group_id = groupFilter
 
     formChanges = (params, attribute, attributes, classname, form, ui) =>
       if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
@@ -113,16 +90,15 @@ class Index extends App.ControllerContent
 
     @html App.view('customer_ticket_create')( head: 'New Ticket' )
 
-
     new App.ControllerForm(
       el:       @el.find('.ticket-form-top')
       form_id:  @form_id
       model:    App.Ticket
-      screen:   'create_top'#@article_attributes['screen']
+      screen:   'create_top'
       handlers: [
         formChanges
       ]
-      filter:     @form_meta.filter
+      filter:    @form_meta.filter
       autofocus: true
       params:    defaults
     )
@@ -131,19 +107,19 @@ class Index extends App.ControllerContent
       el:       @el.find('.article-form-top')
       form_id:  @form_id
       model:    App.TicketArticle
-      screen:   'create_top'#@article_attributes['screen']
+      screen:   'create_top'
       params:   defaults
     )
     new App.ControllerForm(
       el:       @el.find('.ticket-form-middle')
       form_id:  @form_id
       model:    App.Ticket
-      screen:   'create_middle'#@article_attributes['screen']
+      screen:   'create_middle'
       handlers: [
         formChanges
       ]
       filter:     @form_meta.filter
-      params:    defaults
+      params:     defaults
       noFieldset: true
     )
     #new App.ControllerForm(

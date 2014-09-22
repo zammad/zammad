@@ -179,22 +179,29 @@ class CreateObjectManager < ActiveRecord::Migration
       :active             => true,
       :screens            => {
         :create_middle => {
-          '-all-' => {
-            :null => false,
+          :Agent => {
+            :null       => false,
             :item_class => 'column',
+          },
+          :Customer => {
+            :item_class => 'column',
+            :nulloption => false,
+            :null       => true,
+            :filter     => [1,4],
+            :default    => 1,
           },
         },
         :edit => {
           :Agent => {
             :nulloption => false,
-            :null => false,
-            :filter => [2,3,4],
+            :null       => false,
+            :filter     => [2,3,4],
           },
           :Customer => {
             :nulloption => false,
-            :null => true,
-            :filter => [2,4],
-            :default => 2,
+            :null       => true,
+            :filter     => [2,4],
+            :default    => 2,
           },
         },
       },
