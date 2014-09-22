@@ -548,7 +548,7 @@ class App.OverviewSettings extends App.ControllerModal
         },
         {
           value:  'escalation_time'
-          name:   'Escalation in'
+          name:   'Escalation'
         },
         {
           value:  'article_count'
@@ -579,7 +579,7 @@ class App.OverviewSettings extends App.ControllerModal
         last_contact_customer:  'Last Contact Customer'
         first_response:         'First Response'
         close_time:             'Close Time'
-        escalation_time:        'Escalation in'
+        escalation_time:        'Escalation'
         article_count:          'Article Count'
       class:   'medium'
     },
