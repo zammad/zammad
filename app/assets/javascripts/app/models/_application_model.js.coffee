@@ -327,12 +327,13 @@ class App.Model extends Spine.Model
 
     # fetch init collection
     if param.initFetch is true
-      @one 'refresh', (collection) =>
-        @initFetchActive = false
-        callback(collection)
       if !@initFetchActive
-        @initFetchActive = true
+        @one 'refresh', (collection) =>
+          @initFetchActive = true
+          callback(collection)
         @fetch( {}, { clear: true } )
+      else
+        callback( @all() )
 
     # return key
     key
