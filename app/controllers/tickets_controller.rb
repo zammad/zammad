@@ -279,12 +279,34 @@ class TicketsController < ApplicationController
       assets = article.assets(assets)
     }
 
+    # get links
+    links = Link.list(
+      :link_object       => 'Ticket',
+      :link_object_value => ticket.id,
+    )
+    link_list = []
+    links.each { |item|
+      link_list.push item
+      if item['link_object'] == 'Ticket'
+        ticket = Ticket.lookup( :id => item['link_object_value'] )
+        assets = ticket.assets(assets)
+      end
+    }
+
+    # get tags
+    tags = Tag.tag_list(
+      :object => 'Ticket',
+      :o_id   => ticket.id,
+    )
+
     # return result
     render :json => {
       :ticket_id          => ticket.id,
       :ticket_article_ids => article_ids,
       :signature          => signature,
       :assets             => assets,
+      :links              => link_list,
+      :tags               => tags,
       :form_meta          => attributes_to_change,
       :edit_form          => attributes_to_change,
     }

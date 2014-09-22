@@ -6,7 +6,12 @@ class App.WidgetLink extends App.ControllerDrox
 
   constructor: ->
     super
-    @fetch()
+
+    # if links are given, do not init fetch
+    if @links
+      @render()
+    else
+      @fetch()
 
   fetch: =>
     # fetch item on demand

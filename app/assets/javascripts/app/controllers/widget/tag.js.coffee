@@ -3,6 +3,11 @@ class App.WidgetTag extends App.Controller
     super
 
     @attribute_id = 'tags_' + @object.id + '_' + @object_type
+
+    if @tags
+      @render(@tags)
+      return
+
     tags = App.Store.get( "tags::#{@attribute_id}" )
     if tags
       @render( tags )

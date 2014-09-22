@@ -110,6 +110,12 @@ class App.TicketZoom extends App.Controller
     # remember article ids
     @ticket_article_ids = data.ticket_article_ids
 
+    # remember link
+    @links = data.links
+
+    # remember tags
+    @tags = data.tags
+
     # get edit form attributes
     @form_meta = data.form_meta
 
@@ -263,7 +269,8 @@ class TicketInfo extends App.ControllerDrox
       new App.WidgetTag(
         el:           @el.find('.tag_info')
         object_type:  'Ticket'
-        object:        ticket
+        object:       ticket
+        tags:         @tags
       )
 
   release: =>
@@ -283,6 +290,7 @@ class Widgets extends App.Controller
     new TicketInfo(
       ticket:  ticket
       el:      @el.find('.ticket_info')
+      tags:    @ui.tags
     )
 
     # start customer info controller
@@ -299,6 +307,7 @@ class Widgets extends App.Controller
         el:           @el.find('.link_info')
         object_type:  'Ticket'
         object:       ticket
+        links:        @ui.links
       )
 
     # show frontend times
