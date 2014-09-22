@@ -1475,7 +1475,7 @@ class App.ControllerForm extends App.Controller
 
             # check all filter values as array
             # if it's matching, use it for selection
-            if record['id'] is key
+            if record['id'] is key || ( record['id'] && key && record['id'].toString() is key.toString() )
               list.push record
 
       # no data filter matched
@@ -1523,9 +1523,9 @@ class App.ControllerForm extends App.Controller
 
   # set selected attributes
   _selectedOptions: (attribute) ->
-
     return if !attribute.options
 
+    # check if selected / checked need to be set
     check = (value, record) ->
       if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
 
@@ -1533,14 +1533,12 @@ class App.ControllerForm extends App.Controller
         if record.value.toString() is value.toString() || record.name.toString() is value.toString()
           record.selected = 'selected'
           record.checked = 'checked'
-#          if record.name.toString() is attribute.value.toString()
-#            record.selected = 'selected'
-#            record.checked = 'checked'
 
       else if ( value && record.value && _.include( value, record.value ) ) || ( value && record.name && _.include( value, record.name ) )
         record.selected = 'selected'
         record.checked = 'checked'
 
+    # lookup of any record
     for record in attribute.options
 
       if _.isArray( attribute.value )
@@ -1549,6 +1547,16 @@ class App.ControllerForm extends App.Controller
 
       if typeof attribute.value is 'string' || typeof attribute.value is 'number' || typeof attribute.value is 'boolean'
         check( attribute.value, record )
+
+    # if noting is selected / checked, use default as selected / checked
+    selected = false
+    for record in attribute.options
+      if record.selected || record.checked
+        selected = true
+    if !selected
+      for record in attribute.options
+        if typeof attribute.default is 'string' || typeof attribute.default is 'number' || typeof attribute.default is 'boolean'
+          check( attribute.default, record )
 
   # set disabled attributes
   _disabledOptions: (attribute) ->

@@ -49,35 +49,13 @@ class Index extends App.ControllerContent
 
     # set defaults
     defaults = template['options'] || {}
-    if !( 'state_id' of defaults )
-      defaults['state_id'] = App.TicketState.findByAttribute( 'name', 'new' )
-    if !( 'priority_id' of defaults )
-      defaults['priority_id'] = App.TicketPriority.findByAttribute( 'name', '2 normal' )
 
-    groupFilter = (collection, type) =>
-
-      # only filter on collections
-      return collection if type isnt 'collection'
-
-      # get configured ids
-      group_ids = App.Config.get('customer_ticket_create_group_ids')
-
-      # return all groups if no one is selected
-      return collection if !group_ids
-      return collection if !_.isArray( group_ids ) && group_ids is ''
-      return collection if _.isEmpty( group_ids )
-
-      if !_.isArray( group_ids )
-         group_ids = [group_ids]
-
-      # filter selected groups
-      if _.isEmpty( group_ids )
-        return collection
-      _.filter(
-        collection
-        (item) ->
-          return item if item && _.contains( group_ids, item.id.toString() )
-      )
+    filter = {}
+    groupFilter = App.Config.get('customer_ticket_create_group_ids')
+    if groupFilter
+      if !_.isArray(groupFilter)
+        groupFilter = [groupFilter]
+      filter.group_id = groupFilter
 
     @html App.view('customer_ticket_create')( head: 'New Ticket' )
 
@@ -87,8 +65,7 @@ class Index extends App.ControllerContent
       model:    App.Ticket
       screen:   'create_web'
       autofocus: true
-      filter:
-        group_id: groupFilter
+      filter:   filter
       params:    defaults
     )
 

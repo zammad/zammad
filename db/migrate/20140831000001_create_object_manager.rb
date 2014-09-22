@@ -240,18 +240,23 @@ class CreateObjectManager < ActiveRecord::Migration
             :filter => [2,3,4],
           },
         },
-        :create_web => {},
+        :create_web => {
+          :Customer => {
+            :filter     => [1,4],
+            :default    => 1,
+          },
+        },
         :edit => {
           :Agent => {
             :nulloption => false,
-            :null => false,
-            :filter => [2,3,4],
+            :null       => false,
+            :filter     => [2,3,4],
           },
           :Customer => {
             :nulloption => false,
-            :null => true,
-            :filter => [2,4],
-            :default => 2,
+            :null       => true,
+            :filter     => [2,4],
+            :default    => 2,
           },
         },
       },
