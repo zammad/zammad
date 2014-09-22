@@ -479,6 +479,18 @@ Freemont and pulling out several minutes.
 [1] &#104;&#116;&#116;&#112;&#58;&#47;&#47;&#1072;&#1086;&#1089;&#1082;&#46;&#1088;&#1092;?jmlfwnwe&ucwkiyyc
 ",
         },
+
+      },
+      {
+        :data         => IO.read('test/fixtures/mail23.box'),
+        :body_md5     => '545a1b067fd10ac636c20b44f5df8868',
+        :params   => {
+          :from               => 'marketingmanager@nthcpghana.com',
+          :from_email         => 'marketingmanager@nthcpghana.com',
+          :from_display_name  => '',
+          :subject            => nil,
+          :to                 => 'undisclosed-recipients: ;',
+        },
       },
     ]
 
