@@ -171,6 +171,7 @@ class App.Model extends Spine.Model
               attribute[item] = value
             attributesNew[ attribute.name ] = attribute
 
+    # if no screen is given or no attribute has this screen - use default attributes
     if !screen || _.isEmpty( attributesNew )
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
@@ -335,9 +336,13 @@ class App.Model extends Spine.Model
 
     # fetch init collection
     if param.initFetch is true
-      @one 'refresh', (collection) =>
-        callback(collection)
-      @fetch( {}, { clear: true } )
+      if !@initFetchActive
+        @one 'refresh', (collection) =>
+          @initFetchActive = true
+          callback(collection)
+        @fetch( {}, { clear: true } )
+      else
+        callback( @all() )
 
     # return key
     key

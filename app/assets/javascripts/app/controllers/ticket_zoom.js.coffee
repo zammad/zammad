@@ -113,6 +113,12 @@ class App.TicketZoom extends App.Controller
     # remember article ids
     @ticket_article_ids = data.ticket_article_ids
 
+    # remember link
+    @links = data.links
+
+    # remember tags
+    @tags = data.tags
+
     # get edit form attributes
     @form_meta = data.form_meta
 
@@ -155,12 +161,14 @@ class App.TicketZoom extends App.Controller
             el:           el.find('.tags')
             object_type:  'Ticket'
             object:       @ticket
+            tags:         @tags
           )
           el.append('<div class="links"></div>')
           new App.WidgetLink(
             el:           el.find('.links')
             object_type:  'Ticket'
             object:       @ticket
+            links:        @links
           )
           el.append('<div class="action"></div>')
           showHistory = =>
@@ -865,26 +873,14 @@ class Edit extends App.Controller
         @autosaveStart()
         return
 
+    ticket.article = article
     ticket.save(
       done: (r) =>
 
         # reset form after save
-        if article
-          article.save(
-            done: (r) =>
-              @ui.fetch( ticket.id, true )
+        App.TaskManager.update( @task_key, { 'state': {} })
 
-              # reset form after save
-              App.TaskManager.update( @task_key, { 'state': {} })
-            fail: (r) =>
-              @log 'error', 'update article', r
-          )
-        else
-
-          # reset form after save
-          App.TaskManager.update( @task_key, { 'state': {} })
-
-          @ui.fetch( ticket.id, true )
+        @ui.fetch( ticket.id, true )
     )
 
   reset: (e) =>

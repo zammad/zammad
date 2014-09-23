@@ -12,10 +12,16 @@ class App.WidgetTag extends App.Controller
 
   constructor: ->
     super
+
     @cacheKey = "tags::#{@object_type}::#{@object.id}"
+
+    if @tags
+      @render(@tags)
+      return
+
     @tagList = App.Store.get( @cacheKey ) || []
-    @render()
     if !_.isEmpty(@tagList)
+      @render()
       @delay(
         =>
           @fetch()
