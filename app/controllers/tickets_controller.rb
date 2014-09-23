@@ -22,7 +22,7 @@ class TicketsController < ApplicationController
 
   # POST /api/v1/tickets
   def create
-    @ticket = Ticket.new( Ticket.param_validation( params[:ticket] ) )
+    ticket = Ticket.new( Ticket.param_validation( params[:ticket] ) )
 
     # check if article is given
     if !params[:article]
@@ -31,8 +31,8 @@ class TicketsController < ApplicationController
     end
 
     # create ticket
-    if !@ticket.save
-      render :json => @ticket.errors, :status => :unprocessable_entity
+    if !ticket.save
+      render :json => ticket.errors, :status => :unprocessable_entity
       return
     end
 
@@ -42,7 +42,7 @@ class TicketsController < ApplicationController
       tags.each {|tag|
         Tag.tag_add(
           :object        => 'Ticket',
-          :o_id          => @ticket.id,
+          :o_id          => ticket.id,
           :item          => tag,
           :created_by_id => current_user.id,
         )
@@ -51,57 +51,39 @@ class TicketsController < ApplicationController
 
     # create article if given
     if params[:article]
-      form_id  = params[:article][:form_id]
-      params[:article].delete(:form_id)
-      @article = Ticket::Article.new( Ticket::Article.param_validation( params[:article] ) )
-      @article.ticket_id     = @ticket.id
-
-      # find attachments in upload cache
-      if form_id
-        @article.attachments = Store.list(
-          :object => 'UploadCache',
-          :o_id   => form_id,
-        )
-      end
-      if !@article.save
-        render :json => @article.errors, :status => :unprocessable_entity
-        return
-      end
-
-      # remove attachments from upload cache
-      if form_id
-        Store.remove(
-          :object => 'UploadCache',
-          :o_id   => form_id,
-        )
-      end
+      article_create( ticket, params[:article] )
     end
 
-    render :json => @ticket, :status => :created
+    render :json => ticket, :status => :created
   end
 
   # PUT /api/v1/tickets/1
   def update
-    @ticket = Ticket.find(params[:id])
+    ticket = Ticket.find(params[:id])
 
     # permissin check
-    return if !ticket_permission(@ticket)
+    return if !ticket_permission(ticket)
 
-    if @ticket.update_attributes( Ticket.param_validation( params[:ticket] ) )
-      render :json => @ticket, :status => :ok
+    if ticket.update_attributes( Ticket.param_validation( params[:ticket] ) )
+
+      if params[:article]
+        article_create( ticket, params[:article] )
+      end
+
+      render :json => ticket, :status => :ok
     else
-      render :json => @ticket.errors, :status => :unprocessable_entity
+      render :json => ticket.errors, :status => :unprocessable_entity
     end
   end
 
   # DELETE /api/v1/tickets/1
   def destroy
-    @ticket = Ticket.find( params[:id] )
+    ticket = Ticket.find( params[:id] )
 
     # permissin check
-    return if !ticket_permission(@ticket)
+    return if !ticket_permission(ticket)
 
-    @ticket.destroy
+    ticket.destroy
 
     head :ok
   end
@@ -376,4 +358,34 @@ class TicketsController < ApplicationController
     }
   end
 
+  private
+
+  def article_create(ticket, params)
+puts params.inspect
+    # create article if given
+    form_id  = params[:form_id]
+    params.delete(:form_id)
+    article = Ticket::Article.new( Ticket::Article.param_validation( params ) )
+    article.ticket_id = ticket.id
+
+    # find attachments in upload cache
+    if form_id
+      article.attachments = Store.list(
+        :object => 'UploadCache',
+        :o_id   => form_id,
+      )
+    end
+    if !article.save
+      render :json => article.errors, :status => :unprocessable_entity
+      return
+    end
+
+    # remove attachments from upload cache
+    if form_id
+      Store.remove(
+        :object => 'UploadCache',
+        :o_id   => form_id,
+      )
+    end
+  end
 end

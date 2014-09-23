@@ -576,26 +576,14 @@ class Edit extends App.Controller
         @autosaveStart()
         return
 
+    ticket.article = article
     ticket.save(
       done: (r) =>
 
         # reset form after save
-        if article
-          article.save(
-            done: (r) =>
-              @ui.fetch( ticket.id, true )
+        App.TaskManager.update( @task_key, { 'state': {} })
 
-              # reset form after save
-              App.TaskManager.update( @task_key, { 'state': {} })
-            fail: (r) =>
-              @log 'error', 'update article', r
-          )
-        else
-
-          # reset form after save
-          App.TaskManager.update( @task_key, { 'state': {} })
-
-          @ui.fetch( ticket.id, true )
+        @ui.fetch( ticket.id, true )
     )
 
   reset: (e) =>
