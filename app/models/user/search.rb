@@ -41,9 +41,15 @@ returns
     # fallback do sql query
     # - stip out * we already search for *query* -
     query.gsub! '*', ''
-    users = User.where(
-      '(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
-    ).order('firstname').limit(limit)
+    if params[:role_ids]
+      users = User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where(
+        '(users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
+      ).order('firstname').limit(limit)
+    else
+      users = User.where(
+        '(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
+      ).order('firstname').limit(limit)
+    end
     return users
   end
 
