@@ -337,26 +337,47 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
       return
     end
 
-    # do query
-    user_all = User.search(
+    query_params = {
       :query        => params[:term],
       :limit        => params[:limit],
       :current_user => current_user,
-    )
-
-    # build result list
-    users = []
-    user_all.each do |user|
-      realname = user.firstname.to_s + ' ' + user.lastname.to_s
-      if user.email && user.email.to_s != ''
-        realname = realname + ' <' +  user.email.to_s + '>'
-      end
-      a = { :id => user.id, :label => realname, :value => realname }
-      users.push a
+    }
+    if params[:role_ids] && !params[:role_ids].empty?
+      query_params[:role_ids] = params[:role_ids]
     end
 
+    # do query
+    user_all = User.search(query_params)
+
+    # build result list
+    if !params[:full]
+      users = []
+      user_all.each { |user|
+        realname = user.firstname.to_s + ' ' + user.lastname.to_s
+        if user.email && user.email.to_s != ''
+          realname = realname + ' <' +  user.email.to_s + '>'
+        end
+        a = { :id => user.id, :label => realname, :value => realname }
+        users.push a
+      }
+
+      # return result
+      render :json => users
+      return
+    end
+
+    user_ids = []
+    assets   = {}
+    user_all.each { |user|
+      assets = user.assets(assets)
+      user_ids.push user.id
+    }
+
     # return result
-    render :json => users
+    render :json => {
+      :assets   => assets,
+      :user_ids => user_ids,
+    }
   end
 
   # GET /api/v1/users/history/1
