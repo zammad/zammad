@@ -248,10 +248,9 @@ class App.ControllerTable extends App.Controller
     # enable checkbox bulk selection
     if data.checkbox
 
-      # click first tr>td, click checkbox / improve usability
+      # click first tr>td, catch click
       table.delegate('tr > td:nth-child(1)', event, (e) ->
         e.stopPropagation()
-        $(e.target).find('[name="bulk"]').click()
       )
 
       # bind on full bulk click
