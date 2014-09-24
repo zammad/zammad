@@ -37,16 +37,20 @@ class App.User extends App.Model
     "user icon"
 
   initials: ->
-    if @firstname[0] && @lastname[0]
-      @firstname[0] + @lastname[0]
-    else if @firstname[0] && !@lastname[0]
-      @firstname[0] + @firstname[1]
-    else if !@firstname[0] && @lastname[0]
-      @lastname[0] + @lastname[1]
+    if @firstname && @lastname && @firstname[0] && @lastname[0]
+      return @firstname[0] + @lastname[0]
+    else if @firstname && @firstname[0] && !@lastname
+      if @firstname[1]
+        return @firstname[0] + @firstname[1]
+      return @firstname[0]
+    else if !@firstname && @lastname && @lastname[0]
+      if @lastname[1]
+        return @lastname[0] + @lastname[1]
+      return @lastname[0]
     else if @email
-      @email[0] + @email[1]
+      return @email[0] + @email[1]
     else
-      '??'
+      return '??'
 
   avatar: (big = false, placement = '', cssClass = '') ->
     if big
