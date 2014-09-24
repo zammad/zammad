@@ -16,11 +16,11 @@ class App.WidgetTag extends App.Controller
     @cacheKey = "tags::#{@object_type}::#{@object.id}"
 
     if @tags
-      @render(@tags)
+      @render()
       return
 
-    @tagList = App.Store.get( @cacheKey ) || []
-    if !_.isEmpty(@tagList)
+    @tags = App.Store.get( @cacheKey ) || []
+    if !_.isEmpty(@tags)
       @render()
       @delay(
         =>
@@ -41,14 +41,14 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id
       processData: true
       success: (data, status, xhr) =>
-        @tagList = data.tags
-        App.Store.write( @cacheKey, @tagList )
+        @tags = data.tags
+        App.Store.write( @cacheKey, @tags )
         @render()
     )
 
   render: ->
     @html App.view('widget/tag')(
-      tags: @tagList || [],
+      tags: @tags || [],
     )
 
   showInput: (e) ->
@@ -70,7 +70,7 @@ class App.WidgetTag extends App.Controller
       @render()
       return
 
-    @tagList.push item
+    @tags.push item
     @render()
 
     @ajax(
@@ -90,7 +90,7 @@ class App.WidgetTag extends App.Controller
     item = $(e.target).parents('li').find('.tag').text()
     return if !item
 
-    @tagList = _.filter(@tagList, (tagItem) -> return tagItem if tagItem isnt item )
+    @tags = _.filter(@tags, (tagItem) -> return tagItem if tagItem isnt item )
     @render()
 
     @ajax(
