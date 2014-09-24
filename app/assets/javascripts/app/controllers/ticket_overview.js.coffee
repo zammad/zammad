@@ -7,20 +7,24 @@ class Index extends App.Controller
 
     @html App.view('agent_ticket_view')()
 
+    # redirect to first view
     if !@view
       cache = App.Store.get( 'navupdate_ticket_overview' )
-      if cache && cache[0]
-        @view = cache[0].link
+      if cache && !_.isEmpty( cache )
+        view = cache[0].link
+        @navigate "ticket/view/#{view}"
+        return
 
     new Navbar(
       el:   @el.find('.sidebar')
       view: @view
     )
 
-    new Table(
-      el:   @el.find('.main')
-      view: @view
-    )
+    if @view
+      new Table(
+        el:   @el.find('.main')
+        view: @view
+      )
 
 class Table extends App.ControllerContent
   events:
@@ -363,7 +367,7 @@ class Table extends App.ControllerContent
         labelClass:           'input-group-addon'
       form_data:   @bulk
       noFieldset: true
-    )    
+    )
 
     html.bind('submit', (e) =>
       e.preventDefault()
@@ -696,6 +700,12 @@ class Navbar extends App.Controller
   render: (dataOrig) ->
 
     data = _.clone(dataOrig)
+
+    # redirect to first view
+    if !@view && !_.isEmpty(data)
+      view = data[0].link
+      @navigate "ticket/view/#{view}"
+      return
 
     # add new views
     for item in data
