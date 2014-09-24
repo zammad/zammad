@@ -277,8 +277,8 @@ class TicketsController < ApplicationController
     links.each { |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
-        ticket = Ticket.lookup( :id => item['link_object_value'] )
-        assets = ticket.assets(assets)
+        linked_ticket = Ticket.lookup( :id => item['link_object_value'] )
+        assets = linked_ticket.assets(assets)
       end
     }
 

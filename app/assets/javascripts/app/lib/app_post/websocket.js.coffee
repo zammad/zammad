@@ -151,20 +151,20 @@ class _webSocketSingleton extends App.Controller
   ping: =>
     return if @backend is 'ajax'
 
-    @log 'debug', 'send websockend ping'
+    @log 'debug', 'send websocket ping'
     @send( { action: 'ping' } )
 
     # check if ping is back within 2 min
     App.Delay.clear 'websocket-ping-check', 'ws'
     check = =>
-      @log 'notice', 'no websockend ping response, reconnect...'
+      @log 'notice', 'no websocket ping response, reconnect...'
       @close()
     App.Delay.set check, 90000, 'websocket-ping-check', 'ws'
 
   pong: ->
     return if @backend is 'ajax'
 
-    @log 'debug', 'received websockend ping'
+    @log 'debug', 'received websocket ping'
 
     # test again after 1 min
     App.Delay.set @ping, 60000, 'websocket-pong', 'ws'
