@@ -30,6 +30,8 @@ class App.ControllerForm extends App.Controller
 
     fieldset = $('<fieldset></fieldset>')
 
+    fieldset.append('<a href="#" class="js-reset hide">' + App.i18n.translatePlain('Discard your unsaved changes.') + '</a>')
+
     # collect form attributes
     @attributes = []
     if @model.attributesGet
@@ -1595,38 +1597,16 @@ class App.ControllerForm extends App.Controller
   @params: (form) ->
     param = {}
 
-    # create jquery object if not already exists
-    if form instanceof jQuery
-      # do nothing
-    else
-      form = $(form)
-
-    # find form if current is <form>
-    if form.is('form')
-      form = form
-
-    # find form based on sub elements
-    else if form.find('form')[0]
-      form = $( form.find('form')[0] )
-
-    # find form based on parents next <form>
-    else if form.parents('form')[0]
-      form = $( form.parents('form')[0] )
-
-    # use current content as form if form isn't already finished
-    else if !@finishForm
-      from = form
-    else
-      App.Log.error 'ControllerForm', 'no form found!', form
+    lookupForm = @findForm(form)
 
     # get form elements
-    array = form.serializeArray()
+    array = lookupForm.serializeArray()
 
     # 1:1 and boolean params
     for key in array
 
       # check if item is-hidden and should not be used
-      if form.find('[name="' + key.name + '"]').hasClass('is-hidden')
+      if lookupForm.find('[name="' + key.name + '"]').hasClass('is-hidden')
         continue
 
       # collect all other params
@@ -1694,29 +1674,73 @@ class App.ControllerForm extends App.Controller
     formId = new Date().getTime() + Math.floor( Math.random() * 99999 )
     formId.toString().substr formId.toString().length-9, 9
 
-  @disable: (form) ->
-    App.Log.notice 'ControllerForm', 'disable...', $(form.target).parent()
-    $(form.target).parent().find('button').attr('disabled', true)
-    $(form.target).parent().find('[type="submit"]').attr('disabled', true)
-    $(form.target).parent().find('[type="reset"]').attr('disabled', true)
+  @findForm: (form) ->
+    # check jquery event
+    if form && form.target
+      form = form.target
 
+    # create jquery object if not already exists
+    if form instanceof jQuery
+      # do nothing
+    else
+      form = $(form)
+
+    #console.log('FF', form)
+    # get form
+    if form.is('form') is true
+      #console.log('direct from')
+      return form
+    else if form.find('form').is('form') is true
+      #console.log('child from')
+      return form.find('form')
+    else if $(form).parents('form').is('form') is true
+      #console.log('parent from')
+      return form.parents('form')
+    # use current content as form if form isn't already finished
+    else if !@finishForm
+      #console.log('finishForm')
+      return form
+    else
+      App.Log.error 'ControllerForm', 'no form found!', form
+    form
+
+  @disable: (form) ->
+    lookupForm = @findForm(form)
+
+    if lookupForm
+      App.Log.notice 'ControllerForm', 'disable...', lookupForm
+      lookupForm.find('button').attr('disabled', true)
+      lookupForm.find('[type="submit"]').attr('disabled', true)
+      lookupForm.find('[type="reset"]').attr('disabled', true)
+    else
+      App.Log.notice 'ControllerForm', 'disable item...', form
+      form.attr('disabled', true)
 
   @enable: (form) ->
-    App.Log.notice 'ControllerForm', 'enable...', $(form.target).parent()
-    $(form.target).parent().find('button').attr('disabled', false)
-    $(form.target).parent().find('[type="submit"]').attr('disabled', false)
-    $(form.target).parent().find('[type="reset"]').attr('disabled', false)
+
+    lookupForm = @findForm(form)
+
+    if lookupForm
+      App.Log.notice 'ControllerForm', 'enable...', lookupForm
+      lookupForm.find('button').attr('disabled', false)
+      lookupForm.find('[type="submit"]').attr('disabled', false)
+      lookupForm.find('[type="reset"]').attr('disabled', false)
+    else
+      App.Log.notice 'ControllerForm', 'enable item...', form
+      form.attr('disabled', false)
 
   @validate: (data) ->
 
+    lookupForm = @findForm(data.form)
+
     # remove all errors
-    $(data.form).parents().find('.has-error').removeClass('has-error')
-    $(data.form).parents().find('.help-inline').html('')
+    lookupForm.find('.has-error').removeClass('has-error')
+    lookupForm.find('.help-inline').html('')
 
     # show new errors
     for key, msg of data.errors
-      $(data.form).parents('form').find('[name="' + key + '"]').parents('div .form-group').addClass('has-error')
-      $(data.form).parents('form').find('[name="' + key + '"]').parent().find('.help-inline').html(msg)
+      lookupForm.find('[name="' + key + '"]').parents('div .form-group').addClass('has-error')
+      lookupForm.find('[name="' + key + '"]').parent().find('.help-inline').html(msg)
 
     # set autofocus
-    $(data.form).parents('form').find('.has-error').find('input, textarea').first().focus()
+    lookupForm.find('.has-error').find('input, textarea').first().focus()
