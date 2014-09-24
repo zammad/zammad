@@ -1,6 +1,5 @@
 <div class="level-2">
-  <div class="priority icon"></div>
-  eskalierend
+  <div class="<%- @ticket.icon() %>" title="<%- @ticket.iconTitle() %>"></div>
 </div>
 <hr>
 <h3>Personen</h3>
