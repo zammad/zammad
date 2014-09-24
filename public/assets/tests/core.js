@@ -426,6 +426,88 @@ test( "config", function() {
   });
 });
 
+// diff
+test( "diff", function() {
+
+  // simple
+  var tests = [
+    {
+      object1: {
+        key1: 123,
+        key2: 1234
+      },
+      object2: {
+        key1: 123,
+        key2: 1235
+      },
+      result: {
+        key2: 1235
+      }
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: 123
+      },
+      object2: {
+        key1: 123,
+        key2: 123
+      },
+      result: {}
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: 123
+      },
+      object2: {
+        key1: 123,
+        key2: 123
+      },
+      result: {}
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: [1,3,5]
+      },
+      object2: {
+        key1: 123,
+        key2: 123
+      },
+      result: {
+        key2: 123
+      }
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: [1,3,5]
+      },
+      object2: {
+        key1: 123,
+      },
+      result: {}
+    },
+    {
+      object1: {
+        key1: 123,
+      },
+      object2: {
+        key1: 123,
+        key2: 124
+      },
+      result: {}
+    },
+  ];
+
+  _.each(tests, function(test) {
+    var item = difference( test.object1, test.object2 )
+    deepEqual( item, test.result, 'tests simple' );
+  });
+
+
+});
 
 // auth
 App.Auth.login({
