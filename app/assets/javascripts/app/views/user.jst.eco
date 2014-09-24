@@ -1,0 +1,22 @@
+<div class="page-header horizontal">
+  <div class="page-header-title">
+    <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
+  </div>
+  <div class="page-header-meta">
+    <% if @buttons: %>
+    <% for button in @buttons: %>
+      <a data-type="<%= button['data-type'] %>" class="btn btn-default <%= button['class'] %>"><%- @T( button.name ) %></a>
+    <% end %>
+    <% end %>
+  </div>
+</div>
+
+<input class="search" name="search" placeholder="<%- @T('Search for users') %>">
+
+<div class="tabs wide-tabs horizontal" style="width: 100%;">
+  <% for role in @roles: %>
+    <div class="tab" data-id="<%= role.id %>"><%- @T(role.displayName() ) %></div>
+  <% end %>
+</div>
+
+<div class="table-overview"></div>

@@ -1,9 +1,44 @@
 class Index extends App.Controller
+  events:
+    'click [data-type="new"]':  'new'
+
   constructor: ->
     super
 
     # check authentication
     return if !@authenticate()
+
+    @render()
+
+  render: ->
+    @html App.view('user')(
+      head: 'Users'
+      buttons: [
+        { name: 'New User', 'data-type': 'new', class: 'primary' }
+      ]
+      roles: App.Role.all()
+    )
+
+    @$('.tab').on(
+      'click'
+      (e) =>
+        e.preventDefault()
+        $(e.target).toggleClass('active')
+        term = @$('.search').val().trim()
+        return if !term
+        @delay( @search, 220, 'search' )
+    )
+
+    # start search
+    @$('.search').bind( 'keyup', (e) =>
+      term = @$('.search').val().trim()
+      return if !term
+      return if term is @term
+      @term = term
+      @delay( @search, 220, 'search' )
+    )
+
+  renderResult: (user_ids = []) ->
 
     callbackHeader = (header) ->
       attribute =
@@ -27,34 +62,82 @@ class Index extends App.Controller
       App.Auth._logout()
       window.location = App.Config.get('api_path') + '/sessions/switch/' + id
 
-    new App.ControllerGenericIndex(
-      el: @el
-      id: @id
-      genericObject: 'User'
-      defaultSortBy: 'login'
-      ignoreObjectIDs: [1]
+    edit = (id, e) =>
+      e.preventDefault()
+      item = App.User.find(id)
+
+      rerender = =>
+        @renderResult(user_ids)
+
+      new App.ControllerGenericEdit(
+        id:            item.id
+        pageData:
+          title:     'Users'
+          home:      'users'
+          object:    'User'
+          objects:   'Users'
+          navupdate: '#users'
+        genericObject: 'User'
+        callback: rerender
+      )
+
+    users = []
+    for user_id in user_ids
+      user = App.User.find(user_id)
+      users.push user
+
+    @$('.table-overview').html('')
+    new App.ControllerTable(
+      el:       @$('.table-overview')
+      model:    App.User
+      objects:  users
+      callbackHeader:   callbackHeader
+      callbackAttributes:
+        switch_to: [
+          callbackAttributes
+        ]
+      bindCol:
+        switch_to:
+          events:
+            'click': switchTo
+      bindRow:
+        events:
+          'click': edit
+    )
+
+  search: =>
+    role_ids = []
+    @$('.tab.active').each( (i,d) ->
+      role_ids.push $(d).data('id')
+    )
+    App.Ajax.request(
+      id:    'search'
+      type:  'GET'
+      url:   @apiPath + '/users/search'
+      data:
+        term:  @term
+        limit: 140
+        role_ids: role_ids
+        full:  1
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # load assets
+        App.Collection.loadAssets( data.assets )
+
+        @renderResult(data.user_ids)
+    )
+
+  new: (e) ->
+    e.preventDefault()
+    new App.ControllerGenericNew(
       pageData:
         title:     'Users'
         home:      'users'
         object:    'User'
         objects:   'Users'
         navupdate: '#users'
-        notes: [
-          'Users are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers.'
-        ]
-        buttons: [
-          { name: 'New User', 'data-type': 'new', class: 'primary' }
-        ]
-        tableExtend:
-          callbackHeader:   callbackHeader
-          callbackAttributes:
-            switch_to: [
-              callbackAttributes
-            ]
-          bindCol:
-            switch_to:
-              events:
-                'click': switchTo
+      genericObject: 'User'
     )
 
 App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
