@@ -1,9 +1,6 @@
 class App.Navigation extends App.Controller
   className: 'navigation vertical'
 
-  events:
-    'click .empty-search': 'emptySearch'
-
   constructor: ->
     super
     @render()
@@ -34,32 +31,32 @@ class App.Navigation extends App.Controller
     # bell on / bell off
     @bind 'bell', (data) =>
       if data is 'on'
-        @el.find('.bell').addClass('show')
+        @$('.bell').addClass('show')
         App.Audio.play( 'https://www.sounddogs.com/previews/2193/mp3/219024_SOUNDDOGS__be.mp3' )
         @delay(
           -> App.Event.trigger('bell', 'off' )
           3000
         )
       else
-        @el.find('.bell').removeClass('show')
+        @$('.bell').removeClass('show')
 
   renderMenu: =>
     items = @getItems( navbar: @Config.get( 'NavBar' ) )
 
     # get open tabs to repopen on rerender
     open_tab = {}
-    @el.find('.open').children('a').each( (i,d) =>
+    @$('.open').children('a').each( (i,d) =>
       href = $(d).attr('href')
       open_tab[href] = true
     )
 
     # get active tabs to reactivate on rerender
     active_tab = {}
-    @el.find('.active').children('a').each( (i,d) =>
+    @$('.active').children('a').each( (i,d) =>
       href = $(d).attr('href')
       active_tab[href] = true
     )
-    @el.find('.main-navigation').html App.view('navigation/menu')(
+    @$('.main-navigation').html App.view('navigation/menu')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab
@@ -71,26 +68,26 @@ class App.Navigation extends App.Controller
 
     # get open tabs to repopen on rerender
     open_tab = {}
-    @el.find('.open').children('a').each( (i,d) =>
+    @$('.open').children('a').each( (i,d) =>
       href = $(d).attr('href')
       open_tab[href] = true
     )
 
     # get active tabs to reactivate on rerender
     active_tab = {}
-    @el.find('.active').children('a').each( (i,d) =>
+    @$('.active').children('a').each( (i,d) =>
       href = $(d).attr('href')
       active_tab[href] = true
     )
 
-    @el.find('.navbar-items-personal').html App.view('navigation/personal')(
+    @$('.navbar-items-personal').html App.view('navigation/personal')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab
     )
 
   renderResult: (result = []) =>
-    el = @el.find('#global-search-result')
+    el = @$('#global-search-result')
 
     # destroy existing popovers
     @ticketPopupsDestroy()
@@ -99,7 +96,7 @@ class App.Navigation extends App.Controller
 
     # remove result if not result exists
     if _.isEmpty( result )
-      @el.find('.search').removeClass('open')
+      @$('.search').removeClass('open')
       el.html( '' )
       return
 
@@ -110,7 +107,7 @@ class App.Navigation extends App.Controller
     el.html( html )
 
     # show result list
-    @el.find('.search').addClass('open')
+    @$('.search').addClass('open')
 
     # start ticket popups
     @ticketPopups()
@@ -123,13 +120,9 @@ class App.Navigation extends App.Controller
 
   render: () ->
 
-    # remember old search query
-    search = @el.find('#global-search').val()
-
-    user   = App.Session.get()
+    user = App.Session.get()
     @html App.view('navigation')(
-      user:         user
-      search:       search
+      user: user
     )
 
     # renderMenu
@@ -137,14 +130,6 @@ class App.Navigation extends App.Controller
 
     # renderPersonal
     @renderPersonal()
-
-    # set focus to search box
-    if @searchFocus
-      @searchFocusSet = true
-      App.ClipBoard.setPosition( 'global-search', search.length )
-
-    else
-      @searchFocusSet = false
 
     searchFunction = =>
       App.Ajax.request(
@@ -202,57 +187,56 @@ class App.Navigation extends App.Controller
       )
 
     # observer search box
-    @el.find('#global-search').bind( 'focusin', (e) =>
+    @$('#global-search').bind( 'focusin', (e) =>
 
-      # remember to set search box
-      @searchFocus = true
-
-      @el.find('.search').addClass('focused')
+      @$('.search').addClass('focused')
 
       # check if search is needed
-      @term = @el.find('#global-search').val()
-      return if @searchFocusSet
-      return if !@term
-      @delay( searchFunction, 200, 'search' )
+      term = @$('#global-search').val().trim()
+      return if !term
+      @term = term
+      @delay( searchFunction, 220, 'search' )
     )
 
     # remove search result
-    @el.find('#global-search').bind( 'focusout', (e) =>
-      @el.find('.search').removeClass('focused')
+    @$('#global-search').bind( 'focusout', (e) =>
+      @$('.search').removeClass('focused')
 
       @delay(
         =>
-          @searchFocus = false
           @renderResult()
         320
       )
     )
 
     # prevent submit of search box
-    @el.find('form.search').bind( 'submit', (e) =>
+    @$('form.search').bind( 'submit', (e) =>
       e.preventDefault()
     )
 
     # start search
-    @el.find('#global-search').bind( 'keyup', (e) =>
-      @term = @el.find('#global-search').val()
-
-      @el.find('.search').toggleClass('filled', !!@term)
-
-      return if !@term
-      return if @term is search
+    @$('#global-search').bind( 'keyup', (e) =>
+      term = @$('#global-search').val().trim()
+      return if !term
+      return if term is @term
+      @term = term
+      @$('.search').toggleClass('filled', !!@term)
       @delay( searchFunction, 220, 'search' )
+    )
+
+    # bind to empty search
+    @$('.empty-search').on(
+      'click'
+      =>
+        @$('#global-search').val('')
+        @$('.search').removeClass('filled')
     )
 
     new App.OnlineNotificationWidget(
       el: @el
     )
 
-    @taskbar = new App.TaskbarWidget( el: @el.find('.tasks') )
-
-  emptySearch: (event) =>
-    @el.find('#global-search').val("")
-    @el.find('.search').removeClass('filled')
+    @taskbar = new App.TaskbarWidget( el: @$('.tasks') )
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)
@@ -353,8 +337,8 @@ class App.Navigation extends App.Controller
           @addPrioCount newlist, item
 
   update: (url) =>
-    @el.find('li').removeClass('active')
-    @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
+    @$('li').removeClass('active')
+    @$("[href=\"#{url}\"]").parents('li').addClass('active')
 
   recentViewNavbarItemsRebuild: =>
 
