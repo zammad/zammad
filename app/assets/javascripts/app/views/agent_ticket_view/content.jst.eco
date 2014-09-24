@@ -18,5 +18,5 @@
     <div class="table-overview"></div>
   </div>
 
-  <div class="bulk-action hide"></div>
+  <div class="bulkAction hide"></div>
 </div>

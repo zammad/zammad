@@ -200,9 +200,9 @@ class Table extends App.ControllerContent
         value
       callbackCheckbox = (id, checked, e) =>
         if @el.find('table').find('input[name="bulk"]:checked').length == 0
-          @el.find('.bulk-action').addClass('hide')
+          @el.find('.bulkAction').addClass('hide')
         else
-          @el.find('.bulk-action').removeClass('hide')
+          @el.find('.bulkAction').removeClass('hide')
       callbackIconHeader = (header) ->
         attribute =
           name:       'icon'
@@ -259,9 +259,9 @@ class Table extends App.ControllerContent
     @frontendTimeUpdate()
 
     # start bulk action observ
-    @el.find('.bulk-action').append( @bulk_form() )
+    @el.find('.bulkAction').append( @bulk_form() )
     if @el.find('.table-overview').find('input[name="bulk"]:checked').length isnt 0
-        @el.find('.bulk-action').removeClass('hide')
+        @el.find('.bulkAction').removeClass('hide')
 
     # show/hide bulk action
     @el.find('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
@@ -269,13 +269,13 @@ class Table extends App.ControllerContent
       if @el.find('.table-overview').find('input[name="bulk"]:checked').length == 0
 
         # hide
-        @el.find('.bulk-action').addClass('hide')
+        @el.find('.bulkAction').addClass('hide')
 
         @resetBulkForm()
       else
 
         # show
-        @el.find('.bulk-action').removeClass('hide')
+        @el.find('.bulkAction').removeClass('hide')
     )
 
     # deselect bulk_all if one item is uncheck observ
@@ -325,9 +325,7 @@ class Table extends App.ControllerContent
       { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
       { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
       { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: '', item_class: ''  },
-      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' },
-      { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: articleTypeFilter, default: '9', translate: true, class: 'medium' },
-      { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
+      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' }
     ]
 
     # render init page
@@ -341,16 +339,32 @@ class Table extends App.ControllerContent
       form_data:   @bulk
       noFieldset: true
     )
+
     new App.ControllerForm(
-      el: html.find('#form-ticket-bulk-text')
+      el: html.find('#form-ticket-bulk-comment')
       model:
-        configure_attributes: [{ name: 'body', display: 'Comment', tag: 'textarea', rows: 1, null: true, upload: false, item_class: 'flex' }]
+        configure_attributes: [{ name: 'body',         display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
         className:            'create'
         labelClass:           'input-group-addon'
       form_data:   @bulk
       noFieldset: true
     )
-    #html.delegate('.bulk-action-form', 'submit', (e) =>
+
+    @confirm_attributes = [
+      { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: articleTypeFilter, default: '9', translate: true, class: 'medium' }
+      { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
+    ]
+
+    new App.ControllerForm(
+      el: html.find('#form-ticket-bulk-typeVisibility')
+      model:
+        configure_attributes: @confirm_attributes
+        className:            'create'
+        labelClass:           'input-group-addon'
+      form_data:   @bulk
+      noFieldset: true
+    )    
+
     html.bind('submit', (e) =>
       e.preventDefault()
       @bulk_submit(e)

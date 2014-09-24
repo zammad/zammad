@@ -1294,7 +1294,7 @@ footer {
   padding: 10px 20px;
 }
 
-.bulk-action {
+.bulkAction {
   background: white;
   z-index: 1;
   box-shadow: 
@@ -1303,12 +1303,12 @@ footer {
     0 -3px rgba(0,0,0,.01);
 }
 
-  .bulk-action .btn {
+  .bulkAction .btn {
     margin: 0 10px;
   }
 
-  .bulkAction-labelOffset {
-    margin-top: 14px;
+  .bulkAction-controls {
+    margin-top: 10px;
   }
 
 .show_toogle {
@@ -2219,7 +2219,7 @@ footer {
     height: 60px;
   }
 
-    .form-inline .form-group:last-child {
+    .ticket-attributes.form-inline .form-group:last-child {
       flex-grow: 0;
     }
 
@@ -2270,12 +2270,13 @@ footer {
   }
 
   .form-inline .input-group-addon {
+    width: auto;
     padding: 0;
     margin: 10px 18px 0;
     font-size: 13px;
     letter-spacing: 0.05em;
     color: #ccc;
-    display: block;
+    display: inline-block;
     position: relative;
   }
 
@@ -2296,22 +2297,29 @@ footer {
             appearance: none;
   }
 
-  .form-inline .textarea.form-group {
-    padding: 0 18px;
+  .bulkAction-secondStep .form-group {
+    min-width: 100px;
+  }
+
+  .bulkAction-secondStep .form-inline .textarea.form-group {
+    padding: 0 10px;
     height: auto;
     flex-grow: 1;
   }
 
-    .form-inline .textarea.form-group  .input-group-addon {
-      margin-left: 0;
-      margin-right: 0;
+    .bulkAction-secondStep .form-inline .textarea.form-group  .input-group-addon {
+      margin-left: 8px;
+      margin-right: 8px;
       margin-bottom: 5px;
     }
 
-    .form-inline textarea.form-control {
+    .bulkAction-secondStep .form-inline textarea.form-control {
       display: block;
+      padding-left: 8px;
+      padding-right: 8px;
       width: 100%;
       resize: vertical;
+      border-color: #f0f0f0;
     }
 
 .ticketZoom {
