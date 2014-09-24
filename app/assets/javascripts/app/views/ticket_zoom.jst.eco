@@ -66,7 +66,7 @@
       </select>
     </div>
     <div class="form-group">
-      <input type="submit" class="btn primary submit" value="update">
+      <input type="submit" class="btn btn--primary submit" value="<%- @T('Update') %>">
     </div>
   </form>
 </div>
