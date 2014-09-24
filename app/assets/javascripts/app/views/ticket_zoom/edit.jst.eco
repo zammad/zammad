@@ -1,4 +1,4 @@
-<form class="ticket-update <% if @formChanged: %>form-changed<% end %>">
+<form class="article-add <% if @formChanged: %>form-changed<% end %>">
   <div class="bubble-grid horizontal">
     <div class="vertical center edit-controls">
       <%- App.User.fullLocal( @S('id') ).avatar(false, 'right', 'zIndex-5') %>
@@ -8,18 +8,11 @@
         </div>
         <div class="pop-selector hide">
           <div class="horizontal">
-            <div class="pop-selectable u-clickable centered" data-value="email">
-              <div class="white email channel icon"></div>
+            <% for atricleType in @articleTypes: %>
+            <div class="pop-selectable u-clickable centered" data-value="<%= atricleType.name %>">
+              <div class="white <%= atricleType.icon %> channel icon"></div>
             </div>
-            <div class="pop-selectable u-clickable centered" data-value="facebook">
-              <div class="white facebook channel icon"></div>
-            </div>
-            <div class="pop-selectable u-clickable centered" data-value="twitter">
-              <div class="white twitter channel icon"></div>
-            </div>
-            <div class="pop-selectable u-clickable centered" data-value="phone">
-              <div class="white phone channel icon"></div>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>

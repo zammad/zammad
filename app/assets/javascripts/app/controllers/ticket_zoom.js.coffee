@@ -1,4 +1,7 @@
 class App.TicketZoom extends App.Controller
+  events:
+    'click .submit': 'submit'
+
   constructor: (params) ->
     super
 
@@ -52,13 +55,15 @@ class App.TicketZoom extends App.Controller
     @navupdate '#'
 
   changed: =>
-    formCurrent = @formParam( @el.find('.ticket-update') )
-    diff = difference( @formDefault, formCurrent )
-    return false if !diff || _.isEmpty( diff )
+    formCurrent = @formParam( @el.find('.edit') )
+    ticket = App.Ticket.find(@ticket_id).attributes()
+    modelDiff  = @getDiff( ticket, formCurrent )
+    return false if !modelDiff || _.isEmpty( modelDiff )
     return true
 
   release: =>
     # nothing
+    @autosaveStop()
 
   fetch: (ticket_id, force) ->
 
@@ -138,6 +143,8 @@ class App.TicketZoom extends App.Controller
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
+    @formEnable( @$('.submit') )
+
     if !@renderDone
       @renderDone = true
       @html App.view('ticket_zoom')(
@@ -148,13 +155,76 @@ class App.TicketZoom extends App.Controller
       @TicketTitle()
 
       editTicket = (el) =>
-        el.append('<div class="edit"></div>')
-        new App.ControllerForm(
-          el:         el.find('.edit')
-          model:      App.Ticket
-          screen:     'edit'
-          params:     App.Ticket.find(@ticket.id)
-        )
+        el.append('<form class="edit"></form>')
+        @editEl = el
+        console.log('EDIT TAB', @ticket.id)
+
+        reset = (e) =>
+          e.preventDefault()
+          App.TaskManager.update( @task_key, { 'state': {} })
+          show(@ticket)
+
+        show = (ticket) =>
+          console.log('SHOW', ticket.id)
+          el.find('.edit').html('')
+
+          formChanges = (params, attribute, attributes, classname, form, ui) =>
+            if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
+              dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+              if dependency
+
+                for fieldNameToChange of dependency
+                  filter = []
+                  if dependency[fieldNameToChange]
+                    filter = dependency[fieldNameToChange]
+
+                  # find element to replace
+                  for item in attributes
+                    if item.name is fieldNameToChange
+                      item.display = false
+                      item['filter'] = {}
+                      item['filter'][ fieldNameToChange ] = filter
+                      item.default = params[item.name]
+                      #if !item.default
+                      #  delete item['default']
+                      newElement = ui.formGenItem( item, classname, form )
+
+                  # replace new option list
+                  form.find('[name="' + fieldNameToChange + '"]').replaceWith( newElement )
+
+          defaults   = ticket.attributes()
+          task_state = App.TaskManager.get(@task_key).state || {}
+          modelDiff  = @getDiff( defaults, task_state )
+          #if @isRole('Customer')
+          #  delete defaults['state_id']
+          #  delete defaults['state']
+          if !_.isEmpty( task_state )
+            defaults = _.extend( defaults, task_state )
+
+          new App.ControllerForm(
+            el:         el.find('.edit')
+            model:      App.Ticket
+            screen:     'edit'
+            params:     App.Ticket.find(ticket.id)
+            handlers: [
+              formChanges
+            ]
+            filter:    @form_meta.filter
+            params:    defaults
+          )
+          #console.log('Ichanges', modelDiff, task_state, ticket.attributes())
+          @markFormDiff( modelDiff )
+
+          # bind on reset link
+          @el.find('.edit .js-reset').on(
+            'click'
+            (e) =>
+              reset(e)
+          )
+
+        @subscribeIdEdit = @ticket.subscribe(show)
+        show(@ticket)
+
         if !@isRole('Customer')
           el.append('<div class="tags"></div>')
           new App.WidgetTag(
@@ -272,39 +342,6 @@ class App.TicketZoom extends App.Controller
         items:  items
       )
 
-      ###
-      new App.ControllerForm(
-        el:         @el.find('.edit')
-        model:      App.Ticket
-        screen:   'edit'
-        params:     App.Ticket.find(@ticket.id)
-      )
-      # start link info controller
-      if !@isRole('Customer')
-        new App.WidgetTag(
-          el:           @el.find('.tags')
-          object_type:  'Ticket'
-          object:        @ticket
-        )
-        new App.WidgetLink(
-          el:           @el.find('.links')
-          object_type:  'Ticket'
-          object:       @ticket
-        )
-        new App.ControllerForm(
-          el:         @el.find('.customer-edit')
-          model:      App.User
-          screen:   'edit'
-          params:     App.User.find(@ticket.customer_id)
-        )
-        new App.ControllerForm(
-          el:         @el.find('.organization-edit')
-          model:      App.Organization
-          params:     App.Organization.find(@ticket.organitaion_id)
-          screen:   'edit'
-        )
-        ###
-
     @ArticleView()
 
     if force || !@editDone
@@ -324,6 +361,8 @@ class App.TicketZoom extends App.Controller
       scrollTo = ->
         @scrollTo( 0, offset )
       @delay( scrollTo, 100, false )
+
+    @autosaveStart()
 
   TicketTitle: =>
     # show ticket title
@@ -350,6 +389,200 @@ class App.TicketZoom extends App.Controller
       form_meta:  @form_meta
       task_key:   @task_key
       ui:         @
+    )
+
+  autosaveStop: =>
+    @autosaveLast = {}
+    @clearInterval( 'autosave' )
+
+  autosaveStart: =>
+    if !@autosaveLast
+      @autosaveLast = App.TaskManager.get(@task_key).state || {}
+    update = =>
+      currentStore  = @ticket.attributes()
+      currentParams = @formParam( @el.find('.edit') )
+
+      # get diff of model
+      modelDiff = @getDiff( currentStore, currentParams )
+      #console.log('modelDiff', modelDiff)
+
+      # get diff of last save
+      changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast )
+      #console.log('changedBetweenLastSave', changedBetweenLastSave)
+      if !changedBetweenLastSave
+        #console.log('autosave DIFF result', changedBetweenLastSave)
+        console.log('model DIFF ', modelDiff)
+
+        @autosaveLast = clone(currentParams)
+        @markFormDiff( modelDiff )
+
+        App.TaskManager.update( @task_key, { 'state': modelDiff })
+    @interval( update, 3000, 'autosave' )
+
+  getDiff: (model, params) =>
+
+    # do type convertation to compare it against form
+    modelClone = clone(model)
+    for key, value of modelClone
+      if key is 'owner_id' && modelClone[key] is 1
+        modelClone[key] = ''
+      else if typeof value is 'number'
+        modelClone[key] = value.toString()
+    #console.log('LLL', modelClone)
+    result = difference( modelClone, params )
+
+  markFormDiff: (diff = {}) =>
+    form = @$('.edit')
+
+    params = @formParam( form )
+    #console.log('markFormDiff', diff, params)
+
+    # clear all changes
+    if _.isEmpty(diff)
+      form.removeClass('form-changed')
+      form.find('.form-group').removeClass('is-changed')
+      form.find('.js-reset').addClass('hide')
+
+    # set changes
+    else
+      form.addClass('form-changed')
+      for currentKey, currentValue of params
+        element = @$('.edit [name="' + currentKey + '"]').parents('.form-group')
+        if diff[currentKey]
+          if !element.hasClass('is-changed')
+            element.addClass('is-changed')
+        else
+          if element.hasClass('is-changed')
+            element.removeClass('is-changed')
+
+      form.find('.js-reset').removeClass('hide')
+
+
+  submit: (e) =>
+    e.stopPropagation()
+    e.preventDefault()
+    ticketParams = @formParam( @$('.edit') )
+    console.log "submit ticket", ticketParams
+
+    # validate ticket
+    ticket = App.Ticket.fullLocal( @ticket.id )
+
+    # update ticket attributes
+    for key, value of ticketParams
+      ticket[key] = value
+
+    # set defaults
+    if !@isRole('Customer')
+      if !ticket['owner_id']
+        ticket['owner_id'] = 1
+
+    # check if title exists
+    if !ticket['title']
+      alert( App.i18n.translateContent('Title needed') )
+      return
+
+    # submit ticket & article
+    @log 'notice', 'update ticket', ticket
+
+    # disable form
+    @formDisable(e)
+
+    # validate ticket
+    errors = ticket.validate(
+      screen: 'edit'
+    )
+    if errors
+      @log 'error', 'update', errors
+      @formValidate(
+        form:   @$('.edit')
+        errors: errors
+        screen: 'edit'
+      )
+      @formEnable(e)
+      #@autosaveStart()
+      return
+
+    console.log('ticket validateion ok')
+
+    @formEnable(e)
+
+    # validate article
+    articleParams = @formParam( @$('.article-add') )
+    console.log "submit article", articleParams
+    return
+    articleAttributes = App.TicketArticle.attributesGet( 'edit' )
+    if articleParams['body'] || ( articleAttributes['body'] && articleAttributes['body']['null'] is false )
+      if @isRole('Customer')
+        sender            = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+        type              = App.TicketArticleType.findByAttribute( 'name', 'web' )
+        articleParams.type_id    = type.id
+        articleParams.sender_id  = sender.id
+      else
+        sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+        type              = App.TicketArticleType.find( params['type_id'] )
+        articleParams.sender_id  = sender.id
+
+      article = new App.TicketArticle
+      for key, value of articleParams
+        article[key] = value
+
+      # validate email params
+      if type.name is 'email'
+
+        # check if recipient exists
+        if !articleParams['to'] && !articleParams['cc']
+          alert( App.i18n.translateContent('Need recipient in "To" or "Cc".') )
+          return
+
+        # check if message exists
+        if !articleParams['body']
+          alert( App.i18n.translateContent('Text needed') )
+          return
+
+      # check attachment
+      if articleParams['body']
+        attachmentTranslated = App.i18n.translateContent('Attachment')
+        attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
+        if articleParams['body'].match(/attachment/i) || articleParams['body'].match( attachmentTranslatedRegExp )
+          if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+            #@autosaveStart()
+            return
+
+      article.load(params)
+      errors = article.validate()
+      if errors
+        @log 'error', 'update article', errors
+        @formValidate(
+          form:   @$('.article-add')
+          errors: errors
+          screen: 'edit'
+        )
+        @formEnable(e)
+        @autosaveStart()
+        return
+
+      ticket.article = article
+      console.log('ARR', article)
+    return
+    ticket.save(
+      done: (r) =>
+
+        # reset form after save
+        App.TaskManager.update( @task_key, { 'state': {} })
+
+        @ui.fetch( ticket.id, true )
+    )
+
+
+
+    # submit changes
+    ticket.save(
+      done: (r) =>
+
+        # reset form after save
+        App.TaskManager.update( @task_key, { 'state': {} })
+
+        @fetch( ticket.id, true )
     )
 
 class TicketTitle extends App.Controller
@@ -394,6 +627,8 @@ class TicketTitle extends App.Controller
 
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
+    #if @subscribeIdEdit
+    App.Ticket.unsubscribe( @subscribeIdEdit )
 
 class Edit extends App.Controller
   elements:
@@ -433,7 +668,7 @@ class Edit extends App.Controller
     e.stopPropagation()
 
   release: =>
-    @autosaveStop()
+    #@autosaveStop()
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
@@ -442,12 +677,43 @@ class Edit extends App.Controller
     ticket = App.Ticket.fullLocal( @ticket.id )
 
     # gets referenced in @set_type
-    @type = 'email'
+    @type = 'note'
+    articleTypes = [
+      {
+        name: 'note'
+        icon: 'note'
+      },
+      {
+        name: 'email'
+        icon: 'email'
+      },
+      {
+        name: 'facebook'
+        icon: 'facebook'
+      },
+      {
+        name: 'twitter'
+        icon: 'twitter'
+      },
+      {
+        name: 'phone'
+        icon: 'phone'
+      },
+    ]
+    if @isRole('Customer')
+      @type = 'note'
+      articleTypes = [
+        {
+          name: 'note'
+          icon: 'note'
+        },
+      ]
 
     @html App.view('ticket_zoom/edit')(
-      ticket:     ticket
-      type:       @type
-      isCustomer: @isRole('Customer')
+      ticket:       ticket
+      type:         @type
+      articleTypes: articleTypes
+      isCustomer:   @isRole('Customer')
       formChanged: !_.isEmpty( App.TaskManager.get(@task_key).state )
     )
 
@@ -458,41 +724,7 @@ class Edit extends App.Controller
       delete defaults['state']
     if !_.isEmpty( App.TaskManager.get(@task_key).state )
       defaults = App.TaskManager.get(@task_key).state
-    formChanges = (params, attribute, attributes, classname, form, ui) =>
-      if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
-        dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
-        if dependency
 
-          for fieldNameToChange of dependency
-            filter = []
-            if dependency[fieldNameToChange]
-              filter = dependency[fieldNameToChange]
-
-            # find element to replace
-            for item in attributes
-              if item.name is fieldNameToChange
-                item.display = false
-                item['filter'] = {}
-                item['filter'][ fieldNameToChange ] = filter
-                item.default = params[item.name]
-                #if !item.default
-                #  delete item['default']
-                newElement = ui.formGenItem( item, classname, form )
-
-            # replace new option list
-            form.find('[name="' + fieldNameToChange + '"]').replaceWith( newElement )
-
-    new App.ControllerForm(
-      el:       @el.find('.form-ticket-update')
-      form_id:  @form_id
-      model:    App.Ticket
-      screen:   'edit'
-      handlers: [
-        formChanges
-      ]
-      filter:    @form_meta.filter
-      params:    defaults
-    )
     new App.ControllerForm(
       el:        @el.find('.form-article-update')
       form_id:   @form_id
@@ -538,11 +770,8 @@ class Edit extends App.Controller
       ]
     )
 
-    # remember form defaults
-    @ui.formDefault = @formParam( @el.find('.ticket-update') )
-
     # start auto save
-    @autosaveStart()
+    #@autosaveStart()
 
     # enable user popups
     @userPopups()
@@ -662,7 +891,7 @@ class Edit extends App.Controller
   detect_empty_textarea: =>
     if !@textarea.val()
       @add_textarea_catcher()
-    else 
+    else
       @remove_textarea_catcher()
 
   open_textarea: =>
@@ -699,7 +928,7 @@ class Edit extends App.Controller
           duration: 300
           easing: 'easeOutQuad'
 
-      @bubblePlaceholderHint.velocity 
+      @bubblePlaceholderHint.velocity
         properties:
           opacity: 0
         options:
@@ -738,7 +967,7 @@ class Edit extends App.Controller
           duration: 300
           easing: 'easeOutQuad'
 
-      @bubblePlaceholderHint.velocity 
+      @bubblePlaceholderHint.velocity
         properties:
           opacity: 1
         options:
@@ -765,7 +994,7 @@ class Edit extends App.Controller
 
   update: (e) =>
     e.preventDefault()
-    @autosaveStop()
+    #@autosaveStop()
     params = @formParam(e.target)
 
     # get ticket
@@ -822,7 +1051,7 @@ class Edit extends App.Controller
       attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
       if params['body'].match(/attachment/i) || params['body'].match( attachmentTranslatedRegExp )
         if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-          @autosaveStart()
+          #@autosaveStart()
           return
 
     # submit ticket & article
@@ -845,7 +1074,7 @@ class Edit extends App.Controller
         screen: 'edit'
       )
       @formEnable(e)
-      @autosaveStart()
+      #@autosaveStart()
       return
 
     # validate article
