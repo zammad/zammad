@@ -318,7 +318,7 @@ class _taskManagerSingleton extends App.Controller
     @TaskbarIdInt
 
   taskUpdate: (task) ->
-    @log 'notice', "UPDATE task #{task.id}", task
+    #@log 'notice', "UPDATE task #{task.id}", task
     @tasksToUpdate[ task.key ] = 'toUpdate'
     App.Event.trigger 'task:render'
 

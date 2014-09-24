@@ -164,7 +164,7 @@ class App.Model extends Spine.Model
 
     # if no screen is given or no attribute has this screen - use default attributes
     if !screen || _.isEmpty( attributesNew )
-      console.log(attributesNew)
+     #console.log(attributesNew)
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
