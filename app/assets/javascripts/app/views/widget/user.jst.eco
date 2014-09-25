@@ -1,47 +1,54 @@
-<div class="user-info">
-
-  <%- @user.avatar(true) %>
-
-  <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></div>
+<table class="userInfo">
+  <tr>
+    <td>
+      <%- @user.avatar(true) %>
+    <td class="userInfo-name">
+      <div class="u-textTruncate" title="<%- @Ti( 'Name') %>">
+        <%= @user.displayName() %>
+      </div>
+  </tr>
 <% for row in @userData: %>
   <% if @user[row.name] || row.name is 'note': %>
+    <tr>
     <% if row.tag isnt 'textarea': %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
+      <td class="userInfo-label"><%- @Ti( row.display ) %>
+      <td class="userInfo-value"><%- @L( @P( @user[row.name] ) ) %>
     <% else: %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>">
-        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update" placeholder="<%- @T( row.display ) %>"><%= @user[row.name] %></textarea>
-      </div>
+      <td class="userInfo-label"><%- @Ti( row.display ) %>
+      <td class="userInfo-value">
+        <textarea rows="1" name="<%= row.name %>" data-type="update" placeholder="<%- @T('Add a Note') %>"><%= @user[row.name] %></textarea>
     <% end %>
+    </tr>
   <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
-  <div class="customer-info">
-    <strong><%- @T( 'Linked Accounts' ) %></strong><br/>
+  <tr>
+    <td class="userInfo-label"><%- @T( 'Linked Accounts' ) %>
+    <td class="userInfo-value">
   <% for account of @user['accounts']: %>
-    <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
+      <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
   <% end %>
-  </div>
+  </tr>
 <% end %>
 <% if !_.isEmpty(@user['links']): %>
   <% for link in @user['links']: %>
-  <div class="customer-info">
-    <strong><%- @T( link['title'] ) %></strong><br/>
-    <% for item in link['items']: %>
-      <% if item['url']: %>
-        <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
-      <% else: %>
-        <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
-      <% end %>
-        <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
-      <% if item['url']: %>
-        </a>
-      <% else: %>
-        </span>
-      <% end %>
+  <tr>
+    <td class="userInfo-label"><%- @T( link['title'] ) %>
+    <td class="userInfo-value">
+  <% for item in link['items']: %>
+    <% if item['url']: %>
+      <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
+    <% else: %>
+      <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
     <% end %>
-  </div>
+      <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
+    <% if item['url']: %>
+      </a>
+    <% else: %>
+      </span>
+    <% end %>
+  <% end %>
+  </tr>
   <% end %>
 <% end %>
-</div>
-
-</div>
+</table>
