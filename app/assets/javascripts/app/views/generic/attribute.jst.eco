@@ -1,7 +1,9 @@
 <div class="<%= @attribute.tag %> form-group<%= " #{ @attribute.item_class }" if @attribute.item_class %>">
-  <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T( @attribute.display ) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+  <div class="horizontal">
+    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T( @attribute.display ) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+    <%- @item %><% if @attribute.note: %><div class="align-right help-message" title="<%- @Ti( @attribute.note ) + ' ' %>"><div class="help icon"></div></div><% end %>
+  </div>
   <div class="controls">
-    <%- @item %><% if @attribute.note: %><span class="glyphicon glyphicon-question-sign help-message" title="<%- @Ti( @attribute.note ) + ' ' %>"></span><% end %>
 	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>
 	<% if @attribute.add: %><span><a href="#" class="glyphicon glyphicon-plus"></a></span><% end %>
     <span class="help-inline"></span>
