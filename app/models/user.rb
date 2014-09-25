@@ -463,6 +463,9 @@ returns
   end
 
   def check_login
+    if !self.login && self.email
+      self.login = self.email
+    end
     if self.login
       self.login = self.login.downcase
       check = true

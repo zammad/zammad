@@ -500,7 +500,7 @@ class CreateObjectManager < ActiveRecord::Migration
       :data_option => {
         :type      => 'text',
         :maxlength => 100,
-        :null      => false,
+        :null      => true,
         :autocapitalize => false,
       },
       :editable           => false,
@@ -508,12 +508,7 @@ class CreateObjectManager < ActiveRecord::Migration
       :screens            => {
         :signup => {},
         :invite_agent => {},
-        :edit => {
-          :Agent => {},
-          :Admin => {
-            :null => false,
-          },
-        },
+        :edit => {},
       },
       :pending_migration  => false,
       :position           => 100,
