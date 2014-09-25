@@ -117,11 +117,12 @@ class App.TaskbarWidget extends App.Controller
 class Remove extends App.ControllerModal
   constructor: ->
     super
-    @head     = 'Confirm'
-    @message  = 'Tab has changed, you really want to close it?'
-    @cancel   = true
-    @close    = true
-    @button   = 'Close'
+    @head        = 'Confirm'
+    @message     = 'Tab has changed, you really want to close it?'
+    @cancel      = true
+    @close       = true
+    @button      = 'Discared changes'
+    @buttonClass = 'btn--danger'
     @show()
 
   onSubmit: (e) =>

@@ -444,6 +444,7 @@ class App.ControllerModal extends App.Controller
       keyboard: true
       close:    true
       head:     '?'
+      buttonClass: 'btn--success'
 
     options = _.extend( defaults, options )
 
@@ -461,12 +462,13 @@ class App.ControllerModal extends App.Controller
 
     @modalElement = $( '<div class="modal fade"></div>' )
     @modalElement.append $( App.view('modal')(
-      head:    @head
-      message: @message
-      detail:  @detail
-      close:   @close
-      cancel:  @cancel
-      button:  @button
+      head:         @head
+      message:      @message
+      detail:       @detail
+      close:        @close
+      cancel:       @cancel
+      button:       @button
+      buttonClass:  @buttonClass
     ) )
     if @el && !@message && !@detail
       @modalElement.find('.modal-body').html @el
