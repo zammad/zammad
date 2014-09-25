@@ -1,4 +1,4 @@
-class UpdateObjectManager2 < ActiveRecord::Migration
+class UpdateObjectManager3 < ActiveRecord::Migration
   def up
 
     ObjectManager::Attribute.add(
