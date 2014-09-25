@@ -1,4 +1,4 @@
-<div class="level-2">
+<div>
   <div class="<%- @ticket.icon() %>" title="<%- @ticket.iconTitle() %>"></div>
 </div>
 <hr>
