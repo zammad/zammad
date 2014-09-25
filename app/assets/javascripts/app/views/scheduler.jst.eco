@@ -1,15 +1,15 @@
-<div class="page-header">
-  <h1>Scheduler <small>Management</small></h1>
-</div>
-
-<div class="row">
-  <div class="span3">
-    <ul class="nav nav-tabs nav-stacked">
-      <li><a href="#">Jobs</a></li>
-    </ul>
+<div class="flex scrollable">
+  <div class="horizontal">
+    <div class="page-header-title">
+      <h1>Scheduler <small>Management</small></h1>
+    </div>
   </div>
+
+  <ul class="nav nav-tabs nav-stacked">
+    <li><a href="#">Jobs</a></li>
+  </ul>
+
   <div class="table-overview">
-  
     <div class="tabbable">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#channel-inbound" data-toggle="tab">Times</a></li>
@@ -93,6 +93,6 @@
         </div>
       </div>
     </div>
-  
+
   </div>
 </div>
