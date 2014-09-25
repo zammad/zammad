@@ -1,26 +1,29 @@
-<div class="page-header">
-  <h1><%- @T('Maintenance Message') %><small></small></h1>
+<div class="flex scrollable">
+  <div>
+    <div class="page-header-title">
+    <h1><%- @T('Maintenance Message') %><small></small></h1>
+  </div>
+  <form id="maintenanceForm">
+    <fieldset>
+    <div class="form-group">
+      <label for="title"><%- @T('Title') %></label>
+      <div class="controls">
+        <input type="text" name="head" class="form-control" placeholder="<%- @Ti('some title') %>" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="message"><%- @T('Message') %></label>
+      <div class="controls">
+      <textarea name="message" class="form-control" rows="8" placeholder="<%- @Ti('what details') %>" required></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="message"><%- @T('Reload application') %></label>
+      <div class="controls">
+      <input name="reload" type="checkbox" value="1">
+      </div>
+    </div>
+    </fieldset>
+    <button type="submit" class="btn btn--primary submit"><%- @T('Send to clients') %></button>
+  </form>
 </div>
-<form class="form-large" id="maintenanceForm">
-  <fieldset>
-  <div class="form-group">
-    <label for="title"><%- @T('Title') %></label>
-    <div class="controls">
-      <input type="text" name="head" class="form-control" placeholder="<%- @Ti('some title') %>" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="message"><%- @T('Message') %></label>
-    <div class="controls">
-    <textarea name="message" class="form-control" rows="8" placeholder="<%- @Ti('what details') %>" required></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="message"><%- @T('Reload application') %></label>
-    <div class="controls">
-    <input name="reload" type="checkbox" value="1">
-    </div>
-  </div>
-  </fieldset>
-  <button type="submit" class="btn btn--primary submit"><%- @T('Send to clients') %></button>
-</form>
