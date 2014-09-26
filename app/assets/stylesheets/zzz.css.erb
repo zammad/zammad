@@ -420,7 +420,9 @@ label {
   opacity: 0.2;
 }
 
-input:not([type=submit]),
+input[type=text],
+input[type=password],
+input[type=email],
 textarea,
 .form-control {
   display: block;
@@ -3413,6 +3415,30 @@ footer {
     outline: none;
     resize: none;
   }
+
+.checkbox.form-group .checkbox {
+  margin: 10px 0 0;
+  margin-bottom: 15px;
+}
+
+.checkbox.form-group label {
+  padding: 0 2px;
+  cursor: default;
+}
+
+.checkbox.form-group .controls label {
+  padding-left: 20px;
+  display: block;
+  font: inherit;
+  font-size: 13px;
+  color: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.checkbox.form-group input[type=checkbox] {
+  margin-top: 1px;
+}
 
 /*
 
