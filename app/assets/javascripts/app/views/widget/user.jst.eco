@@ -1,40 +1,43 @@
-<table class="userInfo">
-  <tr>
+<div class="userInfo">
+  <div class="userInfo-entry">
     <td>
       <%- @user.avatar(true) %>
-    <td class="userInfo-name">
+    <div class="userInfo-name">
       <div class="u-textTruncate" title="<%- @Ti( 'Name') %>">
         <%= @user.displayName() %>
       </div>
-  </tr>
+    </div>
+  </div>
 <% for row in @userData: %>
   <% if @user[row.name] || row.name is 'note': %>
-    <tr>
+    <div class="userInfo-entry">
     <% if row.tag isnt 'textarea': %>
-      <td class="userInfo-label"><%- @Ti( row.display ) %>
-      <td class="userInfo-value"><%- @L( @P( @user[row.name] ) ) %>
+      <div class="userInfo-label"><%- @Ti( row.display ) %></div>
+      <div class="userInfo-value"><%- @L( @P( @user[row.name] ) ) %></div>
     <% else: %>
-      <td class="userInfo-label"><%- @Ti( row.display ) %>
-      <td class="userInfo-value">
+      <div class="userInfo-label"><%- @Ti( row.display ) %></div>
+      <div class="userInfo-value">
         <textarea rows="1" name="<%= row.name %>" data-type="update" placeholder="<%- @T('Add a Note') %>"><%= @user[row.name] %></textarea>
+      </div>
     <% end %>
-    </tr>
+    </div>
   <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
-  <tr>
-    <td class="userInfo-label"><%- @T( 'Linked Accounts' ) %>
-    <td class="userInfo-value">
+  <div class="userInfo-entry">
+    <div class="userInfo-label"><%- @T( 'Linked Accounts' ) %></div>
+    <div class="userInfo-value">
   <% for account of @user['accounts']: %>
       <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
   <% end %>
-  </tr>
+    </div>
+  </div>
 <% end %>
 <% if !_.isEmpty(@user['links']): %>
   <% for link in @user['links']: %>
-  <tr>
-    <td class="userInfo-label"><%- @T( link['title'] ) %>
-    <td class="userInfo-value">
+  <div class="userInfo-entry">
+    <div class="userInfo-label"><%- @T( link['title'] ) %></div>
+    <div class="userInfo-value">
   <% for item in link['items']: %>
     <% if item['url']: %>
       <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
@@ -47,8 +50,9 @@
     <% else: %>
       </span>
     <% end %>
+    </div>
   <% end %>
-  </tr>
+  </div>
   <% end %>
 <% end %>
-</table>
+</div>

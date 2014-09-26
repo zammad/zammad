@@ -3365,42 +3365,39 @@ footer {
   }
 
 .userInfo {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto;
 }
 
 .userInfo .avatar {
   float: right;
+  position: relative;
+}
+.userInfo .avatar:after {
+  content: "";
+  background: url(<%= asset_path "sprite.svg" %>);
+  background-position: -226px 0;
+  right: 0;
+  top: 0;
+  width: 97px;
+  height: 96px;
+  position: absolute;
 }
 
 .userInfo-name {
   color: rgba(0,8,14,.73);
   font-size: 16px;
-  position: relative;
 }
 
-  .userInfo-name div {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    margin-top: -10px;
-    line-height: 20px;
-  }
-
-.userInfo td {
-  padding: 5px 0;
-}
-
-.userInfo td:first-child {
-  padding-right: 10px;
-  vertical-align: top;
+.userInfo-entry {
+  margin: 20px 0;
 }
 
 .userInfo-label {
-  color: #bbb;
+  text-transform: uppercase;
+  color: #999;
+  font-size: 12px;
   font-weight: normal;
-  text-align: right;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
 }
 
 .userInfo-value {
