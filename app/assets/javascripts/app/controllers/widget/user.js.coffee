@@ -73,16 +73,11 @@ class App.WidgetUser extends App.Controller
       userData: userData
     )
 
-    a = =>
-      visible = @el.find('textarea').is(":visible")
-      if visible && !@el.find('textarea').expanding('active')
-        @el.find('textarea').expanding()
-      @el.find('textarea').on('focus', (e) =>
-        visible = @el.find('textarea').is(":visible")
-        if visible && !@el.find('textarea').expanding('active')
-          @el.find('textarea').expanding()
-      )
-    @delay( a, 40 )
+    @$('div[contenteditable]').ce(
+      mode:      'textonly'
+      multiline: true
+      maxlength: 250
+    )
 
     @userTicketPopups(
       selector: '.user-tickets'
@@ -90,17 +85,8 @@ class App.WidgetUser extends App.Controller
       position: 'right'
     )
 
-    ###
-    if user.organization_id
-      @el.append('<div class="org-info"></div>')
-      new App.WidgetOrganization(
-        organization_id: user.organization_id
-        el:              @el.find('.org-info')
-      )
-    ###
-
   update: (e) =>
-    note = $(e.target).val()
+    note = $(e.target).ceg({ mode: 'textonly' })
     user = App.User.find( @user_id )
     if user.note isnt note
       user.updateAttributes( note: note )

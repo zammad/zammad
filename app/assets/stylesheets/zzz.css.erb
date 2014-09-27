@@ -1363,17 +1363,6 @@ footer {
   color: #bbb;
 }
 
-.inline-edit {
-  padding: 4px;
-}
-.inline-edit:hover {
-  padding: 3px;
-  border: 1px dotted #F92;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-
 .translation {
   border: 1px dotted #F92;
   -webkit-border-radius: 3px;
@@ -3440,6 +3429,24 @@ footer {
   margin-top: 1px;
 }
 
+.textbox[contenteditable] {
+  white-space: pre;
+  padding: 1px;
+  outline-style: none;
+}
+.textbox[contenteditable]:hover, .textbox[contenteditable]:focus {
+  padding: 0;
+  border: 1px dotted hsl(145,51%,45%);
+  border-radius: 3px;
+}
+.textbox[contenteditable].invalid {
+  padding: 0;
+  border: 1px dotted #F92;
+  border-radius: 3px;
+}
+.textbox > .placeholder {
+  color: #999;
+}
 /*
 
   ----------------

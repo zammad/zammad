@@ -41,16 +41,11 @@ class App.WidgetOrganization extends App.Controller
       organizationData: organizationData
     )
 
-    a = =>
-      visible = @el.find('textarea').is(":visible")
-      if visible && !@el.find('textarea').expanding('active')
-        @el.find('textarea').expanding()
-      @el.find('textarea').on('focus', (e) =>
-        visible = @el.find('textarea').is(":visible")
-        if visible && !@el.find('textarea').expanding('active')
-          @el.find('textarea').expanding()
-      )
-    @delay( a, 40 )
+    @$('div [contenteditable]').ce(
+      mode:      'textonly'
+      multiline: true
+      maxlength: 250
+    )
 
     # enable user popups
     @userPopups()
@@ -64,7 +59,7 @@ class App.WidgetOrganization extends App.Controller
     ###
 
   update: (e) =>
-    note   = $(e.target).val()
+    note = $(e.target).ceg({ mode: 'textonly' })
     organization = App.Organization.find( @organization_id )
     if organization.note isnt note
       organization.updateAttributes( note: note )
