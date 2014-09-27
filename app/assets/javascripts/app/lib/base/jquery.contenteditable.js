@@ -11,7 +11,33 @@
 
   var DEFAULTS = {
     mode:     'richtext',
-    multiline: true
+    multiline: true,
+    allowKey: {
+      8: true, // backspace
+      9: true, // tab
+      16: true, // shift
+      17: true, // ctrl
+      18: true, // alt
+      20: true, // cabslock
+      37: true, // up
+      38: true, // right
+      39: true, // down
+      40: true, // left
+      91: true, // cmd left
+      92: true, // cmd right
+    },
+    extraAllowKey: {
+      65: true, // a + ctrl - select all
+      67: true, // c + ctrl - copy
+      86: true, // v + ctrl - paste
+      88: true, // x + ctrl - cut
+      90: true, // z + ctrl - undo
+    },
+    richTextFormatKey: {
+      66: true, // b
+      73: true, // i
+      85: true, // u
+    }
   }
   var OPTIONS = {}
 
@@ -38,6 +64,41 @@
         }, 100);
       }
     }
+  }
+
+  // max length check
+  var maxLengthOk = function(field, typeAhead) {
+    var length = field.text().length
+    if (typeAhead) {
+      length = length + 1
+    }
+    if ( length > OPTIONS.maxlength ) {
+      field.addClass('invalid')
+      setTimeout(function(){
+        field.removeClass('invalid')
+      }, 1000);
+      return false
+    }
+    return true
+  }
+
+  // check if key is allowed, even if length limit is reached
+  var allowKey = function(e) {
+    if ( OPTIONS.allowKey[ e.keyCode ] ) {
+      return true
+    }
+    if ( ( e.ctrlKey || e.metaKey ) && OPTIONS.extraAllowKey[ e.keyCode ] ) {
+      return true
+    }
+    return false
+  }
+
+  // check if rich text key is pressed
+  var richTextKey = function(e) {
+    if ( ( e.ctrlKey || e.metaKey ) && OPTIONS.richTextFormatKey[ e.keyCode ] ) {
+      return true
+    }
+    return false
   }
 
   // get correct val if textbox
@@ -71,8 +132,7 @@
       updatePlaceholder( this, 'add' )
       this.bind('focus', function (e) {
         updatePlaceholder( $(e.target), 'remove' )
-      })
-      this.bind('blur', function (e) {
+      }).bind('blur', function (e) {
         updatePlaceholder( $(e.target), 'add' )
       })
     }
@@ -80,53 +140,43 @@
     // maxlength check
     if ( options.maxlength ) {
       this.bind('keydown', function (e) {
-        // check maxlength
-        var field = $(e.target)
-        var length = $(e.target).text().length
-        if ( length >= options.maxlength ) {
-          switch ( e.keyCode ) {
-            case 8: // backspace
-              // just go ahead
-              break;
-            case 37: // up
-              // just go ahead
-              break;
-            case 38: // right
-              // just go ahead
-              break;
-            case 39: // down
-              // just go ahead
-              break;
-            case 40: // left
-              // just go ahead
-              break;
-            case 65: // a + ctrl - select all
-              // just go ahead
-              if ( e.ctrlKey || e.metaKey ) {
-                break;
-              }
-            case 65: // x + ctrl - cut
-              // just go ahead
-              if ( e.ctrlKey || e.metaKey ) {
-                break;
-              }
-            default:
-              field.addClass('invalid')
-              e.preventDefault()
-          }
+
+        // check control key
+        if ( allowKey(e) ) {
+          maxLengthOk( $(e.target) )
         }
+
+        // check type ahead key
         else {
-          if ( field.hasClass('invalid') ) {
-            field.removeClass('invalid')
+          if ( !maxLengthOk( $(e.target), true ) ) {
+            e.preventDefault()
           }
         }
+      }).bind('keyup', function (e) {
+
+        // check control key
+        if ( allowKey(e) ) {
+          maxLengthOk( $(e.target) )
+        }
+
+        // check type ahead key
+        else {
+          if ( !maxLengthOk( $(e.target), true ) ) {
+            e.preventDefault()
+          }
+        }
+      }).bind('focus', function (e) {
+        maxLengthOk( $(e.target) )
+      }).bind('blur', function (e) {
+        maxLengthOk( $(e.target) )
       })
     }
 
     // just paste text
     if ( options.mode === 'textonly' ) {
       this.bind('paste', function (e) {
-        var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        var text = (e.originalEvent || e).clipboardData.getData('text/plain')
+        var overlimit = false
         if (text) {
 
           // replace new lines
@@ -136,19 +186,21 @@
             text = text.replace(/\t/g, '')
           }
 
-          // limit length
+          // limit length, limit paste string
           if ( options.maxlength ) {
             var pasteLength   = text.length
             var currentLength = $(e.target).text().length
             var overSize      = ( currentLength + pasteLength ) - options.maxlength
             if ( overSize > 0 ) {
               text = text.substr( 0, pasteLength - overSize )
+              overlimit = true
             }
           }
 
           // insert new text
           e.preventDefault()
-          document.execCommand('inserttext', false, text);
+          document.execCommand('inserttext', false, text)
+          maxLengthOk( $(e.target), overlimit )
         }
 
       });
@@ -157,18 +209,8 @@
     // disable rich text b/u/i
     if ( options.mode === 'textonly' ) {
       this.bind('keydown', function (e) {
-        if ( e.ctrlKey || e.metaKey ) {
-          switch ( e.keyCode ) {
-            case 66: // b
-              e.preventDefault()
-              break;
-            case 73: // i
-              e.preventDefault()
-              break;
-            case 85: // u
-              e.preventDefault()
-              break;
-          }
+        if ( richTextKey(e) ) {
+          e.preventDefault()
         }
       });
     }
