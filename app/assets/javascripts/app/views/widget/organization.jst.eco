@@ -8,7 +8,7 @@
         <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
       <% else: %>
         <div class="customer-info" title="<%- @Ti( row.display ) %>">
-          <div contenteditable="true" class="textbox" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @T('Add a Note') %>"><%= @organization[row.name] %></div>
+          <div contenteditable="true" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @T('Add a Note') %>"><%= @organization[row.name] %></div>
         </div>
       <% end %>
     <% end %>

@@ -17,7 +17,7 @@
     <% else: %>
       <div class="userInfo-label"><%- @Ti( row.display ) %></div>
       <div class="userInfo-value">
-        <div contenteditable="true" class="textbox" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%= @user[row.name] %></div>
+        <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%= @user[row.name] %></div>
       </div>
     <% end %>
     </div>

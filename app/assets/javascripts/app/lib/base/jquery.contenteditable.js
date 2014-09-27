@@ -80,9 +80,9 @@
     // maxlength check
     if ( options.maxlength ) {
       this.bind('keydown', function (e) {
-
         // check maxlength
-        length = $(e.target).text().length
+        var field = $(e.target)
+        var length = $(e.target).text().length
         if ( length >= options.maxlength ) {
           switch ( e.keyCode ) {
             case 8: // backspace
@@ -111,13 +111,13 @@
                 break;
               }
             default:
-              $(e.target).addClass('invalid')
+              field.addClass('invalid')
               e.preventDefault()
           }
         }
         else {
-          if ( $(e.target).hasClass('invalid') ) {
-            $(e.target).removeClass('invalid')
+          if ( field.hasClass('invalid') ) {
+            field.removeClass('invalid')
           }
         }
       })
