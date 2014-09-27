@@ -362,6 +362,9 @@ class App.TicketZoom extends App.Controller
         @scrollTo( 0, offset )
       @delay( scrollTo, 100, false )
 
+    # enable user popups
+    @userPopups()
+
     @autosaveStart()
 
   TicketTitle: =>
@@ -509,9 +512,15 @@ class App.TicketZoom extends App.Controller
     # validate article
     articleParams = @formParam( @$('.article-add') )
     console.log "submit article", articleParams
-    return
     articleAttributes = App.TicketArticle.attributesGet( 'edit' )
     if articleParams['body'] || ( articleAttributes['body'] && articleAttributes['body']['null'] is false )
+      articleParams.from      = @Session.get().displayName()
+      articleParams.ticket_id = ticket.id
+      articleParams.form_id   = @form_id
+
+      if !articleParams['internal']
+        articleParams['internal'] = false
+
       if @isRole('Customer')
         sender            = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
         type              = App.TicketArticleType.findByAttribute( 'name', 'web' )
@@ -519,8 +528,9 @@ class App.TicketZoom extends App.Controller
         articleParams.sender_id  = sender.id
       else
         sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-        type              = App.TicketArticleType.find( params['type_id'] )
         articleParams.sender_id  = sender.id
+        type              = App.TicketArticleType.findByAttribute( 'name', articleParams['type'] )
+        articleParams.type_id  = type.id
 
       article = new App.TicketArticle
       for key, value of articleParams
@@ -548,7 +558,9 @@ class App.TicketZoom extends App.Controller
             #@autosaveStart()
             return
 
-      article.load(params)
+      console.log "article load", articleParams
+      #return
+      article.load(articleParams)
       errors = article.validate()
       if errors
         @log 'error', 'update article', errors
@@ -563,18 +575,7 @@ class App.TicketZoom extends App.Controller
 
       ticket.article = article
       console.log('ARR', article)
-    return
-    ticket.save(
-      done: (r) =>
-
-        # reset form after save
-        App.TaskManager.update( @task_key, { 'state': {} })
-
-        @ui.fetch( ticket.id, true )
-    )
-
-
-
+    #return
     # submit changes
     ticket.save(
       done: (r) =>
@@ -602,28 +603,25 @@ class TicketTitle extends App.Controller
       isCustomer: @isRole('Customer')
     )
 
+    @$('.ticket-title-update').ce({
+      mode:      'textonly'
+      multiline: false
+      maxlength: 250
+    })
+
     # show frontend times
     @frontendTimeUpdate()
 
   update: (e) =>
-    $this = $(e.target)
-    title = $this.html()
-    title = ('' + title)
-      .replace(/<.+?>/g, '')
-    title = ('' + title)
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-    if title is '-'
-      title = ''
+    title = $(e.target).ceg({ mode: 'textonly' }) || '-'
 
     # update title
-    @ticket.title = title
-    @ticket.save()
+    if title isnt @ticket.title
+      @ticket.title = title
+      @ticket.save()
 
-    # update taskbar with new meta data
-    App.Event.trigger 'task:render'
+      # update taskbar with new meta data
+      App.Event.trigger 'task:render'
 
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
@@ -646,8 +644,8 @@ class Edit extends App.Controller
     'click .submit':             'update'
     'click [data-type="reset"]': 'reset'
     'click .visibility-toggle':  'toggle_visibility'
-    'click .pop-selectable':     'select_type'
-    'click .pop-selected':       'show_selectable_types'
+    'click .pop-selectable':     'selectArticleType'
+    'click .pop-selected':       'showSelectableArticleType'
     'focus textarea':            'open_textarea'
     'input textarea':            'detect_empty_textarea'
     'click .recipient-picker':   'toggle_recipients'
@@ -676,7 +674,7 @@ class Edit extends App.Controller
 
     ticket = App.Ticket.fullLocal( @ticket.id )
 
-    # gets referenced in @set_type
+    # gets referenced in @setArticleType
     @type = 'note'
     articleTypes = [
       {
@@ -714,7 +712,6 @@ class Edit extends App.Controller
       type:         @type
       articleTypes: articleTypes
       isCustomer:   @isRole('Customer')
-      formChanged: !_.isEmpty( App.TaskManager.get(@task_key).state )
     )
 
     @form_id = App.ControllerForm.formId()
@@ -772,9 +769,6 @@ class Edit extends App.Controller
 
     # start auto save
     #@autosaveStart()
-
-    # enable user popups
-    @userPopups()
 
     # show text module UI
     if !@isRole('Customer')
@@ -864,24 +858,24 @@ class Edit extends App.Controller
       @el.addClass('is-public')
       @el.removeClass('is-internal')
 
-  show_selectable_types: =>
+  showSelectableArticleType: =>
     @el.find('.pop-selector').removeClass('hide')
 
     @selectTypeCatcher = new App.clickCatcher
       holder: @el.offsetParent()
-      callback: @hide_type
+      callback: @hideSelectableArticleType
       zIndexScale: 6
 
-  select_type: (e) =>
-    @set_type $(e.target).data('value')
-    @hide_type()
+  selectArticleType: (e) =>
+    @setArticleType $(e.target).data('value')
+    @hideSelectableArticleType()
     @selectTypeCatcher.remove()
     @selectTypeCatcher = null
 
-  hide_type: =>
+  hideSelectableArticleType: =>
     @el.find('.pop-selector').addClass('hide')
 
-  set_type: (type) ->
+  setArticleType: (type) ->
     typeIcon = @el.find('.pop-selected .icon')
     if @type
       typeIcon.removeClass @type
