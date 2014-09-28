@@ -1,5 +1,1 @@
 <h1><span contenteditable="true" class="ticket-title-update" data-placeholder="<%= @T('Enter Title...') %>"><%= @P( @ticket.title ) %></span></h1>
-
-<small class="task-subline">
-  <%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span> - <%- @T('created') %> <span class="humanTimeFromNow" data-time="<%- @ticket.created_at %>">?</span> <% if !@isCustomer && @ticket.escalation_time: %> - <%- @T('escalation') %> <span class="humanTimeFromNow escalation" data-time="<%- @ticket.escalation_time %>">?</span><% end %>
-</small>

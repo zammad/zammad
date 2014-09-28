@@ -152,7 +152,16 @@ class App.TicketZoom extends App.Controller
         nav:        @nav
         isCustomer: @isRole('Customer')
       )
-      @TicketTitle()
+
+      new TicketTitle(
+        ticket: @ticket
+        el:     @el.find('.ticket-title')
+      )
+
+      new TicketMeta(
+        ticket: @ticket
+        el:     @el.find('.ticket-meta')
+      )
 
       editTicket = (el) =>
         el.append('<form class="edit"></form>')
@@ -367,12 +376,6 @@ class App.TicketZoom extends App.Controller
 
     @autosaveStart()
 
-  TicketTitle: =>
-    # show ticket title
-    new TicketTitle(
-      ticket: @ticket
-      el:     @el.find('.ticket-title')
-    )
 
   ArticleView: =>
     # show article
@@ -606,7 +609,6 @@ class TicketTitle extends App.Controller
 
     @html App.view('ticket_zoom/title')(
       ticket:     ticket
-      isCustomer: @isRole('Customer')
     )
 
     @$('.ticket-title-update').ce({
@@ -614,9 +616,6 @@ class TicketTitle extends App.Controller
       multiline: false
       maxlength: 250
     })
-
-    # show frontend times
-    @frontendTimeUpdate()
 
   update: (e) =>
     title = $(e.target).ceg() || ''
@@ -631,8 +630,26 @@ class TicketTitle extends App.Controller
 
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
-    #if @subscribeIdEdit
-    App.Ticket.unsubscribe( @subscribeIdEdit )
+
+class TicketMeta extends App.Controller
+  constructor: ->
+    super
+
+    @ticket      = App.Ticket.fullLocal( @ticket.id )
+    @subscribeId = @ticket.subscribe(@render)
+    @render(@ticket)
+
+  render: (ticket) =>
+    @html App.view('ticket_zoom/meta')(
+      ticket:     ticket
+      isCustomer: @isRole('Customer')
+    )
+
+    # show frontend times
+    @frontendTimeUpdate()
+
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
 
 class Edit extends App.Controller
   elements:

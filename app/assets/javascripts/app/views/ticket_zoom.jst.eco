@@ -6,6 +6,7 @@
           <div class="flex vertical center">
             <%- @ticket.customer.avatar(true) %>
             <div class="ticket-title"></div>
+            <div class="ticket-meta"></div>
           </div>
           <div class="page-header-meta">
             <% if @C( 'LastOverview' ) && @nav: %>
