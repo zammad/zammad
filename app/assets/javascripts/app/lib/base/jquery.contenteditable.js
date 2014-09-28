@@ -39,12 +39,12 @@
       85: true, // u
     }
   }
-  var OPTIONS = {}
 
   // add/remove placeholder
   var updatePlaceholder = function(target, type) {
+    var options = target.data('ce.options')
     var text = target.text().trim()
-    var placeholder = '<span class="placeholder">' + OPTIONS.placeholder + '</span>'
+    var placeholder = '<span class="placeholder">' + options.placeholder + '</span>'
 
     // add placholder if no text exists
     if ( type === 'add') {
@@ -55,7 +55,7 @@
 
     // empty placeholder text
     else {
-      if ( text === OPTIONS.placeholder ) {
+      if ( text === options.placeholder ) {
         setTimeout(function(){
           document.execCommand('selectAll', false, '');
           document.execCommand('delete', false, '');
@@ -68,11 +68,16 @@
 
   // max length check
   var maxLengthOk = function(field, typeAhead) {
+    var options = field.data('ce.options')
+    if (!options) {
+      return true
+    }
+
     var length = field.text().length
     if (typeAhead) {
       length = length + 1
     }
-    if ( length > OPTIONS.maxlength ) {
+    if ( length > options.maxlength ) {
       field.addClass('invalid')
       setTimeout(function(){
         field.removeClass('invalid')
@@ -84,10 +89,12 @@
 
   // check if key is allowed, even if length limit is reached
   var allowKey = function(e) {
-    if ( OPTIONS.allowKey[ e.keyCode ] ) {
+    var options = $(e.target).data('ce.options')
+
+    if ( options.allowKey[ e.keyCode ] ) {
       return true
     }
-    if ( ( e.ctrlKey || e.metaKey ) && OPTIONS.extraAllowKey[ e.keyCode ] ) {
+    if ( ( e.ctrlKey || e.metaKey ) && options.extraAllowKey[ e.keyCode ] ) {
       return true
     }
     return false
@@ -95,7 +102,9 @@
 
   // check if rich text key is pressed
   var richTextKey = function(e) {
-    if ( ( e.ctrlKey || e.metaKey ) && OPTIONS.richTextFormatKey[ e.keyCode ] ) {
+    var options = $(e.target).data('ce.options')
+
+    if ( ( e.ctrlKey || e.metaKey ) && options.richTextFormatKey[ e.keyCode ] ) {
       return true
     }
     return false
@@ -103,7 +112,8 @@
 
   // get correct val if textbox
   $.fn.ceg = function(option) {
-    var options = $.extend({}, DEFAULTS, option)
+    var options = this.data('ce.options')
+
     updatePlaceholder( this, 'remove' )
 
     // get text
@@ -125,7 +135,9 @@
   $.fn.ce = function(option) {
     var options = $.extend({}, DEFAULTS, option)
     options.placeholder = options.placeholder || this.data('placeholder')
-    OPTIONS = options
+
+    // store options
+    this.data('ce.options', options)
 
     // process placeholder
     if ( options.placeholder ) {

@@ -86,7 +86,7 @@ class App.WidgetUser extends App.Controller
     )
 
   update: (e) =>
-    note = $(e.target).ceg({ mode: 'textonly' })
+    note = $(e.target).ceg()
     user = App.User.find( @user_id )
     if user.note isnt note
       user.updateAttributes( note: note )

@@ -59,7 +59,7 @@ class App.WidgetOrganization extends App.Controller
     ###
 
   update: (e) =>
-    note = $(e.target).ceg({ mode: 'textonly' })
+    note = $(e.target).ceg()
     organization = App.Organization.find( @organization_id )
     if organization.note isnt note
       organization.updateAttributes( note: note )
