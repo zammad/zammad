@@ -598,6 +598,12 @@ class TicketTitle extends App.Controller
     @render(@ticket)
 
   render: (ticket) =>
+
+    # check if render is needed
+    if @lastTitle && @lastTitle is ticket.title
+      return
+    @lastTitle = ticket.title
+
     @html App.view('ticket_zoom/title')(
       ticket:     ticket
       isCustomer: @isRole('Customer')
@@ -613,7 +619,7 @@ class TicketTitle extends App.Controller
     @frontendTimeUpdate()
 
   update: (e) =>
-    title = $(e.target).ceg({ mode: 'textonly' }) || '-'
+    title = $(e.target).ceg() || ''
 
     # update title
     if title isnt @ticket.title
