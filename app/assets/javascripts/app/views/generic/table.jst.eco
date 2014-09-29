@@ -87,7 +87,7 @@
       <%   end %>
       <% end %>
       <% #console.log('HH', item_clone.name, item_clone.type, item_clone.translate, item_clone, object.translate(), refObject, translation) %>
-      <td>
+      <td <% if item_clone.parentClass: %>class="<%= item_clone.parentClass %>"<% end %>>
       <% if item_clone.link: %><a href="<%- item_clone.link %>" <% if item_clone.target: %>target="<%= item_clone.target %>"<% end %>><% end %>
       <% if item_clone.translate || ( translation && !refObject && object.translate && object.translate() ) || ( translation && refObject && refObject.translate && refObject.translate() ) : %>
         <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %>><%- @T( @P( value, item_clone ) ) %></span>
