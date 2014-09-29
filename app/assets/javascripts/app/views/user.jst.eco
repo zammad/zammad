@@ -1,24 +1,24 @@
-<div class="flex scrollable">
-  <div class="horizontal">
-    <div class="page-header-title">
-      <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
-    </div>
-    <div class="page-header-meta">
-      <% if @buttons: %>
-      <% for button in @buttons: %>
-        <a data-type="<%= button['data-type'] %>" class="btn btn-default <%= button['class'] %>"><%- @T( button.name ) %></a>
-      <% end %>
-      <% end %>
-    </div>
+<div class="horizontal">
+  <div class="page-header-title">
+    <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
   </div>
-
-  <input class="search" name="search" placeholder="<%- @T('Search for users') %>">
-
-  <div class="tabs wide-tabs horizontal" style="width: 100%;">
-    <% for role in @roles: %>
-      <div class="tab" data-id="<%= role.id %>"><%- @T(role.displayName() ) %></div>
+  <div class="page-header-meta">
+    <% if @buttons: %>
+    <% for button in @buttons: %>
+      <a data-type="<%= button['data-type'] %>" class="btn <%= button['class'] %>"><%- @T( button.name ) %></a>
+    <% end %>
     <% end %>
   </div>
-
-  <div class="table-overview"></div>
 </div>
+
+<div class="userSearch horizontal center">
+  <input type="text" class="js-search flex" name="search" placeholder="<%- @T('Search for users') %>">
+  <div class="userSearch-label"><%- @T('Filter') %>:</div>
+  <div class="tabs tabs-wide horizontal">
+    <% for role in @roles: %>
+      <div class="tab active" data-id="<%= role.id %>"><%- @T(role.displayName() ) %></div>
+    <% end %>
+  </div>
+</div>
+
+<div class="table-overview"></div>
