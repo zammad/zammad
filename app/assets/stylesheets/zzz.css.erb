@@ -209,8 +209,8 @@ table {
   display: table-row;
 }
 
-.table th,
-.table td {
+.table th:not(.noTruncate),
+.table td:not(.noTruncate) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
