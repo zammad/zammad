@@ -3440,19 +3440,19 @@ footer {
 }
 
 [contenteditable] {
+  margin: -1px;
   display: block;
   white-space: pre-wrap;
   outline-style: none;
-}
-[contenteditable]:hover, [contenteditable]:focus {
-  margin: -1px;
-  border: 1px dotted hsl(145,51%,45%);
+  border: 1px solid transparent;
   border-radius: 3px;
+}
+[contenteditable]:hover,
+[contenteditable]:focus {
+  border-color: hsl(145,51%,45%);
 }
 [contenteditable].invalid {
-  margin: -1px;
-  border: 1px dotted #F92;
-  border-radius: 3px;
+  border-color: #F92;
 }
 [contenteditable] > .placeholder {
   color: #999;
