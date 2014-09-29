@@ -1,4 +1,4 @@
-<div class="flex vertical">
+<div class="tabsSidebar-holder flex vertical">
   <div class="flex u-positionOrigin horizontal">
     <div class="main flex tabsSidebarSpace">
       <div class="userZoom">

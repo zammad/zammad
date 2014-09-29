@@ -1,4 +1,4 @@
-<div class="flex vertical">
+<div class="tabsSidebar-holder flex vertical">
   <div class="flex u-positionOrigin horizontal">
     <div class="main no-padding flex tabsSidebarSpace">
       <div class="ticketZoom">
