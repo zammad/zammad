@@ -441,15 +441,11 @@ textarea,
   outline: none;
 }
 
-  input[type=text]:focus,
-  input[type=password]:focus,
-  input[type=email]:focus,
-  textarea:focus {
+  .form-control:focus {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
 
-  .form-control:focus,
   .tokenfield.focus {
     box-shadow: none;
     border-color: hsl(0,0%,90%);
@@ -1619,7 +1615,6 @@ footer {
     right: 0;
     top: 0;
     width: 50px;
-    padding-left: 12px;
     height: 100%;
     visibility: hidden;
   }
@@ -2380,6 +2375,7 @@ footer {
   }
 
     .ticket-title h1 {
+      max-width: 350px;
       margin-top: 15px;
       margin-bottom: 8px;
       text-align: center;
@@ -2842,6 +2838,11 @@ footer {
 
 .tabsSidebarSpace.is-closed {
   margin-right: 0;
+}
+
+.tabsSidebar-holder {
+  overflow: hidden;
+  position: relative;
 }
 
 .tabsSidebar .sidebar {
@@ -3439,19 +3440,19 @@ footer {
 }
 
 [contenteditable] {
+  margin: -1px;
   display: block;
   white-space: pre-wrap;
   outline-style: none;
-}
-[contenteditable]:hover, [contenteditable]:focus {
-  margin: -1px;
-  border: 1px dotted hsl(145,51%,45%);
+  border: 1px solid transparent;
   border-radius: 3px;
+}
+[contenteditable]:hover,
+[contenteditable]:focus {
+  border-color: hsl(145,51%,45%);
 }
 [contenteditable].invalid {
-  margin: -1px;
-  border: 1px dotted #F92;
-  border-radius: 3px;
+  border-color: #F92;
 }
 [contenteditable] > .placeholder {
   color: #999;
@@ -3471,6 +3472,49 @@ footer {
 
 .userSearch .tabs {
   margin: 0;
+}
+
+.nav-tabs {
+  border-bottom: none; 
+}
+
+.nav-tabs li {
+  margin: 0;
+}
+
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+  background: white;
+  border-radius: 0;
+  border: 1px solid hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+  height: 40px;
+  margin: 0;
+}
+
+.nav-tabs > li:not(:last-child):not(:only-child) > a {
+  border-right: none;
+}
+
+.nav-tabs > li:first-child > a {
+  border-radius: 5px 0 0 5px;
+}
+
+.nav-tabs > li:last-child > a {
+  border-radius: 0 5px 5px 0;
+}
+
+.nav-tabs > li:only-child > a {
+  border-radius: 5px;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  background: hsl(206,7%,28%);
+  color: white;
+  border-color: hsl(0,0%,90%);
 }
 
 /*

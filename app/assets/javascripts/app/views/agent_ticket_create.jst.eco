@@ -1,49 +1,51 @@
-<div class="main no-padding flex tabsSidebarSpace">
-  <div class="newTicket">
-    <div class="box">
-      <div class="page-header">
-        <h1><%- @T( @head ) %></h1>
+<div class="tabsSidebar-holder">
+  <div class="main no-padding flex tabsSidebarSpace">
+    <div class="newTicket">
+      <div class="box">
+        <div class="page-header">
+          <h1><%- @T( @head ) %></h1>
+        </div>
+
+        <ul class="horizontal tabs type-tabs">
+
+          <li class="tab u-textTruncate" data-type="phone-in">
+            <div class="gray received-calls channel icon"></div>
+            <%- @T( 'Received Call' ) %>
+          </li>
+
+          <li class="tab u-textTruncate" data-type="phone-out">
+            <div class="gray outbound-calls channel icon"></div>
+            <%- @T( 'Outbound Call' ) %>
+          </li>
+
+         <li class="tab u-textTruncate" data-type="email-out">
+            <div class="gray email channel icon"></div>
+            <%- @T( 'Send E-Mail' ) %>
+          </li>
+        </ul>
+
+        <form role="form" class="ticket-create">
+          <input type="hidden" name="formSenderType"/>
+
+          <div class="ticket-form-top"></div>
+          <div class="article-form-top"></div>
+
+          <div class="formset-inset">
+            <div class="ticket-form-middle horizontal two-columns"></div>
+            <div class="ticket-form-bottom"></div>
+          </div>
+
+          <div class="form-actions horizontal">
+            <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+            <button type="submit" class="btn btn--success submit align-right"><%- @T( 'Create' ) %></button>
+          </div>
+        </form>
       </div>
-
-      <ul class="horizontal tabs type-tabs">
-
-        <li class="tab u-textTruncate" data-type="phone-in">
-          <div class="gray received-calls channel icon"></div>
-          <%- @T( 'Received Call' ) %>
-        </li>
-
-        <li class="tab u-textTruncate" data-type="phone-out">
-          <div class="gray outbound-calls channel icon"></div>
-          <%- @T( 'Outbound Call' ) %>
-        </li>
-
-       <li class="tab u-textTruncate" data-type="email-out">
-          <div class="gray email channel icon"></div>
-          <%- @T( 'Send E-Mail' ) %>
-        </li>
-      </ul>
-
-      <form role="form" class="ticket-create">
-        <input type="hidden" name="formSenderType"/>
-
-        <div class="ticket-form-top"></div>
-        <div class="article-form-top"></div>
-
-        <div class="formset-inset">
-          <div class="ticket-form-middle horizontal two-columns"></div>
-          <div class="ticket-form-bottom"></div>
-        </div>
-
-        <div class="form-actions horizontal">
-          <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-          <button type="submit" class="btn btn--success submit align-right"><%- @T( 'Create' ) %></button>
-        </div>
-      </form>
     </div>
   </div>
-</div>
 
-<div class="tabsSidebar vertical"></div>
+  <div class="tabsSidebar vertical"></div>
+</div>
 <!--
 <div class="sidebar">
   <div class="widgets">
