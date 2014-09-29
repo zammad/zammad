@@ -2375,7 +2375,6 @@ footer {
   }
 
     .ticket-title h1 {
-      max-width: 350px;
       margin-top: 15px;
       margin-bottom: 8px;
       text-align: center;
@@ -2529,7 +2528,7 @@ footer {
               transform: rotate(-45deg);
     }
 
-    .ticket-article-item.is-internal .bubble-arrow:after {
+    .article-add.is-internal .bubble-arrow:after {
       background: #f2def2;
       border: #eed3d7;
     }
@@ -2635,15 +2634,15 @@ footer {
     opacity: 0.2;
   }
 
-  .ticket-edit.is-public .internal-visibility {
+  .article-add.is-public .internal-visibility {
     visibility: hidden;
   }
 
-  .ticket-edit.is-internal .visibility-toggle .icon {
+  .article-add.is-internal .visibility-toggle .icon {
     opacity: 1;
   }
 
-  .ticket-edit.is-internal .public-visibility {
+  .article-add.is-internal .public-visibility {
     visibility: hidden;
   }
 
@@ -2762,17 +2761,16 @@ footer {
     .recipient-list input:-ms-input-placeholder {         color: #666; }
 
   .ticket-edit .text-bubble {
-    padding: 0;
     border-color: #b3b3b3;
     white-space: normal;
     border-radius: 5px;
     overflow: hidden;
   }
 
-    .ticket-edit textarea {
+    .ticket-edit .text-bubble [contenteditable] {
       width: 100%;
-      height: 38px;
-      padding: 10px;
+      /*height: 38px;*/
+      min-height: 20px;
       vertical-align: bottom;
       border: none;
       background: none;
