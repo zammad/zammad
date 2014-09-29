@@ -441,15 +441,11 @@ textarea,
   outline: none;
 }
 
-  input[type=text]:focus,
-  input[type=password]:focus,
-  input[type=email]:focus,
-  textarea:focus {
+  .form-control:focus {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
 
-  .form-control:focus,
   .tokenfield.focus {
     box-shadow: none;
     border-color: hsl(0,0%,90%);
@@ -3513,7 +3509,7 @@ footer {
 .nav-tabs > li.active > a:focus {
   background: hsl(206,7%,28%);
   color: white;
-  border: 1px solid hsl(0,0%,90%);
+  border-color: hsl(0,0%,90%);
 }
 
 /*
