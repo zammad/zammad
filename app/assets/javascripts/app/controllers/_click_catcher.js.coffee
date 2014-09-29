@@ -14,6 +14,7 @@ class App.clickCatcher extends Spine.Controller
   render: ->
     @el.addClass("zIndex-#{ @zIndexScale }") if @zIndexScale
     @el.on('click', @triggerCallback)
+    @el.height(@holder.prop('scrollHeight'))
     @el.appendTo(@holder)
 
   remove: ->

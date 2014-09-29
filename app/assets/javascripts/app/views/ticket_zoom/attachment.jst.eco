@@ -1,0 +1,7 @@
+<div class="attachment horizontal">
+  <div class="attachment-name u-highlight"><%- @fileName %></div>
+  <div class="attachment-size"><%- @fileSize %></div>
+  <div class="attachment-delete js-delete align-right u-clickable">
+    <div class="delete icon"></div><%- @T('Delete File') %>
+  </div>
+</div>

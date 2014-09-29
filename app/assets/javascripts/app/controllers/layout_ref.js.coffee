@@ -10,14 +10,38 @@ App.Config.set( 'layout_ref', Index, 'Routes' )
 
 
 class Content extends App.ControllerContent
+  elements:
+    '.js-textarea' :                'textarea'
+    '.attachmentPlaceholder':       'attachmentPlaceholder'
+    '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
+    '.attachmentPlaceholder-hint':  'attachmentHint'
+    '.ticket-edit':                 'ticketEdit'
+    '.attachments':                 'attachmentsHolder'
+    '.attachmentUpload':            'attachmentUpload'
+    '.attachmentUpload-progressBar':'progressBar'
+    '.js-percentage':               'progressText'
+
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
-    'click .js-organisation': 'showOrganisationMembers'
-    'click .js-back':         'hideOrganisationMembers'
+    'click .js-organisation':                 'showOrganisationMembers'
+    'click .js-back':                         'hideOrganisationMembers'
+    'focus .js-textarea':                     'open_textarea'
+    'input .js-textarea':                     'detect_empty_textarea'
+    'dragenter':                              'onDragenter'
+    'dragleave':                              'onDragleave'
+    'drop':                                   'onFileDrop'
+    'change input[type=file]':                'onFilePick'
 
   constructor: ->
     super
     @render()
+
+    @textareaHeight =
+      open: 148
+      closed: 38
+
+    @dragEventCounter = 0
+    @attachments = []
 
     for avatar in @$('.user.avatar')
       avatar = $(avatar)
@@ -93,6 +117,168 @@ class Content extends App.ControllerContent
       options:
         speed: 300
         complete: => @organisationList.addClass('hide')
+
+  detect_empty_textarea: =>
+    if !@textarea.text()
+      @add_textarea_catcher()
+    else
+      @remove_textarea_catcher()
+
+  open_textarea: =>
+    if !@textareaCatcher and !@textarea.text() and !@attachments.length
+      @ticketEdit.addClass('is-open')
+
+      @textarea.velocity
+        properties:
+          minHeight: "#{ @textareaHeight.open - 38 }px"
+          marginBottom: 38
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+          complete: => @add_textarea_catcher()
+
+      # scroll to bottom
+      # @textarea.velocity "scroll",
+      #   container: @textarea.scrollParent()
+      #   offset: 99999
+      #   duration: 300
+      #   easing: 'easeOutQuad'
+      #   queue: false
+
+      # @editControlItem.velocity "transition.slideRightIn",
+      #   duration: 300
+      #   stagger: 50
+      #   drag: true
+
+      # move attachment text to the left bottom (bottom happens automatically)
+
+      @attachmentPlaceholder.velocity
+        properties:
+          translateX: -@attachmentInputHolder.position().left + "px"
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+
+      @attachmentHint.velocity
+        properties:
+          opacity: 0
+        options:
+          duration: 300
+
+  add_textarea_catcher: ->
+    @textareaCatcher = new App.clickCatcher
+      holder: @ticketEdit.offsetParent()
+      callback: @close_textarea
+      zIndexScale: 4
+
+  remove_textarea_catcher: ->
+    return if !@textareaCatcher
+    @textareaCatcher.remove()
+    @textareaCatcher = null
+
+  close_textarea: =>
+    @remove_textarea_catcher()
+    if !@textarea.text() && !@attachments.length
+
+      @textarea.velocity
+        properties:
+          minHeight: "#{ @textareaHeight.closed }px"
+          marginBottom: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+          complete: => @ticketEdit.removeClass('is-open')
+
+      @attachmentPlaceholder.velocity
+        properties:
+          translateX: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+
+      @attachmentHint.velocity
+        properties:
+          opacity: 1
+        options:
+          duration: 300
+
+      # @editControlItem.css('display', 'none')
+
+  onDragenter: (event) =>
+    # on the first event, 
+    # open textarea (it will only open if its closed)
+    @open_textarea() if @dragEventCounter is 0
+
+    @dragEventCounter++
+    @ticketEdit.addClass('is-dropTarget')
+
+  onDragleave: (event) =>
+    @dragEventCounter--
+
+    @ticketEdit.removeClass('is-dropTarget') if @dragEventCounter is 0
+
+  onFileDrop: (event) =>
+    event.preventDefault()
+    event.stopPropagation()
+    files = event.originalEvent.dataTransfer.files
+    @ticketEdit.removeClass('is-dropTarget')
+
+    @queueUpload(files)
+
+  onFilePick: (event) =>
+    @open_textarea()
+    @queueUpload(event.target.files)
+
+  queueUpload: (files) ->
+    @uploadQueue ?= []
+
+    # add files
+    for file in files
+      @uploadQueue.push(file)
+
+    @workOfUploadQueue()
+
+  workOfUploadQueue: =>
+    if !@uploadQueue.length
+      return
+
+    file = @uploadQueue.shift()
+    # console.log "working of", file, "from", @uploadQueue
+    @fakeUpload file.name, file.size, @workOfUploadQueue
+
+  humanFileSize: (size) =>
+    i = Math.floor( Math.log(size) / Math.log(1024) )
+    return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
+
+  updateUploadProgress: (progress) =>
+    @progressBar.width(progress + "%")
+    @progressText.text(progress)
+
+    if progress is 100
+      @attachmentPlaceholder.removeClass('hide')
+      @attachmentUpload.addClass('hide')
+
+  fakeUpload: (fileName, fileSize, callback) ->
+    @attachmentPlaceholder.addClass('hide')
+    @attachmentUpload.removeClass('hide')
+
+    progress = 0;
+    duration = fileSize / 1024
+
+    for i in [0..100]
+      setTimeout @updateUploadProgress, i*duration/100 , i
+
+    setTimeout (=> 
+      callback()
+      @renderAttachment(fileName, fileSize)
+    ), duration
+
+  renderAttachment: (fileName, fileSize) =>
+    @attachments.push([fileName, fileSize])
+    @attachmentsHolder.append App.view('ticket_zoom/attachment')
+      fileName: fileName
+      fileSize: @humanFileSize(fileSize)
+
 
 App.Config.set( 'layout_ref/content', Content, 'Routes' )
 

@@ -89,7 +89,7 @@ small {
 }
 
 .clickCatcher {
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -103,6 +103,25 @@ small {
 
 .debug .clickCatcher + .clickCatcher {
   background: hsla(50,100%,50%,.13);
+}
+
+[contenteditable] {
+  margin: -1px;
+  display: block;
+  white-space: pre-wrap;
+  outline-style: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+[contenteditable]:hover,
+[contenteditable]:focus {
+  border-color: hsl(145,51%,45%);
+}
+[contenteditable].invalid {
+  border-color: #F92;
+}
+[contenteditable] > .placeholder {
+  color: #999;
 }
 
 .close,
@@ -2586,6 +2605,19 @@ footer {
     margin-bottom: 3px;
   }
 
+  .dropArea {
+    background: white;
+    border: 5px solid;
+    color: hsl(202,66%,55%);
+    font-size: 20px;
+    margin: 5px;
+    display: none;
+  }
+
+  .ticket-edit.is-dropTarget .dropArea {
+    display: block;
+  }
+
 .edit-controls {
   position: relative;
 }
@@ -2764,10 +2796,11 @@ footer {
     border-color: #b3b3b3;
     white-space: normal;
     border-radius: 5px;
-    overflow: hidden;
   }
 
-    .ticket-edit .text-bubble [contenteditable] {
+    .ticket-edit .text-bubble [contenteditable],
+    .ticket-edit textarea,
+    .ticketEdit-body {
       width: 100%;
       /*height: 38px;*/
       min-height: 20px;
@@ -2776,6 +2809,11 @@ footer {
       background: none;
       outline: none;
       resize: none;
+    }
+
+    .ticketEdit-body {
+      height: auto;
+      min-height: 38px;
     }
 
     .ticket-edit .bubble-arrow:after {
@@ -2787,17 +2825,73 @@ footer {
     position: absolute;
     bottom: 0;
     left: 10px;
-    width: 100%;
+    right: 10px;
     height: 38px;
     padding: 10px 0;
     color: #b3b3b3;
   }
 
-    .edit-upload-button {
+    .attachments:not(:empty) {
+      padding: 9px 5px;
+      border-top: 1px solid hsl(0,0%,93%);
+      margin-bottom: 50px;
+    }
+
+    .attachment {
+      font-size: 13px;
+      padding: 3px 10px 3px 7px;
+      cursor: default;
+    }
+
+    .attachment:hover {
+      background: hsl(200,20%,97%);
+    }
+
+      .attachment-name {
+        margin-right: 5px;
+      }
+
+      .attachment-delete {
+        color: hsl(198,19%,72%);
+        text-decoration: underline;
+        display: none;
+      }
+
+      .attachment:hover .attachment-delete {
+        display: block;
+      }
+
+        .attachment-delete .icon {
+          opacity: 0.2;
+          margin-right: 5px;
+        }
+
+    .attachmentPlaceholder-inputHolder {
       position: relative;
       display: inline-block;
       overflow: hidden;
       vertical-align: bottom;
+    }
+
+    .attachmentUpload {
+      color: hsl(198,19%,72%);
+    }
+
+    .attachmentUpload-cancel {
+      text-decoration: underline;
+    }
+
+    .attachmentUpload .delete.icon {
+      opacity: 0.33;
+      margin-right: 5px;
+    }
+
+    .attachmentUpload-progressBar {
+      position: absolute;
+      height: 4px;
+      background: hsl(202,66%,55%);
+      left: 0;
+      bottom: -5px;
     }
 
 .pop-selector {
@@ -3435,25 +3529,6 @@ footer {
 
 .checkbox.form-group input[type=checkbox] {
   margin-top: 1px;
-}
-
-[contenteditable] {
-  margin: -1px;
-  display: block;
-  white-space: pre-wrap;
-  outline-style: none;
-  border: 1px solid transparent;
-  border-radius: 3px;
-}
-[contenteditable]:hover,
-[contenteditable]:focus {
-  border-color: hsl(145,51%,45%);
-}
-[contenteditable].invalid {
-  border-color: #F92;
-}
-[contenteditable] > .placeholder {
-  color: #999;
 }
 
 .userSearch {
