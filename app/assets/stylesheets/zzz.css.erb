@@ -438,7 +438,16 @@ textarea,
   border-radius: 3px;
   transition: none;
   box-shadow: none;
+  outline: none;
 }
+
+  input[type=text]:focus,
+  input[type=password]:focus,
+  input[type=email]:focus,
+  textarea:focus {
+    border-color: hsl(200,71%,59%);
+    box-shadow: 0 0 0 3px hsl(201,62%,90%);
+  }
 
   .form-control:focus,
   .tokenfield.focus {
@@ -624,8 +633,8 @@ ol.tabs li {
   }
 
   .tab {
-    height: 39px;
-    padding: 9px;
+    height: 40px;
+    padding: 10px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
     cursor: pointer;
@@ -3447,6 +3456,19 @@ footer {
 [contenteditable] > .placeholder {
   color: #999;
 }
+
+.userSearch-label {
+  margin: 0 10px 0 20px;
+}
+
+.userSearch .tab:not(.active) {
+  background: white;
+}
+
+.userSearch .tabs {
+  margin: 0;
+}
+
 /*
 
   ----------------

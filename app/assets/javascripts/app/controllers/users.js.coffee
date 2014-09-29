@@ -14,7 +14,7 @@ class Index extends App.Controller
     @html App.view('user')(
       head: 'Users'
       buttons: [
-        { name: 'New User', 'data-type': 'new', class: 'primary' }
+        { name: 'New User', 'data-type': 'new', class: 'btn--success' }
       ]
       roles: App.Role.all()
     )
