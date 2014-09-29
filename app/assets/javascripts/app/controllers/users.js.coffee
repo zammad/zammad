@@ -1,4 +1,6 @@
 class Index extends App.Controller
+  elements:
+    '.js-search' : 'searchInput'
   events:
     'click [data-type="new"]':  'new'
 
@@ -24,14 +26,14 @@ class Index extends App.Controller
       (e) =>
         e.preventDefault()
         $(e.target).toggleClass('active')
-        term = @$('.search').val().trim()
+        term = @searchInput.val().trim()
         return if !term
         @delay( @search, 220, 'search' )
     )
 
     # start search
-    @$('.search').bind( 'keyup', (e) =>
-      term = @$('.search').val().trim()
+    @searchInput.bind( 'keyup', (e) =>
+      term = @searchInput.val().trim()
       return if !term
       return if term is @term
       @term = term

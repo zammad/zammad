@@ -12,7 +12,7 @@
 </div>
 
 <div class="userSearch horizontal center">
-  <input type="text" class="flex" name="search" placeholder="<%- @T('Search for users') %>">
+  <input type="text" class="js-search flex" name="search" placeholder="<%- @T('Search for users') %>">
   <div class="userSearch-label"><%- @T('Filter') %>:</div>
   <div class="tabs tabs-wide horizontal">
     <% for role in @roles: %>
