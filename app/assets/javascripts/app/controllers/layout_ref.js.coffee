@@ -64,6 +64,68 @@ class Content extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/content')()
 
+
+App.Config.set( 'layout_ref/content', Content, 'Routes' )
+
+
+class CommunicationOverview extends App.ControllerContent
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/communication_overview')()
+
+App.Config.set( 'layout_ref/communication_overview', CommunicationOverview, 'Routes' )
+
+
+class LayoutRefCommunicationReply extends App.ControllerContent
+  elements:
+    '.js-textarea' :                'textarea'
+    '.attachmentPlaceholder':       'attachmentPlaceholder'
+    '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
+    '.attachmentPlaceholder-hint':  'attachmentHint'
+    '.ticket-edit':                 'ticketEdit'
+    '.attachments':                 'attachmentsHolder'
+    '.attachmentUpload':            'attachmentUpload'
+    '.attachmentUpload-progressBar':'progressBar'
+    '.js-percentage':               'progressText'
+
+  events:
+    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
+    'click .js-organisation':                 'showOrganisationMembers'
+    'click .js-back':                         'hideOrganisationMembers'
+    'focus .js-textarea':                     'open_textarea'
+    'input .js-textarea':                     'detect_empty_textarea'
+    'dragenter':                              'onDragenter'
+    'dragleave':                              'onDragleave'
+    'drop':                                   'onFileDrop'
+    'change input[type=file]':                'onFilePick'
+
+  constructor: ->
+    super
+
+    if @content is 'no_content'
+      @content = ''
+    else if @content is 'content'
+      @content = "some content la la la la"
+    else
+      @content = "some\nmultiline content\n1\n2\n3"
+
+    @render()
+
+    @textareaHeight =
+      open: 148
+      closed: 20
+
+    @dragEventCounter = 0
+    @attachments = []
+
+  render: ->
+    @html App.view('layout_ref/communication_reply')(
+      content: @content
+    )
+
     @$('[contenteditable]').ce({
       mode:      'textonly'
       multiline: true
@@ -211,7 +273,7 @@ class Content extends App.ControllerContent
       # @editControlItem.css('display', 'none')
 
   onDragenter: (event) =>
-    # on the first event, 
+    # on the first event,
     # open textarea (it will only open if its closed)
     @open_textarea() if @dragEventCounter is 0
 
@@ -286,7 +348,8 @@ class Content extends App.ControllerContent
       fileSize: @humanFileSize(fileSize)
 
 
-App.Config.set( 'layout_ref/content', Content, 'Routes' )
+App.Config.set( 'layout_ref/communication_reply/:content', LayoutRefCommunicationReply, 'Routes' )
+
 
 
 class ContentSidebarRight extends App.ControllerContent

@@ -10,6 +10,10 @@
     <li>Content + Sidebar Left <a href="#layout_ref/content_sidebar_left">Example</a></li>
     <li>Content + Sidebar Tabs Right <a href="#layout_ref/content_sidebar_tabs_right">Example</a></li>
     <li>Modal Dialog <a href="#layout_ref/modal_form">Example with From</a> / <a href="#layout_ref/modal_text">Example with Text</a></li>
+    <li>Communication Overview <a href="#layout_ref/communication_overview">Example</a></li>
+    <li>Communication Reply - no content <a href="#layout_ref/communication_reply/no_content">Example</a></li>
+    <li>Communication Reply - with content <a href="#layout_ref/communication_reply/content">Example</a></li>
+    <li>Communication Reply - with multiline content <a href="#layout_ref/communication_reply/mulit_line_content">Example</a></li>
   </ul>
 
 </div>
