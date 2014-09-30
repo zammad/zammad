@@ -1,6 +1,8 @@
 <form class="form-normal">
   <h2><%- @T( 'Language' ) %></h2>
   <p><%- @T( 'Change your language.' ) %></p>
-  <div class="language_item"></div>
-  <button type="submit" class="btn"><%- @T( 'Submit' ) %></button>
+  <div class="settings-entry horizontal end">
+    <div class="form-item language_item flex"></div>
+    <button type="submit" class="btn btn--primary"><%- @T( 'Submit' ) %></button>
+  </div>
 </form>
