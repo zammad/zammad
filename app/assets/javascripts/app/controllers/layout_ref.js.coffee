@@ -38,7 +38,7 @@ class Content extends App.ControllerContent
 
     @textareaHeight =
       open: 148
-      closed: 38
+      closed: 20
 
     @dragEventCounter = 0
     @attachments = []
@@ -63,6 +63,12 @@ class Content extends App.ControllerContent
 
   render: ->
     @html App.view('layout_ref/content')()
+
+    @$('[contenteditable]').ce({
+      mode:      'textonly'
+      multiline: true
+      maxlength: 2500
+    })
 
   showOrganisationMembers: (e) =>
     e.stopPropagation()

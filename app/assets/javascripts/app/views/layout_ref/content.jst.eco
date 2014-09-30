@@ -42,7 +42,7 @@
 
   <hr>
 
-  <h2>Article Reply</h2>
+  <h2>Article Reply #1</h2>
 
   <div class="ticket-edit">
     <div class="article-content zIndex-5">
@@ -50,6 +50,65 @@
         <div class="text-bubble">
           <div class="bubble-arrow"></div>
           <div class="js-textarea ticketEdit-body" contenteditable="true"></div>
+          <!-- .text-bubble grows with textarea (and expanding clone) -->
+          <div class="attachments"></div>
+            <!--
+            </div>
+            <div class="attachment horizontal">
+              <div class="attachment-name u-highlight">sega-genesis-box.gif</div>
+              <div class="attachment-size">2.4mb</div>
+              <div class="attachment-delete js-delete align-right u-clickable">
+                <div class="delete icon"></div><%- @T('Delete File') %>
+              </div>
+            </div>
+            <div class="attachment horizontal">
+              <div class="attachment-name u-highlight">license-key.txt</div>
+              <div class="attachment-size">7kb</div>
+              <div class="attachment-delete js-delete align-right u-clickable">
+                <div class="delete icon"></div><%- @T('Delete File') %>
+              </div>
+            </div>
+          </div>-->
+          <div class="article-attachment u-unclickable">
+            <div class="attachmentPlaceholder">
+              <span class="attachmentPlaceholder-hint">Antwort eingeben oder</span>
+              <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable">
+                Dateien wählen..
+                <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+              </span>
+            </div>
+            <div class="attachmentUpload hide u-clickable">
+              <div class="horizontal">
+                <div class="u-highlight">
+                  <%- @T(' Uploading ') %> (<span class="js-percentage">0</span>%) ...
+                </div>
+                <div class="attachmentUpload-cancel align-right js-cancel u-clickable">
+                  <div class="delete icon"></div><%- @T('Cancel Upload') %>
+                </div>
+              </div>
+              <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="fit dropArea">
+            <div class="dropArea-inner fit centered">
+              <%- @T('Drop Files here') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h2>Article Reply #2</h2>
+
+  <div class="ticket-edit">
+    <div class="article-content zIndex-5">
+      <div class="internal-border">
+        <div class="text-bubble">
+          <div class="bubble-arrow"></div>
+          <div class="js-textarea ticketEdit-body" contenteditable="true">with some default text</div>
           <!-- .text-bubble grows with textarea (and expanding clone) -->
           <div class="attachments"></div>
             <!--
