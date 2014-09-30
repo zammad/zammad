@@ -1114,6 +1114,12 @@ ol.tabs li {
     background-position: -141px -216px;
   }
 
+  .paperclip.icon {
+    width: 31px;
+    height: 29px;
+    background-position: -141px -263px;
+  }
+
   .stat-all-tickets.icon {
     width: 48px;
     height: 83px;
@@ -2566,6 +2572,27 @@ footer {
       box-shadow: none;
     }
 
+  .ticket-article-item .attachments:not(:empty) {
+    white-space: normal;
+    margin: 0 -20px;
+    padding: 26px 20px 7px 72px;
+    position: relative;
+  }
+
+    .ticket-article-item .attachments h3 {
+      color: hsl(60,1%,34%);
+      letter-spacing: 0;
+      font-weight: bold;
+      padding: 0 7px;
+      margin: 0 0 4px;
+    }
+
+    .attachments .paperclip {
+      position: absolute;
+      left: 33px;
+      top: 27px;
+    }
+
   .ticket-article-item .task-subline {
     margin-top: 12px;
   }
@@ -2840,7 +2867,7 @@ footer {
 
     .attachment {
       font-size: 13px;
-      padding: 3px 10px 3px 7px;
+      padding: 1px 10px 1px 7px;
       cursor: default;
     }
 

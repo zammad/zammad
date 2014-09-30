@@ -42,6 +42,121 @@
 
   <hr>
 
+  <h2>Ticket Article</h2>
+
+  <div class="ticket-article">
+    <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
+      <div class="article-meta-clip top">
+        <div class="article-content-meta top hide">
+          <div class="article-meta top">
+            <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
+              <div class="article-meta-key u-textTruncate">From</div>
+              <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="article-content zIndex-1 horizontal reverse">
+        <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
+        <div class="flex bubble-gap internal-border">
+          <div class="text-bubble"><div class="bubble-arrow"></div>Welcome!
+
+Thank you for installing Zammad.
+
+You will find updates and patches at <a href="http://zammad.org/" title="http://zammad.org/" target="_blank">http://zammad.org/</a>. Online
+documentation is available at <a href="http://guides.zammad.org/" title="http://guides.zammad.org/" target="_blank">http://guides.zammad.org/</a>. You can also
+use our forums at <a href="http://forums.zammad.org/" title="http://forums.zammad.org/" target="_blank">http://forums.zammad.org/</a>
+
+Regards,
+<a href="#" class="show_toogle">See more</a><div class="hide preview">
+The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad.org</a> Project</div></div>
+        </div>
+      </div>
+      <div class="article-meta-clip bottom">
+        <div class="article-content-meta bottom hide">
+          <div class="article-meta bottom">
+            <div class="horizontal article-meta-row">
+              <div class="article-meta-key">Kanal</div>
+              <div class="article-meta-value">
+                <span class="white phone channel icon"></span>
+                phone
+              </div>
+            </div>
+          </div>
+          <div class="article-actions horizontal stretch">
+              <a href="" data-type="internal" class="article-action u-clickable">
+                <span class="internal action icon"></span>set to internal
+              </a>
+              <a href="#" data-type="reply" class="article-action u-clickable">
+                <span class="reply action icon"></span>reply
+              </a>
+              <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
+                <span class="split action icon"></span>split
+              </a>
+          </div>
+        </div>
+      </div>
+      <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
+    </div>
+
+    <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
+      <div class="article-meta-clip top">
+        <div class="article-content-meta top hide">
+          <div class="article-meta top">
+            <div class="horizontal article-meta-row" title="From: Felix Niklas">
+              <div class="article-meta-key u-textTruncate">From</div>
+              <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="article-content zIndex-1 horizontal">
+        <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
+        <div class="flex bubble-gap internal-border">
+          <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,
+anbei findest du die Midi Noten für Maria Maria "I Like it Loud".
+Wünsche dir einen guten Auftritt in Hamburg.
+
+Alles gute,
+Oliver
+            <div class="attachments">
+              <div class="paperclip icon"></div>
+              <h3>2 <%- @T('Attached Files') %></h3>
+              <div class="attachment horizontal">
+                <div class="attachment-name u-highlight">midinotes_view.jpg</div>
+                <div class="attachment-size">35.5kb</div>
+              </div>
+              <div class="attachment horizontal">
+                <div class="attachment-name u-highlight">lyrics_I_Like_it_Loud.txt</div>
+                <div class="attachment-size">17.1kb</div>
+              </div>
+            </div></div>
+        </div>
+      </div>
+      <div class="article-meta-clip bottom">
+        <div class="article-content-meta bottom hide">
+          <div class="article-meta bottom">
+            <div class="horizontal article-meta-row">
+              <div class="article-meta-key">Kanal</div>
+              <div class="article-meta-value">
+                <span class="white note channel icon"></span>
+                note
+              </div>
+            </div>
+          </div>
+          <div class="article-actions horizontal stretch">
+            <a href="" data-type="internal" class="article-action u-clickable">
+              <span class="internal action icon"></span>set to internal
+            </a>
+          </div>
+        </div>
+      </div>
+      <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
+    </div>
+  </div>
+
+  <hr>
+
   <h2>Article Reply</h2>
 
   <div class="ticket-edit">
@@ -126,10 +241,7 @@
                     Albrecht &amp; Bertschler GmbH
                     <span class="recipientList-detail">- 4 Personen</span>
                   </div>
-                  <div class="white right arrow icon"></div>
-
-
-                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="BENCHMARKhumanresources">
+                  <div class="white right arrow icon"></div>                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="BENCHMARKhumanresources">
                   <div class="recipientList-iconSpacer centered">
                     <div class="white organisation icon"></div>
                   </div>
@@ -212,10 +324,7 @@
                   <div class="recipientList-name flex u-textTruncat">
                     <%- @T('Create new Customer') %>
                   </div>
-              </ul>
-
-
-              <ul class="recipientList-organisationMembers hide" id="AlbrechtBertschlerGmbG">
+              </ul>              <ul class="recipientList-organisationMembers hide" id="AlbrechtBertschlerGmbG">
                 <li class="recipientList-controls u-clickable js-back">
                   <div class="recipientList-backClickArea centered">
                     <div class="recipientList-backButton">
@@ -259,11 +368,7 @@
                     Katharina Nussman
                     <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
                   </div>
-              </ul>
-
-
-
-              <ul class="recipientList-organisationMembers hide" id="BENCHMARKhumanresources">
+              </ul>              <ul class="recipientList-organisationMembers hide" id="BENCHMARKhumanresources">
                 <li class="recipientList-controls u-clickable js-back">
                   <div class="recipientList-backClickArea centered">
                     <div class="recipientList-backButton">
@@ -330,9 +435,8 @@ Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit no
     <li>item 4</li>
   </ul>
 
-
-
   <hr>
+
   <h2>Ordered list</h2>
 
   <ol>
