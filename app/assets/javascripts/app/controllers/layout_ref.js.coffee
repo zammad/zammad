@@ -10,35 +10,10 @@ App.Config.set( 'layout_ref', Index, 'Routes' )
 
 
 class Content extends App.ControllerContent
-  elements:
-    '.js-textarea' :                'textarea'
-    '.attachmentPlaceholder':       'attachmentPlaceholder'
-    '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
-    '.attachmentPlaceholder-hint':  'attachmentHint'
-    '.ticket-edit':                 'ticketEdit'
-    '.attachments':                 'attachmentsHolder'
-    '.attachmentUpload':            'attachmentUpload'
-    '.attachmentUpload-progressBar':'progressBar'
-    '.js-percentage':               'progressText'
-
-  events:
-    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
-    'click .js-organisation':                 'showOrganisationMembers'
-    'click .js-back':                         'hideOrganisationMembers'
-    'focus .js-textarea':                     'open_textarea'
-    'input .js-textarea':                     'detect_empty_textarea'
-    'dragenter':                              'onDragenter'
-    'dragleave':                              'onDragleave'
-    'drop':                                   'onFileDrop'
-    'change input[type=file]':                'onFilePick'
 
   constructor: ->
     super
     @render()
-
-    @textareaHeight =
-      open: 148
-      closed: 20
 
     @dragEventCounter = 0
     @attachments = []
@@ -118,6 +93,8 @@ class LayoutRefCommunicationReply extends App.ControllerContent
       open: 148
       closed: 20
 
+    @open_textarea(null, true) if @content
+
     @dragEventCounter = 0
     @attachments = []
 
@@ -192,8 +169,13 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     else
       @remove_textarea_catcher()
 
-  open_textarea: =>
-    if !@textareaCatcher and !@textarea.text() and !@attachments.length
+  open_textarea: (event, withoutAnimation) =>
+    if !@ticketEdit.hasClass('is-open')
+      duration = 300
+      
+      if withoutAnimation
+        duration = 0
+
       @ticketEdit.addClass('is-open')
 
       @textarea.velocity
@@ -201,7 +183,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
           minHeight: "#{ @textareaHeight.open - 38 }px"
           marginBottom: 38
         options:
-          duration: 300
+          duration: duration
           easing: 'easeOutQuad'
           complete: => @add_textarea_catcher()
 
@@ -224,14 +206,14 @@ class LayoutRefCommunicationReply extends App.ControllerContent
         properties:
           translateX: -@attachmentInputHolder.position().left + "px"
         options:
-          duration: 300
+          duration: duration
           easing: 'easeOutQuad'
 
       @attachmentHint.velocity
         properties:
           opacity: 0
         options:
-          duration: 300
+          duration: duration
 
   add_textarea_catcher: ->
     @textareaCatcher = new App.clickCatcher

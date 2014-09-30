@@ -2508,6 +2508,7 @@ footer {
     padding: 5px;
     border-radius: 8px;
     margin: -5px;
+    overflow: hidden;
   }
 
   .is-internal .internal-border {
@@ -2584,7 +2585,8 @@ footer {
       box-shadow: none;
     }
 
-  .ticket-article-item .attachments:not(:empty) {
+  .ticket-article-item .attachments {
+    border-top: 1px solid hsl(0,0%,93%);
     white-space: normal;
     margin: 0 -20px;
     padding: 26px 20px 7px 72px;
@@ -2871,10 +2873,10 @@ footer {
     color: #b3b3b3;
   }
 
-    .attachments:not(:empty) {
+    .ticket-edit .attachments:not(:empty) {
       padding: 9px 5px;
       border-top: 1px solid hsl(0,0%,93%);
-      margin-bottom: 50px;
+      margin: 0 -20px 50px;
     }
 
     .attachment {
