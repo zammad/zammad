@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
           'Groups are ...'
         ],
         buttons: [
-          { name: 'New Group', 'data-type': 'new', class: 'primary' },
+          { name: 'New Group', 'data-type': 'new', class: 'btn--success' },
         ],
       },
     )

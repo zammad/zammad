@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
           'TextModules are ...'
         ],
         buttons: [
-          { name: 'New TextModule', 'data-type': 'new', class: 'primary' },
+          { name: 'New TextModule', 'data-type': 'new', class: 'btn--success' },
         ],
       },
     )
