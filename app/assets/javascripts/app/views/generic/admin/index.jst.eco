@@ -1,17 +1,14 @@
-<div class="flex scrollable">
+<div class="page-header-title">
   <div class="horizontal">
-    <div class="page-header-title">
-      <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
-    </div>
+    <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
     <div class="page-header-meta">
       <% if @buttons: %>
       <% for button in @buttons: %>
-        <a data-type="<%= button['data-type'] %>" class="btn btn-default <%= button['class'] %>"><%- @T( button.name ) %></a>
+        <a data-type="<%= button['data-type'] %>" class="btn <%= button['class'] %>"><%- @T( button.name ) %></a>
       <% end %>
       <% end %>
     </div>
   </div>
-
-  <div class="table-overview"></div>
-
 </div>
+
+<div class="table-overview"></div>
