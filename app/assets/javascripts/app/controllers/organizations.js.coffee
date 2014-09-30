@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
           'Organizations are for any person in the system. Agents (Owners, Resposbiles, ...) and Customers.'
         ],
         buttons: [
-          { name: 'New Organization', 'data-type': 'new', class: 'primary' },
+          { name: 'New Organization', 'data-type': 'new', class: 'btn--success' },
         ],
       },
     )

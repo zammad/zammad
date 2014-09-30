@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
 #          'SLA are ...'
         ],
         buttons: [
-          { name: 'New SLA', 'data-type': 'new', class: 'primary' },
+          { name: 'New SLA', 'data-type': 'new', class: 'btn--success' },
         ],
       },
     )
