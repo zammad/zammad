@@ -10,27 +10,10 @@ App.Config.set( 'layout_ref', Index, 'Routes' )
 
 
 class Content extends App.ControllerContent
-  elements:
-    '.js-textarea' :                'textarea'
-    '.attachmentPlaceholder':       'attachmentPlaceholder'
-    '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
-    '.attachmentPlaceholder-hint':  'attachmentHint'
-    '.ticket-edit':                 'ticketEdit'
-    '.attachments':                 'attachmentsHolder'
-    '.attachmentUpload':            'attachmentUpload'
-    '.attachmentUpload-progressBar':'progressBar'
-    '.js-percentage':               'progressText'
-
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
     'click .js-organisation':                 'showOrganisationMembers'
     'click .js-back':                         'hideOrganisationMembers'
-    'focus .js-textarea':                     'open_textarea'
-    'input .js-textarea':                     'detect_empty_textarea'
-    'dragenter':                              'onDragenter'
-    'dragleave':                              'onDragleave'
-    'drop':                                   'onFileDrop'
-    'change input[type=file]':                'onFilePick'
 
   constructor: ->
     super
@@ -63,74 +46,6 @@ class Content extends App.ControllerContent
 
   render: ->
     @html App.view('layout_ref/content')()
-
-
-App.Config.set( 'layout_ref/content', Content, 'Routes' )
-
-
-class CommunicationOverview extends App.ControllerContent
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-    @html App.view('layout_ref/communication_overview')()
-
-App.Config.set( 'layout_ref/communication_overview', CommunicationOverview, 'Routes' )
-
-
-class LayoutRefCommunicationReply extends App.ControllerContent
-  elements:
-    '.js-textarea' :                'textarea'
-    '.attachmentPlaceholder':       'attachmentPlaceholder'
-    '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
-    '.attachmentPlaceholder-hint':  'attachmentHint'
-    '.ticket-edit':                 'ticketEdit'
-    '.attachments':                 'attachmentsHolder'
-    '.attachmentUpload':            'attachmentUpload'
-    '.attachmentUpload-progressBar':'progressBar'
-    '.js-percentage':               'progressText'
-
-  events:
-    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
-    'click .js-organisation':                 'showOrganisationMembers'
-    'click .js-back':                         'hideOrganisationMembers'
-    'focus .js-textarea':                     'open_textarea'
-    'input .js-textarea':                     'detect_empty_textarea'
-    'dragenter':                              'onDragenter'
-    'dragleave':                              'onDragleave'
-    'drop':                                   'onFileDrop'
-    'change input[type=file]':                'onFilePick'
-
-  constructor: ->
-    super
-
-    if @content is 'no_content'
-      @content = ''
-    else if @content is 'content'
-      @content = "some content la la la la"
-    else
-      @content = "some\nmultiline content\n1\n2\n3"
-
-    @render()
-
-    @textareaHeight =
-      open: 148
-      closed: 20
-
-    @dragEventCounter = 0
-    @attachments = []
-
-  render: ->
-    @html App.view('layout_ref/communication_reply')(
-      content: @content
-    )
-
-    @$('[contenteditable]').ce({
-      mode:      'textonly'
-      multiline: true
-      maxlength: 2500
-    })
 
   showOrganisationMembers: (e) =>
     e.stopPropagation()
@@ -185,6 +100,70 @@ class LayoutRefCommunicationReply extends App.ControllerContent
       options:
         speed: 300
         complete: => @organisationList.addClass('hide')
+
+App.Config.set( 'layout_ref/content', Content, 'Routes' )
+
+
+class CommunicationOverview extends App.ControllerContent
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/communication_overview')()
+
+App.Config.set( 'layout_ref/communication_overview', CommunicationOverview, 'Routes' )
+
+
+class LayoutRefCommunicationReply extends App.ControllerContent
+  elements:
+    '.js-textarea' :                'textarea'
+    '.attachmentPlaceholder':       'attachmentPlaceholder'
+    '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
+    '.attachmentPlaceholder-hint':  'attachmentHint'
+    '.ticket-edit':                 'ticketEdit'
+    '.attachments':                 'attachmentsHolder'
+    '.attachmentUpload':            'attachmentUpload'
+    '.attachmentUpload-progressBar':'progressBar'
+    '.js-percentage':               'progressText'
+
+  events:
+    'focus .js-textarea':                     'open_textarea'
+    'input .js-textarea':                     'detect_empty_textarea'
+    'dragenter':                              'onDragenter'
+    'dragleave':                              'onDragleave'
+    'drop':                                   'onFileDrop'
+    'change input[type=file]':                'onFilePick'
+
+  constructor: ->
+    super
+
+    if @content is 'no_content'
+      @content = ''
+    else if @content is 'content'
+      @content = "some content la la la la"
+    else
+      @content = "some\nmultiline content\n1\n2\n3"
+
+    @render()
+
+    @textareaHeight =
+      open: 148
+      closed: 20
+
+    @dragEventCounter = 0
+    @attachments = []
+
+  render: ->
+    @html App.view('layout_ref/communication_reply')(
+      content: @content
+    )
+
+    @$('[contenteditable]').ce({
+      mode:      'textonly'
+      multiline: true
+      maxlength: 2500
+    })
 
   detect_empty_textarea: =>
     if !@textarea.text()
