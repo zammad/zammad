@@ -1,6 +1,6 @@
 <div class="flex vertical">
   <div class="flex u-positionOrigin horizontal">
-    <div class="main flex tabsSidebarSpace">
+    <div class="main flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
       <div class="organizationZoom">
         <div class="page-header">
           <h1><%- @T( @head ) %></h1>

@@ -511,11 +511,11 @@ class App.Sidebar extends App.Controller
             )
 
   toggleSidebar: ->
-    @el.parent().find('.tabsSidebarSpace').toggleClass('is-closed')
+    @el.parent().find('.tabsSidebar-sidebarSpacer').toggleClass('is-closed')
     @el.parent().find('.tabsSidebar').toggleClass('is-closed')
 
   showSidebar: ->
-    @el.parent().find('.tabsSidebarSpace').removeClass('is-closed')
+    @el.parent().find('.tabsSidebar-sidebarSpacer').removeClass('is-closed')
     @el.parent().find('.tabsSidebar').removeClass('is-closed')
 
   toggleTab: (e) ->

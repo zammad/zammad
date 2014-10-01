@@ -1,5 +1,5 @@
 <div class="tabsSidebar-holder flex horizontal">
-  <div class="main flex tabsSidebarSpace">
+  <div class="main flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <h1>content</h1>
 
     <p>
