@@ -5,6 +5,9 @@
   display: -webkit-flex;
   display: flex;
 }
+.horizontal.hide, .vertical.hide, .centered.hide {
+  display: none;
+}
 
 .horizontal {
   -webkit-box-orient: horizontal;

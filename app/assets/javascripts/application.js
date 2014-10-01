@@ -11,6 +11,7 @@
 
 //= require ./app/lib/animations/velocity.min.js
 //= require ./app/lib/animations/velocity.ui.js
+//= require ./app/lib/animations/skrollr.js
 
 //not_used= require_tree ./app/lib/spine
 //= require ./app/lib/spine/spine.coffee

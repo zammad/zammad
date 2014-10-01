@@ -375,6 +375,18 @@ class App.TicketZoom extends App.Controller
     @userPopups()
 
     @autosaveStart()
+  
+    @bindScrollPageHeader()
+
+  bindScrollPageHeader: ->
+    pageHeader = @$('.page-header')
+    scrollHolder = pageHeader.scrollParent()
+    scrollBody = scrollHolder.get(0).scrollHeight - scrollHolder.height()
+
+    if scrollBody > pageHeader.height()
+      skrollr.init
+        forceHeight: false
+        holder: scrollHolder.get(0)
 
 
   ArticleView: =>

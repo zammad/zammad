@@ -122,6 +122,9 @@ small {
 [contenteditable]:focus {
   border-color: hsl(145,51%,45%);
 }
+[contenteditable]:focus {
+  text-overflow: clip !important;
+}
 [contenteditable].invalid {
   border-color: #F92;
 }
@@ -528,6 +531,10 @@ textarea,
 
 .pagination-items-range {
   color: #706f6f;
+}
+
+.page-header {
+  border: none;
 }
 
 .page-header-title {
@@ -2404,12 +2411,16 @@ footer {
 
 .ticketZoom .page-header {
   margin-top: 62px;
-  margin-bottom: 46px;
-  border-bottom: none;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.ticketZoom .ticket-article {
+  margin-top: 55px;
 }
 
   .ticket-title {
-    max-width: 90%;
+    max-width: 596px;
   }
 
     .ticket-title h1 {
@@ -2964,13 +2975,16 @@ footer {
     border-radius: 0 4px 4px 0;
   }
 
-.tabsSidebarSpace {
+.tabsSidebar-tabsSpacer {
   padding-right: 62px !important;
-  margin-right: 280px;
-  transition: 500ms;
 }
 
-.tabsSidebarSpace.is-closed {
+.tabsSidebar-sidebarSpacer {
+  margin-right: 280px;
+  transition: margin 500ms;
+}
+
+.tabsSidebar-sidebarSpacer.is-closed {
   margin-right: 0;
 }
 
@@ -3125,7 +3139,6 @@ footer {
 
   .box .page-header {
     text-align: center;
-    border-bottom: none;
     margin: 0;
     padding-bottom: 12px;
   }
@@ -3652,6 +3665,34 @@ footer {
 .form-item + .btn {
   margin-left: 15px;
 }
+
+.scrollPageHeader {
+  background: white;
+  border-bottom: 1px solid hsl(0,0%,78%);
+  height: 64px;
+  left: 260px;
+  padding: 0 22px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translateY(-64px);
+}
+
+  .scrollPageHeader small {
+    color: hsl(198,19%,72%);
+  }
+
+  .scrollPageHeader .ticket-title {
+    max-width: initial;
+  }
+
+  .scrollPageHeader h1 {
+    font-size: 19px;
+    margin: 0 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
 /*
 

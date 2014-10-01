@@ -6,22 +6,59 @@
 
   <h2>Ticket Article</h2>
 
-  <div class="ticket-article">
-    <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
-      <div class="article-meta-clip top">
-        <div class="article-content-meta top hide">
-          <div class="article-meta top">
-            <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
-              <div class="article-meta-key u-textTruncate">From</div>
-              <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
+  <div class="ticketZoom">
+    <div class="scrollPageHeader zIndex-9 horizontal center" 
+      data-anchor-target=".ticketZoom .page-header"
+      data-128-top-bottom="transform: translateY(-64px);"
+      data-64-top-bottom="transform: translateY(0px);"
+    >
+      <small>Ticket# <span class="ticket-number">1002</span></small>
+      <div class="ticket-title flex">
+        <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
+      </div>
+      <div class="pagination-counter">
+        <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
+      </div>
+      <ul class="pagination">
+        <li>
+          <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
+            <span class="left arrow icon"></span>
+          </a>
+        <li>
+          <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
+            <span class="right arrow icon"></span>
+          </a>
+      </ul>
+    </div>
+    <div class="page-header horizontal">
+      <div class="flex vertical center">
+        <span class="avatar unique user-popover  big" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
+        <div class="ticket-title">
+          <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
+        </div>
+        <div class="ticket-meta">
+          <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="11.07.2014 12:10">11.07.2014</span> 
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket-article">
+      <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
+                <div class="article-meta-key u-textTruncate">From</div>
+                <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="article-content zIndex-1 horizontal reverse">
-        <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
-        <div class="flex bubble-gap internal-border">
-          <div class="text-bubble"><div class="bubble-arrow"></div>Welcome!
+        <div class="article-content zIndex-1 horizontal reverse">
+          <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
+          <div class="flex bubble-gap internal-border">
+            <div class="text-bubble"><div class="bubble-arrow"></div>Welcome!
 
 Thank you for installing Zammad.
 
@@ -32,88 +69,173 @@ use our forums at <a href="http://forums.zammad.org/" title="http://forums.zamma
 Regards,
 <a href="#" class="show_toogle">See more</a><div class="hide preview">
 The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad.org</a> Project</div></div>
+          </div>
         </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">Kanal</div>
+                <div class="article-meta-value">
+                  <span class="white phone channel icon"></span>
+                  phone
+                </div>
+              </div>
+            </div>
+            <div class="article-actions horizontal stretch">
+                <a href="" data-type="internal" class="article-action u-clickable">
+                  <span class="internal action icon"></span>set to internal
+                </a>
+                <a href="#" data-type="reply" class="article-action u-clickable">
+                  <span class="reply action icon"></span>reply
+                </a>
+                <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
+                  <span class="split action icon"></span>split
+                </a>
+            </div>
+          </div>
+        </div>
+        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
       </div>
-      <div class="article-meta-clip bottom">
-        <div class="article-content-meta bottom hide">
-          <div class="article-meta bottom">
-            <div class="horizontal article-meta-row">
-              <div class="article-meta-key">Kanal</div>
-              <div class="article-meta-value">
-                <span class="white phone channel icon"></span>
-                phone
+
+      <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row" title="From: Felix Niklas">
+                <div class="article-meta-key u-textTruncate">From</div>
+                <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
               </div>
             </div>
           </div>
-          <div class="article-actions horizontal stretch">
+        </div>
+        <div class="article-content zIndex-1 horizontal">
+          <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
+          <div class="flex bubble-gap internal-border">
+            <div class="text-bubble"><div class="bubble-arrow"></div>Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">Kanal</div>
+                <div class="article-meta-value">
+                  <span class="white note channel icon"></span>
+                  note
+                </div>
+              </div>
+            </div>
+            <div class="article-actions horizontal stretch">
               <a href="" data-type="internal" class="article-action u-clickable">
                 <span class="internal action icon"></span>set to internal
               </a>
-              <a href="#" data-type="reply" class="article-action u-clickable">
-                <span class="reply action icon"></span>reply
-              </a>
-              <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                <span class="split action icon"></span>split
-              </a>
-          </div>
-        </div>
-      </div>
-      <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
-    </div>
-
-    <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
-      <div class="article-meta-clip top">
-        <div class="article-content-meta top hide">
-          <div class="article-meta top">
-            <div class="horizontal article-meta-row" title="From: Felix Niklas">
-              <div class="article-meta-key u-textTruncate">From</div>
-              <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
             </div>
           </div>
         </div>
+        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
       </div>
-      <div class="article-content zIndex-1 horizontal">
-        <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
-        <div class="flex bubble-gap internal-border">
-          <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,
+
+      <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
+                <div class="article-meta-key u-textTruncate">From</div>
+                <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1 horizontal reverse">
+          <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
+          <div class="flex bubble-gap internal-border">
+            <div class="text-bubble"><div class="bubble-arrow"></div>Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
+
+Grüße, Peter</div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">Kanal</div>
+                <div class="article-meta-value">
+                  <span class="white phone channel icon"></span>
+                  phone
+                </div>
+              </div>
+            </div>
+            <div class="article-actions horizontal stretch">
+                <a href="" data-type="internal" class="article-action u-clickable">
+                  <span class="internal action icon"></span>set to internal
+                </a>
+                <a href="#" data-type="reply" class="article-action u-clickable">
+                  <span class="reply action icon"></span>reply
+                </a>
+                <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
+                  <span class="split action icon"></span>split
+                </a>
+            </div>
+          </div>
+        </div>
+        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
+      </div>
+
+      <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row" title="From: Felix Niklas">
+                <div class="article-meta-key u-textTruncate">From</div>
+                <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1 horizontal">
+          <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
+          <div class="flex bubble-gap internal-border">
+            <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,
 anbei findest du die Midi Noten für Maria Maria "I Like it Loud".
 Wünsche dir einen guten Auftritt in Hamburg.
 
 Alles gute,
 Oliver
-            <div class="attachments">
-              <div class="paperclip icon"></div>
-              <h3>2 <%- @T('Attached Files') %></h3>
-              <div class="attachment horizontal">
-                <div class="attachment-name u-highlight">midinotes_view.jpg</div>
-                <div class="attachment-size">35.5kb</div>
-              </div>
-              <div class="attachment horizontal">
-                <div class="attachment-name u-highlight">lyrics_I_Like_it_Loud.txt</div>
-                <div class="attachment-size">17.1kb</div>
-              </div>
-            </div></div>
+              <div class="attachments">
+                <div class="paperclip icon"></div>
+                <h3>2 <%- @T('Attached Files') %></h3>
+                <div class="attachment horizontal">
+                  <div class="attachment-name u-highlight">midinotes_view.jpg</div>
+                  <div class="attachment-size">35.5kb</div>
+                </div>
+                <div class="attachment horizontal">
+                  <div class="attachment-name u-highlight">lyrics_I_Like_it_Loud.txt</div>
+                  <div class="attachment-size">17.1kb</div>
+                </div>
+              </div></div>
+          </div>
         </div>
-      </div>
-      <div class="article-meta-clip bottom">
-        <div class="article-content-meta bottom hide">
-          <div class="article-meta bottom">
-            <div class="horizontal article-meta-row">
-              <div class="article-meta-key">Kanal</div>
-              <div class="article-meta-value">
-                <span class="white note channel icon"></span>
-                note
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">Kanal</div>
+                <div class="article-meta-value">
+                  <span class="white note channel icon"></span>
+                  note
+                </div>
               </div>
             </div>
-          </div>
-          <div class="article-actions horizontal stretch">
-            <a href="" data-type="internal" class="article-action u-clickable">
-              <span class="internal action icon"></span>set to internal
-            </a>
+            <div class="article-actions horizontal stretch">
+              <a href="" data-type="internal" class="article-action u-clickable">
+                <span class="internal action icon"></span>set to internal
+              </a>
+            </div>
           </div>
         </div>
+        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
       </div>
-      <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
     </div>
   </div>
 

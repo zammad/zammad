@@ -101,9 +101,22 @@ App.Config.set( 'layout_ref/content', Content, 'Routes' )
 
 
 class CommunicationOverview extends App.ControllerContent
+
   constructor: ->
     super
     @render()
+
+    @bindScrollPageHeader()
+
+  bindScrollPageHeader: ->
+    pageHeader = @$('.page-header')
+    scrollHolder = pageHeader.scrollParent()
+    scrollBody = scrollHolder.get(0).scrollHeight - scrollHolder.height()
+
+    if scrollBody > pageHeader.height()
+      skrollr.init
+        forceHeight: false
+        holder: scrollHolder.get(0)
 
   render: ->
     @html App.view('layout_ref/communication_overview')()
