@@ -217,12 +217,27 @@
       length = length + 1
     }
     if ( length > this.options.maxlength ) {
-      this.$element.addClass('invalid')
-      setTimeout($.proxy(function(){
-          this.$element.removeClass('invalid')
-        }, this), 1000)
 
-      return false
+      // try to set error on framework form
+      parent = this.$element.parent().parent()
+      if ( parent.hasClass('form-group') ) {
+        parent.addClass('has-error')
+        setTimeout($.proxy(function(){
+            parent.removeClass('has-error')
+          }, this), 1000)
+
+        return false
+      }
+
+      // set validation on element
+      else {
+        this.$element.addClass('invalid')
+        setTimeout($.proxy(function(){
+            this.$element.removeClass('invalid')
+          }, this), 1000)
+
+        return false
+      }
     }
     return true
   }
