@@ -4,7 +4,7 @@
   <div class="bubble-grid horizontal">
     <div class="vertical center edit-controls">
       <%- App.User.fullLocal( @S('id') ).avatar(false, 'right', 'zIndex-5') %>
-      <div class="dark pop-select zIndex-7 edit-control-item" style="display: block;">
+      <div class="dark pop-select zIndex-7 edit-control-item">
         <div class="pop-selected u-clickable centered">
           <div class="gray <%- @article.type %> channel icon"></div>
         </div>
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="visibility-toggle zIndex-7 u-clickable edit-control-item" style="display: block;">
+      <div class="visibility-toggle zIndex-7 u-clickable edit-control-item">
         <div class="internal-visibility centered" title="<%- @T("unset internal") %>">
           <div class="internal visibility icon"></div>
         </div>
@@ -39,37 +39,7 @@
           <div class="bubble-arrow"></div>
           <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%= @article.body %></div>
           <!-- .text-bubble grows with textarea (and expanding clone) -->
-
-<div class="shortcut dropdown">
-  <ul class="dropdown-menu" style="width: 240px; max-height: 200px;">
-    <li><a href="#">shortcut 1</a></li>
-    <li><a href="#">shortcut 2</a></li>
-    <li><a href="#">shortcut 3</a></li>
-    <li><a href="#">shortcut 4</a></li>
-    <li><a href="#">shortcut 5</a></li>
-    <li><a href="#">shortcut 6</a></li>
-    <li><a href="#">shortcut 7</a></li>
-    <li><a href="#">shortcut 8</a></li>
-  </ul>
-</div>
           <div class="attachments"></div>
-            <!--
-            </div>
-            <div class="attachment horizontal">
-              <div class="attachment-name u-highlight">sega-genesis-box.gif</div>
-              <div class="attachment-size">2.4mb</div>
-              <div class="attachment-delete js-delete align-right u-clickable">
-                <div class="delete icon"></div><%- @T('Delete File') %>
-              </div>
-            </div>
-            <div class="attachment horizontal">
-              <div class="attachment-name u-highlight">license-key.txt</div>
-              <div class="attachment-size">7kb</div>
-              <div class="attachment-delete js-delete align-right u-clickable">
-                <div class="delete icon"></div><%- @T('Delete File') %>
-              </div>
-            </div>
-          </div>-->
           <div class="article-attachment u-unclickable">
             <div class="attachmentPlaceholder">
               <span class="attachmentPlaceholder-hint">Antwort eingeben oder</span>

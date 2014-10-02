@@ -681,7 +681,7 @@ class TicketMeta extends App.Controller
 
 class Edit extends App.Controller
   elements:
-    '.js-textarea' :                'textarea'
+    '.js-textarea':                 'textarea'
     '.attachmentPlaceholder':       'attachmentPlaceholder'
     '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
     '.attachmentPlaceholder-hint':  'attachmentHint'
@@ -690,7 +690,7 @@ class Edit extends App.Controller
     '.attachmentUpload':            'attachmentUpload'
     '.attachmentUpload-progressBar':'progressBar'
     '.js-percentage':               'progressText'
-    #'.edit-control-item' :          'editControlItem'
+    '.edit-control-item':           'editControlItem'
     #'.edit-controls':               'editControls'
     #'.recipient-picker':            'recipientPicker'
     #'.recipient-list':              'recipientList'
@@ -733,7 +733,6 @@ class Edit extends App.Controller
     e.stopPropagation()
 
   release: =>
-    #@autosaveStop()
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
@@ -773,13 +772,14 @@ class Edit extends App.Controller
           icon: 'note'
         },
       ]
-    console.log('DEvvvvvV', @defaults)
+
     @html App.view('ticket_zoom/edit')(
       ticket:       ticket
       articleTypes: articleTypes
       article:      @defaults
       isCustomer:   @isRole('Customer')
     )
+    @setArticleType(@type)
 
     configure_attributes = [
       { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organisation/Company', minLengt: 2, disableCreateUser: false },
@@ -802,7 +802,7 @@ class Edit extends App.Controller
     # show text module UI
     if !@isRole('Customer')
       textModule = new App.WidgetTextModule(
-        el:       @el
+        el:       @$('.js-textarea').parent()
         data:
           ticket: ticket
       )
@@ -922,6 +922,7 @@ class Edit extends App.Controller
       @remove_textarea_catcher()
 
   open_textarea: (event, withoutAnimation) =>
+    console.log('ticketEdit', @ticketEdit.hasClass('is-open'))
     if !@ticketEdit.hasClass('is-open')
       duration = 300
 
@@ -940,20 +941,19 @@ class Edit extends App.Controller
           complete: => @add_textarea_catcher()
 
       # scroll to bottom
-      # @textarea.velocity "scroll",
-      #   container: @textarea.scrollParent()
-      #   offset: 99999
-      #   duration: 300
-      #   easing: 'easeOutQuad'
-      #   queue: false
+      @textarea.velocity "scroll",
+        container: @textarea.scrollParent()
+        offset: 99999
+        duration: 300
+        easing: 'easeOutQuad'
+        queue: false
 
-      # @editControlItem.velocity "transition.slideRightIn",
-      #   duration: 300
-      #   stagger: 50
-      #   drag: true
+      @editControlItem.velocity "transition.slideRightIn",
+         duration: 300
+         stagger: 50
+         drag: true
 
       # move attachment text to the left bottom (bottom happens automatically)
-
       @attachmentPlaceholder.velocity
         properties:
           translateX: -@attachmentInputHolder.position().left + "px"
@@ -1004,10 +1004,10 @@ class Edit extends App.Controller
         options:
           duration: 300
 
-      # @editControlItem.css('display', 'none')
+      @editControlItem.css('display', 'none')
 
   onDragenter: (event) =>
-    # on the first event, 
+    # on the first event,
     # open textarea (it will only open if its closed)
     @open_textarea() if @dragEventCounter is 0
 
