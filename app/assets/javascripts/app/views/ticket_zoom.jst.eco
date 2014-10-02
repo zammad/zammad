@@ -1,7 +1,28 @@
 <div class="tabsSidebar-holder flex vertical">
   <div class="flex u-positionOrigin horizontal">
-    <div class="main no-padding flex tabsSidebarSpace">
+    <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
       <div class="ticketZoom">
+        <div class="scrollPageHeader tabsSidebar-sidebarSpacer zIndex-9 horizontal center"
+          data-anchor-target=".ticketZoom .page-header"
+          data-128-top-bottom="transform: translateY(-64px);"
+          data-64-top-bottom="transform: translateY(0px);"
+        >
+          <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
+          <div class="ticket-title flex"></div>
+          <div class="pagination-counter">
+            <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
+          </div>
+          <ul class="pagination">
+            <li>
+              <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
+                <span class="left arrow icon"></span>
+              </a>
+            <li>
+              <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
+                <span class="right arrow icon"></span>
+              </a>
+          </ul>
+        </div>
         <div class="page-header horizontal">
           <div class="flex vertical center">
             <%- @ticket.customer.avatar(true) %>
