@@ -720,13 +720,14 @@ class Edit extends App.Controller
       open: 148
       closed: 20
 
+
     @dragEventCounter = 0
     @attachments = []
 
     @render()
 
-    if @textarea.text().trim()
-      @ticketEdit.addClass('is-open')
+    if @defaults.body
+      @open_textarea(null, true)
 
   stopPropagation: (e) ->
     e.stopPropagation()
@@ -920,9 +921,13 @@ class Edit extends App.Controller
     else
       @remove_textarea_catcher()
 
-  open_textarea: =>
-    console.log('OT', @textareaCatcher , @textarea.text().trim() , @attachments.length)
-    if !@textareaCatcher and !@textarea.text().trim() and !@attachments.length
+  open_textarea: (event, withoutAnimation) =>
+    if !@ticketEdit.hasClass('is-open')
+      duration = 300
+
+      if withoutAnimation
+        duration = 0
+
       @ticketEdit.addClass('is-open')
 
       @textarea.velocity
@@ -930,7 +935,7 @@ class Edit extends App.Controller
           minHeight: "#{ @textareaHeight.open - 38 }px"
           marginBottom: 38
         options:
-          duration: 300
+          duration: duration
           easing: 'easeOutQuad'
           complete: => @add_textarea_catcher()
 
@@ -953,14 +958,14 @@ class Edit extends App.Controller
         properties:
           translateX: -@attachmentInputHolder.position().left + "px"
         options:
-          duration: 300
+          duration: duration
           easing: 'easeOutQuad'
 
       @attachmentHint.velocity
         properties:
           opacity: 0
         options:
-          duration: 300
+          duration: duration
 
   add_textarea_catcher: ->
     @textareaCatcher = new App.clickCatcher
