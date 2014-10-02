@@ -1,4 +1,4 @@
-<div class="tabsSidebar-holder">
+<div class="tabsSidebar-holder flex horizontal">
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="newTicket">
       <div class="box">
