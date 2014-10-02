@@ -7,7 +7,10 @@ class App.WidgetTextModule extends App.Controller
     if @selector
       @bindElements = @$( @selector ).textmodule()
     else
-      @bindElements = @$('[contenteditable]').textmodule()
+      if @el.attr('contenteditable')
+        @bindElements = @el.textmodule()
+      else
+        @bindElements = @$('[contenteditable]').textmodule()
     @update()
 
     @subscribeId = App.TextModule.subscribe(@update, initFetch: true )
