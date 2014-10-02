@@ -442,6 +442,10 @@ label {
   margin-top: 0;
 }
 
+.form-group .controls {
+  position: relative;
+}
+
 .form-group .help-message {
   cursor: help;
   opacity: 0.2;
@@ -471,6 +475,12 @@ textarea,
   .form-control:focus {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
+  }
+
+
+  .form-control[contenteditable] {
+    height: auto;
+    min-height: 100px;
   }
 
   .tokenfield.focus {

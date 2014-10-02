@@ -704,6 +704,14 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'radio'
       item = $( App.view('generic/radio')( attribute: attribute ) )
 
+    # richtext
+    else if attribute.tag is 'richtext'
+      item = $( App.view('generic/richtext')( attribute: attribute ) )
+      item.ce(
+        mode: attribute.type
+        maxlength: attribute.maxlength
+      )
+
     # textarea
     else if attribute.tag is 'textarea'
       fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )

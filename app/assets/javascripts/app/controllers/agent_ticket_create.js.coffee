@@ -272,7 +272,7 @@ class App.TicketCreate extends App.Controller
 
     # show text module UI
     @textModule = new App.WidgetTextModule(
-      el: @el.find('form').find('textarea')
+      el: @el.find('[data-name="body"]')
     )
 
     new Sidebar(
@@ -391,7 +391,7 @@ class App.TicketCreate extends App.Controller
             type:    'success',
             msg:     App.i18n.translateInline( 'Ticket %s created!', @number ),
             link:    "#ticket/zoom/#{@id}"
-            timeout: 12000,
+            timeout: 4000,
 
           # close ticket create task
           App.TaskManager.remove( ui.task_key )
