@@ -1,10 +1,12 @@
-<form class="article-add <% if @formChanged: %>form-changed<% end %>">
+<form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>">
+  <input type="hidden" name="type" value="<%= @article.type %>">
+  <input type="hidden" name="internal" value="<%= @article.internal %>">
   <div class="bubble-grid horizontal">
     <div class="vertical center edit-controls">
       <%- App.User.fullLocal( @S('id') ).avatar(false, 'right', 'zIndex-5') %>
-      <div class="dark pop-select zIndex-7 edit-control-item">
+      <div class="dark pop-select zIndex-7 edit-control-item" style="display: block;">
         <div class="pop-selected u-clickable centered">
-          <div class="gray <%- @type %> channel icon"></div>
+          <div class="gray <%- @article.type %> channel icon"></div>
         </div>
         <div class="pop-selector hide">
           <div class="horizontal">
@@ -16,48 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="u-positionOrigin zIndex-7 edit-control-item">
-        <div class="recipient-picker u-clickable horizontal centered">
-          <div class="recipients icon"></div>
-          <div class="recipient-count">3</div>
-        </div>
-        <div class="recipient-list hide">
-          <div class="list-arrow"></div>
-          <div class="list-head horizontal">
-            <%- @T('Recipients') %>
-            <div class="align-right"><%- @T('type') %></div>
-          </div>
-          <div class="list-entry horizontal centered">
-            <div class="avatar"  style="background-image: url(http://berta9.express.ge/31/performer/Paul%20van%20Dyk/.photo/34_paul_van_dyk_01.jpg)"></div>
-            <div class="list-entry-name flex">Hans Peter Baxxter</div>
-            <div class="list-entry-type u-clickable horizontal">
-              <div class="active" data-value="to">To</div>
-              <div data-value="cc" title="<%- @T('carbon copy') %>">Cc</div>
-            </div>
-          </div>
-          <div class="list-entry horizontal centered">
-            <div class="avatar"  style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/48.jpg)"></div>
-            <div class="list-entry-name flex">Julia Maier</div>
-            <div class="list-entry-type u-clickable horizontal">
-              <div class="active" data-value="to">To</div>
-              <div data-value="cc" title="<%- @T('carbon copy') %>">Cc</div>
-            </div>
-          </div>
-          <div class="list-entry horizontal centered">
-            <div class="avatar"  style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/sindresorhus/48.jpg)"></div>
-            <div class="list-entry-name flex">Remo Batlogg</div>
-            <div class="list-entry-type u-clickable horizontal">
-              <div class="active" data-value="to">To</div>
-              <div data-value="cc" title="<%- @T('carbon copy') %>">Cc</div>
-            </div>
-          </div>
-          <form class="list-edit">
-            <input type="email" class="list-entry" placeholder="<%- @T('Add recipients..') %>"></input>
-            <input type="submit" tabindex="-1"></input>
-          </form>
-        </div>
-      </div>
-      <div class="visibility-toggle zIndex-7 u-clickable edit-control-item">
+      <div class="visibility-toggle zIndex-7 u-clickable edit-control-item" style="display: block;">
         <div class="internal-visibility centered" title="<%- @T("unset internal") %>">
           <div class="internal visibility icon"></div>
         </div>
@@ -67,20 +28,76 @@
       </div>
     </div>
     <div class="flex article-content zIndex-5 bubble-gap">
+<!--
+      <label class="recipients"><%- @T('Recipients') %>
+        <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_normal.jpg)"></div>
+        <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"></div>
+      </label>
+-->
       <div class="internal-border">
         <div class="text-bubble">
           <div class="bubble-arrow"></div>
-          <textarea rows="1"></textarea>
+          <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%= @article.body %></div>
           <!-- .text-bubble grows with textarea (and expanding clone) -->
-          <div class="article-attachment js-attachment u-unclickable">
-            <span class="bubble-placeholder-hint">Antwort eingeben oder</span>
-            <span class="u-highlight u-clickable edit-upload-button js-attachment-text">
-              Dateien wählen..
-              <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
-            </span>
+
+<div class="shortcut dropdown">
+  <ul class="dropdown-menu" style="width: 240px; max-height: 200px;">
+    <li><a href="#">shortcut 1</a></li>
+    <li><a href="#">shortcut 2</a></li>
+    <li><a href="#">shortcut 3</a></li>
+    <li><a href="#">shortcut 4</a></li>
+    <li><a href="#">shortcut 5</a></li>
+    <li><a href="#">shortcut 6</a></li>
+    <li><a href="#">shortcut 7</a></li>
+    <li><a href="#">shortcut 8</a></li>
+  </ul>
+</div>
+          <div class="attachments"></div>
+            <!--
+            </div>
+            <div class="attachment horizontal">
+              <div class="attachment-name u-highlight">sega-genesis-box.gif</div>
+              <div class="attachment-size">2.4mb</div>
+              <div class="attachment-delete js-delete align-right u-clickable">
+                <div class="delete icon"></div><%- @T('Delete File') %>
+              </div>
+            </div>
+            <div class="attachment horizontal">
+              <div class="attachment-name u-highlight">license-key.txt</div>
+              <div class="attachment-size">7kb</div>
+              <div class="attachment-delete js-delete align-right u-clickable">
+                <div class="delete icon"></div><%- @T('Delete File') %>
+              </div>
+            </div>
+          </div>-->
+          <div class="article-attachment u-unclickable">
+            <div class="attachmentPlaceholder">
+              <span class="attachmentPlaceholder-hint">Antwort eingeben oder</span>
+              <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable">
+                Dateien wählen..
+                <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+              </span>
+            </div>
+            <div class="attachmentUpload hide u-clickable">
+              <div class="horizontal">
+                <div class="u-highlight">
+                  <%- @T(' Uploading ') %> (<span class="js-percentage">0</span>%) ...
+                </div>
+                <div class="attachmentUpload-cancel align-right js-cancel u-clickable">
+                  <div class="delete icon"></div><%- @T('Cancel Upload') %>
+                </div>
+              </div>
+              <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="fit dropArea">
+            <div class="dropArea-inner fit centered">
+              <%- @T('Drop Files here') %>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </form>

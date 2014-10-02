@@ -1599,6 +1599,12 @@ class App.ControllerForm extends App.Controller
 
     lookupForm = @findForm(form)
 
+    # get contenteditable
+    for element in lookupForm.find('[contenteditable]')
+      name = $(element).data('name')
+      if name
+        param[name] = $(element).ceg()
+
     # get form elements
     array = lookupForm.serializeArray()
 

@@ -163,6 +163,8 @@ class LayoutRefCommunicationReply extends App.ControllerContent
       maxlength: 2500
     })
 
+    @$('[contenteditable]').textmodule()
+
   detect_empty_textarea: =>
     if !@textarea.text()
       @add_textarea_catcher()
@@ -172,7 +174,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
   open_textarea: (event, withoutAnimation) =>
     if !@ticketEdit.hasClass('is-open')
       duration = 300
-      
+
       if withoutAnimation
         duration = 0
 

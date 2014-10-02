@@ -88,9 +88,6 @@ class App.TicketZoom extends App.Controller
           if newTicketRaw.updated_by_id isnt @Session.get('id')
             App.TaskManager.notify( @task_key )
 
-          # rerender edit box
-          @editDone = false
-
         # remember current data
         @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
@@ -163,6 +160,15 @@ class App.TicketZoom extends App.Controller
         el:     @el.find('.ticket-meta')
       )
 
+      new Edit(
+        ticket:     @ticket
+        el:         @el.find('.ticket-edit')
+        #el:         @el.find('.edit')
+        form_meta:  @form_meta
+        defaults:   @taskGet('article')
+        ui:         @
+      )
+
       editTicket = (el) =>
         el.append('<form class="edit"></form>')
         @editEl = el
@@ -170,7 +176,7 @@ class App.TicketZoom extends App.Controller
 
         reset = (e) =>
           e.preventDefault()
-          App.TaskManager.update( @task_key, { 'state': {} })
+          @taskReset()
           show(@ticket)
 
         show = (ticket) =>
@@ -202,7 +208,7 @@ class App.TicketZoom extends App.Controller
                   form.find('[name="' + fieldNameToChange + '"]').replaceWith( newElement )
 
           defaults   = ticket.attributes()
-          task_state = App.TaskManager.get(@task_key).state || {}
+          task_state = @taskGet('ticket')
           modelDiff  = @getDiff( defaults, task_state )
           #if @isRole('Customer')
           #  delete defaults['state_id']
@@ -351,17 +357,13 @@ class App.TicketZoom extends App.Controller
         items:  items
       )
 
-    @ArticleView()
-
-    if force || !@editDone
-      # reset form on force reload
-      if force && _.isEmpty( App.TaskManager.get(@task_key).state )
-        App.TaskManager.update( @task_key, { 'state': {} })
-      @editDone = true
-
-      # rerender widget if it hasn't changed
-      if !@editWidget || _.isEmpty( App.TaskManager.get(@task_key).state )
-        @editWidget = @Edit()
+    # show article
+    new ArticleView(
+      ticket:             @ticket
+      ticket_article_ids: @ticket_article_ids
+      el:                 @el.find('.ticket-article')
+      ui:                 @
+    )
 
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )
@@ -376,40 +378,30 @@ class App.TicketZoom extends App.Controller
 
     @autosaveStart()
 
-
-  ArticleView: =>
-    # show article
-    new ArticleView(
-      ticket:             @ticket
-      ticket_article_ids: @ticket_article_ids
-      el:                 @el.find('.ticket-article')
-      ui:                 @
-    )
-
-  Edit: =>
-    # show edit
-    new Edit(
-      ticket:     @ticket
-      el:         @el.find('.ticket-edit')
-      #el:         @el.find('.edit')
-      form_meta:  @form_meta
-      task_key:   @task_key
-      ui:         @
-    )
-
   autosaveStop: =>
     @autosaveLast = {}
     @clearInterval( 'autosave' )
 
   autosaveStart: =>
     if !@autosaveLast
-      @autosaveLast = App.TaskManager.get(@task_key).state || {}
+      @autosaveLast = @taskGet()
     update = =>
-      currentStore  = @ticket.attributes()
-      currentParams = @formParam( @el.find('.edit') )
+      #console.log('AR', @formParam( @el.find('.article-add') ) )
+      currentStore  =
+        ticket:  @ticket.attributes()
+        article: {
+          type: ''
+          body: ''
+          internal: ''
+        }
+      currentParams =
+        ticket:  @formParam( @el.find('.edit') )
+        article: @formParam( @el.find('.article-add') )
 
       # get diff of model
-      modelDiff = @getDiff( currentStore, currentParams )
+      modelDiff =
+        ticket: @getDiff( currentStore.ticket, currentParams.ticket )
+        article: @getDiff( currentStore.article, currentParams.article )
       #console.log('modelDiff', modelDiff)
 
       # get diff of last save
@@ -420,9 +412,9 @@ class App.TicketZoom extends App.Controller
         console.log('model DIFF ', modelDiff)
 
         @autosaveLast = clone(currentParams)
-        @markFormDiff( modelDiff )
+        @markFormDiff( modelDiff.ticket )
 
-        App.TaskManager.update( @task_key, { 'state': modelDiff })
+        @taskUpdateAll( modelDiff )
     @interval( update, 3000, 'autosave' )
 
   getDiff: (model, params) =>
@@ -584,10 +576,34 @@ class App.TicketZoom extends App.Controller
       done: (r) =>
 
         # reset form after save
-        App.TaskManager.update( @task_key, { 'state': {} })
+        @taskReset()
 
         @fetch( ticket.id, true )
     )
+
+  taskGet: (area) =>
+    @localTaskData = App.TaskManager.get(@task_key).state || {}
+    if area
+      if !@localTaskData[area]
+        @localTaskData[area] = {}
+      return @localTaskData[area]
+    if !@localTaskData
+      @localTaskData = {}
+    @localTaskData
+
+  taskUpdate: (area, data) =>
+    @localTaskData[area] = data
+    App.TaskManager.update( @task_key, { 'state': @localTaskData })
+
+  taskUpdateAll: (data) =>
+    @localTaskData = data
+    App.TaskManager.update( @task_key, { 'state': @localTaskData })
+
+  taskReset: (area, data) =>
+    @localTaskData =
+      ticket: {}
+      article: {}
+    App.TaskManager.update( @task_key, { 'state': @localTaskData })
 
 class TicketTitle extends App.Controller
   events:
@@ -653,37 +669,52 @@ class TicketMeta extends App.Controller
 
 class Edit extends App.Controller
   elements:
-    'textarea' :                    'textarea'
-    '.edit-control-item' :          'editControlItem'
-    '.edit-controls':               'editControls'
-    '.recipient-picker':            'recipientPicker'
-    '.recipient-list':              'recipientList'
-    '.recipient-list .list-arrow':  'recipientListArrow'
-    '.js-attachment':               'attachmentHolder'
-    '.js-attachment-text':          'attachmentText'
-    '.bubble-placeholder-hint':     'bubblePlaceholderHint'
+    '.js-textarea' :                'textarea'
+    '.attachmentPlaceholder':       'attachmentPlaceholder'
+    '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
+    '.attachmentPlaceholder-hint':  'attachmentHint'
+    '.article-add':                 'ticketEdit'
+    '.attachments':                 'attachmentsHolder'
+    '.attachmentUpload':            'attachmentUpload'
+    '.attachmentUpload-progressBar':'progressBar'
+    '.js-percentage':               'progressText'
+    #'.edit-control-item' :          'editControlItem'
+    #'.edit-controls':               'editControls'
+    #'.recipient-picker':            'recipientPicker'
+    #'.recipient-list':              'recipientList'
+    #'.recipient-list .list-arrow':  'recipientListArrow'
 
   events:
-    'click .submit':             'update'
+    #'click .submit':             'update'
     'click [data-type="reset"]': 'reset'
-    'click .visibility-toggle':  'toggle_visibility'
+    'click .visibility-toggle':  'toggleVisibility'
     'click .pop-selectable':     'selectArticleType'
     'click .pop-selected':       'showSelectableArticleType'
-    'focus textarea':            'open_textarea'
-    'input textarea':            'detect_empty_textarea'
     'click .recipient-picker':   'toggle_recipients'
     'click .recipient-list':     'stopPropagation'
     'click .list-entry-type div':  'change_type'
     'submit .recipient-list form': 'add_recipient'
+    'focus .js-textarea':                     'open_textarea'
+    'input .js-textarea':                     'detect_empty_textarea'
+    'dragenter':                              'onDragenter'
+    'dragleave':                              'onDragleave'
+    'drop':                                   'onFileDrop'
+    'change input[type=file]':                'onFilePick'
 
   constructor: ->
     super
 
     @textareaHeight =
       open: 148
-      closed: 38
+      closed: 20
+
+    @dragEventCounter = 0
+    @attachments = []
 
     @render()
+
+    if @textarea.text().trim()
+      @ticketEdit.addClass('is-open')
 
   stopPropagation: (e) ->
     e.stopPropagation()
@@ -729,74 +760,36 @@ class Edit extends App.Controller
           icon: 'note'
         },
       ]
-
+    console.log('DEvvvvvV', @defaults)
     @html App.view('ticket_zoom/edit')(
       ticket:       ticket
-      type:         @type
       articleTypes: articleTypes
+      article:      @defaults
       isCustomer:   @isRole('Customer')
     )
 
-    @form_id = App.ControllerForm.formId()
-    defaults = ticket.attributes()
-    if @isRole('Customer')
-      delete defaults['state_id']
-      delete defaults['state']
-    if !_.isEmpty( App.TaskManager.get(@task_key).state )
-      defaults = App.TaskManager.get(@task_key).state
+    configure_attributes = [
+      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organisation/Company', minLengt: 2, disableCreateUser: false },
+    ]
 
-    new App.ControllerForm(
-      el:        @el.find('.form-article-update')
-      form_id:   @form_id
-      model:     App.TicketArticle
-      screen:   'edit'
-      filter:
-        type_id: [1,9,5]
-      params:    defaults
-      dependency: [
-        {
-          bind: {
-            name:     'type_id'
-            relation: 'TicketArticleType'
-            value:    ['email']
-          },
-          change: {
-            action: 'show'
-            name: ['to', 'cc'],
-          },
-        },
-        {
-          bind: {
-            name:     'type_id'
-            relation: 'TicketArticleType'
-            value:    ['note', 'phone', 'twitter status']
-          },
-          change: {
-            action: 'hide'
-            name: ['to', 'cc'],
-          },
-        },
-        {
-          bind: {
-            name:     'type_id'
-            relation: 'TicketArticleType'
-            value:    ['twitter direct-message']
-          },
-          change: {
-            action: 'show'
-            name: ['to'],
-          },
-        },
-      ]
+    controller = new App.ControllerForm(
+      el: @$('.recipients')
+      model:
+        configure_attributes: configure_attributes,
     )
 
-    # start auto save
-    #@autosaveStart()
+    @$('[data-name="body"]').ce({
+      mode:      'textonly'
+      multiline: true
+      maxlength: 2500
+    })
+
+    @form_id = App.ControllerForm.formId()
 
     # show text module UI
     if !@isRole('Customer')
       textModule = new App.WidgetTextModule(
-        el:   @textarea
+        el:       @el
         data:
           ticket: ticket
       )
@@ -871,15 +864,18 @@ class Edit extends App.Controller
     e.stopPropagation()
     e.preventDefault()
     console.log "add recipient", e
-    # store recipient 
+    # store recipient
 
-  toggle_visibility: ->
-    if @el.hasClass('is-public')
-      @el.removeClass('is-public')
-      @el.addClass('is-internal')
+  toggleVisibility: ->
+    item = @$('.article-add')
+    if item.hasClass('is-public')
+      item.removeClass('is-public')
+      item.addClass('is-internal')
+      @$('[name="internal"]').val('true')
     else
-      @el.addClass('is-public')
-      @el.removeClass('is-internal')
+      item.addClass('is-public')
+      item.removeClass('is-internal')
+      @$('[name="internal"]').val('')
 
   showSelectableArticleType: =>
     @el.find('.pop-selector').removeClass('hide')
@@ -903,59 +899,60 @@ class Edit extends App.Controller
     if @type
       typeIcon.removeClass @type
     @type = type
+    @$('[name="type"]').val(type)
     typeIcon.addClass @type
 
   detect_empty_textarea: =>
-    if !@textarea.val()
+    if !@textarea.text().trim()
       @add_textarea_catcher()
     else
       @remove_textarea_catcher()
 
   open_textarea: =>
-    if !@textareaCatcher and !@textarea.val()
-      @el.addClass('is-open')
+    console.log('OT', @textareaCatcher , @textarea.text().trim() , @attachments.length)
+    if !@textareaCatcher and !@textarea.text().trim() and !@attachments.length
+      @ticketEdit.addClass('is-open')
 
       @textarea.velocity
         properties:
-          height: "#{ @textareaHeight.open - 38 }px"
+          minHeight: "#{ @textareaHeight.open - 38 }px"
           marginBottom: 38
         options:
           duration: 300
           easing: 'easeOutQuad'
+          complete: => @add_textarea_catcher()
 
       # scroll to bottom
-      @textarea.velocity "scroll",
-        container: @textarea.scrollParent()
-        offset: 99999
-        duration: 300
-        easing: 'easeOutQuad'
-        queue: false
+      # @textarea.velocity "scroll",
+      #   container: @textarea.scrollParent()
+      #   offset: 99999
+      #   duration: 300
+      #   easing: 'easeOutQuad'
+      #   queue: false
 
-      @editControlItem.velocity "transition.slideRightIn",
-        duration: 300
-        stagger: 50
-        drag: true
+      # @editControlItem.velocity "transition.slideRightIn",
+      #   duration: 300
+      #   stagger: 50
+      #   drag: true
 
       # move attachment text to the left bottom (bottom happens automatically)
 
-      @attachmentHolder.velocity
+      @attachmentPlaceholder.velocity
         properties:
-          translateX: -@attachmentText.position().left + "px"
+          translateX: -@attachmentInputHolder.position().left + "px"
         options:
           duration: 300
           easing: 'easeOutQuad'
 
-      @bubblePlaceholderHint.velocity
+      @attachmentHint.velocity
         properties:
           opacity: 0
         options:
           duration: 300
 
-      @add_textarea_catcher()
-
   add_textarea_catcher: ->
     @textareaCatcher = new App.clickCatcher
-      holder: @el.offsetParent()
+      holder: @ticketEdit.offsetParent()
       callback: @close_textarea
       zIndexScale: 4
 
@@ -966,168 +963,107 @@ class Edit extends App.Controller
 
   close_textarea: =>
     @remove_textarea_catcher()
-    if !@textarea.val()
+    if !@textarea.text().trim() && !@attachments.length
 
       @textarea.velocity
         properties:
-          height: "#{ @textareaHeight.closed }px"
+          minHeight: "#{ @textareaHeight.closed }px"
           marginBottom: 0
         options:
           duration: 300
           easing: 'easeOutQuad'
-          complete: => @el.removeClass('is-open')
+          complete: => @ticketEdit.removeClass('is-open')
 
-      @attachmentHolder.velocity
+      @attachmentPlaceholder.velocity
         properties:
           translateX: 0
         options:
           duration: 300
           easing: 'easeOutQuad'
 
-      @bubblePlaceholderHint.velocity
+      @attachmentHint.velocity
         properties:
           opacity: 1
         options:
           duration: 300
 
-      @editControlItem.css('display', 'none')
+      # @editControlItem.css('display', 'none')
 
-  autosaveStop: =>
-    @clearInterval( 'autosave' )
+  onDragenter: (event) =>
+    # on the first event, 
+    # open textarea (it will only open if its closed)
+    @open_textarea() if @dragEventCounter is 0
 
-  autosaveStart: =>
-    @autosaveLast = _.clone( @ui.formDefault )
-    update = =>
-      currentData = @formParam( @el.find('.ticket-update') )
-      diff = difference( @autosaveLast, currentData )
-      if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
-        @autosaveLast = currentData
-        @log 'notice', 'form hash changed', diff, currentData
-        @el.find('.edit').addClass('form-changed')
-        @el.find('.edit').find('.reset-message').show()
-        @el.find('.edit').find('.reset-message').removeClass('hide')
-        App.TaskManager.update( @task_key, { 'state': currentData })
-    @interval( update, 3000, 'autosave' )
+    @dragEventCounter++
+    @ticketEdit.addClass('is-dropTarget')
 
-  update: (e) =>
-    e.preventDefault()
-    #@autosaveStop()
-    params = @formParam(e.target)
+  onDragleave: (event) =>
+    @dragEventCounter--
 
-    # get ticket
-    ticket = App.Ticket.fullLocal( @ticket.id )
+    @ticketEdit.removeClass('is-dropTarget') if @dragEventCounter is 0
 
-    @log 'notice', 'update', params, ticket
+  onFileDrop: (event) =>
+    event.preventDefault()
+    event.stopPropagation()
+    files = event.originalEvent.dataTransfer.files
+    @ticketEdit.removeClass('is-dropTarget')
 
-    # update local ticket
+    @queueUpload(files)
 
-    # create local article
+  onFilePick: (event) =>
+    @open_textarea()
+    @queueUpload(event.target.files)
 
+  queueUpload: (files) ->
+    @uploadQueue ?= []
 
-    # find sender_id
-    if @isRole('Customer')
-      sender            = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-      type              = App.TicketArticleType.findByAttribute( 'name', 'web' )
-      params.type_id    = type.id
-      params.sender_id  = sender.id
-    else
-      sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-      type              = App.TicketArticleType.find( params['type_id'] )
-      params.sender_id  = sender.id
+    # add files
+    for file in files
+      @uploadQueue.push(file)
 
-    # update ticket
-    for key, value of params
-      ticket[key] = value
+    @workOfUploadQueue()
 
-    # check owner assignment
-    if !@isRole('Customer')
-      if !ticket['owner_id']
-        ticket['owner_id'] = 1
-
-    # check if title exists
-    if !ticket['title']
-      alert( App.i18n.translateContent('Title needed') )
+  workOfUploadQueue: =>
+    if !@uploadQueue.length
       return
 
-    # validate email params
-    if type.name is 'email'
+    file = @uploadQueue.shift()
+    # console.log "working of", file, "from", @uploadQueue
+    @fakeUpload file.name, file.size, @workOfUploadQueue
 
-      # check if recipient exists
-      if !params['to'] && !params['cc']
-        alert( App.i18n.translateContent('Need recipient in "To" or "Cc".') )
-        return
+  humanFileSize: (size) =>
+    i = Math.floor( Math.log(size) / Math.log(1024) )
+    return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
 
-      # check if message exists
-      if !params['body']
-        alert( App.i18n.translateContent('Text needed') )
-        return
+  updateUploadProgress: (progress) =>
+    @progressBar.width(progress + "%")
+    @progressText.text(progress)
 
-    # check attachment
-    if params['body']
-      attachmentTranslated = App.i18n.translateContent('Attachment')
-      attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
-      if params['body'].match(/attachment/i) || params['body'].match( attachmentTranslatedRegExp )
-        if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-          #@autosaveStart()
-          return
+    if progress is 100
+      @attachmentPlaceholder.removeClass('hide')
+      @attachmentUpload.addClass('hide')
 
-    # submit ticket & article
-    @log 'notice', 'update ticket', ticket
+  fakeUpload: (fileName, fileSize, callback) ->
+    @attachmentPlaceholder.addClass('hide')
+    @attachmentUpload.removeClass('hide')
 
-    # disable form
-    @formDisable(e)
+    progress = 0;
+    duration = fileSize / 1024
 
-    # validate ticket
-    errors = ticket.validate(
-      screen: 'edit'
-    )
-    if errors
-      @log 'error', 'update', errors
+    for i in [0..100]
+      setTimeout @updateUploadProgress, i*duration/100 , i
 
-      @log 'error', errors
-      @formValidate(
-        form:   e.target
-        errors: errors
-        screen: 'edit'
-      )
-      @formEnable(e)
-      #@autosaveStart()
-      return
+    setTimeout (=>
+      callback()
+      @renderAttachment(fileName, fileSize)
+    ), duration
 
-    # validate article
-    articleAttributes = App.TicketArticle.attributesGet( 'edit' )
-    if params['body'] || ( articleAttributes['body'] && articleAttributes['body']['null'] is false )
-      article = new App.TicketArticle
-      params.from      = @Session.get().displayName()
-      params.ticket_id = ticket.id
-      params.form_id   = @form_id
+  renderAttachment: (fileName, fileSize) =>
+    @attachments.push([fileName, fileSize])
+    @attachmentsHolder.append App.view('ticket_zoom/attachment')
+      fileName: fileName
+      fileSize: @humanFileSize(fileSize)
 
-      if !params['internal']
-        params['internal'] = false
-
-      @log 'notice', 'update article', params, sender
-      article.load(params)
-      errors = article.validate()
-      if errors
-        @log 'error', 'update article', errors
-        @formValidate(
-          form:   e.target
-          errors: errors
-          screen: 'edit'
-        )
-        @formEnable(e)
-        @autosaveStart()
-        return
-
-    ticket.article = article
-    ticket.save(
-      done: (r) =>
-
-        # reset form after save
-        App.TaskManager.update( @task_key, { 'state': {} })
-
-        @ui.fetch( ticket.id, true )
-    )
 
   reset: (e) =>
     e.preventDefault()

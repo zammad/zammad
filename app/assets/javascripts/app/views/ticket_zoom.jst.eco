@@ -24,7 +24,7 @@
 
         <div class="ticket-article"></div>
 
-        <div class="ticket-edit is-public"></div>
+        <div class="ticket-edit"></div>
 
       </div>
     </div>
