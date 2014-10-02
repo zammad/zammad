@@ -148,7 +148,11 @@
     }, this)).on('focus', $.proxy(function (e) {
       this.close()
     }, this)).on('blur', $.proxy(function (e) {
-      this.close()
+      // delay, to get click on text module before widget is closed
+      a = $.proxy(function() {
+        this.close()
+      }, this)
+      setTimeout(a, 600);
     }, this))
 
   };
@@ -232,15 +236,17 @@
 
   // cut out search string from text
   Plugin.prototype.cutInput = function() {
-    if (!this.buffer) {
+    if (!this.buffer) return
+    var sel = window.getSelection()
+    if ( !sel || sel.rangeCount < 1) {
+      this.buffer = ''
       return
     }
-    var sel = window.getSelection();
-    var range = sel.getRangeAt(0);
-    var clone = range.cloneRange();
-    clone.setStart(range.startContainer, range.startOffset - this.buffer.length);
-    clone.setEnd(range.startContainer, range.startOffset);
-    clone.deleteContents();
+    var range = sel.getRangeAt(0)
+    var clone = range.cloneRange()
+    clone.setStart(range.startContainer, range.startOffset - this.buffer.length)
+    clone.setEnd(range.startContainer, range.startOffset)
+    clone.deleteContents()
     this.buffer = ''
   }
 
@@ -274,12 +280,11 @@
     }
     this.$widget.find('ul li').on(
       'click',
-      function(e) {
-        console.log(31231)
+      $.proxy(function(e) {
         e.preventDefault()
         var id = $(e.target).data('id')
-        console.log('99', id)
-      }
+        this.take(id)
+      }, this)
     )
     this.updatePosition()
   }
