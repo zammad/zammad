@@ -32,7 +32,7 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => '#content input[name="title"]',
+            :css     => '#content input[name="head"]',
             :value   => message,
           },
           {
@@ -96,7 +96,7 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => '#content input[name="title"]',
+            :css     => '#content input[name="head"]',
             :value   => message + ' #2',
           },
           {
@@ -160,7 +160,7 @@ class MaintenanceMessageTest < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => '#content input[name="title"]',
+            :css     => '#content input[name="head"]',
             :value   => message + ' #3' ,
           },
           {
