@@ -46,7 +46,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-number',
+            :css          => '.active .page-header .ticket-number',
             :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,
@@ -89,7 +89,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where   => :instance1,
             :execute => 'set',
-            :css     => '.active .ticket-answer textarea[name="body"]',
+            :css     => '.active .ticket-edit textarea[name="body"]',
             :value   => 'some level 3 <b>body</b> in instance 1',
           },
           {
@@ -101,7 +101,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active .ticket-answer textarea[name="body"]',
+            :css     => '.active .ticket-edit textarea[name="body"]',
             :value   => 'some level 3 <b>body</b> in instance 2',
           },
           {
@@ -145,7 +145,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-answer textarea[name="body"]',
+            :css          => '.active .ticket-edit textarea[name="body"]',
             :value        => 'some level 3 <b>body</b> in instance 1',
             :match_result => true,
           },
@@ -162,7 +162,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active .ticket-answer textarea[name="body"]',
+            :css          => '.active .ticket-edit textarea[name="body"]',
             :value        => '^$',
             :no_quote     => true,
             :match_result => true,
@@ -199,7 +199,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-answer textarea[name="body"]',
+            :css          => '.active .ticket-edit textarea[name="body"]',
             :value        => '^$',
             :no_quote     => true,
             :match_result => true,
@@ -215,7 +215,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active .ticket-answer textarea[name="body"]',
+            :css          => '.active .ticket-edit textarea[name="body"]',
             :value        => '^$',
             :no_quote     => true,
             :match_result => true,
@@ -243,7 +243,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-answer textarea[name="body"]',
+            :css          => '.active .ticket-edit textarea[name="body"]',
             :value        => '^$',
             :no_quote     => true,
             :match_result => true,
@@ -259,7 +259,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active .ticket-answer textarea[name="body"]',
+            :css          => '.active .ticket-edit textarea[name="body"]',
             :value        => '^$',
             :no_quote     => true,
             :match_result => true,
@@ -277,7 +277,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active .ticket-answer textarea[name="body"]',
+            :css     => '.active .ticket-edit textarea[name="body"]',
             :value   => '22 some level 3 <b>body</b> in instance 2',
           },
           {
@@ -299,7 +299,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active .ticket-answer textarea[name="body"]',
+            :css          => '.active .ticket-edit textarea[name="body"]',
             :value        => '22 some level 3 <b>body</b> in instance 2',
             :match_result => true,
           },

@@ -36,7 +36,7 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.ticket-create textarea[name="body"]',
+            :css     => '.ticket-create [data-name="body"]',
             :value   => 'some body 123äöü',
           },
           {
@@ -64,17 +64,17 @@ class CustomerTicketCreateTest < TestCase
           # update ticket
           {
             :execute => 'check',
-            :css     => '.active textarea[name="body"]',
+            :css     => '.active [data-name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => '.active textarea[name="body"]',
+            :css     => '.active [data-name="body"]',
             :value   => 'some body 1234 äöüß',
           },
           {
             :execute => 'click',
-            :css     => '.active button',
+            :css     => '.active input[type="submit"]',
             :type    => 'submit',
           },
           {

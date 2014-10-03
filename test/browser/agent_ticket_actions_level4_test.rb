@@ -26,7 +26,7 @@ class AgentTicketActionLevel4Test < TestCase
 
           # reload instances, verify autosave
           {
-            :execute      => 'reload',
+            :execute => 'reload',
           },
           {
             :execute => 'wait',
@@ -57,8 +57,7 @@ class AgentTicketActionLevel4Test < TestCase
 
           # close task/cleanup
           {
-            :execute => 'click',
-            :css     => '#task [data-type="close"]',
+            :execute => 'close_all_tasks',
           },
         ],
       },

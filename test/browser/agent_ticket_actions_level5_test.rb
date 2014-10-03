@@ -120,7 +120,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.active textarea[name=body]',
+            :css     => '.active [data-name="body"]',
             :value   => '::' + random,
           },
           {
@@ -143,7 +143,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute      => 'match',
-            :css          => '.active textarea[name=body]',
+            :css          => '.active [data-name="body"]',
             :value        => 'some content' + random,
             :match_result => true,
           },
@@ -291,7 +291,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active textarea[name=body]',
+            :css     => '.active [data-name="body"]',
             :value   => '::' + random,
           },
           {
@@ -319,7 +319,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active textarea[name=body]',
+            :css          => '.active [data-name="body"]',
             :value        => 'some content ' + random,
             :match_result => true,
           },
@@ -330,7 +330,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket-create input[name="customer_id_completion"]',
             :value   => 'nicole',
           },
           {
@@ -340,13 +340,13 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket-create input[name="customer_id_completion"]',
             :value   => :arrow_down,
           },
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
+            :css     => '.active .ticket-create input[name="customer_id_completion"]',
             :value   => :tab,
           },
           {
@@ -357,7 +357,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active textarea[name=body]',
+            :css     => '.active [data-name="body"]',
             :value   => '::' + random,
           },
           {
@@ -378,7 +378,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active textarea[name=body]',
+            :css          => '.active [data-name="body"]',
             :value        => 'some content Braun' + random,
             :match_result => true,
           },
@@ -420,7 +420,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where    => :instance2,
             :execute => 'set',
-            :css     => '.active textarea[name=body]',
+            :css     => '.active [data-name="body"]',
             :value   => 'test',
           },
           {
@@ -430,7 +430,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where    => :instance2,
             :execute => 'set',
-            :css     => '.active textarea[name=body]',
+            :css     => '.active [data-name="body"]',
             :value   => '::' + random,
           },
           {
@@ -456,7 +456,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active textarea[name=body]',
+            :css          => '.active [data-name="body"]',
             :value        => 'some content Braun' + random,
             :match_result => true,
           },
@@ -494,7 +494,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '#form-customer input[name="customer_id_autocompletion"]',
+            :css     => '#form-customer input[name="customer_id_completion"]',
             :value   => firstname,
           },
           {
@@ -504,13 +504,13 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '#form-customer input[name="customer_id_autocompletion"]',
+            :css     => '#form-customer input[name="customer_id_completion"]',
             :value   => :arrow_down,
           },
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '#form-customer input[name="customer_id_autocompletion"]',
+            :css     => '#form-customer input[name="customer_id_completion"]',
             :value   => :tab,
           },
           {
@@ -531,7 +531,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where    => :instance2,
             :execute => 'set',
-            :css     => '.active textarea[name=body]',
+            :css     => '.active [data-name="body"]',
             :value   => '::' + random,
           },
           {
@@ -557,7 +557,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active textarea[name=body]',
+            :css          => '.active [data-name="body"]',
             :value        => 'some content ' + lastname,
             :match_result => true,
           },

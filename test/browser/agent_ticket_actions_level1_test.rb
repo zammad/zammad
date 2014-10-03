@@ -30,31 +30,31 @@ class AgentTicketActionLevel1Test < TestCase
           # remember old ticket where we want to merge to
           {
             :execute      => 'match',
-            :css          => '.active .ticket-number',
+            :css          => '.active .page-header .ticket-number',
             :value        => '^(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
 
           # update ticket
-          {
-            :execute => 'select',
-            :css     => '.active select[name="type_id"]',
-            :value   => 'note',
-          },
+          #{
+          #  :execute => 'select',
+          #  :css     => '.active select[name="type_id"]',
+          #  :value   => 'note',
+          #},
           {
             :execute => 'check',
-            :css     => '.active textarea[name="body"]',
+            :css     => '.active [data-name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => '.active textarea[name="body"]',
+            :css     => '.active [data-name="body"]',
             :value   => 'some body 1234 äöüß',
           },
           {
             :execute => 'click',
-            :css     => '.active button.submit',
+            :css     => '.active input.submit',
           },
           {
             :execute => 'wait',
@@ -66,8 +66,7 @@ class AgentTicketActionLevel1Test < TestCase
             :value   => 'some body 1234 äöüß',
           },
           {
-            :execute => 'click',
-            :css     => '#task [data-type="close"]',
+            :execute => 'close_all_tasks',
           },
         ],
       },
@@ -81,40 +80,40 @@ class AgentTicketActionLevel1Test < TestCase
             :execute => 'create_ticket',
             :group   => 'Users',
             :subject => 'test to merge',
-            :body    => 'some body 123äöü 222',
+            :body    => 'some body 123äöü 222 - test to merge',
           },
 
           # check ticket
           {
             :execute      => 'watch_for',
-            :area         => '.content_permanent.active',
-            :value        => 'some body 123äöü 222',
+            :area         => '.content.active',
+            :value        => 'some body 123äöü 222 - test to merge',
           },
 
           # update ticket
-          {
-            :execute => 'select',
-            :css     => '.content_permanent.active select[name="type_id"]',
-            :value   => 'note',
-          },
+          #{
+          #  :execute => 'select',
+          #  :css     => '.content_permanent.active select[name="type_id"]',
+          #  :value   => 'note',
+          #},
           {
             :execute => 'check',
-            :css     => '.content_permanent.active textarea[name="body"]',
+            :css     => '.content.active [data-name="body"]',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => '.content_permanent.active textarea[name="body"]',
-            :value   => 'some body 1234 äöüß 222',
+            :css     => '.content.active [data-name="body"]',
+            :value   => 'some body 1234 äöüß 333',
           },
           {
             :execute => 'click',
-            :css     => '.content_permanent.active button.submit',
+            :css     => '.content.active input.submit',
           },
           {
             :execute      => 'watch_for',
-            :area         => '.content_permanent.active .ticket-answer',
-            :value        => 'some body 1234 äöüß 222',
+            :area         => '.content.active .ticket-edit',
+            :value        => 'some body 1234 äöüß 333',
           },
 
           # check if task is shown
@@ -131,7 +130,7 @@ class AgentTicketActionLevel1Test < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => '.active .actions',
+            :css     => '.active .actions button',
           },
           {
             :execute => 'click',
@@ -158,7 +157,7 @@ class AgentTicketActionLevel1Test < TestCase
           # check if megred to ticket is shown now
           {
             :execute      => 'match',
-            :css          => '.active .ticket-number',
+            :css          => '.active .page-header .ticket-number',
             :value        => '###stack###',
             :match_result => true,
           },
@@ -173,8 +172,7 @@ class AgentTicketActionLevel1Test < TestCase
 
           # close task/cleanup
           {
-            :execute => 'click',
-            :css     => '#task [data-type="close"]',
+            :execute => 'close_all_tasks',
           },
         ],
       },
