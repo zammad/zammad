@@ -1,4 +1,4 @@
-<li class="recipientList-entry recipientList-new u-clickable horizontal center js-user-new">
+<li class="recipientList-entry recipientList-new u-clickable horizontal center js-user-new" data-user-id="new">
   <div class="recipientList-iconSpacer centered">
     <div class="white plus icon"></div>
   </div>

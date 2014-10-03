@@ -594,6 +594,7 @@ class App.TicketZoom extends App.Controller
     )
 
   taskGet: (area) =>
+    return {} if !App.TaskManager.get(@task_key)
     @localTaskData = App.TaskManager.get(@task_key).state || {}
     if area
       if !@localTaskData[area]
@@ -967,11 +968,12 @@ class Edit extends App.Controller
         options:
           duration: duration
 
-  add_textarea_catcher: ->
-    @textareaCatcher = new App.clickCatcher
-      holder: @ticketEdit.offsetParent()
-      callback: @close_textarea
-      zIndexScale: 4
+  add_textarea_catcher: =>
+    if @ticketEdit.is(':visible')
+      @textareaCatcher = new App.clickCatcher
+        holder: @ticketEdit.offsetParent()
+        callback: @close_textarea
+        zIndexScale: 4
 
   remove_textarea_catcher: ->
     return if !@textareaCatcher

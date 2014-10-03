@@ -1,10 +1,12 @@
 class App.UserOrganizationAutocompletion extends App.Controller
+  className: 'dropdown js-recipientDropdown zIndex-2'
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
     'click .js-organisation':                 'showOrganisationMembers'
     'click .js-back':                         'hideOrganisationMembers'
     'click .js-user':                         'selectUser'
     'click .js-user-new':                     'newUser'
+    'focus input':                            'open'
 
   constructor: (params) ->
     super
@@ -18,14 +20,29 @@ class App.UserOrganizationAutocompletion extends App.Controller
   element: =>
     @el
 
+  open: =>
+    @el.addClass('open')
+    @catcher = new App.clickCatcher
+      holder:       @el.offsetParent()
+      callback:     @close
+      zIndexScale:  1
+
+  close: =>
+    @el.removeClass('open')
+    if @catcher
+      @catcher.remove()
+
   selectUser: (e) ->
     userId = $(e.target).parents('.recipientList-entry').data('user-id')
     if !userId
       userId = $(e.target).data('user-id')
+    @setUser(userId)
+    @close()
 
+  setUser: (userId) =>
     @el.find('[name="' + @attribute.name + '"]').val( userId ).trigger('change')
 
-  setUser: ->
+  executeCallback: ->
     userId = @el.find('[name="' + @attribute.name + '"]').val()
     return if !userId
     return if !App.User.exists(userId)
@@ -63,14 +80,17 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @el.html App.view('generic/user_search/input')(
       attribute: @attribute
     )
+    if !@attribute.disableCreateUser
+      @el.find('.recipientList').append( @buildUserNew() )
+
     @el.find('[name="' + @attribute.name + '"]').on(
       'change',
       (e) =>
-        @setUser()
+        @executeCallback()
     )
 
     @el.find('[name="' + @attribute.name + '_completion"]').on(
-      'keyup',
+      'keydown',
       (e) =>
         item = $(e.target).val().trim()
 
@@ -78,14 +98,61 @@ class App.UserOrganizationAutocompletion extends App.Controller
 
         # clean input field on ESC
         if e.keyCode is 27
+
+          # if org member selection is shwon, go back to member list
+          if @$('.recipientList-backClickArea').is(':visible')
+            @$('.recipientList-backClickArea').click()
+            return
+
+          # empty user selection and close
           $(e.target).val('')
           item = ''
+          @close()
 
         # ignore arrow keys
-        return if e.keyCode is 37
-        return if e.keyCode is 38
-        return if e.keyCode is 39
-        return if e.keyCode is 40
+        if e.keyCode is 37
+          return
+
+        if e.keyCode is 39
+          return
+
+        # up / select upper item
+        if e.keyCode is 38
+          e.preventDefault()
+          recipientList = @$('.recipientList')
+          if recipientList.find('li.is-active').length is 0
+            recipientList.find('li').last().addClass('is-active')
+          else
+            if recipientList.find('li.is-active').prev().length isnt 0
+              recipientList.find('li.is-active').removeClass('is-active').prev().addClass('is-active')
+          return
+
+        # down / select lower item
+        if e.keyCode is 40
+          e.preventDefault()
+          recipientList = @$('.recipientList')
+          if recipientList.find('li.is-active').length is 0
+            recipientList.find('li').first().addClass('is-active')
+          else
+            if recipientList.find('li.is-active').next().length isnt 0
+              recipientList.find('li.is-active').removeClass('is-active').next().addClass('is-active')
+          return
+
+        # enter / take item
+        if e.keyCode is 13
+          e.preventDefault()
+          userId = @$('.recipientList').find('li.is-active').data('user-id')
+          if !userId
+            organisationId = @$('.recipientList').find('li.is-active').data('organisation-id')
+            if organisationId
+              @showOrganisationMembers(undefined, @$('.recipientList').find('li.is-active'))
+              return
+          if userId is 'new'
+            @newUser()
+          else
+            @setUser(userId)
+            @close()
+          return
 
         # ignore shift
         return if e.keyCode is 16
@@ -97,10 +164,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
         return if e.keyCode is 18
 
         # hide dropdown
-        @el.find('.recipientList').html('')
-        @el.find('.recipientList-organisationMembers').remove()
+        @$('.recipientList').empty()
+        @$('.recipientList-organisationMembers').remove()
         if !item && !@attribute.disableCreateUser
-          @el.find('.recipientList').append( @buildUserNew() )
+          @$('.recipientList').append( @buildUserNew() )
 
         # show dropdown
         if item && ( !@attribute.minLengt || @attribute.minLengt <= item.length )
@@ -142,10 +209,11 @@ class App.UserOrganizationAutocompletion extends App.Controller
           @el.find('.recipientList').append( @buildUserNew() )
     )
 
-  showOrganisationMembers: (e) =>
-    e.stopPropagation()
+  showOrganisationMembers: (e,listEntry) =>
+    if e
+      e.stopPropagation()
+      listEntry = $(e.currentTarget)
 
-    listEntry = $(e.currentTarget)
     organisationId = listEntry.data('organisation-id')
 
     @recipientList = @$('.recipientList')
@@ -195,7 +263,8 @@ class App.UserOrganizationAutocompletion extends App.Controller
         complete: => @organisationList.addClass('hide')
 
   newUser: (e) =>
-    e.preventDefault()
+    if e
+      e.preventDefault()
     new UserNew(
       parent: @
     )
@@ -249,6 +318,7 @@ class UserNew extends App.ControllerModal
         # force to reload object
         callbackReload = (user) ->
           ui.parent.el.find('[name=customer_id]').val( user.id ).trigger('change')
+          ui.parent.close()
 
           # start customer info controller
           ui.hide()

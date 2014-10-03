@@ -272,7 +272,7 @@ class App.TicketCreate extends App.Controller
 
     # show text module UI
     @textModule = new App.WidgetTextModule(
-      el: @el.find('[data-name="body"]')
+      el: @el.find('[data-name="body"]').parent()
     )
 
     new Sidebar(

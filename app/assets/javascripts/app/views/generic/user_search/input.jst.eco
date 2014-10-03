@@ -1,12 +1,8 @@
-<div class="dropdown js-recipientDropdown">
+<div class="u-positionOrigin">
+  <input type="hidden" name="<%- @attribute.name %>" value="<%= @attribute.value %>">
+  <input name="<%- @attribute.name %>_completion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+</div>
 
-  <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
-    <input type="hidden" name="<%- @attribute.name %>" value="<%= @attribute.value %>">
-    <input name="<%- @attribute.name %>_completion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-  </div>
-
-  <div class="dropdown-menu" aria-labelledby="customer_id">
-    <ul class="recipientList" role="menu"></ul>
-  </div>
-
+<div class="dropdown-menu" aria-labelledby="customer_id">
+  <ul class="recipientList" role="menu"></ul>
 </div>

@@ -1,1 +1,3 @@
-<div contenteditable="true" id="<%= @attribute.id %>" data-name="<%= @attribute.name %>" class="form-control <%= @attribute.class %>"><%= @attribute.value %></div>
+<div class="richtext">
+  <div contenteditable="true" id="<%= @attribute.id %>" data-name="<%= @attribute.name %>" class="form-control <%= @attribute.class %>"><%= @attribute.value %></div>
+</div>

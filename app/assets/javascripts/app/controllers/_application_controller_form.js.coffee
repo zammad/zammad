@@ -707,7 +707,7 @@ class App.ControllerForm extends App.Controller
     # richtext
     else if attribute.tag is 'richtext'
       item = $( App.view('generic/richtext')( attribute: attribute ) )
-      item.ce(
+      item.find('[contenteditable]').ce(
         mode: attribute.type
         maxlength: attribute.maxlength
       )
