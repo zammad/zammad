@@ -114,7 +114,8 @@ class _webSocketSingleton extends App.Controller
     # logon websocket
     data =
       action: 'login'
-      session: App.Session.get()
+      session:
+        id: App.Session.get('id')
     @send(data)
 
   spool: =>
