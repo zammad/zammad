@@ -1,0 +1,7 @@
+<ul class="nav nav-pills nav-stacked">
+  <% if @items: %>
+    <% for item in @items: %>
+      <li <% if item.active: %>class="active"<% end %>><a href="<%= item.target %>"><span class="local"><%- @T(item.name) %></span><span class="badge pull-right"><%= item.count %></span></a></li>
+    <% end %>
+  <% end %>
+</ul>

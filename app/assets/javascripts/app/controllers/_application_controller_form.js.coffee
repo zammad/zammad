@@ -2,7 +2,11 @@ class App.ControllerForm extends App.Controller
   constructor: (params) ->
     for key, value of params
       @[key] = value
-    @attribute_count = 0
+
+    if !@handlers
+      @handlers = []
+    @handlers.push @_showHideToggle
+    @handlers.push @_requiredMandantoryToggle
 
     if !@form
       @form = @formGen()
@@ -21,33 +25,63 @@ class App.ControllerForm extends App.Controller
   formGen: ->
     App.Log.debug 'ControllerForm', 'formGen', @model.configure_attributes
 
-    fieldset = $('<fieldset>')
+    fieldset = $('<fieldset></fieldset>')
 
-    for attribute_clean in @model.configure_attributes
-      attribute = _.clone( attribute_clean )
+    # collect form attributes
+    @attributes = []
+    if @model.attributesGet
+      attributesClean = @model.attributesGet(@screen)
+    else
+      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes )
 
-      if !attribute.readonly && ( !@required || @required && attribute[@required] )
+    for attributeName, attribute of attributesClean
 
-        @attribute_count = @attribute_count + 1
+      # ignore read only attributes
+      if !attribute.readonly
 
-        # add item
-        item = @formGenItem( attribute, @model.className, fieldset )
-        item.appendTo(fieldset)
+        # check generic filter
+        if @filter && !attribute.filter
+          if @filter[ attributeName ]
+            attribute.filter = @filter[ attributeName ]
 
-        # if password, add confirm password item
-        if attribute.type is 'password'
+        @attributes.push attribute
 
-          # set selected value passed on current params
-          if @params
-            if attribute.name of @params
-              attribute.value = @params[attribute.name]
+    attribute_count = 0
+    className       = @model.className + '_' + Math.floor( Math.random() * 999999 ).toString()
 
-          # rename display and name to _confirm
-          if !attribute.single
-            attribute.display = attribute.display + ' (confirm)'
-            attribute.name = attribute.name + '_confirm';
-            item = @formGenItem( attribute, @model.className, fieldset )
-            item.appendTo(fieldset)
+    for attribute in @attributes
+      attribute_count = attribute_count + 1
+
+      # add item
+      item = @formGenItem( attribute, className, fieldset, attribute_count )
+      item.appendTo(fieldset)
+
+      # if password, add confirm password item
+      if attribute.type is 'password'
+
+        # set selected value passed on current params
+        if @params
+          if attribute.name of @params
+            attribute.value = @params[attribute.name]
+
+        # rename display and name to _confirm
+        if !attribute.single
+          attribute.display = attribute.display + ' (confirm)'
+          attribute.name = attribute.name + '_confirm';
+          item = @formGenItem( attribute, className, fieldset, attribute_count )
+          item.appendTo(fieldset)
+
+    if @fullForm
+      if !@formClass
+        @formClass = ''
+      fieldset = $('<form class="' + @formClass + '"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend( fieldset )
+
+    # bind form events
+    if @events
+      for eventSelector, callback of @events
+        do (eventSelector, callback) =>
+          evs = eventSelector.split(' ')
+          fieldset.find( evs[1] ).bind(evs[0], (e) => callback(e) )
 
     # return form
     return fieldset
@@ -77,21 +111,21 @@ class App.ControllerForm extends App.Controller
     null:           false
     relation:       'User'
     autocapitalize: false
-    help:           'Select the customer of the Ticket or create one.'
-    link:           '<a href="" class="customer_new">&raquo;</a>'
+    help:           'Select the customer of the ticket or create one.'
+    helpLink:       '<a href="" class="customer_new">&raquo;</a>'
     callback:       @userInfo
     class:          'span7'
   }
 
   # colection as relation
   attribute_config = {
-    name:       'ticket_priority_id'
+    name:       'priority_id'
     display:    'Priority'
     tag:        'select'
     multiple:   false
     null:       false
     relation:   'TicketPriority'
-    default:    defaults['ticket_priority_id']
+    default:    defaults['priority_id']
     translate:  true
     class:      'medium'
   }
@@ -99,7 +133,7 @@ class App.ControllerForm extends App.Controller
 
   # colection as options
   attribute_config = {
-    name:       'ticket_priority_id'
+    name:       'priority_id'
     display:    'Priority'
     tag:        'select'
     multiple:   false
@@ -126,14 +160,14 @@ class App.ControllerForm extends App.Controller
 
   ###
 
-  formGenItem: (attribute_config, classname, form ) ->
-    attribute = _.clone( attribute_config )
+  formGenItem: (attribute_config, classname, form, attribute_count ) ->
+    attribute = clone( attribute_config )
 
     # create item id
     attribute.id = classname + '_' + attribute.name
 
     # set autofocus
-    if @autofocus && @attribute_count is 1
+    if @autofocus && attribute_count is 1
       attribute.autofocus = 'autofocus'
 
     # set required option
@@ -229,6 +263,22 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'select'
       item = $( App.view('generic/select')( attribute: attribute ) )
 
+    # date
+    else if attribute.tag is 'date'
+      attribute.type = 'text'
+      item = $( App.view('generic/date')( attribute: attribute ) )
+      #item.datetimepicker({
+      #  format: 'Y.m.d'
+      #});
+
+    # date
+    else if attribute.tag is 'datetime'
+      attribute.type = 'text'
+      item = $( App.view('generic/date')( attribute: attribute ) )
+      #item.datetimepicker({
+      #  format: 'Y.m.d H:i'
+      #});
+
     # timezone
     else if attribute.tag is 'timezone'
       attribute.options = []
@@ -249,6 +299,302 @@ class App.ControllerForm extends App.Controller
           record.selected = 'selected'
 
       item = $( App.view('generic/select')( attribute: attribute ) )
+
+    # postmaster_match
+    else if attribute.tag is 'postmaster_match'
+      addItem = (key, displayName, el, defaultValue = '') =>
+        add = { name: key, display: displayName, tag: 'input', null: false, default: defaultValue }
+        itemInput = $( @formGenItem( add ).append('<a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a>' ) )
+
+        # remove on click
+        itemInput.find('.remove').bind('click', (e) ->
+          e.preventDefault()
+          key = $(e.target).parent().find('select, input').attr('name')
+          return if !key
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
+        )
+
+        # add new item
+        el.parent().parent().parent().find('.list').append(itemInput)
+        el.parent().parent().parent().find('.addSelection select').val('')
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+
+      # scaffold of match elements
+      item = $('
+        <div class="postmaster_match">
+          <hr>
+          <div class="list"></div>
+          <hr>
+          <div>
+            <div class="addSelection"></div>
+            <div class="add"><a href="#" class="glyphicon glyphicon-plus"></a></div>
+          </div>
+        </div>')
+
+      # select shown attributes
+      loopData = [
+        {
+          value:    'from'
+          name:     'From'
+        },
+        {
+          value:    'to'
+          name:     'To'
+        },
+        {
+          value:    'cc'
+          name:     'Cc'
+        },
+        {
+          value:    'subject'
+          name:     'Subject'
+        },
+        {
+          value:    'body'
+          name:     'Body'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-any-recipient'
+          name:     'Any Recipient'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    ''
+          name:     '- ' + App.i18n.translateInline('expert settings') + ' -'
+          disable:  true
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-spam-flag'
+          name:     'X-Spam-Flag'
+        },
+        {
+          value:    'x-spam-level'
+          name:     'X-Spam-Level'
+        },
+        {
+          value:    'x-spam-score'
+          name:     'X-Spam-Score'
+        },
+        {
+          value:    'x-spam-status'
+          name:     'X-Spam-Status'
+        },
+        {
+          value:    'importance'
+          name:     'Importance'
+        },
+        {
+          value:    'x-priority'
+          name:     'X-Priority'
+        },
+
+        {
+          value:    'organization'
+          name:     'Organization'
+        },
+
+        {
+          value:    'x-original-to'
+          name:     'X-Original-To'
+        },
+        {
+          value:    'delivered-to'
+          name:     'Delivered-To'
+        },
+        {
+          value:    'envelope-to'
+          name:     'Envelope-To'
+        },
+        {
+          value:    'return-path'
+          name:     'Return-Path'
+        },
+        {
+          value:    'mailing-list'
+          name:     'Mailing-List'
+        },
+        {
+          value:    'list-id'
+          name:     'List-Id'
+        },
+        {
+          value:    'list-archive'
+          name:     'List-Archive'
+        },
+        {
+          value:    'mailing-list'
+          name:     'Mailing-List'
+        },
+        {
+          value:    'auto-submitted'
+          name:     'Auto-Submitted'
+        },
+        {
+          value:    'x-loop'
+          name:     'X-Loop'
+        },
+      ]
+      for listItem in loopData
+        listItem.value = "#{ attribute.name }::#{listItem.value}"
+      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true, required: false }
+      item.find('.addSelection').append( @formGenItem( add ) )
+
+      # bind add click
+      item.find('.add').bind('click', (e) ->
+        e.preventDefault()
+        name        = $(@).parent().parent().find('.addSelection').find('select').val()
+        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        return if !name
+        addItem( name, displayName, $(@) )
+      )
+
+      # show default values
+      loopDataValue = {}
+      if attribute.value
+        for key, value of attribute.value
+          displayName = key
+          for listItem in loopData
+            if listItem.value is "#{ attribute.name }::#{key}"
+              addItem( "#{ attribute.name }::#{key}", listItem.name, item.find('.add a'), value )
+
+    # postmaster_set
+    else if attribute.tag is 'postmaster_set'
+      addItem = (key, displayName, el, defaultValue = '') =>
+        collection = undefined
+        for listItem in loopData
+          if listItem.value is key
+            collection = listItem
+        if collection.relation
+          add = { name: key, display: displayName, tag: 'select', multiple: false, null: false, nulloption: true, relation: collection.relation, translate: true, default: defaultValue }
+        else if collection.options
+          add = { name: key, display: displayName, tag: 'select', multiple: false, null: false, nulloption: true, options: collection.options, translate: true, default: defaultValue }
+        else
+          add = { name: key, display: displayName, tag: 'input', null: false, default: defaultValue }
+        itemInput = $( @formGenItem( add ).append('<a href=\"#\" class=\"glyphicon glyphicon-minus remove\"></a>' ) )
+
+        # remove on click
+        itemInput.find('.remove').bind('click', (e) ->
+          e.preventDefault()
+          key = $(e.target).parent().find('select, input').attr('name')
+          return if !key
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
+        )
+
+        # add new item
+        el.parent().parent().parent().find('.list').append(itemInput)
+        el.parent().parent().parent().find('.addSelection select').val('')
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
+        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+
+      # scaffold of perform elements
+      item = $('
+        <div class="perform_set">
+          <hr>
+          <div class="list"></div>
+          <hr>
+          <div>
+            <div class="addSelection"></div>
+            <div class="add"><a href="#" class="glyphicon glyphicon-plus"></a></div>
+          </div>
+        </div>')
+
+
+      # select shown attributes
+      loopData = [
+        {
+          value:    'x-zammad-ticket-priority_id'
+          name:     'Ticket Priority'
+          relation: 'TicketPriority'
+        },
+        {
+          value:    'x-zammad-ticket-state_id'
+          name:     'Ticket State'
+          relation: 'TicketState'
+        },
+        {
+          value:    'x-zammad-ticket-customer'
+          name:     'Ticket Customer'
+        },
+        {
+          value:    'x-zammad-ticket-group_id'
+          name:     'Ticket Group'
+          relation: 'Group'
+        },
+        {
+          value:    'x-zammad-ticket-owner'
+          name:     'Ticket Owner'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-zammad-article-internal'
+          name:     'Article Internal'
+          options:  { true: 'Yes', false: 'No'}
+        },
+        {
+          value:    'x-zammad-article-type_id'
+          name:     'Article Type'
+          relation: 'TicketArticleType'
+        },
+        {
+          value:    'x-zammad-article-sender_id'
+          name:     'Article Sender'
+          relation: 'TicketArticleSender'
+        },
+        {
+          value:    ''
+          name:     '-'
+          disable:  true
+        },
+        {
+          value:    'x-zammad-ignore'
+          name:     'Ignore Message'
+          options:  { true: 'Yes', false: 'No'}
+        },
+      ]
+      for listItem in loopData
+        listItem.value = "#{ attribute.name }::#{listItem.value}"
+      add = { name: '', display: '', tag: 'select', multiple: false, null: false, nulloption: true, options: loopData, translate: true, required: false }
+      item.find('.addSelection').append( @formGenItem( add ) )
+
+      item.find('.add').bind('click', (e) ->
+        e.preventDefault()
+        name        = $(@).parent().parent().find('.addSelection').find('select').val()
+        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        return if !name
+        addItem( name, displayName, $(@) )
+      )
+
+      # show default values
+      loopDataValue = {}
+      if attribute.value
+        for key, value of attribute.value
+          displayName = key
+          for listItem in loopData
+            if listItem.value is "#{ attribute.name }::#{key}"
+              addItem( "#{ attribute.name }::#{key}", listItem.name, item.find('.add a'), value )
 
     # select
     else if attribute.tag is 'input_select'
@@ -345,77 +691,69 @@ class App.ControllerForm extends App.Controller
 
     # radio
     else if attribute.tag is 'radio'
-      item = App.view('generic/radio')( attribute: attribute )
+      item = $( App.view('generic/radio')( attribute: attribute ) )
 
     # textarea
     else if attribute.tag is 'textarea'
-      item = $( App.view('generic/textarea')( attribute: attribute ) )
+      fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+      item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
+
+      a = =>
+        visible = $( item[0] ).is(":visible")
+        if visible && !$( item[0] ).expanding('active')
+          $( item[0] ).expanding()
+        $( item[0] ).on('focus', ->
+          visible = $( item[0] ).is(":visible")
+          if visible && !$( item[0] ).expanding('active')
+            $( item[0] ).expanding()
+        )
+      App.Delay.set( a, 80 )
+
       if attribute.upload
-        fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
-        item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
 
         # add file uploader
         u = =>
-          @el.find('#' + fileUploaderId ).fineUploader(
-            request:
-              endpoint: App.Config.get('api_path') + '/ticket_attachment_new'
-              params:
-                form_id: @form_id
-            text:
-              uploadButton: '<i class="icon-attachment"></i>'
-            template: '<div class="qq-uploader">' +
-                        '<pre class="btn qq-upload-icon qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
-                        '<div class="btn qq-upload-icon qq-upload-button pull-right" style="">{uploadButtonText}</div>' +
-                        '<ul class="qq-upload-list span5" style="margin-top: 10px;"></ul>' +
-                      '</div>',
-            classes:
-              success: ''
-              fail:    ''
-            debug: false
-          )
-        App.Delay.set( u, 80, undefined, 'form_upload' )
+          # only add upload item if html element exists
+          if @el.find('#' + fileUploaderId )[0]
+            @el.find('#' + fileUploaderId ).fineUploader(
+              request:
+                endpoint: App.Config.get('api_path') + '/ticket_attachment_new'
+                params:
+                  form_id: @form_id
+              text:
+                uploadButton: '<i class="glyphicon glyphicon-paperclip"></i>'
+              template: '<div class="qq-uploader">' +
+                          '<pre class="btn qq-upload-icon qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
+                          '<div class="btn btn-default qq-upload-icon2 qq-upload-button pull-right" style="">{uploadButtonText}</div>' +
+                          '<ul class="qq-upload-list span5" style="margin-top: 10px;"></ul>' +
+                        '</div>',
+              classes:
+                success: ''
+                fail:    ''
+              debug: false
+            )
+        App.Delay.set( u, 100, undefined, 'form_upload' )
+
+    # article
+    else if attribute.tag is 'article'
+      item = $( App.view('generic/article')( attribute: attribute ) )
+
 
     # tag
     else if attribute.tag is 'tag'
       item = $( App.view('generic/input')( attribute: attribute ) )
       a = =>
-        siteUpdate = (reorder) =>
-          container = document.getElementById( attribute.id + "_tagsinput" )
-          if reorder
-            $('#' + attribute.id + "_tagsinput" ).height( 20 )
-          height = container.scrollHeight
-          $('#' + attribute.id + "_tagsinput" ).height( height - 16 )
-
-        onAddTag = =>
-          siteUpdate()
-
-        onRemoveTag = =>
-          siteUpdate(true)
-
-        $('#' + attribute.id + '_tagsinput').remove()
-        w = $('#' + attribute.id).width()
-        h = $('#' + attribute.id).height()
-        $('#' + attribute.id).tagsInput(
-          width: w + 'px'
-#          height: (h + 30 )+ 'px'
-          onAddTag:    onAddTag
-          onRemoveTag: onRemoveTag
-        )
-        siteUpdate(true)
-
-        # update box size
-        App.Event.bind 'ui:rerender:content', =>
-          siteUpdate(true)
-
-      App.Delay.set( a, 80, undefined, 'form_tags' )
+        $('#' + attribute.id ).tokenfield()
+        $('#' + attribute.id ).parent().css('height', 'auto')
+      App.Delay.set( a, 120, undefined, 'tags' )
 
     # autocompletion
     else if attribute.tag is 'autocompletion'
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )
 
       a = =>
-        @local_attribute = '#' + attribute.id
-        @local_attribute_full = '#' + attribute.id + '_autocompletion'
+        local_attribute = '#' + attribute.id
+        local_attribute_full = '#' + attribute.id + '_autocompletion'
         @callback = attribute.callback
 
         # call calback on init
@@ -424,8 +762,8 @@ class App.ControllerForm extends App.Controller
 
         b = (event, item) =>
           # set html form attribute
-          $(@local_attribute).val(item.id)
-          $(@local_attribute + '_autocompletion_value_shown').val(item.value)
+          $(local_attribute).val(item.id).trigger('change')
+          $(local_attribute + '_autocompletion_value_shown').val(item.value)
 
           # call calback
           if @callback
@@ -445,8 +783,11 @@ class App.ControllerForm extends App.Controller
           }
         )
         ###
-        $(@local_attribute_full).autocomplete(
-          source: attribute.source,
+        source = attribute.source
+        if typeof(source) is 'string'
+          source = source.replace('#{@apiPath}', App.Config.get('api_path') );
+        $(local_attribute_full).autocomplete(
+          source: source,
           minLength: attribute.minLengt || 3,
           select: ( event, ui ) =>
             b(event, ui.item)
@@ -579,9 +920,9 @@ class App.ControllerForm extends App.Controller
               } )
               all
           }
-        else if key is 'tickets.ticket_state_id'
+        else if key is 'tickets.state_id'
           attribute_config = {
-            name:       attribute.name + '::tickets.ticket_state_id'
+            name:       attribute.name + '::tickets.state_id'
             display:    'State'
             tag:        'select'
             multiple:   true
@@ -593,9 +934,9 @@ class App.ControllerForm extends App.Controller
             class:      'medium'
             remove:     true
           }
-        else if key is 'tickets.ticket_priority_id'
+        else if key is 'tickets.priority_id'
           attribute_config = {
-            name:       attribute.name + '::tickets.ticket_priority_id'
+            name:       attribute.name + '::tickets.priority_id'
             display:    'Priority'
             tag:        'select'
             multiple:   true
@@ -698,7 +1039,7 @@ class App.ControllerForm extends App.Controller
             remove:     true
           }
         itemSub = @formGenItem( attribute_config )
-        itemSub.find('.icon-minus').bind('click', (e) ->
+        itemSub.find('.glyphicon-minus').bind('click', (e) ->
           e.preventDefault()
           $(@).parent().parent().parent().remove()
         )
@@ -727,18 +1068,19 @@ class App.ControllerForm extends App.Controller
             selected: false
             disable:  true
           },
-#          {
-#            value:    'tickets.number'
-#            name:     'Number'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.title'
-#            name:     'Title'
-#            selected: true
-#            disable:  false
-#          },
+          #
+          #{
+          #  value:    'tickets.number'
+          #  name:     'Number'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.title'
+          #  name:     'Title'
+          #  selected: true
+          #  disable:  false
+          #},
           {
             value:    'tickets.group_id'
             name:     'Group'
@@ -746,13 +1088,13 @@ class App.ControllerForm extends App.Controller
             disable:  false
           },
           {
-            value:    'tickets.ticket_state_id'
+            value:    'tickets.state_id'
             name:     'State'
             selected: false
             disable:  false
           },
           {
-            value:    'tickets.ticket_priority_id'
+            value:    'tickets.priority_id'
             name:     'Priority'
             selected: true
             disable:  false
@@ -763,68 +1105,55 @@ class App.ControllerForm extends App.Controller
             selected: true
             disable:  false
           },
-          {
-            value:    'tickets.customer_id'
-            name:     'Customer'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.organization_id'
-            name:     'Organization'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.created_at::<>'
-            name:     'Created (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.created_at::><'
-            name:     'Created (between)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.close_time::<>'
-            name:     'Closed (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.close_time::><'
-            name:     'Closed (between)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.updated_at::<>'
-            name:     'Updated (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.updated_at::><'
-            name:     'Updated (between)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.escalation_time::<>'
-            name:     'Escalation (before/last)'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.escalation_time::><'
-            name:     'Escalation (between)'
-            selected: true
-            disable:  false
-          },
-
-#          {
+          #{
+          #  value:    'tickets.created_at::<>'
+          #  name:     'Created (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.created_at::><'
+          #  name:     'Created (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.close_time::<>'
+          #  name:     'Closed (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.close_time::><'
+          #  name:     'Closed (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.updated_at::<>'
+          #  name:     'Updated (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.updated_at::><'
+          #  name:     'Updated (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.escalation_time::<>'
+          #  name:     'Escalation (before/last)'
+          #  selected: true
+          #  disable:  false
+          #},
+          #{
+          #  value:    'tickets.escalation_time::><'
+          #  name:     'Escalation (between)'
+          #  selected: true
+          #  disable:  false
+          #},
+#         # {
 #            value:    'tag'
 #            name:     'Tag'
 #            selected: true
@@ -902,24 +1231,24 @@ class App.ControllerForm extends App.Controller
 #            selected: true
 #            disable:  false
 #          },
-#          {
-#            value:    '-c'
-#            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
-#            selected: false
-#            disable:  true
-#          },
-#          {
-#            value:    'customers.id'
-#            name:     'Kunde'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'organization.id'
-#            name:     'Organization'
-#            selected: true
-#            disable:  false
-#          },
+          {
+            value:    '-c'
+            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'customers.id'
+            name:     'Customer'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'organization.id'
+            name:     'Organization'
+            selected: true
+            disable:  false
+          },
         ]
         default:    ''
         translate:  true
@@ -928,7 +1257,7 @@ class App.ControllerForm extends App.Controller
       }
       list = @formGenItem( attribute_config )
 
-      list.find('.icon-plus').bind('click', (e) ->
+      list.find('.glyphicon-plus').bind('click', (e) ->
         e.preventDefault()
 
         value = $(e.target).parents().find('[name=ticket_attribute_list]').val()
@@ -940,66 +1269,12 @@ class App.ControllerForm extends App.Controller
     else
       item = $( App.view('generic/input')( attribute: attribute ) )
 
-    if attribute.onchange
-      if typeof attribute.onchange is 'function'
-        attribute.onchange(attribute)
-      else
-        for i of attribute.onchange
-          a = i.split(/__/)
-          if a[1]
-            if a[0] is attribute.name
-              @attribute = attribute
-              @classname = classname
-              @attributes_clean = attributes_clean
-              @change = a
-              b = =>
-#                console.log 'aaa', @attribute
-                attribute = @attribute
-                change = @change
-                classname = @classname
-                attributes_clean = @attributes_clean
-                ui = @
-                $( '#' + @attribute.id ).bind('change', ->
-                  ui.log 'change', @, attribute, change
-                  ui.log change[0] + ' has changed - changing ' + change[1]
-
-                  item = $( ui.formGenItem(attribute, classname, attributes_clean) )
-                  ui.log item, classname
-                )
-              App.Delay.set( b, 100, undefined, 'form_change' )
-#            if attribute.onchange[]
-
-    ui = @
-#    item.bind('focus', ->
-#      ui.log 'focus', attribute
-#    );
-    item.bind('change', ->
-      if ui.form_data
-        params = App.ControllerForm.params(@)
-        for i of ui.form_data
-          a = i.split(/__/)
-          if a[1] && a[0] is attribute.name
-            newListAttribute  = i
-            changedAttribute  = a[0]
-            toChangeAttribute = a[1]
-
-            # get new option list
-            newListAttributes = ui['form_data'][newListAttribute][ params['group_id'] ]
-
-            # find element to replace
-            for item in ui.model.configure_attributes
-              if item.name is toChangeAttribute
-                item.display = false
-                item['filter'][toChangeAttribute] = newListAttributes
-                if params[changedAttribute]
-                  item.default = params[toChangeAttribute]
-                if !item.default
-                  delete item['default']
-                newElement = ui.formGenItem( item, classname, form )
-
-            # replace new option list
-            form.find('[name="' + toChangeAttribute + '"]').replaceWith( newElement )
-    )
+    if @handlers
+      item.bind('change', (e) =>
+        params = App.ControllerForm.params( $(e.target) )
+        for handler in @handlers
+          handler(params, attribute, @attributes, classname, form, @)
+      )
 
     # bind dependency
     if @dependency
@@ -1051,22 +1326,59 @@ class App.ControllerForm extends App.Controller
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.control-group').removeClass('hide')
+      el.find('[name="' + key + '"]').parents('.form-group').removeClass('hide')
       el.find('[name="' + key + '"]').removeClass('is-hidden')
 
   _hide: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.control-group').addClass('hide')
+      el.find('[name="' + key + '"]').parents('.form-group').addClass('hide')
       el.find('[name="' + key + '"]').addClass('is-hidden')
+
+  _mandantory: (name, el = @el) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      el.find('[name="' + key + '"]').attr('required', true)
+      el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('*')
+
+  _optional: (name, el = @el) ->
+    if !_.isArray(name)
+      name = [name]
+    for key in name
+      el.find('[name="' + key + '"]').attr('required', false)
+      el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('')
+
+  _showHideToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+    for attribute in attributes
+      if attribute.shown_if
+        hit = false
+        for refAttribute, refValue of attribute.shown_if
+          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
+            hit = true
+        if hit
+          ui._show(attribute.name)
+        else
+          ui._hide(attribute.name)
+
+  _requiredMandantoryToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+    for attribute in attributes
+      if attribute.required_if
+        hit = false
+        for refAttribute, refValue of attribute.required_if
+          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
+            hit = true
+        if hit
+          ui._mandantory(attribute.name)
+        else
+          ui._optional(attribute.name)
 
   # sort attribute.options
   _sortOptions: (attribute) ->
 
     return if !attribute.options
     return if _.isArray( attribute.options )
-
     options_by_name = []
     for i in attribute.options
       options_by_name.push i['name'].toString().toLowerCase()
@@ -1099,8 +1411,12 @@ class App.ControllerForm extends App.Controller
           row.name = App.i18n.translateInline( row.name )
         attribute.options.push row
     else
-      for key, value of selection
-        name_new = value
+      order = _.sortBy(
+        _.keys(selection), (item) ->
+          selection[item].toString().toLowerCase()
+      )
+      for key in order
+        name_new = selection[key]
         if attribute.translate
           name_new = App.i18n.translateInline( name_new )
         attribute.options.push {
@@ -1118,13 +1434,14 @@ class App.ControllerForm extends App.Controller
 
     list = []
     if attribute.filter
+
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter', attribute.filter
 
       # function based filter
       if typeof attribute.filter is 'function'
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-function'
 
-        all = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+        all = App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
         list = attribute.filter( all, 'collection' )
 
@@ -1135,7 +1452,7 @@ class App.ControllerForm extends App.Controller
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data', filter
 
         # check all records
-        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
           # check all filter attributes
           for key in filter
@@ -1145,13 +1462,29 @@ class App.ControllerForm extends App.Controller
             if record['id'] is key
               list.push record
 
+      # data based filter
+      else if attribute.filter && _.isArray attribute.filter
+
+        App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-array', attribute.filter
+
+        # check all records
+        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy )
+
+          # check all filter attributes
+          for key in attribute.filter
+
+            # check all filter values as array
+            # if it's matching, use it for selection
+            if record['id'] is key || ( record['id'] && key && record['id'].toString() is key.toString() )
+              list.push record
+
       # no data filter matched
       else
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data no filter matched'
-        list = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+        list = App[ attribute.relation ].search( sortBy: attribute.sortBy )
     else
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-no filter defined'
-      list = App[ attribute.relation ].search( sortBy: attribute.sortBy || 'name' )
+      list = App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
     App.Log.debug 'ControllerForm', '_getRelationOptionList', attribute, list
 
@@ -1190,9 +1523,9 @@ class App.ControllerForm extends App.Controller
 
   # set selected attributes
   _selectedOptions: (attribute) ->
-
     return if !attribute.options
 
+    # check if selected / checked need to be set
     check = (value, record) ->
       if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
 
@@ -1200,14 +1533,12 @@ class App.ControllerForm extends App.Controller
         if record.value.toString() is value.toString() || record.name.toString() is value.toString()
           record.selected = 'selected'
           record.checked = 'checked'
-#          if record.name.toString() is attribute.value.toString()
-#            record.selected = 'selected'
-#            record.checked = 'checked'
 
       else if ( value && record.value && _.include( value, record.value ) ) || ( value && record.name && _.include( value, record.name ) )
         record.selected = 'selected'
         record.checked = 'checked'
 
+    # lookup of any record
     for record in attribute.options
 
       if _.isArray( attribute.value )
@@ -1216,6 +1547,16 @@ class App.ControllerForm extends App.Controller
 
       if typeof attribute.value is 'string' || typeof attribute.value is 'number' || typeof attribute.value is 'boolean'
         check( attribute.value, record )
+
+    # if noting is selected / checked, use default as selected / checked
+    selected = false
+    for record in attribute.options
+      if record.selected || record.checked
+        selected = true
+    if !selected
+      for record in attribute.options
+        if typeof attribute.default is 'string' || typeof attribute.default is 'number' || typeof attribute.default is 'boolean'
+          check( attribute.default, record )
 
   # set disabled attributes
   _disabledOptions: (attribute) ->
@@ -1231,8 +1572,9 @@ class App.ControllerForm extends App.Controller
 
   validate: (params) ->
     App.Model.validate(
-      model: @model,
-      params: params,
+      model:  @model
+      params: params
+      screen: @screen
     )
 
   # get all params of the form
@@ -1240,23 +1582,27 @@ class App.ControllerForm extends App.Controller
     param = {}
 
     # create jquery object if not already exists
-    if typeof form isnt 'function'
+    if form instanceof jQuery
+      # do nothing
+    else
       form = $(form)
 
+    # find form if current is <form>
+    if form.is('form')
+      form = form
+
     # find form based on sub elements
-    if form.children()[0]
-      form = form.children().parents('form')
+    else if form.find('form')[0]
+      form = $( form.find('form')[0] )
 
     # find form based on parents next <form>
     else if form.parents('form')[0]
-      form = form.parents('form')
+      form = $( form.parents('form')[0] )
 
-    # find form based on parents next <form>, not really good!
-    else if form.parents().find('form')[0]
-      form = form.parents().find('form')
     else
       App.Log.error 'ControllerForm', 'no form found!', form
 
+    # get form elements
     array = form.serializeArray()
 
     # 1:1 and boolean params
@@ -1347,18 +1693,13 @@ class App.ControllerForm extends App.Controller
   @validate: (data) ->
 
     # remove all errors
-    $(data.form).parents().find('.error').removeClass('error')
+    $(data.form).parents().find('.has-error').removeClass('has-error')
     $(data.form).parents().find('.help-inline').html('')
 
     # show new errors
     for key, msg of data.errors
-      $(data.form).parents().find('[name*="' + key + '"]').parents('div .control-group').addClass('error')
-      $(data.form).parents().find('[name*="' + key + '"]').parent().find('.help-inline').html(msg)
+      $(data.form).parents().find('[name="' + key + '"]').parents('div .form-group').addClass('has-error')
+      $(data.form).parents().find('[name="' + key + '"]').parent().find('.help-inline').html(msg)
 
     # set autofocus
-    $(data.form).parents().find('.error').find('input, textarea').first().focus()
-
-#    # enable form again
-#    if $(data.form).parents().find('.error').html()
-#      @formEnable(data.form)
-
+    $(data.form).parents().find('.has-error').find('input, textarea').first().focus()

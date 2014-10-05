@@ -5,7 +5,8 @@ class App.Navigation extends App.Controller
 
     # rerender view
     @bind 'ui:rerender', (data) =>
-      @render()
+      @renderMenu()
+      @renderPersonal()
 
     # update selected item
     @bind 'navupdate', (data) =>
@@ -16,29 +17,52 @@ class App.Navigation extends App.Controller
       @log 'Navigation', 'notice', 'navbar rebuild', user
 
       if !_.isEmpty( user )
-        cache = App.Store.get( 'navupdate_ticket_overview' )
-        @ticket_overview_build( cache ) if cache
-
-      if !_.isEmpty( user )
         cache = App.Store.get( 'update_recent_viewed' )
         @recent_viewed_build( cache ) if cache
 
       @render()
 
-    # rebuild ticket overview data
-    @bind 'navupdate_ticket_overview', (data) =>
-      @ticket_overview_build(data)
-      @render()
-
     # rebuild recent viewed data
     @bind 'update_recent_viewed', (data) =>
       @recent_viewed_build(data)
-      @render()
+      @renderPersonal()
 
-  render: () ->
-    user      = App.Session.all()
-    nav_left  = @getItems( navbar: @Config.get( 'NavBar' ) )
-    nav_right = @getItems( navbar: @Config.get( 'NavBarRight' ) )
+    # bell on / bell off
+    @bind 'bell', (data) =>
+      if data is 'on'
+        @el.find('.bell').addClass('show')
+        App.Audio.play( 'https://www.sounddogs.com/previews/2193/mp3/219024_SOUNDDOGS__be.mp3' )
+        @delay(
+          -> App.Event.trigger('bell', 'off' )
+          3000
+        )
+      else
+        @el.find('.bell').removeClass('show')
+
+  renderMenu: =>
+    items = @getItems( navbar: @Config.get( 'NavBar' ) )
+
+    # get open tabs to repopen on rerender
+    open_tab = {}
+    @el.find('.open').children('a').each( (i,d) =>
+      href = $(d).attr('href')
+      open_tab[href] = true
+    )
+
+    # get active tabs to reactivate on rerender
+    active_tab = {}
+    @el.find('.active').children('a').each( (i,d) =>
+      href = $(d).attr('href')
+      active_tab[href] = true
+    )
+    @el.find('.navbar-items-left').html App.view('navigation/menu')(
+      items:      items
+      open_tab:   open_tab
+      active_tab: active_tab
+    )
+
+  renderPersonal: =>
+    items = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 
     # get open tabs to repopen on rerender
     open_tab = {}
@@ -54,25 +78,62 @@ class App.Navigation extends App.Controller
       active_tab[href] = true
     )
 
+    @el.find('.navbar-items-right .navbar-personal').remove()
+
+    @el.find('.navbar-items-right').append App.view('navigation/personal')(
+      items:      items
+      open_tab:   open_tab
+      active_tab: active_tab
+    )
+
+  renderResult: (result = []) =>
+    el = @el.find('#global-search-result')
+
+    # destroy existing popovers
+    @ticketPopupsDestroy()
+    @userPopupsDestroy()
+    @organizationPopupsDestroy()
+
+    # remove result if not result exists
+    if _.isEmpty( result )
+      @el.find('#global-search').parents('li').removeClass('open')
+      el.html( '' )
+      return
+
+    # show result list
+    @el.find('#global-search').parents('li').addClass('open')
+
+    # build markup
+    html = App.view('navigation/result')(
+      result: result
+    )
+    el.html( html )
+
+    # start ticket popups
+    @ticketPopups('left')
+
+    # start user popups
+    @userPopups('left')
+
+    # start oorganization popups
+    @organizationPopups('left')
+
+  render: () ->
+
+    # remember old search query
     search = @el.find('#global-search').val()
+
+    user   = App.Session.all()
     @html App.view('navigation')(
-      navbar_left:  nav_left
-      navbar_right: nav_right
-      open_tab:     open_tab
-      active_tab:   active_tab
       user:         user
-      result:       @result || []
       search:       search
     )
 
-    # start ticket popups
-    @ticketPopups('right')
+    # renderMenu
+    @renderMenu()
 
-    # start user popups
-    @userPopups('right')
-
-    # start oorganization popups
-    @organizationPopups('right')
+    # renderPersonal
+    @renderPersonal()
 
     # set focus to search box
     if @searchFocus
@@ -92,11 +153,11 @@ class App.Navigation extends App.Controller
         processData: true,
         success: (data, status, xhr) =>
 
-          # load collections
-          App.Event.trigger 'loadAssets', data.assets
+          # load assets
+          App.Collection.loadAssets( data.assets )
 
-          @result = data.result
-          for area in @result
+          result = data.result
+          for area in result
             if area.name is 'Ticket'
               area.result = []
               for id in area.ids
@@ -105,8 +166,8 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
                   id:       ticket.id
-                  class:    "ticket-data"
-                  url:      "#ticket/zoom/#{ticket.id}"
+                  class:    "ticket-popover"
+                  url:      ticket.uiUrl()
                 area.result.push data
             else if area.name is 'User'
               area.result = []
@@ -115,8 +176,8 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "#{user.displayName()}"
                   id:       user.id
-                  class:    "user-data"
-                  url:      "#users/#{user.id}"
+                  class:    "user-popover"
+                  url:      user.uiUrl()
                 area.result.push data
             else if area.name is 'Organization'
               area.result = []
@@ -125,12 +186,11 @@ class App.Navigation extends App.Controller
                 data =
                   display:  "#{organization.displayName()}"
                   id:       organization.id
-                  class:    "organization-data"
-                  url:      "#organizations/#{ticket.id}"
+                  class:    "organization-popover"
+                  url:      organization.uiUrl()
                 area.result.push data
 
-          if @result
-            @render(user)
+          @renderResult(result)
       )
 
     # observer search box
@@ -151,8 +211,7 @@ class App.Navigation extends App.Controller
       @delay(
         =>
           @searchFocus = false
-          @result = []
-          @render(user)
+          @renderResult()
         320
       )
     )
@@ -262,37 +321,14 @@ class App.Navigation extends App.Controller
     @el.find('li').removeClass('active')
     @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
 
-  ticket_overview_build: (data) =>
-
-    App.Store.write( 'navupdate_ticket_overview', data )
-
-    # remove old views
-    NavBar = @Config.get( 'NavBar' ) || {}
-    for key of NavBar
-      if NavBar[key].parent is '#ticket_view'
-        delete NavBar[key]
-
-    # add new views
-    for item in data
-      NavBar['TicketOverview' + item.link] = {
-        prio:   item.prio,
-        parent: '#ticket_view',
-        name:   item.name,
-        count:  item.count,
-        target: '#ticket_view/' + item.link,
-#        role:   ['Agent', 'Customer'],
-      }
-
-    @Config.set( 'NavBar', NavBar )
-
   recent_viewed_build: (data) =>
 
     App.Store.write( 'update_recent_viewed', data )
 
     items = data.recent_viewed
 
-    # load collections
-    App.Event.trigger 'loadAssets', data.assets
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     # remove old views
     NavBarRight = @Config.get( 'NavBarRight' ) || {}
@@ -310,14 +346,29 @@ class App.Navigation extends App.Controller
       if prio is 8000
         divider   = true
         navheader = 'Recent Viewed'
-      ticket = App.Ticket.find( item.o_id )
+
+      item.link  = ''
+      item.title = '???'
+
+      # convert backend name space to local name space
+      item.object = item.object.replace("::", '')
+
+      # lookup real data
+      if App[item.object]
+        object           = App[item.object].find( item.o_id )
+        item.link        = object.uiUrl()
+        item.title       = object.displayName()
+        item.object_name = object.objectDisplayName()
+
+      item.created_by = App.User.find( item.created_by_id )
+
       prio++
-      NavBarRight['RecendViewed::' + ticket.id + '-' + prio ] = {
-        prio:      prio,
-        parent:    '#current_user',
-        name:      item.recent_view_object + ' (' + ticket.title + ')',
-        target:    '#ticket/zoom/' + ticket.id,
-        divider:   divider,
+      NavBarRight['RecendViewed::' + item.o_id + item.object + '-' + prio ] = {
+        prio:      prio
+        parent:    '#current_user'
+        name:      App.i18n.translateInline(item.object) + ' (' + item.title + ')'
+        target:    item.link
+        divider:   divider
         navheader: navheader
       }
 

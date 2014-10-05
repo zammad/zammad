@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
   before_filter :authentication_check, :except => [:create, :password_reset_send, :password_reset_verify]
@@ -16,7 +16,7 @@ Example:
   "firstname":"Marti",
   "lastname":"Ede",
   "email":"m@edenhofer.de",
-  "image":"http://www.gravatar.com/avatar/1c38b099f2344976005de69965733465?s=48",
+  "image_source":"http://www.gravatar.com/avatar/1c38b099f2344976005de69965733465?s=48",
   "web":"http://127.0.0.1",
   "password":"123",
   "phone":"112",
@@ -70,7 +70,7 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password}
     end
     users_all = []
     users.each {|user|
-      users_all.push User.user_data_full( user.id )
+      users_all.push User.lookup( :id => user.id ).attributes_with_associations
     }
     render :json => users_all, :status => :ok
   end
@@ -101,7 +101,14 @@ curl http://localhost/api/v1/users/#{id}.json -v -u #{login}:#{password}
         return
       end
     end
-    user = User.user_data_full( params[:id] )
+
+    if params[:full]
+      full = User.full( params[:id] )
+      render :json => full
+      return
+    end
+
+    user = User.find( params[:id] )
     render :json => user
   end
 
@@ -245,7 +252,7 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-T
         )
       end
 
-      user_new = User.user_data_full( user.id )
+      user_new = User.find( user.id )
       render :json => user_new, :status => :created
     rescue Exception => e
       render :json => { :error => e.message }, :status => :unprocessable_entity
@@ -309,7 +316,7 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
       end
 
       # get new data
-      user_new = User.user_data_full( params[:id] )
+      user_new = User.find( params[:id] )
       render :json => user_new, :status => :ok
     rescue Exception => e
       render :json => { :error => e.message }, :status => :unprocessable_entity
@@ -350,6 +357,25 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
 
     # return result
     render :json => users
+  end
+
+  # GET /api/v1/users/history/1
+  def history
+
+    # permissin check
+    if !is_role('Admin') && !is_role('Agent')
+      response_access_deny
+      return
+    end
+
+    # get user data
+    user = User.find( params[:id] )
+
+    # get history of user
+    history = user.history_get(true)
+
+    # return result
+    render :json => history
   end
 
 =begin
@@ -549,6 +575,53 @@ curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "C
     end
     record.destroy_all
     render :json => { :message => 'ok' }, :status => :ok
+  end
+
+=begin
+
+Resource:
+GET /api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7
+
+Response:
+<IMAGE>
+
+Test:
+curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u #{login}:#{password}
+
+=end
+
+  def image
+
+    # cache image
+    response.headers['Expires'] = 1.year.from_now.httpdate
+    response.headers["Cache-Control"] = "cache, store, max-age=31536000, must-revalidate"
+    response.headers["Pragma"] = "cache"
+
+    # serve user image
+    user = User.where( :image => params[:hash] ).first
+    if user
+      # find file
+      list = Store.list( :object => 'User::Image', :o_id => user.id )
+      if list && list[0]
+        file = Store.find( list[0] )
+        send_data(
+          file.content,
+          :filename    => file.filename,
+          :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+          :disposition => 'inline'
+        )
+        return
+      end
+    end
+
+    # serve defalt image
+    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
+    send_data(
+      Base64.decode64(image),
+      :filename    => 'image.gif',
+      :type        => 'image/gif',
+      :disposition => 'inline',
+    )
   end
 
 end

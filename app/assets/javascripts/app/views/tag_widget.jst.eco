@@ -1,4 +1,0 @@
-<div class="well">
-  <h3><%- @T( 'Tags' ) %></h3>
-  <input type="text" name="tags" id="<%- @tag_id %>" class="span2" value="<% for tag in @tags: %><%= tag %>,<% end %>"/>
-</div>

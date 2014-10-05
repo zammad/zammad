@@ -367,3 +367,182 @@ test( "form dependend fields check", function() {
   deepEqual( params, test_params, 'form param check' );
 });
 
+test( "form postmaster filter", function() {
+
+// check match area
+
+// check set area
+
+// add match rule
+
+// add set rule
+  App.TicketPriority.refresh( [
+    {
+      id:   1,
+      name: 'prio 1',
+    },
+    {
+      id:   2,
+      name: 'prio 2',
+    },
+  ] )
+  App.Group.refresh( [
+    {
+      id:   1,
+      name: 'group 1',
+    },
+    {
+      id:   2,
+      name: 'group 2',
+    },
+  ] )
+
+  $('#forms').append('<hr><h1>form postmaster filter</h1><form id="form5"></form>')
+  var el = $('#form5')
+  var defaults = {
+    input2: 'some name',
+    match: {
+      from: 'some@address',
+      subject: 'some subject',
+    },
+    set: {
+      'x-zammad-ticket-owner': 'owner',
+      'x-zammad-ticket-customer': 'customer',
+      'x-zammad-ticket-priority_id': 2,
+      'x-zammad-ticket-group_id': 1,
+    },
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default' },
+        { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default' },
+        { name: 'match',  display: 'Match',  tag: 'postmaster_match', null: false, default: false},
+        { name: 'set',    display: 'Set',    tag: 'postmaster_set', null: false, default: false},
+      ],
+    },
+    params: defaults,
+  });
+  params = App.ControllerForm.params( el )
+  test_params = {
+    input1: "some not used default",
+    input2: "some name",
+    match: {
+      from: 'some@address',
+      subject: 'some subject',
+    },
+    set: {
+      'x-zammad-ticket-owner': 'owner',
+      'x-zammad-ticket-customer': 'customer',
+      'x-zammad-ticket-priority_id': "2",
+      'x-zammad-ticket-group_id': "1",
+    },
+  };
+  deepEqual( params, test_params, 'form param check' );
+  el.find('[name="set::x-zammad-ticket-priority_id"]').parent().next().click()
+  el.find('[name="set::x-zammad-ticket-customer"]').parent().next().click()
+  App.Delay.set( function() {
+      test( "form param check after remove click", function() {
+        params = App.ControllerForm.params( el )
+        test_params = {
+          input1: "some not used default",
+          input2: "some name",
+          match: {
+            from: 'some@address',
+            subject: 'some subject',
+          },
+          set: {
+            'x-zammad-ticket-owner': 'owner',
+            'x-zammad-ticket-group_id': "1",
+          },
+        };
+        deepEqual( params, test_params, 'form param check' );
+      });
+    },
+    1000
+  );
+
+});
+
+test( "form selector", function() {
+  $('#forms').append('<hr><h1>form selector</h1><div><form id="form6"></form></div>')
+  var el = $('#form6')
+  var defaults = {
+    input2: 'some name66',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default33' },
+        { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default' },
+      ],
+    },
+    params: defaults,
+  });
+  test_params = {
+    input1: "some not used default33",
+    input2: "some name66",
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+
+  params = App.ControllerForm.params( el.find('input') )
+  deepEqual( params, test_params, 'form param check via $("#form").find("input")' );
+
+  params = App.ControllerForm.params( el.parent() )
+  deepEqual( params, test_params, 'form param check via $("#form").parent()' );
+
+});
+
+test( "form required_if + shown_if", function() {
+  $('#forms').append('<hr><h1>form required_if + shown_if</h1><div><form id="form7"></form></div>')
+  var el = $('#form7')
+  var defaults = {
+    input2: 'some name66',
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default33' },
+        { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: true }, shown_if: { active: true } },
+        { name: 'active', display: 'Active',  tag: 'boolean', type: 'boolean', 'default': true, null: false },
+      ],
+    },
+    params: defaults,
+  });
+  test_params = {
+    input1: "some not used default33",
+    input2: "some name66",
+    active: true
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+  equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
+  equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
+
+  el.find('[name="active"]').val('{boolean}::false').trigger('change')
+  test_params = {
+    input1: "some not used default33",
+    active: false
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+  equal( el.find('[name="input2"]').attr('required'), undefined, 'check required attribute of input2 ')
+  equal( el.find('[name="input2"]').is(":visible"), false, 'check visible attribute of input2 ')
+
+
+  el.find('[name="active"]').val('{boolean}::true').trigger('change')
+  test_params = {
+    input1: "some not used default33",
+    input2: "some name66",
+    active: true
+  };
+  params = App.ControllerForm.params( el )
+  deepEqual( params, test_params, 'form param check via $("#form")' );
+  equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
+  equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
+
+});

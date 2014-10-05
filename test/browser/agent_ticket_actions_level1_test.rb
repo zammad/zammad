@@ -22,7 +22,7 @@ class AgentTicketActionLevel1Test < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some body 123äöü',
             :match_result => true,
           },
@@ -30,8 +30,8 @@ class AgentTicketActionLevel1Test < TestCase
           # remember old ticket where we want to merge to
           {
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
-            :value        => '^(.*)$',
+            :css          => '.active .ticket_info h3',
+            :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
@@ -39,7 +39,7 @@ class AgentTicketActionLevel1Test < TestCase
           # update ticket
           {
             :execute => 'select',
-            :css     => '.active select[name="ticket_article_type_id"]',
+            :css     => '.active select[name="type_id"]',
             :value   => 'note',
           },
           {
@@ -54,7 +54,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.active button',
+            :css     => '.active button.submit',
           },
           {
             :execute => 'wait',
@@ -86,16 +86,15 @@ class AgentTicketActionLevel1Test < TestCase
 
           # check ticket
           {
-            :execute      => 'match',
-            :css          => '.content_permanent.active',
+            :execute      => 'watch_for',
+            :area         => '.content_permanent.active',
             :value        => 'some body 123äöü 222',
-            :match_result => true,
           },
 
           # update ticket
           {
             :execute => 'select',
-            :css     => '.content_permanent.active select[name="ticket_article_type_id"]',
+            :css     => '.content_permanent.active select[name="type_id"]',
             :value   => 'note',
           },
           {
@@ -110,17 +109,12 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.content_permanent.active button',
+            :css     => '.content_permanent.active button.submit',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.content_permanent.active .ticket-answer',
+            :execute      => 'watch_for',
+            :area         => '.content_permanent.active .ticket-answer',
             :value        => 'some body 1234 äöüß 222',
-            :match_result => true,
           },
 
           # check if task is shown
@@ -135,6 +129,10 @@ class AgentTicketActionLevel1Test < TestCase
       {
         :name     => 'agent ticket merge',
         :action   => [
+          {
+            :execute => 'click',
+            :css     => '.active .actions',
+          },
           {
             :execute => 'click',
             :css     => '.active a[data-type="merge"]',
@@ -160,7 +158,7 @@ class AgentTicketActionLevel1Test < TestCase
           # check if megred to ticket is shown now
           {
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
+            :css          => '.active .ticket_info h3',
             :value        => '###stack###',
             :match_result => true,
           },

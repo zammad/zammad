@@ -1,7 +1,4 @@
 class App.ChannelFacebook extends App.Controller
-  events:
-    'click [data-toggle="tabnav"]': 'toggle',
-    
   constructor: ->
     super
 

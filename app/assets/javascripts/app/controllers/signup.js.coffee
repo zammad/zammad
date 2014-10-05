@@ -32,7 +32,7 @@ class Index extends App.ControllerContent
     new App.ControllerForm(
       el:        @el.find('#form-signup')
       model:     App.User
-      required:  'signup'
+      screen:    'signup'
       autofocus: true
     )
 
@@ -62,7 +62,7 @@ class Index extends App.ControllerContent
 
     # save user
     user.save(
-      success: (r) =>
+      done: (r) =>
         App.Auth.login(
           data:
             username: @params.login
@@ -70,7 +70,7 @@ class Index extends App.ControllerContent
           success: @success
           error: @error
         )
-#      error: =>
+#      fail: =>
 #        @modalHide()
     )
 

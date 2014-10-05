@@ -1,4 +1,4 @@
-class App.ProfilePassword extends App.Controller
+class Index extends App.Controller
   events:
     'submit form': 'update'
 
@@ -59,3 +59,6 @@ class App.ProfilePassword extends App.Controller
       type: 'error'
       msg:  App.i18n.translateContent( data.message )
     )
+
+App.Config.set( 'Password', { prio: 2000, name: 'Password', parent: '#profile', target: '#profile/password', controller: Index }, 'NavBarProfile' )
+

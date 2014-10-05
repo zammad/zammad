@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 # encoding: utf-8
 
@@ -44,13 +44,13 @@ class Channel::EmailParser
     :x-zammad-customer-lastname  => '',
 
     # ticket headers
-    :x-zammad-group    => 'some_group',
-    :x-zammad-state    => 'some_state',
-    :x-zammad-priority => 'some_priority',
-    :x-zammad-owner    => 'some_owner_login',
+    :x-zammad-ticket-group    => 'some_group',
+    :x-zammad-ticket-state    => 'some_state',
+    :x-zammad-ticket-priority => 'some_priority',
+    :x-zammad-ticket-owner    => 'some_owner_login',
 
     # article headers
-    :x-zammad-article-visibility => 'internal',
+    :x-zammad-article-internal   => false,
     :x-zammad-article-type       => 'agent',
     :x-zammad-article-sender     => 'customer',
 
@@ -66,15 +66,42 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-      data[field.name.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+      data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+    }
+
+    # get sender
+    from = nil
+    ['from', 'reply-to', 'return-path'].each { |item|
+      if !from
+        if mail[ item.to_sym ]
+          from = mail[ item.to_sym ].value
+        end
+      end
+    }
+
+    # set x-any-recipient
+    data['x-any-recipient'.to_sym] = ''
+    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
+      if mail[item.to_sym]
+        if data['x-any-recipient'.to_sym] != ''
+          data['x-any-recipient'.to_sym] += ', '
+        end
+        data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
+      end
     }
 
     # set extra headers
-    data[:from_email]        = Mail::Address.new( mail[:from].value ).address
-    data[:from_local]        = Mail::Address.new( mail[:from].value ).local
-    data[:from_domain]       = Mail::Address.new( mail[:from].value ).domain
-    data[:from_display_name] = Mail::Address.new( mail[:from].value ).display_name ||
-    ( Mail::Address.new( mail[:from].value ).comments && Mail::Address.new( mail[:from].value ).comments[0] )
+    begin
+      data[:from_email]        = Mail::Address.new( from ).address
+      data[:from_local]        = Mail::Address.new( from ).local
+      data[:from_domain]       = Mail::Address.new( from ).domain
+      data[:from_display_name] = Mail::Address.new( from ).display_name ||
+      ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
+    rescue
+      data[:from_email]        = from
+      data[:from_local]        = from
+      data[:from_domain]       = from
+    end
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] = Mail::Field.new( 'X-From', data[:from_display_name] ).to_s
@@ -95,6 +122,10 @@ class Channel::EmailParser
         data[:body] = mail.text_part.body.decoded
         data[:body] = Encode.conv( mail.text_part.charset, data[:body] )
 
+        if !data[:body].valid_encoding?
+          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+        end
+
         # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
@@ -102,7 +133,11 @@ class Channel::EmailParser
           filename = 'html-email'
           data[:body] = mail.html_part.body.to_s
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
-          data[:body] = html2ascii( data[:body] )
+          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+
+          if !data[:body].valid_encoding?
+            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          end
 
           # any other attachments
         else
@@ -161,6 +196,10 @@ class Channel::EmailParser
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
+        if !data[:body].valid_encoding?
+          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+        end
+
         # html part
       else
         filename = '-no name-'
@@ -168,7 +207,11 @@ class Channel::EmailParser
           filename = 'html-email'
           data[:body] = mail.body.decoded
           data[:body] = Encode.conv( mail.charset, data[:body] )
-          data[:body] = html2ascii( data[:body] )
+          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+
+          if !data[:body].valid_encoding?
+            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          end
 
           # any other attachments
         else
@@ -337,16 +380,16 @@ class Channel::EmailParser
 
       # set ticket state to open if not new
       if ticket
-        ticket_state      = Ticket::State.find( ticket.ticket_state_id )
-        ticket_state_type = Ticket::StateType.find( ticket_state.state_type_id )
+        state      = Ticket::State.find( ticket.state_id )
+        state_type = Ticket::StateType.find( state.state_type_id )
 
         # if tickte is merged, find linked ticket
-        if ticket_state_type.name == 'merged'
+        if state_type.name == 'merged'
 
         end
 
-        if ticket_state_type.name != 'new'
-          ticket.ticket_state = Ticket::State.where( :name => 'open' ).first
+        if state_type.name != 'new'
+          ticket.state = Ticket::State.where( :name => 'open' ).first
           ticket.save
         end
       end
@@ -355,56 +398,41 @@ class Channel::EmailParser
       if !ticket
 
         # set attributes
-        ticket_attributes = {
+        ticket = Ticket.new(
           :group_id           => channel[:group_id] || 1,
           :customer_id        => user.id,
           :title              => mail[:subject] || '',
-          :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
-          :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
-        }
+          :state_id    => Ticket::State.where( :name => 'new' ).first.id,
+          :priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+        )
 
-        # x-headers lookup
-        map = [
-          [ 'x-zammad-group',    Group,            'group_id',           'name'  ],
-          [ 'x-zammad-state',    Ticket::State,    'ticket_state_id',    'name'  ],
-          [ 'x-zammad-priority', Ticket::Priority, 'ticket_priority_id', 'name'  ],
-          [ 'x-zammad-owner',    User,             'owner_id',           'login' ],
-        ]
-        object_lookup( ticket_attributes, map, mail )
+        set_attributes_by_x_headers( ticket, 'ticket', mail )
 
         # create ticket
-        ticket = Ticket.create( ticket_attributes )
+        ticket.save
       end
 
       # import mail
 
       # set attributes
-      internal = false
-      if mail[ 'X-Zammad-Article-Visibility'.to_sym ] && mail[ 'X-Zammad-Article-Visibility'.to_sym ] == 'internal'
-        internal = true
-      end
-      article_attributes = {
-        :ticket_id                => ticket.id,
-        :ticket_article_type_id   => Ticket::Article::Type.where( :name => 'email' ).first.id,
-        :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-        :body                     => mail[:body],
-        :from                     => mail[:from],
-        :to                       => mail[:to],
-        :cc                       => mail[:cc],
-        :subject                  => mail[:subject],
-        :message_id               => mail[:message_id],
-        :internal                 => internal,
-      }
+      article = Ticket::Article.new(
+        :ticket_id    => ticket.id,
+        :type_id      => Ticket::Article::Type.where( :name => 'email' ).first.id,
+        :sender_id    => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
+        :body         => mail[:body],
+        :from         => mail[:from],
+        :to           => mail[:to],
+        :cc           => mail[:cc],
+        :subject      => mail[:subject],
+        :message_id   => mail[:message_id],
+        :internal     => false,
+      )
 
       # x-headers lookup
-      map = [
-        [ 'x-zammad-article-type',    Ticket::Article::Type,   'ticket_article_type_id',   'name' ],
-        [ 'x-zammad-article-sender',  Ticket::Article::Sender, 'ticket_article_sender_id', 'name' ],
-      ]
-      object_lookup( article_attributes, map, mail )
+      set_attributes_by_x_headers( article, 'article', mail )
 
       # create article
-      article = Ticket::Article.create(article_attributes)
+      article.save
 
       # store mail plain
       Store.add(
@@ -451,18 +479,61 @@ class Channel::EmailParser
     return ticket, article, user
   end
 
-  def object_lookup( attributes, map, mail )
-    map.each { |item|
-      if mail[ item[0].to_sym ]
-        new_object = item[1].where( "lower(#{item[3]}) = ?", mail[ item[0].to_sym ].downcase ).first
-        if new_object
-          attributes[ item[2].to_sym ] = new_object.id
+  def set_attributes_by_x_headers( item_object, header_name, mail )
+
+    # loop all x-zammad-hedaer-* headers
+    item_object.attributes.each{|key,value|
+
+      # ignore read only attributes
+      next if key == 'updated_at'
+      next if key == 'created_at'
+      next if key == 'updated_by_id'
+      next if key == 'created_by_id'
+
+      # check if id exists
+      key_short = key[ key.length-3 , key.length ]
+      if key_short == '_id'
+        key_short = key[ 0, key.length-3 ]
+        header = "x-zammad-#{header_name}-#{key_short}"
+        if mail[ header.to_sym ]
+          puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+          item_object.class.reflect_on_all_associations.map { |assoc|
+            if assoc.name.to_s == key_short
+              puts "NOTICE: ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
+              item = assoc.class_name.constantize
+
+              if item.respond_to?(:name)
+                if item.lookup( :name => mail[ header.to_sym ] )
+                  item_object[key] = item.lookup( :name => mail[ header.to_sym ] ).id
+                end
+              elsif item.respond_to?(:login)
+                if item.lookup( :login => mail[ header.to_sym ] )
+                  item_object[key] = item.lookup( :login => mail[ header.to_sym ] ).id
+                end
+              end
+            end
+          }
         end
       end
+
+      # check if attribute exists
+      header = "x-zammad-#{header_name}-#{key}"
+      if mail[ header.to_sym ]
+        puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+        item_object[key] = mail[ header.to_sym ]
+      end
     }
+
   end
 
   def html2ascii(string)
+
+    # in case of invalid encodeing, strip invalid chars
+    # see also test/fixtures/mail21.box
+    # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
+    if !string.valid_encoding?
+      string = string.chars.select { |c| c.valid_encoding? }.join
+    end
 
     # find <a href=....> and replace it with [x]
     link_list = ''
@@ -486,6 +557,12 @@ class Channel::EmailParser
     # strip all other tags
     string.gsub!( /\<.+?\>/, '' )
 
+    # strip all &amp; &lt; &gt; &quot;
+    string.gsub!( '&amp;', '&' )
+    string.gsub!( '&lt;', '<' )
+    string.gsub!( '&gt;', '>' )
+    string.gsub!( '&quot;', '"' )
+
     # encode html entities like "&#8211;"
     string.gsub!( /(&\#(\d+);?)/x ) { |item|
       $2.chr
@@ -498,13 +575,23 @@ class Channel::EmailParser
       if hex
         chr = hex.chr
         if chr
-          chr
+          chr_orig = chr
         else
           chr_orig
         end
       else
         chr_orig
       end
+
+      # check valid encoding
+      begin
+        if !chr_orig.encode('UTF-8').valid_encoding?
+          chr_orig = '?'
+        end
+      rescue
+        chr_orig = '?'
+      end
+      chr_orig
     }
 
     # remove empty lines

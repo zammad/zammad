@@ -1,4 +1,9 @@
-class ApplicationLib
+module ApplicationLib
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+
+  module ClassMethods
 
 =begin
 
@@ -12,13 +17,13 @@ returns
 
 =end
 
-  def self.load_adapter_by_setting(setting)
-    adapter = Setting.get( setting )
-    return if !adapter
+    def load_adapter_by_setting(setting)
+      adapter = Setting.get( setting )
+      return if !adapter
 
-    # load backend
-    self.load_adapter(adapter)
-  end
+      # load backend
+      self.load_adapter(adapter)
+    end
 
 =begin
 
@@ -32,19 +37,26 @@ returns
 
 =end
 
-  def self.load_adapter(adapter)
+    def load_adapter(adapter)
 
-    # load adapter
+      # load adapter
 
-    # will only work on ruby 2.0
-#    Object.const_get(adapter)
+      # will only work on ruby 2.0
+#      Object.const_get(adapter)
 
-    # will work on ruby 1.9 and 2.0
-#    adapter.split('::').inject(Object) do |mod, class_name|
-#      mod.const_get(class_name)
-#    end
+      # will work on ruby 1.9 and 2.0
+#      adapter.split('::').inject(Object) do |mod, class_name|
+#        mod.const_get(class_name)
+#      end
 
-    # will work with active_support
-    adapter.constantize
+      # will work with active_support
+      adapter = adapter.constantize
+
+      if !adapter
+        raise "Can't load adapter '#{adapter_name}'"
+      end
+
+      adapter
+    end
   end
 end

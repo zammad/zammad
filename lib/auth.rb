@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-class Auth < ApplicationLib
+class Auth
+  include ApplicationLib
 
 =begin
 
@@ -49,10 +50,6 @@ returns
 
         # remember last login date
         user_auth.update_last_login
-
-        # reset login failed
-        user_auth.login_failed = 0
-        user_auth.save
 
         return user_auth
       end

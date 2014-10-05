@@ -120,9 +120,9 @@ class _taskManagerSingleton extends App.Controller
 
     # create new task if not exists
     task = @get( key )
-    console.log('add', key, callback, params, to_not_show, task)
+    @log 'debug', 'add', key, callback, params, to_not_show, task, active
     if !task
-      console.log('add, create new taskbar in backend')
+      @log 'debug', 'add, create new taskbar in backend'
       task = new App.Taskbar
       task.load(
         key:      key
@@ -138,7 +138,7 @@ class _taskManagerSingleton extends App.Controller
       # save new task and update task collection
       ui = @
       task.save(
-        success: ->
+        done: ->
           for taskPosition of ui.allTasks
             if ui.allTasks[taskPosition] && ui.allTasks[taskPosition]['key'] is @key
               task = @attributes()
@@ -147,7 +147,7 @@ class _taskManagerSingleton extends App.Controller
 
     # create div for permanent content
     if !$("#content_permanent")[0]
-      $('#app section').append('<div id="content_permanent" class="container"></div>')
+      $('#app section').append('<div id="content_permanent" class="content"></div>')
 
     # empty static content if task is shown
     if active
@@ -202,35 +202,35 @@ class _taskManagerSingleton extends App.Controller
 
   startController: (key, callback, params, to_not_show) =>
 
-    console.log('controller start try...', callback, key)
+    @log 'debug', 'controller start try...', callback, key
 
-    # activate controller
-    worker = @worker( key )
-    if worker && worker.activate
-      worker.activate()
-
-    # return if controller is already started
-    return if @workersStarted[key]
-    @workersStarted[key] = true
-    console.log('controller start now...', callback, key)
-
-    # create new controller instanz
+    # create params
     params_app = _.clone(params)
     params_app['el']       = $('#content_permanent_' + key )
     params_app['task_key'] = key
-
     if to_not_show
       params_app['doNotLog'] = 1
+
+    # return if controller is already started
+    if @workersStarted[key]
+
+      # activate existing controller
+      worker = @worker( key )
+      if worker && worker.activate && !to_not_show
+        worker.activate(params_app)
+        App.Event.trigger('ui:rerender:task')
+      return
+
+    @workersStarted[key] = true
+
+    # create new controller instanz
     a = new App[callback]( params_app )
     @workers[ key ] = a
-    console.log('controller start now 2...', callback, key)
 
     # activate controller
     if !to_not_show
-      console.log('controller start now 2 activate...', callback, key)
-      a.activate()
+      a.activate(params_app)
 
-    console.log('controller start now 2 return...', callback, key)
     return a
 
   get: ( key ) =>
@@ -318,7 +318,7 @@ class _taskManagerSingleton extends App.Controller
     @TaskbarIdInt
 
   taskUpdate: (task) ->
-    @log 'notice', "UPDATE task #{task.id}", task
+    #@log 'notice', "UPDATE task #{task.id}", task
     @tasksToUpdate[ task.key ] = 'toUpdate'
     App.Event.trigger 'task:render'
 
@@ -334,11 +334,11 @@ class _taskManagerSingleton extends App.Controller
         if taskUpdate.isOnline()
           ui = @
           taskUpdate.save(
-            success: ->
+            done: ->
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
-            error: (task) =>
-              ui.log 'error', "can't update task '#{task.id}'"
+            fail: ->
+              ui.log 'error', "can't update task", @
               if ui.tasksToUpdate[ @key ] is 'inProgress'
                 delete ui.tasksToUpdate[ @key ]
           )
@@ -374,7 +374,6 @@ class _taskManagerSingleton extends App.Controller
     task_count = 0
     for task in @allTasks
       task_count += 1
-      console.log('START', task)
       do (task) =>
         App.Delay.set(
           =>

@@ -13,11 +13,9 @@ class Index extends App.ControllerContent
     @render()
 
   render: ->
-    
+
     @html App.view('scheduler')(
       head: 'some header'
     )
 
-App.Config.set( 'scheduler', Index, 'Routes' )
-
-App.Config.set( 'Scheduler', { prio: 3500, parent: '#admin', name: 'Scheduler', target: '#scheduler', role: ['Admin'] }, 'NavBar' )
+App.Config.set( 'Scheduler', { prio: 2000, name: 'Schedulers', parent: '#manage', target: '#manage/schedulers', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

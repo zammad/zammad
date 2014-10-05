@@ -15,7 +15,7 @@
 * source /home/zammad/.rvm/scripts/rvm
 * echo "source /home/zammad/.rvm/scripts/rvm" >> /home/zammad/.bashrc
 * rvm install ruby
-* gem install rails therubyracer 
+* gem install rails therubyracer
 
 ### Apache Config
 * vi /etc/apache2/sites-available/zammad
@@ -99,9 +99,9 @@
 
 ### Start Server
 * rake assets:precompile
-* rails server &
-* ruby script/websocket-server.rb start &
-* rails r 'Scheduler.run' &
+* puma -p 3000 # application web server
+* script/websocket-server.rb start # non blocking websocket server
+* script/scheduler.rb start # generate overviews on demand, just send changed data to browser
 
 
 
@@ -122,7 +122,7 @@
 * source /home/zammad/.rvm/scripts/rvm
 * echo "source /home/zammad/.rvm/scripts/rvm" >> /home/zammad/.bashrc
 * rvm install ruby
-* gem install rails therubyracer 
+* gem install rails therubyracer
 
 ### Get Zammad
 * cd /var/www/zammad
@@ -141,7 +141,7 @@
 * rake db:migrate
 * rake db:seed
 * rake assets:precompile
-* rails server &
-* ruby script/websocket-server.rb start &
-* rails r 'Scheduler.run' &
+* puma -p 3000 # application web server
+* script/websocket-server.rb start # non blocking websocket server
+* script/scheduler.rb start # generate overviews on demand, just send changed data to browser
 

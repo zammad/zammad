@@ -10,11 +10,11 @@ class App.SettingsArea extends App.Controller
 
   render: =>
     settings = App.Setting.all()
-    
+
     html = $('<div></div>')
     for setting in settings
       if setting.area is @area
-        item = new App.SettingsAreaItem( setting: setting ) 
+        item = new App.SettingsAreaItem( setting: setting )
         html.append( item.el )
 
     @html html
@@ -48,7 +48,7 @@ class App.SettingsAreaItem extends App.Controller
     )
 
     new App.ControllerForm(
-      el: @el.find('#form-item'),
+      el: @el.find('.form-item'),
       model: { configure_attributes: @configure_attributes, className: '' },
       autofocus: false,
     )
@@ -67,21 +67,25 @@ class App.SettingsAreaItem extends App.Controller
       state = {
         value: params
       }
+      #App.Config.set((@setting.name, params)
     else
       state = {
         value: directData
       }
+      #App.Config.set(@setting.name, directData)
 
     @setting['state'] = state
+    ui = @
     @setting.save(
-      success: =>
+      done: =>
 
         App.Event.trigger 'notify', {
           type:    'success'
           msg:     App.i18n.translateContent('Update successful!')
           timeout: 1500
         }
-
+        ui.render()
+        #App.Event.trigger( 'ui:rerender' )
         # login check
         App.Auth.loginCheck()
     )

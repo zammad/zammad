@@ -47,7 +47,7 @@ class App.Run extends App.Controller
     App.Event.trigger( event + ':ready')
 
 class App.Content extends App.Controller
-  className: 'container'
+  className: 'content'
 
   constructor: ->
     super

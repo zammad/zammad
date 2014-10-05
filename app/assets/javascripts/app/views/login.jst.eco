@@ -3,60 +3,47 @@
   <div class="hero-unit">
   <h1><%- @T( 'Welcome stranger!' ) %></h1>
 
-    <div class="container">
-      <div class="row">
-        <div class="span12">
-          <p><%- @T( 'Sign in with' ) %></p>
-          <form id="login" class="form-search" method="post">
-            <input name="username" type="text" class="input span3" placeholder="<%- @Ti( 'Username or email' ) %>" value="<%= @item.username %>" autocapitalize="off"/>
-            <input name="password" type="password" class="input span3" placeholder="<%- @Ti( 'Password' ) %>"/>
-            <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
-            <div>
-              <span class="small"><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></span>
-              <% if @C('user_lost_password'): %>
-              <span class="small">&middot;</span>
-              <a href="#reset_password" class="small"><%- @T( 'Forgot password?' ) %></a>
-              <% end %>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <% if !_.isEmpty( @auth_providers ): %>
-      <div class="row">
-        <div class="span12">
-          <p>--- <%- @T( 'or' ) %> ---</p>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="span12">
-          <p><%- @T( 'Sign in using' ) %></p>
-          <ul>
-          <% for auth_provider in @auth_providers: %>
-            <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
+    <div class="col-12">
+      <p><%- @T( 'Sign in with' ) %></p>
+      <form id="login" class="form-inline">
+        <input name="username" type="text" class="form-control col-3" placeholder="<%- @Ti( 'Username or email' ) %>" value="<%= @item.username %>" autocapitalize="off"/>
+        <input name="password" type="password" class="form-control col-3" placeholder="<%- @Ti( 'Password' ) %>"/>
+        <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
+        <div>
+          <span class="small"><label><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></label></span>
+          <% if @C('user_lost_password'): %>
+          <span class="small">&middot;</span>
+          <a href="#reset_password" class="small"><%- @T( 'Forgot password?' ) %></a>
           <% end %>
-          </ul>
         </div>
-      </div>
-      <% end %>
-
-      <% if @C('user_create_account'): %>
-      <div class="row">
-        <div class="span12">
-          <p>--- <%- @T( 'or' ) %> ---</p>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="span12">
-          <p><%- @T( 'New to %s join today!',  @C( 'product_name' ) ) %></p>
-          <p><a href="#signup" class="btn"><%- @T( 'Sign up' ) %></a>
-        </div>
-      </div>
-      <% end %>
-
+      </form>
     </div>
+
+  <% if !_.isEmpty( @auth_providers ): %>
+    <div class="col-12">
+      <p>--- <%- @T( 'or' ) %> ---</p>
+    </div>
+
+    <div class="col-12">
+      <p><%- @T( 'Sign in using' ) %></p>
+      <ul>
+      <% for auth_provider in @auth_providers: %>
+        <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @C('user_create_account'): %>
+    <div class="col-12">
+      <p>--- <%- @T( 'or' ) %> ---</p>
+    </div>
+
+    <div class="col-12">
+      <p><%- @T( 'New to %s join today!',  @C( 'product_name' ) ) %></p>
+      <p><a href="#signup" class="btn btn-default"><%- @T( 'Sign up' ) %></a>
+    </div>
+  <% end %>
 
   </div>
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 require 'mail'
 
@@ -41,7 +41,7 @@ class Channel::EmailBuild
         mail.attachments[attachment.filename] = {
           :content_type => attachment.preferences['Content-Type'],
           :mime_type    => attachment.preferences['Mime-Type'],
-          :content      => attachment.store_file.data
+          :content      => attachment.content
         }
       end
     end

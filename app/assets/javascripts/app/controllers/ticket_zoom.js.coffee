@@ -7,11 +7,10 @@ class App.TicketZoom extends App.Controller
 
     @navupdate '#'
 
-    @edit_form      = undefined
+    @form_meta      = undefined
     @ticket_id      = params.ticket_id
     @article_id     = params.article_id
     @signature      = undefined
-    @doNotLog       = params['doNotLog'] || 0
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
@@ -19,17 +18,16 @@ class App.TicketZoom extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false )
-    @interval( update, 300000, 'pull_check' )
+    @interval( update, 450000, 'pull_check' )
 
     # fetch new data if triggered
     @bind(
-      'Ticket:updated'
+      'Ticket:update'
       (data) =>
         update = =>
           if data.id.toString() is @ticket_id.toString()
-            ticket = App.Ticket.find( @ticket_id )
-            @log 'notice', 'TRY', data.updated_at, ticket.updated_at
-            if data.updated_at isnt ticket.updated_at
+            @log 'notice', 'TRY', new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
+            if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
               @fetch( @ticket_id, false )
         @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
     )
@@ -39,6 +37,7 @@ class App.TicketZoom extends App.Controller
       url: @url()
       id:  @ticket_id
     if @ticket
+      @ticket = App.Ticket.fullLocal( @ticket.id )
       meta.head  = @ticket.title
       meta.title = '#' + @ticket.number + ' - ' + @ticket.title
     meta
@@ -48,7 +47,6 @@ class App.TicketZoom extends App.Controller
 
   activate: =>
     @navupdate '#'
-    @el.find('textarea').elastic()
 
   changed: =>
     formCurrent = @formParam( @el.find('.ticket-update') )
@@ -67,12 +65,12 @@ class App.TicketZoom extends App.Controller
     @ajax(
       id:    'ticket_zoom_' + ticket_id
       type:  'GET'
-      url:   @apiPath + '/ticket_full/' + ticket_id + '?do_not_log=' + @doNotLog
+      url:   @apiPath + '/ticket_full/' + ticket_id
       processData: true
       success: (data, status, xhr) =>
 
         # check if ticket has changed
-        newTicketRaw = data.assets.tickets[ticket_id]
+        newTicketRaw = data.assets.Ticket[ticket_id]
         if @ticketUpdatedAtLastCall && !force
 
           # return if ticket hasnt changed
@@ -102,24 +100,33 @@ class App.TicketZoom extends App.Controller
         # remove task
         App.TaskManager.remove( @task_key )
     )
-    @doNotLog = 1
+
+    if !@doNotLog
+      @doNotLog = 1
+      @recentView( 'Ticket', ticket_id )
 
   load: (data, force) =>
 
     # remember article ids
     @ticket_article_ids = data.ticket_article_ids
 
+    # remember link
+    @links = data.links
+
+    # remember tags
+    @tags = data.tags
+
     # get edit form attributes
-    @edit_form = data.edit_form
+    @form_meta = data.form_meta
 
     # get signature
     @signature = data.signature
 
-    # load collections
-    App.Event.trigger 'loadAssets', data.assets
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     # get data
-    @ticket = App.Ticket.retrieve( @ticket_id )
+    @ticket = App.Ticket.fullLocal( @ticket_id )
 
     # render page
     @render(force)
@@ -135,12 +142,9 @@ class App.TicketZoom extends App.Controller
         nav:        @nav
         isCustomer: @isRole('Customer')
       )
+      @TicketTitle()
+      @Widgets()
 
-    # show frontend times
-    @frontendTimeUpdate()
-
-    @TicketTitle()
-    @TicketInfo()
     @TicketAction()
     @ArticleView()
 
@@ -154,14 +158,6 @@ class App.TicketZoom extends App.Controller
       if !@editWidget || _.isEmpty( App.TaskManager.get(@task_key).state )
         @editWidget = @Edit()
 
-    # show text module UI
-    if !@isRole('Customer')
-      new App.TextModuleUI(
-        el:   @el.find('textarea')
-        data:
-          ticket: @ticket
-      )
-
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )
       offset = document.getElementById( 'article-' + @article_id ).offsetTop
@@ -173,15 +169,8 @@ class App.TicketZoom extends App.Controller
   TicketTitle: =>
     # show ticket title
     new TicketTitle(
-      ticket:   @ticket
-      el:       @el.find('.ticket-title')
-    )
-
-  TicketInfo: =>
-    # show ticket info
-    new TicketInfo(
-      ticket:   @ticket
-      el:       @el.find('.ticket-info')
+      ticket: @ticket
+      el:     @el.find('.ticket-title')
     )
 
   ArticleView: =>
@@ -198,19 +187,28 @@ class App.TicketZoom extends App.Controller
     new Edit(
       ticket:     @ticket
       el:         @el.find('.edit')
-      edit_form:  @edit_form
+      form_meta:  @form_meta
       task_key:   @task_key
       ui:         @
     )
 
-  TicketAction: =>
+  Widgets: =>
     # show ticket action row
-    new TicketAction(
+    new Widgets(
       ticket:     @ticket
       task_key:   @task_key
-      el:         @el.find('.ticket-action')
+      el:         @el.find('.widgets')
       ui:         @
     )
+
+  TicketAction: =>
+    # start action controller
+    if !@isRole('Customer')
+      new ActionRow(
+        el:      @el.find('.action')
+        ticket:  @ticket
+        ui:      @
+      )
 
 class TicketTitle extends App.Controller
   events:
@@ -218,11 +216,14 @@ class TicketTitle extends App.Controller
 
   constructor: ->
     super
-    @render()
 
-  render: ->
-    @html App.view('ticket_zoom/ticket_title')(
-      ticket: @ticket
+    @ticket      = App.Ticket.fullLocal( @ticket.id )
+    @subscribeId = @ticket.subscribe(@render)
+    @render(@ticket)
+
+  render: (ticket) =>
+    @html App.view('ticket_zoom/title')(
+      ticket: ticket
     )
 
   update: (e) =>
@@ -239,67 +240,81 @@ class TicketTitle extends App.Controller
       title = ''
 
     # update title
-    ticket = App.Ticket.retrieve( @ticket.id )
-    ticket.title = title
-    ticket.load( title: title )
-    ticket.save()
+    @ticket.title = title
+    @ticket.save()
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
 
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
 
-class TicketInfo extends App.Controller
+class TicketInfo extends App.ControllerDrox
   constructor: ->
     super
-    @render()
 
-  render: ->
-    @html App.view('ticket_zoom/ticket_info')(
-      ticket: @ticket
+    @subscribeId = @ticket.subscribe(@render)
+    @render(@ticket)
+
+  render: (ticket) =>
+    @html @template(
+      file:   'ticket_zoom/info'
+      header: '#' + ticket.number
+      params:
+        ticket: ticket
     )
-
-class TicketAction extends App.Controller
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-
-    @html App.view('ticket_zoom/ticket_action')()
-
-    # start customer info controller
-    if !@isRole('Customer')
-      new App.UserInfo(
-        el:      @el.find('.customer_info')
-        user_id: @ticket.customer_id
-        ticket:  @ticket
-      )
-
-    # start action controller
-    if !@isRole('Customer')
-      new TicketActionRow(
-        el:      @el.find('.action_info')
-        ticket:  @ticket
-        zoom:    @ui
-      )
 
     # start tag controller
     if !@isRole('Customer')
-      new App.TagWidget(
+      new App.WidgetTag(
         el:           @el.find('.tag_info')
         object_type:  'Ticket'
-        object:        @ticket
+        object:       ticket
+        tags:         @tags
+      )
+
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
+
+class Widgets extends App.Controller
+  constructor: ->
+    super
+    @subscribeId = @ticket.subscribe(@render)
+    @render(@ticket)
+
+  render: (ticket) =>
+
+    @html App.view('ticket_zoom/widgets')()
+
+    # show ticket info
+    new TicketInfo(
+      ticket:  ticket
+      el:      @el.find('.ticket_info')
+      tags:    @ui.tags
+    )
+
+    # start customer info controller
+    if !@isRole('Customer')
+      new App.WidgetUser(
+        el:      @el.find('.customer_info')
+        user_id: ticket.customer_id
+        ticket:  ticket
       )
 
     # start link info controller
     if !@isRole('Customer')
-      new App.LinkInfo(
+      new App.WidgetLink(
         el:           @el.find('.link_info')
         object_type:  'Ticket'
-        object:       @ticket
+        object:       ticket
+        links:        @ui.links
       )
 
+    # show frontend times
+    @frontendTimeUpdate()
 
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
 
 class Edit extends App.Controller
   events:
@@ -312,10 +327,12 @@ class Edit extends App.Controller
 
   release: =>
     @autosaveStop()
+    if @subscribeIdTextModule
+      App.Ticket.unsubscribe(@subscribeIdTextModule)
 
   render: ->
 
-    ticket = App.Ticket.retrieve( @ticket.id )
+    ticket = App.Ticket.fullLocal( @ticket.id )
 
     @html App.view('ticket_zoom/edit')(
       ticket:     ticket
@@ -323,62 +340,60 @@ class Edit extends App.Controller
       formChanged: !_.isEmpty( App.TaskManager.get(@task_key).state )
     )
 
-    @configure_attributes_ticket = [
-      { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @edit_form, class: 'span2', item_class: 'pull-left'  },
-      { name: 'owner_id',           display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @edit_form, nulloption: true, class: 'span2', item_class: 'pull-left' },
-    ]
-    if @isRole('Customer')
-      @configure_attributes_ticket = [
-        { name: 'ticket_state_id',    display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-        { name: 'ticket_priority_id', display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @edit_form, translate: true, class: 'span2', item_class: 'pull-left' },
-      ]
-
-    @configure_attributes_article = [
-      { name: 'ticket_article_type_id',   display: 'Type',        tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @edit_form, default: '9', translate: true, class: 'medium' },
-      { name: 'to',                       display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-      { name: 'cc',                       display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-#      { name: 'subject',                  display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-      { name: 'in_reply_to',              display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-      { name: 'body',                     display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
-      { name: 'internal',                 display: 'Visibility',  tag: 'select',   null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false },
-    ]
-    if @isRole('Customer')
-      @configure_attributes_article = [
-        { name: 'to',           display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-        { name: 'cc',           display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-#        { name: 'subject',     display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', hide: true },
-        { name: 'in_reply_to',  display: 'In Reply to', tag: 'input',    type: 'text', limit: 100, null: true, class: 'span7', item_class: 'hide' },
-        { name: 'body',         display: 'Text',        tag: 'textarea', rows: 6,  limit: 100, null: true, class: 'span7', item_class: '', upload: true },
-      ]
-
     @form_id = App.ControllerForm.formId()
-    defaults = ticket
+    defaults = ticket.attributes()
+    if @isRole('Customer')
+      delete defaults['state_id']
+      delete defaults['state']
     if !_.isEmpty( App.TaskManager.get(@task_key).state )
       defaults = App.TaskManager.get(@task_key).state
-    new App.ControllerForm(
-      el:        @el.find('.form-ticket-update')
-      form_id:   @form_id
-      model:
-        configure_attributes: @configure_attributes_ticket
-        className:            'update_ticket_' + ticket.id
-      params:    defaults
-      form_data: @edit_form
-    )
+    formChanges = (params, attribute, attributes, classname, form, ui) =>
+      if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
+        dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+        if dependency
 
+          for fieldNameToChange of dependency
+            filter = []
+            if dependency[fieldNameToChange]
+              filter = dependency[fieldNameToChange]
+
+            # find element to replace
+            for item in attributes
+              if item.name is fieldNameToChange
+                item.display = false
+                item['filter'] = {}
+                item['filter'][ fieldNameToChange ] = filter
+                item.default = params[item.name]
+                #if !item.default
+                #  delete item['default']
+                newElement = ui.formGenItem( item, classname, form )
+
+            # replace new option list
+            form.find('[name="' + fieldNameToChange + '"]').replaceWith( newElement )
+
+    new App.ControllerForm(
+      el:       @el.find('.form-ticket-update')
+      form_id:  @form_id
+      model:    App.Ticket
+      screen:   'edit'
+      handlers: [
+        formChanges
+      ]
+      filter:    @form_meta.filter
+      params:    defaults
+    )
     new App.ControllerForm(
       el:        @el.find('.form-article-update')
       form_id:   @form_id
-      model:
-        configure_attributes: @configure_attributes_article
-        className:            'update_ticket_' + ticket.id
-      form_data: @edit_form
+      model:     App.TicketArticle
+      screen:   'edit'
+      filter:
+        type_id: [1,9,5]
       params:    defaults
       dependency: [
         {
           bind: {
-            name:     'ticket_article_type_id'
+            name:     'type_id'
             relation: 'TicketArticleType'
             value:    ['email']
           },
@@ -389,19 +404,28 @@ class Edit extends App.Controller
         },
         {
           bind: {
-            name:     'ticket_article_type_id'
+            name:     'type_id'
             relation: 'TicketArticleType'
-            value:    ['note', 'twitter status', 'twitter direct-message']
+            value:    ['note', 'phone', 'twitter status']
           },
           change: {
             action: 'hide'
             name: ['to', 'cc'],
           },
         },
+        {
+          bind: {
+            name:     'type_id'
+            relation: 'TicketArticleType'
+            value:    ['twitter direct-message']
+          },
+          change: {
+            action: 'show'
+            name: ['to'],
+          },
+        },
       ]
     )
-
-    @el.find('textarea').elastic()
 
     # remember form defaults
     @ui.formDefault = @formParam( @el.find('.ticket-update') )
@@ -411,6 +435,19 @@ class Edit extends App.Controller
 
     # enable user popups
     @userPopups()
+
+    # show text module UI
+    if !@isRole('Customer')
+      textModule = new App.WidgetTextModule(
+        el:   @el.find('textarea')
+        data:
+          ticket: ticket
+      )
+      callback = (ticket) =>
+        textModule.reload(
+          ticket: ticket
+        )
+      @subscribeIdTextModule = ticket.subscribe( callback )
 
   autosaveStop: =>
     @clearInterval( 'autosave' )
@@ -423,8 +460,9 @@ class Edit extends App.Controller
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = currentData
         @log 'notice', 'form hash changed', diff, currentData
-        @el.find('.ticket-update').parent().addClass('form-changed')
-        @el.find('.ticket-update').parent().parent().find('.reset-message').show()
+        @el.find('.ticket-edit').addClass('form-changed')
+        @el.find('.ticket-edit').find('.reset-message').show()
+        @el.find('.ticket-edit').find('.reset-message').removeClass('hide')
         App.TaskManager.update( @task_key, { 'state': currentData })
     @interval( update, 3000, 'autosave' )
 
@@ -433,38 +471,43 @@ class Edit extends App.Controller
     @autosaveStop()
     params = @formParam(e.target)
 
-    ticket = App.Ticket.retrieve( @ticket.id )
+    # get ticket
+    ticket = App.Ticket.fullLocal( @ticket.id )
 
     @log 'notice', 'update', params, ticket
 
+    # update local ticket
+
+    # create local article
+
+
     # find sender_id
     if @isRole('Customer')
-      sender       = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-      article_type = App.TicketArticleType.findByAttribute( 'name', 'web' )
-      params.ticket_article_type_id   = article_type.id
-      params.ticket_article_sender_id = sender.id
+      sender            = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+      type              = App.TicketArticleType.findByAttribute( 'name', 'web' )
+      params.type_id    = type.id
+      params.sender_id  = sender.id
     else
-      sender       = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-      article_type = App.TicketArticleType.find( params['ticket_article_type_id'] )
-      params.ticket_article_sender_id = sender.id
+      sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+      type              = App.TicketArticleType.find( params['type_id'] )
+      params.sender_id  = sender.id
 
     # update ticket
-    ticket_update = {}
-    for item in @configure_attributes_ticket
-      ticket_update[item.name] = params[item.name]
+    for key, value of params
+      ticket[key] = value
 
     # check owner assignment
     if !@isRole('Customer')
-      if !ticket_update['owner_id']
-        ticket_update['owner_id'] = 1
+      if !ticket['owner_id']
+        ticket['owner_id'] = 1
 
     # check if title exists
-    if !ticket_update['title'] && !ticket.title
+    if !ticket['title']
       alert( App.i18n.translateContent('Title needed') )
       return
 
     # validate email params
-    if article_type.name is 'email'
+    if type.name is 'email'
 
       # check if recipient exists
       if !params['to'] && !params['cc']
@@ -485,22 +528,32 @@ class Edit extends App.Controller
           @autosaveStart()
           return
 
-    ticket.load( ticket_update )
-    @log 'notice', 'update ticket', ticket_update, ticket
+    # submit ticket & article
+    @log 'notice', 'update ticket', ticket
 
     # disable form
     @formDisable(e)
 
     # validate ticket
-    errors = ticket.validate()
+    errors = ticket.validate(
+      screen: 'edit'
+    )
     if errors
       @log 'error', 'update', errors
+
+      @log 'error', errors
+      @formValidate(
+        form:   e.target
+        errors: errors
+        screen: 'edit'
+      )
       @formEnable(e)
       @autosaveStart()
       return
 
     # validate article
-    if params['body']
+    articleAttributes = App.TicketArticle.attributesGet( 'edit' )
+    if params['body'] || ( articleAttributes['body'] && articleAttributes['body']['null'] is false )
       article = new App.TicketArticle
       params.from      = @Session.get( 'firstname' ) + ' ' + @Session.get( 'lastname' )
       params.ticket_id = ticket.id
@@ -514,30 +567,23 @@ class Edit extends App.Controller
       errors = article.validate()
       if errors
         @log 'error', 'update article', errors
+        @formValidate(
+          form:   e.target
+          errors: errors
+          screen: 'edit'
+        )
         @formEnable(e)
         @autosaveStart()
         return
 
+    ticket.article = article
     ticket.save(
-      success: (r) =>
+      done: (r) =>
 
         # reset form after save
-        if article
-          article.save(
-            success: (r) =>
-              @ui.fetch( ticket.id, true )
+        App.TaskManager.update( @task_key, { 'state': {} })
 
-              # reset form after save
-              App.TaskManager.update( @task_key, { 'state': {} })
-            error: (r) =>
-              @log 'error', 'update article', r
-          )
-        else
-
-          # reset form after save
-          App.TaskManager.update( @task_key, { 'state': {} })
-
-          @ui.fetch( ticket.id, true )
+        @ui.fetch( ticket.id, true )
     )
 
   reset: (e) =>
@@ -563,7 +609,7 @@ class ArticleView extends App.Controller
     # get all articles
     @articles = []
     for article_id in @ticket_article_ids
-      article = App.TicketArticle.retrieve( article_id )
+      article = App.TicketArticle.fullLocal( article_id )
       @articles.push article
 
     # rework articles
@@ -604,16 +650,19 @@ class ArticleView extends App.Controller
 
   show_toogle: (e) ->
     e.preventDefault()
-    $(e.target).hide()
+    #$(e.target).hide()
     if $(e.target).next('div')[0]
-      $(e.target).next('div').show()
-    else
-      $(e.target).parent().next('div').show()
+      if $(e.target).next('div').hasClass('hide')
+        $(e.target).next('div').removeClass('hide')
+        $(e.target).text( App.i18n.translateContent('Fold in') )
+      else
+        $(e.target).text( App.i18n.translateContent('See more') )
+        $(e.target).next('div').addClass('hide')
 
-  checkIfSignatureIsNeeded: (article_type) =>
+  checkIfSignatureIsNeeded: (type) =>
 
     # add signature
-    if @ui.signature && @ui.signature.body && article_type.name is 'email'
+    if @ui.signature && @ui.signature.body && type.name is 'email'
       body   = @ui.el.find('[name="body"]').val() || ''
       regexp = new RegExp( escapeRegExp( @ui.signature.body ) , 'i')
       if !body.match(regexp)
@@ -627,16 +676,16 @@ class ArticleView extends App.Controller
     e.preventDefault()
     article_id   = $(e.target).parents('[data-id]').data('id')
     article      = App.TicketArticle.find( article_id )
-    article_type = App.TicketArticleType.find( article.ticket_article_type_id )
+    type         = App.TicketArticleType.find( article.type_id )
     customer     = App.User.find( article.created_by_id )
 
     # update form
-    @checkIfSignatureIsNeeded(article_type)
+    @checkIfSignatureIsNeeded(type)
 
     # preselect article type
-    @ui.el.find('[name="ticket_article_type_id"]').find('option:selected').removeAttr('selected')
-    @ui.el.find('[name="ticket_article_type_id"]').find('[value="' + article_type.id + '"]').attr('selected',true)
-    @ui.el.find('[name="ticket_article_type_id"]').trigger('change')
+    @ui.el.find('[name="type_id"]').find('option:selected').removeAttr('selected')
+    @ui.el.find('[name="type_id"]').find('[value="' + type.id + '"]').attr('selected',true)
+    @ui.el.find('[name="type_id"]').trigger('change')
 
     # empty form
     #@ui.el.find('[name="to"]').val('')
@@ -647,19 +696,19 @@ class ArticleView extends App.Controller
     if article.message_id
       @ui.el.find('[name="in_reply_to"]').val(article.message_id)
 
-    if article_type.name is 'twitter status'
+    if type.name is 'twitter status'
 
       # set to in body
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       @ui.el.find('[name="body"]').val('@' + to)
 
-    else if article_type.name is 'twitter direct-message'
+    else if type.name is 'twitter direct-message'
 
       # show to
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       @ui.el.find('[name="to"]').val(to)
 
-    else if article_type.name is 'email'
+    else if type.name is 'email'
       @ui.el.find('[name="to"]').val(article.from)
 
     # add quoted text if needed
@@ -703,9 +752,9 @@ class Article extends App.Controller
     if article_lines.length > preview
       preview_mode = true
       if article_lines[preview] is ''
-        article_lines.splice( preview, 0, '----SEEMORE----' )
+        article_lines.splice( preview, 0, '-----SEEMORE-----' )
       else
-        article_lines.splice( preview + 1, 0, '----SEEMORE----' )
+        article_lines.splice( preview - 1, 0, '-----SEEMORE-----' )
       @article['html'] = article_lines.join("\n")
     @article['html'] = window.linkify( @article['html'] )
     notify = '<a href="#" class="show_toogle">' + App.i18n.translateContent('See more') + '</a>'
@@ -713,9 +762,9 @@ class Article extends App.Controller
     # preview mode
     if preview_mode
       @article_changed = false
-      @article['html'] = @article['html'].replace /^\n{0,10}----SEEMORE----\n/m, (match) =>
+      @article['html'] = @article['html'].replace /^-----SEEMORE-----\n/m, (match) =>
         @article_changed = true
-        notify + '<div class="hide">'
+        notify + '<div class="hide preview">'
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
 
@@ -724,10 +773,9 @@ class Article extends App.Controller
       @article_changed = false
       @article['html'] = @article['html'].replace /^\n{0,10}(--|__)/m, (match) =>
         @article_changed = true
-        notify + '<div class="hide">' + match
+        notify + '<div class="hide preview">' + match
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
-
 
   actionRow: ->
     if @isRole('Customer')
@@ -749,10 +797,10 @@ class Article extends App.Controller
           type: 'internal'
         }
       ]
-    if @article.article_type.name is 'note'
+    if @article.type.name is 'note'
 #        actions.push []
     else
-      if @article.article_sender.name is 'Customer'
+      if @article.sender.name is 'Customer'
         actions.push {
           name: 'reply'
           type: 'reply'
@@ -775,7 +823,7 @@ class Article extends App.Controller
       for attachment in @article.attachments
         attachment.size = @humanFileSize(attachment.size)
 
-class TicketActionRow extends App.Controller
+class ActionRow extends App.Controller
   events:
     'click [data-type=history]':  'history_dialog'
     'click [data-type=merge]':    'merge_dialog'
@@ -786,19 +834,19 @@ class TicketActionRow extends App.Controller
     @render()
 
   render: ->
-    @html App.view('ticket_action')()
+    @html App.view('ticket_zoom/actions')()
 
   history_dialog: (e) ->
     e.preventDefault()
-    new App.TicketHistory( ticket_id: @ticket.id )
+    new App.TicketHistory( ticket: @ticket )
 
   merge_dialog: (e) ->
     e.preventDefault()
-    new App.TicketMerge( ticket_id: @ticket.id, task_key: @zoom.task_key )
+    new App.TicketMerge( ticket: @ticket, task_key: @ui.task_key )
 
   customer_dialog: (e) ->
     e.preventDefault()
-    new App.TicketCustomer( ticket_id: @ticket.id, zoom: @zoom )
+    new App.TicketCustomer( ticket: @ticket )
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->

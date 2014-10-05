@@ -31,7 +31,12 @@ module Encode
 #    puts '-------' + charset
 #    puts string
     # convert string
-    string.encode!( 'UTF-8', charset )
+    begin
+      string.encode!( 'UTF-8', charset )
+    rescue => e
+      puts 'ERROR: ' + e.inspect
+      string
+    end
 #    Iconv.conv( 'UTF8', charset, string )
   end
 end

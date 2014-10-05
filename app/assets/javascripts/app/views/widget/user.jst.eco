@@ -1,0 +1,48 @@
+<div class="user-info">
+
+<% if @user.imageUrl: %>
+  <img class="thumbnail" src="<%- @user.imageUrl %>" alt="">
+<% end %>
+  <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></div>
+<% for row in @userData: %>
+  <% if @user[row.name] || row.name is 'note': %>
+    <% if row.tag isnt 'textarea': %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
+    <% else: %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>">
+        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update" placeholder="<%- @T( row.display ) %>"><%= @user[row.name] %></textarea>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+<% if !_.isEmpty(@user['accounts']): %>
+  <div class="customer-info">
+    <strong><%- @T( 'Linked Accounts' ) %></strong><br/>
+  <% for account of @user['accounts']: %>
+    <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
+  <% end %>
+  </div>
+<% end %>
+<% if !_.isEmpty(@user['links']): %>
+  <% for link in @user['links']: %>
+  <div class="customer-info">
+    <strong><%- @T( link['title'] ) %></strong><br/>
+    <% for item in link['items']: %>
+      <% if item['url']: %>
+        <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
+      <% else: %>
+        <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
+      <% end %>
+        <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
+      <% if item['url']: %>
+        </a>
+      <% else: %>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+  <% end %>
+<% end %>
+</div>
+
+</div>

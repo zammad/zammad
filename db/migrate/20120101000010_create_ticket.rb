@@ -131,7 +131,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :message_id_md5,       :string, :limit => 32,      :null => true
       t.column :in_reply_to,          :string, :limit => 3000,    :null => true
       t.column :references,           :string, :limit => 3200,    :null => true
-      t.column :body,                 :text,                      :null => true
+      t.column :body,                 :text,   :limit => 4.megabytes + 1
       t.column :internal,             :boolean,                   :null => false, :default => false
       t.column :updated_by_id,        :integer,                   :null => false
       t.column :created_by_id,        :integer,                   :null => false
@@ -141,6 +141,7 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_articles, [:message_id_md5]
     add_index :ticket_articles, [:message_id_md5, :ticket_article_type_id], :name => 'index_ticket_articles_message_id_md5_type_id'
     add_index :ticket_articles, [:created_by_id]
+    add_index :ticket_articles, [:created_at]
     add_index :ticket_articles, [:internal]
     add_index :ticket_articles, [:ticket_article_type_id]
     add_index :ticket_articles, [:ticket_article_sender_id]

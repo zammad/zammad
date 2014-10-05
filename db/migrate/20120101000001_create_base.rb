@@ -1,6 +1,6 @@
 class CreateBase < ActiveRecord::Migration
   def up
-    
+
     create_table :sessions do |t|
       t.string :session_id, :null => false
       t.text :data
@@ -15,7 +15,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :firstname,      :string, :limit => 100, :null => true
       t.column :lastname,       :string, :limit => 100, :null => true
       t.column :email,          :string, :limit => 140, :null => true
-      t.column :image,          :string, :limit => 200, :null => true
+      t.column :image,          :string, :limit => 100, :null => true
       t.column :web,            :string, :limit => 100, :null => true
       t.column :password,       :string, :limit => 100, :null => true
       t.column :phone,          :string, :limit => 100, :null => true
@@ -31,7 +31,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :note,           :string, :limit => 250, :null => true
       t.column :last_login,     :timestamp,             :null => true
       t.column :source,         :string, :limit => 200, :null => true
-      t.column :preferences,    :string, :limit => 4000,:null => true
+      t.column :preferences,    :string, :limit => 8000,:null => true
       t.column :updated_by_id,  :integer,               :null => false
       t.column :created_by_id,  :integer,               :null => false
       t.timestamps
@@ -108,7 +108,7 @@ class CreateBase < ActiveRecord::Migration
       t.integer :user_id
       t.integer :role_id
     end
-    
+
     create_table :groups_users, :id => false do |t|
       t.integer :user_id
       t.integer :group_id
@@ -143,6 +143,18 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :translations, [:source]
     add_index :translations, [:locale]
+
+    create_table :object_lookups do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :object_lookups, [:name],   :unique => true
+
+    create_table :type_lookups do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :type_lookups, [:name],   :unique => true
 
   end
 end

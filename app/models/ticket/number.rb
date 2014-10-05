@@ -1,6 +1,7 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class Ticket::Number < ApplicationLib
+class Ticket::Number
+  include ApplicationLib
 
 =begin
 
@@ -15,7 +16,7 @@ returns
 =end
 
   def self.generate
-    
+
     # generate number
     (1..50_000).each { |i|
       number = adapter.generate
@@ -48,7 +49,7 @@ returns
     if !adapter_name
       raise "Missing ticket_number setting option"
     end
-    adapter = self.load_adapter(adapter_name)
+    adapter = load_adapter(adapter_name)
     if !adapter
       raise "Can't load ticket_number adapter '#{adapter_name}'"
     end

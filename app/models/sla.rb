@@ -1,6 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
-
-require 'cache'
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Sla < ApplicationModel
   store     :condition

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::Ticket::LastContact < ActiveRecord::Observer
   observe 'ticket::_article'
@@ -10,10 +10,10 @@ class Observer::Ticket::LastContact < ActiveRecord::Observer
     return true if record.internal
 
     # if article is a message to customer
-    return true if !Ticket::Article::Type.lookup( :id => record.ticket_article_type_id ).communication
+    return true if !Ticket::Article::Type.lookup( :id => record.type_id ).communication
 
     # if sender is not customer
-    sender = Ticket::Article::Sender.lookup( :id => record.ticket_article_sender_id )
+    sender = Ticket::Article::Sender.lookup( :id => record.sender_id )
     if sender.name == 'Customer'
 
       # check if last communication is done by agent, else do not set last_contact_customer

@@ -1,15 +1,21 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 require 'twitter'
 
 class Channel::Twitter2
   def connect(channel)
-    @client = Twitter::Client.new(
-      :consumer_key       => channel[:options][:consumer_key],
-      :consumer_secret    => channel[:options][:consumer_secret],
-      :oauth_token        => channel[:options][:oauth_token],
-      :oauth_token_secret => channel[:options][:oauth_token_secret]
-    )
+    @client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = channel[:options][:consumer_key]
+      config.consumer_secret     = channel[:options][:consumer_secret]
+      config.access_token        = channel[:options][:oauth_token]
+      config.access_token_secret = channel[:options][:oauth_token_secret]
+    end
+  end
+
+  def disconnect
+    if @client
+      @client = nil
+    end
   end
 
   def fetch (channel)
@@ -21,18 +27,21 @@ class Channel::Twitter2
     if channel[:options][:search]
       channel[:options][:search].each { |search|
         puts " - searching for #{search[:item]}"
-        tweets = @client.search( search[:item] )
+        tweets = []
+        @client.search( search[:item], :count => 50, :result_type => "recent" ).collect do |tweet|
+          tweets.push tweet
+        end
         @article_type = 'twitter status'
-        fetch_loop(tweets, channel, search[:group])
+        fetch_loop( tweets, channel, search[:group] )
       }
     end
 
     # mentions
     if channel[:options][:mentions]
       puts " - searching for mentions"
-      tweets = @client.mentions
+      tweets = @client.mentions_timeline
       @article_type = 'twitter status'
-      fetch_loop(tweets, channel, channel[:options][:mentions][:group])
+      fetch_loop( tweets, channel, channel[:options][:mentions][:group] )
     end
 
     # direct messages
@@ -40,12 +49,13 @@ class Channel::Twitter2
       puts " - searching for direct_messages"
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
-      fetch_loop(tweets, channel, channel[:options][:direct_messages][:group])
+      fetch_loop( tweets, channel, channel[:options][:direct_messages][:group] )
     end
     puts 'done'
+    disconnect
   end
 
-  def fetch_loop(tweets, channel, group)
+  def fetch_loop( tweets, channel, group )
 
     # get all tweets
     all_tweets = []
@@ -90,19 +100,16 @@ class Channel::Twitter2
     sender = nil
 
     # status (full user data is included)
-    if tweet['user']
-      sender = tweet['user']
+    if tweet.respond_to?('user')
+      sender = tweet.user
 
-      # direct message (full user data is included)
-    elsif tweet['sender']
-      sender = tweet['sender']
+    # direct message (full user data is included)
+    elsif tweet.respond_to?('sender')
+      sender = tweet.sender
 
-      # search (no user data is included, do extra lookup)
-    elsif tweet['from_user_id']
+    # search (no user data is included, do extra lookup)
+    elsif tweet.respond_to?('from_user_id')
       begin
-
-        # reconnect for #<Twitter::Error::NotFound: Sorry, that page does not exist> workaround
-        #        @client = connect(channel)
         sender = @client.user(tweet.from_user_id)
       rescue Exception => e
         puts "Exception: twitter: " + e.inspect
@@ -112,9 +119,9 @@ class Channel::Twitter2
 
     # check if parent exists
     user = nil, ticket = nil, article = nil
-    if tweet['in_reply_to_status_id']
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
       puts 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
-      tweet_sub = @client.status(tweet.in_reply_to_status_id)
+      tweet_sub = @client.status( tweet.in_reply_to_status_id )
       #        puts tweet_sub.inspect
       (user, ticket, article) = fetch_import(tweet_sub, channel, group)
     end
@@ -148,7 +155,7 @@ class Channel::Twitter2
         :lastname       => '',
         :email          => '',
         :password       => '',
-        :image          => sender.profile_image_url,
+        :image_source   => sender.profile_image_url.to_s,
         :note           => sender.description,
         :active         => true,
         :roles          => roles,
@@ -176,11 +183,11 @@ class Channel::Twitter2
 
     #    puts '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
-    if tweet['in_reply_to_status_id']
-      puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
+      puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
       article = Ticket::Article.where( :message_id => tweet.in_reply_to_status_id.to_s ).first
       if article
-        puts 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id
+        puts 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
         return article.ticket
       end
     end
@@ -195,8 +202,8 @@ class Channel::Twitter2
     if @article_type == 'twitter direct-message'
       ticket = Ticket.where( :customer_id => user.id ).first
       if ticket
-        ticket_state_type = Ticket::StateType.where( ticket.ticket_state.state_type_id )
-        if ticket_state_type.name == 'closed' || ticket_state_type.name == 'closed'
+        state_type = Ticket::StateType.where( ticket.state.state_type_id )
+        if state_type.name == 'closed' || state_type.name == 'closed'
           ticket = nil
         end
       end
@@ -218,45 +225,44 @@ class Channel::Twitter2
         priority_id = priority.id
       end
       ticket = Ticket.create(
-        :group_id           => group_id,
-        :customer_id        => user.id,
-        :title              => tweet.text[0,40],
-        :ticket_state_id    => state_id,
-        :ticket_priority_id => priority_id,
+        :group_id    => group_id,
+        :customer_id => user.id,
+        :title       => tweet.text[0,40],
+        :state_id    => state_id,
+        :priority_id => priority_id,
       )
     end
 
-    return ticket
+    ticket
   end
 
-  def fetch_article_create(user,ticket,tweet, sender)
+  def fetch_article_create( user, ticket, tweet, sender )
 
     # find if record already exists
     article = Ticket::Article.where( :message_id => tweet.id.to_s ).first
-    if article
-      return article
-    end
+    return article if article
 
     # set ticket state to open if not new
-    if ticket.ticket_state.name != 'new'
-      ticket.ticket_state = Ticket::State.where( :name => 'open' ).first
+    if ticket.state.name != 'new'
+      ticket.state = Ticket::State.where( :name => 'open' ).first
       ticket.save
     end
 
     # import tweet
     to = nil
-    if tweet['recipient']
+    if tweet.respond_to?('recipient')
       to = tweet.recipient.name
     end
+
     article = Ticket::Article.create(
-      :ticket_id                => ticket.id,
-      :ticket_article_type_id   => Ticket::Article::Type.where( :name => @article_type ).first.id,
-      :ticket_article_sender_id => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-      :body                     => tweet.text,
-      :from                     => sender.name,
-      :to                       => to,
-      :message_id               => tweet.id,
-      :internal                 => false,
+      :ticket_id  => ticket.id,
+      :type_id    => Ticket::Article::Type.where( :name => @article_type ).first.id,
+      :sender_id  => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
+      :body       => tweet.text,
+      :from       => sender.name,
+      :to         => to,
+      :message_id => tweet.id,
+      :internal   => false,
     )
 
   end
@@ -265,15 +271,15 @@ class Channel::Twitter2
     #    logger.debug('tweeeeettttt!!!!!!')
     channel = Channel.where( :area => 'Twitter::Inbound', :active => true ).first
 
-    client = Twitter::Client.new(
-      :consumer_key       => channel[:options][:consumer_key],
-      :consumer_secret    => channel[:options][:consumer_secret],
-      :oauth_token        => channel[:options][:oauth_token],
-      :oauth_token_secret => channel[:options][:oauth_token_secret]
-    )
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = channel[:options][:consumer_key]
+      config.consumer_secret     = channel[:options][:consumer_secret]
+      config.access_token        = channel[:options][:oauth_token]
+      config.access_token_secret = channel[:options][:oauth_token_secret]
+    end
     if attr[:type] == 'twitter direct-message'
       puts 'to:' + attr[:to].to_s
-      dm = client.direct_message_create(
+      dm = client.create_direct_message(
         attr[:to].to_s,
         attr[:body].to_s,
         {}

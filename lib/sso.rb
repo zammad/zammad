@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-class Sso < ApplicationLib
+class Sso
+  include ApplicationLib
 
 =begin
 
@@ -22,7 +23,18 @@ returns
         :adapter => 'Sso::Env',
       },
       {
-        :adapter => 'Sso::Otrs',
+        :adapter           => 'Sso::Otrs',
+        :required_group_ro => 'stats',
+        :group_rw_role_map => {
+          'admin' => 'Admin',
+          'stats' => 'Report',
+        },
+        :group_ro_role_map => {
+          'stats' => 'Report',
+        },
+        :always_role => {
+          'Agent' => true,
+        },
       },
     ]
 
@@ -49,10 +61,6 @@ returns
 
         # remember last login date
         user_auth.update_last_login
-
-        # reset login failed
-        user_auth.login_failed = 0
-        user_auth.save
 
         return user_auth
       end

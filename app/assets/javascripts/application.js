@@ -5,28 +5,28 @@
 // the compiled file.
 //
 
-//= require ./app/lib/core/jquery-1.10.2.min.js
+//= require ./app/lib/core/jquery-2.1.1.js
 //= require ./app/lib/core/jquery-ui-1.8.23.custom.min.js
-//= require ./app/lib/core/underscore-1.5.1.js
+//= require ./app/lib/core/underscore-1.7.0.js
 
 //not_used= require_tree ./app/lib/spine
-//= require ./app/lib/spine/spine.js
-//= require ./app/lib/spine/ajax.js
-//= require ./app/lib/spine/local.js
-//= require ./app/lib/spine/route.js
+//= require ./app/lib/spine/spine.coffee
+//= require ./app/lib/spine/ajax.coffee
+//= require ./app/lib/spine/local.coffee
+//= require ./app/lib/spine/route.coffee
 
 //= require ./app/lib/flot/jquery.flot.js
 //= require ./app/lib/flot/jquery.flot.selection.js
 
 //not_used= require_tree ./app/lib/bootstrap
-//= require ./app/lib/bootstrap/bootstrap-dropdown.js
-//= require ./app/lib/bootstrap/bootstrap-tooltip.js
-//= require ./app/lib/bootstrap/bootstrap-popover.js
-//= require ./app/lib/bootstrap/bootstrap-modal.js
-//= require ./app/lib/bootstrap/bootstrap-tab.js
-//= require ./app/lib/bootstrap/bootstrap-transition.js
-//= require ./app/lib/bootstrap/bootstrap-button.js
-//= require ./app/lib/bootstrap/bootstrap-collapse.js
+//= require ./app/lib/bootstrap/dropdown.js
+//= require ./app/lib/bootstrap/tooltip.js
+//= require ./app/lib/bootstrap/popover.js
+//= require ./app/lib/bootstrap/modal.js
+//= require ./app/lib/bootstrap/tab.js
+//= require ./app/lib/bootstrap/transition.js
+//= require ./app/lib/bootstrap/button.js
+//= require ./app/lib/bootstrap/collapse.js
 
 //= require_tree ./app/lib/base
 
@@ -64,6 +64,13 @@ function difference(object1, object2) {
     }
   }
   return changes;
+}
+
+function clone(object) {
+  if (!object) {
+    return object
+  }
+  return JSON.parse(JSON.stringify(object));
 }
 
 jQuery.event.special.remove = {

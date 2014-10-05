@@ -1,0 +1,4 @@
+<div class="">
+  <h6><%- @T( 'Tags' ) %></h6>
+  <input type="text" name="tags" id="<%- @tag_id %>" class="form-control" value="<% for tag in @tags: %><%= tag %>,<% end %>"/>
+</div>

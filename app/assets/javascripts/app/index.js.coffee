@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+
 
 #= require_self
 #= require_tree ./lib/app_init
@@ -32,6 +34,53 @@ class App extends Spine.Controller
         # return raw data
         item
 
+      # define date format helper
+      params.date = ( time ) ->
+        return '' if !time
+        s = ( num, digits ) ->
+          while num.toString().length < digits
+            num = "0" + num
+          num
+
+        timeObject = new Date(time)
+        d = s( timeObject.getDate(), 2 )
+        m = s( timeObject.getMonth() + 1, 2 )
+        y = timeObject.getFullYear()
+        "#{y}-#{m}-#{d}"
+
+      # define datetime format helper
+      params.datetime = ( time ) ->
+        return '' if !time
+        s = ( num, digits ) ->
+          while num.toString().length < digits
+            num = "0" + num
+          num
+
+        timeObject = new Date(time)
+        d = s( timeObject.getDate(), 2 )
+        m = s( timeObject.getMonth() + 1, 2 )
+        y = timeObject.getFullYear()
+        S = s( timeObject.getSeconds(), 2 )
+        M = s( timeObject.getMinutes(), 2 )
+        H = s( timeObject.getHours(), 2 )
+        "#{y}-#{m}-#{d} #{H}:#{M}:#{S}"
+
+      # define decimal format helper
+      params.decimal = ( data, positions = 2 ) ->
+        return '' if !data
+        s = ( num, digits ) ->
+          while num.toString().length < digits
+            num = num + "0"
+          num
+        result = data.toString().match(/^(.+?)\.(.+?)$/)
+        if !result || !result[2]
+          return "#{data}." + s( 0, positions ).toString()
+        length = result[2].toString().length
+        diff = positions - length
+        if diff > 0
+          return "#{result[1]}." + s( result[2], positions ).toString()
+        "#{result[1]}.#{result[2].substr(0,positions)}"
+
       # define translation helper
       params.T = ( item, args... ) ->
         App.i18n.translateContent( item, args )
@@ -42,7 +91,9 @@ class App extends Spine.Controller
 
       # define linkify helper
       params.L = ( item ) ->
-        window.linkify( item )
+        if item && typeof item is 'string'
+          return window.linkify( item )
+        item
 
       # define config helper
       params.C = ( key ) ->

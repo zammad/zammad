@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Ticket::Assets
 
@@ -23,28 +23,20 @@ returns
 
   def assets (data)
 
-    if !data[:tickets]
-      data[:tickets] = {}
+    if !data[ Ticket.to_app_model ]
+      data[ Ticket.to_app_model ] = {}
     end
-    if !data[:tickets][ self.id ]
-      data[:tickets][ self.id ] = self.attributes
+    if !data[ Ticket.to_app_model ][ self.id ]
+      data[ Ticket.to_app_model ][ self.id ] = self.attributes_with_associations
     end
-
-    if !data[:users]
-      data[:users] = {}
-    end
-    if !data[:users][ self['owner_id'] ]
-      data[:users][ self['owner_id'] ] = User.user_data_full( self['owner_id'] )
-    end
-    if !data[:users][ self['customer_id'] ]
-      data[:users][ self['customer_id'] ] = User.user_data_full( self['customer_id'] )
-    end
-    if !data[:users][ self['created_by_id'] ]
-      data[:users][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
-    end
-    if !data[:users][ self['updated_by_id'] ]
-      data[:users][ self['updated_by_id'] ] = User.user_data_full( self['updated_by_id'] )
-    end
+    ['created_by_id', 'updated_by_id', 'owner_id', 'customer_id'].each {|item|
+      if self[ item ]
+        if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
+          user = User.lookup( :id => self[ item ] )
+          data = user.assets( data )
+        end
+      end
+    }
     data
   end
 

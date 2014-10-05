@@ -7,12 +7,12 @@
  *= require ./fineuploader.css
  *= require ./ui-lightness/jquery-ui-1.8.23.custom.css
  *= require ./jquery.noty.css
- *= require ./jquery.tagsinput.css
+ *= require ./bootstrap-tokenfield.css
  *= require ./noty_theme_twitter.css
  *= require ./sew.css
  *= require ./zzz.css
  *
  *= require_tree ./custom/
- * 
+ *
 */
 

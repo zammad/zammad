@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class OrganizationsController < ApplicationController
   before_filter :authentication_check
@@ -90,6 +90,11 @@ curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
         return
       end
     end
+    if params[:full]
+      full = Organization.full( params[:id] )
+      render :json => full
+      return
+    end
     model_show_render(Organization, params)
   end
 
@@ -168,4 +173,24 @@ Test:
     return if deny_if_not_role('Agent')
     model_destory_render(Organization, params)
   end
+
+  # GET /api/v1/organizations/history/1
+  def history
+
+    # permissin check
+    if !is_role('Admin') && !is_role('Agent')
+      response_access_deny
+      return
+    end
+
+    # get organization data
+    organization = Organization.find( params[:id] )
+
+    # get history of organization
+    history = organization.history_get(true)
+
+    # return result
+    render :json => history
+  end
+
 end

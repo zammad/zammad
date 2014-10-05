@@ -27,7 +27,7 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.ticket-create input[name="subject"]',
+            :css     => '.ticket-create input[name="title"]',
             :value   => 'some subject 123äöü',
           },
           {
@@ -52,7 +52,7 @@ class CustomerTicketCreateTest < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some body 123äöü',
             :match_result => true,
           },

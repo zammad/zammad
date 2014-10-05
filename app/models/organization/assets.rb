@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Organization::Assets
 
@@ -22,21 +22,31 @@ returns
 
   def assets (data)
 
-    if !data[:organizations]
-      data[:organizations] = {}
+    if !data[ Organization.to_app_model ]
+      data[ Organization.to_app_model ] = {}
     end
-    if !data[:users]
-      data[:users] = {}
+    if !data[ User.to_app_model ]
+      data[ User.to_app_model ] = {}
     end
-    if !data[:organizations][ self.id ]
-      data[:organizations][ self.id ] = self.attributes
-      data[:organizations][ self.id ][:user_ids] = []
-      users = User.where( :organization_id => self.id ).limit(10)
-      users.each {|user|
-        data[:users][ user.id ] = User.user_data_full( user.id )
-        data[:organizations][ self.id ][:user_ids].push user.id
-      }
+    if !data[ Organization.to_app_model ][ self.id ]
+      data[ Organization.to_app_model ][ self.id ] = self.attributes_with_associations
+      if data[ Organization.to_app_model ][ self.id ]['member_ids']
+        data[ Organization.to_app_model ][ self.id ]['member_ids'].each {|user_id|
+          if !data[ User.to_app_model ][ user_id ]
+            user = User.lookup( :id => user_id )
+            data = user.assets( data )
+          end
+        }
+      end
     end
+    ['created_by_id', 'updated_by_id'].each {|item|
+      if self[ item ]
+        if !data[ User.to_app_model ][ self[ item ] ]
+          user = User.lookup( :id => self[ item ] )
+          data = user.assets( data )
+        end
+      end
+    }
     data
   end
 

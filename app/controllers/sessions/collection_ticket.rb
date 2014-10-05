@@ -1,42 +1,43 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module ExtraCollection
-  def session( collections, user )
+  def session( collections, assets, user )
 
     # all ticket stuff
-    collections['TicketStateType']     = Ticket::StateType.all
-    collections['TicketState']         = Ticket::State.all
-    collections['TicketPriority']      = Ticket::Priority.all
-    collections['TicketArticleType']   = Ticket::Article::Type.all
-    collections['TicketArticleSender'] = Ticket::Article::Sender.all
-
+    collections[ Ticket::StateType.to_app_model ] = []
+    Ticket::StateType.all.each {|item|
+      assets = item.assets(assets)
+    }
+    collections[ Ticket::State.to_app_model ] = []
+    Ticket::State.all.each {|item|
+      assets = item.assets(assets)
+    }
+    collections[ Ticket::Priority.to_app_model ] = []
+    Ticket::Priority.all.each {|item|
+      assets = item.assets(assets)
+    }
+    collections[ Ticket::Article::Type.to_app_model ] = []
+    Ticket::Article::Type.all.each {|item|
+      assets = item.assets(assets)
+    }
+    collections[ Ticket::Article::Sender.to_app_model ] = []
+    Ticket::Article::Sender.all.each {|item|
+      assets = item.assets(assets)
+    }
     if !user.is_role('Customer')
 
       # all signatures
-      collections['Signature']           = Signature.all
+      collections[ Signature.to_app_model ] = []
+      Signature.all.each {|item|
+        assets = item.assets(assets)
+      }
 
       # all email addresses
-      collections['EmailAddress']        = EmailAddress.all
+      collections[ EmailAddress.to_app_model ] = []
+      EmailAddress.all.each {|item|
+        assets = item.assets(assets)
+      }
     end
   end
-  def push( collections, user )
-
-    # all ticket stuff
-    collections['TicketStateType']     = Ticket::StateType.all
-    collections['TicketState']         = Ticket::State.all
-    collections['TicketPriority']      = Ticket::Priority.all
-    collections['TicketArticleType']   = Ticket::Article::Type.all
-    collections['TicketArticleSender'] = Ticket::Article::Sender.all
-
-    if !user.is_role('Customer')
-
-      # all signatures
-      collections['Signature']    = Signature.all
-
-      # all email addresses
-      collections['EmailAddress'] = EmailAddress.all
-    end
-  end
-
-  module_function :session, :push
+  module_function :session
 end

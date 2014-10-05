@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TicketsController < ApplicationController
   before_filter :authentication_check
@@ -22,7 +22,7 @@ class TicketsController < ApplicationController
 
   # POST /api/v1/tickets
   def create
-    @ticket = Ticket.new( Ticket.param_validation( params[:ticket] ) )
+    ticket = Ticket.new( Ticket.param_validation( params[:ticket] ) )
 
     # check if article is given
     if !params[:article]
@@ -31,8 +31,8 @@ class TicketsController < ApplicationController
     end
 
     # create ticket
-    if !@ticket.save
-      render :json => @ticket.errors, :status => :unprocessable_entity
+    if !ticket.save
+      render :json => ticket.errors, :status => :unprocessable_entity
       return
     end
 
@@ -42,7 +42,7 @@ class TicketsController < ApplicationController
       tags.each {|tag|
         Tag.tag_add(
           :object        => 'Ticket',
-          :o_id          => @ticket.id,
+          :o_id          => ticket.id,
           :item          => tag,
           :created_by_id => current_user.id,
         )
@@ -51,57 +51,39 @@ class TicketsController < ApplicationController
 
     # create article if given
     if params[:article]
-      form_id  = params[:article][:form_id]
-      params[:article].delete(:form_id)
-      @article = Ticket::Article.new( params[:article] )
-      @article.ticket_id     = @ticket.id
-
-      # find attachments in upload cache
-      if form_id
-        @article.attachments = Store.list(
-          :object => 'UploadCache',
-          :o_id   => form_id,
-        )
-      end
-      if !@article.save
-        render :json => @article.errors, :status => :unprocessable_entity
-        return
-      end
-
-      # remove attachments from upload cache
-      if form_id
-        Store.remove(
-          :object => 'UploadCache',
-          :o_id   => form_id,
-        )
-      end
+      article_create( ticket, params[:article] )
     end
 
-    render :json => @ticket, :status => :created
+    render :json => ticket, :status => :created
   end
 
   # PUT /api/v1/tickets/1
   def update
-    @ticket = Ticket.find(params[:id])
+    ticket = Ticket.find(params[:id])
 
     # permissin check
-    return if !ticket_permission(@ticket)
+    return if !ticket_permission(ticket)
 
-    if @ticket.update_attributes( Ticket.param_validation( params[:ticket] ) )
-      render :json => @ticket, :status => :ok
+    if ticket.update_attributes( Ticket.param_validation( params[:ticket] ) )
+
+      if params[:article]
+        article_create( ticket, params[:article] )
+      end
+
+      render :json => ticket, :status => :ok
     else
-      render :json => @ticket.errors, :status => :unprocessable_entity
+      render :json => ticket.errors, :status => :unprocessable_entity
     end
   end
 
   # DELETE /api/v1/tickets/1
   def destroy
-    @ticket = Ticket.find( params[:id] )
+    ticket = Ticket.find( params[:id] )
 
     # permissin check
-    return if !ticket_permission(@ticket)
+    return if !ticket_permission(ticket)
 
-    @ticket.destroy
+    ticket.destroy
 
     head :ok
   end
@@ -130,53 +112,11 @@ class TicketsController < ApplicationController
     return if !ticket_permission( ticket )
 
     # get history of ticket
-    history = History.list( 'Ticket', params[:id], 'Ticket::Article' )
+    history = ticket.history_get(true)
 
-    # get related assets
-    assets = ticket.assets({})
-    history_list = []
-    history.each do |item|
-
-      assets = item.assets(assets)
-
-      item_tmp = item.attributes
-      if item['history_object'] == 'Ticket::Article'
-        item_temp['type'] = 'Article ' + item['type'].to_s
-      else
-        item_tmp['type'] = 'Ticket ' + item['type'].to_s
-      end
-      item_tmp['history_type'] = item.history_type.name
-      item_tmp['history_object'] = item.history_object.name
-      if item.history_attribute
-       item_tmp['history_attribute'] = item.history_attribute.name
-      end
-      item_tmp.delete( 'history_attribute_id' )
-      item_tmp.delete( 'history_object_id' )
-      item_tmp.delete( 'history_type_id' )
-      item_tmp.delete( 'o_id' )
-      item_tmp.delete( 'updated_at' )
-      if item_tmp['id_to'] == nil && item_tmp['id_from'] == nil
-        item_tmp.delete( 'id_to' )
-        item_tmp.delete( 'id_from' )
-      end
-      if item_tmp['value_to'] == nil && item_tmp['value_from'] == nil
-        item_tmp.delete( 'value_to' )
-        item_tmp.delete( 'value_from' )
-      end
-      if item_tmp['related_history_object_id'] == nil
-        item_tmp.delete( 'related_history_object_id' )
-      end
-      if item_tmp['related_o_id'] == nil
-        item_tmp.delete( 'related_o_id' )
-      end
-      history_list.push item_tmp
-    end
 
     # return result
-    render :json => {
-      :assets   => assets,
-      :history  => history_list,
-    }
+    render :json => history
   end
 
   # GET /api/v1/ticket_merge_list/1
@@ -187,15 +127,15 @@ class TicketsController < ApplicationController
 
     # open tickets by customer
     ticket_list = Ticket.where(
-      :customer_id     => ticket.customer_id,
-      :ticket_state_id => Ticket::State.by_category( 'open' )
+      :customer_id  => ticket.customer_id,
+      :state_id     => Ticket::State.by_category( 'open' )
     )
     .where( 'id != ?', [ ticket.id ] )
     .order('created_at DESC')
     .limit(6)
 
     # get related assets
-    ticket_ids_by_customer = [] 
+    ticket_ids_by_customer = []
     ticket_list.each {|ticket|
       ticket_ids_by_customer.push ticket.id
       assets = ticket.assets(assets)
@@ -281,11 +221,6 @@ class TicketsController < ApplicationController
     ticket = Ticket.find( params[:id] )
     return if !ticket_permission( ticket )
 
-    # log object as viewed
-    if !params[:do_not_log] || params[:do_not_log].to_i == 0
-      log_view( ticket )
-    end
-
     # get signature
     signature = {}
     if ticket.group.signature
@@ -302,27 +237,12 @@ class TicketsController < ApplicationController
       )
     end
 
-    # get related users
-    assets = {}
-    assets[:users] = {}
-    assets = ticket.assets(assets)
-
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
 
-    attributes_to_change[:owner_id].each { |user_id|
-      if !assets[:users][user_id]
-        assets[:users][user_id] = User.user_data_full( user_id )
-      end
-    }
-
-    attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
-      user_ids.each {|user_id|
-        if !assets[:users][user_id]
-          assets[:users][user_id] = User.user_data_full( user_id )
-        end
-      }
-    }
+    # get related users
+    assets = attributes_to_change[:assets]
+    assets = ticket.assets(assets)
 
     # get related articles
     articles = Ticket::Article.where( :ticket_id => params[:id] )
@@ -341,12 +261,35 @@ class TicketsController < ApplicationController
       assets = article.assets(assets)
     }
 
+    # get links
+    links = Link.list(
+      :link_object       => 'Ticket',
+      :link_object_value => ticket.id,
+    )
+    link_list = []
+    links.each { |item|
+      link_list.push item
+      if item['link_object'] == 'Ticket'
+        linked_ticket = Ticket.lookup( :id => item['link_object_value'] )
+        assets = linked_ticket.assets(assets)
+      end
+    }
+
+    # get tags
+    tags = Tag.tag_list(
+      :object => 'Ticket',
+      :o_id   => ticket.id,
+    )
+
     # return result
     render :json => {
       :ticket_id          => ticket.id,
       :ticket_article_ids => article_ids,
       :signature          => signature,
       :assets             => assets,
+      :links              => link_list,
+      :tags               => tags,
+      :form_meta          => attributes_to_change,
       :edit_form          => attributes_to_change,
     }
   end
@@ -357,40 +300,17 @@ class TicketsController < ApplicationController
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       :user       => current_user,
-      #      :ticket_id  => params[:ticket_id],
-      #      :article_id => params[:article_id]
+      :ticket_id  => params[:ticket_id],
+      :article_id => params[:article_id]
     )
 
-    assets = {}
-    assets[:users] = {}
-    attributes_to_change[:owner_id].each { |user_id|
-      if !assets[:users][user_id]
-        assets[:users][user_id] = User.user_data_full( user_id )
-      end
-    }
-
-    attributes_to_change[:group_id__owner_id].each {|group_id, user_ids|
-      user_ids.each {|user_id|
-        if !assets[:users][user_id]
-          assets[:users][user_id] = User.user_data_full( user_id )
-        end
-      }
-    }
-
+    assets = attributes_to_change[:assets]
     # split data
     split = {}
     if params[:ticket_id] && params[:article_id]
       ticket = Ticket.find( params[:ticket_id] )
       split[:ticket_id] = ticket.id
       assets = ticket.assets(assets)
-
-      owner_ids = []
-      ticket.agent_of_group.each { |user|
-        owner_ids.push user.id
-        if !assets[:users][user.id]
-          assets[:users][user.id] = User.user_data_full( user.id )
-        end
-      }
 
       # get related articles
       article = Ticket::Article.find( params[:article_id] )
@@ -402,18 +322,26 @@ class TicketsController < ApplicationController
     render :json => {
       :split     => split,
       :assets    => assets,
-      :edit_form => attributes_to_change,
+      :form_meta => {
+        :filter       => attributes_to_change[:filter],
+        :dependencies => attributes_to_change[:dependencies],
+      }
     }
   end
 
   # GET /api/v1/tickets/search
   def search
 
+    # permit nested conditions
+    params.require(:condition).permit!
+
     # build result list
     tickets = Ticket.search(
       :limit        => params[:limit],
       :query        => params[:term],
+      :condition    => params[:condition],
       :current_user => current_user,
+      :detail       => params[:detail]
     )
     assets = {}
     ticket_result = []
@@ -424,9 +352,40 @@ class TicketsController < ApplicationController
 
     # return result
     render :json => {
-      :tickets => ticket_result,
-      :assets  => assets,
+      :tickets       => ticket_result,
+      :tickets_count => tickets.count,
+      :assets        => assets,
     }
   end
 
+  private
+
+  def article_create(ticket, params)
+puts params.inspect
+    # create article if given
+    form_id  = params[:form_id]
+    params.delete(:form_id)
+    article = Ticket::Article.new( Ticket::Article.param_validation( params ) )
+    article.ticket_id = ticket.id
+
+    # find attachments in upload cache
+    if form_id
+      article.attachments = Store.list(
+        :object => 'UploadCache',
+        :o_id   => form_id,
+      )
+    end
+    if !article.save
+      render :json => article.errors, :status => :unprocessable_entity
+      return
+    end
+
+    # remove attachments from upload cache
+    if form_id
+      Store.remove(
+        :object => 'UploadCache',
+        :o_id   => form_id,
+      )
+    end
+  end
 end

@@ -9,7 +9,7 @@ class SettingTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#settings"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
@@ -17,7 +17,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#settings/security/third_party_auth"]',
+            :css     => 'a[href="#third_party_auth"]',
           },
           {
             :execute => 'check',

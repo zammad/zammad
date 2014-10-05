@@ -1,10 +1,8 @@
 <div class="hero-unit">
   <h1><%- @T( 'Join' ) %> <%= @C( 'product_name' ) %><small></small></h1>
-  <div class="container">
-    <form class="form-horizontal">
+    <form class="form-group form-normal">
       <p id="form-signup"></p>
-      <a href="#/" class="btn cancel"><%- @T( 'Cancel' ) %></a>
+      <a href="#/" class="btn btn-default cancel"><%- @T( 'Cancel' ) %></a>
       <button class="btn btn-primary submit"><%- @T( 'Create my account' ) %></button>
     </form>
-  </div>
 </div>

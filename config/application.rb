@@ -16,8 +16,7 @@ module Zammad
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
-#    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -27,7 +26,6 @@ module Zammad
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers =
       'observer::_session',
-      'observer::_history',
       'observer::_ticket::_first_response',
       'observer::_ticket::_last_contact',
       'observer::_ticket::_close_time',
@@ -61,12 +59,6 @@ module Zammad
     # like if you have constraints or database-specific column types
     # config.active_record.schema_format = :sql
 
-    # Enforce whitelist mode for mass assignment.
-    # This will create an empty whitelist of attributes available for mass-assignment for all models
-    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
-    # parameters by using an attr_accessible or attr_protected declaration.
-    # config.active_record.whitelist_attributes = true
-
     # Enable the asset pipeline
     config.assets.enabled = true
 
@@ -78,12 +70,6 @@ module Zammad
 
     # REST api path
     config.api_path = '/api/v1'
-
-    # Enable threaded mode
-    config.threadsafe!
-
-    # catch all router files
-    config.paths['config/routes'] += Dir[Rails.root.join("config/routes/*.rb")]
 
   end
 end

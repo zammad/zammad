@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
   observe 'ticket'
@@ -14,17 +14,17 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
     return if !record.customer_id
 
     # open ticket count
-    ticket_state_open = Ticket::State.by_category( 'open' )
-    tickets_open      = Ticket.where(
-      :customer_id     => record.customer_id,
-      :ticket_state_id => ticket_state_open,
+    state_open    = Ticket::State.by_category( 'open' )
+    tickets_open  = Ticket.where(
+      :customer_id  => record.customer_id,
+      :state_id     => state_open,
     ).count()
 
     # closed ticket count
-    ticket_state_closed = Ticket::State.by_category( 'closed' )
-    tickets_closed      = Ticket.where(
-      :customer_id     => record.customer_id,
-      :ticket_state_id => ticket_state_closed,
+    state_closed    = Ticket::State.by_category( 'closed' )
+    tickets_closed  = Ticket.where(
+      :customer_id  => record.customer_id,
+      :state_id     => state_closed,
     ).count()
 
     # check if update is needed

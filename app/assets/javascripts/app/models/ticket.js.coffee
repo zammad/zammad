@@ -1,61 +1,28 @@
 class App.Ticket extends App.Model
-  @configure 'Ticket', 'number', 'title', 'group_id', 'owner_id', 'customer_id', 'ticket_state_id', 'ticket_priority_id', 'article', 'tags', 'updated_at'
+  @configure 'Ticket', 'number', 'title', 'group_id', 'owner_id', 'customer_id', 'state_id', 'priority_id', 'article', 'tags', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/tickets'
   @configure_attributes = [
       { name: 'number',                display: '#',        tag: 'input',    type: 'text', limit: 100, null: true, read_only: true,  style: 'width: 8%'  },
-      { name: 'customer_id',           display: 'Customer', tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8', autocapitalize: false, help: 'Select the customer of the Ticket or create one.', link: '<a href="" class="customer_new">&raquo;</a>' },
-      { name: 'group_id',              display: 'Group',    tag: 'select',   multiple: false, limit: 100, null: false, class: 'span8', relation: 'Group', style: 'width: 10%' },
-      { name: 'owner_id',              display: 'Owner',    tag: 'select',   multiple: false, limit: 100, null: true, class: 'span8', relation: 'User', style: 'width: 12%' },
-      { name: 'title',                 display: 'Title',    tag: 'input',    type: 'text', limit: 100, null: false, class: 'span8' },
-      { name: 'ticket_state_id',       display: 'State',    tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', class: 'medium', style: 'width: 12%' },
-      { name: 'ticket_priority_id',    display: 'Priority', tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', class: 'medium', style: 'width: 12%' },
-      { name: 'created_at',            display: 'Created',  tag: 'time', style: 'width: 12%' },
-      { name: 'last_contact',          display: 'Last contact',            tag: 'time', null: true, style: 'width: 12%' },
-      { name: 'last_contact_agent',    display: 'Last contact (Agent)',    tag: 'time', null: true, style: 'width: 12%' },
-      { name: 'last_contact_customer', display: 'Last contact (Customer)', tag: 'time', null: true, style: 'width: 12%' },
-      { name: 'first_response',        display: 'First response',          tag: 'time', null: true, style: 'width: 12%' },
-      { name: 'close_time',            display: 'Close time',              tag: 'time', null: true, style: 'width: 12%' },
-      { name: 'escalation_time',       display: 'Escalation in',           tag: 'time', null: true, style: 'width: 12%' },
+      { name: 'customer_id',           display: 'Customer', tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
+      { name: 'organization_id',       display: 'Organization', relation: 'Organization', tagreadonly: 1 },
+      { name: 'group_id',              display: 'Group',    tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', style: 'width: 10%' },
+      { name: 'owner_id',              display: 'Owner',    tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', style: 'width: 12%' },
+      { name: 'title',                 display: 'Title',    tag: 'input',    type: 'text', limit: 100, null: false },
+      { name: 'state_id',              display: 'State',    tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', class: 'medium', style: 'width: 12%' },
+      { name: 'priority_id',           display: 'Priority', tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', class: 'medium', style: 'width: 12%' },
+      { name: 'last_contact',          display: 'Last contact',            type: 'time', null: true, style: 'width: 12%' },
+      { name: 'last_contact_agent',    display: 'Last contact (Agent)',    type: 'time', null: true, style: 'width: 12%' },
+      { name: 'last_contact_customer', display: 'Last contact (Customer)', type: 'time', null: true, style: 'width: 12%' },
+      { name: 'first_response',        display: 'First response',          type: 'time', null: true, style: 'width: 12%' },
+      { name: 'close_time',            display: 'Close time',              type: 'time', null: true, style: 'width: 12%' },
+      { name: 'escalation_time',       display: 'Escalation in',           type: 'time', null: true, style: 'width: 12%', class: 'escalation' },
       { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
+      { name: 'created_by_id',         display: 'Created by', relation: 'User', readonly: 1 },
+      { name: 'created_at',            display: 'Created', type: 'time', style: 'width: 12%', readonly: 1 },
+      { name: 'updated_by_id',         display: 'Updated by', relation: 'User', readonly: 1 },
+      { name: 'updated_at',            display: 'Updated', type: 'time', style: 'width: 12%', readonly: 1 },
     ]
 
-  @_fillUp: (data) ->
-
-    # priority
-    data.ticket_priority = App.TicketPriority.find( data.ticket_priority_id )
-
-    # state
-    data.ticket_state = App.TicketState.find( data.ticket_state_id )
-
-    # group
-    data.group = App.Group.find( data.group_id )
-
-    # customer
-    if data.customer_id
-      if !App.User.exists( data.customer_id )
-        console.error("Can't find user for data.customer_id #{data.customer_id} for ticket #{data.id}")
-      else
-        data.customer = App.User.find( data.customer_id )
-
-    # owner
-    if data.owner_id
-      if !App.User.exists( data.owner_id )
-        console.error("Can't find user for data.owner_id #{data.owner_id} for ticket #{data.id}")
-      else
-        data.owner = App.User.find( data.owner_id )
-
-    # add created & updated
-    if data.created_by_id
-      if !App.User.exists( data.created_by_id )
-        console.error("Can't find user for data.created_by_id #{data.created_by_id} for ticket #{data.id}")
-      else
-        data.created_by = App.User.find( data.created_by_id )
-    if data.updated_by_id
-      if !App.User.exists( data.updated_by_id )
-        console.error("Can't find user for data.updated_by_id #{data.updated_by_id} for ticket #{data.id}")
-      else
-        data.updated_by = App.User.find( data.updated_by_id )
-
-    data
-
+  uiUrl: ->
+    '#ticket/zoom/' + @id

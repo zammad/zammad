@@ -50,7 +50,7 @@ class AgentTicketActionLevel4Test < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some body 4 -  123äöü',
             :match_result => true,
           },

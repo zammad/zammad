@@ -1,11 +1,9 @@
-<div class="row">
-  <div class="span3">
+<div class="span3">
     <h2 class="can-move"><%- @T( @head ) %></h2>
     <dl>
     <% for item in @items: %>
-      <dt><span class="user-data" data-id="<%= item.updated_by_id %>">"<%= item.updated_by.displayName() %>"</span></dt>
-      <dd><%- @T( item.history_type ) %> <a href="<%- item.link %>"><%= item.type %><% if item.title: %> (<%= item.title %>)<% end %></a>.</dd>
+      <dt><span class="user-popover" data-id="<%= item.created_by_id %>">"<%= item.created_by.displayName() %>"</span></dt>
+      <dd><%- @T( item.type ) %> <a href="<%- item.link %>"><%= item.object_name %><% if item.title: %> (<%= item.title %>)<% end %></a> <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span> <%- @T('ago') %>.</dd>
     <% end %>
     </dl>
-  </div>
 </div>

@@ -1,9 +1,6 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class SessionsController < ApplicationController
-  #  def create
-  #    render :text => request.env['rack.auth'].inspect
-  #  end
 
   # "Create" a login, aka "log the user in"
   def create
@@ -17,9 +14,6 @@ class SessionsController < ApplicationController
       return
     end
 
-    # auto population of default collections
-    default_collection = SessionHelper::default_collections(user)
-
     # remember me - set session cookie to expire later
     if params[:remember_me]
       request.env['rack.session.options'][:expire_after] = 1.year
@@ -30,28 +24,40 @@ class SessionsController < ApplicationController
     #  request.env['rack.session.options'][:renew] = true
     #  reset_session
 
-    # set session user_id
-    user = User.find_fulldata(user.id)
+    # set session user
+    current_user_set(user)
+
+    # log new session
+    user.activity_stream_log( 'session started', user.id, true )
+
+    # auto population of default collections
+    collections, assets = SessionHelper::default_collections(user)
+
+    # add session user assets
+    assets = user.assets(assets)
+
+    # get models
+    models = SessionHelper::models(user)
 
     # check logon session
     logon_session_key = nil
     if params['logon_session']
       logon_session_key = Digest::MD5.hexdigest( rand(999999).to_s + Time.new.to_s )
-#      session = ActiveRecord::SessionStore::Session.create(
-#        :session_id => logon_session_key,
-#        :data => {
-#          :user_id => user['id']
-#        }
-#      )
-    else
-      session[:user_id] = user['id']
+      #      session = ActiveRecord::SessionStore::Session.create(
+      #        :session_id => logon_session_key,
+      #        :data => {
+      #          :user_id => user['id']
+      #        }
+      #      )
     end
 
     # return new session data
     render :json => {
-      :session             => user,
-      :default_collections => default_collection,
-      :logon_session       => logon_session_key,
+      :session       => user,
+      :models        => models,
+      :collections   => collections,
+      :assets        => assets,
+      :logon_session => logon_session_key,
     },
     :status => :created
   end
@@ -67,32 +73,44 @@ class SessionsController < ApplicationController
 
     # check logon session
     if params['logon_session']
-      session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
+      session = SessionHelper::get( params['logon_session'] )
       if session
         user_id = session.data[:user_id]
       end
     end
 
     if !user_id
+      # get models
+      models = SessionHelper::models()
+
       render :json => {
         :error  => 'no valid session',
         :config => config_frontend,
+        :models => models,
       }
       return
     end
 
     # Save the user ID in the session so it can be used in
     # subsequent requests
-    user = User.user_data_full( user_id )
+    user = User.find( user_id )
 
     # auto population of default collections
-    default_collection = SessionHelper::default_collections( User.find(user_id) )
+    collections, assets = SessionHelper::default_collections(user)
+
+    # add session user assets
+    assets = user.assets(assets)
+
+    # get models
+    models = SessionHelper::models(user)
 
     # return current session
     render :json => {
-      :session             => user,
-      :default_collections => default_collection,
-      :config              => config_frontend,
+      :session      => user,
+      :models       => models,
+      :collections  => collections,
+      :assets       => assets,
+      :config       => config_frontend,
     }
   end
 
@@ -126,11 +144,14 @@ class SessionsController < ApplicationController
       authorization = Authorization.create_from_hash(auth, current_user)
     end
 
+    # set current session user
+    current_user_set(authorization.user)
+
+    # log new session
+    user.activity_stream_log( 'session started', authorization.user.id, true )
+
     # remember last login date
     authorization.user.update_last_login
-
-    # Log the authorizing user in.
-    session[:user_id] = authorization.user.id
 
     # redirect to app
     redirect_to '/'
@@ -141,45 +162,73 @@ class SessionsController < ApplicationController
 
     # Log the authorizing user in.
     if user
-      session[:user_id] = user.id
+
+      # set current session user
+      current_user_set(user)
+
+      # log new session
+      user.activity_stream_log( 'session started', user.id, true )
+
+      # remember last login date
+      user.update_last_login
     end
 
     # redirect to app
     redirect_to '/#'
   end
 
+  # "switch" to user
+  def switch_to_user
+    return if deny_if_not_role('Admin')
+
+    # check user
+    if !params[:id]
+      render(
+        :json   => { :message => 'no user given' },
+        :status => :not_found
+      )
+      return false
+    end
+
+    user = User.lookup( :id => params[:id] )
+    if !user
+      render(
+        :json   => {},
+        :status => :not_found
+      )
+      return false
+    end
+
+    # log new session
+    user.activity_stream_log( 'switch to', current_user.id, true )
+
+    # set session user
+    current_user_set(user)
+
+    redirect_to '/#'
+  end
+
   def list
     return if deny_if_not_role('Admin')
-    sessions = ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(10000)
-    users = {}
+    assets = {}
     sessions_clean = []
-    sessions.each {|session|
+    SessionHelper.list.each {|session|
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']
-        if !users[ session.data['user_id'] ]
-          users[ session.data['user_id'] ] = User.user_data_full( session.data['user_id'] )
-        end
+        user = User.lookup( :id => session.data['user_id'] )
+        assets = user.assets( assets )
       end
     }
     render :json => {
       :sessions => sessions_clean,
-      :users    => users,
+      :assets   => assets,
     }
-  end
-
-  def delete_old
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 90.days ).delete_all
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.now - 2.days ).delete_all
-    render :json => {}
   end
 
   def delete
     return if deny_if_not_role('Admin')
-    session = ActiveRecord::SessionStore::Session.where( :id => params[:id] ).first
-    if session
-      session.destroy
-    end
+    SessionHelper::destroy( params[:id] )
     render :json => {}
   end
 end

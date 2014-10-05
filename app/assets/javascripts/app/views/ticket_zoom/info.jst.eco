@@ -1,0 +1,22 @@
+<table>
+  <tr>
+    <td><%- @T('Group') %></td><td><%= @ticket.group.name %></td>
+  </tr>
+  <tr>
+    <td><%- @T('State') %></td><td><%- @T( @ticket.state.name ) %></td>
+  </tr>
+  <tr>
+    <td><%- @T('Priority') %></td><td><%- @T( @ticket.priority.name ) %></td>
+  </tr>
+  <tr>
+    <td><%- @T('Age') %></td><td><span class="humanTimeFromNow" data-time="<%- @ticket.created_at %>">?</span></td>
+  </tr>
+  <% if !@isCustomer && @ticket.escalation_time: %>
+    <tr>
+      <td><%- @T('Escalation in') %></td>
+      <td><span class="humanTimeFromNow escalation" data-time="<%- @ticket.escalation_time %>">?</span></td>
+    </tr>
+  <% end %>
+</table>
+
+<div class="tag_info"></div>

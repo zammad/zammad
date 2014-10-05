@@ -4,14 +4,19 @@ class App.PostmasterFilter extends App.Model
   @url: @apiPath + '/postmaster_filters'
 
   @configure_attributes = [
-    { name: 'name',         display: 'Name',              tag: 'input', type: 'text', limit: 250, 'null': false, 'class': 'span4' },
-    { name: 'channel',      display: 'Channel',           type: 'input', readonly: 1 },
-    { name: 'match',        display: 'Match all of the following', tag: 'input_select', count_min: 2, count_max: 88, multiple: true, 'null': false, 'class': 'span4', select: { 'class': 'span2', multiple: false, options: { from: 'From', to: 'To', cc: 'Cc', subject: 'Subject', body: 'Body' } }, input: { limit: 250, type: 'text', 'class': 'span3' }, },
-    { name: 'perform',      display: 'Perform action of the following', tag: 'input_select', count_min: 2, count_max: 88, multiple: true, 'null': false, 'class': 'span4', select: { 'class': 'span2', multiple: false, options: { from: 'From', to: 'To', cc: 'Cc', subject: 'Subject', body: 'Body', 'x-zammad-priority': 'Ticket Priority', 'x-zammad-state': 'Ticket State', 'x-zammad-customer': 'Ticket Customer', 'x-zammad-ignore': 'Ignore Message', 'x-zammad-group': 'Ticket Group', 'x-zammad-owner': 'Ticket Owner', 'x-zammad-article-visibility': 'Article Visibility', 'x-zammad-article-type': 'Article Type', 'x-zammad-article-sender': 'Article Sender' } }, input: { limit: 250, type: 'text', 'class': 'span3' }, },
-    { name: 'note',         display: 'Note',              tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, 'null': true, 'class': 'span4' },
-    { name: 'updated_at',   display: 'Updated',           type: 'time', readonly: 1 },
-    { name: 'active',       display: 'Active',            tag: 'boolean', type: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
+    { name: 'name',           display: 'Name',              tag: 'input', type: 'text', limit: 250, 'null': false },
+    { name: 'channel',        display: 'Channel',           type: 'input', readonly: 1 },
+    { name: 'match',          display: 'Match all of the following',      tag: 'postmaster_match' },
+    { name: 'perform',        display: 'Perform action of the following', tag: 'postmaster_set' },
+    { name: 'note',           display: 'Note',              tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, 'null': true },
+    { name: 'updated_at',     display: 'Updated',           type: 'time', readonly: 1 },
+    { name: 'active',         display: 'Active',            tag: 'boolean', type: 'boolean', 'default': true, 'null': false },
+    { name: 'created_by_id',  display: 'Created by', relation: 'User', readonly: 1 },
+    { name: 'created_at',     display: 'Created', type: 'time', readonly: 1 },
+    { name: 'updated_by_id',  display: 'Updated by', relation: 'User', readonly: 1 },
+    { name: 'updated_at',     display: 'Updated', type: 'time', readonly: 1 },
   ]
+  @configure_delete = true
   @configure_overview = [
     'name',
   ]

@@ -21,7 +21,7 @@ class App.DashboardActivityStream extends App.Controller
         type:  'GET'
         url:   @apiPath + '/activity_stream'
         data:  {
-          limit: 8
+          limit: @limit || 8
         }
         processData: true
         success: (data) =>
@@ -32,29 +32,29 @@ class App.DashboardActivityStream extends App.Controller
   load: (data) =>
     items = data.activity_stream
 
-    # load collections
-    App.Event.trigger 'loadAssets', data.assets
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     @render(items)
 
   render: (items) ->
 
     for item in items
-      if item.history_object is 'Ticket'
-        ticket = App.Ticket.find( item.o_id )
-        item.link = '#ticket/zoom/' + ticket.id
-        item.title = ticket.title
-        item.type = 'Ticket'
-        item.updated_by_id = ticket.updated_by_id
-        item.updated_by = App.User.find( ticket.updated_by_id )
-      else if item.history_object is 'Ticket::Article'
-        article = App.TicketArticle.find( item.o_id )
-        ticket  = App.Ticket.find( article.ticket_id )
-        item.link = '#ticket/zoom/' + ticket.id + '/' + article.id
-        item.title = article.subject || ticket.title
-        item.type = 'Article'
-        item.updated_by_id = article.updated_by_id
-        item.updated_by = App.User.find( article.updated_by_id )
+
+      item.link  = ''
+      item.title = '???'
+
+      # convert backend name space to local name space
+      item.object = item.object.replace("::", '')
+
+      # lookup real data
+      if App[item.object]
+        object           = App[item.object].find( item.o_id )
+        item.link        = object.uiUrl()
+        item.title       = object.displayName()
+        item.object_name = object.objectDisplayName()
+
+      item.created_by = App.User.find( item.created_by_id )
 
     html = App.view('dashboard/activity_stream')(
       head: 'Activity Stream',
@@ -65,5 +65,7 @@ class App.DashboardActivityStream extends App.Controller
     @html html
 
     # start user popups
-    @userPopups('left')
+    @userPopups('right')
 
+    # update time
+    @frontendTimeUpdate()

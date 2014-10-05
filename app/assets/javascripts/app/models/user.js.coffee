@@ -6,20 +6,20 @@ class App.User extends App.Model
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
     { name: 'login',            display: 'Login',         tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', autocapitalize: false, signup: false, quick: false },
-    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', signup: true, quick: true, info: true, invite_agent: true },
-    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', signup: true, quick: true, info: true, invite_agent: true },
-    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, class: 'span4', signup: true, quick: true, info: true, invite_agent: true },
-    { name: 'web',              display: 'Web',           tag: 'input',    type: 'url',      limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'phone',            display: 'Phone',         tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'mobile',           display: 'Mobile',        tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'fax',              display: 'Fax',           tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', class: 'span4', signup: false, quick: true, info: true },
-    { name: 'department',       display: 'Department',    tag: 'input',    type: 'text',    limit: 200, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'street',           display: 'Street',        tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'zip',              display: 'Zip',           tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'city',             display: 'City',          tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, quick: true, info: true },
-    { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', class: 'span4', signup: true,  quick: false, },
-    { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, class: 'span4', quick: true, info: true },
+    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', signup: true, info: true, invite_agent: true },
+    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', signup: true, info: true, invite_agent: true },
+    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, class: 'span4', signup: true, info: true, invite_agent: true },
+    { name: 'web',              display: 'Web',           tag: 'input',    type: 'url',      limit: 100, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'phone',            display: 'Phone',         tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'mobile',           display: 'Mobile',        tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'fax',              display: 'Fax',           tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', class: 'span4', signup: false, info: true },
+    { name: 'department',       display: 'Department',    tag: 'input',    type: 'text',    limit: 200, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'street',           display: 'Street',        tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'zip',              display: 'Zip',           tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'city',             display: 'City',          tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
+    { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', class: 'span4', signup: true, },
+    { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, class: 'span4', info: true },
     { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role', class: 'span4' },
     { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', class: 'span4', invite_agent: true },
     { name: 'active',           display: 'Active',        tag: 'boolean',  default: true, null: true, class: 'span4' },
@@ -29,6 +29,9 @@ class App.User extends App.Model
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
     'login', 'firstname', 'lastname',
   ]
+
+  uiUrl: ->
+    '#user/zoom/' + @id
 
   @_fillUp: (data) ->
 
@@ -41,8 +44,23 @@ class App.User extends App.Model
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
 
     # set image url
-    if !data.image
-      data.image = 'http://placehold.it/48x48'
+    data.imageUrl = @apiPath + '/users/image/' + data.image
+
+    if data.organization_id
+      data.organization = App.Organization.find(data.organization_id)
+
+    if data['role_ids']
+      data['roles'] = []
+      for role_id in data['role_ids']
+        if App.Role.exists( role_id )
+          role = App.Role.find( role_id )
+          data['roles'].push role
+
+    if data['group_ids']
+      data['groups'] = []
+      for group_id in data['group_ids']
+        if App.Group.exists( group_id )
+          group = App.Group.find( group_id )
+          data['groups'].push group
 
     data
-

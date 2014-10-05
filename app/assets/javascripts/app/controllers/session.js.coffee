@@ -1,4 +1,5 @@
-class Session extends App.ControllerContent
+class Index extends App.ControllerContent
+  divClass: 'lala'
   events:
     'click [data-type="delete"]': 'destroy'
 
@@ -11,7 +12,7 @@ class Session extends App.ControllerContent
     @interval(
       =>
         @load()
-      30000
+      45000
     )
 
   # fetch data, render view
@@ -25,7 +26,9 @@ class Session extends App.ControllerContent
     )
 
   render: (data) ->
-    App.Collection.load( type: 'User', data: data.users )
+
+    # load assets
+    App.Collection.loadAssets( data.assets )
 
     # fill users
     for session in data.sessions
@@ -50,6 +53,4 @@ class Session extends App.ControllerContent
         @load()
     )
 
-
-App.Config.set( 'session', Session, 'Routes' )
-App.Config.set( 'session', { prio: 3700, parent: '#admin', name: 'Sessions', target: '#session', role: ['Admin'] }, 'NavBar' )
+App.Config.set( 'Session', { prio: 3700, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

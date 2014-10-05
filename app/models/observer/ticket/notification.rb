@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 require 'event_buffer'
 require 'notification_factory'
@@ -34,6 +34,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         next if !ticket
 
         article = ticket.articles[-1]
+        next if !article
       else
         raise "unknown object for notification #{event[:name]}"
       end
@@ -49,11 +50,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-            a new Ticket (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+            a new Ticket (#{ticket.title}) via i18n(#{article.type.name}).
 
             Group: #{ticket.group.name}
             Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-            State: i18n(#{ticket.ticket_state.name})
+            State: i18n(#{ticket.state.name})
 
             From: #{article.from}
             <snip>
@@ -72,7 +73,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       if event[:name] == 'Ticket' && event[:type] == 'create'
 
         # only for incoming emails
-        next if article.ticket_article_type.name != 'email'
+        next if article.type.name != 'email'
 
         puts 'send new ticket notify to customer'
         send_notify(
@@ -107,7 +108,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
         puts 'send new ticket::article notify'
 
-        if article.ticket_article_sender.name == 'Customer'
+        if article.sender.name == 'Customer'
           send_notify(
             {
               :event     => event,
@@ -115,11 +116,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
               :subject   => 'Follow Up (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-              a follow Up (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+              a follow Up (#{ticket.title}) via i18n(#{article.type.name}).
 
               Group: #{ticket.group.name}
               Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-              State: i18n(#{ticket.ticket_state.name})
+              State: i18n(#{ticket.state.name})
 
               From: #{article.from}
               <snip>
@@ -136,7 +137,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
         # send new note notification to owner
         # if agent == created.id
-        if article.ticket_article_sender.name == 'Agent' && article.created_by_id != article.ticket.owner_id
+        if article.sender.name == 'Agent' && article.created_by_id != article.ticket.owner_id
           send_notify(
             {
               :event     => event,
@@ -144,11 +145,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
               :subject   => 'Updated (#{ticket.title})',
               :body      => 'Hi #{recipient.firstname},
 
-              updated (#{ticket.title}) via i18n(#{article.ticket_article_type.name}).
+              updated (#{ticket.title}) via i18n(#{article.type.name}).
 
               Group: #{ticket.group.name}
               Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-              State: i18n(#{ticket.ticket_state.name})
+              State: i18n(#{ticket.state.name})
 
               From: #{article.from}
               <snip>
@@ -168,84 +169,13 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
   def self.send_notify(data, ticket, article)
 
-    # find recipients
-    recipients = []
-
-    # group of agents to work on
-    if data[:recipient] == 'group'
-      recipients = ticket.agent_of_group()
-
-      # owner
-    elsif data[:recipient] == 'owner'
-      if ticket.owner_id != 1
-        recipients.push ticket.owner
-      end
-
-      # customer
-    elsif data[:recipient] == 'customer'
-      if ticket.customer_id != 1
-        # temporarily disabled
-        #        recipients.push ticket.customer
-      end
-
-      # owner or group of agents to work on
-    elsif data[:recipient] == 'to_work_on'
-      if ticket.owner_id != 1
-        recipients.push ticket.owner
-      else
-        recipients = ticket.agent_of_group()
-      end
-    end
-
-    # send notifications
-    recipient_list = ''
-    notification_subject = ''
-    recipients.each do |user|
-      next if !user.email || user.email == ''
-
-      # add recipient_list
-      if recipient_list != ''
-        recipient_list += ','
-      end
-      recipient_list += user.email.to_s
-
-      # prepare subject & body
-      notification = {}
-      [:subject, :body].each { |key|
-        notification[key.to_sym] = NotificationFactory.build(
-          :locale  => user.locale,
-          :string  => data[key.to_sym],
-          :objects => {
-            :ticket    => ticket,
-            :article   => article,
-            :recipient => user,
-          }
-        )
-      }
-      notification_subject = notification[:subject]
-
-      # rebuild subject
-      notification[:subject] = ticket.subject_build( notification[:subject] )
-
-      # send notification
-      NotificationFactory.send(
-        :recipient => user,
-        :subject   => notification[:subject],
-        :body      => notification[:body]
-      )
-    end
-
-    # add history record
-    if recipient_list != ''
-      History.add(
-        :o_id                   => ticket.id,
-        :history_type           => 'notification',
-        :history_object         => 'Ticket',
-        :value_from             => notification_subject,
-        :value_to               => recipient_list,
-        :created_by_id          => article.created_by_id || 1
-      )
-    end
+    # send background job
+    params = {
+      :ticket_id  => ticket.id,
+      :article_id => article.id,
+      :data       => data,
+    }
+    Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( params ) )
   end
 
   def after_create(record)

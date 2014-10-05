@@ -11,28 +11,71 @@ class App.Overview extends App.Model
 #    { name: 'content',    display: 'Content',             tag: 'textarea',                limit: 250, 'null': false, 'class': 'span4' },
     { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_attribute_selection', null: true, class: 'span4' },
     { name: 'prio',       display: 'Prio',                tag: 'input',    type: 'text', limit: 10, 'null': false, 'class': 'span4' },
-    { 
+    {
       name:    'view::s'
       display: 'Attributes'
       tag:     'checkbox'
-      default: ['number', 'title', 'ticket_state', 'created_at']
+      default: ['number', 'title', 'state', 'created_at']
       null:    false
       translate: true
-      options:
-        number:                 'Number'
-        title:                  'Title'
-        customer:               'Customer'
-        ticket_state:           'State'
-        ticket_priority:        'Priority'
-        group:                  'Group'
-        owner:                  'Owner'
-        created_at:             'Age'
-        last_contact:           'Last Contact'
-        last_contact_agent:     'Last Contact Agent'
-        last_contact_customer:  'Last Contact Customer'
-        first_response:         'First Response'
-        close_time:             'Close Time'
-        article_count:          'Article Count'
+      options: [
+        {
+          value:  'number'
+          name:   'Number'
+        },
+        {
+          value:  'title'
+          name:   'Title'
+        },
+        {
+          value:  'customer'
+          name:   'Customer'
+        },
+        {
+          value:  'state'
+          name:   'State'
+        },
+        {
+          value:  'priority'
+          name:   'Priority'
+        },
+        {
+          value:  'group'
+          name:   'Group'
+        },
+        {
+          value:  'owner'
+          name:   'Owner'
+        },
+        {
+          value:  'created_at'
+          name:   'Age'
+        },
+        {
+          value:  'last_contact'
+          name:   'Last Contact'
+        },
+        {
+          value:  'last_contact_agent'
+          name:   'Last Contact Agent'
+        },
+        {
+          value:  'last_contact_customer'
+          name:   'Last Contact Customer'
+        },
+        {
+          value:  'first_response'
+          name:   'First Response'
+        },
+        {
+          value:  'close_time'
+          name:   'Close Time'
+        },
+        {
+          value:  'article_count'
+          name:   'Article Count'
+        },
+      ]
       class:      'medium'
     },
 
@@ -47,8 +90,8 @@ class App.Overview extends App.Model
         number:                 'Number'
         title:                  'Title'
         customer:               'Customer'
-        ticket_state:           'State'
-        ticket_priority:        'Priority'
+        state:                  'State'
+        priority:               'Priority'
         group:                  'Group'
         owner:                  'Owner'
         created_at:             'Age'
@@ -60,7 +103,7 @@ class App.Overview extends App.Model
         article_count:          'Article Count'
       class:   'span4'
     },
-    { 
+    {
       name:    'order::direction'
       display: 'Direction'
       tag:     'select'
@@ -72,7 +115,7 @@ class App.Overview extends App.Model
         DESC:  'down'
       class:   'span4'
     },
-    { 
+    {
       name:    'group_by'
       display: 'Group by'
       tag:     'select'
@@ -82,14 +125,17 @@ class App.Overview extends App.Model
       translate:  true
       options:
         customer:               'Customer'
-        ticket_state:           'State'
-        ticket_priority:        'Priority'
+        state:                  'State'
+        priority:               'Priority'
         group:                  'Group'
         owner:                  'Owner'
       class:   'span4'
     },
-    { name: 'updated_at', display: 'Updated',             type: 'time', readonly: 1 },
-    { name: 'active',     display: 'Active',              tag: 'boolean',  note: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
+    { name: 'active',         display: 'Active',              tag: 'boolean',  note: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
+    { name: 'created_by_id',  display: 'Created by', relation: 'User', readonly: 1 },
+    { name: 'created_at',     display: 'Created', type: 'time', readonly: 1 },
+    { name: 'updated_by_id',  display: 'Updated by', relation: 'User', readonly: 1 },
+    { name: 'updated_at',     display: 'Updated', type: 'time', readonly: 1 },
   ]
   @configure_delete = true
   @configure_overview = [

@@ -1,7 +1,7 @@
 <form class="" id="<%= @setting.name %>">
   <h2><%- @T( @setting.title ) %></h2>
   <p><%- @T( @setting.description ) %></p>
-  <div id="form-item"></div>
+  <div class="form-item"></div>
   <button type="submit" class="btn"><%- @T( 'Submit' ) %></button>
 </form>
 <hr/>

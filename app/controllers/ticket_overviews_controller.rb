@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 require 'ticket/overviews'
 
@@ -49,7 +49,7 @@ class TicketOverviewsController < ApplicationController
     end
 
     # get related users
-    assets = { :users => {} }
+    assets = {}
     overview[:ticket_ids].each {|ticket_id|
       ticket = Ticket.lookup( :id => ticket_id )
       assets = ticket.assets(assets)
@@ -70,9 +70,7 @@ class TicketOverviewsController < ApplicationController
       Group.find(group_id).users.each {|user|
         next if !agents[ user.id ]
         groups_users[ group_id ].push user.id
-        if !assets[:users][user.id]
-          assets[:users][user.id] = User.user_data_full(user.id)
-        end
+        assets = user.assets( assets )
       }
     }
 

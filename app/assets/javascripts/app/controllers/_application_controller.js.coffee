@@ -62,6 +62,10 @@ class App.Controller extends Spine.Controller
     if @ajaxCalls
       for callId in @ajaxCalls
         App.Ajax.abort(callId)
+    @userTicketPopupsDestroy()
+    @ticketPopupsDestroy()
+    @userPopupsDestroy()
+    @organizationPopupsDestroy()
 
   release: =>
     # release custom bindings after it got removed from dom
@@ -143,13 +147,13 @@ class App.Controller extends Spine.Controller
 
   ticketTableAttributes: (attributes) =>
     all_attributes = [
-      { name: 'number',                 link: true, title: 'title' },
-      { name: 'title',                  link: true, title: 'title' },
-      { name: 'customer',               class: 'user-data', data: { id: true } },
-      { name: 'ticket_state',           translate: true, title: true },
-      { name: 'ticket_priority',        translate: true, title: true },
+      { name: 'number',                 type: 'link', title: 'title', dataType: 'edit' },
+      { name: 'title',                  type: 'link', title: 'title', dataType: 'edit' },
+      { name: 'customer',               class: 'user-popover', data: { id: true } },
+      { name: 'state',                  translate: true, title: true },
+      { name: 'priority',               translate: true, title: true },
       { name: 'group',                  title: 'group' },
-      { name: 'owner',                  class: 'user-data', data: { id: true } },
+      { name: 'owner',                  class: 'user-popover', data: { id: true } },
       { name: 'created_at',             callback: @frontendTime },
       { name: 'last_contact',           callback: @frontendTime },
       { name: 'last_contact_agent',     callback: @frontendTime },
@@ -191,7 +195,7 @@ class App.Controller extends Spine.Controller
       if diff > 0
         escalated = '-'
       if diff >= 0
-        style = "class=\"label label-important\""
+        style = "class=\"label label-danger\""
       else if diff > -60 * 60
         style = "class=\"label label-warning\""
       else
@@ -244,7 +248,7 @@ class App.Controller extends Spine.Controller
     el.unbind()
 
     # start customer info controller
-    new App.UserInfo(
+    new App.WidgetUser(
       el:       el
       user_id:  data.user_id
       callback: data.callback
@@ -281,50 +285,59 @@ class App.Controller extends Spine.Controller
 
   ticketPopups: (position = 'right') ->
 
-    # remove old popovers
-    $('.popover-inner').parent().remove()
+    @ticketPopupsDestroy()
 
     # show ticket popup
     ui = @
-    $('.ticket-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+    @ticketPopupsList = @el.find('.ticket-popover').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 400, hide: 400 }
+      placement:  position
       title: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.retrieve( ticket_id )
-        ticket.title
+        ticket = App.Ticket.fullLocal( ticket_id )
+        App.i18n.escape( ticket.title )
       content: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.retrieve( ticket_id )
+        ticket = App.Ticket.fullLocal( ticket_id )
         ticket.humanTime = ui.humanTime(ticket.created_at)
         # insert data
-        App.view('ticket_info_small')(
+        App.view('popover/ticket')(
           ticket: ticket,
         )
     )
 
+  ticketPopupsDestroy: =>
+    if @ticketPopupsList
+      @ticketPopupsList.popover('destroy')
+
   userPopups: (position = 'right') ->
 
-    # remove old popovers
-    $('.popover-inner').parent().remove()
+    # open user in new task if user isn't customer
+    if !@isRole('Customer')
+      @el.find('.user-popover').bind('click', (e) =>
+        user_id = $(e.target).data('id')
+        @navigate "#user/zoom/#{user_id}"
+      );
+
+    @userPopupsDestroy()
 
     # show user popup
-    $('.user-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+    @userPopupsList = @el.find('.user-popover').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 400, hide: 400 }
+      placement:  position
       title: ->
         user_id = $(@).data('id')
-        user = App.User.find( user_id )
-        user.displayName()
+        user = App.User.fullLocal( user_id )
+        App.i18n.escape( user.displayName() )
       content: ->
         user_id = $(@).data('id')
-        user = App.User.find( user_id )
+        user = App.User.fullLocal( user_id )
 
         # get display data
         data = []
@@ -346,80 +359,118 @@ class App.Controller extends Spine.Controller
                 data.push item
 
         # insert data
-        App.view('user_info_small')(
+        App.view('popover/user')(
           user: user,
           data: data,
         )
     )
 
+  userPopupsDestroy: =>
+    if @userPopupsList
+      @userPopupsList.popover('destroy')
+
   organizationPopups: (position = 'right') ->
 
-    # remove old popovers
-    $('.popover-inner').parent().remove()
+    @organizationPopupsDestroy()
 
     # show organization popup
-    $('.organization-data').popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 1200 }
-#      placement: 'bottom'
-      placement: position
+    @organizationPopupsList = @el.find('.organization-popover').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      delay:      { show: 400, hide: 400 }
+      placement:  position
       title: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.find( organization_id )
-        organization.name
+        organization = App.Organization.fullLocal( organization_id )
+        App.i18n.escape( organization.name )
       content: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.find( organization_id )
+        organization = App.Organization.fullLocal( organization_id )
         # insert data
-        App.view('organization_info_small')(
+        App.view('popover/organization')(
           organization: organization,
         )
     )
 
-  userTicketPopups: (data) ->
+  organizationPopupsDestroy: =>
+    if @organizationPopupsList
+      @organizationPopupsList.popover('destroy')
 
-    # remove old popovers
-    $('.popover-inner').parent().remove()
+  userTicketPopups: (params) ->
+
+    show = (data, tickets) =>
+
+      if !data.position
+        data.position = 'left'
+
+      @userTicketPopupsDestroy()
+
+      # show user popup
+      controller = @
+      @userTicketPopupsList = @el.find(data.selector).popover(
+        trigger:    'hover'
+        container:  'body'
+        html:       true
+        delay:      { show: 500, hide: 5200 }
+        placement:  data.position
+        title: ->
+          $(@).find('[title="*"]').val()
+
+        content: ->
+          type = $(@).filter('[data-type]').data('type')
+          data = tickets[type] || []
+
+          # set human time
+          for ticket in data
+            ticket.humanTime = controller.humanTime(ticket.created_at)
+
+          # insert data
+          App.view('popover/user_ticket_list')(
+            tickets: data,
+          )
+      )
+
+    fetch = (params) =>
+      @ajax(
+        type:  'GET',
+        url:   @Config.get('api_path') + '/ticket_customer',
+        data:  {
+          customer_id: params.user_id,
+        }
+        processData: true,
+        success: (data, status, xhr) =>
+          App.Store.write( "user-ticket-popover::#{params.user_id}",  data.tickets )
+          show( params, data.tickets )
+      )
 
     # get data
-    tickets = {}
+    tickets = App.Store.get( "user-ticket-popover::#{params.user_id}" )
+    if tickets
+      show( params, tickets )
+      @delay(
+        =>
+          fetch(params)
+        1000
+        'fetch'
+      )
+    else
+      fetch(params)
+
+  userTicketPopupsDestroy: =>
+    if @userTicketPopupsList
+      @userTicketPopupsList.popover('destroy')
+
+  recentView: (object, o_id) =>
+    params =
+      object: object
+      o_id:   o_id
     App.Ajax.request(
-      type:  'GET',
-      url:   @Config.get('api_path') + '/ticket_customer',
-      data:  {
-        customer_id: data.user_id,
-      }
-      processData: true,
-      success: (data, status, xhr) =>
-        tickets = data.tickets
-    )
-
-    if !data.position
-      data.position = 'left'
-
-    # show user popup
-    controller = @
-    $(data.selector).popover(
-      trigger: 'hover'
-      html:    true
-      delay:   { show: 500, hide: 5200 }
-      placement: data.position
-      title: ->
-        $(@).find('[title="*"]').val()
-
-      content: ->
-        type = $(@).filter('[data-type]').data('type')
-        data = tickets[type] || []
-
-        # set human time
-        for ticket in data
-          ticket.humanTime = controller.humanTime(ticket.created_at)
-
-        # insert data
-        App.view('user_ticket_info_small')(
-          tickets: data,
-        )
+      id:    "recent_view_#{object}_#{o_id}"
+      type:  'POST'
+      url:   @Config.get('api_path') + '/recent_viewed'
+      data:  JSON.stringify(params)
+      processData: true
     )
 
   ws_send: (data) ->
@@ -437,7 +488,7 @@ class App.ControllerContent extends App.Controller
     $('#content_permanent').hide()
 
 class App.ControllerModal extends App.Controller
-  className: 'modal hide fade',
+  className: 'modal fade',
   tag: 'div',
 
   events:
@@ -484,11 +535,11 @@ class App.ControllerModal extends App.Controller
     data = $.extend({}, defaults, params)
     @el.modal(data)
 
-    @el.bind('hidden', =>
+    @el.bind('hidden.bs.modal', =>
 
       # navigate back to home page
-      if @pageData && @pageData.home
-        @navigate @pageData.home
+#      if @pageData && @pageData.home
+#        @navigate @pageData.home
 
       # navigate back
       if params && params.navigateBack
@@ -569,3 +620,31 @@ class App.SessionMessage extends App.ControllerModal
 
     throw "Cant reload page!"
 
+class App.UpdateHeader extends App.Controller
+  constructor: ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = @genericObject.subscribe( @render )
+
+  release: =>
+    App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
+
+  render: (genericObject) =>
+    @el.find( '.page-header h1' ).html( genericObject.displayName() )
+
+
+class App.UpdateTastbar extends App.Controller
+  constructor: ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = @genericObject.subscribe( @update )
+
+  release: =>
+    App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
+
+  update: (genericObject) =>
+
+    # update taskbar with new meta data
+    App.Event.trigger 'task:render'

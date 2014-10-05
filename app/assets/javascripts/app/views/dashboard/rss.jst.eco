@@ -1,5 +1,4 @@
-<div class="row">
-  <div class="span3">
+<div class="span3">
     <h2 class="can-move"><%- @T( @head ) %></h2>
     <% if @message: %>
       <%- @T(@message) %>
@@ -9,5 +8,4 @@
       <li><a href="<%= item.link %>" title="<%= item.summary %>" target="_blank"><%= item.title %>"</a></li>
     <% end %>
     </ul>
-  </div>
 </div>

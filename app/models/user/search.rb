@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module User::Search
 
@@ -44,13 +44,22 @@ returns
     # enable search only for agents and admins
     return [] if !current_user.is_role('Agent') && !current_user.is_role('Admin')
 
-    # do query
-    users = User.find(
-      :all,
-      :limit      => limit,
-      :conditions => ['(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%"],
-      :order      => 'firstname'
-    )
+    # try search index backend
+    if SearchIndexBackend.enabled?
+      ids = SearchIndexBackend.search( query, limit, 'User' )
+      users = []
+      ids.each { |id|
+        users.push User.lookup( :id => id )
+      }
+      return users
+    end
+
+    # fallback do sql query
+    # - stip out * we already search for *query* -
+    query.gsub! '*', ''
+    users = User.where(
+      '(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
+    ).order('firstname').limit(limit)
     return users
   end
 

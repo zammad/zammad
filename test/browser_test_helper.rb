@@ -1,6 +1,5 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
 require 'selenium-webdriver'
 
 class TestCase < Test::Unit::TestCase
@@ -43,7 +42,7 @@ class TestCase < Test::Unit::TestCase
     return local_browser
   end
   def browser_instance_preferences(local_browser)
-    local_browser.manage.window.resize_to(1024, 1024)
+    #local_browser.manage.window.resize_to(1024, 1024)
     if ENV['REMOTE_URL'] !~ /saucelabs/i
       if @browsers.size < 1
         local_browser.manage.window.move_to(0, 0)
@@ -254,45 +253,84 @@ class TestCase < Test::Unit::TestCase
           return
         end
         sleep 0.33
-      } 
+      }
       assert( false, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+      return
+    elsif action[:execute] == 'create_user'
+
+      instance.find_element( { :css => 'a[href="#manage"]' } ).click
+      instance.find_element( { :css => 'a[href="#manage/users"]' } ).click
+      sleep 2
+      instance.find_element( { :css => 'a[data-type="new"]' } ).click
+      sleep 2
+      element = instance.find_element( { :css => '.modal input[name=login]' } )
+      element.clear
+      element.send_keys( action[:login] )
+      element = instance.find_element( { :css => '.modal input[name=firstname]' } )
+      element.clear
+      element.send_keys( action[:firstname] )
+      element = instance.find_element( { :css => '.modal input[name=lastname]' } )
+      element.clear
+      element.send_keys( action[:lastname] )
+      element = instance.find_element( { :css => '.modal input[name=email]' } )
+      element.clear
+      element.send_keys( action[:email] )
+      element = instance.find_element( { :css => '.modal input[name=password]' } )
+      element.clear
+      element.send_keys( action[:password] )
+      element = instance.find_element( { :css => '.modal input[name=password_confirm]' } )
+      element.clear
+      element.send_keys( action[:password] )
+      instance.find_element( { :css => '.modal input[name="role_ids"][value="3"]' } ).click
+      instance.find_element( { :css => '.modal button.submit' } ).click
+      (1..14).each {|loop|
+        element = instance.find_element( { :css => 'body' } )
+        text = element.text
+        if text =~ /#{Regexp.quote(action[:lastname])}/
+          assert( true, "(#{test[:name]}) user created" )
+          return
+        end
+        sleep 0.5
+      }
+      assert( true, "(#{test[:name]}) user creation failed" )
       return
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
-      instance.find_element( { :css => 'a[href="#ticket_create/call_inbound"]' } ).click
-      element = instance.find_element( { :css => '.active .ticket_create' } )
+      instance.find_element( { :css => 'a[href="#ticket/create/call_inbound"]' } ).click
+      element = instance.find_element( { :css => '.active .ticket-create' } )
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
         return
       end
       sleep 2
-      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
       element.clear
-      element.send_keys( 'nico' )
+      element.send_keys( 'nico*' )
       sleep 4
-      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
       element.send_keys( :arrow_down )
       sleep 0.2
-      element = instance.find_element( { :css => '.active .ticket_create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
       element.send_keys( :tab )
       sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket_create select[name="group_id"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create select[name="group_id"]' } )
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by( :text, action[:group])
       sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket_create input[name="subject"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create input[name="title"]' } )
       element.clear
       element.send_keys( action[:subject] )
       sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket_create textarea[name="body"]' } )
+      element = instance.find_element( { :css => '.active .ticket-create textarea[name="body"]' } )
       element.clear
       element.send_keys( action[:body] )
       if action[:do_not_submit]
         assert( true, "(#{test[:name]}) ticket created without submit" )
         return
       end
-      sleep 0.1
+      sleep 0.8
       instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
+      sleep 1
       (1..14).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
           assert( true, "(#{test[:name]}) ticket created" )
@@ -300,7 +338,7 @@ class TestCase < Test::Unit::TestCase
         end
         sleep 0.5
       }
-      assert( true, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
+      assert( false, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
       return
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100

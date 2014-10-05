@@ -1,17 +1,17 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-require 'sso'
-require 'digest/sha2'
-require 'organization'
+require 'digest/md5'
 
 class User < ApplicationModel
+  require 'user/assets'
   include User::Assets
   extend User::Search
+  include User::SearchIndex
 
   before_create   :check_name, :check_email, :check_login, :check_image, :check_password
   before_update   :check_password, :check_image, :check_email, :check_login_update
-  after_create    :notify_clients_after_create
-  after_update    :notify_clients_after_update
+  after_create    :check_image_load, :notify_clients_after_create
+  after_update    :check_image_load, :notify_clients_after_update
   after_destroy   :notify_clients_after_destroy
 
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
@@ -22,6 +22,33 @@ class User < ApplicationModel
   belongs_to              :organization,    :class_name => 'Organization'
 
   store                   :preferences
+
+  activity_stream_support(
+    :role              => 'Admin',
+    :ignore_attributes => {
+      :last_login   => true,
+      :image        => true,
+      :image_source => true,
+    }
+  )
+  history_support(
+    :ignore_attributes => {
+      :password     => true,
+      :image        => true,
+      :image_source => true,
+    }
+  )
+  search_index_support(
+    :ignore_attributes => {
+      :password     => true,
+      :image        => true,
+      :image_source => true,
+      :source       => true,
+      :login_failed => true,
+      :preferences  => true,
+      :locale       => true,
+    }
+  )
 
 =begin
 
@@ -47,7 +74,7 @@ returns
       end
       fullname = fullname + self.lastname
     end
-    return fullname
+    fullname
   end
 
 =begin
@@ -67,7 +94,54 @@ returns
     self.roles.each { |role|
       return role if role.name == role_name
     }
-    return false
+    false
+  end
+
+=begin
+
+get users activity stream
+
+  user = User.find(123)
+  result = user.activity_stream( 20 )
+
+returns
+
+  result = [
+    {
+      :id            =>2,
+      :o_id          =>2,
+      :created_by_id => 3,
+      :created_at    => '2013-09-28 00:57:21',
+      :object        => "User",
+      :type          => "created",
+    },
+    {
+      :id            =>2,
+      :o_id          =>2,
+      :created_by_id => 3,
+      :created_at    => '2013-09-28 00:59:21',
+      :object        => "User",
+      :type          => "updated",
+    },
+  ]
+
+=end
+
+  def activity_stream( limit, fulldata = false )
+    activity_stream = ActivityStream.list( self, limit )
+    return activity_stream if !fulldata
+
+    # get related objects
+    assets = {}
+    activity_stream.each {|item|
+      require item['object'].to_filename
+      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      assets = record.assets(assets)
+    }
+    return {
+      :activity_stream => activity_stream,
+      :assets          => assets,
+    }
   end
 
 =begin
@@ -287,111 +361,9 @@ returns
     return user
   end
 
-  def self.find_fulldata(user_id)
-
-    cache = self.cache_get(user_id, true)
-    return cache if cache
-
-    # get user
-    user = User.find(user_id)
-    data = user.attributes
-
-    # do not show password
-    user['password'] = ''
-
-    # get linked accounts
-    data['accounts'] = {}
-    authorizations = user.authorizations() || []
-    authorizations.each do | authorization |
-      data['accounts'][authorization.provider] = {
-        :uid      => authorization[:uid],
-        :username => authorization[:username]
-      }
-    end
-
-    # set roles
-    roles = []
-    user.roles.select('id, name').where( :active => true ).each { |role|
-      roles.push role.attributes
-    }
-    data['roles'] = roles
-    data['role_ids'] = user.role_ids
-
-    groups = []
-    user.groups.select('id, name').where( :active => true ).each { |group|
-      groups.push group.attributes
-    }
-    data['groups'] = groups
-    data['group_ids'] = user.group_ids
-
-    organization = user.organization
-    if organization
-      data['organization'] = organization.attributes
-    end
-
-    organizations = []
-    user.organizations.select('id, name').where( :active => true ).each { |organization|
-      organizations.push organization.attributes
-    }
-    data['organizations'] = organizations
-    data['organization_ids'] = user.organization_ids
-
-    self.cache_set(user.id, data, true)
-
-    return data
-  end
-
-  def self.user_data_full (user_id)
-
-    # get user
-    user = User.find_fulldata(user_id)
-
-    # do not show password
-    user['password'] = ''
-
-    # TEMP: compat. reasons
-    user['preferences'] = {} if user['preferences'] == nil
-
-    items = []
-    if user['preferences'][:tickets_open].to_i > 0
-      item = {
-        :url   => '',
-        :name  => 'open',
-        :count => user['preferences'][:tickets_open] || 0,
-        :title => 'Open Tickets',
-        :class => 'user-tickets',
-        :data  => 'open'
-      }
-      items.push item
-    end
-    if user['preferences'][:tickets_closed].to_i > 0
-      item = {
-        :url   => '',
-        :name  => 'closed',
-        :count => user['preferences'][:tickets_closed] || 0,
-        :title => 'Closed Tickets',
-        :class => 'user-tickets',
-        :data  => 'closed'
-      }
-      items.push item
-    end
-
-    # show linked topics and items
-    if items.count > 0
-      topic = {
-        :title => 'Tickets',
-        :items => items,
-      }
-      user['links'] = []
-      user['links'].push topic
-    end
-
-    return user
-  end
-
 =begin
 
-update last login date (is automatically done by auth and sso backend)
+update last login date and reset login_failed (is automatically done by auth and sso backend)
 
   user = User.find(123)
   result = user.update_last_login
@@ -404,6 +376,13 @@ returns
 
   def update_last_login
     self.last_login = Time.now
+
+    # reset login failed
+    self.login_failed = 0
+
+    # set updated by user
+    self.updated_by_id = self.id
+
     self.save
   end
 
@@ -468,13 +447,49 @@ returns
   end
 
   def check_image
-    require 'digest/md5'
-    if !self.image || self.image == ''
+    if !self.image_source || self.image_source == '' || self.image_source =~ /gravatar.com/i
       if self.email
         hash = Digest::MD5.hexdigest(self.email)
-        self.image = "http://www.gravatar.com/avatar/#{hash}?s=48"
+        self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
       end
     end
+  end
+
+  def check_image_load
+
+    return if !self.image_source
+    return if self.image_source !~ /http/i
+
+    # download image
+    response = UserAgent.request( self.image_source )
+    if !response.success?
+      self.update_column( :image, 'none' )
+      self.cache_delete
+      #puts "WARNING: Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
+      #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
+      return
+    end
+
+    # store image local
+    hash = Digest::MD5.hexdigest( response.body )
+
+    # check if image has changed
+    return if self.image == hash
+
+    # save new image
+    self.update_column( :image, hash )
+    self.cache_delete
+    Store.remove( :object => 'User::Image', :o_id => self.id )
+    Store.add(
+      :object      => 'User::Image',
+      :o_id        => self.id,
+      :data        => response.body,
+      :filename    => 'image',
+      :preferences => {
+        'Content-Type' => response.content_type
+      },
+      :created_by_id => self.updated_by_id,
+    )
   end
 
   def check_password

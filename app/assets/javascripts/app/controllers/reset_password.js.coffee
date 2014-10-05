@@ -21,11 +21,11 @@ class Index extends App.ControllerContent
     @render()
 
   render: (params) ->
-   configure_attributes = [
+    configure_attributes = [
       { name: 'username', display: 'Enter your username or email address', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4',  },
     ]
 
-    @html App.view('reset_password')(params)
+    @html App.view('password/reset')(params)
 
     @form = new App.ControllerForm(
       el:        @el.find('#form-password-item')
@@ -94,11 +94,11 @@ class Verify extends App.ControllerContent
     )
 
   render_success: =>
-   configure_attributes = [
+    configure_attributes = [
       { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input span4',  },
     ]
 
-    @html App.view('reset_password_change')()
+    @html App.view('password/reset_change')()
 
     new App.ControllerForm(
       el:        @el.find('#form-password-change')

@@ -1,0 +1,13 @@
+[Unit]
+Description=Zammad Application
+
+[Service]
+Type=forking
+User=zammad
+WorkingDirectory=/home/zammad/zammad
+Environment=RAILS_ENV=production
+PIDFile=/var/run/zammad.puma.pid
+ExecStart=puma -p 3000 -d -e production --pidfile /var/run/zammad.puma.pid
+
+[Install]
+WantedBy=multi-user.target

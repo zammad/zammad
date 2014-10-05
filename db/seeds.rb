@@ -16,7 +16,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'product_name', 
+        :name     => 'product_name',
         :tag      => 'input',
       },
     ],
@@ -35,7 +35,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'organization', 
+        :name     => 'organization',
         :tag      => 'input',
       },
     ],
@@ -54,7 +54,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'system_id', 
+        :name     => 'system_id',
         :tag      => 'select',
         :options  => {
           '10' => '10',
@@ -78,7 +78,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'fqdn', 
+        :name     => 'fqdn',
         :tag      => 'input',
       },
     ],
@@ -96,7 +96,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'http_type', 
+        :name     => 'http_type',
         :tag      => 'select',
         :options  => {
           'https' => 'https',
@@ -121,7 +121,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'storage', 
+        :name     => 'storage',
         :tag      => 'select',
         :options  => {
           'DB' => 'Database',
@@ -179,6 +179,51 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  :title       => 'Send client stats',
+  :name        => 'ui_send_client_stats',
+  :area        => 'System::UI',
+  :description => 'Send client stats to central server.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'ui_send_client_stats',
+        :tag      => 'boolean',
+        :options     => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state    => true,
+  :frontend => true
+)
+Setting.create_if_not_exists(
+  :title       => 'Client storage',
+  :name        => 'ui_client_storage',
+  :area        => 'System::UI',
+  :description => 'Use client storage to cache data to perform speed of application.',
+  :options     => {
+    :form => [
+      {
+        :display  => '',
+        :null     => true,
+        :name     => 'ui_client_storage',
+        :tag      => 'boolean',
+        :options     => {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  :state    => false,
+  :frontend => true
+)
+
+Setting.create_if_not_exists(
   :title       => 'New User Accounts',
   :name        => 'user_create_account',
   :area        => 'Security::Base',
@@ -188,7 +233,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'user_create_account', 
+        :name     => 'user_create_account',
         :tag      => 'boolean',
         :options     => {
           true  => 'yes',
@@ -210,7 +255,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'user_lost_password', 
+        :name     => 'user_lost_password',
         :tag      => 'boolean',
         :options     => {
           true  => 'yes',
@@ -232,7 +277,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'switch_to_user', 
+        :name     => 'switch_to_user',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -300,7 +345,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'auth_twitter', 
+        :name     => 'auth_twitter',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -322,13 +367,13 @@ Setting.create_if_not_exists(
       {
         :display  => 'Twitter Key',
         :null     => true,
-        :name     => 'key', 
+        :name     => 'key',
         :tag      => 'input',
       },
       {
         :display  => 'Twitter Secret',
         :null     => true,
-        :name     => 'secret', 
+        :name     => 'secret',
         :tag      => 'input',
       },
     ],
@@ -346,7 +391,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'auth_facebook', 
+        :name     => 'auth_facebook',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -369,13 +414,13 @@ Setting.create_if_not_exists(
       {
         :display   => 'App ID',
         :null      => true,
-        :name      => 'app_id', 
+        :name      => 'app_id',
         :tag       => 'input',
       },
       {
         :display   => 'App Secret',
         :null      => true,
-        :name      => 'app_secret', 
+        :name      => 'app_secret',
         :tag       => 'input',
       },
     ],
@@ -394,7 +439,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'auth_google_oauth2', 
+        :name      => 'auth_google_oauth2',
         :tag       => 'boolean',
         :options   => {
           true  => 'yes',
@@ -416,13 +461,13 @@ Setting.create_if_not_exists(
       {
         :display   => 'Client ID',
         :null      => true,
-        :name      => 'client_id', 
+        :name      => 'client_id',
         :tag       => 'input',
       },
       {
         :display   => 'Client Secret',
         :null      => true,
-        :name      => 'client_secret', 
+        :name      => 'client_secret',
         :tag       => 'input',
       },
     ],
@@ -441,7 +486,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'auth_linkedin', 
+        :name      => 'auth_linkedin',
         :tag       => 'boolean',
         :options   => {
           true  => 'yes',
@@ -463,13 +508,13 @@ Setting.create_if_not_exists(
       {
         :display   => 'App ID',
         :null      => true,
-        :name      => 'app_id', 
+        :name      => 'app_id',
         :tag       => 'input',
       },
       {
         :display   => 'App Secret',
         :null      => true,
-        :name      => 'app_secret', 
+        :name      => 'app_secret',
         :tag       => 'input',
       },
     ],
@@ -488,7 +533,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'password_min_size', 
+        :name      => 'password_min_size',
         :tag       => 'select',
         :options     => {
           4 => 4,
@@ -517,7 +562,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'password_min_2_lower_2_upper_characters', 
+        :name      => 'password_min_2_lower_2_upper_characters',
         :tag       => 'select',
         :options     => {
           1 => 'yes',
@@ -539,7 +584,7 @@ Setting.create_if_not_exists(
       {
         :display   => 'Needed',
         :null      => true,
-        :name      => 'password_need_digit', 
+        :name      => 'password_need_digit',
         :tag       => 'select',
         :options     => {
           1 => 'yes',
@@ -561,7 +606,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'password_max_login_failed', 
+        :name      => 'password_max_login_failed',
         :tag       => 'select',
         :options     => {
           4 => 4,
@@ -598,7 +643,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => false,
-        :name      => 'ticket_hook', 
+        :name      => 'ticket_hook',
         :tag       => 'input',
       },
     ],
@@ -616,7 +661,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_hook_divider', 
+        :name      => 'ticket_hook_divider',
         :tag       => 'input',
       },
     ],
@@ -634,7 +679,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_hook_position', 
+        :name      => 'ticket_hook_position',
         :tag       => 'select',
         :options     => {
           'left'  => 'Left',
@@ -657,7 +702,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => false,
-        :name      => 'ticket_subject_size', 
+        :name      => 'ticket_subject_size',
         :tag       => 'input',
       },
     ],
@@ -675,7 +720,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_subject_re', 
+        :name      => 'ticket_subject_re',
         :tag       => 'input',
       },
     ],
@@ -709,7 +754,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_number', 
+        :name      => 'ticket_number',
         :tag       => 'select',
         :options   => {
           'Ticket::Number::Increment' => 'Increment (SystemID.Counter)',
@@ -731,7 +776,7 @@ Setting.create_if_not_exists(
       {
         :display  => 'Checksum',
         :null     => true,
-        :name     => 'checksum', 
+        :name     => 'checksum',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -741,7 +786,7 @@ Setting.create_if_not_exists(
       {
         :display  => 'Min. size of number',
         :null     => true,
-        :name     => 'min_size', 
+        :name     => 'min_size',
         :tag      => 'select',
         :options  => {
           1 => 1,
@@ -784,7 +829,7 @@ Setting.create_if_not_exists(
       {
         :display  => 'Checksum',
         :null     => true,
-        :name     => 'checksum', 
+        :name     => 'checksum',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -809,7 +854,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'customer_ticket_create', 
+        :name     => 'customer_ticket_create',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -832,7 +877,7 @@ Setting.create_if_not_exists(
       {
         :display    => '',
         :null       => true,
-        :name       => 'group_ids', 
+        :name       => 'group_ids',
         :tag        => 'select',
         :multiple   => true,
         :null       => false,
@@ -856,7 +901,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'customer_ticket_view', 
+        :name     => 'customer_ticket_view',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -879,7 +924,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'ticket_define_email_from', 
+        :name      => 'ticket_define_email_from',
         :tag       => 'select',
         :options   => {
           :SystemAddressName          => 'System Address Display Name',
@@ -902,7 +947,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'ticket_define_email_from_seperator', 
+        :name     => 'ticket_define_email_from_seperator',
         :tag      => 'input',
       },
     ],
@@ -921,7 +966,7 @@ Setting.create_if_not_exists(
       {
         :display   => '',
         :null      => true,
-        :name      => 'postmaster_max_size', 
+        :name      => 'postmaster_max_size',
         :tag       => 'select',
         :options   => {
           1 => 1,
@@ -962,7 +1007,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'postmaster_follow_up_search_in', 
+        :name     => 'postmaster_follow_up_search_in',
         :tag      => 'checkbox',
         :options  => {
           'references' => 'References',
@@ -987,7 +1032,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'notification_sender', 
+        :name     => 'notification_sender',
         :tag      => 'input',
       },
     ],
@@ -1006,7 +1051,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'send_no_auto_response_reg_exp', 
+        :name     => 'send_no_auto_response_reg_exp',
         :tag      => 'input',
       },
     ],
@@ -1025,7 +1070,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'chat', 
+        :name     => 'chat',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -1058,7 +1103,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_mode', 
+        :name     => 'import_mode',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -1080,7 +1125,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_ignore_sla', 
+        :name     => 'import_ignore_sla',
         :tag      => 'boolean',
         :options  => {
           true  => 'yes',
@@ -1097,13 +1142,13 @@ Setting.create_if_not_exists(
   :title       => 'Import Endpoint',
   :name        => 'import_otrs_endpoint',
   :area        => 'Import::OTRS',
-  :description => 'Defines OTRS endpoint to import users, ticket, ticket_states and articles.',
+  :description => 'Defines OTRS endpoint to import users, ticket, states and articles.',
   :options     => {
     :form => [
       {
         :display  => '',
         :null     => false,
-        :name     => 'import_otrs_endpoint', 
+        :name     => 'import_otrs_endpoint',
         :tag      => 'input',
       },
     ],
@@ -1121,7 +1166,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => false,
-        :name     => 'import_otrs_endpoint_key', 
+        :name     => 'import_otrs_endpoint_key',
         :tag      => 'input',
       },
     ],
@@ -1140,7 +1185,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_otrs_user', 
+        :name     => 'import_otrs_user',
         :tag      => 'input',
       },
     ],
@@ -1159,7 +1204,7 @@ Setting.create_if_not_exists(
       {
         :display  => '',
         :null     => true,
-        :name     => 'import_otrs_password', 
+        :name     => 'import_otrs_password',
         :tag      => 'input',
       },
     ],
@@ -1266,20 +1311,20 @@ Link::Object.create_if_not_exists( :name => 'Question/Answer' )
 Link::Object.create_if_not_exists( :name => 'Idea' )
 Link::Object.create_if_not_exists( :name => 'Bug' )
 
-Ticket::StateType.create_if_not_exists( :name => 'new', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'open', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'pending reminder', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'pending action', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'closed', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'merged', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :name => 'removed', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 1, :name => 'new', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 2, :name => 'open', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 3, :name => 'pending reminder', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 4, :name => 'pending action', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 5, :name => 'closed', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 6, :name => 'merged', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 7, :name => 'removed', :updated_by_id  => 1 )
 
-Ticket::State.create_if_not_exists( :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id )
-Ticket::State.create_if_not_exists( :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id )
-Ticket::State.create_if_not_exists( :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id  )
-Ticket::State.create_if_not_exists( :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id  )
-Ticket::State.create_if_not_exists( :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id  )
-Ticket::State.create_if_not_exists( :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id  )
+Ticket::State.create_if_not_exists( :id => 1, :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id )
+Ticket::State.create_if_not_exists( :id => 2, :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id )
+Ticket::State.create_if_not_exists( :id => 3, :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id  )
+Ticket::State.create_if_not_exists( :id => 4, :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id  )
+Ticket::State.create_if_not_exists( :id => 5, :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id  )
+Ticket::State.create_if_not_exists( :id => 6, :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id  )
 
 Ticket::Priority.create_if_not_exists( :name => '1 low' )
 Ticket::Priority.create_if_not_exists( :name => '2 normal' )
@@ -1302,19 +1347,19 @@ Ticket::Article::Sender.create_if_not_exists( :name => 'System' )
 
 UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
-  :group_id           => Group.where( :name => 'Users' ).first.id,
-  :customer_id        => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
-  :owner_id           => User.where( :login => '-' ).first.id,
-  :title              => 'Welcome to Zammad!',
-  :ticket_state_id    => Ticket::State.where( :name => 'new' ).first.id,
-  :ticket_priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+  :group_id    => Group.where( :name => 'Users' ).first.id,
+  :customer_id => User.where( :login => 'nicole.braun@zammad.org' ).first.id,
+  :owner_id    => User.where( :login => '-' ).first.id,
+  :title       => 'Welcome to Zammad!',
+  :state_id    => Ticket::State.where( :name => 'new' ).first.id,
+  :priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
 )
 Ticket::Article.create(
-  :ticket_id                => ticket.id, 
-  :ticket_article_type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
-  :ticket_article_sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
-  :from                     => 'Zammad Feedback <feedback@zammad.org>',
-  :body                     => 'Welcome!
+  :ticket_id => ticket.id,
+  :type_id   => Ticket::Article::Type.where(:name => 'phone' ).first.id,
+  :sender_id => Ticket::Article::Sender.where(:name => 'Customer' ).first.id,
+  :from      => 'Zammad Feedback <feedback@zammad.org>',
+  :body      => 'Welcome!
 
 Thank you for installing Zammad.
 
@@ -1337,17 +1382,17 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [ 1,2,3 ],
-    'tickets.owner_id'        => 'current_user.id',
+    'tickets.state_id' => [ 1,2,3 ],
+    'tickets.owner_id' => 'current_user.id',
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1358,17 +1403,17 @@ Overview.create_if_not_exists(
   :prio       => 1001,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [1,2,3],
-    'tickets.owner_id'        => 1,
+    'tickets.state_id' => [1,2,3],
+    'tickets.owner_id' => 1,
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1379,16 +1424,16 @@ Overview.create_if_not_exists(
   :prio       => 1002,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [1,2,3],
+    'tickets.state_id' => [1,2,3],
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1406,9 +1451,9 @@ Overview.create_if_not_exists(
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'owner', 'escalation_time' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'escalation_time' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'owner', 'escalation_time' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'owner', 'escalation_time' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'owner', 'escalation_time' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'owner', 'escalation_time' ],
     :view_mode_default => 's',
   },
 )
@@ -1419,17 +1464,17 @@ Overview.create_if_not_exists(
   :prio       => 1020,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [3],
-    'tickets.owner_id'        => 'current_user.id',        
+    'tickets.state_id' => [3],
+    'tickets.owner_id' => 'current_user.id',
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1440,17 +1485,17 @@ Overview.create_if_not_exists(
   :prio       => 9003,
   :role_id    => overview_role.id,
   :condition  => {
-#      'tickets.ticket_state_id' => [3],
-#      'tickets.owner_id'        => current_user.id,        
+#      'tickets.state_id' => [3],
+#      'tickets.owner_id'        => current_user.id,
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :s => [ 'title', 'customer', 'ticket_state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'group', 'created_at' ],
+    :s => [ 'title', 'customer', 'state', 'group', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1462,7 +1507,7 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.ticket_state_id' => [ 1,2,3,4,6 ],
+    'tickets.state_id' => [ 1,2,3,4,6 ],
     'tickets.customer_id'     => 'current_user.id',
   },
   :order => {
@@ -1470,9 +1515,9 @@ Overview.create_if_not_exists(
     :direction => 'DESC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'created_at' ],
-    :s => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
-    :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'created_at' ],
+    :s => [ 'number', 'title', 'state', 'priority', 'created_at' ],
+    :m => [ 'number', 'title', 'state', 'priority', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1483,7 +1528,7 @@ Overview.create_if_not_exists(
   :role_id             => overview_role.id,
   :organization_shared => true,
   :condition => {
-    'tickets.ticket_state_id' => [ 1,2,3,4,6 ],
+    'tickets.state_id' => [ 1,2,3,4,6 ],
     'tickets.organization_id' => 'current_user.organization_id',
   },
   :order => {
@@ -1491,9 +1536,9 @@ Overview.create_if_not_exists(
     :direction => 'DESC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'ticket_state', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'ticket_state', 'ticket_priority', 'created_at' ],
-    :m => [ 'number', 'title', 'ticket_state', 'ticket_priority', 'created_at' ],
+    :d => [ 'title', 'customer', 'state', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'created_at' ],
+    :m => [ 'number', 'title', 'state', 'priority', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1638,7 +1683,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Direction", :targ
 Translation.create_if_not_exists( :locale => 'de', :source => "Owner", :target => "Besitzer" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Subject", :target => "Betreff" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Priority", :target => "Priorität" )
-Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the Ticket or create one.", :target => "Wähle den Kundn f�r das Ticket oder erstell einen neuen." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Select the customer of the ticket or create one.", :target => "Wähle den Kunden f�r das Ticket oder erstelle einen Neuen." )
 Translation.create_if_not_exists( :locale => 'de', :source => "New Ticket", :target => "Neues Ticket" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Firstname", :target => "Vorname" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Lastname", :target => "Nachname" )
@@ -1711,7 +1756,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Forgot your passw
 Translation.create_if_not_exists( :locale => 'de', :source => "Templates", :target => "Vorlagen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Delete", :target => "Löschen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Apply", :target => "Übernehmen" )
-Translation.create_if_not_exists( :locale => 'de', :source => "Save as Template", :target => "Als Template speichern" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Save as Template", :target => "Als Vorlage speichern" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Save", :target => "Speichern" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Open Tickets", :target => "Offene Ticket" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Closed Tickets", :target => "Geschlossene Ticket" )
@@ -1726,7 +1771,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "3 high", :target 
 Translation.create_if_not_exists( :locale => 'de', :source => "public", :target => "öffentlich" )
 Translation.create_if_not_exists( :locale => 'de', :source => "internal", :target => "intern" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Attach files", :target => "Dateien anhängen" )
-Translation.create_if_not_exists( :locale => 'de', :source => "Visability", :target => "Sichtbarkeit" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Visibility", :target => "Sichtbarkeit" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Actions", :target => "Aktionen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Email", :target => "E-Mail" )
 Translation.create_if_not_exists( :locale => 'de', :source => "email", :target => "E-Mail" )
@@ -1746,7 +1791,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Change Customer",
 Translation.create_if_not_exists( :locale => 'de', :source => "My Tickets", :target => "Meine Tickets" )
 Translation.create_if_not_exists( :locale => 'de', :source => "My Organization Tickets", :target => "Meine Organisations Tickets" )
 Translation.create_if_not_exists( :locale => 'de', :source => "My Organization", :target => "Meine Organisation" )
-Translation.create_if_not_exists( :locale => 'de', :source => "Assignment Timout", :target => "Zeitliche Zuweisungsüberschritung" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Assignment Timeout", :target => "Zeitliche Zuweisungsüberschritung" )
 Translation.create_if_not_exists( :locale => 'de', :source => "We've sent password reset instructions to your email address.", :target => "Wir haben Ihnen die Anleitung zum zurücksetzen Ihres Passworts an Ihre E-Mail-Adresse gesendet." )
 Translation.create_if_not_exists( :locale => 'de', :source => "Enter your username or email address", :target => "Bitte geben Sie Ihren Benutzernamen oder E-Mail-Adresse ein" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Choose your new password.", :target => "Wählen Sie Ihr neues Passwort." )
@@ -1859,6 +1904,11 @@ Translation.create_if_not_exists( :locale => 'de', :source => "Feedback about ou
 Translation.create_if_not_exists( :locale => 'de', :source => "What ideas do you have?", :target => "Welche Ideen haben Sie?" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Attach Screenshot of page", :target => "Screenshot dieser Seite anhängen" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Thanks for your Feedback!", :target => "Vielen Dank für Ihre Feedback!" )
+Translation.create_if_not_exists( :locale => 'de', :source => "What can you do here?", :target => "Was können Sie hier machen?" )
+Translation.create_if_not_exists( :locale => 'de', :source => "Here you can create one.", :target => "Hier können Sie eins erstellen." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Fold in", :target => "Einklappen" )
+Translation.create_if_not_exists( :locale => 'de', :source => "from", :target => "von" )
+Translation.create_if_not_exists( :locale => 'de', :source => "to", :target => "nach" )
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "" )
 
 # install all packages in auto_install

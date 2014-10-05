@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TaskbarController < ApplicationController
   before_filter :authentication_check
@@ -18,7 +18,6 @@ class TaskbarController < ApplicationController
   end
 
   def create
-    params[:user_id] = current_user.id
     model_create_render(Taskbar,params)
   end
 
@@ -26,7 +25,6 @@ class TaskbarController < ApplicationController
     taskbar = Taskbar.find( params[:id] )
     return if !access(taskbar)
 
-    params[:user_id] = current_user.id
     taskbar.update_attributes!( Taskbar.param_cleanup(params) )
     model_update_render_item(taskbar)
   end

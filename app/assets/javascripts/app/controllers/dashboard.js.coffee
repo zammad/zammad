@@ -2,7 +2,7 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    
+
     # check authentication
     return if !@authenticate()
 
@@ -33,17 +33,17 @@ class Index extends App.ControllerContent
         activity_stream: {
           controller: App.DashboardActivityStream,
           params: {
-            limit: 8,
+            limit: 20,
           },
         },
-        rss_atom: {
-          controller: App.DashboardRss,
-          params: {
-            head:  'Heise ATOM',
-            url:   'http://www.heise.de/newsticker/heise-atom.xml',
-            limit: 5,
-          },
-        },
+#        rss_atom: {
+#          controller: App.DashboardRss,
+#          params: {
+#            head:  'Heise ATOM',
+#            url:   'http://www.heise.de/newsticker/heise-atom.xml',
+#            limit: 5,
+#          },
+#        },
 #        rss_rdf: {
 #          controller: App.DashboardRss,
 #          params: {
@@ -52,10 +52,9 @@ class Index extends App.ControllerContent
 #            limit: 5,
 #          },
 #        },
-
-        recent_viewed: {
-          controller: App.DashboardRecentViewed,
-        }
+#        recent_viewed: {
+#          controller: App.DashboardRecentViewed,
+#        }
       }
     }
 

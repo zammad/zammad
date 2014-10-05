@@ -31,7 +31,7 @@ class _trackSingleton
 
     # start initial submit 30 sec. later to avoid ie10 cookie issues
     delay = =>
-      App.Interval.set @send, 80000
+      App.Interval.set @send, 60000
     App.Delay.set delay, 30000
 
     # log clicks
@@ -89,8 +89,8 @@ class _trackSingleton
         return
     )
 
-
   log: ( area, level, args ) ->
+    return if !App.Config.get('ui_send_client_stats')
     info =
       time:     Math.round( new Date().getTime() / 1000 )
       area:     area
@@ -100,10 +100,11 @@ class _trackSingleton
     @data.push info
 
   send: (async = true) =>
+    return if !App.Config.get('ui_send_client_stats')
     return if _.isEmpty @data
     newData = _.clone( @data )
     @data = []
-    newDataNew = [] 
+    newDataNew = []
     for item in newData
       try
         itemNew = _.clone( item )

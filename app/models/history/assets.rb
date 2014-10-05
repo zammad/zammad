@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module History::Assets
 
@@ -22,22 +22,9 @@ returns
 
   def assets (data)
 
-    if !data[:users]
-      data[:users] = {}
-    end
-    if !data[:users][ self['created_by_id'] ]
-      data[:users][ self['created_by_id'] ] = User.user_data_full( self['created_by_id'] )
-    end
-
-    # fetch meta relations
-    if !data[:history_object]
-      data[:history_object] = History::Object.all()
-    end
-    if !data[:history_type]
-      data[:history_type] = History::Type.all()
-    end
-    if !data[:history_attribute]
-      data[:history_attribute] = History::Attribute.all()
+    if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self['created_by_id'] ]
+      user = User.lookup( :id => self['created_by_id'] )
+      data = user.assets( data )
     end
 
     data

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class PostmasterFiltersController < ApplicationController
   before_filter :authentication_check
@@ -17,7 +17,7 @@ Example:
     "From":"some@example.com"
   },
   "perform":{
-    "x-zammad-priority":"3 high"
+    "x-zammad-ticket-priority":"3 high"
   },
   "note":"",
   "active":true,
@@ -93,7 +93,7 @@ Payload:
     "From":"some@example.com"
   },
   "perform":{
-    "x-zammad-priority":"3 high"
+    "x-zammad-ticket-priority":"3 high"
   },
   "note":"",
   "active":true,
@@ -108,7 +108,7 @@ Response:
     "From":"some@example.com"
   },
   "perform":{
-    "x-zammad-priority":"3 high"
+    "x-zammad-ticket-priority":"3 high"
   },
   "note": "",
   "active":true,
@@ -137,7 +137,7 @@ Payload:
     "From":"some@example.com"
   },
   "perform":{
-    "x-zammad-priority":"3 high"
+    "x-zammad-ticket-priority":"3 high"
   },
   "note":"",
   "active":true,
@@ -151,7 +151,7 @@ Response:
     "From":"some@example.com"
   },
   "perform":{
-    "x-zammad-priority":"3 high"
+    "x-zammad-ticket-priority":"3 high"
   },
   "note":"",
   "active":true,

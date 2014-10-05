@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationController < ActionController::Base
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user,
   :authentication_check,
   :config_frontend,
-  :user_data_full,
   :is_role,
   :model_create_render,
   :model_update_render,
@@ -14,8 +13,8 @@ class ApplicationController < ActionController::Base
   :mode_show_rendeder,
   :model_index_render
 
-  skip_filter :verify_authenticity_token
-  before_filter :log_request, :set_user, :session_update
+  skip_before_filter :verify_authenticity_token
+  before_filter :set_user, :session_update
   before_filter :cors_preflight_check
 
   after_filter  :set_access_control_headers
@@ -53,10 +52,6 @@ class ApplicationController < ActionController::Base
     Observer::Ticket::Notification.transaction
   end
 
-  def log_request
-    puts Time.now().to_s + ' ' + request.original_fullpath.to_s
-  end
-
   # Finds the User with the ID stored in the session with the key
   # :current_user_id This is a common way to handle user login in
   # a Rails application; logging in sets the session value and
@@ -67,6 +62,7 @@ class ApplicationController < ActionController::Base
     @_current_user = User.find( session[:user_id] )
   end
   def current_user_set(user)
+    session[:user_id] = user.id
     @_current_user = user
     set_user
   end
@@ -80,6 +76,7 @@ class ApplicationController < ActionController::Base
 
   # update session updated_at
   def session_update
+    #sleep 0.6
 
     # on many paralell requests, session got reinitialised if Time. is used, as workaround use DateTime.
     #session[:ping] = Time.now.utc.iso8601
@@ -99,7 +96,7 @@ class ApplicationController < ActionController::Base
 
   def authentication_check_only
 
-    puts 'authentication_check'
+    #puts 'authentication_check'
     session[:request_type] = 1
     #puts params.inspect
     #puts session.inspect
@@ -107,7 +104,7 @@ class ApplicationController < ActionController::Base
 
     # check http basic auth
     authenticate_with_http_basic do |username, password|
-      puts 'http basic auth check'
+      #puts 'http basic auth check'
       session[:request_type] = 2
 
       userdata = User.authenticate( username, password )
@@ -226,10 +223,6 @@ class ApplicationController < ActionController::Base
     return false
   end
 
-  def log_view (object)
-    RecentView.log( object, current_user )
-  end
-
   def config_frontend
 
     # config
@@ -261,20 +254,24 @@ class ApplicationController < ActionController::Base
     begin
 
       # create object
-      generic_object = object.new( object.param_cleanup(params) )
+      generic_object = object.new( object.param_cleanup( params[object.to_app_model_url] ) )
 
       # save object
       generic_object.save!
+
+      # set relations
+      generic_object.param_set_associations( params )
 
       model_create_render_item(generic_object)
     rescue Exception => e
       puts e.message.inspect
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
   def model_create_render_item (generic_object)
-    render :json => generic_object, :status => :created
+    render :json => generic_object.attributes_with_associations, :status => :created
   end
 
   def model_update_render (object, params)
@@ -284,15 +281,20 @@ class ApplicationController < ActionController::Base
       generic_object = object.find( params[:id] )
 
       # save object
-      generic_object.update_attributes!( object.param_cleanup(params) )
-      model_update_render_item(generic_object)
+      generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model_url] ) )
+
+      # set relations
+      generic_object.param_set_associations( params )
+
+      model_update_render_item( generic_object )
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
   def model_update_render_item (generic_object)
-    render :json => generic_object, :status => :ok
+    render :json => generic_object.attributes_with_associations, :status => :ok
   end
 
   def model_destory_render (object, params)
@@ -302,6 +304,7 @@ class ApplicationController < ActionController::Base
       model_destory_render_item()
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
@@ -311,23 +314,32 @@ class ApplicationController < ActionController::Base
 
   def model_show_render (object, params)
     begin
+
+      if params[:full]
+        generic_object_full = object.full( params[:id] )
+        render :json => generic_object_full, :status => :ok
+        return
+      end
+
       generic_object = object.find( params[:id] )
       model_show_render_item(generic_object)
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end
   def model_show_render_item (generic_object)
-    render :json => generic_object, :status => :ok
+    render :json => generic_object.attributes_with_associations, :status => :ok
   end
 
   def model_index_render (object, params)
     begin
-      generic_object = object.all
-      model_index_render_result( generic_object )
+      generic_objects = object.all
+      model_index_render_result( generic_objects )
     rescue Exception => e
       logger.error e.message
+      logger.error e.backtrace.inspect
       render :json => { :error => e.message }, :status => :unprocessable_entity
     end
   end

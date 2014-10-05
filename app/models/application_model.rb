@@ -1,27 +1,52 @@
-# Copyright (C) 2013-2013 Zammad Foundation, http://zammad-foundation.org/
-
-require 'cache'
-require 'user_info'
-require 'sessions'
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationModel < ActiveRecord::Base
+  include ApplicationModel::Assets
+  include ApplicationModel::HistoryLogBase
+  include ApplicationModel::ActivityStreamBase
+  include ApplicationModel::SearchIndexBase
+
   self.abstract_class = true
 
-  before_create  :cache_delete, :fill_up_user_create
-  before_update  :cache_delete_before, :fill_up_user_update
-  before_destroy :cache_delete_before
+  before_create  :check_attributes_protected, :check_limits, :cache_delete, :fill_up_user_create
+  before_update  :check_limits, :cache_delete_before, :fill_up_user_update
+  before_destroy :cache_delete_before, :destroy_dependencies
+
   after_create  :cache_delete
   after_update  :cache_delete
   after_destroy :cache_delete
 
+  after_create  :attachments_buffer_check
+  after_update  :attachments_buffer_check
+
+  after_create  :activity_stream_create
+  after_update  :activity_stream_update
+  before_destroy :activity_stream_destroy
+
+  after_create  :history_create
+  after_update  :history_update
+  after_destroy :history_destroy
+
+  after_create  :search_index_update
+  after_update  :search_index_update
+  after_destroy :search_index_destroy
+
+  before_destroy :recent_view_destroy
+
+  # create instance accessor
+  class << self
+    attr_accessor :activity_stream_support_config, :history_support_config, :search_index_support_config
+  end
+
+  attr_accessor :history_changes_last_done
+
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
 
-  # for import of other objects, remove 'id'
-  def self.attributes_protected_by_default
-    if Setting.get('import_mode') && @@import_class_list.include?( self.name.to_s )
-      ['type']
+  def check_attributes_protected
+    if Setting.get('import_mode') && @@import_class_list.include?( self.class.to_s )
+      # do noting, use id as it is
     else
-      ['id','type']
+      self[:id] = nil
     end
   end
 
@@ -39,6 +64,10 @@ returns
 
   def self.param_cleanup(params)
 
+    if params == nil
+      raise "No params for #{self.to_s}!"
+    end
+
     # only use object attributes
     data = {}
     self.new.attributes.each {|item|
@@ -50,6 +79,64 @@ returns
 
     # we do want to set this via database
     self.param_validation(data)
+  end
+
+=begin
+
+set rellations of model based on params
+
+  model = Model.find(1)
+  result = model.param_set_associations(params)
+
+returns
+
+  result = true|false
+
+=end
+
+  def param_set_associations(params)
+
+    # set relations
+    self.class.reflect_on_all_associations.map { |assoc|
+      real_key = assoc.name.to_s[0,assoc.name.to_s.length-1] + '_ids'
+      if params.has_key?( real_key.to_sym )
+        list_of_items = params[ real_key.to_sym ]
+        if params[ real_key.to_sym ].class != Array
+          list_of_items = [ params[ real_key.to_sym ] ]
+        end
+        list = []
+        list_of_items.each {|item|
+          list.push( assoc.klass.find(item) )
+        }
+        self.send( assoc.name.to_s + '=', list )
+      end
+    }
+  end
+
+=begin
+
+get rellations of model based on params
+
+  model = Model.find(1)
+  attributes = model.attributes_with_associations
+
+returns
+
+  hash with attributes and association ids
+
+=end
+
+  def attributes_with_associations
+
+    # set relations
+    attributes = self.attributes
+    self.class.reflect_on_all_associations.map { |assoc|
+      real_key = assoc.name.to_s[0,assoc.name.to_s.length-1] + '_ids'
+      if self.respond_to?( real_key )
+        attributes[ real_key ] = self.send( real_key )
+      end
+    }
+    attributes
   end
 
 =begin
@@ -71,7 +158,9 @@ returns
     data.delete( :created_at )
     data.delete( :updated_by_id )
     data.delete( :created_by_id )
-
+    if data.respond_to?('permit!')
+      data.permit!
+    end
     data
   end
 
@@ -337,11 +426,11 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-
+    puts "#{ self.class.name }.find(#{ self.id }) notify created " + self.created_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':created',
+      :event => class_name + ':create',
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
   end
@@ -365,11 +454,11 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    puts "#{self.class.name.downcase} UPDATED " + self.updated_at.to_s
+    puts "#{ self.class.name }.find(#{ self.id }) notify UPDATED " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':updated',
+      :event => class_name + ':update',
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
   end
@@ -392,7 +481,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    puts "#{self.class.name.downcase} DESTOY " + self.updated_at.to_s
+    puts "#{ self.class.name }.find(#{ self.id }) notify DESTOY " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -400,4 +489,434 @@ class OwnModel < ApplicationModel
       :data => { :id => self.id, :updated_at => self.updated_at }
     )
   end
+
+=begin
+
+serve methode to configure and enable search index support for this model
+
+class Model < ApplicationModel
+  search_index_support :ignore_attributes => {
+    :create_article_type_id   => true,
+    :create_article_sender_id => true,
+    :article_count            => true,
+  }
+
+end
+
+=end
+
+  def self.search_index_support(data = {})
+    @search_index_support_config = data
+  end
+
+=begin
+
+update search index, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.search_index_update
+
+=end
+
+  def search_index_update
+    return if !self.class.search_index_support_config
+
+    # start background job to transfer data to search index
+    return if !SearchIndexBackend.enabled?
+    Delayed::Job.enqueue( ApplicationModel::BackgroundJobSearchIndex.new( self.class.to_s, self.id ) )
+  end
+
+=begin
+
+delete search index object, will be executed automatically
+
+  model = Model.find(123)
+  model.search_index_destroy
+
+=end
+
+  def search_index_destroy
+    return if !self.class.search_index_support_config
+    SearchIndexBackend.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
+reload search index with full data
+
+  Model.search_index_reload
+
+=end
+
+  def self.search_index_reload
+    return if !@search_index_support_config
+    self.all.order('created_at DESC').each { |item|
+      item.search_index_update_backend
+    }
+  end
+
+=begin
+
+serve methode to configure and enable activity stream support for this model
+
+class Model < ApplicationModel
+  activity_stream_support :role => 'Admin'
+end
+
+=end
+
+  def self.activity_stream_support(data = {})
+    @activity_stream_support_config = data
+  end
+
+=begin
+
+log object create activity stream, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.activity_stream_create
+
+=end
+
+  def activity_stream_create
+    return if !self.class.activity_stream_support_config
+    activity_stream_log( 'created', self['created_by_id'] )
+  end
+
+=begin
+
+log object update activity stream, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.activity_stream_update
+
+=end
+
+  def activity_stream_update
+    return if !self.class.activity_stream_support_config
+
+    return if !self.changed?
+
+    # default ignored attributes
+    ignore_attributes = {
+      :created_at               => true,
+      :updated_at               => true,
+      :created_by_id            => true,
+      :updated_by_id            => true,
+    }
+    if self.class.activity_stream_support_config[:ignore_attributes]
+      self.class.activity_stream_support_config[:ignore_attributes].each {|key, value|
+        ignore_attributes[key] = value
+      }
+    end
+
+    log = false
+    self.changes.each {|key, value|
+
+      # do not log created_at and updated_at attributes
+      next if ignore_attributes[key.to_sym] == true
+
+      log = true
+    }
+
+    return if !log
+
+    activity_stream_log( 'updated', self['updated_by_id'] )
+  end
+
+=begin
+
+delete object activity stream, will be executed automatically
+
+  model = Model.find(123)
+  model.activity_stream_destroy
+
+=end
+
+  def activity_stream_destroy
+    return if !self.class.activity_stream_support_config
+    ActivityStream.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
+serve methode to configure and enable history support for this model
+
+class Model < ApplicationModel
+  history_support
+end
+
+
+class Model < ApplicationModel
+  history_support :ignore_attributes => { :article_count => true }
+end
+
+=end
+
+  def self.history_support(data = {})
+    @history_support_config = data
+  end
+
+=begin
+
+log object create history, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.history_create
+
+=end
+
+  def history_create
+    return if !self.class.history_support_config
+    #puts 'create ' + self.changes.inspect
+    self.history_log( 'created', self.created_by_id )
+
+  end
+
+=begin
+
+log object update history with all updated attributes, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.history_update
+
+=end
+
+  def history_update
+    return if !self.class.history_support_config
+
+    return if !self.changed?
+
+    # return if it's no update
+    return if self.new_record?
+
+    # new record also triggers update, so ignore new records
+    changes = self.changes
+    if self.history_changes_last_done
+      self.history_changes_last_done.each {|key, value|
+        if changes.has_key?(key) && changes[key] == value
+          changes.delete(key)
+        end
+      }
+    end
+    self.history_changes_last_done = changes
+    #puts 'updated ' + self.changes.inspect
+
+    return if changes['id'] && !changes['id'][0]
+
+    # default ignored attributes
+    ignore_attributes = {
+      :created_at               => true,
+      :updated_at               => true,
+      :created_by_id            => true,
+      :updated_by_id            => true,
+    }
+    if self.class.history_support_config[:ignore_attributes]
+      self.class.history_support_config[:ignore_attributes].each {|key, value|
+        ignore_attributes[key] = value
+      }
+    end
+
+    changes.each {|key, value|
+
+      # do not log created_at and updated_at attributes
+      next if ignore_attributes[key.to_sym] == true
+
+      # get attribute name
+      attribute_name = key.to_s
+      if attribute_name[-3,3] == '_id'
+        attribute_name = attribute_name[ 0, attribute_name.length-3 ]
+      end
+
+      value_id = []
+      value_str = [ value[0], value[1] ]
+      if key.to_s[-3,3] == '_id'
+        value_id[0] = value[0]
+        value_id[1] = value[1]
+
+        if self.respond_to?( attribute_name ) && self.send(attribute_name)
+          relation_class = self.send(attribute_name).class
+          if relation_class && value_id[0]
+            relation_model = relation_class.lookup( :id => value_id[0] )
+            if relation_model
+              if relation_model['name']
+                value_str[0] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[0] = relation_model.send('fullname')
+              end
+            end
+          end
+          if relation_class && value_id[1]
+            relation_model = relation_class.lookup( :id => value_id[1] )
+            if relation_model
+              if relation_model['name']
+                value_str[1] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[1] = relation_model.send('fullname')
+              end
+            end
+          end
+        end
+      end
+      data = {
+        :history_attribute      => attribute_name,
+        :value_from             => value_str[0].to_s,
+        :value_to               => value_str[1].to_s,
+        :id_from                => value_id[0],
+        :id_to                  => value_id[1],
+      }
+      #puts "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
+      self.history_log( 'updated', self.updated_by_id, data )
+    }
+  end
+
+=begin
+
+delete object history, will be executed automatically
+
+  model = Model.find(123)
+  model.history_destroy
+
+=end
+
+  def history_destroy
+    return if !self.class.history_support_config
+    History.remove( self.class.to_s, self.id )
+  end
+
+=begin
+
+get list of attachments of this object
+
+  item = Model.find(123)
+  list = item.attachments
+
+returns
+
+  # array with Store model objects
+
+=end
+
+  def attachments
+    Store.list( :object => self.class.to_s, :o_id => self.id )
+  end
+
+=begin
+
+store attachments for this object
+
+  item = Model.find(123)
+  item.attachments = [ Store-Object1, Store-Object2 ]
+
+=end
+
+  def attachments=(attachments)
+    self.attachments_buffer = attachments
+
+    # update if object already exists
+    if self.id && self.id != 0
+      attachments_buffer_check
+    end
+  end
+
+=begin
+
+return object and assets
+
+  data = Model.full(123)
+  data = {
+    :id     => 123,
+    :assets => assets,
+  }
+
+=end
+
+  def self.full(id)
+    object = self.find(id)
+    assets = object.assets({})
+    {
+      :id     => id,
+      :assets => assets,
+    }
+  end
+
+  private
+
+  def attachments_buffer
+    @attachments_buffer_data
+  end
+  def attachments_buffer=(attachments)
+    @attachments_buffer_data = attachments
+  end
+
+  def attachments_buffer_check
+
+    # do nothing if no attachment exists
+    return 1 if attachments_buffer == nil
+
+    # store attachments
+    article_store = []
+    attachments_buffer.each do |attachment|
+      article_store.push Store.add(
+        :object        => self.class.to_s,
+        :o_id          => self.id,
+        :data          => attachment.content,
+        :filename      => attachment.filename,
+        :preferences   => attachment.preferences,
+        :created_by_id => self.created_by_id,
+      )
+    end
+    attachments_buffer = nil
+  end
+
+=begin
+
+delete object recent viewed list, will be executed automatically
+
+  model = Model.find(123)
+  model.recent_view_destroy
+
+=end
+
+  def recent_view_destroy
+    RecentView.log_destroy( self.class.to_s, self.id )
+  end
+
+=begin
+
+check string/varchar size and cut them if needed
+
+=end
+
+  def check_limits
+    self.attributes.each {|attribute|
+      next if !self[ attribute[0] ]
+      next if self[ attribute[0] ].class != String
+      next if self[ attribute[0] ].empty?
+      column = self.class.columns_hash[ attribute[0] ]
+      limit = column.limit
+      if column && limit
+        current_length = attribute[1].to_s.length
+        if limit < current_length
+          puts "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
+          self[ attribute[0] ] = attribute[1][ 0, limit ]
+        end
+      end
+
+      # strip 4 bytes utf8 chars if needed
+      if column && self[ attribute[0] ]
+        self[attribute[0]] = self[ attribute[0] ].utf8_to_3bytesutf8
+      end
+    }
+  end
+
+=begin
+
+destory object dependencies, will be executed automatically
+
+=end
+
+  def destroy_dependencies
+  end
+
 end

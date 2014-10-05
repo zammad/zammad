@@ -39,7 +39,7 @@ class Index extends App.ControllerContent
     )
 
   render: ->
-
+    console.log('RENDER 1')
     # check authentication, redirect to login if master user already exists
     if !@master_user && !@authenticate()
       @navigate '#login'
@@ -51,13 +51,13 @@ class Index extends App.ControllerContent
     new App.ControllerForm(
       el:        @el.find('#form-master')
       model:     App.User
-      required:  'signup'
+      screen:    'signup'
       autofocus: true
     )
     new App.ControllerForm(
       el:        @el.find('#form-agent')
       model:     App.User
-      required:  'invite_agent'
+      screen:    'invite_agent'
       autofocus: true
     )
 
@@ -94,8 +94,7 @@ class Index extends App.ControllerContent
 
     # save user
     user.save(
-      success: (r) =>
-
+      done: =>
         if @master_user
           @master_user = false
           App.Auth.login(
@@ -106,7 +105,7 @@ class Index extends App.ControllerContent
             success: @relogin
 #            error: @error,
           )
-
+          @Config.set('system_init_done', true)
           App.Event.trigger 'notify', {
             type:    'success'
             msg:     App.i18n.translateContent( 'Welcome to %s!', @Config.get('product_name') )
@@ -123,13 +122,13 @@ class Index extends App.ControllerContent
 
           # rerender page
           @render()
-      error: (data) ->
 
-          App.Event.trigger 'notify', {
-            type:    'error'
-            msg:     App.i18n.translateContent( 'Can\'t create user!' )
-            timeout: 2500
-          }
+      fail: (data) ->
+        App.Event.trigger 'notify', {
+          type:    'error'
+          msg:     App.i18n.translateContent( 'Can\'t create user!' )
+          timeout: 2500
+        }
 #        @modalHide()
     )
 
@@ -142,8 +141,10 @@ class Index extends App.ControllerContent
 #        type: 'success',
 #        msg: 'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
 
-    @el.find('.master_user').fadeOut('slow', =>
-      @el.find('.agent_user').fadeIn()
-    )
+    @el.find('.master_user').addClass('hide')
+    @el.find('.agent_user').removeClass('hide')
+#    @el.find('.master_user').fadeOut('slow', =>
+#      @el.find('.agent_user').fadeIn()
+#    )
 
 App.Config.set( 'getting_started', Index, 'Routes' )

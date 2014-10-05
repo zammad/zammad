@@ -4,48 +4,102 @@ class App.ControllerTable extends App.Controller
       @[key] = value
 
     @table = @tableGen(params)
+
     if @el
       @el.append( @table )
 
   ###
 
+    # table based on model
+
+    rowClick = (id, e) ->
+      e.preventDefault()
+      console.log('rowClick', id)
+    rowMouseover = (id, e) ->
+      e.preventDefault()
+      console.log('rowMouseover', id)
+    rowMouseout = (id, e) ->
+      e.preventDefault()
+      console.log('rowMouseout', id)
+    rowDblClick = (id, e) ->
+      e.preventDefault()
+      console.log('rowDblClick', id)
+
+    colClick = (id, e) ->
+      e.preventDefault()
+      console.log('colClick', e.target)
+
+    checkboxClick = (id, e) ->
+      e.preventDefault()
+      console.log('checkboxClick', e.target)
+
+    callbackHeader = (header) ->
+      console.log('current header is', header)
+      # add new header item
+      attribute =
+        name: 'some name'
+        display: 'Some Name'
+      header.push attribute
+      console.log('new header is', header)
+
+    callbackAttributes = (value, object, attribute, header, refObject) ->
+      console.log('data of item col', value, object, attribute, header, refObject)
+      value = 'New Data To Show'
+      value
+
     new App.ControllerTable(
-      header:   ['Host', 'User', 'Adapter', 'Active'],
-      overview: ['host', 'user', 'adapter', 'active'],
-      model:    App.Channel,
-      objects:  data,
-      checkbox: false,
-      radio:    false,
+      el:       element
+      overview: ['host', 'user', 'adapter', 'active']
+      model:    App.Channel
+      objects:  data
+      groupBy:  'group'
+      checkbox: false
+      radio:    false
+      bindRow:
+        events:
+          'click':      rowClick
+          'mouseover':  rowMouseover
+          'mouseout':   rowMouseout
+          'dblclick':   rowDblClick
+      bindCol:
+        host:
+          events:
+            'click': colClick
+      bindCheckbox:
+        events:
+          'click':      rowClick
+          'mouseover':  rowMouseover
+          'mouseout':   rowMouseout
+          'dblclick':   rowDblClick
+      callbackHeader:   callbackHeader
+      callbackAttributes:
+        attributeName: [
+          callbackAttributes
+        ]
     )
 
     new App.ControllerTable(
-      overview_extended: [
-        { name: 'number',                 link: true },
-        { name: 'title',                  link: true },
-        { name: 'customer',               class: 'user-data', data: { id: true } },
-        { name: 'ticket_state',           translate: true },
-        { name: 'ticket_priority',        translate: true },
-        { name: 'group' },
-        { name: 'owner',                  class: 'user-data', data: { id: true } },
-        { name: 'created_at',             callback: @frontendTime },
-        { name: 'last_contact',           callback: @frontendTime },
-        { name: 'last_contact_agent',     callback: @frontendTime },
-        { name: 'last_contact_customer',  callback: @frontendTime },
-        { name: 'first_response',         callback: @frontendTime },
-        { name: 'close_time',             callback: @frontendTime },
-      ],
-      model:    App.Ticket,
-      objects:  tickets,
-      checkbox: false,
-      radio:    false,
+      el:       element
+      overview: ['time', 'area', 'level', 'browser', 'location', 'data']
+      attributes: [
+        { name: 'time',     display: 'Time',      type: 'time' },
+        { name: 'area',     display: 'Area',      type: 'text' },
+        { name: 'level',    display: 'Level',     type: 'text' },
+        { name: 'browser',  display: 'Browser',   type: 'text' },
+        { name: 'location', display: 'Location',  type: 'text' },
+        { name: 'data',     display: 'Data',      type: 'text' },
+      ]
+      objects:  data
     )
 
   ###
 
   tableGen: (data) ->
+    if !data.model
+      data.model = {}
     overview   = data.overview || data.model.configure_overview || []
     attributes = data.attributes || data.model.configure_attributes || {}
-    header     = data.header
+    attributes = App.Model.attributesGet(false, attributes)
     destroy    = data.model.configure_delete
 
     # check if table is empty
@@ -53,84 +107,173 @@ class App.ControllerTable extends App.Controller
       table = '<p>-' + App.i18n.translateContent( 'none' ) + '-</p>'
       return $(table)
 
-    # define normal header
-    if header
-      header_new = []
-      for key in header
-        header_new.push {
-          display: key
-        }
-      header = header_new
-    else if !data.overview_extended
-      header = []
-      for row in overview
-        if attributes
-          for attribute in attributes
-            if row is attribute.name
-              header.push attribute
-            else
-              rowWithoutId = row + '_id'
-              if rowWithoutId is attribute.name
-                header.push  attribute
+    # group by
+    if data.groupBy
 
-    dataTypesForCols = []
-    for row in overview
-      dataTypesForCols.push {
-        name: row
-        link: true
-      }
+      # remove group by attribute from header
+      overview = _.filter(
+        overview
+        (item) =>
+          return item if item isnt data.groupBy
+          return
+      )
 
-    # extended table format
-    if data.overview_extended
-      if !header
-        header = []
-        for row in data.overview_extended
-          for attribute in attributes
-            if row.name is attribute.name
-              header.push attribute
-            else
-              rowWithoutId = row.name + '_id'
-              if rowWithoutId is attribute.name
-                header.push attribute
+      # get new order
+      groupObjects = _.groupBy(
+        data.objects
+        (item) =>
+          return '' if !item[data.groupBy]
+          return item[data.groupBy].displayName() if item[data.groupBy].displayName
+          item[data.groupBy]
+      )
+      groupOrder = []
+      for group, value of groupObjects
+        groupOrder.push group
 
-      dataTypesForCols = data.overview_extended
+      # sort new groups
+      groupOrder = _.sortBy(
+        groupOrder
+        (item) =>
+          item
+      )
 
-    # generate content data
-    for object in data.objects
+      # create new data array
+      data.objects = []
+      for group in groupOrder
+        data.objects = data.objects.concat groupObjects[group]
+        groupObjects[group] = [] # release old array
 
-      # check if info for each col. is already there
-      for row in dataTypesForCols
+    # get header data
+    header = []
+    for item in overview
+      headerFound = false
+      for attributeName, attribute of attributes
+        if attributeName is item
+          headerFound = true
+          header.push attribute
+        else
+          rowWithoutId = item + '_id'
+          if attributeName is rowWithoutId
+            headerFound = true
+            header.push attribute
 
-        # lookup relation
-        if !object[row.name]
-          rowWithoutId = row.name + '_id'
-          for attribute in attributes
-            if rowWithoutId is attribute.name
-              if attribute.relation && App[ attribute.relation ]
-                record = App[ attribute.relation ].find( object[rowWithoutId] )
-                object[row.name] = record.name
+    # execute header callback
+    if data.callbackHeader
+      header = data.callbackHeader(header)
 
-    @log 'debug', 'table', 'header', header, 'overview', dataTypesForCols, 'objects', data.objects
+    # get content
+    @log 'debug', 'table', 'header', header, 'overview', 'objects', data.objects
     table = App.view('generic/table')(
       header:   header
-      overview: dataTypesForCols
       objects:  data.objects
       checkbox: data.checkbox
       radio:    data.radio
       groupBy:  data.groupBy
       destroy:  destroy
+      callbacks: data.callbackAttributes
     )
 
     # convert to jquery object
     table = $(table)
 
-    # enable checkbox bulk selection
-    if data.checkbox
-      table.delegate('[name="bulk_all"]', 'click', (e) ->
-        if $(e.target).attr('checked')
-          $(e.target).parents().find('[name="bulk"]').attr( 'checked', true );
-        else
-          $(e.target).parents().find('[name="bulk"]').attr( 'checked', false );
+    cursorMap =
+      click:    'pointer'
+      dblclick: 'pointer'
+      #mouseover: 'alias'
+
+    # bind col.
+    if data.bindCol
+      for name, item of data.bindCol
+        if item.events
+          position = 0
+          if data.checkbox
+            position += 1
+          hit      = false
+
+          for headerName in header
+            if !hit
+              position += 1
+            if headerName.name is name || headerName.name is "#{name}_id"
+              hit = true
+
+          if hit
+            for event, callback of item.events
+              do (table, event, callback) =>
+                if cursorMap[event]
+                  table.find("tbody > tr > td:nth-child(#{position}) span").css( 'cursor', cursorMap[event] )
+                table.on( event, "tbody > tr > td:nth-child(#{position}) span",
+                  (e) =>
+                    e.stopPropagation()
+                    id = $(e.target).parents('tr').data('id')
+                    callback(id, e)
+                )
+
+    # bind row
+    if data.bindRow
+      if data.bindRow.events
+        for event, callback of data.bindRow.events
+          do (table, event, callback) =>
+            if cursorMap[event]
+              table.find('tbody > tr').css( 'cursor', cursorMap[event] )
+            table.on( event, 'tbody > tr',
+              (e) =>
+                id = $(e.target).parents('tr').data('id')
+                callback(id, e)
+            )
+
+    # bind bindCheckbox
+    if data.bindCheckbox
+      if data.bindCheckbox.events
+        for event, callback of data.bindCheckbox.events
+          do (table, event, callback) =>
+            table.delegate('input[name="bulk"]', event, (e) ->
+              e.stopPropagation()
+              id      = $(e.target).parents('tr').data('id')
+              checked = $(e.target).prop('checked')
+              callback(id, checked, e)
+            )
+
+    # bind on delete dialog
+    if data.model && destroy
+      table.delegate('[data-type="destroy"]', 'click', (e) ->
+        e.stopPropagation()
+        e.preventDefault()
+        itemId = $(e.target).parents('tr').data('id')
+        item   = data.model.find(itemId)
+        new App.ControllerGenericDestroyConfirm(
+          item: item
+        )
       )
 
-    return table
+    # enable checkbox bulk selection
+    if data.checkbox
+
+      # click first tr>td, click checkbox / improve usability
+      table.delegate('tr > td:nth-child(1)', event, (e) ->
+        e.stopPropagation()
+        $(e.target).find('[name="bulk"]').click()
+      )
+
+      # bind on full bulk click
+      table.delegate('input[name="bulk_all"]', 'click', (e) ->
+        e.stopPropagation()
+        if $(e.target).prop('checked')
+          $(e.target).parents('table').find('[name="bulk"]').each( ->
+            if !$(@).prop('checked')
+              #$(@).prop('checked', true)
+              $(@).trigger('click')
+          )
+        else
+          $(e.target).parents('table').find('[name="bulk"]').each( ->
+            if $(@).prop('checked')
+              #$(@).prop('checked', false)
+              $(@).trigger('click')
+          )
+      )
+
+    time = =>
+      @frontendTimeUpdate()
+    @delay(time, 80) # to show time immediately for normal tables
+    @delay(time, 280) # to show time immediately for tables in modal dialog
+
+    table

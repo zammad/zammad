@@ -3,12 +3,12 @@ class App.Sla extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/slas'
   @configure_attributes = [
-    { name: 'name',                display: 'Name',                tag: 'input',    type: 'text', limit: 100, null: false, 'class': 'span4' },
-    { name: 'first_response_time', display: 'First Response Time', tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
-    { name: 'update_time',         display: 'Update Time',         tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
-    { name: 'close_time',          display: 'Solution Time',       tag: 'input',    type: 'text', limit: 100, null: true, 'class': 'span4', note: 'In minutes, only business times are counted.' },
-    { name: 'condition',           display: 'Conditions where SLA is used', tag: 'ticket_attribute_selection', null: true, class: 'span4' },
-    { name: 'timezone',            display: 'Timezone',            tag: 'timezone', null: true, class: 'span4' },
+    { name: 'name',                display: 'Name',                tag: 'input',    type: 'text', limit: 100, null: false },
+    { name: 'first_response_time', display: 'First Response Time', tag: 'input',    type: 'text', limit: 100, null: true, note: 'In minutes, only business times are counted.' },
+    { name: 'update_time',         display: 'Update Time',         tag: 'input',    type: 'text', limit: 100, null: true, note: 'In minutes, only business times are counted.' },
+    { name: 'close_time',          display: 'Solution Time',       tag: 'input',    type: 'text', limit: 100, null: true, note: 'In minutes, only business times are counted.' },
+    { name: 'condition',           display: 'Conditions where SLA is used', tag: 'ticket_attribute_selection', null: true },
+    { name: 'timezone',            display: 'Timezone',            tag: 'timezone', null: true },
     {
       name:    'data'
       display: 'Business Times'
@@ -25,15 +25,17 @@ class App.Sla extends App.Model
       nulloption: true
       translate:  true
       options:
-        customer:         'Customer'
-        ticket_state:     'State'
-        ticket_priority:  'Priority'
-        group:            'Group'
-        owner:            'Owner'
-      class:   'span4'
+        customer:  'Customer'
+        state:     'State'
+        priority:  'Priority'
+        group:     'Group'
+        owner:     'Owner'
     },
-    { name: 'updated_at',          display: 'Updated',             type: 'time', readonly: 1 },
-    { name: 'active',              display: 'Active',              tag: 'boolean',  note: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
+    { name: 'active',         display: 'Active',              tag: 'boolean',  note: 'boolean', 'default': true, 'null': false },
+    { name: 'created_by_id',  display: 'Created by', relation: 'User', readonly: 1 },
+    { name: 'created_at',     display: 'Created', type: 'time', readonly: 1 },
+    { name: 'updated_by_id',  display: 'Updated by', relation: 'User', readonly: 1 },
+    { name: 'updated_at',     display: 'Updated', type: 'time', readonly: 1 },
   ]
   @configure_delete = true
   @configure_overview = [

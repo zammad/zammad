@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class RecentViewedController < ApplicationController
   before_filter :authentication_check
@@ -14,15 +14,42 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/recent_viewed.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
+curl http://localhost/api/v1/recent_viewed -v -u #{login}:#{password} -H "Content-Type: application/json" -X GET
 
 =end
 
-  def recent_viewed
+  def index
     recent_viewed = RecentView.list_fulldata( current_user, 10 )
 
     # return result
     render :json => recent_viewed
+  end
+
+=begin
+
+Resource:
+POST /api/v1/recent_viewed
+
+Payload:
+{
+  "object": "Ticket",
+  "o_id": 123,
+}
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/v1/recent_viewed -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"object": "Ticket","o_id": 123}'
+
+=end
+
+  def create
+
+    RecentView.log( params[:object], params[:o_id], current_user )
+
+    # return result
+    render :json => { :message => 'ok' }
   end
 
 end

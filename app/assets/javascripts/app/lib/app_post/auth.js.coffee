@@ -30,7 +30,7 @@ class App.Auth
       success: (data, status, xhr) =>
 
         # set login (config, session, ...)
-        @_login(data)
+        @_login(data, 'check')
 
       error: (xhr, statusText, error) =>
         @_loginError()
@@ -51,7 +51,7 @@ class App.Auth
         @_loginError()
     )
 
-  @_login: (data) ->
+  @_login: (data, type) ->
     App.Log.notice 'Auth', '_login:success', data
 
     # if session is not valid
@@ -69,24 +69,44 @@ class App.Auth
       App.Event.trigger( 'auth:logout' )
       App.Event.trigger( 'ui:rerender' )
 
+      # update model definition
+      if data.models
+        for model, attributes of data.models
+          for attribute in attributes
+            App[model].attributes.push attribute.name
+            App[model].configure_attributes.push attribute
+
       return false;
 
-    # set avatar
-    if !data.session.image
-      data.session.image = 'http://placehold.it/48x48'
+    # clear local store
+    if type isnt 'check'
+      App.Event.trigger( 'clearStore' )
+
+    # update model definition
+    if data.models
+      for model, attributes of data.models
+        for attribute in attributes
+          App[model].attributes.push attribute.name
+          App[model].configure_attributes.push attribute
 
     # update config
     for key, value of data.config
       App.Config.set( key, value )
 
+    # refresh default collections
+    if data.collections
+      App.Collection.resetCollections( data.collections )
+
+    # load assets
+    if data.assets
+      App.Collection.loadAssets( data.assets )
+
     # store user data
-    for key, value of data.session
+    session = App.User.fullLocal(data.session.id)
+    for key, value of session
       App.Session.set( key, value )
 
-    # refresh default collections
-    for key, value of data.default_collections
-      App[key].refresh( value, options: { clear: true } )
-
+    # trigger auth ok with new session data
     App.Event.trigger( 'auth', data.session )
 
     # init of i18n
@@ -110,6 +130,7 @@ class App.Auth
     App.Event.trigger( 'auth' )
     App.Event.trigger( 'auth:logout' )
     App.Event.trigger( 'ui:rerender' )
+    App.Event.trigger( 'clearStore' )
 
   @_loginError: (xhr, statusText, error) ->
     App.Log.notice 'Auth', '_loginError:error'
@@ -121,3 +142,4 @@ class App.Auth
     App.Event.trigger( 'auth' )
     App.Event.trigger( 'auth:logout' )
     App.Event.trigger( 'ui:rerender' )
+    App.Event.trigger( 'clearStore' )

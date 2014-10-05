@@ -1,11 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.14'
-
-# preparation for rails 4
-#gem 'rails', '4.0.0.rc1'
-#gem 'rails-observers'
-#gem 'activerecord-session_store'
+gem 'rails', '4.1.5'
+gem 'rails-observers'
+gem 'activerecord-session_store'
 
 gem 'eco'
 
@@ -17,12 +14,8 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-
-# preparation for rails 4
-#  gem 'sass-rails',   '~> 4.0.0.rc1'
-#  gem 'coffee-rails', '~> 4.0.0.rc1'
-  gem 'sass-rails',   '~> 3.2.4'
-  gem 'coffee-rails', '~> 3.2.2'
+  gem 'sass-rails', github: 'rails/sass-rails'
+  gem 'coffee-rails'
   gem 'uglifier'
 end
 
@@ -32,7 +25,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 
-gem 'twitter'
+gem 'twitter', '~> 5.8'
 gem 'koala'
 gem 'mail'
 
@@ -44,9 +37,9 @@ gem 'daemons'
 gem 'simple-rss'
 
 # e. g. on linux we need a javascript execution
-# gem 'libv8', '~> 3.11.8'
-# gem 'execjs'
-# gem 'therubyracer'
+gem 'libv8', '~> 3.11.8'
+gem 'execjs'
+gem 'therubyracer'
 
 # e. g. for mysql you need to load mysql
 gem 'mysql2'
@@ -58,6 +51,8 @@ gem 'mysql2'
 #end
 
 gem 'net-ldap'
+
+gem 'writeexcel'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -76,6 +71,8 @@ gem 'em-websocket'
 # in production environments by default.
 group :development, :test do
 
+    gem 'test-unit'
+    gem 'spring'
     gem 'sqlite3'
 
     # code coverage
@@ -92,4 +89,7 @@ group :development, :test do
 #    gem 'em-websocket-client'
 end
 
-gem 'thin'
+# to generate doc
+gem 'kramdown'
+
+gem 'puma'

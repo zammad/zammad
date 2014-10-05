@@ -1,8 +1,3 @@
-$.fn.item = (genericObject) ->
-  elementID   = $(@).data('id')
-  elementID or= $(@).parents('[data-id]').data('id')
-  genericObject.find(elementID)
-
 class App.ControllerGenericNew extends App.ControllerModal
   constructor: (params) ->
     super
@@ -12,11 +7,11 @@ class App.ControllerGenericNew extends App.ControllerModal
 
     @html App.view('generic/admin/new')( head: @pageData.object )
     new App.ControllerForm(
-      el:         @el.find('#object_new'),
-      model:      App[ @genericObject ],
-      params:     @item,
-      required:   @required,
-      autofocus:  true,
+      el:         @el.find('#object_new')
+      model:      App[ @genericObject ]
+      params:     @item
+      screen:     @screen || 'edit'
+      autofocus:  true
     )
     @modalShow()
 
@@ -40,12 +35,13 @@ class App.ControllerGenericNew extends App.ControllerModal
     # save object
     ui = @
     object.save(
-      success: ->
+      done: ->
         if ui.callback
-          ui.callback( @ )
+          item = App[ ui.genericObject ].fullLocal(@id)
+          ui.callback( item )
         ui.modalHide()
 
-      error: ->
+      fail: ->
         ui.log 'errors'
         ui.modalHide()
     )
@@ -60,17 +56,17 @@ class App.ControllerGenericEdit extends App.ControllerModal
 
     @html App.view('generic/admin/edit')( head: @pageData.object )
     new App.ControllerForm(
-      el:         @el.find('#object_edit'),
-      model:      App[ @genericObject ],
-      params:     @item,
-      required:   @required,
-      autofocus:  true,
+      el:         @el.find('#object_edit')
+      model:      App[ @genericObject ]
+      params:     @item
+      screen:     @screen || 'edit'
+      autofocus:  true
     )
     @modalShow()
 
   submit: (e) ->
     e.preventDefault()
-    params = @formParam(e.target) 
+    params = @formParam(e.target)
     @item.load(params)
 
     # validate
@@ -86,20 +82,20 @@ class App.ControllerGenericEdit extends App.ControllerModal
     # save object
     ui = @
     @item.save(
-      success: ->
+      done: ->
         if ui.callback
-          ui.callback( @ )
+          item = App[ ui.genericObject ].fullLocal(@id)
+          ui.callback( item )
         ui.modalHide()
 
-      error: =>
+      fail: =>
         ui.log 'errors'
         ui.modalHide()
     )
 
-class App.ControllerGenericIndex extends App.ControllerContent
+class App.ControllerGenericIndex extends App.Controller
   events:
     'click [data-type=edit]':    'edit'
-    'click [data-type=destroy]': 'destroy'
     'click [data-type=new]':     'new'
 
   constructor: ->
@@ -112,7 +108,8 @@ class App.ControllerGenericIndex extends App.ControllerContent
     @navupdate @pageData.navupdate
 
     # bind render after a change is done
-    @subscribeId = App[ @genericObject ].subscribe(@render)
+    if !@disableRender
+      @subscribeId = App[ @genericObject ].subscribe(@render)
 
     App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
       @log 'error', 'ajax', msg.status
@@ -126,10 +123,12 @@ class App.ControllerGenericIndex extends App.ControllerContent
     @render()
 
     # fetch all
-    App[ @genericObject ].fetch()
+    if !@disableInitFetch
+      App[ @genericObject ].fetch()
 
   release: =>
-    App[ @genericObject ].unsubscribe(@subscribeId)
+    if @subscribeId
+      App[ @genericObject ].unsubscribe(@subscribeId)
 
   render: =>
 
@@ -143,42 +142,48 @@ class App.ControllerGenericIndex extends App.ControllerContent
       )
 
     @html App.view('generic/admin/index')(
-      head:    @pageData.objects,
-      notes:   @pageData.notes,
-      buttons: @pageData.buttons,
-      menus:   @pageData.menus,
+      head:    @pageData.objects
+      notes:   @pageData.notes
+      buttons: @pageData.buttons
+      menus:   @pageData.menus
     )
 
     # append content table
-    new App.ControllerTable(
-      el:      @el.find('.table-overview'),
-      model:   App[ @genericObject ],
-      objects: objects,
+    params = _.extend(
+      {
+        el:         @el.find('.table-overview')
+        model:      App[ @genericObject ]
+        objects:    objects
+        bindRow:
+          events:
+            'click': @edit
+      },
+      @pageData.tableExtend
     )
+    new App.ControllerTable(params)
 
-  edit: (e) =>
+  edit: (id, e) =>
     e.preventDefault()
-    item = $(e.target).item( App[ @genericObject ] )
-    new App.ControllerGenericEdit(
-      id:            item.id,
-      pageData:      @pageData,
-      genericObject: @genericObject
-    )
+    item = App[ @genericObject ].find(id)
 
-  destroy: (e) ->
-    item = $(e.target).item( App[ @genericObject ] )
-    new DestroyConfirm(
-      item: item
+    if @editCallback
+      @editCallback(item)
+      return
+
+    new App.ControllerGenericEdit(
+      id:            item.id
+      pageData:      @pageData
+      genericObject: @genericObject
     )
 
   new: (e) ->
     e.preventDefault()
     new App.ControllerGenericNew(
-      pageData:      @pageData,
+      pageData:      @pageData
       genericObject: @genericObject
     )
 
-class DestroyConfirm extends App.ControllerModal
+class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   constructor: ->
     super
     @render()
@@ -191,13 +196,33 @@ class DestroyConfirm extends App.ControllerModal
       button:  'Yes'
     )
     @modalShow(
-      backdrop: true,
-      keyboard: true,
+      backdrop: true
+      keyboard: true
     )
 
   submit: (e) =>
     @modalHide()
     @item.destroy()
+
+class App.ControllerDrox extends App.Controller
+  constructor: (params) ->
+    super
+
+    if params.data && ( params.data.text || params.data.html )
+      @inline(params.data)
+
+  inline: (data) ->
+    @html App.view('generic/drox')(data)
+    if data.text
+      @el.find('.drox-body').text(data.text)
+    if data.html
+      @el.find('.drox-body').html(data.html)
+
+  template: (data) ->
+    drox = $( App.view('generic/drox')(data) )
+    content = App.view(data.file)(data.params)
+    drox.find('.drox-body').append(content)
+    drox
 
 class App.ControllerLevel2 extends App.ControllerContent
   events:
@@ -213,10 +238,10 @@ class App.ControllerLevel2 extends App.ControllerContent
     @navupdate @page.nav
 
     @html App.view('generic/admin_level2/index')(
-      page:     @page,
-      menus:    @menu,
-      type:     @type,
-      target:   @target,
+      page:     @page
+      menus:    @menu
+      type:     @type
+      target:   @target
     )
 
     if !@target
@@ -244,14 +269,17 @@ class App.ControllerLevel2 extends App.ControllerContent
 #    window.scrollTo(0,0)
 
 class App.ControllerTabs extends App.Controller
+  events:
+    'click .nav-tabs [data-toggle="tab"]': 'tabRemember',
+
   constructor: ->
     super
 
   render: ->
+
     @html App.view('generic/tabs')(
-      tabs: @tabs,
+      tabs: @tabs
     )
-    @el.find('.nav-tabs li:first').addClass('active')
 
     for tab in @tabs
       @el.find('.tab-content').append('<div class="tab-pane" id="' + tab.target + '"></div>')
@@ -260,4 +288,130 @@ class App.ControllerTabs extends App.Controller
         params.el = @el.find( '#' + tab.target )
         new tab.controller( params )
 
-    @el.find('.tab-content .tab-pane:first').addClass('active')
+    @lastActiveTab = @Config.get('lastTab')
+    if @lastActiveTab &&  @el.find('.nav-tabs li a[href="' + @lastActiveTab + '"]')[0]
+      @el.find('.nav-tabs li a[href="' + @lastActiveTab + '"]').tab('show')
+    else
+      @el.find('.nav-tabs li:first a').tab('show')
+
+  tabRemember: (e) =>
+    @lastActiveTab = $(e.target).attr('href')
+    @Config.set('lastTab', @lastActiveTab)
+
+class App.ControllerNavSidbar extends App.ControllerContent
+  constructor: (params) ->
+    super
+
+    # get groups
+    groups = App.Config.get(@configKey)
+    groupsUnsorted = []
+    for key, value of groups
+      if !value.controller
+        groupsUnsorted.push value
+
+    @groupsSorted = _.sortBy( groupsUnsorted, (item) -> return item.prio )
+
+    # get items of group
+    for group in @groupsSorted
+      items = App.Config.get(@configKey)
+      itemsUnsorted = []
+      for key, value of items
+        if value.controller
+          if value.parent is group.target
+            itemsUnsorted.push value
+
+      group.items = _.sortBy( itemsUnsorted, (item) -> return item.prio )
+
+    # set active item
+    selectedItem = undefined
+    for group in @groupsSorted
+      if group.items
+        for item in group.items
+          if !@target && !selectedItem
+            item.active = true
+            selectedItem = item
+          else if @target && item.target is window.location.hash
+            item.active = true
+            selectedItem = item
+          else
+            item.active = false
+
+    @render(selectedItem)
+
+    @bind(
+      'ui:rerender'
+      =>
+        @render(selectedItem, true)
+    )
+
+  render: (selectedItem, force) ->
+    if !$( '.' + @configKey )[0] || force
+      @html App.view('generic/navbar_l2')(
+        groups:     @groupsSorted
+        className:  @configKey
+      )
+    if selectedItem
+      @el.find('li').removeClass('active')
+      @el.find('a[href="' + selectedItem.target + '"]').parent().addClass('active')
+
+      new selectedItem.controller(
+        el: @el.find('.main')
+      )
+
+class App.GenericHistory extends App.ControllerModal
+  events:
+    'click [data-type=sortorder]': 'sortorder',
+    'click .cancel': 'modalHide',
+    'click .close':  'modalHide',
+
+  constructor: ->
+    super
+
+  render: ( items, orderClass = '' ) ->
+
+    for item in items
+
+      item.link  = ''
+      item.title = '???'
+
+      if item.object is 'Ticket::Article'
+        item.object = 'Article'
+        article = App.TicketArticle.find( item.o_id )
+        ticket  = App.Ticket.find( article.ticket_id )
+        item.title = article.subject || ticket.title
+        item.link  = article.uiUrl()
+
+      if App[item.object]
+        object     = App[item.object].find( item.o_id )
+        item.link  = object.uiUrl()
+        item.title = object.displayName()
+
+      item.created_by = App.User.find( item.created_by_id )
+
+    # set cache
+    @historyListCache = items
+
+    @html App.view('generic/history')(
+      items: items
+      orderClass: orderClass
+
+      @historyListCache
+    )
+
+    @modalShow()
+
+    # enable user popups
+    @userPopups()
+
+    # show frontend times
+    @delay( @frontendTimeUpdate, 300, 'ui-time-update' )
+
+  sortorder: (e) ->
+    e.preventDefault()
+    isDown = @el.find('[data-type="sortorder"]').hasClass('down')
+
+    if isDown
+      @render( @historyListCache, 'up' )
+    else
+      @render( @historyListCache.reverse(), 'down' )
+

@@ -1,5 +1,4 @@
-![Build Status](http://ci.zammad.org/buildStatus/icon?job=ZammadUnittest-ruby-1.9.3-p429)
-
+[![Build Status](http://ci.zammad.org/buildStatus/icon?job=ZammadUnittest-ruby-2.0.0-p195)](http://ci.zammad.org/job/ZammadUnittest-ruby-2.0.0-p195/)
 Welcome to Zammad
 =================
 
@@ -26,7 +25,7 @@ Getting Started
 
 ```
      zammad@shell> cd zammad
-     zammad@shell> gem install rails
+     zammad@shell> gem install rails 
      zammad@shell> vi Gemfile # enable libv8, execjs and therubyracer if needed!
      zammad@shell> sudo bundle install
 ```
@@ -51,9 +50,9 @@ Getting Started
 
 ```
      zammad@shell> rake assets:precompile
-     zammad@shell> rails server # rails web server
-     zammad@shell> ruby script/websocket-server.rb # non blocking websocket server
-     zammad@shell> rails runner 'Session.jobs' # generate overviews on demand, just send changed data to browser
+     zammad@shell> puma -p 3000 # application web server
+     zammad@shell> script/websocket-server.rb start # non blocking websocket server
+     zammad@shell> script/scheduler.rb start # generate overviews on demand, just send changed data to browser
 ```
 
 6. Go to http://localhost:3000/#getting_started and you'll see:

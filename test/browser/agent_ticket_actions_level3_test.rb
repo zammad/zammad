@@ -37,22 +37,26 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 3 <b>body</b> 123äöü',
             :match_result => true,
           },
 
           # remember old ticket where we want to merge to
           {
-            :where   => :instance1,
+            :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
-            :value        => '^(.*)$',
+            :css          => '.active .ticket_info h3',
+            :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
 
           # open ticket in second browser
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
           {
             :where   => :instance2,
             :execute => 'set',
@@ -71,40 +75,12 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").val("")',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").focus()',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").blur()',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").parent().parent().removeClass("open")',
-          },
-          {
-            :execute => 'wait',
             :value   => 3,
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 3 <b>body</b> 123äöü',
             :match_result => true,
           },
@@ -130,13 +106,14 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 5,
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
           {
@@ -146,13 +123,14 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 8,
+            :value   => 12,
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
 
@@ -160,7 +138,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active div.article-view',
+            :css          => '.active div.ticket-article-view',
             :value        => 'some level 3 <b>body</b> in instance 2',
             :match_result => true,
           },
@@ -174,8 +152,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
 
@@ -197,21 +176,21 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 8,
+            :value   => 16,
           },
 
           # check content in instance 2
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.article-view',
+            :css          => '.active div.ticket-article-view',
             :value        => 'some level 3 <b>body</b> in instance 1',
             :match_result => true,
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.article-view',
+            :css          => '.active div.ticket-article-view',
             :value        => 'some level 3 <b>body</b> in instance 2',
             :match_result => true,
           },
@@ -228,8 +207,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
           {
@@ -243,8 +223,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
 
@@ -270,8 +251,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
           {
@@ -285,8 +267,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
 
@@ -304,8 +287,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
           {
@@ -322,8 +306,9 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => true,
           },
           {
@@ -339,13 +324,15 @@ class AgentTicketActionsLevel3Test < TestCase
             :where        => :instance2,
             :execute      => 'match',
             :css          => '.content_permanent.active',
-            :value        => 'Discard your unsaved changes.',
+            :css          => '.content_permanent.active .reset-message',
+            :value        => '(Discard your unsaved changes.|Verwerfen der)',
+            :no_quote     => true,
             :match_result => false,
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.article-view',
+            :css          => '.active div.ticket-article-view',
             :value        => '22 some level 3 <b>body</b> in instance 2',
             :match_result => true,
           },

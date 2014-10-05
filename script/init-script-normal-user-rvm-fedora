@@ -38,13 +38,13 @@ else
     exit 1
 fi
 
-rvm use ruby-1.9.3
+rvm use ruby-2.0.0
 
 RUBY=$(which ruby)
 RAILS=$(which rails)
 BUNDLE=$(which bundle)
 
-APP_PIDFILE=$DAEMON_HOME/tmp/pids/thin.pid
+APP_PIDFILE=$DAEMON_HOME/tmp/pids/puma.pid
 WS_PIDFILE=$DAEMON_HOME/tmp/pids/websocket.pid
 SCHEDULER_PIDFILE=$DAEMON_HOME/tmp/pids/scheduler_runner.pid
 
@@ -62,7 +62,8 @@ start() {
     # start web server
     echo -n $"Starting ${NAME}/${RAILS_ENV} application server on port: ${APP_PORT}"
 #    $RAILS server -d -p $APP_PORT --pid $APP_PIDFILE &> /dev/null
-    thin start --threaded -d -p $APP_PORT --pid $APP_PIDFILE
+#    thin start --threaded -d -p $APP_PORT --pid $APP_PIDFILE
+    pumactl start --pidfile $APP_PIDFILE -d -p $APP_PORT -e $RAILS_ENV &> /dev/null
     sleep 2
     status -p $APP_PIDFILE &> /dev/null && echo_success || echo_failure
     echo
@@ -76,18 +77,14 @@ start() {
 
     # start scheduler worker
     echo -n $"Starting ${NAME}/${RAILS_ENV} scheduler worker"
-    script/scheduler.rb start
-    sleep 10
-    status -p $SCHEDULER_PIDFILE &> /dev/null && echo_success || echo_failure
+    script/scheduler.rb start &> /dev/null && echo_success || echo_failure
     echo
 }
 
 stop() {
     # stop scheduler worker
     echo -n $"Shutting down ${NAME}/${RAILS_ENV} scheduler worker"
-    if test -e $SCHEDULER_PIDFILE; then
-        killproc -p $SCHEDULER_PIDFILE
-    fi
+    script/scheduler.rb stop &> /dev/null && echo_success || echo_failure
     echo
 
     # stop websocket server
@@ -120,7 +117,6 @@ case "$1" in
     status)
         status -p $APP_PIDFILE "${NAME} ${RAILS_ENV} - application server"
         status -p $WS_PIDFILE "${NAME} ${RAILS_ENV} - web socket server"
-        status -p $SCHEDULER_PIDFILE "${NAME} ${RAILS_ENV} - scheduler worker"
     ;;
 
     *)

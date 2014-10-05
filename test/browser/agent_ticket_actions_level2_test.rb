@@ -37,7 +37,7 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 2 <b>body</b> 123äöü',
             :match_result => true,
           },
@@ -46,8 +46,8 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active .ticket-zoom small',
-            :value        => '^(.*)$',
+            :css          => '.active .ticket_info h3',
+            :value        => '^#(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
@@ -71,40 +71,12 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").val("")',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").focus()',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").blur()',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$("#global-search").parent().parent().removeClass("open")',
-          },
-          {
-            :execute => 'wait',
             :value   => 3,
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.article',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 2 <b>body</b> 123äöü',
             :match_result => true,
           },
@@ -225,7 +197,7 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where   => :instance1,
             :execute => 'select',
-            :css     => '.active .ticket-answer select[name="ticket_article_type_id"]',
+            :css     => '.active .ticket-answer select[name="type_id"]',
             :value   => 'note',
           },
           {
@@ -237,7 +209,7 @@ class AgentTicketActionsLevel2Test < TestCase
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => '.active button',
+            :css     => '.active button.submit',
           },
           {
             :where   => :instance1,

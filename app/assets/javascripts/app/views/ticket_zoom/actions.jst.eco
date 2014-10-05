@@ -1,0 +1,9 @@
+<div class="btn-group dropup">
+  <button type="button" class="btn btn-default dropdown-toggle actions" data-toggle="dropdown"><%- @T('Action') %> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#" data-type="history"><%- @T( 'History' ) %></a></li>
+    <li><a href="#" data-type="merge"><%- @T( 'Merge' ) %></a></li>
+    <li><a href="#" data-type="customer"><%- @T( 'Change Customer' ) %></a></li>
+  </ul>
+</div>

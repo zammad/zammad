@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class PackagesController < ApplicationController
   before_filter :authentication_check
@@ -6,7 +6,7 @@ class PackagesController < ApplicationController
   # GET /api/v1/packages
   def index
     return if deny_if_not_role('Admin')
-    packages = Package.all( :order => 'name' )
+    packages = Package.all().order('name')
     render :json => {
       :packages => packages
     }
@@ -18,7 +18,7 @@ class PackagesController < ApplicationController
 
     Package.install( :string => params[:file_upload].read )
 
-    redirect_to '/#package'
+    redirect_to '/#system/package'
   end
 
   # DELETE /api/v1/packages

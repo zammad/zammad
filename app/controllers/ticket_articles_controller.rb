@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TicketArticlesController < ApplicationController
   before_filter :authentication_check
@@ -110,7 +110,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    list = Store.list( :object => 'Ticket::Article', :o_id => params[:article_id] ) || []
+    list = article.attachments || []
     access = false
     list.each {|item|
       if item.id.to_i == params[:id].to_i
@@ -125,7 +125,7 @@ class TicketArticlesController < ApplicationController
     # find file
     file = Store.find(params[:id])
     send_data(
-      file.store_file.data,
+      file.content,
       :filename    => file.filename,
       :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
       :disposition => 'inline'
@@ -148,7 +148,7 @@ class TicketArticlesController < ApplicationController
     if list
       file = Store.find(list.first)
       send_data(
-        file.store_file.data,
+        file.content,
         :filename    => file.filename,
         :type        => 'message/rfc822',
         :disposition => 'inline'

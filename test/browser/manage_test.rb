@@ -13,61 +13,19 @@ class ManageTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#users"]',
+            :css     => 'a[href="#manage/users"]',
           },
           {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name=login]',
-            :value   => 'some login' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="firstname"]',
-            :value   => 'Manage Firstname' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="lastname"]',
-            :value   => 'Manage Lastname' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="email"]',
-            :value   => user_email,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password"]',
-            :value   => 'some-pass',
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password_confirm"]',
-            :value   => 'some-pass',
-          },
-          {
-            :execute => 'click',
-            :css     => 'input[name="role_ids"][value="3"]',
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.submit',
+            :execute    => 'create_user',
+            :login      => 'some login' + random,
+            :firstname  => 'Manage Firstname' + random,
+            :lastname   => 'Manage Lastname' + random,
+            :email      => user_email,
+            :password   => 'some-pass',
           },
           {
             :execute  => 'watch_for',
@@ -76,15 +34,15 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[data-type="edit"]:last-child',
+            :css     => '.table-overview tr:last-child td',
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="lastname"]',
+            :css     => '.modal input[name="lastname"]',
             :value   => '2Manage Lastname' + random,
           },
           {
@@ -107,11 +65,11 @@ class ManageTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#slas"]',
+            :css     => 'a[href="#manage/slas"]',
           },
           {
             :execute => 'wait',
@@ -127,12 +85,12 @@ class ManageTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => 'input[name=name]',
+            :css     => '.modal input[name=name]',
             :value   => 'some sla' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="first_response_time"]',
+            :css     => '.modal input[name="first_response_time"]',
             :value   => 61,
           },
           {
@@ -145,21 +103,25 @@ class ManageTest < TestCase
             :value   => random,
           },
           {
+            :execute => 'wait',
+            :value   => 3,
+          },
+          {
             :execute => 'click',
-            :css     => 'a[data-type="edit"]:last-child',
+            :css     => '.table-overview tr:last-child td',
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute => 'set',
-            :css     => 'input[name=name]',
+            :css     => '.modal input[name=name]',
             :value   => 'some sla update ' + random,
           },
           {
             :execute => 'set',
-            :css     => 'input[name="first_response_time"]',
+            :css     => '.modal input[name="first_response_time"]',
             :value   => 121,
           },
           {
@@ -168,12 +130,12 @@ class ManageTest < TestCase
           },
           {
             :execute  => 'watch_for',
-            :area     => 'body',
+            :area     => 'body table',
             :value    => 'some sla update ' + random,
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 4,
           },
           {
             :execute => 'click',
@@ -189,7 +151,7 @@ class ManageTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 3,
           },
           {
             :execute      => 'match',
@@ -203,11 +165,11 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#slas"]',
+            :css     => 'a[href="#manage/slas"]',
           },
           {
             :execute => 'wait',
@@ -232,11 +194,11 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#admin"]',
+            :css     => 'a[href="#manage"]',
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#slas"]',
+            :css     => 'a[href="#manage/slas"]',
           },
           {
             :execute => 'wait',

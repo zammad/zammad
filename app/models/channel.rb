@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Channel < ApplicationModel
   store :options
@@ -13,6 +13,7 @@ class Channel < ApplicationModel
         puts "can't use " + 'Channel::' + channel[:adapter]
         puts e.inspect
         puts e.backtrace
+        c.disconnect
       end
     }
   end

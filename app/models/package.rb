@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 require 'rexml/document'
 class Package < ApplicationModel
@@ -50,7 +50,7 @@ class Package < ApplicationModel
     return if ! File.exist?( path )
     data = []
     Dir.foreach( path ) do |entry|
-      if entry =~ /\.zpm/
+      if entry =~ /\.zpm/ && entry !~ /^\./
         data.push entry
       end
     end
@@ -315,8 +315,9 @@ class Package < ApplicationModel
           begin
             load entry
           rescue => e
+            puts "TRIED TO RELOAD '#{entry}'"
             puts 'ERROR: ' + e.inspect
-            puts 'Traceback: ' + e.backtrace
+            puts 'Traceback: ' + e.backtrace.inspect
           end
         end
       }
@@ -352,11 +353,10 @@ class Package < ApplicationModel
     if !list || !list.first
       raise "No such file in storage list #{name} #{version}"
     end
-    store_file = list.first.store_file
-    if !store_file
+    if !list.first.content
       raise "No such file in storage #{name} #{version}"
     end
-    store_file.data
+    list.first.content
   end
 
   def self._read_file(file, fullpath = false)
@@ -374,7 +374,7 @@ class Package < ApplicationModel
     rescue => e
       raise 'ERROR: ' + e.inspect
     end
-    return contents
+    contents
   end
 
   def self._write_file(file, permission, data)
@@ -411,7 +411,7 @@ class Package < ApplicationModel
     rescue => e
       raise 'ERROR: ' + e.inspect
     end
-    return true
+    true
   end
 
   def self._delete_file(file, permission, data)

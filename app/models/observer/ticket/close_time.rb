@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::Ticket::CloseTime < ActiveRecord::Observer
   observe 'ticket'
@@ -22,9 +22,9 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
     return true if record.close_time
 
     # check if ticket is closed now
-    ticket_state = Ticket::State.lookup( :id => record.ticket_state_id )
-    ticket_state_type = Ticket::StateType.lookup( :id => ticket_state.state_type_id )
-    return true if ticket_state_type.name != 'closed'
+    state = Ticket::State.lookup( :id => record.state_id )
+    state_type = Ticket::StateType.lookup( :id => state.state_type_id )
+    return true if state_type.name != 'closed'
 
     # set close_time
     record.close_time = Time.now

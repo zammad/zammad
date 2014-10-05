@@ -1,4 +1,4 @@
-class App.ProfileLanguage extends App.Controller
+class Index extends App.Controller
   events:
     'submit form': 'update'
 
@@ -45,7 +45,7 @@ class App.ProfileLanguage extends App.Controller
     )
 
   success: (data, status, xhr) =>
-    App.User.retrieve(
+    App.User.full(
       App.Session.get( 'id' ),
       =>
         App.i18n.set( @locale )
@@ -66,3 +66,6 @@ class App.ProfileLanguage extends App.Controller
       type: 'error'
       msg:  App.i18n.translateContent( data.message )
     )
+
+App.Config.set( 'Language', { prio: 1000, name: 'Language', parent: '#profile', target: '#profile/language', controller: Index }, 'NavBarProfile' )
+
