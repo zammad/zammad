@@ -75,7 +75,7 @@ class LongPollingController < ApplicationController
           # broadcast to recipient list
           if params['data']['recipient'] && params['data']['recipient']['user_id']
             params['data']['recipient']['user_id'].each { |user_id|
-              if local_client[:user][:id] == user_id
+              if local_client[:user]['id'].to_s == user_id.to_s
                 log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id #{user_id})", local_client_id
                 Sessions.send( local_client_id, params['data'] )
               end

@@ -199,7 +199,7 @@ EventMachine.run {
                     log 'error', "recipient.user_id attribute isn't an array '#{ data['recipient']['user_id'].inspect }'"
                   else
                     data['recipient']['user_id'].each { |user_id|
-                      if local_client[:user][:id].to_i == user_id.to_i
+                      if local_client[:user]['id'].to_i == user_id.to_i
                         log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id=#{user_id})", local_client_id
                         if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
                           @clients[ local_client_id ][:websocket].send( "[#{msg}]" )

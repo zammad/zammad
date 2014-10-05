@@ -29,16 +29,12 @@ returns
 =end
 
   def self.create( client_id, session, meta )
-    data = {}
-    if session
-      data[:id] = session[:id]
-    end
     path = @path + '/' + client_id.to_s
     FileUtils.mkpath path
     meta[:last_ping] = Time.new.to_i.to_s
     File.open( path + '/session', 'wb' ) { |file|
       data = {
-        :user => data,
+        :user => session,
         :meta => meta,
       }
       file.write Marshal.dump(data)
@@ -109,7 +105,7 @@ returns
   {
     '4711' => {
       :user => {
-        :id => 123,
+        'id' => 123,
       },
       :meta => {
         :type      => 'websocket',
@@ -118,7 +114,7 @@ returns
     },
     '4712' => {
       :user => {
-        :id => 124,
+        'id' => 124,
       },
       :meta => {
         :type      => 'ajax',
@@ -214,7 +210,7 @@ returns
 
   {
     :user => {
-      :id => 123,
+      'id' => 123,
     },
     :meta => {
       :type      => 'websocket',
@@ -301,8 +297,8 @@ returns
       session = Sessions.get(client_id)
       next if !session
       next if !session[:user]
-      next if !session[:user][:id]
-      next if session[:user][:id].to_i != user_id.to_i
+      next if !session[:user]['id']
+      next if session[:user]['id'].to_i != user_id.to_i
       Sessions.send( client_id, data )
     }
     true
@@ -482,8 +478,8 @@ returns
         session_data = Sessions.get( client_id )
         next if !session_data
         next if !session_data[:user]
-        next if !session_data[:user][:id]
-        user = User.find( session_data[:user][:id] )
+        next if !session_data[:user]['id']
+        user = User.lookup( session_data[:user]['id'] )
         next if !user
 
         # start client thread
