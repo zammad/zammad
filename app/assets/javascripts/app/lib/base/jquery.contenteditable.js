@@ -255,7 +255,11 @@
 
   // check if rich text key is pressed
   Plugin.prototype.richTextKey = function(e) {
-    if ( ( e.ctrlKey || e.metaKey ) && this.options.richTextFormatKey[ e.keyCode ] ) {
+    // e.altKey
+    // e.ctrlKey
+    // e.metaKey
+    // on mac block e.ctrlKey + i/b/u
+    if ( !e.altKey && e.metaKey && this.options.richTextFormatKey[ e.keyCode ] ) {
       return true
     }
     return false
