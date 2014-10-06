@@ -49,7 +49,7 @@ returns
     # store meta data
     store = Store.create(data)
 
-    true
+    store
   end
 
 =begin
@@ -87,7 +87,7 @@ returns
 
 =begin
 
-remove an attachment to storage
+remove attachments of object from storage
 
   result = Store.remove(
     :object       => 'Ticket::Article',
@@ -109,13 +109,33 @@ returns
     stores.each do |store|
 
       # check backend for references
-      files = Store.where( :store_file_id => store.store_file_id )
-      if files.count == 1 && files.first.id == store.id
-        Store::File.find( store.store_file_id ).destroy
-      end
-
-      store.destroy
+      Store.remove_item( store.id )
     end
+    return true
+  end
+
+=begin
+
+remove one attachment from storage
+
+  result = Store.remove_item(store_id)
+
+returns
+
+  result = true
+
+=end
+
+  def self.remove_item(store_id)
+
+    # check backend for references
+    store = Store.find(store_id)
+    files = Store.where( :store_file_id => store.store_file_id )
+    if files.count == 1 && files.first.id == store.id
+      Store::File.find( store.store_file_id ).destroy
+    end
+
+    store.destroy
     return true
   end
 

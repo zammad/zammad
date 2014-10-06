@@ -1,3 +1,18 @@
+###
+  App.Ajax.request(
+    id:    'search'
+    type:  'GET'
+    url:   url
+    data:
+      term: term
+    processData: true,
+    success: (data, status, xhr) =>
+      console.log(data, status)
+    error: (xhr, statusText, error) =>
+      console.log(statusText, error)
+  )
+###
+
 class App.Ajax
   _instance = undefined # Must be declared here to force the closure on the class
   @request: (args) -> # Must be a static method

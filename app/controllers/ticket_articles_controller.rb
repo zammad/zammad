@@ -64,16 +64,25 @@ class TicketArticlesController < ApplicationController
     head :ok
   end
 
-  # POST /ticket_attachment/new
-  def attachment_new
+  # DELETE /ticket_attachment_upload
+  def ticket_attachment_upload_delete
+    Store.remove_item( params[:store_id] )
+
+    # return result
+    render :json => {
+      :success  => true,
+    }
+  end
+
+  # POST /ticket_attachment_upload
+  def ticket_attachment_upload_add
 
     # store file
-    #    content_type = request.content_type
-    content_type = request[:content_type]
-    puts 'content_type: ' + content_type.inspect
+    file = params[:File]
+    content_type = file.content_type
     if !content_type || content_type == 'application/octet-stream'
-      if MIME::Types.type_for(params[:qqfile]).first
-        content_type = MIME::Types.type_for(params[:qqfile]).first.content_type
+      if MIME::Types.type_for(file.original_filename).first
+        content_type = MIME::Types.type_for(file.original_filename).first.content_type
       else
         content_type = 'application/octet-stream'
       end
@@ -81,17 +90,22 @@ class TicketArticlesController < ApplicationController
     headers_store = {
       'Content-Type' => content_type
     }
-    Store.add(
+    store = Store.add(
       :object      => 'UploadCache',
       :o_id        => params[:form_id],
-      :data        => request.body.read,
-      :filename    => params[:qqfile],
+      :data        => file.read,
+      :filename    => file.original_filename,
       :preferences => headers_store
     )
 
     # return result
     render :json => {
       :success  => true,
+      :data     => {
+        :store_id => store.id,
+        :filename => file.original_filename,
+        :size     => store.size,
+      }
     }
   end
 
