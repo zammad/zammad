@@ -698,6 +698,7 @@ class Edit extends App.Controller
     '.attachmentUpload':            'attachmentUpload'
     '.attachmentUpload-progressBar':'progressBar'
     '.js-percentage':               'progressText'
+    '.text-bubble':                 'textBubble'
     '.edit-control-item':           'editControlItem'
     #'.edit-controls':               'editControls'
     #'.recipient-picker':            'recipientPicker'
@@ -975,11 +976,17 @@ class Edit extends App.Controller
       @textarea.velocity
         properties:
           minHeight: "#{ @textareaHeight.open - 38 }px"
-          marginBottom: 38
         options:
           duration: duration
           easing: 'easeOutQuad'
           complete: => @add_textarea_catcher()
+
+      @textBubble.velocity
+        properties:
+          paddingBottom: 28
+        options:
+          duration: duration
+          easing: 'easeOutQuad'
 
       # scroll to bottom
       @textarea.velocity "scroll",
@@ -1027,11 +1034,17 @@ class Edit extends App.Controller
       @textarea.velocity
         properties:
           minHeight: "#{ @textareaHeight.closed }px"
-          marginBottom: 0
         options:
           duration: 300
           easing: 'easeOutQuad'
           complete: => @ticketEdit.removeClass('is-open')
+
+      @textBubble.velocity
+        properties:
+          paddingBottom: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
 
       @attachmentPlaceholder.velocity
         properties:

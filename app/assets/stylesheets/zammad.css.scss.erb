@@ -472,11 +472,14 @@ textarea,
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
 
+  .richtext.form-control {
+    padding-bottom: 28px;
+  }
+
   .richtext.form-control [contenteditable] {
     height: auto;
     min-height: 82px;
     background: none;
-    margin-bottom: 28px;
   }
 
   .has-error .form-control,
@@ -2918,6 +2921,8 @@ footer {
     border-color: #b3b3b3;
     white-space: normal;
     border-radius: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
     .ticket-edit .text-bubble [contenteditable],
@@ -2954,10 +2959,10 @@ footer {
     overflow: hidden;
   }
 
-    .ticket-edit .attachments:not(:empty) {
+    .attachments:not(:empty) {
       padding: 9px 5px;
       border-top: 1px solid hsl(0,0%,93%);
-      margin: 0 -20px 50px;
+      margin: 6px -12px 30px;
     }
 
     .attachment {
