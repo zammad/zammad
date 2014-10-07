@@ -111,22 +111,20 @@ small {
 }
 
 [contenteditable] {
-  margin: -1px;
   display: block;
   white-space: pre-wrap;
   outline-style: none;
-  border: 1px solid transparent;
   border-radius: 3px;
 }
 [contenteditable]:hover,
 [contenteditable]:focus {
-  border-color: hsl(145,51%,45%);
+  background: #f8f9fa;
 }
 [contenteditable]:focus {
   text-overflow: clip !important;
 }
 [contenteditable].invalid {
-  border-color: #F92;
+  background: #F92;
 }
 [contenteditable] > .placeholder {
   color: #999;
@@ -483,7 +481,7 @@ textarea,
   .richtext.form-control [contenteditable] {
     height: auto;
     min-height: 82px;
-    border: none;
+    background: none;
     margin-bottom: 28px;
   }
 
