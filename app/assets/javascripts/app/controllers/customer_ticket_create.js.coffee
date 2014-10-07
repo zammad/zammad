@@ -77,7 +77,6 @@ class Index extends App.ControllerContent
             # find element to replace
             for item in attributes
               if item.name is fieldNameToChange
-                item.display = false
                 item['filter'] = {}
                 item['filter'][ fieldNameToChange ] = filter
                 item.default = params[item.name]
@@ -86,7 +85,7 @@ class Index extends App.ControllerContent
                 newElement = ui.formGenItem( item, classname, form )
 
             # replace new option list
-            form.find('[name="' + fieldNameToChange + '"]').replaceWith( newElement )
+            form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
 
     @html App.view('customer_ticket_create')( head: 'New Ticket' )
 
