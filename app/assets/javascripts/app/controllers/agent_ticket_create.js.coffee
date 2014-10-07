@@ -15,7 +15,6 @@ class App.TicketCreate extends App.Controller
     return if !@authenticate()
 
     # set title
-    @form_id = App.ControllerForm.formId()
     @form_meta = undefined
 
     # define default type
@@ -177,18 +176,24 @@ class App.TicketCreate extends App.Controller
 
   render: (template = {}) ->
 
-    @html App.view('agent_ticket_create')(
-      head:  'New Ticket'
-      agent: @isRole('Agent')
-      admin: @isRole('Admin')
-    )
-
     # get params
     params = {}
     if template && !_.isEmpty( template.options )
       params = template.options
     else if App.TaskManager.get(@task_key) && !_.isEmpty( App.TaskManager.get(@task_key).state )
       params = App.TaskManager.get(@task_key).state
+
+    if params['form_id']
+      @form_id = params['form_id']
+    else
+      @form_id = App.ControllerForm.formId()
+
+    @html App.view('agent_ticket_create')(
+      head:     'New Ticket'
+      agent:    @isRole('Agent')
+      admin:    @isRole('Admin')
+      form_id:  @form_id
+    )
 
     formChanges = (params, attribute, attributes, classname, form, ui) =>
       if @form_meta.dependencies && @form_meta.dependencies[attribute.name]

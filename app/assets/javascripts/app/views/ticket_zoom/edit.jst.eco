@@ -1,6 +1,7 @@
 <form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>">
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
+  <input type="hidden" name="form_id" value="<%= @article.form_id %>">
   <div class="bubble-grid horizontal">
     <div class="vertical center edit-controls">
       <%- App.User.fullLocal( @S('id') ).avatar(false, 'right', 'zIndex-5') %>

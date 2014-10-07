@@ -26,6 +26,7 @@
 
         <form role="form" class="ticket-create">
           <input type="hidden" name="formSenderType"/>
+          <input type="hidden" name="form_id" value="<%= @form_id %>"/>
 
           <div class="ticket-form-top"></div>
           <div class="article-form-top"></div>

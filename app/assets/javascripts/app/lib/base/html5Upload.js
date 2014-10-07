@@ -11,6 +11,7 @@
     function UploadManager(options) {
         var self = this;
         self.dropContainer = options.dropContainer;
+        self.dropContainer1 = options.dropContainer1;
         self.inputField = options.inputField;
         self.uploadsQueue = [];
         self.activeUploads = 0;
@@ -67,20 +68,51 @@
             console.log('Initializing upload manager');
             var manager = this,
                 dropContainer = manager.dropContainer,
+                dropContainer1 = manager.dropContainer1,
                 inputField = manager.inputField,
+                inCounter = 0,
                 cancelEvent = function (e) {
                     e.preventDefault();
                     e.stopPropagation();
+                    console.log('in', inCounter)
+                    if ( !$(dropContainer).closest('.richtext').hasClass('is-dropTarget') ) {
+                      inCounter++
+                    }
+                    if ( inCounter === 1 ) {
+                      $(dropContainer).closest('.richtext').addClass('is-dropTarget')
+                    }
+                };
+                leaveEvent = function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('out', inCounter)
+                    if ( $(dropContainer).closest('.richtext').hasClass('is-dropTarget') ) {
+                      inCounter--
+                    }
+                    if ( inCounter === 0 ) {
+                      $(dropContainer).closest('.richtext').removeClass('is-dropTarget')
+                    }
                 };
 
             if (dropContainer) {
+                manager.on(dropContainer, 'dragleave', leaveEvent);
                 manager.on(dropContainer, 'dragover', cancelEvent);
                 manager.on(dropContainer, 'dragenter', cancelEvent);
                 manager.on(dropContainer, 'drop', function (e) {
-                    cancelEvent(e);
+                    leaveEvent(e);
                     manager.processFiles(e.dataTransfer.files);
                 });
             }
+            if (dropContainer1) {
+                manager.on(dropContainer1, 'dragleave', leaveEvent);
+                manager.on(dropContainer1, 'dragover', cancelEvent);
+                manager.on(dropContainer1, 'dragenter', cancelEvent);
+                manager.on(dropContainer1, 'drop', function (e) {
+                    leaveEvent(e);
+                    manager.processFiles(e.dataTransfer.files);
+                });
+            }
+
 
             if (inputField) {
                 manager.on(inputField, 'change', function () {

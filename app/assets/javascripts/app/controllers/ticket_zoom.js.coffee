@@ -160,11 +160,15 @@ class App.TicketZoom extends App.Controller
         el:     @el.find('.ticket-meta')
       )
 
+      @form_id = App.ControllerForm.formId()
+
+
       new Edit(
         ticket:     @ticket
         el:         @el.find('.ticket-edit')
         #el:         @el.find('.edit')
         form_meta:  @form_meta
+        form_id:    @form_id
         defaults:   @taskGet('article')
         ui:         @
       )
@@ -586,6 +590,7 @@ class App.TicketZoom extends App.Controller
     # submit changes
     ticket.save(
       done: (r) =>
+        @renderDone = false
 
         # reset form after save
         @taskReset()
@@ -709,10 +714,10 @@ class Edit extends App.Controller
     'submit .recipient-list form': 'add_recipient'
     'focus .js-textarea':                     'open_textarea'
     'input .js-textarea':                     'detect_empty_textarea'
-    'dragenter':                              'onDragenter'
-    'dragleave':                              'onDragleave'
-    'drop':                                   'onFileDrop'
-    'change input[type=file]':                'onFilePick'
+    #'dragenter':                              'onDragenter'
+    #'dragleave':                              'onDragleave'
+    #'drop':                                   'onFileDrop'
+    #'change input[type=file]':                'onFilePick'
 
   constructor: ->
     super
@@ -798,7 +803,40 @@ class Edit extends App.Controller
       maxlength: 2500
     })
 
-    @form_id = App.ControllerForm.formId()
+    html5Upload.initialize(
+      uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
+      dropContainer: @$('.article-attachment').get(0),
+      #dropContainer1: @$('.dropArea').get(0),
+      inputField: @$('.article-attachment input').get(0),
+      key: 'File',
+      data: { form_id: @form_id },
+      maxSimultaneousUploads: 2,
+      onFileAdded: (file) =>
+
+        @attachmentPlaceholder.addClass('hide')
+        @attachmentUpload.removeClass('hide')
+
+        file.on(
+          # Called after received response from the server
+          onCompleted: (response) =>
+
+            response = JSON.parse(response)
+            @attachments.push response.data
+
+            @attachmentPlaceholder.removeClass('hide')
+            @attachmentUpload.addClass('hide')
+
+            @renderAttachment(response.data)
+            console.log('upload complete', response.data )
+
+          # Called during upload progress, first parameter
+          # is decimal value from 0 to 100.
+          onProgress: (progress, fileSize, uploadedBytes) =>
+            @progressBar.width(parseInt(progress) + "%")
+            @progressText.text(parseInt(progress))
+            console.log('uploadProgress ', parseInt(progress))
+        )
+    )
 
     # show text module UI
     if !@isRole('Customer')
@@ -1014,75 +1052,37 @@ class Edit extends App.Controller
     @open_textarea() if @dragEventCounter is 0
 
     @dragEventCounter++
-    @ticketEdit.addClass('is-dropTarget')
+    @ticketEdit.parent().addClass('is-dropTarget')
 
   onDragleave: (event) =>
     @dragEventCounter--
 
-    @ticketEdit.removeClass('is-dropTarget') if @dragEventCounter is 0
+    @ticketEdit.parent().removeClass('is-dropTarget') if @dragEventCounter is 0
 
-  onFileDrop: (event) =>
-    event.preventDefault()
-    event.stopPropagation()
-    files = event.originalEvent.dataTransfer.files
-    @ticketEdit.removeClass('is-dropTarget')
-
-    @queueUpload(files)
-
-  onFilePick: (event) =>
-    @open_textarea()
-    @queueUpload(event.target.files)
-
-  queueUpload: (files) ->
-    @uploadQueue ?= []
-
-    # add files
-    for file in files
-      @uploadQueue.push(file)
-
-    @workOfUploadQueue()
-
-  workOfUploadQueue: =>
-    if !@uploadQueue.length
-      return
-
-    file = @uploadQueue.shift()
-    # console.log "working of", file, "from", @uploadQueue
-    @fakeUpload file.name, file.size, @workOfUploadQueue
-
-  humanFileSize: (size) =>
-    i = Math.floor( Math.log(size) / Math.log(1024) )
-    return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
-
-  updateUploadProgress: (progress) =>
-    @progressBar.width(progress + "%")
-    @progressText.text(progress)
-
-    if progress is 100
-      @attachmentPlaceholder.removeClass('hide')
-      @attachmentUpload.addClass('hide')
-
-  fakeUpload: (fileName, fileSize, callback) ->
-    @attachmentPlaceholder.addClass('hide')
-    @attachmentUpload.removeClass('hide')
-
-    progress = 0;
-    duration = fileSize / 1024
-
-    for i in [0..100]
-      setTimeout @updateUploadProgress, i*duration/100 , i
-
-    setTimeout (=>
-      callback()
-      @renderAttachment(fileName, fileSize)
-    ), duration
-
-  renderAttachment: (fileName, fileSize) =>
-    @attachments.push([fileName, fileSize])
-    @attachmentsHolder.append App.view('ticket_zoom/attachment')
-      fileName: fileName
-      fileSize: @humanFileSize(fileSize)
-
+  renderAttachment: (file) =>
+    @attachmentsHolder.append App.view('generic/attachment_item')
+      fileName: file.filename
+      fileSize: @humanFileSize( file.size )
+      store_id: file.store_id
+    @attachmentsHolder.on(
+      'click'
+      "[data-id=#{file.store_id}]", (e) =>
+        @attachments = _.filter(
+          @attachments,
+          (item) ->
+            return if item.id isnt file.store_id
+            item
+        )
+        store_id = $(e.currentTarget).data('id')
+        App.Ajax.request(
+          type:  'DELETE'
+          url:   App.Config.get('api_path') + '/ticket_attachment_upload'
+          data:  JSON.stringify( { store_id: store_id } ),
+          processData: false
+          success: (data, status, xhr) =>
+        )
+        $(e.currentTarget).closest('.attachment').empty()
+    )
 
   reset: (e) =>
     e.preventDefault()

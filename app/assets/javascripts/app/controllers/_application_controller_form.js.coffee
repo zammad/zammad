@@ -717,7 +717,7 @@ class App.ControllerForm extends App.Controller
         renderAttachment = (file) =>
           item.find('.attachments').append( App.view('generic/attachment_item')(
             fileName: file.filename
-            fileSize: @humanFileSize(file.size)
+            fileSize: @humanFileSize( file.size )
             store_id: file.store_id
           ))
           item.on(
@@ -748,8 +748,9 @@ class App.ControllerForm extends App.Controller
         @attachmentsHolder = item.find('.attachments')
         html5Upload.initialize(
           uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
-          dropContainer: item.find( ".attachmentPlaceholder" ).get(0),
-          inputField: item.find( "input" ).get(0),
+          dropContainer: item.get(0),
+          dropContainer1: item.find('.dropArea').get(0),
+          inputField: item.find( 'input' ).get(0),
           key: 'File',
           data: { form_id: @form_id },
           maxSimultaneousUploads: 2,
@@ -774,9 +775,9 @@ class App.ControllerForm extends App.Controller
               # Called during upload progress, first parameter
               # is decimal value from 0 to 100.
               onProgress: (progress, fileSize, uploadedBytes) =>
-                @progressBar.width(progress + "%")
-                @progressText.text(progress)
-                console.log('uploadProgress ', progress)
+                @progressBar.width(parseInt(progress) + "%")
+                @progressText.text(parseInt(progress))
+                console.log('uploadProgress ', parseInt(progress))
             )
         )
 
@@ -805,7 +806,7 @@ class App.ControllerForm extends App.Controller
           if @el.find('#' + fileUploaderId )[0]
             @el.find('#' + fileUploaderId ).fineUploader(
               request:
-                endpoint: App.Config.get('api_path') + '/ticket_attachment_new'
+                endpoint: App.Config.get('api_path') + '/ticket_attachment_upload'
                 params:
                   form_id: @form_id
               text:
