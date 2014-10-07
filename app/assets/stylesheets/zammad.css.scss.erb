@@ -160,9 +160,11 @@ span[data-tooltip]:after {
   content: "";
   position: absolute;
   pointer-events: none;
-  transform: scale(0);
+  -webkit-transform: scale(0);
+          transform: scale(0);
   opacity: 0;
-  transition: transform 300ms cubic-bezier(0.34,1.6,0.71,1), opacity 300ms;
+  -webkit-transition: -webkit-transform 300ms cubic-bezier(0.34,1.6,0.71,1), opacity 300ms;
+          transition:         transform 300ms cubic-bezier(0.34,1.6,0.71,1), opacity 300ms;
 }
 a[data-tooltip]:before,
 time[data-tooltip]:before,
@@ -177,7 +179,8 @@ span[data-tooltip]:before {
   padding: 0 13px;
   content: attr(data-tooltip);
   white-space: nowrap;
-  transform-origin: 17px 26px;
+  -webkit-transform-origin: 17px 26px;
+          transform-origin: 17px 26px;
 }
 a[data-tooltip]:after,
 time[data-tooltip]:after,
@@ -187,7 +190,8 @@ span[data-tooltip]:after {
   border-top: 7px solid #c6c6c5;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  transform-origin: 4px 0;
+  -webkit-transform-origin: 4px 0;
+          transform-origin: 4px 0;
 }
 a[data-tooltip]:hover:after,
 a[data-tooltip]:hover:before,
@@ -198,7 +202,8 @@ span[data-tooltip]:hover:before {
   pointer-events: auto;
   transform: scale(1);
   opacity: 1;
-  transition: transform 300ms 1.5s cubic-bezier(0.34,1.6,0.71,1), opacity 300ms 1.5s;
+  -webkit-transition: -webkit-transform 300ms 1.5s cubic-bezier(0.34,1.6,0.71,1), opacity 300ms 1.5s;
+          transition:         transform 300ms 1.5s cubic-bezier(0.34,1.6,0.71,1), opacity 300ms 1.5s;
 }
 
 .textarea::-webkit-input-placeholder,
@@ -472,6 +477,9 @@ textarea,
   transition: none;
   box-shadow: none;
   outline: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
   .form-control:focus,
@@ -489,6 +497,18 @@ textarea,
     height: auto;
     min-height: 82px;
     background: none;
+  }
+
+  select.form-control {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  select.form-control + .select-arrow  {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    margin-top: -3px;
   }
 
   .has-error .form-control,
@@ -691,7 +711,8 @@ ol.tabs li {
     padding: 10px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
-    flex-grow: 1;
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
     @extend .u-clickable;
   }
 
@@ -2011,7 +2032,8 @@ footer {
     height: 40px;
     padding: 0 15px;
     color: #2594d4;
-    display: flex;
+    display: -webkit-flex;
+    display:         flex;
   }
 
   .user-menu .dropdown-menu > li > a:hover {
@@ -2089,7 +2111,8 @@ footer {
   .nav-pills > li > a {
     padding: 0;
     height: 40px;
-    display: flex;
+    display: -webkit-flex;
+    display:         flex;
     color: #0f94d6;
     line-height: 39px;
     border-radius: 0;
@@ -2388,13 +2411,15 @@ footer {
 
   .form-inline .form-group {
     overflow: hidden;
-    flex-grow: 1;
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
     position: relative;
     height: 60px;
   }
 
     .ticket-attributes.form-inline .form-group:last-child {
-      flex-grow: 0;
+      -webkit-flex-grow: 0;
+              flex-grow: 0;
     }
 
     .form-group.is-changed {
@@ -2465,9 +2490,6 @@ footer {
     display: block;
     border-radius: 0;
     background: none;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
   }
 
   .bulkAction-secondStep .form-group {
@@ -2477,7 +2499,8 @@ footer {
   .bulkAction-secondStep .form-inline .textarea.form-group {
     padding: 0 10px;
     height: auto;
-    flex-grow: 1;
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
   }
 
     .bulkAction-secondStep .form-inline .textarea.form-group  .input-group-addon {
@@ -3266,7 +3289,8 @@ footer {
   vertical-align: top;
   margin-right: 9px;
   margin-top: 10px;
-  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .tokenfield .token {
@@ -3764,7 +3788,8 @@ footer {
   position: fixed;
   right: 0;
   top: 0;
-  transform: translateY(-64px);
+  -webkit-transform: translateY(-64px);
+          transform: translateY(-64px);
 }
 
   .scrollPageHeader small {

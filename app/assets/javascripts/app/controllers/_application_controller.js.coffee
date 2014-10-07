@@ -102,12 +102,12 @@ class App.Controller extends Spine.Controller
   # show navigation
   navShow: ->
     return if $('#navigation').is(':visible')
-    $('#navigation').attr('style', 'display: flex!important')
+    $('#navigation').removeClass('hide')
 
   # hide navigation
   navHide: ->
     return if !$('#navigation').is(':visible')
-    $('#navigation').attr('style', 'display: none!important')
+    $('#navigation').addClass('hide')
 
   scrollTo: ( x = 0, y = 0, delay = 0 ) ->
     a = ->
@@ -428,14 +428,14 @@ class App.Controller extends Spine.Controller
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
-    $('.content').attr('style', 'display: none!important')
+    $('.content').addClass('hide');
     @navShow()
 
 class App.ControllerContent extends App.Controller
   constructor: ->
     super
-    $('.content').attr('style', 'display: none!important')
-    $('#content').attr('style', 'display: flex!important')
+    $('.content').addClass('hide');
+    $('#content').removeClass('hide');
     @navShow()
 
 class App.ControllerModal extends App.Controller
