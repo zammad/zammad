@@ -236,9 +236,7 @@ table {
 
 .table th:not(.noTruncate),
 .table td:not(.noTruncate) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @extend .u-textTruncate;
 }
 
 .table > thead:first-child > tr:first-child > th,
@@ -278,9 +276,7 @@ table {
   padding: 0;
   margin: 0;
   height: 38px;
-  cursor: pointer;
-  -webkit-user-select: none;
-          user-select: none;
+  @extend .u-clickable;
 }
 
 .checkbox-replacement input[type=checkbox] {
@@ -333,10 +329,8 @@ table {
 }
 
 #task .task {
+  @extend .u-textTruncate;
   max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   display: inline-block;
 }
 
@@ -647,7 +641,7 @@ textarea,
   .subtle-link {
     color: rgba(0,0,0,.32);
     text-decoration: underline;
-    cursor: pointer;
+    @extend .u-clickable;
   }
 
   .subtle-link:hover {
@@ -684,8 +678,8 @@ ol.tabs li {
     padding: 10px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
-    cursor: pointer;
     flex-grow: 1;
+    @extend .u-clickable;
   }
 
   .tab.active {
@@ -762,8 +756,8 @@ ol.tabs li {
 
   .auth_provider:hover {
     color: white;
-    cursor: pointer;
     text-decoration: none;
+    @extend .u-clickable;
   }
 
   .auth_provider.facebook {
@@ -1414,9 +1408,7 @@ footer {
   width: 50%;
 }
 .customer_info ul.nav > li > a {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  @extend .u-textTruncate;
 }
 .customer_info .thumbnail {
   position: absolute;
@@ -1638,8 +1630,8 @@ footer {
 
   .task {
     padding: 10px 15px 7px 0;
-    cursor: pointer;
     position: relative;
+    @extend .u-clickable;
   }
 
     .tasks-navigation .task {
@@ -1817,8 +1809,8 @@ footer {
     height: 36px;
     background: url(<%= asset_path "logo.svg" %>);
     transition: 240ms;
-    cursor: pointer;
     position: relative;
+    @extend .u-clickable;
   }
 
     .logo .activity-counter {
@@ -1905,8 +1897,9 @@ footer {
     .user-menu .list-button {
       height: 60px;
       position: relative;
-      cursor: pointer;
       z-index: 1001;
+      text-decoration: none;
+      @extend .u-clickable;
     }
     
     .user-menu .list-button *:not(.dropdown-nose) {
@@ -2081,9 +2074,7 @@ footer {
     line-height: 39px;
     border-radius: 0;
     border-top: 1px solid #f2f2f3;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    @extend .u-textTruncate;
   }
 
   .nav-pills > li:hover > a {
@@ -2709,9 +2700,7 @@ footer {
     font-size: 12px;
     text-align: center;
     opacity: 0.5;
-    cursor: pointer;
-    -webkit-user-select: none;
-            user-select: none;
+    @extend .u-clickable;
   }
 
     .article-action:hover {
@@ -3125,9 +3114,9 @@ footer {
     width: 56px;
     height: 60px;
     background: hsl(197,20%,93%);
-    cursor: pointer;
     position: relative;
     border-top: 1px solid hsl(202,12%,87%);
+    @extend .u-clickable;
   }
 
     .tabsSidebar-tab.is-changed:before {
@@ -3440,9 +3429,7 @@ footer {
     position: absolute;
     right: 0;
     top: 0;
-    cursor: pointer;
-    -webkit-user-select: none;
-            user-select: none;
+    @extend .u-clickable;
   }
 
   .modal-close .close.icon {
@@ -3660,7 +3647,7 @@ footer {
   font-size: 13px;
   color: inherit;
   text-transform: inherit;
-  cursor: pointer;
+  @extend .u-clickable;
 }
 
 .checkbox.form-group input[type=checkbox] {
@@ -3771,9 +3758,7 @@ footer {
   .scrollPageHeader h1 {
     font-size: 19px;
     margin: 0 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @extend .u-textTruncate;
   }
 
 .wizard {
@@ -3815,11 +3800,11 @@ footer {
 }
 
 .import-source {
-  cursor: pointer;
   border-radius: 5px;
   border: 1px solid rgba(0,0,0,.13);
   height: 50px;
   margin: 5px 0;
+  @extend .u-clickable;
 }
 
 .input-feedback {

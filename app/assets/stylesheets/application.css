@@ -10,7 +10,7 @@
  *= require ./bootstrap-tokenfield.css
  *= require ./noty_theme_twitter.css
  *= require ./sew.css
- *= require ./zzz.css
+ *= require ./zammad.css.scss
  *= require ./fonts/fira-sans.css
  *= require ./layout.css
  *
