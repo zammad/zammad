@@ -1,6 +1,6 @@
 class App.TicketZoom extends App.Controller
   events:
-    'click .submit': 'submit'
+    'click .js-submit': 'submit'
 
   constructor: (params) ->
     super
