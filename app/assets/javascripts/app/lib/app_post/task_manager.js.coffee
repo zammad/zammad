@@ -356,6 +356,9 @@ class _taskManagerSingleton extends App.Controller
 
     # destory task in backend
     delete @tasksToUpdate[ task.key ]
+
+    # if task isnt already stored on backend
+    return if !task.id
     App.Taskbar.destroy(task.id)
     return
 
