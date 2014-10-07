@@ -1089,6 +1089,8 @@ class Edit extends App.Controller
             item
         )
         store_id = $(e.currentTarget).data('id')
+
+        # delete attachment from storage
         App.Ajax.request(
           type:  'DELETE'
           url:   App.Config.get('api_path') + '/ticket_attachment_upload'
@@ -1096,7 +1098,13 @@ class Edit extends App.Controller
           processData: false
           success: (data, status, xhr) =>
         )
-        $(e.currentTarget).closest('.attachment').empty()
+
+        # remove attachment from dom
+        element = $(e.currentTarget).closest('.attachments')
+        $(e.currentTarget).closest('.attachment').remove()
+        # empty .attachment (remove spaces) to keep css working, thanks @mrflix :-o
+        if element.find('.attachment').length == 0
+          element.empty()
     )
 
   reset: (e) =>
