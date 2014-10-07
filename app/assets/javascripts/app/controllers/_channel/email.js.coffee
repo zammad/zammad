@@ -50,7 +50,7 @@ class App.ChannelEmailFilter extends App.Controller
   render: =>
     data = App.PostmasterFilter.search( sortBy: 'name' )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
       el:       template.find('.overview')
@@ -137,7 +137,7 @@ class App.ChannelEmailAddress extends App.Controller
   render: =>
     data = App.EmailAddress.search( sortBy: 'realname' )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
       el:       template.find('.overview')
@@ -225,7 +225,7 @@ class App.ChannelEmailSignature extends App.Controller
   render: =>
     data = App.Signature.search( sortBy: 'name' )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
     new App.ControllerTable(
       el:       template.find('.overview')
       model:    App.Signature
@@ -310,7 +310,7 @@ class App.ChannelEmailInbound extends App.Controller
   render: =>
     channels = App.Channel.search( filter: { area: 'Email::Inbound' } )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
       el:       template.find('.overview')
