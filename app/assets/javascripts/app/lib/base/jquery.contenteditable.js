@@ -47,6 +47,11 @@
 
     this.options = $.extend( {}, defaults, options) ;
 
+    // take placeholder from markup
+    if ( !this.options.placeholder && this.$element.data('placeholder') ) {
+      this.options.placeholder = this.$element.data('placeholder')
+    }
+
     this._defaults = defaults;
     this._name = pluginName;
 
@@ -56,6 +61,14 @@
   }
 
   Plugin.prototype.init = function () {
+
+    // set focus class
+    this.$element.on('focus', $.proxy(function (e) {
+      this.$element.closest('.form-control').addClass('focus')
+    }, this)).on('blur', $.proxy(function (e) {
+      this.$element.closest('.form-control').removeClass('focus')
+    }, this))
+
     // process placeholder
     if ( this.options.placeholder ) {
       this.updatePlaceholder( 'add' )
@@ -177,13 +190,17 @@
 
   // add/remove placeholder
   Plugin.prototype.updatePlaceholder = function(type) {
-    var text = this.$element.text().trim()
+    if (!this.options.placeholder) {
+      return
+    }
+    var holder = this.$element
+    var text = holder.text().trim()
     var placeholder = '<span class="placeholder">' + this.options.placeholder + '</span>'
 
     // add placholder if no text exists
     if ( type === 'add') {
       if ( !text ) {
-        this.$element.html( placeholder )
+        holder.html( placeholder )
       }
     }
 
@@ -220,7 +237,7 @@
 
       // try to set error on framework form
       parent = this.$element.parent().parent()
-      if ( parent.hasClass('form-group') ) {
+      if ( parent.hasClass('controls') ) {
         parent.addClass('has-error')
         setTimeout($.proxy(function(){
             parent.removeClass('has-error')
