@@ -159,7 +159,6 @@ time[data-tooltip]:after,
 span[data-tooltip]:after {
   content: "";
   position: absolute;
-  pointer-events: none;
   -webkit-transform: scale(0);
           transform: scale(0);
   opacity: 0;
@@ -199,7 +198,6 @@ time[data-tooltip]:hover:after,
 time[data-tooltip]:hover:before,
 span[data-tooltip]:hover:after,
 span[data-tooltip]:hover:before {
-  pointer-events: auto;
   transform: scale(1);
   opacity: 1;
   -webkit-transition: -webkit-transform 300ms 1.5s cubic-bezier(0.34,1.6,0.71,1), opacity 300ms 1.5s;
@@ -511,6 +509,10 @@ textarea,
     margin-top: -3px;
   }
 
+  select::-ms-expand {
+    display: none;
+  }
+
   .has-error .form-control,
   .has-error .form-control:focus,
   .has-error .form-control.focus {
@@ -711,8 +713,7 @@ ol.tabs li {
     padding: 10px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
-    -webkit-flex-grow: 1;
-            flex-grow: 1;
+    @extend .grow;
     @extend .u-clickable;
   }
 
@@ -2411,15 +2412,13 @@ footer {
 
   .form-inline .form-group {
     overflow: hidden;
-    -webkit-flex-grow: 1;
-            flex-grow: 1;
     position: relative;
     height: 60px;
+    @extend .grow;
   }
 
     .ticket-attributes.form-inline .form-group:last-child {
-      -webkit-flex-grow: 0;
-              flex-grow: 0;
+      @extend .grow;
     }
 
     .form-group.is-changed {
@@ -2499,8 +2498,7 @@ footer {
   .bulkAction-secondStep .form-inline .textarea.form-group {
     padding: 0 10px;
     height: auto;
-    -webkit-flex-grow: 1;
-            flex-grow: 1;
+    @extend .grow;
   }
 
     .bulkAction-secondStep .form-inline .textarea.form-group  .input-group-addon {
@@ -2808,7 +2806,6 @@ footer {
 
   .pop-selectable .icon {
     opacity: 0.3;
-    pointer-events: none;
   }
 
   .pop-selectable:hover .icon {
@@ -3862,7 +3859,6 @@ footer {
   width: 52px;
   border-radius: 0 5px 5px 0;
   background: linear-gradient(to right, rgba(255,255,255,0), white 33%);
-  pointer-events: none;
 }
 
 .input-feedback .icon {
@@ -3909,6 +3905,8 @@ footer {
   opacity: 1;
 }
 
+
+
 /*
 
   ----------------
@@ -3921,4 +3919,241 @@ footer {
   .sidebar.optional {
     display: none;
   }
+}
+
+
+
+/*
+
+  ----------------
+   layout classes
+  ----------------
+
+*/
+
+.horizontal, .vertical, .centered {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+.horizontal.hide, .vertical.hide, .centered.hide {
+  display: none;
+}
+
+.horizontal {
+  -webkit-box-orient: horizontal;
+  -ms-flex-direction: row;
+  -moz-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.horizontal.reverse {
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  -moz-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.vertical {
+  -webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  -moz-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+.vertical.reverse {
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: column-reverse;
+  -moz-flex-direction: column-reverse;
+  -webkit-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+}
+
+.vertical.stretch > *,
+.horizontal.stretch > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  -moz-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.fullHeight {
+  min-height: 100%;
+}
+
+.relative {
+  position: relative;
+}
+
+.fit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+body.fit {
+  margin: 0;
+}
+
+.scrollable {
+  overflow: auto;
+}
+
+.flex {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  -moz-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.flex-auto {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  -moz-flex: 1 1 auto;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.flex-none {
+  -webkit-box-flex: none;
+  -ms-flex: none;
+  -moz-flex: none;
+  -webkit-flex: none;
+  flex: none;
+}
+
+.flex-1 {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  -moz-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.flex-2 {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
+  -moz-flex: 2;
+  -webkit-flex: 2;
+  flex: 2;
+}
+
+.flex-3 {
+  -webkit-box-flex: 3;
+  -ms-flex: 3;
+  -moz-flex: 3;
+  -webkit-flex: 3;
+  flex: 3;
+}
+
+.justify-start {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -moz-justify-content: flex-start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+.justified {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.justify-end {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  -moz-justify-content: flex-end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+.justify-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -moz-justify-content: space-between;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+
+.start {
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  -moz-align-items: flex-start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+
+.center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -moz-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.centered {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -moz-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.end {
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  -moz-align-items: flex-end;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+}
+
+.grow {
+  -ms-flex: 1 0 auto;
+  -webkit-flex-grow: 1;
+          flex-grow: 1;
+}
+
+.two-columns,
+.three-columns,
+.wrap {
+  -ms-box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+     -moz-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+
+.two-columns > .column {
+  width: 50%;
+}
+
+.three-columns > .column {
+  width: 33.33%;
+}
+
+.align-right {
+  margin-left: auto;
+}
+
+.align-center {
+  margin-left: auto;
+  margin-right: auto;
 }

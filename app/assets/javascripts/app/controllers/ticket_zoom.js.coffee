@@ -734,7 +734,7 @@ class Edit extends App.Controller
 
     @render()
 
-    if @defaults.body
+    if @defaults.body or Function('/*@cc_on return document.documentMode===10@*/')()
       @open_textarea(null, true)
 
   stopPropagation: (e) ->
