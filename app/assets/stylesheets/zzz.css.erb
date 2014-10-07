@@ -1314,6 +1314,59 @@ ol.tabs li {
     background-position: -96px -335px;
   }
 
+  .download.icon {
+    width: 14px;
+    height: 13px;
+    background-position: -112px -339px;
+  }
+
+  .checkmark.icon {
+    width: 16px;
+    height: 15px;
+    background-position: -126px -337px;
+  }
+
+  .error.icon {
+    width: 13px;
+    height: 13px;
+    background-position: -143px -339px;
+  }
+
+  .loading.icon {
+    width: 30px;
+    height: 30px;
+    background: hsl(339,80%,62%);
+    -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+    animation: rotateplane 1.2s infinite ease-in-out;
+  }
+
+  .small.loading.icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  @-webkit-keyframes rotateplane {
+    0% { -webkit-transform: perspective(120px); background: hsl(202,68%,54%); }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg); background: hsl(145,51%,45%); }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg); background: hsl(202,68%,54%); }
+  }
+
+  @keyframes rotateplane {
+    0% { 
+      transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+      background: hsl(202,68%,54%); 
+    } 50% { 
+      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      background: hsl(145,51%,45%);
+    } 100% { 
+      transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      background: hsl(202,68%,54%);
+    }
+  }
+
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
