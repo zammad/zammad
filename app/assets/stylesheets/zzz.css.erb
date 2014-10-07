@@ -3847,12 +3847,14 @@ footer {
 }
 
 .progressTable {
-  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
 }
 
 .progressTable td {
-  padding: 8px 5px;
+  padding: 8px;
+  overflow: auto;
+  width: 33%;
 }
 
 .progressTable tr:not(:last-child) {
@@ -3863,21 +3865,13 @@ footer {
   text-align: right;
 }
 
-.progressTable-progressCell {
-  width: 120px;
+.progressTable progress {
+  width: 100%;
+  min-width: 60px;
+  display: block;
 }
 
-.progress {
-  height: 10px;
-  margin: 3px 0 0;
-}
-
-  .progress .bar {
-    background: #389ed9;
-    height: 100%;
-  }
-
-.progressTable .progress + .checkmark {
+.progressTable .checkmark {
   margin-left: 10px;
   opacity: 0;
 }

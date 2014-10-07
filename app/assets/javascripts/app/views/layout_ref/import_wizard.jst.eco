@@ -61,24 +61,30 @@
         <table class="progressTable">
           <tr class="is-done">
             <td><span class="js-count">42</span>/<span class="js-max">42</span>
-            <td>Users
-            <td class="progressTable-progressCell"><div class="horizontal">
-              <div class="progress flex"><div class="bar" style="width: 100%"></div></div><div class="checkmark icon"></div>
-            </div>
+            <td><span>Users</span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <div class="checkmark icon"></div>
+              </div>
           </tr>
           <tr class="is-done">
-            <td><span class="js-count">29999</span>/<span class="js-max">29999</span>
-            <td>Tickets
-            <td class="progressTable-progressCell"><div class="horizontal">
-              <div class="progress flex"><div class="bar" style="width: 100%"></div></div><div class="checkmark icon"></div>
-            </div>
+            <td><span class="js-count">134318</span>/<span class="js-max">134318</span>
+            <td><span>Tickets</span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="134318" value="134318"></progress></div>
+                <div class="checkmark icon"></div>
+              </div>
           </tr>
           <tr>
             <td>
-            <td>Configuration
-            <td class="progressTable-progressCell"><div class="horizontal">
-              <div class="progress flex"><div class="bar" style="width: 33%"></div></div><div class="checkmark icon"></div>
-            </div>
+            <td><span>Configuration</span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress value="0.3"></progress></div><!-- if there is no max, the value is between 0..1 -->
+                <div class="checkmark icon"></div>
+              </div>
           </tr>
         </table>
       </div>
