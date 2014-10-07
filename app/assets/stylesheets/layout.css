@@ -212,3 +212,8 @@ body.fit {
 .align-right {
   margin-left: auto;
 }
+
+.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}

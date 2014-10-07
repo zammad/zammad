@@ -1,0 +1,90 @@
+<div class="main flex centered darkBackground">
+  <div class="import wizard hero-unit">
+    <div class="wizard-slide vertical" data-slide="home">
+      <h2>Import Tickets</h2>
+      <div class="wizard-body flex vertical justified">
+        <div class="import-source centered" data-source="otrs" data-target="otrs-prepare-plugin">
+          <img class="logo" src="<%= @C('otrs-logo.png') %>" alt="OTRS" height="37">
+        </div>
+      </div>
+    </div>
+    <div class="wizard-slide vertical hide" data-slide="otrs-prepare-plugin" data-hide="2330">
+      <h2>Create OTRS Migration Plugin</h2>
+      <div class="wizard-body flex vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Personalise Migration Plugin ..
+        </p>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="subtle-link" data-target="home">Go Back</a>
+      </div>
+    </div>
+    <div class="wizard-slide vertical hide" data-slide="otrs-plugin">
+      <h2>Download OTRS Migration Plugin</h2>
+      <div class="wizard-body flex vertical justified">
+        <p>
+          Download and install this personalised OTRS Migration Plugin on your OTRS System:
+        </p>
+        <a class="btn btn--primary btn--download" download data-action="reveal"><span class="download icon"></span> Personal Migration Plugin</a>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="subtle-link" data-target="home">Go Back</a>
+        <div class="btn btn--primary align-right hide" data-target="otrs-link">Next</div>
+      </div>
+    </div>
+    <div class="wizard-slide vertical hide" data-slide="otrs-link">
+      <h2>Link OTRS</h2>
+      <div class="wizard-body flex vertical justified">
+        <p>
+          Enter the link provided by the plugin at the end of the installation to link the two systems:
+        </p>
+        <div class="form-group">
+          <label for="otrs-link">OTRS Link</label>
+          <div class="u-positionOrigin">
+            <input type="url" id="otrs-link" class="form-control" placeholder="http://otrs.company.de/otrs">
+            <div class="input-feedback centered">
+              <div class="small loading icon"></div>
+              <div class="error icon"></div>
+              <div class="checkmark icon"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="subtle-link" data-target="otrs-plugin">Go Back</a>
+        <div class="btn btn--primary align-right hide" data-target="otrs-export">Migrate OTRS Data</div>
+      </div>
+    </div>
+    <div class="wizard-slide vertical hide" data-slide="otrs-export">
+      <h2>OTRS Migration</h2>
+      <div class="wizard-body flex vertical justified">
+        <table class="progressTable">
+          <tr class="is-done">
+            <td><span class="js-count">42</span>/<span class="js-max">42</span>
+            <td>Users
+            <td class="progressTable-progressCell"><div class="horizontal">
+              <div class="progress flex"><div class="bar" style="width: 100%"></div></div><div class="checkmark icon"></div>
+            </div>
+          </tr>
+          <tr class="is-done">
+            <td><span class="js-count">29999</span>/<span class="js-max">29999</span>
+            <td>Tickets
+            <td class="progressTable-progressCell"><div class="horizontal">
+              <div class="progress flex"><div class="bar" style="width: 100%"></div></div><div class="checkmark icon"></div>
+            </div>
+          </tr>
+          <tr>
+            <td>
+            <td>Configuration
+            <td class="progressTable-progressCell"><div class="horizontal">
+              <div class="progress flex"><div class="bar" style="width: 33%"></div></div><div class="checkmark icon"></div>
+            </div>
+          </tr>
+        </table>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a href="#dashboard" class="btn btn--primary align-center hide js-finished">Done</a>
+      </div>
+    </div>
+  </div>
+</div>

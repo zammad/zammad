@@ -88,7 +88,7 @@
       </select>
     </div>
     <div class="form-group">
-      <input type="submit" class="btn btn--primary submit" value="<%- @T('Update') %>">
+      <input type="submit" class="btn btn--primary js-submit" value="<%- @T('Update') %>">
     </div>
   </form>
 </div>

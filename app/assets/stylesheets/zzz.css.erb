@@ -10,7 +10,7 @@ ul {
 }
 
 p {
-  color: hsl(198,19%,72%);
+  color: #bcbcbb;
   margin-bottom: 14px;
 }
 
@@ -473,15 +473,17 @@ textarea,
   outline: none;
 }
 
-  .form-control:focus {
+  .form-control:focus,
+  .form-control.is-focused {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
 
-
-  .form-control[contenteditable] {
+  .richtext.form-control [contenteditable] {
     height: auto;
-    min-height: 100px;
+    min-height: 82px;
+    border: none;
+    margin-bottom: 28px;
   }
 
   .tokenfield.focus {
@@ -609,7 +611,11 @@ textarea,
     margin-top: 0;
   }
 
-.login, .getstarted, .reset_password, .signup {
+.login, 
+.getstarted, 
+.reset_password,
+.signup,
+.darkBackground {
   padding: 10px;
   height: auto;
   background: hsl(234,10%,19%);
@@ -1314,6 +1320,59 @@ ol.tabs li {
     background-position: -96px -335px;
   }
 
+  .download.icon {
+    width: 14px;
+    height: 13px;
+    background-position: -112px -339px;
+  }
+
+  .checkmark.icon {
+    width: 16px;
+    height: 15px;
+    background-position: -126px -337px;
+  }
+
+  .error.icon {
+    width: 13px;
+    height: 13px;
+    background-position: -143px -339px;
+  }
+
+  .loading.icon {
+    width: 30px;
+    height: 30px;
+    background: hsl(339,80%,62%);
+    -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+    animation: rotateplane 1.2s infinite ease-in-out;
+  }
+
+  .small.loading.icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  @-webkit-keyframes rotateplane {
+    0% { -webkit-transform: perspective(120px); background: hsl(202,68%,54%); }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg); background: hsl(145,51%,45%); }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg); background: hsl(202,68%,54%); }
+  }
+
+  @keyframes rotateplane {
+    0% { 
+      transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+      background: hsl(202,68%,54%); 
+    } 50% { 
+      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      background: hsl(145,51%,45%);
+    } 100% { 
+      transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      background: hsl(202,68%,54%);
+    }
+  }
+
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
@@ -1462,9 +1521,13 @@ footer {
   width: 100px;
 }
 
-.btn {
+.btn,
+.btn:hover,
+.btn:focus {
   font-size: 14px;
   padding: 9px 24px 8px;
+  color: white;
+  background: hsl(234,10%,29%);
 }
 
 .btn:active {
@@ -1491,6 +1554,13 @@ footer {
 .btn--danger:focus {
   color: white;
   background: hsl(0,65%,55%);
+}
+
+.btn--download .download.icon {
+  margin-right: 6px;
+  margin-top: 3px;
+  margin-left: -10px;
+  vertical-align: top;
 }
 
 .navigation {
@@ -2000,6 +2070,10 @@ footer {
     margin: 21px 0 12px;
   }
 
+  .NavBarAdmin + .main p {
+    color: hsl(198,19%,72%);
+  }
+
   .nav-stacked > li + li {
     margin-top: 0;
   }
@@ -2431,7 +2505,8 @@ footer {
 }
 
   .ticket-title {
-    max-width: 596px;
+    max-width: 800px;
+    padding: 0 81px;
   }
 
     .ticket-title h1 {
@@ -3170,7 +3245,7 @@ footer {
   }
 
 .formset-inset {
-  margin: 31px -24px 24px;
+  margin: 18px -24px 24px;
   padding: 19px 24px 4px;
   background: hsl(197,20%,93%);
   border-top: 1px solid hsl(0,0%,90%);
@@ -3695,6 +3770,7 @@ footer {
 
   .scrollPageHeader .ticket-title {
     max-width: initial;
+    padding: 0;
   }
 
   .scrollPageHeader h1 {
@@ -3704,6 +3780,114 @@ footer {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+.wizard {
+  width: 360px;
+}
+
+.wizard h2 {
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,.13);
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.wizard .form-group {
+  margin: 0;
+}
+
+.wizard-slide {
+  min-height: 260px;
+}
+
+.wizard-body {
+  padding-bottom: 15px;
+}
+
+.wizard-controls {
+  padding-top: 15px;
+  height: 39px;
+}
+
+.wizard-loadingText {
+  text-align: center;
+  margin: 0;
+}
+
+.wizard-loadingText .loading {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.import-source {
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,.13);
+  height: 50px;
+  margin: 5px 0;
+}
+
+.input-feedback {
+  position: absolute;
+  padding-left: 10px;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  width: 52px;
+  border-radius: 0 5px 5px 0;
+  background: linear-gradient(to right, transparent, white 33%);
+  pointer-events: none;
+}
+
+.input-feedback .icon {
+  display: none;
+}
+
+.input-feedback[data-state=loading] .loading.icon,
+.input-feedback[data-state=error] .error.icon,
+.input-feedback[data-state=success] .checkmark.icon {
+  display: block;
+}
+
+.progressTable {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.progressTable td {
+  padding: 8px 5px;
+}
+
+.progressTable tr:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+.progressTable td:first-child {
+  text-align: right;
+}
+
+.progressTable-progressCell {
+  width: 120px;
+}
+
+.progress {
+  height: 10px;
+  margin: 3px 0 0;
+}
+
+  .progress .bar {
+    background: #389ed9;
+    height: 100%;
+  }
+
+.progressTable .progress + .checkmark {
+  margin-left: 10px;
+  opacity: 0;
+}
+
+.progressTable tr.is-done .checkmark {
+  opacity: 1;
+}
 
 /*
 
