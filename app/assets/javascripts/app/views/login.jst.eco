@@ -2,7 +2,7 @@
   <p><%- @T( 'Login with %s', @C( 'fqdn' ) ) %></p>
 
   <div class="hero-unit">
-    <img class="logo" src="http://znuny.com/assets/logo_small.png" alt="<%= @C( 'product_name' ) %>">
+    <img class="logo" src="<%= @C('company-logo.png') %>" alt="<%= @C( 'product_name' ) %>">
     <form id="login">
       <div class="form-group">
         <label for="username"><%- @Ti( 'Username / email' ) %></label>
