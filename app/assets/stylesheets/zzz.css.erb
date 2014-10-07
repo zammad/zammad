@@ -473,15 +473,17 @@ textarea,
   outline: none;
 }
 
-  .form-control:focus {
+  .form-control:focus,
+  .form-control.is-focused {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
 
-
-  .form-control[contenteditable] {
+  .richtext.form-control [contenteditable] {
     height: auto;
-    min-height: 100px;
+    min-height: 82px;
+    border: none;
+    margin-bottom: 28px;
   }
 
   .tokenfield.focus {
@@ -3243,7 +3245,7 @@ footer {
   }
 
 .formset-inset {
-  margin: 31px -24px 24px;
+  margin: 18px -24px 24px;
   padding: 19px 24px 4px;
   background: hsl(197,20%,93%);
   border-top: 1px solid hsl(0,0%,90%);
