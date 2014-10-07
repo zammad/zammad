@@ -11,7 +11,7 @@
   <div class="form-group">
     <label for="maintenance-message"><%- @T('Message') %></label>
     <div class="controls">
-    <textarea id="maintenance-message" name="message" class="form-control" rows="8"required></textarea>
+    <textarea id="maintenance-message" name="message" class="form-control" rows="8" required></textarea>
     </div>
   </div>
   <div class="form-group">
