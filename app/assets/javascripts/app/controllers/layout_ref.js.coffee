@@ -262,7 +262,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
 
       @textBubble.velocity
         properties:
-          paddingBottom: 0
+          paddingBottom: 10
         options:
           duration: 300
           easing: 'easeOutQuad'
