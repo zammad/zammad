@@ -497,4 +497,72 @@ class ContentSidebarLeft extends App.ControllerContent
 
 App.Config.set( 'layout_ref/content_sidebar_left', ContentSidebarLeft, 'Routes' )
 
+
+class ImportWizard extends App.ControllerContent
+  elements:
+    '[data-target]':  'links'
+    '[data-slide]':   'slides'
+    '[data-action]':  'actions'
+    '#otrs-link':     'otrsLink'
+    '.input-feedback':'inputFeedback'
+
+  constructor: ->
+    super
+    @render()
+
+    @links.on 'click', @navigate
+    @actions.on 'click', @action
+
+    # wait 500 ms after the last user input before we check the link
+    @otrsLink.on 'input', _.debounce(@checkOtrsLink, 600) 
+
+  checkOtrsLink: (e) =>
+    if @otrsLink.val() is ""
+      @inputFeedback.attr('data-state', '')
+      return
+
+    @inputFeedback.attr('data-state', 'loading')
+
+    # send fake callback
+    if @otrsLink.val() is '1337'
+      state = 'success'
+    else
+      state = 'error'
+
+    setTimeout @otrsLinkCallback, 1500, state
+
+  otrsLinkCallback: (state) =>
+    @inputFeedback.attr('data-state', state)
+
+    @showNextButton @inputFeedback if state is 'success'
+
+  action: (e) =>
+    button = $(e.delegateTarget)
+
+    switch button.attr('data-action')
+      when "reveal" then @showNextButton button
+
+  showNextButton: (sibling) ->
+    sibling.parents('.wizard-slide').find('.btn.hide').removeClass('hide')
+
+  navigate: (e) =>
+    target = $(e.delegateTarget).attr('data-target')
+    targetSlide = @$("[data-slide=#{ target }]")
+
+    if targetSlide
+      @goToSlide targetSlide
+
+  goToSlide: (targetSlide) =>
+    @slides.addClass('hide')
+    targetSlide.removeClass('hide')
+
+    if targetSlide.attr('data-hide')
+      setTimeout @goToSlide, targetSlide.attr('data-hide'), targetSlide.next()
+
+
+  render: ->
+    @html App.view('layout_ref/import_wizard')()
+
+App.Config.set( 'layout_ref/import_wizard', ImportWizard, 'Routes' )
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
