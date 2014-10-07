@@ -812,22 +812,22 @@ ol.tabs li {
 }
 
   .facebook .provider_icon {
-    background-image: url(<%= asset_path "facebook.svg" %>);
+    background-image: image_url("facebook.svg");
   }
 
   .google .provider_icon {
-    background-image: url(<%= asset_path "google.svg" %>);
+    background-image: image_url("google.svg");
   }
 
   .twitter .provider_icon {
-    background-image: url(<%= asset_path "twitter.svg" %>);
+    background-image: image_url("twitter.svg");
   }
 
 .icon {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-image: url(<%= asset_path "sprite.svg" %>);
+  background-image: image_url("sprite.svg");
   background-repeat: no-repeat;
   background-position: 20px 20px; /* make icon empty */
 }
@@ -1829,7 +1829,7 @@ footer {
     height: 30px;
     color: #ECECEC;
     line-height: 20px;
-    background: #31373b url(<%= asset_path "sprite.svg" %>) no-repeat 10px -26px;
+    background: #31373b image-url("sprite.svg") no-repeat 10px -26px;
     outline: none;
     border: none;
     border-radius: 15px;
@@ -1848,7 +1848,7 @@ footer {
   .search .logo {
     width: 41px;
     height: 36px;
-    background: url(<%= asset_path "logo.svg" %>);
+    background: image_url("logo.svg");
     transition: 240ms;
     position: relative;
     @extend .u-clickable;
@@ -2058,7 +2058,7 @@ footer {
   }
 
   .unique.avatar {
-    background-image: url(<%= asset_path "avatar-bg.png" %>);
+    background-image: image_url("avatar-bg.png");
     background-size: auto;
     color: white;
     line-height: 42px;
@@ -3634,7 +3634,7 @@ footer {
 }
 .userInfo .avatar:after {
   content: "";
-  background: url(<%= asset_path "sprite.svg" %>);
+  background: image_url("sprite.svg");
   background-position: -226px 0;
   right: 0;
   top: 0;
