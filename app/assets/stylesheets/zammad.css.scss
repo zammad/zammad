@@ -3629,10 +3629,11 @@ footer {
   float: right;
   position: relative;
 }
+
 .userInfo .avatar:after {
   content: "";
   background: image_url("sprite.svg");
-  background-position: -226px 0;
+  background-position: -236px 0;
   right: 0;
   top: 0;
   width: 97px;
