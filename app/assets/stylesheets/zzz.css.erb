@@ -474,7 +474,8 @@ textarea,
 }
 
   .form-control:focus,
-  .form-control.is-focused {
+  .form-control.focus,
+  .tokenfield.focus {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
@@ -486,13 +487,9 @@ textarea,
     margin-bottom: 28px;
   }
 
-  .tokenfield.focus {
-    box-shadow: none;
-    border-color: hsl(0,0%,90%);
-  }
-
   .has-error .form-control,
-  .has-error .form-control:focus {
+  .has-error .form-control:focus,
+  .has-error .form-control.focus {
     box-shadow: none;
     border-color: red !important;
   }
