@@ -429,6 +429,7 @@ class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
     $('.content').attr('style', 'display: none!important')
+    @navShow()
 
 class App.ControllerContent extends App.Controller
   constructor: ->

@@ -12,7 +12,9 @@ class App.TicketCreate extends App.Controller
     super
 
     # check authentication
-    return if !@authenticate()
+    if !@authenticate()
+      App.TaskManager.remove( @task_key )
+      return
 
     # set title
     @form_meta = undefined
