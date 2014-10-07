@@ -14,6 +14,10 @@ p {
   margin-bottom: 14px;
 }
 
+a {
+  outline: none !important;
+}
+
 a.create {
   color: hsl(145,51%,45%);
   text-decoration: underline;
@@ -444,6 +448,11 @@ label {
   opacity: 0.2;
 }
 
+input[type="radio"], 
+input[type="checkbox"] {
+  margin: 0;
+}
+
 input[type=text],
 input[type=password],
 input[type=email],
@@ -489,8 +498,9 @@ textarea,
     border-color: red !important;
   }
 
-  .help-inline {
+  .help-inline:not(:empty) {
     color: red;
+    padding: 2px;
     font-size: 13px;
   }
 
@@ -1518,6 +1528,7 @@ footer {
   padding: 10px 24px 9px;
   color: #2c2d36;
   background: white;
+  outline: none;
 }
 
 .btn:active {
@@ -2443,15 +2454,11 @@ footer {
     left: 0;
     top: 0;
     position: absolute;
-    padding: 28px 18px 18px;
+    padding: 28px 18px 12px;
     float: none;
     display: block;
     border-radius: 0;
     background: none;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-        -ms-appearance: none;
-            appearance: none;
   }
 
   .bulkAction-secondStep .form-group {
@@ -2670,7 +2677,7 @@ footer {
       box-shadow: none;
     }
 
-  .ticket-article-item .attachments {
+  .ticket-article-item .attachments:not(:empty) {
     border-top: 1px solid hsl(0,0%,93%);
     white-space: normal;
     margin: 0 -20px;
@@ -3820,7 +3827,7 @@ footer {
   bottom: 1px;
   width: 52px;
   border-radius: 0 5px 5px 0;
-  background: linear-gradient(to right, transparent, white 33%);
+  background: linear-gradient(to right, rgba(255,255,255,0), white 33%);
   pointer-events: none;
 }
 

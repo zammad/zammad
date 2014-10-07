@@ -35,7 +35,7 @@
         <div class="stat-graphic flex horizontal centered">
           <div class="stats-channel email-channel vertical center">
             <div class="email channel icon"></div>
-            <div class="channel-bars flex horizontal end justify-center">
+            <div class="channel-bars horizontal end justify-center">
               <div class="channel-bar primary" style="height: 80%"></div>
               <div class="channel-bar secondary" style="height: 100%"></div>
             </div>
@@ -43,7 +43,7 @@
           </div>
           <div class="stats-channel received-calls-channel vertical center">
             <div class="received-calls channel icon"></div>
-            <div class="channel-bars flex horizontal end justify-center">
+            <div class="channel-bars horizontal end justify-center">
               <div class="channel-bar primary" style="height: 53%"></div>
               <div class="channel-bar secondary" style="height: 47%"></div>
             </div>
@@ -51,7 +51,7 @@
           </div>
           <div class="stats-channel outbound-calls-channel vertical center">
             <div class="outbound-calls channel icon"></div>
-            <div class="channel-bars flex horizontal end justify-center">
+            <div class="channel-bars horizontal end justify-center">
               <div class="channel-bar primary" style="height: 46%"></div>
               <div class="channel-bar secondary" style="height: 53%"></div>
             </div>
@@ -59,7 +59,7 @@
           </div>
           <div class="stats-channel facebook-channel vertical center">
             <div class="facebook channel icon"></div>
-            <div class="channel-bars flex horizontal end justify-center">
+            <div class="channel-bars horizontal end justify-center">
               <div class="channel-bar primary" style="height: 24%"></div>
               <div class="channel-bar secondary" style="height: 18%"></div>
             </div>
@@ -67,7 +67,7 @@
           </div>
           <div class="stats-channel twitter-channel vertical center">
             <div class="twitter channel icon"></div>
-            <div class="channel-bars flex horizontal end justify-center">
+            <div class="channel-bars horizontal end justify-center">
               <div class="channel-bar primary" style="height: 13%"></div>
               <div class="channel-bar secondary" style="height: 16%"></div>
             </div>
