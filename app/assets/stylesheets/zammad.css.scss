@@ -2108,13 +2108,16 @@ footer {
     margin-top: 0;
   }
 
-  .nav-pills > li > a {
+  .nav-pills > li > a,
+  .nav-pills > li > a:focus,
+  .nav-pills > li > a:active {
     padding: 0;
     height: 40px;
     color: #0f94d6;
     line-height: 39px;
     border-radius: 0;
     border-top: 1px solid #f2f2f3;
+    background: transparent; /* a:focus, a:active with bg: transparent fixes gray focus bg in IE 10 */
     @extend .u-textTruncate;
     @extend %displayflex;
   }
@@ -2124,7 +2127,7 @@ footer {
   }
 
   .nav-pills > li:hover > a,
-  .nav-pills > li:hover + li > a {
+  .nav-pills > li:hover + li:not(.active) > a {
     border-color: transparent;
   }
 
@@ -2133,6 +2136,7 @@ footer {
   .nav-pills > li.active > a:focus {
     color: white;
     background: #2c2d36;
+    border-color: initial;
   }
 
   .nav-pills > li:hover > a,
@@ -3537,6 +3541,10 @@ footer {
   .dropdown-menu > li > a:hover {
     color: white;
     background: hsl(205,90%,60%);
+  }
+
+  .dropdown-menu > li > a span {
+    display: block;
   }
 
   .dropdown.actions li {
