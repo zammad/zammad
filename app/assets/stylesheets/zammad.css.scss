@@ -713,7 +713,7 @@ ol.tabs li {
     padding: 10px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
-    @extend .grow;
+    @extend .flex-auto;
     @extend .u-clickable;
   }
 
@@ -2416,11 +2416,11 @@ footer {
     overflow: hidden;
     position: relative;
     height: 60px;
-    @extend .grow;
+    @extend .flex-auto;
   }
 
     .ticket-attributes.form-inline .form-group:last-child {
-      @extend .grow;
+      @extend .flex-shrink;
     }
 
     .form-group.is-changed {
@@ -2494,13 +2494,12 @@ footer {
   }
 
   .bulkAction-secondStep .form-group {
-    min-width: 150px;
+    min-width: 140px;
   }
 
   .bulkAction-secondStep .form-inline .textarea.form-group {
     padding: 5px 10px;
     height: auto;
-    @extend .flex-auto;
   }
 
     .bulkAction-secondStep .form-inline .textarea.form-group  .input-group-addon {
@@ -4035,6 +4034,14 @@ body.fit {
           flex: 1 1 auto;
 }
 
+.flex-shrink {
+  -webkit-box-flex: 1;
+  -webkit-flex: 0 1 auto;
+     -moz-flex: 0 1 auto;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+}
+
 .flex-none {
   -webkit-box-flex: none;
   -webkit-flex: none;
@@ -4135,12 +4142,6 @@ body.fit {
   -moz-align-items: flex-end;
   -webkit-align-items: flex-end;
   align-items: flex-end;
-}
-
-.grow {
-  -ms-flex: 1 0 auto;
-  -webkit-flex-grow: 1;
-          flex-grow: 1;
 }
 
 .two-columns,
