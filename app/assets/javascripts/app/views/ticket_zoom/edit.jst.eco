@@ -3,9 +3,9 @@
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @article.form_id %>">
   <div class="bubble-grid horizontal">
-    <div class="vertical center edit-controls">
+    <div class="editControls">
       <%- App.User.fullLocal( @S('id') ).avatar(false, 'right', 'zIndex-5') %>
-      <div class="dark pop-select zIndex-7 edit-control-item">
+      <div class="dark pop-select zIndex-7 editControls-item">
         <div class="pop-selected u-clickable centered">
           <div class="gray <%- @article.type %> channel icon"></div>
         </div>
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="visibility-toggle zIndex-7 u-clickable edit-control-item">
+      <div class="visibility-toggle zIndex-7 u-clickable editControls-item">
         <div class="internal-visibility centered" title="<%- @T("unset internal") %>">
           <div class="internal visibility icon"></div>
         </div>

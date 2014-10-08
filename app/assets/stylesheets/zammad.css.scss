@@ -2767,10 +2767,6 @@ footer {
     background: white;
   }
 
-  .ticket-edit .avatar {
-    margin-bottom: 3px;
-  }
-
   .dropArea {
     background: white;
     border: 5px solid;
@@ -2784,27 +2780,32 @@ footer {
     display: block;
   }
 
-.edit-controls {
+.editControls {
   position: relative;
 }
 
-  .edit-control-item {
+  .editControls-item {
     width: 38px;
     height: 36px;
     position: absolute;
     top: 38px;
     display: none;
+    margin-left: 1px;
   }
 
-  .edit-control-item:nth-child(3) {
-    top: 74px;
+  .editControls-item:nth-child(2) {
+    margin-top: 5px;
   }
 
-  .edit-control-item:nth-child(4) {
-    top: 110px;
+  .editControls-item:nth-child(3) {
+    top: 79px;
   }
 
-  .edit-control-item:not(:last-child) {
+  .editControls-item:nth-child(4) {
+    top: 115px;
+  }
+
+  .editControls-item:not(:last-child) {
     border-bottom: 1px solid #e6e6e6;
   }
 
