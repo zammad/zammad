@@ -1554,8 +1554,9 @@ footer {
 .btn:focus {
   font-size: 14px;
   padding: 10px 24px 9px;
-  color: #2c2d36;
+  color: hsl(202,68%,54%);
   background: white;
+  border-color: rgba(0,0,0,.1);
   outline: none;
 }
 
