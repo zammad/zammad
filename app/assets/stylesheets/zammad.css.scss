@@ -2033,8 +2033,7 @@ footer {
     height: 40px;
     padding: 0 15px;
     color: #2594d4;
-    display: -webkit-flex;
-    display:         flex;
+    @extend %displayflex;
   }
 
   .user-menu .dropdown-menu > li > a:hover {
@@ -2112,13 +2111,12 @@ footer {
   .nav-pills > li > a {
     padding: 0;
     height: 40px;
-    display: -webkit-flex;
-    display:         flex;
     color: #0f94d6;
     line-height: 39px;
     border-radius: 0;
     border-top: 1px solid #f2f2f3;
     @extend .u-textTruncate;
+    @extend %displayflex;
   }
 
   .nav-pills > li:hover > a {
@@ -3622,9 +3620,6 @@ footer {
     right: 0;
   }
 
-.userInfo {
-}
-
 .userInfo .avatar {
   float: right;
   position: relative;
@@ -3932,14 +3927,19 @@ footer {
 
 */
 
-.horizontal, .vertical, .centered {
+.horizontal, 
+.vertical, 
+.centered, 
+%displayflex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: -moz-flex;
   display: -webkit-flex;
   display: flex;
 }
-.horizontal.hide, .vertical.hide, .centered.hide {
+.horizontal.hide, 
+.vertical.hide, 
+.centered.hide {
   display: none;
 }
 
