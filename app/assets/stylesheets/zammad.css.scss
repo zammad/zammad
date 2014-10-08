@@ -3809,7 +3809,7 @@ footer {
   }
 
 .wizard {
-  width: 360px;
+  width: 400px;
 }
 
 .wizard h2 {
@@ -3821,10 +3821,6 @@ footer {
 
 .wizard .form-group {
   margin: 0;
-}
-
-.wizard-slide {
-  min-height: 260px;
 }
 
 .wizard-body {
@@ -3844,6 +3840,10 @@ footer {
 .wizard-loadingText .loading {
   vertical-align: middle;
   margin-right: 10px;
+}
+
+.import.wizard .wizard-slide {
+  height: 300px;
 }
 
 .import-source {
@@ -4018,50 +4018,50 @@ body.fit {
 
 .flex {
   -webkit-box-flex: 1;
-  -ms-flex: 1;
-  -moz-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
+      -webkit-flex: 1;
+         -moz-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
 }
 
 .flex-auto {
   -webkit-box-flex: 1;
-  -ms-flex: 1 1 auto;
-  -moz-flex: 1 1 auto;
   -webkit-flex: 1 1 auto;
-  flex: 1 1 auto;
+     -moz-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
 }
 
 .flex-none {
   -webkit-box-flex: none;
-  -ms-flex: none;
-  -moz-flex: none;
   -webkit-flex: none;
-  flex: none;
+     -moz-flex: none;
+      -ms-flex: none;
+          flex: none;
 }
 
 .flex-1 {
   -webkit-box-flex: 1;
-  -ms-flex: 1;
-  -moz-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
+      -webkit-flex: 1;
+         -moz-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
 }
 
 .flex-2 {
   -webkit-box-flex: 2;
-  -ms-flex: 2;
-  -moz-flex: 2;
-  -webkit-flex: 2;
-  flex: 2;
+      -webkit-flex: 2;
+         -moz-flex: 2;
+          -ms-flex: 2;
+              flex: 2;
 }
 
 .flex-3 {
   -webkit-box-flex: 3;
-  -ms-flex: 3;
-  -moz-flex: 3;
-  -webkit-flex: 3;
-  flex: 3;
+      -webkit-flex: 3;
+         -moz-flex: 3;
+          -ms-flex: 3;
+              flex: 3;
 }
 
 .justify-start {
