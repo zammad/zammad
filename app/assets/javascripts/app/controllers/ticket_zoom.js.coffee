@@ -807,8 +807,7 @@ class Edit extends App.Controller
 
     html5Upload.initialize(
       uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
-      dropContainer: @$('.article-attachment').get(0),
-      #dropContainer1: @$('.dropArea').get(0),
+      dropContainer: @el.get(0),
       inputField: @$('.article-attachment input').get(0),
       key: 'File',
       data: { form_id: @form_id },

@@ -754,10 +754,9 @@ class App.ControllerForm extends App.Controller
         @attachmentPlaceholder = item.find('.attachmentPlaceholder')
         @attachmentUpload = item.find('.attachmentUpload')
         @attachmentsHolder = item.find('.attachments')
-        html5Upload.initialize(
+        u = => html5Upload.initialize(
           uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
-          dropContainer: item.get(0),
-          dropContainer1: item.find('.dropArea').get(0),
+          dropContainer: item.closest('form').get(0),
           inputField: item.find( 'input' ).get(0),
           key: 'File',
           data: { form_id: @form_id },
@@ -788,7 +787,7 @@ class App.ControllerForm extends App.Controller
                 console.log('uploadProgress ', parseInt(progress))
             )
         )
-
+        App.Delay.set( u, 100, undefined, 'form_upload' )
 
     # textarea
     else if attribute.tag is 'textarea'
