@@ -2494,13 +2494,13 @@ footer {
   }
 
   .bulkAction-secondStep .form-group {
-    min-width: 100px;
+    min-width: 150px;
   }
 
   .bulkAction-secondStep .form-inline .textarea.form-group {
-    padding: 0 10px;
+    padding: 5px 10px;
     height: auto;
-    @extend .grow;
+    @extend .flex-auto;
   }
 
     .bulkAction-secondStep .form-inline .textarea.form-group  .input-group-addon {
@@ -2515,6 +2515,9 @@ footer {
       padding-right: 8px;
       width: 100%;
       resize: vertical;
+    }
+
+    .bulkAction-secondStep .form-inline textarea.form-control:not(:focus) {
       border-color: #f0f0f0;
     }
 
