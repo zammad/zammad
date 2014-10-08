@@ -1,0 +1,5 @@
+<form class="form-normal">
+  <h2><%- @T( 'Avatar' ) %></h2>
+  <div class="snapshot"></div>
+  <button type="submit" class="btn"><%- @T( 'Snapshot' ) %></button>
+</form>
