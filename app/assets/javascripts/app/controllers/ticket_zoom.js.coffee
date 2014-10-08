@@ -734,8 +734,11 @@ class Edit extends App.Controller
 
     @render()
 
-    if @defaults.body
+    if @defaults.body or @isIE10()
       @open_textarea(null, true)
+
+  isIE10: ->
+    Function('/*@cc_on return document.documentMode===10@*/')()
 
   stopPropagation: (e) ->
     e.stopPropagation()
@@ -1027,7 +1030,7 @@ class Edit extends App.Controller
 
   close_textarea: =>
     @remove_textarea_catcher()
-    if !@textarea.text().trim() && !@attachments.length
+    if !@textarea.text().trim() && !@attachments.length && not @isIE10()
 
       @textarea.velocity
         properties:
