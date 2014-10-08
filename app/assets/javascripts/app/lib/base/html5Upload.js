@@ -69,20 +69,20 @@
                 dropContainer = manager.dropContainer,
                 inputField = manager.inputField,
                 inCounter = 0,
-                cancelEvent = function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                overEvent = function (e) {
+                    e.preventDefault()
+                    e.stopPropagation()
                     inCounter++
                     //console.log('in', inCounter, dropContainer)
                     showDropZone(dropContainer)
                 };
                 stopEvent = function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    e.preventDefault()
+                    e.stopPropagation()
                 };
                 leaveEvent = function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    e.preventDefault()
+                    e.stopPropagation()
                     inCounter--
                     //console.log('out', inCounter)
                     if ( inCounter == 0 ) {
@@ -101,14 +101,14 @@
                 }
 
             if (dropContainer) {
-                manager.on(dropContainer, 'dragleave', leaveEvent);
-                manager.on(dropContainer, 'dragover', stopEvent);
-                manager.on(dropContainer, 'dragenter', cancelEvent);
+                manager.on(dropContainer, 'dragleave', leaveEvent)
+                manager.on(dropContainer, 'dragover', stopEvent)
+                manager.on(dropContainer, 'dragenter', overEvent)
                 manager.on(dropContainer, 'drop', function (e) {
                     inCounter = 0
                     stopEvent(e);
                     hideDropZone(dropContainer)
-                    manager.processFiles(e.dataTransfer.files);
+                    manager.processFiles(e.dataTransfer.files)
                 });
             }
 
