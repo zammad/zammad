@@ -16,7 +16,7 @@
       <th <% if item.style: %>style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
 <% end %>
 <% if @destroy: %>
-      <th class="span2"><%- @T('Delete') %></th>
+      <th><%- @T('Delete') %></th>
 <% end %>
     </tr>
   </thead>
