@@ -1,3 +1,22 @@
+###
+
+check if browser is supported
+
+  result = App.Browser.check()
+
+  result = true # true/false
+
+get used browser
+
+  browser = App.Browser.detection()
+
+  browser = {
+    browser: "Chrome",
+    version: 37,
+    OS:      "Mac"
+  }
+
+###
 class App.Browser
   @detection: ->
     data =
@@ -8,42 +27,28 @@ class App.Browser
   @check: ->
     data = @detection()
 
-    # disable Crome 13 and older
-    if data.browser == 'Chrome' && data.version <= 20
-      @message(data)
-      console.log('Browser not supported')
-      return false
+    # define min. required browser version
+    map =
+      Chrome2: 37
+      Firefox: 28
+      Explorer: 10
+      Safari: 6
+      Opera: 22
 
-    # disable Firefox 9 and older
-    else if data.browser == 'Firefox' && data.version <= 27
-      @message(data)
-      console.log('Browser not supported')
-      return false
+    # disable id older
+    if data.browser && data.version
+      if map[data.browser] && data.version < map[data.browser]
+        @message(data, data.browser, map[data.browser])
+        console.log('Browser not supported')
+        return false
 
-    # disable IE 8 and older
-    else if data.browser == 'Explorer' && data.version <= 9
-      @message(data)
-      console.log('Browser not supported')
-      return false
-
-    # disable Safari 3 and older
-    else if data.browser == 'Safari' && data.version <= 6
-      @message(data)
-      console.log('Browser not supported')
-      return false
-
-    # disable Opera 10 and older
-    else if data.browser == 'Opera' && data.version <= 21
-      @message(data)
-      console.log('Browser not supported')
-      return false
-
+    # allow browser
     return true
 
-  @message: (data) ->
+  @message: (data, browser, version) ->
     new App.ControllerModal(
       head:     'Browser too old!'
-      message:  "Your Browser is not supported (#{data.browser} #{data.version} #{data.OS}). Please use a newer one."
+      message:  "Your Browser is not supported (#{data.browser} #{data.version} #{data.OS}). Please use a newer one (e. g. #{browser} #{version} or higher)."
       close:    false
       backdrop: false
       keyboard: false
