@@ -376,7 +376,7 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
     # return result
     render :json => {
       :assets   => assets,
-      :user_ids => user_ids,
+      :user_ids => user_ids.uniq,
     }
   end
 
