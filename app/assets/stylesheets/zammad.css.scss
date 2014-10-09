@@ -427,7 +427,8 @@ h5 {
   font-size: 16px;
 }
 
-label {
+label,
+.checkbox.form-group label {
   text-transform: uppercase;
   color: #999;
   font-size: 12px;
@@ -435,6 +436,19 @@ label {
   letter-spacing: 0.1em;
   padding: 0 2px;
   margin-bottom: 6px;
+}
+
+fieldset {
+  margin: 0 -4px;
+}
+
+fieldset .form-group {
+  padding: 0 4px;
+}
+
+fieldset > *:not(.form-group) .form-control {
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 .form-group + .form-group {
@@ -451,6 +465,15 @@ label {
   opacity: 0.2;
 }
 
+.form-group:not(.formGroup--halfSize) {
+  clear: left;
+}
+
+.form-group.formGroup--halfSize {
+  width: 50%;
+  float: left;
+}
+
 input[type="radio"], 
 input[type="checkbox"] {
   margin: 0;
@@ -460,7 +483,8 @@ input[type=text],
 input[type=password],
 input[type=email],
 textarea,
-.form-control {
+.form-control,
+.checkbox.form-group .checkbox {
   display: block;
   padding: 6px 12px;
   width: 100%;
@@ -3687,8 +3711,11 @@ footer {
   }
 
 .checkbox.form-group .checkbox {
-  margin: 10px 0 0;
+  margin-top: 0;
   margin-bottom: 15px;
+  height: auto;
+  padding-bottom: 2px;
+  background: hsl(210,17%,98%);
 }
 
 .checkbox.form-group label {
@@ -3697,17 +3724,20 @@ footer {
 }
 
 .checkbox.form-group .controls label {
-  padding-left: 20px;
+  padding: 3px 0 3px 20px;
   display: block;
   font: inherit;
   font-size: 13px;
+  margin-bottom: 0;
   color: inherit;
   text-transform: inherit;
+  letter-spacing: 0;
   @extend .u-clickable;
 }
 
 .checkbox.form-group input[type=checkbox] {
-  margin-top: 1px;
+  margin-top: 3px;
+  vertical-align: bottom;
 }
 
 .userSearch {
@@ -3787,7 +3817,7 @@ footer {
 }
 
 .form-item + .btn {
-  margin-left: 15px;
+  margin-left: 23px;
 }
 
 .scrollPageHeader {
