@@ -492,6 +492,45 @@ Freemont and pulling out several minutes.
           :to                 => 'undisclosed-recipients: ;',
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail24.box'),
+        :body_md5     => 'd41d8cd98f00b204e9800998ecf8427e',
+        :params   => {
+          :from               => 'oracle@IG0-1-DB01.example.com',
+          :from_email         => 'oracle@IG0-1-DB01.example.com',
+          :from_display_name  => '',
+          :subject            => 'Regelsets im Test-Status gefunden: 1',
+          :to                 => 'support@example.com',
+          :body               => '',
+        },
+        :attachments  => [
+          {
+            :data     => 'RULESET_ID;NAME;ACTIV;RUN_MODE;AUDIT_MODIFY_DATE
+387;DP DHL JOIN - EN : Einladung eAC;T;SM;1.09.14
+',
+            :md5      => 'a61c76479fdc2f107fe2697ac5ad60ae',
+            :filename => 'rulesets-report.csv',
+          },
+        ],
+      },
+      {
+        :data         => IO.read('test/fixtures/mail25.box'),
+        :body_md5     => '436f71d8d8a4ffbd3f18fc9de7d7f767',
+        :params   => {
+          :from               => 'oracle@IG0-1-DB01.example.com',
+          :from_email         => 'oracle@IG0-1-DB01.example.com',
+          :from_display_name  => '',
+          :subject            => 'Regelsets im Test-Status gefunden: 1',
+          :to                 => 'support@example.com',
+          :body               => "begin 644 rulesets-report.csv
+M4E5,15-%5%])1#M.04U%.T%#5$E6.U)53E]-3T1%.T%51$E47TU/1$E&65]$
+M051%\"C,X-SM$4\"!$2$P@2D])3B`M($5.(#H@16EN;&%D=6YG(&5!0SM4.U--
+*.S$W+C`Y+C$T\"@``
+`
+end
+",
+        },
+      },
     ]
 
     files.each { |file|
@@ -524,7 +563,7 @@ Freemont and pulling out several minutes.
           data[:attachments].each { |attachment_parser|
             next if found
             file_md5 = Digest::MD5.hexdigest( attachment_parser[:data] )
-#            puts 'Attachment:' + attachment_parser.inspect + '-' + file_md5
+            #puts 'Attachment:' + attachment_parser.inspect + '-' + file_md5
             if attachment[:md5] == file_md5
               found = true
               assert_equal( attachment[:filename], attachment_parser[:filename] )
