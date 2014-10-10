@@ -133,12 +133,19 @@
           return
         }
 
+        newLine = "<br>"
         if ( this.options.mode === 'textonly' ) {
-          document.execCommand('insertHTML', false, "\n")
+          newLine = "\n"
+        }
+        if (document.selection) {
+          var range = document.selection.createRange()
+          newLine = "<br/>" // ie is not supporting \n :(
+          range.pasteHTML(newLine)
         }
         else {
-          document.execCommand('insertHTML', false, '<br>')
+          document.execCommand('insertHTML', false, newLine)
         }
+
         // prevent the default behaviour of return key pressed
         return false
       }
@@ -275,8 +282,12 @@
     // e.altKey
     // e.ctrlKey
     // e.metaKey
-    // on mac block e.ctrlKey + i/b/u
+    // on mac block e.metaKey + i/b/u
     if ( !e.altKey && e.metaKey && this.options.richTextFormatKey[ e.keyCode ] ) {
+      return true
+    }
+    // on win block e.ctrlKey + i/b/u
+    if ( !e.altKey && e.ctrlKey && this.options.richTextFormatKey[ e.keyCode ] ) {
       return true
     }
     return false
