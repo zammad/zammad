@@ -166,7 +166,13 @@
 
   // get cursor position
   Plugin.prototype.getCaretPosition = function() {
-    document.execCommand('insertHTML', false, '<span id="hidden"></span>');
+    // not needed on IE
+    if (document.selection) {
+      return
+    }
+    else {
+      document.execCommand('insertHTML', false, '<span id="hidden"></span>')
+    }
     var hiddenNode = document.getElementById('hidden');
     if (!hiddenNode) {
         return 0;
@@ -226,7 +232,13 @@
       if ( item.id == id ) {
         var content = item.content + "\n"
         this.cutInput()
-        document.execCommand('insertHTML', false, content)
+        if (document.selection) {
+          var range = document.selection.createRange()
+          range.pasteHTML(content)
+        }
+        else {
+          document.execCommand('insertHTML', false, content)
+        }
         this.close()
         return
       }
