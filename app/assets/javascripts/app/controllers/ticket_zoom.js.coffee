@@ -697,6 +697,7 @@ class Edit extends App.Controller
     '.attachmentUpload':            'attachmentUpload'
     '.attachmentUpload-progressBar':'progressBar'
     '.js-percentage':               'progressText'
+    '.js-cancel':                   'cancelContainer'
     '.text-bubble':                 'textBubble'
     '.editControls-item':           'editControlItem'
     #'.editControls':               'editControls'
@@ -811,16 +812,25 @@ class Edit extends App.Controller
     html5Upload.initialize(
       uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
       dropContainer: @el.get(0),
+      cancelContainer: @cancelContainer,
       inputField: @$('.article-attachment input').get(0),
       key: 'File',
       data: { form_id: @form_id },
-      maxSimultaneousUploads: 2,
+      maxSimultaneousUploads: 1,
       onFileAdded: (file) =>
 
-        @attachmentPlaceholder.addClass('hide')
-        @attachmentUpload.removeClass('hide')
-
         file.on(
+
+          onStart: =>
+            @attachmentPlaceholder.addClass('hide')
+            @attachmentUpload.removeClass('hide')
+            @cancelContainer.removeClass('hide')
+            console.log('upload start')
+
+          onAborted: =>
+            @attachmentPlaceholder.removeClass('hide')
+            @attachmentUpload.addClass('hide')
+
           # Called after received response from the server
           onCompleted: (response) =>
 
@@ -838,6 +848,9 @@ class Edit extends App.Controller
           onProgress: (progress, fileSize, uploadedBytes) =>
             @progressBar.width(parseInt(progress) + "%")
             @progressText.text(parseInt(progress))
+            # hide cancel on 90%
+            if parseInt(progress) >= 90
+              @cancelContainer.addClass('hide')
             console.log('uploadProgress ', parseInt(progress))
         )
     )

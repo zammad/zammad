@@ -754,19 +754,29 @@ class App.ControllerForm extends App.Controller
         @attachmentPlaceholder = item.find('.attachmentPlaceholder')
         @attachmentUpload = item.find('.attachmentUpload')
         @attachmentsHolder = item.find('.attachments')
+        @cancelContainer = item.find('.js-cancel')
         u = => html5Upload.initialize(
           uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
           dropContainer: item.closest('form').get(0),
+          cancelContainer: @cancelContainer,
           inputField: item.find( 'input' ).get(0),
           key: 'File',
           data: { form_id: @form_id },
-          maxSimultaneousUploads: 2,
+          maxSimultaneousUploads: 1,
           onFileAdded: (file) =>
 
-            @attachmentPlaceholder.addClass('hide')
-            @attachmentUpload.removeClass('hide')
-
             file.on(
+
+              onStart: =>
+                @attachmentPlaceholder.addClass('hide')
+                @attachmentUpload.removeClass('hide')
+                @cancelContainer.removeClass('hide')
+                console.log('upload start')
+
+              onAborted: =>
+                @attachmentPlaceholder.removeClass('hide')
+                @attachmentUpload.addClass('hide')
+
               # Called after received response from the server
               onCompleted: (response) =>
 
@@ -784,6 +794,9 @@ class App.ControllerForm extends App.Controller
               onProgress: (progress, fileSize, uploadedBytes) =>
                 @progressBar.width(parseInt(progress) + "%")
                 @progressText.text(parseInt(progress))
+                # hide cancel on 90%
+                if parseInt(progress) >= 90
+                  @cancelContainer.addClass('hide')
                 console.log('uploadProgress ', parseInt(progress))
             )
         )

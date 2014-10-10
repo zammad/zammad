@@ -12,7 +12,9 @@
         var self = this;
         self.dropContainer = options.dropContainer;
         self.inputField = options.inputField;
+        self.cancelContainer = options.cancelContainer;
         self.uploadsQueue = [];
+        self._xhrs = [];
         self.activeUploads = 0;
         self.data = options.data;
         self.key = options.key;
@@ -47,6 +49,10 @@
                 console.log('Event: upload onStart');
                 (self.eventHandlers.onStart || noop)();
             },
+            onAborted: function () {
+                console.log('Event: upload onAborted');
+                (self.eventHandlers.onAborted || noop)();
+            },
             onCompleted: function (data) {
                 console.log('Event: upload onCompleted, data = ' + data);
                 file = null;
@@ -68,6 +74,7 @@
             var manager = this,
                 dropContainer = manager.dropContainer,
                 inputField = manager.inputField,
+                cancelContainer = manager.cancelContainer,
                 inCounter = 0,
                 overEvent = function (e) {
                     e.preventDefault()
@@ -117,6 +124,12 @@
                     manager.processFiles(this.files);
                 });
             }
+
+            if (cancelContainer) {
+                cancelContainer.on('click', function() {
+                    manager.uploadCancel()
+                })
+            }
         },
 
         processFiles: function (files) {
@@ -137,6 +150,17 @@
                 upload = new FileUpload(file);
                 manager.uploadFile(upload);
             }
+        },
+
+        uploadCancel: function () {
+          var manager = this;
+          //manager.uploadsQueue.shift()
+          console.log(99999, manager._xhrs)
+          _.each( manager._xhrs, function(xhr){
+            console.log(888, xhr)
+            xhr.abort()
+          })
+          manager._xhrs = []
         },
 
         uploadFile: function (upload) {
@@ -168,6 +192,7 @@
             manager.activeUploads += 1;
 
             xhr = new window.XMLHttpRequest();
+            manager._xhrs.push( xhr )
             formData = new window.FormData();
             fileName = file.name;
 
@@ -204,6 +229,16 @@
                     manager.ajaxUpload(manager.uploadsQueue.shift());
                 }
             };
+            xhr.abort = function (event) {
+                console.log('Upload abort');
+
+                // Reduce number of active uploads:
+                manager.activeUploads -= 1;
+
+                upload.events.onAborted();
+
+                manager.uploadsQueue = []
+            }
 
             // Triggered when upload fails:
             xhr.onerror = function () {
