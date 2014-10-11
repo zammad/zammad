@@ -5,7 +5,7 @@
         <h1><%- @T( 'New Ticket' ) %></h1>
       </div>
 
-      <form role="form" class="form-large ticket-create">
+      <form role="form" class="form-large newTicket">
 
         <div class="ticket-form-top"></div>
         <div class="article-form-top"></div>

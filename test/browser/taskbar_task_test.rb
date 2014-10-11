@@ -32,12 +32,12 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'check',
-            :css     => '.active .ticket-create',
+            :css     => '.active .newTicket',
             :result  => true,
           },
           {
             :execute => 'set',
-            :css     => '.active .ticket-create input[name="title"]',
+            :css     => '.active .newTicket input[name="title"]',
             :value   => 'some test AAA',
           },
           {
@@ -112,7 +112,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.active .ticket-create input[name="title"]',
+            :css     => '.active .newTicket input[name="title"]',
             :value   => 'INBOUND TEST#1',
           },
           {
@@ -121,7 +121,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.active .ticket-create [data-name="body"]',
+            :css     => '.active .newTicket [data-name="body"]',
             :value   => 'INBOUND BODY TEST#1',
           },
           {
@@ -138,7 +138,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.active .ticket-create input[name="title"]',
+            :css     => '.active .newTicket input[name="title"]',
             :value   => 'OUTBOUND TEST#1',
           },
           {
@@ -147,7 +147,7 @@ class TaskbarTaskTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.active .ticket-create [data-name="body"]',
+            :css     => '.active .newTicket [data-name="body"]',
             :value   => 'OUTBOUND BODY TEST#1',
           },
           {

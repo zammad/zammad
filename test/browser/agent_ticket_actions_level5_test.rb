@@ -134,8 +134,14 @@ class AgentTicketActionLevel5Test < TestCase
             :match_result => true,
           },
           {
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :arrow_down,
+          },
+          {
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :enter,
           },
           {
             :execute => 'wait',
@@ -308,8 +314,15 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :arrow_down,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :enter,
           },
           {
             :where   => :instance2,
@@ -330,7 +343,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '.active .ticket-create input[name="customer_id_completion"]',
+            :css     => '.active .newTicket input[name="customer_id_completion"]',
             :value   => 'nicole',
           },
           {
@@ -340,13 +353,13 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_completion"]',
+            :css     => '.active .newTicket input[name="customer_id_completion"]',
             :value   => :arrow_down,
           },
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_completion"]',
+            :css     => '.active .newTicket input[name="customer_id_completion"]',
             :value   => :tab,
           },
           {
@@ -367,8 +380,15 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :arrow_down,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :enter,
           },
           {
             :where   => :instance2,
@@ -446,8 +466,15 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :arrow_down,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :enter,
           },
           {
             :execute => 'wait',
@@ -547,8 +574,15 @@ class AgentTicketActionLevel5Test < TestCase
 #          },
           {
             :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :arrow_down,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'sendkey',
+            :css     => '.active .shortcut',
+            :value   => :enter,
           },
           {
             :execute => 'wait',

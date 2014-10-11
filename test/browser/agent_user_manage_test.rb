@@ -151,7 +151,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'set',
-            :css     => '.active .ticket-create input[name="customer_id_completion"]',
+            :css     => '.active .newTicket input[name="customer_id_completion"]',
             :value   => customer_user_email,
           },
           {
@@ -160,12 +160,12 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_completion"]',
+            :css     => '.active .newTicket input[name="customer_id_completion"]',
             :value   => :arrow_down,
           },
           {
             :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_completion"]',
+            :css     => '.active .newTicket input[name="customer_id_completion"]',
             :value   => :enter,
           },
           {

@@ -82,64 +82,29 @@ class AgentTicketActionsLevel2Test < TestCase
           },
 
           # change title in second browser
-#          {
-#            :where        => :instance2,
-#            :execute      => 'sendkey',
-#            :css          => '.active .ticket-title-update',
-#            :value        => 'TTT',
-#          },
-#          {
-#            :where        => :instance2,
-#            :execute      => 'sendkey',
-#            :css          => '.active .ticket-title-update',
-#            :value        => :tab,
-#          },
           {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$(".active .ticket-title .ticket-title-update").focus()',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$(".active .ticket-title .ticket-title-update").html("TTTsome level 2 &lt;b&gt;subject&lt;/b&gt; 123äöü")',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$(".active .ticket-title .ticket-title-update").blur()',
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'js',
-            :value        => '$(".active .ticket-title .ticket-title-update").trigger("blur")',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
+            :where   => :instance2,
+            :execute => 'set_ticket_attributes',
+            :title   => 'TTTsome level 2 <b>subject</b> 123äöü',
           },
 
           # set body in edit area
           {
             :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => 'some level 2 <b>body</b> in instance 2',
+            :execute => 'set_ticket_attributes',
+            :body    => 'some level 2 <b>body</b> in instance 2',
           },
           {
             :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => 'some level 2 <b>body</b> in instance 1',
+            :execute => 'set_ticket_attributes',
+            :body    => 'some level 2 <b>body</b> in instance 1',
           },
 
           # change task and page title in second browser
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.tasks .active',
-            :value        => 'TTTsome level 2 <b>subject</b> 123äöü',
-            :match_result => true,
+            :execute      => 'verify_task_attributes',
+            :title        => 'TTTsome level 2 <b>subject</b> 123äöü',
           },
           {
             :where        => :instance2,
@@ -154,17 +119,13 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active .ticket-title-update',
-            :value        => 'TTTsome level 2 <b>subject</b> 123äöü',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :title        => 'TTTsome level 2 <b>subject</b> 123äöü',
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.tasks .active',
-            :value        => 'TTTsome level 2 <b>subject</b> 123äöü',
-            :match_result => true,
+            :execute      => 'verify_task_attributes',
+            :title        => 'TTTsome level 2 <b>subject</b> 123äöü',
           },
           {
             :where        => :instance1,
@@ -180,17 +141,13 @@ class AgentTicketActionsLevel2Test < TestCase
           # verify text in input body
           {
             :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active [data-name="body"]',
-            :value        => 'some level 2 <b>body</b> in instance 1',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => 'some level 2 <b>body</b> in instance 1',
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active [data-name="body"]',
-            :value        => 'some level 2 <b>body</b> in instance 2',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => 'some level 2 <b>body</b> in instance 2',
           },
 
           # add new article
@@ -202,14 +159,13 @@ class AgentTicketActionsLevel2Test < TestCase
           #},
           {
             :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => 'some update 4711',
+            :execute => 'set_ticket_attributes',
+            :body    => 'some update 4711',
           },
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => '.active input.submit',
+            :css     => '.content.active button.js-submit',
           },
           {
             :where   => :instance1,
@@ -221,19 +177,14 @@ class AgentTicketActionsLevel2Test < TestCase
           # verify empty text in input body
           {
             :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active [data-name="body"]',
-            :value        => '',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => '',
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active [data-name="body"]',
-            :value        => 'some level 2 <b>body</b> in instance 2',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => 'some level 2 <b>body</b> in instance 2',
           },
-
 
           # reload instances, verify again
           {
@@ -252,17 +203,13 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active .ticket-title-update',
-            :value        => 'TTTsome level 2 <b>subject</b> 123äöü',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :title        => 'TTTsome level 2 <b>subject</b> 123äöü',
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.tasks .active',
-            :value        => 'TTTsome level 2 <b>subject</b> 123äöü',
-            :match_result => true,
+            :execute      => 'verify_task_attributes',
+            :title        => 'TTTsome level 2 <b>subject</b> 123äöü',
           },
           {
             :where        => :instance1,
@@ -294,17 +241,13 @@ class AgentTicketActionsLevel2Test < TestCase
           # verify empty text in input body
           {
             :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active [data-name="body"]',
-            :value        => '',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => '',
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active [data-name="body"]',
-            :value        => 'some level 2 <b>body</b> in instance 2',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => 'some level 2 <b>body</b> in instance 2',
           },
 
         ],

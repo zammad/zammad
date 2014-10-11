@@ -47,7 +47,7 @@ class AgentTicketActionsLevel3Test < TestCase
             :where        => :instance1,
             :execute      => 'match',
             :css          => '.active .page-header .ticket-number',
-            :value        => '^#(.*)$',
+            :value        => '^(.*)$',
             :no_quote     => true,
             :match_result => true,
           },
@@ -88,9 +88,8 @@ class AgentTicketActionsLevel3Test < TestCase
           # change edit screen in instance 1
           {
             :where   => :instance1,
-            :execute => 'set',
-            :css     => '.active .ticket-edit textarea[name="body"]',
-            :value   => 'some level 3 <b>body</b> in instance 1',
+            :execute => 'set_ticket_attributes',
+            :body    => 'some level 3 <b>body</b> in instance 1',
           },
           {
             :execute => 'wait',
@@ -100,9 +99,8 @@ class AgentTicketActionsLevel3Test < TestCase
           # update ticket in instance 2
           {
             :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active .ticket-edit textarea[name="body"]',
-            :value   => 'some level 3 <b>body</b> in instance 2',
+            :execute => 'set_ticket_attributes',
+            :body    => 'some level 3 <b>body</b> in instance 2',
           },
           {
             :execute => 'wait',
@@ -111,7 +109,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => true,
@@ -119,7 +117,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.active .edit button[type="submit"]',
+            :css     => '.active button.js-submit',
           },
           {
             :execute => 'wait',
@@ -128,7 +126,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => false,
@@ -143,16 +141,14 @@ class AgentTicketActionsLevel3Test < TestCase
             :match_result => true,
           },
           {
-            :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit textarea[name="body"]',
-            :value        => 'some level 3 <b>body</b> in instance 1',
-            :match_result => true,
+            :where      => :instance1,
+            :execute    => 'verify_ticket_attributes',
+            :body       => 'some level 3 <b>body</b> in instance 1',
           },
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => true,
@@ -161,18 +157,15 @@ class AgentTicketActionsLevel3Test < TestCase
           # check edit screen in instance 2
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit textarea[name="body"]',
-            :value        => '^$',
-            :no_quote     => true,
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :bdoy         => '',
           },
 
           # update ticket in instance 1
           {
             :where   => :instance1,
             :execute => 'click',
-            :css     => '.active .edit button[type="submit"]',
+            :css     => '.active button.js-submit',
           },
           {
             :execute => 'wait',
@@ -198,32 +191,26 @@ class AgentTicketActionsLevel3Test < TestCase
           # check content and edit screen in instance 1+2
           {
             :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit textarea[name="body"]',
-            :value        => '^$',
-            :no_quote     => true,
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => '',
           },
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => false,
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit textarea[name="body"]',
-            :value        => '^$',
-            :no_quote     => true,
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => '',
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => false,
@@ -242,32 +229,26 @@ class AgentTicketActionsLevel3Test < TestCase
           # check content and edit screen in instance 1+2
           {
             :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit textarea[name="body"]',
-            :value        => '^$',
-            :no_quote     => true,
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => '',
           },
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => false,
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit textarea[name="body"]',
-            :value        => '^$',
-            :no_quote     => true,
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => '',
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => false,
@@ -275,10 +256,9 @@ class AgentTicketActionsLevel3Test < TestCase
 
           # change form of ticket in instance 2
           {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active .ticket-edit textarea[name="body"]',
-            :value   => '22 some level 3 <b>body</b> in instance 2',
+            :where        => :instance2,
+            :execute      => 'set_ticket_attributes',
+            :body         => '22 some level 3 <b>body</b> in instance 2',
           },
           {
             :execute => 'wait',
@@ -287,7 +267,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => true,
@@ -298,15 +278,13 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit textarea[name="body"]',
-            :value        => '22 some level 3 <b>body</b> in instance 2',
-            :match_result => true,
+            :execute      => 'verify_ticket_attributes',
+            :body         => '22 some level 3 <b>body</b> in instance 2',
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => true,
@@ -314,7 +292,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.active .edit button[type="submit"]',
+            :css     => '.active button.js-submit',
           },
           {
             :execute => 'wait',
@@ -324,7 +302,7 @@ class AgentTicketActionsLevel3Test < TestCase
             :where        => :instance2,
             :execute      => 'match',
             :css          => '.content_permanent.active',
-            :css          => '.content_permanent.active .reset-message',
+            :css          => '.content.active .js-reset',
             :value        => '(Discard your unsaved changes.|Verwerfen der)',
             :no_quote     => true,
             :match_result => false,

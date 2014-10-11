@@ -92,7 +92,7 @@
       <div class="select-arrow icon"></div>
     </div>
     <div class="form-group">
-      <input type="submit" class="btn btn--primary js-submit" value="<%- @T('Update') %>">
+      <button type="submit" class="btn btn--primary js-submit"><%- @T('Update') %></button>
     </div>
   </form>
 </div>

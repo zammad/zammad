@@ -35,7 +35,7 @@ class AgentTicketActionLevel4Test < TestCase
 
           {
             :execute => 'click',
-            :css     => '.active .form-actions button[type="submit"]',
+            :css     => '.content.active button.submit',
           },
           {
             :execute => 'wait',

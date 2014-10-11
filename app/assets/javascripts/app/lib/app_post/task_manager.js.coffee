@@ -151,8 +151,7 @@ class _taskManagerSingleton extends App.Controller
       $('#content').empty()
 
       # hide all tasks
-      $('.content').addClass('hide')
-      $('.content').removeClass('active')
+      $('.content').addClass('hide').removeClass('active')
 
     # create div for task if not exists
     if !$("#content_permanent_#{key}")[0]
@@ -160,9 +159,9 @@ class _taskManagerSingleton extends App.Controller
 
     # set task to shown and active
     if @activeTask is key
-      $('#content_permanent_' + key).removeClass('hide')
+      $('#content_permanent_' + key).removeClass('hide').addClass('active')
     else
-      $('#content_permanent_' + key).addClass('hide')
+      $('#content_permanent_' + key).addClass('hide').removeClass('active')
 
     # set all tasks to active false, only new/selected one to active
     if active

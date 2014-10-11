@@ -270,9 +270,9 @@ class TestCase < Test::Unit::TestCase
       sleep 2
       instance.find_element( { :css => 'a[data-type="new"]' } ).click
       sleep 2
-      element = instance.find_element( { :css => '.modal input[name=login]' } )
-      element.clear
-      element.send_keys( action[:login] )
+      #element = instance.find_element( { :css => '.modal input[name=login]' } )
+      #element.clear
+      #element.send_keys( action[:login] )
       element = instance.find_element( { :css => '.modal input[name=firstname]' } )
       element.clear
       element.send_keys( action[:firstname] )
@@ -301,42 +301,100 @@ class TestCase < Test::Unit::TestCase
       }
       assert( true, "(#{test[:name]}) user creation failed" )
       return
+
+    elsif action[:execute] == 'verify_task_attributes'
+      if action[:title]
+        element = instance.find_element( { :css => '.tasks .active' } )
+        assert_equal( action[:title], element.text.strip  )
+      end
+      return
+    elsif action[:execute] == 'verify_ticket_attributes'
+      if action[:title]
+        element = instance.find_element( { :css => '.content.active .page-header .ticket-title-update' } )
+        assert_equal( action[:title], element.text.strip  )
+      end
+      if action[:body]
+        element = instance.find_element( { :css => '.content.active [data-name="body"]' } )
+        assert_equal( action[:body], element.text.strip  )
+      end
+      return
+    elsif action[:execute] == 'set_ticket_attributes'
+      if action[:title]
+        element = instance.find_element( { :css => '.content.active .page-header .ticket-title-update' } )
+        instance.execute_script( '$(".content.active .page-header .ticket-title-update").focus()' )
+        instance.execute_script( '$(".content.active .page-header .ticket-title-update").text("' + action[:title] + '")' )
+        instance.execute_script( '$(".content.active .page-header .ticket-title-update").blur()' )
+        instance.execute_script( '$(".content.active .page-header .ticket-title-update").trigger("blur")' )
+#          {
+#            :where        => :instance2,
+#            :execute      => 'sendkey',
+#            :css          => '.content.active .page-header .ticket-title-update',
+#            :value        => 'TTT',
+#          },
+#          {
+#            :where        => :instance2,
+#            :execute      => 'sendkey',
+#            :css          => '.content.active .page-header .ticket-title-update',
+#            :value        => :tab,
+#          },
+      end
+      if action[:body]
+        element = instance.find_element( { :css => '.content.active [data-name="body"]' } )
+        element.clear
+        element.send_keys( action[:body] )
+        # check if body is filled / in case use workaround
+        body = element.text
+        puts "body '#{body}'"
+        if !body || body.empty? || body == '' || body == ' '
+          result = instance.execute_script( '$(".content.active [data-name=body]").text("' + action[:body] + '")' )
+          puts "r #{result.inspect}"
+        end
+      end
+      return
     elsif action[:execute] == 'create_ticket'
       instance.find_element( { :css => 'a[href="#new"]' } ).click
       instance.find_element( { :css => 'a[href="#ticket/create"]' } ).click
-      element = instance.find_element( { :css => '.active .ticket-create' } )
+      element = instance.find_element( { :css => '.active .newTicket' } )
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
         return
       end
       sleep 2
-      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
+      element.click
       element.clear
       element.send_keys( 'nico*' )
       sleep 4
-      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
+      element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
       element.send_keys( :arrow_down )
-      sleep 0.2
-      element = instance.find_element( { :css => '.active .ticket-create input[name="customer_id_autocompletion"]' } )
-      element.send_keys( :tab )
-      sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket-create select[name="group_id"]' } )
+      sleep 0.3
+      element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
+      element.send_keys( :enter )
+      sleep 0.3
+      element = instance.find_element( { :css => '.active .newTicket select[name="group_id"]' } )
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by( :text, action[:group])
-      sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket-create input[name="title"]' } )
+      sleep 0.2
+      element = instance.find_element( { :css => '.active .newTicket input[name="title"]' } )
       element.clear
       element.send_keys( action[:subject] )
-      sleep 0.1
-      element = instance.find_element( { :css => '.active .ticket-create textarea[name="body"]' } )
+      sleep 0.2
+      element = instance.find_element( { :css => '.active .newTicket [data-name="body"]' } )
       element.clear
       element.send_keys( action[:body] )
+      # check if body is filled / in case use workaround
+      body = element.text
+      puts "body '#{body}'"
+      if !body || body.empty? || body == '' || body == ' '
+        result = instance.execute_script( '$(".content.active .newTicket [data-name=body]").text("' + action[:body] + '")' )
+        puts "r #{result.inspect}"
+      end
       if action[:do_not_submit]
         assert( true, "(#{test[:name]}) ticket created without submit" )
         return
       end
       sleep 0.8
-      instance.find_element( { :css => '.active .form-actions button[type="submit"]' } ).click
+      instance.find_element( { :css => '.content.active button.submit' } ).click
       sleep 1
       (1..14).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
@@ -452,6 +510,7 @@ class TestCase < Test::Unit::TestCase
         elsif action[:css] =~ /(input|textarea)/i
           text = element.attribute('value')
         else
+          puts "'DAT ' #{element.text}"
           text = element.text
         end
         if action[:value] == '###stack###'
@@ -459,6 +518,7 @@ class TestCase < Test::Unit::TestCase
         end
         match = false
         if action[:no_quote]
+          puts "aaaa #{text}/#{action[:value]}"
           if text =~ /#{action[:value]}/
             if $1
               @stack = $1

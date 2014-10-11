@@ -21,27 +21,27 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'check',
-            :css     => '.ticket-create',
+            :css     => '.newTicket',
             :result  => true,
           },
           {
             :execute => 'select',
-            :css     => '.ticket-create select[name="group_id"]',
+            :css     => '.newTicket select[name="group_id"]',
             :value   => 'Users',
           },
           {
             :execute => 'set',
-            :css     => '.ticket-create input[name="title"]',
+            :css     => '.newTicket input[name="title"]',
             :value   => 'some subject 123äöü',
           },
           {
             :execute => 'set',
-            :css     => '.ticket-create [data-name="body"]',
+            :css     => '.newTicket [data-name="body"]',
             :value   => 'some body 123äöü',
           },
           {
             :execute => 'click',
-            :css     => '.ticket-create button[type="submit"]',
+            :css     => '.newTicket button.submit',
           },
           {
             :execute => 'wait',
@@ -74,7 +74,7 @@ class CustomerTicketCreateTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.active input[type="submit"]',
+            :css     => '.active button.js-submit',
             :type    => 'submit',
           },
           {

@@ -43,18 +43,12 @@ class AgentTicketActionLevel1Test < TestCase
           #  :value   => 'note',
           #},
           {
-            :execute => 'check',
-            :css     => '.active [data-name="body"]',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => 'some body 1234 äöüß',
+            :execute => 'set_ticket_attributes',
+            :body    => 'some body 1234 äöüß',
           },
           {
             :execute => 'click',
-            :css     => '.active input.submit',
+            :css     => '.content.active button.js-submit',
           },
           {
             :execute => 'wait',
@@ -97,18 +91,12 @@ class AgentTicketActionLevel1Test < TestCase
           #  :value   => 'note',
           #},
           {
-            :execute => 'check',
-            :css     => '.content.active [data-name="body"]',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => '.content.active [data-name="body"]',
-            :value   => 'some body 1234 äöüß 333',
+            :execute => 'set_ticket_attributes',
+            :body    => 'some body 1234 äöüß 333',
           },
           {
             :execute => 'click',
-            :css     => '.content.active input.submit',
+            :css     => '.content.active button.js-submit',
           },
           {
             :execute      => 'watch_for',
