@@ -479,7 +479,7 @@ returns
         next if !session_data
         next if !session_data[:user]
         next if !session_data[:user]['id']
-        user = User.lookup( session_data[:user]['id'] )
+        user = User.lookup( :id => session_data[:user]['id'] )
         next if !user
 
         # start client thread

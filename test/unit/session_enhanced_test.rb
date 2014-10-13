@@ -83,17 +83,17 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     data = Sessions.get(client_id1)
     assert( data[:meta], "check if meta exists" )
     assert( data[:user], "check if user exists" )
-    assert_equal( data[:user][:id], agent1.id, "check if user id is correct" )
+    assert_equal( data[:user]['id'], agent1.id, "check if user id is correct" )
 
     data = Sessions.get(client_id2)
     assert( data[:meta], "check if meta exists" )
     assert( data[:user], "check if user exists" )
-    assert_equal( data[:user][:id], agent2.id, "check if user id is correct" )
+    assert_equal( data[:user]['id'], agent2.id, "check if user id is correct" )
 
     data = Sessions.get(client_id3)
     assert( data[:meta], "check if meta exists" )
     assert( data[:user], "check if user exists" )
-    assert_equal( data[:user][:id], agent3.id, "check if user id is correct" )
+    assert_equal( data[:user]['id'], agent3.id, "check if user id is correct" )
 
     # send data to one client
     Sessions.send( client_id1, { :msg => 'äöüß123' } )
