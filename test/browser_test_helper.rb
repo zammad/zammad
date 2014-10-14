@@ -161,10 +161,10 @@ class TestCase < Test::Unit::TestCase
   def browser_element_action(test, action, instance)
     puts "NOTICE #{Time.now.to_s}: " + action.inspect
     if action[:execute] !~ /accept|dismiss/i
-      cookies = instance.manage.all_cookies
-      cookies.each {|cookie|
-        puts "  COOKIE " + cookie.to_s
-      }
+      #cookies = instance.manage.all_cookies
+      #cookies.each {|cookie|
+      #  puts "  COOKIE " + cookie.to_s
+      #}
     end
 
     sleep 0.1
@@ -344,10 +344,10 @@ class TestCase < Test::Unit::TestCase
         element.send_keys( action[:body] )
         # check if body is filled / in case use workaround
         body = element.text
-        puts "body '#{body}'"
+        #puts "body '#{body}'"
         if !body || body.empty? || body == '' || body == ' '
           result = instance.execute_script( '$(".content.active [data-name=body]").text("' + action[:body] + '")' )
-          puts "r #{result.inspect}"
+          #puts "r #{result.inspect}"
         end
       end
       return
@@ -360,34 +360,42 @@ class TestCase < Test::Unit::TestCase
         return
       end
       sleep 2
-      element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
-      element.click
-      element.clear
-      element.send_keys( 'nico*' )
-      sleep 4
-      element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
-      element.send_keys( :arrow_down )
-      sleep 0.3
-      element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
-      element.send_keys( :enter )
-      sleep 0.3
-      element = instance.find_element( { :css => '.active .newTicket select[name="group_id"]' } )
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, action[:group])
-      sleep 0.2
-      element = instance.find_element( { :css => '.active .newTicket input[name="title"]' } )
-      element.clear
-      element.send_keys( action[:subject] )
-      sleep 0.2
-      element = instance.find_element( { :css => '.active .newTicket [data-name="body"]' } )
-      element.clear
-      element.send_keys( action[:body] )
-      # check if body is filled / in case use workaround
-      body = element.text
-      puts "body '#{body}'"
-      if !body || body.empty? || body == '' || body == ' '
-        result = instance.execute_script( '$(".content.active .newTicket [data-name=body]").text("' + action[:body] + '")' )
-        puts "r #{result.inspect}"
+      if action[:customer] == nil
+        element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
+        element.click
+        element.clear
+        element.send_keys( 'nico*' )
+        sleep 4
+        element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
+        element.send_keys( :arrow_down )
+        sleep 0.3
+        element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
+        element.send_keys( :enter )
+        sleep 0.3
+      end
+      if action[:group]
+        element = instance.find_element( { :css => '.active .newTicket select[name="group_id"]' } )
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by( :text, action[:group])
+        sleep 0.2
+      end
+      if action[:subject]
+        element = instance.find_element( { :css => '.active .newTicket input[name="title"]' } )
+        element.clear
+        element.send_keys( action[:subject] )
+        sleep 0.2
+      end
+      if action[:body]
+        element = instance.find_element( { :css => '.active .newTicket [data-name="body"]' } )
+        element.clear
+        element.send_keys( action[:body] )
+        # check if body is filled / in case use workaround
+        body = element.text
+        #puts "body '#{body}'"
+        if !body || body.empty? || body == '' || body == ' '
+          result = instance.execute_script( '$(".content.active .newTicket [data-name=body]").text("' + action[:body] + '")' )
+          #puts "r #{result.inspect}"
+        end
       end
       if action[:do_not_submit]
         assert( true, "(#{test[:name]}) ticket created without submit" )
@@ -436,6 +444,16 @@ class TestCase < Test::Unit::TestCase
       return
     elsif action[:execute] == 'js'
       result = instance.execute_script( action[:value] )
+    elsif action[:execute] == 'sendkey'
+      if action[:value].class == Array
+        action[:value].each {|key|
+          instance.action.send_keys(key).perform
+        }
+      else
+      instance.action.send_keys(action[:value]).perform
+      #instance.action.send_keys(:enter).perform
+      end
+#      element.send_keys( action[:value] )
     elsif action[:link]
       if action[:link].match '###stack###'
         action[:link].gsub! '###stack###', @stack
@@ -459,10 +477,14 @@ class TestCase < Test::Unit::TestCase
       if action[:value] == '###stack###'
         element.send_keys( @stack )
       else
-        element.send_keys( action[:value] )
+        element.send_keys( '' )
+        keys = action[:value].to_s.split('')
+        keys.each {|key|
+          instance.action.send_keys(key).perform
+        }
+        #element.send_keys( action[:value] )
+        sleep 0.3
       end
-    elsif action[:execute] == 'sendkey'
-      element.send_keys( action[:value] )
     elsif action[:execute] == 'select'
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, action[:value])
@@ -510,7 +532,6 @@ class TestCase < Test::Unit::TestCase
         elsif action[:css] =~ /(input|textarea)/i
           text = element.attribute('value')
         else
-          puts "'DAT ' #{element.text}"
           text = element.text
         end
         if action[:value] == '###stack###'
@@ -518,7 +539,7 @@ class TestCase < Test::Unit::TestCase
         end
         match = false
         if action[:no_quote]
-          puts "aaaa #{text}/#{action[:value]}"
+          #puts "aaaa #{text}/#{action[:value]}"
           if text =~ /#{action[:value]}/
             if $1
               @stack = $1
@@ -546,6 +567,7 @@ class TestCase < Test::Unit::TestCase
       end
     elsif action[:execute] == 'check'
     elsif action[:execute] == 'js'
+    elsif action[:execute] == 'sendkey'
     else
       assert( false, "(#{test[:name]}) unknow action '#{action[:execute]}'" )
     end

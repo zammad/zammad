@@ -121,11 +121,11 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :execute => 'set',
             :css     => '.active [data-name="body"]',
-            :value   => '::' + random,
+            :value   => 'test ::' + random,
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
           {
             :execute      => 'match',
@@ -135,13 +135,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :arrow_down,
-          },
-          {
-            :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :enter,
+            :value   => [:arrow_down,:enter]
           },
           {
             :execute => 'wait',
@@ -185,36 +179,18 @@ class AgentTicketActionLevel5Test < TestCase
             :execute => 'close_all_tasks',
           },
           {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#new"]',
+            :where         => :instance2,
+            :execute       => 'create_ticket',
+            :subject       => 'A',
+            :customer      => '',
+            :do_not_submit => true,
           },
           {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket/create"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active input[name=title]',
-            :value   => 'A',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#new"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket/create"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active input[name=title]',
-            :value   => 'B',
+            :where         => :instance2,
+            :execute       => 'create_ticket',
+            :customer      => '',
+            :subject       => 'B',
+            :do_not_submit => true,
           },
 
           # create new text module
@@ -303,7 +279,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'wait',
-            :value   => 1,
+            :value   => 2,
           },
           {
             :where        => :instance2,
@@ -315,14 +291,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :enter,
+            :value   => [:arrow_down,:enter]
           },
           {
             :where   => :instance2,
@@ -353,14 +322,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .newTicket input[name="customer_id_completion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '.active .newTicket input[name="customer_id_completion"]',
-            :value   => :tab,
+            :value   => [:arrow_down,:enter]
           },
           {
             :where   => :instance2,
@@ -381,14 +343,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :enter,
+            :value   => [:arrow_down,:enter]
           },
           {
             :where   => :instance2,
@@ -455,7 +410,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 0.5,
+            :value   => 2,
           },
           {
             :where        => :instance2,
@@ -467,14 +422,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :enter,
+            :value   => [:arrow_down,:enter]
           },
           {
             :execute => 'wait',
@@ -503,16 +451,12 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.active .action button',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
+            :css     => '.content.active .tabsSidebar-tabs [data-tab="customer"]',
           },
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.active .action [data-type="customer"]',
+            :css     => '.content.active .tabsSidebar [data-name="Change Customer"]',
           },
           {
             :execute => 'wait',
@@ -521,7 +465,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'set',
-            :css     => '#form-customer input[name="customer_id_completion"]',
+            :css     => '.modal [name="customer_id_completion"]',
             :value   => firstname,
           },
           {
@@ -531,14 +475,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '#form-customer input[name="customer_id_completion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '#form-customer input[name="customer_id_completion"]',
-            :value   => :tab,
+            :value   => [:arrow_down,:enter]
           },
           {
             :where   => :instance2,
@@ -548,7 +485,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.modal-content [type="submit"]',
+            :css     => '.modal-content .js-submit',
           },
           {
             :where   => :instance2,
@@ -563,7 +500,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 0.5,
+            :value   => 2,
           },
 #          {
 #            :where        => :instance2,
@@ -575,14 +512,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '.active .shortcut',
-            :value   => :enter,
+            :value   => [:arrow_down,:enter]
           },
           {
             :execute => 'wait',

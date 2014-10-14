@@ -32,13 +32,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'sendkey',
-            :css     => '.active [name="customer_id_completion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :execute => 'sendkey',
-            :css     => '.active [name="customer_id_completion"]',
-            :value   => :enter,
+            :value   => [:arrow_down,:enter]
           },
           {
             :execute => 'wait',
@@ -160,13 +154,7 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'sendkey',
-            :css     => '.active .newTicket input[name="customer_id_completion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :execute => 'sendkey',
-            :css     => '.active .newTicket input[name="customer_id_completion"]',
-            :value   => :enter,
+            :value   => [:arrow_down,:enter]
           },
           {
             :execute => 'wait',
