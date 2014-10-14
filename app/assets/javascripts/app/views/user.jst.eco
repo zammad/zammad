@@ -11,9 +11,11 @@
   </div>
 </div>
 
-<div class="userSearch horizontal center">
+<div class="userSearch vertical center">
   <input type="text" class="js-search form-control flex" name="search" placeholder="<%- @T('Search for users') %>">
-  <div class="userSearch-label"><%- @T('Filter') %>:</div>
+</div>
+<div class="userSearch horizontal">
+  <div class="userSearch-label"><%- @T('Roles') %>:</div>
   <div class="tabs tabs-wide horizontal">
     <% for role in @roles: %>
       <div class="tab active" data-id="<%= role.id %>"><%- @T(role.displayName() ) %></div>
