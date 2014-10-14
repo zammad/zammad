@@ -20,24 +20,25 @@ class App.WidgetTextModule extends App.Controller
 
   reload: (data) =>
     return if !data
+    @data = data
     @update()
 
   update: =>
     allRaw = App.TextModule.all()
     all = []
-    ui = @data || @
+    data = @data || @
     for item in allRaw
       if item.active is true
         attributes = item.attributes()
         attributes.content = attributes.content.replace( /<%=\s{0,2}(.+?)\s{0,2}%>/g, ( index, key ) ->
-          key = key.replace( /@/g, 'ui.data.' )
+          key = key.replace( /@/g, 'data.' )
           varString = "#{key}" + ''
-#          console.log( "tag replacement env: ", ui.data)
+          #console.log( "tag replacement env: ", data)
           try
-#            console.log( "tag replacement: " + key, varString )
+            #console.log( "tag replacement: " + key, varString )
             key = eval (varString)
           catch error
-#            console.log( "tag replacement error: " + error )
+            #console.log( "tag replacement error: " + error )
             key = ''
           return key
         )
