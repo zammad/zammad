@@ -28,6 +28,11 @@ class ManageTest < TestCase
             :password   => 'some-pass',
           },
           {
+            :execute => 'set',
+            :css     => '.content .js-search',
+            :value   => user_email,
+          },
+          {
             :execute  => 'watch_for',
             :area     => 'body',
             :value    => random,
