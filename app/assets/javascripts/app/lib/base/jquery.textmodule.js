@@ -45,13 +45,11 @@
 
       // navigate through widget
       if ( this.isActive() ) {
-        console.log('WIDGET IS OPEN', e.keyCode)
 
         // enter
         if ( e.keyCode === 13 ) {
           e.preventDefault()
           var id = this.$widget.find('.dropdown-menu li.active a').data('id')
-          console.log('ID', id)
           this.take(id)
         }
 
@@ -89,7 +87,6 @@
             if ( next[0] ) {
               top = next.addClass('active').position().top
             }
-            console.log('scrollTop', top, top-30)
             this.$widget.find('.dropdown-menu').scrollTop( top );
 
           }
@@ -105,9 +102,10 @@
         if ( this.buffer === '::' ) {
           this.close()
         }
-        this.buffer = this.buffer.substr( 0, this.buffer.length-1 )
-        console.log('BS', this.buffer)
-        this.result( this.buffer.substr(2,this.buffer.length) )
+        var length = this.buffer.length
+        this.buffer = this.buffer.substr( 0, length-1 )
+        console.log('BS backspace', this.buffer)
+        this.result( this.buffer.substr( 2, length-1 ) )
       }
     }, this ))
 
@@ -122,18 +120,18 @@
         }
 
         // enter :
-        if ( e.keyCode === 58 ) {
+        if ( String.fromCharCode(e.which) === ':' ) {
           this.buffer = this.buffer + ':'
         }
 
         if ( this.buffer && this.buffer.substr(0,2) === '::' ) {
 
-
           var sign = String.fromCharCode(e.which)
-          if ( e.keyCode !== 58 ) {
+          if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
             this.buffer = this.buffer + sign
+            //console.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
           }
-          console.log('BUFF HINT', this.buffer, this.buffer.length, e.which)
+          console.log('BUFF HINT', this.buffer, this.buffer.length, e.which, String.fromCharCode(e.which))
 
           this.result( this.buffer.substr(2,this.buffer.length) )
 
@@ -161,37 +159,16 @@
   Plugin.prototype.baseTemplate = function() {
     this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="width: 360px; max-height: 200px;"><li><a>-</a></li></ul></div>')
     this.$widget = this.$element.next()
-    this.updatePosition()
-  }
-
-  // get cursor position
-  Plugin.prototype.getCaretPosition = function() {
-    // not needed on IE
-    if (document.selection) {
-      return
-    }
-    else {
-      document.execCommand('insertHTML', false, '<span id="hidden"></span>')
-    }
-    var hiddenNode = document.getElementById('hidden');
-    if (!hiddenNode) {
-        return 0;
-    }
-    var position = $(hiddenNode).position()
-    hiddenNode.parentNode.removeChild(hiddenNode)
-    return position
   }
 
   // update widget position
   Plugin.prototype.updatePosition = function() {
     this.$widget.find('.dropdown-menu').scrollTop( 300 );
-    var position = this.getCaretPosition()
-    var heightTextarea = this.$element.height()
-    var widgetHeight = this.$widget.find('ul').height() + 40
-    console.log('position', position)
-    console.log('heightTextarea', heightTextarea)
-    console.log('widgetHeight', widgetHeight)
-    this.$widget.css('top', position.top - heightTextarea - widgetHeight)
+    if ( !this.$element.is(':visible') ) return
+    var position = this.$element.caret('position');
+    if (!position) return
+    var widgetHeight = this.$widget.find('ul').height() + 85
+    this.$widget.css('top', position.top - widgetHeight)
     if ( !this.isActive() ) {
       this.$widget.css('left', position.left)
     }
@@ -232,7 +209,7 @@
       if ( item.id == id ) {
         var content = item.content + "\n"
         this.cutInput()
-        if (document.selection) {
+        if (document.selection) { // IE
           var range = document.selection.createRange()
           range.pasteHTML(content)
         }
@@ -249,6 +226,7 @@
   // cut out search string from text
   Plugin.prototype.cutInput = function() {
     if (!this.buffer) return
+    if (!this.$element.text()) return
     var sel = window.getSelection()
     if ( !sel || sel.rangeCount < 1) {
       this.buffer = ''
@@ -266,7 +244,7 @@
   Plugin.prototype.result = function(term) {
 
     var result = _.filter( this.collection, function(item) {
-      reg = new RegExp( term, 'i' )
+      var reg = new RegExp( term, 'i' )
       if ( item.name && item.name.match( reg ) ) {
         return item
       }
@@ -280,7 +258,7 @@
     console.log('result', term, result)
     for (var i = 0; i < result.length; i++) {
       var item = result[i]
-      template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + item.name
+      var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + item.name
       if (item.keywords) {
         template = template + " (" + item.keywords + ")"
       }

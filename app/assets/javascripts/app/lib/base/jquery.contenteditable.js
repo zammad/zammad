@@ -132,11 +132,7 @@
           e.preventDefault()
           return
         }
-
-        newLine = "<br>"
-        if ( this.options.mode === 'textonly' ) {
-          newLine = "\n"
-        }
+        newLine = "<br></br>"
         if (document.selection) {
           var range = document.selection.createRange()
           newLine = "<br/>" // ie is not supporting \n :(
@@ -154,7 +150,14 @@
     // just paste text
     if ( this.options.mode === 'textonly' ) {
       this.$element.on('paste', $.proxy(function (e) {
-        var text = (e.originalEvent || e).clipboardData.getData('text/plain')
+        e.preventDefault()
+        var text
+        if (window.clipboardData) { // IE
+          text = window.clipboardData.getData('Text')
+        }
+        else {
+          text = (e.originalEvent || e).clipboardData.getData('text/plain')
+        }
         var overlimit = false
         if (text) {
 
@@ -177,8 +180,13 @@
           }
 
           // insert new text
-          e.preventDefault()
-          document.execCommand('inserttext', false, text)
+          if (document.selection) { // IE
+            var range = document.selection.createRange()
+            range.pasteHTML(text)
+          }
+          else {
+            document.execCommand('inserttext', false, text)
+          }
           this.maxLengthOk( overlimit )
         }
 
@@ -243,7 +251,7 @@
     if ( length > this.options.maxlength ) {
 
       // try to set error on framework form
-      parent = this.$element.parent().parent()
+      var parent = this.$element.parent().parent()
       if ( parent.hasClass('controls') ) {
         parent.addClass('has-error')
         setTimeout($.proxy(function(){
@@ -302,7 +310,7 @@
 
       // strip html signes if multi line exists
       if ( this.options.multiline ) {
-        text = this.$element.html()
+        var text = this.$element.html()
         text = text.replace(/<br>/g, "\n") // new line as br
         text = text.replace(/<div>/g, "\n") // in some caes, new line als div
         text = $("<div>" + text + "</div>").text().trim()
