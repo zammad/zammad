@@ -320,18 +320,19 @@ class App.ControllerForm extends App.Controller
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
           e.preventDefault()
-          key = $(e.target).parent().find('select, input').attr('name')
+          key = $(e.target).closest('.form-group').find('select, input').attr('name')
           return if !key
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
-          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).closest('.form-group').remove()
         )
 
         # add new item
-        el.parent().parent().parent().find('.list').append(itemInput)
-        el.parent().parent().parent().find('.addSelection select').val('')
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+        control = el.closest('.postmaster_match')
+        control.find('.list').append(itemInput)
+        control.find('.addSelection select').val('')
+        control.find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
+        control.find('.addSelection select option[value="' + key + '"]').hide()
 
       # scaffold of match elements
       item = $('
@@ -470,8 +471,8 @@ class App.ControllerForm extends App.Controller
       # bind add click
       item.find('.add').bind('click', (e) ->
         e.preventDefault()
-        name        = $(@).parent().parent().find('.addSelection').find('select').val()
-        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        name        = $(@).closest('.controls').find('.addSelection').find('select').val()
+        displayName = $(@).closest('.controls').find('.addSelection').find('select option:selected').html()
         return if !name
         addItem( name, displayName, $(@) )
       )
@@ -503,18 +504,19 @@ class App.ControllerForm extends App.Controller
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
           e.preventDefault()
-          key = $(e.target).parent().find('select, input').attr('name')
+          key = $(e.target).closest('.form-group').find('select, input').attr('name')
           return if !key
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
-          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).closest('.form-group').remove()
         )
 
         # add new item
-        el.parent().parent().parent().find('.list').append(itemInput)
-        el.parent().parent().parent().find('.addSelection select').val('')
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+        control = el.closest('.perform_set')
+        control.find('.list').append(itemInput)
+        control.find('.addSelection select').val('')
+        control.find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
+        control.find('.addSelection select option[value="' + key + '"]').hide()
 
       # scaffold of perform elements
       item = $('
@@ -592,8 +594,8 @@ class App.ControllerForm extends App.Controller
 
       item.find('.add').bind('click', (e) ->
         e.preventDefault()
-        name        = $(@).parent().parent().find('.addSelection').find('select').val()
-        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        name        = $(@).closest('.controls').find('.addSelection').find('select').val()
+        displayName = $(@).closest('.controls').find('.addSelection').find('select option:selected').html()
         return if !name
         addItem( name, displayName, $(@) )
       )
@@ -1400,6 +1402,8 @@ class App.ControllerForm extends App.Controller
           do (action, attribute) ->
             item.bind('change', ->
               value = $(@).val()
+              if !value
+                value = $(@).find('select, input').val()
 
               # lookup relation if needed
               if action.bind.relation
@@ -1440,14 +1444,14 @@ class App.ControllerForm extends App.Controller
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.form-group').removeClass('hide')
+      el.find('[name="' + key + '"]').closest('.form-group').removeClass('hide')
       el.find('[name="' + key + '"]').removeClass('is-hidden')
 
   _hide: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.form-group').addClass('hide')
+      el.find('[name="' + key + '"]').closest('.form-group').addClass('hide')
       el.find('[name="' + key + '"]').addClass('is-hidden')
 
   _mandantory: (name, el = @el) ->
@@ -1797,9 +1801,9 @@ class App.ControllerForm extends App.Controller
     else if form.find('form').is('form') is true
       #console.log('child from')
       return form.find('form')
-    else if $(form).parents('form').is('form') is true
-      #console.log('parent from')
-      return form.parents('form')
+    else if $(form).closest('form').is('form') is true
+      #console.log('closest from')
+      return form.closest('form')
     # use current content as form if form isn't already finished
     else if !@finishForm
       #console.log('finishForm')

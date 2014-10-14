@@ -440,8 +440,8 @@ test( "form postmaster filter", function() {
     },
   };
   deepEqual( params, test_params, 'form param check' );
-  el.find('[name="set::x-zammad-ticket-priority_id"]').parent().next().click()
-  el.find('[name="set::x-zammad-ticket-customer"]').parent().next().click()
+  el.find('[name="set::x-zammad-ticket-priority_id"]').closest('.form-group').find('.remove').click()
+  el.find('[name="set::x-zammad-ticket-customer"]').closest('.form-group').find('.remove').click()
   App.Delay.set( function() {
       test( "form param check after remove click", function() {
         params = App.ControllerForm.params( el )
