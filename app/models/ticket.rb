@@ -4,13 +4,13 @@ class Ticket < ApplicationModel
   include Ticket::Escalation
   include Ticket::Subject
   include Ticket::Permission
-  require 'ticket/assets'
+  load 'ticket/assets.rb'
   include Ticket::Assets
-  require 'ticket/history_log'
+  load 'ticket/history_log.rb'
   include Ticket::HistoryLog
-  require 'ticket/activity_stream_log'
+  load 'ticket/activity_stream_log.rb'
   include Ticket::ActivityStreamLog
-  require 'ticket/search_index'
+  load 'ticket/search_index.rb'
   include Ticket::SearchIndex
   extend Ticket::Search
 
