@@ -25,9 +25,9 @@ Getting Started
 
 ```
      zammad@shell> cd zammad
-     zammad@shell> gem install rails 
+     zammad@shell> gem install rails
      zammad@shell> vi Gemfile # enable libv8, execjs and therubyracer if needed!
-     zammad@shell> sudo bundle install
+     zammad@shell> bundle install
 ```
 
 3. Configure your databases
