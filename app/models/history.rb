@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class History < ApplicationModel
-  require 'history/assets'
+  load 'history/assets.rb'
   include History::Assets
 
   self.table_name = 'histories'
