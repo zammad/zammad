@@ -22,7 +22,7 @@ class App.Browser
     data =
       browser: @searchString(@dataBrowser) or "An unknown browser"
       version: @searchVersion(navigator.userAgent) or @searchVersion(navigator.appVersion) or "an unknown version"
-      OS:      @searchString(@dataOS) or "an unknown OS"
+      os:      @searchString(@dataOS) or "an unknown os"
 
   @check: ->
     data = @detection()

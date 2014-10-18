@@ -13,11 +13,16 @@ Zammad::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_assets  = true
   config.static_cache_control = "public, max-age=3600"
 
+  # Disable assert compression for relyable error code lines
   config.assets.compress = false
+
+  # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
+
+  # Generate digests for assets URLs
   config.assets.digest = true
 
   # Show full error reports and disable caching
@@ -36,9 +41,9 @@ Zammad::Application.configure do
   config.active_support.deprecation = :stderr
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
-  # autoload on
+  # Enable autoload
   config.dependency_loading = true
 
 end

@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket::Article < ApplicationModel
-  require 'ticket/article/assets'
+  load 'ticket/article/assets.rb'
   include Ticket::Article::Assets
-  require 'ticket/article/history_log'
+  load 'ticket/article/history_log.rb'
   include Ticket::Article::HistoryLog
-  require 'ticket/article/activity_stream_log'
+  load 'ticket/article/activity_stream_log.rb'
   include Ticket::Article::ActivityStreamLog
 
   belongs_to    :ticket

@@ -1,0 +1,48 @@
+Return-Path: oracle@ELIG0-1-DB01.example.com
+Received: by ELIG0-1-DB01 (Postfix, from userid 1000)
+	id 1F4D8383B7; Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+Received: from ELIG0-1-DB01 (static-62-50-37-197.irtnet.net [62.50.37.197])
+	by mail2.mail.example.com (Postfix) with ESMTP
+	id 43854316E9; Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+Received: from mail2.mail.example.com (perls.mail.example.com [195.30.107.84])
+	by mail.example.com (Postfix) with ESMTP id 4DE3C471003F;
+	Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+Received: from mail.example.com ([127.0.0.1])
+	by localhost (mail.example.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AtfOMc9Eru0V; Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.example.com (Postfix) with ESMTP id 3C7B54710042;
+	Thu, 18 Sep 2014 09:30:06 +0200 (CEST)
+Received: from mail.example.com (LHLO mail.example.com) (195.30.107.40) by
+ mail.example.com with LMTP; Thu, 18 Sep 2014 09:30:06 +0200 (CEST)
+Date: Thu, 18 Sep 2014 09:30:01 +0200 (CEST)
+From: oracle@IG0-1-DB01.example.com
+To: support@example.com
+Subject: Regelsets im Test-Status gefunden: 1
+Message-ID: <279749720.2270042.1412150446700.JavaMail.root@mail.example.com>
+Content-Type: multipart/mixed;
+ boundary="=_ddc0e1e5-3d61-45a1-88f4-7f1b332d2495"; generated=true
+X-Virus-Scanned: amavisd-new at mail.example.com
+X-Spam-Flag: NO
+X-Spam-Score: -1.897
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.897 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-1.9, FSL_HELO_NON_FQDN_1=0.001, HELO_NO_DOMAIN=0.001,
+	TO_NO_BRKTS_PCNT=0.001] autolearn=ham
+MIME-Version: 1.0
+
+--=_ddc0e1e5-3d61-45a1-88f4-7f1b332d2495
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+
+
+--=_ddc0e1e5-3d61-45a1-88f4-7f1b332d2495
+Content-Type: text/csv
+Content-Disposition: attachment; filename=rulesets-report.csv
+Content-Transfer-Encoding: 7bit
+
+RULESET_ID;NAME;ACTIV;RUN_MODE;AUDIT_MODIFY_DATE
+387;DP DHL JOIN - EN : Einladung eAC;T;SM;1.09.14
+
+--=_ddc0e1e5-3d61-45a1-88f4-7f1b332d2495--
