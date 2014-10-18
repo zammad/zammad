@@ -24,7 +24,8 @@ class _trackSingleton
     @trackId = 'track-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
     @browser = App.Browser.detection()
     @data    = []
-    @url     = 'https://portal.znuny.com/api/ui'
+#    @url     = 'https://log.znuny.com/api/ui'
+    @url     = 'https://portal.znuny.com/api/v1/ui'
 #    @url     = 'api/ui'
 
     @log( 'start', 'notice', {} )
@@ -89,14 +90,14 @@ class _trackSingleton
         return
     )
 
-  log: ( area, level, args ) ->
+  log: ( facility, level, args ) ->
     return if !App.Config.get('ui_send_client_stats')
     info =
       time:     Math.round( new Date().getTime() / 1000 )
-      area:     area
+      facility: facility
       level:    level
-      location: window.location.href
-      data:     args
+      location: window.location.pathname + window.location.hash
+      message:  args
     @data.push info
 
   send: (async = true) =>
@@ -110,9 +111,6 @@ class _trackSingleton
         itemNew = _.clone( item )
         JSON.stringify(item)
 
-        # add browser info
-        for item, value of @browser
-          itemNew[item] = value
         newDataNew.push itemNew
       catch e
         # nothing
@@ -122,8 +120,12 @@ class _trackSingleton
       url:    @url
       async:  async
       data:   JSON.stringify(
-        track_id: @trackId
-        log:      newDataNew
+        meta:
+          track_id: @trackId
+          host:     window.location.host
+          protocol: window.location.protocol
+        browser: @browser
+        log:     newDataNew
       )
       crossDomain: true
 #      success: (data, status, xhr) =>
