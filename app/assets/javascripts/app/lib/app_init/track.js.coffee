@@ -62,16 +62,22 @@ class _trackSingleton
     $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
 
       # do not log ui requests
-      if settings.url && settings.url.substr(settings.url-3,3) isnt '/ui'
+      if settings.url && settings.url.substr(settings.url.length-3,3) isnt '/ui'
         level = 'notice'
         responseText = ''
         if request.status >= 400
           level = 'error'
           responseText = request.responseText
 
-        # delete passwords form data
-        if settings.data && typeof settings.data is 'string'
-          settings.data = settings.data.replace(/"password":".+?"/gi, '"password":"xxx"')
+        if settings.data
+
+          # add length limitation
+          if settings.data.length > 3000
+            settings.data = settings.data.substr(0,3000)
+
+          # delete passwords form data
+          if typeof settings.data is 'string'
+            settings.data = settings.data.replace(/"password":".+?"/gi, '"password":"xxx"')
 
         @log(
           'ajax.send',
