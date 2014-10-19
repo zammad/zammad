@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Store < ApplicationModel
-  require 'store/object'
-  require 'store/file'
+  load 'store/object.rb'
+  load 'store/file.rb'
 
   store       :preferences
   belongs_to  :store_object,          :class_name => 'Store::Object'
