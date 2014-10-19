@@ -24,9 +24,9 @@ class _trackSingleton
     @trackId = 'track-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
     @browser = App.Browser.detection()
     @data    = []
+#    @url     = 'http://localhost:3005/api/v1/ui'
 #    @url     = 'https://log.znuny.com/api/ui'
     @url     = 'https://portal.znuny.com/api/v1/ui'
-#    @url     = 'api/ui'
 
     @log( 'start', 'notice', {} )
 
@@ -60,13 +60,19 @@ class _trackSingleton
 
     # log ajax calls
     $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
-      length = @url.length
-      if settings.url.substr(0,length) isnt @url && settings.url.substr(0,6) isnt 'api/ui'
+
+      # do not log ui requests
+      if settings.url && settings.url.substr(0,3) isnt '/ui'
         level = 'notice'
         responseText = ''
         if request.status >= 400
           level = 'error'
           responseText = request.responseText
+
+        # delete passwords form data
+        if settings.data && typeof settings.data is 'string'
+          settings.data = settings.data.replace(/"password":".+?"/gi, '"password":"xxx"')
+
         @log(
           'ajax.send',
           level,
@@ -85,7 +91,7 @@ class _trackSingleton
     $(window).bind(
       'beforeunload'
       =>
-        @log( 'end', 'notice', {} )
+        @log( 'good bye', 'notice', {} )
         @send(false)
         return
     )
