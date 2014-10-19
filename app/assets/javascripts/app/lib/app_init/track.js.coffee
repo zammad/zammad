@@ -62,7 +62,7 @@ class _trackSingleton
     $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
 
       # do not log ui requests
-      if settings.url && settings.url.substr(0,3) isnt '/ui'
+      if settings.url && settings.url.substr(settings.url-3,3) isnt '/ui'
         level = 'notice'
         responseText = ''
         if request.status >= 400
