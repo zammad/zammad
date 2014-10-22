@@ -45,7 +45,7 @@ class Base extends App.ControllerContent
   className: 'getstarted fit'
   events:
     'change [name=adapter]':     'toggleAdapter'
-    'submit .base':              'storeFqdn'
+    'submit .base':              'storeUrl'
     'submit .base-outbound':     'storeOutbound'
     'submit .base-inbound':      'storeInbound'
     'click  .js-next':           'submit'
@@ -87,12 +87,12 @@ class Base extends App.ControllerContent
 
     @html App.view('getting_started/base')()
 
-    # fqdn
+    # url
     configureAttributesBase = [
-      { name: 'fqdn', display: 'System URL (where the system can be reached)', tag: 'input', null: false, placeholder: 'http://yourhost' },
+      { name: 'url', display: 'System URL (where the system can be reached)', tag: 'input', null: false, placeholder: 'http://yourhost' },
     ]
     new App.ControllerForm(
-      el: @$('.base-fqdn'),
+      el: @$('.base-url'),
       model: { configure_attributes: configureAttributesBase, className: '' },
     )
 
@@ -163,7 +163,7 @@ class Base extends App.ControllerContent
     @$('.wizard-controls .btn').text('Check').attr('data-form', 'base-inbound').addClass('btn--primary').removeClass('btn--danger').removeClass('btn--success')
     @enable( @$('.btn') )
 
-  storeFqdn: (e) =>
+  storeUrl: (e) =>
     e.preventDefault()
 
     # get params
@@ -172,10 +172,10 @@ class Base extends App.ControllerContent
     @disable(e)
 
     @ajax(
-      id:   'base_fqdn'
+      id:   'base_url'
       type: 'POST'
-      url:  @apiPath + '/getting_started/base_fqdn'
-      data: JSON.stringify( {fqdn:params.fqdn} )
+      url:  @apiPath + '/getting_started/base_url'
+      data: JSON.stringify( {url:params.url} )
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'

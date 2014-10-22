@@ -47,23 +47,32 @@ curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
     }
   end
 
-  def base_fqdn
+  def base_url
     return if setup_done_response
 
     # validate
-    if !params[:fqdn] ||params[:fqdn] !~ /^(http|https):\/\/.+?$/
+    if !params[:url] ||params[:url] !~ /^(http|https):\/\/.+?$/
       render :json => {
         :result  => 'invalid',
         :message => 'Invalid!',
       }
-      return true
+      return
     end
 
-    Setting.set('fqdn', params[:fqdn])
+    # split url in http_type and fqdn
+    if params[:url] =~ /^(http|https):\/\/(.+?)$/
+      Setting.set('http_type', $1)
+      Setting.set('fqdn', $2)
 
-    # return result
+      render :json => {
+        :result => 'ok',
+      }
+      return
+    end
+
     render :json => {
-      :result => 'ok',
+      :result  => 'invalid',
+      :message => 'Unable to parse url!',
     }
   end
 
