@@ -1,0 +1,14 @@
+<div class="main flex centered darkBackground">
+  <div class="import wizard hero-unit">
+    <div class="wizard-slide vertical" data-slide="home">
+      <h2><%- @T('Welcome to %s', @C('product_name') ) %></h2>
+      <div class="wizard-body flex vertical justified">
+        <div class="centered">
+          <a href="#getting_started/import"><%- @T('Import from other System') %></a>
+          |
+          <a href="#getting_started/base"><%- @T('Setup new System') %></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

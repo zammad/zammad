@@ -402,7 +402,7 @@ class UpdateObjectManager5 < ActiveRecord::Migration
       :screens            => {
         :signup => {
           '-all-' => {
-            :null => true,
+            :null => false,
           },
         },
         :invite_agent => {},

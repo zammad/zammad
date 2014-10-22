@@ -1,0 +1,23 @@
+<div class="main flex centered darkBackground">
+  <div class="import wizard hero-unit">
+    <div class="wizard-slide vertical" data-slide="home">
+      <h2><%- @T('Import from') %></h2>
+      <div class="wizard-body flex vertical justified">
+        <div class="import-source centered" data-source="otrs" data-target="otrs-prepare-plugin">
+          <img class="logo" src="<%= @C('otrs-logo.png') %>" alt="OTRS" height="37">
+        </div>
+      </div>
+    </div>
+    <div class="wizard-slide vertical hide" data-slide="otrs-prepare-plugin" data-hide="2330">
+      <h2>Create OTRS Migration Plugin</h2>
+      <div class="wizard-body flex vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Personalise Migration Plugin ..
+        </p>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="subtle-link" data-target="home">Go Back</a>
+      </div>
+    </div>
+  </div>
+</div>

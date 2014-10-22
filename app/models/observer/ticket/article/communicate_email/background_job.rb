@@ -10,7 +10,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     subject = ticket.subject_build( record.subject )
 
     # send email
-    a = Channel::IMAP.new
+    a = Channel::EmailSend.new
     message = a.send(
       {
         :message_id  => record.message_id,

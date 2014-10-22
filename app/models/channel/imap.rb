@@ -4,7 +4,7 @@ require 'net/imap'
 
 class Channel::IMAP < Channel::EmailParser
 
-  def fetch (channel)
+  def fetch (channel, check_type = '', verify_string = '')
     ssl  = false
     port = 143
     if channel[:options][:ssl].to_s == 'true'
@@ -30,17 +30,37 @@ class Channel::IMAP < Channel::EmailParser
     else
       @imap.select( channel[:options][:folder] )
     end
+    if check_type == 'check'
+      puts "check only mode, fetch no emails"
+      disconnect
+      return
+    elsif check_type == 'verify'
+      puts "verify mode, fetch no emails #{verify_string}"
+    end
     count     = 0
     count_all = @imap.search(['ALL']).count
     @imap.search(['ALL']).each do |message_id|
       count += 1
       puts " - message #{count.to_s}/#{count_all.to_s}"
-      msg = @imap.fetch(message_id,'RFC822')[0].attr['RFC822']
       #      puts msg.to_s
 
-      # delete email from server after article was created
-      if process(channel, msg)
-        @imap.store(message_id, "+FLAGS", [:Deleted])
+      # check for verify message
+      if check_type == 'verify'
+        subject = @imap.fetch(message_id,'ENVELOPE')[0].attr['ENVELOPE'].subject
+        if subject && subject =~ /#{verify_string}/
+          puts " - verify email #{verify_string} found"
+          @imap.store(message_id, "+FLAGS", [:Deleted])
+          @imap.expunge()
+          disconnect
+          return 'verify ok'
+        end
+      else
+
+        # delete email from server after article was created
+        msg = @imap.fetch(message_id,'RFC822')[0].attr['RFC822']
+        if process(channel, msg)
+          @imap.store(message_id, "+FLAGS", [:Deleted])
+        end
       end
     end
     @imap.expunge()
@@ -54,17 +74,6 @@ class Channel::IMAP < Channel::EmailParser
   def disconnect
     if @imap
       @imap.disconnect()
-    end
-  end
-
-  def send(attr, notification = false)
-    channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
-    begin
-      c = eval 'Channel::' + channel[:adapter] + '.new'
-      c.send(attr, channel, notification)
-    rescue Exception => e
-      puts "can't use " + 'Channel::' + channel[:adapter]
-      puts e.inspect
     end
   end
 end

@@ -45,6 +45,6 @@ class Channel::EmailBuild
         }
       end
     end
-    return mail
+    mail
   end
 end

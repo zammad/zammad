@@ -218,7 +218,7 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-T
         data[:subject] = 'Invitation to #{config.product_name} at #{config.fqdn}'
         data[:body]    = 'Hi #{user.firstname},
 
-        I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - a customer support / ticket system platform.
+        I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - the customer support / ticket system platform.
 
         Click on the following link and set your password:
 

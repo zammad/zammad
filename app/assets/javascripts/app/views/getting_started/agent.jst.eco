@@ -1,0 +1,16 @@
+<div class="fullHeight flex vertical center justified getstarted">
+  <div class="hero-unit">
+    <ol class="horizontal tabs progress-tabs tabs-condensed">
+      <li class="configure_channels tab u-textTruncate"><%- @T( 'Configure Base' ) %></li>
+      <li class="create_admin tab u-textTruncate"><%- @T( 'Create Admin' ) %></li>
+      <li class="invite_agents tab u-textTruncate active"><%- @T( 'Invite Agents' ) %></li>
+    </ol>
+    <div class="master-user hero-left">
+      <form class="form-stacked js-agent">
+        <div class="form-controls">
+          <button type="submit" class="btn btn--primary submit pull-right"><%- @T( 'Send Invitation' ) %></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

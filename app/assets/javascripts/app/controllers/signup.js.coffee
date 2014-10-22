@@ -22,11 +22,6 @@ class Index extends App.ControllerContent
 
   render: ->
 
-    # set password as required
-    for item in App.User.configure_attributes
-      if item.name is 'password'
-        item.null = false
-
     @html App.view('signup')()
 
     new App.ControllerForm(
@@ -53,7 +48,9 @@ class Index extends App.ControllerContent
     user = new App.User
     user.load(@params)
 
-    errors = user.validate()
+    errors = user.validate(
+      screen: 'signup'
+    )
     if errors
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )

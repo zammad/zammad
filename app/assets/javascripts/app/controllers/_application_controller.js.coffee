@@ -183,13 +183,15 @@ class App.Controller extends Spine.Controller
       callback: data.callback
     )
 
-  authenticate: ->
+  authenticate: (checkOnly = false) ->
 
     # return true if session exists
     return true if @Session.get()
 
     # remember requested url
     @Config.set( 'requested_url', window.location.hash )
+
+    return false if checkOnly
 
     # redirect to login
     @navigate '#login'
