@@ -36,13 +36,18 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       },
       {
         :locale => 'de',
-        :string => 'i18n(#{"New"}) some text',
+        :string => 'i18n(New) some text',
         :result => 'Neu some text',
       },
       {
         :locale => 'de',
         :string => '\'i18n(#{ticket.state.name})\' ticket state',
         :result => '\'neu\' ticket state',
+      },
+      {
+        :locale => 'de',
+        :string => '\#{puts `ls`}',
+        :result => '\#{puts `ls`}',
       },
     ]
     tests.each { |test|
