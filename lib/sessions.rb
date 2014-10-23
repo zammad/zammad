@@ -142,7 +142,7 @@ returns
 
 destroy session
 
-  Sessions.destory?(client_id)
+  Sessions.destory(client_id)
 
 returns
 
@@ -227,7 +227,7 @@ returns
     session_file = session_dir + '/session'
     data = nil
     if !File.exist? session_file
-      FileUtils.rm_rf session_dir
+      self.destory(client_id)
       puts "ERROR: missing session file for '#{client_id.to_s}', remove session."
       return
     end
@@ -240,7 +240,7 @@ returns
       }
     rescue Exception => e
       puts e.inspect
-      FileUtils.rm_rf session_dir
+      self.destory(client_id)
       puts "ERROR: reading session file '#{session_file}', remove session."
       return
     end
