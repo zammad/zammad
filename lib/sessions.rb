@@ -171,7 +171,7 @@ returns
     list_of_closed_sessions = []
     clients = Sessions.list
     clients.each { |client_id, client|
-      if ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
+      if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
         list_of_closed_sessions.push client_id
         Sessions.destory( client_id )
       end
@@ -223,9 +223,14 @@ returns
 =end
 
   def self.get( client_id )
-    session_file = @path + '/' + client_id.to_s + '/session'
+    session_dir  = @path + '/' + client_id.to_s
+    session_file = session_dir + '/session'
     data = nil
-    return if !File.exist? session_file
+    if !File.exist? session_file
+      FileUtils.rm_rf session_dir
+      puts "ERROR: missing session file for '#{client_id.to_s}', remove session."
+      return
+    end
     begin
       File.open( session_file, 'rb' ) { |file|
         file.flock( File::LOCK_EX )
@@ -234,9 +239,9 @@ returns
         data = Marshal.load( all )
       }
     rescue Exception => e
-      File.delete(session_file)
-      puts "Error reading '#{session_file}':"
       puts e.inspect
+      FileUtils.rm_rf session_dir
+      puts "ERROR: reading session file '#{session_file}', remove session."
       return
     end
     data
