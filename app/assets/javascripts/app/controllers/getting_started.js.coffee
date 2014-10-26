@@ -6,9 +6,15 @@ class Index extends App.ControllerContent
 
     if @authenticate(true)
       @navigate '#'
+      return
 
     # set title
     @title 'Get Started'
+
+    # if not import backend exists, go ahead
+    if !App.Config.get('ImportPlugins')
+      @navigate 'getting_started/base'
+      return
 
     @fetch()
 
@@ -28,6 +34,11 @@ class Index extends App.ControllerContent
         # redirect to login if master user already exists
         if data.setup_done
           @navigate '#login'
+          return
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
           return
 
         # render page
@@ -55,6 +66,7 @@ class Base extends App.ControllerContent
 
     if @authenticate(true)
       @navigate '#'
+      return
 
     # set title
     @title 'Configure Base'
@@ -77,6 +89,11 @@ class Base extends App.ControllerContent
         # redirect to login if master user already exists
         if data.setup_done
           @navigate '#login'
+          return
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
           return
 
         # render page
@@ -263,6 +280,7 @@ class Admin extends App.ControllerContent
 
     if @authenticate(true)
       @navigate '#'
+      return
 
     # set title
     @title 'Create Admin'
@@ -288,6 +306,11 @@ class Admin extends App.ControllerContent
         # redirect to login if master user already exists
         if data.setup_done
           @navigate '#login'
+          return
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
           return
 
         # load group collection
@@ -393,15 +416,17 @@ class Agent extends App.ControllerContent
       id:    'getting_started',
       type:  'GET',
       url:   @apiPath + '/getting_started',
-      data:  {
-#        view:       @view,
-      }
       processData: true,
       success: (data, status, xhr) =>
 
         # redirect to login if master user already exists
         if !data.setup_done
           @navigate '#getting_started/admin'
+          return
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
           return
 
         # load group collection
@@ -469,44 +494,4 @@ class Agent extends App.ControllerContent
         }
     )
 
-
 App.Config.set( 'getting_started/agents', Agent, 'Routes' )
-
-class Import extends App.ControllerContent
-  className: 'getstarted fit'
-
-  constructor: ->
-    super
-
-    # set title
-    @title 'Import'
-
-    @fetch()
-
-  fetch: ->
-
-    # get data
-    @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      data:  {
-#        view:       @view,
-      }
-      processData: true,
-      success: (data, status, xhr) =>
-
-        # redirect to login if master user already exists
-        if data.setup_done
-          @navigate '#login'
-          return
-
-        # render page
-        @render()
-    )
-
-  render: ->
-
-    @html App.view('getting_started/import')()
-
-App.Config.set( 'getting_started/import', Import, 'Routes' )

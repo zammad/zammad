@@ -42,8 +42,10 @@ curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
 
     # return result
     render :json => {
-      :setup_done => setup_done,
-      :groups     => groups,
+      :setup_done     => setup_done,
+      :import_mode    => Setting.get('import_mode'),
+      :import_backend => Setting.get('import_backend'),
+      :groups         => groups,
     }
   end
 
@@ -201,10 +203,10 @@ curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
 
     # connection test
     translationMap = {
-      'authentication failed' => 'Authentication failed!',
+      'authentication failed'                                     => 'Authentication failed!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      'No route to host' => 'No route to host!',
-      'Connection refused' => 'Connection refused!',
+      'No route to host'                                          => 'No route to host!',
+      'Connection refused'                                        => 'Connection refused!',
     }
     if params[:adapter] == 'IMAP'
       begin
@@ -253,7 +255,7 @@ curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
         'x-zammad-ignore' => 'true',
       }
     )
-    (1..10).each {|loop|
+    (1..5).each {|loop|
       sleep 10
 
       # fetch mailbox
@@ -315,7 +317,7 @@ curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
   private
 
   def setup_done
-    #return false
+    return false
     count = User.all.count()
     done = true
     if count <= 2

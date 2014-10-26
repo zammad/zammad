@@ -1116,6 +1116,15 @@ Setting.create_if_not_exists(
   :frontend => true
 )
 Setting.create_if_not_exists(
+  :title       => 'Import Backend',
+  :name        => 'import_backend',
+  :area        => 'Import::Base::Internal',
+  :description => 'Set backend which is used for import.',
+  :options     => {},
+  :state       => '',
+  :frontend    => true
+)
+Setting.create_if_not_exists(
   :title       => 'Ignore Escalation/SLA Information',
   :name        => 'import_ignore_sla',
   :area        => 'Import::Base',
