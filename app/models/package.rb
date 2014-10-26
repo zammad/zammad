@@ -34,7 +34,7 @@ class Package < ApplicationModel
     end
     if data[:output]
       location = data[:output] + '/' + package.elements["zpm/name"].text + '-' + package.elements["zpm/version"].text + '.zpm'
-      puts "NOTICE: writting package to '#{location}'"
+      logger.info "NOTICE: writting package to '#{location}'"
       file = File.new( location, 'wb' )
       file.write( package.to_s )
       file.close
@@ -67,12 +67,12 @@ class Package < ApplicationModel
     # link files
     Dir.glob( @@root + '/**/*' ) do |entry|
       if File.symlink?( entry)
-        puts "unlink: #{entry}"
+        logger.info "unlink: #{entry}"
         File.delete( entry )
       end
       backup_file = entry + '.link_backup'
       if File.exists?( backup_file )
-        puts "Restore backup file of #{backup_file} -> #{entry}."
+        logger.info "Restore backup file of #{backup_file} -> #{entry}."
         File.rename( backup_file, entry )
       end
     end
@@ -87,7 +87,7 @@ class Package < ApplicationModel
     if package == false
       raise "Can't link package, '#{package_base_dir}' is no package source directory!"
     end
-    puts package.inspect
+    logger.debug package.inspect
     return package
   end
 
@@ -109,13 +109,13 @@ class Package < ApplicationModel
       dest = @@root + '/' + file
 
       if File.symlink?( dest.to_s )
-        puts "Unlink file: #{dest.to_s}"
+        logger.info "Unlink file: #{dest.to_s}"
         File.delete( dest.to_s )
       end
 
       backup_file = dest.to_s + '.link_backup'
       if File.exists?( backup_file )
-        puts "Restore backup file of #{backup_file} -> #{dest.to_s}."
+        logger.info "Restore backup file of #{backup_file} -> #{dest.to_s}."
         File.rename( backup_file, dest.to_s )
       end
     end
@@ -137,7 +137,7 @@ class Package < ApplicationModel
 
       # ignore files
       if file =~ /^README/
-        puts "NOTICE: Ignore #{file}"
+        logger.info "NOTICE: Ignore #{file}"
         next
       end
 
@@ -146,7 +146,7 @@ class Package < ApplicationModel
 
       if File.directory?( entry.to_s )
         if !File.exists?( dest.to_s )
-          puts "Create dir: #{dest.to_s}"
+          logger.info "Create dir: #{dest.to_s}"
           FileUtils.mkdir_p( dest.to_s )
         end
       end
@@ -156,7 +156,7 @@ class Package < ApplicationModel
         if File.exists?( backup_file )
           raise "Can't link #{entry.to_s} -> #{dest.to_s}, destination and .link_backup already exists!"
         else
-          puts "Create backup file of #{dest.to_s} -> #{backup_file}."
+          logger.info "Create backup file of #{dest.to_s} -> #{backup_file}."
           File.rename( dest.to_s, backup_file )
         end
       end
@@ -165,7 +165,7 @@ class Package < ApplicationModel
         if File.symlink?( dest.to_s )
           File.delete( dest.to_s )
         end
-        puts "Link file: #{entry.to_s} -> #{dest.to_s}"
+        logger.info "Link file: #{entry.to_s} -> #{dest.to_s}"
         File.symlink( entry.to_s, dest.to_s )
       end
     end
@@ -325,14 +325,14 @@ class Package < ApplicationModel
   end
 
   def self._parse(xml)
-    #    puts xml.inspect
+    logger.debug xml.inspect
     begin
       package = REXML::Document.new( xml )
     rescue => e
       puts 'ERROR: ' + e.inspect
       return
     end
-    #    puts package.inspect
+    logger.debug package.inspect
     return package
   end
 
@@ -383,7 +383,7 @@ class Package < ApplicationModel
     # rename existing file
     if File.exist?( location )
       backup_location = location + '.save'
-      puts "NOTICE: backup old file '#{location}' to #{backup_location}"
+      logger.info "NOTICE: backup old file '#{location}' to #{backup_location}"
       File.rename( location, backup_location )
     end
 
@@ -403,7 +403,7 @@ class Package < ApplicationModel
 
     # install file
     begin
-      puts "NOTICE: install '#{location}' (#{permission})"
+      logger.info "NOTICE: install '#{location}' (#{permission})"
       file = File.new( location, 'wb' )
       file.write( data )
       file.close
@@ -418,7 +418,7 @@ class Package < ApplicationModel
     location = @@root + '/' + file
 
     # install file
-    puts "NOTICE: uninstall '#{location}'"
+    logger.info "NOTICE: uninstall '#{location}'"
     if File.exist?( location )
       File.delete( location )
     end
@@ -426,7 +426,7 @@ class Package < ApplicationModel
     # rename existing file
     backup_location = location + '.save'
     if File.exist?( backup_location )
-      puts "NOTICE: restore old file '#{backup_location}' to #{location}"
+      logger.info "NOTICE: restore old file '#{backup_location}' to #{location}"
       File.rename( backup_location, location )
     end
 
@@ -474,7 +474,7 @@ class Package < ApplicationModel
         if direction == 'reverse'
           done = Package::Migration.where( :name => package.underscore, :version => version ).first
           next if !done
-          puts "NOTICE: down package migration '#{migration}'"
+          logger.info "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).down
@@ -487,7 +487,7 @@ class Package < ApplicationModel
         else
           done = Package::Migration.where( :name => package.underscore, :version => version ).first
           next if done
-          puts "NOTICE: up package migration '#{migration}'"
+          logger.info "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).up

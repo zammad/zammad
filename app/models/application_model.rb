@@ -182,7 +182,7 @@ returns
     if self.class.column_names.include? 'updated_by_id'
       if UserInfo.current_user_id
         if self.updated_by_id && self.updated_by_id != UserInfo.current_user_id
-          puts "NOTICE create - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+          logger.info "NOTICE create - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
         end
         self.updated_by_id = UserInfo.current_user_id
       end
@@ -190,7 +190,7 @@ returns
     if self.class.column_names.include? 'created_by_id'
       if UserInfo.current_user_id
         if self.created_by_id && self.created_by_id != UserInfo.current_user_id
-          puts "NOTICE create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+          logger.info "NOTICE create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
         end
         self.created_by_id = UserInfo.current_user_id
       end
@@ -426,7 +426,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    puts "#{ self.class.name }.find(#{ self.id }) notify created " + self.created_at.to_s
+    logger.debug "#{ self.class.name }.find(#{ self.id }) notify created " + self.created_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -454,7 +454,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    puts "#{ self.class.name }.find(#{ self.id }) notify UPDATED " + self.updated_at.to_s
+    logger.debug "#{ self.class.name }.find(#{ self.id }) notify UPDATED " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -481,7 +481,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    puts "#{ self.class.name }.find(#{ self.id }) notify DESTOY " + self.updated_at.to_s
+    logger.debug "#{ self.class.name }.find(#{ self.id }) notify DESTOY " + self.updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -934,7 +934,7 @@ check string/varchar size and cut them if needed
       if column && limit
         current_length = attribute[1].to_s.length
         if limit < current_length
-          puts "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
+          logger.info "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
           self[ attribute[0] ] = attribute[1][ 0, limit ]
         end
       end

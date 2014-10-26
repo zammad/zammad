@@ -403,7 +403,7 @@ returns
 
     # find file
     list = Store.list( :object => 'User::Image', :o_id => self.id )
-      puts list.inspect
+    logger.debug list.inspect
     if list && list[0]
       file = Store.find( list[0] )
       result = {
@@ -492,7 +492,7 @@ returns
       if self.email
         hash = Digest::MD5.hexdigest(self.email)
         self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
-        #puts "#{self.email}: http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
+        logger.debug "#{self.email}: #{self.image_source}"
       end
     end
   end

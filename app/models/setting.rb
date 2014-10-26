@@ -42,6 +42,7 @@ class Setting < ApplicationModel
     end
     setting.state = { :value => value }
     setting.save
+    logger.info "Setting.set() name:#{name}, value:#{value.inspect}"
   end
 
   def self.get(name)

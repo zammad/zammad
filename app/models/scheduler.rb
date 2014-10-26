@@ -8,7 +8,7 @@ class Scheduler < ApplicationModel
 
     jobs_started = {}
     while true
-      puts "Scheduler running (runner #{runner} of #{runner_count})..."
+      logger.info "Scheduler running (runner #{runner} of #{runner_count})..."
 
       # reconnect in case db connection is lost
       begin
@@ -29,7 +29,7 @@ class Scheduler < ApplicationModel
   end
 
   def self.start_job( job, runner, runner_count )
-    puts "started job thread for '#{job.name}' (#{job.method})..."
+    logger.info "started job thread for '#{job.name}' (#{job.method})..."
     sleep 4
 
     Thread.new {
@@ -56,7 +56,7 @@ class Scheduler < ApplicationModel
       #        raise "Exception from thread"
       job.pid = ''
       job.save
-      puts " ...stopped thread for '#{job.method}'"
+      logger.info " ...stopped thread for '#{job.method}'"
     }
   end
 
@@ -66,7 +66,7 @@ class Scheduler < ApplicationModel
       job.last_run = Time.now
       job.pid = Thread.current.object_id
       job.save
-      puts "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count})..."
+      logger.info "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count})..."
       eval job.method()
     rescue => e
       puts "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count}) exited with error #{ e.inspect }"
@@ -84,7 +84,7 @@ class Scheduler < ApplicationModel
       # reset error counter if to old
       if try_run_time + ( 60 * 5 ) < Time.now
         try_count = 0
-      end 
+      end
       try_run_time = Time.now
 
       # restart job again
@@ -98,7 +98,7 @@ class Scheduler < ApplicationModel
 
   def self.worker
     wait = 10
-    puts "*** Starting worker #{Delayed::Job.to_s}"
+    logger.info "*** Starting worker #{Delayed::Job.to_s}"
 
     loop do
       result = nil
@@ -113,7 +113,7 @@ class Scheduler < ApplicationModel
 
       if count.zero?
         sleep(wait)
-        puts "*** worker loop"
+        logger.info "*** worker loop"
       else
         printf "*** #{count} jobs processed at %.4f j/s, %d failed ...\n" % [count / realtime, result.last]
       end

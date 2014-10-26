@@ -59,14 +59,8 @@ module NotificationFactory
 
   def self.send(data)
     sender = Setting.get('notification_sender')
-<<<<<<< HEAD
-    Rails.logger.info "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]}"
+    Rails.logger.info "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]} (from #{sender})"
     Channel::EmailSend.new.send(
-=======
-    imap   = Channel::IMAP.new
-    Rails.logger.info "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]}"
-    message = imap.send(
->>>>>>> 5e22499e44225c831661087b68de154deafef5c6
       {
 #        :in_reply_to => self.in_reply_to,
         :from       => sender,
