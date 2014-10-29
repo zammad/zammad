@@ -14,12 +14,18 @@
           <p><%= @message %></p>
       <% end %>
       <% if @detail: %>
-          <pre><%= @detail %></p>
+          <pre><%= @detail %></pre>
+      <% end %>
+      <% if @content: %>
+          <%- @content %>
       <% end %>
       </div>
       <div class="modal-footer horizontal">
   <% if @cancel: %>
         <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+  <% end %>
+  <% for button in @centerButtons: %>
+        <div class="btn <%= button.className %> align-center"><%- @T( button.text ) %></div>
   <% end %>
   <% if @button: %>
         <button type="submit" class="btn <%= @buttonClass %> js-submit align-right"><%- @T( @button ) %></button>

@@ -1,9 +1,9 @@
 <div class="attachments"></div>
 <div class="article-attachment u-unclickable">
   <div class="attachmentPlaceholder">
-    <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable">
+    <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable fileUpload">
       Dateien wählen..
-      <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+      <input multiple="multiple" type="file" name="file" style="">
     </span>
   </div>
   <div class="attachmentUpload hide u-clickable">

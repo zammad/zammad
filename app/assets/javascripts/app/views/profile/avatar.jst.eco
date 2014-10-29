@@ -1,5 +1,23 @@
-<form class="form-normal">
-  <h2><%- @T( 'Avatar' ) %></h2>
-  <div class="snapshot"></div>
-  <button type="submit" class="btn"><%- @T( 'Snapshot' ) %></button>
-</form>
+<div class="page-header-title">
+  <div class="horizontal">
+    <h1><%- @T( 'Avatar' ) %></h1>
+    <div class="page-header-meta">
+    <% if @webcamSupport: %>
+      <div class="btn btn--success js-openCamera">Camera</div>
+    <% end %>
+      <div class="btn btn--success fileUpload">Upload<input type="file" class="js-upload" accept="image/*"></div>
+    </div>
+  </div>
+</div>
+<div class="avatar-gallery horizontal wrap">
+  <div class="avatar-holder">
+    <%- App.Session.get().uniqueAvatar(true) %>
+  </div>
+  <div class="avatar-holder">
+    <%- App.Session.get().avatar(true, undefined, 'is-active') %>
+    <div class="avatar-delete"><div class="delete icon"></div></div>
+  </div>
+  <!-- <div class="active">
+    <div class="big avatar avatar--new centered"><div class="white plus icon"></div></div>
+  </div> -->
+</div>

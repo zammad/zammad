@@ -54,22 +54,28 @@ class App.User extends App.Model
 
   avatar: (big = false, placement = '', cssClass = '') ->
     if big
-      cssClass = ' big'
+      cssClass += ' big'
     if placement
       placement = "data-placement=\"#{placement}\""
 
     if @image is 'none'
-      width  = 300
-      height = 226
-      size   = if big then 50 else 40
-
-      rng = new Math.seedrandom(@id)
-      x = rng() * (width - size)
-      y = rng() * (height - size)
-
-      "<span class=\"avatar unique user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
+      return @uniqueAvatar(big, placement, cssClass)
     else
       "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
+
+  uniqueAvatar: (big = false, placement = '', cssClass = '') ->
+    if big
+      cssClass += ' big'
+
+    width  = 300
+    height = 226
+    size   = if big then 50 else 40
+
+    rng = new Math.seedrandom(@id)
+    x = rng() * (width - size)
+    y = rng() * (height - size)
+
+    "<span class=\"avatar unique user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
   @_fillUp: (data) ->
 
