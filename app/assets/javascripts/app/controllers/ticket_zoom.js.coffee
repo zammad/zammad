@@ -1,4 +1,7 @@
 class App.TicketZoom extends App.Controller
+  elements:
+    '.main': 'main'
+  
   events:
     'click .js-submit': 'submit'
 
@@ -384,6 +387,11 @@ class App.TicketZoom extends App.Controller
     @autosaveStart()
   
     @bindScrollPageHeader()
+
+    @scrollToBottom()
+
+  scrollToBottom: ->
+    @main.scrollTop( @main.prop('scrollHeight') )
 
   bindScrollPageHeader: ->
     pageHeader = @$('.page-header')
