@@ -441,6 +441,17 @@ class App.ControllerContent extends App.Controller
     @navShow()
 
 class App.ControllerModal extends App.Controller
+  elements:
+    '.modal-body': 'body'
+
+  events:
+    'submit form': 'onSubmit'
+    'click .js-submit:not(.is-disabled)': 'onSubmit'
+    'click .js-cancel': 'hide'
+    'click .js-close': 'hide'
+
+  className: 'modal fade zIndex-9'
+
   constructor: (options = {}) ->
     defaults =
       backdrop: true
@@ -448,23 +459,20 @@ class App.ControllerModal extends App.Controller
       close:    true
       head:     '?'
       buttonClass: 'btn--success'
+      centerButtons: []
 
     options = _.extend( defaults, options )
-
-    # do not use @el, because it's inserted by js
-    delete options.el
 
     super(options)
 
     if @shown
       @show()
 
-  show: ->
+  show: (content) ->
     if @button is true
       @button = 'Submit'
 
-    @modalElement = $( '<div class="modal fade"></div>' )
-    @modalElement.append $( App.view('modal')(
+    @html App.view('modal')
       head:         @head
       message:      @message
       detail:       @detail
@@ -472,41 +480,42 @@ class App.ControllerModal extends App.Controller
       cancel:       @cancel
       button:       @button
       buttonClass:  @buttonClass
-    ) )
-    if @el && !@message && !@detail
-      @modalElement.find('.modal-body').html @el
+      centerButtons:@centerButtons
+      content: content
 
-    @modalElement.find('form').on('submit', (e) => @onSubmit(e) )
-    @modalElement.find('.js-submit').on('click', (e) => @onSubmit(e) )
-    @modalElement.find('.js-cancel').on('click', (e) => @hide(e)  )
-    @modalElement.find('.js-close').on('click', (e) => @hide(e) )
+    if @content
+      @body.html @content
 
-    @modalElement.modal(
+    @el.modal
       keyboard: @keyboard
       show:     true
       backdrop: @backdrop
-    ).on('show.bs.modal', =>
-      @onShow()
-    ).on('hidden.bs.modal', =>
-      @onHide()
-      # remove modal from dom
-      $('.modal').remove()
-    ).find('.js-close').bind('submit', (e) => @hide(e) )
+    .on
+      'show.bs.modal': @onShow
+      'shown.bs.modal': @onShown
+      'hidden.bs.modal': =>
+        @onHide()
+        # remove modal from dom
+        $('.modal').remove()
 
-  hide: (e) ->
+  hide: (e) =>
     if e
       e.preventDefault()
-    @modalElement.modal('hide')
+    @el.modal('hide')
+
+  onShown: ->
+    console.log('modal shown: do nothing')
+    # do nothing
 
   onShow: ->
-    console.log('no nothing')
+    console.log('modal rendered: do nothing')
     # do nothing
 
   onHide: ->
-    console.log('no nothing')
+    console.log('modal removed: do nothing')
     # do nothing
 
-  onSubmit: (e) ->
+  onSubmit: (e) =>
     e.preventDefault()
     @log 'error', 'You need to implement your own "onSubmit" method!'
 

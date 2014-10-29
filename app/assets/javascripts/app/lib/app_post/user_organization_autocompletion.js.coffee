@@ -282,7 +282,7 @@ class UserNew extends App.ControllerModal
       autofocus:  true
     )
 
-    @el = controller.form
+    @content = controller.form
 
     @show()
 

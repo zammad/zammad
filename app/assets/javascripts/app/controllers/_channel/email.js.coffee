@@ -91,7 +91,7 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
         autofocus: true,
       )
 
-    @el = @form.form
+    @content = @form.form
     @show()
 
   onSubmit: (e) =>
@@ -180,7 +180,7 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
         autofocus: true,
       )
 
-    @el = @form.form
+    @content = @form.form
 
     @show()
 
@@ -266,7 +266,7 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
         autofocus: true
       )
 
-    @el = @form.form
+    @content = @form.form
 
     @show()
 
@@ -353,7 +353,7 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
         autofocus: true
       )
 
-    @el = @form.form
+    @content = @form.form
 
     @show()
 

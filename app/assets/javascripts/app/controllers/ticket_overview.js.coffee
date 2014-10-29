@@ -639,7 +639,7 @@ class App.OverviewSettings extends App.ControllerModal
       model:     { configure_attributes: @configure_attributes_article }
       autofocus: false
     )
-    @el = controller.form
+    @content = controller.form
     @show()
 
   onSubmit: (e) =>

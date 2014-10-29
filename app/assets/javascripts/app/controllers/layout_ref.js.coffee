@@ -398,7 +398,7 @@ class ModalForm extends App.ControllerModal
       model: App.User
       autofocus: true
     )
-    @el = controller.form
+    @content = controller.form
 
     @show()
 
@@ -421,9 +421,7 @@ class ModalText extends App.ControllerModal
     @render()
 
   render: ->
-    @html App.view('layout_ref/content')()
-
-    @show()
+    @show( App.view('layout_ref/content')() )
 
   onHide: =>
     window.history.back()

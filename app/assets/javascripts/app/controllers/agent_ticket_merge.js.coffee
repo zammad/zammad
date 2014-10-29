@@ -26,7 +26,7 @@ class App.TicketMerge extends App.ControllerModal
 
   render: ->
 
-    @html App.view('agent_ticket_merge')()
+    @content = $ App.view('agent_ticket_merge')()
 
     list = []
     for ticket_id in @ticket_ids_by_customer
@@ -34,7 +34,7 @@ class App.TicketMerge extends App.ControllerModal
         ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:       @el.find('#ticket-merge-customer-tickets'),
+      el:       @content.find('#ticket-merge-customer-tickets'),
       overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
       model:    App.Ticket,
       objects:  list,
@@ -47,18 +47,18 @@ class App.TicketMerge extends App.ControllerModal
         ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:       @el.find('#ticket-merge-recent-tickets'),
+      el:       @content.find('#ticket-merge-recent-tickets'),
       overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
       model:    App.Ticket,
       objects:  list,
       radio:    true,
     )
 
-    @el.delegate('[name="master_ticket_number"]', 'focus', (e) ->
+    @content.delegate('[name="master_ticket_number"]', 'focus', (e) ->
       $(e.target).parents().find('[name="radio"]').prop( 'checked', false )
     )
 
-    @el.delegate('[name="radio"]', 'click', (e) ->
+    @content.delegate('[name="radio"]', 'click', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal( ticket_id )
