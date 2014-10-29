@@ -39,11 +39,6 @@ class App.i18n
       _instance ?= new _i18nSingleton( args )
     _instance.set( args )
 
-  @escape: ( args ) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton( args )
-    _instance.escape( args )
-
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 
@@ -135,13 +130,13 @@ class _i18nSingleton extends Spine.Module
     )
 
   translateInline: ( string, args... ) =>
-    @escape( @translate( string, args... ) )
+    HTMLEscape( @translate( string, args... ) )
 
   translateContent: ( string, args... ) =>
-    translated = @escape( @translate( string, args... ) )
-#    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + '<span class="icon-edit"></span>'
+    translated = HTMLEscape( @translate( string, args... ) )
+#    replace = '<span class="translation" contenteditable="true" data-text="' + HTMLEscape(string) + '">' + translated + '<span class="icon-edit"></span>'
     if App.Config.get( 'Translation' )
-      replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
+      replace = '<span class="translation" contenteditable="true" data-text="' + HTMLEscape(string) + '">' + translated + ''
   #    if !@_translated
   #       replace += '<span class="missing">XX</span>'
       replace += '</span>'
@@ -178,13 +173,6 @@ class _i18nSingleton extends Spine.Module
 
     # return translated string
     return translated
-
-  escape: ( string ) ->
-    string = ( '' + string )
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/\x22/g, '&quot;')
 
   date: ( time, offset ) =>
     @convert(time, offset, @dateFormat)

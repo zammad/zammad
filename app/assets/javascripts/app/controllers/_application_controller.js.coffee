@@ -229,7 +229,7 @@ class App.Controller extends Spine.Controller
       title: ->
         ticket_id = $(@).data('id')
         ticket = App.Ticket.fullLocal( ticket_id )
-        App.i18n.escape( ticket.title )
+        HTMLEscape( ticket.title )
       content: ->
         ticket_id = $(@).data('id')
         ticket = App.Ticket.fullLocal( ticket_id )
@@ -265,7 +265,7 @@ class App.Controller extends Spine.Controller
       title: ->
         user_id = $(@).data('id')
         user = App.User.fullLocal( user_id )
-        App.i18n.escape( user.displayName() )
+        HTMLEscape( user.displayName() )
       content: ->
         user_id = $(@).data('id')
         user = App.User.fullLocal( user_id )
@@ -314,7 +314,7 @@ class App.Controller extends Spine.Controller
       title: ->
         organization_id = $(@).data('id')
         organization = App.Organization.fullLocal( organization_id )
-        App.i18n.escape( organization.name )
+        HTMLEscape( organization.name )
       content: ->
         organization_id = $(@).data('id')
         organization = App.Organization.fullLocal( organization_id )

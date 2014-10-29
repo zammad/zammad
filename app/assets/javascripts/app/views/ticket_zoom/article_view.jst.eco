@@ -6,27 +6,27 @@
     <div class="article-content-meta top hide">
       <div class="article-meta top">
       <% if article.from: %>
-        <div class="horizontal article-meta-row" title="<%- @Ti( 'From' ) %>: <%= article.from %>">
+        <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T( 'From' ) %></div>
-          <div class="article-meta-value flex u-textTruncate"><%= article.from %></div>
+          <div class="article-meta-value flex contain-text u-textTruncate"><%- @AddressLine(article.from) %></div>
         </div>
       <% end %>
       <% if article.to: %>
-        <div class="horizontal article-meta-row" title="<%- @Ti( 'To' ) %>: <%= article.to %>">
+        <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T( 'To' ) %></div>
-          <div class="article-meta-value flex u-textTruncate"><%= article.to %></div>
+          <div class="article-meta-value flex contain-text u-textTruncate"><%- @AddressLine(article.to) %></div>
         </div>
       <% end %>
       <% if article.cc: %>
-        <div class="horizontal article-meta-row" title="<%- @Ti( 'Kopie' ) %>: <%= article.cc %>">
-          <div class="article-meta-key u-textTruncate"><%- @T( 'Kopie' ) %></div>
-          <div class="article-meta-value flex u-textTruncate"><%= article.cc %></div>
+        <div class="horizontal article-meta-row">
+          <div class="article-meta-key u-textTruncate"><%- @T( 'Cc' ) %></div>
+          <div class="article-meta-value flex contain-text u-textTruncate"><%- @AddressLine(article.cc) %></div>
         </div>
       <% end %>
       <% if article.subject: %>
-        <div class="horizontal article-meta-row" title="<%- @Ti( 'Subject' ) %>: <%= article.subject %>">
+        <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T( 'Subject' ) %></div>
-          <div class="article-meta-value flex u-textTruncate"><%= article.subject %></div>
+          <div class="article-meta-value flex contain-text u-textTruncate"><%= article.subject %></div>
         </div>
       <% end %>
       </div>

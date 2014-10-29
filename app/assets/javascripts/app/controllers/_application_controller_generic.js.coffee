@@ -441,12 +441,12 @@ class App.GenericHistory extends App.ControllerModal
         if item.value_from
           if item.value_to
             content += " #{ @T( 'from' ) }"
-          content += " '#{ App.i18n.escape(item.value_from) }'"
+          content += " '#{ HTMLEscape(item.value_from) }'"
 
         if item.value_to
           if item.value_from
             content += " #{ @T( 'to' ) }"
-          content += " '#{ App.i18n.escape(item.value_to) }'"
+          content += " '#{ HTMLEscape(item.value_to) }'"
 
       newItem.records.push content
 

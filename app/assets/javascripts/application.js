@@ -77,6 +77,15 @@ function clone(object) {
   return JSON.parse(JSON.stringify(object));
 }
 
+function HTMLEscape(string) {
+  return ( '' + string )
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 jQuery.event.special.remove = {
   remove: function(e) {
     if (e.handler) e.handler();

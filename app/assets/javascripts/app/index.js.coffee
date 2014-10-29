@@ -103,6 +103,27 @@ class App extends Spine.Controller
       params.S = ( key ) ->
         App.Session.get( key )
 
+      # define address line helper
+      params.AddressLine = ( line ) ->
+        return '' if !line
+        items = emailAddresses.parseAddressList(line)
+
+        # line was not parsable
+        if !items
+          return line
+
+        # set markup
+        result = ''
+        for item in items
+          if result
+            result = result + ', '
+          if item.name
+            result = result + HTMLEscape(item.name) + ' '
+          if item.address
+            result = result + " <span class=\"text-muted\">&lt;#{HTMLEscape(item.address)}&gt</span>"
+
+        result
+
       # define template
       JST["app/views/#{name}"](params)
     template
