@@ -12,7 +12,8 @@ class App.ControllerGenericNew extends App.ControllerModal
       screen:     @screen || 'edit'
       autofocus:  true
     )
-    @el = controller.form
+
+    @content = controller.form
 
     @show()
 
@@ -62,7 +63,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
       screen:     @screen || 'edit'
       autofocus:  true
     )
-    @el = controller.form
+    @content = controller.form
 
     @show()
 
@@ -363,13 +364,13 @@ class App.GenericHistory extends App.ControllerModal
 
     localItem = @reworkItems( @items )
 
-    @html App.view('generic/history')(
+    @content = $ App.view('generic/history')(
       items: localItem
     )
 
     @onShow()
 
-    @el.find('a[data-type="sortorder"]').bind(
+    @content.find('a[data-type="sortorder"]').bind(
       'click',
       (e) =>
         e.preventDefault()
