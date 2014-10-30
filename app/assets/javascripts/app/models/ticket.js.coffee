@@ -19,9 +19,9 @@ class App.Ticket extends App.Model
       { name: 'escalation_time',       display: 'Escalation',              type: 'time', null: true, style: 'width: 12%', class: 'escalation', parentClass: 'noTruncate' },
       { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
       { name: 'created_by_id',         display: 'Created by', relation: 'User', readonly: 1 },
-      { name: 'created_at',            display: 'Created', type: 'time', style: 'width: 90px', readonly: 1, parentClass: 'noTruncate' },
+      { name: 'created_at',            display: 'Created', type: 'time', style: 'width: 120px', readonly: 1, parentClass: 'noTruncate' },
       { name: 'updated_by_id',         display: 'Updated by', relation: 'User', readonly: 1 },
-      { name: 'updated_at',            display: 'Updated', type: 'time', style: 'width: 90px', readonly: 1, parentClass: 'noTruncate' },
+      { name: 'updated_at',            display: 'Updated', type: 'time', style: 'width: 120px', readonly: 1, parentClass: 'noTruncate' },
     ]
 
   uiUrl: ->
