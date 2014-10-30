@@ -1,5 +1,5 @@
 <div class="fit vertical">
-  <div class="overview flex scrollable">
+  <div class="tableOverview flex scrollable">
     <div class="horizontal">
       <div class="page-header-title">
         <h1><%- @T( @overview.name ) %> <% if @edit: %><small><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a></small><% end %></h1>
