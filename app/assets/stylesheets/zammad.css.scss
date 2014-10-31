@@ -256,6 +256,7 @@ table {
   font-weight: normal;
   font-size: 12px;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .table > tbody > tr > td {
@@ -1756,8 +1757,12 @@ footer {
   .task.active .priority.icon,
   .task.active .modified.priority.icon,
   .task.active .modified.priority.icon:after {
-    background: white;
+    background-color: white;
     border-color: white;
+  }
+
+  .task.active .priority.icon:after {
+    background-color: #389ed9;
   }
 
   .level-1 {
