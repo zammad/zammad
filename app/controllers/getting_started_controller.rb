@@ -317,7 +317,7 @@ curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
   private
 
   def setup_done
-    return false
+    #return false
     count = User.all.count()
     done = true
     if count <= 2
