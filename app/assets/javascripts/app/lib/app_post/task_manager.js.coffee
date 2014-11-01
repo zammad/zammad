@@ -206,12 +206,8 @@ class _taskManagerSingleton extends App.Controller
 
     # return if controller is already started
     if @workersStarted[key]
-
-      # activate existing controller
-      worker = @worker( key )
-      if worker && worker.activate && !to_not_show
-        worker.activate(params_app)
-        App.Event.trigger('ui:rerender:task')
+      if !to_not_show
+        @showController( key, params_app )
       return
 
     @workersStarted[key] = true
@@ -222,9 +218,21 @@ class _taskManagerSingleton extends App.Controller
 
     # activate controller
     if !to_not_show
-      a.activate(params_app)
+      @showController( key, params_app )
 
     return a
+
+  showController: ( thisKey, params_app ) =>
+    for key of @workersStarted
+      controller = @workers[ key ]
+      if controller
+        if key is thisKey
+          if controller.show
+            controller.show(params_app)
+            App.Event.trigger('ui:rerender:task')
+        else
+          if controller.hide
+            controller.hide()
 
   get: ( key ) =>
     for task in @allTasks

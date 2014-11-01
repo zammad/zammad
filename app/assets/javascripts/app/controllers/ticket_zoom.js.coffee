@@ -40,9 +40,6 @@ class App.TicketZoom extends App.Controller
         @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
     )
 
-    @bind "task:hide", @onHide
-    @bind "task:show", @onShow
-
   meta: =>
     meta =
       url:        @url()
@@ -58,9 +55,15 @@ class App.TicketZoom extends App.Controller
   url: =>
     '#ticket/zoom/' + @ticket_id
 
-  activate: =>
+  show: =>
     App.OnlineNotification.seen( 'Ticket', @ticket_id )
     @navupdate '#'
+    if @scrollHeader
+      @scrollHeader.continue()
+
+  hide: =>
+    if @scrollHeader
+      @scrollHeader.pause()
 
   changed: =>
     formCurrent = @formParam( @el.find('.edit') )
@@ -406,14 +409,6 @@ class App.TicketZoom extends App.Controller
       @scrollHeader = skrollr.init
         forceHeight: false
         holder: @main.get(0)
-
-  onShow: =>
-    if @scrollHeader
-      @scrollHeader.continue()
-
-  onHide: =>
-    if @scrollHeader
-      @scrollHeader.pause()
 
   autosaveStop: =>
     @autosaveLast = {}

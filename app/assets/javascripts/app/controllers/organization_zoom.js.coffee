@@ -31,7 +31,7 @@ class App.OrganizationZoom extends App.Controller
   url: =>
     '#organization/zoom/' + @organization_id
 
-  activate: =>
+  show: =>
     App.OnlineNotification.seen( 'Organization', @organization_id )
     @navupdate '#'
 

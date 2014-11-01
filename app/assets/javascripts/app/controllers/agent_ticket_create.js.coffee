@@ -104,7 +104,7 @@ class App.TicketCreate extends App.Controller
   url: =>
     '#ticket/create/id/' + @id
 
-  activate: =>
+  show: =>
     @navupdate '#'
 
   changed: =>
