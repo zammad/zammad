@@ -5,6 +5,11 @@ class Index extends App.ControllerContent
   constructor: ->
     super
 
+    # redirect to getting started if setup is not done
+    if !@Config.get('system_init_done')
+      @navigate '#getting_started'
+      return
+
     # navigate to # if session if exists
     if @Session.get()
       @navigate '#'
