@@ -40,6 +40,9 @@ class App.TicketZoom extends App.Controller
         @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
     )
 
+    @bind "task:hide", @onHide
+    @bind "task:show", @onShow
+
   meta: =>
     meta =
       url:        @url()
@@ -69,6 +72,7 @@ class App.TicketZoom extends App.Controller
   release: =>
     # nothing
     @autosaveStop()
+    @scrollHeader.destroy() if @scrollHeader
 
   fetch: (ticket_id, force) ->
 
@@ -385,23 +389,31 @@ class App.TicketZoom extends App.Controller
     @userPopups()
 
     @autosaveStart()
+
+    @scrollToBottom()
   
     @bindScrollPageHeader()
 
-    @scrollToBottom()
-
-  scrollToBottom: ->
+  scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
 
   bindScrollPageHeader: ->
     pageHeader = @$('.page-header')
-    scrollHolder = pageHeader.scrollParent()
-    scrollBody = scrollHolder.get(0).scrollHeight - scrollHolder.height()
+    scrollBody = @main.prop('scrollHeight') - @main.height()
 
     if scrollBody > pageHeader.height()
-      skrollr.init
+      # TODO: recalculate the distance when adding a comment
+      @scrollHeader = skrollr.init
         forceHeight: false
-        holder: scrollHolder.get(0)
+        holder: @main.get(0)
+
+  onShow: =>
+    if @scrollHeader
+      @scrollHeader.continue()
+
+  onHide: =>
+    if @scrollHeader
+      @scrollHeader.pause()
 
   autosaveStop: =>
     @autosaveLast = {}

@@ -7,6 +7,7 @@
  *
  * Free to use under terms of MIT license
  */
+window.id = 0;
 (function(window, document, undefined) {
 	'use strict';
 
@@ -19,7 +20,7 @@
 		},
 		//Main entry point.
 		init: function(options) {
-			return _instance || new Skrollr(options);
+			new Skrollr(options);
 		},
 		VERSION: '0.6.26'
 	};
@@ -232,6 +233,8 @@
 
 		_instance = this;
 
+		this.id = window.id++;
+
 		options = options || {};
 
 		_constants = options.constants || {};
@@ -308,15 +311,28 @@
 			}
 		});
 
-		var requestAnimFrame = polyfillRAF();
-
 		//Let's go.
-		(function animloop(){
-			_render();
-			_animFrame = requestAnimFrame(animloop);
-		}());
+		this.animloop();
 
 		return _instance;
+	}
+
+	Skrollr.prototype.animloop = function() {
+		var requestAnimFrame = polyfillRAF();
+		_render();
+		// console.log("rendering", this.id);
+		if(!this.paused)
+			_animFrame = requestAnimFrame(_instance.animloop.bind(this));
+	}
+
+	Skrollr.prototype.pause = function() {
+		cancelAnimFrame(_animFrame);
+		this.paused = true;
+	}
+
+	Skrollr.prototype.continue = function() {
+		this.paused = false;
+		this.animloop();
 	}
 
 	/**
@@ -616,7 +632,7 @@
 		if(_isMobile) {
 			_mobileOffset = Math.min(Math.max(top, 0), _maxKeyFrame);
 		} else {
-			window.scrollTo(0, top);
+			documentElement.scrollTop = top;
 		}
 
 		return _instance;
