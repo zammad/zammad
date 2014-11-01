@@ -62,6 +62,15 @@
                 <div class="checkmark icon"></div>
               </div>
           </tr>
+          <tr class="js-base">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Base Objects') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <div class="checkmark icon"></div>
+              </div>
+          </tr>
           <tr class="js-user">
             <td><span class="js-done">-</span>/<span class="js-total">-</span>
             <td><span><%- @T('Users') %></span>
@@ -83,7 +92,7 @@
         </table>
       </div>
       <div class="wizard-controls horizontal center">
-        <a href="#" class="btn btn--primary align-right js-finished"><%- @T('Done') %></a>
+        <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('Done') %></a>
       </div>
     </div>
 

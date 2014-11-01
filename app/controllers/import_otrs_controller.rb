@@ -49,7 +49,7 @@ class ImportOtrsController < ApplicationController
       response = UserAgent.request( url )
 
       Setting.set('import_otrs_endpoint', url)
-      Setting.set('import_mode', true)
+      Setting.set('import_otrs_endpoint_key', '01234567899876543210')
       Setting.set('import_backend', 'otrs')
       if response.body =~ /zammad migrator/
         render :json => {
@@ -73,8 +73,18 @@ class ImportOtrsController < ApplicationController
   def import_start
     return if setup_done_response
 
-    # start migration
+    Setting.set('import_mode', true)
+    welcome = Import::OTRS2.save_statisitic
+    if !welcome
+      render :json => {
+        :message => 'Migrator can\'t read OTRS output!',
+        :result  => 'invalid',
+      }
+      return
+    end
 
+    # start migration
+    Import::OTRS2.delay.start
 
     render :json => {
       :result  => 'ok',
@@ -84,26 +94,11 @@ class ImportOtrsController < ApplicationController
   def import_status
     return if setup_done_response
 
-
-    # start migration
-
+    state = Import::OTRS2.get_current_state
 
     render :json => {
-      :data    => {
-        :User => {
-          :total => 1300,
-          :done  => rand(1300).to_i,
-        },
-        :Ticket => {
-          :total => 13000,
-          :done  => rand(13000).to_i,
-        },
-        :Config => {
-          :total => 1,
-          :done  => rand(2).to_i
-        },
-      },
-      :result  => 'in_progress',
+      :data   => state,
+      :result => 'in_progress',
     }
   end
 
