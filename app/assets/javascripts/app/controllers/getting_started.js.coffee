@@ -105,8 +105,9 @@ class Base extends App.ControllerContent
     @html App.view('getting_started/base')()
 
     # url
+    url = window.location.origin
     configureAttributesBase = [
-      { name: 'url', display: 'System URL (where the system can be reached)', tag: 'input', null: false, placeholder: 'http://yourhost' },
+      { name: 'url', display: 'System URL (where the system can be reached)', tag: 'input', null: false, placeholder: 'http://yourhost', default: url },
     ]
     new App.ControllerForm(
       el: @$('.base-url'),
