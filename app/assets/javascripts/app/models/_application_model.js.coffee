@@ -553,8 +553,11 @@ class App.Model extends Spine.Model
       return '' if item[ attribute ] is undefined
       return '' if item[ attribute ] is null
 
-      # return value
-      item[ attribute ].toLowerCase()
+      # return value if string
+      if item[ attribute ].toLowerCase
+        return item[ attribute ].toLowerCase()
+
+      item[ attribute ]
     )
 
   @_order: ( collection, attribute ) ->
