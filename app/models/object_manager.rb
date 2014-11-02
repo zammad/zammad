@@ -11,7 +11,7 @@ add a new activity entry for an object
 =end
 
   def self.listObjects
-    ['Ticket', 'TicketArticle', 'Group', 'Organization', 'User']
+    ['Ticket', 'User', 'Organization' ] #, 'Group' ]
   end
 
 end
@@ -23,6 +23,33 @@ class ObjectManager::Attribute < ApplicationModel
   store                   :screens
   store                   :data_option
 
+=begin
+
+list of all attributes
+
+  result = ObjectManager::Attribute.list_full
+
+  result = [
+    {
+      :name    => 'some name',
+      :display => '...',
+    }.
+  ],
+
+=end
+
+  def self.list_full
+    result = ObjectManager::Attribute.all
+    attributes = []
+    assets = {}
+    result.each {|item|
+      attribute = item.attributes
+      attribute[:object] = ObjectLookup.by_id( item.object_lookup_id )
+      attribute.delete('object_lookup_id')
+      attributes.push attribute
+    }
+    attributes
+  end
 
 =begin
 
@@ -89,7 +116,7 @@ add a new activity entry for an object
 
 =begin
 
-get list of object attributes
+get user based list of object attributes
 
   attribute_list = ObjectManager::Attribute.by_object('Ticket', user)
 
