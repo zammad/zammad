@@ -150,23 +150,120 @@ class Edit extends App.ControllerModal
     @cancel = true
     @button = true
 
-    ###
+    @content = $( App.view('object_manager/edit')(
+      head:  @object
+      items: []
+    ) )
+
+
+    item = App.ObjectManagerAttribute.find(@id)
+
+    options =
+      input:    'Text (normal - one line)'
+      select:   'Selection'
+      datetime: 'Datetime'
+      date:     'Date'
+      textarea: 'Text (normal - multiline)'
+      richtext: 'Text (richtext)'
+      checkbox: 'Checkbox'
+      boolean:  'Yes/No'
+
+    configureAttributesTop = [
+      { name: 'name',       display: 'Name',    tag: 'input',     type: 'text', limit: 100, 'null': false },
+      { name: 'display',    display: 'Anzeige', tag: 'input',     type: 'text', limit: 100, 'null': false },
+      { name: 'data_type',  display: 'Format',  tag: 'select',    multiple: false, nulloption: true, null: false, options: options, translate: true },
+    ]
     controller = new App.ControllerForm(
-      model:      App.ObjectManagerAttribute
-      params:     @item
-      screen:     @screen || 'edit'
+      model:      { configure_attributes: configureAttributesTop, className: '' },
+      params:     item
+      #screen:     @screen || 'edit'
+      el:         @content.find('.js-top')
       autofocus:  true
     )
 
-    @content = controller.form
-    ###
-
-    content = App.view('object_manager/edit')(
-      head:  @object
-      items: []
+    # input
+    configureAttributesInput = [
+      { name: 'data_option::type',            display: 'Type',            tag: 'select', multiple: false, nulloption: true, null: false, options: { text: 'text', email: 'email', url: 'url', email: 'email', password: 'password', phone: 'phone'}, translate: true },
+      { name: 'data_option::maxlength',       display: 'Max. Length',     tag: 'input',  type: 'text', limit: 100, 'null': false },
+      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::autocomplete',    display: 'autocomplete',    tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::default',         display: 'Default',         tag: 'input', type: 'text', limit: 100, null: true },
+      { name: 'data_option::note',            display: 'Note',            tag: 'input', type: 'text', limit: 100, null: true },
+    ]
+    controller = new App.ControllerForm(
+      model:      { configure_attributes: configureAttributesInput, className: '' },
+      params:     item
+      el:         @content.find('.js-input')
+      autofocus:  true
     )
 
-    @show(content)
+    # textarea
+    configureAttributesTextarea = [
+      { name: 'data_option::maxlength',       display: 'Max. Length',     tag: 'input',  type: 'text', limit: 100, null: false },
+      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::note',            display: 'autocomplete',    tag: 'input',  type: 'text', limit: 100, null: true },
+    ]
+    controller = new App.ControllerForm(
+      model:      { configure_attributes: configureAttributesTextarea, className: '' },
+      params:     item
+      el:         @content.find('.js-textarea')
+      autofocus:  true
+    )
+
+    # select
+    configureAttributesSelect = [
+      { name: 'data_option::nulloption',      display: 'Empty Selection', tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::null',            display: 'Required',        tag: 'boolean', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::relation',        display: 'Relation',        tag: 'input',  type: 'text', limit: 100, null: true },
+      { name: 'data_option::options',         display: 'Options',         tag: 'hash',   multiple: true, null: false },
+      { name: 'data_option::translate',       display: 'Übersetzen',      tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::note',            display: 'Note',            tag: 'input',  type: 'text', limit: 100, null: true },
+    ]
+    controller = new App.ControllerForm(
+      model:      { configure_attributes: configureAttributesSelect, className: '' },
+      params:     item
+      el:         @content.find('.js-select')
+      autofocus:  true
+    )
+
+    ###
+        :options => {
+          'Incident' => 'Incident',
+          'Problem'  => 'Problem',
+          'Request for Change' => 'Request for Change',
+        },
+    ###
+
+    @content.find('[name=data_type]').on(
+      'change',
+      (e) =>
+        dataType = $( e.target ).val()
+        @content.find('.js-middle > div').addClass('hide')
+        @content.find(".js-#{dataType}").removeClass('hide')
+    )
+    @content.find('[name=data_type]').trigger('change')
+
+
+
+    configureAttributesBottom = [
+      { name: 'active',     display: 'Active',              tag: 'boolean',   'default': true, 'null': false },
+    ]
+    controller = new App.ControllerForm(
+      model:      { configure_attributes: configureAttributesBottom, className: '' },
+      params:     item
+      #screen:     @screen || 'edit'
+      el:         @content.find('.js-bottom')
+    )
+
+    #@content = controller.form
+
+
+
+
+    #@show(content)
+    @show()
 
 
 
