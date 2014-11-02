@@ -21,6 +21,10 @@ class Index extends App.ControllerContent
           spool:  false
           data:   params
     )
+    @notify
+      type:      'success'
+      msg:       App.i18n.translateContent('Sent successfully!')
+      removeAll: true
     @render()
 
 App.Config.set( 'Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
