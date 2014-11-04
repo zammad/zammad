@@ -48,9 +48,10 @@ class ImportOtrsController < ApplicationController
       url.gsub!(/([^:])(\/+\/)/, "\\1/")
       response = UserAgent.request( url )
 
+      #Setting.set('import_mode', true)
+      Setting.set('import_backend', 'otrs')
       Setting.set('import_otrs_endpoint', url)
       Setting.set('import_otrs_endpoint_key', '01234567899876543210')
-      Setting.set('import_backend', 'otrs')
       if response.body =~ /zammad migrator/
         render :json => {
           :url    => url,
@@ -74,7 +75,7 @@ class ImportOtrsController < ApplicationController
     return if setup_done_response
 
     Setting.set('import_mode', true)
-    welcome = Import::OTRS2.save_statisitic
+    welcome = Import::OTRS2.connection_test
     if !welcome
       render :json => {
         :message => 'Migrator can\'t read OTRS output!',

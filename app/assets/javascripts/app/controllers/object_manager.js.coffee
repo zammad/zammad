@@ -2,6 +2,9 @@ class Index extends App.ControllerTabs
   constructor: ->
     super
 
+    # check authentication
+    return if !@authenticate()
+
     # get data
     @ajax(
       id:    'object_manager_attributes_list',

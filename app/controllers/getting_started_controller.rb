@@ -331,7 +331,9 @@ curl http://localhost/api/v1/getting_started.json -v -u #{login}:#{password}
       return false
     end
     render :json => {
-      :setup_done => true,
+      :setup_done     => true,
+      :import_mode    => Setting.get('import_mode'),
+      :import_backend => Setting.get('import_backend'),
     }
     true
   end

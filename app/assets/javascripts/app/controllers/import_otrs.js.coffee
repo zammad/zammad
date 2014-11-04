@@ -29,7 +29,7 @@ class Index extends App.ControllerContent
       success:     (data, status, xhr) =>
 
         # redirect to login if master user already exists
-        if data.setup_done
+        if @Config.get('system_init_done')
           @navigate '#login'
           return
 
@@ -132,12 +132,15 @@ class Index extends App.ControllerContent
           element.find('.js-total').text(item.total)
           element.find('progress').attr('max', item.total )
           element.find('progress').attr('value', item.done )
-          if item.total is item.done
+          if item.total <= item.done
             element.addClass('is-done')
           else
             element.removeClass('is-done')
 
-        @delay( @updateMigration, 3000 )
+#js-finished
+#@Config.set('system_init_done', true)
+
+        @delay( @updateMigration, 5000 )
     )
 
 App.Config.set( 'import/otrs', Index, 'Routes' )

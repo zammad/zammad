@@ -2,7 +2,24 @@ module Import
 end
 module Import::OTRS2
 
-  def self.request_json(part)
+=begin
+
+  result = request_json('Subaction=List', 1)
+
+  return
+
+   { some json structure }
+
+
+  result = request_json('Subaction=List')
+
+  return
+
+     "some data string"
+
+=end
+
+  def self.request_json(part, data_only = false)
     response = request(part)
     if !response
       raise "Can't connect to Zammad Migrator"
@@ -14,8 +31,24 @@ module Import::OTRS2
     if !result
       raise "Invalid response"
     end
-    result
+    if data_only
+      result['Result']
+    else
+      result
+    end
   end
+
+=begin
+
+  start get request to backend, add auth data automatically
+
+  result = request('Subaction=List')
+
+  return
+
+     "some data string"
+
+=end
 
   def self.request(part)
     url = Setting.get('import_otrs_endpoint') + part + ';Key=' + Setting.get('import_otrs_endpoint_key')
@@ -31,49 +64,20 @@ module Import::OTRS2
       puts "ERROR: #{response.error}"
       return
     end
-    return response
+    response
   end
 
-  def self.connection_test
-    return self.request_json('')
-  end
+=begin
 
-  def self.save_statisitic
-    statistic = self.request_json(';Subaction=List')
-    # save process
-    if statistic
-      Cache.write('import_otrs_stats', statistic)
-    end
-    statistic
-  end
+  start post request to backend, add auth data automatically
 
-  def self.get_statisitic
-    cache = Cache.get('import_otrs_stats')
-    if cache
-      return cache
-    end
-    self.save_statisitic
-  end
+  result = request('Subaction=List')
 
-  def self.get_current_state
-    total = self.get_statisitic
-    base = Group.count + Ticket::State.count + Ticket::Priority.count
-    data = {
-      :Base   => {
-        :done  => base,
-        :total => total['Base'] || 0,
-      },
-      :User   => {
-        :done  => User.count,
-        :total => total['User'] || 0,
-      },
-      :Ticket => {
-        :done  => Ticket.count,
-        :total => total['Ticket'] || 0,
-      },
-    }
-    data
-  end
+  return
+
+     "some data string"
+
+=end
 
   def self.post(data)
     url = Setting.get('import_otrs_endpoint')
@@ -92,17 +96,125 @@ module Import::OTRS2
       puts "ERROR: #{response.error}"
       return
     end
-    return response
+    response
   end
+
+=begin
+
+  start post request to backend, add auth data automatically
+
+  result = json('some response string')
+
+  return
+
+     {}
+
+=end
 
   def self.json(response)
     data = Encode.conv( 'utf8', response.body.to_s )
     JSON.parse( data )
   end
 
+  def self.load( object, limit = '', offset = '' )
+    request_json( ";Subaction=Export;Object=#{object};Limit=#{limit};Offset=#{offset}", 1 )
+  end
+
+=begin
+
+  start get request to backend to check connection
+
+  result = connection_test
+
+  return
+
+     true | false
+
+=end
+
+  def self.connection_test
+    return self.request_json('')
+  end
+
+=begin
+
+  get object statisitic from server ans save it in cache
+
+  result = get_statisitic('Subaction=List')
+
+  return
+
+     {
+        'Ticket'     => 1234,
+        'User'       => 123,
+        'SomeObject' => 999,
+     }
+
+=end
+
+  def self.get_statisitic
+
+    # check cache
+    cache = Cache.get('import_otrs_stats')
+    if cache
+      return cache
+    end
+
+    # retrive statistic
+    statistic = self.request_json(';Subaction=List', 1)
+    if statistic
+      Cache.write('import_otrs_stats', statistic)
+    end
+    statistic
+  end
+
+=begin
+
+  return current import state
+
+  result = get_current_state
+
+  return
+
+     {
+        :Ticket     => {
+          :total => 1234,
+          :done  => 13,
+        },
+        :Base     => {
+          :total => 1234,
+          :done  => 13,
+        },
+     }
+
+=end
+
+  def self.get_current_state
+    data = self.get_statisitic
+    base = Group.count + Ticket::State.count + Ticket::Priority.count
+    base_total = data['Queue'] + data['State'] + data['Priority']
+    user = User.count
+    user_total = data['User'] + data['CustomerUser']
+    data = {
+      :Base   => {
+        :done  => base,
+        :total => base_total || 0,
+      },
+      :User   => {
+        :done  => user,
+        :total => user_total || 0,
+      },
+      :Ticket => {
+        :done  => Ticket.count,
+        :total => data['Ticket'] || 0,
+      },
+    }
+    data
+  end
+
   #
   # start import
-  # 
+  #
   # Import::OTRS2.start
   #
 
@@ -122,103 +234,69 @@ module Import::OTRS2
       "API key not valid!"
     end
 
-    # get objects to import
-    object_list = request_json(";Subaction=List")
-    #puts "r #{result.inspect}"
-    #if !result['Success']
-    #  "API key not valid!"
-    #end
-    object_list.each {|object, object_count|
-      puts "#{object} - #{object_count}"
-      relations = request_json(";Subaction=List;Object=#{object}")
-      relations.each {|relation, relation_count|
-        #puts "lll #{relation}/#{relation_count}"
-        records = request_json(";Subaction=Export;Object=#{object};Attribute=#{relation}")
-        #puts "--- #{recoords.inspect}"
-        if object == 'Ticket'
-          if relation == 'State'
-            state(records)
-          elsif relation == 'Priority'
-            priority(records)
-          elsif relation == 'Queue'
-            ticket_group(records)
-          elsif relation == 'CustomerUser'
-            #customer(records)
-            customer
-          elsif relation == 'User'
-            user(records)
-          end
-        end
-      }
-      if object == 'Ticket'
-        ticket_fetch
-      elsif object == 'TicketArticle'
-        ticket_article_fetch
-      end
-    }
-
-    puts "aaaa #{result.inspect}"
-    return
-
-#self.ticket('156115')
-#return
     # create states
-    state
+    records = load('State')
+    state(records)
 
     # create priorities
-    priority
+    records = load('Priority')
+    priority(records)
 
     # create groups
-    ticket_group
+    records = load('Queue')
+    ticket_group(records)
 
     # create agents
-    user
+    records = load('User')
+    user(records)
 
     # create customers
-#    customer
-
-    result = JSON.parse( response.body )
-    result = result.reverse
+    count = 0
+    steps = 20
+    run   = true
+    while run
+        count += steps
+        records = load('CustomerUser', steps, count-steps)
+        if !records || !records[0]
+          puts "all customers imported."
+          run = false
+          next
+        end
+        customer(records)
+    end
 
     Thread.abort_on_exception = true
     thread_count = 4
     threads = {}
+    count = 0
+    locks = {}
     (1..thread_count).each {|thread|
-
-
-
       threads[thread] = Thread.new {
         sleep thread * 3
         puts "Started import thread# #{thread} ..."
         run = true
-        steps = 100
-        count = 0
+        steps = 20
         while run
-          sleep 2
-          puts "Count=#{count};Offset=#{count}"
-          result = request_json( ";Subaction=Export;Object=Ticket;Limit=#{steps};Offset=#{count}") #;Count=100;Offset=#{count}" )
-          if !result
-            run = false
-          end
-          count = count + steps
-            run = false
-          end
-
-
-        while run
-          ticket_ids = result.pop(20)
-          if !ticket_ids.empty?
-            self.ticket(ticket_ids)
-          else
+          count += steps
+          #sleep 2
+          #puts "Limit=#{steps};Offset=#{count}"
+          puts "loading... thread# #{thread} ..."
+          #result = request_json( ";Subaction=Export;Object=Ticket;Limit=#{steps};Offset=#{count-steps}", 1) #;Count=100;Offset=#{count}" )
+          records = load( 'Ticket', steps, count-steps )
+          if !records || !records[0]
             puts "... thread# #{thread}, no more work."
             run = false
+            next
           end
+          _ticket_result(records, locks)
         end
       }
     }
     (1..thread_count).each {|thread|
       threads[thread].join
     }
+
+    Setting.set( 'system_init_done', true )
 
     return
   end
@@ -277,25 +355,7 @@ module Import::OTRS2
     self._ticket_result(result)
   end
 
-  def self.ticket_fetch
-    done = false
-    count = 0
-    steps = 100
-    while done == false
-      sleep 2
-      puts "Count=#{count};Offset=#{count}"
-      result = request_json( ";Subaction=Export;Object=Ticket;Limit=#{steps};Offset=#{count}") #;Count=100;Offset=#{count}" )
-      return if !result
-      count = count + steps
-      if result.empty?
-        done = true
-      end
-      puts "aa #{result}"
-      _ticket_result(result)
-    end
-  end
-
-  def self._ticket_result(result)
+  def self._ticket_result(result, locks)
 #    puts result.inspect
     map = {
       :Ticket => {
@@ -363,7 +423,8 @@ module Import::OTRS2
     # check if state already exists
         ticket_old = Ticket.where( :id => ticket_new[:id] ).first
 #puts 'TICKET OLD ' + ticket_old.inspect
-    # find user
+
+        # find owner
         if ticket_new[:owner]
           user = User.lookup( :login => ticket_new[:owner] )
           if user
@@ -373,6 +434,8 @@ module Import::OTRS2
           end
           ticket_new.delete(:owner)
         end
+
+        # find customer
         if ticket_new[:customer]
           user = User.lookup( :login => ticket_new[:customer] )
           if user
@@ -395,76 +458,8 @@ module Import::OTRS2
           ticket.id = ticket_new[:id]
           ticket.save
         end
-      end
-    }
-  end
 
-  def self.ticket_article_fetch
-    done = false
-    count = 0
-    steps = 100
-    while done == false
-      sleep 2
-      puts "Count=#{count};Offset=#{count}"
-      result = request_json( ";Subaction=Export;Object=TicketArticle;Limit=#{steps};Offset=#{count}") #;Count=100;Offset=#{count}" )
-      return if !result
-      count = count + steps
-      if result.empty?
-        done = true
-      end
-      puts "aa #{result}"
-      _ticket_article_result(result)
-    end
-  end
-
-  def self._ticket_article_result(record)
-
-
-    map = {
-      :Ticket => {
-        :Changed                          => :updated_at,
-        :Created                          => :created_at,
-        :CreateBy                         => :created_by_id,
-        :TicketNumber                     => :number,
-        :QueueID                          => :group_id,
-        :StateID                          => :state_id,
-        :PriorityID                       => :priority_id,
-        :Owner                            => :owner,
-        :CustomerUserID                   => :customer,
-        :Title                            => :title,
-        :TicketID                         => :id,
-        :FirstResponse                    => :first_response,
-#        :FirstResponseTimeDestinationDate => :first_response_escal_date,
-#        :FirstResponseInMin               => :first_response_in_min,
-#        :FirstResponseDiffInMin           => :first_response_diff_in_min,
-        :Closed                           => :close_time,
-#        :SoltutionTimeDestinationDate     => :close_time_escal_date,
-#        :CloseTimeInMin                   => :close_time_in_min,
-#        :CloseTimeDiffInMin               => :close_time_diff_in_min,
-      },
-      :Article => {
-        :SenderType  => :sender,
-        :ArticleType => :type,
-        :TicketID    => :ticket_id,
-        :ArticleID   => :id,
-        :Body        => :body,
-        :From        => :from,
-        :To          => :to,
-        :Cc          => :cc,
-        :Subject     => :subject,
-        :InReplyTo   => :in_reply_to,
-        :MessageID   => :message_id,
-#        :ReplyTo    => :reply_to,
-        :References  => :references,
-        :Changed      => :updated_at,
-        :Created      => :created_at,
-        :ChangedBy    => :updated_by_id,
-        :CreatedBy    => :created_by_id,
-      },
-    }
-
-
-        record.each { |article|
+        record['Articles'].each { |article|
 
           # get article values
           article_new = {
@@ -492,6 +487,14 @@ module Import::OTRS2
               user = User.where( :login => email ).first
             end
             if !user
+
+              # create article user if not exists
+              while locks[ email ]
+                puts "user #{email} is locked"
+                sleep 1
+              end
+              locks[ email ] = true
+
               begin
                 display_name = Mail::Address.new( article_new[:from] ).display_name ||
                   ( Mail::Address.new( article_new[:from] ).comments && Mail::Address.new( article_new[:from] ).comments[0] )
@@ -514,6 +517,7 @@ module Import::OTRS2
                 :updated_by_id  => 1,
                 :created_by_id  => 1,
               )
+              locks[ email ] = false
             end
             article_new[:created_by_id] = user.id
           end
@@ -567,41 +571,19 @@ module Import::OTRS2
             article.save
           end
 
-          if article['Attachments']
-            article['Attachments'].each {|file|
-              headers_store = {
-                'Content-Type'        => file['ContentType'],
-                'Content-Alternative' => file['ContentAlternative'],
-                'Content-ID'          => file['ContentID'],
-              }
-              Store.add(
-                :object      => 'TicketArticle',
-                :o_id        => article_new[:id],
-                :data        => file['Content'],
-                :filename    => file['Filename'],
-                :preferences => headers_store
-              )
-            }
-
-            puts "---- #{article['Attachments'].inspect}"
-          end
         }
-
-  end
-  def self._ticket_history_result(result)
-
 
         record['History'].each { |history|
     #      puts '-------'
     #      puts history.inspect
           if history['HistoryType'] == 'NewTicket'
             History.add(
-              :id             => history['HistoryID'],
-              :o_id           => history['TicketID'],
-              :history_type   => 'created',
-              :history_object => 'Ticket',
-              :created_at     => history['CreateTime'],
-              :created_by_id  => history['CreateBy']
+              :id                 => history['HistoryID'],
+              :o_id               => history['TicketID'],
+              :history_type       => 'created',
+              :history_object     => 'Ticket',
+              :created_at         => history['CreateTime'],
+              :created_by_id      => history['CreateBy']
             )
           end
           if history['HistoryType'] == 'StateUpdate'
@@ -699,8 +681,8 @@ module Import::OTRS2
             )
           end
         }
-      #end
-    #}
+      end
+    }
   end
 
   def self.state(records)
@@ -757,6 +739,7 @@ module Import::OTRS2
       end
     }
   end
+
   def self.priority(records)
 
     map = {
@@ -797,6 +780,7 @@ module Import::OTRS2
       end
     }
   end
+
   def self.ticket_group(records)
     map = {
       :ChangeTime   => :updated_at,
@@ -856,113 +840,103 @@ module Import::OTRS2
 
     records.each { |user|
 #      puts 'USER: ' + user.inspect
-        _set_valid(user)
+      _set_valid(user)
 
-        role = Role.lookup( :name => 'Agent' )
-        # get new attributes
-        user_new = {
-          :created_by_id => 1,
-          :updated_by_id => 1,
-          :source        => 'OTRS Import',
-          :role_ids      => [ role.id ],
-        }
-        map.each { |key,value|
-          if user[key.to_s]
-            user_new[value] = user[key.to_s]
-          end
-        }
-
-        # check if state already exists
-#        user_old = User.where( :login => user_new[:login] ).first
-        user_old = User.where( :id => user_new[:id] ).first
-
-        # set state types
-        if user_old
-          puts "update User.find(#{user_new[:id]})"
-#          puts 'Update User' + user_new.inspect
-          user_new.delete( :role_ids )
-          user_old.update_attributes(user_new)
-        else
-          puts "add User.find(#{user_new[:id]})"
-#          puts 'Add User' + user_new.inspect
-          user = User.new(user_new)
-          user.id = user_new[:id]
-          user.save
-        end
-
-#      end
-    }
-  end
-  def self.customer
-    done = false
-    count = 0
-    steps = 100
-    while done == false
-      sleep 2
-      puts "Count=#{count};Offset=#{count}"
-      result = request_json( ";Subaction=Export;Object=Ticket;Attribute=CustomerUser;Limit=#{steps};Offset=#{count}") #;Count=100;Offset=#{count}" )
-      return if !result
-      count = count + steps
-      map = {
-        :ChangeTime    => :updated_at,
-        :CreateTime    => :created_at,
-        :CreateBy      => :created_by_id,
-        :ChangeBy      => :updated_by_id,
-        :ValidID       => :active,
-        :UserComment   => :note,
-        :UserEmail     => :email,
-        :UserFirstname => :firstname,
-        :UserLastname  => :lastname,
-  #      :UserTitle     => 
-        :UserLogin     => :login,
-        :UserPassword  => :password,
-        :UserPhone     => :phone,
-        :UserFax       => :fax,
-        :UserMobile    => :mobile,
-        :UserStreet    => :street,
-        :UserZip       => :zip,
-        :UserCity      => :city,
-        :UserCountry   => :country,
-      };
-
-      done = true
-      result.each { |user|
-        done = false
-        _set_valid(user)
-
-        role = Role.lookup( :name => 'Customer' )
-
-        # get new attributes
-        user_new = {
-          :created_by_id => 1,
-          :updated_by_id => 1,
-          :source        => 'OTRS Import',
-          :role_ids      => [role.id],
-        }
-        map.each { |key,value|
-          if user[key.to_s]
-            user_new[value] = user[key.to_s]
-          end
-        }
-
-        # check if state already exists
-  #        user_old = User.where( :login => user_new[:login] ).first
-        user_old = User.where( :login => user_new[:login] ).first
-
-        # set state types
-        if user_old
-          puts "update User.find(#{user_new[:id]})"
-#          puts 'Update User' + user_new.inspect
-          user_old.update_attributes(user_new)
-        else
-#          puts 'Add User' + user_new.inspect
-          puts "add User.find(#{user_new[:id]})"
-          user = User.new(user_new)
-          user.save
+      role = Role.lookup( :name => 'Agent' )
+      # get new attributes
+      user_new = {
+        :created_by_id => 1,
+        :updated_by_id => 1,
+        :source        => 'OTRS Import',
+        :role_ids      => [ role.id ],
+      }
+      map.each { |key,value|
+        if user[key.to_s]
+          user_new[value] = user[key.to_s]
         end
       }
-    end
+
+      if user_new[:password]
+        user_new[:password] = "{sha2}#{user_new[:password]}"
+      end
+      # check if state already exists
+#        user_old = User.where( :login => user_new[:login] ).first
+      user_old = User.where( :id => user_new[:id] ).first
+
+      # set state types
+      if user_old
+        puts "update User.find(#{user_new[:id]})"
+#          puts 'Update User' + user_new.inspect
+        user_new.delete( :role_ids )
+        user_old.update_attributes(user_new)
+      else
+        puts "add User.find(#{user_new[:id]})"
+#          puts 'Add User' + user_new.inspect
+        user = User.new(user_new)
+        user.id = user_new[:id]
+        user.save
+      end
+    }
   end
+  def self.customer(records)
+    map = {
+      :ChangeTime    => :updated_at,
+      :CreateTime    => :created_at,
+      :CreateBy      => :created_by_id,
+      :ChangeBy      => :updated_by_id,
+      :ValidID       => :active,
+      :UserComment   => :note,
+      :UserEmail     => :email,
+      :UserFirstname => :firstname,
+      :UserLastname  => :lastname,
+#      :UserTitle     => 
+      :UserLogin     => :login,
+      :UserPassword  => :password,
+      :UserPhone     => :phone,
+      :UserFax       => :fax,
+      :UserMobile    => :mobile,
+      :UserStreet    => :street,
+      :UserZip       => :zip,
+      :UserCity      => :city,
+      :UserCountry   => :country,
+    };
+
+    records.each { |user|
+      _set_valid(user)
+puts "CUser #{user.inspect}"
+      role = Role.lookup( :name => 'Customer' )
+
+      # get new attributes
+      user_new = {
+        :created_by_id => 1,
+        :updated_by_id => 1,
+        :source        => 'OTRS Import',
+        :role_ids      => [role.id],
+      }
+      map.each { |key,value|
+        if user[key.to_s]
+          user_new[value] = user[key.to_s]
+        end
+      }
+
+      # check if state already exists
+#        user_old = User.where( :login => user_new[:login] ).first
+      user_old = User.where( :login => user_new[:login] ).first
+
+      # set state types
+      if user_old
+        puts "update User.find(#{user_new[:id]})"
+#          puts 'Update User' + user_new.inspect
+        user_old.update_attributes(user_new)
+      else
+#          puts 'Add User' + user_new.inspect
+        puts "add User.find(#{user_new[:id]})"
+        user = User.new(user_new)
+        user.save
+      end
+    }
+  end
+
   def self._set_valid(record)
       # map
       if record['ValidID'] == '3'

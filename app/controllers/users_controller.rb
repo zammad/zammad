@@ -194,17 +194,9 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-T
 
       user.save
 
-      # if first user set init done
+      # if first user was added, set system init done
       if count <= 2
-        Setting.create_or_update(
-          :title       => 'System Init Done',
-          :name        => 'system_init_done',
-          :area        => 'Core',
-          :description => 'Defines if application is in init mode.',
-          :options     => {},
-          :state       => true,
-          :frontend    => true
-        )
+        Setting.set( 'system_init_done', true )
       end
 
       # send inviteation if needed / only if session exists
