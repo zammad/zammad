@@ -52,24 +52,24 @@ class App.User extends App.Model
     else
       return '??'
 
-  avatar: (big = false, placement = '', cssClass = '') ->
-    if big
-      cssClass += ' big'
+  avatar: (size = 40, placement = '', cssClass = '') ->
+    cssClass += " size-#{ size }"
+
     if placement
       placement = "data-placement=\"#{placement}\""
 
     if @image is 'none'
-      return @uniqueAvatar(big, placement, cssClass)
+      return @uniqueAvatar(size, placement, cssClass)
     else
       "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
 
-  uniqueAvatar: (big = false, placement = '', cssClass = '') ->
-    if big
-      cssClass += ' big'
+  uniqueAvatar: (size = 40, placement = '', cssClass = '') ->
+    if size and !cssClass
+      cssClass += " size-#{ size }"
 
     width  = 300
     height = 226
-    size   = if big then 50 else 40
+    size = parseInt(size, 10)
 
     rng = new Math.seedrandom(@id)
     x = rng() * (width - size)

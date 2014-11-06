@@ -39,7 +39,7 @@
     <% else: %>
     <%    position = 'right' %>
     <% end %>
-    <%- article.created_by.avatar(false, position) %>
+    <%- article.created_by.avatar("40", position) %>
     <div class="flex bubble-gap internal-border">
       <div class="text-bubble"><div class="bubble-arrow"></div><%- article.html %></div>
     </div>

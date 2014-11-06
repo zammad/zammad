@@ -24,7 +24,10 @@ class Content extends App.ControllerContent
 
     for avatar in @$('.user.avatar')
       avatar = $(avatar)
-      size = if avatar.hasClass('big') then 50 else 40
+      size = switch 
+        when avatar.hasClass('size-80') then 80 
+        when avatar.hasClass('size-50') then 50
+        else 40
       @createUniqueAvatar avatar, size, avatar.data('firstname'), avatar.data('lastname'), avatar.data('userid')
 
   createUniqueAvatar: (holder, size, firstname, lastname, id) ->
@@ -575,5 +578,16 @@ class ImportWizard extends App.ControllerContent
     @html App.view('layout_ref/import_wizard')()
 
 App.Config.set( 'layout_ref/import_wizard', ImportWizard, 'Routes' )
+
+class UserZoom extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/user_zoom')()
+
+App.Config.set( 'layout_ref/user_zoom', UserZoom, 'Routes' )
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
