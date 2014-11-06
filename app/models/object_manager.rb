@@ -4,14 +4,26 @@ class ObjectManager
 
 =begin
 
-add a new activity entry for an object
+list all backend managed object
 
   ObjectManager.listObjects()
 
 =end
 
   def self.listObjects
-    ['Ticket', 'TicketArticle', 'User', 'Organization' ] #, 'Group' ]
+    ['Ticket', 'TicketArticle', 'User', 'Organization', 'Group' ]
+  end
+
+=begin
+
+list all frontend managed object
+
+  ObjectManager.listFrontendObjects()
+
+=end
+
+  def self.listFrontendObjects
+    ['Ticket', 'User', 'Organization' ] #, 'Group' ]
   end
 
 end
