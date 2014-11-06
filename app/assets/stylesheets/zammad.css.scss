@@ -1603,6 +1603,11 @@ footer {
   margin-left: 10px;
 }
 
+.vertical > .btn + .btn {
+  margin-left: 0;
+  margin-top: 10px;
+}
+
 .btn--primary,
 .btn--primary:hover,
 .btn--primary:focus {
