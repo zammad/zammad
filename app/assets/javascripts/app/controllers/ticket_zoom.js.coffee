@@ -608,6 +608,9 @@ class App.TicketZoom extends App.Controller
       done: (r) =>
         @renderDone = false
 
+        # reset article - should not be resubmited on next ticket update
+        ticket.article = undefined
+
         # reset form after save
         @taskReset()
 
@@ -673,6 +676,10 @@ class TicketTitle extends App.Controller
     # update title
     if title isnt @ticket.title
       @ticket.title = title
+
+      # reset article - should not be resubmited on next ticket update
+      @ticket.article = undefined
+
       @ticket.save()
 
       # update taskbar with new meta data
