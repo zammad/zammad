@@ -20,6 +20,9 @@ returns
     # return if we run import mode
     return if Setting.get('import_mode')
 
+    # return if we run on init mode
+    return if !Setting.get('system_init_done')
+
     return if !self.class.activity_stream_support_config
     role = self.class.activity_stream_support_config[:role]
     ticket = Ticket.lookup( :id => self.ticket_id )
