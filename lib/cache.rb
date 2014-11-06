@@ -8,7 +8,11 @@ module Cache
       params[:expires_in] = 24.hours
     end
 #    puts 'Cache.write: ' + key.to_s
-    Rails.cache.write( key.to_s, data, params)
+    begin
+      Rails.cache.write( key.to_s, data, params)
+    rescue Exception => e
+      puts "NOTICE: #{e.message}"
+    end
   end
   def self.get( key )
 #    puts 'Cache.get: ' + key.to_s
@@ -17,7 +21,7 @@ module Cache
   def self.clear
 #    puts 'Cache.clear...'
     # workaround, set test cache before clear whole cache, Rails.cache.clear complains about not existing cache dir
-    Cache.write('test',1 )
+    Cache.write( 'test', 1 )
 
     Rails.cache.clear
   end
