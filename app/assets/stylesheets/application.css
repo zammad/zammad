@@ -11,7 +11,7 @@
  *= require ./bootstrap-tokenfield.css
  *= require ./noty_theme_twitter.css
  *= require ./sew.css
- *= require ./fonts/fira-sans.css
+ *= require ./fira-sans.css
  *= require ./zammad.css.scss
  *
  *= require_tree ./custom/
