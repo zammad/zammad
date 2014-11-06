@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
     @fetch()
 
   release: =>
-    @el.removeClass('fit').removeClass('getstarted')
+    @el.removeClass('fit', 'getstarted')
 
   fetch: ->
 
@@ -74,7 +74,7 @@ class Base extends App.ControllerContent
     @fetch()
 
   release: =>
-    @el.removeClass('fit').removeClass('getstarted')
+    @el.removeClass('fit', 'getstarted')
 
   fetch: ->
 
@@ -171,14 +171,14 @@ class Base extends App.ControllerContent
     @$('.base').addClass('hide')
     @$('.base-outbound').removeClass('hide')
     @$('.base-inbound').addClass('hide')
-    @$('.wizard-controls .btn').text('Check').attr('data-form', 'base-outbound').addClass('btn--primary').removeClass('btn--danger').removeClass('btn--success')
+    @$('.wizard-controls .btn').text('Check').attr('data-form', 'base-outbound').addClass('btn--primary').removeClass('btn--danger', 'btn--success')
     @enable( @$('.btn') )
 
   showInbound: =>
     @$('.base').addClass('hide')
     @$('.base-outbound').addClass('hide')
     @$('.base-inbound').removeClass('hide')
-    @$('.wizard-controls .btn').text('Check').attr('data-form', 'base-inbound').addClass('btn--primary').removeClass('btn--danger').removeClass('btn--success')
+    @$('.wizard-controls .btn').text('Check').attr('data-form', 'base-inbound').addClass('btn--primary').removeClass('btn--danger', 'btn--success')
     @enable( @$('.btn') )
 
   storeUrl: (e) =>
@@ -197,10 +197,10 @@ class Base extends App.ControllerContent
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
-          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary').removeClass('btn--danger').addClass('btn--success')
+          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary', 'btn--danger').addClass('btn--success')
           @delay( @showOutbound, 1500 )
         else
-          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary').removeClass('btn--success')
+          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary', 'btn--success')
           @enable(e)
       fail: =>
         @enable(e)
@@ -221,10 +221,10 @@ class Base extends App.ControllerContent
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
-          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary').removeClass('btn--danger').addClass('btn--success')
+          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary', 'btn--danger').addClass('btn--success')
           @delay( @showInbound, 1500 )
         else
-          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary').removeClass('btn--success')
+          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary', 'btn--success')
           @enable(e)
       fail: =>
         @enable(e)
@@ -248,10 +248,10 @@ class Base extends App.ControllerContent
       success: (data, status, xhr) =>
 
         if data.result is 'ok'
-          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary').removeClass('btn--danger').addClass('btn--success')
+          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary', 'btn--danger').addClass('btn--success')
           @delay( @goToAdmin, 1500 )
         else
-          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary').removeClass('btn--success')
+          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary', 'btn--success')
         @enable(e)
       fail: =>
         @enable(e)
@@ -289,7 +289,7 @@ class Admin extends App.ControllerContent
     @fetch()
 
   release: =>
-    @el.removeClass('fit').removeClass('getstarted')
+    @el.removeClass('fit', 'getstarted')
 
   fetch: ->
 
@@ -408,7 +408,7 @@ class Agent extends App.ControllerContent
 
 
   release: =>
-    @el.removeClass('fit').removeClass('getstarted')
+    @el.removeClass('fit', 'getstarted')
 
   fetch: ->
 
