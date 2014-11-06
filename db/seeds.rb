@@ -6,7 +6,7 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
-Setting.create_or_update(
+Setting.create_if_not_exists(
   :title       => 'System Init Done',
   :name        => 'system_init_done',
   :area        => 'Core',
@@ -275,28 +275,6 @@ Setting.create_if_not_exists(
   },
   :state       => true,
   :frontend    => true
-)
-Setting.create_if_not_exists(
-  :title       => 'Switch to User',
-  :name        => 'switch_to_user',
-  :area        => 'Security::Base',
-  :description => 'Allows the administrators to login as other users, via the users administration panel.',
-  :options     => {
-    :form => [
-      {
-        :display  => '',
-        :null     => true,
-        :name     => 'switch_to_user',
-        :tag      => 'boolean',
-        :options  => {
-          true  => 'yes',
-          false => 'no',
-        },
-      },
-    ],
-  },
-  :state    => false,
-  :frontend => true
 )
 Setting.create_if_not_exists(
   :title       => 'Authentication via OTRS',
@@ -1408,70 +1386,9 @@ Overview.create_if_not_exists(
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :view_mode_default => 's',
-  },
-)
-
-Overview.create_if_not_exists(
-  :name       => 'Unassigned & Open Tickets',
-  :link       => 'all_unassigned',
-  :prio       => 1001,
-  :role_id    => overview_role.id,
-  :condition  => {
-    'tickets.state_id' => [1,2,3],
-    'tickets.owner_id' => 1,
-  },
-  :order => {
-    :by        => 'created_at',
-    :direction => 'ASC',
-  },
-  :view => {
-    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :view_mode_default => 's',
-  },
-)
-
-Overview.create_if_not_exists(
-  :name       => 'All Open Tickets',
-  :link       => 'all_open',
-  :prio       => 1002,
-  :role_id    => overview_role.id,
-  :condition  => {
-    'tickets.state_id' => [1,2,3],
-  },
-  :order => {
-    :by        => 'created_at',
-    :direction => 'ASC',
-  },
-  :view => {
-    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :view_mode_default => 's',
-  },
-)
-
-Overview.create_if_not_exists(
-  :name       => 'Escalated Tickets',
-  :link       => 'all_escalated',
-  :prio       => 1010,
-  :role_id    => overview_role.id,
-  :condition  => {
-    'tickets.escalation_time' =>{ 'direction' => 'before', 'count'=> 5, 'area' => 'minute' },
-  },
-  :order => {
-    :by        => 'escalation_time',
-    :direction => 'ASC',
-  },
-  :view => {
-    :d => [ 'title', 'customer', 'state', 'group', 'owner', 'escalation_time' ],
-    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'owner', 'escalation_time' ],
-    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'owner', 'escalation_time' ],
+    :d => [ 'title', 'customer', 'group', 'created_at' ],
+    :s => [ 'title', 'customer', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1479,7 +1396,7 @@ Overview.create_if_not_exists(
 Overview.create_if_not_exists(
   :name       => 'My pending reached Tickets',
   :link       => 'my_pending_reached',
-  :prio       => 1020,
+  :prio       => 1010,
   :role_id    => overview_role.id,
   :condition  => {
     'tickets.state_id' => [3],
@@ -1490,30 +1407,70 @@ Overview.create_if_not_exists(
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'group', 'created_at' ],
+    :s => [ 'title', 'customer', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'created_at' ],
     :view_mode_default => 's',
   },
 )
 
 Overview.create_if_not_exists(
-  :name       => 'All Tickets',
-  :link       => 'all',
-  :prio       => 9003,
+  :name       => 'Unassigned & Open Tickets',
+  :link       => 'all_unassigned',
+  :prio       => 1020,
   :role_id    => overview_role.id,
   :condition  => {
-#      'tickets.state_id' => [3],
-#      'tickets.owner_id'        => current_user.id,
+    'tickets.state_id' => [1,2,3],
+    'tickets.owner_id' => 1,
   },
   :order => {
     :by        => 'created_at',
     :direction => 'ASC',
   },
   :view => {
-    :s => [ 'title', 'customer', 'state', 'group', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'state', 'priority', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'group', 'created_at' ],
+    :s => [ 'title', 'customer', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    :view_mode_default => 's',
+  },
+)
+
+Overview.create_if_not_exists(
+  :name       => 'All Open Tickets',
+  :link       => 'all_open',
+  :prio       => 1030,
+  :role_id    => overview_role.id,
+  :condition  => {
+    'tickets.state_id' => [1,2,3],
+  },
+  :order => {
+    :by        => 'created_at',
+    :direction => 'ASC',
+  },
+  :view => {
+    :d => [ 'title', 'customer', 'group', 'created_at' ],
+    :s => [ 'title', 'customer', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    :view_mode_default => 's',
+  },
+)
+
+Overview.create_if_not_exists(
+  :name       => 'Escalated Tickets',
+  :link       => 'all_escalated',
+  :prio       => 1040,
+  :role_id    => overview_role.id,
+  :condition  => {
+    'tickets.escalation_time' =>{ 'direction' => 'before', 'count'=> 5, 'area' => 'minute' },
+  },
+  :order => {
+    :by        => 'escalation_time',
+    :direction => 'ASC',
+  },
+  :view => {
+    :d => [ 'title', 'customer', 'group', 'owner', 'escalation_time' ],
+    :s => [ 'title', 'customer', 'group', 'owner', 'escalation_time' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'owner', 'escalation_time' ],
     :view_mode_default => 's',
   },
 )
@@ -1534,8 +1491,8 @@ Overview.create_if_not_exists(
   },
   :view => {
     :d => [ 'title', 'customer', 'state', 'created_at' ],
-    :s => [ 'number', 'title', 'state', 'priority', 'created_at' ],
-    :m => [ 'number', 'title', 'state', 'priority', 'created_at' ],
+    :s => [ 'number', 'title', 'state', 'created_at' ],
+    :m => [ 'number', 'title', 'state', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1555,8 +1512,8 @@ Overview.create_if_not_exists(
   },
   :view => {
     :d => [ 'title', 'customer', 'state', 'created_at' ],
-    :s => [ 'number', 'title', 'customer', 'state', 'priority', 'created_at' ],
-    :m => [ 'number', 'title', 'state', 'priority', 'created_at' ],
+    :s => [ 'number', 'title', 'customer', 'state', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'state', 'created_at' ],
     :view_mode_default => 's',
   },
 )
