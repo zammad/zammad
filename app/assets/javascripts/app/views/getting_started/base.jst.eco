@@ -12,19 +12,19 @@
 
 
     <form class="base-outbound hide">
-      <%- @T('E-Mail Outbound') %>
+      <h2><%- @T('E-Mail Outbound') %></h2>
       <div class="base-outbound-type"></div>
       <div class="base-outbound-settings"></div>
     </form>
 
     <form class="base-inbound hide">
-      <%- @T('E-Mail Inbound') %>
+      <h2><%- @T('E-Mail Inbound') %></h2>
       <div class="base-inbound-settings"></div>
     </form>
 
     <div class="wizard-controls horizontal center">
       <a class="subtle-link" href="#getting_started"><%- @T('Go Back') %></a>
-      <div class="btn btn--primary js-next align-right" data-form="base"><%- @T('Update') %></div>
+      <div class="btn btn--primary js-next align-right" data-form="base"><%- @T('Next') %></div>
     </div>
 
   </div>
