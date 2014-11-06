@@ -270,7 +270,6 @@ class CreateObjectManager < ActiveRecord::Migration
             :item_class => 'column',
           },
         },
-        :create_web => {},
         :edit => {
           :Agent => {
             :null => false,
@@ -302,7 +301,6 @@ class CreateObjectManager < ActiveRecord::Migration
             :null => true,
           },
         },
-        :create_web => {},
         :edit => {},
       },
       :pending_migration  => false,
@@ -326,11 +324,6 @@ class CreateObjectManager < ActiveRecord::Migration
       :active             => true,
       :screens            => {
         :create_top => {
-          '-all-' => {
-            :null => false,
-          },
-        },
-        :create_web => {
           '-all-' => {
             :null => false,
           },
@@ -359,7 +352,7 @@ class CreateObjectManager < ActiveRecord::Migration
       :editable           => false,
       :active             => true,
       :screens            => {
-        :create_top => {},
+        :create_middle => {},
         :edit => {
           :Agent => {
             :null => false,
@@ -388,7 +381,7 @@ class CreateObjectManager < ActiveRecord::Migration
       :editable           => false,
       :active             => true,
       :screens            => {
-        :create_top => {},
+        :create_middle => {},
         :edit => {
           :Agent => {
             :null => false,
@@ -414,12 +407,13 @@ class CreateObjectManager < ActiveRecord::Migration
       :editable           => false,
       :active             => true,
       :screens            => {
-        :create_top => {},
+        :create_middle => {},
         :edit => {
           :Agent => {
             :null => true,
           },
-        },      },
+        },
+      },
       :pending_migration  => false,
       :position           => 300,
       :created_by_id      => 1,
@@ -445,12 +439,13 @@ class CreateObjectManager < ActiveRecord::Migration
             :null => true,
           }
         },
-        :create_web => {},
+        :create_middle => {},
         :edit => {
           :Agent => {
             :null => true,
           },
-        },      },
+        },
+      },
       :pending_migration  => false,
       :position           => 400,
       :created_by_id      => 1,

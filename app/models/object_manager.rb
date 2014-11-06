@@ -11,7 +11,7 @@ add a new activity entry for an object
 =end
 
   def self.listObjects
-    ['Ticket', 'User', 'Organization' ] #, 'Group' ]
+    ['Ticket', 'TicketArticle', 'User', 'Organization' ] #, 'Group' ]
   end
 
 end
