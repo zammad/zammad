@@ -59,10 +59,9 @@ if ARGV[0] != 'start' && ARGV[0] != 'stop'
   exit;
 end
 
-puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s },pid:#{@options[:i].to_s})"
-#puts options.inspect
-
 if ARGV[0] == 'stop'
+  puts "Stopping websocket server"
+
 
   # read pid
   pid =File.open( @options[:i].to_s  ).read
@@ -72,6 +71,7 @@ if ARGV[0] == 'stop'
   Process.kill( 9, pid.to_i )
   exit
 end
+puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s },pid:#{@options[:i].to_s})"
 if ARGV[0] == 'start'  && @options[:d]
 
   Daemons.daemonize
