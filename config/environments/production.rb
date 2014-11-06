@@ -20,8 +20,8 @@ Zammad::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
-  # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  # Set uglifier as JS and sass as CSS compressor
+  config.assets.js_compressor  = :uglifier
   # config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
@@ -30,17 +30,17 @@ Zammad::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  # Version of your assets, change this if you want to expire all your assets.
+  # Version of your assets, change this if you want to expire all your assets
   config.assets.version = '1.0'
 
   # Specifies the header that your server uses for sending files
-  # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
+  # config.action_dispatch.x_sendfile_header = "X-Sendfile"       # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies
   # config.force_ssl = true
 
-  # See everything in the log (default is :info)
+  # Define the log level (default is :info, to see all use :debug)
   # config.log_level = :debug
   config.log_level = :info
 
@@ -69,12 +69,12 @@ Zammad::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Disable automatic flushing of the log to improve performance.
+  # Disable automatic flushing of the log to improve performance
   # config.autoflush_log = false
 
-  # autoload on
+  # Enable autoload
   config.dependency_loading = true
 
-  # Use default logging formatter so that PID and timestamp are not suppressed.
+  # Use default logging formatter so that PID and timestamp are not suppressed
   config.log_formatter = ::Logger::Formatter.new
 end

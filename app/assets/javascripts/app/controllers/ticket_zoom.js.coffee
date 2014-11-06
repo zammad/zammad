@@ -241,6 +241,10 @@ class TicketTitle extends App.Controller
 
     # update title
     @ticket.title = title
+
+    # reset article - should not be resubmited on next ticket update
+    ticket.article = undefined
+
     @ticket.save()
 
     # update taskbar with new meta data
@@ -579,6 +583,9 @@ class Edit extends App.Controller
     ticket.article = article
     ticket.save(
       done: (r) =>
+
+        # reset article - should not be resubmited on next ticket update
+        ticket.article = undefined
 
         # reset form after save
         App.TaskManager.update( @task_key, { 'state': {} })

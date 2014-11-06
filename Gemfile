@@ -91,5 +91,7 @@ end
 
 # to generate doc
 gem 'kramdown'
+gem 'prawn'
+gem 'prawn-table'
 
 gem 'puma'
