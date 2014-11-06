@@ -6,6 +6,15 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
+Setting.create_or_update(
+  :title       => 'System Init Done',
+  :name        => 'system_init_done',
+  :area        => 'Core',
+  :description => 'Defines if application is in init mode.',
+  :options     => {},
+  :state       => false,
+  :frontend    => true
+)
 Setting.create_if_not_exists(
   :title       => 'Product Name',
   :name        => 'product_name',

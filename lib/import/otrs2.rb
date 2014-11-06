@@ -177,11 +177,11 @@ module Import::OTRS2
   return
 
      {
-        :Ticket     => {
+        :Ticket => {
           :total => 1234,
           :done  => 13,
         },
-        :Base     => {
+        :Base   => {
           :total => 1234,
           :done  => 13,
         },
@@ -221,9 +221,6 @@ module Import::OTRS2
   def self.start
     puts 'Start import...'
 
-#    # set system in import mode
-#    Setting.set('import_mode', true)
-
     # check if system is in import mode
     if !Setting.get('import_mode')
       raise "System is not in import mode!"
@@ -252,7 +249,7 @@ module Import::OTRS2
 
     # create customers
     count = 0
-    steps = 20
+    steps = 30
     run   = true
     while run
         count += steps
@@ -266,10 +263,10 @@ module Import::OTRS2
     end
 
     Thread.abort_on_exception = true
-    thread_count = 4
+    thread_count = 8
     threads = {}
     count = 0
-    locks = {}
+    locks = { :User => {} }
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
         sleep thread * 3
@@ -278,10 +275,12 @@ module Import::OTRS2
         steps = 20
         while run
           count += steps
-          #sleep 2
-          #puts "Limit=#{steps};Offset=#{count}"
+          sleep 1
           puts "loading... thread# #{thread} ..."
-          #result = request_json( ";Subaction=Export;Object=Ticket;Limit=#{steps};Offset=#{count-steps}", 1) #;Count=100;Offset=#{count}" )
+          offset = count-steps
+          if offset != 0
+            offset = count - steps + 1
+          end
           records = load( 'Ticket', steps, count-steps )
           if !records || !records[0]
             puts "... thread# #{thread}, no more work."
@@ -297,8 +296,9 @@ module Import::OTRS2
     }
 
     Setting.set( 'system_init_done', true )
+    #Setting.set( 'import_mode', false )
 
-    return
+    true
   end
 
   def self.diff_worker
@@ -312,7 +312,7 @@ module Import::OTRS2
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-        raise "System is not in import mode!"
+      raise "System is not in import mode!"
     end
 
     # create states
@@ -327,7 +327,7 @@ module Import::OTRS2
     # create agents
     user
 
-    self.ticket_diff()
+    self.ticket_diff
 
     return
   end
@@ -402,292 +402,285 @@ module Import::OTRS2
 
     result.each {|record|
 
-      # use transaction
-      ActiveRecord::Base.transaction do
+      ticket_new = {
+        :title         => '',
+        :created_by_id => 1,
+        :updated_by_id => 1,
+      }
+      map[:Ticket].each { |key,value|
+        if record[key.to_s] && record[key.to_s].class == String
+          ticket_new[value] = Encode.conv( 'utf8', record[key.to_s] )
+        else
+          ticket_new[value] = record[key.to_s]
+        end
+      }
+      ticket_old = Ticket.where( :id => ticket_new[:id] ).first
 
-        ticket_new = {
-          :title         => '',
+      # find owner
+      if ticket_new[:owner]
+        user = User.lookup( :login => ticket_new[:owner] )
+        if user
+          ticket_new[:owner_id] = user.id
+        else
+          ticket_new[:owner_id] = 1
+        end
+        ticket_new.delete(:owner)
+      end
+
+      # find customer
+      if ticket_new[:customer]
+        user = User.lookup( :login => ticket_new[:customer] )
+        if user
+          ticket_new[:customer_id] = user.id
+        else
+          ticket_new[:customer_id] =  1
+        end
+        ticket_new.delete(:customer)
+      else
+        ticket_new[:customer_id] = 1
+      end
+
+      # set state types
+      if ticket_old
+        puts "update Ticket.find(#{ticket_new[:id]})"
+        ticket_old.update_attributes(ticket_new)
+      else
+        puts "add Ticket.find(#{ticket_new[:id]})"
+        ticket = Ticket.new(ticket_new)
+        ticket.id = ticket_new[:id]
+        ticket.save
+      end
+
+      record['Articles'].each { |article|
+
+        # get article values
+        article_new = {
           :created_by_id => 1,
           :updated_by_id => 1,
         }
-        map[:Ticket].each { |key,value|
-          if record[key.to_s] && record[key.to_s].class == String
-            ticket_new[value] = Encode.conv( 'utf8', record[key.to_s] )
-          else
-            ticket_new[value] = record[key.to_s]
+        map[:Article].each { |key,value|
+          if article[key.to_s]
+            article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
           end
         }
-#      puts key.to_s
-#      puts value.to_s
-#puts 'new ticket data ' + ticket_new.inspect
-    # check if state already exists
-        ticket_old = Ticket.where( :id => ticket_new[:id] ).first
-#puts 'TICKET OLD ' + ticket_old.inspect
 
-        # find owner
-        if ticket_new[:owner]
-          user = User.lookup( :login => ticket_new[:owner] )
-          if user
-            ticket_new[:owner_id] = user.id
-          else
-            ticket_new[:owner_id] = 1
-          end
-          ticket_new.delete(:owner)
-        end
+        # create customer/sender if needed
+        if article_new[:sender] == 'customer' && article_new[:created_by_id].to_i == 1 && !article_new[:from].empty?
 
-        # find customer
-        if ticket_new[:customer]
-          user = User.lookup( :login => ticket_new[:customer] )
-          if user
-            ticket_new[:customer_id] = user.id
-          else
-            ticket_new[:customer_id] =  1
-          end
-          ticket_new.delete(:customer)
-        else
-          ticket_new[:customer_id] = 1
-        end
-#    puts 'ttt' + ticket_new.inspect
-        # set state types
-        if ticket_old
-          puts "update Ticket.find(#{ticket_new[:id]})"
-          ticket_old.update_attributes(ticket_new)
-        else
-          puts "add Ticket.find(#{ticket_new[:id]})"
-          ticket = Ticket.new(ticket_new)
-          ticket.id = ticket_new[:id]
-          ticket.save
-        end
-
-        record['Articles'].each { |article|
-
-          # get article values
-          article_new = {
-            :created_by_id => 1,
-            :updated_by_id => 1,
-          }
-          map[:Article].each { |key,value|
-            if article[key.to_s]
-              article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
+          email = nil
+          begin
+            email = Mail::Address.new( article_new[:from] ).address
+          rescue
+            email = article_new[:from]
+            if article_new[:from] =~ /<(.+?)>/
+              email = $1
             end
-          }
-          # create customer/sender if needed
-          if article_new[:sender] == 'customer' && article_new[:created_by_id].to_i == 1 && !article_new[:from].empty?
-            # set extra headers
+          end
+
+          # create article user if not exists
+          while locks[:User][ email ]
+            puts "user #{email} is locked"
+            sleep 1
+          end
+
+          # lock user
+          locks[:User][ email ] = true
+
+          user = User.where( :email => email ).first
+          if !user
+            user = User.where( :login => email ).first
+          end
+          if !user
             begin
-              email = Mail::Address.new( article_new[:from] ).address
+              display_name = Mail::Address.new( article_new[:from] ).display_name ||
+                ( Mail::Address.new( article_new[:from] ).comments && Mail::Address.new( article_new[:from] ).comments[0] )
             rescue
-              email = article_new[:from]
-              if article_new[:from] =~ /<(.+?)>/
-                email = $1
-              end
+              display_name = article_new[:from]
             end
-            user = User.where( :email => email ).first
-            if !user
-              user = User.where( :login => email ).first
-            end
-            if !user
 
-              # create article user if not exists
-              while locks[ email ]
-                puts "user #{email} is locked"
-                sleep 1
-              end
-              locks[ email ] = true
+            # do extra decoding because we needed to use field.value
+            display_name = Mail::Field.new( 'X-From', display_name ).to_s
 
-              begin
-                display_name = Mail::Address.new( article_new[:from] ).display_name ||
-                  ( Mail::Address.new( article_new[:from] ).comments && Mail::Address.new( article_new[:from] ).comments[0] )
-              rescue
-                display_name = article_new[:from]
-              end
-
-              # do extra decoding because we needed to use field.value
-              display_name = Mail::Field.new( 'X-From', display_name ).to_s
-
-              roles = Role.lookup( :name => 'Customer' )
-              user = User.create(
-                :login          => email,
-                :firstname      => display_name,
-                :lastname       => '',
-                :email          => email,
-                :password       => '',
-                :active         => true,
-                :role_ids       => [roles.id],
-                :updated_by_id  => 1,
-                :created_by_id  => 1,
-              )
-              locks[ email ] = false
-            end
-            article_new[:created_by_id] = user.id
-          end
-
-          if article_new[:sender] == 'customer'
-            article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Customer' ).id
-            article_new.delete( :sender )
-          end
-          if article_new[:sender] == 'agent'
-            article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Agent' ).id
-            article_new.delete( :sender )
-          end
-          if article_new[:sender] == 'system'
-            article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'System' ).id
-            article_new.delete( :sender )
-          end
-
-          if article_new[:type] == 'email-external'
-            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
-            article_new[:internal] = false
-          elsif article_new[:type] == 'email-internal'
-            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
-            article_new[:internal] = true
-          elsif article_new[:type] == 'note-external'
-            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
-            article_new[:internal] = false
-          elsif article_new[:type] == 'note-internal'
-            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
-            article_new[:internal] = true
-          elsif article_new[:type] == 'phone'
-            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'phone' ).id
-            article_new[:internal] = false
-          elsif article_new[:type] == 'webrequest'
-            article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'web' ).id
-            article_new[:internal] = false
-          else
-            article_new[:type_id] = 9
-          end
-          article_new.delete( :type )
-          article_old = Ticket::Article.where( :id => article_new[:id] ).first
-    #puts 'ARTICLE OLD ' + article_old.inspect
-          # set state types
-          if article_old
-            puts "update Ticket::Article.find(#{article_new[:id]})"
-    #        puts article_new.inspect
-            article_old.update_attributes(article_new)
-          else
-            puts "add Ticket::Article.find(#{article_new[:id]})"
-            article = Ticket::Article.new(article_new)
-            article.id = article_new[:id]
-            article.save
-          end
-
-        }
-
-        record['History'].each { |history|
-    #      puts '-------'
-    #      puts history.inspect
-          if history['HistoryType'] == 'NewTicket'
-            History.add(
-              :id                 => history['HistoryID'],
-              :o_id               => history['TicketID'],
-              :history_type       => 'created',
-              :history_object     => 'Ticket',
-              :created_at         => history['CreateTime'],
-              :created_by_id      => history['CreateBy']
+            roles = Role.lookup( :name => 'Customer' )
+            user = User.create(
+              :login          => email,
+              :firstname      => display_name,
+              :lastname       => '',
+              :email          => email,
+              :password       => '',
+              :active         => true,
+              :role_ids       => [roles.id],
+              :updated_by_id  => 1,
+              :created_by_id  => 1,
             )
           end
-          if history['HistoryType'] == 'StateUpdate'
-            data = history['Name']
-            # "%%new%%open%%"
-            from = nil
-            to   = nil
-            if data =~ /%%(.+?)%%(.+?)%%/
-              from    = $1
-              to      = $2
-              state_from = Ticket::State.lookup( :name => from )
-              state_to   = Ticket::State.lookup( :name => to )
-              if state_from
-                from_id = state_from.id
-              end
-              if state_to
-                to_id = state_to.id
-              end
+          article_new[:created_by_id] = user.id
+
+          # unlock user
+          locks[:User][ email ] = false
+        end
+
+        if article_new[:sender] == 'customer'
+          article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Customer' ).id
+          article_new.delete( :sender )
+        end
+        if article_new[:sender] == 'agent'
+          article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Agent' ).id
+          article_new.delete( :sender )
+        end
+        if article_new[:sender] == 'system'
+          article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'System' ).id
+          article_new.delete( :sender )
+        end
+
+        if article_new[:type] == 'email-external'
+          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
+          article_new[:internal] = false
+        elsif article_new[:type] == 'email-internal'
+          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
+          article_new[:internal] = true
+        elsif article_new[:type] == 'note-external'
+          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
+          article_new[:internal] = false
+        elsif article_new[:type] == 'note-internal'
+          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
+          article_new[:internal] = true
+        elsif article_new[:type] == 'phone'
+          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'phone' ).id
+          article_new[:internal] = false
+        elsif article_new[:type] == 'webrequest'
+          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'web' ).id
+          article_new[:internal] = false
+        else
+          article_new[:type_id] = 9
+        end
+        article_new.delete( :type )
+        article_old = Ticket::Article.where( :id => article_new[:id] ).first
+
+        # set state types
+        if article_old
+          puts "update Ticket::Article.find(#{article_new[:id]})"
+          article_old.update_attributes(article_new)
+        else
+          puts "add Ticket::Article.find(#{article_new[:id]})"
+          article = Ticket::Article.new(article_new)
+          article.id = article_new[:id]
+          article.save
+        end
+
+      }
+
+      record['History'].each { |history|
+        if history['HistoryType'] == 'NewTicket'
+          History.add(
+            :id                 => history['HistoryID'],
+            :o_id               => history['TicketID'],
+            :history_type       => 'created',
+            :history_object     => 'Ticket',
+            :created_at         => history['CreateTime'],
+            :created_by_id      => history['CreateBy']
+          )
+        end
+        if history['HistoryType'] == 'StateUpdate'
+          data = history['Name']
+          # "%%new%%open%%"
+          from = nil
+          to   = nil
+          if data =~ /%%(.+?)%%(.+?)%%/
+            from    = $1
+            to      = $2
+            state_from = Ticket::State.lookup( :name => from )
+            state_to   = Ticket::State.lookup( :name => to )
+            if state_from
+              from_id = state_from.id
             end
-    #        puts "STATE UPDATE (#{history['HistoryID']}): -> #{from}->#{to}"
-            History.add(
-              :id                 => history['HistoryID'],
-              :o_id               => history['TicketID'],
-              :history_type       => 'updated',
-              :history_object     => 'Ticket',
-              :history_attribute  => 'state',
-              :value_from         => from,
-              :id_from            => from_id,
-              :value_to           => to,
-              :id_to              => to_id,
-              :created_at         => history['CreateTime'],
-              :created_by_id      => history['CreateBy']
-            )
-          end
-          if history['HistoryType'] == 'Move'
-            data = history['Name']
-            # "%%Queue1%%5%%Postmaster%%1"
-            from = nil
-            to   = nil
-            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-              from    = $1
-              from_id = $2
-              to      = $3
-              to_id   = $4
+            if state_to
+              to_id = state_to.id
             end
-            History.add(
-              :id                 => history['HistoryID'],
-              :o_id               => history['TicketID'],
-              :history_type       => 'updated',
-              :history_object     => 'Ticket',
-              :history_attribute  => 'group',
-              :value_from         => from,
-              :value_to           => to,
-              :id_from            => from_id,
-              :id_to              => to_id,
-              :created_at         => history['CreateTime'],
-              :created_by_id      => history['CreateBy']
-            )
           end
-          if history['HistoryType'] == 'PriorityUpdate'
-            data = history['Name']
-            # "%%3 normal%%3%%5 very high%%5"
-            from = nil
-            to   = nil
-            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-              from    = $1
-              from_id = $2
-              to      = $3
-              to_id   = $4
-            end
-            History.add(
-              :id                 => history['HistoryID'],
-              :o_id               => history['TicketID'],
-              :history_type       => 'updated',
-              :history_object     => 'Ticket',
-              :history_attribute  => 'priority',
-              :value_from         => from,
-              :value_to           => to,
-              :id_from            => from_id,
-              :id_to              => to_id,
-              :created_at         => history['CreateTime'],
-              :created_by_id      => history['CreateBy']
-            )
+          History.add(
+            :id                 => history['HistoryID'],
+            :o_id               => history['TicketID'],
+            :history_type       => 'updated',
+            :history_object     => 'Ticket',
+            :history_attribute  => 'state',
+            :value_from         => from,
+            :id_from            => from_id,
+            :value_to           => to,
+            :id_to              => to_id,
+            :created_at         => history['CreateTime'],
+            :created_by_id      => history['CreateBy']
+          )
+        end
+        if history['HistoryType'] == 'Move'
+          data = history['Name']
+          # "%%Queue1%%5%%Postmaster%%1"
+          from = nil
+          to   = nil
+          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+            from    = $1
+            from_id = $2
+            to      = $3
+            to_id   = $4
           end
-          if history['ArticleID'] && history['ArticleID'] != 0
-            History.add(
-              :id                 => history['HistoryID'],
-              :o_id               => history['ArticleID'],
-              :history_type       => 'created',
-              :history_object     => 'Ticket::Article',
-              :related_o_id       => history['TicketID'],
-              :related_history_object => 'Ticket',
-              :created_at         => history['CreateTime'],
-              :created_by_id      => history['CreateBy']
-            )
+          History.add(
+            :id                 => history['HistoryID'],
+            :o_id               => history['TicketID'],
+            :history_type       => 'updated',
+            :history_object     => 'Ticket',
+            :history_attribute  => 'group',
+            :value_from         => from,
+            :value_to           => to,
+            :id_from            => from_id,
+            :id_to              => to_id,
+            :created_at         => history['CreateTime'],
+            :created_by_id      => history['CreateBy']
+          )
+        end
+        if history['HistoryType'] == 'PriorityUpdate'
+          data = history['Name']
+          # "%%3 normal%%3%%5 very high%%5"
+          from = nil
+          to   = nil
+          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+            from    = $1
+            from_id = $2
+            to      = $3
+            to_id   = $4
           end
-        }
-      end
+          History.add(
+            :id                 => history['HistoryID'],
+            :o_id               => history['TicketID'],
+            :history_type       => 'updated',
+            :history_object     => 'Ticket',
+            :history_attribute  => 'priority',
+            :value_from         => from,
+            :value_to           => to,
+            :id_from            => from_id,
+            :id_to              => to_id,
+            :created_at         => history['CreateTime'],
+            :created_by_id      => history['CreateBy']
+          )
+        end
+        if history['ArticleID'] && history['ArticleID'] != 0
+          History.add(
+            :id                 => history['HistoryID'],
+            :o_id               => history['ArticleID'],
+            :history_type       => 'created',
+            :history_object     => 'Ticket::Article',
+            :related_o_id       => history['TicketID'],
+            :related_history_object => 'Ticket',
+            :created_at         => history['CreateTime'],
+            :created_by_id      => history['CreateBy']
+          )
+        end
+      }
     }
   end
 
-  def self.state(records)
+  # sync ticket states
 
-#    puts records.inspect
+  def self.state(records)
     map = {
       :ChangeTime   => :updated_at,
       :CreateTime   => :created_at,
@@ -699,7 +692,7 @@ module Import::OTRS2
       :Comment      => :note,
     };
 
-    # rename states to get not uniq issues
+    # rename states to handle not uniq issues
     Ticket::State.all.each {|state|
       state.name = state.name + '_tmp'
       state.save
@@ -739,6 +732,8 @@ module Import::OTRS2
       end
     }
   end
+
+  # sync ticket priorities
 
   def self.priority(records)
 
@@ -781,6 +776,8 @@ module Import::OTRS2
     }
   end
 
+  # sync ticket groups / queues
+
   def self.ticket_group(records)
     map = {
       :ChangeTime   => :updated_at,
@@ -820,6 +817,9 @@ module Import::OTRS2
       end
     }
   end
+
+  # sync agents
+
   def self.user(records)
 
     map = {
@@ -838,11 +838,10 @@ module Import::OTRS2
       :UserPw        => :password,
     };
 
+    role = Role.lookup( :name => 'Agent' )
     records.each { |user|
-#      puts 'USER: ' + user.inspect
       _set_valid(user)
 
-      role = Role.lookup( :name => 'Agent' )
       # get new attributes
       user_new = {
         :created_by_id => 1,
@@ -859,25 +858,30 @@ module Import::OTRS2
       if user_new[:password]
         user_new[:password] = "{sha2}#{user_new[:password]}"
       end
-      # check if state already exists
-#        user_old = User.where( :login => user_new[:login] ).first
+      # check if agent already exists
       user_old = User.where( :id => user_new[:id] ).first
 
-      # set state types
+      # create / update agent
       if user_old
-        puts "update User.find(#{user_new[:id]})"
-#          puts 'Update User' + user_new.inspect
-        user_new.delete( :role_ids )
+        puts "update User.find(#{user_old[:id]})"
+
+        # only update roles if different (reduce sql statements)
+        if user_old.role_ids == user_new[:role_ids]
+          user_new.delete( :role_ids )
+        end
+
         user_old.update_attributes(user_new)
       else
         puts "add User.find(#{user_new[:id]})"
-#          puts 'Add User' + user_new.inspect
         user = User.new(user_new)
         user.id = user_new[:id]
         user.save
       end
     }
   end
+
+  # sync customers
+
   def self.customer(records)
     map = {
       :ChangeTime    => :updated_at,
@@ -901,17 +905,18 @@ module Import::OTRS2
       :UserCountry   => :country,
     };
 
+    role_agent    = Role.lookup( :name => 'Agent' )
+    role_customer = Role.lookup( :name => 'Customer' )
+
     records.each { |user|
       _set_valid(user)
-puts "CUser #{user.inspect}"
-      role = Role.lookup( :name => 'Customer' )
 
       # get new attributes
       user_new = {
         :created_by_id => 1,
         :updated_by_id => 1,
         :source        => 'OTRS Import',
-        :role_ids      => [role.id],
+        :role_ids      => [ role_customer.id ],
       }
       map.each { |key,value|
         if user[key.to_s]
@@ -919,17 +924,23 @@ puts "CUser #{user.inspect}"
         end
       }
 
-      # check if state already exists
-#        user_old = User.where( :login => user_new[:login] ).first
+      # check if customer already exists
       user_old = User.where( :login => user_new[:login] ).first
 
-      # set state types
+      # create / update agent
       if user_old
-        puts "update User.find(#{user_new[:id]})"
-#          puts 'Update User' + user_new.inspect
-        user_old.update_attributes(user_new)
+
+        # do not update user if it is already agent
+        if !user_old.role_ids.include?( role_agent.id )
+
+          # only update roles if different (reduce sql statements)
+          if user_old.role_ids == user_new[:role_ids]
+            user_new.delete( :role_ids )
+          end
+          puts "update User.find(#{user_old[:id]})"
+          user_old.update_attributes(user_new)
+        end
       else
-#          puts 'Add User' + user_new.inspect
         puts "add User.find(#{user_new[:id]})"
         user = User.new(user_new)
         user.save
@@ -937,18 +948,20 @@ puts "CUser #{user.inspect}"
     }
   end
 
+  # set translate valid ids to active = true|false
+
   def self._set_valid(record)
       # map
-      if record['ValidID'] == '3'
+      if record['ValidID'].to_s == '3'
         record['ValidID'] = '2'
       end
-      if record['ValidID'] == '2'
+      if record['ValidID'].to_s == '2'
         record['ValidID'] = false
       end
-      if record['ValidID'] == '1'
+      if record['ValidID'].to_s == '1'
         record['ValidID'] = true
       end
-      if record['ValidID'] == '0'
+      if record['ValidID'].to_s == '0'
         record['ValidID'] = false
       end
   end

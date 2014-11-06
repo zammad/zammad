@@ -8,7 +8,7 @@ class Index extends App.Controller
       return
 
     # check if import is active
-    if @Config.get('import_mode')
+    if !@Config.get('system_init_done') && @Config.get('import_mode')
       @navigate '#import'
       return
 
