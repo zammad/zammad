@@ -32,7 +32,7 @@
     </div>
     <div class="page-header horizontal">
       <div class="flex vertical center">
-        <span class="avatar unique user-popover  big" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
+        <span class="avatar unique user-popover size-50" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
         <div class="ticket-title">
           <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
         </div>

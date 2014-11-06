@@ -11,13 +11,13 @@
 </div>
 <div class="avatar-gallery horizontal wrap">
   <div class="avatar-holder">
-    <%- App.Session.get().uniqueAvatar(true) %>
+    <%- App.Session.get().uniqueAvatar("50") %>
   </div>
   <div class="avatar-holder">
-    <%- App.Session.get().avatar(true, undefined, 'is-active') %>
+    <%- App.Session.get().avatar("50", undefined, 'is-active') %>
     <div class="avatar-delete"><div class="delete icon"></div></div>
   </div>
   <!-- <div class="active">
-    <div class="big avatar avatar--new centered"><div class="white plus icon"></div></div>
+    <div class="size-50 avatar avatar--new centered"><div class="white plus icon"></div></div>
   </div> -->
 </div>

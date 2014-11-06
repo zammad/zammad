@@ -5,12 +5,13 @@ body {
   background: hsl(210,17%,98%);
 }
 
-ol,
+p, 
+ol, 
 ul {
+  color: #bcbcbb;
 }
 
 p {
-  color: #bcbcbb;
   margin: 14px 0;
 }
 
@@ -2100,9 +2101,14 @@ footer {
   vertical-align: bottom;
 }
 
-  .big.avatar {
+  .avatar.size-50 {
     width: 50px;
     height: 50px;
+  }
+
+  .avatar.size-80 {
+    width: 82px;
+    height: 82px;
   }
 
   .unique.avatar {
@@ -2117,9 +2123,14 @@ footer {
     text-shadow: 0 1px rgba(0,0,0,.2);
   }
 
-  .unique.big.avatar {
+  .unique.avatar.size-50 {
     font-size: 16px;
     line-height: 52px;
+  }
+
+  .unique.avatar.size-80 {
+    font-size: 20px;
+    line-height: 84px;
   }
 
 .sidebar {

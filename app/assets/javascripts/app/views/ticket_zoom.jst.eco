@@ -25,7 +25,7 @@
         </div>
         <div class="page-header horizontal">
           <div class="flex vertical center">
-            <%- @ticket.customer.avatar(true) %>
+            <%- @ticket.customer.avatar("50") %>
             <div class="ticket-title"></div>
             <div class="ticket-meta"></div>
           </div>
