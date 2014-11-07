@@ -1,4 +1,4 @@
-<div class="dropdown dropup actions">
+<div class="dropdown dropup dropdown--actions">
   <button class="btn" data-toggle="dropdown"><%- @T('Action') %> <span class="caret"></span></button>
   <ul class="dropdown-menu">
     <% for item in @items: %>

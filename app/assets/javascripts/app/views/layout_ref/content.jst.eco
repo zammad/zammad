@@ -71,7 +71,7 @@
 
             <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
               <input id="customer_id_autocompletion2" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organisation/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-              <span class="caret"></span>
+              <span class="select-arrow icon"></span>
             </div>
 
             <div class="dropdown-menu" aria-labelledby="customer_id">

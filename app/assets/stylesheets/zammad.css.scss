@@ -15,8 +15,13 @@ p {
   margin: 14px 0;
 }
 
+.u-highlight {
+  color: hsl(194,90%,45%);
+}
+
 a {
   outline: none !important;
+  @extend .u-highlight;
 }
 
 a.create {
@@ -27,10 +32,6 @@ a.create {
 small {
   color: #c6c6c5;
   font-size: 12px;
-}
-
-.u-highlight {
-  color: hsl(194,90%,45%);
 }
 
 .u-unclickable {
@@ -528,7 +529,7 @@ textarea,
     padding-right: 10px;
   }
 
-  select.form-control + .select-arrow  {
+  .form-control + .select-arrow  {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -759,12 +760,15 @@ ol.tabs li {
   }
 
   .wide-tabs {
-    width: 60%;
     margin: 25px auto 20px;
     font-size: 15px;
     font-weight: 300;
     background: white;
     border-radius: 8px;
+  }
+
+  .dashboard .wide-tabs {
+    width: 60%;
   }
 
   .wide-tabs .tab:first-child {
@@ -1304,6 +1308,7 @@ ol.tabs li {
     width: 12px;
     height: 7px;
     background-position: -81px -308px;
+    margin-top: -2px;
   }
 
   .dark.group.icon {
@@ -1690,29 +1695,35 @@ footer {
   overflow: auto;
 }
 
-  .tasks.tasks-standalone {
+  .tasks.tasks--standalone {
     background: none;
     margin-top: 8px;
   }
 
-    .tasks-standalone .task {
+    .tasks--standalone .task {
       padding: 0;
       margin-bottom: 9px;
+      @extend .horizontal;
     }
 
-    .tasks-standalone .icon-holder {
+    .tasks-standalone .name {
+      @extend .u-highlight;
+      @extend .u-textTruncate;
+    }
+
+    .tasks--standalone .icon-holder {
       width: 20px;
     }
 
-    .tasks-standalone .icon-holder .icon {
+    .tasks--standalone .icon-holder .icon {
       margin-top: 4px;
     }
 
-    .tasks-standalone .time {
+    .tasks--standalone .time {
       color: hsl(198,19%,72%);
     }
 
-    .tasks-standalone .task .priority.icon:after {
+    .tasks--standalone .task .priority.icon:after {
       background: white;
     }
 
@@ -2322,10 +2333,13 @@ footer {
 
   .stat-widget {
     height: 200px;
-    margin: 7px; 
     padding: 13px;
     text-align: center;
     line-height: 20px;
+  }
+
+  .dashboard .stat-widget {
+    margin: 7px; 
     background: white;
     border: 1px solid #e5f0f5;
     border-radius: 1px;
@@ -2341,15 +2355,21 @@ footer {
 
     .stat-widget .stat-label {
       color: #444a4f;
+      @extend .u-textTruncate;
     }
 
     .stat-widget .stat-detail {
       color: #b4b7b9;
+      @extend .u-textTruncate;
     }
 
     .channel-distribution.stat-widget {
       color: #a1a4a7;
     }
+
+  .stat-graphic {
+    @extend .flex, .horizontal, .centered;
+  }
 
   .time.stat-widget .stat-graphic .icon {
     position: relative;
@@ -2370,17 +2390,18 @@ footer {
       left: 14px;
     }
 
-.stats-channel {
+.stats-row {
   padding: 8px 0 7px;
   margin-bottom: -7px;
   border-radius: 3px;
+  @extend .vertical, .center;
 }
 
-.stats-channel:hover {
+.stats-row:hover {
   background: rgba(0,8,14,.03);
 }
 
-  .stats-channel .channel-bars {
+  .stats-row .stat-bars {
     height: 73px;
     margin: 16px 0 15px;
     padding: 2px 12px;
@@ -2388,17 +2409,61 @@ footer {
     background: linear-gradient(to top, #f2f2f3, #f2f2f3 1px, transparent 1px);
     background-position: center bottom;
     background-size: 100% 12px;
+    @extend .horizontal, .end;
   }
 
-  .channel-bars .channel-bar {
+  .stat-bars .stat-bar {
     border-radius: 5px;
     width: 10px;
+    color: #a9bcc4;
     background: #a9bcc4;
   }
 
-  .channel-bars .channel-bar.secondary {
+  .stat-widget .secondary {
     opacity: .38;
+    color: #a9bcc4;
+    background: #a9bcc4;
   }
+
+  .stat-legend {
+    margin-top: 30px;
+    @extend .align-right, .horizontal;
+  }
+
+  .stat-legendEntry {
+    font-size: 11px;
+    line-height: 1;
+    margin-left: 20px;
+    background: none !important;
+  }
+
+  .stat-circle {
+    margin-bottom: -1px;
+    margin-right: 7px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    display: inline-block;
+  }
+
+.frequency.stat-widget {
+  .stat-bars {
+    margin-top: 0;
+  }
+
+  .stats-row {
+    margin-bottom: 0;
+  }
+
+  .stat-label {
+    color: #a1a4a7;
+  }
+
+  .primary {
+    color: hsl(145,51%,45%);
+    background: hsl(145,51%,45%);
+  }
+}
 
 .activity.sidebar {
   width: 370px;
@@ -3550,7 +3615,7 @@ footer {
 .dropdown-menu {
   margin: 0;
   padding: 0;
-  width: 100%;
+  min-width: 100%;
   color: white;
   background: none;
   border-radius: 0;
@@ -3558,6 +3623,10 @@ footer {
   box-shadow: none;
   overflow-x: hidden;
 }
+
+  .dropdown-toggle {
+    @extend .u-clickable;
+  }
 
   .dropdown ul {
     margin: 0;
@@ -3598,8 +3667,12 @@ footer {
     display: block;
   }
 
-  .dropdown.actions li {
+  .dropdown.dropdown--actions li {
     padding: 0;
+  }
+
+  .dropdown.dropdown--actions a {
+    @extend .u-clickable;
   }
 
 .recipientList,
@@ -3622,6 +3695,7 @@ footer {
   }
 
   .recipientList-name {
+    color: white;
     margin-left: 10px;
     margin-top: 2px;
   }
@@ -4081,6 +4155,103 @@ footer {
 .cropper-container {
   /* prevent cropper.js's centering – we center via flex */
   left: 0 !important;
+}
+
+.userZoom {
+  padding: 60px;
+  overflow: auto;
+  
+  h1 {
+    margin: 18px 0 0;
+  }
+
+  .tabs {
+    margin-top: 2px;
+    margin-bottom: 25px;
+  }
+}
+
+.userZoom-window {
+  background: white;
+  max-width: 660px;
+  margin: 0 auto;
+  border: 1px solid #e6e6e6;
+}
+
+.userZoom-section {
+  padding: 20px 50px;
+}
+
+.userZoom-section:not(:last-child) {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.userZoom-action {
+  margin-right: -20px;
+  
+  .dropdown-toggle {
+    margin-top: -20px;
+    margin-right: -30px;
+    margin-bottom: 8px;
+    padding: 26px 40px 2px;
+  }
+  
+  label {
+    margin: 0 10px;
+    padding: 0;
+    opacity: 0.8;
+    cursor: inherit;
+  }
+  .cog.icon {
+    opacity: 0.55;
+  }
+}
+
+.userZoom-organisation {
+  font-size: 16px;
+  @extend .u-highlight;
+}
+
+.userZoom-details {
+  margin-left: -50px;
+}
+
+.userZoom-detailsEntry {
+  margin: 8px 0;
+  padding-left: 50px;
+  width: 50%;
+}
+
+.userZoom-detailsEntry label {
+  padding: 0;
+  margin-bottom: 2px;
+  display: block;
+}
+
+.userZoom-ticketList {
+  @extend .flex;
+  
+  &:not(:last-child) {
+    margin-right: 50px;
+  }
+}
+
+.userZoom-ticketList {
+  ol {
+    padding: 0;
+  }
+
+  .name {
+    @extend .u-highlight;
+  }
+}
+
+.userZoom .frequency.stat-widget {
+  height: 230px;
+  
+  .stat-bars {
+    height: 100px;
+  }
 }
 
 

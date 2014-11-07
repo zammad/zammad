@@ -65,37 +65,37 @@
             <textarea class="form-control" id="customer-info-note" rows="5">Not assigned</textarea>
           </div>
           <label><%- @T('Tickets') %></label>
-          <ol class="tasks tasks-standalone"> <!-- vaguely based on task_widget_tasks.jst.eco -/->
-            <li class="task level-1 horizontal">
+          <ol class="tasks tasks--standalone"> <!-- vaguely based on task_widget_tasks.jst.eco -/->
+            <li class="task level-1">
               <div class="icon-holder">
                 <div class="priority icon"></div>
               </div>
               <div class="flex">
-                <div class="u-highlight name u-textTruncate">Micro-SIM doesn't work</div>
+                <div class="name">Micro-SIM doesn't work</div>
                 <div class="time">23 minutes ago</div>
               </div>
-            <li class="task level-3 horizontal">
+            <li class="task level-3">
               <div class="icon-holder">
                 <div class="priority icon"></div>
               </div>
               <div class="flex">
-                <div class="u-highlight name u-textTruncate">Superb Service!</div>
+                <div class="name">Superb Service!</div>
                 <div class="time">43 minutes ago</div>
               </div>
-            <li class="task level-2 horizontal">
+            <li class="task level-2">
               <div class="icon-holder">
                 <div class="priority icon"></div>
               </div>
               <div class="flex">
-                <div class="u-highlight name u-textTruncate">Print sheets strip off</div>
+                <div class="name">Print sheets strip off</div>
                 <div class="time">1 hour ago</div>
               </div>
-            <li class="task level-3 horizontal">
+            <li class="task level-3">
               <div class="icon-holder">
                 <div class="priority icon"></div>
               </div>
               <div class="flex">
-                <div class="u-highlight name u-textTruncate">Block not properly wrought</div>
+                <div class="name">Block not properly wrought</div>
                 <div class="time">2 hour ago</div>
               </div>
           </ol>
