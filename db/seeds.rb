@@ -1262,17 +1262,6 @@ Group.create_if_not_exists(
   :updated_by_id    => 1,
   :created_by_id    => 1
 )
-Group.create_if_not_exists(
-  :id             => 2,
-  :name           => 'Twitter',
-  :note           => 'All Tweets.',
-  :updated_by_id  => 1,
-  :created_by_id  => 1
-)
-
-roles         = Role.where( :name => 'Customer' )
-organizations = Organization.all
-groups        = Group.all
 
 user = User.create_if_not_exists(
   :login         => '-',
@@ -1281,23 +1270,26 @@ user = User.create_if_not_exists(
   :email         => '',
   :password      => 'root',
   :active        => false,
-  :roles         => roles,
-  :groups        => groups,
-  :organizations => organizations,
   :updated_by_id => 1,
   :created_by_id => 1
 )
+
 UserInfo.current_user_id = 1
-user_community = User.create_if_not_exists(
-  :login         => 'nicole.braun@zammad.org',
-  :firstname     => 'Nicole',
-  :lastname      => 'Braun',
-  :email         => 'nicole.braun@zammad.org',
-  :password      => '',
-  :active        => true,
-  :roles         => roles,
-#  :groups        => groups,
-  :organizations => organizations,
+roles         = Role.where( :name => 'Customer' )
+organizations = Organization.all
+groups        = Group.all
+org_community = Organization.create_if_not_exists(
+  :name => 'Zammad Foundation',
+)
+user_community = User.create_or_update(
+  :login           => 'nicole.braun@zammad.org',
+  :firstname       => 'Nicole',
+  :lastname        => 'Braun',
+  :email           => 'nicole.braun@zammad.org',
+  :password        => '',
+  :active          => true,
+  :roles           => roles,
+  :organization_id => org_community.id,
 )
 
 Link::Type.create_if_not_exists( :name => 'normal' )
