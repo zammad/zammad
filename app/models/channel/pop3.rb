@@ -26,9 +26,17 @@ class Channel::POP3 < Channel::EmailParser
     elsif check_type == 'verify'
       puts "verify mode, fetch no emails"
     end
+
+    mails     = @pop.mails
     count     = 0
-    count_all = @pop.mails.size
-    @pop.each_mail do |m|
+    count_all = mails.size
+
+    # reverse message order to increase performance
+    if check_type == 'verify'
+      mails.reverse!
+    end
+
+    mails.each do |m|
       count += 1
       puts " - message #{count.to_s}/#{count_all.to_s}"
 
