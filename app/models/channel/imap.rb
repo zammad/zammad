@@ -37,9 +37,17 @@ class Channel::IMAP < Channel::EmailParser
     elsif check_type == 'verify'
       puts "verify mode, fetch no emails #{verify_string}"
     end
-    count     = 0
-    count_all = @imap.search(['ALL']).count
-    @imap.search(['ALL']).each do |message_id|
+
+    message_ids = @imap.search(['ALL'])
+    count_all   = message_ids.count
+    count       = 0
+
+    # reverse message order to increase performance
+    if check_type == 'verify'
+      message_ids.reverse!
+    end
+
+    message_ids.each do |message_id|
       count += 1
       puts " - message #{count.to_s}/#{count_all.to_s}"
       #      puts msg.to_s
