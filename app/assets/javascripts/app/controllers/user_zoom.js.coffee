@@ -1,6 +1,6 @@
 class App.UserZoom extends App.Controller
-  elements:
-    '.tabsSidebar'      : 'sidebar'
+  events:
+    'focusout [data-type=update]': 'update',
 
   constructor: (params) ->
     super
@@ -12,7 +12,11 @@ class App.UserZoom extends App.Controller
 
     @navupdate '#'
 
-    App.User.full( @user_id, @render )
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.User.full( @user_id, @render, false, true )
+
+  release: =>
+    App.User.unsubscribe(@subscribeId)
 
   meta: =>
     meta =
@@ -35,10 +39,7 @@ class App.UserZoom extends App.Controller
     @navupdate '#'
 
   changed: =>
-    formCurrent = @formParam( @el.find('.ticket-update') )
-    diff = difference( @formDefault, formCurrent )
-    return false if !diff || _.isEmpty( diff )
-    return true
+    false
 
   render: (user) =>
 
@@ -46,12 +47,43 @@ class App.UserZoom extends App.Controller
       @doNotLog = 1
       @recentView( 'User', @user_id )
 
+    # get display data
+    userData = []
+    for item2 in App.User.configure_attributes
+      item = _.clone( item2 )
+
+      # check if value for _id exists
+      itemNameValue = item.name
+      itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
+      if itemNameValueNew of user
+        item.name = itemNameValueNew
+
+      # add to show if value exists
+      if user[item.name] || item.tag is 'textarea'
+
+        # do not show firstname and lastname / already show via diplayName()
+        if item.name isnt 'firstname' && item.name isnt 'lastname' && item.name isnt 'organization'
+          if item.info
+            userData.push item
+
     @html App.view('user_zoom')(
-      user:  user
+      user:     user
+      userData: userData
     )
 
-    new Overviews(
-      el:   @el
+    @$('[contenteditable]').ce({
+      mode:      'textonly'
+      multiline: true
+      maxlength: 250
+    })
+
+    #new Overviews(
+    #  el:   @el
+    #  user: user
+    #)
+
+    new TicketStats(
+      el:   @$('.js-ticket-stats')
       user: user
     )
 
@@ -59,31 +91,190 @@ class App.UserZoom extends App.Controller
       genericObject: user
     )
 
-    new App.UpdateHeader(
-      el:            @el
-      genericObject: user
-    )
-
     # start action controller
     showHistory = =>
       new App.UserHistory( user_id: user.id )
 
+    editUser = =>
+      new App.ControllerGenericEdit(
+        id: user.id
+        genericObject: 'User'
+        screen: 'edit'
+        pageData:
+          title: 'Users'
+          object: 'User'
+          objects: 'Users'
+      )
+
     actions = [
+      {
+        name:     'edit'
+        title:    'Edit'
+        callback: editUser
+      }
       {
         name:     'history'
         title:    'History'
         callback: showHistory
       }
     ]
+
     new App.ActionRow(
       el:    @el.find('.action')
       items: actions
     )
 
-    new Sidebar(
-      el:         @sidebar
-      user:       user
-      textModule: @textModule
+  update: (e) =>
+    console.log('update')
+    note = $(e.target).ceg()
+    user = App.User.find( @user_id )
+    if user.note isnt note
+      user.updateAttributes( note: note )
+      @log 'notice', 'update', e, note, user
+
+
+class TicketStats extends App.Controller
+  events:
+    'click .js-userTab': 'showUserTab'
+    'click .js-orgTab':  'showOrgTab'
+
+  constructor: ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.User.full( @user.id, @load, false, true )
+
+  release: =>
+    App.User.unsubscribe(@subscribeId)
+
+  load: (user) =>
+    @ajax(
+      id:    'ticket_stats_' + user.id,
+      type:  'GET',
+      url:   @apiPath + '/ticket_stats/' + user.id,
+      success: (data) =>
+       # load assets
+        App.Collection.loadAssets( data.assets )
+
+        @render(data)
+      )
+
+  showOrgTab: =>
+    @$('.js-userTab').removeClass('active')
+    @$('.js-orgTab').addClass('active')
+    @$('.js-user').addClass('hide')
+    @$('.js-org').removeClass('hide')
+
+  showUserTab: =>
+    @$('.js-userTab').addClass('active')
+    @$('.js-orgTab').removeClass('active')
+    @$('.js-user').removeClass('hide')
+    @$('.js-org').addClass('hide')
+
+  render: (data) =>
+
+    @html App.view('user_zoom/ticket_stats')(
+      user: @user
+    )
+
+    limit = 5
+    new TicketStatsList(
+      el:         @$('.js-user-open-tickets')
+      user:       @user
+      head:       'Open Ticket'
+      ticket_ids: data.user_tickets_open_ids
+      limit:      limit
+    )
+    new TicketStatsList(
+      el:         @$('.js-user-closed-tickets')
+      user:       @user
+      head:       'Closed Ticket'
+      ticket_ids: data.user_tickets_closed_ids
+      limit:      limit
+    )
+    new TicketStatsFrequency(
+      el:                    @$('.js-user-frequency')
+      user:                  @user
+      ticket_volume_by_year: data.user_ticket_volume_by_year
+    )
+
+    new TicketStatsList(
+      el:         @$('.js-org-open-tickets')
+      user:       @user
+      head:       'Open Ticket'
+      ticket_ids: data.org_tickets_open_ids
+      limit:      limit
+    )
+    new TicketStatsList(
+      el:         @$('.js-org-closed-tickets')
+      user:       @user
+      head:       'Closed Ticket'
+      ticket_ids: data.org_tickets_closed_ids
+      limit:      limit
+    )
+    new TicketStatsFrequency(
+      el:                    @$('.js-org-frequency')
+      user:                  @user
+      ticket_volume_by_year: data.org_ticket_volume_by_year
+    )
+
+class TicketStatsList extends App.Controller
+  events:
+    'click .js-showAll': 'showAll'
+
+  constructor: ->
+    super
+    @render()
+
+  render: =>
+
+    ticket_ids_show = []
+    if !@all
+      count = 0
+      for ticket_id in @ticket_ids
+        count += 1
+        if count <= @limit
+          ticket_ids_show.push ticket_id
+    else
+      ticket_ids_show = @ticket_ids
+
+    @html App.view('user_zoom/ticket_stats_list')(
+      user:            @user
+      head:            @head
+      ticket_ids:      @ticket_ids
+      ticket_ids_show: ticket_ids_show
+      limit:           @limit
+    )
+    @frontendTimeUpdate()
+    @ticketPopups()
+
+  showAll: (e) =>
+    e.preventDefault()
+    @all = true
+    @render()
+
+class TicketStatsFrequency extends App.Controller
+  constructor: ->
+    super
+    @render()
+
+  render: (data) =>
+
+    # find 100%
+    max = 0
+    for item in @ticket_volume_by_year
+      if item.closed > max
+        max = item.closed
+      if item.created > max
+        max = item.created
+    console.log('MM', max)
+    for item in @ticket_volume_by_year
+      item.created_in_percent = 100 / max * item.created
+      item.closed_in_percent = 100 / max * item.closed
+
+    @html App.view('user_zoom/ticket_stats_frequency')(
+      user: @user
+      ticket_volume_by_year: @ticket_volume_by_year.reverse()
     )
 
 class Overviews extends App.Controller
@@ -154,80 +345,6 @@ class Overviews extends App.Controller
     @el.find( '#sortable' ).sortable( dndOptions )
     @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
-class Sidebar extends App.Controller
-  constructor: ->
-    super
-
-    # render ui
-    @render()
-
-  render: ->
-
-    items = []
-
-    showCustomer = (el) =>
-      new App.WidgetUser(
-        el:       el
-        user_id:  @user.id
-      )
-
-    editCustomer = (e, el) =>
-      new App.ControllerGenericEdit(
-        id: @user.id
-        genericObject: 'User'
-        screen: 'edit'
-        pageData:
-          title: 'Users'
-          object: 'User'
-          objects: 'Users'
-      )
-    items.push {
-      head: 'Customer'
-      name: 'customer'
-      icon: 'person'
-      actions: [
-        {
-          name:  'Edit Customer'
-          class: 'glyphicon glyphicon-edit'
-          callback: editCustomer
-        },
-      ]
-      callback: showCustomer
-    }
-
-    if @user.organization_id
-      editOrganization = (e, el) =>
-        new App.ControllerGenericEdit(
-          id: @user.organization_id
-          genericObject: 'Organization'
-          pageData:
-            title: 'Organizations'
-            object: 'Organization'
-            objects: 'Organizations'
-        )
-      showOrganization = (el) =>
-        new App.WidgetOrganization(
-          el:               el
-          organization_id:  @user.organization_id
-        )
-      items.push {
-        head: 'Organization'
-        name: 'organization'
-        icon: 'group'
-        actions: [
-          {
-            name:     'Edit Organization'
-            class:    'glyphicon glyphicon-edit'
-            callback: editOrganization
-          },
-        ]
-        callback: showOrganization
-      }
-
-    new App.Sidebar(
-      el:     @el
-      items:  items
-    )
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

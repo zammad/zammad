@@ -1,0 +1,24 @@
+<% if @user && @user.organization: %>
+  <div class="tabs wide-tabs horizontal">
+    <div class="tab js-userTab active"><%- @T('Tickets of User') %></div>
+    <div class="tab js-orgTab"><%- @T('Tickets of Organization') %></div>
+  </div>
+<% end %>
+
+<div class="js-user">
+  <div class="userZoom-ticketLists horizontal">
+    <div class="userZoom-ticketList js-user-open-tickets"></div>
+    <div class="userZoom-ticketList js-user-closed-tickets"></div>
+  </div>
+
+  <div class="frequency stat-widget vertical js-user-frequency"></div>
+</div>
+
+<div class="js-org hide">
+  <div class="userZoom-ticketLists horizontal">
+    <div class="userZoom-ticketList js-org-open-tickets"></div>
+    <div class="userZoom-ticketList js-org-closed-tickets"></div>
+  </div>
+
+  <div class="frequency stat-widget vertical js-org-frequency"></div>
+</div>

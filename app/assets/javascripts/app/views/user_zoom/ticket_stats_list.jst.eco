@@ -1,0 +1,18 @@
+<label><%- @T(@head) %> (<%= @ticket_ids.length %>)</label>
+<ol class="tasks tasks--standalone">
+  <% for ticket_id in @ticket_ids_show: %>
+  <% ticket = App.Ticket.fullLocal(ticket_id) %>
+  <li class="task">
+    <div class="icon-holder">
+      <div class="icon <%- ticket.icon() %>"></div>
+    </div>
+    <div class="flex">
+      <a class="name ticket-popover" data-id="<%- ticket_id %>" href="<%- ticket.uiUrl() %>"><%= ticket.title %></a>
+      <div class="time humanTimeFromNow" data-time="<%- ticket.created_at %>"></div>
+    </div>
+  </li>
+  <% end %>
+</ol>
+<% if @ticket_ids.length > @ticket_ids_show.length: %>
+  <a href="#" class="js-showAll"><%- @T('Show all ...') %></a>
+<% end %>

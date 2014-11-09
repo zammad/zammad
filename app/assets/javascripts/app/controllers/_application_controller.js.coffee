@@ -228,15 +228,14 @@ class App.Controller extends Spine.Controller
       placement:  position
       title: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.fullLocal( ticket_id )
+        ticket    = App.Ticket.fullLocal( ticket_id )
         HTMLEscape( ticket.title )
       content: ->
-        ticket_id = $(@).data('id')
-        ticket = App.Ticket.fullLocal( ticket_id )
+        ticket_id        = $(@).data('id')
+        ticket           = App.Ticket.fullLocal( ticket_id )
         ticket.humanTime = ui.humanTime(ticket.created_at)
-        # insert data
         App.view('popover/ticket')(
-          ticket: ticket,
+          ticket: ticket
         )
     )
 
