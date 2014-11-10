@@ -48,7 +48,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'b collections group' do
     require 'sessions/backend/collections/group.rb'
 
-    UserInfo.current_user_id = 1
+    UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
     collection_client1 = Sessions::Backend::Collections::Group.new(user, false, '123-1')
     collection_client2 = Sessions::Backend::Collections::Group.new(user, false, '234-2')
@@ -139,7 +139,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
   test 'b collections organization' do
     require 'sessions/backend/collections/organization.rb'
-    UserInfo.current_user_id = 1
+    UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
     org = Organization.create( :name => 'SomeOrg1::' + rand(999999).to_s, :active => true )
 
@@ -211,13 +211,11 @@ class SessionBasicTest < ActiveSupport::TestCase
 
   test 'b activity stream' do
 
-    UserInfo.current_user_id = 1
-
     # create users
     roles  = Role.where( :name => [ 'Agent', 'Admin'] )
     groups = Group.all
 
-    UserInfo.current_user_id = 1
+    UserInfo.current_user_id = 2
     agent1 = User.create_or_update(
       :login         => 'activity-stream-agent-1',
       :firstname     => 'Session',
@@ -235,17 +233,17 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = as_client1.push
-    assert( result1, "check as" )
+    assert( result1, "check as agent1" )
     sleep 1
 
     # next check should be empty
     result1 = as_client1.push
-    assert( !result1, "check as - recall" )
+    assert( !result1, "check as agent1 - recall" )
 
     # next check should be empty
     sleep 60
     result1 = as_client1.push
-    assert( !result1, "check as - recall 2" )
+    assert( !result1, "check as agent1 - recall 2" )
 
     agent1.update_attribute( :email, 'activity-stream-agent11@example.com' )
     ticket = Ticket.create(:title => '12323', :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1 )
@@ -254,12 +252,12 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = as_client1.push
-    assert( result1, "check as - recall 3" )
+    assert( result1, "check as agent1 - recall 3" )
   end
 
   test 'b ticket_create' do
 
-    UserInfo.current_user_id = 1
+    UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
     ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, false, '123-1')
 

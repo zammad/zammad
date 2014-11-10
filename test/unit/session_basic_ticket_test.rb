@@ -4,7 +4,7 @@ require 'test_helper'
 class SessionBasicTicketTest < ActiveSupport::TestCase
   test 'b ticket_overview_index' do
 
-    UserInfo.current_user_id = 1
+    UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
     client1 = Sessions::Backend::TicketOverviewIndex.new(user, false, '123-1')
 
@@ -33,7 +33,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
   test 'b ticket_overview_list' do
 
-    UserInfo.current_user_id = 1
+    UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
     client1 = Sessions::Backend::TicketOverviewList.new(user, false, '123-1')
 
