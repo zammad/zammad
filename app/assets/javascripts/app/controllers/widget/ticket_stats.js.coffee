@@ -59,9 +59,6 @@ class App.TicketStats extends App.Controller
       org_total:    data.org_tickets_open_ids.length + data.org_tickets_closed_ids.length
     )
 
-    if @organization
-      @showOrgTab()
-
     limit = 5
     new TicketStatsList(
       el:         @$('.js-user-open-tickets')
@@ -158,6 +155,5 @@ class TicketStatsFrequency extends App.Controller
       item.closed_in_percent = 100 / max * item.closed
 
     @html App.view('widget/ticket_stats_frequency')(
-      user: @user
       ticket_volume_by_year: @ticket_volume_by_year.reverse()
     )

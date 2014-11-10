@@ -5,7 +5,7 @@
   </div>
 <% end %>
 
-<div class="js-user">
+<div class="js-user <% if !@user && @organization: %>hide<% end %>">
   <div class="userZoom-ticketLists horizontal">
     <div class="userZoom-ticketList js-user-open-tickets"></div>
     <div class="userZoom-ticketList js-user-closed-tickets"></div>
@@ -14,7 +14,7 @@
   <div class="frequency stat-widget vertical js-user-frequency"></div>
 </div>
 
-<div class="js-org hide">
+<div class="js-org <% if @user: %>hide<% end %>">
   <div class="userZoom-ticketLists horizontal">
     <div class="userZoom-ticketList js-org-open-tickets"></div>
     <div class="userZoom-ticketList js-org-closed-tickets"></div>
