@@ -115,7 +115,7 @@ class App.UserProfile extends App.Controller
     ]
 
     new App.ActionRow(
-      el:    @el.find('.action')
+      el:    @el.find('.js-action')
       items: actions
     )
 

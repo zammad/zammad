@@ -464,6 +464,7 @@ class App.ActionRow extends App.Controller
   render: ->
     @html App.view('generic/actions')(
       items: @items
+      type:  @type
     )
 
     for item in @items
@@ -501,15 +502,11 @@ class App.Sidebar extends App.Controller
     # add item acctions
     for item in @items
       if item.actions
-        for action in item.actions
-          do (action) =>
-            @el.find('.sidebar[data-tab="' + item.name + '"] .tabsSidebar-tabActions .tabsSidebar-tabAction[data-name="' + action.name + '"]').bind(
-              'click'
-              (e) =>
-                e.stopPropagation()
-                e.preventDefault()
-                action.callback(e)
-            )
+        new App.ActionRow(
+          el:    @el.find('.sidebar[data-tab="' + item.name + '"] .js-actions')
+          items: item.actions
+          type:  'small'
+        )
 
   toggleSidebar: ->
     @el.parent().find('.tabsSidebar-sidebarSpacer').toggleClass('is-closed')

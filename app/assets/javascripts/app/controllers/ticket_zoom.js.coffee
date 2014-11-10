@@ -1,7 +1,7 @@
 class App.TicketZoom extends App.Controller
   elements:
     '.main': 'main'
-  
+
   events:
     'click .js-submit': 'submit'
 
@@ -270,34 +270,38 @@ class App.TicketZoom extends App.Controller
             object:       @ticket
             links:        @links
           )
-          el.append('<div class="action"></div>')
-          showHistory = =>
-            new App.TicketHistory( ticket_id: @ticket.id )
-          showMerge = =>
-            new App.TicketMerge( ticket: @ticket, task_key: @task_key )
-          actions = [
-            {
-              name:     'history'
-              title:    'History'
-              callback: showHistory
-            },
-            {
-              name:     'merge'
-              title:    'Merge'
-              callback: showMerge
-            },
-          ]
-          new App.ActionRow(
-            el:    @el.find('.action')
-            items: actions
-          )
 
+      showTicketHistory = =>
+        new App.TicketHistory( ticket_id: @ticket.id )
+      showTicketMerge = =>
+        new App.TicketMerge( ticket: @ticket, task_key: @task_key )
+      changeCustomer = (e, el) =>
+        new App.TicketCustomer(
+          ticket: @ticket
+        )
       items = [
         {
           head: 'Ticket Settings'
           name: 'ticket'
           icon: 'message'
           callback: editTicket
+          actions: [
+            {
+              name:     'ticket-history'
+              title:    'History'
+              callback: showTicketHistory
+            },
+            {
+              name:     'ticket-merge'
+              title:    'Merge'
+              callback: showTicketMerge
+            },
+            {
+              title:    'Change Customer'
+              name:     'customer-change'
+              callback: changeCustomer
+            },
+          ]
         }
       ]
       if !@isRole('Customer')
@@ -311,10 +315,6 @@ class App.TicketZoom extends App.Controller
               object: 'User'
               objects: 'Users'
           )
-        changeCustomer = (e, el) =>
-          new App.TicketCustomer(
-            ticket: @ticket
-          )
         showCustomer = (el) =>
           new App.WidgetUser(
             el:       el
@@ -326,13 +326,13 @@ class App.TicketZoom extends App.Controller
           icon: 'person'
           actions: [
             {
-              name:  'Change Customer'
-              class: 'glyphicon glyphicon-transfer'
+              title:    'Change Customer'
+              name:     'customer-change'
               callback: changeCustomer
             },
             {
-              name:  'Edit Customer'
-              class: 'glyphicon glyphicon-edit'
+              title:    'Edit Customer'
+              name:     'customer-edit'
               callback: editCustomer
             },
           ]
@@ -359,8 +359,8 @@ class App.TicketZoom extends App.Controller
             icon: 'group'
             actions: [
               {
-                name:     'Edit Organization'
-                class:    'glyphicon glyphicon-edit'
+                title:    'Edit Organization'
+                name:     'organization-edit'
                 callback: editOrganization
               },
             ]
@@ -394,7 +394,7 @@ class App.TicketZoom extends App.Controller
     @autosaveStart()
 
     @scrollToBottom()
-  
+
     @bindScrollPageHeader()
 
   scrollToBottom: =>

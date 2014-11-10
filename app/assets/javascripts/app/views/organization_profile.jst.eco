@@ -2,7 +2,7 @@
 
   <div class="profile-window">
     <div class="profile-section vertical centered">
-      <div class="align-right profile-action dropdown dropdown--actions action"></div>
+      <div class="align-right profile-action js-action"></div>
       <h1><%= @organization.displayName() %></h1>
     </div>
     <div class="profile-section">

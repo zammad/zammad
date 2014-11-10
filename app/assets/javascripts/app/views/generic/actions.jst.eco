@@ -1,8 +1,12 @@
-<div class="dropdown dropup dropdown--actions">
-  <button class="btn" data-toggle="dropdown"><%- @T('Action') %> <span class="caret"></span></button>
-  <ul class="dropdown-menu">
+<div class="dropdown dropdown--actions">
+  <div class="dropdown-toggle horizontal center" id="userAction" data-toggle="dropdown">
+    <div class="light cog icon"></div>
+    <% if @type isnt 'small': %><label><%- @T('Action') %></label><% end %>
+    <span class="select-arrow icon"></span>
+  </div>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
     <% for item in @items: %>
-    <li><a href="#" data-type="<%= item.name %>"><%- @T( item.title ) %></a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-type="<%= item.name %>"><%- @T( item.title ) %></a>
     <% end %>
   </ul>
 </div>
