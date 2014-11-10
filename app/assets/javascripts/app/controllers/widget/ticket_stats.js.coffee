@@ -1,4 +1,10 @@
 class App.TicketStats extends App.Controller
+  elements:
+    '.js-userTab': 'userTabButton'
+    '.js-orgTab': 'orgTabButton'
+    '.js-user': 'userTab'
+    '.js-org': 'orgTab'
+
   events:
     'click .js-userTab': 'showUserTab'
     'click .js-orgTab':  'showOrgTab'
@@ -37,16 +43,16 @@ class App.TicketStats extends App.Controller
       )
 
   showOrgTab: =>
-    @$('.js-userTab').removeClass('active')
-    @$('.js-orgTab').addClass('active')
-    @$('.js-user').addClass('hide')
-    @$('.js-org').removeClass('hide')
+    @userTabButton.removeClass('active')
+    @orgTabButton.addClass('active')
+    @userTab.addClass('hide')
+    @orgTab.removeClass('hide')
 
   showUserTab: =>
-    @$('.js-userTab').addClass('active')
-    @$('.js-orgTab').removeClass('active')
-    @$('.js-user').removeClass('hide')
-    @$('.js-org').addClass('hide')
+    @userTabButton.addClass('active')
+    @orgTabButton.removeClass('active')
+    @userTab.removeClass('hide')
+    @orgTab.addClass('hide')
 
   render: (data) =>
 

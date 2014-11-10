@@ -6,18 +6,18 @@
 <% end %>
 
 <div class="js-user <% if !@user && @organization: %>hide<% end %>">
-  <div class="userZoom-ticketLists horizontal">
-    <div class="userZoom-ticketList js-user-open-tickets"></div>
-    <div class="userZoom-ticketList js-user-closed-tickets"></div>
+  <div class="profile-ticketLists horizontal">
+    <div class="profile-ticketList js-user-open-tickets"></div>
+    <div class="profile-ticketList js-user-closed-tickets"></div>
   </div>
 
   <div class="frequency stat-widget vertical js-user-frequency"></div>
 </div>
 
 <div class="js-org <% if @user: %>hide<% end %>">
-  <div class="userZoom-ticketLists horizontal">
-    <div class="userZoom-ticketList js-org-open-tickets"></div>
-    <div class="userZoom-ticketList js-org-closed-tickets"></div>
+  <div class="profile-ticketLists horizontal">
+    <div class="profile-ticketList js-org-open-tickets"></div>
+    <div class="profile-ticketList js-org-closed-tickets"></div>
   </div>
 
   <div class="frequency stat-widget vertical js-org-frequency"></div>
