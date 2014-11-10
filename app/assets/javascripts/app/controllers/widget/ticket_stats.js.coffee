@@ -54,7 +54,9 @@ class App.TicketStats extends App.Controller
 
     @html App.view('widget/ticket_stats')(
       user:         @user
+      user_total:   data.user_tickets_open_ids.length + data.user_tickets_closed_ids.length
       organization: @organization
+      org_total:    data.org_tickets_open_ids.length + data.org_tickets_closed_ids.length
     )
 
     if @organization
