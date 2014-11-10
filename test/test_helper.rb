@@ -23,6 +23,9 @@ class ActiveSupport::TestCase
   # load seeds
   load "#{Rails.root}/db/seeds.rb"
 
+  # set system mode to done / to activate
+  Setting.set('system_init_done', true)
+
   setup do
 
     # set current user

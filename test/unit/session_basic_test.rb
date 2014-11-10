@@ -227,7 +227,7 @@ class SessionBasicTest < ActiveSupport::TestCase
       :groups        => groups,
     )
     agent1.roles = roles
-    agent1.save
+    assert( agent1.save, "create/update agent1" )
 
     as_client1 = Sessions::Backend::ActivityStream.new(agent1, false, '123-1')
 
