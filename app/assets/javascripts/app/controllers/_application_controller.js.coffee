@@ -249,7 +249,7 @@ class App.Controller extends Spine.Controller
     if !@isRole('Customer')
       @el.find('.user-popover').bind('click', (e) =>
         user_id = $(e.target).data('id')
-        @navigate "#user/zoom/#{user_id}"
+        @navigate "#user/profile/#{user_id}"
       );
 
     @userPopupsDestroy()

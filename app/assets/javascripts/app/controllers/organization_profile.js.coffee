@@ -1,4 +1,4 @@
-class App.OrganizationZoom extends App.Controller
+class App.OrganizationProfile extends App.Controller
   constructor: (params) ->
     super
 
@@ -30,7 +30,7 @@ class App.OrganizationZoom extends App.Controller
     meta
 
   url: =>
-    '#organization/zoom/' + @organization_id
+    '#organization/profile/' + @organization_id
 
   show: =>
     App.OnlineNotification.seen( 'Organization', @organization_id )
@@ -64,7 +64,7 @@ class App.OrganizationZoom extends App.Controller
           if item.info
             organizationData.push item
 
-    @html App.view('organization_zoom')(
+    @html App.view('organization_profile')(
       organization:     organization
       organizationData: organizationData
     )
@@ -124,6 +124,6 @@ class Router extends App.ControllerPermanent
     clean_params =
       organization_id:  params.organization_id
 
-    App.TaskManager.add( 'Organization-' + @organization_id, 'OrganizationZoom', clean_params )
+    App.TaskManager.add( 'Organization-' + @organization_id, 'OrganizationProfile', clean_params )
 
-App.Config.set( 'organization/zoom/:organization_id', Router, 'Routes' )
+App.Config.set( 'organization/profile/:organization_id', Router, 'Routes' )

@@ -1,4 +1,4 @@
-class App.UserZoom extends App.Controller
+class App.UserProfile extends App.Controller
   events:
     'focusout [data-type=update]': 'update',
 
@@ -32,7 +32,7 @@ class App.UserZoom extends App.Controller
     meta
 
   url: =>
-    '#user/zoom/' + @user_id
+    '#user/profile/' + @user_id
 
   show: =>
     App.OnlineNotification.seen( 'User', @user_id )
@@ -66,7 +66,7 @@ class App.UserZoom extends App.Controller
           if item.info
             userData.push item
 
-    @html App.view('user_zoom')(
+    @html App.view('user_profile')(
       user:     user
       userData: userData
     )
@@ -135,6 +135,6 @@ class Router extends App.ControllerPermanent
     clean_params =
       user_id:  params.user_id
 
-    App.TaskManager.add( 'User-' + @user_id, 'UserZoom', clean_params )
+    App.TaskManager.add( 'User-' + @user_id, 'UserProfile', clean_params )
 
-App.Config.set( 'user/zoom/:user_id', Router, 'Routes' )
+App.Config.set( 'user/profile/:user_id', Router, 'Routes' )

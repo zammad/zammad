@@ -4157,7 +4157,7 @@ footer {
   left: 0 !important;
 }
 
-.userZoom {
+.profile {
   padding: 60px;
   overflow: auto;
   
@@ -4171,22 +4171,22 @@ footer {
   }
 }
 
-.userZoom-window {
+.profile-window {
   background: white;
   max-width: 660px;
   margin: 0 auto;
   border: 1px solid #e6e6e6;
 }
 
-.userZoom-section {
+.profile-section {
   padding: 20px 50px;
 }
 
-.userZoom-section:not(:last-child) {
+.profile-section:not(:last-child) {
   border-bottom: 1px solid #f2f2f2;
 }
 
-.userZoom-action {
+.profile-action {
   margin-right: -20px;
   
   .dropdown-toggle {
@@ -4207,28 +4207,28 @@ footer {
   }
 }
 
-.userZoom-organisation {
+.profile-subtitle {
   font-size: 16px;
   @extend .u-highlight;
 }
 
-.userZoom-details {
+.profile-details {
   margin-left: -50px;
 }
 
-.userZoom-detailsEntry {
+.profile-detailsEntry {
   margin: 8px 0;
   padding-left: 50px;
   width: 50%;
 }
 
-.userZoom-detailsEntry label {
+.profile-detailsEntry label {
   padding: 0;
   margin-bottom: 2px;
   display: block;
 }
 
-.userZoom-ticketList {
+.profile-ticketList {
   @extend .flex;
   
   &:not(:last-child) {
@@ -4236,7 +4236,7 @@ footer {
   }
 }
 
-.userZoom-ticketList {
+.profile-ticketList {
   ol {
     padding: 0;
   }
@@ -4246,7 +4246,7 @@ footer {
   }
 }
 
-.userZoom .frequency.stat-widget {
+.profile .frequency.stat-widget {
   height: 230px;
   
   .stat-bars {

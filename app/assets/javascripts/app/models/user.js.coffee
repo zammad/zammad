@@ -31,7 +31,7 @@ class App.User extends App.Model
   ]
 
   uiUrl: ->
-    '#user/zoom/' + @id
+    '#user/profile/' + @id
 
   icon: (user) ->
     "user icon"

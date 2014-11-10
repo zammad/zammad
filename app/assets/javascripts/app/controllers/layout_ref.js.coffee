@@ -579,15 +579,15 @@ class ImportWizard extends App.ControllerContent
 
 App.Config.set( 'layout_ref/import_wizard', ImportWizard, 'Routes' )
 
-class UserZoom extends App.ControllerContent
+class ReferenceUserProfile extends App.ControllerContent
 
   constructor: ->
     super
     @render()
 
   render: ->
-    @html App.view('layout_ref/user_zoom')()
+    @html App.view('layout_ref/user_profile')()
 
-App.Config.set( 'layout_ref/user_zoom', UserZoom, 'Routes' )
+App.Config.set( 'layout_ref/user_profile', ReferenceUserProfile, 'Routes' )
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
