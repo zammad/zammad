@@ -3,6 +3,15 @@ require 'test_helper'
 
 class TwitterTest < ActiveSupport::TestCase
 
+  # needed to check correct behavior
+  Group.create_if_not_exists(
+    :id             => 2,
+    :name           => 'Twitter',
+    :note           => 'All Tweets.',
+    :updated_by_id  => 1,
+    :created_by_id  => 1
+  )
+
   # app config
   consumer_key    = 'd2zoZBmMXmT7KLPgEHSzpw'
   consumer_secret = 'QMUrlyDlqjITCkWdrOgsTxMVVLxr4A4IW3DIgtIg'

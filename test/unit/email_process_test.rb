@@ -3,6 +3,16 @@ require 'test_helper'
 
 class EmailProcessTest < ActiveSupport::TestCase
   test 'process simple' do
+
+    # needed to check correct behavior
+    Group.create_if_not_exists(
+      :id             => 2,
+      :name           => 'Twitter',
+      :note           => 'All Tweets.',
+      :updated_by_id  => 1,
+      :created_by_id  => 1
+    )
+
     files = [
       {
         :data => 'From: me@example.com
