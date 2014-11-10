@@ -365,50 +365,96 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/v1/ticket_stats/1
+  # GET /api/v1/ticket_stats
   def stats
-    user = User.find(params[:id])
+
+    if !params[:user_id] && !params[:organization_id]
+      raise "Need user_id or organization_id as param"
+    end
 
     # permissin check
     #return if !ticket_permission(ticket)
 
     # lookup open user tickets
-    limit     = 100
-    assets    = {}
-    condition = {
-      'tickets.state_id'    => Ticket::State.by_category('open'),
-      'tickets.customer_id' => user.id,
-    }
-    user_tickets_open = Ticket.search(
-      :limit        => limit,
-      #:query        => params[:term],
-      :condition    => condition,
-      :current_user => current_user,
-      :detail       => true,
-    )
-    user_tickets_open_ids = assets_of_tickets(user_tickets_open, assets)
+    limit                      = 100
+    assets                     = {}
+    access_condition           = Ticket.access_condition( current_user )
+    now                        = DateTime.now
+    user_tickets_open_ids      = []
+    user_tickets_closed_ids    = []
+    user_ticket_volume_by_year = []
+    if params[:user_id]
+      user = User.find( params[:user_id] )
+      condition = {
+        'tickets.state_id'    => Ticket::State.by_category('open'),
+        'tickets.customer_id' => user.id,
+      }
+      user_tickets_open = Ticket.search(
+        :limit        => limit,
+        #:query        => params[:term],
+        :condition    => condition,
+        :current_user => current_user,
+        :detail       => true,
+      )
+      user_tickets_open_ids = assets_of_tickets(user_tickets_open, assets)
 
-    # lookup closed user tickets
-    condition = {
-      'tickets.state_id'    => Ticket::State.by_category('closed'),
-      'tickets.customer_id' => user.id,
-    }
-    user_tickets_closed = Ticket.search(
-      :limit        => limit,
-      #:query        => params[:term],
-      :condition    => condition,
-      :current_user => current_user,
-      :detail       => true,
-    )
-    user_tickets_closed_ids = assets_of_tickets(user_tickets_closed, assets)
+      # lookup closed user tickets
+      condition = {
+        'tickets.state_id'    => Ticket::State.by_category('closed'),
+        'tickets.customer_id' => user.id,
+      }
+      user_tickets_closed = Ticket.search(
+        :limit        => limit,
+        #:query        => params[:term],
+        :condition    => condition,
+        :current_user => current_user,
+        :detail       => true,
+      )
+      user_tickets_closed_ids = assets_of_tickets(user_tickets_closed, assets)
 
+      # generate stats by user
+      (0..11).each {|month_back|
+        date_to_check = DateTime.now - month_back.month
+        date_start = "#{date_to_check.year}-#{date_to_check.month}-#{01} 00:00:00"
+        date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
+
+        condition = {
+          'tickets.customer_id' => user.id,
+        }
+
+        # created
+        created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end ).
+          where(access_condition).
+          where(condition).
+          count
+
+        # closed
+        closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  ).
+          where(access_condition).
+          where(condition).
+          count
+
+        data = {
+          :month   => date_to_check.month,
+          :year    => date_to_check.year,
+          :text    => Date::MONTHNAMES[date_to_check.month],
+          :created => created,
+          :closed  => closed,
+        }
+        user_ticket_volume_by_year.push data
+      }
+    end
 
     # lookup open org tickets
-    org_tickets_open_ids = []
-    if user.organization_id
+    org_tickets_open_ids      = []
+    org_tickets_closed_ids    = []
+    org_ticket_volume_by_year = []
+    if params[:organization_id] && !params[:organization_id].empty?
+      organization = Organization.find( params[:organization_id] )
+
       condition = {
         'tickets.state_id'        => Ticket::State.by_category('open'),
-        'tickets.organization_id' => user.organization_id,
+        'tickets.organization_id' => params[:organization_id],
       }
       org_tickets_open = Ticket.search(
         :limit        => limit,
@@ -418,14 +464,11 @@ class TicketsController < ApplicationController
         :detail       => true,
       )
       org_tickets_open_ids = assets_of_tickets(org_tickets_open, assets)
-    end
 
-    # lookup closed org tickets
-    org_tickets_closed_ids = []
-    if user.organization_id
+      # lookup closed org tickets
       condition = {
         'tickets.state_id'        => Ticket::State.by_category('closed'),
-        'tickets.organization_id' => user.organization_id,
+        'tickets.organization_id' => params[:organization_id],
       }
       org_tickets_closed = Ticket.search(
         :limit        => limit,
@@ -435,63 +478,33 @@ class TicketsController < ApplicationController
         :detail       => true,
       )
       org_tickets_closed_ids = assets_of_tickets(org_tickets_closed, assets)
+
+      # generate stats by org
+      (0..11).each {|month_back|
+        date_to_check = DateTime.now - month_back.month
+        date_start = "#{date_to_check.year}-#{date_to_check.month}-#{01} 00:00:00"
+        date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
+
+        condition = {
+          'tickets.organization_id' => params[:organization_id],
+        }
+
+        # created
+        created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end ).where(condition).count
+
+        # closed
+        closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  ).where(condition).count
+
+        data = {
+          :month   => date_to_check.month,
+          :year    => date_to_check.year,
+          :text    => Date::MONTHNAMES[date_to_check.month],
+          :created => created,
+          :closed  => closed,
+        }
+        org_ticket_volume_by_year.push data
+      }
     end
-
-    # generate stats by user
-    user_ticket_volume_by_year = []
-    now = DateTime.now
-    (0..11).each {|month_back|
-      date_to_check = DateTime.now - month_back.month
-      date_start = "#{date_to_check.year}-#{date_to_check.month}-#{01} 00:00:00"
-      date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
-
-      condition = {
-        'tickets.customer_id' => user.id,
-      }
-
-      # created
-      created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end ).where(condition).count
-
-      # closed
-      closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  ).where(condition).count
-
-      data = {
-        :month   => date_to_check.month,
-        :year    => date_to_check.year,
-        :text    => Date::MONTHNAMES[date_to_check.month],
-        :created => created,
-        :closed  => closed,
-      }
-      user_ticket_volume_by_year.push data
-    }
-
-    # generate stats by org
-    org_ticket_volume_by_year = []
-    now = DateTime.now
-    (0..11).each {|month_back|
-      date_to_check = DateTime.now - month_back.month
-      date_start = "#{date_to_check.year}-#{date_to_check.month}-#{01} 00:00:00"
-      date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
-
-      condition = {
-        'tickets.organization_id' => user.organization_id,
-      }
-
-      # created
-      created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end ).where(condition).count
-
-      # closed
-      closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  ).where(condition).count
-
-      data = {
-        :month   => date_to_check.month,
-        :year    => date_to_check.year,
-        :text    => Date::MONTHNAMES[date_to_check.month],
-        :created => created,
-        :closed  => closed,
-      }
-      org_ticket_volume_by_year.push data
-    }
 
     # return result
     render :json => {

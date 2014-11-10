@@ -1,18 +1,49 @@
-<div class="flex vertical">
-  <div class="flex u-positionOrigin horizontal">
-    <div class="main flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
-      <div class="organizationZoom">
-        <div class="page-header">
-          <h1><%- @T( @head ) %></h1>
-        </div>
+<div class="flex userZoom">
 
-        <div class="main-overviews" id="sortable"></div>
+  <div class="userZoom-window">
+    <div class="userZoom-section vertical centered">
+      <div class="align-right userZoom-action dropdown dropdown--actions action"></div>
+      <h1><%= @organization.displayName() %></h1>
+    </div>
+    <div class="userZoom-section">
+      <div class="userZoom-details horizontal wrap">
+        <% for row in @organizationData: %>
+          <% if @organization[row.name]: %>
+            <% if row.tag isnt 'textarea': %>
+              <div class="userZoom-detailsEntry">
+                <label><%- @Ti( row.display ) %></label>
+                <%- @L( @P( @organization[row.name] ) ) %>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% for row in @organizationData: %>
+          <% if row.tag is 'textarea': %>
+            <div class="userZoom-detailsEntry" style="width: 100%;">
+              <label><%- @Ti( row.display ) %></label>
+              <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%= @organization[row.name] %></div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
 
-    <div class="tabsSidebar vertical"></div>
+    <% if @organization.members: %>
+    <div class="userZoom-section">
+      <label><%- @T('Member') %></label>
+      <div class="userZoom-details horizontal wrap">
+
+        <% for user in @organization.members: %>
+          <div class="userZoom-detailsEntry">
+            <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+    <% end %>
+
+    <div class="userZoom-section js-ticket-stats"></div>
+
   </div>
-  <form class="bottom-form form-inline horizontal" role="form">
-    <div class="action"></div>
-  </form>
 </div>

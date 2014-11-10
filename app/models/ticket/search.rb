@@ -4,7 +4,7 @@ module Ticket::Search
 
 =begin
 
-search tickets
+search tickets via search index
 
   result = Ticket.search(
     :current_user => User.find(123),
@@ -17,7 +17,7 @@ returns
   result = [ticket_model1, ticket_model2]
 
 
-search tickets
+search tickets via search index
 
   result = Ticket.search(
     :current_user => User.find(123),
@@ -29,6 +29,22 @@ search tickets
 returns
 
   result = [1,3,5,6,7]
+
+
+search tickets via database
+
+  result = Ticket.search(
+    :current_user => User.find(123),
+    :condition    => '',
+    :detail       => true,
+    :limit        => 15,
+    :full         => 0
+  )
+
+returns
+
+  result = [1,3,5,6,7]
+
 
 =end
 
@@ -94,20 +110,7 @@ returns
     end
 
     # fallback do sql query
-    access_condition = []
-    if current_user.is_role('Agent')
-      group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', current_user.id ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
-      access_condition = [ 'group_id IN (?)', group_ids ]
-    else
-      if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
-        access_condition = [ 'customer_id = ?', current_user.id ]
-      else
-        access_condition = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-      end
-    end
+    access_condition = Ticket.access_condition( current_user )
 
     # do query
     # - stip out * we already search for *query* -

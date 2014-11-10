@@ -24,7 +24,7 @@
     <div class="u-textTruncate"><%- @T( @ticket.priority.name ) %></div>
   </div>
   <div class="column">
-    <h3><%- @T( 'Age' ) %></h3>
+    <h3><%- @T( 'Created' ) %></h3>
     <div class="u-textTruncate"><%- @P( @ticket.humanTime ) %></div>
   </div>
   <div class="column">

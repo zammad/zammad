@@ -79,6 +79,36 @@ returns
 
 =begin
 
+get user access conditions
+
+  connditions = Ticket.access_condition( User.find(1) )
+
+returns
+
+  result = [user1, user2, ...]
+
+=end
+
+  def self.access_condition(user)
+    access_condition = []
+    if user.is_role('Agent')
+      group_ids = Group.select( 'groups.id' ).joins(:users).
+      where( 'groups_users.user_id = ?', user.id ).
+      where( 'groups.active = ?', true ).
+      map( &:id )
+      access_condition = [ 'group_id IN (?)', group_ids ]
+    else
+      if !user.organization || ( !user.organization.shared || user.organization.shared == false )
+        access_condition = [ 'customer_id = ?', user.id ]
+      else
+        access_condition = [ '( customer_id = ? OR organization_id = ? )', user.id, user.organization.id ]
+      end
+    end
+    access_condition
+  end
+
+=begin
+
 merge tickets
 
   ticket = Ticket.find(123)
