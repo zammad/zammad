@@ -9,7 +9,7 @@ class App.TicketStats extends App.Controller
     # subscribe and reload data / fetch new data if triggered
     if @user
       @subscribeId = App.User.full( @user.id, @load, false, true )
-    if @organization
+    else if @organization
       @subscribeId = App.Organization.full( @organization.id, @load, false, true )
 
   release: =>
@@ -32,9 +32,7 @@ class App.TicketStats extends App.Controller
       data:        data
       processData: true
       success:     (data) =>
-       # load assets
         App.Collection.loadAssets( data.assets )
-
         @render(data)
       )
 
@@ -152,7 +150,7 @@ class TicketStatsFrequency extends App.Controller
 
     for item in @ticket_volume_by_year
       item.created_in_percent = 100 / max * item.created
-      item.closed_in_percent = 100 / max * item.closed
+      item.closed_in_percent  = 100 / max * item.closed
 
     @html App.view('widget/ticket_stats_frequency')(
       ticket_volume_by_year: @ticket_volume_by_year.reverse()
