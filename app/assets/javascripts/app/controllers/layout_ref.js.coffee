@@ -590,4 +590,15 @@ class ReferenceUserProfile extends App.ControllerContent
 
 App.Config.set( 'layout_ref/user_profile', ReferenceUserProfile, 'Routes' )
 
+class ReferenceOrganizationProfile extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/organization_profile')()
+
+App.Config.set( 'layout_ref/organization_profile', ReferenceOrganizationProfile, 'Routes' )
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

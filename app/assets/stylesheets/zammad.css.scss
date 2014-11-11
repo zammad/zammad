@@ -4216,6 +4216,16 @@ footer {
   margin-left: -50px;
 }
 
+.profile-ticketsPlaceholder {
+  @extend .flex;
+  margin: 12px 0 22px;
+  color: hsl(209,28%,74%);
+  
+  .mood.icon {
+    margin-bottom: 10px;
+  }
+}
+
 .profile-detailsEntry {
   margin: 8px 0;
   padding-left: 50px;
@@ -4230,9 +4240,16 @@ footer {
 
 .profile-ticketList {
   @extend .flex;
+  @extend .vertical;
   
   &:not(:last-child) {
     margin-right: 50px;
+  }
+
+  .tasks {
+    @extend .flex;
+    @extend .vertical;
+    @extend .justified;
   }
 }
 
