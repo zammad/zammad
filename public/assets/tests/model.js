@@ -1,3 +1,5 @@
+window.onload = function() {
+
 // model
 test( "model basic tests", function() {
 
@@ -198,3 +200,143 @@ test( "model basic tests", function() {
   ok( !error['test2'], 'test2 is not required')
 
 });
+
+// model
+test( "model loadAssets tests - 1", function() {
+  window.refreshCounter1 = 0
+  var callback1 = function(state) {
+    window.refreshCounter1 = window.refreshCounter1 + 1
+    equal( state.id, 9999, 'id check')
+
+    if ( window.refreshCounter1 == 1 ) {
+      App.Collection.loadAssets({
+        TicketState: {
+          9999: {
+            name: 'some some name', id: 9999, updated_at: "2014-11-07T23:43:08.000Z"
+          }
+        }
+      })
+
+    }
+    if ( window.refreshCounter1 == 2 ) {
+      App.Collection.loadAssets({
+        TicketState: {
+          9999: {
+            name: 'some some name', id: 9999, updated_at: "2014-11-07T23:43:08.000Z"
+          }
+        }
+      })
+
+    }
+  }
+  App.Collection.loadAssets({
+    TicketState: {
+      9999: {
+        name: 'some some name', id: 9999, updated_at: "2014-11-06T23:43:08.000Z"
+      }
+    }
+  })
+
+  App.TicketState.full(9999, callback1, false, true)
+
+});
+
+App.Delay.set( function() {
+    test( "model loadAssets tests - 1 / check refresh counter", function() {
+      equal( window.refreshCounter1, 2, 'check refresh counter')
+    });
+  },
+  1000
+);
+
+test( "model loadAssets tests - 2", function() {
+  window.refreshCounter2 = 0
+  var callback2 = function(state) {
+    window.refreshCounter2 = window.refreshCounter2 + 1
+    equal( state.id, 10000, 'id check')
+
+    if ( window.refreshCounter2 == 1 ) {
+      App.Collection.loadAssets({
+        TicketState: {
+          10000: {
+            name: 'some some name', id: 10000, updated_at: "2014-11-07T23:43:08.000Z"
+          }
+        }
+      })
+    }
+    if ( window.refreshCounter2 == 2 ) {
+      App.Collection.loadAssets({
+        TicketState: {
+          10000: {
+            name: 'some some name', id: 10000, updated_at: "2014-11-05T23:43:08.000Z"
+          }
+        }
+      })
+    }
+  }
+  App.Collection.loadAssets({
+    TicketState: {
+      10000: {
+        name: 'some some name', id: 10000, updated_at: "2014-11-06T23:43:08.000Z"
+      }
+    }
+  })
+
+  App.TicketState.full(10000, callback2, false, true)
+
+});
+
+App.Delay.set( function() {
+    test( "model loadAssets tests - 2 / check refresh counter", function() {
+      equal( window.refreshCounter2, 2, 'check refresh counter')
+    });
+  },
+  1200
+);
+
+test( "model loadAssets tests - 3", function() {
+  window.refreshCounter3 = 0
+  var callback3 = function(state) {
+    window.refreshCounter3 = window.refreshCounter3 + 1
+    equal( state.id, 10001, 'id check')
+
+    if ( window.refreshCounter3 == 1 ) {
+      App.Collection.loadAssets({
+        TicketState: {
+          10001: {
+            name: 'some some name', id: 10001, updated_at: "2014-11-07T23:43:08.000Z"
+          }
+        }
+      })
+    }
+    if ( window.refreshCounter3 == 2 ) {
+      App.Collection.loadAssets({
+        TicketState: {
+          10001: {
+            name: 'some some name', id: 10001, updated_at: "2014-11-08T23:43:08.000Z"
+          }
+        }
+      })
+    }
+  }
+  App.Collection.loadAssets({
+    TicketState: {
+      10001: {
+        name: 'some some name', id: 10001, updated_at: "2014-11-06T23:43:08.000Z"
+      }
+    }
+  })
+
+  App.TicketState.full(10001, callback3, false, true)
+
+});
+
+App.Delay.set( function() {
+    test( "model loadAssets tests - 3 / check refresh counter", function() {
+      equal( window.refreshCounter3, 3, 'check refresh counter')
+    });
+  },
+  1400
+);
+
+}

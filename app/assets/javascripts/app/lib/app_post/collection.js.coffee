@@ -119,8 +119,9 @@ class _collectionSingleton extends Spine.Module
         # check if new object is newer, just load newer objects
         if object.updated_at && appObject.exists( key )
           exists = appObject.find( key )
-          if exists.updated_at && exists.updated_at isnt object.updated_at
-            appObject.refresh( object )
+          if exists.updated_at
+            if exists.updated_at < object.updated_at
+              appObject.refresh( object )
           else
             appObject.refresh( object )
         else
