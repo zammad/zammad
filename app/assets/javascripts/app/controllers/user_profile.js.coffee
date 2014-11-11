@@ -1,6 +1,6 @@
 class App.UserProfile extends App.Controller
   events:
-    'focusout [data-type=update]': 'update',
+    'focusout [data-type=update]': 'update'
 
   constructor: (params) ->
     super

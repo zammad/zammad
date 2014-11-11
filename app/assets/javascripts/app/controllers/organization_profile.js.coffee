@@ -1,4 +1,7 @@
 class App.OrganizationProfile extends App.Controller
+  events:
+    'focusout [data-type=update]': 'update'
+
   constructor: (params) ->
     super
 
@@ -115,6 +118,14 @@ class App.OrganizationProfile extends App.Controller
       el:    @el.find('.js-action')
       items: actions
     )
+
+  update: (e) =>
+    console.log('update')
+    note = $(e.target).ceg()
+    org  = App.Organization.find( @organization_id )
+    if org.note isnt note
+      org.updateAttributes( note: note )
+      @log 'notice', 'update', e, note, org
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

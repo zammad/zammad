@@ -13,6 +13,12 @@
   </li>
   <% end %>
 </ol>
+<% if @ticket_ids.length is 0: %>
+<div class="profile-ticketsPlaceholder vertical centered">
+  <div class="<%- @iconClass %>"></div>
+  <%- @T('No Tickets') %>
+</div>
+<% end %>
 <% if @ticket_ids.length > @ticket_ids_show.length: %>
   <a href="#" class="js-showAll"><%- @T('Show all ...') %></a>
 <% end %>

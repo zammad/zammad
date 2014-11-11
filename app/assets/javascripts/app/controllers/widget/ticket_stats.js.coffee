@@ -64,10 +64,14 @@ class App.TicketStats extends App.Controller
     )
 
     limit = 5
+    iconClass = ''
+    if data.user_tickets_open_ids.length is 0 && data.user_tickets_closed_ids.length > 0
+      iconClass = 'mood icon supergood-state'
     new TicketStatsList(
       el:         @$('.js-user-open-tickets')
       user:       @user
       head:       'Open Ticket'
+      iconClass:  iconClass
       ticket_ids: data.user_tickets_open_ids
       limit:      limit
     )
@@ -84,10 +88,14 @@ class App.TicketStats extends App.Controller
       ticket_volume_by_year: data.user_ticket_volume_by_year
     )
 
+    iconClass = ''
+    if data.org_tickets_open_ids.length is 0 && data.org_tickets_closed_ids.length > 0
+      iconClass = 'mood icon supergood-state'
     new TicketStatsList(
       el:         @$('.js-org-open-tickets')
       user:       @user
       head:       'Open Ticket'
+      iconClass:  iconClass
       ticket_ids: data.org_tickets_open_ids
       limit:      limit
     )
@@ -127,10 +135,12 @@ class TicketStatsList extends App.Controller
     @html App.view('widget/ticket_stats_list')(
       user:            @user
       head:            @head
+      iconClass:       @iconClass
       ticket_ids:      @ticket_ids
       ticket_ids_show: ticket_ids_show
       limit:           @limit
     )
+
     @frontendTimeUpdate()
     @ticketPopups()
 
