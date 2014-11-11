@@ -121,22 +121,6 @@
                 <div class="name">Superb Service!</div>
                 <div class="time">43 minutes ago</div>
               </div>
-            <li class="task level-1">
-              <div class="icon-holder">
-                <div class="priority icon"></div>
-              </div>
-              <div class="flex">
-                <div class="name">Print sheets strip off</div>
-                <div class="time">1 hour ago</div>
-              </div>
-            <li class="task level-1">
-              <div class="icon-holder">
-                <div class="priority icon"></div>
-              </div>
-              <div class="flex">
-                <div class="name">Block not properly wrought</div>
-                <div class="time">2 hour ago</div>
-              </div>
           </ol>
           <a href="#">Alle Tickets von Steuerbüro C. Kaik …</a>
         </div>
