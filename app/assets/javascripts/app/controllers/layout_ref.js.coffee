@@ -461,12 +461,12 @@ class ContentSidebarTabsRight extends App.ControllerContent
         callback: (el) ->
           el.html('some ticket')
         actions: [
-            name:  'Change Customer'
-            class: 'glyphicon glyphicon-transfer'
+            title:    'Change Customer'
+            name:     'change-customer'
             callback: changeCustomerTicket
           ,
-            name:  'Edit Customer'
-            class: 'glyphicon glyphicon-edit'
+            title:    'Edit Customer'
+            name:     'edit-customer'
             callback: editCustomerTicket
         ]
       ,
@@ -476,12 +476,12 @@ class ContentSidebarTabsRight extends App.ControllerContent
         callback: (el) ->
           el.html('some customer')
         actions: [
-            name:  'Change Customer'
-            class: 'glyphicon glyphicon-transfer'
+            title:    'Change Customer'
+            name:     'change-customer'
             callback: changeCustomerCustomer
           ,
-            name:  'Edit Customer'
-            class: 'glyphicon glyphicon-edit'
+            title:    'Edit Customer'
+            name:     'edit-customer'
             callback: editCustomerCustomer
         ]
       ,

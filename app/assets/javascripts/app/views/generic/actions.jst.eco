@@ -1,7 +1,9 @@
 <div class="dropdown dropdown--actions">
   <div class="dropdown-toggle horizontal center" id="userAction" data-toggle="dropdown">
-    <div class="light cog icon"></div>
-    <% if @type isnt 'small': %><label><%- @T('Action') %></label><% end %>
+    <% if @type isnt 'small': %>
+      <div class="light cog icon"></div>
+      <label><%- @T('Action') %></label>
+    <% end %>
     <span class="select-arrow icon"></span>
   </div>
   <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
