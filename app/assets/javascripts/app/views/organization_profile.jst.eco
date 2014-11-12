@@ -35,6 +35,7 @@
 
         <% for user in @organization.members: %>
           <div class="profile-detailsEntry">
+            <%- user.avatar("40") %>
             <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a>
           </div>
         <% end %>
