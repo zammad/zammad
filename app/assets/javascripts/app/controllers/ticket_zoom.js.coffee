@@ -281,7 +281,7 @@ class App.TicketZoom extends App.Controller
         )
       items = [
         {
-          head: 'Ticket Settings'
+          head: 'Ticket'
           name: 'ticket'
           icon: 'message'
           callback: editTicket
