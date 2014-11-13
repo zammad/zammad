@@ -240,12 +240,22 @@ module Import::OTRS2
     priority(records)
 
     # create groups
-    records = load('Queue')
-    ticket_group(records)
+    queues = load('Queue')
+    ticket_group(queues)
+
+    # get agents groups
+    groups = load('Group')
+
+    # get agents roles
+    roles = load('Role')
 
     # create agents
-    records = load('User')
-    user(records)
+    users = load('User')
+    user(users, groups, roles, queues)
+
+    # create organizations
+    organizations = load('Customer')
+    organization(organizations)
 
     # create customers
     count = 0
@@ -259,7 +269,7 @@ module Import::OTRS2
           run = false
           next
         end
-        customer(records)
+        customer(records, organizations)
     end
 
     Thread.abort_on_exception = true
@@ -275,7 +285,6 @@ module Import::OTRS2
         steps = 20
         while run
           count += steps
-          sleep 1
           puts "loading... thread# #{thread} ..."
           offset = count-steps
           if offset != 0
@@ -288,6 +297,7 @@ module Import::OTRS2
             next
           end
           _ticket_result(records, locks)
+          sleep 1
         end
       }
     }
@@ -819,8 +829,7 @@ module Import::OTRS2
   end
 
   # sync agents
-
-  def self.user(records)
+  def self.user(records, groups, roles, queues)
 
     map = {
       :ChangeTime    => :updated_at,
@@ -838,16 +847,23 @@ module Import::OTRS2
       :UserPw        => :password,
     };
 
-    role = Role.lookup( :name => 'Agent' )
+
     records.each { |user|
       _set_valid(user)
+
+      # get roles
+      role_ids = get_roles_ids(user, groups, roles, queues)
+
+      # get groups
+      group_ids = get_queue_ids(user, groups, roles, queues)
 
       # get new attributes
       user_new = {
         :created_by_id => 1,
         :updated_by_id => 1,
         :source        => 'OTRS Import',
-        :role_ids      => [ role.id ],
+        :role_ids      => role_ids,
+        :group_ids     => group_ids,
       }
       map.each { |key,value|
         if user[key.to_s]
@@ -855,9 +871,11 @@ module Import::OTRS2
         end
       }
 
+      # set pw
       if user_new[:password]
         user_new[:password] = "{sha2}#{user_new[:password]}"
       end
+
       # check if agent already exists
       user_old = User.where( :id => user_new[:id] ).first
 
@@ -880,9 +898,56 @@ module Import::OTRS2
     }
   end
 
+  def self.get_queue_ids(user, groups, roles, queues)
+    queue_ids = []
+
+    # lookup by groups
+    user['GroupIDs'].each {|group_id, permissions|
+      queues.each {|queue_lookup|
+        if queue_lookup['GroupID'] == group_id
+          if permissions && permissions.include?('rw')
+            queue_ids.push queue_lookup['QueueID']
+          end
+        end
+      }
+    }
+
+    # lookup by roles
+
+    # roles of user
+      # groups of roles
+        # queues of group
+
+    queue_ids
+  end
+
+  def self.get_roles_ids(user, groups, roles, queues)
+    roles    = ['Agent']
+    role_ids = []
+    user['GroupIDs'].each {|group_id, permissions|
+      groups.each {|group_lookup|
+        if group_id == group_lookup['ID']
+          if group_lookup['Name'] == 'admin' && permissions && permissions.include?('rw')
+            roles.push 'Admin'
+          end
+          if group_lookup['Name'] =~ /^(stats|report)/ && permissions && ( permissions.include?('ro') || permissions.include?('rw') )
+            roles.push 'Report'
+          end
+        end
+      }
+    }
+    roles.each {|role|
+      role_lookup = Role.lookup( :name => role )
+      if role_lookup
+        role_ids.push role_lookup.id
+      end
+    }
+    role_ids
+  end
+
   # sync customers
 
-  def self.customer(records)
+  def self.customer(records, organizations)
     map = {
       :ChangeTime    => :updated_at,
       :CreateTime    => :created_at,
@@ -913,10 +978,11 @@ module Import::OTRS2
 
       # get new attributes
       user_new = {
-        :created_by_id => 1,
-        :updated_by_id => 1,
-        :source        => 'OTRS Import',
-        :role_ids      => [ role_customer.id ],
+        :created_by_id   => 1,
+        :updated_by_id   => 1,
+        :source          => 'OTRS Import',
+        :organization_id => get_organization_id(user, organizations),
+        :role_ids        => [ role_customer.id ],
       }
       map.each { |key,value|
         if user[key.to_s]
@@ -948,9 +1014,65 @@ module Import::OTRS2
     }
   end
 
+  def self.get_organization_id(user, organizations)
+    organization_id = nil
+    if user['UserCustomerID']
+      organizations.each {|organization|
+        if user['UserCustomerID'] == organization['CustomerID']
+          organization = Organization.where(:name => organization['CustomerCompanyName'] ).first
+          organization_id = organization.id
+        end
+      }
+    end
+    organization_id
+  end
+
+  # sync organizations
+
+  def self.organization(records)
+    map = {
+      :ChangeTime             => :updated_at,
+      :CreateTime             => :created_at,
+      :CreateBy               => :created_by_id,
+      :ChangeBy               => :updated_by_id,
+      :CustomerCompanyName    => :name,
+      :ValidID                => :active,
+      :CustomerCompanyComment => :note,
+    };
+
+    records.each { |organization|
+      _set_valid(organization)
+
+      # get new attributes
+      organization_new = {
+        :created_by_id => 1,
+        :updated_by_id => 1,
+      }
+      map.each { |key,value|
+        if organization[key.to_s]
+          organization_new[value] = organization[key.to_s]
+        end
+      }
+
+      # check if state already exists
+      organization_old = Organization.where( :name => organization_new[:name] ).first
+
+      # set state types
+      if organization_old
+        organization_old.update_attributes(organization_new)
+      else
+        organization = Organization.new(organization_new)
+        organization.id = organization_new[:id]
+        organization.save
+      end
+    }
+  end
+
+
   # set translate valid ids to active = true|false
 
   def self._set_valid(record)
+
       # map
       if record['ValidID'].to_s == '3'
         record['ValidID'] = '2'
@@ -963,6 +1085,11 @@ module Import::OTRS2
       end
       if record['ValidID'].to_s == '0'
         record['ValidID'] = false
+      end
+
+      # fallback
+      if !record['ValidID']
+        record['ValidID'] = true
       end
   end
 end
