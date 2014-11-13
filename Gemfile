@@ -25,9 +25,9 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 
-gem 'twitter', '~> 5.8'
+gem 'twitter', '~> 5.13'
 gem 'koala'
-gem 'mail'
+gem 'mail', '~> 2.5'
 
 gem 'mime-types'
 
