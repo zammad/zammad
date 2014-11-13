@@ -14,7 +14,7 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', github: 'rails/sass-rails'
+  gem 'sass-rails' #, github: 'rails/sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
 end
