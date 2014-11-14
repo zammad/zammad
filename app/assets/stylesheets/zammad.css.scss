@@ -3335,6 +3335,31 @@ footer {
     color: hsl(204,3%,72%);
   }
 
+.alert {
+  padding: 10px 15px;
+  border-radius: 3px;
+  
+  &.alert--info {
+    border-color: hsl(188,50%,72%);
+    background: hsl(191,53%,79%);
+  }
+
+  &.alert--success {
+    border-color: hsl(145,51%,70%);
+    background: hsl(145,51%,77%);
+  }
+
+  &.alert--warning {
+    border-color: hsl(43,92%,71%);
+    background: hsl(42,94%,80%);
+  }
+
+  &.alert--danger {
+    border-color: hsl(9,72%,62%);
+    background: hsl(12,73%,66%);
+  }
+}
+
 .tags {
   margin-bottom: 20px;
 }

@@ -60,6 +60,16 @@
 
   <hr>
 
+  <h2>Alerts</h2>
+
+  <pre>&lt;div class=&quot;alert alert--info&quot; role=&quot;alert&quot;&gt;Account must be manually configured&lt;/div&gt;</pre>
+  <div class="alert alert--info horizontal" role="alert">Account must be manually configured <code class="align-right">.alert--info</code></div>
+  <div class="alert alert--success horizontal" role="alert">Connection established! <code class="align-right">.alert--success</code></div>
+  <div class="alert alert--warning horizontal" role="alert">Delete Cookies? <code class="align-right">.alert--warning</code></div>
+  <div class="alert alert--danger horizontal" role="alert">System Shutting Down! <code class="align-right">.alert--danger</code></div>
+
+  <hr>
+
   <h2>User Selection</h2>
 
     <form>
