@@ -4510,6 +4510,16 @@ label + .wizard-buttonList {
   display: block;
 }
 
+.profile-organizationMember {
+  @extend .profile-detailsEntry;
+  @extend .horizontal;
+  @extend .center;
+  
+  .avatar {
+    margin-right: 10px;
+  }
+}
+
 .profile-ticketList {
   @extend .flex;
   @extend .vertical;
@@ -4521,7 +4531,6 @@ label + .wizard-buttonList {
   .tasks {
     @extend .flex;
     @extend .vertical;
-    @extend .justified;
   }
 }
 
@@ -4540,6 +4549,19 @@ label + .wizard-buttonList {
   
   .stat-bars {
     height: 100px;
+  }
+}
+
+.profile-organizationIcon {
+  @extend .centered;
+  width: 80px;
+  height: 80px;
+  background: hsl(0,0%,87%);
+  border-radius: 100%;
+  opacity: 0.4;
+  
+  .icon {
+    transform: scale(1.6);
   }
 }
 
