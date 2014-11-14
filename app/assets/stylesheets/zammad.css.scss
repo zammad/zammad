@@ -840,18 +840,23 @@ ol.tabs li {
 .provider_icon {
   width: 29px;
   height: 22px;
+  background: image_url("provider.svg") no-repeat;
 }
 
-  .facebook .provider_icon {
-    background-image: image_url("facebook.svg");
+  .facebook.provider_icon {
+    background-position: 0 0;
   }
 
-  .google .provider_icon {
-    background-image: image_url("google.svg");
+  .google.provider_icon {
+    background-position: -30px 0;
   }
 
-  .twitter .provider_icon {
-    background-image: image_url("twitter.svg");
+  .twitter.provider_icon {
+    background-position: -60px 0;
+  }
+
+  .email.provider_icon {
+    background-position: -90px 0;
   }
 
 .icon {
