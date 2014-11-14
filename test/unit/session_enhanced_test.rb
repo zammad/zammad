@@ -10,38 +10,38 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 1
     agent1 = User.create_or_update(
-      :login         => 'session-agent-1',
-      :firstname     => 'Session',
-      :lastname      => 'Agent 1',
-      :email         => 'session-agent1@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'session-agent-1',
+      :firstname => 'Session',
+      :lastname  => 'Agent 1',
+      :email     => 'session-agent1@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent1.roles = roles
     agent1.save
     agent2 = User.create_or_update(
-      :login         => 'session-agent-2',
-      :firstname     => 'Session',
-      :lastname      => 'Agent 2',
-      :email         => 'session-agent2@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'session-agent-2',
+      :firstname => 'Session',
+      :lastname  => 'Agent 2',
+      :email     => 'session-agent2@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent2.roles = roles
     agent2.save
     agent3 = User.create_or_update(
-      :login         => 'session-agent-3',
-      :firstname     => 'Session',
-      :lastname      => 'Agent 3',
-      :email         => 'session-agent3@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'session-agent-3',
+      :firstname => 'Session',
+      :lastname  => 'Agent 3',
+      :email     => 'session-agent3@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent3.roles = roles
     agent3.save
@@ -182,26 +182,26 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 1
     agent1 = User.create_or_update(
-      :login         => 'session-agent-1',
-      :firstname     => 'Session',
-      :lastname      => 'Agent 1',
-      :email         => 'session-agent1@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'session-agent-1',
+      :firstname => 'Session',
+      :lastname  => 'Agent 1',
+      :email     => 'session-agent1@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent1.roles = roles
     agent1.save
     agent2 = User.create_or_update(
-      :login         => 'session-agent-2',
-      :firstname     => 'Session',
-      :lastname      => 'Agent 2',
-      :email         => 'session-agent2@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'session-agent-2',
+      :firstname => 'Session',
+      :lastname  => 'Agent 2',
+      :email     => 'session-agent2@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent2.roles = roles
     agent2.save
@@ -210,7 +210,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     # create sessions
     client_id1_0 = '1234-1'
     client_id1_1 = '1234-2'
-    client_id2 = '123456'
+    client_id2   = '123456'
     Sessions.destory(client_id1_0)
     Sessions.destory(client_id1_1)
     Sessions.destory(client_id2)
@@ -234,18 +234,18 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check collections
     collections = {
-      'Group' => true,
+      'Group'        => true,
       'Organization' => true,
-      'User' => nil,
+      'User'         => nil,
     }
     check_if_collection_reset_message_exists(client_id1_0, collections, 'init')
     check_if_collection_reset_message_exists(client_id1_1, collections, 'init')
     check_if_collection_reset_message_exists(client_id2, collections, 'init')
 
     collections = {
-      'Group' => nil,
+      'Group'        => nil,
       'Organization' => nil,
-      'User' => nil,
+      'User'         => nil,
     }
     check_if_collection_reset_message_exists(client_id1_0, collections, 'init2')
     check_if_collection_reset_message_exists(client_id1_1, collections, 'init2')
@@ -254,9 +254,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     sleep 20
 
     collections = {
-      'Group' => nil,
+      'Group'        => nil,
       'Organization' => nil,
-      'User' => nil,
+      'User'         => nil,
     }
     check_if_collection_reset_message_exists(client_id1_0, collections, 'init3')
     check_if_collection_reset_message_exists(client_id1_1, collections, 'init3')
@@ -270,9 +270,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check collections
     collections = {
-      'Group' => true,
+      'Group'        => true,
       'Organization' => nil,
-      'User' => nil,
+      'User'         => nil,
     }
     check_if_collection_reset_message_exists(client_id1_0, collections, 'update')
     check_if_collection_reset_message_exists(client_id1_1, collections, 'update')
