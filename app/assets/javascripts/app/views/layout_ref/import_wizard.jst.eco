@@ -1,16 +1,16 @@
 <div class="main flex centered darkBackground">
-  <div class="import wizard hero-unit">
-    <div class="wizard-slide vertical" data-slide="home">
+  <div class="import wizard">
+    <div class="wizard-slide" data-slide="home">
       <h2>Import Tickets</h2>
-      <div class="wizard-body flex vertical justified">
+      <div class="wizard-body vertical justified">
         <div class="import-source centered" data-source="otrs" data-target="otrs-prepare-plugin">
-          <img class="logo" src="<%= @C('otrs-logo.png') %>" alt="OTRS" height="37">
+          <img class="logo" src="<%= @C('image_path') + '/' + 'otrs-logo.png' %>" alt="OTRS" height="37">
         </div>
       </div>
     </div>
-    <div class="wizard-slide vertical hide" data-slide="otrs-prepare-plugin" data-hide="2330">
+    <div class="wizard-slide hide" data-slide="otrs-prepare-plugin" data-hide="2330">
       <h2>Create OTRS Migration Plugin</h2>
-      <div class="wizard-body flex vertical justified">
+      <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
           <span class="loading icon"></span> Personalise Migration Plugin ..
         </p>
@@ -19,9 +19,9 @@
         <a class="subtle-link" data-target="home">Go Back</a>
       </div>
     </div>
-    <div class="wizard-slide vertical hide" data-slide="otrs-plugin">
+    <div class="wizard-slide hide" data-slide="otrs-plugin">
       <h2>Download OTRS Migration Plugin</h2>
-      <div class="wizard-body flex vertical justified">
+      <div class="wizard-body vertical justified">
         <p>
           Download and install this personalised OTRS Migration Plugin on your OTRS System:
         </p>
@@ -32,13 +32,13 @@
         <div class="btn btn--primary align-right hide" data-target="otrs-link">Next</div>
       </div>
     </div>
-    <div class="wizard-slide vertical hide" data-slide="otrs-link">
+    <div class="wizard-slide hide" data-slide="otrs-link">
       <h2>Link OTRS</h2>
-      <div class="wizard-body flex vertical justified">
+      <div class="wizard-body vertical justified">
         <p>
           Enter the link provided by the plugin at the end of the installation to link the two systems:
         </p>
-        <div class="form-group">
+        <div class="form-group fromGroup--standalone">
           <label for="otrs-link">OTRS Link</label>
           <div class="u-positionOrigin">
             <input type="url" id="otrs-link" class="form-control" placeholder="http://otrs.company.de/otrs">
@@ -55,9 +55,9 @@
         <div class="btn btn--primary align-right hide" data-target="otrs-export">Migrate OTRS Data</div>
       </div>
     </div>
-    <div class="wizard-slide vertical hide" data-slide="otrs-export">
+    <div class="wizard-slide hide" data-slide="otrs-export">
       <h2>OTRS Migration</h2>
-      <div class="wizard-body flex vertical justified">
+      <div class="wizard-body vertical justified">
         <table class="progressTable">
           <tr class="is-done">
             <td><span class="js-count">42</span>/<span class="js-max">42</span>

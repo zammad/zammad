@@ -29,11 +29,10 @@
 
       <div class="auth_providers horizontal stretch">
         <% for auth_provider in @auth_providers: %>
-          <a class="auth_provider <%= auth_provider.class %> horizontal" href="<%= auth_provider.url %>">
-            <span class="provider_icon"></span>
+          <a class="auth_provider <%= auth_provider.class %>" href="<%= auth_provider.url %>">
+            <span class="<%= auth_provider.class %> provider_icon"></span>
             <span class="provider_name flex"><%- @T( auth_provider.name ) %></span>
           </a>
-          <li><a href="<%= auth_provider.url %>"></a></li>
         <% end %>
       </div>
       <% end %>

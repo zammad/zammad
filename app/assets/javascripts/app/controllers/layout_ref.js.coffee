@@ -512,20 +512,50 @@ class ContentSidebarLeft extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_left', ContentSidebarLeft, 'Routes' )
 
 
-class ImportWizard extends App.ControllerContent
+class App.ControllerWizard extends App.ControllerContent
   elements:
-    '[data-target]':  'links'
     '[data-slide]':   'slides'
-    '[data-action]':  'actions'
+
+  events:
+    'click [data-target]': 'navigate'
+    'click [data-action]': 'action'
+
+  constructor: ->
+    super
+
+  action: (e) =>
+    button = $(e.currentTarget)
+
+    switch button.attr('data-action')
+      when "reveal" then @showNextButton button
+
+  showNextButton: (sibling) ->
+    sibling.parents('.wizard-slide').find('.btn.hide').removeClass('hide')
+
+  navigate: (e) =>
+    target = $(e.currentTarget).attr('data-target')
+    targetSlide = @$("[data-slide=#{ target }]")
+    console.log(e, target, targetSlide)
+
+    if targetSlide
+      @goToSlide targetSlide
+
+  goToSlide: (targetSlide) =>
+    @slides.addClass('hide')
+    targetSlide.removeClass('hide')
+
+    if targetSlide.attr('data-hide')
+      setTimeout @goToSlide, targetSlide.attr('data-hide'), targetSlide.next()
+
+
+class ImportWizard extends App.ControllerWizard
+  elements:
     '#otrs-link':     'otrsLink'
     '.input-feedback':'inputFeedback'
 
   constructor: ->
     super
     @render()
-
-    @links.on 'click', @navigate
-    @actions.on 'click', @action
 
     # wait 500 ms after the last user input before we check the link
     @otrsLink.on 'input', _.debounce(@checkOtrsLink, 600) 
@@ -549,30 +579,6 @@ class ImportWizard extends App.ControllerContent
     @inputFeedback.attr('data-state', state)
 
     @showNextButton @inputFeedback if state is 'success'
-
-  action: (e) =>
-    button = $(e.delegateTarget)
-
-    switch button.attr('data-action')
-      when "reveal" then @showNextButton button
-
-  showNextButton: (sibling) ->
-    sibling.parents('.wizard-slide').find('.btn.hide').removeClass('hide')
-
-  navigate: (e) =>
-    target = $(e.delegateTarget).attr('data-target')
-    targetSlide = @$("[data-slide=#{ target }]")
-
-    if targetSlide
-      @goToSlide targetSlide
-
-  goToSlide: (targetSlide) =>
-    @slides.addClass('hide')
-    targetSlide.removeClass('hide')
-
-    if targetSlide.attr('data-hide')
-      setTimeout @goToSlide, targetSlide.attr('data-hide'), targetSlide.next()
-
 
   render: ->
     @html App.view('layout_ref/import_wizard')()
@@ -600,5 +606,48 @@ class ReferenceOrganizationProfile extends App.ControllerContent
     @html App.view('layout_ref/organization_profile')()
 
 App.Config.set( 'layout_ref/organization_profile', ReferenceOrganizationProfile, 'Routes' )
+
+class ReferenceSetupWizard extends App.ControllerWizard
+  elements:
+    '.fileUpload-preview': 'logoPreview'
+    '#agent_email': 'agentEmail'
+    '#agent_first_name': 'agentFirstName'
+    '#agent_last_name': 'agentLastName'
+
+  events:
+    'change .js-upload': 'onLogoPick'
+    'click .js-inviteAgent': 'inviteAgent'
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/setup')()
+
+  onLogoPick: (event) =>
+    reader = new FileReader()
+
+    reader.onload = (e) =>
+      @logoPreview.attr('src', e.target.result)
+
+    reader.readAsDataURL(event.target.files[0])
+
+  inviteAgent: =>
+    firstname = @agentFirstName.val()
+    lastname = @agentLastName.val()
+
+    App.Event.trigger 'notify', {
+      type:    'success'
+      msg:     App.i18n.translateContent( "Invitation sent to #{ firstname } #{ lastname }" )
+      timeout: 3500
+    }
+
+    @agentEmail.add(@agentFirstName).add(@agentLastName).val('')
+    @agentFirstName.focus()
+
+
+
+App.Config.set( 'layout_ref/setup', ReferenceSetupWizard, 'Routes' )
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
