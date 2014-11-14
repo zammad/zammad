@@ -297,7 +297,7 @@ module Import::OTRS2
             next
           end
           _ticket_result(records, locks)
-          sleep 1
+          #sleep 1
         end
       }
     }
@@ -717,7 +717,7 @@ module Import::OTRS2
         :updated_by_id => 1,
       }
       map.each { |key,value|
-        if state[key.to_s]
+        if state.has_key?(key.to_s)
           state_new[value] = state[key.to_s]
         end
       }
@@ -767,7 +767,7 @@ module Import::OTRS2
         :updated_by_id => 1,
       }
       map.each { |key,value|
-        if priority[key.to_s]
+        if priority.has_key?(key.to_s)
           priority_new[value] = priority[key.to_s]
         end
       }
@@ -809,7 +809,7 @@ module Import::OTRS2
         :updated_by_id => 1,
       }
       map.each { |key,value|
-        if group[key.to_s]
+        if group.has_key?(key.to_s)
           group_new[value] = group[key.to_s]
         end
       }
@@ -866,7 +866,7 @@ module Import::OTRS2
         :group_ids     => group_ids,
       }
       map.each { |key,value|
-        if user[key.to_s]
+        if user.has_key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
       }
@@ -985,7 +985,7 @@ module Import::OTRS2
         :role_ids        => [ role_customer.id ],
       }
       map.each { |key,value|
-        if user[key.to_s]
+        if user.has_key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
       }
@@ -1049,7 +1049,7 @@ module Import::OTRS2
         :updated_by_id => 1,
       }
       map.each { |key,value|
-        if organization[key.to_s]
+        if organization.has_key?(key.to_s)
           organization_new[value] = organization[key.to_s]
         end
       }
@@ -1075,20 +1075,16 @@ module Import::OTRS2
 
       # map
       if record['ValidID'].to_s == '3'
-        record['ValidID'] = '2'
-      end
-      if record['ValidID'].to_s == '2'
         record['ValidID'] = false
-      end
-      if record['ValidID'].to_s == '1'
+      elsif record['ValidID'].to_s == '2'
+        record['ValidID'] = false
+      elsif record['ValidID'].to_s == '1'
         record['ValidID'] = true
-      end
-      if record['ValidID'].to_s == '0'
+      elsif record['ValidID'].to_s == '0'
         record['ValidID'] = false
-      end
 
       # fallback
-      if !record['ValidID']
+      else
         record['ValidID'] = true
       end
   end
