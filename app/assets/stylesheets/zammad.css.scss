@@ -2667,7 +2667,7 @@ footer {
       content: "";
       position: absolute;
       top: 0;
-      left: 0;
+      left: -16px;
       height: 100%;
       width: 3px;
       background: repeating-linear-gradient(-45deg, hsl(193,18%,90%), hsl(193,18%,90%) 4px, transparent 4px, transparent 7px) repeat center;
@@ -3348,7 +3348,19 @@ footer {
 .tabsSidebar .sidebar {
   width: 280px;
   border-left: 1px solid #e6e6e6;
+  padding: 0;
+  @extend .vertical;
 }
+
+  .tabsSidebar hr {
+    margin: 20px;
+  }
+
+  .tabsSidebar .sidebar-header {
+    @extend .horizontal;
+    @extend .center;
+    padding: 20px 20px 0;
+  }
 
   .tabsSidebar .sidebar h2 {
     margin: 0 0 -1px;
@@ -3362,6 +3374,11 @@ footer {
   .tabsSidebar-close {
     padding: 20px;
     margin: -15px;
+  }
+
+  .tabsSidebar .sidebar-content {
+    @extend .flex;
+    padding: 0 20px 20px;
   }
 
   .sidebar.bottom-form-shadow {
@@ -3434,13 +3451,6 @@ footer {
 
   .tabsSidebar-tab.active .icon {
     opacity: 1;
-  }
-
-  .sidebar .form-group {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-right: 20px;
-    padding-left: 20px;
   }
 
   .sidebar .text-muted {
@@ -3921,6 +3931,10 @@ footer {
 
 .userInfo-entry {
   margin: 20px 0;
+}
+
+.userInfo-entry:first-child {
+  margin-top: 0;
 }
 
 .userInfo-label {
