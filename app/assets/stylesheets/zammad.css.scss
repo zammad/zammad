@@ -3351,7 +3351,12 @@ footer {
 }
 
   .tabsSidebar .sidebar h2 {
-    margin: 5px 0 0;
+    margin: 0 0 -1px;
+    line-height: 1;
+  }
+
+  .tabsSidebar .sidebar-actions {
+    padding-left: 8px;
   }
 
   .tabsSidebar-close {
