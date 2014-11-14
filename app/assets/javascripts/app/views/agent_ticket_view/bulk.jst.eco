@@ -1,6 +1,6 @@
 <form class="update-box bulkAction-form" role="form">
   <div class="horizontal center bulkAction-firstStep js-action-step">
-    <div id="form-ticket-bulk" class="form-inline form-inline--enclosed flex horizontal"></div>
+    <div id="form-ticket-bulk" class="form-inline form-inline--enclosed flex"></div>
     <div class="btn btn--primary js-confirm"><%- @T('Confirm') %></div>
   </div>
   <div class="vertical hide bulkAction-secondStep js-confirm-step">

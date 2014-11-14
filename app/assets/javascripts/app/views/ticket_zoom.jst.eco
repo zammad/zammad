@@ -53,7 +53,7 @@
     <div class="tabsSidebar vertical"></div>
   </div>
 
-  <form class="ticket-attributes bottom-form form-inline horizontal" role="form">
+  <form class="attributeBar form-inline is-closed" role="form">
     <div class="form-group">
       <label for="update_ticket_1_state_id123" class="input-group-addon u-clickable">State</label>
       <select id="update_ticket_1_state_id123" class="form-control level-1" name="state_id">

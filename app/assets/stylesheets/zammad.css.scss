@@ -2641,6 +2641,10 @@ footer {
     background: white;
   }
 
+.form-inline {
+  @extend .horizontal;
+}
+
 .form-inline .input-group-addon,
 .form-inline .form-control:not(textarea) {
   background: white;
@@ -2655,7 +2659,7 @@ footer {
     @extend .flex-auto;
   }
 
-    .ticket-attributes.form-inline .form-group:last-child {
+    .attributeBar.form-inline .form-group:last-child {
       @extend .flex-shrink;
     }
 
@@ -2998,10 +3002,6 @@ footer {
   margin-top: auto;
   margin-bottom: 36px;
 }
-
-  .bottom-form {
-    background: white;
-  }
 
   .dropArea {
     background: white;
@@ -3506,6 +3506,16 @@ footer {
     .tagList .tag-delete:hover {
       opacity: 0.5;
     }
+
+.attributeBar {
+  height: 60px;
+  background: white;
+  transition: margin 250ms;
+  
+  &.is-closed {
+    margin-bottom: -60px;
+  }
+}
 
 .newTicket {
   padding: 34px;
@@ -4580,7 +4590,8 @@ label + .wizard-buttonList {
   opacity: 0.4;
   
   .icon {
-    transform: scale(1.6);
+    -webkit-transform: scale(1.6);
+            transform: scale(1.6);
   }
 }
 
