@@ -595,10 +595,10 @@ textarea,
   line-height: 22px;
   color: #555;
   background: white;
-  border: 1px solid transparent;
+  border: 1px solid hsl(0, 0%, 90%);
   border-radius: 3px;
   transition: none;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.1);
+  box-shadow: none;
   outline: none;
   -webkit-appearance: none;
      -moz-appearance: none;
