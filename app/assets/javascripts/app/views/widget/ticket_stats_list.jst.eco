@@ -1,4 +1,5 @@
 <label><%- @T(@head) %> (<%= @ticket_ids.length %>)</label>
+<% if @ticket_ids.length: %>
 <ol class="tasks tasks--standalone">
   <% for ticket_id in @ticket_ids_show: %>
   <% ticket = App.Ticket.fullLocal(ticket_id) %>
@@ -13,7 +14,7 @@
   </li>
   <% end %>
 </ol>
-<% if @ticket_ids.length is 0: %>
+<% else: %>
 <div class="profile-ticketsPlaceholder vertical centered">
   <div class="<%- @iconClass %>"></div>
   <%- @T('No Tickets') %>
