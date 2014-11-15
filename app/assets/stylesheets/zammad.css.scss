@@ -523,11 +523,11 @@ label,
 .checkbox.form-group label {
   text-transform: uppercase;
   color: #999;
+  display: block;
   font-size: 12px;
   font-weight: normal;
   letter-spacing: 0.1em;
-  padding: 0 2px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 fieldset {
@@ -550,6 +550,11 @@ fieldset > *:not(.form-group) .form-control {
 
 .form-group + .form-group {
   margin-top: 0;
+}
+
+.form-group label {
+  padding: 0 2px;
+  margin-bottom: 6px;
 }
 
 .form-group .controls .richtext {
@@ -669,7 +674,6 @@ textarea,
   text-transform: inherit;
   vertical-align: baseline;
   letter-spacing: inherit;
-  display: block;
 }
 
 
@@ -2244,6 +2248,7 @@ footer {
     letter-spacing: 1px;
     text-transform: uppercase;
     text-shadow: 0 1px rgba(0,0,0,.2);
+    cursor: default;
   }
 
   .unique.avatar.size-50 {
@@ -2267,6 +2272,23 @@ footer {
 
   .sidebar h2 {
     margin-top: 5px;
+  }
+
+  .sidebar h3 {
+    margin: 0;
+    color: rgba(0,8,14,.73);
+    font-weight: normal;
+    font-size: 16px;
+    text-transform: initial;
+    letter-spacing: 0;
+  }
+
+  .sidebar-block {
+    margin: 20px 0;
+    
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   .main + .sidebar {
@@ -3352,7 +3374,7 @@ footer {
   @extend .vertical;
 }
 
-  .tabsSidebar hr {
+  .tabsSidebar .sidebar > hr {
     margin: 20px;
   }
 
@@ -3918,12 +3940,12 @@ footer {
     right: 0;
   }
 
-.userInfo .avatar {
+.userInfo-avatar {
   float: right;
   position: relative;
 }
 
-.userInfo .avatar:after {
+.userInfo-avatar:after {
   content: "";
   background: image_url("sprite.svg");
   background-position: -236px 0;
@@ -3934,41 +3956,24 @@ footer {
   position: absolute;
 }
 
-.userInfo-name {
-  color: rgba(0,8,14,.73);
-  font-size: 16px;
-}
-
-.userInfo-entry {
-  margin: 20px 0;
-}
-
-.userInfo-entry:first-child {
-  margin-top: 0;
-}
-
-.userInfo-label {
-  text-transform: uppercase;
-  color: #999;
-  font-size: 12px;
-  font-weight: normal;
-  letter-spacing: 0.1em;
-  margin-bottom: 6px;
-}
-
-.userInfo-value {
-  word-wrap: break-word;
-}
-
-  .userInfo-value textarea {
-    width: 100%;
-    height: auto;
-    line-height: 20px;
-    border: none;
-    padding: 0;
-    outline: none;
-    resize: none;
+.userList {
+  list-style: none;
+  padding: 0;
+  
+  li {
+    @extend .horizontal;
+    @extend .center;
+    margin: 10px 0;
   }
+
+  a {
+    @extend .u-textTruncate;
+  }
+
+  .avatar {
+    margin-right: 7px;
+  }
+}
 
 .checkbox.form-group .checkbox {
   margin-top: 0;
@@ -3985,7 +3990,6 @@ footer {
 
 .checkbox.form-group .controls label {
   padding: 3px 0 3px 20px;
-  display: block;
   font: inherit;
   font-size: 13px;
   margin-bottom: 0;

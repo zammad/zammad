@@ -1,57 +1,49 @@
 <div class="userInfo">
-  <div class="userInfo-entry">
-    <%- @user.avatar("50") %>
-    <div class="userInfo-name">
-      <div class="u-textTruncate" title="<%- @Ti( 'Name') %>">
-        <%= @user.displayName() %>
-      </div>
-    </div>
+  <div class="sidebar-block">
+    <%- @user.avatar("50", "", "userInfo-avatar") %>
+    <h3 class="u-textTruncate" title="<%- @Ti( 'Name') %>">
+      <%= @user.displayName() %>
+    </h3>
   </div>
 <% for row in @userData: %>
   <% if @user[row.name] || row.name is 'note': %>
-    <div class="userInfo-entry">
+    <div class="sidebar-block">
     <% if row.tag isnt 'textarea': %>
-      <div class="userInfo-label"><%- @T( row.display ) %></div>
-      <div class="userInfo-value"><%- @L( @P( @user[row.name] ) ) %></div>
+      <label><%- @T( row.display ) %></label>
+      <%- @L( @P( @user[row.name] ) ) %>
     <% else: %>
-      <div class="userInfo-label"><%- @T( row.display ) %></div>
-      <div class="userInfo-value">
-        <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%= @user[row.name] %></div>
-      </div>
+      <label><%- @T( row.display ) %></label>
+      <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%= @user[row.name] %></div>
     <% end %>
     </div>
   <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
-  <div class="userInfo-entry">
-    <div class="userInfo-label"><%- @T( 'Linked Accounts' ) %></div>
-    <div class="userInfo-value">
+  <div class="sidebar-block">
+    <label><%- @T( 'Linked Accounts' ) %></label>
   <% for account of @user['accounts']: %>
-      <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
+    <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
   <% end %>
-    </div>
   </div>
 <% end %>
 <% if !_.isEmpty(@user['links']): %>
   <% for link in @user['links']: %>
-  <div class="userInfo-entry">
-    <div class="userInfo-label"><%- @T( link['title'] ) %></div>
-    <div class="userInfo-value">
-  <% for item in link['items']: %>
-    <% if item['url']: %>
-      <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
-    <% else: %>
-      <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
-    <% end %>
-      <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
-    <% if item['url']: %>
-      </a>
-    <% else: %>
-      </span>
-    <% end %>
-    </div>
+  <div class="sidebar-block">
+    <label><%- @T( link['title'] ) %></label>
+<% for item in link['items']: %>
+  <% if item['url']: %>
+    <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
+  <% else: %>
+    <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
+  <% end %>
+    <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
+  <% if item['url']: %>
+    </a>
+  <% else: %>
+    </span>
   <% end %>
   </div>
+<% end %>
   <% end %>
 <% end %>
 </div>

@@ -1,31 +1,45 @@
-<div class="userInfo">
-  <div class="userInfo-entry">
+<div class="sidebar-block">
+  <h3 class="u-textTruncate" title="<%- @Ti( 'Name') %>">
     <%= @organization.displayName() %>
-  </div>
-
-  <% for row in @organizationData: %>
-    <% if @organization[row.name] || row.name is 'note': %>
-      <div class="userInfo-entry">
-      <% if row.tag isnt 'textarea': %>
-        <div class="userInfo-label"><%- @T( row.display ) %></div>
-        <div class="userInfo-value"><%- @L( @P( @organization[row.name] ) ) %></div>
-      <% else: %>
-        <div class="userInfo-label"><%- @T( row.display ) %></div>
-        <div class="userInfo-value">
-          <div contenteditable="true" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @T('Add a Note') %>"><%= @organization[row.name] %></div>
-        </div>
-      <% end %>
-      </div>
-    <% end %>
-  <% end %>
-
-  <% if @organization.members: %>
-    <h3><%- @T('Member') %></h3>
-    <ul>
-    <% for user in @organization.members: %>
-      <li><a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a></li>
-    <% end %>
-    </ul>
-  <% end %>
-
+  </h3>
 </div>
+
+<% for row in @organizationData: %>
+<% if @organization[row.name] || row.name is 'note': %>
+<div class="sidebar-block">
+<% if row.tag isnt 'textarea': %>
+  <label><%- @T( row.display ) %></label>
+  <%- @L( @P( @organization[row.name] ) ) %>
+<% else: %>
+  <label><%- @T( row.display ) %></label>
+  <div contenteditable="true" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @T('Add a Note') %>"><%= @organization[row.name] %></div>
+<% end %>
+</div>
+<% end %>
+<% end %>
+
+<% if @organization.members: %>
+<hr>
+<user class="sidebar-block">
+  <label><%- @T('Member') %></label>
+  <ul class="userList">
+<% for user in @organization.members: %>
+    <li>
+      <%- user.avatar("40") %>
+      <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>">
+        <%= user.displayName() %>
+      </a>
+    <li>
+      <%- user.avatar("40") %>
+      <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>">
+        <%= user.displayName() %>
+      </a>
+    <li>
+      <%- user.avatar("40") %>
+      <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>">
+        <%= user.displayName() %>
+      </a>
+<% end %>
+  </ul>
+</div>
+<% end %>
