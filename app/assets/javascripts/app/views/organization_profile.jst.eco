@@ -3,6 +3,9 @@
   <div class="profile-window">
     <div class="profile-section vertical centered">
       <div class="align-right profile-action js-action"></div>
+      <div class="profile-organizationIcon">
+        <div class="organisation icon"></div>
+      </div>
       <h1><%= @organization.displayName() %></h1>
     </div>
     <div class="profile-section">
@@ -34,7 +37,7 @@
       <div class="profile-details horizontal wrap">
 
         <% for user in @organization.members: %>
-          <div class="profile-detailsEntry">
+          <div class="profile-organizationMember">
             <%- user.avatar("40") %>
             <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a>
           </div>
