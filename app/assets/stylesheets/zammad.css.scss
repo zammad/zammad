@@ -522,7 +522,7 @@ h5 {
 label,
 .checkbox.form-group label {
   text-transform: uppercase;
-  color: #999;
+  color: hsl(0,0%,60%);
   display: block;
   font-size: 12px;
   font-weight: normal;
@@ -1646,10 +1646,10 @@ footer {
 }
 
 .can-move-placeholder {
-    border: 1px dashed #DDD;
-    background: #EEE;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  border: 1px dashed #DDD;
+  background: #EEE;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .customer_info {
@@ -4502,6 +4502,10 @@ label + .wizard-buttonList {
 
 .profile-section {
   padding: 20px 50px;
+  
+  &.profile-memberSection {
+    margin-bottom: 10px;
+  }
 }
 
 .profile-section:not(:last-child) {

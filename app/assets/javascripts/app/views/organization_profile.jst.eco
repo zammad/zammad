@@ -32,7 +32,7 @@
     </div>
 
     <% if @organization.members: %>
-    <div class="profile-section">
+    <div class="profile-section profile-memberSection">
       <label><%- @T('Members') %></label>
       <div class="profile-details horizontal wrap">
 

@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <div class="profile-section">
+    <div class="profile-section profile-memberSection">
       <label><%- @T('Members') %></label>
       <div class="profile-details horizontal wrap">
         <div class="profile-organizationMember">
