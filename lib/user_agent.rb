@@ -53,7 +53,7 @@ returns
 
         # http basic auth (if needed)
         if options[:user] && options[:user] != '' && options[:password] && options[:password] != ''
-          request.basic_auth user, password
+          request.basic_auth options[:user], options[:password]
         end
 
         begin
