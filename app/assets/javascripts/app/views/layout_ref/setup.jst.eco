@@ -56,8 +56,12 @@
           <div class="form-group">
             <label>Logo</label>
             <div class="horizontal center">
-              <img class="fileUpload-preview" src="">
-              <div class="btn btn--success fileUpload">Upload<input type="file" class="js-upload" accept="image/*"></div>
+              <div class="flex fileUpload-placeholder">
+                <img class="fileUpload-preview" src="">
+              </div>
+              <div class="flex">
+                <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" accept="image/*"></div>
+              </div>
             </div>
           </div>
           <div class="form-group">
