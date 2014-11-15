@@ -609,7 +609,7 @@ App.Config.set( 'layout_ref/organization_profile', ReferenceOrganizationProfile,
 
 class ReferenceSetupWizard extends App.ControllerWizard
   elements:
-    '.fileUpload-preview': 'logoPreview'
+    '.logo-preview': 'logoPreview'
     '#agent_email': 'agentEmail'
     '#agent_first_name': 'agentFirstName'
     '#agent_last_name': 'agentLastName'
