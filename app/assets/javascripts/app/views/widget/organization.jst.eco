@@ -1,16 +1,21 @@
-<div class="drox">
-
-  <%= @organization.displayName() %>
+<div class="userInfo">
+  <div class="userInfo-entry">
+    <%= @organization.displayName() %>
+  </div>
 
   <% for row in @organizationData: %>
     <% if @organization[row.name] || row.name is 'note': %>
+      <div class="userInfo-entry">
       <% if row.tag isnt 'textarea': %>
-        <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
+        <div class="userInfo-label"><%- @T( row.display ) %></div>
+        <div class="userInfo-value"><%- @L( @P( @organization[row.name] ) ) %></div>
       <% else: %>
-        <div class="customer-info" title="<%- @Ti( row.display ) %>">
+        <div class="userInfo-label"><%- @T( row.display ) %></div>
+        <div class="userInfo-value">
           <div contenteditable="true" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @T('Add a Note') %>"><%= @organization[row.name] %></div>
         </div>
       <% end %>
+      </div>
     <% end %>
   <% end %>
 
