@@ -222,7 +222,7 @@ class AaaGettingStartedTest < TestCase
           {
             :execute => 'watch_for',
             :area    => 'body',
-            :value   => 'Activity Stream',
+            :value   => 'My Stats',
           },
           {
             :execute => 'check',
