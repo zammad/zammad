@@ -4,6 +4,7 @@ class App.TicketZoom extends App.Controller
 
   events:
     'click .js-submit': 'submit'
+    'click .js-bookmark': 'bookmark'
 
   constructor: (params) ->
     super
@@ -241,6 +242,7 @@ class App.TicketZoom extends App.Controller
             ]
             filter:    @form_meta.filter
             params:    defaults
+            bookmarkable: true
           )
           #console.log('Ichanges', modelDiff, task_state, ticket.attributes())
           @markFormDiff( modelDiff )
@@ -616,6 +618,9 @@ class App.TicketZoom extends App.Controller
 
         @fetch( ticket.id, true )
     )
+
+  bookmark: (e) =>
+    $(e.currentTarget).find('.bookmark.icon').toggleClass('filled')
 
   taskGet: (area) =>
     return {} if !App.TaskManager.get(@task_key)
