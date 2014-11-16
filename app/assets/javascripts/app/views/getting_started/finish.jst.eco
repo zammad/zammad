@@ -1,0 +1,13 @@
+<div class="main flex vertical centered darkBackground">
+  <img class="zammad full logo" src="<%= @C('image_path') + '/' + 'full logo on dark.svg' %>" alt="Zammad">
+  <form class="setup wizard">
+    <div class="wizard-slide">
+      <h2><%- @T('Setup Finished') %></h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Starting Zammad
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

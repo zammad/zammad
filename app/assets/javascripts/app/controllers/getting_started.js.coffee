@@ -13,7 +13,7 @@ class Index extends App.ControllerContent
 
     # if not import backend exists, go ahead
     if !App.Config.get('ImportPlugins')
-      @navigate 'getting_started/base'
+      @navigate 'getting_started/admin'
       return
 
     @fetch()
@@ -51,230 +51,10 @@ class Index extends App.ControllerContent
 
 App.Config.set( 'getting_started', Index, 'Routes' )
 
-
-class Base extends App.ControllerContent
-  className: 'getstarted fit'
-  events:
-    'change [name=adapter]':     'toggleAdapter'
-    'submit .base':              'storeUrl'
-    'submit .base-outbound':     'storeOutbound'
-    'submit .base-inbound':      'storeInbound'
-    'click  .js-next':           'submit'
-
-  constructor: ->
-    super
-
-    if @authenticate(true)
-      @navigate '#'
-      return
-
-    # set title
-    @title 'Configure Base'
-
-    @fetch()
-
-  release: =>
-    @el.removeClass('fit getstarted')
-
-  fetch: ->
-
-    # get data
-    @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      processData: true,
-      success: (data, status, xhr) =>
-
-        # redirect to login if master user already exists
-        if @Config.get('system_init_done')
-          @navigate '#login'
-          return
-
-        # check if import is active
-        if data.import_mode == true
-          @navigate '#import/' + data.import_backend
-          return
-
-        # render page
-        @render()
-    )
-
-  render: ->
-
-    @html App.view('getting_started/base')()
-
-    # url
-    url = window.location.origin
-    configureAttributesBase = [
-      { name: 'url', display: 'System URL (where the system can be reached)', tag: 'input', null: false, placeholder: 'http://yourhost', default: url },
-    ]
-    new App.ControllerForm(
-      el: @$('.base-url'),
-      model: { configure_attributes: configureAttributesBase, className: '' },
-    )
-
-    # outbound
-    adapters =
-      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...)'
-      smtp: 'SMTP'
-    adapter_used = 'sendmail'
-    configureAttributesOutbound = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , default: adapter_used },
-    ]
-    new App.ControllerForm(
-      el:    @$('.base-outbound-type'),
-      model: { configure_attributes: configureAttributesOutbound, className: '' },
-    )
-
-    @toggleAdapter()
-
-    # inbound
-    configureAttributesInbound = [
-      { name: 'email',              display: 'Email',    tag: 'input',    type: 'text', limit: 200, null: false, autocapitalize: false, default: '' },
-      { name: 'adapter',            display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } },
-      { name: 'options::host',      display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::user',      display: 'User',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::password',  display: 'Password', tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::ssl',       display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' }, translate: true, default: true},
-    ]
-    new App.ControllerForm(
-      el: @$('.base-inbound-settings'),
-      model: { configure_attributes: configureAttributesInbound, className: '' },
-    )
-
-  toggleAdapter: (channel_used = {}) =>
-    adapter = @$('[name=adapter]').val()
-    if adapter is 'smtp'
-      configureAttributesOutbound = [
-        { name: 'options::host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['host']) },
-        { name: 'options::user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['user']) },
-        { name: 'options::password', display: 'Password', tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['password']) },
-        { name: 'options::ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , translate: true, default: (channel_used['options']&&channel_used['options']['ssl']||true) },
-        { name: 'options::port',     display: 'Port',     tag: 'input',    type: 'text', limit: 5, null: false, class: 'span1', autocapitalize: false, default: ((channel_used['options']&&channel_used['options']['port']) || 25) },
-      ]
-      @form = new App.ControllerForm(
-        el: @$('.base-outbound-settings')
-        model: { configure_attributes: configureAttributesOutbound, className: '' }
-        autofocus: true
-      )
-    else
-      @el.find('.base-outbound-settings').html('')
-
-  submit: (e) =>
-    e.preventDefault()
-    form = $(e.target).attr('data-form')
-    console.log('submit', form)
-    @$(".#{form}").trigger('submit')
-
-  showOutbound: =>
-    @$('.base').addClass('hide')
-    @$('.base-outbound').removeClass('hide')
-    @$('.base-inbound').addClass('hide')
-    @$('.wizard-controls .btn').text('Check').attr('data-form', 'base-outbound').addClass('btn--primary').removeClass('btn--danger btn--success')
-    @enable( @$('.btn') )
-
-  showInbound: =>
-    @$('.base').addClass('hide')
-    @$('.base-outbound').addClass('hide')
-    @$('.base-inbound').removeClass('hide')
-    @$('.wizard-controls .btn').text('Check').attr('data-form', 'base-inbound').addClass('btn--primary').removeClass('btn--danger btn--success')
-    @enable( @$('.btn') )
-
-  storeUrl: (e) =>
-    e.preventDefault()
-
-    # get params
-    params = @formParam(e.target)
-    console.log('submit', params, e)
-    @disable(e)
-
-    @ajax(
-      id:   'base_url'
-      type: 'POST'
-      url:  @apiPath + '/getting_started/base_url'
-      data: JSON.stringify( {url:params.url} )
-      processData: true
-      success: (data, status, xhr) =>
-        if data.result is 'ok'
-          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary btn--danger').addClass('btn--success')
-          @delay( @showOutbound, 1500 )
-        else
-          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary btn--success')
-          @enable(e)
-      fail: =>
-        @enable(e)
-    )
-
-  storeOutbound: (e) =>
-    e.preventDefault()
-
-    # get params
-    params = @formParam(e.target)
-    @disable(e)
-
-    @ajax(
-      id:   'base_outbound'
-      type: 'POST'
-      url:  @apiPath + '/getting_started/base_outbound'
-      data: JSON.stringify( params )
-      processData: true
-      success: (data, status, xhr) =>
-        if data.result is 'ok'
-          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary btn--danger').addClass('btn--success')
-          @delay( @showInbound, 1500 )
-        else
-          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary btn--success')
-          @enable(e)
-      fail: =>
-        @enable(e)
-    )
-
-  storeInbound: (e) =>
-    e.preventDefault()
-
-    # get params
-    params = @formParam(e.target)
-    @disable(e)
-
-    console.log('PA', params)
-
-    @ajax(
-      id:   'base_inbound'
-      type: 'POST'
-      url:  @apiPath + '/getting_started/base_inbound'
-      data: JSON.stringify( params )
-      processData: true
-      success: (data, status, xhr) =>
-
-        if data.result is 'ok'
-          @$('.wizard-controls .btn').text('Done').removeClass('btn--primary btn--danger').addClass('btn--success')
-          @delay( @goToAdmin, 1500 )
-        else
-          @$('.wizard-controls .btn').text( data.message_human || data.message ).addClass('btn--danger').removeClass('btn--primary btn--success')
-        @enable(e)
-      fail: =>
-        @enable(e)
-    )
-
-  disable: (e) =>
-    @formDisable(e)
-    @$('.wizard-controls .btn').attr('disabled', true)
-
-  enable: (e) =>
-    @formEnable(e)
-    @$('.wizard-controls .btn').attr('disabled', false)
-
-  goToAdmin: =>
-    @navigate 'getting_started/admin'
-
-App.Config.set( 'getting_started/base', Base, 'Routes' )
-
-
 class Admin extends App.ControllerContent
   className: 'getstarted fit'
   events:
-    'submit .js-admin':         'submit'
+    'submit form': 'submit'
 
   constructor: ->
     super
@@ -295,13 +75,10 @@ class Admin extends App.ControllerContent
 
     # get data
     @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      data:  {
-#        view:       @view,
-      }
-      processData: true,
+      id:    'getting_started'
+      type:  'GET'
+      url:   @apiPath + '/getting_started'
+      processData: true
       success: (data, status, xhr) =>
 
         # redirect to login if master user already exists
@@ -384,28 +161,34 @@ class Admin extends App.ControllerContent
   relogin: (data, status, xhr) =>
     @log 'notice', 'relogin:success', data
 
-    # add notify
     App.Event.trigger 'notify:removeall'
 
-    @navigate 'getting_started/agents'
+    @navigate 'getting_started/base'
 
 App.Config.set( 'getting_started/admin', Admin, 'Routes' )
 
-class Agent extends App.ControllerContent
-  className: 'getstarted'
+
+class Base extends App.ControllerContent
+  className: 'getstarted fit'
+  elements:
+    '.logo-preview': 'logoPreview'
+
   events:
-    'submit .js-agent':         'submit'
+    'submit form':       'submit'
+    'change .js-upload': 'onLogoPick'
 
   constructor: ->
     super
 
-    return if !@authenticate()
+    # redirect if we are not admin
+    if !@authenticate(true)
+      @navigate '#'
+      return
 
     # set title
-    @title 'Invite Agents'
+    @title 'Configure Base'
 
     @fetch()
-
 
   release: =>
     @el.removeClass('fit getstarted')
@@ -420,10 +203,408 @@ class Agent extends App.ControllerContent
       processData: true,
       success: (data, status, xhr) =>
 
-        # redirect to login if master user already exists
-        if !data.setup_done
-          @navigate '#getting_started/admin'
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
           return
+
+        # render page
+        @render()
+    )
+
+  render: ->
+
+    fqdn      = App.Config.get('fqdn')
+    http_type = App.Config.get('http_type')
+    if !fqdn || fqdn is 'zammad.example.com'
+      url = window.location.origin
+    else
+      url = "#{http_type}://#{fqdn}"
+
+    organization = App.Config.get('organization')
+    @html App.view('getting_started/base')(
+      url:          url
+      organization: organization
+    )
+
+  onLogoPick: (event) =>
+    reader = new FileReader()
+
+    reader.onload = (e) =>
+      @logoPreview.attr('src', e.target.result)
+
+    file = event.target.files[0]
+
+    @hideAlerts()
+
+    # if no file is given, about in file upload was used
+    if !file
+      return
+
+    maxSiteInMb = 3
+    if file.size && file.size > 1024 * 1024 * maxSiteInMb
+      @showAlert( 'logo', App.i18n.translateInline( 'File too big, max. %s MB allowed.', maxSiteInMb ) )
+      @logoPreview.attr( 'src', '' )
+      return
+
+    reader.readAsDataURL(file)
+
+  submit: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+    params['logo'] = @logoPreview.attr('src')
+
+    @hideAlerts()
+    @disable(e)
+
+    @ajax(
+      id:   'getting_started_base'
+      type: 'POST'
+      url:  @apiPath + '/getting_started/base'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          for key, value of data.settings
+            App.Config.set( key, value )
+          @navigate 'getting_started/channel'
+        else
+          for key, value of data.messages
+            @showAlert( key, value )
+          @enable(e)
+      fail: =>
+        @enable(e)
+    )
+
+  hideAlerts: =>
+    @$('.form-group').removeClass('has-error')
+    @$('.alert').addClass('hide')
+
+  showAlert: (field, message) =>
+    @$("[name=#{field}]").closest('.form-group').addClass('has-error')
+    @$("[name=#{field}]").closest('.form-group').find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
+
+  disable: (e) =>
+    @formDisable(e)
+    @$('.wizard-controls .btn').attr('disabled', true)
+
+  enable: (e) =>
+    @formEnable(e)
+    @$('.wizard-controls .btn').attr('disabled', false)
+
+App.Config.set( 'getting_started/base', Base, 'Routes' )
+
+class Channel extends App.ControllerContent
+  className: 'getstarted fit'
+
+  constructor: ->
+    super
+
+    # redirect if we are not admin
+    if !@authenticate(true)
+      @navigate '#'
+      return
+
+    # set title
+    @title 'Connect Channels'
+
+    @adapters = [
+      {
+        name: 'Email'
+        class: 'email'
+        link: '#getting_started/channel/email'
+      },
+    ]
+
+    @fetch()
+
+  release: =>
+    @el.removeClass('fit getstarted')
+
+  fetch: ->
+
+    # get data
+    @ajax(
+      id:    'getting_started',
+      type:  'GET',
+      url:   @apiPath + '/getting_started',
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
+          return
+
+        # render page
+        @render()
+    )
+
+  render: ->
+    @html App.view('getting_started/channel')(
+      adapters: @adapters
+    )
+
+App.Config.set( 'getting_started/channel', Channel, 'Routes' )
+
+
+class ChannelEmail extends App.ControllerContent
+  className: 'getstarted fit'
+  events:
+    'submit .js-intro':                   'emailProbe'
+    'submit .js-inbound':                 'storeInbound'
+    'change .js-outbound [name=adapter]': 'toggleAdapter'
+    'submit .js-outbound':                'storeOutbound'
+
+  constructor: ->
+    super
+
+    # redirect if we are not admin
+    if !@authenticate(true)
+      @navigate '#'
+      return
+
+    # set title
+    @title 'Email Account'
+
+    # store account settings
+    @account =
+      inbound:  {}
+      outbound: {}
+      meta:     {}
+
+    @fetch()
+
+  release: =>
+    @el.removeClass('fit getstarted')
+
+  fetch: ->
+
+    # get data
+    @ajax(
+      id:    'getting_started',
+      type:  'GET',
+      url:   @apiPath + '/getting_started',
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
+          return
+
+        # render page
+        @render()
+    )
+
+  render: ->
+
+    @html App.view('getting_started/email')()
+
+    # outbound
+    adapters =
+      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
+      smtp:     'SMTP - configure your own outgoing SMTP settings'
+    adapter_used = 'sendmail'
+    configureAttributesOutbound = [
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , default: adapter_used },
+    ]
+    new App.ControllerForm(
+      el:    @$('.base-outbound-type'),
+      model: { configure_attributes: configureAttributesOutbound, className: '' },
+    )
+    @toggleAdapter()
+
+    # inbound
+    configureAttributesInbound = [
+      { name: 'adapter',            display: 'Type',     tag: 'select',   multiple: false, null: false, options: { imap: 'IMAP', pop3: 'POP3' } },
+      { name: 'options::host',      display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::user',      display: 'User',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::password',  display: 'Password', tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::ssl',       display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' }, translate: true, default: true},
+    ]
+    new App.ControllerForm(
+      el:    @$('.base-inbound-settings'),
+      model: { configure_attributes: configureAttributesInbound, className: '' },
+    )
+
+  toggleAdapter: (channel_used = {}) =>
+    adapter = @$('.js-outbound [name=adapter]').val()
+    if adapter is 'smtp'
+      configureAttributesOutbound = [
+        { name: 'options::host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['host']) },
+        { name: 'options::user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['user']) },
+        { name: 'options::password', display: 'Password', tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['password']) },
+        { name: 'options::ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , translate: true, default: (channel_used['options']&&channel_used['options']['ssl']||true) },
+        { name: 'options::port',     display: 'Port',     tag: 'input',    type: 'text', limit: 5, null: false, class: 'span1', autocapitalize: false, default: ((channel_used['options']&&channel_used['options']['port']) || 25) },
+      ]
+      @form = new App.ControllerForm(
+        el:    @$('.base-outbound-settings')
+        model: { configure_attributes: configureAttributesOutbound, className: '' }
+      )
+    else
+      @el.find('.base-outbound-settings').html('')
+
+  emailProbe: (e) =>
+    e.preventDefault()
+    params = @formParam(e.target)
+
+    # remember account settings
+    @account.meta = params
+
+    @disable(e)
+    @$('.js-probe .js-email').text( params.email )
+    @showSlide('js-probe')
+
+    @ajax(
+      id:   'email_probe'
+      type: 'POST'
+      url:  @apiPath + '/getting_started/email_probe'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          if data.setting
+            for key, value of data.setting
+              @account[key] = value
+          @verify(@account)
+        else
+          @showSlide('js-inbound')
+        @enable(e)
+      fail: =>
+        @enable(e)
+        @showSlide('js-intro')
+    )
+
+  showSlide: (name) =>
+    @$('.setup.wizard').addClass('hide')
+    @$(".setup.wizard.#{name}").removeClass('hide')
+
+  storeOutbound: (e) =>
+    e.preventDefault()
+
+    # get params
+    params          = @formParam(e.target)
+    params['email'] = @account['meta']['email']
+    @disable(e)
+
+    @hideAlert('js-outbound')
+
+    @ajax(
+      id:   'email_outbound'
+      type: 'POST'
+      url:  @apiPath + '/getting_started/email_outbound'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+
+          # remember account settings
+          @account.outbound = params
+
+          @verify(@account)
+        else
+          @showAlert('js-outbound', data.message_human || data.message )
+        @enable(e)
+      fail: =>
+        @enable(e)
+    )
+
+  storeInbound: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+    @disable(e)
+
+    @hideAlert('js-inbound')
+
+    @ajax(
+      id:   'email_inbound'
+      type: 'POST'
+      url:  @apiPath + '/getting_started/email_inbound'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          @showSlide('js-outbound')
+
+          # remember account settings
+          @account.inbound = params
+        else
+          @showAlert('js-inbound', data.message_human || data.message )
+        @enable(e)
+      fail: =>
+        @enable(e)
+    )
+
+  verify: (account) =>
+    @showSlide('js-verify')
+
+    @hideAlert('js-verify')
+
+    @ajax(
+      id:   'email_verify'
+      type: 'POST'
+      url:  @apiPath + '/getting_started/email_verify'
+      data: JSON.stringify( account )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          @navigate 'getting_started/agents'
+        else
+          @showAlert('js-verify', data.message_human || data.message )
+        @enable(e)
+      fail: =>
+        @enable(e)
+    )
+
+  showAlert: (screen, message) =>
+    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
+
+  hideAlert: (screen) =>
+    @$(".#{screen}").find('.alert').addClass('hide')
+
+  disable: (e) =>
+    @formDisable(e)
+    @$('.wizard-controls .btn').attr('disabled', true)
+
+  enable: (e) =>
+    @formEnable(e)
+    @$('.wizard-controls .btn').attr('disabled', false)
+
+App.Config.set( 'getting_started/channel/email', ChannelEmail, 'Routes' )
+
+
+class Agent extends App.ControllerContent
+  className: 'getstarted fit'
+  events:
+    'submit form': 'submit'
+
+  constructor: ->
+    super
+
+    return if !@authenticate()
+
+    # set title
+    @title 'Invite Agents'
+
+    @fetch()
+
+  release: =>
+    @el.removeClass('fit getstarted')
+
+  fetch: ->
+
+    # get data
+    @ajax(
+      id:    'getting_started',
+      type:  'GET',
+      url:   @apiPath + '/getting_started',
+      processData: true,
+      success: (data, status, xhr) =>
 
         # check if import is active
         if data.import_mode == true
@@ -496,3 +677,32 @@ class Agent extends App.ControllerContent
     )
 
 App.Config.set( 'getting_started/agents', Agent, 'Routes' )
+
+class Channel extends App.ControllerContent
+  className: 'getstarted fit'
+
+  constructor: ->
+    super
+
+    return if !@authenticate()
+
+    # set title
+    @title 'Setup Finished'
+
+    @render()
+
+  release: =>
+    @el.removeClass('fit getstarted')
+
+  render: ->
+    @html App.view('getting_started/finish')()
+    @delay(
+      => @$('.wizard-slide').addClass('hide')
+      2300
+    )
+    @delay(
+      => @navigate '#'
+      4300
+    )
+
+App.Config.set( 'getting_started/finish', Channel, 'Routes' )

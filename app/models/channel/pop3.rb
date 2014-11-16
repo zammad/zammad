@@ -15,8 +15,15 @@ class Channel::POP3 < Channel::EmailParser
     puts "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
 
     @pop = Net::POP3.new( channel[:options][:host], port )
+
+    # on check, reduce open_timeout to have faster probing
+    if check_type == 'check'
+      @pop.open_timeout = 5
+      @pop.read_timeout = 6
+    end
+
     if ssl
-      @pop.enable_ssl
+      @pop.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
     end
     @pop.start( channel[:options][:user], channel[:options][:password] )
     if check_type == 'check'

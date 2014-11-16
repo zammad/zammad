@@ -1,14 +1,13 @@
-<div class="fullHeight flex vertical center justified getstarted fit">
-  <div class="hero-unit">
-    <ol class="horizontal tabs progress-tabs tabs-condensed">
-      <li class="configure_channels tab u-textTruncate"><%- @T( 'Configure Base' ) %></li>
-      <li class="create_admin tab u-textTruncate active"><%- @T( 'Create Admin' ) %></li>
-      <li class="invite_agents tab u-textTruncate"><%- @T( 'Invite Agents' ) %></li>
-    </ol>
-    <div class="master-user hero-left">
-      <form class="form-stacked js-admin">
-        <button type="submit" class="btn btn--primary submit pull-right"><%- @T( 'Create Admin' ) %></button>
-      </form>
+<div class="main flex vertical centered darkBackground">
+  <img class="zammad full logo" src="<%= @C('image_path') + '/' + 'full logo on dark.svg' %>" alt="Zammad">
+  <form class="setup wizard">
+    <div class="wizard-slide">
+      <h2><%- @T('Administrator Account') %></h2>
+      <div class="wizard-body vertical justified js-admin"></div>
+      <div class="wizard-controls center">
+        <a class="subtle-link" href="#getting_started"><%- @T('Go Back') %></a>
+        <button class="btn btn--success align-right"><%- @T( 'Create' ) %></button>
+      </div>
     </div>
-  </div>
+  </form>
 </div>

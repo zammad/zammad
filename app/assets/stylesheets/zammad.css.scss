@@ -4203,12 +4203,12 @@ label + .wizard-buttonList {
   display: block;
   background: hsl(0,0%,95%);
   width: 100%;
-  height: 130px;
+  height: 60px;
   margin-bottom: 10px;
   content: "";
   color: hsl(0,0%,60%);
   @extend .centered;
-  
+
   &:after {
     content: attr(data-placeholder);
   }
@@ -4216,8 +4216,8 @@ label + .wizard-buttonList {
 
 .setup.wizard .logo-preview:not([src=""]) {
   content: initial;
-  max-width: 100%;
-  max-height: 130px;
+  max-width: 240px;
+  max-height: 60px;
   margin: 0 auto 15px;
   background: none;
   width: auto;

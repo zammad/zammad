@@ -1,0 +1,25 @@
+<div class="main flex vertical centered darkBackground">
+  <img class="zammad full logo" src="<%= @C('image_path') + '/' + 'full logo on dark.svg' %>" alt="Zammad">
+  <form class="setup wizard">
+    <div class="wizard-slide">
+      <h2><%- @T('Connect Channels') %></h2>
+      <div class="wizard-body vertical center">
+        <p class="help-block help-block--center"><%- @T('Setup the communication channels you want to use with your Zammad.') %></p>
+        <div class="wizard-buttonList vertical">
+
+          <% for adapter in @adapters: %>
+            <div class="btn auth_provider auth_provider--wide <%= adapter.class %>">
+              <div class="<%= adapter.class %> provider_icon"></div>
+              <a class="provider_name" href="<%= adapter.link %>"><%- @T( adapter.name ) %></a>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+      <div class="wizard-controls center">
+        <a class="subtle-link" href="#getting_started/base"><%- @T('Go Back') %></a>
+        <a class="btn align-right" href="#getting_started/finish"><%- @T( 'Skip' ) %></a>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,31 +1,32 @@
-<div class="fullHeight flex vertical center justified">
-  <div class="hero-unit">
-    <ol class="horizontal tabs progress-tabs tabs-condensed">
-      <li class="configure_channels tab u-textTruncate active"><%- @T( 'Configure Base' ) %></li>
-      <li class="create_admin tab u-textTruncate"><%- @T( 'Create Admin' ) %></li>
-      <li class="invite_agents tab u-textTruncate"><%- @T( 'Invite Agents' ) %></li>
-    </ol>
-
-    <form class="base">
-      <div class="base-url"></div>
-    </form>
-
-
-    <form class="base-outbound hide">
-      <h2><%- @T('E-Mail Outbound') %></h2>
-      <div class="base-outbound-type"></div>
-      <div class="base-outbound-settings"></div>
-    </form>
-
-    <form class="base-inbound hide">
-      <h2><%- @T('E-Mail Inbound') %></h2>
-      <div class="base-inbound-settings"></div>
-    </form>
-
-    <div class="wizard-controls horizontal center">
-      <a class="subtle-link" href="#getting_started"><%- @T('Go Back') %></a>
-      <div class="btn btn--primary js-next align-right" data-form="base"><%- @T('Next') %></div>
+<div class="main flex vertical centered darkBackground">
+  <img class="zammad full logo" src="<%= @C('image_path') + '/' + 'full logo on dark.svg' %>" alt="Zammad">
+  <form class="setup wizard">
+    <div class="wizard-slide">
+      <h2><%- @T('Organization') %></h2>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group">
+            <label><%- @T('Organization Name') %></label>
+            <div class="alert alert--danger hide" role="alert"></div>
+            <input class="form-control" name="organization" placeholder="<%- @Ti('Company Inc.') %>" value="<%= @organization %>" required>
+          </div>
+          <div class="form-group">
+            <label><%- @T('Logo') %></label>
+            <div class="alert alert--danger hide" role="alert"></div>
+            <img class="logo-preview" src="" data-placeholder="<%- @T('Your Logo') %>">
+            <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" name="logo" accept="image/*"></div>
+          </div>
+          <div class="form-group">
+            <label><%- @T('System URL') %></label>
+            <div class="alert alert--danger hide" role="alert"></div>
+            <input type="text" class="form-control" name="url" value="<%= @url %>" placeholder="http://zammad.example.com" required>
+            <p class="help-block">The URL to this installation of Zammad.</p>
+          </div>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <button class="btn btn--primary align-right"><%- @T( 'Next' ) %></button>
+      </div>
     </div>
-
-  </div>
+  </form>
 </div>
