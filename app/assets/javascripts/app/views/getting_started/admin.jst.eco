@@ -1,9 +1,9 @@
 <div class="main flex vertical centered darkBackground">
   <img class="zammad full logo" src="<%= @C('image_path') + '/' + 'full logo on dark.svg' %>" alt="Zammad">
-  <form class="setup wizard">
+  <form class="setup wizard js-admin">
     <div class="wizard-slide">
       <h2><%- @T('Administrator Account') %></h2>
-      <div class="wizard-body vertical justified js-admin"></div>
+      <div class="wizard-body vertical justified js-admin-form"></div>
       <div class="wizard-controls center">
         <a class="subtle-link" href="#getting_started"><%- @T('Go Back') %></a>
         <button class="btn btn--success align-right"><%- @T( 'Create' ) %></button>

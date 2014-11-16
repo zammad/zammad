@@ -253,11 +253,14 @@ class TestCase < Test::Unit::TestCase
       text = ''
       (1..36).each { |loop|
         element = instance.find_element( { :css => action[:area] } )
-        text = element.text
-        if text =~ /#{action[:value]}/i
-          assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
-          sleep 0.4
-          return
+        if element.displayed?
+          text = element.text
+          puts "T: #{text}"
+          if text =~ /#{action[:value]}/i
+            assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+            sleep 0.4
+            return
+          end
         end
         sleep 0.33
       }

@@ -103,7 +103,7 @@ class Admin extends App.ControllerContent
     @html App.view('getting_started/admin')()
 
     new App.ControllerForm(
-      el:        @$('.js-admin')
+      el:        @$('.js-admin-form')
       model:     App.User
       screen:    'signup'
       autofocus: true
@@ -623,7 +623,7 @@ class Agent extends App.ControllerContent
     @html App.view('getting_started/agent')()
 
     new App.ControllerForm(
-      el:        @$('.js-agent')
+      el:        @$('.js-agent-form')
       model:     App.User
       screen:    'invite_agent'
       autofocus: true
