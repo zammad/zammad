@@ -1,7 +1,17 @@
 <div class="<%= @attribute.tag %> form-group<%= " #{ @attribute.item_class }" if @attribute.item_class %>">
-  <div class="horizontal">
+  <div class="formGroup-label">
     <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T( @attribute.display ) %> <span><% if !@attribute.null: %>*<% end %></span></label>
-    <%- @item %><% if @attribute.note: %><div class="align-right help-message" title="<%- @Ti( @attribute.note ) + ' ' %>"><div class="help icon"></div></div><% end %>
+    <%- @item %>
+    <% if @bookmarkable: %>
+    <div class="align-right js-bookmark formGroup-bookmark">
+      <div class="filled bookmark icon"></div>
+    </div>
+    <% end %>
+    <% if @attribute.note: %>
+    <div class="align-right help-message" title="<%- @Ti( @attribute.note ) + ' ' %>">
+      <div class="help icon"></div>
+    </div>
+    <% end %>
   </div>
   <div class="controls">
 	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>

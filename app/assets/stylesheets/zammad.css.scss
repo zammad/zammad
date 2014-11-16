@@ -548,13 +548,40 @@ fieldset > *:not(.form-group) .form-control {
   margin-right: 4px;
 }
 
+.form-group {
+  margin-bottom: 16px;
+}
+
 .form-group + .form-group {
   margin-top: 0;
 }
 
-.form-group label {
+.formGroup-label {
   padding: 0 2px;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
+  position: relative;
+  @extend .horizontal;
+  @extend .center;
+  
+  label {
+    margin: 0;
+  }
+
+  .bookmark.icon {
+    margin-bottom: -1px;
+  }
+}
+
+.formGroup-bookmark {
+  @extend .u-clickable;
+  @extend .horizontal;
+  @extend .center;
+  @extend .reverse;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  top: -10px;
 }
 
 .form-group .controls .richtext {
@@ -1484,6 +1511,16 @@ ol.tabs li {
     height: 7px;
     background-position: -81px -308px;
     margin-top: -2px;
+  }
+
+  .bookmark.icon {
+    width: 12px;
+    height: 12px;
+    background-position: -94px -307px;
+  }
+
+  .filled.bookmark.icon {
+    background-position: -107px -307px;
   }
 
   .dark.group.icon {
@@ -2692,17 +2729,20 @@ footer {
     .form-group.is-changed:before {
       content: "";
       position: absolute;
-      top: 0;
+      top: 23px;
       left: -16px;
-      height: 100%;
+      bottom: 0;
       width: 3px;
-      background: repeating-linear-gradient(-45deg, hsl(193,18%,90%), hsl(193,18%,90%) 4px, transparent 4px, transparent 7px) repeat center;
-      background-size: 9px 9px;
+      background: repeating-linear-gradient(45deg, hsl(193,18%,90%), hsl(193,18%,90%) 5px, transparent 5px, transparent 9px) repeat center;
+      background-size: 11px 11px;
     }
 
     .form-inline .form-group.is-changed:before {
       width: 100%;
       height: 3px;
+      top: 0;
+      left: 0;
+      bottom: auto;
     }
 
     .form-group.is-changed label {
@@ -2717,7 +2757,7 @@ footer {
       width: 5px;
       height: 5px;
       top: 50%;
-      margin-top: -4px;
+      margin-top: -3px;
       border-radius: 100%;
       background: hsl(198,19%,72%);
     }

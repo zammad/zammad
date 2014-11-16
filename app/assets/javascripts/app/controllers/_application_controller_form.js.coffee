@@ -1430,6 +1430,7 @@ class App.ControllerForm extends App.Controller
         App.view('generic/attribute')(
           attribute: attribute,
           item:      '',
+          bookmarkable: @bookmarkable
         )
       )
       fullItem.find('.controls').prepend( item )
