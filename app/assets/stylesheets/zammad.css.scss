@@ -656,7 +656,7 @@ textarea,
 
   select.form-control {
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 34px;
   }
 
   .form-control + .select-arrow  {
@@ -806,6 +806,14 @@ textarea,
   padding: 10px;
   height: auto;
   background: hsl(234,10%,19%);
+}
+
+.content.getstarted {
+  padding: 0;
+  
+  .main {
+    padding: 20px 10px;
+  }
 }
 
 .login {
@@ -3471,7 +3479,7 @@ footer {
       position: static;
     }
   }
-  
+
   .tabsSidebar-close {
     padding: 20px;
     margin: -15px;
@@ -4196,6 +4204,7 @@ footer {
   @extend .hero-unit;
   width: 400px;
   padding-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .wizard h2 {
@@ -4254,30 +4263,6 @@ label + .wizard-buttonList {
   }
 }
 
-.setup.wizard .wizard-slide {
-  h2 .provider_icon {
-    margin-right: 8px;
-    margin-left: -10px;
-  }
-
-  &[data-slide=twitter],
-  &[data-slide=email] {
-    h2 {
-      color: white;
-    }
-  }
-
-  &[data-slide=twitter] {
-    background: hsl(197, 75%, 53%);
-    border-color: hsl(197, 75%, 48%);
-  }
-
-  &[data-slide=email] {
-    background: hsl(47, 100%, 59%);
-    border-color: hsl(47, 100%, 54%);
-  }
-}
-
 .setup.wizard .logo-preview {
   display: block;
   height: 0;
@@ -4300,6 +4285,10 @@ label + .wizard-buttonList {
   + .logo-preview-placeholder {
     display: none;
   }
+}
+
+.setup.wizard .base-outbound-settings {
+  margin-top: 15px;
 }
 
 .import.wizard .wizard-slide {
