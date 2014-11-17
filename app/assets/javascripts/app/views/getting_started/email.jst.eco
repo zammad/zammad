@@ -56,10 +56,10 @@
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="base-inbound-settings"></div>
-        <div class="wizard-controls center">
-          <a class="subtle-link" href="#getting_started/channel"><%- @T('Go Back') %></a>
-          <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
-        </div>
+      </div>
+      <div class="wizard-controls center">
+        <a class="subtle-link" href="#getting_started/channel"><%- @T('Go Back') %></a>
+        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
       </div>
     </div>
   </form>
@@ -71,10 +71,10 @@
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="base-outbound-type"></div>
         <div class="base-outbound-settings"></div>
-        <div class="wizard-controls center">
-          <a class="subtle-link" href="#getting_started/channel"><%- @T('Go Back') %></a>
-          <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
-        </div>
+      </div>
+      <div class="wizard-controls center">
+        <a class="subtle-link" href="#getting_started/channel"><%- @T('Go Back') %></a>
+        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
       </div>
     </div>
   </form>
