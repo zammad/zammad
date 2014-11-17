@@ -414,14 +414,14 @@ returns
       return result
     end
 
-    # serve defalt image
+    # serve default image
     image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
     result = {
       :content      => Base64.decode64(image),
       :filename     => 'image.gif',
       :content_type => 'image/gif',
     }
-    return result
+    result
   end
 
   private
