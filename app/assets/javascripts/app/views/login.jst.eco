@@ -1,55 +1,63 @@
-<div class="fullHeight vertical center justified login fit">
-  <p><%- @T( 'Login with %s', @C( 'fqdn' ) ) %></p>
+<div class="login">
+  <div class="flex vertical centered">
+    <p><%- @T( 'Login with %s', @C( 'fqdn' ) ) %></p>
 
-  <div class="hero-unit">
-    <img class="company-logo" src="<%= @C('image_path') + '/' + 'company-logo.png' %>" alt="<%= @C( 'product_name' ) %>">
-    <form id="login">
-      <div class="form-group">
-        <label for="username"><%- @Ti( 'Username / email' ) %></label>
-        <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
-      </div>
+    <div class="hero-unit">
+      <img class="company-logo" src="<%= @C('image_path') + '/' + 'company-logo.png' %>" alt="<%= @C( 'product_name' ) %>">
+      <form id="login">
+        <div class="form-group">
+          <label for="username"><%- @Ti( 'Username / email' ) %></label>
+          <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
+        </div>
 
-      <div class="form-group">
-        <label for="password"><%- @Ti( 'Password' ) %></label>
-        <input id="password" name="password" type="password" class="form-control"/>
-      </div>
+        <div class="form-group">
+          <label for="password"><%- @Ti( 'Password' ) %></label>
+          <input id="password" name="password" type="password" class="form-control"/>
+        </div>
 
-      <div class="form-controls">
-        <button class="btn btn--primary" type="submit"><%- @T( 'Sign in' ) %></button>
+        <div class="form-controls">
+          <button class="btn btn--primary" type="submit"><%- @T( 'Sign in' ) %></button>
 
-        <% if @C('user_lost_password'): %>
-          <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
+          <% if @C('user_lost_password'): %>
+            <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
+          <% end %>
+        </div>
+
+        <% if !_.isEmpty( @auth_providers ): %>
+        <div class="separator">
+          <span class="separator-text"><%- @T( 'or sign in using' ) %></span>
+        </div>
+
+        <div class="auth_providers horizontal stretch">
+          <% for auth_provider in @auth_providers: %>
+            <a class="auth_provider <%= auth_provider.class %>" href="<%= auth_provider.url %>">
+              <span class="<%= auth_provider.class %> provider_icon"></span>
+              <span class="provider_name flex"><%- @T( auth_provider.name ) %></span>
+            </a>
+          <% end %>
+        </div>
         <% end %>
-      </div>
+      </form>
+    </div>
 
-      <% if !_.isEmpty( @auth_providers ): %>
-      <div class="separator">
-        <span class="separator-text"><%- @T( 'or sign in using' ) %></span>
-      </div>
-
-      <div class="auth_providers horizontal stretch">
-        <% for auth_provider in @auth_providers: %>
-          <a class="auth_provider <%= auth_provider.class %>" href="<%= auth_provider.url %>">
-            <span class="<%= auth_provider.class %> provider_icon"></span>
-            <span class="provider_name flex"><%- @T( auth_provider.name ) %></span>
-          </a>
-        <% end %>
-      </div>
+    <p>
+      <%- @T( "You're already registered with your email adress if you've been in touch with our support team.") %><br>
+      <% if @C('user_lost_password'): %>
+        <%- @T( "You can request your password") %> <a href="#reset_password"><%- @T( "here") %></a>.
       <% end %>
-    </form>
+    </p>
+
+    <% if @C('user_create_account'): %>
+      <hr>
+      <p>
+        <a href="#signup"><%- @T( 'Register as a new customer' ) %></a>
+      </p>
+    <% end %>
   </div>
 
-  <p>
-    <%- @T( "You're already registered with your email adress if you've been in touch with our support team.") %><br>
-    <% if @C('user_lost_password'): %>
-      <%- @T( "You can request your password") %> <a href="#reset_password"><%- @T( "here") %></a>.
-    <% end %>
-  </p>
-
-  <% if @C('user_create_account'): %>
-    <hr>
-    <p>
-      <a href="#signup"><%- @T( 'Register as a new customer' ) %></a>
-    </p>
-  <% end %>
+  <div class="poweredBy">
+    <img class="logo" src="<%= @C('image_path') + '/' + 'logo.svg' %>">
+    <%- @T("Powered by") %>
+    <img class="logotype" src="<%= @C('image_path') + '/' + 'logotype on dark.svg' %>">
+  </div>
 </div>
