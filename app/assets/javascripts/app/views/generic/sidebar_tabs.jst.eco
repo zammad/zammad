@@ -2,7 +2,7 @@
 <div class="sidebar bottom-form-shadow flex hide" data-tab="<%= item.name %>">
   <div class="sidebar-header">
     <h2 class="u-textTruncate"><%- @T( item.head ) %></h2>
-    <div class="sidebar-actions js-actions flex"></div>
+    <div class="js-actions flex"></div>
     <div class="tabsSidebar-close centered u-clickable">
       <div class="arrow-right icon"></div>
     </div>
