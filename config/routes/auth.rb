@@ -15,6 +15,7 @@ Zammad::Application.routes.draw do
   match api_path + '/sessions/switch/:id',  :to => 'sessions#switch_to_user',       :via => :get
   match api_path + '/sessions/switch_back', :to => 'sessions#switch_back_to_user',  :via => :get
   match api_path + '/sessions',             :to => 'sessions#list',                 :via => :get
+  match api_path + '/sessions/logo',        :to => 'sessions#logo',                 :via => :get
   match api_path + '/sessions/:id',         :to => 'sessions#delete',               :via => :delete
 
 end
