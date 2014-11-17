@@ -477,16 +477,21 @@ class App.ActionRow extends App.Controller
         )
 
 class App.Sidebar extends App.Controller
+  elements:
+    '.tabsSidebar-tab': 'tabs'
+    '.sidebar':         'sidebars'
+
   events:
     'click .tabsSidebar-tab':  'toggleTab'
     'click .tabsSidebar-close': 'toggleSidebar'
+    'click .sidebar-header h2': 'toggleDropdown'
 
   constructor: ->
     super
     @render()
 
     # get first tab
-    name = @el.find('.tabsSidebar-tab').first().data('tab')
+    name = @tabs.first().data('tab')
 
     # activate first tab
     @toggleTabAction(name)
@@ -508,7 +513,11 @@ class App.Sidebar extends App.Controller
           type:  'small'
         )
 
-  toggleSidebar: ->
+  toggleDropdown: (e) =>
+    e.stopPropagation()
+    $(e.currentTarget).next('.js-actions').find('.dropdown-toggle').dropdown('toggle')
+
+  toggleSidebar: =>
     @el.parent().find('.tabsSidebar-sidebarSpacer').toggleClass('is-closed')
     @el.parent().find('.tabsSidebar').toggleClass('is-closed')
     @el.parent().next('.attributeBar').toggleClass('is-closed')
@@ -518,7 +527,7 @@ class App.Sidebar extends App.Controller
     @el.parent().find('.tabsSidebar').removeClass('is-closed')
     @el.parent().next('.attributeBar').addClass('is-closed')
 
-  toggleTab: (e) ->
+  toggleTab: (e) =>
 
     # get selected tab
     name = $(e.target).closest('.tabsSidebar-tab').data('tab')
@@ -537,13 +546,13 @@ class App.Sidebar extends App.Controller
     return if !name
 
     # remove active state
-    @el.find('.tabsSidebar-tab').removeClass('active')
+    @tabs.removeClass('active')
 
     # add active state
     @el.find('.tabsSidebar-tab[data-tab=' + name + ']').addClass('active')
 
     # hide all content tabs
-    @el.find('.sidebar').addClass('hide')
+    @sidebars.addClass('hide')
 
     # show active tab content
     tabContent = @el.find('.sidebar[data-tab=' + name + ']')

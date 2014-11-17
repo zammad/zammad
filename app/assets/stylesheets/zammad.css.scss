@@ -808,19 +808,27 @@ textarea,
   background: hsl(234,10%,19%);
 }
 
+.login {
+  @extend .fit;
+  @extend .vertical;
+  @extend .center;
+}
+
 .login .hero-unit {
   width: 430px;
 }
 
-  .login .logo {
-    margin: 30px auto;
+  .login .company-logo {
+    max-height: 100px;
+    max-width: 200px;
+    margin: 20px auto 42px;
     display: block;
   }
 
   .login p {
     margin: 10px 0;
     max-width: 400px;
-    color: hsl(210,8%,42%);
+    color: hsl(233,7%,42%);
     text-align: center;
   }
 
@@ -832,19 +840,42 @@ textarea,
   }
 
   .login p a {
-    color: hsl(210,8%,54%);
+    color: hsl(233,7%,54%);
     text-decoration: underline;
   }
 
-  .subtle-link {
-    color: rgba(0,0,0,.32);
-    text-decoration: underline;
-    @extend .u-clickable;
+.poweredBy {
+  @extend .horizontal;
+  @extend .center;
+  color: hsl(233,7%,26%);
+  padding: 20px 0 10px;
+  margin-top: auto;
+  margin-left: -14px;
+  cursor: default;
+  
+  .logo {
+    height: 40px;
+    margin-right: 8px;
+    margin-top: -11px;
   }
 
-  .subtle-link:hover {
-    color: rgba(0,0,0,.5);
+  .logotype {
+    opacity: 0.095;
+    height: 15px;
+    margin-left: 5px;
+    margin-top: -6px;
   }
+}
+
+.subtle-link {
+  color: rgba(0,0,0,.32);
+  text-decoration: underline;
+  @extend .u-clickable;
+}
+
+.subtle-link:hover {
+  color: rgba(0,0,0,.5);
+}
 
 ol.tabs {
   list-style: decimal inside;
@@ -3421,18 +3452,26 @@ footer {
   .tabsSidebar .sidebar-header {
     @extend .horizontal;
     @extend .center;
-    padding: 20px 20px 0;
+    margin: 20px 20px 0;
+    padding: 0 0 5px;
+    position: relative;
+    
+    h2 {
+      margin: 0 0 -1px;
+      line-height: 1;
+      padding-right: 8px;
+      @extend .u-clickable;
+    }
+    
+    + hr {
+      margin-top: 15px;
+    }
+    
+    .dropdown {
+      position: static;
+    }
   }
-
-  .tabsSidebar .sidebar h2 {
-    margin: 0 0 -1px;
-    line-height: 1;
-  }
-
-  .tabsSidebar .sidebar-actions {
-    padding-left: 8px;
-  }
-
+  
   .tabsSidebar-close {
     padding: 20px;
     margin: -15px;
@@ -4241,27 +4280,26 @@ label + .wizard-buttonList {
 
 .setup.wizard .logo-preview {
   display: block;
-  background: hsl(0,0%,95%);
-  width: 100%;
-  height: 60px;
-  margin-bottom: 10px;
-  content: "";
-  color: hsl(0,0%,60%);
-  @extend .centered;
+  height: 0;
+  max-width: 200px;
+  max-height: 100px;
 
-  &:after {
-    content: attr(data-placeholder);
+  + .logo-preview-placeholder {
+    height: 100px;
+    color: hsl(0,0%,60%);
+    background: hsl(0,0%,95%);
+    margin-bottom: 10px;
+    @extend .centered;
   }
 }
 
 .setup.wizard .logo-preview:not([src=""]) {
-  content: initial;
-  max-width: 240px;
-  max-height: 60px;
   margin: 0 auto 15px;
-  background: none;
-  width: auto;
   height: auto;
+  
+  + .logo-preview-placeholder {
+    display: none;
+  }
 }
 
 .import.wizard .wizard-slide {
