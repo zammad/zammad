@@ -812,8 +812,10 @@ textarea,
   width: 430px;
 }
 
-  .login .logo {
-    margin: 30px auto;
+  .login .company-logo {
+    max-height: 100px;
+    max-width: 200px;
+    margin: 20px auto 42px;
     display: block;
   }
 
