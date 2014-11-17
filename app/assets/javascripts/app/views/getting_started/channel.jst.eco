@@ -8,10 +8,10 @@
         <div class="wizard-buttonList vertical">
 
           <% for adapter in @adapters: %>
-            <div class="btn auth_provider auth_provider--wide <%= adapter.class %>">
+            <a href="<%= adapter.link %>" class="btn auth_provider auth_provider--wide <%= adapter.class %>">
               <div class="<%= adapter.class %> provider_icon"></div>
-              <a class="provider_name" href="<%= adapter.link %>"><%- @T( adapter.name ) %></a>
-            </div>
+              <div class="provider_name"><%- @T( adapter.name ) %></div>
+            </a>
           <% end %>
 
         </div>

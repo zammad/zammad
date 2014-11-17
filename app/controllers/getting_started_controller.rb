@@ -198,7 +198,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
           # probe inbound
           result = email_probe_inbound( settings[:inbound] )
-          if !result
+          if result[:result] != 'ok'
             render :json => result
             return
           end
@@ -355,7 +355,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       puts "PROBE: #{config.inspect}"
       result = email_probe_inbound( config )
       puts "RESULT: #{result.inspect}"
-      if !result
+      if result[:result] == 'ok'
         success = true
         settings[:inbound] = config
         break
@@ -539,14 +539,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # connection test
     result = email_probe_outbound( params, params[:email] )
-    if result[:result] != 'ok'
-      render :json => result
-      return
-    end
 
-    # return result
     render :json => {
-      :result => 'ok',
+      :result => result
     }
   end
 
@@ -565,14 +560,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # connection test
     result = email_probe_inbound( params )
-    if result
-      render :json => result
-      return
-    end
 
-    render :json => {
-      :result => 'ok',
-    }
+    render :json => result
+    return
   end
 
   def email_verify
@@ -683,10 +673,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # test connection
     translationMap = {
-      'authentication failed' => 'Authentication failed!',
+      'authentication failed'                                     => 'Authentication failed!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      'No route to host' => 'No route to host!',
-      'Connection refused' => 'Connection refused!',
+      'No route to host'                                          => 'No route to host!',
+      'Connection refused'                                        => 'Connection refused!',
     }
     if params[:adapter] == 'smtp'
       begin
@@ -711,6 +701,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           if e.message =~ /#{Regexp.escape(key)}/i
             result = {
               :result => 'ok',
+              :notice => e.message,
             }
             return result
           end
@@ -728,7 +719,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         }
         return result
       end
-      return
+      result = {
+        :result => 'ok',
+      }
+      return result
     end
 
     begin
@@ -755,7 +749,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       }
       return result
     end
-    return
+    result = {
+      :result => 'ok',
+    }
+    return result
   end
 
   def email_probe_inbound(params)
@@ -789,7 +786,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         }
         return result
       end
-      return
+      result = {
+        :result => 'ok',
+      }
+      return result
     end
 
     begin
@@ -808,7 +808,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       }
       return result
     end
-    return
+    result = {
+      :result => 'ok',
+    }
+    return result
   end
 
   def mxers(domain)

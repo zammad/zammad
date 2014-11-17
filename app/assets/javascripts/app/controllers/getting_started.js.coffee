@@ -143,11 +143,6 @@ class Admin extends App.ControllerContent
             }
         )
         @Config.set('system_init_done', true)
-        App.Event.trigger 'notify', {
-          type:    'success'
-          msg:     App.i18n.translateContent( 'Welcome to %s!', @Config.get('product_name') )
-          timeout: 2500
-        }
 
       fail: (data) =>
         @formEnable(e)
@@ -540,7 +535,7 @@ class ChannelEmail extends App.ControllerContent
         @enable(e)
     )
 
-  verify: (account) =>
+  verify: (account, count = 0) =>
     @showSlide('js-verify')
 
     @hideAlert('js-verify')
@@ -555,7 +550,14 @@ class ChannelEmail extends App.ControllerContent
         if data.result is 'ok'
           @navigate 'getting_started/agents'
         else
-          @showAlert('js-verify', data.message_human || data.message )
+          if count is 1
+            @showAlert('js-verify', data.message_human || data.message )
+            @delay(
+              => @showSlide('js-inbound')
+              2300
+            )
+          else
+            @verify( @account, count + 1 )
         @enable(e)
       fail: =>
         @enable(e)
