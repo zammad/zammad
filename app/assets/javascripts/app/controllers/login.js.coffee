@@ -89,12 +89,6 @@ class Index extends App.ControllerContent
     # rebuild navbar with ticket overview counter
     App.WebSocket.send( event: 'navupdate_ticket_overview' )
 
-    # add notify
-    @notify
-      type:      'success'
-      msg:       App.i18n.translateContent('Login successfully! Have a nice day!')
-      removeAll: true
-
     # redirect to #
     requested_url = @Config.get( 'requested_url' )
     if requested_url && requested_url isnt '#login'
