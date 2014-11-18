@@ -2,6 +2,8 @@
 require 'integration_test_helper'
 
 class OtrsImportTest < ActiveSupport::TestCase
+
+  # check count of imported items
   test 'check counts' do
     #agent_count = User.where()
     assert_equal( 600, Ticket.count, 'tickets' )
@@ -10,6 +12,7 @@ class OtrsImportTest < ActiveSupport::TestCase
 
   end
 
+  # check imported users and permission
   test 'check users' do
     role_admin    = Role.where( :name => 'Admin' ).first
     role_agent    = Role.where( :name => 'Agent' ).first
@@ -83,12 +86,14 @@ class OtrsImportTest < ActiveSupport::TestCase
 
   end
 
+  # check all synced states and state types
   test 'check ticket stats' do
     state_new = Ticket::State.find(1)
     assert_equal( 'new', state_new.name )
     assert_equal( 'new', state_new.state_type.name )
   end
 
+  # check groups/queues
   test 'check groups' do
     group1 = Group.find(1)
     assert_equal( 'Postmaster', group1.name )
@@ -99,6 +104,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( false, group2.active )
   end
 
+  # check imported customers and organization relation
   test 'check customers / organizations' do
     user1 = User.where( :login => 'jn' ).first
     assert_equal( 'Johannes', user1.firstname )
