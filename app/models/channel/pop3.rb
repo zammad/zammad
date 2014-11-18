@@ -18,7 +18,7 @@ class Channel::POP3 < Channel::EmailParser
 
     # on check, reduce open_timeout to have faster probing
     if check_type == 'check'
-      @pop.open_timeout = 5
+      @pop.open_timeout = 4
       @pop.read_timeout = 6
     end
 

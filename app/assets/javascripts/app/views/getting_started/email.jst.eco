@@ -5,6 +5,7 @@
     <div class="wizard-slide">
       <h2><%- @T('Email Account') %></h2>
       <div class="wizard-body vertical justified">
+        <div class="alert alert--danger hide" role="alert"></div>
         <fieldset>
           <div class="form-group">
             <label><%- @T('Full Name') %></label>

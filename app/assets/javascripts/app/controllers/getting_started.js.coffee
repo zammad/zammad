@@ -348,10 +348,10 @@ App.Config.set( 'getting_started/channel', Channel, 'Routes' )
 class ChannelEmail extends App.ControllerContent
   className: 'getstarted fit'
   events:
-    'submit .js-intro':                   'emailProbe'
-    'submit .js-inbound':                 'storeInbound'
-    'change .js-outbound [name=adapter]': 'toggleAdapter'
-    'submit .js-outbound':                'storeOutbound'
+    'submit .js-intro':                   'probeBasedOnIntro'
+    'submit .js-inbound':                 'probeInbound'
+    'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
+    'submit .js-outbound':                'probleOutbound'
 
   constructor: ->
     super
@@ -410,7 +410,7 @@ class ChannelEmail extends App.ControllerContent
       el:    @$('.base-outbound-type'),
       model: { configure_attributes: configureAttributesOutbound, className: '' },
     )
-    @toggleAdapter()
+    @toggleOutboundAdapter()
 
     # inbound
     configureAttributesInbound = [
@@ -425,7 +425,15 @@ class ChannelEmail extends App.ControllerContent
       model: { configure_attributes: configureAttributesInbound, className: '' },
     )
 
-  toggleAdapter: (channel_used = {}) =>
+  toggleOutboundAdapter: =>
+
+    # fill user / password based on intro info
+    channel_used = { options: {} }
+    if @account['meta']
+      channel_used['options']['user']     = @account['meta']['email']
+      channel_used['options']['password'] = @account['meta']['password']
+
+    # show used backend
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
@@ -442,7 +450,7 @@ class ChannelEmail extends App.ControllerContent
     else
       @el.find('.base-outbound-settings').html('')
 
-  emailProbe: (e) =>
+  probeBasedOnIntro: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
 
@@ -467,25 +475,53 @@ class ChannelEmail extends App.ControllerContent
           @verify(@account)
         else
           @showSlide('js-inbound')
+          @showAlert('js-inbound', 'Unable to detect your server settings. Manual configuration needed.' )
+          @$('.js-inbound [name="options::user"]').val( @account['meta']['email'] )
+          @$('.js-inbound [name="options::password"]').val( @account['meta']['password'] )
+
         @enable(e)
       fail: =>
         @enable(e)
         @showSlide('js-intro')
     )
 
-  showSlide: (name) =>
-    @$('.setup.wizard').addClass('hide')
-    @$(".setup.wizard.#{name}").removeClass('hide')
+  probeInbound: (e) =>
+    e.preventDefault()
 
-  storeOutbound: (e) =>
+    # get params
+    params = @formParam(e.target)
+    @disable(e)
+
+    @ajax(
+      id:   'email_inbound'
+      type: 'POST'
+      url:  @apiPath + '/getting_started/email_inbound'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+
+          # remember account settings
+          @account.inbound = params
+
+          @showSlide('js-outbound')
+          @$('.js-outbound [name="options::user"]').val( @account['meta']['email'] )
+          @$('.js-outbound [name="options::password"]').val( @account['meta']['password'] )
+
+        else
+          @showAlert('js-inbound', data.message_human || data.message )
+        @enable(e)
+      fail: =>
+        @enable(e)
+    )
+
+  probleOutbound: (e) =>
     e.preventDefault()
 
     # get params
     params          = @formParam(e.target)
     params['email'] = @account['meta']['email']
     @disable(e)
-
-    @hideAlert('js-outbound')
 
     @ajax(
       id:   'email_outbound'
@@ -507,38 +543,8 @@ class ChannelEmail extends App.ControllerContent
         @enable(e)
     )
 
-  storeInbound: (e) =>
-    e.preventDefault()
-
-    # get params
-    params = @formParam(e.target)
-    @disable(e)
-
-    @hideAlert('js-inbound')
-
-    @ajax(
-      id:   'email_inbound'
-      type: 'POST'
-      url:  @apiPath + '/getting_started/email_inbound'
-      data: JSON.stringify( params )
-      processData: true
-      success: (data, status, xhr) =>
-        if data.result is 'ok'
-          @showSlide('js-outbound')
-
-          # remember account settings
-          @account.inbound = params
-        else
-          @showAlert('js-inbound', data.message_human || data.message )
-        @enable(e)
-      fail: =>
-        @enable(e)
-    )
-
   verify: (account, count = 0) =>
     @showSlide('js-verify')
-
-    @hideAlert('js-verify')
 
     @ajax(
       id:   'email_verify'
@@ -550,18 +556,30 @@ class ChannelEmail extends App.ControllerContent
         if data.result is 'ok'
           @navigate 'getting_started/agents'
         else
-          if count is 1
+          if count is 2
             @showAlert('js-verify', data.message_human || data.message )
             @delay(
-              => @showSlide('js-inbound')
+              =>
+                @showSlide('js-intro')
+                @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
+
               2300
             )
           else
+            console.log('r', data, @account)
+            if data.subject && @account
+              @account.subject = data.subject
             @verify( @account, count + 1 )
-        @enable(e)
+        #@enable(e)
       fail: =>
-        @enable(e)
+        #@enable(e)
     )
+
+
+  showSlide: (name) =>
+    @hideAlert(name)
+    @$('.setup.wizard').addClass('hide')
+    @$(".setup.wizard.#{name}").removeClass('hide')
 
   showAlert: (screen, message) =>
     @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )

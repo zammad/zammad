@@ -14,17 +14,28 @@ class Channel::IMAP < Channel::EmailParser
 
     puts "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
 
-    @imap = Net::IMAP.new( channel[:options][:host], port, ssl, nil, false )
-
-    # try LOGIN, if not - try plain
-    begin
-      @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
-    rescue Exception => e
-      if e.to_s !~ /unsupported\sauthentication\smechanism/i
-        raise e
-      end
-      @imap.login( channel[:options][:user], channel[:options][:password] )
+    # on check, reduce open_timeout to have faster probing
+    timeout = 12
+    if check_type == 'check'
+      timeout = 4
     end
+
+    Timeout.timeout(timeout) do
+
+      @imap = Net::IMAP.new( channel[:options][:host], port, ssl, nil, false )
+
+    end
+
+      # try LOGIN, if not - try plain
+      begin
+        @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
+      rescue Exception => e
+        if e.to_s !~ /unsupported\s(authenticate|authentication)\smechanism/i
+          raise e
+        end
+        @imap.login( channel[:options][:user], channel[:options][:password] )
+      end
+
     if !channel[:options][:folder] || channel[:options][:folder].empty?
       @imap.select('INBOX')
     else

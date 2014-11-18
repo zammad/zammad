@@ -174,7 +174,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           :adapter => 'smtp',
           :options => {
             :host     => 'smtp.gmail.com',
-            :port     => '465',
+            :port     => '25',
             :ssl      => true,
             :user     => params[:email],
             :password => params[:password],
@@ -212,7 +212,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
           render :json => {
             :result  => 'ok',
-            :account => settings,
+            :setting => settings,
           }
           return
         end
@@ -540,9 +540,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # connection test
     result = email_probe_outbound( params, params[:email] )
 
-    render :json => {
-      :result => result
-    }
+    render :json => result
   end
 
   def email_inbound
@@ -571,18 +569,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     return if deny_if_not_role('Admin')
 
     # send verify email to inbox
-    subject = '#' + rand(99999999999).to_s
-    Channel::EmailSend.new.send(
-      {
-        :from             => params[:meta][:email],
-        :to               => params[:meta][:email],
-        :subject          => "Zammad Getting started Test Email #{subject}",
-        :body             => '.',
-        'x-zammad-ignore' => 'true',
-      }
-    )
-    (1..5).each {|loop|
-      sleep 10
+    if !params[:subject]
+      subject = '#' + rand(99999999999).to_s
+    else
+      subject = params[:subject]
+    end
+    result = email_probe_outbound( params[:outbound], params[:meta][:email], subject )
+
+    (1..7).each {|loop|
+      sleep 7
 
       # fetch mailbox
       found = nil
@@ -655,20 +650,38 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     render :json => {
       :result  => 'invalid',
       :message => 'Verification Email not found in mailbox.',
+      :subject => subject,
     }
   end
 
   private
 
-  def email_probe_outbound(params, email)
+  def email_probe_outbound(params, email, subject = nil)
 
     # validate params
     if !params[:adapter]
       result = {
         :result  => 'invalid',
-        :message => 'Invalid!',
+        :message => 'Invalid, need adapter!',
       }
       return result
+    end
+
+    if subject
+      mail = {
+        :from             => email,
+        :to               => email,
+        :subject          => "Zammad Getting started Test Email #{subject}",
+        :body             => '.',
+        'x-zammad-ignore' => 'true',
+      }
+    else
+      mail = {
+        :from    => email,
+        :to      => 'emailtrytest@znuny.com',
+        :subject => 'test',
+        :body    => 'test',
+      }
     end
 
     # test connection
@@ -678,15 +691,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       'No route to host'                                          => 'No route to host!',
       'Connection refused'                                        => 'Connection refused!',
     }
-    if params[:adapter] == 'smtp'
+    if params[:adapter] =~ /^smtp$/i
       begin
         Channel::SMTP.new.send(
-          {
-            :from    => email,
-            :to      => 'emailtrytest@znuny.com',
-            :subject => 'test',
-            :body    => 'test',
-          },
+          mail,
           {
             :options => params[:options]
           }
@@ -694,18 +702,21 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       rescue Exception => e
 
         # check if sending email was ok, but mailserver rejected
-        whiteMap = {
-          'Recipient address rejected' => true,
-        }
-        whiteMap.each {|key, message|
-          if e.message =~ /#{Regexp.escape(key)}/i
-            result = {
-              :result => 'ok',
-              :notice => e.message,
-            }
-            return result
-          end
-        }
+        if !subject
+          whiteMap = {
+            'Recipient address rejected' => true,
+          }
+          whiteMap.each {|key, message|
+            if e.message =~ /#{Regexp.escape(key)}/i
+              result = {
+                :result   => 'ok',
+                :settings => params,
+                :notice   => e.message,
+              }
+              return result
+            end
+          }
+        end
         message_human = ''
         translationMap.each {|key, message|
           if e.message =~ /#{Regexp.escape(key)}/i
@@ -714,6 +725,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         }
         result = {
           :result        => 'invalid',
+          :settings      => params,
           :message       => e.message,
           :message_human => message_human,
         }
@@ -727,12 +739,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     begin
       Channel::Sendmail.new.send(
-        {
-          :from    => email,
-          :to      => 'emailtrytest@znuny.com',
-          :subject => 'test',
-          :body    => 'test',
-        },
+        mail,
         nil
       )
     rescue Exception => e
@@ -744,6 +751,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       }
       result = {
         :result        => 'invalid',
+        :settings      => params,
         :message       => e.message,
         :message_human => message_human,
       }
@@ -781,6 +789,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         }
         result = {
           :result        => 'invalid',
+          :settings      => params,
           :message       => e.message,
           :message_human => message_human,
         }
@@ -803,6 +812,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       }
       result = {
         :result        => 'invalid',
+        :settings      => params,
         :message       => e.message,
         :message_human => message_human,
       }
