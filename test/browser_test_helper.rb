@@ -250,12 +250,16 @@ class TestCase < Test::Unit::TestCase
       assert( false, "(#{test[:name]}) no login box found!" )
       return
     elsif action[:execute] == 'watch_for'
+      timeout = 16
+      if action[:timeout]
+        timeout = action[:timeout]
+      end
+      loops = timeout / 0.33
       text = ''
-      (1..36).each { |loop|
+      (1..loops).each { |loop|
         element = instance.find_element( { :css => action[:area] } )
         if element.displayed?
           text = element.text
-          puts "T: #{text}"
           if text =~ /#{action[:value]}/i
             assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
             sleep 0.4
