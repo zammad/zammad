@@ -221,6 +221,7 @@ class Base extends App.ControllerContent
       url:          url
       organization: organization
     )
+    @$("input, select").first().focus()
 
   onLogoPick: (event) =>
     reader = new FileReader()
@@ -352,6 +353,7 @@ class ChannelEmail extends App.ControllerContent
     'submit .js-inbound':                 'probeInbound'
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
+    'click  .js-back':                    'goToSlide'
 
   constructor: ->
     super
@@ -397,6 +399,7 @@ class ChannelEmail extends App.ControllerContent
   render: ->
 
     @html App.view('getting_started/email')()
+    @showSlide('js-intro')
 
     # outbound
     adapters =
@@ -414,11 +417,10 @@ class ChannelEmail extends App.ControllerContent
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',            display: 'Type',     tag: 'select',   multiple: false, null: false, options: { imap: 'IMAP', pop3: 'POP3' } },
-      { name: 'options::host',      display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::user',      display: 'User',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::password',  display: 'Password', tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::ssl',       display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' }, translate: true, default: true},
+      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: { imap: 'IMAP', pop3: 'POP3' } },
+      { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, single: true },
     ]
     new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
@@ -437,11 +439,9 @@ class ChannelEmail extends App.ControllerContent
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
-        { name: 'options::host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['host']) },
-        { name: 'options::user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['user']) },
-        { name: 'options::password', display: 'Password', tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['password']) },
-        { name: 'options::ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , translate: true, default: (channel_used['options']&&channel_used['options']['ssl']||true) },
-        { name: 'options::port',     display: 'Port',     tag: 'input',    type: 'text', limit: 5, null: false, class: 'span1', autocapitalize: false, default: ((channel_used['options']&&channel_used['options']['port']) || 25) },
+        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true, default: (channel_used['options']&&channel_used['options']['host']) },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['user']) },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, single: true, default: (channel_used['options']&&channel_used['options']['password']) },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
@@ -492,6 +492,8 @@ class ChannelEmail extends App.ControllerContent
     params = @formParam(e.target)
     @disable(e)
 
+    @showSlide('js-test')
+
     @ajax(
       id:   'email_inbound'
       type: 'POST'
@@ -509,9 +511,12 @@ class ChannelEmail extends App.ControllerContent
           @$('.js-outbound [name="options::password"]').val( @account['meta']['password'] )
 
         else
+          @showSlide('js-inbound')
           @showAlert('js-inbound', data.message_human || data.message )
         @enable(e)
       fail: =>
+        @showSlide('js-inbound')
+        @showAlert('js-inbound', data.message_human || data.message )
         @enable(e)
     )
 
@@ -522,6 +527,8 @@ class ChannelEmail extends App.ControllerContent
     params          = @formParam(e.target)
     params['email'] = @account['meta']['email']
     @disable(e)
+
+    @showSlide('js-test')
 
     @ajax(
       id:   'email_outbound'
@@ -537,9 +544,12 @@ class ChannelEmail extends App.ControllerContent
 
           @verify(@account)
         else
+          @showSlide('js-outbound')
           @showAlert('js-outbound', data.message_human || data.message )
         @enable(e)
       fail: =>
+        @showSlide('js-outbound')
+        @showAlert('js-outbound', data.message_human || data.message )
         @enable(e)
     )
 
@@ -566,20 +576,24 @@ class ChannelEmail extends App.ControllerContent
               2300
             )
           else
-            console.log('r', data, @account)
             if data.subject && @account
               @account.subject = data.subject
             @verify( @account, count + 1 )
-        #@enable(e)
       fail: =>
-        #@enable(e)
+        @showSlide('js-intro')
+        @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
     )
 
+  goToSlide: (e) =>
+    e.preventDefault()
+    slide = $(e.target).data('slide')
+    @showSlide(slide)
 
   showSlide: (name) =>
     @hideAlert(name)
     @$('.setup.wizard').addClass('hide')
     @$(".setup.wizard.#{name}").removeClass('hide')
+    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
 
   showAlert: (screen, message) =>
     @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )

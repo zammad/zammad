@@ -254,7 +254,7 @@ class TestCase < Test::Unit::TestCase
       if action[:timeout]
         timeout = action[:timeout]
       end
-      loops = timeout / 0.33
+      loops = (timeout / 0.5).to_i
       text = ''
       (1..loops).each { |loop|
         element = instance.find_element( { :css => action[:area] } )
@@ -266,7 +266,7 @@ class TestCase < Test::Unit::TestCase
             return
           end
         end
-        sleep 0.33
+        sleep 0.5
       }
       assert( false, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
       return

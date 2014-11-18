@@ -187,7 +187,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     domains = [domain]
     mail_exchangers = mxers(domain)
     if mail_exchangers && mail_exchangers[0]
-      puts "MX #{mail_exchangers} - #{mail_exchangers[0][0]}"
+      logger.info "MX for #{domain}: #{mail_exchangers} - #{mail_exchangers[0][0]}"
     end
     if mail_exchangers && mail_exchangers[0] && mail_exchangers[0][0]
       domains.push mail_exchangers[0][0]
@@ -352,9 +352,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     settings = {}
     success = false
     inboundMap.each {|config|
-      puts "PROBE: #{config.inspect}"
+      logger.info "INBOUND PROBE: #{config.inspect}"
       result = email_probe_inbound( config )
-      puts "RESULT: #{result.inspect}"
+      logger.info "INBOUND RESULT: #{result.inspect}"
       if result[:result] == 'ok'
         success = true
         settings[:inbound] = config
@@ -501,9 +501,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     success = false
     outboundMap.each {|config|
-      puts "PROBE: #{config.inspect}"
+      logger.info "OUTBOUND PROBE: #{config.inspect}"
       result = email_probe_outbound( config, params[:email] )
-      puts "RESULT: #{result.inspect}"
+      logger.info "OUTBOUND RESULT: #{result.inspect}"
       if result[:result] == 'ok'
         success = true
         settings[:outbound] = config
@@ -576,15 +576,25 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
     result = email_probe_outbound( params[:outbound], params[:meta][:email], subject )
 
-    (1..7).each {|loop|
-      sleep 7
+    (1..5).each {|loop|
+      sleep 10
 
       # fetch mailbox
       found = nil
-      if params[:inbound][:adapter] =~ /^imap$/i
-        found = Channel::IMAP.new.fetch( { :options => params[:inbound][:options] }, 'verify', subject )
-      else
-        found = Channel::POP3.new.fetch( { :options => params[:inbound][:options] }, 'verify', subject )
+
+      begin
+        if params[:inbound][:adapter] =~ /^imap$/i
+          found = Channel::IMAP.new.fetch( { :options => params[:inbound][:options] }, 'verify', subject )
+        else
+          found = Channel::POP3.new.fetch( { :options => params[:inbound][:options] }, 'verify', subject )
+        end
+      rescue Exception => e
+        render :json => {
+          :result  => 'invalid',
+          :message => e.to_s,
+          :subject => subject,
+        }
+        return
       end
 
       if found && found == 'verify ok'
@@ -646,7 +656,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       end
     }
 
-    # check dilivery for 30 sek.
+    # check delivery for 30 sek.
     render :json => {
       :result  => 'invalid',
       :message => 'Verification Email not found in mailbox.',
@@ -687,11 +697,21 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # test connection
     translationMap = {
       'authentication failed'                                     => 'Authentication failed!',
+      'Incorrect username'                                        => 'Authentication failed!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
       'No route to host'                                          => 'No route to host!',
       'Connection refused'                                        => 'Connection refused!',
     }
     if params[:adapter] =~ /^smtp$/i
+
+      # in case, fill missing params
+      if !params[:options].has_key?(:port)
+        params[:options][:port] = 25
+      end
+      if !params[:options].has_key?(:ssl)
+        params[:options][:ssl] = true
+      end
+
       begin
         Channel::SMTP.new.send(
           mail,
@@ -773,11 +793,13 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # connection test
     translationMap = {
       'authentication failed'                                     => 'Authentication failed!',
+      'Incorrect username'                                        => 'Authentication failed!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
       'No route to host'                                          => 'No route to host!',
       'Connection refused'                                        => 'Connection refused!',
     }
     if params[:adapter] =~ /^imap$/i
+
       begin
         Channel::IMAP.new.fetch( { :options => params[:options] }, 'check' )
       rescue Exception => e

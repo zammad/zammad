@@ -2,8 +2,13 @@
 require 'browser_test_helper'
 
 class AaaGettingStartedTest < TestCase
-  def test_getting_started
-    tests = [
+  def test_a_getting_started
+    if !ENV['MAILBOX_INIT']
+      raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
+    end
+    mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
+    mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
+    tests            = [
       {
         :name     => 'start',
         :instance => browser_instance,
@@ -138,12 +143,12 @@ class AaaGettingStartedTest < TestCase
           {
             :execute => 'set',
             :css     => '.js-intro input[name="email"]',
-            :value   => 'otest01@znuny.com',
+            :value   => mailbox_user,
           },
           {
             :execute => 'set',
             :css     => '.js-intro input[name="password"]',
-            :value   => 'otest0142',
+            :value   => mailbox_password,
           },
           {
             :execute => 'click',
@@ -153,16 +158,19 @@ class AaaGettingStartedTest < TestCase
             :execute => 'watch_for',
             :area    => 'body',
             :value   => 'testing',
+            :timeout => 60,
           },
           {
             :execute => 'watch_for',
             :area    => 'body',
             :value   => 'verify',
+            :timeout => 70,
           },
           {
             :execute => 'watch_for',
             :area    => 'body',
             :value   => 'invite',
+            :timeout => 60,
           },
           {
             :execute => 'check',
@@ -234,4 +242,199 @@ class AaaGettingStartedTest < TestCase
     ]
     browser_single_test(tests)
   end
+
+  def test_b_accounts_auto
+    if !ENV['MAILBOX_AUTO1']
+      raise "Need MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
+    end
+    mailbox_user     = ENV['MAILBOX_AUTO1'].split(':')[0]
+    mailbox_password = ENV['MAILBOX_AUTO1'].split(':')[1]
+    accounts = [
+      {
+        :realname => 'gmail',
+        :email    => mailbox_user,
+        :password => mailbox_password,
+      },
+    ]
+    accounts.each {|account|
+      tests = [
+        {
+          :name     => 'getting started - auto mail',
+          :action   => [
+            {
+              :execute => 'navigate',
+              :to      => browser_url + '/#getting_started/channel',
+            },
+            {
+              :execute => 'click',
+              :css     => '.js-channel .email .provider_name',
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-intro input[name="realname"]',
+              :value   => account[:realname],
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-intro input[name="email"]',
+              :value   => account[:email],
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-intro input[name="password"]',
+              :value   => account[:password],
+            },
+            {
+              :execute => 'click',
+              :css     => '.js-intro .btn--primary',
+            },
+            {
+              :execute => 'watch_for',
+              :area    => 'body',
+              :value   => 'testing',
+            },
+            {
+              :execute => 'watch_for',
+              :area    => 'body',
+              :value   => 'verify',
+              :timeout => 80,
+            },
+            {
+              :execute => 'watch_for',
+              :area    => 'body',
+              :value   => 'invite',
+            },
+            {
+              :execute => 'check',
+              :element => :url,
+              :result  => '#getting_started/agents',
+            },
+          ],
+        },
+      ]
+      browser_signle_test_with_login(tests, { :username => 'master@example.com' })
+    }
+  end
+
+  def test_b_accounts_manual
+    if !ENV['MAILBOX_MANUAL1']
+      raise "Need MAILBOX_AUTO1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
+    end
+    mailbox_user     = ENV['MAILBOX_MANUAL1'].split(':')[0]
+    mailbox_password = ENV['MAILBOX_MANUAL1'].split(':')[1]
+    mailbox_inbound  = ENV['MAILBOX_MANUAL1'].split(':')[2]
+    mailbox_outbound = ENV['MAILBOX_MANUAL1'].split(':')[3]
+
+    accounts = [
+      {
+        :realname => 'yahoo',
+        :email    => mailbox_user,
+        :password => mailbox_password,
+        :inbound  => {
+          'options::host' => mailbox_inbound,
+        },
+        :outbound  => {
+          'options::host' => mailbox_outbound,
+        },
+      },
+    ]
+    accounts.each {|account|
+      tests = [
+        {
+          :name   => 'getting started - manual mail',
+          :action => [
+            {
+              :execute => 'navigate',
+              :to      => browser_url + '/#getting_started/channel',
+            },
+            {
+              :execute => 'click',
+              :css     => '.js-channel .email .provider_name',
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-intro input[name="realname"]',
+              :value   => account[:realname],
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-intro input[name="email"]',
+              :value   => account[:email],
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-intro input[name="password"]',
+              :value   => account[:password],
+            },
+            {
+              :execute => 'click',
+              :css     => '.js-intro .btn--primary',
+            },
+            {
+              :execute => 'watch_for',
+              :area    => '.js-probe',
+              :value   => 'testing',
+            },
+            {
+              :execute => 'watch_for',
+              :area    => '.js-inbound h2',
+              :value   => 'inbound',
+              :timeout => 220,
+            },
+            {
+              :execute => 'watch_for',
+              :area    => '.js-inbound',
+              :value   => 'manual',
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-inbound input[name="options::host"]',
+              :value   => account[:inbound]['options::host'],
+            },
+            {
+              :execute => 'click',
+              :css     => '.js-inbound .btn--primary',
+            },
+            {
+              :execute => 'watch_for',
+              :area    => '.js-outbound h2',
+              :value   => 'outbound',
+            },
+            {
+              :execute => 'select',
+              :css     => '.js-outbound select[name="adapter"]',
+              :value   => 'SMTP - configure your own outgoing SMTP settings',
+            },
+            {
+              :execute => 'set',
+              :css     => '.js-outbound input[name="options::host"]',
+              :value   => account[:outbound]['options::host'],
+            },
+            {
+              :execute => 'click',
+              :css     => '.js-outbound .btn--primary',
+            },
+            {
+              :execute => 'watch_for',
+              :area    => 'body',
+              :value   => 'verify',
+            },
+            {
+              :execute => 'watch_for',
+              :area    => 'body',
+              :value   => 'invite',
+              :timeout => 190,
+            },
+            {
+              :execute => 'check',
+              :element => :url,
+              :result  => '#getting_started/agents',
+            },
+          ],
+        },
+      ]
+      browser_signle_test_with_login(tests, { :username => 'master@example.com' })
+    }
+  end
+
 end

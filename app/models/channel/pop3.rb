@@ -5,11 +5,11 @@ require 'net/pop'
 class Channel::POP3 < Channel::EmailParser
 
   def fetch (channel, check_type = '', verify_string = '')
-    ssl  = false
-    port = 110
-    if channel[:options][:ssl].to_s == 'true'
-      ssl  = true
-      port = 995
+    ssl  = true
+    port = 995
+    if channel[:options].has_key?(:ssl) && channel[:options][:ssl].to_s == 'false'
+      ssl  = false
+      port = 110
     end
 
     puts "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"

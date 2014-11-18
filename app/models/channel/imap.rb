@@ -5,11 +5,11 @@ require 'net/imap'
 class Channel::IMAP < Channel::EmailParser
 
   def fetch (channel, check_type = '', verify_string = '')
-    ssl  = false
-    port = 143
-    if channel[:options][:ssl].to_s == 'true'
-      ssl  = true
-      port = 993
+    ssl  = true
+    port = 993
+    if channel[:options].has_key?(:ssl) && channel[:options][:ssl].to_s == 'false'
+      ssl  = false
+      port = 143
     end
 
     puts "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
@@ -26,15 +26,15 @@ class Channel::IMAP < Channel::EmailParser
 
     end
 
-      # try LOGIN, if not - try plain
-      begin
-        @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
-      rescue Exception => e
-        if e.to_s !~ /unsupported\s(authenticate|authentication)\smechanism/i
-          raise e
-        end
-        @imap.login( channel[:options][:user], channel[:options][:password] )
+    # try LOGIN, if not - try plain
+    begin
+      @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
+    rescue Exception => e
+      if e.to_s !~ /unsupported\s(authenticate|authentication)\smechanism/i
+        raise e
       end
+      @imap.login( channel[:options][:user], channel[:options][:password] )
+    end
 
     if !channel[:options][:folder] || channel[:options][:folder].empty?
       @imap.select('INBOX')

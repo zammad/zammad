@@ -9,15 +9,15 @@
         <fieldset>
           <div class="form-group">
             <label><%- @T('Full Name') %></label>
-            <input type="text" class="form-control" value="" name="realname" placeholder="<%- @T('Organization Support') %>">
+            <input type="text" class="form-control" value="" name="realname" placeholder="<%- @T('Organization Support') %>" required>
           </div>
           <div class="form-group">
             <label><%- @T('Email') %></label>
-            <input type="email" class="form-control" value="" name="email" placeholder="<%- @T('support@example.com') %>">
+            <input type="email" class="form-control" value="" name="email" placeholder="<%- @T('support@example.com') %>" required>
           </div>
           <div class="form-group">
             <label><%- @T('Password') %></label>
-            <input type="password" class="form-control" name="password" value="">
+            <input type="password" class="form-control" name="password" value="" required>
           </div>
         </fieldset>
       </div>
@@ -34,6 +34,17 @@
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
           <span class="loading icon"></span> <%- @T('Testing') %> <span class="js-email"></span>
+        </p>
+      </div>
+    </div>
+  </form>
+
+  <form class="setup wizard hide js-test">
+    <div class="wizard-slide">
+      <h2><%- @T('Email Account') %></h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> <%- @T('Verifying...') %>
         </p>
       </div>
     </div>
@@ -59,7 +70,7 @@
         <div class="base-inbound-settings"></div>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" href="#getting_started/channel"><%- @T('Go Back') %></a>
+        <a class="subtle-link js-back" data-slide="js-intro"><%- @T('Go Back') %></a>
         <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
       </div>
     </div>
@@ -74,7 +85,7 @@
         <div class="base-outbound-settings"></div>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" href="#getting_started/channel"><%- @T('Go Back') %></a>
+        <a class="subtle-link js-back" data-slide="js-inbound"><%- @T('Go Back') %></a>
         <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
       </div>
     </div>
