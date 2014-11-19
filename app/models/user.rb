@@ -491,7 +491,7 @@ returns
     if !self.image_source || self.image_source == '' || self.image_source =~ /gravatar.com/i
       if self.email
         hash = Digest::MD5.hexdigest(self.email)
-        self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
+        self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=160&d=404"
         logger.debug "#{self.email}: #{self.image_source}"
       end
     end
