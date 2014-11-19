@@ -68,17 +68,11 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # validate image
-    if params[:logo] && !params[:logo].empty?
-      content_type = nil
-      content      = nil
+    if params[:logo] && params[:logo] =~ /^data:image/i
 
-      # data:image/png;base64
-      if params[:logo] =~ /^data:(.+?);base64,(.+?)$/
-        content_type = $1
-        content      = $2
-      end
+      file = StaticAssets.data_url_attributes( params[:logo] )
 
-      if !content_type || !content
+      if !file[:content] || !file[:content_type]
         messages[:logo] = 'Unable to process image upload.'
       end
     end
@@ -105,7 +99,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     settings[:organization] = params[:organization]
 
     # save image
-    if params[:logo] && !params[:logo].empty?
+    if params[:logo] && params[:logo] =~ /^data:image/i
 
       # data:image/png;base64
       file = StaticAssets.data_url_attributes( params[:logo] )
@@ -114,7 +108,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       StaticAssets.store_raw( file[:content], file[:content_type] )
     end
 
-    if params[:logo_resize] && !params[:logo_resize].empty?
+    if params[:logo_resize] && params[:logo_resize] =~ /^data:image/i
 
       # data:image/png;base64
       file = StaticAssets.data_url_attributes( params[:logo_resize] )
