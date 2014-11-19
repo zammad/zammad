@@ -216,9 +216,13 @@ class Base extends App.ControllerContent
     else
       url = "#{http_type}://#{fqdn}"
 
+    logoFile = App.Config.get('product_logo')
+    logoUrl  = App.Config.get('image_path') + "/#{logoFile}"
+
     organization = App.Config.get('organization')
     @html App.view('getting_started/base')(
       url:          url
+      logoUrl:      logoUrl
       organization: organization
     )
     @$("input, select").first().focus()
@@ -237,7 +241,7 @@ class Base extends App.ControllerContent
     if !file
       return
 
-    maxSiteInMb = 3
+    maxSiteInMb = 8
     if file.size && file.size > 1024 * 1024 * maxSiteInMb
       @showAlert( 'logo', App.i18n.translateInline( 'File too big, max. %s MB allowed.', maxSiteInMb ) )
       @logoPreview.attr( 'src', '' )
@@ -250,7 +254,14 @@ class Base extends App.ControllerContent
 
     # get params
     params = @formParam(e.target)
+
+    # add logo
     params['logo'] = @logoPreview.attr('src')
+
+    # add resized image
+    if params['logo']
+      resizeLogo = new App.ImageService( params['logo'] )
+      params['logo_resize'] = resizeLogo.toDataURLForApp( @logoPreview.width(), @logoPreview.height() )
 
     @hideAlerts()
     @disable(e)

@@ -279,45 +279,4 @@ class SessionsController < ApplicationController
     render :json => {}
   end
 
-=begin
-
-Resource:
-GET /api/v1/sessions/logo
-
-Response:
-<IMAGE>
-
-Test:
-curl http://localhost/api/v1/sessions/logo
-
-=end
-
-  def logo
-
-    # cache image
-    #response.headers['Expires'] = 1.year.from_now.httpdate
-    #response.headers["Cache-Control"] = "cache, store, max-age=31536000, must-revalidate"
-    #response.headers["Pragma"] = "cache"
-
-    # find logo
-    list = Store.list( :object => 'System::Logo', :o_id => 2 )
-    if list && list[0]
-      file = Store.find( list[0] )
-      send_data(
-        file.content,
-        :filename    => file.filename,
-        :type        => file.preferences['Content-Type'],
-        :disposition => 'inline'
-      )
-      return
-    end
-
-    # serve default image
-    send_data(
-      '',
-      :filename    => '',
-      :type        => 'image/gif',
-      :disposition => 'inline'
-    )
-  end
 end

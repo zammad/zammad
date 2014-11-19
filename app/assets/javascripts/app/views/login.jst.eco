@@ -3,7 +3,7 @@
     <p><%- @T( 'Login with %s', @C( 'fqdn' ) ) %></p>
 
     <div class="hero-unit">
-      <img class="company-logo" src="<%= @C('api_path') + '/sessions/logo' %>" alt="<%= @C( 'product_name' ) %>">
+      <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C( 'product_name' ) %>">
       <form id="login">
         <div class="form-group">
           <label for="username"><%- @Ti( 'Username / email' ) %></label>

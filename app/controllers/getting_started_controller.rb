@@ -106,26 +106,27 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # save image
     if params[:logo] && !params[:logo].empty?
-      content_type = nil
-      content      = nil
 
       # data:image/png;base64
-      if params[:logo] =~ /^data:(.+?);base64,(.+?)$/
-        content_type = $1
-        content      = Base64.decode64($2)
-      end
-      Store.remove( :object => 'System::Logo', :o_id => 1 )
-      Store.add(
-        :object      => 'System::Logo',
-        :o_id        => 1,
-        :data        => content,
-        :filename    => 'image',
-        :preferences => {
-          'Content-Type' => content_type
-        },
-#        :created_by_id => self.updated_by_id,
-      )
+      file = StaticAssets.data_url_attributes( params[:logo] )
+
+      # store image 1:1
+      StaticAssets.store_raw( file[:content], file[:content_type] )
     end
+
+    if params[:logo_resize] && !params[:logo_resize].empty?
+
+      # data:image/png;base64
+      file = StaticAssets.data_url_attributes( params[:logo_resize] )
+
+      # store image 1:1
+      settings[:product_logo] = StaticAssets.store( file[:content], file[:content_type] )
+    end
+
+    # set changed settings
+    settings.each {|key, value|
+      Setting.set(key, value)
+    }
 
     render :json => {
       :result   => 'ok',

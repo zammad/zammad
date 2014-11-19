@@ -13,7 +13,7 @@
           <div class="form-group">
             <label><%- @T('Logo') %></label>
             <div class="alert alert--danger hide" role="alert"></div>
-            <img class="logo-preview" src="">
+            <img class="logo-preview" src="<%= @logoUrl %>">
             <div class="logo-preview-placeholder"><%- @T('Your Logo') %></div>
             <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" name="logo" accept="image/*"></div>
           </div>

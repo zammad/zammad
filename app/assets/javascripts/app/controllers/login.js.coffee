@@ -50,11 +50,15 @@ class Index extends App.ControllerContent
     }
     auth_providers = []
     for key, provider of auth_provider_all
-      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is "true"
+      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is 'true'
         auth_providers.push provider
+
+    logoFile = App.Config.get('product_logo')
+    logoUrl  = App.Config.get('image_path') + "/#{logoFile}"
 
     @html App.view('login')(
       item:           data
+      logoUrl:        logoUrl
       auth_providers: auth_providers
     )
 
