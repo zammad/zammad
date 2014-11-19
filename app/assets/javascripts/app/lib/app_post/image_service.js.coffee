@@ -41,6 +41,10 @@ class App.ImageService
     #@resize()
     @canvas.toDataURL( type, quallity )
 
-  toDataURLForApp: ( x, y ) =>
+  toDataURLForAvatar: ( x, y ) =>
     @resize( x * 2, y * 2 )
     @toDataURL( 'image/jpeg', 0.7 )
+
+  toDataURLForApp: ( x, y ) =>
+    @resize( x * 2, y * 2 )
+    @toDataURL( 'image/png', 0.7 )
