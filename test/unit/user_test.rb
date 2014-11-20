@@ -150,8 +150,8 @@ class UserTest < ActiveSupport::TestCase
         :update_verify => {
           :firstname => 'Bob',
           :lastname  => 'Smith',
-          :image     => '9f19a507f4574b8455543408a7ef2257',
-          :image_md5 => '9f19a507f4574b8455543408a7ef2257',
+          :image     => 'a6f7f7f9dac25b2c023d403ef998801c',
+          :image_md5 => 'a6f7f7f9dac25b2c023d403ef998801c',
           :email     => 'unit-test1@znuny.com',
           :login     => 'login-4',
         }
@@ -180,8 +180,8 @@ class UserTest < ActiveSupport::TestCase
         :update_verify => {
           :firstname => 'Bob',
           :lastname  => 'Smith',
-          :image     => '9f19a507f4574b8455543408a7ef2257',
-          :image_md5 => '9f19a507f4574b8455543408a7ef2257',
+          :image     => 'a6f7f7f9dac25b2c023d403ef998801c',
+          :image_md5 => 'a6f7f7f9dac25b2c023d403ef998801c',
           :email     => 'unit-test1@znuny.com',
           :login     => 'login-5',
         }
