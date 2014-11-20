@@ -428,7 +428,7 @@ module Import::OTRS2
 
       # find owner
       if ticket_new[:owner]
-        user = User.lookup( :login => ticket_new[:owner] )
+        user = User.lookup( :login => ticket_new[:owner].downcase )
         if user
           ticket_new[:owner_id] = user.id
         else
@@ -439,7 +439,7 @@ module Import::OTRS2
 
       # find customer
       if ticket_new[:customer]
-        user = User.lookup( :login => ticket_new[:customer] )
+        user = User.lookup( :login => ticket_new[:customer].downcase )
         if user
           ticket_new[:customer_id] = user.id
         else

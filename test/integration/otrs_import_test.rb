@@ -6,7 +6,7 @@ class OtrsImportTest < ActiveSupport::TestCase
   # check count of imported items
   test 'check counts' do
     #agent_count = User.where()
-    assert_equal( 600, Ticket.count, 'tickets' )
+    assert_equal( 603, Ticket.count, 'tickets' )
     assert_equal( 10, Ticket::State.count, 'ticket states' )
     assert_equal( 24, Group.count, 'groups' )
 
@@ -88,9 +88,17 @@ class OtrsImportTest < ActiveSupport::TestCase
 
   # check all synced states and state types
   test 'check ticket stats' do
-    state_new = Ticket::State.find(1)
-    assert_equal( 'new', state_new.name )
-    assert_equal( 'new', state_new.state_type.name )
+    state = Ticket::State.find(1)
+    assert_equal( 'new', state.name )
+    assert_equal( 'new', state.state_type.name )
+
+    state = Ticket::State.find(2)
+    assert_equal( 'closed successful', state.name )
+    assert_equal( 'closed', state.state_type.name )
+
+    state = Ticket::State.find(6)
+    assert_equal( 'pending reminder', state.name )
+    assert_equal( 'pending reminder', state.state_type.name )
   end
 
   # check groups/queues
@@ -122,5 +130,45 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'qa4711@t-online.de', user2.email )
     organization2 = user2.organization
     assert( organization2, nil )
+  end
+
+  # check imported tickets
+  test 'check tickets' do
+
+    # ticket is open
+    ticket = Ticket.find(728)
+    assert_equal( 'test #1', ticket.title )
+    assert_equal( 'open', ticket.state.name )
+    assert_equal( 'Misc', ticket.group.name )
+    assert_equal( '4 high', ticket.priority.name )
+    assert_equal( 'agent-2', ticket.owner.login )
+    assert_equal( 'partner', ticket.customer.login )
+    assert_equal( 'Partner der betreut', ticket.organization.name )
+    assert_equal( Time.parse('2014-11-20 22:33:41 +0000').gmtime.to_s, ticket.created_at.to_s )
+    assert_equal( nil, ticket.close_time )
+
+    # ticket is created with state closed
+    ticket = Ticket.find(729)
+    assert_equal( 'test #2', ticket.title )
+    assert_equal( 'closed successful', ticket.state.name )
+    assert_equal( 'Raw', ticket.group.name )
+    assert_equal( '3 normal', ticket.priority.name )
+    assert_equal( 'agent-2', ticket.owner.login )
+    assert_equal( 'jn2', ticket.customer.login )
+    assert_equal( 'Znuny GmbH', ticket.organization.name )
+    assert_equal( Time.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.created_at.to_s )
+    assert_equal( Time.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.close_time.to_s )
+
+    # ticket is created open and now closed
+    ticket = Ticket.find(730)
+    assert_equal( 'test #3', ticket.title )
+    assert_equal( 'closed successful', ticket.state.name )
+    assert_equal( 'Postmaster', ticket.group.name )
+    assert_equal( '3 normal', ticket.priority.name )
+    assert_equal( 'agent-2', ticket.owner.login )
+    assert_equal( 'betreuterkunde2', ticket.customer.login )
+    assert_equal( 'Noch ein betreuter Kunde', ticket.organization.name )
+    assert_equal( Time.parse('2014-11-21 00:17:40 +0000').gmtime.to_s, ticket.created_at.to_s )
+    assert_equal( Time.parse('2014-11-21 00:21:08 +0000').gmtime.to_s, ticket.close_time.to_s )
   end
 end
