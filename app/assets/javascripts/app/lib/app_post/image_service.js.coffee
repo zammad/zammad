@@ -37,14 +37,20 @@ class App.ImageService
     context.drawImage( imageObject, 0, 0, x, y )
     @canvas
 
+  checkUrl: =>
+    ignore = /\.svg$/i
+    ignore.test( @orgDataURL )
+
   toDataURL: (type, quallity = 1) =>
     #@resize()
     @canvas.toDataURL( type, quallity )
 
   toDataURLForAvatar: ( x, y ) =>
+    return if @checkUrl()
     @resize( x * 2, y * 2 )
     @toDataURL( 'image/jpeg', 0.7 )
 
   toDataURLForApp: ( x, y ) =>
+    return if @checkUrl()
     @resize( x * 2, y * 2 )
     @toDataURL( 'image/png', 0.7 )

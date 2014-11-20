@@ -59,13 +59,9 @@ class AaaGettingStartedTest < TestCase
             :css     => '.js-admin .btn--success',
           },
           {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute => 'check',
-            :element => :url,
-            :result  => '#getting_started',
+            :execute => 'watch_for',
+            :area    => '.js-base h2',
+            :value   => 'Organization',
           },
         ],
       },

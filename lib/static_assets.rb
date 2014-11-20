@@ -52,7 +52,16 @@ module StaticAssets
 
   # read image
   def self.read
+
+    # use reduced dimensions
     list = Store.list( :object => 'System::Logo', :o_id => 2 )
+
+    # as fallback use 1:1
+    if !list || !list[0]
+      list = Store.list( :object => 'System::Logo', :o_id => 1 )
+    end
+
+    # store hash in config
     if list && list[0]
       file = Store.find( list[0] )
       hash = Digest::MD5.hexdigest( file.content )
