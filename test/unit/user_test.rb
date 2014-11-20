@@ -169,8 +169,8 @@ class UserTest < ActiveSupport::TestCase
         :create_verify => {
           :firstname => 'Bob',
           :lastname  => 'Smith',
-          :image     => 'fb83638ff260b20555b25173169135dd',
-          :image_md5 => 'fb83638ff260b20555b25173169135dd',
+          :image     => '8765a1ac93f54405d8dfdd856c48c31f',
+          :image_md5 => '8765a1ac93f54405d8dfdd856c48c31f',
           :email     => 'unit-test2@znuny.com',
           :login     => 'login-5',
         },
