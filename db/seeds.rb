@@ -16,6 +16,15 @@ Setting.create_if_not_exists(
   :frontend    => true
 )
 Setting.create_if_not_exists(
+  :title       => 'Online Service',
+  :name        => 'system_online_service',
+  :area        => 'Core',
+  :description => 'Defines if application is used as online service.',
+  :options     => {},
+  :state       => false,
+  :frontend    => true
+)
+Setting.create_if_not_exists(
   :title       => 'Product Name',
   :name        => 'product_name',
   :area        => 'System::Base',

@@ -276,7 +276,10 @@ class Base extends App.ControllerContent
         if data.result is 'ok'
           for key, value of data.settings
             App.Config.set( key, value )
-          @navigate 'getting_started/channel'
+          if App.Config.get('system_online_service')
+            @navigate 'getting_started/channel/email_pre_configured'
+          else
+            @navigate 'getting_started/channel'
         else
           for key, value of data.messages
             @showAlert( key, value )
@@ -356,6 +359,50 @@ class Channel extends App.ControllerContent
 
 App.Config.set( 'getting_started/channel', Channel, 'Routes' )
 
+class ChannelEmailPreConfigured extends App.ControllerContent
+  className: 'getstarted fit'
+
+  constructor: ->
+    super
+
+    # redirect if we are not admin
+    if !@authenticate(true)
+      @navigate '#'
+      return
+
+    # set title
+    @title 'Connect Channels'
+
+    @fetch()
+
+  release: =>
+    @el.removeClass('fit getstarted')
+
+  fetch: ->
+
+    # get data
+    @ajax(
+      id:    'getting_started',
+      type:  'GET',
+      url:   @apiPath + '/getting_started',
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
+          return
+
+        # render page
+        @render(data)
+    )
+
+  render: (data) ->
+    @html App.view('getting_started/email_pre_configured')(
+      data
+    )
+
+App.Config.set( 'getting_started/channel/email_pre_configured', ChannelEmailPreConfigured, 'Routes' )
 
 class ChannelEmail extends App.ControllerContent
   className: 'getstarted fit'

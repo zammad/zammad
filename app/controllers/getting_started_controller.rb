@@ -39,15 +39,12 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       return if !authentication_check
     end
 
-    # get all groups
-    groups = Group.where( :active => true )
-
     # return result
     render :json => {
-      :setup_done     => setup_done,
-      :import_mode    => Setting.get('import_mode'),
-      :import_backend => Setting.get('import_backend'),
-      :groups         => groups,
+      :setup_done            => setup_done,
+      :import_mode           => Setting.get('import_mode'),
+      :import_backend        => Setting.get('import_backend'),
+      :system_online_service => Setting.get('system_online_service'),
     }
   end
 
@@ -58,8 +55,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # validate url
     messages = {}
-    if !params[:url] ||params[:url] !~ /^(http|https):\/\/.+?$/
-      messages[:url] = 'A URL looks like http://zammad.example.com'
+    if !Setting.get('system_online_service')
+      if !params[:url] ||params[:url] !~ /^(http|https):\/\/.+?$/
+        messages[:url] = 'A URL looks like http://zammad.example.com'
+      end
     end
 
     # validate organization
@@ -87,11 +86,13 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # split url in http_type and fqdn
     settings = {}
-    if params[:url] =~ /^(http|https):\/\/(.+?)$/
-      Setting.set('http_type', $1)
-      settings[:http_type] = $1
-      Setting.set('fqdn', $2)
-      settings[:fqdn] = $2
+    if !Setting.get('system_online_service')
+      if params[:url] =~ /^(http|https):\/\/(.+?)$/
+        Setting.set('http_type', $1)
+        settings[:http_type] = $1
+        Setting.set('fqdn', $2)
+        settings[:fqdn] = $2
+      end
     end
 
     # save organization
@@ -595,7 +596,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       if found && found == 'verify ok'
 
         # remember address
-        address = EmailAddress.all.first
+        address = EmailAddress.where( :email => params[:meta][:email] ).first
+        if !address
+          address = EmailAddress.first
+        end
         if address
           address.update_attributes(
             :realname      => params[:meta][:realname],
@@ -863,10 +867,20 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if !setup_done
       return false
     end
+
+    # get all groups
+    groups = Group.where( :active => true )
+
+    # get email addresses
+    addresses = EmailAddress.where( :active => true )
+
     render :json => {
-      :setup_done     => true,
-      :import_mode    => Setting.get('import_mode'),
-      :import_backend => Setting.get('import_backend'),
+      :setup_done            => true,
+      :import_mode           => Setting.get('import_mode'),
+      :import_backend        => Setting.get('import_backend'),
+      :system_online_service => Setting.get('system_online_service'),
+      :addresses             => addresses,
+      :groups                => groups,
     }
     true
   end

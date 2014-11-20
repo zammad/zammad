@@ -17,12 +17,14 @@
             <div class="logo-preview-placeholder"><%- @T('Your Logo') %></div>
             <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" name="logo" accept="image/*"></div>
           </div>
+          <% if !@C('system_online_service'): %>
           <div class="form-group">
             <label><%- @T('System URL') %></label>
             <div class="alert alert--danger hide" role="alert"></div>
             <input type="text" class="form-control" name="url" value="<%= @url %>" placeholder="http://zammad.example.com" required>
             <p class="help-block">The URL to this installation of Zammad.</p>
           </div>
+          <% end %>
         </fieldset>
       </div>
       <div class="wizard-controls center">
