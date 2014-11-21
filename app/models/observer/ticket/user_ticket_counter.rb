@@ -11,6 +11,10 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
   end
 
   def user_ticket_counter_update(record)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     return if !record.customer_id
 
     # open ticket count
