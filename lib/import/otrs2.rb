@@ -231,13 +231,29 @@ module Import::OTRS2
       "API key not valid!"
     end
 
+    # set settings
+    settings = load('SysConfig')
+    setting(settings)
+
+    # dynamic fields
+    dynamic_fields = load('DynamicField')
+    #settings(dynamic_fields, settings)
+
+    # email accounts
+    #accounts = load('PostMasterAccount')
+    #account(accounts)
+
+    # email filter
+    #filters = load('PostMasterFilter')
+    #filter(filters)
+
     # create states
-    records = load('State')
-    state(records)
+    states = load('State')
+    state(states)
 
     # create priorities
-    records = load('Priority')
-    priority(records)
+    priorities = load('Priority')
+    priority(priorities)
 
     # create groups
     queues = load('Queue')
@@ -689,7 +705,6 @@ module Import::OTRS2
   end
 
   # sync ticket states
-
   def self.state(records)
     map = {
       :ChangeTime   => :updated_at,
@@ -744,7 +759,6 @@ module Import::OTRS2
   end
 
   # sync ticket priorities
-
   def self.priority(records)
 
     map = {
@@ -787,7 +801,6 @@ module Import::OTRS2
   end
 
   # sync ticket groups / queues
-
   def self.ticket_group(records)
     map = {
       :ChangeTime   => :updated_at,
@@ -1065,6 +1078,58 @@ module Import::OTRS2
         organization.id = organization_new[:id]
         organization.save
       end
+    }
+  end
+
+
+  # sync settings
+
+  def self.setting(records)
+
+
+    records.each { |setting|
+
+      # fqdn
+      if setting['Key'] == 'FQDN'
+        Setting.set( 'fqdn', setting['Value'] )
+      end
+
+      # http type
+      if setting['Key'] == 'HttpType'
+        Setting.set( 'http_type', setting['Value'] )
+      end
+
+      # system id
+      if setting['Key'] == 'SystemID'
+        Setting.set( 'system_id', setting['Value'] )
+      end
+
+      # organization
+      if setting['Key'] == 'Organization'
+        Setting.set( 'organization', setting['Value'] )
+      end
+
+      # sending emails
+      if setting['Key'] == 'SendmailModule'
+        # TODO
+      end
+
+      # number generater
+      if setting['Key'] == 'Ticket::NumberGenerator'
+        if setting['Value'] == 'Kernel::System::Ticket::Number::DateChecksum'
+          Setting.set( 'ticket_number', 'Ticket::Number::Date' )
+          Setting.set( 'ticket_number_date', { :checksum => true } )
+        elsif setting['Value'] == 'Kernel::System::Ticket::Number::Date'
+          Setting.set( 'ticket_number', 'Ticket::Number::Date' )
+          Setting.set( 'ticket_number_date', { :checksum => false } )
+        end
+      end
+
+      # ticket hook
+      if setting['Key'] == 'Ticket::Hook'
+        Setting.set( 'ticket_hook', setting['Value'] )
+      end
+
     }
   end
 

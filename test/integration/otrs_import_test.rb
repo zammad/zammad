@@ -3,13 +3,20 @@ require 'integration_test_helper'
 
 class OtrsImportTest < ActiveSupport::TestCase
 
+  # check settings items
+  test 'check settings' do
+    assert_equal( '305', Setting.get('system_id'), 'system_id' )
+    assert_equal( 'vz305.demo.znuny.com', Setting.get('fqdn'), 'fqdn' )
+    assert_equal( 'http', Setting.get('http_type'), 'http_type' )
+    assert_equal( 'Example Company VZ305', Setting.get('organization'), 'organization' )
+
+  end
+
   # check count of imported items
   test 'check counts' do
-    #agent_count = User.where()
     assert_equal( 603, Ticket.count, 'tickets' )
     assert_equal( 10, Ticket::State.count, 'ticket states' )
     assert_equal( 24, Group.count, 'groups' )
-
   end
 
   # check imported users and permission
@@ -147,6 +154,9 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( Time.parse('2014-11-20 22:33:41 +0000').gmtime.to_s, ticket.created_at.to_s )
     assert_equal( nil, ticket.close_time )
 
+    # check history
+        # create entry
+
     # ticket is created with state closed
     ticket = Ticket.find(729)
     assert_equal( 'test #2', ticket.title )
@@ -159,6 +169,9 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( Time.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.created_at.to_s )
     assert_equal( Time.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.close_time.to_s )
 
+    # check history
+        # create entry
+
     # ticket is created open and now closed
     ticket = Ticket.find(730)
     assert_equal( 'test #3', ticket.title )
@@ -170,5 +183,9 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'Noch ein betreuter Kunde', ticket.organization.name )
     assert_equal( Time.parse('2014-11-21 00:17:40 +0000').gmtime.to_s, ticket.created_at.to_s )
     assert_equal( Time.parse('2014-11-21 00:21:08 +0000').gmtime.to_s, ticket.close_time.to_s )
+
+    # check history
+        # create entry
+        # state change entry
   end
 end
