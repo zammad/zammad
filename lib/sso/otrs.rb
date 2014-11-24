@@ -10,7 +10,8 @@ module Sso::Otrs
     return false if !params['SessionID']
 
     # connect to OTRS
-    result = Import::OTRS.session( params['SessionID'] )
+    result = Import::OTRS2.session( params['SessionID'] )
+
     return false if !result
     return false if !result['groups_ro']
     return false if !result['groups_rw']
@@ -18,8 +19,10 @@ module Sso::Otrs
 
     user = User.where( :login => result['user']['UserLogin'], :active => true ).first
 
-    # sync / check permissions
-    Import::OTRS.permission_sync( user, result, config_item )
+    if !user
+      Rails.logger.notice "No such user #{result['user']['UserLogin']}, requested for SSO!"
+      return
+    end
 
     return user
   end

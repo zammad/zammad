@@ -38,7 +38,7 @@ add a new history entry for an object
   def self.add(data)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return if Setting.get('import_mode') && !data[:id]
 
     # lookups
     if data[:history_type]

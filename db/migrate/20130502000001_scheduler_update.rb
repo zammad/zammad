@@ -6,7 +6,7 @@ class SchedulerUpdate < ActiveRecord::Migration
     Scheduler.reset_column_information
     Scheduler.create_or_update(
       :name           => 'Import OTRS diff load',
-      :method         => 'Import::OTRS.diff_worker',
+      :method         => 'Import::OTRS2.diff_worker',
       :period         => 60 * 3,
       :prio           => 1,
       :active         => true,

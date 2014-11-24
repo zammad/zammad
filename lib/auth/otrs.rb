@@ -11,7 +11,7 @@ module Auth::Otrs
     return false if endpoint == 'http://otrs_host/otrs'
 
     # connect to OTRS
-    result = Import::OTRS.auth( username, password )
+    result = Import::OTRS2.auth( username, password )
     return false if !result
     return false if !result['groups_ro']
     return false if !result['groups_rw']

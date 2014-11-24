@@ -83,6 +83,8 @@ returns
             :code    => 0,
           )
         end
+      else
+        raise "Unknown method '#{options[:method]}'"
       end
 
       if !response
@@ -107,7 +109,12 @@ returns
           :success => false,
           :code    => response.code,
         )
-
+      when Net::HTTPInternalServerError
+        return Result.new(
+          :error   => "Server Error: #{response.inspect}!",
+          :success => false,
+          :code    => response.code,
+        )
       when Net::HTTPRedirection
         raise "Too many redirections for the original URL, halting." if count <= 0
         url = response["location"]
@@ -123,7 +130,7 @@ returns
         )
       end
 
-      raise "Unknown method '#{option[:method]}'"
+      raise "Unable to proccess http call '#{response.inspect}'"
     end
 
     def self.ftp(uri,options)

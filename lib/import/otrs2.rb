@@ -79,8 +79,10 @@ module Import::OTRS2
 
 =end
 
-  def self.post(data)
-    url = Setting.get('import_otrs_endpoint')
+  def self.post(data, url = nil)
+    if !url
+      url = Setting.get('import_otrs_endpoint')
+    end
     data['Key'] = Setting.get('import_otrs_endpoint_key')
     puts 'POST: ' + url
     response = UserAgent.request(
@@ -116,8 +118,69 @@ module Import::OTRS2
     JSON.parse( data )
   end
 
-  def self.load( object, limit = '', offset = '' )
-    request_json( ";Subaction=Export;Object=#{object};Limit=#{limit};Offset=#{offset}", 1 )
+=begin
+
+  start auth on OTRS - just for experimental reasons
+
+  result = auth(username, password)
+
+  return
+
+     { ..user structure.. }
+
+=end
+
+  def self.auth(username, password)
+    url = Setting.get('import_otrs_endpoint')
+    url.gsub!('ZammadMigrator', 'ZammadSSO')
+    response = post( { :Action => 'ZammadSSO', :Subaction => 'Auth', :User => username, :Pw => password }, url )
+    return if !response
+    return if !response.success?
+
+    result = json(response)
+    return result
+  end
+
+=begin
+
+  request session data - just for experimental reasons
+
+  result = session(session_id)
+
+  return
+
+     { ..session structure.. }
+
+=end
+
+  def self.session(session_id)
+    url = Setting.get('import_otrs_endpoint')
+    url.gsub!('ZammadMigrator', 'ZammadSSO')
+    response = post( { :Action => 'ZammadSSO', :Subaction => 'SessionCheck', :SessionID => session_id }, url )
+    return if !response
+    return if !response.success?
+    result = json(response)
+    return result
+  end
+
+=begin
+
+  load objects from otrs
+
+  result = load('SysConfig')
+
+  return
+
+    [
+      { ..object1.. },
+      { ..object2.. },
+      { ..object3.. },
+    ]
+
+=end
+
+  def self.load( object, limit = '', offset = '', diff = 0 )
+    request_json( ";Subaction=Export;Object=#{object};Limit=#{limit};Offset=#{offset};Diff=#{diff}", 1 )
   end
 
 =begin
@@ -313,7 +376,6 @@ module Import::OTRS2
             next
           end
           _ticket_result(records, locks)
-          #sleep 1
         end
       }
     }
@@ -342,43 +404,58 @@ module Import::OTRS2
     end
 
     # create states
-    state
+    states = load('State')
+    state(states)
 
     # create priorities
-    priority
+    priorities = load('Priority')
+    priority(priorities)
 
     # create groups
-    ticket_group
+    queues = load('Queue')
+    ticket_group(queues)
+
+    # get agents groups
+    groups = load('Group')
+
+    # get agents roles
+    roles = load('Role')
 
     # create agents
-    user
+    users = load('User')
+    user(users, groups, roles, queues)
 
+    # create organizations
+    organizations = load('Customer')
+    organization(organizations)
+
+    # get changed tickets
     self.ticket_diff
 
     return
   end
 
+  def self.ticket_diff
+    count = 0
+    run   = true
+    steps = 20
+    locks = { :User => {} }
+    while run
+      count += steps
+      puts "loading... diff ..."
+      offset = count-steps
+      if offset != 0
+        offset = count - steps + 1
+      end
+      records = load( 'Ticket', steps, count-steps, 1 )
+      if !records || !records[0]
+        puts "... no more work."
+        run = false
+        next
+      end
+      _ticket_result(records, locks)
+    end
 
-  def self.ticket_diff()
-    url = "public.pl?Action=Export;Type=TicketDiff;Limit=30"
-    response = request( url )
-    return if !response
-    return if !response.success?
-    result = json(response)
-    self._ticket_result(result)
-  end
-
-  def self.ticket(ticket_ids)
-    url = "public.pl?Action=Export;Type=Ticket;"
-    ticket_ids.each {|ticket_id|
-      url = url + "TicketID=#{CGI::escape ticket_id};"
-    }
-    response = request( url )
-    return if !response
-    return if !response.success?
-
-    result = json(response)
-    self._ticket_result(result)
   end
 
   def self._ticket_result(result, locks)
@@ -595,10 +672,11 @@ module Import::OTRS2
         end
 
       }
-
+#puts "HS: #{record['History'].inspect}"
       record['History'].each { |history|
         if history['HistoryType'] == 'NewTicket'
-          History.add(
+          puts "HS.add( #{history.inspect} )"
+          res = History.add(
             :id                 => history['HistoryID'],
             :o_id               => history['TicketID'],
             :history_type       => 'created',
@@ -606,6 +684,7 @@ module Import::OTRS2
             :created_at         => history['CreateTime'],
             :created_by_id      => history['CreateBy']
           )
+          puts "res #{res.inspect}"
         end
         if history['HistoryType'] == 'StateUpdate'
           data = history['Name']
