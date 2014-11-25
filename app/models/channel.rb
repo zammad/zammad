@@ -7,10 +7,10 @@ class Channel < ApplicationModel
     channels = Channel.where( 'active = ? AND area LIKE ?', true, '%::Inbound' )
     channels.each { |channel|
       begin
-        c = eval 'Channel::' + channel[:adapter] + '.new'
+        c = eval 'Channel::' + channel[:adapter].upcase + '.new'
         c.fetch(channel)
       rescue Exception => e
-        puts "can't use " + 'Channel::' + channel[:adapter]
+        puts "can't use " + 'Channel::' + channel[:adapter].upcase
         puts e.inspect
         puts e.backtrace
         c.disconnect
