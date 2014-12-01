@@ -3,21 +3,27 @@
     <h1><%- @T( 'Avatar' ) %></h1>
     <div class="page-header-meta">
     <% if @webcamSupport: %>
-      <div class="btn btn--success js-openCamera">Camera</div>
+      <div class="btn btn--success js-openCamera"><%- @T('Camera') %></div>
     <% end %>
-      <div class="btn btn--success fileUpload">Upload<input type="file" class="js-upload" accept="image/*"></div>
+      <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" accept="image/*"></div>
     </div>
   </div>
 </div>
 <div class="avatar-gallery horizontal wrap">
+  <% for avatar in @avatars: %>
   <div class="avatar-holder">
-    <%- App.Session.get().uniqueAvatar("50") %>
+    <% if avatar.inital: %>
+      <% cssClass = '' %>
+      <% if avatar.default: %>
+      <%  cssClass = 'is-active' %>
+      <% end %>
+      <%- App.Session.get().uniqueAvatar('50', '', cssClass, avatar) %>
+    <% else: %>
+      <span class="avatar size-50 <% if avatar.default: %>is-active<% end %>" data-avatar-id="<%- avatar.id %>" style="background-image: url(<%- avatar.content %>)"></span>
+      <% if avatar.deletable: %>
+        <div class="avatar-delete"><div class="delete icon"></div></div>
+      <% end %>
+    <% end %>
   </div>
-  <div class="avatar-holder">
-    <%- App.Session.get().avatar("50", undefined, 'is-active') %>
-    <div class="avatar-delete"><div class="delete icon"></div></div>
-  </div>
-  <!-- <div class="active">
-    <div class="size-50 avatar avatar--new centered"><div class="white plus icon"></div></div>
-  </div> -->
+  <% end %>
 </div>

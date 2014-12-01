@@ -1,4 +1,4 @@
 <div class="avatar-holder">
-  <span class="avatar size-50" style="background-image: url(<%- @src %>)"></span>
+  <span class="avatar size-50" data-avatar-id="<%- @avatar.id %>" style="background-image: url(<%- @src %>)"></span>
   <div class="avatar-delete"><div class="delete icon"></div></div>
 </div>

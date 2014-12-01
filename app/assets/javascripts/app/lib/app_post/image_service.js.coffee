@@ -5,7 +5,7 @@ class App.ImageService
   src: (url) =>
     @orgDataURL = url
 
-  resize: ( x = 'auto', y = 'auto') =>
+  resize: ( x = 'auto', y = 'auto', sizeFactor = 1) =>
     @canvas  = document.createElement('canvas')
     context = @canvas.getContext('2d')
 
@@ -28,7 +28,10 @@ class App.ImageService
       factor = imageWidth / y
       x = imageHeight / factor
 
-    console.log('BB', x, y)
+    if x < imageWidth || y < imageHeight
+      x = x * sizeFactor
+      y = y * sizeFactor
+
     # set canvas dimensions
     @canvas.width  = x
     @canvas.height = y
@@ -47,10 +50,10 @@ class App.ImageService
 
   toDataURLForAvatar: ( x, y ) =>
     return if @checkUrl()
-    @resize( x * 2, y * 2 )
+    @resize( x, y, 2 )
     @toDataURL( 'image/jpeg', 0.7 )
 
   toDataURLForApp: ( x, y ) =>
     return if @checkUrl()
-    @resize( x * 2, y * 2 )
+    @resize( x, y, 2 )
     @toDataURL( 'image/png', 0.7 )

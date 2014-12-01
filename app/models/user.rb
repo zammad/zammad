@@ -8,11 +8,11 @@ class User < ApplicationModel
   extend User::Search
   include User::SearchIndex
 
-  before_create   :check_name, :check_email, :check_login, :check_image, :check_password
-  before_update   :check_password, :check_image, :check_email, :check_login_update
-  after_create    :check_image_load, :notify_clients_after_create
-  after_update    :check_image_load, :notify_clients_after_update
-  after_destroy   :notify_clients_after_destroy
+  before_create   :check_name, :check_email, :check_login, :check_password
+  before_update   :check_password, :check_email
+  after_create    :avatar_check, :notify_clients_after_create
+  after_update    :avatar_check, :notify_clients_after_update
+  after_destroy   :avatar_destroy, :notify_clients_after_destroy
 
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
   has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update
@@ -382,48 +382,6 @@ returns
     self.save
   end
 
-=begin
-
-get image of user
-
-  user = User.find(123)
-  result = user.get_image
-
-returns
-
-  result = {
-    :filename     => 'some filename',
-    :content_type => 'image/png',
-    :content      => bin_string,
-  }
-
-=end
-
-  def get_image
-
-    # find file
-    list = Store.list( :object => 'User::Image', :o_id => self.id )
-    logger.debug list.inspect
-    if list && list[0]
-      file = Store.find( list[0] )
-      result = {
-        :content      => file.content,
-        :filename     => file.filename,
-        :content_type => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
-      }
-      return result
-    end
-
-    # serve default image
-    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
-    result = {
-      :content      => Base64.decode64(image),
-      :filename     => 'image.gif',
-      :content_type => 'image/gif',
-    }
-    result
-  end
-
   private
 
   def check_name
@@ -472,7 +430,7 @@ returns
       while check
         exists = User.where( :login => self.login ).first
         if exists
-          self.login = self.login + rand(99).to_s
+          self.login = self.login + rand(999).to_s
         else
           check = false
         end
@@ -480,59 +438,30 @@ returns
     end
   end
 
-  # FIXME: Remove me later
-  def check_login_update
-    if self.login
-      self.login = self.login.downcase
-    end
-  end
+  def avatar_check
 
-  def check_image
-    if !self.image_source || self.image_source == '' || self.image_source =~ /gravatar.com/i
-      if self.email
-        hash = Digest::MD5.hexdigest(self.email)
-        self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=160&d=404"
-        logger.debug "#{self.email}: #{self.image_source}"
-      end
-    end
-  end
+    return if !self.email
+    return if self.email.empty?
 
-  def check_image_load
-
-    return if !self.image_source
-    return if self.image_source !~ /http/i
-
-    # download image
-    response = UserAgent.request( self.image_source )
-    if !response.success?
-      self.update_column( :image, 'none' )
-      self.cache_delete
-      #puts "WARNING: Can't fetch '#{self.image_source}' (maybe no avatar available), http code: #{response.code.to_s}"
-      #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
-      return
-    end
-    #puts "NOTICE: Fetch '#{self.image_source}', http code: #{response.code.to_s}"
-
-    # store image local
-    hash = Digest::MD5.hexdigest( response.body )
-
-    # check if image has changed
-    return if self.image == hash
-    #puts "NOTICE: update image in store"
-    # save new image
-    self.update_column( :image, hash )
-    Store.remove( :object => 'User::Image', :o_id => self.id )
-    Store.add(
-      :object      => 'User::Image',
-      :o_id        => self.id,
-      :data        => response.body,
-      :filename    => 'image',
-      :preferences => {
-        'Content-Type' => response.content_type
-      },
+    # save/update avatar
+    avatar = Avatar.auto_detection(
+      :object        => 'User',
+      :o_id          => self.id,
+      :url           => self.email,
+      :source        => 'app',
+      :updated_by_id => self.updated_by_id,
       :created_by_id => self.updated_by_id,
     )
-    self.cache_delete
+
+    # update user link
+    if avatar
+      self.update_column( :image, avatar.store_hash )
+      self.cache_delete
+    end
+  end
+
+  def avatar_destroy
+    Avatar.remove( 'User', self.id )
   end
 
   def check_password
@@ -542,16 +471,17 @@ returns
 
       # get current record
       if self.id
-        current = User.find(self.id)
-        self.password = current.password
+        #current = User.find(self.id)
+        #self.password = current.password
+        self.password = self.password_was
       end
 
-      # create crypted password if not already crypted
-    else
-      if self.password !~ /^\{sha2\}/
-        crypted = Digest::SHA2.hexdigest( self.password )
-        self.password = "{sha2}#{crypted}"
-      end
+    end
+
+    # crypt password if not already crypted
+    if self.password && self.password !~ /^\{sha2\}/
+      crypted       = Digest::SHA2.hexdigest( self.password )
+      self.password = "{sha2}#{crypted}"
     end
   end
 end

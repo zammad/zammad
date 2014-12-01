@@ -1,19 +1,30 @@
 class Index extends App.Controller
   elements:
-    '.js-upload': 'fileInput'
+    '.js-upload':      'fileInput'
     '.avatar-gallery': 'avatarGallery'
 
   events:
     'click .js-openCamera': 'openCamera'
-    'change .js-upload': 'onUpload'
-    'click .avatar': 'onSelect'
+    'change .js-upload':    'onUpload'
+    'click .avatar':        'onSelect'
     'click .avatar-delete': 'onDelete'
 
   constructor: ->
     super
     return if !@authenticate()
+    @avatars = []
+    @loadAvatarList()
 
-    @render()
+  loadAvatarList: =>
+    @ajax(
+      id:   'avatar_list'
+      type: 'GET'
+      url:  @apiPath + '/users/avatar'
+      processData: true
+      success: (data, status, xhr) =>
+        @avatars = data.avatars
+        @render()
+    )
 
   # check if the browser supports webcam access
   # doesnt render the camera button if not
@@ -24,6 +35,8 @@ class Index extends App.Controller
   render: =>
     @html App.view('profile/avatar')
       webcamSupport: @hasGetUserMedia()
+      avatars:       @avatars
+    @$('.avatar[data-id="' + @Session.get('id') + '"]').attr('data-id', '').attr('data-avatar-id', '0')
 
   onSelect: (e) =>
     @pick( $(e.currentTarget) )
@@ -31,33 +44,99 @@ class Index extends App.Controller
   onDelete: (e) =>
     e.stopPropagation()
     if confirm App.i18n.translateInline('Delete Avatar?')
+
+      params =
+        id: $(e.currentTarget).parent('.avatar-holder').find('.avatar').data('avatar-id')
+
       $(e.currentTarget).parent('.avatar-holder').remove()
-      @pick @('.avatar').last()
-      # remove avatar
+      @pick @$('.avatar').last()
+
+      # remove avatar globally
+      @ajax(
+        id:   'avatar_delete'
+        type: 'DELETE'
+        url:  @apiPath + '/users/avatar'
+        data: JSON.stringify( params )
+        processData: true
+        success: (data, status, xhr) =>
+    )
 
   pick: (avatar) =>
     @$('.avatar').removeClass('is-active')
     avatar.addClass('is-active')
+    avatar_id = avatar.data('avatar-id')
+    params    =
+      id: avatar_id
+
     # update avatar globally
+    @ajax(
+      id:   'avatar_set_default'
+      type: 'POST'
+      url:  @apiPath + '/users/avatar/set'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+
+        # update avatar in app at runtime
+        activeAvatar = @$('.avatar.is-active')
+        style = activeAvatar.attr('style')
+
+        # set correct background size
+        if activeAvatar.text()
+          style += ';background-size:auto'
+        else
+          style += ';background-size:cover'
+
+        # find old avatars and update them
+        replaceAvatar = $('.avatar[data-id="' + @Session.get('id') + '"]')
+        replaceAvatar.attr('style', style)
+
+        # update avatar text if needed
+        if activeAvatar.text()
+          replaceAvatar.text(activeAvatar.text())
+          replaceAvatar.addClass('unique')
+        else
+          replaceAvatar.text( '' )
+          replaceAvatar.removeClass('unique')
+    )
+    avatar
 
   openCamera: =>
     new Camera
       callback: @storeImage
 
   storeImage: (src) =>
-    avatarHolder = $(App.view('profile/avatar-holder') src: src)
-    @avatarGallery.append(avatarHolder)
-    @pick avatarHolder.find('.avatar')
+
+    # store avatar globally
+    params =
+      avatar_full: src
+
+    # add resized image
+    avatar = new App.ImageService( src )
+    params['avatar_resize'] = avatar.toDataURLForAvatar( 'auto', 160 )
+
+    # store on server site
+    @ajax(
+      id:   'avatar_new'
+      type: 'POST'
+      url:  @apiPath + '/users/avatar'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        avatarHolder = $(App.view('profile/avatar-holder')( src: src, avatar: data.avatar ) )
+        @avatarGallery.append(avatarHolder)
+        @pick avatarHolder.find('.avatar')
+    )
 
   onUpload: (event) =>
     callback = @storeImage
     EXIF.getData event.target.files[0], ->
-      orientation = this.exifdata.Orientation
-      reader = new FileReader()
+      orientation   = this.exifdata.Orientation
+      reader        = new FileReader()
       reader.onload = (e) =>
         new ImageCropper
           imageSource: e.target.result
-          callback: callback
+          callback:    callback
           orientation: orientation
 
       reader.readAsDataURL(this)
@@ -71,9 +150,9 @@ class ImageCropper extends App.ControllerModal
 
   constructor: (options) ->
     super
-    @head = 'Crop Image'
-    @cancel = true
-    @button = 'Save'
+    @head        = 'Crop Image'
+    @cancel      = true
+    @button      = 'Save'
     @buttonClass = 'btn--success'
 
     @show( App.view('profile/imageCropper')() )
@@ -97,9 +176,9 @@ class ImageCropper extends App.ControllerModal
       @image.attr src: @options.imageSource
 
   orientateImage: (e) =>
-    image = e.currentTarget
+    image  = e.currentTarget
     canvas = document.createElement('canvas')
-    ctx = canvas.getContext('2d')
+    ctx    = canvas.getContext('2d')
 
     # fit image into options.max bounding box
     # if image.width > @options.max
@@ -110,10 +189,10 @@ class ImageCropper extends App.ControllerModal
     #   image.height = @options.max
 
     if @angle is 180
-      canvas.width = image.width
+      canvas.width  = image.width
       canvas.height = image.height
     else
-      canvas.width = image.height
+      canvas.width  = image.height
       canvas.height = image.width
 
     ctx.translate(canvas.width/2, canvas.height/2)
@@ -143,25 +222,25 @@ class ImageCropper extends App.ControllerModal
 
 class Camera extends App.ControllerModal
   elements:
-    '.js-shoot': 'shootButton'
-    '.js-submit': 'submitButton'
+    '.js-shoot':       'shootButton'
+    '.js-submit':      'submitButton'
     '.camera-preview': 'preview'
-    '.camera': 'camera'
-    'video': 'video'
+    '.camera':         'camera'
+    'video':           'video'
 
   events:
     'click .js-shoot:not(.is-disabled)': 'onShootClick'
 
   constructor: (options) ->
     super
-    @size = 256
-    @photoTaken = false
+    @size            = 256
+    @photoTaken      = false
     @backgroundColor = 'white'
 
-    @head = 'Camera'
-    @cancel = true
-    @button = 'Save'
-    @buttonClass = 'btn--success is-disabled'
+    @head          = 'Camera'
+    @cancel        = true
+    @button        = 'Save'
+    @buttonClass   = 'btn--success is-disabled'
     @centerButtons = [{
       className: 'btn--success js-shoot',
       text: 'Shoot'
@@ -179,26 +258,26 @@ class Camera extends App.ControllerModal
   onShootClick: =>
     if @photoTaken
       @photoTaken = false
-      @countdown = 0
+      @countdown  = 0
       @submitButton.addClass('is-disabled')
       @shootButton
         .removeClass('btn--danger')
         .addClass('btn--success')
-        .text(App.i18n.translateInline('Shoot'))
+        .text( App.i18n.translateInline('Shoot') )
       @updatePreview()
     else
       @shoot()
       @shootButton
         .removeClass('btn--success')
         .addClass('btn--danger')
-        .text(App.i18n.translateInline('Discard'))
+        .text( App.i18n.translateInline('Discard') )
 
   shoot: =>
     @photoTaken = true
     @submitButton.removeClass('is-disabled')
 
   onWebcamReady: (stream) =>
-    # in case the modal is closed before the 
+    # in case the modal is closed before the
     # request was fullfilled
     if @hidden
       @stream.stop()
@@ -220,13 +299,13 @@ class Camera extends App.ControllerModal
     @video.get(0).play()
 
   onWebcamError: (error) =>
-    # in case the modal is closed before the 
+    # in case the modal is closed before the
     # request was fullfilled
     if @hidden
       return
 
     convertToHumanReadable =
-      'PermissionDeniedError': App.i18n.translateInline('You have to allow access to your webcam.')
+      'PermissionDeniedError':       App.i18n.translateInline('You have to allow access to your webcam.')
       'ConstraintNotSatisfiedError': App.i18n.translateInline('No camera found.')
 
     alert convertToHumanReadable[error.name]
@@ -271,7 +350,7 @@ class Camera extends App.ControllerModal
     # reset the clip area to be able to draw on the whole canvas
     @ctx.restore()
 
-    # update the preview again as soon as 
+    # update the preview again as soon as
     # the browser is ready to draw a new frame
     if not @photoTaken
       requestAnimationFrame @updatePreview
@@ -289,13 +368,14 @@ class Camera extends App.ControllerModal
     @video.attr height: ''
 
     @cache.attr
-      width: @video.height()
+      width:  @video.height()
       height: @video.height()
 
     offsetX = (@video.width() - @video.height())/2
 
     # draw full resolution screenshot
     @cacheCtx.save()
+
     # flip image
     @cacheCtx.scale(-1,1)
     @cacheCtx.drawImage(@video.get(0), offsetX, 0, -@video.width(), @video.height())

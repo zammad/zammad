@@ -155,7 +155,7 @@ class SessionsController < ApplicationController
     current_user_set(authorization.user)
 
     # log new session
-    user.activity_stream_log( 'session started', authorization.user.id, true )
+    authorization.user.activity_stream_log( 'session started', authorization.user.id, true )
 
     # remember last login date
     authorization.user.update_last_login

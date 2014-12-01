@@ -8,6 +8,12 @@ Zammad::Application.routes.draw do
   match api_path + '/users/password_change',       :to => 'users#password_change',       :via => :post
   match api_path + '/users/preferences',           :to => 'users#preferences',           :via => :put
   match api_path + '/users/account',               :to => 'users#account_remove',        :via => :delete
+
+  match api_path + '/users/avatar',                :to => 'users#avatar_new',            :via => :post
+  match api_path + '/users/avatar',                :to => 'users#avatar_list',           :via => :get
+  match api_path + '/users/avatar',                :to => 'users#avatar_destroy',        :via => :delete
+  match api_path + '/users/avatar/set',            :to => 'users#avatar_set_default',    :via => :post
+
   match api_path + '/users',                       :to => 'users#index',                 :via => :get
   match api_path + '/users/:id',                   :to => 'users#show',                  :via => :get
   match api_path + '/users/history/:id',           :to => 'users#history',               :via => :get

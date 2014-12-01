@@ -190,29 +190,35 @@ class ApplicationController < ActionController::Base
     end
 
     # return auth ok
-    return true
+    true
   end
 
   def is_role( role_name )
     return false if !current_user
     return true if current_user.is_role( role_name )
-    return false
+    false
   end
 
   def ticket_permission(ticket)
     return true if ticket.permission( :current_user => current_user )
-
     response_access_deny
-    return false
+    false
   end
 
   def is_not_role( role_name )
     deny_if_not_role( role_name )
   end
+
   def deny_if_not_role( role_name )
     return false if is_role( role_name )
     response_access_deny
-    return true
+    true
+  end
+
+  def valid_session_with_user
+    return true if current_user
+    render :json => { :message => 'No session user!' }, :status => :unprocessable_entity
+    false
   end
 
   def response_access_deny
@@ -220,7 +226,7 @@ class ApplicationController < ActionController::Base
       :json => {},
       :status => :unauthorized
     )
-    return false
+    false
   end
 
   def config_frontend

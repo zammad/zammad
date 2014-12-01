@@ -95,12 +95,7 @@ curl http://localhost/api/v1/users/#{id}.json -v -u #{login}:#{password}
   def show
 
     # access deny
-    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
-      if params[:id].to_i != current_user.id
-        response_access_deny
-        return
-      end
-    end
+    return if !permission_check
 
     if params[:full]
       full = User.full( params[:id] )
@@ -175,6 +170,10 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-T
 
         # else do assignment as defined
       else
+
+        # permission check by role
+        return if !permission_check_by_role
+
         if params[:role_ids]
           user.role_ids = params[:role_ids]
         end
@@ -278,13 +277,8 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
 
   def update
 
-    # allow user to update him self
-    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
-      if params[:id] != current_user.id
-        response_access_deny
-        return
-      end
-    end
+    # access deny
+    return if !permission_check
 
     user = User.find( params[:id] )
 
@@ -606,23 +600,143 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
   def image
 
     # cache image
-    response.headers['Expires'] = 1.year.from_now.httpdate
-    response.headers["Cache-Control"] = "cache, store, max-age=31536000, must-revalidate"
-    response.headers["Pragma"] = "cache"
+    response.headers['Expires']       = 1.year.from_now.httpdate
+    response.headers['Cache-Control'] = 'cache, store, max-age=31536000, must-revalidate'
+    response.headers['Pragma']        = 'cache'
 
-    user = User.where( :image => params[:hash] ).first
-    if user
-      image = user.get_image
+    file = Avatar.get_by_hash( params[:hash] )
+    if file
       send_data(
-        image[:content],
-        :filename    => image[:filename],
-        :type        => image[:content_type],
+        file.content,
+        :filename    => file.filename,
+        :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
         :disposition => 'inline'
       )
       return
     end
 
-    render :json => {}, :status => 404
+    # serve default image
+    image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
+    send_data(
+      Base64.decode64(image),
+      :filename    => 'image.gif',
+      :type        => 'image/gif',
+      :disposition => 'inline'
+    )
+  end
+
+=begin
+
+Resource:
+POST /api/v1/users/avatar
+
+Payload:
+{
+  "avatar_full": "base64 url",
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"avatar": "base64 url"}'
+
+=end
+
+  def avatar_new
+    return if !valid_session_with_user
+
+    # get & validate image
+    file_full   = StaticAssets.data_url_attributes( params[:avatar_full] )
+    file_resize = StaticAssets.data_url_attributes( params[:avatar_resize] )
+
+    avatar = Avatar.add(
+      :object           => 'User',
+      :o_id             => current_user.id,
+      :full             => {
+        :content   => file_full[:content],
+        :mime_type => file_full[:mime_type],
+      },
+      :resize           => {
+        :content   => file_resize[:content],
+        :mime_type => file_resize[:mime_type],
+      },
+      :source           => 'upload ' + Time.now.to_s,
+      :deletable        => true,
+    )
+
+    # update user link
+    current_user.update_attributes( :image => avatar.store_hash )
+
+    render :json => { :avatar => avatar }, :status => :ok
+  end
+
+  def avatar_set_default
+    return if !valid_session_with_user
+
+    # get & validate image
+    if !params[:id]
+      render :json => { :message => 'No id of avatar!' }, :status => :unprocessable_entity
+      return
+    end
+
+    # set as default
+    avatar = Avatar.set_default( 'User', current_user.id, params[:id] )
+
+    # update user link
+    current_user.update_attributes( :image => avatar.store_hash )
+
+    render :json => {}, :status => :ok
+  end
+
+  def avatar_destroy
+    return if !valid_session_with_user
+
+    # get & validate image
+    if !params[:id]
+      render :json => { :message => 'No id of avatar!' }, :status => :unprocessable_entity
+      return
+    end
+
+    # remove avatar
+    Avatar.remove_one( 'User', current_user.id, params[:id] )
+
+    # update user link
+    avatar = Avatar.get_default( 'User', current_user.id )
+    current_user.update_attributes( :image => avatar.store_hash )
+
+    render :json => {}, :status => :ok
+  end
+
+  def avatar_list
+    return if !valid_session_with_user
+
+    # list of avatars
+    result = Avatar.list( 'User', current_user.id )
+    render :json => { :avatars => result }, :status => :ok
+  end
+
+  private
+
+  def permission_check_by_role
+    return true if is_role('Admin')
+    return true if is_role('Agent')
+
+    response_access_deny
+    return false
+  end
+
+  def permission_check
+    return true if is_role('Admin')
+    return true if is_role('Agent')
+
+    # allow to update customer by him self
+    return true if is_role('Customer') && params[:id].to_i == current_user.id
+
+    response_access_deny
+    return false
   end
 
 end

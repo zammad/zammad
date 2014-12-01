@@ -71,7 +71,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
       file = StaticAssets.data_url_attributes( params[:logo] )
 
-      if !file[:content] || !file[:content_type]
+      if !file[:content] || !file[:mime_type]
         messages[:logo] = 'Unable to process image upload.'
       end
     end
@@ -106,7 +106,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       file = StaticAssets.data_url_attributes( params[:logo] )
 
       # store image 1:1
-      StaticAssets.store_raw( file[:content], file[:content_type] )
+      StaticAssets.store_raw( file[:content], file[:mime_type] )
     end
 
     if params[:logo_resize] && params[:logo_resize] =~ /^data:image/i
@@ -115,7 +115,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       file = StaticAssets.data_url_attributes( params[:logo_resize] )
 
       # store image 1:1
-      settings[:product_logo] = StaticAssets.store( file[:content], file[:content_type] )
+      settings[:product_logo] = StaticAssets.store( file[:content], file[:mime_type] )
     end
 
     # set changed settings

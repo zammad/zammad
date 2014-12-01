@@ -17,7 +17,7 @@ class UserTest < ActiveSupport::TestCase
         :create_verify => {
           :firstname => 'Firstname',
           :lastname  => 'Lastname',
-          :image     => 'none',
+          :image     => nil,
           :email     => 'some@example.com',
           :login     => 'some@example.com',
         },
@@ -35,7 +35,7 @@ class UserTest < ActiveSupport::TestCase
         :create_verify => {
           :firstname => 'Firstname',
           :lastname  => 'Lastname',
-          :image     => 'none',
+          :image     => nil,
           :email     => 'some@example.com',
           :login     => 'some@example.com',
         },
@@ -53,7 +53,7 @@ class UserTest < ActiveSupport::TestCase
         :create_verify => {
           :firstname => 'Firstname',
           :lastname  => 'Lastname',
-          :image     => 'none',
+          :image     => nil,
           :email     => 'some@example.com',
           :login     => 'some@example.com',
         },
@@ -139,8 +139,7 @@ class UserTest < ActiveSupport::TestCase
         :create_verify => {
           :firstname => 'Bob',
           :lastname  => 'Smith',
-          :image     => 'none',
-          :image_md5 => '76fdc28c07e4f3d7802b75aacfccdf6a',
+          :image     => nil,
           :email     => 'bob.smith@example.com',
           :login     => 'login-4',
         },
@@ -203,8 +202,8 @@ class UserTest < ActiveSupport::TestCase
         assert_equal( value, user[key], "create check #{ key } in (#{ test[:name] })" )
       }
       if test[:create_verify][:image_md5]
-        file = user.get_image
-        file_md5 = Digest::MD5.hexdigest( file[:content] )
+        file = Avatar.get_by_hash( user.image )
+        file_md5 = Digest::MD5.hexdigest( file.content )
         assert_equal( test[:create_verify][:image_md5], file_md5, "create avatar md5 check in (#{ test[:name] })"  )
       end
       if test[:update]
@@ -216,8 +215,8 @@ class UserTest < ActiveSupport::TestCase
         }
 
         if test[:update_verify][:image_md5]
-          file = user.get_image
-          file_md5 = Digest::MD5.hexdigest( file[:content] )
+          file = Avatar.get_by_hash( user.image )
+          file_md5 = Digest::MD5.hexdigest( file.content )
           assert_equal( test[:update_verify][:image_md5], file_md5, "update avatar md5 check in (#{ test[:name] })"  )
         end
       end

@@ -58,24 +58,29 @@ class App.User extends App.Model
     if placement
       placement = "data-placement=\"#{placement}\""
 
-    if @image is 'none'
+    if !@image || @image is 'none'
       return @uniqueAvatar(size, placement, cssClass)
     else
       "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
 
-  uniqueAvatar: (size = 40, placement = '', cssClass = '') ->
-    if size and !cssClass
+  uniqueAvatar: (size = 40, placement = '', cssClass = '', avatar) ->
+    if size
       cssClass += " size-#{ size }"
 
     width  = 300
     height = 226
-    size = parseInt(size, 10)
+    size   = parseInt(size, 10)
 
     rng = new Math.seedrandom(@id)
-    x = rng() * (width - size)
-    y = rng() * (height - size)
+    x   = rng() * (width - size)
+    y   = rng() * (height - size)
 
-    "<span class=\"avatar unique user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
+    if !avatar
+      cssClass += "#{cssClass} user-popover"
+      data      = "data-id=\"#{@id}\""
+    else
+      data      = "data-avatar-id=\"#{avatar.id}\""
+    "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
   @_fillUp: (data) ->
 

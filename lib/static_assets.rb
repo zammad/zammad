@@ -3,8 +3,8 @@ module StaticAssets
   def self.data_url_attributes( data_url )
     data = {}
     if data_url =~ /^data:(.+?);base64,(.+?)$/
-      data[:content_type] = $1
-      data[:content]      = Base64.decode64($2)
+      data[:mime_type] = $1
+      data[:content]   = Base64.decode64($2)
       return data
     end
     raise "Unable to parse data url: #{data_url.substr(0,100)}"
