@@ -19,6 +19,10 @@ add a avatar based on auto detection (email address)
 =end
 
   def self.auto_detection(data)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     return if !data[:url]
     return if data[:url].empty?
 
