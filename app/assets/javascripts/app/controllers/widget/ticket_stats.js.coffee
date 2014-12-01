@@ -14,12 +14,15 @@ class App.TicketStats extends App.Controller
 
     # subscribe and reload data / fetch new data if triggered
     if @user
-      @subscribeId = App.User.full( @user.id, @load, false, true )
+      @subscribeIdUser = App.User.full( @user.id, @load, false, true )
     else if @organization
-      @subscribeId = App.Organization.full( @organization.id, @load, false, true )
+      @subscribeIdOrganization = App.Organization.full( @organization.id, @load, false, true )
 
   release: =>
-    App.User.unsubscribe(@subscribeId)
+    if @subscribeIdUser
+      App.User.unsubscribe(@subscribeIdUser)
+    if @subscribeIdOrganization
+      App.Organization.unsubscribe(@subscribeIdOrganization)
 
   load: (object) =>
     if @organization
