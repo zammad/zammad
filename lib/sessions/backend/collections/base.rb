@@ -93,7 +93,6 @@ class Sessions::Backend::Collections::Base
     items.each {|item|
       all.push item.attributes_with_associations
     }
-    all = items
 
     # collect assets
     assets = {}
