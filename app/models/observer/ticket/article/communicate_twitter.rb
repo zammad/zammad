@@ -17,7 +17,7 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     type = Ticket::Article::Type.lookup( :id => record.type_id )
     return if type['name'] != 'twitter direct-message' && type['name'] != 'twitter status'
 
-    a = Channel::Twitter2.new
+    a = Channel::TWITTER2.new
     message = a.send(
       {
         :type        => type['name'],

@@ -2,7 +2,7 @@
 
 require 'twitter'
 
-class Channel::Twitter2
+class Channel::TWITTER2
   def connect(channel)
     @client = Twitter::REST::Client.new do |config|
       config.consumer_key        = channel[:options][:consumer_key]
