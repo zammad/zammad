@@ -3,6 +3,11 @@ require 'integration_test_helper'
 
 class OtrsImportTest < ActiveSupport::TestCase
 
+  Setting.set("import_otrs_endpoint", "http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator")
+  Setting.set("import_otrs_endpoint_key", "01234567899876543210")
+  Setting.set("import_mode", true)
+  Import::OTRS2.start
+
   # check settings items
   test 'check settings' do
     assert_equal( '305', Setting.get('system_id'), 'system_id' )

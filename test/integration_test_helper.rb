@@ -13,16 +13,11 @@ class ActiveSupport::TestCase
   # load seeds
   load "#{Rails.root}/db/seeds.rb"
 
-  Setting.set("import_otrs_endpoint", "http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator")
-  Setting.set("import_otrs_endpoint_key", "01234567899876543210")
-  Setting.set("import_mode", true)
-  Import::OTRS2.start
-
   setup do
 
     # set current user
-    #puts 'reset UserInfo.current_user_id'
-    #UserInfo.current_user_id = nil
+    puts 'reset UserInfo.current_user_id'
+    UserInfo.current_user_id = nil
   end
 
   # Add more helper methods to be used by all tests here...

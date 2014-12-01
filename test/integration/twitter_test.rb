@@ -1,7 +1,10 @@
 # encoding: utf-8
-require 'test_helper'
+require 'integration_test_helper'
 
 class TwitterTest < ActiveSupport::TestCase
+
+  # set system mode to done / to activate
+  Setting.set('system_init_done', true)
 
   # needed to check correct behavior
   Group.create_if_not_exists(
