@@ -175,7 +175,6 @@ class App.TicketZoom extends App.Controller
 
       @form_id = App.ControllerForm.formId()
 
-
       new Edit(
         ticket:     @ticket
         el:         @el.find('.ticket-edit')
@@ -189,12 +188,20 @@ class App.TicketZoom extends App.Controller
       editTicket = (el) =>
         el.append('<form class="edit"></form>')
         @editEl = el
-        console.log('EDIT TAB', @ticket.id)
 
         reset = (e) =>
           e.preventDefault()
           @taskReset()
           show(@ticket)
+          new Edit(
+            ticket:     @ticket
+            el:         @el.find('.ticket-edit')
+            #el:         @el.find('.edit')
+            form_meta:  @form_meta
+            form_id:    @form_id
+            defaults:   @taskGet('article')
+            ui:         @
+          )
 
         show = (ticket) =>
           console.log('SHOW', ticket.id)
@@ -245,10 +252,10 @@ class App.TicketZoom extends App.Controller
             bookmarkable: true
           )
           #console.log('Ichanges', modelDiff, task_state, ticket.attributes())
-          @markFormDiff( modelDiff )
+          #@markFormDiff( modelDiff )
 
           # bind on reset link
-          @el.find('.edit .js-reset').on(
+          @$('.js-reset').on(
             'click'
             (e) =>
               reset(e)
@@ -424,7 +431,7 @@ class App.TicketZoom extends App.Controller
       currentStore  =
         ticket:  @ticket.attributes()
         article: {
-          type: ''
+          type: 'note'
           body: ''
           internal: ''
         }
@@ -434,7 +441,7 @@ class App.TicketZoom extends App.Controller
 
       # get diff of model
       modelDiff =
-        ticket: @getDiff( currentStore.ticket, currentParams.ticket )
+        ticket:  @getDiff( currentStore.ticket, currentParams.ticket )
         article: @getDiff( currentStore.article, currentParams.article )
       #console.log('modelDiff', modelDiff)
 
@@ -446,7 +453,7 @@ class App.TicketZoom extends App.Controller
         console.log('model DIFF ', modelDiff)
 
         @autosaveLast = clone(currentParams)
-        @markFormDiff( modelDiff.ticket )
+        @markFormDiff( modelDiff )
 
         @taskUpdateAll( modelDiff )
     @interval( update, 3000, 'autosave' )
@@ -464,30 +471,33 @@ class App.TicketZoom extends App.Controller
     result = difference( modelClone, params )
 
   markFormDiff: (diff = {}) =>
-    form = @$('.edit')
+    ticketForm  = @$('.edit')
+    articleForm = @$('.article-add')
 
-    params = @formParam( form )
-    #console.log('markFormDiff', diff, params)
+    params         = {}
+    params.ticket  = @formParam( ticketForm )
+    params.article = @formParam( articleForm )
+    console.log('markFormDiff', diff, params)
 
     # clear all changes
-    if _.isEmpty(diff)
-      form.removeClass('form-changed')
-      form.find('.form-group').removeClass('is-changed')
-      form.find('.js-reset').addClass('hide')
+    if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)
+      ticketForm.removeClass('form-changed')
+      ticketForm.find('.form-group').removeClass('is-changed')
+      @$('.js-reset').addClass('hide')
 
     # set changes
     else
-      form.addClass('form-changed')
-      for currentKey, currentValue of params
+      ticketForm.addClass('form-changed')
+      for currentKey, currentValue of params.ticket
         element = @$('.edit [name="' + currentKey + '"]').parents('.form-group')
-        if diff[currentKey]
+        if diff.ticket[currentKey]
           if !element.hasClass('is-changed')
             element.addClass('is-changed')
         else
           if element.hasClass('is-changed')
             element.removeClass('is-changed')
 
-      form.find('.js-reset').removeClass('hide')
+      @$('.js-reset').removeClass('hide')
 
 
   submit: (e) =>
@@ -643,7 +653,7 @@ class App.TicketZoom extends App.Controller
 
   taskReset: (area, data) =>
     @localTaskData =
-      ticket: {}
+      ticket:  {}
       article: {}
     App.TaskManager.update( @task_key, { 'state': @localTaskData })
 

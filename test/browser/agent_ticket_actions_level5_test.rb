@@ -446,17 +446,15 @@ class AgentTicketActionLevel5Test < TestCase
             :execute => 'click',
             :css     => 'a[href="#manage"]',
           },
-
-          # create ticket
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.content.active .tabsSidebar-tabs [data-tab="customer"]',
+            :css     => '.active div[data-tab="ticket"] .js-actions .select-arrow',
           },
           {
             :where   => :instance2,
             :execute => 'click',
-            :css     => '.content.active .tabsSidebar [data-name="Change Customer"]',
+            :css     => '.active div[data-tab="ticket"] .js-actions a[data-type="customer-change"]',
           },
           {
             :execute => 'wait',

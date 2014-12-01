@@ -118,11 +118,11 @@ class AgentTicketActionLevel1Test < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => '.active .actions button',
+            :css     => '.active div[data-tab="ticket"] .js-actions .select-arrow',
           },
           {
             :execute => 'click',
-            :css     => '.active a[data-type="merge"]',
+            :css     => '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]',
           },
           {
             :execute => 'wait',

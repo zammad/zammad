@@ -136,7 +136,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance1,
             :execute      => 'match',
-            :css          => '.active div.ticket-article-view',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 3 <b>body</b> in instance 2',
             :match_result => true,
           },
@@ -176,14 +176,14 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.ticket-article-view',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 3 <b>body</b> in instance 1',
             :match_result => true,
           },
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.ticket-article-view',
+            :css          => '.active div.ticket-article',
             :value        => 'some level 3 <b>body</b> in instance 2',
             :match_result => true,
           },
@@ -310,7 +310,7 @@ class AgentTicketActionsLevel3Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active div.ticket-article-view',
+            :css          => '.active div.ticket-article',
             :value        => '22 some level 3 <b>body</b> in instance 2',
             :match_result => true,
           },

@@ -30,8 +30,6 @@ class App.ControllerForm extends App.Controller
 
     fieldset = $('<fieldset></fieldset>')
 
-    fieldset.append('<a href="#" class="js-reset hide">' + App.i18n.translatePlain('Discard your unsaved changes.') + '</a>')
-
     # collect form attributes
     @attributes = []
     if @model.attributesGet

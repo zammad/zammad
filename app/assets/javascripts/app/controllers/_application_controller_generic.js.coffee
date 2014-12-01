@@ -520,12 +520,12 @@ class App.Sidebar extends App.Controller
   toggleSidebar: =>
     @el.parent().find('.tabsSidebar-sidebarSpacer').toggleClass('is-closed')
     @el.parent().find('.tabsSidebar').toggleClass('is-closed')
-    @el.parent().next('.attributeBar').toggleClass('is-closed')
+    #@el.parent().next('.attributeBar').toggleClass('is-closed')
 
   showSidebar: ->
     @el.parent().find('.tabsSidebar-sidebarSpacer').removeClass('is-closed')
     @el.parent().find('.tabsSidebar').removeClass('is-closed')
-    @el.parent().next('.attributeBar').addClass('is-closed')
+    #@el.parent().next('.attributeBar').addClass('is-closed')
 
   toggleTab: (e) =>
 

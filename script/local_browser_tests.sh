@@ -29,7 +29,7 @@ rake db:seed
 cat config/environments/production.rb | sed -e 's/config.serve_static_assets = false/config.serve_static_assets = true/' > /tmp/production.rb && cp /tmp/production.rb config/environments/production.rb
 
 # mofidy auth backend
-cat lib/auth/test.rb | sed 's/development/production/' > /tmp/test.rb && cp /tmp/test.rb lib/auth/test.rb
+cat lib/auth/test.rb | sed 's/test/production/' > /tmp/test.rb && cp /tmp/test.rb lib/auth/test.rb
 
 pumactl --pidfile tmp/pids/puma.pid stop
 script/websocket-server.rb stop
