@@ -84,34 +84,41 @@ class Sessions::Backend::Collections::Base
     Sessions::CacheIn.set( self.client_key, true, { :expires_in => 10.seconds } )
 
     return if !self.changed?
-    data = self.load
+    items = self.load
 
-    return if !data||data.empty?
+    return if !items||items.empty?
+
+    # get relations of data
+    all   = []
+    items.each {|item|
+      all.push item.attributes_with_associations
+    }
+    all = items
 
     # collect assets
     assets = {}
-    data.each {|item|
+    items.each {|item|
       assets = item.assets(assets)
     }
     if !@client
       return {
         :collection => {
-          data.first.class.to_app_model => data,
+          items.first.class.to_app_model => all,
         },
         :assets => assets,
       }
     end
-    @client.log 'notify', "push assets for push_collection #{ data.first.class.to_s } for user #{ @user.id }"
+    @client.log 'notify', "push assets for push_collection #{ items.first.class.to_s } for user #{ @user.id }"
     @client.send({
       :data   => assets,
       :event  => [ 'loadAssets' ],
     })
 
-    @client.log 'notify', "push push_collection #{ data.first.class.to_s } for user #{ @user.id }"
+    @client.log 'notify', "push push_collection #{ items.first.class.to_s } for user #{ @user.id }"
     @client.send({
       :event  => 'resetCollection',
       :data   => {
-        data.first.class.to_app_model => data,
+        items.first.class.to_app_model => all,
       },
     })
   end

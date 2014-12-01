@@ -109,13 +109,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert( check_if_collection_exists(result3, :Group), "check collections - after touch" )
 
     # change collection
-    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true )
+    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true, :member_ids => [customer1.id] )
     sleep 16
 
     # get whole collections
     result1 = collection_client1.push
     assert( result1, "check collections - after create" )
-    assert( check_if_collection_exists(result1, :Organization), "check collections - after create" )
+    assert( check_if_collection_exists(result1, :Organization, { :id => org.id, :member_ids => [customer1.id] } ), "check collections - after create with attributes" )
     sleep 0.5
     result2 = collection_client2.push
     assert( result2, "check collections - after create" )
@@ -137,9 +137,29 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert( result3.empty?, "check collections - recall" )
   end
 
-  def check_if_collection_exists(results, collection)
+  def check_if_collection_exists(results, collection, attributes = nil)
     results.each {|result|
-      return true if result && result[:collection] && result[:collection][collection]
+      next if !result
+      if result[:collection] && result[:collection][collection]
+
+        # check just if collection exists
+        if !attributes
+          return true
+        end
+
+        # check if objetc with attributes in collection exists
+        result[:collection][collection].each {|item|
+          match_all = true
+          attributes.each {|key, value|
+            if item.attributes_with_associations[ key.to_s ] != value
+              match_all = false
+            end
+          }
+          if match_all
+            return true
+          end
+        }
+      end
     }
     nil
   end
