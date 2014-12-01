@@ -6,15 +6,15 @@ class AgentTicketActionsLevel3Test < TestCase
     message = 'message 3 äöüß ' + rand(99999999999999999).to_s
     tests = [
       {
-        :name     => 'start',
-        :instance1 => browser_instance,
-        :instance2 => browser_instance,
+        :name               => 'start',
+        :instance1          => browser_instance,
+        :instance2          => browser_instance,
         :instance1_username => 'master@example.com',
         :instance1_password => 'test',
         :instance2_username => 'agent1@example.com',
         :instance2_password => 'test',
-        :url      => browser_url,
-        :action   => [
+        :url                => browser_url,
+        :action             => [
           {
             :where   => :instance1,
             :execute => 'close_all_tasks',
@@ -141,9 +141,9 @@ class AgentTicketActionsLevel3Test < TestCase
             :match_result => true,
           },
           {
-            :where      => :instance1,
-            :execute    => 'verify_ticket_attributes',
-            :body       => 'some level 3 <b>body</b> in instance 1',
+            :where   => :instance1,
+            :execute => 'verify_ticket_attributes',
+            :body    => 'some level 3 <b>body</b> in instance 1',
           },
           {
             :where        => :instance1,
@@ -156,9 +156,9 @@ class AgentTicketActionsLevel3Test < TestCase
 
           # check edit screen in instance 2
           {
-            :where        => :instance2,
-            :execute      => 'verify_ticket_attributes',
-            :bdoy         => '',
+            :where   => :instance2,
+            :execute => 'verify_ticket_attributes',
+            :bdoy    => '',
           },
 
           # update ticket in instance 1
@@ -190,9 +190,9 @@ class AgentTicketActionsLevel3Test < TestCase
 
           # check content and edit screen in instance 1+2
           {
-            :where        => :instance1,
-            :execute      => 'verify_ticket_attributes',
-            :body         => '',
+            :where   => :instance1,
+            :execute => 'verify_ticket_attributes',
+            :body    => '',
           },
           {
             :where        => :instance1,
@@ -203,9 +203,9 @@ class AgentTicketActionsLevel3Test < TestCase
             :match_result => false,
           },
           {
-            :where        => :instance2,
-            :execute      => 'verify_ticket_attributes',
-            :body         => '',
+            :where   => :instance2,
+            :execute => 'verify_ticket_attributes',
+            :body    => '',
           },
           {
             :where        => :instance2,
@@ -218,19 +218,19 @@ class AgentTicketActionsLevel3Test < TestCase
 
           # reload instances, verify again
           {
-            :where        => :instance1,
-            :execute      => 'reload',
+            :where   => :instance1,
+            :execute => 'reload',
           },
           {
-            :where        => :instance2,
-            :execute      => 'reload',
+            :where   => :instance2,
+            :execute => 'reload',
           },
 
           # check content and edit screen in instance 1+2
           {
-            :where        => :instance1,
-            :execute      => 'verify_ticket_attributes',
-            :body         => '',
+            :where   => :instance1,
+            :execute => 'verify_ticket_attributes',
+            :body    => '',
           },
           {
             :where        => :instance1,
@@ -241,9 +241,9 @@ class AgentTicketActionsLevel3Test < TestCase
             :match_result => false,
           },
           {
-            :where        => :instance2,
-            :execute      => 'verify_ticket_attributes',
-            :body         => '',
+            :where   => :instance2,
+            :execute => 'verify_ticket_attributes',
+            :body    => '',
           },
           {
             :where        => :instance2,
@@ -256,9 +256,9 @@ class AgentTicketActionsLevel3Test < TestCase
 
           # change form of ticket in instance 2
           {
-            :where        => :instance2,
-            :execute      => 'set_ticket_attributes',
-            :body         => '22 some level 3 <b>body</b> in instance 2',
+            :where   => :instance2,
+            :execute => 'set_ticket_attributes',
+            :body    => '22 some level 3 <b>body</b> in instance 2',
           },
           {
             :execute => 'wait',
@@ -273,13 +273,13 @@ class AgentTicketActionsLevel3Test < TestCase
             :match_result => true,
           },
           {
-            :where        => :instance2,
-            :execute      => 'reload',
+            :where   => :instance2,
+            :execute => 'reload',
           },
           {
-            :where        => :instance2,
-            :execute      => 'verify_ticket_attributes',
-            :body         => '22 some level 3 <b>body</b> in instance 2',
+            :where   => :instance2,
+            :execute => 'verify_ticket_attributes',
+            :body    => '22 some level 3 <b>body</b> in instance 2',
           },
           {
             :where        => :instance2,

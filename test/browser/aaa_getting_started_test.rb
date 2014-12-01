@@ -153,12 +153,6 @@ class AaaGettingStartedTest < TestCase
           {
             :execute => 'watch_for',
             :area    => 'body',
-            :value   => 'testing',
-            :timeout => 60,
-          },
-          {
-            :execute => 'watch_for',
-            :area    => 'body',
             :value   => 'verify',
             :timeout => 70,
           },
@@ -287,11 +281,6 @@ class AaaGettingStartedTest < TestCase
             {
               :execute => 'watch_for',
               :area    => 'body',
-              :value   => 'testing',
-            },
-            {
-              :execute => 'watch_for',
-              :area    => 'body',
               :value   => 'verify',
               :timeout => 80,
             },
@@ -365,11 +354,6 @@ class AaaGettingStartedTest < TestCase
             {
               :execute => 'click',
               :css     => '.js-intro .btn--primary',
-            },
-            {
-              :execute => 'watch_for',
-              :area    => '.js-probe',
-              :value   => 'testing',
             },
             {
               :execute => 'watch_for',
