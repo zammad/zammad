@@ -143,21 +143,17 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       if result[:collection] && result[:collection][collection]
 
         # check just if collection exists
-        if !attributes
-          return true
-        end
+        return true if !attributes
 
         # check if objetc with attributes in collection exists
         result[:collection][collection].each {|item|
           match_all = true
           attributes.each {|key, value|
-            if item.attributes_with_associations[ key.to_s ] != value
+            if item[ key.to_s ] != value
               match_all = false
             end
           }
-          if match_all
-            return true
-          end
+          return true if match_all
         }
       end
     }
