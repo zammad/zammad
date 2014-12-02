@@ -28,7 +28,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
       zIndexScale:  1
 
   close: =>
-    @el.removeClass('open')
+    execute = =>
+      @el.removeClass('open')
+    @delay( execute, 400, 'close' )
+
     if @catcher
       @catcher.remove()
 
@@ -166,8 +169,8 @@ class App.UserOrganizationAutocompletion extends App.Controller
         @searchTerm = item
 
         # hide dropdown
-        @emptyResultList()
         if !item && !@attribute.disableCreateUser
+          @emptyResultList()
           @$('.recipientList').append( @buildUserNew() )
 
         # show dropdown

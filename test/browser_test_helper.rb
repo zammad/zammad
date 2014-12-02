@@ -378,11 +378,14 @@ class TestCase < Test::Unit::TestCase
         element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
         element.click
         element.clear
+
+        # in certan cases focus is not set, do it this way
+        instance.execute_script( '$(".content.active .newTicket input[name=customer_id_completion]").focus()' )
         element.send_keys( 'nico*' )
         sleep 4
         element.send_keys( :arrow_down )
         sleep 0.1
-        element.send_keys( :enter )
+        instance.find_element( { :css => '.active .newTicket .recipientList-entry.js-user.is-active' } ).click
         sleep 0.3
       end
       if action[:group]
@@ -401,11 +404,12 @@ class TestCase < Test::Unit::TestCase
         element = instance.find_element( { :css => '.active .newTicket [data-name="body"]' } )
         element.clear
         element.send_keys( action[:body] )
+
         # check if body is filled / in case use workaround
         body = element.text
         #puts "body '#{body}'"
         if !body || body.empty? || body == '' || body == ' '
-          result = instance.execute_script( '$(".content.active .newTicket [data-name=body]").text("' + action[:body] + '")' )
+          result = instance.execute_script( '$(".content.active .newTicket [data-name=body]").text("' + action[:body] + '").focus()' )
           #puts "r #{result.inspect}"
         end
       end
@@ -414,9 +418,10 @@ class TestCase < Test::Unit::TestCase
         return
       end
       sleep 0.8
-      instance.find_element( { :css => '.content.active button.submit' } ).click
+      #instance.execute_script( '$(".content.active .newTicket form").submit()' )
+      instance.find_element( { :css => '.content.active .newTicket button.submit' } ).click
       sleep 1
-      (1..14).each {|loop|
+      (1..16).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
           assert( true, "(#{test[:name]}) ticket created" )
           sleep 1
@@ -494,7 +499,7 @@ class TestCase < Test::Unit::TestCase
         keys = action[:value].to_s.split('')
         keys.each {|key|
           instance.action.send_keys(key).perform
-          sleep 0.05
+          sleep 0.01
         }
         #element.send_keys( action[:value] )
         sleep 0.3

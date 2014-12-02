@@ -334,7 +334,12 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :value   => [:arrow_down,:enter]
+            :value   => [:arrow_down]
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
           },
           {
             :where   => :instance2,
@@ -485,7 +490,12 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'sendkey',
-            :value   => [:arrow_down,:enter]
+            :value   => [:arrow_down]
+          },
+          {
+            :where   => :instance2,
+            :execute => 'click',
+            :css     => '.modal .recipientList-entry.js-user.is-active',
           },
           {
             :where   => :instance2,

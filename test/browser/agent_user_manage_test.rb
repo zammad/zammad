@@ -28,11 +28,15 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => '.active [name="customer_id_completion"]',
+            :css     => '.active .newTicket [name="customer_id_completion"]',
           },
           {
             :execute => 'sendkey',
-            :value   => [:arrow_down,:enter]
+            :value   => [:arrow_down]
+          },
+          {
+            :execute => 'click',
+            :css     => '.active .newTicket .recipientList-entry.js-user-new',
           },
           {
             :execute => 'wait',
@@ -154,7 +158,11 @@ class AgentUserManageTest < TestCase
           },
           {
             :execute => 'sendkey',
-            :value   => [:arrow_down,:enter]
+            :value   => [:arrow_down]
+          },
+          {
+            :execute => 'click',
+            :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
           },
           {
             :execute => 'wait',
