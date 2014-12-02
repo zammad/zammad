@@ -21,6 +21,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @el
 
   open: =>
+    @emptyResultList()
     @el.addClass('open')
     @catcher = new App.clickCatcher
       holder:       @el.offsetParent()
@@ -28,6 +29,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
       zIndexScale:  1
 
   close: =>
+    @emptyResultList()
     @el.removeClass('open')
     if @catcher
       @catcher.remove()
@@ -89,6 +91,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
         @executeCallback()
     )
 
+    # navigate in result list
     @el.find('[name="' + @attribute.name + '_completion"]').on(
       'keydown',
       (e) =>
@@ -99,7 +102,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
         # clean input field on ESC
         if e.keyCode is 27
 
-          # if org member selection is shwon, go back to member list
+          # if org member selection is shown, go back to member list
           if @$('.recipientList-backClickArea').is(':visible')
             @$('.recipientList-backClickArea').click()
             return
@@ -153,19 +156,19 @@ class App.UserOrganizationAutocompletion extends App.Controller
             @setUser(userId)
             @close()
           return
+    )
 
-        # ignore shift
-        return if e.keyCode is 16
-
-        # ignore ctrl
-        return if e.keyCode is 17
-
-        # ignore alt
-        return if e.keyCode is 18
+    # start search
+    @searchTerm = ''
+    @el.find('[name="' + @attribute.name + '_completion"]').on(
+      'keyup',
+      (e) =>
+        item = $(e.target).val().trim()
+        return if @searchTerm is item
+        @searchTerm = item
 
         # hide dropdown
-        @$('.recipientList').empty()
-        @$('.recipientList-organisationMembers').remove()
+        @emptyResultList()
         if !item && !@attribute.disableCreateUser
           @$('.recipientList').append( @buildUserNew() )
 
@@ -176,7 +179,6 @@ class App.UserOrganizationAutocompletion extends App.Controller
     )
 
   searchUser: (term) =>
-
     @ajax(
       id:    'searchUser' + @key
       type:  'GET'
@@ -185,6 +187,8 @@ class App.UserOrganizationAutocompletion extends App.Controller
         query: term
       processData: true
       success: (data, status, xhr) =>
+        @emptyResultList()
+
         # load assets
         App.Collection.loadAssets( data.assets )
 
@@ -208,6 +212,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
         if !@attribute.disableCreateUser
           @el.find('.recipientList').append( @buildUserNew() )
     )
+
+  emptyResultList: =>
+    @$('.recipientList').empty()
+    @$('.recipientList-organisationMembers').remove()
 
   showOrganisationMembers: (e,listEntry) =>
     if e

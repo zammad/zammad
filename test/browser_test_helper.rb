@@ -417,6 +417,7 @@ class TestCase < Test::Unit::TestCase
       (1..14).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
           assert( true, "(#{test[:name]}) ticket created" )
+          sleep 1
           return
         end
         sleep 0.5
