@@ -260,14 +260,18 @@ class TestCase < Test::Unit::TestCase
       loops = (timeout / 0.5).to_i
       text = ''
       (1..loops).each { |loop|
-        element = instance.find_element( { :css => action[:area] } )
-        if element.displayed?
-          text = element.text
-          if text =~ /#{action[:value]}/i
-            assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
-            sleep 0.4
-            return
+        begin
+          element = instance.find_element( { :css => action[:area] } )
+          if element && element.displayed?
+            text = element.text
+            if text =~ /#{action[:value]}/i
+              assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+              sleep 0.4
+              return
+            end
           end
+        rescue => e
+          puts e.message
         end
         sleep 0.5
       }
@@ -376,10 +380,8 @@ class TestCase < Test::Unit::TestCase
         element.clear
         element.send_keys( 'nico*' )
         sleep 4
-        element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
         element.send_keys( :arrow_down )
-        sleep 0.3
-        element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
+        sleep 0.1
         element.send_keys( :enter )
         sleep 0.3
       end

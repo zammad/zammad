@@ -21,7 +21,6 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @el
 
   open: =>
-    @emptyResultList()
     @el.addClass('open')
     @catcher = new App.clickCatcher
       holder:       @el.offsetParent()
@@ -29,7 +28,6 @@ class App.UserOrganizationAutocompletion extends App.Controller
       zIndexScale:  1
 
   close: =>
-    @emptyResultList()
     @el.removeClass('open')
     if @catcher
       @catcher.remove()
