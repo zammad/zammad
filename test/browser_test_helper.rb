@@ -491,6 +491,7 @@ class TestCase < Test::Unit::TestCase
         keys = action[:value].to_s.split('')
         keys.each {|key|
           instance.action.send_keys(key).perform
+          sleep 0.05
         }
         #element.send_keys( action[:value] )
         sleep 0.3

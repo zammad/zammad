@@ -27,6 +27,10 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => 'a[data-type="new"]',
           },
           {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
             :execute => 'set',
             :css     => '.modal input[name=name]',
             :value   => 'some name' + random,
@@ -71,6 +75,10 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :execute => 'click',
             :css     => 'a[data-type="new"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
           },
           {
             :execute => 'set',
@@ -208,6 +216,10 @@ class AgentTicketActionLevel5Test < TestCase
             :where   => :instance1,
             :execute => 'click',
             :css     => 'a[data-type="new"]',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
           },
           {
             :where   => :instance1,
