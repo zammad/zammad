@@ -187,7 +187,7 @@ class AgentTicketActionsLevel2Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 3,
           },
 
           # reload instances, verify again
