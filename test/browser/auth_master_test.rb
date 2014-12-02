@@ -38,39 +38,9 @@ class AuthMasterTest < TestCase
         :name     => 'login',
         :action   => [
           {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="username"]',
-            :value   => 'master@example.com',
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password"]',
-            :value   => 'test1234äöüß'
-          },
-          {
-            :execute => 'click',
-            :css     => '#login button',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-
-          # check action
-          {
-            :execute  => 'check',
-            :css      => '#login',
-            :result   => false,
-          },
-          {
-            :execute  => 'watch_for',
-            :area     => 'body',
-            :value    => 'master@example',
+            :execute  => 'login',
+            :username => 'master@example.com',
+            :password => 'test1234äöüß',
           },
         ],
       },

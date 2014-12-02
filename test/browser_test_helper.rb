@@ -227,6 +227,9 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_element( { :css => '#login input[name="password"]' } )
       element.clear
       element.send_keys( action[:password] )
+      if action[:remember_me]
+        instance.find_element( { :css => '#login [name="remember_me"]' } ).click
+      end
       instance.find_element( { :css => '#login button' } ).click
       sleep 4
       login = instance.find_element( { :css => '.user-menu .user a' } ).attribute('title')

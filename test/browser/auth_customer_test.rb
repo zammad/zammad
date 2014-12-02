@@ -38,39 +38,13 @@ class AuthCustomerTest < TestCase
         :name     => 'login',
         :action   => [
           {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="username"]',
-            :value   => 'nicole.braun@zammad.org',
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password"]',
-            :value   => 'test'
-          },
-          {
-            :execute => 'click',
-            :css     => '#login button',
+            :execute => 'login',
+            :username => 'nicole.braun@zammad.org',
+            :password => 'test',
           },
           {
             :execute => 'wait',
             :value   => 5,
-          },
-
-          # check action
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :execute  => 'watch_for',
-            :area     => 'body',
-            :value    => 'nicole.braun@zammad.org',
           },
           {
             :execute  => 'reload',
@@ -78,7 +52,7 @@ class AuthCustomerTest < TestCase
           {
             :execute  => 'watch_for',
             :area     => 'body',
-            :value    => 'nicole.braun@zammad.org',
+            :value    => 'Overviews',
           },
           {
             :execute  => 'match',
@@ -122,43 +96,10 @@ class AuthCustomerTest < TestCase
         :url      => browser_url,
         :action   => [
           {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="username"]',
-            :value   => 'nicole.braun@zammad.org',
-          },
-          {
-            :execute => 'set',
-            :css     => 'input[name="password"]',
-            :value   => 'test'
-          },
-          {
-            :execute => 'click',
-            :css     => '#login [name="remember_me"]',
-          },
-          {
-            :execute => 'click',
-            :css     => '#login button',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-
-          # check action
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => false,
-          },
-          {
-            :execute  => 'watch_for',
-            :area     => 'body',
-            :value    => 'nicole.braun@zammad.org',
+            :execute     => 'login',
+            :username    => 'nicole.braun@zammad.org',
+            :password    => 'test',
+            :remember_me => true,
           },
           {
             :execute  => 'match',

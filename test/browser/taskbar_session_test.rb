@@ -16,7 +16,7 @@ class TaskbarSessionTest < TestCase
         :action   => [
           {
             :execute => 'wait',
-            :value   => 12,
+            :value   => 8,
           },
           {
             :where        => :instance1,
@@ -52,7 +52,7 @@ class TaskbarSessionTest < TestCase
         :action   => [
           {
             :execute => 'wait',
-            :value   => 12,
+            :value   => 8,
           },
           {
             :where        => :instance1,

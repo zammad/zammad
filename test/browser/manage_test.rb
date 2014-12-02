@@ -166,10 +166,6 @@ class ManageTest < TestCase
           },
           {
             :execute => 'click',
-            :css     => 'a[href="#/"]',
-          },
-          {
-            :execute => 'click',
             :css     => 'a[href="#manage"]',
           },
           {
@@ -192,10 +188,6 @@ class ManageTest < TestCase
           {
             :execute => 'wait',
             :value   => 2,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#/"]',
           },
           {
             :execute => 'click',
