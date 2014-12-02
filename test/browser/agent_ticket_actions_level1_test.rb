@@ -5,8 +5,8 @@ class AgentTicketActionLevel1Test < TestCase
   def test_agent_ticket_create
     tests = [
       {
-        :name     => 'agent ticket create 1',
-        :action   => [
+        :name   => 'agent ticket create 1',
+        :action => [
           {
             :execute => 'close_all_tasks',
           },
@@ -22,7 +22,7 @@ class AgentTicketActionLevel1Test < TestCase
           # check ticket
           {
             :execute      => 'match',
-            :css          => '.active div.ticket-article',
+            :css          => '.content.active .ticket-article',
             :value        => 'some body 123äöü',
             :match_result => true,
           },
@@ -30,7 +30,7 @@ class AgentTicketActionLevel1Test < TestCase
           # remember old ticket where we want to merge to
           {
             :execute      => 'match',
-            :css          => '.active .page-header .ticket-number',
+            :css          => '.content.active .page-header .ticket-number',
             :value        => '^(.*)$',
             :no_quote     => true,
             :match_result => true,
@@ -56,7 +56,7 @@ class AgentTicketActionLevel1Test < TestCase
           },
           {
             :execute => 'watch_for',
-            :area    => 'body',
+            :area    => '.content.active .ticket-article',
             :value   => 'some body 1234 äöüß',
           },
           {
@@ -66,8 +66,8 @@ class AgentTicketActionLevel1Test < TestCase
       },
 
       {
-        :name     => 'agent ticket create 2',
-        :action   => [
+        :name   => 'agent ticket create 2',
+        :action => [
 
           # create ticket
           {
@@ -79,9 +79,9 @@ class AgentTicketActionLevel1Test < TestCase
 
           # check ticket
           {
-            :execute      => 'watch_for',
-            :area         => '.content.active',
-            :value        => 'some body 123äöü 222 - test to merge',
+            :execute => 'watch_for',
+            :area    => '.content.active .ticket-article',
+            :value   => 'some body 123äöü 222 - test to merge',
           },
 
           # update ticket
@@ -99,9 +99,9 @@ class AgentTicketActionLevel1Test < TestCase
             :css     => '.content.active button.js-submit',
           },
           {
-            :execute      => 'watch_for',
-            :area         => '.content.active .ticket-edit',
-            :value        => 'some body 1234 äöüß 333',
+            :execute => 'watch_for',
+            :area    => '.content.active .ticket-article',
+            :value   => 'some body 1234 äöüß 333',
           },
 
           # check if task is shown
@@ -114,8 +114,8 @@ class AgentTicketActionLevel1Test < TestCase
         ],
       },
       {
-        :name     => 'agent ticket merge',
-        :action   => [
+        :name   => 'agent ticket merge',
+        :action => [
           {
             :execute => 'click',
             :css     => '.active div[data-tab="ticket"] .js-actions .select-arrow',
