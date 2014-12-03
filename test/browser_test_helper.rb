@@ -277,6 +277,31 @@ class TestCase < Test::Unit::TestCase
       }
       assert( false, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
       return
+    elsif action[:execute] == 'watch_for_disappear'
+      timeout = 16
+      if action[:timeout]
+        timeout = action[:timeout]
+      end
+      loops = (timeout / 0.5).to_i
+      text = ''
+      (1..loops).each { |loop|
+        begin
+          element = instance.find_element( { :css => action[:area] } )
+          if !element || !element.displayed?
+            assert( true, "(#{test[:name]}) not found" )
+            sleep 0.4
+            return
+          end
+        rescue => e
+          puts e.message
+          assert( true, "(#{test[:name]}) not found" )
+          sleep 0.4
+          return
+        end
+        sleep 0.5
+      }
+      assert( false, "(#{test[:name]} / #{test[:area]}) still exsists" )
+      return
     elsif action[:execute] == 'create_user'
 
       instance.find_element( { :css => 'a[href="#manage"]' } ).click
