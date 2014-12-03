@@ -381,7 +381,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where   => :instance2,
             :execute => 'wait',
-            :value   => 10,
+            :value   => 1,
           },
           {
             :where   => :instance2,
@@ -458,7 +458,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => 'body',
+            :css          => '.active .ticket-edit',
             :value        => random,
             :match_result => true,
           },

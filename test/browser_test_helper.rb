@@ -293,7 +293,7 @@ class TestCase < Test::Unit::TestCase
             return
           end
         rescue => e
-          puts e.message
+          #puts e.message
           assert( true, "(#{test[:name]}) not found" )
           sleep 0.4
           return
@@ -520,13 +520,15 @@ class TestCase < Test::Unit::TestCase
       if action[:value] == '###stack###'
         element.send_keys( @stack )
       else
-        element.send_keys( '' )
-        keys = action[:value].to_s.split('')
-        keys.each {|key|
-          instance.action.send_keys(key).perform
-          sleep 0.01
-        }
-        #element.send_keys( action[:value] )
+        if !action[:slow]
+          element.send_keys( action[:value] )
+        else
+          element.send_keys( '' )
+          keys = action[:value].to_s.split('')
+          keys.each {|key|
+            instance.action.send_keys(key).perform
+          }
+        end
         sleep 0.3
       end
     elsif action[:execute] == 'select'

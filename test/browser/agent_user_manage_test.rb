@@ -35,12 +35,16 @@ class AgentUserManageTest < TestCase
             :value   => [:arrow_down]
           },
           {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
             :execute => 'click',
             :css     => '.active .newTicket .recipientList-entry.js-user-new',
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
           {
             :execute => 'set',
@@ -159,6 +163,10 @@ class AgentUserManageTest < TestCase
           {
             :execute => 'sendkey',
             :value   => [:arrow_down]
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
           },
           {
             :execute => 'click',
