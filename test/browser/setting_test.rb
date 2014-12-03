@@ -37,7 +37,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 4,
+            :value   => 6,
           },
           {
             :execute      => 'match',
@@ -50,10 +50,6 @@ class SettingTest < TestCase
             :css          => '#auth_facebook select[name="auth_facebook"]',
             :value        => 'no',
             :match_result => false,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
           },
 
           # set no
@@ -68,7 +64,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 6,
           },
           {
             :execute      => 'match',
@@ -100,7 +96,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 6,
           },
           {
             :execute      => 'match',
@@ -132,7 +128,7 @@ class SettingTest < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 6,
           },
           {
             :execute      => 'match',

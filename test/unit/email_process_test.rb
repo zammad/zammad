@@ -3,16 +3,6 @@ require 'test_helper'
 
 class EmailProcessTest < ActiveSupport::TestCase
   test 'process simple' do
-
-    # needed to check correct behavior
-    Group.create_if_not_exists(
-      :id             => 2,
-      :name           => 'Twitter',
-      :note           => 'All Tweets.',
-      :updated_by_id  => 1,
-      :created_by_id  => 1
-    )
-
     files = [
       {
         :data => 'From: me@example.com
@@ -31,7 +21,7 @@ Subject: äöü some subject
 Some Textäöü",
         :trusted => false,
         :success => true,
-        :result => {
+        :result  => {
           0 => {
             :priority => '2 normal',
             :title    => 'äöü some subject',
@@ -51,16 +41,16 @@ Subject: äöü some subject
 
 Some Textäöü".encode("ISO-8859-1"),
         :success => true,
-        :result => {
+        :result  => {
           0 => {
-            :priority   => '2 normal',
-            :title      => '', # should be äöü some subject, but can not be parsed from mime tools
+            :priority => '2 normal',
+            :title    => '', # should be äöü some subject, but can not be parsed from mime tools
           },
           1 => {
-            :body       => 'Some Textäöü',
-            :sender     => 'Customer',
-            :type       => 'email',
-            :internal   => false,
+            :body     => 'Some Textäöü',
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => false,
           },
         },
       },
@@ -127,15 +117,15 @@ Subject: Subject: =?utf-8?B?44CQ5LiT5Lia5Li65oKo5rOo5YaM6aaZ5riv5Y+K5rW35aSW5YWs
 Some Text",
         :trusted => false,
         :success => true,
-        :result => {
+        :result  => {
           0 => {
-            :priority   => '2 normal',
-            :title      => '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
+            :priority => '2 normal',
+            :title    => '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
           },
           1 => {
-            :body       => 'Some Text',
-            :sender     => 'Customer',
-            :type       => 'email',
+            :body   => 'Some Text',
+            :sender => 'Customer',
+            :type   => 'email',
           },
         },
       },
@@ -144,11 +134,11 @@ Some Text",
         :success => true,
         :result  => {
           0 => {
-            :priority   => '2 normal',
-            :title      => 'World Best DRUGS Mall For a Reasonable Price.',
+            :priority => '2 normal',
+            :title    => 'World Best DRUGS Mall For a Reasonable Price.',
           },
           1 => {
-            :body       => '_________________________________________________________________________________Please beth saw his head
+            :body => '_________________________________________________________________________________Please beth saw his head
 
 92hH3&yuml;oI221G1&iquest;iH16u-2&loz;NQ422U1awAq&sup1;JLZ&mu;2IicgT1&zeta;2Y7&sube;t 63&lsquo;M236E2&Yacute;&rarr;DA2&dagger;I048CvJ9A&uarr;3iTc4&Eacute;I&Upsilon;vXO502N1FJS&eth;1r 154F1HPO11CRxZp tL&icirc;T9&ouml;XH1b3Es1W mN2Bg3&otilde;EbP&OElig;S2f&tau;T&oacute;Y4 sU2P2&zeta;&Delta;RFkcI21&trade;C&Oacute;Z3E&Lambda;Rq!Cass is good to ask what that
 
@@ -219,9 +209,9 @@ Homegrown dandelions by herself into her lips. Such an excuse to stop thinking a
 [2] http://www.avast.com/
 [3] http://www.avast.com/
 ',
-            :sender     => 'Customer',
-            :type       => 'email',
-            :internal   => false,
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => false,
           },
         },
       },
@@ -230,11 +220,11 @@ Homegrown dandelions by herself into her lips. Such an excuse to stop thinking a
         :success => true,
         :result  => {
           0 => {
-            :priority   => '2 normal',
-            :title      => 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
+            :priority => '2 normal',
+            :title    => 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
           },
           1 => {
-            :body       => "Puzzled by judith bronte dave. Melvin will want her way through with.
+            :body => "Puzzled by judith bronte dave. Melvin will want her way through with.
 Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.
 Freemont and they talked with beppe.
 Thinking of bed and whenever adam.
@@ -251,23 +241,23 @@ Freemont and pulling out several minutes.
 
 [1] &#104;&#116;&#116;&#112;&#58;&#47;&#47;&#1072;&#1086;&#1089;&#1082;&#46;&#1088;&#1092;?jmlfwnwe&ucwkiyyc
 ",
-            :sender     => 'Customer',
-            :type       => 'email',
-            :internal   => false,
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => false,
           },
         },
       },
       {
-        :data         => IO.read('test/fixtures/mail23.box'),
+        :data    => IO.read('test/fixtures/mail23.box'),
         :success => true,
         :result  => {
           0 => {
-            :priority   => '2 normal',
-            :title      => '',
+            :priority => '2 normal',
+            :title    => '',
           },
           1 => {
-            :from       => 'marketingmanager@nthcpghana.com',
-            :body       => '»ú·¿»·¾³·¨¹æ
+            :from => 'marketingmanager@nthcpghana.com',
+            :body => '»ú·¿»·¾³·¨¹æ
 Message-ID: <20140911055224675615@nthcpghana.com>
 From: =?utf-8?B?6IOh5qW35ZKM?= <marketingmanager@nthcpghana.com>
 To: <spviex@126.com>,
@@ -1862,9 +1852,9 @@ AElFTkSuQmCC
 ------=_NextPart_000_0FA8_01BB04D8.188AE890--
 
 ',
-            :sender     => 'Customer',
-            :type       => 'email',
-            :internal   => false,
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => false,
           },
         },
       },
@@ -1897,13 +1887,13 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :priority     => '3 high',
-            :title        => 'some subject',
+            :priority => '3 high',
+            :title    => 'some subject',
           },
           1 => {
-            :sender       => 'System',
-            :type         => 'phone',
-            :internal     => true,
+            :sender   => 'System',
+            :type     => 'phone',
+            :internal => true,
           },
         },
       },
@@ -1927,13 +1917,13 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :priority     => '2 normal',
-            :title        => 'some subject',
+            :priority => '2 normal',
+            :title    => 'some subject',
           },
           1 => {
-            :sender       => 'Customer',
-            :type         => 'email',
-            :internal     => false,
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => false,
           },
         },
       },
@@ -1942,14 +1932,19 @@ Some Text',
   end
 
   test 'process with postmaster filter' do
-    group = Group.create_if_not_exists(
-      :name          => 'Test Group',
+    group1 = Group.create_if_not_exists(
+      :name          => 'Test Group1',
+      :created_by_id => 1,
+      :updated_by_id => 1,
+    )
+    group2 = Group.create_if_not_exists(
+      :name          => 'Test Group2',
       :created_by_id => 1,
       :updated_by_id => 1,
     )
     PostmasterFilter.destroy_all
     PostmasterFilter.create(
-      :name => 'not used',
+      :name  => 'not used',
       :match => {
         :from => 'nobody@example.com',
       },
@@ -1962,12 +1957,12 @@ Some Text',
       :updated_by_id => 1,
     )
     PostmasterFilter.create(
-      :name => 'used',
+      :name  => 'used',
       :match => {
         :from => 'me@example.com',
       },
       :perform => {
-        'X-Zammad-Ticket-group_id' => group.id,
+        'X-Zammad-Ticket-group_id'  => group1.id,
         'x-Zammad-Article-Internal' => true,
       },
       :channel       => 'email',
@@ -1976,12 +1971,12 @@ Some Text',
       :updated_by_id => 1,
     )
     PostmasterFilter.create(
-      :name => 'used x-any-recipient',
+      :name  => 'used x-any-recipient',
       :match => {
         'x-any-recipient' => 'any@example.com',
       },
       :perform => {
-        'X-Zammad-Ticket-group_id' => 2,
+        'X-Zammad-Ticket-group_id'  => group2.id,
         'x-Zammad-Article-Internal' => true,
       },
       :channel       => 'email',
@@ -2000,14 +1995,14 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :group        => group.name,
-            :priority     => '2 normal',
-            :title        => 'some subject',
+            :group    => group1.name,
+            :priority => '2 normal',
+            :title    => 'some subject',
           },
           1 => {
-            :sender       => 'Customer',
-            :type         => 'email',
-            :internal     => true,
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => true,
           },
         },
       },
@@ -2022,14 +2017,14 @@ Some Text',
         :success => true,
         :result => {
           0 => {
-            :group          => 'Twitter',
-            :priority       => '2 normal',
-            :title          => 'some subject',
+            :group    => group2.name,
+            :priority => '2 normal',
+            :title    => 'some subject',
           },
           1 => {
-            :sender         => 'Customer',
-            :type           => 'email',
-            :internal       => true,
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => true,
           },
         },
       },
