@@ -121,8 +121,9 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => 'a[href="#ticket/create"]',
           },
           {
-            :execute => 'wait',
-            :value   => 2,
+            :execute => 'watch_for',
+            :area    => '.active [data-name="body"]',
+            :value   => '',
           },
           {
             :execute => 'set',
@@ -137,6 +138,10 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :execute => 'sendkey',
             :value   => [:arrow_down]
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
           },
           {
             :execute => 'click',
@@ -303,6 +308,11 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
+            :execute => 'wait',
+            :value   => 3,
+          },
+          {
+            :where   => :instance2,
             :execute => 'click',
             :css     => '.active .shortcut > ul> li > a',
           },
@@ -339,6 +349,11 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where   => :instance2,
             :execute => 'click',
             :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
           },
@@ -362,6 +377,11 @@ class AgentTicketActionLevel5Test < TestCase
             :where   => :instance2,
             :execute => 'sendkey',
             :value   => [:arrow_down]
+          },
+          {
+            :where   => :instance2,
+            :execute => 'wait',
+            :value   => 10,
           },
           {
             :where   => :instance2,
@@ -449,6 +469,11 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where   => :instance2,
             :execute => 'click',
             :css     => '.active .shortcut > ul> li > a',
           },
@@ -505,6 +530,11 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where   => :instance2,
             :execute => 'click',
             :css     => '.modal .recipientList-entry.js-user.is-active',
           },
@@ -519,9 +549,8 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => '.modal-content .js-submit',
           },
           {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 4,
+            :execute => 'watch_for_disappear',
+            :area    => '.modal',
           },
           {
             :where    => :instance2,
@@ -544,6 +573,11 @@ class AgentTicketActionLevel5Test < TestCase
             :where   => :instance2,
             :execute => 'sendkey',
             :value   => [:arrow_down]
+          },
+          {
+            :where   => :instance2,
+            :execute => 'wait',
+            :value   => 1,
           },
           {
             :where   => :instance2,

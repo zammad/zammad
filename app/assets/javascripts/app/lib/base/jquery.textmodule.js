@@ -95,6 +95,7 @@
       }
     }, this ))
 
+    // reduce buffer, in case close it
     this.$element.on('keydown', $.proxy(function (e) {
 
       // backspace
@@ -109,13 +110,23 @@
       }
     }, this ))
 
+    // build buffer
     this.$element.on('keypress', $.proxy(function (e) {
-      var value = this.$element.text()
       console.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which) )
       a = $.proxy(function() {
 
         // shift
         if ( e.keyCode === 16 ) {
+          return
+        }
+
+        // enter
+        if ( e.keyCode === 13 ) {
+          return
+        }
+
+        // arrow keys
+        if ( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
           return
         }
 
@@ -234,7 +245,13 @@
     }
     var range = sel.getRangeAt(0)
     var clone = range.cloneRange()
-    clone.setStart(range.startContainer, range.startOffset - this.buffer.length)
+
+    // improve error handling
+    start = range.startOffset - this.buffer.length
+    if (start < 0) {
+      start = 0
+    }
+    clone.setStart(range.startContainer, start)
     clone.setEnd(range.startContainer, range.startOffset)
     clone.deleteContents()
     this.buffer = ''
