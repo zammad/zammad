@@ -126,9 +126,12 @@ class AgentTicketActionLevel5Test < TestCase
             :value   => '',
           },
           {
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => 'test ::' + random,
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :execute => 'set_ticket_attributes',
+            :body   => 'test ::' + random,
           },
           {
             :execute => 'watch_for',
@@ -285,21 +288,12 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => '::' + random,
+            :execute => 'set_ticket_attributes',
+            :body   => '::' + random,
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 2,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
           },
           {
             :where   => :instance2,
@@ -307,9 +301,8 @@ class AgentTicketActionLevel5Test < TestCase
             :value   => [:arrow_down]
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
-            :value   => 3,
+            :value   => 1,
           },
           {
             :where   => :instance2,
@@ -317,7 +310,6 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => '.active .shortcut > ul> li > a',
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -348,7 +340,6 @@ class AgentTicketActionLevel5Test < TestCase
             :value   => [:arrow_down]
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -358,18 +349,15 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
           {
             :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => '::' + random,
+            :execute => 'set_ticket_attributes',
+            :body   => '::' + random,
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -379,7 +367,6 @@ class AgentTicketActionLevel5Test < TestCase
             :value   => [:arrow_down]
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -389,7 +376,6 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => '.active .shortcut > ul> li > a',
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -436,31 +422,22 @@ class AgentTicketActionLevel5Test < TestCase
             :value   => 4,
           },
           {
-            :where    => :instance2,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => 'test',
+            :where   => :instance2,
+            :execute => 'set_ticket_attributes',
+            :body   => 'test',
           },
           {
             :execute => 'wait',
             :value   => 2,
           },
           {
-            :where    => :instance2,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => '::' + random,
+            :where   => :instance2,
+            :execute => 'set_ticket_attributes',
+            :body   => '::' + random,
           },
           {
             :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active .ticket-edit',
-            :value        => random,
-            :match_result => true,
+            :value   => 1,
           },
           {
             :where   => :instance2,
@@ -468,7 +445,6 @@ class AgentTicketActionLevel5Test < TestCase
             :value   => [:arrow_down]
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -529,7 +505,6 @@ class AgentTicketActionLevel5Test < TestCase
             :value   => [:arrow_down]
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -539,7 +514,6 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => '.modal .recipientList-entry.js-user.is-active',
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
@@ -549,33 +523,29 @@ class AgentTicketActionLevel5Test < TestCase
             :css     => '.modal-content .js-submit',
           },
           {
+            :where   => :instance2,
             :execute => 'watch_for_disappear',
             :area    => '.modal',
           },
           {
-            :where    => :instance2,
-            :execute => 'set',
-            :css     => '.active [data-name="body"]',
-            :value   => '::' + random,
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'set_ticket_attributes',
+            :body   => '::' + random,
           },
           {
             :execute => 'wait',
-            :value   => 2,
+            :value   => 1,
           },
-#          {
-#            :where        => :instance2,
-#            :execute      => 'match',
-#            :css          => 'body',
-#            :value        => random,
-#            :match_result => true,
-#          },
           {
             :where   => :instance2,
             :execute => 'sendkey',
             :value   => [:arrow_down]
           },
           {
-            :where   => :instance2,
             :execute => 'wait',
             :value   => 1,
           },
