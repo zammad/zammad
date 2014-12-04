@@ -113,46 +113,46 @@
     // build buffer
     this.$element.on('keypress', $.proxy(function (e) {
       console.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which) )
-      a = $.proxy(function() {
 
-        // shift
-        if ( e.keyCode === 16 ) {
-          return
+      // shift
+      if ( e.keyCode === 16 ) {
+        return
+      }
+
+      // enter
+      if ( e.keyCode === 13 ) {
+        return
+      }
+
+      // arrow keys
+      if ( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
+        return
+      }
+
+      // enter :
+      if ( String.fromCharCode(e.which) === ':' ) {
+        this.buffer = this.buffer + ':'
+      }
+
+      if ( this.buffer && this.buffer.substr(0,2) === '::' ) {
+
+        var sign = String.fromCharCode(e.which)
+        if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
+          this.buffer = this.buffer + sign
+          //console.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
         }
+        console.log('BUFF HINT', this.buffer, this.buffer.length, e.which, String.fromCharCode(e.which))
 
-        // enter
-        if ( e.keyCode === 13 ) {
-          return
-        }
-
-        // arrow keys
-        if ( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
-          return
-        }
-
-        // enter :
-        if ( String.fromCharCode(e.which) === ':' ) {
-          this.buffer = this.buffer + ':'
-        }
-
-        if ( this.buffer && this.buffer.substr(0,2) === '::' ) {
-
-          var sign = String.fromCharCode(e.which)
-          if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
-            this.buffer = this.buffer + sign
-            //console.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
-          }
-          console.log('BUFF HINT', this.buffer, this.buffer.length, e.which, String.fromCharCode(e.which))
-
+        b = $.proxy(function() {
           this.result( this.buffer.substr(2,this.buffer.length) )
+        }, this)
+        setTimeout(b, 400);
 
-          if (!this.isActive()) {
-            this.open()
-          }
-
+        if (!this.isActive()) {
+          this.open()
         }
-      }, this)
-      setTimeout(a, 400);
+
+      }
 
     }, this)).on('focus', $.proxy(function (e) {
       this.close()
@@ -191,7 +191,10 @@
     if (this.ce) {
       this.ce.input('off')
     }
-    this.$widget.addClass('open')
+    b = $.proxy(function() {
+      this.$widget.addClass('open')
+    }, this)
+    setTimeout(b, 400);
   }
 
   // close widget
