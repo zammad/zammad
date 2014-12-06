@@ -38,12 +38,12 @@
       66: true, // b
       73: true, // i
       85: true, // u
-    }
+    },
   };
 
   function Plugin( element, options ) {
-    this.element    = element;
-    this.$element   = $(element)
+    this.element  = element;
+    this.$element = $(element)
 
     this.options = $.extend( {}, defaults, options) ;
 
@@ -53,7 +53,7 @@
     }
 
     this._defaults = defaults;
-    this._name = pluginName;
+    this._name     = pluginName;
 
     this.preventInput = false
 
@@ -61,95 +61,117 @@
   }
 
   Plugin.prototype.init = function () {
+    var _this = this
 
     // set focus class
-    this.$element.on('focus', $.proxy(function (e) {
-      this.$element.closest('.form-control').addClass('focus')
-    }, this)).on('blur', $.proxy(function (e) {
-      this.$element.closest('.form-control').removeClass('focus')
-    }, this))
+    this.$element.on('focus', function (e) {
+      _this.$element.closest('.form-control').addClass('focus')
+    }).on('blur', function (e) {
+      _this.$element.closest('.form-control').removeClass('focus')
+    })
 
     // process placeholder
     if ( this.options.placeholder ) {
       this.updatePlaceholder( 'add' )
-      this.$element.on('focus', $.proxy(function (e) {
-        this.updatePlaceholder( 'remove' )
-      }, this)).on('blur', $.proxy(function (e) {
-        this.updatePlaceholder( 'add' )
-      }, this))
+      this.$element.on('focus', function (e) {
+        _this.updatePlaceholder( 'remove' )
+      }).on('blur', function (e) {
+        _this.updatePlaceholder( 'add' )
+      })
     }
 
     // maxlength check
     //this.options.maxlength = 10
     if ( this.options.maxlength ) {
-      this.$element.on('keydown', $.proxy(function (e) {
-        console.log('maxlength', e.keyCode, this.allowKey(e))
+      this.$element.on('keydown', function (e) {
+        console.log('maxlength', e.keyCode, _this.allowKey(e))
         // check control key
-        if ( this.allowKey(e) ) {
-          this.maxLengthOk()
+        if ( _this.allowKey(e) ) {
+          _this.maxLengthOk()
         }
         // check type ahead key
         else {
-          if ( !this.maxLengthOk( true ) ) {
+          if ( !_this.maxLengthOk( true ) ) {
             e.preventDefault()
           }
         }
-      }, this)).on('keyup', $.proxy(function (e) {
+      }).on('keyup', function (e) {
         // check control key
-        if ( this.allowKey(e) ) {
-          this.maxLengthOk()
+        if ( _this.allowKey(e) ) {
+          _this.maxLengthOk()
         }
         // check type ahead key
         else {
-          if ( !this.maxLengthOk( true ) ) {
+          if ( !_this.maxLengthOk( true ) ) {
             e.preventDefault()
           }
         }
-      }, this)).on('focus', $.proxy(function (e) {
-        this.maxLengthOk()
-      }, this)).on('blur', $.proxy(function (e) {
-        this.maxLengthOk()
-      }, this))
+      }).on('focus', function (e) {
+        _this.maxLengthOk()
+      }).on('blur', function (e) {
+        _this.maxLengthOk()
+      })
     }
 
     // handle enter
-    this.$element.on('keydown', $.proxy(function (e) {
+    this.$element.on('keydown', function (e) {
       console.log('keydown', e.keyCode)
-      if (this.preventInput) {
-        console.log('preventInput', this.preventInput)
+      if ( _this.preventInput ) {
+        console.log('preventInput', _this.preventInput)
         return
       }
 
-      // trap the return key being pressed
+      // strap the return key being pressed
       if (e.keyCode === 13) {
         // disbale multi line
-        if ( !this.options.multiline ) {
+        if ( !_this.options.multiline ) {
           e.preventDefault()
           return
         }
         // limit check
-        if ( !this.maxLengthOk( true ) ) {
+        if ( !_this.maxLengthOk( true ) ) {
           e.preventDefault()
           return
         }
-        newLine = "<br></br>"
+
+        //newLine = "<br></br>"
+        newLine = "\n<br>"
         if (document.selection) {
           var range = document.selection.createRange()
-          newLine = "<br/>" // ie is not supporting \n :(
+          newLine   = "<br/>" // ie is not supporting \n :(
           range.pasteHTML(newLine)
         }
         else {
+
+          // workaround for chrome - insert <br> directly after <br> is ignored -
+          // insert <br>, if it hasn't change add it twice again
+          var oldValue = _this.$element.html().trim()
           document.execCommand('insertHTML', false, newLine)
+          var newValue = _this.$element.html().trim()
+          console.log('ON', oldValue, '--', newValue)
+          //if ( oldValue == newValue || oldValue == newValue.substr( 0, newValue.length - newLine.length ) ) {
+          //if ( oldValue == newValue.substr( 0, newValue.length - newLine.length ) ) {
+          if ( oldValue == newValue ) {
+            var oldValue = _this.$element.html().trim()
+            document.execCommand('insertHTML', false, newLine)
+            console.log('Autoinsert 1th-br')
+            var newValue = _this.$element.html().trim()
+            if ( oldValue == newValue ) {
+              console.log('Autoinsert 2th-br')
+              document.execCommand('insertHTML', false, ' ' + newLine) // + newLine)
+            }
+          }
         }
 
         // prevent the default behaviour of return key pressed
+        e.preventDefault()
         return false
       }
-    }, this))
+    })
 
     // just paste text
     if ( this.options.mode === 'textonly' ) {
-      this.$element.on('paste', $.proxy(function (e) {
+      this.$element.on('paste', function (e) {
         e.preventDefault()
         var text
         if (window.clipboardData) { // IE
@@ -162,19 +184,19 @@
         if (text) {
 
           // replace new lines
-          if ( !this.options.multiline ) {
+          if ( !_this.options.multiline ) {
             text = text.replace(/\n/g, '')
             text = text.replace(/\r/g, '')
             text = text.replace(/\t/g, '')
           }
 
           // limit length, limit paste string
-          if ( this.options.maxlength ) {
+          if ( _this.options.maxlength ) {
             var pasteLength   = text.length
-            var currentLength = this.$element.text().length
-            var overSize      = ( currentLength + pasteLength ) - this.options.maxlength
+            var currentLength = _this.$element.text().length
+            var overSize      = ( currentLength + pasteLength ) - _this.options.maxlength
             if ( overSize > 0 ) {
-              text = text.substr( 0, pasteLength - overSize )
+              text      = text.substr( 0, pasteLength - overSize )
               overlimit = true
             }
           }
@@ -187,29 +209,28 @@
           else {
             document.execCommand('inserttext', false, text)
           }
-          this.maxLengthOk( overlimit )
+          _this.maxLengthOk( overlimit )
         }
-
-      }, this))
+      })
     }
 
     // disable rich text b/u/i
     if ( this.options.mode === 'textonly' ) {
-      this.$element.on('keydown', $.proxy(function (e) {
-        if ( this.richTextKey(e) ) {
+      this.$element.on('keydown', function (e) {
+        if ( _this.richTextKey(e) ) {
           e.preventDefault()
         }
-      }, this))
+      })
     }
   };
 
   // add/remove placeholder
   Plugin.prototype.updatePlaceholder = function(type) {
-    if (!this.options.placeholder) {
+    if ( !this.options.placeholder ) {
       return
     }
-    var holder = this.$element
-    var text = holder.text().trim()
+    var holder      = this.$element
+    var text        = holder.text().trim()
     var placeholder = '<span class="placeholder">' + this.options.placeholder + '</span>'
 
     // add placholder if no text exists
@@ -234,7 +255,7 @@
 
   // disable/enable input
   Plugin.prototype.input = function(type) {
-    if (type === 'off') {
+    if ( type === 'off' ) {
       this.preventInput = true
     }
     else {
@@ -303,7 +324,7 @@
 
   // get value
   Plugin.prototype.value = function() {
-    this.updatePlaceholder( 'remove' )
+    //this.updatePlaceholder( 'remove' )
 
     // get text
     if ( this.options.mode === 'textonly' ) {

@@ -35,22 +35,23 @@
 
   Plugin.prototype.init = function () {
     this.baseTemplate()
+    var _this = this
 
-    this.$element.on('keydown', $.proxy(function (e) {
+    this.$element.on('keydown', function (e) {
 
       // esc
       if ( e.keyCode === 27 ) {
-        this.close()
+        _this.close()
       }
 
-      // navigate through widget
-      if ( this.isActive() ) {
+      // navigate through item
+      if ( _this.isActive() ) {
 
         // enter
         if ( e.keyCode === 13 ) {
           e.preventDefault()
-          var id = this.$widget.find('.dropdown-menu li.active a').data('id')
-          this.take(id)
+          var id = _this.$widget.find('.dropdown-menu li.active a').data('id')
+          _this.take(id)
         }
 
         // arrow keys
@@ -60,59 +61,58 @@
 
         // up
         if ( e.keyCode === 38 ) {
-          if ( !this.$widget.find('.dropdown-menu li.active')[0] ) {
-            var top = this.$widget.find('.dropdown-menu li').last().addClass('active').position().top
-            this.$widget.find('.dropdown-menu').scrollTop( top );
+          if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
+            var top = _this.$widget.find('.dropdown-menu li').last().addClass('active').position().top
+            _this.$widget.find('.dropdown-menu').scrollTop( top );
           }
           else {
-            var prev = this.$widget.find('.dropdown-menu li.active').removeClass('active').prev()
+            var prev = _this.$widget.find('.dropdown-menu li.active').removeClass('active').prev()
             var top = 300
             if ( prev[0] ) {
               top = prev.addClass('active').position().top
             }
-            this.$widget.find('.dropdown-menu').scrollTop( top );
+            _this.$widget.find('.dropdown-menu').scrollTop( top );
           }
         }
 
         // down
         if ( e.keyCode === 40 ) {
-          if ( !this.$widget.find('.dropdown-menu li.active')[0] ) {
-            var top = this.$widget.find('.dropdown-menu li').first().addClass('active').position().top
-            this.$widget.find('.dropdown-menu').scrollTop( top );
+          if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
+            var top = _this.$widget.find('.dropdown-menu li').first().addClass('active').position().top
+            _this.$widget.find('.dropdown-menu').scrollTop( top );
 
           }
           else {
-            var next = this.$widget.find('.dropdown-menu li.active').removeClass('active').next()
+            var next = _this.$widget.find('.dropdown-menu li.active').removeClass('active').next()
             var top = 300
             if ( next[0] ) {
               top = next.addClass('active').position().top
             }
-            this.$widget.find('.dropdown-menu').scrollTop( top );
-
+            _this.$widget.find('.dropdown-menu').scrollTop( top );
           }
         }
 
       }
-    }, this ))
+    })
 
     // reduce buffer, in case close it
-    this.$element.on('keydown', $.proxy(function (e) {
+    this.$element.on('keydown', function (e) {
 
       // backspace
-      if ( e.keyCode === 8 && this.buffer ) {
-        if ( this.buffer === '::' ) {
-          this.close()
+      if ( e.keyCode === 8 && _this.buffer ) {
+        if ( _this.buffer === '::' ) {
+          _this.close()
         }
-        var length = this.buffer.length
-        this.buffer = this.buffer.substr( 0, length-1 )
-        console.log('BS backspace', this.buffer)
-        this.result( this.buffer.substr( 2, length-1 ) )
+        var length   = _this.buffer.length
+        _this.buffer = _this.buffer.substr( 0, length-1 )
+        console.log('BS backspace', _this.buffer)
+        _this.result( _this.buffer.substr( 2, length-1 ) )
       }
-    }, this ))
+    })
 
     // build buffer
-    this.$element.on('keypress', $.proxy(function (e) {
-      console.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which) )
+    this.$element.on('keypress', function (e) {
+      console.log('BUFF', _this.buffer, e.keyCode, String.fromCharCode(e.which) )
 
       // shift
       if ( e.keyCode === 16 ) {
@@ -131,38 +131,38 @@
 
       // enter :
       if ( String.fromCharCode(e.which) === ':' ) {
-        this.buffer = this.buffer + ':'
+        _this.buffer = _this.buffer + ':'
       }
 
-      if ( this.buffer && this.buffer.substr(0,2) === '::' ) {
+      if ( _this.buffer && _this.buffer.substr(0,2) === '::' ) {
 
         var sign = String.fromCharCode(e.which)
         if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
-          this.buffer = this.buffer + sign
+          _this.buffer = _this.buffer + sign
           //console.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
         }
-        console.log('BUFF HINT', this.buffer, this.buffer.length, e.which, String.fromCharCode(e.which))
+        console.log('BUFF HINT', _this.buffer, _this.buffer.length, e.which, String.fromCharCode(e.which))
 
         b = $.proxy(function() {
           this.result( this.buffer.substr(2,this.buffer.length) )
-        }, this)
+        }, _this)
         setTimeout(b, 400);
 
-        if (!this.isActive()) {
-          this.open()
+        if (!_this.isActive()) {
+          _this.open()
         }
 
       }
 
-    }, this)).on('focus', $.proxy(function (e) {
-      this.close()
-    }, this)).on('blur', $.proxy(function (e) {
+    }).on('focus', function (e) {
+      _this.close()
+    }).on('blur', function (e) {
       // delay, to get click on text module before widget is closed
       a = $.proxy(function() {
         this.close()
-      }, this)
+      }, _this)
       setTimeout(a, 600);
-    }, this))
+    })
 
   };
 
@@ -174,9 +174,11 @@
 
   // update widget position
   Plugin.prototype.updatePosition = function() {
+    console.log('uP')
     this.$widget.find('.dropdown-menu').scrollTop( 300 );
-    if ( !this.$element.is(':visible') ) return
+    //if ( !this.$element.is(':visible') ) return
     var position = this.$element.caret('position');
+  console.log('PP', position)
     if (!position) return
     var widgetHeight = this.$widget.find('ul').height() + 85
     this.$widget.css('top', position.top - widgetHeight)
@@ -262,7 +264,7 @@
 
   // render result
   Plugin.prototype.result = function(term) {
-
+    var _this = this
     var result = _.filter( this.collection, function(item) {
       var reg = new RegExp( term, 'i' )
       if ( item.name && item.name.match( reg ) ) {
@@ -290,11 +292,11 @@
     }
     this.$widget.find('ul li').on(
       'click',
-      $.proxy(function(e) {
+      function(e) {
         e.preventDefault()
         var id = $(e.target).data('id')
-        this.take(id)
-      }, this)
+        _this.take(id)
+      }
     )
     this.updatePosition()
   }
