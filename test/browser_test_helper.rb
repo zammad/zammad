@@ -378,14 +378,17 @@ class TestCase < Test::Unit::TestCase
 #          },
       end
       if action[:body]
-        element = instance.find_element( { :css => '.content.active [data-name="body"]' } )
+        instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
+        sleep 0.5
+        element = instance.find_element( { :css => '.content.active div[data-name=body]' } )
         element.clear
         element.send_keys( action[:body] )
         # check if body is filled / in case use workaround
         body = element.text
         #puts "body '#{body}'"
         if !body || body.empty? || body == '' || body == ' '
-          result = instance.execute_script( '$(".content.active [data-name=body]").text("' + action[:body] + '")' )
+          puts "DBODY WORKSAROUND"
+          result = instance.execute_script( '$(".content.active div[data-name=body]").text("' + action[:body] + '").focus()' )
           #puts "r #{result.inspect}"
         end
       end
@@ -426,7 +429,9 @@ class TestCase < Test::Unit::TestCase
         sleep 0.2
       end
       if action[:body]
-        element = instance.find_element( { :css => '.active .newTicket [data-name="body"]' } )
+        instance.execute_script( '$(".active .newTicket div[data-name=body]").focus()' )
+        sleep 0.5
+        element = instance.find_element( { :css => '.active .newTicket div[data-name=body]' } )
         element.clear
         element.send_keys( action[:body] )
 
@@ -434,7 +439,8 @@ class TestCase < Test::Unit::TestCase
         body = element.text
         #puts "body '#{body}'"
         if !body || body.empty? || body == '' || body == ' '
-          result = instance.execute_script( '$(".content.active .newTicket [data-name=body]").text("' + action[:body] + '").focus()' )
+          puts "DBODY WORKSAROUND"
+          result = instance.execute_script( '$(".active .newTicket div[data-name=body]").text("' + action[:body] + '").focus()' )
           #puts "r #{result.inspect}"
         end
       end
@@ -444,7 +450,7 @@ class TestCase < Test::Unit::TestCase
       end
       sleep 0.8
       #instance.execute_script( '$(".content.active .newTicket form").submit()' )
-      instance.find_element( { :css => '.content.active .newTicket button.submit' } ).click
+      instance.find_element( { :css => '.active .newTicket button.submit' } ).click
       sleep 1
       (1..16).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/

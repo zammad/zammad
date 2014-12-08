@@ -21,7 +21,7 @@ class AgentTicketActionLevel4Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 6,
+            :value   => 10,
           },
 
           # reload instances, verify autosave

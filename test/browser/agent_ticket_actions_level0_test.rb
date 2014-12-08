@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel5Test < TestCase
+class AgentTicketActionLevel0Test < TestCase
   def test_I
     random = 'text_module_test_' + rand(99999999).to_s
     random2 = 'text_module_test_' + rand(99999999).to_s
@@ -122,12 +122,12 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute => 'watch_for',
-            :area    => '.active [data-name="body"]',
+            :area    => '.active div[data-name=body]',
             :value   => '',
           },
           {
             :execute => 'wait',
-            :value   => 1,
+            :value   => 3,
           },
           {
             :execute => 'set_ticket_attributes',
@@ -156,7 +156,7 @@ class AgentTicketActionLevel5Test < TestCase
           },
           {
             :execute      => 'match',
-            :css          => '.active [data-name="body"]',
+            :css          => '.active div[data-name=body]',
             :value        => 'some content' + random,
             :match_result => true,
           },
@@ -313,10 +313,13 @@ class AgentTicketActionLevel5Test < TestCase
             :execute => 'wait',
             :value   => 1,
           },
+#         instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
+#execute] == 'js'
+#      result = instance.execute_script( action[:value
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active [data-name="body"]',
+            :css          => '.active div[data-name=body]',
             :value        => 'some content ' + random,
             :match_result => true,
           },
@@ -382,7 +385,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active [data-name="body"]',
+            :css          => '.active div[data-name=body]',
             :value        => 'some content Braun' + random,
             :match_result => true,
           },
@@ -460,7 +463,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active [data-name="body"]',
+            :css          => '.active div[data-name=body]',
             :value        => 'some content Braun' + random,
             :match_result => true,
           },
@@ -561,7 +564,7 @@ class AgentTicketActionLevel5Test < TestCase
           {
             :where        => :instance2,
             :execute      => 'match',
-            :css          => '.active [data-name="body"]',
+            :css          => '.active div[data-name=body]',
             :value        => 'some content ' + lastname,
             :match_result => true,
           },

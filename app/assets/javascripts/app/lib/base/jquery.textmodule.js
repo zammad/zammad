@@ -174,25 +174,29 @@
 
   // update widget position
   Plugin.prototype.updatePosition = function() {
-    console.log('uP')
     this.$widget.find('.dropdown-menu').scrollTop( 300 );
-    //if ( !this.$element.is(':visible') ) return
-    var position = this.$element.caret('position');
-  console.log('PP', position)
+    if ( !this.$element.is(':visible') ) return
+
+    // get cursor position
+    var marker = '<span id="js-cursor-position"></span>'
+    Medium.Injector.prototype.inject( marker )
+    position = $('#js-cursor-position').position()
+    $('#js-cursor-position').remove()
     if (!position) return
-    var widgetHeight = this.$widget.find('ul').height() + 85
-    this.$widget.css('top', position.top - widgetHeight)
-    if ( !this.isActive() ) {
-      this.$widget.css('left', position.left)
-    }
+
+    // set position of widget
+    var height = this.$element.height()
+    var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
+    var top = -( widgetHeight + height ) + position.top
+    this.$widget.css('top', top)
+    this.$widget.css('left', position.left)
   }
 
   // open widget
   Plugin.prototype.open = function() {
     this.active = true
-    if (this.ce) {
-      this.ce.input('off')
-    }
+    this.updatePosition()
+
     b = $.proxy(function() {
       this.$widget.addClass('open')
     }, this)
@@ -203,15 +207,42 @@
   Plugin.prototype.close = function() {
     this.active = false
     this.cutInput()
-    if (this.ce) {
-      this.ce.input('on')
-    }
     this.$widget.removeClass('open')
   }
 
   // check if widget is active/open
   Plugin.prototype.isActive = function() {
     return this.active
+  }
+
+  // paste some content
+  Plugin.prototype.paste = function(string) {
+    if (document.selection) { // IE
+      var range = document.selection.createRange()
+      range.pasteHTML(string)
+    }
+    else {
+      document.execCommand('insertHTML', false, string)
+    }
+  }
+
+  // cut some content
+  Plugin.prototype.cut = function(string) {
+    var sel = window.getSelection()
+    if ( !sel || sel.rangeCount < 1) {
+      return
+    }
+    var range = sel.getRangeAt(0)
+    var clone = range.cloneRange()
+
+    // improve error handling
+    start = range.startOffset - string.length
+    if (start < 0) {
+      start = 0
+    }
+    clone.setStart(range.startContainer, start)
+    clone.setEnd(range.startContainer, range.startOffset)
+    clone.deleteContents()
   }
 
   // select text module and insert into text
@@ -223,15 +254,9 @@
     for (var i = 0; i < this.collection.length; i++) {
       var item = this.collection[i]
       if ( item.id == id ) {
-        var content = item.content + "\n"
+        var content = item.content + "<br/>\n"
         this.cutInput()
-        if (document.selection) { // IE
-          var range = document.selection.createRange()
-          range.pasteHTML(content)
-        }
-        else {
-          document.execCommand('insertHTML', false, content)
-        }
+        this.paste(content)
         this.close()
         return
       }
@@ -248,17 +273,7 @@
       this.buffer = ''
       return
     }
-    var range = sel.getRangeAt(0)
-    var clone = range.cloneRange()
-
-    // improve error handling
-    start = range.startOffset - this.buffer.length
-    if (start < 0) {
-      start = 0
-    }
-    clone.setStart(range.startContainer, start)
-    clone.setEnd(range.startContainer, range.startOffset)
-    clone.deleteContents()
+    this.cut(this.buffer)
     this.buffer = ''
   }
 

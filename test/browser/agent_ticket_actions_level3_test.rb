@@ -104,7 +104,7 @@ class AgentTicketActionsLevel3Test < TestCase
           },
           {
             :execute => 'wait',
-            :value   => 5,
+            :value   => 6,
           },
           {
             :where        => :instance2,
@@ -155,6 +155,10 @@ class AgentTicketActionsLevel3Test < TestCase
           },
 
           # check edit screen in instance 2
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
           {
             :where   => :instance2,
             :execute => 'verify_ticket_attributes',

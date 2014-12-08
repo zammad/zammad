@@ -6,11 +6,12 @@
  *= require ./bootstrap.css
  *= require ./cropper.min.css
  *= require ./fineuploader.css
- *= require ./ui-lightness/jquery-ui-1.8.23.custom.css
+ *= require ./ui-lightness/jquery-ui-1.11.2.css
  *= require ./jquery.noty.css
  *= require ./bootstrap-tokenfield.css
  *= require ./noty_theme_twitter.css
  *= require ./sew.css
+ *= require ./medium.css
  *= require ./fira-sans.css
  *= require ./zammad.css.scss
  *
