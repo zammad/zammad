@@ -5,11 +5,13 @@ body {
   background: hsl(210,17%,98%);
 }
 
+/* TODO: @mrflix, do we need this at this level?
 p, 
 ol, 
 ul {
   color: #bcbcbb;
 }
+*/
 
 p {
   margin: 14px 0;
@@ -132,7 +134,6 @@ small {
 
 [contenteditable] {
   display: block;
-  white-space: pre-wrap;
   outline-style: none;
   border-radius: 3px;
 }
