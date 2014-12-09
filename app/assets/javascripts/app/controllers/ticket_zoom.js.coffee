@@ -431,8 +431,10 @@ class App.TicketZoom extends App.Controller
       currentStore  =
         ticket:  @ticket.attributes()
         article: {
-          type: 'note'
-          body: ''
+          to:       ''
+          cc:       ''
+          type:     'note'
+          body:     ''
           internal: ''
         }
       currentParams =
@@ -725,50 +727,89 @@ class TicketMeta extends App.Controller
 
 class Edit extends App.Controller
   elements:
-    '.js-textarea':                 'textarea'
-    '.attachmentPlaceholder':       'attachmentPlaceholder'
+    '.js-textarea':                       'textarea'
+    '.attachmentPlaceholder':             'attachmentPlaceholder'
     '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
-    '.attachmentPlaceholder-hint':  'attachmentHint'
-    '.article-add':                 'ticketEdit'
-    '.attachments':                 'attachmentsHolder'
-    '.attachmentUpload':            'attachmentUpload'
-    '.attachmentUpload-progressBar':'progressBar'
-    '.js-percentage':               'progressText'
-    '.js-cancel':                   'cancelContainer'
-    '.text-bubble':                 'textBubble'
-    '.editControls-item':           'editControlItem'
-    #'.editControls':               'editControls'
-    #'.recipient-picker':            'recipientPicker'
-    #'.recipient-list':              'recipientList'
-    #'.recipient-list .list-arrow':  'recipientListArrow'
+    '.attachmentPlaceholder-hint':        'attachmentHint'
+    '.article-add':                       'ticketEdit'
+    '.attachments':                       'attachmentsHolder'
+    '.attachmentUpload':                  'attachmentUpload'
+    '.attachmentUpload-progressBar':      'progressBar'
+    '.js-percentage':                     'progressText'
+    '.js-cancel':                         'cancelContainer'
+    '.text-bubble':                       'textBubble'
+    '.editControls-item':                 'editControlItem'
+    #'.editControls':                     'editControls'
+    #'.recipient-picker':                 'recipientPicker'
+    #'.recipient-list':                   'recipientList'
+    #'.recipient-list .list-arrow':       'recipientListArrow'
 
   events:
-    #'click .submit':             'update'
-    'click [data-type="reset"]': 'reset'
-    'click .visibility-toggle':  'toggleVisibility'
-    'click .pop-selectable':     'selectArticleType'
-    'click .pop-selected':       'showSelectableArticleType'
-    'click .recipient-picker':   'toggle_recipients'
-    'click .recipient-list':     'stopPropagation'
+    #'click .submit':              'update'
+    'click [data-type="reset"]':   'reset'
+    'click .visibility-toggle':    'toggleVisibility'
+    'click .pop-selectable':       'selectArticleType'
+    'click .pop-selected':         'showSelectableArticleType'
+    'click .recipient-picker':     'toggle_recipients'
+    'click .recipient-list':       'stopPropagation'
     'click .list-entry-type div':  'change_type'
     'submit .recipient-list form': 'add_recipient'
-    'focus .js-textarea':                     'open_textarea'
-    'input .js-textarea':                     'detect_empty_textarea'
-    #'dragenter':                              'onDragenter'
-    #'dragleave':                              'onDragleave'
-    #'drop':                                   'onFileDrop'
-    #'change input[type=file]':                'onFilePick'
+    'focus .js-textarea':          'open_textarea'
+    'input .js-textarea':          'detect_empty_textarea'
+    #'dragenter':                  'onDragenter'
+    #'dragleave':                  'onDragleave'
+    #'drop':                       'onFileDrop'
+    #'change input[type=file]':    'onFilePick'
 
   constructor: ->
     super
 
+    # gets referenced in @setArticleType
+    @type = @defaults['type'] || 'note'
+    @articleTypes = [
+      {
+        name:       'note'
+        icon:       'note'
+        attributes: []
+      },
+      {
+        name:       'email'
+        icon:       'email'
+        attributes: ['to','cc']
+      },
+      {
+        name:       'facebook'
+        icon:       'facebook'
+        attributes: []
+      },
+      {
+        name:       'twitter'
+        icon:       'twitter'
+        attributes: []
+      },
+      {
+        name:       'phone'
+        icon:       'phone'
+        attributes: []
+      },
+    ]
+    if @isRole('Customer')
+      @type = 'note'
+      @articleTypes = [
+        {
+          name:       'note'
+          icon:       'note'
+          attributes: []
+        },
+      ]
+
     @textareaHeight =
-      open: 148
+      open:   148
       closed: 20
 
 
     @dragEventCounter = 0
-    @attachments = []
+    @attachments      = []
 
     @render()
 
@@ -789,42 +830,9 @@ class Edit extends App.Controller
 
     ticket = App.Ticket.fullLocal( @ticket.id )
 
-    # gets referenced in @setArticleType
-    @type = 'note'
-    articleTypes = [
-      {
-        name: 'note'
-        icon: 'note'
-      },
-      {
-        name: 'email'
-        icon: 'email'
-      },
-      {
-        name: 'facebook'
-        icon: 'facebook'
-      },
-      {
-        name: 'twitter'
-        icon: 'twitter'
-      },
-      {
-        name: 'phone'
-        icon: 'phone'
-      },
-    ]
-    if @isRole('Customer')
-      @type = 'note'
-      articleTypes = [
-        {
-          name: 'note'
-          icon: 'note'
-        },
-      ]
-
     @html App.view('ticket_zoom/edit')(
       ticket:       ticket
-      articleTypes: articleTypes
+      articleTypes: @articleTypes
       article:      @defaults
       isCustomer:   @isRole('Customer')
     )
@@ -847,14 +855,14 @@ class Edit extends App.Controller
     })
 
     html5Upload.initialize(
-      uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
-      dropContainer: @el.get(0),
-      cancelContainer: @cancelContainer,
-      inputField: @$('.article-attachment input').get(0),
-      key: 'File',
-      data: { form_id: @form_id },
+      uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload',
+      dropContainer:          @el.get(0),
+      cancelContainer:        @cancelContainer,
+      inputField:             @$('.article-attachment input').get(0),
+      key:                    'File',
+      data:                   { form_id: @form_id },
       maxSimultaneousUploads: 1,
-      onFileAdded: (file) =>
+      onFileAdded:            (file) =>
 
         file.on(
 
@@ -987,13 +995,15 @@ class Edit extends App.Controller
     @el.find('.pop-selector').removeClass('hide')
 
     @selectTypeCatcher = new App.clickCatcher
-      holder: @el.offsetParent()
-      callback: @hideSelectableArticleType
+      holder:      @el.offsetParent()
+      callback:    @hideSelectableArticleType
       zIndexScale: 6
 
   selectArticleType: (e) =>
-    @setArticleType $(e.target).data('value')
+    articleTypeToSet = $(e.target).closest('.pop-selectable').data('value')
+    @setArticleType( articleTypeToSet )
     @hideSelectableArticleType()
+
     @selectTypeCatcher.remove()
     @selectTypeCatcher = null
 
@@ -1007,6 +1017,13 @@ class Edit extends App.Controller
     @type = type
     @$('[name="type"]').val(type)
     typeIcon.addClass @type
+
+    # show/hide attributes
+    for articleType in @articleTypes
+      if articleType.name is type
+        @$(".form-group").addClass('hide')
+        for name in articleType.attributes
+          @$("[name=#{name}]").closest('.form-group').removeClass('hide')
 
   detect_empty_textarea: =>
     if !@textarea.text().trim()

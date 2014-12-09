@@ -36,6 +36,20 @@
       </label>
 -->
       <div class="internal-border">
+
+        <div class="input form-group">
+          <div class="formGroup-label">
+            <label for=""><%- @T('To') %></label>
+          </div>
+          <div class="controls"><input id="" type="text" name="to" value="<%= @article.to %>" class="form-control" required="required"></div>
+        </div>
+        <div class="input form-group">
+          <div class="formGroup-label">
+            <label for=""><%- @T('Cc') %></label>
+          </div>
+          <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control"></div>
+        </div>
+
         <div class="text-bubble">
           <div class="bubble-arrow"></div>
           <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%= @article.body %></div>
