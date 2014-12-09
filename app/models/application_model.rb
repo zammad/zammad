@@ -550,7 +550,9 @@ reload search index with full data
 
   def self.search_index_reload
     return if !@search_index_support_config
-    self.all.order('created_at DESC').each { |item|
+    all_ids = self.select('id').all.order('created_at DESC')
+    all_ids.each { |item_with_id|
+      item = self.find( item_with_id.id )
       item.search_index_update_backend
     }
   end
