@@ -41,11 +41,11 @@
           <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%= @article.body %></div>
           <!-- .text-bubble grows with textarea (and expanding clone) -->
           <div class="attachments"></div>
-          <div class="article-attachment u-unclickable">
+          <div class="article-attachment u-unclickable u-textTruncate">
             <div class="attachmentPlaceholder">
-              <span class="attachmentPlaceholder-hint">Antwort eingeben oder</span>
+              <span class="attachmentPlaceholder-hint"><%- @T('Antwort eingeben oder') %></span>
               <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable">
-                Dateien wählen..
+                <%- @T('Dateien wählen..') %>
                 <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
               </span>
             </div>
