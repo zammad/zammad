@@ -6,7 +6,14 @@
   cd /usr/share/elasticsearch
   bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/2.0.0
 
-* Configure elastic search
+* Configure elasticsearch
+  /etc/sysconfig/elasticsearch
+  ES_HEAP_SIZE=2g
+
+  /etc/elasticsearch/elasticsearch.yml
+  http.max_content_length: 500mb
+
+* Configure Zammad
 
   * rails r "Setting.set('es_url', 'http://172.0.0.1:9200')"
   * rails r "Setting.set('es_user', 'elasticsearch')" # optional
