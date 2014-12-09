@@ -113,17 +113,22 @@ class TestCase < Test::Unit::TestCase
     tests.each { |test|
       if test[:action]
         test[:action].each { |action|
+
+          # wait
           if action[:execute] == 'wait'
             sleep action[:value]
             next
           end
+
+          # ignore no browser defined action
           next if !action[:where]
+
+          # set current browser
           if action[:where] == :instance1
             instance = instance1
           else
             instance = instance2
           end
-
           browser_element_action(test, action, instance)
         }
       end
@@ -217,22 +222,22 @@ class TestCase < Test::Unit::TestCase
     elsif action[:element] == :alert
       element = instance.switch_to.alert
     elsif action[:execute] == 'login'
-      element = instance.find_element( { :css => '#login input[name="username"]' } )
+      element = instance.find_elements( { :css => '#login input[name="username"]' } )[0]
       if !element
         assert( false, "(#{test[:name]}) no login box found!" )
         return
       end
       element.clear
       element.send_keys( action[:username] )
-      element = instance.find_element( { :css => '#login input[name="password"]' } )
+      element = instance.find_elements( { :css => '#login input[name="password"]' } )[0]
       element.clear
       element.send_keys( action[:password] )
       if action[:remember_me]
-        instance.find_element( { :css => '#login [name="remember_me"]' } ).click
+        instance.find_elements( { :css => '#login [name="remember_me"]' } )[0].click
       end
-      instance.find_element( { :css => '#login button' } ).click
+      instance.find_elements( { :css => '#login button' } )[0].click
       sleep 4
-      login = instance.find_element( { :css => '.user-menu .user a' } ).attribute('title')
+      login = instance.find_elements( { :css => '.user-menu .user a' } )[0].attribute('title')
       if login != action[:username]
         assert( false, "(#{test[:name]}) login failed" )
         return
@@ -240,11 +245,11 @@ class TestCase < Test::Unit::TestCase
       assert( true, "(#{test[:name]}) login success" )
       return
     elsif action[:execute] == 'logout'
-      instance.find_element( { :css => 'a[href="#current_user"]' } ).click
+      instance.find_elements( { :css => 'a[href="#current_user"]' } )[0].click
       sleep 0.1
-      instance.find_element( { :css => 'a[href="#logout"]' } ).click
+      instance.find_elements( { :css => 'a[href="#logout"]' } )[0].click
       (1..6).each {|loop|
-        login = instance.find_element( { :css => '#login' } )
+        login = instance.find_elements( { :css => '#login' } )[0]
         if login
           assert( true, "(#{test[:name]}) logout" )
           return
@@ -257,23 +262,19 @@ class TestCase < Test::Unit::TestCase
       if action[:timeout]
         timeout = action[:timeout]
       end
-      loops = (timeout / 0.5).to_i
+      loops = (timeout / 2).to_i
       text = ''
       (1..loops).each { |loop|
-        begin
-          element = instance.find_element( { :css => action[:area] } )
-          if element && element.displayed?
-            text = element.text
-            if text =~ /#{action[:value]}/i
-              assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
-              sleep 0.4
-              return
-            end
+        element = instance.find_elements( { :css => action[:area] } )[0]
+        if element #&& element.displayed?
+          text = instance.find_elements( { :css => action[:area] } )[0].text
+          puts "T /#{text.inspect}/#{action[:value].inspect}/"
+          if text =~ /#{action[:value]}/i
+            assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
+            return
           end
-        rescue => e
-          puts e.message
         end
-        sleep 0.5
+        sleep 2
       }
       assert( false, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
       return
@@ -282,55 +283,52 @@ class TestCase < Test::Unit::TestCase
       if action[:timeout]
         timeout = action[:timeout]
       end
-      loops = (timeout / 0.5).to_i
+      puts 1
+      loops = (timeout / 2).to_i
       text = ''
       (1..loops).each { |loop|
-        begin
-          element = instance.find_element( { :css => action[:area] } )
-          if !element || !element.displayed?
-            assert( true, "(#{test[:name]}) not found" )
-            sleep 0.4
-            return
-          end
-        rescue => e
-          #puts e.message
+        puts 2
+        element = instance.find_elements( { :css => action[:area] } )[0]
+        if !element #|| element.displayed?
           assert( true, "(#{test[:name]}) not found" )
-          sleep 0.4
+          sleep 0.2
+          puts 33
           return
         end
-        sleep 0.5
+        sleep 2
+        puts 22
       }
       assert( false, "(#{test[:name]} / #{test[:area]}) still exsists" )
       return
     elsif action[:execute] == 'create_user'
 
-      instance.find_element( { :css => 'a[href="#manage"]' } ).click
-      instance.find_element( { :css => 'a[href="#manage/users"]' } ).click
+      instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+      instance.find_elements( { :css => 'a[href="#manage/users"]' } )[0].click
       sleep 2
-      instance.find_element( { :css => 'a[data-type="new"]' } ).click
+      instance.find_elements( { :css => 'a[data-type="new"]' } )[0].click
       sleep 2
       #element = instance.find_element( { :css => '.modal input[name=login]' } )
       #element.clear
       #element.send_keys( action[:login] )
-      element = instance.find_element( { :css => '.modal input[name=firstname]' } )
+      element = instance.find_elements( { :css => '.modal input[name=firstname]' } )[0]
       element.clear
       element.send_keys( action[:firstname] )
-      element = instance.find_element( { :css => '.modal input[name=lastname]' } )
+      element = instance.find_elements( { :css => '.modal input[name=lastname]' } )[0]
       element.clear
       element.send_keys( action[:lastname] )
-      element = instance.find_element( { :css => '.modal input[name=email]' } )
+      element = instance.find_elements( { :css => '.modal input[name=email]' } )[0]
       element.clear
       element.send_keys( action[:email] )
-      element = instance.find_element( { :css => '.modal input[name=password]' } )
+      element = instance.find_elements( { :css => '.modal input[name=password]' } )[0]
       element.clear
       element.send_keys( action[:password] )
-      element = instance.find_element( { :css => '.modal input[name=password_confirm]' } )
+      element = instance.find_elements( { :css => '.modal input[name=password_confirm]' } )[0]
       element.clear
       element.send_keys( action[:password] )
-      instance.find_element( { :css => '.modal input[name="role_ids"][value="3"]' } ).click
-      instance.find_element( { :css => '.modal button.js-submit' } ).click
+      instance.find_elements( { :css => '.modal input[name="role_ids"][value="3"]' } )[0].click
+      instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
       (1..14).each {|loop|
-        element = instance.find_element( { :css => 'body' } )
+        element = instance.find_elements( { :css => 'body' } )[0]
         text = element.text
         if text =~ /#{Regexp.quote(action[:lastname])}/
           assert( true, "(#{test[:name]}) user created" )
@@ -343,23 +341,30 @@ class TestCase < Test::Unit::TestCase
 
     elsif action[:execute] == 'verify_task_attributes'
       if action[:title]
-        element = instance.find_element( { :css => '.tasks .active' } )
-        assert_equal( action[:title], element.text.strip  )
+        text = instance.find_elements( { :css => '.tasks .active' } )[0].text.strip
+        assert_equal( action[:title], text  )
       end
       return
     elsif action[:execute] == 'verify_ticket_attributes'
       if action[:title]
-        element = instance.find_element( { :css => '.content.active .page-header .ticket-title-update' } )
-        assert_equal( action[:title], element.text.strip  )
+        text = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0].text.strip
+        assert_equal( action[:title], text  )
       end
       if action[:body]
-        element = instance.find_element( { :css => '.content.active [data-name="body"]' } )
-        assert_equal( action[:body], element.text.strip  )
+        text = instance.find_elements( { :css => '.content.active [data-name="body"]' } )[0].text.strip
+        assert_equal( action[:body], text  )
       end
       return
     elsif action[:execute] == 'set_ticket_attributes'
       if action[:title]
-        element = instance.find_element( { :css => '.content.active .page-header .ticket-title-update' } )
+        #element = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0]
+        #element.clear
+        #sleep 0.5
+        #element = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0]
+        #element.send_keys( action[:title] )
+        #sleep 0.5
+        #element.send_keys( :tab )
+
         instance.execute_script( '$(".content.active .page-header .ticket-title-update").focus()' )
         instance.execute_script( '$(".content.active .page-header .ticket-title-update").text("' + action[:title] + '")' )
         instance.execute_script( '$(".content.active .page-header .ticket-title-update").blur()' )
@@ -378,79 +383,65 @@ class TestCase < Test::Unit::TestCase
 #          },
       end
       if action[:body]
-        instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
+        #instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
         sleep 0.5
-        element = instance.find_element( { :css => '.content.active div[data-name=body]' } )
+        element = instance.find_elements( { :css => '.content.active div[data-name=body]' } )[0]
         element.clear
         element.send_keys( action[:body] )
-        # check if body is filled / in case use workaround
-        body = element.text
-        #puts "body '#{body}'"
-        if !body || body.empty? || body == '' || body == ' '
-          puts "DBODY WORKSAROUND"
-          result = instance.execute_script( '$(".content.active div[data-name=body]").text("' + action[:body] + '").focus()' )
-          #puts "r #{result.inspect}"
-        end
       end
       return
     elsif action[:execute] == 'create_ticket'
-      instance.find_element( { :css => 'a[href="#new"]' } ).click
-      instance.find_element( { :css => 'a[href="#ticket/create"]' } ).click
-      element = instance.find_element( { :css => '.active .newTicket' } )
+      instance.find_elements( { :css => 'a[href="#new"]' } )[0].click
+      instance.find_elements( { :css => 'a[href="#ticket/create"]' } )[0].click
+      element = instance.find_elements( { :css => '.active .newTicket' } )[0]
       if !element
         assert( false, "(#{test[:name]}) no ticket create screen found!" )
         return
       end
       sleep 2
-      if action[:customer] == nil
-        element = instance.find_element( { :css => '.active .newTicket input[name="customer_id_completion"]' } )
-        element.click
-        element.clear
-
-        # in certan cases focus is not set, do it this way
-        instance.execute_script( '$(".content.active .newTicket input[name=customer_id_completion]").focus()' )
-        element.send_keys( 'nico*' )
-        sleep 4
-        element.send_keys( :arrow_down )
-        sleep 0.1
-        instance.find_element( { :css => '.active .newTicket .recipientList-entry.js-user.is-active' } ).click
-        sleep 0.3
-      end
       if action[:group]
-        element = instance.find_element( { :css => '.active .newTicket select[name="group_id"]' } )
+        element = instance.find_elements( { :css => '.active .newTicket select[name="group_id"]' } )[0]
         dropdown = Selenium::WebDriver::Support::Select.new(element)
         dropdown.select_by( :text, action[:group])
         sleep 0.2
       end
       if action[:subject]
-        element = instance.find_element( { :css => '.active .newTicket input[name="title"]' } )
+        element = instance.find_elements( { :css => '.active .newTicket input[name="title"]' } )[0]
         element.clear
         element.send_keys( action[:subject] )
         sleep 0.2
       end
       if action[:body]
-        instance.execute_script( '$(".active .newTicket div[data-name=body]").focus()' )
+        #instance.execute_script( '$(".active .newTicket div[data-name=body]").focus()' )
         sleep 0.5
-        element = instance.find_element( { :css => '.active .newTicket div[data-name=body]' } )
+        element = instance.find_elements( { :css => '.active .newTicket div[data-name=body]' } )[0]
         element.clear
         element.send_keys( action[:body] )
+      end
+      if action[:customer] == nil
+        element = instance.find_elements( { :css => '.active .newTicket input[name="customer_id_completion"]' } )[0]
+        element.click
+        element.clear
 
-        # check if body is filled / in case use workaround
-        body = element.text
-        #puts "body '#{body}'"
-        if !body || body.empty? || body == '' || body == ' '
-          puts "DBODY WORKSAROUND"
-          result = instance.execute_script( '$(".active .newTicket div[data-name=body]").text("' + action[:body] + '").focus()' )
-          #puts "r #{result.inspect}"
-        end
+        # in certan cases focus is not set, do it this way
+        #instance.execute_script( '$(".content.active .newTicket input[name=customer_id_completion]").focus()' )
+        element.send_keys( :tab )
+        element.click
+        element.send_keys( 'nico*' )
+        sleep 0.5
+        sleep 4
+        element.send_keys( :arrow_down )
+        sleep 0.1
+        instance.find_elements( { :css => '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
+        sleep 0.3
       end
       if action[:do_not_submit]
         assert( true, "(#{test[:name]}) ticket created without submit" )
         return
       end
       sleep 0.8
-      #instance.execute_script( '$(".content.active .newTicket form").submit()' )
-      instance.find_element( { :css => '.active .newTicket button.submit' } ).click
+      #instance.execute_script( '$(".content.active .newTicket form").submit();' )
+      instance.find_elements( { :css => '.active .newTicket button.submit' } )[0].click
       sleep 1
       (1..16).each {|loop|
         if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
@@ -464,22 +455,23 @@ class TestCase < Test::Unit::TestCase
       return
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100
-        begin
-          sleep 0.8
-          hover_element = instance.find_element( { :css => '.navigation .tasks .task:first-child' } )
-          if hover_element
-            instance.mouse.move_to(hover_element)
+        sleep 1
+        if instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0]
+          instance.mouse.move_to( instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0] )
+          sleep 0.2
+
+          click_element = instance.find_elements( { :css => '.navigation .tasks .task:first-child .js-close' } )[0]
+          if click_element
             sleep 0.1
-            click_element = instance.find_element( { :css => '.navigation .tasks .task:first-child .js-close' } )
-            if click_element
-              click_element.click
-              sleep 0.2
+            click_element.click
+
+            # accept task close warning
+            if action[:discard_changes]
+              sleep 1
+              instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
             end
-          else
-            break
           end
-        rescue => e
-          puts e.message
+        else
           break
         end
       end

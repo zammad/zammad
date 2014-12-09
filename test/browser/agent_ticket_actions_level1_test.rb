@@ -99,6 +99,10 @@ class AgentTicketActionLevel1Test < TestCase
             :css     => '.content.active button.js-submit',
           },
           {
+            :execute => 'wait',
+            :value   => 2,
+          },
+          {
             :execute => 'watch_for',
             :area    => '.content.active .ticket-article',
             :value   => 'some body 1234 äöüß 333',

@@ -106,24 +106,15 @@ class AgentUserManageTest < TestCase
             :no_quote     => true,
             :match_result => true,
           },
+          {
+            :execute => 'wait',
+            :value   => 4,
+          },
 
           # call new ticket screen again
           {
-            :execute => 'close_all_tasks',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-
-          # accept task close warning
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
+            :execute         => 'close_all_tasks',
+            :discard_changes => 1,
           },
           {
             :execute => 'click',
