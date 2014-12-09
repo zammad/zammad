@@ -268,7 +268,6 @@ class TestCase < Test::Unit::TestCase
         element = instance.find_elements( { :css => action[:area] } )[0]
         if element #&& element.displayed?
           text = instance.find_elements( { :css => action[:area] } )[0].text
-          puts "T /#{text.inspect}/#{action[:value].inspect}/"
           if text =~ /#{action[:value]}/i
             assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
             return
@@ -283,20 +282,16 @@ class TestCase < Test::Unit::TestCase
       if action[:timeout]
         timeout = action[:timeout]
       end
-      puts 1
       loops = (timeout / 2).to_i
       text = ''
       (1..loops).each { |loop|
-        puts 2
         element = instance.find_elements( { :css => action[:area] } )[0]
         if !element #|| element.displayed?
           assert( true, "(#{test[:name]}) not found" )
           sleep 0.2
-          puts 33
           return
         end
         sleep 2
-        puts 22
       }
       assert( false, "(#{test[:name]} / #{test[:area]}) still exsists" )
       return
