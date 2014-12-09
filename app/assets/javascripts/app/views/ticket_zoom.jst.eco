@@ -1,57 +1,55 @@
-<div class="tabsSidebar-holder flex vertical">
-  <div class="flex u-positionOrigin horizontal">
-    <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
-      <div class="ticketZoom">
-        <div class="scrollPageHeader tabsSidebar-sidebarSpacer zIndex-9 horizontal center"
-          data-anchor-target=".ticketZoom .page-header"
-          data-128-top-bottom="transform: translateY(-64px);"
-          data-64-top-bottom="transform: translateY(0px);"
-        >
-          <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
-          <div class="ticket-title flex"></div>
-          <div class="pagination-counter">
-            <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
-          </div>
-          <ul class="pagination">
-            <li>
-              <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-                <span class="left arrow icon"></span>
-              </a>
-            <li>
-              <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-                <span class="right arrow icon"></span>
-              </a>
-          </ul>
+<div class="tabsSidebar-holder">
+  <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
+    <div class="ticketZoom">
+      <div class="scrollPageHeader tabsSidebar-sidebarSpacer zIndex-3 horizontal center"
+        data-anchor-target=".ticketZoom .page-header"
+        data-128-top-bottom="transform: translateY(-64px);"
+        data-64-top-bottom="transform: translateY(0px);"
+      >
+        <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
+        <div class="ticket-title flex"></div>
+        <div class="pagination-counter">
+          <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
         </div>
-        <div class="page-header horizontal">
-          <div class="flex vertical center">
-            <%- @ticket.customer.avatar("50") %>
-            <div class="ticket-title"></div>
-            <div class="ticket-meta"></div>
-          </div>
-          <div class="page-header-meta">
-            <% if @C( 'LastOverview' ) && @nav: %>
-              <div class="pull-right">
-                <span class="pagination-count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
-                <% base_url ="#ticket/view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
-                <ul class="pagination pagination-sm">
-                  <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
-                  <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
-                </ul>
-              </div>
-            <% end %>
-          </div>
-        </div>
-
-        <div class="ticket-article"></div>
-
-        <div class="ticket-edit"></div>
-
+        <ul class="pagination">
+          <li>
+            <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
+              <span class="left arrow icon"></span>
+            </a>
+          <li>
+            <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
+              <span class="right arrow icon"></span>
+            </a>
+        </ul>
       </div>
-    </div>
+      <div class="page-header horizontal">
+        <div class="flex vertical center">
+          <%- @ticket.customer.avatar("50") %>
+          <div class="ticket-title"></div>
+          <div class="ticket-meta"></div>
+        </div>
+        <div class="page-header-meta">
+          <% if @C( 'LastOverview' ) && @nav: %>
+            <div class="pull-right">
+              <span class="pagination-count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
+              <% base_url ="#ticket/view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
+              <ul class="pagination pagination-sm">
+                <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
+                <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      </div>
 
-    <div class="tabsSidebar vertical"></div>
+      <div class="ticket-article"></div>
+
+      <div class="ticket-edit"></div>
+
+    </div>
   </div>
+
+  <div class="tabsSidebar vertical"></div>
 
   <div class="attributeBar">
     <form class="form-inline is-closed hide" role="form">

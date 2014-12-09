@@ -3443,6 +3443,8 @@ footer {
 .tabsSidebar-holder {
   overflow: hidden;
   position: relative;
+  @extend .flex;
+  @extend .vertical;
 }
 
 .tabsSidebar .sidebar {
@@ -3501,7 +3503,7 @@ footer {
     position: absolute;
     right: 0;
     top: 0;
-    bottom: 0;
+    bottom: 60px;
     transition: 500ms;
   }
 
@@ -3515,6 +3517,7 @@ footer {
     left: -55px;
     top: 0;
     bottom: 0;
+    pointer-events: none;
   }
 
   .test {
@@ -4798,6 +4801,14 @@ body.fit {
          -moz-flex: 1;
           -ms-flex: 1;
               flex: 1;
+}
+
+.flex-full {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 100%;
+     -moz-flex: 1 1 100%;
+      -ms-flex: 1 1 100%;
+          flex: 1 1 100%;
 }
 
 .flex-auto {
