@@ -1473,13 +1473,13 @@
 					html = this.html;
 
 				if (d.createRange) {
-					var selection = w.getSelection()
-					var	lastChild = html.lastChild()
-					var	length = html.text(lastChild).length - 1
-					var	toModify = el ? el : lastChild
-					var	theLength = ((typeof pos !== 'undefined') && (pos !== null) ? pos : length)
+					var selection = w.getSelection(),
+						lastChild = html.lastChild(),
+						length = html.text(lastChild).length - 1,
+						toModify = el ? el : lastChild,
+						theLength = ((typeof pos !== 'undefined') && (pos !== null) ? pos : length);
+
 					range = d.createRange();
-					console.log('theLength', toModify, theLength, range)
 					range.setStart(toModify, theLength);
 					range.collapse(true);
 					selection.removeAllRanges();
