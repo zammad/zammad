@@ -37,7 +37,7 @@ gem 'daemons'
 gem 'simple-rss'
 
 # e. g. on linux we need a javascript execution
-gem 'libv8', '~> 3.11.8'
+gem 'libv8'
 gem 'execjs'
 gem 'therubyracer'
 
