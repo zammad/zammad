@@ -14,8 +14,7 @@ class Channel::SMTP < Channel::EmailBuild
       :domain               => channel[:options][:host],
       :user_name            => channel[:options][:user],
       :password             => channel[:options][:password],
-      #  :authentication       => 'plain',
-      :enable_starttls_auto => true
+      :enable_starttls_auto => true,
     }
     mail.deliver
   end

@@ -17,7 +17,7 @@ class Channel::IMAP < Channel::EmailParser
     # on check, reduce open_timeout to have faster probing
     timeout = 12
     if check_type == 'check'
-      timeout = 4
+      timeout = 6
     end
 
     Timeout.timeout(timeout) do
@@ -30,7 +30,7 @@ class Channel::IMAP < Channel::EmailParser
     begin
       @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
     rescue Exception => e
-      if e.to_s !~ /unsupported\s(authenticate|authentication)\smechanism/i
+      if e.to_s !~ /(unsupported\s(authenticate|authentication)\smechanism|not\ssupported)/i
         raise e
       end
       @imap.login( channel[:options][:user], channel[:options][:password] )

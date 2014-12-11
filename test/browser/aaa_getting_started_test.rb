@@ -3,8 +3,11 @@ require 'browser_test_helper'
 
 class AaaGettingStartedTest < TestCase
   def test_a_getting_started
+    #return # TODO: temp disable
     if !ENV['MAILBOX_INIT']
-      raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
+      #raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
+      puts "NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
+      return
     end
     mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
     mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
@@ -234,19 +237,24 @@ class AaaGettingStartedTest < TestCase
   end
 
   def test_b_accounts_auto
-    return # TODO: temp disable
-    if !ENV['MAILBOX_AUTO1']
-      raise "Need MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
-    end
-    mailbox_user     = ENV['MAILBOX_AUTO1'].split(':')[0]
-    mailbox_password = ENV['MAILBOX_AUTO1'].split(':')[1]
-    accounts = [
-      {
-        :realname => 'gmail',
+    #return # TODO: temp disable
+    accounts = []
+    (1..10).each {|count|
+      next if !ENV["MAILBOX_AUTO#{count.to_s}"]
+      mailbox_user     = ENV["MAILBOX_AUTO#{count.to_s}"].split(':')[0]
+      mailbox_password = ENV["MAILBOX_AUTO#{count.to_s}"].split(':')[1]
+      account = {
+        :realname => 'auto account',
         :email    => mailbox_user,
         :password => mailbox_password,
-      },
-    ]
+      }
+      accounts.push account
+    }
+    if accounts.empty?
+      #raise "Need min. MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
+      puts "NOTICE: Need min. MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
+      return
+    end
     accounts.each {|account|
       tests = [
         {
@@ -303,18 +311,16 @@ class AaaGettingStartedTest < TestCase
   end
 
   def test_b_accounts_manual
-    return # TODO: temp disable
-    if !ENV['MAILBOX_MANUAL1']
-      raise "Need MAILBOX_AUTO1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
-    end
-    mailbox_user     = ENV['MAILBOX_MANUAL1'].split(':')[0]
-    mailbox_password = ENV['MAILBOX_MANUAL1'].split(':')[1]
-    mailbox_inbound  = ENV['MAILBOX_MANUAL1'].split(':')[2]
-    mailbox_outbound = ENV['MAILBOX_MANUAL1'].split(':')[3]
-
-    accounts = [
-      {
-        :realname => 'yahoo',
+    #return # TODO: temp disable
+    accounts = []
+    (1..10).each {|count|
+      next if !ENV["MAILBOX_MANUAL#{count.to_s}"]
+      mailbox_user     = ENV["MAILBOX_MANUAL#{count.to_s}"].split(':')[0]
+      mailbox_password = ENV["MAILBOX_MANUAL#{count.to_s}"].split(':')[1]
+      mailbox_inbound  = ENV["MAILBOX_MANUAL#{count.to_s}"].split(':')[2]
+      mailbox_outbound = ENV["MAILBOX_MANUAL#{count.to_s}"].split(':')[3]
+      account = {
+        :realname => 'manual account',
         :email    => mailbox_user,
         :password => mailbox_password,
         :inbound  => {
@@ -323,8 +329,15 @@ class AaaGettingStartedTest < TestCase
         :outbound  => {
           'options::host' => mailbox_outbound,
         },
-      },
-    ]
+      }
+      accounts.push account
+    }
+    if accounts.empty?
+      #raise "Need min. MAILBOX_MANUAL1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
+      puts "NOTICE: Need min. MAILBOX_MANUAL1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
+      return
+    end
+
     accounts.each {|account|
       tests = [
         {
