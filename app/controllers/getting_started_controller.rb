@@ -704,7 +704,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         :from             => email,
         :to               => email,
         :subject          => "Zammad Getting started Test Email #{subject}",
-        :body             => '.',
+        :body             => "This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email.",
         'x-zammad-ignore' => 'true',
       }
     else

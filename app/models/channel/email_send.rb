@@ -11,6 +11,7 @@ class Channel::EmailSend
     rescue Exception => e
       puts "can't use " + 'Channel::' + channel[:adapter]
       puts e.inspect
+      puts e.backtrace
     end
   end
 end
