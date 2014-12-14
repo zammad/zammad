@@ -816,6 +816,22 @@ class Edit extends App.Controller
     if @defaults.body or @isIE10()
       @open_textarea(null, true)
 
+    @bind(
+      'ui::ticket::setArticleType'
+      (data) =>
+        if data.ticket.id is @ticket.id
+          #@setArticleType(data.type.name)
+
+          # preselect article type
+          @setArticleType( 'email' )
+          @open_textarea(null, true)
+          for key, value of data.article
+            if key is 'body'
+              @$('[data-name="' + key + '"]').text(value)
+            else
+              @$('[name="' + key + '"]').val(value)
+    )
+
   isIE10: ->
     Function('/*@cc_on return document.documentMode===10@*/')()
 
@@ -1187,9 +1203,9 @@ class ArticleView extends App.Controller
     'click [data-type=internal]':   'public_internal'
     'click .show_toogle':           'show_toogle'
     'click [data-type=reply]':      'reply'
+    'click [data-type=replyAll]':   'replyAll'
     'click .text-bubble':           'toggle_meta'
     'click .text-bubble a':         'stopPropagation'
-#    'click [data-type=reply-all]':  'replyall'
 
   constructor: ->
     super
@@ -1303,7 +1319,7 @@ class ArticleView extends App.Controller
       metaTop.removeClass('hide')
 
       # balance out the top meta height by scrolling down
-      article.velocity("scroll", 
+      article.velocity("scroll",
         container: article.scrollParent()
         offset: -article.offset().top + metaTop.outerHeight()
         duration: animSpeed
@@ -1358,56 +1374,103 @@ class ArticleView extends App.Controller
         # update textarea size
         @ui.el.find('[name="body"]').trigger('change')
 
-  reply: (e) =>
+  replyAll: (e) =>
+    @reply(e, true)
+
+  reply: (e, all = false) =>
     e.preventDefault()
+
+    # get reference article
     article_id   = $(e.target).parents('[data-id]').data('id')
-    article      = App.TicketArticle.find( article_id )
+    article      = App.TicketArticle.fullLocal( article_id )
     type         = App.TicketArticleType.find( article.type_id )
     customer     = App.User.find( article.created_by_id )
+
+    @ui.el.find('.article-add').ScrollTo()
 
     # update form
     @checkIfSignatureIsNeeded(type)
 
-    # preselect article type
-    @ui.el.find('[name="type_id"]').find('option:selected').removeAttr('selected')
-    @ui.el.find('[name="type_id"]').find('[value="' + type.id + '"]').attr('selected',true)
-    @ui.el.find('[name="type_id"]').trigger('change')
-
     # empty form
-    #@ui.el.find('[name="to"]').val('')
-    #@ui.el.find('[name="cc"]').val('')
-    #@ui.el.find('[name="subject"]').val('')
-    @ui.el.find('[name="in_reply_to"]').val('')
+    articleNew = {
+      to:          ''
+      cc:          ''
+      body:        ''
+      in_reply_to: ''
+    }
+
+    #@ui.el.find('[name="in_reply_to"]').val('')
 
     if article.message_id
-      @ui.el.find('[name="in_reply_to"]').val(article.message_id)
+      articleNew.in_reply_to = article.message_id
 
     if type.name is 'twitter status'
 
       # set to in body
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
-      @ui.el.find('[name="body"]').val('@' + to)
+      articleNew.body = '@' + to
 
     else if type.name is 'twitter direct-message'
 
       # show to
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
-      @ui.el.find('[name="to"]').val(to)
+      articleNew.to = to
 
     else if type.name is 'email'
-      @ui.el.find('[name="to"]').val(article.from)
+      if article.sender.name is 'Agent'
+        articleNew.to = article.to
+      else
+        articleNew.to = article.from
+
+      # filter for uniq recipients
+      recipientAddresses = {}
+      recipient = emailAddresses.parseAddressList(articleNew.to)
+      if recipient && recipient[0]
+        recipientAddresses[ recipient[0].address.toString().toLowerCase() ] = true
+      if all
+        addAddresses = (lineNew, addressLine) ->
+          localAddresses = App.EmailAddress.all()
+          recipients     = emailAddresses.parseAddressList(addressLine)
+          if recipients
+            for recipient in recipients
+              if recipient.address
+
+                # check if addess is not local
+                localAddess = false
+                for address in localAddresses
+                  if recipient.address.toString().toLowerCase() == address.email.toString().toLowerCase()
+                    localAddess = true
+                if !localAddess
+
+                  # filter for uniq recipients
+                  if !recipientAddresses[ recipient.address.toString().toLowerCase() ]
+                    recipientAddresses[ recipient.address.toString().toLowerCase() ] = true
+
+                    # add recipient
+                    if lineNew
+                      lineNew = lineNew + ', '
+                    lineNew = lineNew + recipient.address
+          lineNew
+
+        if article.from
+          articleNew.cc = addAddresses(articleNew.cc, article.from)
+        if article.to
+          articleNew.cc = addAddresses(articleNew.cc, article.to)
+        if article.cc
+          articleNew.cc = addAddresses(articleNew.cc, article.cc)
 
     # add quoted text if needed
     selectedText = App.ClipBoard.getSelected()
+    console.log('selectedText', selectedText)
     if selectedText
-      body = @ui.el.find('[name="body"]').val() || ''
+      body = @ui.el.find('[data-name="body"]').text() || ''
       selectedText = selectedText.replace /^(.*)$/mg, (match) =>
         '> ' + match
       body = selectedText + "\n" + body
-      @ui.el.find('[name="body"]').val(body)
+      articleNew.body = body
 
-      # update textarea size
-      @ui.el.find('[name="body"]').trigger('change')
+    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
+
 
 class Article extends App.Controller
   constructor: ->
@@ -1483,25 +1546,34 @@ class Article extends App.Controller
           type: 'internal'
         }
       ]
-    if @article.type.name is 'note'
-#        actions.push []
-    else
-      if @article.sender.name is 'Customer'
+    #if @article.type.name is 'note'
+    #     actions.push []
+    if @article.type.name is 'email'
+      actions.push {
+        name: 'reply'
+        type: 'reply'
+        href: '#'
+      }
+      recipients = []
+      if @article.to
+        localRecipients = emailAddresses.parseAddressList(@article.to)
+        if localRecipients
+          recipients = recipients.concat localRecipients
+      if @article.cc
+        localRecipients = emailAddresses.parseAddressList(@article.cc)
+        if localRecipients
+          recipients = recipients.concat localRecipients
+      if recipients.length > 0
         actions.push {
-          name: 'reply'
-          type: 'reply'
+          name: 'reply all'
+          type: 'replyAll'
           href: '#'
         }
-#        actions.push {
-#          name: 'reply all'
-#          type: 'reply-all'
-#          href: '#'
-#        }
-        actions.push {
-          name: 'split'
-          type: 'split'
-          href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
-        }
+      actions.push {
+        name: 'split'
+        type: 'split'
+        href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
+      }
     @article.actions = actions
 
   attachments: ->
