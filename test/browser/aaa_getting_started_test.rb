@@ -157,13 +157,13 @@ class AaaGettingStartedTest < TestCase
             :execute => 'watch_for',
             :area    => 'body',
             :value   => 'verify',
-            :timeout => 70,
+            :timeout => 20,
           },
           {
             :execute => 'watch_for',
             :area    => 'body',
             :value   => 'invite',
-            :timeout => 60,
+            :timeout => 100,
           },
           {
             :execute => 'check',
@@ -291,12 +291,13 @@ class AaaGettingStartedTest < TestCase
               :execute => 'watch_for',
               :area    => 'body',
               :value   => 'verify',
-              :timeout => 80,
+              :timeout => 20,
             },
             {
               :execute => 'watch_for',
               :area    => 'body',
               :value   => 'invite',
+              :timeout => 100,
             },
             {
               :execute => 'check',

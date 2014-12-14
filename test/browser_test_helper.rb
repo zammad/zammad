@@ -20,12 +20,12 @@ class TestCase < Test::Unit::TestCase
 
   def browser_instance
     if !@browsers
-      @browsers = []
+      @browsers = {}
     end
     if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
       local_browser = Selenium::WebDriver.for( browser.to_sym )
       browser_instance_preferences(local_browser)
-      @browsers.push local_browser
+      @browsers[local_browser.hash] = local_browser
       return local_browser
     end
 
@@ -38,9 +38,16 @@ class TestCase < Test::Unit::TestCase
       :desired_capabilities => caps,
     )
     browser_instance_preferences(local_browser)
-    @browsers.push local_browser
+    @browsers[local_browser.hash] = local_browser
     return local_browser
   end
+
+  def browser_instance_close(local_browser)
+    return if !@browsers[local_browser.hash]
+    @browsers.delete( local_browser.hash )
+    local_browser.quit
+  end
+
   def browser_instance_preferences(local_browser)
     #local_browser.manage.window.resize_to(1024, 1024)
     if ENV['REMOTE_URL'] !~ /saucelabs/i
@@ -55,21 +62,9 @@ class TestCase < Test::Unit::TestCase
 
   def teardown
     return if !@browsers
-
-    # only shut down browser type once on local webdriver tests
-    # otherwise this error will happen "Errno::ECONNREFUSED: Connection refused - connect(2)"
-    if !ENV['REMOTE_URL']
-      shutdown = {}
-      @browsers.each{ |local_browser|
-        next if shutdown[ local_browser.browser ]
-        shutdown[ local_browser.browser ] = true
-        local_browser.quit
-      }
-    else
-      @browsers.each{ |local_browser|
-        local_browser.quit
-      }
-    end
+    @browsers.each { |hash, local_browser|
+      browser_instance_close(local_browser)
+    }
   end
 
   # Add more helper methods to be used by all tests here...
@@ -133,8 +128,8 @@ class TestCase < Test::Unit::TestCase
         }
       end
     }
-    instance1.close
-    instance2.close
+    browser_instance_close(instance1)
+    browser_instance_close(instance2)
   end
 
   def browser_single_test(tests, keep_connection = false)
@@ -160,7 +155,7 @@ class TestCase < Test::Unit::TestCase
     if keep_connection
       return instance
     end
-    instance.close
+    browser_instance_close(instance)
   end
 
   def browser_element_action(test, action, instance)
