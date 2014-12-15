@@ -1,4 +1,4 @@
-<div class="switchBackToUser fit horizontal center">
+<div class="switchBackToUser fit horizontal center zIndex-6"">
   <div class="switchView icon"></div>
   <div class="switchBackToUser-text"><%- @T('Zammad looks like this for "%s"', @S('firstname') + ' ' + @S('lastname')  ) %></div>
   <div class="align-right horizontal center js-close u-clickable">
