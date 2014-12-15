@@ -1,11 +1,7 @@
 <div class="tabsSidebar-holder">
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="ticketZoom">
-      <div class="scrollPageHeader tabsSidebar-sidebarSpacer zIndex-3 horizontal center"
-        data-anchor-target=".ticketZoom .page-header"
-        data-128-top-bottom="transform: translateY(-64px);"
-        data-64-top-bottom="transform: translateY(0px);"
-      >
+      <div class="scrollPageHeader tabsSidebar-sidebarSpacer zIndex-3 horizontal center">
         <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
         <div class="ticket-title flex"></div>
         <div class="pagination-counter">

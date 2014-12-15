@@ -1,9 +1,11 @@
 class App.TicketZoom extends App.Controller
   elements:
-    '.main': 'main'
+    '.main':             'main'
+    '.ticketZoom':       'ticketZoom'
+    '.scrollPageHeader': 'scrollPageHeader'
 
   events:
-    'click .js-submit': 'submit'
+    'click .js-submit':   'submit'
     'click .js-bookmark': 'bookmark'
 
   constructor: (params) ->
@@ -59,24 +61,21 @@ class App.TicketZoom extends App.Controller
   show: =>
     App.OnlineNotification.seen( 'Ticket', @ticket_id )
     @navupdate '#'
-    if @scrollHeader
-      @scrollHeader.continue()
+    @positionPageHeaderStart()
 
   hide: =>
-    if @scrollHeader
-      @scrollHeader.pause()
+    @positionPageHeaderStop()
 
   changed: =>
     formCurrent = @formParam( @el.find('.edit') )
-    ticket = App.Ticket.find(@ticket_id).attributes()
-    modelDiff  = @getDiff( ticket, formCurrent )
+    ticket      = App.Ticket.find(@ticket_id).attributes()
+    modelDiff   = @getDiff( ticket, formCurrent )
     return false if !modelDiff || _.isEmpty( modelDiff )
     return true
 
   release: =>
-    # nothing
     @autosaveStop()
-    @scrollHeader.destroy() if @scrollHeader
+    @positionPageHeaderStop()
 
   fetch: (ticket_id, force) ->
 
@@ -148,6 +147,36 @@ class App.TicketZoom extends App.Controller
 
     # render page
     @render(force)
+
+  positionPageHeaderStart: =>
+
+    # scroll is also fired on window resize, if element scroll is changed
+    @main.bind(
+      'scroll'
+      @positionPageHeaderUpdate
+    )
+
+  positionPageHeaderStop: =>
+    @main.unbind('scroll', @positionPageHeaderUpdate)
+
+  positionPageHeaderUpdate: =>
+    pageHeader       = @scrollPageHeader.height()
+    mainScrollHeigth = @main.prop('scrollHeight')
+    mainHeigth       = @main.height()
+
+    # if page header is possible to use, show page header
+    top = 0
+    if mainScrollHeigth > mainHeigth + pageHeader
+      offset = @ticketZoom.offset()
+      if offset.top >= 0
+        top = offset.top
+
+    # if page header is not possible to use - mainScrollHeigth to low - hide page header
+    else
+      top = pageHeader
+
+    #console.log('TOP', top, @ticket.id, new Date)
+    @scrollPageHeader.css('transform', "translateY(-#{top}px)")
 
   render: (force) =>
 
@@ -404,20 +433,10 @@ class App.TicketZoom extends App.Controller
 
     @scrollToBottom()
 
-    @bindScrollPageHeader()
+    @positionPageHeaderStart()
 
   scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
-
-  bindScrollPageHeader: ->
-    pageHeader = @$('.page-header')
-    scrollBody = @main.prop('scrollHeight') - @main.height()
-
-    if scrollBody > pageHeader.height()
-      # TODO: recalculate the distance when adding a comment
-      @scrollHeader = skrollr.init
-        forceHeight: false
-        holder: @main.get(0)
 
   autosaveStop: =>
     @autosaveLast = {}
