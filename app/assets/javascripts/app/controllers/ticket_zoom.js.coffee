@@ -162,23 +162,22 @@ class App.TicketZoom extends App.Controller
     @main.unbind('scroll', @positionPageHeaderUpdate)
 
   positionPageHeaderUpdate: =>
-    pageHeader       = @scrollPageHeader.height()
+    headerHeight     = @scrollPageHeader.outerHeight()
     mainScrollHeigth = @main.prop('scrollHeight')
     mainHeigth       = @main.height()
 
     # if page header is possible to use, show page header
     top = 0
-    if mainScrollHeigth > mainHeigth + pageHeader
-      offset = @ticketZoom.offset()
-      if offset.top >= 0
-        top = offset.top
+    if mainScrollHeigth > mainHeigth + headerHeight
+      scroll = @main.scrollTop()
+      if scroll <= headerHeight
+        top = (scroll - headerHeight)
 
     # if page header is not possible to use - mainScrollHeigth to low - hide page header
     else
-      top = pageHeader
-
-    #console.log('TOP', top, @ticket.id, new Date)
-    @scrollPageHeader.css('transform', "translateY(-#{top}px)")
+      top = -headerHeight
+    
+    @scrollPageHeader.css('transform', "translateY(#{top}px)")
 
   render: (force) =>
 

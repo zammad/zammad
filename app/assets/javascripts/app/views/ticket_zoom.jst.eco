@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <div class="tabsSidebar vertical"></div>
+  <div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical"></div>
 
   <div class="attributeBar">
     <form class="form-inline is-closed hide" role="form">
