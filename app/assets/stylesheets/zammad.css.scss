@@ -3451,7 +3451,6 @@ footer {
   width: 280px;
   border-left: 1px solid #e6e6e6;
   padding: 0;
-  @extend .vertical;
 }
 
   .tabsSidebar .sidebar > hr {
@@ -3487,7 +3486,6 @@ footer {
   }
 
   .tabsSidebar .sidebar-content {
-    @extend .flex;
     padding: 0 20px 20px;
   }
 
@@ -3503,8 +3501,12 @@ footer {
     position: absolute;
     right: 0;
     top: 0;
-    bottom: 60px;
+    bottom: 0;
     transition: 500ms;
+
+    &.tabsSidebar--attributeBarSpacer {
+      bottom: 60px;
+    }
   }
 
   .tabsSidebar.is-closed {
