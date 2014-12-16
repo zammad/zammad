@@ -308,6 +308,11 @@ span[data-tooltip]:hover:before {
   margin-left: auto;
 }
 
+.subtle-link.align-right ~ .btn,
+.btn.align-right ~ .btn {
+  margin-left: 15px;
+}
+
 .vertical > .btn + .btn {
   margin-left: 0;
   margin-top: 10px;
@@ -4970,12 +4975,6 @@ body.fit {
 
 .align-right {
   margin-left: auto;
-  
-  // give following elements a margin left
-  // used in setup wizard
-  & ~ * {
-    margin-left: 15px;
-  }
 }
 
 .align-center {
