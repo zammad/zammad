@@ -144,6 +144,8 @@ class App.TicketZoom extends App.Controller
 
     # get data
     @ticket = App.Ticket.fullLocal( @ticket_id )
+    @ticket.article = undefined
+    console.log('KLKL',@ticket)
 
     # render page
     @render(force)
@@ -278,7 +280,7 @@ class App.TicketZoom extends App.Controller
             ]
             filter:    @form_meta.filter
             params:    defaults
-            bookmarkable: true
+            #bookmarkable: true
           )
           #console.log('Ichanges', modelDiff, task_state, ticket.attributes())
           #@markFormDiff( modelDiff )
@@ -323,25 +325,26 @@ class App.TicketZoom extends App.Controller
           name: 'ticket'
           icon: 'message'
           callback: editTicket
-          actions: [
-            {
-              name:     'ticket-history'
-              title:    'History'
-              callback: showTicketHistory
-            },
-            {
-              name:     'ticket-merge'
-              title:    'Merge'
-              callback: showTicketMerge
-            },
-            {
-              title:    'Change Customer'
-              name:     'customer-change'
-              callback: changeCustomer
-            },
-          ]
         }
       ]
+      if !@isRole('Customer')
+        items[0]['actions'] = [
+          {
+            name:     'ticket-history'
+            title:    'History'
+            callback: showTicketHistory
+          },
+          {
+            name:     'ticket-merge'
+            title:    'Merge'
+            callback: showTicketMerge
+          },
+          {
+            title:    'Change Customer'
+            name:     'customer-change'
+            callback: changeCustomer
+          },
+        ]
       if !@isRole('Customer')
         editCustomer = (e, el) =>
           new App.ControllerGenericEdit(
@@ -573,7 +576,7 @@ class App.TicketZoom extends App.Controller
     articleParams = @formParam( @$('.article-add') )
     console.log "submit article", articleParams
     articleAttributes = App.TicketArticle.attributesGet( 'edit' )
-    if articleParams['body'] || ( articleAttributes['body'] && articleAttributes['body']['null'] is false )
+    if articleParams['body'] #&& $( articleParams['body'] ).text()
       articleParams.from      = @Session.get().displayName()
       articleParams.ticket_id = ticket.id
       articleParams.form_id   = @form_id
