@@ -263,6 +263,65 @@ class CreateBase < ActiveRecord::Migration
     add_index :activity_streams, [:activity_stream_object_id]
     add_index :activity_streams, [:activity_stream_type_id]
 
+    create_table :histories do |t|
+      t.references :history_type,                       :null => false
+      t.references :history_object,                     :null => false
+      t.references :history_attribute,                  :null => true
+      t.column :o_id,                       :integer,   :null => false
+      t.column :related_o_id,               :integer,   :null => true
+      t.column :related_history_object_id,  :integer,   :null => true
+      t.column :id_to,                      :integer,   :null => true
+      t.column :id_from,                    :integer,   :null => true
+      t.column :value_from,                 :string,    :limit => 250,  :null => true
+      t.column :value_to,                   :string,    :limit => 250,  :null => true
+      t.column :created_by_id,              :integer,   :null => false
+      t.timestamps
+    end
+    add_index :histories, [:o_id]
+    add_index :histories, [:created_by_id]
+    add_index :histories, [:created_at]
+    add_index :histories, [:history_object_id]
+    add_index :histories, [:history_attribute_id]
+    add_index :histories, [:history_type_id]
+    add_index :histories, [:id_to]
+    add_index :histories, [:id_from]
+    add_index :histories, [:value_from]
+    add_index :histories, [:value_to]
+
+    create_table :history_types do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :history_types, [:name],     :unique => true
+
+    create_table :history_objects do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.column :note,         :string, :limit => 250,   :null => true
+      t.timestamps
+    end
+    add_index :history_objects, [:name],   :unique => true
+
+    create_table :history_attributes do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :history_attributes, [:name],   :unique => true
+
+
+    create_table :settings do |t|
+      t.column :title,          :string, :limit => 200,  :null => false
+      t.column :name,           :string, :limit => 200,  :null => false
+      t.column :area,           :string, :limit => 100,  :null => false
+      t.column :description,    :string, :limit => 2000, :null => false
+      t.column :options,        :string, :limit => 2000, :null => true
+      t.column :state,          :string, :limit => 2000, :null => true
+      t.column :state_initial,  :string, :limit => 2000, :null => true
+      t.column :frontend,       :boolean,                :null => false
+      t.timestamps
+    end
+    add_index :settings, [:name], :unique => true
+    add_index :settings, [:area]
+    add_index :settings, [:frontend]
 
   end
 end
