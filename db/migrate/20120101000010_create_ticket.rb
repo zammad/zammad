@@ -29,11 +29,10 @@ class CreateTicket < ActiveRecord::Migration
       t.timestamps
     end
     add_index :ticket_priorities, [:name], :unique => true
-
     create_table :tickets do |t|
       t.references :group,                                                :null => false
-      t.references :ticket_priority,                                      :null => false
-      t.references :ticket_state,                                         :null => false
+      t.references :priority,                                             :null => false
+      t.references :state,                                                :null => false
       t.references :organization,                                         :null => true
       t.column :number,                           :string,  :limit => 60, :null => false
       t.column :title,                            :string,  :limit => 250,:null => false
@@ -43,21 +42,30 @@ class CreateTicket < ActiveRecord::Migration
       t.column :first_response,                   :timestamp,             :null => true
       t.column :first_response_escal_date,        :timestamp,             :null => true
       t.column :first_response_sla_time,          :timestamp,             :null => true
+      t.column :first_response_in_min,            :integer,               :null => true
+      t.column :first_response_diff_in_min,       :integer,               :null => true
       t.column :close_time,                       :timestamp,             :null => true
       t.column :close_time_escal_date,            :timestamp,             :null => true
       t.column :close_time_sla_time,              :timestamp,             :null => true
+      t.column :close_time_in_min,                :integer,               :null => true
+      t.column :close_time_diff_in_min,           :integer,               :null => true
+      t.column :update_time_escal_date,           :timestamp,             :null => true
+      t.column :updtate_time_sla_time,            :timestamp,             :null => true
+      t.column :update_time_in_min,               :integer,               :null => true
+      t.column :update_time_diff_in_min,          :integer,               :null => true
       t.column :last_contact,                     :timestamp,             :null => true
       t.column :last_contact_agent,               :timestamp,             :null => true
       t.column :last_contact_customer,            :timestamp,             :null => true
       t.column :create_article_type_id,           :integer,               :null => true
       t.column :create_article_sender_id,         :integer,               :null => true
       t.column :article_count,                    :integer,               :null => true
+      t.column :escalation_time,                  :timestamp,             :null => true
       t.column :updated_by_id,                    :integer,               :null => false
       t.column :created_by_id,                    :integer,               :null => false
       t.timestamps
     end
-    add_index :tickets, [:ticket_state_id]
-    add_index :tickets, [:ticket_priority_id]
+    add_index :tickets, [:state_id]
+    add_index :tickets, [:priority_id]
     add_index :tickets, [:group_id]
     add_index :tickets, [:owner_id]
     add_index :tickets, [:customer_id]
@@ -66,8 +74,15 @@ class CreateTicket < ActiveRecord::Migration
     add_index :tickets, [:created_at]
     add_index :tickets, [:first_response]
     add_index :tickets, [:first_response_escal_date]
+    add_index :tickets, [:first_response_in_min]
+    add_index :tickets, [:first_response_diff_in_min]
     add_index :tickets, [:close_time]
     add_index :tickets, [:close_time_escal_date]
+    add_index :tickets, [:close_time_in_min]
+    add_index :tickets, [:close_time_diff_in_min]
+    add_index :tickets, [:escalation_time]
+    add_index :tickets, [:update_time_in_min]
+    add_index :tickets, [:update_time_diff_in_min]
     add_index :tickets, [:last_contact]
     add_index :tickets, [:last_contact_agent]
     add_index :tickets, [:last_contact_customer]
@@ -119,9 +134,9 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_article_senders, [:name], :unique => true
 
     create_table :ticket_articles do |t|
-      t.references :ticket,                                 :null => false
-      t.references :ticket_article_type,                    :null => false
-      t.references :ticket_article_sender,                  :null => false
+      t.references :ticket,                                       :null => false
+      t.references :type,                                         :null => false
+      t.references :sender,                                       :null => false
       t.column :from,                 :string, :limit => 3000,    :null => true
       t.column :to,                   :string, :limit => 3000,    :null => true
       t.column :cc,                   :string, :limit => 3000,    :null => true
@@ -139,12 +154,12 @@ class CreateTicket < ActiveRecord::Migration
     end
     add_index :ticket_articles, [:ticket_id]
     add_index :ticket_articles, [:message_id_md5]
-    add_index :ticket_articles, [:message_id_md5, :ticket_article_type_id], :name => 'index_ticket_articles_message_id_md5_type_id'
+    add_index :ticket_articles, [:message_id_md5, :type_id], :name => 'index_ticket_articles_message_id_md5_type_id'
     add_index :ticket_articles, [:created_by_id]
     add_index :ticket_articles, [:created_at]
     add_index :ticket_articles, [:internal]
-    add_index :ticket_articles, [:ticket_article_type_id]
-    add_index :ticket_articles, [:ticket_article_sender_id]
+    add_index :ticket_articles, [:type_id]
+    add_index :ticket_articles, [:sender_id]
 
     create_table :ticket_article_flags do |t|
       t.references :ticket_articles,                        :null => false
