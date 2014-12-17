@@ -20,11 +20,19 @@ class CreateStorage < ActiveRecord::Migration
     add_index :store_objects, [:name],   :unique => true
 
     create_table :store_files do |t|
-      t.column :data,     :binary,        :limit => 200.megabytes,  :null => true
-      t.column :md5,      :string,        :limit => 60,             :null => false
+      t.column :sha,          :string,  :limit => 128, :null => false
+      t.column :provider,     :string,  :limit => 20,  :null => true
       t.timestamps
     end
-    add_index :store_files, [:md5],   :unique => true
+    add_index :store_files, [:sha],  :unique => true
+    add_index :store_files, [:provider]
+
+    create_table :store_provider_dbs do |t|
+      t.column :sha,      :string,        :limit => 128,            :null => false
+      t.column :data,     :binary,        :limit => 200.megabytes,  :null => true
+      t.timestamps
+    end
+    add_index :store_provider_dbs, [:sha],  :unique => true
 
   end
 

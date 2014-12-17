@@ -1,6 +1,5 @@
 class UpdateGeo2 < ActiveRecord::Migration
   def up
-    Setting.where( :name => 'geo_backend' ).destroy_all
     Setting.create_if_not_exists(
       :title       => 'Geo Location Backend',
       :name        => 'geo_location_backend',
