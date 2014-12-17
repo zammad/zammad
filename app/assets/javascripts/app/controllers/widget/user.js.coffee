@@ -28,7 +28,7 @@ class App.WidgetUser extends App.Controller
         name = nameNew
 
       # add to show if value exists
-      if user[name] && attributeConfig.shown
+      if ( user[name] || attributeConfig.tag is 'richtext' ) && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
         if name isnt 'firstname' && name isnt 'lastname' && name isnt 'organization'
