@@ -1,7 +1,7 @@
 class UpdateObjectManager2 < ActiveRecord::Migration
   def up
 
-    remove_index :object_manager_attributes, [:name]
+    #remove_index :object_manager_attributes, [:name]
 
     ObjectManager::Attribute.add(
       :object      => 'User',

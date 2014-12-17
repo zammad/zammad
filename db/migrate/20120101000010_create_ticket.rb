@@ -10,7 +10,7 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_state_types, [:name], :unique => true
 
     create_table :ticket_states do |t|
-      t.references :ticket_state_type, :null => false
+      t.references :state_type, :null => false
       t.column :name,                 :string, :limit => 250, :null => false
       t.column :note,                 :string, :limit => 250, :null => true
       t.column :active,               :boolean,               :null => false, :default => true

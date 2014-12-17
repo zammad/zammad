@@ -31,6 +31,8 @@ class CreateBase < ActiveRecord::Migration
       t.column :note,           :string, :limit => 250, :null => true
       t.column :last_login,     :timestamp,             :null => true
       t.column :source,         :string, :limit => 200, :null => true
+      t.column :locale,         :string, :limit => 10,  :null => true
+      t.column :login_failed,   :integer,               :null => false, :default => 0
       t.column :preferences,    :string, :limit => 8000,:null => true
       t.column :updated_by_id,  :integer,               :null => false
       t.column :created_by_id,  :integer,               :null => false
@@ -46,6 +48,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :users, [:source]
     add_index :users, [:created_by_id]
 
+
     create_table :signatures do |t|
       t.column :name,           :string, :limit => 100,  :null => false
       t.column :body,           :string, :limit => 5000, :null => true
@@ -57,6 +60,7 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :signatures, [:name], :unique => true
 
+
     create_table :email_addresses do |t|
       t.column :realname,       :string, :limit => 250,  :null => false
       t.column :email,          :string, :limit => 250,  :null => false
@@ -67,6 +71,7 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps
     end
     add_index :email_addresses, [:email], :unique => true
+
 
     create_table :groups do |t|
       t.references :signature,                                 :null => true
@@ -92,6 +97,7 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps
     end
     add_index :roles, [:name], :unique => true
+
 
     create_table :organizations do |t|
       t.column :name,                 :string, :limit => 100, :null => false
@@ -119,6 +125,7 @@ class CreateBase < ActiveRecord::Migration
       t.integer :organization_id
     end
 
+
     create_table :authorizations do |t|
       t.string :provider, :limit => 250, :null => false
       t.string :uid,      :limit => 250, :null => false
@@ -132,6 +139,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :authorizations, [:user_id]
     add_index :authorizations, [:username]
 
+
     create_table :translations do |t|
       t.column :locale,               :string,  :limit => 10,   :null => false
       t.column :source,               :string,  :limit => 255,  :null => false
@@ -144,6 +152,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :translations, [:source]
     add_index :translations, [:locale]
 
+
     create_table :object_lookups do |t|
       t.column :name,         :string, :limit => 250,   :null => false
       t.timestamps
@@ -155,6 +164,56 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps
     end
     add_index :type_lookups, [:name],   :unique => true
+
+
+    create_table :tokens do |t|
+      t.references :user,                 :null => false
+      t.string :name,     :limit => 100,  :null => false
+      t.string :action,   :limit => 40,   :null => false
+      t.timestamps
+    end
+    add_index :tokens, :user_id
+    add_index :tokens, [:name, :action], :unique => true
+    add_index :tokens, :created_at
+
+
+    create_table :packages do |t|
+      t.column :name,                 :string, :limit => 250,   :null => false
+      t.column :version,              :string, :limit => 50,    :null => false
+      t.column :vendor,               :string, :limit => 150,   :null => false
+      t.column :state,                :string, :limit => 50,    :null => false
+      t.column :updated_by_id,        :integer,                 :null => false
+      t.column :created_by_id,        :integer,                 :null => false
+      t.timestamps
+    end
+    create_table :package_migrations do |t|
+      t.column :name,                 :string, :limit => 250,   :null => false
+      t.column :version,              :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+
+
+    create_table :tags do |t|
+      t.references :tag_item,                           :null => false
+      t.references :tag_object,                         :null => false
+      t.column :o_id,                       :integer,   :null => false
+      t.column :created_by_id,              :integer,   :null => false
+      t.timestamps
+    end
+    add_index :tags, [:o_id]
+    add_index :tags, [:tag_object_id]
+
+    create_table :tag_objects do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :tag_objects, [:name],    :unique => true
+
+    create_table :tag_items do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :tag_items, [:name],      :unique => true
 
   end
 end
