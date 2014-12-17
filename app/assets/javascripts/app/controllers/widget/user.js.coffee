@@ -1,7 +1,6 @@
 class App.WidgetUser extends App.Controller
   events:
-    'focusout [data-type=update]': 'update',
-    'click [data-type=edit]':      'edit'
+    'focusout [contenteditable]': 'update'
 
   constructor: ->
     super
@@ -20,22 +19,20 @@ class App.WidgetUser extends App.Controller
 
     # get display data
     userData = []
-    for item2 in App.User.configure_attributes
-      item = _.clone( item2 )
+    for attributeName, attributeConfig of App.User.attributesGet('view')
 
       # check if value for _id exists
-      itemNameValue = item.name
-      itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
-      if itemNameValueNew of user
-        item.name = itemNameValueNew
+      name    = attributeName
+      nameNew = name.substr( 0, name.length - 3 )
+      if nameNew of user
+        name = nameNew
 
       # add to show if value exists
-      if user[item.name] || item.tag is 'textarea'
+      if user[name] && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
-        if item.name isnt 'firstname' && item.name isnt 'lastname'
-          if item.info
-            userData.push item
+        if name isnt 'firstname' && name isnt 'lastname' && name isnt 'organization'
+          userData.push attributeConfig
 
     if user.preferences
       items = []
@@ -67,13 +64,13 @@ class App.WidgetUser extends App.Controller
 
     # insert userData
     @html App.view('widget/user')(
-      header: 'Customer'
-      edit:   true
+      header:   'Customer'
+      edit:     true
       user:     user
       userData: userData
     )
 
-    @$('div[contenteditable]').ce(
+    @$('[contenteditable]').ce(
       mode:      'textonly'
       multiline: true
       maxlength: 250
@@ -86,21 +83,11 @@ class App.WidgetUser extends App.Controller
     )
 
   update: (e) =>
-    note = $(e.target).ceg()
-    user = App.User.find( @user_id )
-    if user.note isnt note
-      user.updateAttributes( note: note )
-      @log 'notice', 'update', e, note, user
-
-  edit: (e) =>
-    e.preventDefault()
-    new App.ControllerGenericEdit(
-      id: @user_id
-      genericObject: 'User'
-      screen: 'edit'
-      pageData:
-        title: 'Users'
-        object: 'User'
-        objects: 'Users'
-      callback: @render
-    )
+    name  = $(e.target).attr('data-name')
+    value = $(e.target).html()
+    user  = App.User.find( @user_id )
+    if user[name] isnt value
+      data = {}
+      data[name] = value
+      user.updateAttributes( data )
+      @log 'notice', 'update', name, value, user

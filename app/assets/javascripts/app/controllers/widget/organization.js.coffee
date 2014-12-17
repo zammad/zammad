@@ -1,7 +1,6 @@
 class App.WidgetOrganization extends App.Controller
   events:
-    'focusout [data-type=update-org]':  'update',
-    'click [data-type=edit-org]':       'edit'
+    'focusout [contenteditable]': 'update'
 
   constructor: ->
     super
@@ -18,22 +17,20 @@ class App.WidgetOrganization extends App.Controller
 
     # get display data
     organizationData = []
-    for item2 in App.Organization.configure_attributes
-      item = _.clone( item2 )
+    for attributeName, attributeConfig of App.Organization.attributesGet('view')
 
       # check if value for _id exists
-      itemNameValue = item.name
-      itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
-      if itemNameValueNew of organization
-        item.name = itemNameValueNew
+      name    = attributeName
+      nameNew = name.substr( 0, name.length - 3 )
+      if nameNew of organization
+        name = nameNew
 
       # add to show if value exists
-      if organization[item.name] || item.tag is 'textarea'
+      if organization[name] && attributeConfig.shown
 
-        # do not show name / already show via diplayName()
-        if item.name isnt 'name'
-          if item.info
-            organizationData.push item
+        # do not show firstname and lastname / already show via diplayName()
+        if name isnt 'name'
+          organizationData.push attributeConfig
 
     # insert userData
     @html App.view('widget/organization')(
@@ -41,7 +38,7 @@ class App.WidgetOrganization extends App.Controller
       organizationData: organizationData
     )
 
-    @$('div [contenteditable]').ce(
+    @$('[contenteditable]').ce(
       mode:      'textonly'
       multiline: true
       maxlength: 250
@@ -59,21 +56,11 @@ class App.WidgetOrganization extends App.Controller
     ###
 
   update: (e) =>
-    note = $(e.target).ceg()
-    organization = App.Organization.find( @organization_id )
-    if organization.note isnt note
-      organization.updateAttributes( note: note )
-      @log 'notice', 'update', e, note, organization
-
-  edit: (e) =>
-    e.preventDefault()
-    new App.ControllerGenericEdit(
-      id: @organization_id,
-      genericObject: 'Organization',
-      pageData: {
-        title: 'Organizations',
-        object: 'Organization',
-        objects: 'Organizations',
-      },
-      callback: @render
-    )
+    name  = $(e.target).attr('data-name')
+    value = $(e.target).html()
+    org   = App.Organization.find( @organization_id )
+    if org[name] isnt value
+      data = {}
+      data[name] = value
+      org.updateAttributes( data )
+      @log 'notice', 'update', name, value, org

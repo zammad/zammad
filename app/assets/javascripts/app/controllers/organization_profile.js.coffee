@@ -1,6 +1,6 @@
 class App.OrganizationProfile extends App.Controller
   events:
-    'focusout [data-type=update]': 'update'
+    'focusout [contenteditable]': 'update'
 
   constructor: (params) ->
     super
@@ -50,22 +50,20 @@ class App.OrganizationProfile extends App.Controller
 
     # get display data
     organizationData = []
-    for item2 in App.Organization.configure_attributes
-      item = _.clone( item2 )
+    for attributeName, attributeConfig of App.Organization.attributesGet('view')
 
       # check if value for _id exists
-      itemNameValue = item.name
-      itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
-      if itemNameValueNew of organization
-        item.name = itemNameValueNew
+      name    = attributeName
+      nameNew = name.substr( 0, name.length - 3 )
+      if nameNew of organization
+        name = nameNew
 
       # add to show if value exists
-      if organization[item.name] || item.tag is 'textarea'
+      if organization[name] && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
-        if item.name isnt 'name'
-          if item.info
-            organizationData.push item
+        if name isnt 'name'
+          organizationData.push attributeConfig
 
     @html App.view('organization_profile')(
       organization:     organization
@@ -120,12 +118,14 @@ class App.OrganizationProfile extends App.Controller
     )
 
   update: (e) =>
-    console.log('update')
-    note = $(e.target).ceg()
-    org  = App.Organization.find( @organization_id )
-    if org.note isnt note
-      org.updateAttributes( note: note )
-      @log 'notice', 'update', e, note, org
+    name  = $(e.target).attr('data-name')
+    value = $(e.target).html()
+    org   = App.Organization.find( @organization_id )
+    if org[name] isnt value
+      data = {}
+      data[name] = value
+      org.updateAttributes( data )
+      @log 'notice', 'update', name, value, org
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

@@ -12,7 +12,7 @@
       <div class="profile-details horizontal wrap">
         <% for row in @organizationData: %>
           <% if @organization[row.name]: %>
-            <% if row.tag isnt 'textarea': %>
+            <% if row.tag isnt 'richtext': %>
               <div class="profile-detailsEntry">
                 <label><%- @Ti( row.display ) %></label>
                 <%- @L( @P( @organization[row.name] ) ) %>
@@ -21,10 +21,10 @@
           <% end %>
         <% end %>
         <% for row in @organizationData: %>
-          <% if row.tag is 'textarea': %>
+          <% if row.tag is 'richtext': %>
             <div class="profile-detailsEntry" style="width: 100%;">
               <label><%- @Ti( row.display ) %></label>
-              <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%= @organization[row.name] %></div>
+              <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%- @organization[row.name] %></div>
             </div>
           <% end %>
         <% end %>
