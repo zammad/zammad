@@ -1672,7 +1672,8 @@
 						if ( s.mode !== Medium.inlineMode && s.mode !== Medium.inlineRichMode ) {
 							utils.setupContents();
 
-							if (childCount === 0 && el.firstChild) {
+							// set auto focus
+							if (this.settings.autofocus && childCount === 0 && el.firstChild) {
 								cursor.set(0, el.firstChild);
 							}
 						}
