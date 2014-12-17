@@ -88,19 +88,7 @@
 
       // strip html signes if multi line exists
       if ( this.options.multiline ) {
-        var text = this.$element.html()
-        //console.log('h2a 1', text)
-        text = text.replace(/<p><br><\/p>/g, "\n") // new line as /p
-        text = text.replace(/<p><br\/><\/p>/g, "\n") // new line as /p
-        text = text.replace(/<\/p>/g, "\n") // new line as /p
-        text = text.replace(/<br>/g, "\n") // new line as br
-        text = text.replace(/<\/div>/g, "\n") // in some caes, new line als div
-        text = text.replace(/<.+?>/g, "") // new line as /p
-        text = $("<div>" + text + "</div>").text()
-        text = text.replace(/&nbsp;/g, " ")
-        text = text.replace(/\s+$/g, '');
-        //console.log('h2a 2', text)
-        return text
+        return this.$element.html()
       }
       return this.$element.text().trim()
     }
