@@ -234,20 +234,6 @@ class CreateBase < ActiveRecord::Migration
     add_index :tag_items, [:name],      :unique => true
 
 
-    create_table :object_lookups do |t|
-      t.column :name,         :string, :limit => 250,   :null => false
-      t.timestamps
-    end
-    add_index :object_lookups, [:name],   :unique => true
-
-
-    create_table :type_lookups do |t|
-      t.column :name,         :string, :limit => 250,   :null => false
-      t.timestamps
-    end
-    add_index :type_lookups, [:name],   :unique => true
-
-
     create_table :recent_views do |t|
       t.references :recent_view_object,                 :null => false
       t.column :o_id,                       :integer,   :null => false
