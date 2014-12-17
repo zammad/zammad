@@ -59,7 +59,7 @@ class App.OrganizationProfile extends App.Controller
         name = nameNew
 
       # add to show if value exists
-      if organization[name] && attributeConfig.shown
+      if ( organization[name] || attributeConfig.tag is 'richtext' ) && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
         if name isnt 'name'
