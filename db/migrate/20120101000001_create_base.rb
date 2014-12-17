@@ -16,6 +16,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :lastname,       :string, :limit => 100, :null => true
       t.column :email,          :string, :limit => 140, :null => true
       t.column :image,          :string, :limit => 100, :null => true
+      t.column :image_source,   :string, :limit => 200, :null => true
       t.column :web,            :string, :limit => 100, :null => true
       t.column :password,       :string, :limit => 100, :null => true
       t.column :phone,          :string, :limit => 100, :null => true
@@ -41,6 +42,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :users, [:login], :unique => true
     add_index :users, [:email]
 #    add_index :users, [:email], :unique => true
+    add_index :users, [:image]
     add_index :users, [:department]
     add_index :users, [:phone]
     add_index :users, [:fax]
@@ -192,6 +194,22 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :taskbars do |t|
+      t.column :user_id,            :integer,   :null => false
+      t.column :last_contact,       :datetime,  :null => false
+      t.column :client_id,          :string,    :null => false
+      t.column :key,                :string,    :limit => 100,  :null => false
+      t.column :callback,           :string,    :limit => 100,  :null => false
+      t.column :state,              :string,    :limit => 8000, :null => true
+      t.column :params,             :string,    :limit => 2000, :null => true
+      t.column :prio,               :integer,   :null => false
+      t.column :notify,             :boolean,   :null => false, :default => false
+      t.column :active,             :boolean,   :null => false, :default => false
+      t.timestamps
+    end
+    add_index :taskbars, [:user_id]
+    add_index :taskbars, [:client_id]
+
 
     create_table :tags do |t|
       t.references :tag_item,                           :null => false
@@ -215,6 +233,50 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :tag_items, [:name],      :unique => true
 
+
+    create_table :object_lookups do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :object_lookups, [:name],   :unique => true
+
+
+    create_table :type_lookups do |t|
+      t.column :name,         :string, :limit => 250,   :null => false
+      t.timestamps
+    end
+    add_index :type_lookups, [:name],   :unique => true
+
+
+    create_table :recent_views do |t|
+      t.references :recent_view_object,                 :null => false
+      t.column :o_id,                       :integer,   :null => false
+      t.column :created_by_id,              :integer,   :null => false
+      t.timestamps
+    end
+    add_index :recent_views, [:o_id]
+    add_index :recent_views, [:created_by_id]
+    add_index :recent_views, [:created_at]
+    add_index :recent_views, [:recent_view_object_id]
+
+
+    create_table :activity_streams do |t|
+      t.references :activity_stream_type,                   :null => false
+      t.references :activity_stream_object,                 :null => false
+      t.references :role,                                   :null => true
+      t.references :group,                                  :null => true
+      t.column :o_id,                           :integer,   :null => false
+      t.column :created_by_id,                  :integer,   :null => false
+      t.timestamps
+    end
+    add_index :activity_streams, [:o_id]
+    add_index :activity_streams, [:created_by_id]
+    add_index :activity_streams, [:role_id]
+    add_index :activity_streams, [:group_id]
+    add_index :activity_streams, [:created_at]
+    add_index :activity_streams, [:activity_stream_object_id]
+    add_index :activity_streams, [:activity_stream_type_id]
+
+
   end
 end
-
