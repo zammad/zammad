@@ -5,10 +5,10 @@ class UsersController < ApplicationController
 
   # @path       [GET] /users
   #
-  # @summary          Returns a list of Users.
-  # @notes            Requester has to be in role 'Admin' or 'Agent' to
-  #                   get a list of all Users. If requester is only in the
-  #                   role 'Customer' he gets only his own Users entity.
+  # @summary          Returns a list of User records.
+  # @notes            The requester has to be in the role 'Admin' or 'Agent' to
+  #                   get a list of all Users. If the requester is in the
+  #                   role 'Customer' only just the own User record will be returned.
   #
   # @response_message 200 [Array<User>] List of matching User records.
   # @response_message 401               Invalid session.
@@ -29,10 +29,10 @@ class UsersController < ApplicationController
 
   # @path       [GET] /users/{id}
   #
-  # @summary          Returns the User with the requested identifier.
-  # @notes            Requester has to be in role 'Admin' or 'Agent' to
-  #                   get a list of all Users. If requester is only in the
-  #                   role 'Customer' he gets only his own Users entity.
+  # @summary          Returns the User record with the requested identifier.
+  # @notes            The requester has to be in the role 'Admin' or 'Agent' to
+  #                   access all User records. If the requester is in the
+  #                   role 'Customer' just the own User record is accessable.
   #
   # @parameter        id(required) [Integer] The identifier matching the requested User.
   # @parameter        full         [Bool]    If set a Asset structure with all connected Assets gets returned.
@@ -56,10 +56,10 @@ class UsersController < ApplicationController
 
   # @path      [POST] /users
   #
-  # @summary          Creates a User with the provided attribute values.
+  # @summary          Creates a User record with the provided attribute values.
   # @notes            TODO.
   #
-  # @parameter        User(required,body) [User] The attribute value structure needed to create a User.
+  # @parameter        User(required,body) [User] The attribute value structure needed to create a User record.
   #
   # @response_message 200 [User] Created User record.
   # @response_message 401        Invalid session.
@@ -183,11 +183,11 @@ class UsersController < ApplicationController
 
   # @path       [PUT] /users/{id}
   #
-  # @summary          Updates the User matching the identifier with the provided attribute values.
+  # @summary          Updates the User record matching the identifier with the provided attribute values.
   # @notes            TODO.
   #
-  # @parameter        id(required)        [Integer] The identifier matching the requested User.
-  # @parameter        User(required,body) [User] The attribute value structure needed to update a User.
+  # @parameter        id(required)        [Integer] The identifier matching the requested User record.
+  # @parameter        User(required,body) [User]    The attribute value structure needed to update a User record.
   #
   # @response_message 200 [User] Updated User record.
   # @response_message 401        Invalid session.
@@ -227,10 +227,10 @@ class UsersController < ApplicationController
 
   # @path    [DELETE] /users/{id}
   #
-  # @summary          Deletes the User matching the identifier.
-  # @notes            Requester has to be in role 'Admin' to be able to delete a User.
+  # @summary          Deletes the User record matching the given identifier.
+  # @notes            The requester has to be in the role 'Admin' to be able to delete a User record.
   #
-  # @parameter        id(required) [User] The identifier matching the requested User.
+  # @parameter        id(required) [User] The identifier matching the requested User record.
   #
   # @response_message 200 User successfully deleted.
   # @response_message 401 Invalid session.
@@ -246,9 +246,8 @@ class UsersController < ApplicationController
   #
   # @summary          Searches the User matching the given expression(s).
   # @notes            TODO: It's possible to use the SOLR search syntax.
-  #                   Requester has to be in role 'Admin' or 'Agent' to
-  #                   be able to search Users. If requester is only in the
-  #                   role 'Customer' he gets a permission denied message.
+  #                   The requester has to be in the role 'Admin' or 'Agent' to
+  #                   be able to search for User records.
   #
   # @parameter        term            [String]        The search term.
   # @parameter        limit           [Integer]       The limit of search results.
@@ -257,7 +256,7 @@ class UsersController < ApplicationController
   #                                                   true: { user_ids => [1,2,...], assets => {...} }
   #                                                   or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
   #
-  # @response_message 200 [Array<User>] A list of User resources matching the search term.
+  # @response_message 200 [Array<User>] A list of User records matching the search term.
   # @response_message 401               Invalid session.
   def search
 
@@ -314,13 +313,13 @@ class UsersController < ApplicationController
   # @tag History
   # @tag User
   #
-  # @summary          Returns the History of a User matching the given identifier.
-  # @notes            Requester has to be in role 'Admin' or 'Agent' to
-  #                   get the history of a User.
+  # @summary          Returns the History records of a User record matching the given identifier.
+  # @notes            The requester has to be in the role 'Admin' or 'Agent' to
+  #                   get the History records of a User record.
   #
-  # @parameter        id(required) [Integer] The identifier matching the requested User.
+  # @parameter        id(required) [Integer] The identifier matching the requested User record.
   #
-  # @response_message 200 [History] The History ressource of the requested User.
+  # @response_message 200 [History] The History records of the requested User record.
   # @response_message 401           Invalid session.
   def history
 
