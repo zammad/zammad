@@ -250,10 +250,10 @@ class UsersController < ApplicationController
   #                   be able to search Users. If requester is only in the
   #                   role 'Customer' he gets a permission denied message.
   #
-  # @parameter        term     [String]               The search term.
-  # @parameter        limit    [Integer]              The limit of search results.
+  # @parameter        term            [String]        The search term.
+  # @parameter        limit           [Integer]       The limit of search results.
   # @parameter        role_ids(multi) [Array<String>] A list of Role identifiers to which the Users have to be allocated to.
-  # @parameter        full     [Boolean]              Defines if the result should be
+  # @parameter        full            [Boolean]       Defines if the result should be
   #                                                   true: { user_ids => [1,2,...], assets => {...} }
   #                                                   or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
   #
