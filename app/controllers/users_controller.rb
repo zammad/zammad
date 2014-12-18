@@ -309,7 +309,19 @@ class UsersController < ApplicationController
     }
   end
 
-  # GET /api/v1/users/history/1
+  # @path       [GET] /users/history/{id}
+  #
+  # @tag History
+  # @tag User
+  #
+  # @summary          Returns the History of a User matching the given identifier.
+  # @notes            Requester has to be in role 'Admin' or 'Agent' to
+  #                   get the history of a User.
+  #
+  # @parameter        id(required) [Integer] The identifier matching the requested User.
+  #
+  # @response_message 200 [History] The History ressource of the requested User.
+  # @response_message 401           Invalid session.
   def history
 
     # permissin check
