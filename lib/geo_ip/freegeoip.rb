@@ -16,7 +16,7 @@ class GeoIp::Freegeoip
     url  = "/json/#{CGI::escape address}"
     data = {}
     begin
-      conn = Faraday.new( :url => host )
+      conn = Faraday.new( :url => host, :options => { :open_timeout => 2, :timeout => 5 } )
       response = conn.get url
       data = JSON.parse( response.body )
       Cache.write( cache_key, data, { :expires_in => 90.days } )
