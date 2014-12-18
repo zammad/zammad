@@ -257,7 +257,7 @@ class UsersController < ApplicationController
   #                                                   true: { user_ids => [1,2,...], assets => {...} }
   #                                                   or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
   #
-  # @response_message 200 [Array<User>] Matching Users.
+  # @response_message 200 [Array<User>] A list of User resources matching the search term.
   # @response_message 401               Invalid session.
   def search
 
