@@ -822,13 +822,12 @@ textarea,
   margin-bottom: 5px;
 }
 
-.login, 
 .getstarted, 
 .reset_password,
 .signup,
-.darkBackground {
+.darkBackground,
+.login {
   padding: 10px;
-  height: auto;
   background: hsl(234,10%,19%);
 }
 
@@ -841,13 +840,37 @@ textarea,
 }
 
 .login {
-  @extend .fit;
-  @extend .vertical;
-  @extend .center;
+  padding: 24px 24px 97px;
+  color: hsl(212,8%,40%);  
+  
+  a {
+    color: hsl(229,2%,51%);
+  }
+
+  &.login--fancy {
+    color: hsla(0,0%,100%,.7);
+    background:
+      radial-gradient(circle at 49.06% 50.5%, #a36f71, transparent 74%),
+      radial-gradient(circle at 6.95% 9.56%, #745479, transparent 100%),
+      radial-gradient(circle at 2.58% 98.57%, #392e3e, transparent 51%),
+      radial-gradient(circle at 82.11% 97.15%, #5c404e, transparent 100%),
+      radial-gradient(circle at 50% 50%, #8b6b76, #8b6b76 100%);
+      
+    a {
+      color: white;
+    }
+
+    .hero-unit {
+      box-shadow: 
+        0 8px 17px 0 rgba(0, 0, 0, 0.1),
+        0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    }
+  }
 }
 
 .login .hero-unit {
   width: 430px;
+  margin: 0 0 28px;
 }
 
   .login .company-logo {
@@ -858,32 +881,31 @@ textarea,
   }
 
   .login p {
-    margin: 10px 0;
+    margin: 0 auto 22px;
     max-width: 400px;
-    color: hsl(212,8%,40%);
     text-align: center;
   }
 
   .login hr {
-    margin: 10px 0;
+    margin: 0 auto 22px;
     border-top-color: rgba(255,255,255,.15);
     width: 100%;
     max-width: 400px;
   }
 
   .login p a {
-    color: hsl(229,2%,51%);
     text-decoration: underline;
   }
 
 .poweredBy {
-  @extend .horizontal;
-  @extend .center;
+  @extend .centered;
   color: hsl(233,7%,26%);
-  padding: 20px 0 10px;
-  margin-top: auto;
-  margin-left: -14px;
+  margin: auto 0 34px -16px;
   cursor: default;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   
   .logo {
     height: 40px;
@@ -895,6 +917,24 @@ textarea,
     margin-left: 8px;
     margin-top: -5px;
   }
+}
+
+.fullscreen {
+  @extend .fit;
+  display: table;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.fullscreen-center {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.fullscreen-body {
+  text-align: left;
+  display: inline-block;
 }
 
 .subtle-link {
@@ -1720,6 +1760,7 @@ form {
 }
 
 .form-controls {
+  @extend .clearfix;
   margin-top: 10px;
 }
 
@@ -4799,10 +4840,6 @@ label + .wizard-buttonList {
   -moz-flex: 1;
   -webkit-flex: 1;
   flex: 1;
-}
-
-.fullHeight {
-  min-height: 100%;
 }
 
 .relative {
