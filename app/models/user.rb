@@ -2,6 +2,27 @@
 
 require 'digest/md5'
 
+# @model User
+#
+# @property id(required)    [Integer] The identifier for the User.
+# @property login(required) [String]  The login of the User used for authentication.
+# @property firstname       [String]  The firstname of the User.
+# @property lastname        [String]  The lastname of the User.
+# @property email           [String]  The email of the User.
+# @property image           [String]  The Image used as the User avatar (TODO: Image model?).
+# @property web             [String]  The website/URL of the User.
+# @property password        [String]  The password of the User.
+# @property phone           [String]  The phone number of the User.
+# @property fax             [String]  The fax number of the User.
+# @property mobile          [String]  The mobile number of the User.
+# @property department      [String]  The department the User is working at.
+# @property street          [String]  The street the User lives in.
+# @property zip             [Integer] The zip postal code of the User city.
+# @property city            [String]  The city the User lives in.
+# @property country         [String]  The country the User lives in.
+# @property verified        [Boolean] The flag that shows the verified state of the User.
+# @property active          [Boolean] The flag that shows the active state of the User.
+# @property note            [String]  The note or comment stored to the User.
 class User < ApplicationModel
   load 'user/assets.rb'
   include User::Assets
