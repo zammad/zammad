@@ -3,63 +3,15 @@
 class UsersController < ApplicationController
   before_filter :authentication_check, :except => [:create, :password_reset_send, :password_reset_verify]
 
-=begin
-
-Format:
-JSON
-
-Example:
-{
-  "id":2,
-  "organization_id":null,
-  "login":"m@edenhofer.de",
-  "firstname":"Marti",
-  "lastname":"Ede",
-  "email":"m@edenhofer.de",
-  "image_source":"http://www.gravatar.com/avatar/1c38b099f2344976005de69965733465?s=48",
-  "web":"http://127.0.0.1",
-  "password":"123",
-  "phone":"112",
-  "fax":"211",
-  "mobile":"",
-  "street":"",
-  "zip":"",
-  "city":"",
-  "country":null,
-  "verified":false,
-  "active":true,
-  "note":"some note",
-  "source":null,
-  "role_ids":[1,2],
-  "group_ids":[1,2,3,4],
-}
-
-=end
-
-=begin
-
-Resource:
-GET /api/v1/users.json
-
-Response:
-[
-  {
-    "id": 1,
-    "login": "some_login1",
-    ...
-  },
-  {
-    "id": 2,
-    "login": "some_login2",
-    ...
-  }
-]
-
-Test:
-curl http://localhost/api/v1/users.json -v -u #{login}:#{password}
-
-=end
-
+  # @path       [GET] /users
+  #
+  # @summary          Returns a list of Users.
+  # @notes            Requester has to be in role 'Admin' or 'Agent' to
+  #                   get a list of all Users. If requester is only in the
+  #                   role 'Customer' he gets only his own Users entity.
+  #
+  # @response_message 200 [Array<User>] List of matching User records.
+  # @response_message 401               Invalid session.
   def index
 
     # only allow customer to fetch him self
@@ -75,23 +27,18 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password}
     render :json => users_all, :status => :ok
   end
 
-=begin
-
-Resource:
-GET /api/v1/users/1.json
-
-Response:
-{
-  "id": 1,
-  "login": "some_login1",
-  ...
-},
-
-Test:
-curl http://localhost/api/v1/users/#{id}.json -v -u #{login}:#{password}
-
-=end
-
+  # @path       [GET] /users/{id}
+  #
+  # @summary          Returns the User with the requested identifier.
+  # @notes            Requester has to be in role 'Admin' or 'Agent' to
+  #                   get a list of all Users. If requester is only in the
+  #                   role 'Customer' he gets only his own Users entity.
+  #
+  # @parameter        id(required) [Integer] The identifier matching the requested User.
+  # @parameter        full         [Bool]    If set a Asset structure with all connected Assets gets returned.
+  #
+  # @response_message 200 [User] User record matching the requested identifier.
+  # @response_message 401        Invalid session.
   def show
 
     # access deny
@@ -107,31 +54,15 @@ curl http://localhost/api/v1/users/#{id}.json -v -u #{login}:#{password}
     render :json => user
   end
 
-=begin
-
-Resource:
-POST /api/v1/users.json
-
-Payload:
-{
-  "login": "some_login",
-  "firstname": "some firstname",
-  "lastname": "some lastname",
-  "email": "some@example.com"
-}
-
-Response:
-{
-  "id": 1,
-  "login": "some_login",
-  ...
-},
-
-Test:
-curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"login": "some_login","firstname": "some firstname","lastname": "some lastname","email": "some@example.com"}'
-
-=end
-
+  # @path      [POST] /users
+  #
+  # @summary          Creates a User with the provided attribute values.
+  # @notes            TODO.
+  #
+  # @parameter        User(required,body) [User] The attribute value structure needed to create a User.
+  #
+  # @response_message 200 [User] Created User record.
+  # @response_message 401        Invalid session.
   def create
     user = User.new( User.param_cleanup(params) )
 
@@ -250,31 +181,16 @@ curl http://localhost/api/v1/users.json -v -u #{login}:#{password} -H "Content-T
     end
   end
 
-=begin
-
-Resource:
-PUT /api/v1/users/#{id}.json
-
-Payload:
-{
-  "login": "some_login",
-  "firstname": "some firstname",
-  "lastname": "some lastname",
-  "email": "some@example.com"
-}
-
-Response:
-{
-  "id": 2,
-  "login": "some_login",
-  ...
-},
-
-Test:
-curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"login": "some_login","firstname": "some firstname","lastname": "some lastname","email": "some@example.com"}'
-
-=end
-
+  # @path       [PUT] /users/{id}
+  #
+  # @summary          Updates the User matching the identifier with the provided attribute values.
+  # @notes            TODO.
+  #
+  # @parameter        id(required)        [Integer] The identifier matching the requested User.
+  # @parameter        User(required,body) [User] The attribute value structure needed to update a User.
+  #
+  # @response_message 200 [User] Updated User record.
+  # @response_message 401        Invalid session.
   def update
 
     # access deny
@@ -309,13 +225,40 @@ curl http://localhost/api/v1/users/2.json -v -u #{login}:#{password} -H "Content
     end
   end
 
-  # DELETE /api/v1/users/1
+  # @path    [DELETE] /users/{id}
+  #
+  # @summary          Deletes the User matching the identifier.
+  # @notes            Requester has to be in role 'Admin' to be able to delete a User.
+  #
+  # @parameter        id(required) [User] The identifier matching the requested User.
+  #
+  # @response_message 200 User successfully deleted.
+  # @response_message 401 Invalid session.
   def destroy
     return if deny_if_not_role('Admin')
     model_destory_render(User, params)
   end
 
-  # GET /api/v1/users/search
+  # @path       [GET] /users/search
+  #
+  # @tag Search
+  # @tag User
+  #
+  # @summary          Searches the User matching the given expression(s).
+  # @notes            TODO: It's possible to use the SOLR search syntax.
+  #                   Requester has to be in role 'Admin' or 'Agent' to
+  #                   be able to search Users. If requester is only in the
+  #                   role 'Customer' he gets a permission denied message.
+  #
+  # @parameter        term     [String]               The search term.
+  # @parameter        limit    [Integer]              The limit of search results.
+  # @parameter        role_ids(multi) [Array<String>] A list of Role identifiers to which the Users have to be allocated to.
+  # @parameter        full     [Boolean]              Defines if the result should be
+  #                                                   true: { user_ids => [1,2,...], assets => {...} }
+  #                                                   or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
+  #
+  # @response_message 200 [Array<User>] Matching Users.
+  # @response_message 401               Invalid session.
   def search
 
     if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
