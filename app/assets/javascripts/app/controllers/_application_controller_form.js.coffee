@@ -923,18 +923,286 @@ class App.ControllerForm extends App.Controller
       item.find( "[name=\"#{attribute.name}::count\"]").find("option[value=\"#{attribute.value.count}\"]").attr( 'selected', 'selected' )
       item.find( "[name=\"#{attribute.name}::area\"]").find("option[value=\"#{attribute.value.area}\"]").attr( 'selected', 'selected' )
 
-    # ticket attribute selection
-    else if attribute.tag is 'ticket_attribute_selection'
+    # ticket attribute set
+    else if attribute.tag is 'ticket_attribute_set'
 
       # list of possible attributes
       item = $(
-        App.view('generic/ticket_attribute_selection')(
+        App.view('generic/ticket_attribute_manage')(
           attribute: attribute
         )
       )
 
       addShownAttribute = ( key, value ) =>
-        console.log( 'addShownAttribute', key, value )
+        parts = key.split(/::/)
+        key   = parts[0]
+        type  = parts[1]
+        if key is 'tickets.title'
+          attribute_config = {
+            name:       attribute.name + '::tickets.title'
+            display:    'Title'
+            tag:        'input'
+            type:       'text'
+            null:       false
+            value:      value
+            remove:     true
+          }
+        else if key is 'tickets.group_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.group_id'
+            display:    'Group'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'Group'
+            value:      value
+            remove:     true
+          }
+        else if key is 'tickets.owner_id' || key is 'tickets.customer_id'
+          display = 'Owner'
+          name    = 'owner_id'
+          if key is 'customer_id'
+            display = 'Customer'
+            name    = 'customer_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.' + name
+            display:    display
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'User'
+            value:      value || null
+            remove:     true
+            filter:     ( all, type ) ->
+              return all if type isnt 'collection'
+              all = _.filter( all, (item) ->
+                return if item.id is 1
+                return item
+              )
+              all.unshift( {
+                id: ''
+                name:  '--'
+              } )
+              all.unshift( {
+                id: 1
+                name:  '*** not set ***'
+              } )
+              all.unshift( {
+                id: 'current_user.id'
+                name:  '*** current user ***'
+              } )
+              all
+          }
+        else if key is 'tickets.organization_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.organization_id'
+            display:    'Organization'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'Organization'
+            value:      value || null
+            remove:     true
+            filter:     ( all, type ) ->
+              return all if type isnt 'collection'
+              all.unshift( {
+                id: ''
+                name:  '--'
+              } )
+              all.unshift( {
+                id: 'current_user.organization_id'
+                name:  '*** organization of current user ***'
+              } )
+              all
+          }
+        else if key is 'tickets.state_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.state_id'
+            display:    'State'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'TicketState'
+            value:      value
+            translate:  true
+            remove:     true
+          }
+        else if key is 'tickets.priority_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.priority_id'
+            display:    'Priority'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'TicketPriority'
+            value:      value
+            translate:  true
+            remove:     true
+          }
+        else
+          attribute_config = {
+            name:       attribute.name + '::' + key
+            display:    'FIXME!'
+            tag:        'input'
+            type:       'text'
+            value:      value
+            remove:     true
+          }
+        item.find('select[name=ticket_attribute_list] option[value="' + key + '"]').hide().prop('disabled', true)
+
+        itemSub = @formGenItem( attribute_config )
+        itemSub.find('.glyphicon-minus').bind('click', (e) ->
+          e.preventDefault()
+          value = $(e.target).closest('.controls').find('[name]').attr('name')
+          if value
+            value = value.replace("#{attribute.name}::", '')
+            $(e.target).closest('.sub_attribute').find('select[name=ticket_attribute_list] option[value="' + value + '"]').show().prop('disabled', false)
+          $(@).parent().parent().parent().remove()
+        )
+#        itemSub.append('<a href=\"#\" class=\"icon-minus\"></a>')
+        item.find('.ticket_attribute_item').append( itemSub )
+
+      # list of existing attributes
+      attribute_config = {
+        name:       'ticket_attribute_list'
+        display:    'Add Attribute'
+        tag:        'select'
+        multiple:   false
+        null:       false
+#        nulloption: true
+        options: [
+          {
+            value:    ''
+            name:     '-- Ticket --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'tickets.title'
+            name:     'Title'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.group_id'
+            name:     'Group'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.state_id'
+            name:     'State'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.priority_id'
+            name:     'Priority'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.owner_id'
+            name:     'Owner'
+            selected: true
+            disable:  false
+          },
+#         # {
+#            value:    'tag'
+#            name:     'Tag'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    '-a'
+#            name:     '-- ' + App.i18n.translateInline('Article') + ' --'
+#            selected: false
+#            disable:  true
+#          },
+#          {
+#            value:    'ticket_articles.from'
+#            name:     'From'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.to'
+#            name:     'To'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.cc'
+#            name:     'Cc'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.subject'
+#            name:     'Subject'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.body'
+#            name:     'Text'
+#            selected: true
+#            disable:  false
+#          },
+          {
+            value:    '-c'
+            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'customers.id'
+            name:     'Customer'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'organization.id'
+            name:     'Organization'
+            selected: true
+            disable:  false
+          },
+        ]
+        default:    ''
+        translate:  true
+        class:      'medium'
+        add:        true
+      }
+      list = @formGenItem( attribute_config )
+      list.find('.glyphicon-plus').bind('click', (e) ->
+        e.preventDefault()
+        value = $(e.target).closest('.controls').find('[name=ticket_attribute_list]').val()
+        addShownAttribute( value, '' )
+      )
+      item.find('.ticket_attribute_list').prepend( list )
+
+      # list of shown attributes
+      show = []
+      if attribute.value
+        for key, value of attribute.value
+          addShownAttribute( key, value )
+
+    # ticket attribute selection
+    else if attribute.tag is 'ticket_attribute_selection'
+
+      # list of possible attributes
+      item = $(
+        App.view('generic/ticket_attribute_manage')(
+          attribute: attribute
+        )
+      )
+
+      addShownAttribute = ( key, value ) =>
         parts = key.split(/::/)
         key   = parts[0]
         type  = parts[1]
@@ -946,7 +1214,6 @@ class App.ControllerForm extends App.Controller
             type:       'text'
             null:       false
             value:      value
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.title'
@@ -957,7 +1224,6 @@ class App.ControllerForm extends App.Controller
             type:       'text'
             null:       false
             value:      value
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.group_id'
@@ -970,7 +1236,6 @@ class App.ControllerForm extends App.Controller
             nulloption: false
             relation:   'Group'
             value:      value
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.owner_id' || key is 'tickets.customer_id'
@@ -988,7 +1253,6 @@ class App.ControllerForm extends App.Controller
             nulloption: false
             relation:   'User'
             value:      value || null
-            class:      'medium'
             remove:     true
             filter:     ( all, type ) ->
               return all if type isnt 'collection'
@@ -1020,7 +1284,6 @@ class App.ControllerForm extends App.Controller
             nulloption: false
             relation:   'Organization'
             value:      value || null
-            class:      'medium'
             remove:     true
             filter:     ( all, type ) ->
               return all if type isnt 'collection'
@@ -1045,7 +1308,6 @@ class App.ControllerForm extends App.Controller
             relation:   'TicketState'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.priority_id'
@@ -1059,7 +1321,6 @@ class App.ControllerForm extends App.Controller
             relation:   'TicketPriority'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.created_at' && ( type is '<>' || value.count )
@@ -1069,7 +1330,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.created_at' && ( type is '><' || 0 )
@@ -1079,7 +1339,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.close_time' && ( type is '<>' || value.count )
@@ -1089,7 +1348,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.close_time' && ( type is '><' || 0 )
@@ -1099,7 +1357,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.updated_at' && ( type is '<>' || value.count )
@@ -1109,7 +1366,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.updated_at' && ( type is '><' || 0 )
@@ -1119,7 +1375,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.escalation_time' && ( type is '<>' || value.count )
@@ -1129,7 +1384,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.escalation_time' && ( type is '><' || 0 )
@@ -1139,7 +1393,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else
@@ -1149,23 +1402,22 @@ class App.ControllerForm extends App.Controller
             tag:        'input'
             type:       'text'
             value:      value
-            class:      'medium'
             remove:     true
           }
+
+        item.find('select[name=ticket_attribute_list] option[value="' + key + '"]').hide().prop('disabled', true)
+
         itemSub = @formGenItem( attribute_config )
         itemSub.find('.glyphicon-minus').bind('click', (e) ->
           e.preventDefault()
+          value = $(e.target).closest('.controls').find('[name]').attr('name')
+          if value
+            value = value.replace("#{attribute.name}::", '')
+            $(e.target).closest('.sub_attribute').find('select[name=ticket_attribute_list] option[value="' + value + '"]').show().prop('disabled', false)
           $(@).parent().parent().parent().remove()
         )
 #        itemSub.append('<a href=\"#\" class=\"icon-minus\"></a>')
         item.find('.ticket_attribute_item').append( itemSub )
-
-
-      # list of shown attributes
-      show = []
-      if attribute.value
-        for key, value of attribute.value
-          addShownAttribute( key, value )
 
       # list of existing attributes
       attribute_config = {
@@ -1182,19 +1434,18 @@ class App.ControllerForm extends App.Controller
             selected: false
             disable:  true
           },
-          #
-          #{
-          #  value:    'tickets.number'
-          #  name:     'Number'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.title'
-          #  name:     'Title'
-          #  selected: true
-          #  disable:  false
-          #},
+          {
+            value:    'tickets.number'
+            name:     'Number'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.title'
+            name:     'Title'
+            selected: false
+            disable:  false
+          },
           {
             value:    'tickets.group_id'
             name:     'Group'
@@ -1373,11 +1624,99 @@ class App.ControllerForm extends App.Controller
 
       list.find('.glyphicon-plus').bind('click', (e) ->
         e.preventDefault()
-
-        value = $(e.target).parents().find('[name=ticket_attribute_list]').val()
+        value = $(e.target).closest('.controls').find('[name=ticket_attribute_list]').val()
         addShownAttribute( value, '' )
       )
       item.find('.ticket_attribute_list').prepend( list )
+
+      # list of shown attributes
+      show = []
+      if attribute.value
+        for key, value of attribute.value
+          addShownAttribute( key, value )
+
+    # timeplan
+    else if attribute.tag is 'timeplan'
+      item = $( App.view('generic/timeplan')( attribute: attribute ) )
+      attribute_config = {
+        name:     "#{attribute.name}::days"
+        tag:      'select'
+        multiple: true
+        null:     false
+        options:  [
+          {
+            value:    'mon'
+            name:     'Monday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tue'
+            name:     'Tuesday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'wed'
+            name:     'Wednesday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'thu'
+            name:     'Thursday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'fri'
+            name:     'Friday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'sat'
+            name:     'Saturday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'sun'
+            name:     'Sunday'
+            selected: false
+            disable:  false
+          },
+        ]
+        default:  attribute.default?.days
+      }
+      item.find('.days').append( @formGenItem( attribute_config ) )
+
+      hours = {}
+      for hour in [0..23]
+        localHour = "0#{hour}"
+        hours[hour] = localHour.substr(localHour.length-2,2)
+      attribute_config = {
+        name:     "#{attribute.name}::hours"
+        tag:      'select'
+        multiple: true
+        null:     false
+        options:  hours
+        default:  attribute.default?.hours
+      }
+      item.find('.hours').append( @formGenItem( attribute_config ) )
+
+      minutes = {}
+      for minute in [0..5]
+        minutes["#{minute}0"] = "#{minute}0"
+      attribute_config = {
+        name:     "#{attribute.name}::minutes"
+        tag:      'select'
+        multiple: true
+        null:     false
+        options:  minutes
+        default:  attribute.default?.miuntes
+      }
+      item.find('.minutes').append( @formGenItem( attribute_config ) )
 
     # input
     else

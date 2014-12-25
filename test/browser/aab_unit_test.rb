@@ -90,6 +90,28 @@ class AAbUnitTest < TestCase
     ]
     browser_single_test(tests)
   end
+  def test_form_extended
+    tests = [
+      {
+        :name     => 'start',
+        :instance => browser_instance,
+        :url      => browser_url + '/tests-form-extended',
+        :action   => [
+          {
+            :execute => 'wait',
+            :value   => 8,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.result .failed',
+            :value        => '0',
+            :match_result => true,
+          },
+        ],
+      },
+    ]
+    browser_single_test(tests)
+  end
   def test_table
     tests = [
       {

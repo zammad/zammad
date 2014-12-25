@@ -5,17 +5,23 @@ class Index extends App.ControllerContent
     # check authentication
     return if !@authenticate()
 
-    # set title
-    @title 'Scheduler'
-    @navupdate '#scheduler'
-
-    # render page
-    @render()
-
-  render: ->
-
-    @html App.view('scheduler')(
-      head: 'some header'
+    new App.ControllerGenericIndex(
+      el: @el,
+      id: @id,
+      genericObject: 'Job',
+      pageData: {
+        title: 'Schedulers',
+        home: 'schedulers',
+        object: 'Scheduler',
+        objects: 'Schedulers',
+        navupdate: '#schedulers',
+        notes: [
+          'Scheduler are ...'
+        ],
+        buttons: [
+          { name: 'New Scheduler', 'data-type': 'new', class: 'btn--success' },
+        ],
+      },
     )
 
-App.Config.set( 'Scheduler', { prio: 2000, name: 'Schedulers', parent: '#manage', target: '#manage/schedulers', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'Scheduler', { prio: 3000, name: 'Schedulers', parent: '#manage', target: '#manage/schedulers', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

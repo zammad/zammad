@@ -23,6 +23,13 @@ class TestsController < ApplicationController
     end
   end
 
+  # GET /tests/from_extended
+  def form
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
+
   # GET /tests/table
   def table
     respond_to do |format|

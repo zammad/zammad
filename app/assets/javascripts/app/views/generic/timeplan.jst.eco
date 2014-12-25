@@ -1,0 +1,11 @@
+<div>
+  <label><%- @T('Days') %>
+    <div class="days"></div>
+  </label>
+  <label><%- @T('Hours') %>
+    <div class="hours"></div>
+  </label>
+  <label><%- @T('Minutes') %>
+    <div class="minutes"></div>
+  </label>
+</div>
