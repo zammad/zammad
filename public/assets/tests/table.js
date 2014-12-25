@@ -6,17 +6,17 @@ test( "table test", function() {
   var el = $('#table1')
   App.TicketPriority.refresh( [
     {
-      id:   1,
-      name: '1 low',
-      note: 'some note 1',
-      active: true,
+      id:         1,
+      name:       '1 low',
+      note:       'some note 1',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   2,
-      name: '2 normal',
-      note: 'some note 2',
-      active: false,
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
       created_at: '2014-06-10T10:17:34.000Z',
     },
   ] )
@@ -62,25 +62,25 @@ test( "table test", function() {
     radio:    false,
     bindRow: {
       events: {
-        'click':      rowClick,
-        'mouseover':  rowMouseover,
-        'mouseout':   rowMouseout,
-        'dblclick':   rowDblClick,
+        'click':     rowClick,
+        'mouseover': rowMouseover,
+        'mouseout':  rowMouseout,
+        'dblclick':  rowDblClick,
       }
     },
     bindCol: {
       name: {
         events: {
-          'click':      colClick,
-          'mouseover':  colMouseover,
-          'mouseout':   colMouseout,
-          'dblclick':   colDblClick,
+          'click':     colClick,
+          'mouseover': colMouseover,
+          'mouseout':  colMouseout,
+          'dblclick':  colDblClick,
         }
       },
       created_at: {
         events: {
-          'mouseover':  colMouseover,
-          'mouseout':   colMouseout,
+          'mouseover': colMouseover,
+          'mouseout':  colMouseout,
         }
       }
     },
@@ -147,84 +147,84 @@ test( "table test", function() {
 
   App.Group.refresh( [
     {
-      id:   1,
-      name: 'group 1',
-      active: true,
+      id:         1,
+      name:       'group 1',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   2,
-      name: 'group 2',
-      active: true,
+      id:         2,
+      name:       'group 2',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
   App.User.refresh( [
     {
-      id:   55,
-      login: 'login55',
-      firstname: 'firstname55',
-      lastname: 'lastname55',
-      email: 'email55',
-      active: true,
+      id:         55,
+      login:      'login55',
+      firstname:  'firstname55',
+      lastname:   'lastname55',
+      email:      'email55',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   56,
-      login: 'login56',
-      firstname: 'firstname56',
-      lastname: 'lastname56',
-      email: 'email56',
-      active: true,
+      id:         56,
+      login:      'login56',
+      firstname:  'firstname56',
+      lastname:   'lastname56',
+      email:      'email56',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
 
   App.TicketState.refresh( [
     {
-      id:   1,
-      name: 'new',
-      active: true,
+      id:         1,
+      name:       'new',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   2,
-      name: 'open',
-      note: 'some note 2',
-      active: false,
+      id:         2,
+      name:       'open',
+      note:       'some note 2',
+      active:     false,
       created_at: '2014-06-10T10:17:34.000Z',
     },
   ])
   App.Ticket.refresh( [
     {
-      id:   1,
-      title:  'some title 1',
-      number: '4711',
+      id:          1,
+      title:       'some title 1',
+      number:      '4711',
       priority_id: 1,
-      owner_id: 55,
+      owner_id:    55,
       customer_id: 56,
-      state_id: 1,
-      group_id: 2,
-      created_at: '2014-06-10T11:17:34.000Z',
+      state_id:    1,
+      group_id:    2,
+      created_at:  '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   3,
-      title:  'some title 3',
-      number: '4713',
+      id:          3,
+      title:       'some title 3',
+      number:      '4713',
       priority_id: 2,
-      owner_id: 56,
-      state_id: 1,
-      group_id: 2,
-      created_at: '2014-07-11T11:19:34.000Z',
+      owner_id:    56,
+      state_id:    1,
+      group_id:    2,
+      created_at:  '2014-07-11T11:19:34.000Z',
     },
     {
-      id:   2,
-      title:  'some title 2',
-      number: '4712',
+      id:          2,
+      title:       'some title 2',
+      number:      '4712',
       priority_id: 1,
-      state_id: 2,
-      group_id: 1,
-      created_at: '2014-06-10T11:19:34.000Z',
+      state_id:    2,
+      group_id:    1,
+      created_at:  '2014-06-10T11:19:34.000Z',
     },
   ])
   $('#table').append('<hr><h1>table complex I</h1><div id="table4"></div>')
@@ -297,12 +297,12 @@ test( "table test", function() {
     console.log('clickCheckbox', id, checked, e.target)
   };
   new App.ControllerTable({
-    el:       el,
-    overview: ['number', 'title', 'owner', 'customer', 'priority', 'group', 'state', 'created_at'],
-    model:    App.Ticket,
-    objects:  App.Ticket.search({sortBy:'created_at', order: 'DESC'}),
-    checkbox: true,
-    groupBy:  'group',
+    el:           el,
+    overview:     ['number', 'title', 'owner', 'customer', 'priority', 'group', 'state', 'created_at'],
+    model:        App.Ticket,
+    objects:      App.Ticket.search({sortBy:'created_at', order: 'DESC'}),
+    checkbox:     true,
+    groupBy:      'group',
     bindCheckbox: {
       events: {
         'click':  clickCheckbox,
@@ -364,9 +364,9 @@ test( "table test 2", function() {
   var el = $('#table-hash1')
   App.Group.refresh( [
     {
-      id:   5,
-      name: 'group 5',
-      active: true,
+      id:         5,
+      name:       'group 5',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
@@ -378,8 +378,8 @@ test( "table test 2", function() {
         host: 'host1',
         user: 'user1',
       },
-      group_id: 5,
-      active: true,
+      group_id:   5,
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
@@ -389,8 +389,8 @@ test( "table test 2", function() {
         host: 'host2',
         user: 'user2',
       },
-      group_id: 5,
-      active: true,
+      group_id:   5,
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ] )
@@ -428,17 +428,17 @@ test( "table test 3", function() {
   var el = $('#table-link1')
   App.EmailAddress.refresh( [
     {
-      id:   55,
-      realname: 'realname 55',
-      email:    'email 55',
-      active: true,
+      id:         55,
+      realname:   'realname 55',
+      email:      'email 55',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   56,
-      realname: 'realname 56',
-      email:    'email 56',
-      active: true,
+      id:         56,
+      realname:   'realname 56',
+      email:      'email 56',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
@@ -446,7 +446,7 @@ test( "table test 3", function() {
     console.log('current header is', header);
     // add new header item
     var attribute = {
-      name: 'some name',
+      name:    'some name',
       display: 'Some Name',
     };
     header.push(attribute);
@@ -455,20 +455,20 @@ test( "table test 3", function() {
   }
   var callbackAttributes = function(value, object, attribute, header, refObject) {
     console.log('data of item col', value, object, attribute, header, refObject)
-    value = ' '
+    value           = ' '
     attribute.class = 'glyphicon glyphicon-user'
     attribute.link  = '#'
-    attribute.title  = App.i18n.translateInline('Switch to')
+    attribute.title = App.i18n.translateInline('Switch to')
     if (object.id == 55) {
       attribute.data = {
         some: 'value55',
-        xxx: 55,
+        xxx:  55,
       }
     }
     else {
       attribute.data = {
         some: 'value56',
-        xxx: 56,
+        xxx:  56,
       }
     }
     return value
@@ -481,10 +481,10 @@ test( "table test 3", function() {
     //window.location = App.Config.get('api_path') + '/sessions/switch/' + id
   }
   new App.ControllerTable({
-    el:       el,
-    model:    App.EmailAddress,
-    objects:  App.EmailAddress.search({sortBy:'realname', order: 'ASC'}),
-    callbackHeader: callbackHeader,
+    el:                 el,
+    model:              App.EmailAddress,
+    objects:            App.EmailAddress.search({sortBy:'realname', order: 'ASC'}),
+    callbackHeader:     callbackHeader,
     callbackAttributes: {
       'some name': [ callbackAttributes ]
     },
