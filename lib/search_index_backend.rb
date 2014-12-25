@@ -240,7 +240,7 @@ return true if backend is configured
   end
 
   def self.connection( url )
-    conn = Faraday.new( :url => url )
+    conn = Faraday.new( :url => url, :options => { :open_timeout => 5, :timeout => 10 } )
     user = Setting.get('es_user')
     pw   = Setting.get('es_password')
     if user && !user.empty? && pw && !pw.empty?
