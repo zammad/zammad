@@ -579,6 +579,7 @@ class App.TicketZoom extends App.Controller
       articleParams.from      = @Session.get().displayName()
       articleParams.ticket_id = ticket.id
       articleParams.form_id   = @form_id
+      articleParams.content_type = 'text/html'
 
       if !articleParams['internal']
         articleParams['internal'] = false
@@ -1507,6 +1508,10 @@ class Article extends App.Controller
     @preview()
 
   preview: ->
+
+    if @article.content_type is 'text/html'
+      @article['html'] = @article.body
+      return
 
     # build html body
     # cleanup body
