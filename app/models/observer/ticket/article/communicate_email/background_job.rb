@@ -13,14 +13,15 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     a = Channel::EmailSend.new
     message = a.send(
       {
-        :message_id  => record.message_id,
-        :in_reply_to => record.in_reply_to,
-        :from        => record.from,
-        :to          => record.to,
-        :cc          => record.cc,
-        :subject     => subject,
-        :body        => record.body,
-        :attachments => record.attachments
+        :message_id   => record.message_id,
+        :in_reply_to  => record.in_reply_to,
+        :from         => record.from,
+        :to           => record.to,
+        :cc           => record.cc,
+        :subject      => subject,
+        :content_type => record.content_type,
+        :body         => record.body,
+        :attachments  => record.attachments
       }
     )
 
