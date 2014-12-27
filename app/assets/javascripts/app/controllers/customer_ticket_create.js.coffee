@@ -178,13 +178,14 @@ class Index extends App.ControllerContent
 
     # create article
     params['article'] = {
-      from:       "#{ @Session.get().displayName() }"
-      to:         (group && group.name) || ''
-      subject:    params.subject
-      body:       params.body
-      type_id:    type.id
-      sender_id:  sender.id
-      form_id:    @form_id
+      from:         "#{ @Session.get().displayName() }"
+      to:           (group && group.name) || ''
+      subject:      params.subject
+      body:         params.body
+      type_id:      type.id
+      sender_id:    sender.id
+      form_id:      @form_id
+      content_type: 'text/html'
     }
 
     ticket.load(params)

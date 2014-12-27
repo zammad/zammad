@@ -329,25 +329,27 @@ class App.TicketCreate extends App.Controller
     # create article
     if sender.name is 'Customer'
       params['article'] = {
-        to:         (group && group.name) || ''
-        from:       params.customer_id_autocompletion
-        cc:         params.cc
-        subject:    params.subject
-        body:       params.body
-        type_id:    type.id
-        sender_id:  sender.id
-        form_id:    @form_id
+        to:           (group && group.name) || ''
+        from:         params.customer_id_autocompletion
+        cc:           params.cc
+        subject:      params.subject
+        body:         params.body
+        type_id:      type.id
+        sender_id:    sender.id
+        form_id:      @form_id
+        content_type: 'text/html'
       }
     else
       params['article'] = {
-        from:       (group && group.name) || ''
-        to:         params.customer_id_autocompletion
-        cc:         params.cc
-        subject:    params.subject
-        body:       params.body
-        type_id:    type.id
-        sender_id:  sender.id
-        form_id:    @form_id
+        from:         (group && group.name) || ''
+        to:           params.customer_id_autocompletion
+        cc:           params.cc
+        subject:      params.subject
+        body:         params.body
+        type_id:      type.id
+        sender_id:    sender.id
+        form_id:      @form_id
+        content_type: 'text/html'
       }
 
     ticket.load(params)
