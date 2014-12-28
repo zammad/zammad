@@ -176,7 +176,7 @@ class App.TicketZoom extends App.Controller
     # if page header is not possible to use - mainScrollHeigth to low - hide page header
     else
       top = -headerHeight
-    
+
     @scrollPageHeader.css('transform', "translateY(#{top}px)")
 
   render: (force) =>
@@ -700,7 +700,7 @@ class TicketTitle extends App.Controller
     @lastTitle = ticket.title
 
     @html App.view('ticket_zoom/title')(
-      ticket:     ticket
+      ticket: ticket
     )
 
     @$('.ticket-title-update').ce({
@@ -1551,6 +1551,8 @@ class Article extends App.Controller
         notify + '<div class="hide preview">' + match
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
+
+    @article['html'] = @article['html'].replace( /\n/g, '<br>' )
 
   actionRow: ->
     if @isRole('Customer')

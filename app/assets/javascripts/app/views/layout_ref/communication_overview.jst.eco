@@ -196,12 +196,12 @@ Grüße, Peter</div>
         <div class="article-content zIndex-1 horizontal">
           <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,
-anbei findest du die Midi Noten für Maria Maria "I Like it Loud".
-Wünsche dir einen guten Auftritt in Hamburg.
-
-Alles gute,
-Oliver
+            <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,<br>
+anbei findest du die Midi Noten für Maria Maria "I Like it Loud".<br>
+Wünsche dir einen guten Auftritt in Hamburg.<br>
+<br>
+Alles gute,<br>
+Oliver<br>
               <div class="attachments">
                 <div class="paperclip icon"></div>
                 <h3>2 <%- @T('Attached Files') %></h3>

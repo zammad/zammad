@@ -2978,8 +2978,8 @@ footer {
   position: relative;
 }
 
-  /* 
-    clip the article-meta to not stand out on the other side 
+  /*
+    clip the article-meta to not stand out on the other side
     of the text-bubble if the text bubble is small
   */
 
@@ -3056,7 +3056,6 @@ footer {
 
   .text-bubble {
     padding: 10px 20px;
-    white-space: pre-wrap;
     background: white;
     border-radius: 2px;
     border: 1px solid hsl(240,4%,95%);
@@ -3364,7 +3363,6 @@ footer {
 
   .ticket-edit .text-bubble {
     border-color: #b3b3b3;
-    white-space: normal;
     border-radius: 5px;
     padding-left: 12px;
     padding-right: 12px;
