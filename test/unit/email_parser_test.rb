@@ -531,6 +531,36 @@ end
 ",
         },
       },
+      {
+        :data         => IO.read('test/fixtures/mail26.box'),
+        :body_md5     => 'c68fd31c71a463c7ea820ccdf672c680',
+        :params   => {
+          :from               => 'gate <team@support.gate.de>',
+          :from_email         => 'team@support.gate.de',
+          :from_display_name  => 'gate',
+          :subject            => 'Ihre Rechnung als PDF-Dokument',
+          :to                 => 'Martin Edenhofer <billing@znuny.inc>',
+          :body               => "********************************************************************
+
+gate                                                      Service
+
+--------------------------------------------------------------------
+
+gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
+
+",
+        },
+        :attachments  => [
+          {
+            :md5      => '5d6a49a266987af128bb7254abcb2896',
+            :filename => 'message.html',
+          },
+          {
+            :md5      => '552e21cd4cd9918678e3c1a0df491bc3',
+            :filename => 'invoice_gatede_B181347.txt',
+          },
+        ],
+      },
     ]
 
     files.each { |file|

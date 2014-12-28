@@ -1,0 +1,91 @@
+Return-Path: <noreply@bounce.gate.de>
+X-Original-To: billing@znuny.inc
+Delivered-To: znuny-sales@arber.znuny.inc
+Received: from mx01.gate.net (mx01.gate.net [1.116.118.5])
+	by arber.znuny.inc (Postfix) with ESMTPS id C437A6024A
+	for <billing@znuny.inc>; Mon, 22 Dec 2014 09:56:10 +0100 (CET)
+Received: from pfinz.srv.gate.net (pfinz.srv.gate.net [1.10.76.24])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by mx01.gate.net (Postfix) with ESMTPS id CEE3D8084D5
+	for <billing@znuny.inc>; Mon, 22 Dec 2014 09:56:08 +0100 (CET)
+Received: from maild by pfinz.srv.gate.net with local (Exim 4.69)
+	(envelope-from <noreply@bounce.gate.de>)
+	id 1Y2yme-00010q-NZ
+	for billing@znuny.inc; Mon, 22 Dec 2014 09:56:08 +0100
+MIME-Version: 1.0
+Content-Transfer-Encoding: binary
+Content-Type: multipart/mixed; boundary="_----------=_141923856810152176"
+Encoding: quoted-printable
+X-Mailer: MIME::Lite 3.021 (F2.76; T1.24; A2.03; B3.07_01; Q3.07)
+Date: Mon, 22 Dec 2014 09:56:08 +0100
+X-Tmpl: bookd_charge_credit_invoice
+Subject: Ihre Rechnung als PDF-Dokument
+To: "Martin Edenhofer" <billing@znuny.inc>
+From: gate <team@support.gate.de>
+Message-Id: <E1Y2yme-00010q-NZ@pfinz.srv.gate.net>
+
+This is a multi-part message in MIME format.
+
+--_----------=_141923856810152176
+MIME-Version: 1.0
+Content-Transfer-Encoding: binary
+Content-Type: multipart/alternative; boundary="_----------=_141923856810152177"
+X-Mailer: MIME::Lite 3.021 (F2.76; T1.24; A2.03; B3.07_01; Q3.07)
+Date: Mon, 22 Dec 2014 09:56:08 +0100
+
+This is a multi-part message in MIME format.
+
+--_----------=_141923856810152177
+MIME-Version: 1.0
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+X-Mailer: MIME::Lite 3.021 (F2.76; T1.24; A2.03; B3.07_01; Q3.07)
+Date: Mon, 22 Dec 2014 09:56:08 +0100
+
+********************************************************************=0D
+
+gate                                                      Service=0D
+
+--------------------------------------------------------------------=0D
+
+gate GmbH   *   Gladbacher Str. 74   *  40219  D=C3=BCsseldorf=0D
+
+
+--_----------=_141923856810152177
+MIME-Version: 1.0
+Content-Disposition: inline
+Content-Length: 10540
+Content-Transfer-Encoding: binary
+Content-Type: text/html; charset=utf-8
+X-Mailer: MIME::Lite 3.021 (F2.76; T1.24; A2.03; B3.07_01; Q3.07)
+Date: Mon, 22 Dec 2014 09:56:08 +0100
+
+<html>
+<head>
+<title>Ihre Rechnung als PDF-Dokument</title>
+</head>
+<body style="margin: 0px;padding: 0px;font-family: Arial, sans-serif;font-size: 12px;">
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" bgcolor="#d9e7f0" id="mailbg" style="empty-cells:show;font-size: 12px;line-height: 18px;color: #000000;font-family: Arial, sans-serif;width: 100%;height: 100%;background-color: #d9e7f0;padding: 0px;margin: 0px;">
+<tr>
+<td valign="top">
+<center>
+<br><br>
+</center>
+</td>
+</tr>
+</table>
+</body>
+</html>
+--_----------=_141923856810152177--
+
+
+--_----------=_141923856810152176
+Content-Disposition: attachment; filename="invoice_gatede_B181347.txt"
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; name="invoice_gatede_B181347.txt"
+
+c29tZSB0ZXh0
+
+--_----------=_141923856810152176--
