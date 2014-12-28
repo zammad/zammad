@@ -1,4 +1,18 @@
 module NotificationFactory
+
+=begin
+
+  result_string = NotificationFactory.build(
+    :string  => 'Hi #{recipient.firstname},',
+    :objects => {
+      :ticket    => ticket,
+      :recipient => User.find(2),
+    },
+    :locale  => 'en',
+  )
+
+=end
+
   def self.build(data)
 
     data[:string].gsub!( / \#\{ \s* ( .+? ) \s* \} /x ) { |placeholder|
@@ -8,12 +22,6 @@ module NotificationFactory
       original_string = $&
       callback        = $1
       callback_valid  = nil
-
-      # use quoted text
-      callback.gsub!( /\A ( \w+ ) \.body \z/x ) { |item|
-        callback_valid = true
-        item           = item + '.word_wrap( :line_width => 82 ).message_quote.chomp'
-      }
 
       # use config params
       callback.gsub!( /\A config\.( [\w\.]+ ) \z/x ) { |item|
@@ -28,10 +36,27 @@ module NotificationFactory
         object_name   = $1
         object_method = $2
 
-        next if !data[:objects][object_name.to_sym]
+        if data[:objects][object_name.to_sym]
+          callback_valid = true
+          item           = "data[:objects]['#{object_name}'.to_sym]#{object_method}"
+        else
+          item = item
+        end
+      }
 
+      # use quoted text
+      callback.gsub!( /\A ( data\[:objects\]\['article'\.to_sym\] ) \.body \z/x ) { |item|
         callback_valid = true
-        item           = "data[:objects]['#{object_name}'.to_sym]#{object_method}"
+        if data[:objects][:article].content_type == 'text/html'
+          item           = item + '.html2text.message_quote.chomp'
+        else
+          item           = item + '.word_wrap( :line_width => 82 ).message_quote.chomp'
+        end
+      }
+
+      # do validaton, ignore some methodes
+      callback.gsub!( /\.(save|destroy|delete|remove|drop|update|create\(|new|all|where|find)/ix ) { |item|
+        callback_valid = false
       }
 
       if callback_valid
@@ -54,8 +79,18 @@ module NotificationFactory
       placeholder = Translation.translate( locale, string )
     }
 
-    return data[:string]
+    data[:string]
   end
+
+=begin
+
+  success = NotificationFactory.send(
+    :to      => 'somebody@example.com',
+    :subject => 'sime subject',
+    :body    => 'some body'
+  )
+
+=end
 
   def self.send(data)
     sender = Setting.get('notification_sender')
