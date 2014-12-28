@@ -1518,7 +1518,8 @@ class Article extends App.Controller
 #    @article['html'] = @article.body.trim()
     @article['html'] = $.trim( @article.body )
     @article['html'].replace( /\n\r/g, "\n" )
-    @article['html'].replace( /\n\n\n/g, "\n\n" )
+    @article['html'].replace( /\r/g, "\n" )
+    @article['html'].replace( /\n\n/g, "\n" )
 
     # if body has more then x lines / else search for signature
     preview       = 10
