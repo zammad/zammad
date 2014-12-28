@@ -89,8 +89,8 @@
     </form>
     <form class="form-inline">
     <div class="form-group">
-      <button type="submit" class="btn js-reset pull-right hide"><%- @T('Discard your unsaved changes.') %></button>
       <button type="submit" class="btn btn--primary js-submit pull-right"><%- @T('Update') %></button>
+      <button type="submit" class="btn js-reset pull-right hide"><%- @T('Discard your unsaved changes.') %></button>
     </div>
     </form>
   </div>
