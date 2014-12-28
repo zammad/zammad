@@ -3069,6 +3069,7 @@ footer {
     border: 1px solid hsl(240,4%,95%);
     box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
     position: relative;
+    overflow-wrap: break-word;
   }
 
     .text-bubble p {
