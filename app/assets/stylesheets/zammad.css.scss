@@ -150,6 +150,9 @@ small {
 [contenteditable] > .placeholder {
   color: #999;
 }
+[contenteditable] p {
+  margin: 0;
+}
 
 .close,
 .close:hover {

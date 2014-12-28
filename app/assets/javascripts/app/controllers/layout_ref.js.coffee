@@ -116,11 +116,6 @@ class CommunicationOverview extends App.ControllerContent
     scrollHolder = pageHeader.scrollParent()
     scrollBody = scrollHolder.get(0).scrollHeight - scrollHolder.height()
 
-    if scrollBody > pageHeader.height()
-      skrollr.init
-        forceHeight: false
-        holder: scrollHolder.get(0)
-
   render: ->
     @html App.view('layout_ref/communication_overview')()
 
@@ -156,7 +151,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     else if @content is 'content'
       @content = "some content la la la la"
     else
-      @content = "some\nmultiline content\n1\n2\n3"
+      @content = "<p>some</p><p>multiline content</p>1<p>2</p><p>3</p>"
 
     @render()
 

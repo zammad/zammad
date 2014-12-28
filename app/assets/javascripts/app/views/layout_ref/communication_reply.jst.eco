@@ -11,7 +11,7 @@
       <div class="internal-border">
         <div class="text-bubble">
           <div class="bubble-arrow"></div>
-          <div class="js-textarea ticketEdit-body" contenteditable="true"><%= @content %></div>
+          <div class="js-textarea ticketEdit-body" contenteditable="true"><%- @content %></div>
           <!-- .text-bubble grows with textarea (and expanding clone) -->
           <div class="attachments"></div>
             <!--
