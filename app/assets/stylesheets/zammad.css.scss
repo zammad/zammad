@@ -154,6 +154,11 @@ small {
   margin: 0;
 }
 
+/* fix for placeholder */
+.Medium-placeholder {
+  position: relative;
+}
+
 .close,
 .close:hover {
   float: none;
@@ -3065,6 +3070,10 @@ footer {
     box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
     position: relative;
   }
+
+    .text-bubble p {
+      margin: 0;
+    }
 
     .ticket-article-item.state--folde-out .text-bubble {
       border-color: hsl(0,0%,90%);
