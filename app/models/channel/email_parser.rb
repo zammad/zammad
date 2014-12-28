@@ -167,28 +167,20 @@ class Channel::EmailParser
 
       # get attachments
       if mail.parts
-        attachment_count_total = 0
         mail.parts.each { |part|
-          attachment_count_total += 1
 
           # protect process to work fine with spam emails, see test/fixtures/mail15.box
           begin
-            if mail.text_part && mail.text_part == part
-              # ignore text/plain attachments - already shown in view
-            elsif mail.html_part && mail.html_part == part
-              # ignore text/html - html part, already shown in view
-            else
-              attachs = self._get_attachment( part, data[:attachments] )
-              data[:attachments].concat( attachs )
-            end
+            attachs = self._get_attachment( part, data[:attachments], mail )
+            data[:attachments].concat( attachs )
           rescue
-            attachs = self._get_attachment( part, data[:attachments] )
+            attachs = self._get_attachment( part, data[:attachments], mail )
             data[:attachments].concat( attachs )
           end
         }
       end
 
-      # not multipart email
+    # not multipart email
     else
 
       # text part
@@ -238,22 +230,30 @@ class Channel::EmailParser
     end
 
     # strip not wanted chars
+    data[:body].gsub!( /\n\r/, "\n" )
     data[:body].gsub!( /\r\n/, "\n" )
     data[:body].gsub!( /\r/, "\n" )
 
     return data
   end
 
-  def _get_attachment( file, attachments )
+  def _get_attachment( file, attachments, mail )
 
     # check if sub parts are available
     if !file.parts.empty?
       a = []
       file.parts.each {|p|
-        a.concat( self._get_attachment( p, attachments ) )
+        attachment = self._get_attachment( p, attachments, mail )
+        a.concat( attachment )
       }
       return a
     end
+
+    # ignore text/plain attachments - already shown in view
+    return [] if mail.text_part && mail.text_part.body.to_s == file.body.to_s
+
+    # ignore text/html - html part, already shown in view
+    return [] if mail.html_part && mail.html_part.body.to_s == file.body.to_s
 
     # get file preferences
     headers_store = {}
@@ -313,7 +313,7 @@ class Channel::EmailParser
       :filename    => filename,
       :preferences => headers_store,
     }
-    return [attach]
+    [attach]
   end
 
   def process(channel, msg)
