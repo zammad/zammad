@@ -263,35 +263,33 @@ class App.Controller extends Spine.Controller
       placement:  position
       title: ->
         user_id = $(@).data('id')
-        user = App.User.fullLocal( user_id )
+        user    = App.User.fullLocal( user_id )
         HTMLEscape( user.displayName() )
       content: ->
         user_id = $(@).data('id')
-        user = App.User.fullLocal( user_id )
+        user    = App.User.fullLocal( user_id )
 
         # get display data
-        data = []
-        for item2 in App.User.configure_attributes
-          item = _.clone( item2 )
+        userData = []
+        for attributeName, attributeConfig of App.User.attributesGet('view')
 
           # check if value for _id exists
-          itemNameValue = item.name
-          itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
-          if itemNameValueNew of user
-            item.name = itemNameValueNew
+          name    = attributeName
+          nameNew = name.substr( 0, name.length - 3 )
+          if nameNew of user
+            name = nameNew
 
           # add to show if value exists
-          if user[item.name]
+          if user[name] && attributeConfig.shown
 
             # do not show firstname and lastname / already show via diplayName()
-            if item.name isnt 'firstname' && item.name isnt 'lastname' && item.name isnt 'organization'
-              if item.info #&& ( @user[item.name] || item.name isnt 'note' )
-                data.push item
+            if name isnt 'firstname' && name isnt 'lastname' && name isnt 'organization'
+              userData.push attributeConfig
 
         # insert data
         App.view('popover/user')(
-          user: user,
-          data: data,
+          user:     user
+          userData: userData
         )
     )
 
@@ -312,14 +310,33 @@ class App.Controller extends Spine.Controller
       placement:  position
       title: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.fullLocal( organization_id )
+        organization    = App.Organization.fullLocal( organization_id )
         HTMLEscape( organization.name )
       content: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.fullLocal( organization_id )
+        organization    = App.Organization.fullLocal( organization_id )
+
+        # get display data
+        organizationData = []
+        for attributeName, attributeConfig of App.Organization.attributesGet('view')
+
+          # check if value for _id exists
+          name    = attributeName
+          nameNew = name.substr( 0, name.length - 3 )
+          if nameNew of organization
+            name = nameNew
+
+          # add to show if value exists
+          if organization[name] && attributeConfig.shown
+
+            # do not show firstname and lastname / already show via diplayName()
+            if name isnt 'name'
+              organizationData.push attributeConfig
+
         # insert data
         App.view('popover/organization')(
-          organization: organization,
+          organization:     organization,
+          organizationData: organizationData,
         )
     )
 

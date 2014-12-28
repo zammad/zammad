@@ -202,6 +202,11 @@ class Table extends App.ControllerContent
         attribute.data =
           id: refObject.id
         value
+      callbackOrganizationPopover = (value, object, attribute, attributes, refObject) =>
+        attribute.class = 'organization-popover'
+        attribute.data =
+          id: refObject.id
+        value
       callbackCheckbox = (id, checked, e) =>
         if @el.find('table').find('input[name="bulk"]:checked').length == 0
           @el.find('.bulkAction').addClass('hide')
@@ -243,6 +248,8 @@ class Table extends App.ControllerContent
             [ callbackIcon ]
           customer_id:
             [ callbackUserPopover ]
+          organization_id:
+            [ callbackOrganizationPopover ]
           owner_id:
             [ callbackUserPopover ]
           title:
@@ -258,6 +265,9 @@ class Table extends App.ControllerContent
 
     # start user popups
     @userPopups()
+
+    # start organization popups
+    @organizationPopups()
 
     # show frontend times
     @frontendTimeUpdate()

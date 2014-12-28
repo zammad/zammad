@@ -1,13 +1,16 @@
-<% for row in @data: %>
-  <% if @user[row.name]: %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
-  <% end %>
-<% end %>
 <% if @user['organization']: %>
-    <div class="customer-info">
-      <strong><%- @T( 'Organization' ) %></strong><br/>
-      <%- @P( @user['organization'] ) %>
-    </div>
+  <div class="customer-info">
+    <%- @P( @user['organization'] ) %>
+  </div>
+<% end %>
+<% for row in @userData: %>
+  <% if @user[row.name]: %>
+    <% if row.tag is 'richtext': %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @user[row.name] %></div>
+    <% else: %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
+    <% end %>
+  <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
     <div class="customer-info">
@@ -24,7 +27,7 @@
       <% for item in link['items']: %>
         <% if item['url']: %>
           <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
-        <% else: %>  
+        <% else: %>
           <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
         <% end %>
           <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>

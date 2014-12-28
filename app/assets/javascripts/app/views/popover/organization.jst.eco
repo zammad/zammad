@@ -1,18 +1,18 @@
-<table style="width: 100%;">
-  <tr>
-    <td><%- @T( 'Shared' ) %></td>
-    <td><%- @P( @organization.shared ) %></td>
-  </tr>
-  <tr>
-    <td><%- @T( 'Note' ) %></td>
-    <td><%- @P( @organization.note ) %></td>
-  </tr>
-</table>
-<% if  @organization.users: %>
-<strong><%- @T('Users') %></strong>
-<ul>
-  <% for user in @organization.users: %>
-  <li><%= user.displayName() %></li>
+<% for row in @organizationData: %>
+  <% if @organization[row.name]: %>
+    <% if row.tag is 'richtext': %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @organization[row.name] %></div>
+    <% else: %>
+      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
+    <% end %>
   <% end %>
-</ul>
+<% end %>
+<% if  @organization.members: %>
+  <hr>
+  <%- @T('Members') %>
+  <ul>
+    <% for user in @organization.members: %>
+    <li><%= user.displayName() %></li>
+    <% end %>
+  </ul>
 <% end %>
