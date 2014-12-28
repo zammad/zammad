@@ -8,25 +8,25 @@
       <% if article.from: %>
         <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T( 'From' ) %></div>
-          <div class="article-meta-value flex contain-text u-textTruncate"><%- @AddressLine(article.from) %></div>
+          <div class="article-meta-value flex contain-text"><%- @AddressLine(article.from) %></div>
         </div>
       <% end %>
       <% if article.to: %>
         <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T( 'To' ) %></div>
-          <div class="article-meta-value flex contain-text u-textTruncate"><%- @AddressLine(article.to) %></div>
+          <div class="article-meta-value flex contain-text"><%- @AddressLine(article.to) %></div>
         </div>
       <% end %>
       <% if article.cc: %>
         <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T( 'Cc' ) %></div>
-          <div class="article-meta-value flex contain-text u-textTruncate"><%- @AddressLine(article.cc) %></div>
+          <div class="article-meta-value flex contain-text"><%- @AddressLine(article.cc) %></div>
         </div>
       <% end %>
       <% if article.subject: %>
         <div class="horizontal article-meta-row">
           <div class="article-meta-key u-textTruncate"><%- @T( 'Subject' ) %></div>
-          <div class="article-meta-value flex contain-text u-textTruncate"><%= article.subject %></div>
+          <div class="article-meta-value flex contain-text"><%= article.subject %></div>
         </div>
       <% end %>
       </div>
