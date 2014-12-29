@@ -92,7 +92,7 @@ class App extends Spine.Controller
       # define linkify helper
       params.L = ( item ) ->
         if item && typeof item is 'string'
-          return window.linkify( item )
+          return App.Utils.linkify( item )
         item
 
       # define config helper
@@ -118,9 +118,9 @@ class App extends Spine.Controller
           if result
             result = result + ', '
           if item.name
-            result = result + HTMLEscape(item.name) + ' '
+            result = result + App.Utils.htmlEscape(item.name) + ' '
           if item.address
-            result = result + " <span class=\"text-muted\">&lt;#{HTMLEscape(item.address)}&gt</span>"
+            result = result + " <span class=\"text-muted\">&lt;#{App.Utils.htmlEscape(item.address)}&gt</span>"
 
         result
 

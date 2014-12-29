@@ -134,4 +134,26 @@ class AAbUnitTest < TestCase
     ]
     browser_single_test(tests)
   end
+  def test_html_utils
+    tests = [
+      {
+        :name     => 'start',
+        :instance => browser_instance,
+        :url      => browser_url + '/tests-html-utils',
+        :action   => [
+          {
+            :execute => 'wait',
+            :value   => 8,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.result .failed',
+            :value        => '0',
+            :match_result => true,
+          },
+        ],
+      },
+    ]
+    browser_single_test(tests)
+  end
 end

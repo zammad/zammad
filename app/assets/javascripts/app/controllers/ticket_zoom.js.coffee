@@ -145,7 +145,6 @@ class App.TicketZoom extends App.Controller
     # get data
     @ticket = App.Ticket.fullLocal( @ticket_id )
     @ticket.article = undefined
-    console.log('KLKL',@ticket)
 
     # render page
     @render(force)
@@ -849,7 +848,7 @@ class Edit extends App.Controller
           @open_textarea(null, true)
           for key, value of data.article
             if key is 'body'
-              @$('[data-name="' + key + '"]').text(value)
+              @$('[data-name="' + key + '"]').html(value)
             else
               @$('[name="' + key + '"]').val(value)
     )
@@ -1384,17 +1383,20 @@ class ArticleView extends App.Controller
     false
 
   checkIfSignatureIsNeeded: (type) =>
-
+    console.log('checkIfSignatureIsNeeded', type, @ui.signature)
     # add signature
     if @ui.signature && @ui.signature.body && type.name is 'email'
-      body   = @ui.el.find('[name="body"]').val() || ''
-      regexp = new RegExp( escapeRegExp( @ui.signature.body ) , 'i')
-      if !body.match(regexp)
-        body = body + "\n" + @ui.signature.body
-        @ui.el.find('[name="body"]').val( body )
+      body = @ui.el.find('[data-name="body"]').html() || ''
 
-        # update textarea size
-        @ui.el.find('[name="body"]').trigger('change')
+      # convert to html
+      signature = @ui.signature.body
+      #signature = signature.replace(//g, "&nbsp;")
+      signature = '<p>' + signature.replace(/\n/g, '</p><p>') + '</p>'
+      regexp = new RegExp( escapeRegExp( signature ) , 'im')
+      #console.log('aaa', body, regexp)
+      if !body || !body.match(regexp)
+        body = body + signature
+        @ui.el.find('[data-name="body"]').html( body )
 
   replyAll: (e) =>
     @reply(e, true)
@@ -1483,13 +1485,18 @@ class ArticleView extends App.Controller
 
     # add quoted text if needed
     selectedText = App.ClipBoard.getSelected()
-    console.log('selectedText', selectedText)
+
     if selectedText
-      body = @ui.el.find('[data-name="body"]').text() || ''
+      body = @ui.el.find('[data-name="body"]').html() || ''
+
+      # quote text
       selectedText = selectedText.replace /^(.*)$/mg, (match) =>
         '> ' + match
-      body = selectedText + "\n" + body
-      articleNew.body = body
+
+      # convert to html
+      selectedText = '<p>' + selectedText.replace(/\n/g, "</p><p>") + '</p>'
+
+      articleNew.body = selectedText + body
 
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
 
@@ -1514,12 +1521,7 @@ class Article extends App.Controller
       return
 
     # build html body
-    # cleanup body
-#    @article['html'] = @article.body.trim()
-    @article['html'] = $.trim( @article.body )
-    @article['html'].replace( /\n\r/g, "\n" )
-    @article['html'].replace( /\r/g, "\n" )
-    @article['html'].replace( /\n\n/g, "\n" )
+    @article['html'] = App.Utils.textCleanup( @article.body )
 
     # if body has more then x lines / else search for signature
     preview       = 10
@@ -1532,7 +1534,7 @@ class Article extends App.Controller
       else
         article_lines.splice( preview - 1, 0, '-----SEEMORE-----' )
       @article['html'] = article_lines.join("\n")
-    @article['html'] = window.linkify( @article['html'] )
+    @article['html'] = App.Utils.linkify( @article['html'] )
     notify = '<a href="#" class="show_toogle">' + App.i18n.translateContent('See more') + '</a>'
 
     # preview mode
@@ -1553,7 +1555,7 @@ class Article extends App.Controller
       if @article_changed
         @article['html'] = @article['html'] + '</div>'
 
-    @article['html'] = @article['html'].replace( /\n/g, '<br>' )
+    @article['html'] = App.Utils.text2html( @article.body )
 
   actionRow: ->
     if @isRole('Customer')
