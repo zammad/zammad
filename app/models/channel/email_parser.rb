@@ -126,11 +126,11 @@ class Channel::EmailParser
           data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
         end
 
-        # html attachment/body may exists and will be converted to text
+      # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
         if mail.html_part.body
-          filename = 'html-email'
+          filename = 'message.html'
           data[:body] = mail.html_part.body.to_s
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
           data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
@@ -139,7 +139,7 @@ class Channel::EmailParser
             data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
           end
 
-          # any other attachments
+        # any other attachments
         else
           data[:body] = 'no visible content'
         end
@@ -183,7 +183,7 @@ class Channel::EmailParser
     # not multipart email
     else
 
-      # text part
+      # text part only
       if !mail.mime_type || mail.mime_type.to_s ==  '' || mail.mime_type.to_s.downcase == 'text/plain'
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
@@ -192,11 +192,11 @@ class Channel::EmailParser
           data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
         end
 
-        # html part
+      # html part only, convert ot text and add it as attachment
       else
         filename = '-no name-'
         if mail.mime_type.to_s.downcase == 'text/html'
-          filename = 'html-email'
+          filename = 'message.html'
           data[:body] = mail.body.decoded
           data[:body] = Encode.conv( mail.charset, data[:body] )
           data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
@@ -234,7 +234,7 @@ class Channel::EmailParser
     data[:body].gsub!( /\r\n/, "\n" )
     data[:body].gsub!( /\r/, "\n" )
 
-    return data
+    data
   end
 
   def _get_attachment( file, attachments, mail )
