@@ -10,13 +10,9 @@ class App.Utils
 
   # htmlEscapedAndLinkified = App.Utils.text2html( rawText )
   @text2html: ( ascii ) ->
-    console.log('AA0', ascii)
     ascii = @textCleanup(ascii)
     #ascii = @htmlEscape(ascii)
-    console.log('AA1', ascii)
     ascii = @linkify(ascii)
-    #ascii.replace( /\n/g, '<br>' )
-    console.log('AA', ascii)
     ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
     ascii.replace(/<div><\/div>/g, '<div><br></div>')
 
