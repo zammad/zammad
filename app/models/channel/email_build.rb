@@ -46,6 +46,10 @@ module Channel::EmailBuild
     if attr[:content_type] && attr[:content_type] == 'text/html'
       mail.html_part = Mail::Part.new do
         content_type 'text/html; charset=UTF-8'
+
+        # complete check
+        attr[:body] = html_complete_check( attr[:body] )
+
         body attr[:body]
       end
 
@@ -70,5 +74,30 @@ module Channel::EmailBuild
       end
     end
     mail
+  end
+
+=begin
+
+  full_html_document_string = Channel::EmailBuild.html_complete_check( html_string )
+
+=end
+
+  def self.html_complete_check(html)
+    return html if html =~ /<html>/i
+
+    css = 'font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;'
+
+    html = <<HERE
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>'
+  <head>
+  <body style="#{css}">
+  </body>
+</html>
+HERE
+
+    html
   end
 end
