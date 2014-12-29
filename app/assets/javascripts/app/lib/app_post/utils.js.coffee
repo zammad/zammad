@@ -1,24 +1,26 @@
 class App.Utils
 
   # textCleand = App.Utils.textCleanup( rawText )
-
   @textCleanup: ( ascii ) ->
     $.trim( ascii )
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
-      .replace(/\s+$/gm, "\n")        # remove tailing spaces
-      .replace(/\n{2,9}/gm, "\n\n")   # remove multible empty lines
+      .replace(/[ ]\n/g, "\n")          # remove tailing spaces
+      .replace(/\n{3,9}/g, "\n\n")    # remove multible empty lines
 
   # htmlEscapedAndLinkified = App.Utils.text2html( rawText )
-
   @text2html: ( ascii ) ->
+    console.log('AA0', ascii)
     ascii = @textCleanup(ascii)
     #ascii = @htmlEscape(ascii)
+    console.log('AA1', ascii)
     ascii = @linkify(ascii)
-    ascii.replace( /\n/g, '<br>' )
+    #ascii.replace( /\n/g, '<br>' )
+    console.log('AA', ascii)
+    ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
+    ascii.replace(/<div><\/div>/g, '<div><br></div>')
 
   # htmlEscaped = App.Utils.htmlEscape( rawText )
-
   @htmlEscape: ( ascii ) ->
     ascii.replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -27,6 +29,15 @@ class App.Utils
       .replace(/'/g, '&#39;')
 
   # htmlEscapedAndLinkified = App.Utils.linkify( rawText )
-
   @linkify: (ascii) ->
     window.linkify( ascii )
+
+  # quotedText = App.Utils.quote( rawText )
+  @quote: (ascii) ->
+    ascii = @textCleanup(ascii)
+    $.trim( ascii )
+      .replace /^(.*)$/mg, (match) =>
+        if match
+          '> ' + match
+        else
+          '>'

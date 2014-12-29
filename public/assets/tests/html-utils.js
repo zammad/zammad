@@ -33,6 +33,12 @@ test( "textCleanup", function() {
   result = App.Utils.textCleanup( source )
   equal( result, should, source )
 
+  source = "> Welcome!\n> \n> Thank you for installing Zammad.\n> \n> You will find ..."
+  should = "> Welcome!\n>\n> Thank you for installing Zammad.\n>\n> You will find ..."
+  result = App.Utils.textCleanup( source )
+  equal( result, should, source )
+
+
 });
 
 // htmlEscape
@@ -95,17 +101,22 @@ test( "htmlEscape", function() {
 test( "text2html", function() {
 
   var source = "Some\nValue\n\n\nTest"
-  var should = "Some<br>Value<br><br>Test"
+  var should = "<div>Some</div><div>Value</div><div><br></div><div>Test</div>"
   var result = App.Utils.text2html( source )
   equal( result, should, source )
 
   source = "Some\nValue\n"
-  should = "Some<br>Value"
+  should = "<div>Some</div><div>Value</div>"
   result = App.Utils.text2html( source )
   equal( result, should, source )
 
   source = "Some\n<b>Value</b>\n"
-  should = "Some<br>&lt;b&gt;Value&lt;/b&gt;"
+  should = "<div>Some</div><div>&lt;b&gt;Value&lt;/b&gt;</div>"
+  result = App.Utils.text2html( source )
+  equal( result, should, source )
+
+  source = "> Welcome!\n> \n> Thank you for installing Zammad.\n> \n> You will find ..."
+  should = "<div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad.</div><div>&gt;</div><div>&gt; You will find ...</div>"
   result = App.Utils.text2html( source )
   equal( result, should, source )
 
@@ -146,6 +157,31 @@ test( "linkify", function() {
   result = App.Utils.linkify( source )
   equal( result, should, source )
   */
+
+});
+
+// quote
+test( "quote", function() {
+
+  var source = "some text"
+  var should = '> some text'
+  var result = App.Utils.quote( source )
+  equal( result, should, source )
+
+  source = "some text\nsome other text\n"
+  should = "> some text\n> some other text"
+  result = App.Utils.quote( source )
+  equal( result, should, source )
+
+  source = "\n\nsome text\nsome other text\n \n"
+  should = "> some text\n> some other text"
+  result = App.Utils.quote( source )
+  equal( result, should, source )
+
+  source = "Welcome!\n\nThank you for installing Zammad.\n\nYou will find ..."
+  should = "> Welcome!\n>\n> Thank you for installing Zammad.\n>\n> You will find ..."
+  result = App.Utils.quote( source )
+  equal( result, should, source )
 
 });
 

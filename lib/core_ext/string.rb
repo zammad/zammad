@@ -45,7 +45,7 @@ class String
 
 =end
 
-  # from https://gist.github.com/petrblaho/657856
+  # base from https://gist.github.com/petrblaho/657856
   def html2text
     text = self.
       gsub(/(&nbsp;|\n|\s)+/im, ' ').squeeze(' ').strip.
@@ -65,7 +65,8 @@ class String
         gsub(/<hr(| [^>]*)>/i, "___\n").
         gsub(/<li(| [^>]*)>/i, "\n* ").
         gsub(/<blockquote(| [^>]*)>/i, '> ').
-        gsub(/<(br)(| [^>]*)>/i, "\n").
+        gsub(/<(br)(|\/| [^>]*)>/i, "\n").
+        gsub(/<\/div(| [^>]*)>/i, "\n").
         gsub(/<(\/h[\d]+|p)(| [^>]*)>/i, "\n\n").
         gsub(/<[^>]*>/, '')
     ).lstrip.gsub(/\n[ ]+/, "\n") + "\n"
@@ -74,6 +75,6 @@ class String
       text = text + "\n  [#{i+1}] <#{CGI.unescapeHTML(links[i])}>" unless links[i].nil?
     end
     links = nil
-    text
+    text.chomp
   end
 end

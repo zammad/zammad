@@ -1390,8 +1390,7 @@ class ArticleView extends App.Controller
 
       # convert to html
       signature = @ui.signature.body
-      #signature = signature.replace(//g, "&nbsp;")
-      signature = '<p>' + signature.replace(/\n/g, '</p><p>') + '</p>'
+      signature = App.Utils.text2html( signature )
       regexp = new RegExp( escapeRegExp( signature ) , 'im')
       #console.log('aaa', body, regexp)
       if !body || !body.match(regexp)
@@ -1490,11 +1489,11 @@ class ArticleView extends App.Controller
       body = @ui.el.find('[data-name="body"]').html() || ''
 
       # quote text
-      selectedText = selectedText.replace /^(.*)$/mg, (match) =>
-        '> ' + match
+      selectedText = App.Utils.textCleanup( selectedText )
+      selectedText = App.Utils.quote( selectedText )
 
       # convert to html
-      selectedText = '<p>' + selectedText.replace(/\n/g, "</p><p>") + '</p>'
+      selectedText = App.Utils.text2html( selectedText )
 
       articleNew.body = selectedText + body
 

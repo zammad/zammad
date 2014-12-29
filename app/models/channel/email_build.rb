@@ -15,7 +15,7 @@ module Channel::EmailBuild
 
 =end
 
-  def build(attr, notification = false)
+  def self.build(attr, notification = false)
     mail = Mail.new
 
     # set organization
@@ -48,7 +48,7 @@ module Channel::EmailBuild
         content_type 'text/html; charset=UTF-8'
 
         # complete check
-        attr[:body] = html_complete_check( attr[:body] )
+        attr[:body] = Channel::EmailBuild.html_complete_check( attr[:body] )
 
         body attr[:body]
       end

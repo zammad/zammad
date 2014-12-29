@@ -45,7 +45,7 @@
 
     // max length validation
     var validation = function(element) {
-      console.log('pp', element, $(element))
+
       // try to set error on framework form
       var parent = $(element).parent().parent()
       if ( parent.hasClass('controls') ) {
@@ -76,6 +76,13 @@
         mode:             editorMode,
         maxLength:        this.options.maxlength || -1,
         maxLengthReached: validation,
+        tags: {
+          'break': 'br',
+          'horizontalRule': 'hr',
+          'paragraph': 'div',
+          'outerLevel': ['pre', 'blockquote', 'figure'],
+          'innerLevel': ['a', 'b', 'u', 'i', 'img', 'strong']
+        },
     });
   }
 
