@@ -11,6 +11,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     assert( result !~ /^.+?<\!DOCTYPE/, 'test 1')
     assert( result =~ /<html>/, 'test 1')
     assert( result =~ /font-family/, 'test 1')
+    assert( result =~ /<b>test<\/b>/, 'test 1')
 
 
     html   = 'invalid <!DOCTYPE html><html><b>test</b></html>'
@@ -20,6 +21,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     assert( result =~ /^.+?<\!DOCTYPE/, 'test 2')
     assert( result =~ /<html>/, 'test 2')
     assert( result !~ /font-family/, 'test 2')
+    assert( result =~ /<b>test<\/b>/, 'test 2')
 
   end
 end

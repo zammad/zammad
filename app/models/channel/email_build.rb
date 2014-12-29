@@ -93,8 +93,7 @@ module Channel::EmailBuild
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>'
   <head>
-  <body style="#{css}">
-  </body>
+  <body style="#{css}">#{html}</body>
 </html>
 HERE
 
