@@ -383,7 +383,7 @@ POST /api/v1/users/password_reset_verify
 Payload:
 {
   "token": "SoMeToKeN",
-  "password" "new_password"
+  "password": "new_password"
 }
 
 Response:
@@ -398,6 +398,15 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
 
   def password_reset_verify
     if params[:password]
+
+      # check password policy
+      result = password_policy(params[:password])
+      if result != true
+        render :json => { :message => 'failed', :notice => result }, :status => :ok
+        return
+      end
+
+      # set new password with token
       user = User.password_reset_via_token( params[:token], params[:password] )
     else
       user = User.password_reset_check( params[:token] )
@@ -405,7 +414,7 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
     if user
       render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
     else
-      render :json => { :message => 'failed' }, :status => :unprocessable_entity
+      render :json => { :message => 'failed' }, :status => :ok
     end
   end
 
@@ -434,20 +443,28 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
 
     # check old password
     if !params[:password_old]
-      render :json => { :message => 'Old password needed!' }, :status => :unprocessable_entity
+      render :json => { :message => 'failed', :notice => ['Old password needed!'] }, :status => :ok
       return
     end
     user = User.authenticate( current_user.login, params[:password_old] )
     if !user
-      render :json => { :message => 'Old password is wrong!' }, :status => :unprocessable_entity
+      render :json => { :message => 'failed', :notice => ['Old password is wrong!'] }, :status => :ok
       return
     end
 
     # set new password
     if !params[:password_new]
-      render :json => { :message => 'New password needed!' }, :status => :unprocessable_entity
+      render :json => { :message => 'failed', :notice => ['Please supply your new password!'] }, :status => :ok
       return
     end
+
+    # check password policy
+    result = password_policy(params[:password_new])
+    if result != true
+      render :json => { :message => 'failed', :notice => result }, :status => :ok
+      return
+    end
+
     user.update_attributes( :password => params[:password_new] )
     render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
   end
@@ -673,6 +690,19 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   end
 
   private
+
+  def password_policy(password)
+    if Setting.get('password_min_size') > password.length
+      return ["Can\'t update password, it must be at least %s characters long!", Setting.get('password_min_size')]
+    end
+    if Setting.get('password_need_digit').to_i == 1 && password !~ /\d/
+      return ["Can't update password, it must contain at least 1 digit!"]
+    end
+    if Setting.get('password_min_2_lower_2_upper_characters').to_i == 1 && ( password !~ /[A-Z].*[A-Z]/ || password !~ /[a-z].*[a-z]/ )
+      return ["Can't update password, it must contain at least 2 lowercase and 2 uppercase characters!"]
+    end
+    true
+  end
 
   def permission_check_by_role
     return true if is_role('Admin')

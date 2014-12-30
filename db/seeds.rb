@@ -607,7 +607,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  :state    => 0,
+  :state    => 1,
   :frontend => true
 )
 Setting.create_if_not_exists(

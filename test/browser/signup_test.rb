@@ -57,8 +57,6 @@ class SignupTest < TestCase
             :execute => 'wait',
             :value   => 5,
           },
-
-          # check action
           {
             :execute => 'check',
             :css     => '.signup',
@@ -70,6 +68,135 @@ class SignupTest < TestCase
             :attribute    => 'title',
             :value        => signup_user_email,
             :match_result => true,
+          },
+        ],
+      },
+      {
+        :name     => 'set password',
+        :action   => [
+          {
+            :execute => 'click',
+            :css     => '.navbar-items-personal .user a',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#profile"]',
+          },
+          {
+            :execute => 'click',
+            :css     => 'a[href="#profile/password"]',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_old"]',
+            :value   => 'nonexisiting',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new"]',
+            :value   => 'some',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new_confirm"]',
+            :value   => 'some',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'old password is wrong',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_old"]',
+            :value   => 'some-pass',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new_confirm"]',
+            :value   => 'some2',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'passwords do not match',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new"]',
+            :value   => 'some',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new_confirm"]',
+            :value   => 'some',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'it must be at least',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new"]',
+            :value   => 'some-pass-new',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new_confirm"]',
+            :value   => 'some-pass-new',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'must contain at least 1 digit',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new"]',
+            :value   => 'some-pass-new2',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_new_confirm"]',
+            :value   => 'some-pass-new2',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Password changed successfully',
+          },
+          {
+            :execute  => 'logout',
+          },
+          {
+            :execute  => 'login',
+            :username => signup_user_email,
+            :password => 'some-pass-new2',
           },
         ],
       },

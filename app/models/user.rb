@@ -203,7 +203,7 @@ returns
     end
 
     # auth ok
-    return user_auth
+    user_auth
   end
 
 =begin
@@ -224,7 +224,7 @@ returns
     user_auth = Sso.check( params )
     return if !user_auth
 
-    return user_auth
+    user_auth
   end
 
 =begin
@@ -257,7 +257,6 @@ returns
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-
   end
 
 =begin
@@ -326,7 +325,7 @@ returns
       :subject   => data[:subject],
       :body      => data[:body]
     )
-    return true
+    true
   end
 
 =begin
@@ -349,7 +348,7 @@ returns
       user.login_failed = 0
       user.save
     end
-    return user
+    user
   end
 
 =begin
@@ -375,7 +374,7 @@ returns
 
     # delete token
     Token.where( :action => 'PasswordReset', :name => token ).first.destroy
-    return user
+    user
   end
 
 =begin
@@ -431,7 +430,6 @@ returns
         self.firstname = scan[0][0].capitalize
         self.lastname  = scan[0][1].capitalize
       end
-
     end
   end
 
