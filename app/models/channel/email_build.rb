@@ -44,7 +44,7 @@ module Channel::EmailBuild
 
     # add html part
     if attr[:content_type] && attr[:content_type] == 'text/html'
-      mail.html_part = Mail::Part.new do
+      html_alternative = Mail::Part.new do
         content_type 'text/html; charset=UTF-8'
 
         # complete check
@@ -58,19 +58,46 @@ module Channel::EmailBuild
     end
 
     # add plain text part
-    mail.text_part = Mail::Part.new do
+    text_alternative = Mail::Part.new do
       content_type 'text/plain; charset=UTF-8'
       body attr[:body]
     end
 
+    # build email without any attachments
+    if !html_alternative && ( !attr[:attachments] || attr[:attachments].empty? )
+      mail.content_type 'text/plain; charset=UTF-8'
+      mail.body attr[:body]
+      return mail
+    end
+
+    # build email with attachments
+    alternative_bodies = Mail::Part.new { content_type 'multipart/alternative' }
+    alternative_bodies.add_part text_alternative
+
+    if html_alternative
+      html_container = Mail::Part.new { content_type 'multipart/related' }
+      html_container.add_part html_alternative
+      alternative_bodies.add_part html_container
+
+      # place to add inline attachments related to html alternative
+    end
+
+    mail.add_part alternative_bodies
+
     # add attachments
     if attr[:attachments]
       attr[:attachments].each do |attachment|
-        mail.attachments[attachment.filename] = {
-          :content_type => attachment.preferences['Content-Type'],
-          :mime_type    => attachment.preferences['Mime-Type'],
-          :content      => attachment.content
-        }
+        if attachment.class == Hash
+          attachment['content-id'] = nil
+          mail.attachments[ attachment[:filename] ] = attachment
+        else
+          mail.attachments[attachment.filename] = {
+            :content_type => attachment.preferences['Content-Type'],
+            :mime_type    => attachment.preferences['Mime-Type'],
+            :content      => attachment.content,
+            'content-id'  => nil,
+          }
+        end
       end
     end
     mail
