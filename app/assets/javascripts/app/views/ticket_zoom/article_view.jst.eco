@@ -64,7 +64,7 @@
     <div class="article-content-meta bottom hide">
       <div class="article-meta bottom">
         <div class="horizontal article-meta-row">
-          <div class="article-meta-key"><%- @T( 'Kanal' ) %></div>
+          <div class="article-meta-key"><%- @T( 'Channel' ) %></div>
           <div class="article-meta-value">
             <span class="white <%- article.type.name %> channel icon"></span>
             <%- @T(article.type.name) %>
