@@ -146,7 +146,7 @@ class AgentTicketActionLevel1Test < TestCase
             :value   => 6,
           },
 
-          # check if megred to ticket is shown now
+          # check if merged to ticket is shown now
           {
             :execute      => 'match',
             :css          => '.active .page-header .ticket-number',

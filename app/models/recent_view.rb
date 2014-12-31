@@ -90,7 +90,7 @@ class RecentView < ApplicationModel
     # check if object exists
     begin
       return if !Kernel.const_get( object )
-      record = Kernel.const_get( object ).where( :id => o_id ).first
+      record = Kernel.const_get( object ).lookup( :id => o_id )
       return if !record
     rescue
       return
