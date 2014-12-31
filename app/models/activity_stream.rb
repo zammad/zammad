@@ -10,12 +10,12 @@ class ActivityStream < ApplicationModel
 add a new activity entry for an object
 
   ActivityStream.add(
-    :type             => 'updated',
-    :object           => 'Ticket',
-    :role             => 'Admin',
-    :o_id             => ticket.id,
-    :created_by_id    => 1,
-    :created_at       => '2013-06-04 10:00:00',
+    :type          => 'updated',
+    :object        => 'Ticket',
+    :role          => 'Admin',
+    :o_id          => ticket.id,
+    :created_by_id => 1,
+    :created_at    => '2013-06-04 10:00:00',
   )
 
 =end
@@ -41,11 +41,11 @@ add a new activity entry for an object
 
     # check newest entry - is needed
     result = ActivityStream.where(
-      :o_id                        => data[:o_id],
-      #     :activity_stream_type_id     => type_id,
-      :role_id                     => role_id,
-      :activity_stream_object_id   => object_id,
-      :created_by_id               => data[:created_by_id]
+      :o_id                      => data[:o_id],
+      #:activity_stream_type_id  => type_id,
+      :role_id                   => role_id,
+      :activity_stream_object_id => object_id,
+      :created_by_id             => data[:created_by_id]
     ).order('created_at DESC, id DESC').first
 
     # resturn if old entry is really fresh
@@ -53,13 +53,13 @@ add a new activity entry for an object
 
     # create history
     record = {
-      :o_id                        => data[:o_id],
-      :activity_stream_type_id     => type_id,
-      :activity_stream_object_id   => object_id,
-      :role_id                     => role_id,
-      :group_id                    => data[:group_id],
-      :created_at                  => data[:created_at],
-      :created_by_id               => data[:created_by_id]
+      :o_id                      => data[:o_id],
+      :activity_stream_type_id   => type_id,
+      :activity_stream_object_id => object_id,
+      :role_id                   => role_id,
+      :group_id                  => data[:group_id],
+      :created_at                => data[:created_at],
+      :created_by_id             => data[:created_by_id]
     }
 
     ActivityStream.create(record)
@@ -76,8 +76,8 @@ remove whole activity entries of an object
   def self.remove( object_name, o_id )
     object_id = ObjectLookup.by_name( object_name )
     ActivityStream.where(
-      :activity_stream_object_id  => object_id,
-      :o_id                       => o_id,
+      :activity_stream_object_id => object_id,
+      :o_id                      => o_id,
     ).destroy_all
   end
 
@@ -90,7 +90,7 @@ return all activity entries of an user
 =end
 
   def self.list(user,limit)
-    role_ids = user.role_ids
+    role_ids  = user.role_ids
     group_ids = user.group_ids
 
     # do not return an activity stream for custoers
@@ -108,22 +108,14 @@ return all activity entries of an user
     end
     list = []
     stream.each do |item|
-      data = item.attributes
-      data['object']  = ObjectLookup.by_id( data['activity_stream_object_id'] )
-      data['type']    = TypeLookup.by_id( data['activity_stream_type_id'] )
+      data           = item.attributes
+      data['object'] = ObjectLookup.by_id( data['activity_stream_object_id'] )
+      data['type']   = TypeLookup.by_id( data['activity_stream_type_id'] )
       data.delete('activity_stream_object_id')
       data.delete('activity_stream_type_id')
       list.push data
     end
     list
-  end
-
-  private
-
-  class Object < ApplicationModel
-  end
-
-  class Type < ApplicationModel
   end
 
 end
