@@ -21,7 +21,7 @@ class Index extends App.ControllerContent
 
     # set title
     @title 'Reset Password'
-    @navupdate '#reset_password'
+    @navupdate '#password_reset'
 
     @render()
 
@@ -75,7 +75,7 @@ class Index extends App.ControllerContent
       )
       @formEnable( @el.find('.form-password') )
 
-App.Config.set( 'reset_password', Index, 'Routes' )
+App.Config.set( 'password_reset', Index, 'Routes' )
 
 class Verify extends App.ControllerContent
   events:
@@ -94,7 +94,7 @@ class Verify extends App.ControllerContent
 
     # set title
     @title 'Reset Password'
-    @navupdate '#reset_password_verify'
+    @navupdate '#password_reset_verify'
 
     # get data
     params =

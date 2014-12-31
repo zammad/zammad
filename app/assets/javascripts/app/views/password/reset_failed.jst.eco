@@ -3,7 +3,7 @@
     <div class="hero-unit fullscreen-body">
       <h2><%- @T( @head ) %><small></small></h2>
       <p><%- @message %></p>
-      <a href="#reset_password" class="subtle retry">&raquo; <%- @T('try again') %> &laquo;</a>
+      <a href="#password_reset" class="subtle retry">&raquo; <%- @T('try again') %> &laquo;</a>
     </div>
   </div>
 </div>

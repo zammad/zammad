@@ -228,7 +228,7 @@ class SignupPasswordChangeAndResetTest < TestCase
           },
           {
             :execute => 'navigate',
-            :to      => browser_url + '/#reset_password',
+            :to      => browser_url + '/#password_reset',
           },
           {
             :execute => 'wait',
@@ -250,7 +250,7 @@ class SignupPasswordChangeAndResetTest < TestCase
         :action   => [
           {
             :execute => 'click',
-            :css     => 'a[href="#reset_password"]',
+            :css     => 'a[href="#password_reset"]',
           },
           {
             :execute => 'set',

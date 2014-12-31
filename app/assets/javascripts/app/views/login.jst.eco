@@ -28,7 +28,7 @@
             <button class="btn btn--primary" type="submit"><%- @T( 'Sign in' ) %></button>
 
             <% if @C('user_lost_password'): %>
-              <a href="#reset_password" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
+              <a href="#password_reset" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
             <% end %>
           </div>
 
@@ -52,7 +52,7 @@
       <p>
         <%- @T( "You're already registered with your email adress if you've been in touch with our support team.") %><br>
         <% if @C('user_lost_password'): %>
-          <%- @T( "You can request your password") %> <a href="#reset_password"><%- @T( "here") %></a>.
+          <%- @T( "You can request your password") %> <a href="#password_reset"><%- @T( "here") %></a>.
         <% end %>
       </p>
 
