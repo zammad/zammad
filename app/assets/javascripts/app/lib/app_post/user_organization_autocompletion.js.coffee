@@ -21,6 +21,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @el
 
   open: =>
+    @clearDelay('close')
     @el.addClass('open')
     @catcher = new App.clickCatcher
       holder:       @el.offsetParent()

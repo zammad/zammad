@@ -262,7 +262,7 @@ class TestCase < Test::Unit::TestCase
       (1..loops).each { |loop|
         element = instance.find_elements( { :css => action[:area] } )[0]
         if element #&& element.displayed?
-          text = instance.find_elements( { :css => action[:area] } )[0].text
+          text = element.text
           if text =~ /#{action[:value]}/i
             assert( true, "(#{test[:name]}) '#{action[:value]}' found in '#{text}'" )
             return
@@ -412,13 +412,7 @@ class TestCase < Test::Unit::TestCase
         element = instance.find_elements( { :css => '.active .newTicket input[name="customer_id_completion"]' } )[0]
         element.click
         element.clear
-
-        # in certan cases focus is not set, do it this way
-        #instance.execute_script( '$(".content.active .newTicket input[name=customer_id_completion]").focus()' )
-        element.send_keys( :tab )
-        element.click
         element.send_keys( 'nico*' )
-        sleep 0.5
         sleep 4
         element.send_keys( :arrow_down )
         sleep 0.1
@@ -442,6 +436,34 @@ class TestCase < Test::Unit::TestCase
         sleep 0.5
       }
       assert( false, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
+      return
+    elsif action[:execute] == 'search_ticket'
+      element = instance.find_elements( { :css => '#global-search' } )[0]
+      element.click
+      element.clear
+      action[:number].gsub! '###stack###', @stack
+      element.send_keys( action[:number] )
+      sleep 3
+      instance.find_elements( { :css => '.search .empty-search' } )[0].click
+      sleep 0.5
+      text = instance.find_elements( { :css => '#global-search' } )[0].attribute('value')
+      if !text
+        assert( false, "(#{test[:name]}) #global-search is not empty!" )
+        return
+      end
+      element = instance.find_elements( { :css => '#global-search' } )[0]
+      element.click
+      element.clear
+      action[:number].gsub! '###stack###', @stack
+      element.send_keys( action[:number] )
+      sleep 3
+      element = instance.find_element( { :partial_link_text => action[:number] } ).click
+      number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
+      if number !~ /#{action[:number]}/
+        assert( false, "(#{test[:name]}) unable to search/find ticket #{action[:number]}!" )
+        return
+      end
+      assert( true, "(#{test[:name]}) ticket #{action[:number]} found" )
       return
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100

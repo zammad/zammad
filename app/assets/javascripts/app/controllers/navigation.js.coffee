@@ -200,10 +200,9 @@ class App.Navigation extends App.Controller
 
     # remove search result
     @$('#global-search').bind( 'focusout', (e) =>
-      @$('.search').removeClass('focused')
-
       @delay(
         =>
+          @$('.search').removeClass('focused')
           @renderResult()
         320
       )
