@@ -106,6 +106,10 @@ class App.TicketZoom extends App.Controller
         @load(data, force)
         App.Store.write( @key, data )
 
+        if !@doNotLog
+          @doNotLog = 1
+          @recentView( 'Ticket', ticket_id )
+
       error: (xhr, status, error) =>
 
         # do not close window if request is aborted
@@ -118,9 +122,6 @@ class App.TicketZoom extends App.Controller
         App.TaskManager.remove( @task_key )
     )
 
-    if !@doNotLog
-      @doNotLog = 1
-      @recentView( 'Ticket', ticket_id )
 
   load: (data, force) =>
 

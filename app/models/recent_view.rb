@@ -9,14 +9,17 @@ class RecentView < ApplicationModel
 
   def self.log( object, o_id, user )
 
+    # access check
+    return if !access( object, o_id, user )
+
     # lookups
     object_lookup_id = ObjectLookup.by_name( object )
 
     # create entry
     record = {
-      :o_id                   => o_id,
-      :recent_view_object_id  => object_lookup_id.to_i,
-      :created_by_id          => user.id,
+      :o_id                  => o_id,
+      :recent_view_object_id => object_lookup_id.to_i,
+      :created_by_id         => user.id,
     }
     RecentView.create(record)
   end
@@ -45,9 +48,14 @@ class RecentView < ApplicationModel
 
     list = []
     recent_views.each { |item|
-      data = item.attributes
+      data           = item.attributes
       data['object'] = ObjectLookup.by_id( data['recent_view_object_id'] )
       data.delete( 'recent_view_object_id' )
+
+      # access check
+      next if !access( data['object'], data['o_id'], user )
+
+      # add to result list
       list.push data
     }
     list
@@ -70,11 +78,26 @@ class RecentView < ApplicationModel
       self.created_by_id,
       {
         :event => 'RecentView::changed',
-        :data => {}
+        :data  => {}
       }
     )
   end
 
-  class Object < ApplicationModel
+  private
+
+  def self.access(object, o_id, user)
+
+    # check if object exists
+    begin
+      return if !Kernel.const_get( object )
+      record = Kernel.const_get( object ).where( :id => o_id ).first
+      return if !record
+    rescue
+      return
+    end
+
+    # check permission
+    return if !record.respond_to?(:permission)
+    record.permission( :current_user => user )
   end
 end

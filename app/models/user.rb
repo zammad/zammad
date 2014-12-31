@@ -24,6 +24,7 @@ require 'digest/md5'
 # @property active          [Boolean] The flag that shows the active state of the User.
 # @property note            [String]  The note or comment stored to the User.
 class User < ApplicationModel
+  include User::Permission
   load 'user/assets.rb'
   include User::Assets
   extend User::Search

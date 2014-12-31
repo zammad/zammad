@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Organization < ApplicationModel
+  include Organization::Permission
   load 'organization/assets.rb'
   include Organization::Assets
   extend Organization::Search
