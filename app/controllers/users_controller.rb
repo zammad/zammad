@@ -367,12 +367,22 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
       return
     end
 
-    success = User.password_reset_send( params[:username] )
-    if success
+    token = User.password_reset_send( params[:username] )
+    if token
+
+      # only if system is in develop mode, send token back to browser for browser tests
+      if Setting.get('developer_mode') == true
+        render :json => { :message => 'ok', :token => token.name }, :status => :ok
+        return
+      end
+
+      # token sent to user, send ok to browser
       render :json => { :message => 'ok' }, :status => :ok
-    else
-      render :json => { :message => 'failed' }, :status => :unprocessable_entity
+      return
     end
+
+    # unable to generate token
+    render :json => { :message => 'failed' }, :status => :ok
   end
 
 =begin
@@ -443,12 +453,12 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
 
     # check old password
     if !params[:password_old]
-      render :json => { :message => 'failed', :notice => ['Old password needed!'] }, :status => :ok
+      render :json => { :message => 'failed', :notice => ['Current password needed!'] }, :status => :ok
       return
     end
     user = User.authenticate( current_user.login, params[:password_old] )
     if !user
-      render :json => { :message => 'failed', :notice => ['Old password is wrong!'] }, :status => :ok
+      render :json => { :message => 'failed', :notice => ['Current password is wrong!'] }, :status => :ok
       return
     end
 

@@ -28,8 +28,8 @@ rake db:seed
 # modify production.rb to serve assets
 cat config/environments/production.rb | sed -e 's/config.serve_static_assets = false/config.serve_static_assets = true/' > /tmp/production.rb && cp /tmp/production.rb config/environments/production.rb
 
-# mofidy auth backend
-cat lib/auth/test.rb | sed "s/\] == 'test'/] == 'production'/" > /tmp/test.rb && cp /tmp/test.rb lib/auth/test.rb
+# set system to develop mode
+rails r "Setting.set('developer_mode', true)"
 
 pumactl --pidfile tmp/pids/puma.pid stop
 script/websocket-server.rb stop
@@ -42,7 +42,7 @@ sleep 15
 #export REMOTE_URL='http://medenhofer:765d0dd4-994b-4e15-9f89-13f3aedeb462@ondemand.saucelabs.com:80/wd/hub' BROWSER_OS='Windows 2012' BROWSER_VERSION=20 BROWSER=firefox
 
 rake test:browser["BROWSER_URL=http://localhost:4444"]
-#rake test:browser["BROWSER_URL=http://192.168.178.20:4444"]
+#rake test:browser["BROWSER_URL=http://192.168.178.28:4444"]
 
 
 script/websocket-server.rb stop

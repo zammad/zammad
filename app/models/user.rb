@@ -267,7 +267,7 @@ send reset password email with token to user
 
 returns
 
-  result = true|false
+  result = token
 
 =end
 
@@ -325,7 +325,7 @@ returns
       :subject   => data[:subject],
       :body      => data[:body]
     )
-    true
+    token
   end
 
 =begin

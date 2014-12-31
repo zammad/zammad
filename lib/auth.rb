@@ -23,7 +23,7 @@ returns
         :adapter => 'Auth::Internal',
       },
       {
-        :adapter => 'Auth::Test',
+        :adapter => 'Auth::Developer',
       },
     ]
 

@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class SignupTest < TestCase
+class SignupPasswordChangeAndResetTest < TestCase
   def test_signup
     signup_user_email = 'signup-test-' + rand(999999).to_s + '@example.com'
     tests = [
@@ -112,7 +112,7 @@ class SignupTest < TestCase
           {
             :execute => 'watch_for',
             :area    => 'body',
-            :value   => 'old password is wrong',
+            :value   => 'current password is wrong',
           },
           {
             :execute => 'set',
@@ -197,6 +197,154 @@ class SignupTest < TestCase
             :execute  => 'login',
             :username => signup_user_email,
             :password => 'some-pass-new2',
+          },
+          {
+            :execute  => 'logout',
+          },
+        ],
+      },
+      {
+        :name     => 'reset password',
+        :action   => [
+          # got to wrong url
+          {
+            :execute => 'navigate',
+            :to      => browser_url + '/#password_reset_verify/not_existing_token',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Token is invalid',
+          },
+
+          # correct way
+          {
+            :execute => 'click',
+            :css     => 'a[href="#reset_password"]',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="username"]',
+            :value   => 'nonexisiting',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'address invalid',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="username"]',
+            :value   => signup_user_email,
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'sent password reset instructions',
+          },
+
+          # redirect to "#password_reset_verify/#{token}" url by app, because of "developer_mode"
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Choose your new password',
+          },
+
+          # set new password
+          {
+            :execute => 'set',
+            :css     => 'input[name="password"]',
+            :value   => 'some',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_confirm"]',
+            :value   => 'some2',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'passwords do not match',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password"]',
+            :value   => 'some',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_confirm"]',
+            :value   => 'some',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'it must be at least',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password"]',
+            :value   => 'some-pass-new',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_confirm"]',
+            :value   => 'some-pass-new',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'must contain at least 1 digit',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password"]',
+            :value   => 'some-pass-new2',
+          },
+          {
+            :execute => 'set',
+            :css     => 'input[name="password_confirm"]',
+            :value   => 'some-pass-new2',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content .btn--primary',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Your password has been changed',
+          },
+          {
+            :execute => 'wait',
+            :value   => 5,
+          },
+          {
+            :execute      => 'match',
+            :css          => '.user-menu .user a',
+            :attribute    => 'title',
+            :value        => signup_user_email,
+            :match_result => true,
           },
         ],
       },

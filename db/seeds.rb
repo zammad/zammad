@@ -16,6 +16,15 @@ Setting.create_if_not_exists(
   :frontend    => true
 )
 Setting.create_if_not_exists(
+  :title       => 'Developer System',
+  :name        => 'developer_mode',
+  :area        => 'Core::Develop',
+  :description => 'Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery).',
+  :options     => {},
+  :state       => false,
+  :frontend    => true
+)
+Setting.create_if_not_exists(
   :title       => 'Online Service',
   :name        => 'system_online_service',
   :area        => 'Core',

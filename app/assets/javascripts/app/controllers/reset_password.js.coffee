@@ -44,120 +44,156 @@ class Index extends App.ControllerContent
 
     # get data
     @ajax(
-      id:   'password_reset'
-      type: 'POST'
-      url:  @apiPath + '/users/password_reset'
-      data: JSON.stringify(params)
+      id:          'password_reset'
+      type:        'POST'
+      url:         @apiPath + '/users/password_reset'
+      data:        JSON.stringify(params)
       processData: true
-      success: @success
-      error:   @error
+      success:     @success
     )
 
-  success: (data, status, xhr) =>
-    @render( sent: true )
+  success: (data) =>
+    if data.message is 'ok'
 
-  error: (data, status, xhr) =>
-    @notify(
-      type: 'error'
-      msg:  App.i18n.translateContent( 'Username or email address invalid, please try again.' )
-    )
-    @formEnable( @el.find('.form-password') )
+      # if in developer mode, redirect to set new password
+      if data.token && @Config.get('developer_mode') is true
+        redirect = =>
+          @navigate "#password_reset_verify/#{data.token}"
+        @delay( redirect, 2000 )
+      @render( sent: true )
+
+    else
+      @$('[name=username]').val('')
+      @notify(
+        type: 'error'
+        msg:  App.i18n.translateContent( 'Username or email address invalid, please try again.' )
+      )
+      @formEnable( @el.find('.form-password') )
 
 App.Config.set( 'reset_password', Index, 'Routes' )
 
 class Verify extends App.ControllerContent
   events:
-    'submit form': 'submit'
+    'submit form':   'submit'
     'click .submit': 'submit'
 
   constructor: ->
     super
+
+    @navHide()
 
     # set title
     @title 'Reset Password'
     @navupdate '#reset_password_verify'
 
     # get data
-    params = {}
-    params['token'] = @token
+    params =
+      token: @token
     @ajax(
-      id:   'password_reset_verify'
-      type: 'POST'
-      url:  @apiPath + '/users/password_reset_verify'
-      data: JSON.stringify(params)
+      id:          'password_reset_verify'
+      type:        'POST'
+      url:         @apiPath + '/users/password_reset_verify'
+      data:        JSON.stringify(params)
       processData: true
-      success: @render_success
-      error:   @render_failed
+      success:     @render_change
     )
 
-  render_success: =>
-    configure_attributes = [
-      { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input span4',  },
-    ]
+  render_change: (data) =>
+    if data.message is 'ok'
+      configure_attributes = [
+        { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input',  },
+      ]
 
-    @html App.view('password/reset_change')()
+      @html App.view('password/reset_change')()
 
-    new App.ControllerForm(
-      el:        @el.find('#form-password-change')
-      model:     { configure_attributes: configure_attributes }
-      autofocus: true
-    )
-
-  render_failed: =>
-    @html App.view('generic/hero_message')(
-      head:    'Failed!'
-      message: 'Token is not valid!'
-    )
+      new App.ControllerForm(
+        el:        @el.find('.form-password-change')
+        model:     { configure_attributes: configure_attributes }
+        autofocus: true
+      )
+    else
+      @html App.view('password/reset_failed')(
+        head:    'Reset Password failed!'
+        message: 'Token is invalid!'
+      )
 
   submit: (e) ->
     e.preventDefault()
-    params = @formParam(e.target)
+    params          = @formParam(e.target)
     params['token'] = @token
-    @password = params['password']
+    @password       = params['password']
+
+    # disable form
+    @formDisable(e)
+
+    # validate
+    if params['password_confirm'] isnt params['password']
+      @formEnable(e)
+      @$('[name=password]').val('')
+      @$('[name=password_confirm]').val('')
+      @notify
+        type:      'error'
+        msg:       'Can\'t update password, your new passwords do not match. Please try again!'
+        removeAll: true
+      return
+    if !params['password']
+      @formEnable(e)
+      @notify
+        type:      'error'
+        msg:       'Please supply your new password!'
+        removeAll: true
+      return
 
     # get data
     @ajax(
-      id:   'password_reset_verify'
-      type: 'POST'
-      url:  @apiPath + '/users/password_reset_verify'
-      data: JSON.stringify(params)
+      id:          'password_reset_verify'
+      type:        'POST'
+      url:         @apiPath + '/users/password_reset_verify'
+      data:        JSON.stringify(params)
       processData: true
-      success: @render_changed_success
-      error:   @render_changed_failed
+      success:     @render_changed
     )
 
-  render_changed_success: (data, status, xhr) =>
-    App.Auth.login(
-      data:
-        username: data.user_login
-        password: @password
-      success: =>
+  render_changed: (data, status, xhr) =>
+    if data.message is 'ok'
+      App.Auth.login(
+        data:
+          username: data.user_login
+          password: @password
+        success: =>
 
-        # login check
-        App.Auth.loginCheck()
+          # login check
+          App.Auth.loginCheck()
 
-        # add notify
-        @notify
-          type:      'success'
-          msg:       'Woo hoo! Your password has been changed!'
-          removeAll: true
+          # add notify
+          @notify
+            type:      'success'
+            msg:       'Woo hoo! Your password has been changed!'
+            removeAll: true
 
-        # redirect to #
-        @navigate '#'
+          # redirect to #
+          @navigate '#'
 
-      error: =>
+        error: =>
+          @formEnable( @$('form') )
 
-        # add notify
+          # add notify
+          @notify
+            type:      'error'
+            msg:       'Something went wrong. Please contact your administrator.'
+            removeAll: true
+      )
+    else
+      if data.notice
         @notify
           type:      'error'
-          msg:       'Something went wrong. Please contact your administrator.'
+          msg:       App.i18n.translateContent( data.notice[0], data.notice[1] )
           removeAll: true
-    )
-
-  render_changed_failed: =>
-    @html App.view('generic/hero_message')(
-      head:    'Failed!'
-      message: 'Ask your admin!'
-    )
+      else
+        @notify
+          type:      'error'
+          msg:       'Unable to set password. Please contact your administrator.'
+          removeAll: true
+      @formEnable( @$('form') )
 
 App.Config.set( 'password_reset_verify/:token', Verify, 'Routes' )
