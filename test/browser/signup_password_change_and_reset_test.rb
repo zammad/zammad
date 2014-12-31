@@ -204,7 +204,7 @@ class SignupPasswordChangeAndResetTest < TestCase
         ],
       },
       {
-        :name     => 'reset password',
+        :name     => 'reset password (not possible)',
         :action   => [
           # got to wrong url
           {
@@ -216,8 +216,38 @@ class SignupPasswordChangeAndResetTest < TestCase
             :area    => 'body',
             :value   => 'Token is invalid',
           },
-
-          # correct way
+          # with valid session
+          {
+            :execute => 'navigate',
+            :to      => browser_url + '/#',
+          },
+          {
+            :execute  => 'login',
+            :username => signup_user_email,
+            :password => 'some-pass-new2',
+          },
+          {
+            :execute => 'navigate',
+            :to      => browser_url + '/#reset_password',
+          },
+          {
+            :execute => 'wait',
+            :value   => 1,
+          },
+          {
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => 'password',
+            :match_result => false,
+          },
+          {
+            :execute  => 'logout',
+          },
+        ],
+      },
+      {
+        :name     => 'reset password (correct way)',
+        :action   => [
           {
             :execute => 'click',
             :css     => 'a[href="#reset_password"]',

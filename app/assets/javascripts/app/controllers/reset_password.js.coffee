@@ -12,6 +12,11 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
+    # if we are logged in, no passwort reset is wanted, redirect to app
+    if @authenticate(true)
+      @navigate '#'
+      return
+
     @navHide()
 
     # set title
@@ -79,6 +84,11 @@ class Verify extends App.ControllerContent
 
   constructor: ->
     super
+
+    # if we are logged in, no passwort reset is wanted, redirect to app
+    if @authenticate(true)
+      @navigate '#'
+      return
 
     @navHide()
 
