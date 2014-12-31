@@ -152,6 +152,9 @@ class App.TicketZoom extends App.Controller
 
   positionPageHeaderStart: =>
 
+    # init header update needed for safari, scroll event is fired
+    @positionPageHeaderUpdate()
+
     # scroll is also fired on window resize, if element scroll is changed
     @main.bind(
       'scroll'
