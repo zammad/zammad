@@ -27,9 +27,6 @@ class App.Run extends App.Controller
     # start widgets
     @setupWidget( 'Widgets', 'widget', @el )
 
-    # start widgets
-    # @setupWidget( 'Footers', 'footer', @el.find('footer') )
-
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
 
