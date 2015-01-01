@@ -6,12 +6,11 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     record = Ticket::Article.find( @article_id )
 
     # build subject
-    ticket = Ticket.lookup( :id => record.ticket_id )
+    ticket  = Ticket.lookup( :id => record.ticket_id )
     subject = ticket.subject_build( record.subject )
 
     # send email
-    a = Channel::EmailSend.new
-    message = a.send(
+    message = Channel::EmailSend.send(
       {
         :message_id   => record.message_id,
         :in_reply_to  => record.in_reply_to,
