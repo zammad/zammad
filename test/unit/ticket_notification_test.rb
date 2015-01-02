@@ -2,56 +2,57 @@
 require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
-  test 'ticket create' do
 
-    # create agent1 & agent2
-    groups = Group.where( :name => 'Users' )
-    roles  = Role.where( :name => 'Agent' )
-    agent1  = User.create_or_update(
-      :login         => 'ticket-notification-agent1@example.com',
-      :firstname     => 'Notification',
-      :lastname      => 'Agent1',
-      :email         => 'ticket-notification-agent1@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-    )
-    agent2  = User.create_or_update(
-      :login         => 'ticket-notification-agent2@example.com',
-      :firstname     => 'Notification',
-      :lastname      => 'Agent2',
-      :email         => 'ticket-notification-agent2@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-    )
-    Group.create_if_not_exists(
-      :name          => 'WithoutAccess',
-      :note          => 'Test for notification check.',
-      :updated_by_id => 1,
-      :created_by_id => 1
-    )
+  # create agent1 & agent2
+  groups = Group.where( :name => 'Users' )
+  roles  = Role.where( :name => 'Agent' )
+  agent1 = User.create_or_update(
+    :login         => 'ticket-notification-agent1@example.com',
+    :firstname     => 'Notification',
+    :lastname      => 'Agent1',
+    :email         => 'ticket-notification-agent1@example.com',
+    :password      => 'agentpw',
+    :active        => true,
+    :roles         => roles,
+    :groups        => groups,
+    :updated_by_id => 1,
+    :created_by_id => 1,
+  )
+  agent2 = User.create_or_update(
+    :login         => 'ticket-notification-agent2@example.com',
+    :firstname     => 'Notification',
+    :lastname      => 'Agent2',
+    :email         => 'ticket-notification-agent2@example.com',
+    :password      => 'agentpw',
+    :active        => true,
+    :roles         => roles,
+    :groups        => groups,
+    :updated_by_id => 1,
+    :created_by_id => 1,
+  )
+  Group.create_if_not_exists(
+    :name          => 'WithoutAccess',
+    :note          => 'Test for notification check.',
+    :updated_by_id => 1,
+    :created_by_id => 1
+  )
 
-    # create customer
-    roles  = Role.where( :name => 'Customer' )
-    customer  = User.create_or_update(
-      :login         => 'ticket-notification-customer@example.com',
-      :firstname     => 'Notification',
-      :lastname      => 'Customer',
-      :email         => 'ticket-notification-customer@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-    )
+  # create customer
+  roles    = Role.where( :name => 'Customer' )
+  customer = User.create_or_update(
+    :login         => 'ticket-notification-customer@example.com',
+    :firstname     => 'Notification',
+    :lastname      => 'Customer',
+    :email         => 'ticket-notification-customer@example.com',
+    :password      => 'agentpw',
+    :active        => true,
+    :roles         => roles,
+    :groups        => groups,
+    :updated_by_id => 1,
+    :created_by_id => 1,
+  )
+
+  test 'ticket notification simple' do
 
     # create ticket in group
     ticket1 = Ticket.create(
@@ -259,6 +260,64 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     delete = ticket3.destroy
     assert( delete, "ticket3 destroy" )
+
+  end
+
+  test 'ticket notification events' do
+
+    # create ticket in group
+    ticket1 = Ticket.create(
+      :title         => 'some notification event test 1',
+      :group         => Group.lookup( :name => 'Users'),
+      :customer      => customer,
+      :state         => Ticket::State.lookup( :name => 'new' ),
+      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
+      :updated_by_id => customer.id,
+      :created_by_id => customer.id,
+    )
+    article_inbound = Ticket::Article.create(
+      :ticket_id     => ticket1.id,
+      :from          => 'some_sender@example.com',
+      :to            => 'some_recipient@example.com',
+      :subject       => 'some subject',
+      :message_id    => 'some@id',
+      :body          => 'some message',
+      :internal      => false,
+      :sender        => Ticket::Article::Sender.where(:name => 'Customer').first,
+      :type          => Ticket::Article::Type.where(:name => 'email').first,
+      :updated_by_id => customer.id,
+      :created_by_id => customer.id,
+    )
+    assert( ticket1, "ticket created" )
+
+    # execute ticket events
+    Observer::Ticket::Notification.transaction
+
+    # update ticket attributes
+    ticket1.title    = "#{ticket1.title} - #2"
+    ticket1.priority = Ticket::Priority.lookup( :name => '3 high' )
+    ticket1.save
+
+    list        = EventBuffer.list
+    listObjects = Observer::Ticket::Notification.get_uniq_changes(list)
+
+    assert_equal( 'some notification event test 1', listObjects[ticket1.id][:changes]['title'][0] )
+    assert_equal( 'some notification event test 1 - #2', listObjects[ticket1.id][:changes]['title'][1] )
+    assert_equal( '2 normal', listObjects[ticket1.id][:changes]['priority'][0] )
+    assert_equal( '3 high', listObjects[ticket1.id][:changes]['priority'][1] )
+
+    # update ticket attributes
+    ticket1.title    = "#{ticket1.title} - #3"
+    ticket1.priority = Ticket::Priority.lookup( :name => '1 low' )
+    ticket1.save
+
+    list        = EventBuffer.list
+    listObjects = Observer::Ticket::Notification.get_uniq_changes(list)
+
+    assert_equal( 'some notification event test 1', listObjects[ticket1.id][:changes]['title'][0] )
+    assert_equal( 'some notification event test 1 - #2 - #3', listObjects[ticket1.id][:changes]['title'][1] )
+    assert_equal( '2 normal', listObjects[ticket1.id][:changes]['priority'][0] )
+    assert_equal( '1 low', listObjects[ticket1.id][:changes]['priority'][1] )
 
   end
 

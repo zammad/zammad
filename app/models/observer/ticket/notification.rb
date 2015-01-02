@@ -20,12 +20,19 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # get uniq objects
     listObjects = get_uniq_changes(list)
     listObjects.each {|ticket_id, item|
-      ticket  = Ticket.lookup( :id => ticket_id )
-      article = ticket.articles[-1]
+      ticket  = item[:ticket]
+      article = item[:article] || ticket.articles[-1]
 
       # if create, send create message / block update messages
       if item[:type] == 'create'
         puts 'send ticket create notify to agent'
+
+        article_content = ''
+        if item[:article]
+          article_content = '<snip>
+#{article.body}
+</snip>'
+        end
         send_notify(
           {
             :event     => item[:type],
@@ -39,9 +46,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
             State: i18n(#{ticket.state.name})
 
-            <snip>
-            #{article.body}
-            </snip>
+            ' + article_content + '
 
             #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
             '
@@ -60,6 +65,13 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         item[:changes].each {|key,value|
           changes = "#{key}: #{value[0]} -> #{value[1]}"
         }
+        article_content = ''
+        if item[:article]
+          article_content = '<snip>
+#{article.body}
+</snip>'
+        end
+
         send_notify(
           {
             :event     => item[:type],
@@ -72,9 +84,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             Changes:
             ' + changes + '
 
-            <snip>
-            #{article.body}
-            </snip>
+            ' + article_content + '
 
             #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
             '
@@ -110,40 +120,51 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     listObjects = {}
     events.each { |event|
 
-      # get changes
-
-      # send notify
-
       # get current state of objects
-      #if event[:name] == 'Ticket::Article'
-      #  article = Ticket::Article.lookup( :id => event[:id] )
-      #
-      #  # next if article is already deleted
-      #  next if !article
-      #
-      #  ticket  = article.ticket
-      #  #listObjects[ticket.id] = event
-      #elsif event[:name] == 'Ticket'
-      if event[:name] == 'Ticket'
+      if event[:name] == 'Ticket::Article'
+        article = Ticket::Article.lookup( :id => event[:id] )
+
+        # next if article is already deleted
+        next if !article
+
+        ticket = article.ticket
+        if !listObjects[ticket.id]
+          listObjects[ticket.id] = {}
+        end
+        listObjects[ticket.id][:article] = article
+
+      elsif event[:name] == 'Ticket'
         ticket  = Ticket.lookup( :id => event[:id] )
 
         # next if ticket is already deleted
         next if !ticket
 
-        article = ticket.articles[-1]
-        next if !article
 
         if !listObjects[ticket.id]
           listObjects[ticket.id] = {}
         end
+        listObjects[ticket.id][:ticket] = ticket
+
         if !listObjects[ticket.id][:type] || listObjects[ticket.id][:type] == 'update'
           listObjects[ticket.id][:type] = event[:type]
         end
+
+        # merge changes
         if event[:changes]
-          listObjects[ticket.id][:changes] = event[:changes]
+          if !listObjects[ticket.id][:changes]
+            listObjects[ticket.id][:changes] = event[:changes]
+          else
+            event[:changes].each {|key, value|
+              if !listObjects[ticket.id][:changes][key]
+                listObjects[ticket.id][:changes][key] = value
+              else
+                listObjects[ticket.id][:changes][key][1] = value[1]
+              end
+            }
+          end
         end
-      #else
-      #  raise "unknown object for notification #{event[:name]}"
+      else
+        raise "unknown object for notification #{event[:name]}"
       end
     }
     listObjects

@@ -97,14 +97,13 @@ class Observer::Ticket::Notification::BackgroundJob
 
     # add history record
     if recipient_list != ''
-      puts "send... #{recipient_list} #{ticket.id}"
       History.add(
-        :o_id                   => ticket.id,
-        :history_type           => 'notification',
-        :history_object         => 'Ticket',
-        :value_from             => notification_subject,
-        :value_to               => recipient_list,
-        :created_by_id          => article.created_by_id || 1
+        :o_id           => ticket.id,
+        :history_type   => 'notification',
+        :history_object => 'Ticket',
+        :value_from     => notification_subject,
+        :value_to       => recipient_list,
+        :created_by_id  => article.created_by_id || 1
       )
     end
   end
