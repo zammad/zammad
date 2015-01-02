@@ -19,8 +19,8 @@ module NotificationFactory
 
       # store possible callback to work with
       # and check if it's valid for execution
-      original_string      = $&
-      callback             = $1
+      original_string = $&
+      callback        = $1
 
       object_name   = nil
       object_method = nil
