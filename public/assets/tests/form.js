@@ -14,6 +14,7 @@ test( "form elements check", function() {
     selectmulti2: [ false, true ],
     selectmultioption1: false,
     selectmultioption2: [ false, true ],
+    richtext2: 'lalu <l> lalu',
   }
   new App.ControllerForm({
     el:        el,
@@ -31,7 +32,8 @@ test( "form elements check", function() {
         { name: 'selectmulti2', display: 'SelectMulti2', tag: 'select', null: false, multiple: true, options: { true: 'internal', false: 'public' }, default: defaults['selectmulti2'] },
         { name: 'selectmultioption1', display: 'SelectMultiOption1', tag: 'select', null: true, multiple: true, options: [{ value: true, name: 'internal' }, { value: false, name: 'public' }], default: defaults['selectmultioption1'] },
         { name: 'selectmultioption2', display: 'SelectMultiOption2', tag: 'select', null: false, multiple: true, options: [{ value: true, name: 'A' }, { value: 1, name: 'B'}, { value: false, name: 'C' }], default: defaults['selectmultioption2'] },
-
+        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext1']  },
+        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext2']  },
       ]
     },
     autofocus: true
@@ -79,6 +81,14 @@ test( "form elements check", function() {
   equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
   equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
 
+  //equal( el.find('[name="richtext1"]').val(), '', 'check textarea1 value')
+  //equal( el.find('[name="richtext1"]').prop('required'), false, 'check textarea1 required')
+  equal( el.find('[name="richtext1"]').is(":focus"), false, 'check textarea1 focus')
+
+  //equal( el.find('[name="richtext2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
+  //equal( el.find('[name="richtext2"]').prop('required'), true, 'check textarea2 required')
+  equal( el.find('[name="richtext2"]').is(":focus"), false, 'check textarea2 focus')
+
 });
 
 test( "form params check", function() {
@@ -98,6 +108,13 @@ test( "form params check", function() {
     selectmultioption2: [ false, true ],
     autocompletion2: 'id2',
     autocompletion2_autocompletion_value_shown: 'value2',
+    richtext2: '<div>lalu <b>b</b> lalu</div>',
+    richtext3: '<div></div>',
+    richtext4: '<div>lalu <i>b</i> lalu</div>',
+    richtext5: '<div></div>',
+    richtext6: '<div>lalu <b>b</b> lalu</div>',
+    richtext7: "<div>&nbsp;<div>&nbsp;\n</div>  \n</div>",
+    richtext8: '<div>lalu <i>b</i> lalu</div>',
   }
   new App.ControllerForm({
     el:        el,
@@ -117,6 +134,14 @@ test( "form params check", function() {
         { name: 'selectmultioption2', display: 'SelectMultiOption2', tag: 'select', null: false, multiple: true, options: [{ value: true, name: 'A' }, { value: 1, name: 'B'}, { value: false, name: 'C' }] },
         { name: 'autocompletion1', display: 'AutoCompletion1', tag: 'autocompletion', null: false, options: { true: 'internal', false: 'public' }, source: [ { label: "Choice1", value: "value1", id: "id1" }, { label: "Choice2", value: "value2", id: "id2" }, ], minLength: 1 },
         { name: 'autocompletion2', display: 'AutoCompletion2', tag: 'autocompletion', null: false, options: { true: 'internal', false: 'public' }, source: [ { label: "Choice1", value: "value1", id: "id1" }, { label: "Choice2", value: "value2", id: "id2" }, ], minLength: 1 },
+        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext1']  },
+        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext2']  },
+        { name: 'richtext3', display: 'Richtext3', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext3']  },
+        { name: 'richtext4', display: 'Richtext4', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext4']  },
+        { name: 'richtext5', display: 'Richtext5', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext5']  },
+        { name: 'richtext6', display: 'Richtext6', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext6']  },
+        { name: 'richtext7', display: 'Richtext7', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext7']  },
+        { name: 'richtext8', display: 'Richtext8', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext8']  },
       ],
     },
     params: defaults,
@@ -164,6 +189,39 @@ test( "form params check", function() {
   equal( el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
   equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
   equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
+
+  params = App.ControllerForm.params( el )
+  test_params = {
+    input1: '',
+    input2: '123abc',
+    password1: '',
+    password1_confirm: '',
+    password2: 'pw1234<l>',
+    password2_confirm: 'pw1234<l>',
+    textarea1: '',
+    textarea2: 'lalu <l> lalu',
+    select1: 'false',
+    select2: 'true',
+    selectmulti1: 'false',
+    selectmulti2: [ 'true', 'false' ],
+    selectmultioption1: 'false',
+    selectmultioption2: [ 'true', 'false' ],
+    autocompletion1: '',
+    autocompletion1_autocompletion: '',
+    autocompletion1_autocompletion_value_shown: '',
+    autocompletion2: 'id2',
+    autocompletion2_autocompletion: 'value2',
+    autocompletion2_autocompletion_value_shown: 'value2',
+    richtext1: '',
+    richtext2: '<div>lalu <b>b</b> lalu</div>',
+    richtext3: '',
+    richtext4: '<div>lalu <i>b</i> lalu</div>',
+    richtext5: '',
+    richtext6: '<div>lalu <b>b</b> lalu</div>',
+    richtext7: '',
+    richtext8: '<div>lalu <i>b</i> lalu</div>',
+  }
+  deepEqual( params, test_params, 'form param check' );
 
 });
 

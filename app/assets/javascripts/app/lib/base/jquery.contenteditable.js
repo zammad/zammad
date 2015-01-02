@@ -95,9 +95,21 @@
 
       // strip html signes if multi line exists
       if ( this.options.multiline ) {
+
+        // for validation, do not retrun empty content by empty tags
+        text_plain = this.$element.text().trim()
+        if ( !text_plain || text_plain == '' ) {
+          return text_plain
+        }
         return this.$element.html()
       }
       return this.$element.text().trim()
+    }
+
+    // for validation, do not retrun empty content by empty tags
+    text_plain = this.$element.text().trim()
+    if ( !text_plain || text_plain == '' ) {
+      return text_plain
     }
     return this.$element.html().trim()
   }

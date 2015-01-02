@@ -708,7 +708,7 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'richtext'
       item = $( App.view('generic/richtext')( attribute: attribute ) )
       item.find('[contenteditable]').ce(
-        mode: attribute.type
+        mode:      attribute.type
         maxlength: attribute.maxlength
       )
       if attribute.upload
@@ -733,11 +733,11 @@ class App.ControllerForm extends App.Controller
 
               # delete attachment from storage
               App.Ajax.request(
-                type:  'DELETE'
-                url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-                data:  JSON.stringify( { store_id: store_id } ),
+                type:        'DELETE'
+                url:         App.Config.get('api_path') + '/ticket_attachment_upload'
+                data:        JSON.stringify( { store_id: store_id } ),
                 processData: false
-                success: (data, status, xhr) =>
+                success:     (data, status, xhr) =>
               )
 
               # remove attachment from dom
@@ -748,22 +748,23 @@ class App.ControllerForm extends App.Controller
                 element.empty()
           )
 
-        @attachments = []
-        @progressBar = item.find('.attachmentUpload-progressBar')
-        @progressText = item.find('.js-percentage')
+        @attachments           = []
+        @progressBar           = item.find('.attachmentUpload-progressBar')
+        @progressText          = item.find('.js-percentage')
         @attachmentPlaceholder = item.find('.attachmentPlaceholder')
-        @attachmentUpload = item.find('.attachmentUpload')
-        @attachmentsHolder = item.find('.attachments')
-        @cancelContainer = item.find('.js-cancel')
+        @attachmentUpload      = item.find('.attachmentUpload')
+        @attachmentsHolder     = item.find('.attachments')
+        @cancelContainer       = item.find('.js-cancel')
+
         u = => html5Upload.initialize(
-          uploadUrl: App.Config.get('api_path') + '/ticket_attachment_upload',
-          dropContainer: item.closest('form').get(0),
-          cancelContainer: @cancelContainer,
-          inputField: item.find( 'input' ).get(0),
-          key: 'File',
-          data: { form_id: @form_id },
+          uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload',
+          dropContainer:          item.closest('form').get(0),
+          cancelContainer:        @cancelContainer,
+          inputField:             item.find( 'input' ).get(0),
+          key:                    'File',
+          data:                   { form_id: @form_id },
           maxSimultaneousUploads: 1,
-          onFileAdded: (file) =>
+          onFileAdded:            (file) =>
 
             file.on(
 
@@ -847,7 +848,6 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'article'
       item = $( App.view('generic/article')( attribute: attribute ) )
 
-
     # tag
     else if attribute.tag is 'tag'
       item = $( App.view('generic/input')( attribute: attribute ) )
@@ -866,9 +866,9 @@ class App.ControllerForm extends App.Controller
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )
 
       a = =>
-        local_attribute = '#' + attribute.id
+        local_attribute      = '#' + attribute.id
         local_attribute_full = '#' + attribute.id + '_autocompletion'
-        @callback = attribute.callback
+        @callback            = attribute.callback
 
         # call calback on init
         if @callback && attribute.value && @params
@@ -939,13 +939,13 @@ class App.ControllerForm extends App.Controller
         type  = parts[1]
         if key is 'tickets.title'
           attribute_config = {
-            name:       attribute.name + '::tickets.title'
-            display:    'Title'
-            tag:        'input'
-            type:       'text'
-            null:       false
-            value:      value
-            remove:     true
+            name:    attribute.name + '::tickets.title'
+            display: 'Title'
+            tag:     'input'
+            type:    'text'
+            null:    false
+            value:   value
+            remove:  true
           }
         else if key is 'tickets.group_id'
           attribute_config = {
