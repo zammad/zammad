@@ -16,7 +16,6 @@ returns
 =end
 
   def history_log (type, user_id, data = {})
-
     data[:o_id]                   = self['id']
     data[:history_type]           = type
     data[:history_object]         = self.class.name
@@ -37,22 +36,22 @@ returns
 
   result = [
     {
-      :type           => 'created',
-      :object         => 'Ticket',
-      :created_by_id  => 3,
-      :created_at     => "2013-08-19 20:41:33",
+      :type          => 'created',
+      :object        => 'Ticket',
+      :created_by_id => 3,
+      :created_at    => "2013-08-19 20:41:33",
     },
     {
-      :type           => 'updated',
-      :object         => 'Ticket',
-      :attribute      => 'priority',
-      :o_id           => 1,
-      :id_to          => 3,
-      :id_from        => 2,
-      :value_from     => "low",
-      :value_to       => "high",
-      :created_by_id  => 3,
-      :created_at     => "2013-08-19 20:41:33",
+      :type          => 'updated',
+      :object        => 'Ticket',
+      :attribute     => 'priority',
+      :o_id          => 1,
+      :id_to         => 3,
+      :id_from       => 2,
+      :value_from    => "low",
+      :value_to      => "high",
+      :created_by_id => 3,
+      :created_at    => "2013-08-19 20:41:33",
     },
   ]
 

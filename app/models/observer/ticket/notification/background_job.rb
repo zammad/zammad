@@ -40,11 +40,12 @@ class Observer::Ticket::Notification::BackgroundJob
     end
 
     # send notifications
-    recipient_list = ''
+    recipient_list       = ''
     notification_subject = ''
     recipients.each do |user|
 
-      next if ticket.updated_by_id == ticket.owner_id
+      next if ticket.updated_by_id == user.id
+      next if !user.active
 
       # create desktop notification
 
