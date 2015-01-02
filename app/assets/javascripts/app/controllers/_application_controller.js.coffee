@@ -489,15 +489,15 @@ class App.ControllerModal extends App.Controller
       @button = 'Submit'
 
     @html App.view('modal')
-      head:         @head
-      message:      @message
-      detail:       @detail
-      close:        @close
-      cancel:       @cancel
-      button:       @button
-      buttonClass:  @buttonClass
-      centerButtons:@centerButtons
-      content: content
+      head:          @head
+      message:       @message
+      detail:        @detail
+      close:         @close
+      cancel:        @cancel
+      button:        @button
+      buttonClass:   @buttonClass
+      centerButtons: @centerButtons
+      content:       content
 
     if @content
       @body.html @content
@@ -507,8 +507,8 @@ class App.ControllerModal extends App.Controller
       show:     true
       backdrop: @backdrop
     .on
-      'show.bs.modal': @onShow
-      'shown.bs.modal': @onShown
+      'show.bs.modal':   @onShow
+      'shown.bs.modal':  @onShown
       'hidden.bs.modal': =>
         @onHide()
         # remove modal from dom
@@ -543,7 +543,7 @@ class App.ErrorModal extends App.ControllerModal
 class App.SessionMessage extends App.ControllerModal
   constructor: ->
     super
-    @show()
+    @show(@content)
 
   # reload page on modal hidden
   onHide: (e) =>

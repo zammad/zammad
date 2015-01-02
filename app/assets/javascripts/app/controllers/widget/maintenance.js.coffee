@@ -16,9 +16,13 @@ class Widget extends App.Controller
       @disconnectClient()
       button = 'Reload application'
 
+    # convert to html and linkify
+    message.message = App.Utils.textCleanup( message.message )
+    message.message = App.Utils.text2html( message.message )
+
     new App.SessionMessage(
       head:        message.head
-      message:     message.message
+      content:     message.message
       keyboard:    true
       backdrop:    true
       close:       true

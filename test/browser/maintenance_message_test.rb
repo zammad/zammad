@@ -3,8 +3,12 @@ require 'browser_test_helper'
 
 class MaintenanceMessageTest < TestCase
   def test_websocket
-    message = 'message 1äöüß ' + rand(99999999999999999).to_s
-    tests = [
+    string       = rand(99999999999999999).to_s
+    title_html   = "test <b>#{string}</b>"
+    title_text   = "test <b>#{string}<\/b>"
+    message_html = "message <b>1äöüß</b> #{string}\n\n\nhttp://zammad.org"
+    message_text = "message <b>1äöüß<\/b> #{string}\n\nhttp:\/\/zammad.org"
+    tests        = [
       {
         :name     => 'check #1',
         :instance1 => browser_instance,
@@ -33,13 +37,13 @@ class MaintenanceMessageTest < TestCase
             :where   => :instance1,
             :execute => 'set',
             :css     => '#content input[name="head"]',
-            :value   => message,
+            :value   => title_html,
           },
           {
             :where   => :instance1,
             :execute => 'set',
             :css     => '#content textarea[name="message"]',
-            :value   => message,
+            :value   => message_html,
           },
           {
             :where   => :instance1,
@@ -51,17 +55,23 @@ class MaintenanceMessageTest < TestCase
             :value   => 5,
           },
           {
+            :where   => :instance2,
+            :execute => 'watch_for',
+            :area    => '.modal',
+            :value   => title_text,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'watch_for',
+            :area    => '.modal',
+            :value   => message_text,
+          },
+          {
             :where        => :instance1,
             :execute      => 'match',
             :css          => 'body',
-            :value        => message,
+            :value        => message_text,
             :match_result => false,
-          },
-          {
-            :where    => :instance2,
-            :execute  => 'watch_for',
-            :area     => '.modal',
-            :value    => message,
           },
           {
             :where   => :instance2,
@@ -91,13 +101,13 @@ class MaintenanceMessageTest < TestCase
             :where   => :instance1,
             :execute => 'set',
             :css     => '#content input[name="head"]',
-            :value   => message + ' #2',
+            :value   => title_html + ' #2',
           },
           {
             :where   => :instance1,
             :execute => 'set',
             :css     => '#content textarea[name="message"]',
-            :value   => message + ' #2',
+            :value   => message_html + ' #2',
           },
           {
             :where   => :instance1,
@@ -105,21 +115,23 @@ class MaintenanceMessageTest < TestCase
             :css     => '#content button[type="submit"]',
           },
           {
-            :execute => 'wait',
-            :value   => 5,
+            :where   => :instance2,
+            :execute => 'watch_for',
+            :area    => '.modal',
+            :value   => title_text,
+          },
+          {
+            :where   => :instance2,
+            :execute => 'watch_for',
+            :area    => '.modal',
+            :value   => message_text + ' #2',
           },
           {
             :where        => :instance1,
             :execute      => 'match',
             :css          => 'body',
-            :value        => message + ' #2',
+            :value        => message_text + ' #2',
             :match_result => false,
-          },
-          {
-            :where    => :instance2,
-            :execute  => 'watch_for',
-            :area     => '.modal',
-            :value    => message + ' #2',
           },
           {
             :where    => :instance2,
@@ -149,13 +161,13 @@ class MaintenanceMessageTest < TestCase
             :where   => :instance1,
             :execute => 'set',
             :css     => '#content input[name="head"]',
-            :value   => message + ' #3' ,
+            :value   => title_html + ' #3' ,
           },
           {
             :where   => :instance1,
             :execute => 'set',
             :css     => '#content textarea[name="message"]',
-            :value   => message + ' #3',
+            :value   => message_html + ' #3',
           },
           {
             :where   => :instance1,
@@ -178,17 +190,23 @@ class MaintenanceMessageTest < TestCase
             :result  => false,
           },
           {
-            :where        => :instance1,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => message + ' #3',
-            :match_result => false,
+            :where   => :instance2,
+            :execute => 'watch_for',
+            :area    => '.modal',
+            :value   => title_text,
           },
           {
             :where   => :instance2,
             :execute => 'watch_for',
             :area    => '.modal',
-            :value   => message + ' #3',
+            :value   => message_text + ' #3',
+          },
+          {
+            :where        => :instance1,
+            :execute      => 'match',
+            :css          => 'body',
+            :value        => message_text + ' #3',
+            :match_result => false,
           },
           {
             :where   => :instance2,
