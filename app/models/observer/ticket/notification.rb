@@ -67,7 +67,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             :subject   => 'Updated (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-            updated (#{ticket.title}) via i18n(#{article.type.name}) by #{ticket.updated_by.fullname}.
+            updated (#{ticket.title}) by #{ticket.updated_by.fullname}.
 
             Changes:
             ' + changes + '
@@ -189,6 +189,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     record.changes.each {|key, value|
       next if key == 'updated_at'
       next if key == 'first_response'
+      next if key == 'close_time'
       next if key == 'last_contact_agent'
       next if key == 'last_contact_customer'
       next if key == 'last_contact'
