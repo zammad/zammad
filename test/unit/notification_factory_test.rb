@@ -9,8 +9,8 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       :customer_id   => 2,
       :state         => Ticket::State.lookup( :name => 'new' ),
       :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      :updated_by_id => 2,
+      :created_by_id => 2,
     )
     article_plain = Ticket::Article.create(
       :ticket_id     => ticket.id,
@@ -55,6 +55,31 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       },
       {
         :locale => 'de',
+        :string => 'a #{not_existing_object.test}',
+        :result => 'a #{not_existing_object / no such object}',
+      },
+      {
+        :locale => 'de',
+        :string => 'a #{ticket.level1}',
+        :result => 'a #{ticket.level1 / no such method}',
+      },
+      {
+        :locale => 'de',
+        :string => 'a #{ticket.level1.level2}',
+        :result => 'a #{ticket.level1 / no such method}',
+      },
+      {
+        :locale => 'de',
+        :string => 'a #{ticket.title.level2}',
+        :result => 'a #{ticket.title.level2 / no such method}',
+      },
+      {
+        :locale => 'de',
+        :string => 'by #{ticket.updated_by.fullname}',
+        :result => 'by Nicole Braun',
+      },
+      {
+        :locale => 'de',
         :string => 'Subject #{article.from}, Group: #{ticket.group.name}',
         :result => 'Subject Zammad Feedback <feedback@example.org>, Group: Users',
       },
@@ -66,7 +91,7 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       {
         :locale => 'de',
         :string => '\#{puts `ls`}',
-        :result => '\#{puts `ls`}',
+        :result => '\#{puts `ls`} (not allowed)',
       },
     ]
     tests.each { |test|
@@ -165,44 +190,44 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       {
         :locale => 'de',
         :string => '\#{puts `ls`}',
-        :result => '\#{puts `ls`}',
+        :result => '\#{puts `ls`} (not allowed)',
       },
       {
         :locale => 'de',
         :string => 'attack#1 #{article.destroy}',
-        :result => 'attack#1 #{article.destroy}',
+        :result => 'attack#1 #{article.destroy} (not allowed)',
       },
       {
         :locale => 'de',
         :string => 'attack#2 #{Article.where}',
-        :result => 'attack#2 #{Article.where}',
+        :result => 'attack#2 #{Article.where} (not allowed)',
       },
       {
         :locale => 'de',
         :string => 'attack#1 #{article.
         destroy}',
         :result => 'attack#1 #{article.
-        destroy}',
+        destroy} (not allowed)',
       },
       {
         :locale => 'de',
         :string => 'attack#1 #{article.find}',
-        :result => 'attack#1 #{article.find}',
+        :result => 'attack#1 #{article.find} (not allowed)',
       },
       {
         :locale => 'de',
-        :string => 'attack#1 #{article.update}',
-        :result => 'attack#1 #{article.update}',
+        :string => 'attack#1 #{article.update(:name => "test")}',
+        :result => 'attack#1 #{article.update(:name => "test")} (not allowed)',
       },
       {
         :locale => 'de',
         :string => 'attack#1 #{article.all}',
-        :result => 'attack#1 #{article.all}',
+        :result => 'attack#1 #{article.all} (not allowed)',
       },
       {
         :locale => 'de',
         :string => 'attack#1 #{article.delete}',
-        :result => 'attack#1 #{article.delete}',
+        :result => 'attack#1 #{article.delete} (not allowed)',
       },
     ]
     tests.each { |test|

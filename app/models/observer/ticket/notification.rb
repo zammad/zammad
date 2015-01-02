@@ -33,13 +33,12 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-            a new Ticket (#{ticket.title}) via i18n(#{article.type.name}).
+            a new Ticket (#{ticket.title}) via i18n(#{article.type.name}) by #{ticket.updated_by.fullname}.
 
             Group: #{ticket.group.name}
             Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
             State: i18n(#{ticket.state.name})
 
-            From: #{article.from}
             <snip>
             #{article.body}
             </snip>
@@ -68,12 +67,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
             :subject   => 'Updated (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
 
-            updated (#{ticket.title}) via i18n(#{article.type.name}).
+            updated (#{ticket.title}) via i18n(#{article.type.name}) by #{ticket.updated_by.fullname}.
 
             Changes:
             ' + changes + '
 
-            From: #{article.from}
             <snip>
             #{article.body}
             </snip>

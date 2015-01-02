@@ -15,61 +15,70 @@ module NotificationFactory
 
   def self.build(data)
 
-    data[:string].gsub!( / \#\{ \s* ( .+? ) \s* \} /x ) { |placeholder|
+    data[:string].gsub!( / \#\{ \s* ( .+? ) \s* \} /xm ) { |placeholder|
 
       # store possible callback to work with
       # and check if it's valid for execution
-      original_string = $&
-      callback        = $1
-      callback_valid  = nil
+      original_string      = $&
+      callback             = $1
 
-      # use config params
-      callback.gsub!( /\A config\.( [\w\.]+ ) \z/x ) { |item|
-        callback_valid = true
-        name           = $1
-        item           = "Setting.get('#{name}')"
-      }
+      object_name   = nil
+      object_method = nil
 
-      # use object params
-      callback.gsub!( /\A ( [\w]+ )( \.[\w\.]+ ) \z/x ) { |item|
-
+      if callback =~ /\A ( [\w]+ )\.( [\w\.]+ ) \z/x
         object_name   = $1
         object_method = $2
-
-        if data[:objects][object_name.to_sym]
-          callback_valid = true
-          item           = "data[:objects]['#{object_name}'.to_sym]#{object_method}"
-        else
-          item = item
-        end
-      }
-
-      # use quoted text
-      callback.gsub!( /\A ( data\[:objects\]\['article'\.to_sym\] ) \.body \z/x ) { |item|
-        callback_valid = true
-        if data[:objects][:article].content_type == 'text/html'
-          item           = item + '.html2text.message_quote.chomp'
-        else
-          item           = item + '.word_wrap( :line_width => 82 ).message_quote.chomp'
-        end
-      }
+      end
 
       # do validaton, ignore some methodes
-      callback.gsub!( /\.(save|destroy|delete|remove|drop|update|create\(|new|all|where|find)/ix ) { |item|
-        callback_valid = false
-      }
+      if callback =~ /(`|\.(|\s*)(save|destroy|delete|remove|drop|update\(|update_att|create\(|new|all|where|find))/i
+        placeholder = "#{original_string} (not allowed)"
 
-      if callback_valid
-        # replace value
-        begin
-          placeholder = eval callback
-        rescue Exception => e
-          Rails.logger.error "Evaluation error caused by callback '#{callback}'"
-          Rails.logger.error e.inspect
+      # get value based on object_name and object_method
+      elsif object_name && object_method
+
+        # use config params
+        if object_name == 'config'
+          placeholder = Setting.get(object_method)
+
+        # if object_name dosn't exist
+        elsif !data[:objects][object_name.to_sym]
+          placeholder = "\#{#{object_name} / no such object}"
+        else
+          value            = nil
+          object_refs      = data[:objects][object_name.to_sym]
+          object_methods   = object_method.split('.')
+          object_methods_s = ''
+          object_methods.each {|method|
+            if object_methods_s != ''
+              object_methods_s += '.'
+            end
+            object_methods_s += method
+
+            # if method exists
+            if !object_refs.respond_to?( method.to_sym )
+              value = "\#{#{object_name}.#{object_methods_s} / no such method}"
+              break
+            end
+            object_refs = object_refs.send( method.to_sym )
+
+            # add body quote
+            if object_name == 'article' && method == 'body'
+              if data[:objects][:article].content_type == 'text/html'
+                object_refs = object_refs.html2text.message_quote.chomp
+              else
+                object_refs = object_refs.word_wrap( :line_width => 82 ).message_quote.chomp
+              end
+            end
+          }
+          if !value
+            placeholder = object_refs
+          else
+            placeholder = value
+          end
         end
-      else
-        placeholder = original_string
       end
+      placeholder
     }
 
     # translate

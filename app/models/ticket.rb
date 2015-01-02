@@ -53,6 +53,7 @@ class Ticket < ApplicationModel
   belongs_to    :owner,                 :class_name => 'User'
   belongs_to    :customer,              :class_name => 'User'
   belongs_to    :created_by,            :class_name => 'User'
+  belongs_to    :updated_by,            :class_name => 'User'
   belongs_to    :create_article_type,   :class_name => 'Ticket::Article::Type'
   belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
 

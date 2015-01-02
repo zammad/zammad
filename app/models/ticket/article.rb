@@ -12,6 +12,7 @@ class Ticket::Article < ApplicationModel
   belongs_to    :type,        :class_name => 'Ticket::Article::Type'
   belongs_to    :sender,      :class_name => 'Ticket::Article::Sender'
   belongs_to    :created_by,  :class_name => 'User'
+  belongs_to    :updated_by,  :class_name => 'User'
   after_create  :notify_clients_after_create
   after_update  :notify_clients_after_update
   after_destroy :notify_clients_after_destroy
