@@ -17,35 +17,18 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # reset buffer
     EventBuffer.reset
 
-    list.each { |event|
+    # get uniq objects
+    listObjects = get_uniq_changes(list)
+    listObjects.each {|ticket_id, item|
+      ticket  = Ticket.lookup( :id => ticket_id )
+      article = ticket.articles[-1]
 
-      # get current state of objects
-      if event[:name] == 'Ticket::Article'
-        article = Ticket::Article.lookup( :id => event[:id] )
-
-        # next if article is already deleted
-        next if !article
-
-        ticket  = article.ticket
-      elsif event[:name] == 'Ticket'
-        ticket  = Ticket.lookup( :id => event[:id] )
-
-        # next if ticket is already deleted
-        next if !ticket
-
-        article = ticket.articles[-1]
-        next if !article
-      else
-        raise "unknown object for notification #{event[:name]}"
-      end
-
-      # send new ticket notification to agents
-      if event[:name] == 'Ticket' && event[:type] == 'create'
-
-        puts 'send new ticket notify to agent'
+      # if create, send create message / block update messages
+      if item[:type] == 'create'
+        puts 'send ticket create notify to agent'
         send_notify(
           {
-            :event     => event,
+            :event     => item[:type],
             :recipient => 'to_work_on', # group|owner|to_work_on|customer
             :subject   => 'New Ticket (#{ticket.title})',
             :body      => 'Hi #{recipient.firstname},
@@ -70,105 +53,102 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         )
       end
 
-      # send new ticket notification to customers
-      if event[:name] == 'Ticket' && event[:type] == 'create'
-
-        # only for incoming emails
-        next if article.type.name != 'email'
-
-        puts 'send new ticket notify to customer'
+      # if update, send update message, add changes to message
+      if item[:type] == 'update'
+        #puts "CHANGESSS #{item[:changes].inspect}"
+        puts 'send ticket update notify to agent'
+        changes = ''
+        item[:changes].each {|key,value|
+          changes = "#{key}: #{value[0]} -> #{value[1]}"
+        }
         send_notify(
           {
-            :event     => event,
-            :recipient => 'customer', # group|owner|to_work_on|customer
-            :subject   => 'New Ticket has been created! (#{ticket.title})',
-            :body      => 'Thanks for your email. A new ticket has been created.
+            :event     => item[:type],
+            :recipient => 'to_work_on', # group|owner|to_work_on
+            :subject   => 'Updated (#{ticket.title})',
+            :body      => 'Hi #{recipient.firstname},
 
-            You wrote:
+            updated (#{ticket.title}) via i18n(#{article.type.name}).
+
+            Changes:
+            ' + changes + '
+
+            From: #{article.from}
             <snip>
             #{article.body}
             </snip>
 
-            Your email will be answered by a human ASAP
-
-            Have fun with Zammad! :-)
-
-            Your Zammad Team
+            #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
             '
           },
           ticket,
           article,
-          'new ticket'
+          'update ticket',
         )
       end
+    }
+  end
 
-      # send follow up notification
-      if event[:name] == 'Ticket::Article' && event[:type] == 'create'
+=begin
 
-        # only send article notifications after init article is created (handled by ticket create event)
-        next if ticket.articles.count.to_i <= 1
+  result = get_uniq_changes(events)
 
-        puts 'send new ticket::article notify'
+  result = {
+    :1 => {
+      :type => 'create',
+    },
+    :9 = {
+      :type => 'update',
+      :changes => {
+        :attribute1 => [before,now],
+        :attribute2 => [before,now],
+      }
+    },
+  }
 
-        if article.sender.name == 'Customer'
-          send_notify(
-            {
-              :event     => event,
-              :recipient => 'to_work_on', # group|owner|to_work_on|customer
-              :subject   => 'Follow Up (#{ticket.title})',
-              :body      => 'Hi #{recipient.firstname},
+=end
 
-              a follow Up (#{ticket.title}) via i18n(#{article.type.name}).
+  def self.get_uniq_changes(events)
+    listObjects = {}
+    events.each { |event|
 
-              Group: #{ticket.group.name}
-              Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-              State: i18n(#{ticket.state.name})
+      # get changes
 
-              From: #{article.from}
-              <snip>
-              #{article.body}
-              </snip>
+      # send notify
 
-              #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
-              '
-            },
-            ticket,
-            article,
-            'follow up'
-          )
+      # get current state of objects
+      #if event[:name] == 'Ticket::Article'
+      #  article = Ticket::Article.lookup( :id => event[:id] )
+      #
+      #  # next if article is already deleted
+      #  next if !article
+      #
+      #  ticket  = article.ticket
+      #  #listObjects[ticket.id] = event
+      #elsif event[:name] == 'Ticket'
+      if event[:name] == 'Ticket'
+        ticket  = Ticket.lookup( :id => event[:id] )
+
+        # next if ticket is already deleted
+        next if !ticket
+
+        article = ticket.articles[-1]
+        next if !article
+
+        if !listObjects[ticket.id]
+          listObjects[ticket.id] = {}
         end
-
-        # send new note notification to owner
-        # if agent == created.id
-        if article.sender.name == 'Agent' && article.created_by_id != article.ticket.owner_id
-          send_notify(
-            {
-              :event     => event,
-              :recipient => 'owner', # group|owner|to_work_on
-              :subject   => 'Updated (#{ticket.title})',
-              :body      => 'Hi #{recipient.firstname},
-
-              updated (#{ticket.title}) via i18n(#{article.type.name}).
-
-              Group: #{ticket.group.name}
-              Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-              State: i18n(#{ticket.state.name})
-
-              From: #{article.from}
-              <snip>
-              #{article.body}
-              </snip>
-
-              #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
-              '
-            },
-            ticket,
-            article,
-            'follow up',
-          )
+        if !listObjects[ticket.id][:type] || listObjects[ticket.id][:type] == 'update'
+          listObjects[ticket.id][:type] = event[:type]
         end
+        if event[:changes]
+          listObjects[ticket.id][:changes] = event[:changes]
+        end
+      #else
+      #  raise "unknown object for notification #{event[:name]}"
       end
     }
+    listObjects
   end
 
   def self.send_notify(data, ticket, article, type)
@@ -205,22 +185,84 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     #puts 'before_update'
-    current = record.class.find(record.id)
+    #current = record.class.find(record.id)
+
+    real_changes = {}
+    record.changes.each {|key, value|
+      next if key == 'updated_at'
+      next if key == 'first_response'
+      next if key == 'last_contact_agent'
+      next if key == 'last_contact_customer'
+      next if key == 'last_contact'
+      next if key == 'article_count'
+      next if key == 'create_article_type_id'
+      next if key == 'create_article_sender_id'
+      real_changes[key] = value
+    }
+
+    return if real_changes.empty?
+
+    human_changes = {}
+    real_changes.each {|key, value|
+
+      # get attribute name
+      attribute_name = key.to_s
+      if attribute_name[-3,3] == '_id'
+        attribute_name = attribute_name[ 0, attribute_name.length-3 ]
+      end
+      if key == attribute_name
+        human_changes[key] = value
+      end
+
+      value_id = []
+      value_str = [ value[0], value[1] ]
+      if key.to_s[-3,3] == '_id'
+        value_id[0] = value[0]
+        value_id[1] = value[1]
+
+        if record.respond_to?( attribute_name ) && record.send(attribute_name)
+          relation_class = record.send(attribute_name).class
+          if relation_class && value_id[0]
+            relation_model = relation_class.lookup( :id => value_id[0] )
+            if relation_model
+              if relation_model['name']
+                value_str[0] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[0] = relation_model.send('fullname')
+              end
+            end
+          end
+          if relation_class && value_id[1]
+            relation_model = relation_class.lookup( :id => value_id[1] )
+            if relation_model
+              if relation_model['name']
+                value_str[1] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[1] = relation_model.send('fullname')
+              end
+            end
+          end
+        end
+      end
+      human_changes[attribute_name] = [value_str[0].to_s, value_str[1].to_s]
+    }
 
     # do not send anything if nothing has changed
-    return if current.attributes == record.attributes
+    return if human_changes.empty?
 
     #    puts 'UPDATE!!!!!!!!'
+    #    puts "changes #{record.changes.inspect}"
     #    puts 'current'
     #    puts current.inspect
     #    puts 'record'
     #    puts record.inspect
 
     e = {
-      :name => record.class.name,
-      :type => 'update',
-      :data => record,
-      :id   => record.id,
+      :name    => record.class.name,
+      :type    => 'update',
+      :data    => record,
+      :changes => human_changes,
+      :id      => record.id,
     }
     EventBuffer.add(e)
   end

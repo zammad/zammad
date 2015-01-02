@@ -17,20 +17,20 @@ class Observer::Ticket::Notification::BackgroundJob
     if data[:recipient] == 'group'
       recipients = ticket.agent_of_group()
 
-      # owner
+    # owner
     elsif data[:recipient] == 'owner'
       if ticket.owner_id != 1
         recipients.push ticket.owner
       end
 
-      # customer
+    # customer
     elsif data[:recipient] == 'customer'
       if ticket.customer_id != 1
         # temporarily disabled
         #        recipients.push ticket.customer
       end
 
-      # owner or group of agents to work on
+    # owner or group of agents to work on
     elsif data[:recipient] == 'to_work_on'
       if ticket.owner_id != 1
         recipients.push ticket.owner
@@ -43,6 +43,13 @@ class Observer::Ticket::Notification::BackgroundJob
     recipient_list = ''
     notification_subject = ''
     recipients.each do |user|
+
+      next if ticket.updated_by_id == ticket.owner_id
+
+      # create desktop notification
+
+
+      # create online notification
       OnlineNotification.add(
         :type             => @type,
         :object           => 'Ticket',
@@ -52,6 +59,7 @@ class Observer::Ticket::Notification::BackgroundJob
         :user_id          => user.id,
       )
 
+      # create email notification
       next if !user.email || user.email == ''
 
       # add recipient_list
@@ -88,6 +96,7 @@ class Observer::Ticket::Notification::BackgroundJob
 
     # add history record
     if recipient_list != ''
+      puts "send... #{recipient_list} #{ticket.id}"
       History.add(
         :o_id                   => ticket.id,
         :history_type           => 'notification',
