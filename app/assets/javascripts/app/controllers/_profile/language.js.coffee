@@ -12,7 +12,7 @@ class Index extends App.Controller
     html = $( App.view('profile/language')() )
 
     configure_attributes = [
-      { name: 'locale', display: '', tag: 'select', null: false, class: 'input span4', options: { de: 'Deutsch', en: 'English (United States)', 'en-CA': 'English (Canada)', 'en-GB': 'English (United Kingdom)' }, default: App.i18n.get()  },
+      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: { de: 'Deutsch', en: 'English (United States)', 'en-CA': 'English (Canada)', 'en-GB': 'English (United Kingdom)' }, default: App.i18n.get()  },
     ]
 
     @form = new App.ControllerForm(
@@ -68,4 +68,3 @@ class Index extends App.Controller
     )
 
 App.Config.set( 'Language', { prio: 1000, name: 'Language', parent: '#profile', target: '#profile/language', controller: Index }, 'NavBarProfile' )
-

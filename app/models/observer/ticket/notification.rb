@@ -20,80 +20,9 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # get uniq objects
     listObjects = get_uniq_changes(list)
     listObjects.each {|ticket_id, item|
-      ticket  = item[:ticket]
-      article = item[:article] || ticket.articles[-1]
 
-      # if create, send create message / block update messages
-      if item[:type] == 'create'
-        puts 'send ticket create notify to agent'
-
-        article_content = ''
-        if item[:article]
-          article_content = '<snip>
-#{article.body}
-</snip>'
-        end
-        send_notify(
-          {
-            :event     => item[:type],
-            :recipient => 'to_work_on', # group|owner|to_work_on|customer
-            :subject   => 'New Ticket (#{ticket.title})',
-            :body      => 'Hi #{recipient.firstname},
-
-            a new Ticket (#{ticket.title}) via i18n(#{article.type.name}) by #{ticket.updated_by.fullname}.
-
-            Group: #{ticket.group.name}
-            Owner: #{ticket.owner.firstname} #{ticket.owner.lastname}
-            State: i18n(#{ticket.state.name})
-
-            ' + article_content + '
-
-            #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
-            '
-          },
-          ticket,
-          article,
-          'new ticket'
-        )
-      end
-
-      # if update, send update message, add changes to message
-      if item[:type] == 'update'
-        #puts "CHANGESSS #{item[:changes].inspect}"
-        puts 'send ticket update notify to agent'
-        changes = ''
-        item[:changes].each {|key,value|
-          changes = "#{key}: #{value[0]} -> #{value[1]}"
-        }
-        article_content = ''
-        if item[:article]
-          article_content = '<snip>
-#{article.body}
-</snip>'
-        end
-
-        send_notify(
-          {
-            :event     => item[:type],
-            :recipient => 'to_work_on', # group|owner|to_work_on
-            :subject   => 'Updated (#{ticket.title})',
-            :body      => 'Hi #{recipient.firstname},
-
-            updated (#{ticket.title}) by #{ticket.updated_by.fullname}.
-
-            Changes:
-            ' + changes + '
-
-            ' + article_content + '
-
-            #{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}
-            '
-          },
-          ticket,
-          article,
-          'update ticket',
-        )
-      end
+      # send background job
+      Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( item ) )
     }
   end
 
@@ -103,11 +32,14 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
   result = {
     :1 => {
-      :type => 'create',
+      :type       => 'create',
+      :ticket_id  => 123,
+      :article_id => 123,
     },
     :9 = {
-      :type => 'update',
-      :changes => {
+      :type      => 'update',
+      :ticket_id => 123,
+      :changes   => {
         :attribute1 => [before,now],
         :attribute2 => [before,now],
       }
@@ -131,7 +63,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         if !listObjects[ticket.id]
           listObjects[ticket.id] = {}
         end
-        listObjects[ticket.id][:article] = article
+        listObjects[ticket.id][:article_id] = article.id
 
       elsif event[:name] == 'Ticket'
         ticket  = Ticket.lookup( :id => event[:id] )
@@ -143,7 +75,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         if !listObjects[ticket.id]
           listObjects[ticket.id] = {}
         end
-        listObjects[ticket.id][:ticket] = ticket
+        listObjects[ticket.id][:ticket_id] = ticket.id
 
         if !listObjects[ticket.id][:type] || listObjects[ticket.id][:type] == 'update'
           listObjects[ticket.id][:type] = event[:type]
@@ -168,18 +100,6 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       end
     }
     listObjects
-  end
-
-  def self.send_notify(data, ticket, article, type)
-
-    # send background job
-    params = {
-      :ticket_id  => ticket.id,
-      :article_id => article.id,
-      :type       => type,
-      :data       => data,
-    }
-    Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( params ) )
   end
 
   def after_create(record)

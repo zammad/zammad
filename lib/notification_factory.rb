@@ -108,10 +108,11 @@ module NotificationFactory
     Channel::EmailSend.send(
       {
 #        :in_reply_to => self.in_reply_to,
-        :from       => sender,
-        :to         => data[:recipient][:email],
-        :subject    => data[:subject],
-        :body       => data[:body],
+        :from         => sender,
+        :to           => data[:recipient][:email],
+        :subject      => data[:subject],
+        :body         => data[:body],
+        :content_type => 'text/html',
       },
       true
     )

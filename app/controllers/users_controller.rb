@@ -156,7 +156,7 @@ class UsersController < ApplicationController
         # prepare subject & body
         [:subject, :body].each { |key|
           data[key.to_sym] = NotificationFactory.build(
-            :locale  => user.locale,
+            :locale  => user.preferences[:locale],
             :string  => data[key.to_sym],
             :objects => {
               :token        => token,

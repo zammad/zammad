@@ -235,7 +235,7 @@ class TicketsController < ApplicationController
 
       # replace tags
       signature['body'] = NotificationFactory.build(
-        :locale  => current_user.locale,
+        :locale  => current_user.preferences[:locale],
         :string  => signature['body'],
         :objects => {
           :ticket   => ticket,

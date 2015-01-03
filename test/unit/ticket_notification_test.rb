@@ -77,7 +77,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :updated_by_id => customer.id,
       :created_by_id => customer.id,
     )
-    assert( ticket1, "ticket created" )
+    assert( ticket1, "ticket created - ticket notification simple" )
 
     # execute ticket events
     Observer::Ticket::Notification.transaction
@@ -85,8 +85,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal( 1, notification_check(ticket1, agent1), 'agent 1 notification count check' )
-    assert_equal( 1, notification_check(ticket1, agent2), 'agent 2 notification count check' )
+    assert_equal( 1, notification_check(ticket1, agent1), ticket1.id )
+    assert_equal( 1, notification_check(ticket1, agent2), ticket1.id )
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
@@ -99,8 +99,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal( 2, notification_check(ticket1, agent1), 'agent 1 notification count check' )
-    assert_equal( 2, notification_check(ticket1, agent2), 'agent 2 notification count check' )
+    assert_equal( 2, notification_check(ticket1, agent1), ticket1.id )
+    assert_equal( 2, notification_check(ticket1, agent2), ticket1.id )
 
     # add article to ticket
     article_note = Ticket::Article.create(
@@ -151,8 +151,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert( ticket2, "ticket created" )
 
     # verify notifications to no one
-    assert_equal( 0, notification_check(ticket2, agent1), 'agent 1 notification count check' )
-    assert_equal( 0, notification_check(ticket2, agent2), 'agent 2 notification count check' )
+    assert_equal( 0, notification_check(ticket2, agent1), ticket2.id )
+    assert_equal( 0, notification_check(ticket2, agent2), ticket2.id )
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #2"
@@ -166,8 +166,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal( 0, notification_check(ticket2, agent1), 'agent 1 notification count check' )
-    assert_equal( 0, notification_check(ticket2, agent2), 'agent 2 notification count check' )
+    assert_equal( 0, notification_check(ticket2, agent1), ticket2.id )
+    assert_equal( 0, notification_check(ticket2, agent2), ticket2.id )
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #3"
@@ -181,8 +181,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal( 1, notification_check(ticket2, agent1), 'agent 1 notification count check' )
-    assert_equal( 0, notification_check(ticket2, agent2), 'agent 2 notification count check' )
+    assert_equal( 1, notification_check(ticket2, agent1), ticket2.id )
+    assert_equal( 0, notification_check(ticket2, agent2), ticket2.id )
 
 
 
@@ -218,8 +218,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert( ticket3, "ticket created" )
 
     # verify notifications to agent1 and not to agent2
-    assert_equal( 1, notification_check(ticket3, agent1), 'agent 1 notification count check' )
-    assert_equal( 0, notification_check(ticket3, agent2), 'agent 2 notification count check' )
+    assert_equal( 1, notification_check(ticket3, agent1), ticket3.id )
+    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #2"
@@ -233,8 +233,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal( 1, notification_check(ticket3, agent1), 'agent 1 notification count check' )
-    assert_equal( 0, notification_check(ticket3, agent2), 'agent 2 notification count check' )
+    assert_equal( 1, notification_check(ticket3, agent1), ticket3.id )
+    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #3"
@@ -248,8 +248,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal( 2, notification_check(ticket3, agent1), 'agent 1 notification count check' )
-    assert_equal( 0, notification_check(ticket3, agent2), 'agent 2 notification count check' )
+    assert_equal( 2, notification_check(ticket3, agent1), ticket3.id )
+    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
 
 
     delete = ticket1.destroy

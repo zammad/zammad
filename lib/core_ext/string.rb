@@ -77,4 +77,17 @@ class String
     links = nil
     text.chomp
   end
+
+=begin
+
+  html = text_string.text2html
+
+=end
+
+  def text2html
+    text = CGI.escapeHTML( self )
+    text.gsub!(/\n/, '<br>')
+    text.chomp
+  end
+
 end
