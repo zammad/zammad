@@ -369,41 +369,19 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # check changed attributes
     human_changes = bg.human_changes(agent1,ticket1)
     assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert_equal( '1 low', human_changes['Priority'][0] )
-    assert_equal( '2 normal', human_changes['Priority'][1] )
+    assert_equal( 'i18n(1 low)', human_changes['Priority'][0] )
+    assert_equal( 'i18n(2 normal)', human_changes['Priority'][1] )
     assert_not( human_changes['priority_id'] )
 
     # en template
-    template = bg.template_update(agent1, ticket1, article, human_changes)
-    assert( template[:subject] )
-    assert( template[:body] )
-    assert_match( /Priority/, template[:body] )
-    assert_match( /1 low/, template[:body] )
-    assert_match( /3 normal/, template[:body] )
-
-    # en notification
-    body = NotificationFactory.build(
-      :locale  => agent1.preferences[:locale],
-      :string  => template[:body],
-      :objects => {
-        :ticket    => ticket1,
-        :article   => article,
-        :recipient => agent1,
-      }
-    )
-    assert_match( /Priority/, body )
-    assert_match( /1 low/, body )
-    assert_match( /3 normal/, body )
-
-    # de template
     template = bg.template_update(agent2, ticket1, article, human_changes)
     assert( template[:subject] )
     assert( template[:body] )
     assert_match( /Priority/, template[:body] )
     assert_match( /1 low/, template[:body] )
-    assert_match( /3 normal/, template[:body] )
+    assert_match( /2 normal/, template[:body] )
 
-    # de notification
+    # en notification
     body = NotificationFactory.build(
       :locale  => agent2.preferences[:locale],
       :string  => template[:body],
@@ -413,9 +391,31 @@ class TicketNotificationTest < ActiveSupport::TestCase
         :recipient => agent2,
       }
     )
+    assert_match( /Priority/, body )
+    assert_match( /1 low/, body )
+    assert_match( /2 normal/, body )
+
+    # de template
+    template = bg.template_update(agent1, ticket1, article, human_changes)
+    assert( template[:subject] )
+    assert( template[:body] )
+    assert_match( /Priority/, template[:body] )
+    assert_match( /1 low/, template[:body] )
+    assert_match( /2 normal/, template[:body] )
+
+    # de notification
+    body = NotificationFactory.build(
+      :locale  => agent1.preferences[:locale],
+      :string  => template[:body],
+      :objects => {
+        :ticket    => ticket1,
+        :article   => article,
+        :recipient => agent1,
+      }
+    )
 
     assert_match( /Priorität/, body )
-    assert_match( /1 gering/, body )
+    assert_match( /1 niedrig/, body )
     assert_match( /3 normal/, body )
 
   end
