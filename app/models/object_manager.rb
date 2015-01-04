@@ -68,19 +68,20 @@ list of all attributes
 add a new activity entry for an object
 
   ObjectManager::Attribute.add(
-    :object     => 'Ticket',
-    :name       => 'group_id',
-    :frontend   => 'Group',
-    :data_type  => 'select',
+    :object      => 'Ticket',
+    :name        => 'group_id',
+    :frontend    => 'Group',
+    :data_type   => 'select',
     :data_option => {
-      :relation => 'Group',
+      :relation           => 'Group',
       :relation_condition => { :access => 'rw' },
-      :multiple => false,
-      :null     => true,
+      :multiple           => false,
+      :null               => true,
+      :translate          => false,
     },
-    :editable           => false,
-    :active             => true,
-    :screens            => {
+    :editable => false,
+    :active   => true,
+    :screens  => {
       :create => {
         '-all-' => {
           :required => true,
@@ -92,12 +93,12 @@ add a new activity entry for an object
         },
       },
     },
-    :pending_migration  => false,
-    :position           => 20,
-    :created_by_id      => 1,
-    :updated_by_id      => 1,
-    :created_at         => '2014-06-04 10:00:00',
-    :updated_at         => '2014-06-04 10:00:00',
+    :pending_migration => false,
+    :position          => 20,
+    :created_by_id     => 1,
+    :updated_by_id     => 1,
+    :created_at        => '2014-06-04 10:00:00',
+    :updated_at        => '2014-06-04 10:00:00',
   )
 
 
@@ -181,6 +182,31 @@ returns:
       attributes.push data
     }
     attributes
+  end
+
+=begin
+
+get user based list of object attributes as hash
+
+  attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
+
+returns:
+
+  {
+    'api_key'       => { :name => 'api_key', :display => 'API KEY', :tag => 'input', :null => true, :edit => true, :maxlength => 32 },
+    'api_ip_regexp' => { :name => 'api_ip_regexp', :display => 'API IP RegExp', :tag => 'input', :null => true, :edit => true },
+    'api_ip_max'    => { :name => 'api_ip_max', :display => 'API IP Max', :tag => 'input', :null => true, :edit => true },
+  }
+
+=end
+
+  def self.by_object_as_hash(object, user)
+    list = self.by_object(object, user)
+    hash = {}
+    list.each {|item|
+      hash[ item[:name] ] = item
+    }
+    hash
   end
 
 end
