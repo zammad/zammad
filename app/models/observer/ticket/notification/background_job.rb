@@ -136,10 +136,16 @@ class Observer::Ticket::Notification::BackgroundJob
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
+    #puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
-    @changes.each {|key,value|
-      #user_related_changes[key] = value
-      if attribute_list[key.to_s]
+    @changes.each {|key, value|
+
+      # if no config exists, use all attributes
+      if !attribute_list || attribute_list.empty?
+        user_related_changes[key] = value
+
+      # if config exists, just use existing attributes for user
+      elsif attribute_list[key.to_s]
         user_related_changes[key] = value
       end
     }
@@ -212,7 +218,7 @@ class Observer::Ticket::Notification::BackgroundJob
       subject = 'Neues Ticket (#{ticket.title})'
       body    = 'Hallo #{recipient.firstname},
 
-es wurde ein neues Ticket (#{ticket.title}) von #{ticket.updated_by.fullname} erstellt.
+es wurde ein neues Ticket (#{ticket.title}) von "#{ticket.updated_by.fullname}" erstellt.
 
 Gruppe: #{ticket.group.name}
 Besitzer: #{ticket.owner.fullname}
@@ -226,7 +232,7 @@ Status: i18n(#{ticket.state.name})
       subject = 'New Ticket (#{ticket.title})'
       body    = 'Hi #{recipient.firstname},
 
-a new Ticket (#{ticket.title}) has been created by #{ticket.updated_by.fullname}.
+a new Ticket (#{ticket.title}) has been created by "#{ticket.updated_by.fullname}".
 
 Group: #{ticket.group.name}
 Owner: #{ticket.owner.fullname}
@@ -263,7 +269,7 @@ State: i18n(#{ticket.state.name})
       subject = 'Ticket aktualisiert (#{ticket.title})'
       body    = 'Hallo #{recipient.firstname},
 
-Ticket (#{ticket.title}) wurde von #{ticket.updated_by.fullname} aktualisiert.
+Ticket (#{ticket.title}) wurde von "#{ticket.updated_by.fullname}" aktualisiert.
 
 Änderungen:
 ' + changes + '
@@ -275,7 +281,7 @@ Ticket (#{ticket.title}) wurde von #{ticket.updated_by.fullname} aktualisiert.
       subject = 'Updated Ticket (#{ticket.title})'
       body    = 'Hi #{recipient.firstname},
 
-Ticket (#{ticket.title}) has been updated by #{ticket.updated_by.fullname}.
+Ticket (#{ticket.title}) has been updated by "#{ticket.updated_by.fullname}".
 
 Changes:
 ' + changes + '

@@ -177,7 +177,7 @@ returns:
         }
       end
       if item.data_option
-        data = data.merge( item.data_option )
+        data = data.merge( item.data_option.symbolize_keys )
       end
       attributes.push data
     }
