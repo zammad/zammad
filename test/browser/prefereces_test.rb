@@ -47,6 +47,28 @@ class PreferencesTest < TestCase
             :area    => 'body',
             :value   => 'Language',
           },
+          {
+            :execute => 'select',
+            :css     => '.language_item select[name="locale"]',
+            :value   => 'Deutsch',
+          },
+          {
+            :execute => 'click',
+            :css     => '.content button[type="submit"]',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Sprache',
+          },
+          {
+            :execute => 'reload',
+          },
+          {
+            :execute => 'watch_for',
+            :area    => 'body',
+            :value   => 'Sprache',
+          },
         ],
       },
     ]

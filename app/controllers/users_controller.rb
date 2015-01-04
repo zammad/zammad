@@ -509,8 +509,8 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
       params[:user].each {|key, value|
         current_user.preferences[key.to_sym] = value
       }
+      current_user.save
     end
-    current_user.save
     render :json => { :message => 'ok' }, :status => :ok
   end
 

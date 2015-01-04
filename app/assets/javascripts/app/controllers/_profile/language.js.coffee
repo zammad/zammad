@@ -25,7 +25,7 @@ class Index extends App.Controller
   update: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    error = @form.validate(params)
+    error  = @form.validate(params)
     if error
       @formValidate( form: e.target, errors: error )
       return false
@@ -35,13 +35,13 @@ class Index extends App.Controller
     # get data
     @locale = params['locale']
     @ajax(
-      id:   'preferences'
-      type: 'PUT'
-      url:  @apiPath + '/users/preferences'
-      data: JSON.stringify(params)
+      id:          'preferences'
+      type:        'PUT'
+      url:         @apiPath + '/users/preferences'
+      data:        JSON.stringify({user:params})
       processData: true
-      success: @success
-      error:   @error
+      success:     @success
+      error:       @error
     )
 
   success: (data, status, xhr) =>
