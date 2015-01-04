@@ -209,42 +209,55 @@ class Observer::Ticket::Notification::BackgroundJob
   def template_create(user, ticket, article, ticket_changes)
     article_content = ''
     if article
-      article_content = '<snip>
-#{article.body}
-</snip>'
+      article_content = '&lt;snip&gt;
+<blockquote>
+#{article.body.text2html}
+</blockquote>
+&lt;/snip&gt;
+<br>'
     end
 
     if user.preferences[:locale] =~ /^de/i
       subject = 'Neues Ticket (#{ticket.title})'
-      body    = 'Hallo #{recipient.firstname},
-
-es wurde ein neues Ticket (#{ticket.title}) von "#{ticket.updated_by.fullname}" erstellt.
-
-Gruppe: #{ticket.group.name}
-Besitzer: #{ticket.owner.fullname}
-Status: i18n(#{ticket.state.name})
-
+      body    = '<div>Hallo #{recipient.firstname.text2html},</div>
+<br>
+<div>
+es wurde ein neues Ticket (#{ticket.title.text2html}) von "<b>#{ticket.updated_by.fullname.text2html}</b>" erstellt.
+</div>
+<br>
+<div>
+i18n(Group): #{ticket.group.name.text2html}<br>
+i18n(Owner): #{ticket.owner.fullname.text2html}<br>
+i18n(State): i18n(#{ticket.state.name.text2html})<br>
+</div>
+<br>
+<div>
 ' + article_content + '
-
+</div>
 '
     else
 
       subject = 'New Ticket (#{ticket.title})'
-      body    = 'Hi #{recipient.firstname},
-
-a new Ticket (#{ticket.title}) has been created by "#{ticket.updated_by.fullname}".
-
-Group: #{ticket.group.name}
-Owner: #{ticket.owner.fullname}
-State: i18n(#{ticket.state.name})
-
+      body    = '<div>Hi #{recipient.firstname.text2html},</div>
+<br>
+<div>
+a new Ticket (#{ticket.title.text2html}) has been created by "<b>#{ticket.updated_by.fullname.text2html}</b>".
+</div>
+<br>
+<div>
+Group: #{ticket.group.name.text2html}<br>
+Owner: #{ticket.owner.fullname.text2html}<br>
+State: i18n(#{ticket.state.name.text2html})<br>
+</div>
+<br>
+<div>
 ' + article_content + '
-
+</div>
 '
 
     end
 
-    body = template_header(user) + body.chomp.text2html
+    body = template_header(user) + body
     body += template_footer(user, ticket, article)
 
     template = {
@@ -257,41 +270,54 @@ State: i18n(#{ticket.state.name})
   def template_update(user, ticket, article, ticket_changes)
     changes = ''
     ticket_changes.each {|key,value|
-      changes += "i18n(#{key}): #{value[0]} -> #{value[1]}\n"
+      changes += "i18n(#{key.to_s.text2html}): #{value[0].to_s.text2html} -> #{value[1].to_s.text2html}<br>\n"
     }
     article_content = ''
     if article
-      article_content = '<snip>
-#{article.body}
-</snip>'
+      article_content = '&lt;snip&gt;
+<blockquote type="cite">
+#{article.body.text2html}
+</blockquote>
+&lt;/snip&gt;
+<br>'
     end
     if user.preferences[:locale] =~ /^de/i
-      subject = 'Ticket aktualisiert (#{ticket.title})'
-      body    = 'Hallo #{recipient.firstname},
-
-Ticket (#{ticket.title}) wurde von "#{ticket.updated_by.fullname}" aktualisiert.
-
-Änderungen:
+      subject = 'Ticket aktualisiert (#{ticket.title.text2html})'
+      body    = '<div>Hallo #{recipient.firstname.text2html},</div>
+<br>
+<div>
+Ticket (#{ticket.title.text2html}) wurde von "<b>#{ticket.updated_by.fullname.text2html}</b>" aktualisiert.
+</div>
+<br>
+<div>
+Änderungen:<br>
 ' + changes + '
-
+</div>
+<br>
+<div>
 ' + article_content + '
-
+</div>
 '
     else
-      subject = 'Updated Ticket (#{ticket.title})'
-      body    = 'Hi #{recipient.firstname},
-
-Ticket (#{ticket.title}) has been updated by "#{ticket.updated_by.fullname}".
-
-Changes:
+      subject = 'Updated Ticket (#{ticket.title.text2html})'
+      body    = '<div>Hi #{recipient.firstname.text2html},</div>
+<br>
+<div>
+Ticket (#{ticket.title.text2html}) has been updated by "<b>#{ticket.updated_by.fullname.text2html}</b>".
+</div>
+<br>
+<div>
+Changes:<br>
 ' + changes + '
-
+</div>
+<br>
+<div>
 ' + article_content + '
-
+</div>
 '
     end
 
-    body = template_header(user) + body.chomp.text2html
+    body = template_header(user) + body
     body += template_footer(user,ticket, article)
 
     template = {
@@ -363,8 +389,9 @@ Changes:
 
   def template_footer(user, ticket, article)
     '
-<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">i18n(View the Ticket directly here)</a>
-
+<p>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">i18n(View this directly here)</a>
+</p>
 <div class="footer">
   <a href="#{config.http_type}://#{config.fqdn}/#profile/notifications">i18n(Manage your notifications settings)</a>
 </div>

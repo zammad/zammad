@@ -65,9 +65,7 @@ module NotificationFactory
             # add body quote
             if object_name == 'article' && method == 'body'
               if data[:objects][:article].content_type == 'text/html'
-                object_refs = object_refs.html2text.message_quote.chomp
-              else
-                object_refs = object_refs.word_wrap( :line_width => 82 ).message_quote.chomp
+                object_refs = object_refs.html2text.chomp
               end
             end
           }
