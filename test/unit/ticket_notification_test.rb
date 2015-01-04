@@ -15,6 +15,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
     :active        => true,
     :roles         => roles,
     :groups        => groups,
+    :preferences   => {
+      :locale => 'de',
+    },
     :updated_by_id => 1,
     :created_by_id => 1,
   )
@@ -27,6 +30,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
     :active        => true,
     :roles         => roles,
     :groups        => groups,
+    :preferences   => {
+      :locale => 'en_CA',
+    },
     :updated_by_id => 1,
     :created_by_id => 1,
   )
@@ -303,8 +309,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     assert_equal( 'some notification event test 1', listObjects[ticket1.id][:changes]['title'][0] )
     assert_equal( 'some notification event test 1 - #2', listObjects[ticket1.id][:changes]['title'][1] )
-    assert_equal( '2 normal', listObjects[ticket1.id][:changes]['priority'][0] )
-    assert_equal( '3 high', listObjects[ticket1.id][:changes]['priority'][1] )
+    assert_not( listObjects[ticket1.id][:changes]['priority'] )
+    assert_equal( 2, listObjects[ticket1.id][:changes]['priority_id'][0] )
+    assert_equal( 3, listObjects[ticket1.id][:changes]['priority_id'][1] )
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #3"
@@ -316,8 +323,64 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     assert_equal( 'some notification event test 1', listObjects[ticket1.id][:changes]['title'][0] )
     assert_equal( 'some notification event test 1 - #2 - #3', listObjects[ticket1.id][:changes]['title'][1] )
-    assert_equal( '2 normal', listObjects[ticket1.id][:changes]['priority'][0] )
-    assert_equal( '1 low', listObjects[ticket1.id][:changes]['priority'][1] )
+    assert_not( listObjects[ticket1.id][:changes]['priority'] )
+    assert_equal( 2, listObjects[ticket1.id][:changes]['priority_id'][0] )
+    assert_equal( 1, listObjects[ticket1.id][:changes]['priority_id'][1] )
+
+  end
+
+
+  test 'ticket notification template' do
+
+    # create ticket in group
+    ticket1 = Ticket.create(
+      :title         => 'some notification template test 1',
+      :group         => Group.lookup( :name => 'Users'),
+      :customer      => customer,
+      :state         => Ticket::State.lookup( :name => 'new' ),
+      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
+      :updated_by_id => customer.id,
+      :created_by_id => customer.id,
+    )
+    article = Ticket::Article.create(
+      :ticket_id     => ticket1.id,
+      :from          => 'some_sender@example.com',
+      :to            => 'some_recipient@example.com',
+      :subject       => 'some subject',
+      :message_id    => 'some@id',
+      :body          => 'some message',
+      :internal      => false,
+      :sender        => Ticket::Article::Sender.where(:name => 'Customer').first,
+      :type          => Ticket::Article::Type.where(:name => 'email').first,
+      :updated_by_id => customer.id,
+      :created_by_id => customer.id,
+    )
+    assert( ticket1, "ticket created - ticket notification template" )
+
+    bg = Observer::Ticket::Notification::BackgroundJob.new(
+      :ticket_id  => ticket1.id,
+      :article_id => article.id,
+      :type       => 'update',
+      :changes    => {
+        :priority_id => [1, 2],
+      },
+    )
+    human_changes = bg.human_changes(agent1,ticket1)
+    assert_equal( '1 low', human_changes['priority'][0] )
+    assert_equal( '2 normal', human_changes['priority'][1] )
+    assert_not( human_changes['priority_id'] )
+
+    # en notification
+    template = bg.template_update(agent1, ticket1, article, human_changes)
+    assert( template[:subject] )
+    assert( template[:body] )
+    puts template.inspect
+
+    # de notification
+    template = bg.template_update(agent2, ticket1, article, human_changes)
+    assert( template[:subject] )
+    assert( template[:body] )
+    puts template.inspect
 
   end
 

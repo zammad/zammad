@@ -123,9 +123,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    #puts 'before_update'
-    #current = record.class.find(record.id)
-
+    # ignore certain attributes
     real_changes = {}
     record.changes.each {|key, value|
       next if key == 'updated_at'
@@ -140,68 +138,14 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       real_changes[key] = value
     }
 
-    return if real_changes.empty?
-
-    human_changes = {}
-    real_changes.each {|key, value|
-
-      # get attribute name
-      attribute_name = key.to_s
-      if attribute_name[-3,3] == '_id'
-        attribute_name = attribute_name[ 0, attribute_name.length-3 ]
-      end
-      if key == attribute_name
-        human_changes[key] = value
-      end
-
-      value_id = []
-      value_str = [ value[0], value[1] ]
-      if key.to_s[-3,3] == '_id'
-        value_id[0] = value[0]
-        value_id[1] = value[1]
-
-        if record.respond_to?( attribute_name ) && record.send(attribute_name)
-          relation_class = record.send(attribute_name).class
-          if relation_class && value_id[0]
-            relation_model = relation_class.lookup( :id => value_id[0] )
-            if relation_model
-              if relation_model['name']
-                value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
-              end
-            end
-          end
-          if relation_class && value_id[1]
-            relation_model = relation_class.lookup( :id => value_id[1] )
-            if relation_model
-              if relation_model['name']
-                value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
-              end
-            end
-          end
-        end
-      end
-      human_changes[attribute_name] = [value_str[0].to_s, value_str[1].to_s]
-    }
-
     # do not send anything if nothing has changed
-    return if human_changes.empty?
-
-    #    puts 'UPDATE!!!!!!!!'
-    #    puts "changes #{record.changes.inspect}"
-    #    puts 'current'
-    #    puts current.inspect
-    #    puts 'record'
-    #    puts record.inspect
+    return if real_changes.empty?
 
     e = {
       :name    => record.class.name,
       :type    => 'update',
       :data    => record,
-      :changes => human_changes,
+      :changes => real_changes,
       :id      => record.id,
     }
     EventBuffer.add(e)

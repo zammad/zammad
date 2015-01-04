@@ -78,12 +78,15 @@ class Observer::Ticket::Notification::BackgroundJob
       end
       recipient_list += user.email.to_s
 
+      changes = self.human_changes(user, ticket)
+      next if !changes || changes.empty?
+
       # get user based notification template
       # if create, send create message / block update messages
       if @type == 'create'
-        template = self.template_create(user.preferences[:locale], ticket, article, @changes)
+        template = self.template_create(user, ticket, article, changes)
       elsif @type == 'update'
-        template = self.template_update(user.preferences[:locale], ticket, article, @changes)
+        template = self.template_update(user, ticket, article, changes)
       else
         raise "unknown type for notification #{@type}"
       end
@@ -127,7 +130,77 @@ class Observer::Ticket::Notification::BackgroundJob
     end
   end
 
-  def template_create(lang, ticket, article, ticket_changes)
+  def human_changes(user, record)
+
+    return {} if !@changes
+
+    # only show allowed attributes
+    attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
+    user_related_changes = {}
+    @changes.each {|key,value|
+      #user_related_changes[key] = value
+      if attribute_list[key.to_s]
+        user_related_changes[key] = value
+      end
+    }
+
+    changes = {}
+    user_related_changes.each {|key, value|
+
+      # get attribute name
+      attribute_name           = key.to_s
+      object_manager_attribute = attribute_list[attribute_name]
+      if attribute_name[-3,3] == '_id'
+        attribute_name = attribute_name[ 0, attribute_name.length-3 ]
+      end
+      if key == attribute_name
+        changes[key] = value
+      end
+
+      value_id = []
+      value_str = [ value[0], value[1] ]
+      if key.to_s[-3,3] == '_id'
+        value_id[0] = value[0]
+        value_id[1] = value[1]
+
+        if record.respond_to?( attribute_name ) && record.send(attribute_name)
+          relation_class = record.send(attribute_name).class
+          if relation_class && value_id[0]
+            relation_model = relation_class.lookup( :id => value_id[0] )
+            if relation_model
+              if relation_model['name']
+                value_str[0] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[0] = relation_model.send('fullname')
+              end
+            end
+          end
+          if relation_class && value_id[1]
+            relation_model = relation_class.lookup( :id => value_id[1] )
+            if relation_model
+              if relation_model['name']
+                value_str[1] = relation_model['name']
+              elsif relation_model.respond_to?('fullname')
+                value_str[1] = relation_model.send('fullname')
+              end
+            end
+          end
+        end
+      end
+      display = attribute_name
+      if object_manager_attribute && object_manager_attribute[:display]
+        display = object_manager_attribute[:display]
+      end
+      if object_manager_attribute && object_manager_attribute[:translate]
+        changes[display] = ["i18n(#{value_str[0].to_s})", "i18n(#{value_str[1].to_s})"]
+      else
+        changes[display] = [value_str[0].to_s, value_str[1].to_s]
+      end
+    }
+    changes
+  end
+
+  def template_create(user, ticket, article, ticket_changes)
     article_content = ''
     if article
       article_content = '<snip>
@@ -135,7 +208,7 @@ class Observer::Ticket::Notification::BackgroundJob
 </snip>'
     end
 
-    if lang =~ /^de/i
+    if user.preferences[:locale] =~ /^de/i
       subject = 'Neues Ticket (#{ticket.title})'
       body    = 'Hallo #{recipient.firstname},
 
@@ -165,8 +238,8 @@ State: i18n(#{ticket.state.name})
 
     end
 
-    body = template_header(lang) + body.chomp.text2html
-    body += template_footer(lang, ticket, article)
+    body = template_header(user) + body.chomp.text2html
+    body += template_footer(user, ticket, article)
 
     template = {
       :subject => subject,
@@ -175,10 +248,10 @@ State: i18n(#{ticket.state.name})
     template
   end
 
-  def template_update(lang, ticket, article, ticket_changes)
+  def template_update(user, ticket, article, ticket_changes)
     changes = ''
     ticket_changes.each {|key,value|
-      changes += "#{key}: #{value[0]} -> #{value[1]}\n"
+      changes += "i18n(#{key}): #{value[0]} -> #{value[1]}\n"
     }
     article_content = ''
     if article
@@ -186,7 +259,7 @@ State: i18n(#{ticket.state.name})
 #{article.body}
 </snip>'
     end
-    if lang =~ /^de/i
+    if user.preferences[:locale] =~ /^de/i
       subject = 'Ticket aktualisiert (#{ticket.title})'
       body    = 'Hallo #{recipient.firstname},
 
@@ -212,8 +285,8 @@ Changes:
 '
     end
 
-    body = template_header(lang) + body.chomp.text2html
-    body += template_footer(lang,ticket, article)
+    body = template_header(user) + body.chomp.text2html
+    body += template_footer(user,ticket, article)
 
     template = {
       :subject => subject,
@@ -222,7 +295,7 @@ Changes:
     template
   end
 
-  def template_header(lang)
+  def template_header(user)
     '
 <style type="text/css">
   p, table, div, td {
@@ -282,7 +355,7 @@ Changes:
 '
   end
 
-  def template_footer(lang, ticket, article)
+  def template_footer(user, ticket, article)
     '
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">i18n(View the Ticket directly here)</a>
 
