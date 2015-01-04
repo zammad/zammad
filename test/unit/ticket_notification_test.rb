@@ -416,7 +416,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     assert_match( /Priorität/, body )
     assert_match( /1 niedrig/, body )
-    assert_match( /3 normal/, body )
+    assert_match( /2 normal/, body )
 
   end
 
