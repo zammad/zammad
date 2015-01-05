@@ -890,7 +890,7 @@ class Edit extends App.Controller
     )
 
     @$('[data-name="body"]').ce({
-      mode:      'textonly'
+      mode:      'richtext'
       multiline: true
       maxlength: 2500
     })
@@ -1494,10 +1494,10 @@ class ArticleView extends App.Controller
 
       # quote text
       selectedText = App.Utils.textCleanup( selectedText )
+      selectedText = App.Utils.quote( selectedText )
 
       # convert to html
       selectedText = App.Utils.text2html( selectedText )
-      selectedText = '<blockquote type="cite">' + selectedText + '</blockquote>'
 
       articleNew.body = selectedText + body
 

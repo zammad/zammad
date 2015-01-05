@@ -5,7 +5,7 @@ class App.Utils
     $.trim( ascii )
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
-      .replace(/[ ]\n/g, "\n")          # remove tailing spaces
+      .replace(/[ ]\n/g, "\n")        # remove tailing spaces
       .replace(/\n{3,9}/g, "\n\n")    # remove multible empty lines
 
   # htmlEscapedAndLinkified = App.Utils.text2html( rawText )
@@ -28,9 +28,49 @@ class App.Utils
   @linkify: (ascii) ->
     window.linkify( ascii )
 
+  # wrappedText = App.Utils.wrap( rawText, maxLineLength )
+  @wrap: (ascii, max = 82) ->
+    result        = ''
+    counter_lines = 0
+    lines         = ascii.split(/\n/)
+    for line in lines
+      counter_lines += 1
+      counter_parts  = 0
+      part_length    = 0
+      result_part    = ''
+      parts          = line.split(/\s/)
+      for part in parts
+        counter_parts += 1
+
+        # put overflow of parts to result and start new line
+        if (part_length + part.length) > max
+          part_length = 0
+          result_part = result_part.trim()
+          result_part += "\n"
+          result     += result_part
+          result_part = ''
+
+        part_length += part.length
+        result_part += part
+
+        # add spacer at the end
+        if counter_parts isnt parts.length
+          part_length += 1
+          result_part += ' '
+
+      # put parts to result
+      result     += result_part
+      result_part = ''
+
+      # add new line
+      if counter_lines isnt lines.length
+        result += "\n"
+    result
+
   # quotedText = App.Utils.quote( rawText )
-  @quote: (ascii) ->
+  @quote: (ascii, max = 82) ->
     ascii = @textCleanup(ascii)
+    ascii = @wrap(ascii, max)
     $.trim( ascii )
       .replace /^(.*)$/mg, (match) =>
         if match

@@ -160,6 +160,41 @@ test( "linkify", function() {
 
 });
 
+// wrap
+test( "wrap", function() {
+
+  var source = "some text"
+  var should = 'some text'
+  var result = App.Utils.wrap( source )
+  equal( result, should, source )
+
+  source = "some text\nsome other text\n"
+  should = "some text\nsome other text\n"
+  result = App.Utils.wrap( source )
+  equal( result, should, source )
+
+  source = "some text with some line to wrap"
+  should = "some text with\nsome line to\nwrap"
+  result = App.Utils.wrap( source, 14 )
+  equal( result, should, source )
+
+  source = "some text\nsome other text\n"
+  should = "some text\nsome other text\n"
+  result = App.Utils.wrap( source )
+  equal( result, should, source )
+
+  source = "1234567890 1234567890 1234567890 1234567890"
+  should = "1234567890 1234567890 1234567890 1234567890"
+  result = App.Utils.wrap( source )
+  equal( result, should, source )
+
+  source = "123456789012 123456789012 123456789012"
+  should = "123456789012\n123456789012\n123456789012"
+  result = App.Utils.wrap( source, 14 )
+  equal( result, should, source )
+
+});
+
 // quote
 test( "quote", function() {
 
@@ -182,6 +217,13 @@ test( "quote", function() {
   should = "> Welcome!\n>\n> Thank you for installing Zammad.\n>\n> You will find ..."
   result = App.Utils.quote( source )
   equal( result, should, source )
+
+
+  source = "Welcome! Thank you for installing Zammad. You will find ..."
+  should = "> Welcome! Thank you\n> for installing\n> Zammad. You will\n> find ..."
+  result = App.Utils.quote( source, 20 )
+  equal( result, should, source )
+
 
 });
 
