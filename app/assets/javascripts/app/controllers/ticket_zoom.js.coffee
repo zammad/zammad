@@ -1494,10 +1494,10 @@ class ArticleView extends App.Controller
 
       # quote text
       selectedText = App.Utils.textCleanup( selectedText )
-      selectedText = App.Utils.quote( selectedText )
 
       # convert to html
       selectedText = App.Utils.text2html( selectedText )
+      selectedText = '<blockquote type="cite">' + selectedText + '</blockquote>'
 
       articleNew.body = selectedText + body
 
