@@ -86,7 +86,7 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       {
         :locale => 'de',
         :string => 'Body #{article.body}, Group: #{ticket.group.name}',
-        :result => 'Body > some text, Group: Users',
+        :result => 'Body some text, Group: Users',
       },
       {
         :locale => 'de',
@@ -145,8 +145,8 @@ class NotificationFactoryTest < ActiveSupport::TestCase
       {
         :locale => 'de',
         :string => 'Body #{article.body}, Group: #{ticket.group.name}',
-        :result => 'Body > some text
-> next line, Group: Users',
+        :result => 'Body some text
+next line, Group: Users',
       },
     ]
     tests.each { |test|
