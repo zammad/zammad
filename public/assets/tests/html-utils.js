@@ -248,6 +248,11 @@ test( "htmlClanup", function() {
   result = App.Utils.htmlClanup( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><br></div>"
+  should = "<br>"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
 });
 
 // wrap

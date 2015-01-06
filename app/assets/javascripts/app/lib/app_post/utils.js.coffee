@@ -114,7 +114,7 @@ class App.Utils
     @_removeAttributes( html )
 
     # remove tags & content
-    html.find('br, hr, img').remove()
+    html.find('hr, img').remove()
 
     # remove tags, keep content
     html.find('a').replaceWith( ->
