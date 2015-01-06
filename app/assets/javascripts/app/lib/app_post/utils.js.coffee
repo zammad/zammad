@@ -16,14 +16,6 @@ class App.Utils
     ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
     ascii.replace(/<div><\/div>/g, '<div><br></div>')
 
-  # htmlEscaped = App.Utils.htmlEscape( rawText )
-  @htmlEscape: ( ascii ) ->
-    ascii.replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;')
-
   # htmlEscapedAndLinkified = App.Utils.linkify( rawText )
   @linkify: (ascii) ->
     window.linkify( ascii )
@@ -78,32 +70,54 @@ class App.Utils
         else
           '>'
 
-  @htmlRemoveTags: (textarea) ->
+  # htmlEscaped = App.Utils.htmlEscape( rawText )
+  @htmlEscape: ( ascii ) ->
+    ascii.replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+
+  # textWithoutTags = App.Utils.htmlRemoveTags( html )
+  @htmlRemoveTags: (html) ->
+
     # remove tags, keep content
-    textarea.find('a, div, span, li, ul, ol, a, hr, blockquote, br').replaceWith( ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
-
-  @htmlRemoveRichtext: (textarea) ->
-
-    # remove style and class
-    textarea.find('div, span, li, ul, ol, a').removeAttr( 'style' ).removeAttr( 'class' ).removeAttr( 'title' )
-
-    # remove tags, keep content
-    textarea.find('a, li, ul, ol, a, hr').replaceWith( ->
-      $(@).contents()
-    )
-
-  @htmlClanup: (textarea) ->
-
-    # remove style and class
-    textarea.find('div, span, li, ul, ol, a').removeAttr( 'style' ).removeAttr( 'class' ).removeAttr( 'title' )
 
     # remove tags & content
-    textarea.find('hr').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6, br, hr, img').remove()
+
+    html
+
+  # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext( html )
+  @htmlRemoveRichtext: (html) ->
+
+    # remove style and class
+    @_removeAttributes( html )
 
     # remove tags, keep content
-    textarea.find('a').replaceWith( ->
+    html.find('li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6').replaceWith( ->
+      $(@).contents()
+    )
+
+    # remove tags & content
+    html.find('li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6, br, hr, img').remove()
+
+    html
+
+  # cleanHtmlWithRichText = App.Utils.htmlClanup( html )
+  @htmlClanup: (html) ->
+
+    # remove style and class
+    @_removeAttributes( html )
+
+    # remove tags & content
+    html.find('br, hr, img').remove()
+
+    # remove tags, keep content
+    html.find('a').replaceWith( ->
       $(@).contents()
     )
 
@@ -112,7 +126,7 @@ class App.Utils
     replacementTag = 'div';
 
     # Replace all a tags with the type of replacementTag
-    textarea.find('h1, h2, h3, h4, h5, h6').each( ->
+    html.find('h1, h2, h3, h4, h5, h6').each( ->
       outer = this.outerHTML;
 
       # Replace opening tag
@@ -125,4 +139,11 @@ class App.Utils
 
       $(@).replaceWith(newTag);
     )
+    html
 
+  @_removeAttributes: (html) ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6')
+      .removeAttr( 'style' )
+      .removeAttr( 'class' )
+      .removeAttr( 'title' )
+    html

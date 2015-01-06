@@ -41,62 +41,6 @@ test( "textCleanup", function() {
 
 });
 
-// htmlEscape
-test( "htmlEscape", function() {
-
-  var source = "<"
-  var should = "&lt;"
-  var result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = ">"
-  should = "&gt;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = "&"
-  should = "&amp;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = "&amp;"
-  should = "&amp;amp;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = "&amp ;"
-  should = "&amp;amp ;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = "& amp;"
-  should = "&amp; amp;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = "'test'"
-  should = "&#39;test&#39;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = '"test"'
-  should = "&quot;test&quot;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = "<>"
-  should = "&lt;&gt;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-  source = "<&lt;>"
-  should = "&lt;&amp;lt;&gt;"
-  result = App.Utils.htmlEscape( source )
-  equal( result, should, source )
-
-
-});
-
 // text2html
 test( "text2html", function() {
 
@@ -157,6 +101,152 @@ test( "linkify", function() {
   result = App.Utils.linkify( source )
   equal( result, should, source )
   */
+
+});
+
+// htmlEscape
+test( "htmlEscape", function() {
+
+  var source = "<"
+  var should = "&lt;"
+  var result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = ">"
+  should = "&gt;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = "&"
+  should = "&amp;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = "&amp;"
+  should = "&amp;amp;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = "&amp ;"
+  should = "&amp;amp ;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = "& amp;"
+  should = "&amp; amp;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = "'test'"
+  should = "&#39;test&#39;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = '"test"'
+  should = "&quot;test&quot;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = "<>"
+  should = "&lt;&gt;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+  source = "<&lt;>"
+  should = "&lt;&amp;lt;&gt;"
+  result = App.Utils.htmlEscape( source )
+  equal( result, should, source )
+
+});
+
+// htmlRemoveTags
+test( "htmlRemoveTags", function() {
+
+  var source = "<div>test</div>"
+  var should = "test"
+  var result = App.Utils.htmlRemoveTags( $(source) )
+  console.log('RRRR', result);
+  equal( result.html(), should, source )
+
+  source = "<a href=\"some_link\">some link to somewhere</a>"
+  should = "some link to somewhere"
+  result = App.Utils.htmlRemoveTags( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><a href=\"some_link\">some link to somewhere</a></div>"
+  should = "some link to somewhere"
+  result = App.Utils.htmlRemoveTags( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><a href=\"some_link\">some link to somewhere</a> <div><hr></div> <span>123</span> <img src=\"some_image\"/></div>"
+  should = "some link to somewhere  123 "
+  result = App.Utils.htmlRemoveTags( $(source) )
+  equal( result.html(), should, source )
+
+});
+
+// htmlRemoveRichtext
+test( "htmlRemoveRichtext", function() {
+
+  var source = "<div><a href=\"test\">test</a></div>"
+  var should = "test"
+  var result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<a href=\"some_link\">some link to somewhere</a>"
+  should = "some link to somewhere"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><a href=\"some_link\"></a> test </div>"
+  should = " test "
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><b></b> test </div>"
+  should = " test "
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><div><b></b> test </div></div>"
+  should = "<div> test </div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><div><b></b> test </div><span>123</span></div>"
+  should = "<div> test </div><span>123</span>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><div class=\"xxx\"><b></b> test </div></div>"
+  should = "<div> test </div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+});
+
+// htmlClanup
+test( "htmlClanup", function() {
+
+  var source = "<div><a href=\"test\">test</a></div>"
+  var should = "test"
+  var result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<a href=\"some_link\">some link to somewhere</a>"
+  should = "some link to somewhere"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><h1>some link to somewhere</h1></a>"
+  should = "<div>some link to somewhere</div>"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><h1>some link to somewhere</h1><p><hr></p></div>"
+  should = "<div>some link to somewhere</div><p></p><p></p>"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
 
 });
 
