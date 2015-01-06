@@ -572,8 +572,6 @@ class App.TicketZoom extends App.Controller
 
     console.log('ticket validateion ok')
 
-    @formEnable(e)
-
     # validate article
     articleParams = @formParam( @$('.article-add') )
     console.log "submit article", articleParams
@@ -678,11 +676,22 @@ class App.TicketZoom extends App.Controller
     @localTaskData = data
     App.TaskManager.update( @task_key, { 'state': @localTaskData })
 
-  taskReset: (area, data) =>
+  taskReset: =>
+    # hide reset button
+    @$('.js-reset').addClass('hide')
+
+    # reset task state
     @localTaskData =
       ticket:  {}
       article: {}
     App.TaskManager.update( @task_key, { 'state': @localTaskData })
+
+  @bind(
+    'ui::ticket::taskReset'
+    (data) =>
+      if data.ticket_id is @ticket.id
+        @taskReset()
+  )
 
 class TicketTitle extends App.Controller
   events:
@@ -1218,7 +1227,11 @@ class Edit extends App.Controller
 
   reset: (e) =>
     e.preventDefault()
-    App.TaskManager.update( @task_key, { 'state': {} })
+
+    # reset task
+    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id } )
+
+    # rerender edit area
     @render()
 
 
