@@ -1488,16 +1488,17 @@ class ArticleView extends App.Controller
 
     # add quoted text if needed
     selectedText = App.ClipBoard.getSelected()
-
     if selectedText
       body = @ui.el.find('[data-name="body"]').html() || ''
 
       # quote text
       selectedText = App.Utils.textCleanup( selectedText )
-      selectedText = App.Utils.quote( selectedText )
+      #selectedText = App.Utils.quote( selectedText )
 
       # convert to html
       selectedText = App.Utils.text2html( selectedText )
+      if selectedText
+        selectedText = "<div><br><br/></div><div><blockquote type=\"cite\">#{selectedText}</blockquote></div><div><br></div>"
 
       articleNew.body = selectedText + body
 

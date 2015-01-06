@@ -24,8 +24,8 @@ class Content extends App.ControllerContent
 
     for avatar in @$('.user.avatar')
       avatar = $(avatar)
-      size = switch 
-        when avatar.hasClass('size-80') then 80 
+      size = switch
+        when avatar.hasClass('size-80') then 80
         when avatar.hasClass('size-50') then 50
         else 40
       @createUniqueAvatar avatar, size, avatar.data('firstname'), avatar.data('lastname'), avatar.data('userid')
@@ -641,8 +641,76 @@ class ReferenceSetupWizard extends App.ControllerWizard
     @agentEmail.add(@agentFirstName).add(@agentLastName).val('')
     @agentFirstName.focus()
 
+App.Config.set( 'layout_ref/richtext', ReferenceSetupWizard, 'Routes' )
 
+class RichText extends App.ControllerContent
+  constructor: ->
+    super
+    @render()
 
-App.Config.set( 'layout_ref/setup', ReferenceSetupWizard, 'Routes' )
+    @$('.js-text-oneline').ce({
+      mode:      'textonly'
+      multiline: false
+      maxlength: 250
+    })
+
+    @$('.js-text-multiline').ce({
+      mode:      'textonly'
+      multiline: true
+      maxlength: 250
+    })
+
+    @$('.js-text-richtext').ce({
+      mode:      'richtext'
+      multiline: true
+      maxlength: 250
+    })
+    return
+
+    @$('.js-textarea').on('keyup', (e) =>
+      console.log('KU')
+      textarea = @$('.js-textarea')
+      App.Utils.htmlClanup(textarea)
+    )
+
+    @$('.js-textarea').on('paste', (e) =>
+      console.log('paste')
+      #console.log('PPP', e, e.originalEvent.clipboardData)
+
+      execute = =>
+
+        # add marker for cursor
+        getFirstRange = ->
+          sel = rangy.getSelection();
+          if sel.rangeCount
+            sel.getRangeAt(0)
+          else
+            null
+        range = getFirstRange()
+        if range
+          el = document.createElement('span')
+          $(el).attr('data-cursor', 1)
+          range.insertNode(el)
+          rangy.getSelection().setSingleRange(range)
+
+        # cleanup
+        textarea = @$('.js-textarea')
+        App.Utils.htmlClanup(textarea)
+
+        # remove marker for cursor
+        textarea.find('[data-cursor=1]').focus()
+        textarea.find('[data-cursor=1]').remove()
+      @delay( execute, 1)
+
+      return
+    )
+    #editable.style.borderColor = '#54c8eb';
+    #aloha(editable);
+    return
+
+  render: ->
+    @html App.view('layout_ref/richtext')()
+
+App.Config.set( 'layout_ref/richtext', RichText, 'Routes' )
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

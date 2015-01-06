@@ -77,3 +77,52 @@ class App.Utils
           '> ' + match
         else
           '>'
+
+  @htmlRemoveTags: (textarea) ->
+    # remove tags, keep content
+    textarea.find('a, div, span, li, ul, ol, a, hr, blockquote, br').replaceWith( ->
+      $(@).contents()
+    )
+
+  @htmlRemoveRichtext: (textarea) ->
+
+    # remove style and class
+    textarea.find('div, span, li, ul, ol, a').removeAttr( 'style' ).removeAttr( 'class' ).removeAttr( 'title' )
+
+    # remove tags, keep content
+    textarea.find('a, li, ul, ol, a, hr').replaceWith( ->
+      $(@).contents()
+    )
+
+  @htmlClanup: (textarea) ->
+
+    # remove style and class
+    textarea.find('div, span, li, ul, ol, a').removeAttr( 'style' ).removeAttr( 'class' ).removeAttr( 'title' )
+
+    # remove tags & content
+    textarea.find('hr').remove()
+
+    # remove tags, keep content
+    textarea.find('a').replaceWith( ->
+      $(@).contents()
+    )
+
+    # replace tags with generic div
+    # New type of the tag
+    replacementTag = 'div';
+
+    # Replace all a tags with the type of replacementTag
+    textarea.find('h1, h2, h3, h4, h5, h6').each( ->
+      outer = this.outerHTML;
+
+      # Replace opening tag
+      regex = new RegExp('<' + this.tagName, 'i');
+      newTag = outer.replace(regex, '<' + replacementTag);
+
+      # Replace closing tag
+      regex = new RegExp('</' + this.tagName, 'i');
+      newTag = newTag.replace(regex, '</' + replacementTag);
+
+      $(@).replaceWith(newTag);
+    )
+

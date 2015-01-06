@@ -12,6 +12,32 @@
   defaults = {
     mode:     'richtext',
     multiline: true,
+    allowKey: {
+      8: true, // backspace
+      9: true, // tab
+      16: true, // shift
+      17: true, // ctrl
+      18: true, // alt
+      20: true, // cabslock
+      37: true, // up
+      38: true, // right
+      39: true, // down
+      40: true, // left
+      91: true, // cmd left
+      92: true, // cmd right
+    },
+    extraAllowKey: {
+      65: true, // a + ctrl - select all
+      67: true, // c + ctrl - copy
+      86: true, // v + ctrl - paste
+      88: true, // x + ctrl - cut
+      90: true, // z + ctrl - undo
+    },
+    richTextFormatKey: {
+      66: true, // b
+      73: true, // i
+      85: true, // u
+    },
   };
 
   function Plugin( element, options ) {
@@ -28,26 +54,157 @@
       this.options.placeholder = this.$element.data('placeholder')
     }
 
-    // link input
-    if ( !this.options.multiline ) {
-      editorMode = Medium.inlineMode
+    this.preventInput = false
+
+    this.init();
+    // bind
+
+    // bind paste
+  }
+
+
+
+  Plugin.prototype.init = function () {
+    var _this = this
+
+    // handle enter
+    this.$element.on('keydown', function (e) {
+      console.log('keydown', e.keyCode)
+      if ( _this.preventInput ) {
+        console.log('preventInput', _this.preventInput)
+        return
+      }
+
+      // strap the return key being pressed
+      if (e.keyCode === 13) {
+
+        // disbale multi line
+        if ( !_this.options.multiline ) {
+          e.preventDefault()
+          return
+        }
+        // limit check
+        if ( !_this.maxLengthOk( true ) ) {
+          e.preventDefault()
+          return
+        }
+      }
+    })
+
+    this.$element.on('keyup', function (e) {
+      console.log('KU')
+      if ( _this.options.mode === 'textonly' ) {
+        console.log('REMOVE TAGS')
+        if ( !_this.options.multiline ) {
+          App.Utils.htmlRemoveTags(_this.$element)
+        }
+        else {
+          App.Utils.htmlRemoveRichtext(_this.$element)
+        }
+      }
+      else {
+        App.Utils.htmlClanup(_this.$element)
+      }
+    })
+
+
+    // just paste text
+    this.$element.on('paste', function (e) {
+      console.log('paste')
+      if ( _this.options.mode === 'textonly' ) {
+        console.log('REMOVE TAGS')
+        if ( !_this.options.multiline ) {
+          App.Utils.htmlRemoveTags(_this.$element)
+        }
+        else {
+          App.Utils.htmlRemoveRichtext(_this.$element)
+        }
+      }
+      else {
+        App.Utils.htmlClanup(_this.$element)
+      }
+      return true
+      if ( this.options.mode === 'textonly' ) {
+        e.preventDefault()
+        var text
+        if (window.clipboardData) { // IE
+          text = window.clipboardData.getData('Text')
+        }
+        else {
+          text = (e.originalEvent || e).clipboardData.getData('text/plain')
+        }
+        var overlimit = false
+        if (text) {
+
+          // replace new lines
+          if ( !_this.options.multiline ) {
+            text = text.replace(/\n/g, '')
+            text = text.replace(/\r/g, '')
+            text = text.replace(/\t/g, '')
+          }
+
+          // limit length, limit paste string
+          if ( _this.options.maxlength ) {
+            var pasteLength   = text.length
+            var currentLength = _this.$element.text().length
+            var overSize      = ( currentLength + pasteLength ) - _this.options.maxlength
+            if ( overSize > 0 ) {
+              text      = text.substr( 0, pasteLength - overSize )
+              overlimit = true
+            }
+          }
+
+          // insert new text
+          if (document.selection) { // IE
+            var range = document.selection.createRange()
+            range.pasteHTML(text)
+          }
+          else {
+            document.execCommand('inserttext', false, text)
+          }
+          _this.maxLengthOk( overlimit )
+        }
+      }
+    })
+
+    // disable rich text b/u/i
+    if ( this.options.mode === 'textonly' ) {
+      this.$element.on('keydown', function (e) {
+        if ( _this.richTextKey(e) ) {
+          e.preventDefault()
+        }
+      })
     }
 
-    // link textarea
-    else if ( this.options.multiline && this.options.mode != 'richtext' ) {
-      editorMode = Medium.partialMode
-    }
 
-    // rich text
-    else {
-      editorMode = Medium.richMode
-    }
+  }
 
-    // max length validation
-    var validation = function(element) {
+  // check if rich text key is pressed
+  Plugin.prototype.richTextKey = function(e) {
+    // e.altKey
+    // e.ctrlKey
+    // e.metaKey
+    // on mac block e.metaKey + i/b/u
+    if ( !e.altKey && e.metaKey && this.options.richTextFormatKey[ e.keyCode ] ) {
+      return true
+    }
+    // on win block e.ctrlKey + i/b/u
+    if ( !e.altKey && e.ctrlKey && this.options.richTextFormatKey[ e.keyCode ] ) {
+      return true
+    }
+    return false
+  }
+
+  // max length check
+  Plugin.prototype.maxLengthOk = function(typeAhead) {
+    var length = this.$element.text().length
+    if (typeAhead) {
+      length = length + 1
+    }
+    if ( length > this.options.maxlength ) {
 
       // try to set error on framework form
-      var parent = $(element).parent().parent()
+      var parent = this.$element.parent().parent()
       if ( parent.hasClass('controls') ) {
         parent.addClass('has-error')
         setTimeout($.proxy(function(){
@@ -59,31 +216,15 @@
 
       // set validation on element
       else {
-        $(element).addClass('invalid')
+        this.$element.addClass('invalid')
         setTimeout($.proxy(function(){
-            $(element).removeClass('invalid')
+            this.$element.removeClass('invalid')
           }, this), 1000)
 
         return false
       }
     }
-    new Medium({
-        element:          element,
-        modifier:         'auto',
-        placeholder:      this.options.placeholder || '',
-        autofocus:        false,
-        autoHR:           false,
-        mode:             editorMode,
-        maxLength:        this.options.maxlength || -1,
-        maxLengthReached: validation,
-        tags: {
-          'break': 'br',
-          'horizontalRule': 'hr',
-          'paragraph': 'div',
-          'outerLevel': ['pre', 'blockquote', 'figure'],
-          'innerLevel': ['a', 'b', 'u', 'i', 'img', 'strong']
-        },
-    });
+    return true
   }
 
   // get value
