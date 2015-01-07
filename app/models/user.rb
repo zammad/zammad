@@ -294,18 +294,17 @@ returns
     data[:subject] = 'Reset your #{config.product_name} password'
     data[:body]    = 'Forgot your password?
 
-    We received a request to reset the password for your #{config.product_name} account (#{user.login}).
+We received a request to reset the password for your #{config.product_name} account (#{user.login}).
 
-    If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
+If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
 
-    #{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
+#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
 
-    This link takes you to a page where you can change your password.
+This link takes you to a page where you can change your password.
 
-    If you don\'t want to reset your password, please ignore this message. Your password will not be reset.
+If you don\'t want to reset your password, please ignore this message. Your password will not be reset.
 
-    Your #{config.product_name} Team
-    '
+Your #{config.product_name} Team'
 
     # prepare subject & body
     [:subject, :body].each { |key|

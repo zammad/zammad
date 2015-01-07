@@ -2,6 +2,39 @@
 require 'test_helper'
 
 class NotificationFactoryTest < ActiveSupport::TestCase
+  test 'notifications send' do
+    result = NotificationFactory.send(
+      :recipient    => User.find(2),
+      :subject      => 'sime subject',
+      :body         => 'some body',
+      :content_type => '',
+    )
+    assert_match('some body', result.to_s)
+    assert_match('text/plain', result.to_s)
+    assert_no_match('text/html', result.to_s)
+
+    result = NotificationFactory.send(
+      :recipient    => User.find(2),
+      :subject      => 'sime subject',
+      :body         => 'some body',
+      :content_type => 'text/plain',
+    )
+    assert_match('some body', result.to_s)
+    assert_match('text/plain', result.to_s)
+    assert_no_match('text/html', result.to_s)
+
+    result = NotificationFactory.send(
+      :recipient    => User.find(2),
+      :subject      => 'sime subject',
+      :body         => 'some <span>body</span>',
+      :content_type => 'text/html',
+    )
+    assert_match('some body', result.to_s)
+    assert_match('text/plain', result.to_s)
+    assert_match('<span>body</span>', result.to_s)
+    assert_match('text/html', result.to_s)
+  end
+
   test 'notifications base' do
     ticket = Ticket.create(
       :title         => 'some title äöüß',

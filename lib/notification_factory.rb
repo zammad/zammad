@@ -92,9 +92,10 @@ module NotificationFactory
 =begin
 
   success = NotificationFactory.send(
-    :to      => 'somebody@example.com',
-    :subject => 'sime subject',
-    :body    => 'some body'
+    :recipient    => User.find(123),
+    :subject      => 'sime subject',
+    :body         => 'some body',
+    :content_type => '', # optional, e. g. 'text/html'
   )
 
 =end
@@ -103,6 +104,11 @@ module NotificationFactory
     sender = Setting.get('notification_sender')
     Rails.logger.info "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]} (from #{sender})"
 
+    content_type = 'text/plain'
+    if data[:content_type]
+      content_type = data[:content_type]
+    end
+
     Channel::EmailSend.send(
       {
 #        :in_reply_to => self.in_reply_to,
@@ -110,7 +116,7 @@ module NotificationFactory
         :to           => data[:recipient][:email],
         :subject      => data[:subject],
         :body         => data[:body],
-        :content_type => 'text/html',
+        :content_type => content_type,
       },
       true
     )

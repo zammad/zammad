@@ -112,9 +112,10 @@ class Observer::Ticket::Notification::BackgroundJob
       puts "send ticket notifiaction to agent (#{@type}/#{ticket.id}/#{user.email})"
 
       NotificationFactory.send(
-        :recipient => user,
-        :subject   => notification[:subject],
-        :body      => notification[:body]
+        :recipient    => user,
+        :subject      => notification[:subject],
+        :body         => notification[:body],
+        :content_type => 'text/html',
       )
     end
 
