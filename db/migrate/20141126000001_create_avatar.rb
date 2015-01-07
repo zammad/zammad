@@ -18,7 +18,6 @@ class CreateAvatar < ActiveRecord::Migration
     add_index :avatars, [:o_id, :object_lookup_id]
     add_index :avatars, [:store_hash]
     add_index :avatars, [:source]
-    add_index :avatars, [:source_url]
     add_index :avatars, [:default]
   end
 
