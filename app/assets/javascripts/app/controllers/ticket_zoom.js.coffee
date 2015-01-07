@@ -555,6 +555,9 @@ class App.TicketZoom extends App.Controller
     # disable form
     @formDisable(e)
 
+    # stop autosave
+    @autosaveStop()
+
     # validate ticket
     errors = ticket.validate(
       screen: 'edit'
@@ -567,7 +570,7 @@ class App.TicketZoom extends App.Controller
         screen: 'edit'
       )
       @formEnable(e)
-      #@autosaveStart()
+      @autosaveStart()
       return
 
     console.log('ticket validateion ok')
@@ -606,11 +609,13 @@ class App.TicketZoom extends App.Controller
         # check if recipient exists
         if !articleParams['to'] && !articleParams['cc']
           alert( App.i18n.translateContent('Need recipient in "To" or "Cc".') )
+          @autosaveStart()
           return
 
         # check if message exists
         if !articleParams['body']
           alert( App.i18n.translateContent('Text needed') )
+          @autosaveStart()
           return
 
       # check attachment
@@ -619,7 +624,7 @@ class App.TicketZoom extends App.Controller
         attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
         if articleParams['body'].match(/attachment/i) || articleParams['body'].match( attachmentTranslatedRegExp )
           if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-            #@autosaveStart()
+            @autosaveStart()
             return
 
       console.log "article load", articleParams
