@@ -273,10 +273,10 @@ class App.TicketZoom extends App.Controller
             defaults = _.extend( defaults, task_state )
 
           new App.ControllerForm(
-            el:         el.find('.edit')
-            model:      App.Ticket
-            screen:     'edit'
-            params:     App.Ticket.find(ticket.id)
+            el:       el.find('.edit')
+            model:    App.Ticket
+            screen:   'edit'
+            params:   App.Ticket.find(ticket.id)
             handlers: [
               formChanges
             ]
@@ -300,17 +300,17 @@ class App.TicketZoom extends App.Controller
         if !@isRole('Customer')
           el.append('<div class="tags"></div>')
           new App.WidgetTag(
-            el:           el.find('.tags')
-            object_type:  'Ticket'
-            object:       @ticket
-            tags:         @tags
+            el:          el.find('.tags')
+            object_type: 'Ticket'
+            object:      @ticket
+            tags:        @tags
           )
           el.append('<div class="links"></div>')
           new App.WidgetLink(
-            el:           el.find('.links')
-            object_type:  'Ticket'
-            object:       @ticket
-            links:        @links
+            el:          el.find('.links')
+            object_type: 'Ticket'
+            object:      @ticket
+            links:       @links
           )
 
       showTicketHistory = =>
@@ -354,8 +354,8 @@ class App.TicketZoom extends App.Controller
             genericObject: 'User'
             screen: 'edit'
             pageData:
-              title: 'Users'
-              object: 'User'
+              title:   'Users'
+              object:  'User'
               objects: 'Users'
           )
         showCustomer = (el) =>
@@ -387,14 +387,14 @@ class App.TicketZoom extends App.Controller
               id: @ticket.organization_id,
               genericObject: 'Organization'
               pageData:
-                title: 'Organizations'
-                object: 'Organization'
+                title:   'Organizations'
+                object:  'Organization'
                 objects: 'Organizations'
             )
           showOrganization = (el) =>
             new App.WidgetOrganization(
-              el:               el
-              organization_id:  @ticket.organization_id
+              el:              el
+              organization_id: @ticket.organization_id
             )
           items.push {
             head: 'Organization'
@@ -530,10 +530,12 @@ class App.TicketZoom extends App.Controller
     e.stopPropagation()
     e.preventDefault()
     ticketParams = @formParam( @$('.edit') )
-    console.log "submit ticket", ticketParams
 
     # validate ticket
     ticket = App.Ticket.fullLocal( @ticket.id )
+
+    # reset article - should not be resubmited on next ticket update
+    ticket.article = undefined
 
     # update ticket attributes
     for key, value of ticketParams
@@ -627,8 +629,6 @@ class App.TicketZoom extends App.Controller
             @autosaveStart()
             return
 
-      console.log "article load", articleParams
-      #return
       article.load(articleParams)
       errors = article.validate()
       if errors
@@ -643,8 +643,7 @@ class App.TicketZoom extends App.Controller
         return
 
       ticket.article = article
-      console.log('ARR', article)
-    #return
+
     # submit changes
     ticket.save(
       done: (r) =>
@@ -1404,21 +1403,6 @@ class ArticleView extends App.Controller
       return true
     false
 
-  checkIfSignatureIsNeeded: (type) =>
-    console.log('checkIfSignatureIsNeeded', type, @ui.signature)
-    # add signature
-    if @ui.signature && @ui.signature.body && type.name is 'email'
-      body = @ui.el.find('[data-name="body"]').html() || ''
-
-      # convert to html
-      signature = @ui.signature.body
-      signature = App.Utils.text2html( signature )
-      regexp = new RegExp( escapeRegExp( signature ) , 'im')
-      #console.log('aaa', body, regexp)
-      if !body || !body.match(regexp)
-        body = body + signature
-        @ui.el.find('[data-name="body"]').html( body )
-
   replyAll: (e) =>
     @reply(e, true)
 
@@ -1432,9 +1416,6 @@ class ArticleView extends App.Controller
     customer     = App.User.find( article.created_by_id )
 
     @ui.el.find('.article-add').ScrollTo()
-
-    # update form
-    @checkIfSignatureIsNeeded(type)
 
     # empty form
     articleNew = {
@@ -1504,21 +1485,31 @@ class ArticleView extends App.Controller
         if article.cc
           articleNew.cc = addAddresses(articleNew.cc, article.cc)
 
-    # add quoted text if needed
+    # get current body
+    body = @ui.el.find('[data-name="body"]').html() || ''
+
+    # check if signature need to be added
+    if @ui.signature && @ui.signature.body && type.name is 'email'
+      signature = App.Utils.text2html( @ui.signature.body )
+      if App.Utils.signatureCheck( body, signature )
+        body = body + signature
+
+    # check if quote need to be added
     selectedText = App.ClipBoard.getSelected()
     if selectedText
-      body = @ui.el.find('[data-name="body"]').html() || ''
 
-      # quote text
+      # clean selection
       selectedText = App.Utils.textCleanup( selectedText )
-      #selectedText = App.Utils.quote( selectedText )
 
       # convert to html
       selectedText = App.Utils.text2html( selectedText )
       if selectedText
         selectedText = "<div><br><br/></div><div><blockquote type=\"cite\">#{selectedText}</blockquote></div><div><br></div>"
 
-      articleNew.body = selectedText + body
+        # add selected text to body
+        body = selectedText + body
+
+    articleNew.body = body
 
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
 

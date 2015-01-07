@@ -40,23 +40,36 @@
     <%    position = 'right' %>
     <% end %>
     <%- article.created_by.avatar("40", position) %>
-    <div class="flex bubble-gap internal-border">
-      <div class="text-bubble">
-        <div class="bubble-arrow"></div>
-        <%- article.html %>
-        <% if !_.isEmpty( article.attachments ): %>
-          <div class="attachments">
-            <div class="paperclip icon"></div>
-            <h3><%- article.attachments.length %> <%- @T('Attached Files') %></h3>
-            <% for attachment in article.attachments: %>
-              <div class="attachment horizontal">
-                <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment"><%= attachment.filename %></a>
-                <div class="attachment-size"><%= attachment.size %></div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
+    <div class="flex bubble-gap">
+      <div class="internal-border">
+        <div class="text-bubble">
+          <div class="bubble-arrow"></div>
+          <%- article.html %>
+          <% if !_.isEmpty( article.attachments ): %>
+            <div class="attachments">
+              <div class="paperclip icon"></div>
+              <h3><%- article.attachments.length %> <%- @T('Attached Files') %></h3>
+              <% for attachment in article.attachments: %>
+                <div class="attachment horizontal">
+                  <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= article.ticket_id %>/<%= article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment"><%= attachment.filename %></a>
+                  <div class="attachment-size"><%= attachment.size %></div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
+      <% if article.actions: %>
+      <div>
+        <div class="article-actions horizontal stretch">
+          <% for action in article.actions: %>
+            <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action u-clickable<% if action.class: %> <%= action.class %><% end %>">
+              <span class="<%= action.type %> action icon"></span><%- @T( action.name ) %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
     </div>
   </div>
 
@@ -74,16 +87,6 @@
           </div>
         </div>
       </div>
-
-      <% if article.actions: %>
-      <div class="article-actions horizontal stretch">
-        <% for action in article.actions: %>
-          <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action u-clickable<% if action.class: %> <%= action.class %><% end %>">
-            <span class="<%= action.type %> action icon"></span><%- @T( action.name ) %>
-          </a>
-        <% end %>
-      </div>
-      <% end %>
     </div>
   </div>
 
