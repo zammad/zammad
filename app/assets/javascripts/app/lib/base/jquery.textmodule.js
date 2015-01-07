@@ -243,6 +243,7 @@
 
   // paste some content
   Plugin.prototype.paste = function(string) {
+    string = App.Utils.text2html(string) + '<br>'
     if (document.selection) { // IE
       var range = document.selection.createRange()
       range.pasteHTML(string)
@@ -280,7 +281,7 @@
     for (var i = 0; i < this.collection.length; i++) {
       var item = this.collection[i]
       if ( item.id == id ) {
-        var content = item.content + "<br/>\n"
+        var content = item.content
         this.cutInput()
         this.paste(content)
         this.close()
