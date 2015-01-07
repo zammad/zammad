@@ -18,6 +18,7 @@ class UserTest < ActiveSupport::TestCase
           :firstname => 'Firstname',
           :lastname  => 'Lastname',
           :image     => nil,
+          :fullname  => 'Firstname Lastname',
           :email     => 'some@example.com',
           :login     => 'some@example.com',
         },
@@ -88,6 +89,7 @@ class UserTest < ActiveSupport::TestCase
         :create_verify => {
           :firstname => 'Firstname',
           :lastname  => 'Lastname',
+          :fullname  => 'Firstname Lastname',
           :email     => 'firstname.lastname@example.com',
           :login     => 'login-1',
         },
@@ -185,6 +187,59 @@ class UserTest < ActiveSupport::TestCase
           :login     => 'login-5',
         }
       },
+      {
+        :name => '#10 - update create with login/email check',
+        :create => {
+          :firstname     => '',
+          :lastname      => '',
+          :email         => 'caoyaoewfzfw@21222cn.com',
+          :updated_by_id => 1,
+          :created_by_id => 1,
+        },
+        :create_verify => {
+          :firstname => '',
+          :lastname  => '',
+          :fullname  => 'caoyaoewfzfw@21222cn.com',
+          :email     => 'caoyaoewfzfw@21222cn.com',
+          :login     => 'caoyaoewfzfw@21222cn.com',
+        },
+        :update => {
+          :email => 'caoyaoewfzfw@212224cn.com',
+        },
+        :update_verify => {
+          :firstname => '',
+          :lastname  => '',
+          :email     => 'caoyaoewfzfw@212224cn.com',
+          :fullname  => 'caoyaoewfzfw@212224cn.com',
+          :login     => 'caoyaoewfzfw@212224cn.com',
+        }
+      },
+      {
+        :name => '#11 - update create with login/email check',
+        :create => {
+          :firstname     => 'Firstname',
+          :lastname      => 'Lastname',
+          :email         => 'some_tEst11@example.com',
+          :updated_by_id => 1,
+          :created_by_id => 1,
+        },
+        :create_verify => {
+          :firstname => 'Firstname',
+          :lastname  => 'Lastname',
+          :fullname  => 'Firstname Lastname',
+          :email     => 'some_test11@example.com',
+        },
+        :update => {
+          :email => 'some_Test11-1@example.com',
+        },
+        :update_verify => {
+          :firstname => 'Firstname',
+          :lastname  => 'Lastname',
+          :email     => 'some_test11-1@example.com',
+          :fullname  => 'Firstname Lastname',
+          :login     => 'some_test11-1@example.com',
+        }
+      },
     ]
 
     tests.each { |test|
@@ -199,7 +254,11 @@ class UserTest < ActiveSupport::TestCase
 
       test[:create_verify].each { |key, value|
         next if key == :image_md5
-        assert_equal( value, user[key], "create check #{ key } in (#{ test[:name] })" )
+        if user.respond_to?( key )
+          assert_equal( value, user.send(key), "create check #{ key } in (#{ test[:name] })"  )
+        else
+          assert_equal( value, user[key], "create check #{ key } in (#{ test[:name] })" )
+        end
       }
       if test[:create_verify][:image_md5]
         file = Avatar.get_by_hash( user.image )
@@ -211,7 +270,11 @@ class UserTest < ActiveSupport::TestCase
 
         test[:update_verify].each { |key, value|
           next if key == :image_md5
-          assert_equal( value, user[key], "update check #{ key } in (#{ test[:name] })"  )
+          if user.respond_to?( key )
+            assert_equal( value, user.send(key), "update check #{ key } in (#{ test[:name] })"  )
+          else
+            assert_equal( value, user[key], "update check #{ key } in (#{ test[:name] })"  )
+          end
         }
 
         if test[:update_verify][:image_md5]

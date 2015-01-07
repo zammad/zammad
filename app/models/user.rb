@@ -31,7 +31,7 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_create   :check_name, :check_email, :check_login, :check_password
-  before_update   :check_password, :check_email
+  before_update   :check_password, :check_email, :check_login
   after_create    :avatar_check, :notify_clients_after_create
   after_update    :avatar_check, :notify_clients_after_update
   after_destroy   :avatar_destroy, :notify_clients_after_destroy
@@ -94,6 +94,9 @@ returns
         fullname = fullname + ' '
       end
       fullname = fullname + self.lastname
+    end
+    if fullname == '' && self.email
+      fullname = self.email
     end
     fullname
   end
@@ -439,15 +442,26 @@ returns
   end
 
   def check_login
+
+    # use email as login if not given
     if !self.login && self.email
       self.login = self.email
     end
+
+    # if email has changed, login is old email, change also login
+    if self.changes && self.changes['email']
+      if self.changes['email'][0] == self.login
+        self.login = self.email
+      end
+    end
+
+    # check if login already exists
     if self.login
       self.login = self.login.downcase
       check = true
       while check
         exists = User.where( :login => self.login ).first
-        if exists
+        if exists && exists.id != self.id
           self.login = self.login + rand(999).to_s
         else
           check = false
