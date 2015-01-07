@@ -13,6 +13,8 @@ class Ticket::Article < ApplicationModel
   belongs_to    :sender,      :class_name => 'Ticket::Article::Sender'
   belongs_to    :created_by,  :class_name => 'User'
   belongs_to    :updated_by,  :class_name => 'User'
+  before_create :check_subject
+  before_update :check_subject
   after_create  :notify_clients_after_create
   after_update  :notify_clients_after_update
   after_destroy :notify_clients_after_destroy
@@ -26,6 +28,14 @@ class Ticket::Article < ApplicationModel
     :type_id   => true,
     :sender_id => true,
   }
+
+  private
+
+  def check_subject
+    if self.subject
+      self.subject.gsub!(/\s|\t|\r/, ' ')
+    end
+  end
 
   class Flag < ApplicationModel
   end

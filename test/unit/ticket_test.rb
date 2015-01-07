@@ -4,7 +4,7 @@ require 'test_helper'
 class TicketTest < ActiveSupport::TestCase
   test 'ticket create' do
     ticket = Ticket.create(
-      :title         => 'some title äöüß',
+      :title         => "some title\n äöüß",
       :group         => Group.lookup( :name => 'Users'),
       :customer_id   => 2,
       :state         => Ticket::State.lookup( :name => 'new' ),
@@ -14,7 +14,7 @@ class TicketTest < ActiveSupport::TestCase
     )
     assert( ticket, "ticket created" )
 
-    assert_equal( ticket.title, 'some title äöüß', 'ticket.title verify' )
+    assert_equal( ticket.title, 'some title  äöüß', 'ticket.title verify' )
     assert_equal( ticket.group.name, 'Users', 'ticket.group verify' )
     assert_equal( ticket.state.name, 'new', 'ticket.state verify' )
 
@@ -46,14 +46,16 @@ class TicketTest < ActiveSupport::TestCase
     article_note = Ticket::Article.create(
       :ticket_id     => ticket.id,
       :from          => 'some person',
-      :subject       => 'some note',
-      :body          => 'some message',
+      :subject       => "some\nnote",
+      :body          => "some\n message",
       :internal      => true,
       :sender        => Ticket::Article::Sender.where(:name => 'Agent').first,
       :type          => Ticket::Article::Type.where(:name => 'note').first,
       :updated_by_id => 1,
       :created_by_id => 1,
     )
+    assert_equal( article_note.subject, "some note", 'article_note.subject verify - inbound' )
+    assert_equal( article_note.body, "some\n message", 'article_note.body verify - inbound' )
 
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.article_count, 2, 'ticket.article_count verify - note' )

@@ -14,8 +14,8 @@ class Ticket < ApplicationModel
   include Ticket::SearchIndex
   extend Ticket::Search
 
-  before_create   :check_generate, :check_defaults
-  before_update   :check_defaults
+  before_create   :check_generate, :check_defaults, :check_title
+  before_update   :check_defaults, :check_title
   before_destroy  :destroy_dependencies
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
@@ -165,6 +165,12 @@ returns
   def check_generate
     return if self.number
     self.number = Ticket::Number.generate
+  end
+
+  def check_title
+    if self.title
+      self.title.gsub!(/\s|\t|\r/, ' ')
+    end
   end
 
   def check_defaults
