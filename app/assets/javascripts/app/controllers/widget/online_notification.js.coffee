@@ -43,6 +43,11 @@ class App.OnlineNotificationWidget extends App.Controller
     else
       @el.find('.logo').append('<div class="activity-counter">' + count.toString() + '</div>')
 
+  markAllAsSeen: (items) =>
+    for item in items
+      if !item.seen
+        App.OnlineNotification.seen( 'Ticket', item.id )
+
   stop: =>
     @counterUpdate(0)
     @el.find('.logo').popover('destroy')
@@ -68,11 +73,15 @@ class App.OnlineNotificationWidget extends App.Controller
       placement:  'right'
       title: ->
         App.i18n.translateInline( 'Notifications' ) + " <span>#{counter}</span>"
-      content: ->
+      content: =>
         # insert data
-        App.view('widget/online_notification')(
+         html = $( App.view('widget/online_notification')(
           items: items
-        )
+         ))
+         html.on('click', (e) =>
+          e.preventDefault()
+          @markAllAsSeen(items)
+         )
     ).on('shown.bs.popover', =>
       # show frontend times
       @frontendTimeUpdate()
