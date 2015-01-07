@@ -103,7 +103,7 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6, br, hr, img').remove()
+    html.find('li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6, hr, img').remove()
 
     html
 

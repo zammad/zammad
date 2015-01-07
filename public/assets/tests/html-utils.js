@@ -223,6 +223,16 @@ test( "htmlRemoveRichtext", function() {
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><br></div>"
+  should = "<br>"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><div class=\"xxx\"><br></div></div>"
+  should = "<div><br></div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
 });
 
 // htmlClanup
@@ -251,6 +261,11 @@ test( "htmlClanup", function() {
   source = "<div><br></div>"
   should = "<br>"
   result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><div class=\"xxx\"><br></div></div>"
+  should = "<div><br></div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
 });
