@@ -48,6 +48,7 @@
 
     this._defaults = defaults;
     this._name     = pluginName;
+    this._setTimeOutReformat = false;
 
     // take placeholder from markup
     if ( !this.options.placeholder && this.$element.data('placeholder') ) {
@@ -92,11 +93,22 @@
     })
 
     this.$element.on('keyup', function (e) {
-      console.log('KU')
+      console.log('KU', e.ctrlKey)
+      // do not remove tags on space, enter or backspace key, it's needed for FF
       if ( _this.options.mode === 'textonly' ) {
-        console.log('REMOVE TAGS')
         if ( !_this.options.multiline ) {
-          App.Utils.htmlRemoveTags(_this.$element)
+
+          // do tricky this for FF
+          if ( e.keyCode !== 32 && e.keyCode !== 13 && e.keyCode !== 8 )  {
+
+            // start request to remove tags
+            _this.htmlRemoveTags()
+          }
+          else {
+
+            // clear request to delete tags, in FF we need <br> anytime at the end
+            _this.htmlRemoveTagsClearClearTimeout()
+          }
         }
         else {
           App.Utils.htmlRemoveRichtext(_this.$element)
@@ -112,9 +124,8 @@
     this.$element.on('paste', function (e) {
       console.log('paste')
       if ( _this.options.mode === 'textonly' ) {
-        console.log('REMOVE TAGS')
         if ( !_this.options.multiline ) {
-          App.Utils.htmlRemoveTags(_this.$element)
+          _this.htmlRemoveTags()
         }
         else {
           App.Utils.htmlRemoveRichtext(_this.$element)
@@ -175,8 +186,25 @@
         }
       })
     }
+  }
 
+  // check if rich text key is pressed
+  Plugin.prototype.htmlRemoveTags = function() {
 
+    // clear old clear request
+    this.htmlRemoveTagsClearClearTimeout()
+
+    // set new clear request
+    this._setTimeOutReformat = setTimeout($.proxy(function(){
+      App.Utils.htmlRemoveTags(this.$element)
+    }, this), 100)
+    console.log('htmlRemoveTagsClearSetTimeout', this._setTimeOutReformat)
+  }
+  Plugin.prototype.htmlRemoveTagsClearClearTimeout = function() {
+    if (this._setTimeOutReformat) {
+      console.log('htmlRemoveTagsClearClearTimeout', this._setTimeOutReformat)
+      clearTimeout(this._setTimeOutReformat)
+    }
   }
 
   // check if rich text key is pressed

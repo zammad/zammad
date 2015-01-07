@@ -82,12 +82,12 @@ class App.Utils
   @htmlRemoveTags: (html) ->
 
     # remove tags, keep content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, form, strong, blockquote, textarea, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6, br, hr, img').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, form, strong, blockquote, textarea, h1, h2, h3, h4, h5, h6, br, hr, img, input').remove()
 
     html
 
@@ -98,12 +98,12 @@ class App.Utils
     @_removeAttributes( html )
 
     # remove tags, keep content
-    html.find('li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('li, ul, ol, a, b, u, i, strong, form, blockquote, textarea, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6, hr, img').remove()
+    html.find('li, ul, ol, a, b, u, i, strong, form, blockquote, textarea, h1, h2, h3, h4, h5, h6, hr, img, input').remove()
 
     html
 
@@ -112,9 +112,6 @@ class App.Utils
 
     # remove style and class
     @_removeAttributes( html )
-
-    # remove tags & content
-    html.find('hr, img').remove()
 
     # remove tags, keep content
     html.find('a').replaceWith( ->
@@ -126,7 +123,7 @@ class App.Utils
     replacementTag = 'div';
 
     # Replace all a tags with the type of replacementTag
-    html.find('h1, h2, h3, h4, h5, h6').each( ->
+    html.find('h1, h2, h3, h4, h5, h6, textarea').each( ->
       outer = this.outerHTML;
 
       # Replace opening tag
@@ -139,6 +136,10 @@ class App.Utils
 
       $(@).replaceWith(newTag);
     )
+
+    # remove tags & content
+    html.find('hr, img, form, input').remove()
+
     html
 
   @_removeAttributes: (html) ->

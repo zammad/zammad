@@ -165,7 +165,6 @@ test( "htmlRemoveTags", function() {
   var source = "<div>test</div>"
   var should = "test"
   var result = App.Utils.htmlRemoveTags( $(source) )
-  console.log('RRRR', result);
   equal( result.html(), should, source )
 
   source = "<a href=\"some_link\">some link to somewhere</a>"
@@ -178,9 +177,24 @@ test( "htmlRemoveTags", function() {
   result = App.Utils.htmlRemoveTags( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><a href=\"some_link\">some link to somewhere</a><input value=\"should not be shown\"></div>"
+  should = "some link to somewhere"
+  result = App.Utils.htmlRemoveTags( $(source) )
+  equal( result.html(), should, source )
+
   source = "<div><a href=\"some_link\">some link to somewhere</a> <div><hr></div> <span>123</span> <img src=\"some_image\"/></div>"
   should = "some link to somewhere  123 "
   result = App.Utils.htmlRemoveTags( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><form class=\"xxx\">test 123</form></div>"
+  should = "test 123"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><textarea class=\"xxx\">test 123</textarea></div>"
+  should = "test 123"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
 });
@@ -213,6 +227,11 @@ test( "htmlRemoveRichtext", function() {
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><div><b></b> test <input value=\"should not be shown\"></div></div>"
+  should = "<div> test </div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
   source = "<div><div><b></b> test </div><span>123</span></div>"
   should = "<div> test </div><span>123</span>"
   result = App.Utils.htmlRemoveRichtext( $(source) )
@@ -223,13 +242,25 @@ test( "htmlRemoveRichtext", function() {
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><textarea class=\"xxx\"> test </textarea></div>"
+  //should = "<div> test </div>"
+  should = " test "
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
   source = "<div><br></div>"
   should = "<br>"
-  result = App.Utils.htmlClanup( $(source) )
+  result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><div class=\"xxx\"><br></div></div>"
   should = "<div><br></div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><form class=\"xxx\">test 123</form></div>"
+  //should = "<div>test 123</div>"
+  should = "test 123"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
@@ -267,6 +298,25 @@ test( "htmlClanup", function() {
   should = "<div><br></div>"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
+
+  source = "<div><form class=\"xxx\">test 123</form></div>"
+  //should = "<div>test 123<br></div>"
+  should = "test 123"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><form class=\"xxx\">test 123</form> some other value</div>"
+  //should = "<div>ttest 123 some other value</div>"
+  should = "test 123 some other value"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><form class=\"xxx\">test 123</form> some other value<input value=\"should not be shown\"></div>"
+  //should = "<div>test 123 some other value</div>"
+  should = "test 123 some other value"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
 
 });
 
