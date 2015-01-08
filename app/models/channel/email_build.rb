@@ -48,9 +48,9 @@ module Channel::EmailBuild
         content_type 'text/html; charset=UTF-8'
 
         # complete check
-        attr[:body] = Channel::EmailBuild.html_complete_check( attr[:body] )
+        html_document = Channel::EmailBuild.html_complete_check( attr[:body] )
 
-        body attr[:body]
+        body html_document
       end
 
       # generate plain part
