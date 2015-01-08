@@ -82,12 +82,12 @@ class App.Utils
   @htmlRemoveTags: (html) ->
 
     # remove tags, keep content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, form, strong, blockquote, textarea, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, form, strong, blockquote, textarea, h1, h2, h3, h4, h5, h6, br, hr, img, input').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, input, select, button, style, applet, canvas, script, frame, iframe').remove()
 
     html
 
@@ -98,12 +98,12 @@ class App.Utils
     @_removeAttributes( html )
 
     # remove tags, keep content
-    html.find('li, ul, ol, a, b, u, i, strong, form, blockquote, textarea, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('li, ul, ol, a, b, u, i, strong, form, blockquote, textarea, h1, h2, h3, h4, h5, h6, hr, img, input').remove()
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, input, select, button, style, applet, canvas, script, frame, iframe').remove()
 
     html
 
@@ -114,7 +114,7 @@ class App.Utils
     @_removeAttributes( html )
 
     # remove tags, keep content
-    html.find('a').replaceWith( ->
+    html.find('a, font').replaceWith( ->
       $(@).contents()
     )
 
@@ -138,12 +138,12 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('hr, img, form, input').remove()
+    html.find('form, font, hr, img, input, select, button, style, applet, canvas, script, frame, iframe').remove()
 
     html
 
   @_removeAttributes: (html) ->
-    html.find('div, span, p, li, ul, ol, a, b, u, i, strong, blockquote, h1, h2, h3, h4, h5, h6')
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, h1, h2, h3, h4, h5, h6')
       .removeAttr( 'style' )
       .removeAttr( 'class' )
       .removeAttr( 'title' )

@@ -197,6 +197,11 @@ test( "htmlRemoveTags", function() {
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
+  //should = "<div>This is some text!</div>"
+  should = "This is some text!"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
 });
 
 // htmlRemoveRichtext
@@ -264,6 +269,13 @@ test( "htmlRemoveRichtext", function() {
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
+  //should = "<div>This is some text!</div>"
+  should = "This is some text!"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+
 });
 
 // htmlClanup
@@ -317,6 +329,11 @@ test( "htmlClanup", function() {
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
+  //should = "<div>This is some text!</div>"
+  should = "This is some text!"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
 
 });
 
