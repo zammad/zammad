@@ -568,6 +568,36 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
           },
         ],
       },
+      {
+        :data     => IO.read('test/fixtures/mail29.box'),
+        :body_md5 => 'b6cc8164ce896046d631ddd44f8c9f6e',
+        :params   => {
+          :from              => 'Example Sales <sales@example.com>',
+          :from_email        => 'sales@example.com',
+          :from_display_name => "Example Sales",
+          :subject           => "Example licensing information: No channel available",
+          :to                => 'info@znuny.inc',
+          :body              => "Dear Mr. Edenhofer,We want to keep you updated on TeamViewer licensing shortages on a regular basis.
+We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.
+Additional session channels can be added at any time. Please visit our [1] TeamViewer Online Shop for pricing information.
+Thank you - and again all the best with TeamViewer!
+Best regards,
+Your TeamViewer Team
+P.S.: You receive this e-mail because you are listed in our database as person who ordered a TeamViewer license. Please click [2] here to unsubscribe from further e-mails.
+-----------------------------
+[3] www.teamviewer.com
+
+TeamViewer GmbH * Jahnstr. 30 * 73037 Göppingen * Germany
+Tel. 07161 60692 50 * Fax 07161 60692 79
+
+Registration AG Ulm HRB 534075 * General Manager Holger Felgner
+
+
+[1] https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E
+[2] http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&ident=E37682EAC65E8CA6FF36074907D8BC14
+[3] http://www.teamviewer.com",
+        },
+      },
     ]
 
     files.each { |file|
