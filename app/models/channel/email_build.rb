@@ -112,13 +112,39 @@ module Channel::EmailBuild
   def self.html_complete_check(html)
     return html if html =~ /<html>/i
 
-    css = 'font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;'
+    css = "font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;"
 
     html = <<HERE
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+    body {
+      width:90% !important;
+      -webkit-text-size-adjust:90%;
+      -ms-text-size-adjust:90%;
+      #{css};
+    }
+    img {
+      outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;
+    }
+    a img {
+      border:none;
+    }
+    table td {
+      border-collapse: collapse;
+    }
+    table {
+      border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;
+    }
+    p {
+      margin: 0;
+    }
+    p, table, div, td {
+      max-width: 600px;
+    }
+    </style>
   <head>
   <body style="#{css}">#{html}</body>
 </html>

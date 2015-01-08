@@ -331,29 +331,6 @@ Changes:<br>
   def template_header(user)
     '
 <style type="text/css">
-  p, table, div, td {
-    max-width: 600px;
-  }
-
-  body{
-    width:90% !important;
-    -webkit-text-size-adjust:90%;
-    -ms-text-size-adjust:90%;
-    font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;
-    font-size: 12px;
-  }
-  img {
-    outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;
-  }
-  a img {
-    border:none;
-  }
-  table td {
-    border-collapse: collapse;
-  }
-  table {
-    border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;
-  }
   .header {
     color: #aaaaaa;
     border-bottom-style:solid;
