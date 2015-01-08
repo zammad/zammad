@@ -129,7 +129,7 @@ class Channel::EmailParser
       # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
-        if mail.html_part.body
+        if mail.html_part && mail.html_part.body
           filename = 'message.html'
           data[:body] = mail.html_part.body.to_s
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )

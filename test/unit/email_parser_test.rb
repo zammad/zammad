@@ -563,6 +563,46 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
           },
         ],
       },
+      {
+        :data     => IO.read('test/fixtures/mail27.box'),
+        :body_md5 => 'e1c06d85ae7b8b032bef47e42e4c08f9',
+        :params   => {
+          :from              => 'caoyaoewfzfw@21cn.com',
+          :from_email        => 'caoyaoewfzfw@21cn.com',
+          :from_display_name => "",
+          :subject           => "\r\n蠭龕中層管理者如何避免角色行为誤区",
+          :to                => 'duan@seat.com.cn, info@znuny.com, jinzh@kingdream.com',
+          :body              => "\n\n",
+        },
+        :attachments  => [
+          {
+            :md5      => '498b8ae7b26033af1a08f85644d6695c',
+            :filename => 'message.html',
+          },
+        ],
+      },
+      {
+        :data     => IO.read('test/fixtures/mail28.box'),
+        :body_md5 => '5872ddcdfdf6bfe40f36cd0408fca667',
+        :params   => {
+          :from              => 'kontakt@example.de',
+          :from_email        => 'kontakt@example.de',
+          :from_display_name => "",
+          :subject           => "Bewerbung auf Ihr Stellenangebot",
+          :to                => 'info@znuny.inc',
+          :body              => "no visible content",
+        },
+        :attachments  => [
+          {
+            :md5      => '6605d016bda980cdc65fb72d232e4df9',
+            :filename => 'Znuny GmbH .pdf',
+          },
+          {
+            :md5      => '6729bc7cbe44fc967a9d953c4af114b7',
+            :filename => 'Lebenslauf.pdf',
+          },
+        ],
+      },
     ]
 
     files.each { |file|
