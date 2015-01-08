@@ -52,8 +52,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     should = '> Welcome!
 >
 > Thank you for installing Zammad. äöüß
->
-'
+>'
     assert_equal( should, mail.text_part.body.to_s )
     assert_equal( html, mail.html_part.body.to_s )
 
@@ -90,8 +89,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     text = '> Welcome!
 >
 > Thank you for installing Zammad. äöüß
->
-'
+>'
     mail = Channel::EmailBuild.build(
       :from         => 'sender@example.com',
       :to           => 'recipient@example.com',
@@ -108,8 +106,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     should = '> Welcome!
 >
 > Thank you for installing Zammad. äöüß
->
-'
+>'
     assert_equal( should, mail.text_part.body.to_s )
     assert_equal( nil, mail.html_part )
 
@@ -141,8 +138,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     text = '> Welcome!
 >
 > Thank you for installing Zammad. äöüß
->
-'
+>'
     mail = Channel::EmailBuild.build(
       :from         => 'sender@example.com',
       :to           => 'recipient@example.com',
@@ -152,8 +148,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     should = '> Welcome!
 >
 > Thank you for installing Zammad. äöüß
->
-'
+>'
     assert_equal( should, mail.body.to_s )
     assert_equal( nil, mail.html_part )
 
@@ -169,22 +164,63 @@ class EmailBuildTest < ActiveSupport::TestCase
   end
 
   test 'html2text' do
-    html = '<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <head>
-  <body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">
-    <div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad.</div><div>&gt;</div>
-  </body>
-</html>'
-    should = '> Welcome!
->
-> Thank you for installing Zammad.
->
-'
-    assert_equal( should, html.html2text )
 
+    html   = 'test'
+    result = 'test'
+    assert_equal( result, html.html2text )
+
+    html   = '  test '
+    result = 'test'
+    assert_equal( result, html.html2text )
+
+    html   = "\n\n  test \n\n\n"
+    result = 'test'
+    assert_equal( result, html.html2text )
+
+    html   = '<div>test</div>'
+    result = 'test'
+    assert_equal( result, html.html2text )
+
+    html   = '<div>test<br></div>'
+    result = 'test'
+    assert_equal( result, html.html2text )
+
+    html   = "<div>test<br><br><br>\n<br>\n<br>\n</div>"
+    result = 'test'
+    assert_equal( result, html.html2text )
+
+    html   = "<pre>test\n\ntest</pre>"
+    result = "test\ntest"
+    assert_equal( result, html.html2text )
+
+    html   = "<code>test\n\ntest</code>"
+    result = "test\ntest"
+    assert_equal( result, html.html2text )
+
+    html   = "<table><tr><td>test</td><td>col</td></td></tr><tr><td>test</td><td>4711</td></tr></table>"
+    result = "test col  \ntest 4711"
+    assert_equal( result, html.html2text )
+
+
+    html   = "<!-- some comment -->
+    <div>
+    test<br><br><br>\n<br>\n<br>\n
+    </div>"
+    result = 'test'
+    assert_equal( result, html.html2text )
+
+    html   = "\n<div><a href=\"http://zammad.org\">Best Tool of the World</a>
+     some other text</div>
+    <div>"
+    result = "[1] Best Tool of the Worldsome other text\n\n\n[1] http://zammad.org"
+    assert_equal( result, html.html2text )
+
+    html   = "<!-- some comment -->
+    <div>
+    test<br><br><br>\n<hr/>\n<br>\n
+    </div>"
+    result = "test\n\n___"
+    assert_equal( result, html.html2text )
 
     html = ' line&nbsp;1<br>
 you<br/>
@@ -198,6 +234,21 @@ you
     html = ' <ul><li>#1</li><li>#2</li></ul>'
     should = '* #1
 * #2'
+    assert_equal( should, html.html2text )
+
+    html = '<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <head>
+  <body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">
+    <div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad.</div><div>&gt;</div>
+  </body>
+</html>'
+    should = '> Welcome!
+>
+> Thank you for installing Zammad.
+>'
     assert_equal( should, html.html2text )
 
   end

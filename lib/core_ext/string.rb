@@ -45,37 +45,111 @@ class String
 
 =end
 
-  # base from https://gist.github.com/petrblaho/657856
   def html2text
-    text = self.
-      gsub(/(&nbsp;|\n|\s)+/im, ' ').squeeze(' ').strip.
-      gsub(/<([^\s]+)[^>]*(src|href)=\s*(.?)([^>\s]*)\3[^>]*>\4<\/\1>/i, '\4')
+    string = self
 
-    links = []
-    linkregex = /<[^>]*(src|href)=\s*(.?)([^>\s]*)\2[^>]*>\s*/i
-    while linkregex.match(text)
-      links << $~[3]
-      text.sub!(linkregex, "[#{links.size}]")
+    # in case of invalid encodeing, strip invalid chars
+    # see also test/fixtures/mail21.box
+    # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
+    if !string.valid_encoding?
+      string = string.chars.select { |c| c.valid_encoding? }.join
     end
 
-    text = CGI.unescapeHTML(
-      text.
-        gsub(/<(script|style)[^>]*>.*<\/\1>/im, '').
-        gsub(/<!--.*-->/m, '').
-        gsub(/<hr(| [^>]*)>/i, "___\n").
-        gsub(/<li(| [^>]*)>/i, "\n* ").
-        gsub(/<blockquote(| [^>]*)>/i, '> ').
-        gsub(/<(br)(|\/| [^>]*)>/i, "\n").
-        gsub(/<\/div(| [^>]*)>/i, "\n").
-        gsub(/<(\/h[\d]+|p)(| [^>]*)>/i, "\n\n").
-        gsub(/<[^>]*>/, '')
-    ).lstrip.gsub(/\n[ ]+/, "\n") + "\n"
+    # find <a href=....> and replace it with [x]
+    link_list = ''
+    counter   = 0
+    string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) { |item|
+      link = $2
+      counter   = counter + 1
+      link_list += "[#{counter}] #{link}\n"
+      "[#{counter}] "
+    }
 
-    for i in (0...links.size).to_a
-      text = text + "\n  [#{i+1}] <#{CGI.unescapeHTML(links[i])}>" unless links[i].nil?
+    # remove empty lines
+    string.gsub!( /^\s*/m, '' )
+
+    # pre/code handling 1/2
+    string.gsub!( /<pre>(.+?)<\/pre>/m ) { |placeholder|
+      placeholder = placeholder.gsub(/\n/, "###BR###")
+    }
+    string.gsub!( /<code>(.+?)<\/code>/m ) { |placeholder|
+      placeholder = placeholder.gsub(/\n/, "###BR###")
+    }
+
+    # remove all new lines
+    string.gsub!( /(\n\r|\r\r\n|\r\n|\n)/, '' )
+
+    # pre/code handling 2/2
+    string.gsub!( /###BR###/, "\n" )
+
+    # add counting
+    string.gsub!(/<li(| [^>]*)>/i, "\n* ")
+
+    # add quoting
+    string.gsub!(/<blockquote(| [^>]*)>/i, '> ')
+
+    # add hr
+    string.gsub!(/<hr(|\/| [^>]*)>/i, "___\n")
+
+    # add new lines
+    string.gsub!( /\<(br|table)(|\/| [^>]*)\>/i, "\n" )
+    string.gsub!( /\<\/(div|p|pre|blockquote|table|tr)(|\s.+?)\>/i, "\n" )
+    string.gsub!( /\<\/td\>/i, ' '  )
+
+    # strip all other tags
+    string.gsub!( /\<.+?\>/, '' )
+
+    # strip all &amp; &lt; &gt; &quot;
+    string.gsub!( '&amp;', '&' )
+    string.gsub!( '&lt;', '<' )
+    string.gsub!( '&gt;', '>' )
+    string.gsub!( '&quot;', '"' )
+    string.gsub!( '&nbsp;', ' ' )
+
+    # encode html entities like "&#8211;"
+    string.gsub!( /(&\#(\d+);?)/x ) { |item|
+      $2.chr
+    }
+
+    # encode html entities like "&#3d;"
+    string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) { |item|
+      chr_orig = $1
+      hex      = $2.hex
+      if hex
+        chr = hex.chr
+        if chr
+          chr_orig = chr
+        else
+          chr_orig
+        end
+      else
+        chr_orig
+      end
+
+      # check valid encoding
+      begin
+        if !chr_orig.encode('UTF-8').valid_encoding?
+          chr_orig = '?'
+        end
+      rescue
+        chr_orig = '?'
+      end
+      chr_orig
+    }
+
+
+    # remove tailing empty spaces
+    string.gsub!(/\s+\n$/, "\n")
+
+    # remove multible empty lines
+    string.gsub!(/\n\n\n/, "\n\n")
+
+    # add extracted links
+    if link_list != ''
+      string += "\n\n" + link_list
     end
-    links = nil
-    text.chomp
+
+    string.strip
   end
 
 =begin

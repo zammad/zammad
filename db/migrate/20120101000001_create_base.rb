@@ -12,24 +12,24 @@ class CreateBase < ActiveRecord::Migration
     create_table :users do |t|
       t.references :organization,                       :null => true
       t.column :login,          :string, :limit => 100, :null => false
-      t.column :firstname,      :string, :limit => 100, :null => true
-      t.column :lastname,       :string, :limit => 100, :null => true
-      t.column :email,          :string, :limit => 140, :null => true
+      t.column :firstname,      :string, :limit => 100, :null => true, :default => ''
+      t.column :lastname,       :string, :limit => 100, :null => true, :default => ''
+      t.column :email,          :string, :limit => 140, :null => true, :default => ''
       t.column :image,          :string, :limit => 100, :null => true
       t.column :image_source,   :string, :limit => 200, :null => true
-      t.column :web,            :string, :limit => 100, :null => true
+      t.column :web,            :string, :limit => 100, :null => true, :default => ''
       t.column :password,       :string, :limit => 100, :null => true
-      t.column :phone,          :string, :limit => 100, :null => true
-      t.column :fax,            :string, :limit => 100, :null => true
-      t.column :mobile,         :string, :limit => 100, :null => true
-      t.column :department,     :string, :limit => 200, :null => true
-      t.column :street,         :string, :limit => 120, :null => true
-      t.column :zip,            :string, :limit => 100, :null => true
-      t.column :city,           :string, :limit => 100, :null => true
-      t.column :country,        :string, :limit => 100, :null => true
+      t.column :phone,          :string, :limit => 100, :null => true, :default => ''
+      t.column :fax,            :string, :limit => 100, :null => true, :default => ''
+      t.column :mobile,         :string, :limit => 100, :null => true, :default => ''
+      t.column :department,     :string, :limit => 200, :null => true, :default => ''
+      t.column :street,         :string, :limit => 120, :null => true, :default => ''
+      t.column :zip,            :string, :limit => 100, :null => true, :default => ''
+      t.column :city,           :string, :limit => 100, :null => true, :default => ''
+      t.column :country,        :string, :limit => 100, :null => true, :default => ''
       t.column :verified,       :boolean,               :null => false, :default => false
       t.column :active,         :boolean,               :null => false, :default => true
-      t.column :note,           :string, :limit => 250, :null => true
+      t.column :note,           :string, :limit => 250, :null => true, :default => ''
       t.column :last_login,     :timestamp,             :null => true
       t.column :source,         :string, :limit => 200, :null => true
       t.column :login_failed,   :integer,               :null => false, :default => 0
@@ -104,7 +104,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :name,                 :string, :limit => 100, :null => false
       t.column :shared,               :boolean,               :null => false, :default => true
       t.column :active,               :boolean,               :null => false, :default => true
-      t.column :note,                 :string, :limit => 250, :null => true
+      t.column :note,                 :string, :limit => 250, :null => true,  :default => ''
       t.column :updated_by_id,        :integer,               :null => false
       t.column :created_by_id,        :integer,               :null => false
       t.timestamps

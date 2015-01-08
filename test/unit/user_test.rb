@@ -45,7 +45,7 @@ class UserTest < ActiveSupport::TestCase
         :name => '#3 - simple create - nil as lastname',
         :create => {
           :firstname     => 'Firstname Lastname',
-          :lastname      => nil,
+          :lastname      => '',
           :email         => 'some@example.com',
           :login         => 'some@example.com',
           :updated_by_id => 1,
@@ -114,8 +114,8 @@ class UserTest < ActiveSupport::TestCase
       {
         :name => '#7 - simple create - nill as fristname and lastname',
         :create => {
-          :firstname     => nil,
-          :lastname      => nil,
+          :firstname     => '',
+          :lastname      => '',
           :email         => 'FIRSTNAME.lastname@example.com',
           :login         => 'login-3',
           :updated_by_id => 1,

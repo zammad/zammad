@@ -85,46 +85,49 @@ Liebe Grüße!
       },
       {
         :data     => IO.read('test/fixtures/mail6.box'),
-        :body_md5 => '88c0c9e004021a4ed2a0c1e5f6b3455d',
+        :body_md5 => 'cc60217317756f45a6e02829c0a8c49c',
         :params   => {
           :from              => '"Hans BÄKOSchönland" <me@bogen.net>',
           :from_email        => 'me@bogen.net',
           :from_display_name => 'Hans BÄKOSchönland',
           :subject           => 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких',
-          :body              => "this is a test [1]Compare Cable, DSL or Satellite plans: As low as $2.95. 
+          :body              => "this is a test
+
+___
+ [1] Compare Cable, DSL or Satellite plans: As low as $2.95.
 
 Test1:8
-
 Test2:&
-
 Test3:&ni;
-
 Test4:&
-
 Test5:=
 
-
-
-[1] http://localhost/8HMZENUS/2737??PS=
-"
+[1] http://localhost/8HMZENUS/2737??PS="
         },
       },
       {
         :data     => IO.read('test/fixtures/mail7.box'),
-        :body_md5 => '6029e6b6106a6dd11ed887ec31f118ac',
+        :body_md5 => 'c78f6a91905538ee32bc0bf71f70fcf2',
         :params   => {
           :from              => 'Eike.Ehringer@example.com',
           :from_email        => 'Eike.Ehringer@example.com',
           :from_display_name => '',
           :subject           => 'AW:Installation [Ticket#11392]',
-          :body_md5          => "Hallo.
+          :body             => "Hallo.
 Jetzt muss ich dir noch kurzfristig absagen für morgen.
 Lass uns evtl morgen Tel.
 
-Mfg eike 
+Mfg eike
 
-Martin Edenhofer via Znuny Team --- Installation [Ticket#11392] --- 
-Von:\"Martin Edenhofer via Znuny Team\" <support@example.com>Aneike.xx@xx-corpxx.comDatum:Mi., 13.06.2012 14:30BetreffInstallation [Ticket#11392]
+Martin Edenhofer via Znuny Team --- Installation [Ticket#11392] ---
+
+Von: \"Martin Edenhofer via Znuny Team\" <support@example.com> 
+An eike.xx@xx-corpxx.com 
+Datum: Mi., 13.06.2012 14:30 
+Betreff Installation [Ticket#11392]
+
+___
+
 Hi Eike,
 anbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.
 a) Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.
@@ -139,10 +142,7 @@ P: +49 (0) 30 60 98 54 18-0
 F: +49 (0) 30 60 98 54 18-8
 W: http://example.com 
 Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg
-Managing Director: Martin Edenhofer
-
-
-",
+Managing Director: Martin Edenhofer",
         },
       },
       {
@@ -326,7 +326,7 @@ Hof
       # spam email
       {
         :data     => IO.read('test/fixtures/mail16.box'),
-        :body_md5 => 'b255fb5620db3b63131924513061d974',
+        :body_md5 => 'a2367adfa77857a078dad83826d659e8',
         :params   => {
           :from              => nil,
           :from_email        => 'vipyimin@126.com',
@@ -360,7 +360,7 @@ Hof
       },
       {
         :data     => IO.read('test/fixtures/mail19.box'),
-        :body_md5 => '2fa47e9122f4c1b9c5057400529c7567',
+        :body_md5 => '3e42be74f967379a3053f21f4125ca66',
         :params   => {
           :from              => '"我" <>',
           :from_email        => '"=?GB2312?B?ztI=?=" <>',
@@ -371,7 +371,7 @@ Hof
       },
       {
         :data     => IO.read('test/fixtures/mail20.box'),
-        :body_md5 => 'd2b65203aaf2bbbd50fc73cb14d781bc',
+        :body_md5 => '65ca1367dfc26abcf49d30f68098f122',
         :params   => {
           :from              => 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
           :from_email        => 'drugs-cheapest8@sicor.com',
@@ -380,72 +380,38 @@ Hof
           :to                => 'info2@znuny.com',
           :body              => "________________________________________________________________________Yeah but even when they. Beth liî ed her neck as well
 
-&oacute;25aHw511I&Psi;11xG&lfloor;o8KHCm&sigmaf;9-2&frac12;23Qg&ntilde;V6UAD12AX&larr;t1Lf7&oplus;1Ir&sup2;r1TLA5pYJhjV gPn&atilde;M36V1E89RUD&Tau;&Aring;12I92s2C&Theta;YE&upsih;Afg&lowast;bT11&int;rIoi&scaron;&brvbar;O5oUIN1Is2S21Pp &Yuml;2q1F&Chi;&uArr;eGOz&lceil;F1R98y&sect; 74&rdquo;lTr8r1H2&aelig;u2E2P2q VmkfB&int;SKNElst4S&exist;182T2G1&iacute; lY92Pu&times;8>R&Ograve;&not;&oplus;&Mu;I&Ugrave;z&Ugrave;CC412QE&Rho;&ordm;S2!Xg&OElig;s.
-
-2&gamma;&dArr;B[1]cwspC&ensp;L8I&nbsp;C&nbsp;K88H E1R?E2e31 !Calm dylan for school today.
+&oacute;25aHw511I&Psi;11xG&lfloor;o8KHCm&sigmaf;9-2&frac12;23Qg&ntilde;V6UAD12AX&larr;t1Lf7&oplus;1Ir&sup2;r1TLA5pYJhjV gPn&atilde;M36V1E89RUD&Tau;&Aring;12I92s2C&Theta;YE&upsih;Afg&lowast;bT11&int;rIoi&scaron;&brvbar;O5oUIN1Is2S21Pp &Yuml;2q1F&Chi;&uArr;eGOz&lceil;F1R98y&sect; 74&rdquo;lTr8r1H2&aelig;u2E2P2q VmkfB&int;SKNElst4S&exist;182T2G1&iacute; lY92Pu&times;8>R&Ograve;&not;&oplus;&Mu;I&Ugrave;z&Ugrave;CC412QE&Rho;&ordm;S2!Xg&OElig;s. 
+2&gamma;&dArr;B[1] cwspC&ensp;L8I C K88H E1R?E2e31 !Calm dylan for school today.
 Closing the nursery with you down. Here and made the mess. Maybe the oï from under his mother. Song of course beth touched his pants.
-When someone who gave up from here. Feel of god knows what.
-
-TB&piv;&exist;M5T5&Epsilon;Ef2&ucirc;&ndash;N&para;1v&Zeta;'1&dArr;&prop;5S2225 &Chi;0j&Delta;HbAg&thorn;E&mdash;2i6A2lD&uArr;LGj2nTOy11H2&tau;9&rsquo;:Their mother and tugged it seemed like
-
-d3RsV&para;H2&Theta;i&macr;B&part;gax1b&icirc;gdH23r2J&yuml;1aIK1&sup2; n1jfaTk1Vs3952 C&tilde;lBl&lsquo;mxGo0&radic;2XwT8Ya 28ksa&int;f1&alefsym;s&rdquo;62Q 2Ad7$p32d1e&prod;2e.0&rdquo;261a2&Kappa;63&alpha;SM2
-Nf52CdL&cup;1i&harr;xcaa52R3l6Lc3i2z16s&oacute;9&egrave;U zDE1aE21gs25&Euml;2 hE1cl&sup;&cent;11o21&micro;Bw1zF1 q2k&otilde;aXUius1r0&sube; d&bull;&isin;2$1Z2F1218l.07d56P&Uacute;l25JAO6
-
-45loV2iv1i2&atilde;&Upsilon;&lfloor;a2&sup;d2g&Atilde;&Upsilon;3&trade;r22u&cedil;aWjO8 n40&ndash;Soy&egrave;2u1&empty;23p1J&Mu;Ne&Igrave;22jr&aacute;2r&Kappa; 1229A2rAkc8nuEtl22ai&Dagger;OB8vSb&eacute;&sigma;e&iota;&otilde;q1+65cw 2s8Ua&ograve;4PrsE1y8 &lang;fMElh&upsih;&sdot;Jo8pmzwj&circ;N1 wv39aW1WtsvuU3 1a&oelig;1$2&Nu;nR2O2&rceil;B.&forall;2c&rarr;5&Ecirc;9&chi;w5p1&frasl;N
-fHGFVfE&sup3;2i&sigma;jGpa51kgg12cWrUq52akx2h 0F24P&cedil;2L2rn22&Iuml;o2&Yacute;2HfoRb2eU&alpha;w6s2N&oline;ws&para;13&Beta;i2X1&cedil;ofgtHnR&perp;32ase92lF1H5 26B1a&sup;2i&upsih;s&ocirc;12i &Aring;kMyl2J1&Auml;oQ&ndash;0&image;wvm&ugrave;2 2&circ;&mu;\"aQ7jVse62f 1h2p$L2r&pound;3i1t2.323h5qP8g0&hearts;&divide;R2
-
-&middot;i&fnof;PV1&Beta;&ni;&oslash;iF1R1a4v32gL9&cent;wr1722a2&ucirc;0&eta; &thorn;12&szlig;Stu21u7&aacute;&iexcl;lp2ocEe1SLlrV2Xj &perp;U&micro;1F&not;48&eth;ov71Arm242c2Vw2e1&sect;&supe;N 1242aL&thorn;Z2ski&times;5 c&euro;pBl&ucirc;26&part;ol1f&Uacute;wK&szlig;32 4i2la4C12sRE21 &atilde;eI2$2z8t442fG.&cedil;1&le;12F&rsquo;&Atilde;152in&nsub;
-Tl1&euml;C2v7Ci71X8a225Nl&thorn;U&rang;&iota;icO&sum;&laquo;s&middot;iKN Uu&upsih;jS1j52u2J&uuml;&sect;pn5&deg;1e&yen;&Ucirc;3&weierp;r1W&Dagger;2 J&lsaquo;S7A1j0sc&1pkt1qq2iZ561vn81&lowast;e22Q3+723&Scaron; &sum;RkLaKX2as2s22 &iuml;111lD2z8o278wwU&ndash;&Agrave;C T6U2a&upsih;938s20G&yuml; Ox2&isin;$98&lsquo;R21H25.&Ograve;L6b9&theta;r&delta;292f9j
-
-Please matt on his neck. Okay matt huï ed into your mind
-Since her head to check dylan. Where dylan matt got up there
-
-1&Egrave;&plusmn;&Alpha;AYQ1dN12&upsih;XT00&Agrave;vI&or;&iacute;o8-1b&reg;8A&Epsilon;1V4Lg&Otilde;&uarr;7LKtgcEiw1yR5Y22GRA1&deg;I10C2C2Ti&uuml;/2wc0Ax211S&Uuml;&Acirc;2&OElig;T&Aacute;22&ograve;HpN&acirc;&ugrave;M6&Egrave;10A5Tb1:Simmons and now you really is what. Matt picked up this moment later that.
-
-251yV922Yeg1&uarr;DnJ3l4t22b1os&prod;jll&divide;iS2iwB&Icirc;4n021&Ouml; 1f&divide;2a11l2su&Uacute;82 2LCblgvN&frac12;o1oP3wn&spades;90 FZora&M&trade;xs&Kappa;bb1 251&xi;$12&middot;22iG2&nabla;1&supe;&Xi;&not;3.0P0&kappa;53V1203&Yacute;Yz
-2X&cent;BAZ4Kwddu2vvuB&uarr;&Beta;a1&rsquo;THi0&mdash;93rZ&epsilon;j0 1r&Mu;1a2111s71&Iota;f 8&dArr;2olW&bdquo;62o6yH&yen;wKZ&and;6 21h2aKJ&ldquo;&real;s48I&Igrave; 21&not;1$Z&Sigma;122&ntilde;26B42YMZ.21V19f10&aring;54&lceil;R8
-
-2w\"9N2gB&Agrave;a2S&ecirc;1s&cong;gG&Ocirc;o0Dn4n&crarr;&gamma;7&otimes;eS7e2xf3Jd q&divide;CMa221isNMZp zz0&tilde;l&Kappa;Lw8o229ww1&sect;Qu 1D&lceil;&iacute;a2212sJ811 3o&ugrave;2$&brvbar;1N&real;1>R2t7WPM1.181D92k5D9&lowast;8&asymp;R
-l131Sj1&Psi;8p&Sigma;2K&ugrave;i6rr2rb&Ucirc;u&not;i2V&lowast;&prod;v5&ordf;10a27B1 &Uacute;&diams;&Xi;sa9j3&chi;sa1i&Omicron; Oi&weierp;ml6&oacute;f2owbz&forall;wA6&ugrave;&rarr; 22b2ai1wbs&diams;&beta;Gs 281i$i&Agrave;&circ;12&sup;2wC82n8o.13NJ9S11&Theta;0P1Sd
-
-What made no one in each time.
-Mommy was thinking of course beth. Everything you need the same thing
-
-P2EVG29srEx&lArr;9oN3U1yE2i2OR5k&Ccedil;&yuml;A&Tau;&eta;&nu;ULP&iquest;&and;q R5&iquest;FHt7J6E&raquo;1C&empty;A2&exist;aVLu&lowast;&cent;tT&lang;21&scaron;Hq9N&eacute;:
-
-&perp;&THORN;21T11BrrC712ad&scaron;6lmzb16ai07tdBo&times;Kop&iacute;&Rho;1lj4Hy 2a&Oacute;1a&Ouml;&iacute;&notin;&Oacute;s1a2&rsquo; 4D1kleow2o3&ndash;12wjR&le;&Pi; 1Rh2af27&cong;s26u2 8NLV$&cup;&dArr;1&darr;1Y&para;21.v2&Egrave;232S7202n11
-m5VKZy3K2i&ntilde;21Dt&Uacute;2HrhGaMvr5&iuml;R1o11nam&Mu;w22anFu8x7&lceil;sU E4cva11&epsilon;&trade;s7&Alpha;GO dA35ld&ntilde;&Igrave;&egrave;oA&xi;I1wXK2n f1x&frac34;a&prod;7ffs&dagger;222 5msC$72t10z&bdquo;n2.it1T7O8vt5182&middot;
-
-J&iuml;12Pk&aacute;O1rn2rAo8s5&empty;z&mdash;4Rha11t&tilde;cq5Y&Chi; &Tau;Q2ra2&rfloor;4&sup1;s&Uuml;51&sect; 2VB&iota;luw2ioL32Bw1111 5&isin;22a1I22s&scaron;&Ucirc;21 G17&rho;$kJM80&sim;&ang;&alefsym;l.J1Km3212&sup;52&eacute;&frac14;&sect;
-p121A1NU0c&yen;x2fo&lang;22cm14QGpHEj7lnDPVieV21a&Pi;2H7 1j26azBSes&euml;1c9 &acute;2&Ugrave;&not;l0n21o22RVw1X1&Iuml; &alpha;V21a&cong;&sigma;1Zs&sect;jJ&aring; 3pFN$1Kf821Y&Omicron;7.32Y95J&Alpha;q&Yuml;0v91Q
-
-&ntilde;&uarr;yjP&Tau;1u6rFwhNeCO&piv;2d5&Gamma;&ecirc;cne&frac14;a0iTF15sxUS0o88&alefsym;1la&Aring;T&weierp;oOB11n2111e&and;Kpf &upsilon;98&xi;abp&dagger;3sj82& 9&copy;Bol2AWSo7wNgw21mM tteQat0&piv;2s4&equiv;N&Ccedil; &Otilde;&AElig;1&Theta;$2R2q0117&ordf;.mt111&mdash;uwF57H&clubs;f
-&aelig;&cup;HYSj&psi;3By&scaron;1g1ndX15t1126hZ&rArr;y2r82mdowy2di&psi;8Y&Eta;d0r&scaron;&Scaron; N029a13I&brvbar;sQa&yacute;2 20Y7lZ118o&int;50&Ccedil;w1\"1&Zeta; n6&Uuml;&ge;a&nabla;l&szlig;nsF&rsaquo;J9 1D&Omicron;K$142L0S7z2.Ta2X31R9953911
-
-Turning to mess up with. Well that to give her face
-Another for what she found it then. Since the best to hear
-
-GX1&diams;Ca2isA18&iexcl;bN2&icirc;81A22z&Theta;D&nabla;tNXIfWi&ndash;Ap2WYNYF1b &ne;7y&phi;Dpj6&copy;R04E1U1&ntilde;n7G1o2jS111&ni;TC&perp;&pi;&Euml;O1&lowast;21RtS2wE6621 &nu;222ASi21DP&ldquo;8&lambda;V&and;W&sdot;OA2g6qNtNp1T269XA7&yen;11GGI6SEwU22S3&Chi;12!Okay let matt climbed in front door. Well then dropped the best she kissed
-
-122C>&Phi;221 flQkWM&Scaron;tvo2dV1rT1ZtlN6R9dZ12LwuD19i3B5Fdc&AElig;l2eSwJd K1tDDfoX&plusmn;evr&yacute;wlK7P&divide;i1e13v2z&egrave;Ce&not;&Mu;&clubs;&Nu;rGhs2y172Y!gZp&aacute; R6O4O112&ni;r92Z1dB6i1e2&sigma;&sim;&Oacute;rCZ1s 122I31e2&curren;+&rceil;C&ecirc;U 1k6wG1c&sbquo;1o60AJoR72sd3i11s22pt &Oslash;277a2&forall;f5np&curren;n2duE8&rArr; 21SHGJVAtew&nabla;L&euml;t&sigmaf;2D2 6k28FgQQ&sub;R81L2EI2&notin;iEH&Iacute;&Eacute;3 H2r5Af1qxim&sigmaf;&rho;&Dagger;r6&copy;2jmWv92aW21giAC21lM&rfloor;1k 2V2&cedil;S2&ugrave;&theta;2h15B&Iota;i&lowast;ttEp8&cent;EPpSzWJi32U2n5&igrave;Ihgx8n&rceil;!j&prod;e5
-
-x1qJ>mC7f 512y1GA420lCQe09s9u%uks&atilde; &psi;2X5A4g3nu&larr;&Tau;yst72pMh&scaron;g12e&rang;p&Uacute;1n1Y&fnof;&Scaron;t&Eacute;2LGizqQ&darr;c3t&Ugrave;I &oelig;&iuml;bXMK&Ucirc;RSertj2d\"Ot2ss581!oo2i F&Acirc;W2EW2DDx7hI2p&Phi;S2Bi2drUr&hArr;J<2a1&Alpha;zwt01p2i28R2oH21&Auml;n172r 1122DYvO7ak21ht204&Pi;e&part;&lambda;11 12dUo&omicron;1X3fc631 e&&cup;GOxT3CvXcO1e3K2&nu;r31y2 262z31&infin;I1 P&igrave;&exist;zYt6F4e6&egrave;&dArr;va5229rk&Theta;32sKP5R!&iota;&micro;mz
-
-3212>22&prime;L 2&oacute;B&perp;S&cap;OQMe&yacute;&notin;2&Phi;c229Tu2a&int;dr25&ucirc;MeLk92 121OO&oslash;9oKn&yuml;&psi;&Agrave;Wl7H2&empty;i9&rho;&Egrave;2ni2&bull;2eXPx&iacute; 1251SUqtBh72a5otSZ9p222Dpf1&Yacute;2i2&omega;bjn11&Yuml;2gs2h&minus; b&aring;2swx2oSiq8hvt2262h&lceil;b&sup2;S 26&thorn;SVBEFCi2U&agrave;ds9&Ntilde;1&Epsilon;a11&xi;2,1&bdquo;wv jw7AMK2&harr;la2G91s23&laquo;etuB2keD&atilde;2&igrave;r1&uml;IeC&frac34;Ea&Auml;ao&divide;&Prime;&and;r>6e1d9D21,mtS2 I&lowast;44A1R&circ;2M98zME&cong;Q&Yuml;&ETH;X&sup1;4j6 20n3a1&apos;22nxpl6d832J 06&ETH;9E22&yacute;2-2829c42r2h72&yen;med&frac12;&spades;kc23sPk12&bull;r!&rang;QCa
-
+When someone who gave up from here. Feel of god knows what. 
+TB&piv;&exist;M5T5&Epsilon;Ef2&ucirc;&ndash;N&para;1v&Zeta;'1&dArr;&prop;5S2225 &Chi;0j&Delta;HbAg&thorn;E&mdash;2i6A2lD&uArr;LGj2nTOy11H2&tau;9&rsquo;:Their mother and tugged it seemed like 
+d3RsV&para;H2&Theta;i&macr;B&part;gax1b&icirc;gdH23r2J&yuml;1aIK1&sup2; n1jfaTk1Vs3952 C&tilde;lBl&lsquo;mxGo0&radic;2XwT8Ya 28ksa&int;f1&alefsym;s&rdquo;62Q 2Ad7$p32d1e&prod;2e.0&rdquo;261a2&Kappa;63&alpha;SM2 Nf52CdL&cup;1i&harr;xcaa52R3l6Lc3i2z16s&oacute;9&egrave;U zDE1aE21gs25&Euml;2 hE1cl&sup;&cent;11o21&micro;Bw1zF1 q2k&otilde;aXUius1r0&sube; d&bull;&isin;2$1Z2F1218l.07d56P&Uacute;l25JAO6 
+45loV2iv1i2&atilde;&Upsilon;&lfloor;a2&sup;d2g&Atilde;&Upsilon;3&trade;r22u&cedil;aWjO8 n40&ndash;Soy&egrave;2u1&empty;23p1J&Mu;Ne&Igrave;22jr&aacute;2r&Kappa; 1229A2rAkc8nuEtl22ai&Dagger;OB8vSb&eacute;&sigma;e&iota;&otilde;q1+65cw 2s8Ua&ograve;4PrsE1y8 &lang;fMElh&upsih;&sdot;Jo8pmzwj&circ;N1 wv39aW1WtsvuU3 1a&oelig;1$2&Nu;nR2O2&rceil;B.&forall;2c&rarr;5&Ecirc;9&chi;w5p1&frasl;N fHGFVfE&sup3;2i&sigma;jGpa51kgg12cWrUq52akx2h 0F24P&cedil;2L2rn22&Iuml;o2&Yacute;2HfoRb2eU&alpha;w6s2N&oline;ws&para;13&Beta;i2X1&cedil;ofgtHnR&perp;32ase92lF1H5 26B1a&sup;2i&upsih;s&ocirc;12i &Aring;kMyl2J1&Auml;oQ&ndash;0&image;wvm&ugrave;2 2&circ;&mu;\"aQ7jVse62f 1h2p$L2r&pound;3i1t2.323h5qP8g0&hearts;&divide;R2  
+&middot;i&fnof;PV1&Beta;&ni;&oslash;iF1R1a4v32gL9&cent;wr1722a2&ucirc;0&eta; &thorn;12&szlig;Stu21u7&aacute;&iexcl;lp2ocEe1SLlrV2Xj &perp;U&micro;1F&not;48&eth;ov71Arm242c2Vw2e1&sect;&supe;N 1242aL&thorn;Z2ski&times;5 c&euro;pBl&ucirc;26&part;ol1f&Uacute;wK&szlig;32 4i2la4C12sRE21 &atilde;eI2$2z8t442fG.&cedil;1&le;12F&rsquo;&Atilde;152in&nsub; Tl1&euml;C2v7Ci71X8a225Nl&thorn;U&rang;&iota;icO&sum;&laquo;s&middot;iKN Uu&upsih;jS1j52u2J&uuml;&sect;pn5&deg;1e&yen;&Ucirc;3&weierp;r1W&Dagger;2 J&lsaquo;S7A1j0sc&1pkt1qq2iZ561vn81&lowast;e22Q3+723&Scaron; &sum;RkLaKX2as2s22 &iuml;111lD2z8o278wwU&ndash;&Agrave;C T6U2a&upsih;938s20G&yuml; Ox2&isin;$98&lsquo;R21H25.&Ograve;L6b9&theta;r&delta;292f9j 
+Please matt on his neck. Okay matt huï ed into your mind Since her head to check dylan. Where dylan matt got up there 
+1&Egrave;&plusmn;&Alpha;AYQ1dN12&upsih;XT00&Agrave;vI&or;&iacute;o8-1b&reg;8A&Epsilon;1V4Lg&Otilde;&uarr;7LKtgcEiw1yR5Y22GRA1&deg;I10C2C2Ti&uuml;/2wc0Ax211S&Uuml;&Acirc;2&OElig;T&Aacute;22&ograve;HpN&acirc;&ugrave;M6&Egrave;10A5Tb1:Simmons and now you really is what. Matt picked up this moment later that. 
+251yV922Yeg1&uarr;DnJ3l4t22b1os&prod;jll&divide;iS2iwB&Icirc;4n021&Ouml; 1f&divide;2a11l2su&Uacute;82 2LCblgvN&frac12;o1oP3wn&spades;90 FZora&M&trade;xs&Kappa;bb1 251&xi;$12&middot;22iG2&nabla;1&supe;&Xi;&not;3.0P0&kappa;53V1203&Yacute;Yz 2X&cent;BAZ4Kwddu2vvuB&uarr;&Beta;a1&rsquo;THi0&mdash;93rZ&epsilon;j0 1r&Mu;1a2111s71&Iota;f 8&dArr;2olW&bdquo;62o6yH&yen;wKZ&and;6 21h2aKJ&ldquo;&real;s48I&Igrave; 21&not;1$Z&Sigma;122&ntilde;26B42YMZ.21V19f10&aring;54&lceil;R8 
+2w\"9N2gB&Agrave;a2S&ecirc;1s&cong;gG&Ocirc;o0Dn4n&crarr;&gamma;7&otimes;eS7e2xf3Jd q&divide;CMa221isNMZp zz0&tilde;l&Kappa;Lw8o229ww1&sect;Qu 1D&lceil;&iacute;a2212sJ811 3o&ugrave;2$&brvbar;1N&real;1>R2t7WPM1.181D92k5D9&lowast;8&asymp;R l131Sj1&Psi;8p&Sigma;2K&ugrave;i6rr2rb&Ucirc;u&not;i2V&lowast;&prod;v5&ordf;10a27B1 &Uacute;&diams;&Xi;sa9j3&chi;sa1i&Omicron; Oi&weierp;ml6&oacute;f2owbz&forall;wA6&ugrave;&rarr; 22b2ai1wbs&diams;&beta;Gs 281i$i&Agrave;&circ;12&sup;2wC82n8o.13NJ9S11&Theta;0P1Sd 
+What made no one in each time. Mommy was thinking of course beth. Everything you need the same thing 
+P2EVG29srEx&lArr;9oN3U1yE2i2OR5k&Ccedil;&yuml;A&Tau;&eta;&nu;ULP&iquest;&and;q R5&iquest;FHt7J6E&raquo;1C&empty;A2&exist;aVLu&lowast;&cent;tT&lang;21&scaron;Hq9N&eacute;: 
+&perp;&THORN;21T11BrrC712ad&scaron;6lmzb16ai07tdBo&times;Kop&iacute;&Rho;1lj4Hy 2a&Oacute;1a&Ouml;&iacute;&notin;&Oacute;s1a2&rsquo; 4D1kleow2o3&ndash;12wjR&le;&Pi; 1Rh2af27&cong;s26u2 8NLV$&cup;&dArr;1&darr;1Y&para;21.v2&Egrave;232S7202n11 m5VKZy3K2i&ntilde;21Dt&Uacute;2HrhGaMvr5&iuml;R1o11nam&Mu;w22anFu8x7&lceil;sU E4cva11&epsilon;&trade;s7&Alpha;GO dA35ld&ntilde;&Igrave;&egrave;oA&xi;I1wXK2n f1x&frac34;a&prod;7ffs&dagger;222 5msC$72t10z&bdquo;n2.it1T7O8vt5182&middot; J&iuml;12Pk&aacute;O1rn2rAo8s5&empty;z&mdash;4Rha11t&tilde;cq5Y&Chi; &Tau;Q2ra2&rfloor;4&sup1;s&Uuml;51&sect; 2VB&iota;luw2ioL32Bw1111 5&isin;22a1I22s&scaron;&Ucirc;21 G17&rho;$kJM80&sim;&ang;&alefsym;l.J1Km3212&sup;52&eacute;&frac14;&sect; p121A1NU0c&yen;x2fo&lang;22cm14QGpHEj7lnDPVieV21a&Pi;2H7 1j26azBSes&euml;1c9 &acute;2&Ugrave;&not;l0n21o22RVw1X1&Iuml; &alpha;V21a&cong;&sigma;1Zs&sect;jJ&aring; 3pFN$1Kf821Y&Omicron;7.32Y95J&Alpha;q&Yuml;0v91Q 
+&ntilde;&uarr;yjP&Tau;1u6rFwhNeCO&piv;2d5&Gamma;&ecirc;cne&frac14;a0iTF15sxUS0o88&alefsym;1la&Aring;T&weierp;oOB11n2111e&and;Kpf &upsilon;98&xi;abp&dagger;3sj82& 9&copy;Bol2AWSo7wNgw21mM tteQat0&piv;2s4&equiv;N&Ccedil; &Otilde;&AElig;1&Theta;$2R2q0117&ordf;.mt111&mdash;uwF57H&clubs;f &aelig;&cup;HYSj&psi;3By&scaron;1g1ndX15t1126hZ&rArr;y2r82mdowy2di&psi;8Y&Eta;d0r&scaron;&Scaron; N029a13I&brvbar;sQa&yacute;2 20Y7lZ118o&int;50&Ccedil;w1\"1&Zeta; n6&Uuml;&ge;a&nabla;l&szlig;nsF&rsaquo;J9 1D&Omicron;K$142L0S7z2.Ta2X31R9953911 
+Turning to mess up with. Well that to give her face Another for what she found it then. Since the best to hear 
+GX1&diams;Ca2isA18&iexcl;bN2&icirc;81A22z&Theta;D&nabla;tNXIfWi&ndash;Ap2WYNYF1b &ne;7y&phi;Dpj6&copy;R04E1U1&ntilde;n7G1o2jS111&ni;TC&perp;&pi;&Euml;O1&lowast;21RtS2wE6621 &nu;222ASi21DP&ldquo;8&lambda;V&and;W&sdot;OA2g6qNtNp1T269XA7&yen;11GGI6SEwU22S3&Chi;12!Okay let matt climbed in front door. Well then dropped the best she kissed 
+122C>&Phi;221 flQkWM&Scaron;tvo2dV1rT1ZtlN6R9dZ12LwuD19i3B5Fdc&AElig;l2eSwJd K1tDDfoX&plusmn;evr&yacute;wlK7P&divide;i1e13v2z&egrave;Ce&not;&Mu;&clubs;&Nu;rGhs2y172Y!gZp&aacute; R6O4O112&ni;r92Z1dB6i1e2&sigma;&sim;&Oacute;rCZ1s 122I31e2&curren;+&rceil;C&ecirc;U 1k6wG1c&sbquo;1o60AJoR72sd3i11s22pt &Oslash;277a2&forall;f5np&curren;n2duE8&rArr; 21SHGJVAtew&nabla;L&euml;t&sigmaf;2D2 6k28FgQQ&sub;R81L2EI2&notin;iEH&Iacute;&Eacute;3 H2r5Af1qxim&sigmaf;&rho;&Dagger;r6&copy;2jmWv92aW21giAC21lM&rfloor;1k 2V2&cedil;S2&ugrave;&theta;2h15B&Iota;i&lowast;ttEp8&cent;EPpSzWJi32U2n5&igrave;Ihgx8n&rceil;!j&prod;e5 
+x1qJ>mC7f 512y1GA420lCQe09s9u%uks&atilde; &psi;2X5A4g3nu&larr;&Tau;yst72pMh&scaron;g12e&rang;p&Uacute;1n1Y&fnof;&Scaron;t&Eacute;2LGizqQ&darr;c3t&Ugrave;I &oelig;&iuml;bXMK&Ucirc;RSertj2d\"Ot2ss581!oo2i F&Acirc;W2EW2DDx7hI2p&Phi;S2Bi2drUr&hArr;J<2a1&Alpha;zwt01p2i28R2oH21&Auml;n172r 1122DYvO7ak21ht204&Pi;e&part;&lambda;11 12dUo&omicron;1X3fc631 e&&cup;GOxT3CvXcO1e3K2&nu;r31y2 262z31&infin;I1 P&igrave;&exist;zYt6F4e6&egrave;&dArr;va5229rk&Theta;32sKP5R!&iota;&micro;mz 
+3212>22&prime;L 2&oacute;B&perp;S&cap;OQMe&yacute;&notin;2&Phi;c229Tu2a&int;dr25&ucirc;MeLk92 121OO&oslash;9oKn&yuml;&psi;&Agrave;Wl7H2&empty;i9&rho;&Egrave;2ni2&bull;2eXPx&iacute; 1251SUqtBh72a5otSZ9p222Dpf1&Yacute;2i2&omega;bjn11&Yuml;2gs2h&minus; b&aring;2swx2oSiq8hvt2262h&lceil;b&sup2;S 26&thorn;SVBEFCi2U&agrave;ds9&Ntilde;1&Epsilon;a11&xi;2,1&bdquo;wv jw7AMK2&harr;la2G91s23&laquo;etuB2keD&atilde;2&igrave;r1&uml;IeC&frac34;Ea&Auml;ao&divide;&Prime;&and;r>6e1d9D21,mtS2 I&lowast;44A1R&circ;2M98zME&cong;Q&Yuml;&ETH;X&sup1;4j6 20n3a1&apos;22nxpl6d832J 06&ETH;9E22&yacute;2-2829c42r2h72&yen;med&frac12;&spades;kc23sPk12&bull;r!&rang;QCa 
 &Scaron;e21>1&sigma;12 bp&oslash;NERN8eaD61ns7Abhy&plusmn;12&cap; D7sVR8&apos;1Ee22DVfc&tilde;32u72&AElig;qnc23qd2&sim;4&nabla;s&rho;mi5 6212a21&prop;TnQb9sd1M&ugrave;&image; &sum;gM22bN2&para;4c&auml;&frac12;&sube;/4X1&kappa;71f1z &piv;12ECzf&bull;1uMbycs1&bull;9&frac34;ts0T2o3h2DmSs31e7B2&Eacute;r2&sdot;22 &phi;81&Prime;SSX&eth;1u&uacute;I15p58uHp2c2&plusmn;o&part;T1Rrd6sMt&cup;1&micro;&xi;!24Xb
 
 Both hands through the fear in front.
 Wade to give it seemed like this. Yeah but one for any longer. Everything you going inside the kids.
 
-
-[1] http://pxmzcgy.storeprescription.ru?zz=fkxffti
-"
+[1] http://pxmzcgy.storeprescription.ru?zz=fkxffti"
         },
       },
       {
         :data     => IO.read('test/fixtures/mail21.box'),
-        :body_md5 => 'a232a7b7b29d20950b9f7b748137ba9d',
+        :body_md5 => 'f909a17fde261099903f3236f8755249',
         :params   => {
           :from              => 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
           :from_email        => 'pharmacy_affordable1@ertelecom.ru',
@@ -456,7 +422,7 @@ Wade to give it seemed like this. Yeah but one for any longer. Everything you go
       },
       {
         :data     => IO.read('test/fixtures/mail22.box'),
-        :body_md5 => '57cf207fb52f01f107ae008eb2f8d6cc',
+        :body_md5 => '9e79cb133d52afe9e18e8438df539305',
         :params   => {
           :from              => 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
           :from_email        => 'ireoniqla@lipetsk.ru',
@@ -470,16 +436,15 @@ Thinking of bed and whenever adam.
 Mike was too tired man to hear.I10PQSHEJl2Nwf&tilde;2113S173 &Icirc;1mEbb5N371L&piv;C7AlFnR1&diams;HG64B242&brvbar;M2242zk&Iota;N&rceil;7&rceil;TBN&ETH; T2xPI&ograve;gI2&Atilde;lL2&Otilde;ML&perp;22Sa&Psi;RBreathed adam gave the master bedroom door.
 Better get charlie took the wall.
 Charlotte clark smile he saw charlie.
-Dave and leaned her tears adam.Maybe we want any help me that.
+Dave and leaned her tears adam.
+Maybe we want any help me that.
 Next morning charlie gazed at their father.
 Well as though adam took out here. Melvin will be more money. Called him into this one last night.
-Men joined the pickup truck pulled away. Chuck could make sure that.[1]&dagger;p1C?L&thinsp;I?C&ensp;K?88&ensp;5 E R?EEOD !Chuckled adam leaned forward and le? charlie.
+Men joined the pickup truck pulled away. Chuck could make sure that.[1] &dagger;p1C?L&thinsp;I?C&ensp;K?88&ensp;5 E R?EEOD !Chuckled adam leaned forward and le? charlie.
 Just then returned to believe it here.
 Freemont and pulling out several minutes.
 
-
-[1] &#104;&#116;&#116;&#112;&#58;&#47;&#47;&#1072;&#1086;&#1089;&#1082;&#46;&#1088;&#1092;?jmlfwnwe&ucwkiyyc
-",
+[1] &#104;&#116;&#116;&#112;&#58;&#47;&#47;&#1072;&#1086;&#1089;&#1082;&#46;&#1088;&#1092;?jmlfwnwe&ucwkiyyc",
         },
 
       },
@@ -565,14 +530,14 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
       },
       {
         :data     => IO.read('test/fixtures/mail27.box'),
-        :body_md5 => 'e1c06d85ae7b8b032bef47e42e4c08f9',
+        :body_md5 => 'd41d8cd98f00b204e9800998ecf8427e',
         :params   => {
           :from              => 'caoyaoewfzfw@21cn.com',
           :from_email        => 'caoyaoewfzfw@21cn.com',
           :from_display_name => "",
           :subject           => "\r\n蠭龕中層管理者如何避免角色行为誤区",
           :to                => 'duan@seat.com.cn, info@znuny.com, jinzh@kingdream.com',
-          :body              => "\n\n",
+          :body              => "",
         },
         :attachments  => [
           {
@@ -609,8 +574,10 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
       parser = Channel::EmailParser.new
       data = parser.parse( file[:data] )
 
+      #puts '++' + data[:body].to_s + '++'
       # check body
       md5 = Digest::MD5.hexdigest( data[:body] )
+      #puts "IS #{md5} / should #{file[:body_md5]}"
       assert_equal( file[:body_md5], md5 )
 
       # check params

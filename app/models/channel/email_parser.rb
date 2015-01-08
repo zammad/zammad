@@ -12,17 +12,17 @@ class Channel::EmailParser
   mail = parse( msg_as_string )
 
   mail = {
-    :from               => 'Some Name <some@example.com>',
-    :from_email         => 'some@example.com',
-    :from_local         => 'some',
-    :from_domain        => 'example.com',
-    :from_display_name  => 'Some Name',
-    :message_id         => 'some_message_id@example.com',
-    :to                 => 'Some System <system@example.com>',
-    :cc                 => 'Somebody <somebody@example.com>',
-    :subject            => 'some message subject',
-    :body               => 'some message body',
-    :attachments        => [
+    :from              => 'Some Name <some@example.com>',
+    :from_email        => 'some@example.com',
+    :from_local        => 'some',
+    :from_domain       => 'example.com',
+    :from_display_name => 'Some Name',
+    :message_id        => 'some_message_id@example.com',
+    :to                => 'Some System <system@example.com>',
+    :cc                => 'Somebody <somebody@example.com>',
+    :subject           => 'some message subject',
+    :body              => 'some message body',
+    :attachments       => [
       {
         :data        => 'binary of attachment',
         :filename    => 'file_name_of_attachment.txt',
@@ -50,9 +50,9 @@ class Channel::EmailParser
     :x-zammad-ticket-owner    => 'some_owner_login',
 
     # article headers
-    :x-zammad-article-internal   => false,
-    :x-zammad-article-type       => 'agent',
-    :x-zammad-article-sender     => 'customer',
+    :x-zammad-article-internal => false,
+    :x-zammad-article-type     => 'agent',
+    :x-zammad-article-sender   => 'customer',
 
     # all other email headers
     :some-header => 'some_value',
@@ -133,7 +133,7 @@ class Channel::EmailParser
           filename = 'message.html'
           data[:body] = mail.html_part.body.to_s
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
-          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+          data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
           if !data[:body].valid_encoding?
             data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
@@ -199,7 +199,7 @@ class Channel::EmailParser
           filename = 'message.html'
           data[:body] = mail.body.decoded
           data[:body] = Encode.conv( mail.charset, data[:body] )
-          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+          data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
           if !data[:body].valid_encoding?
             data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
@@ -349,7 +349,7 @@ class Channel::EmailParser
       # reset current_user
       UserInfo.current_user_id = 1
 
-
+      # create sender
       if mail[ 'x-zammad-customer-login'.to_sym ]
         user = User.where( :login => mail[ 'x-zammad-customer-login'.to_sym ] ).first
       end
@@ -358,19 +358,27 @@ class Channel::EmailParser
       end
       if !user
         puts 'create user...'
-        roles = Role.where( :name => 'Customer' )
-        user = User.create(
-          :login          => mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          :firstname      => mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-          :lastname       => mail[ 'x-zammad-customer-lastname'.to_sym ],
-          :email          => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          :password       => '',
-          :active         => true,
-          :roles          => roles,
-          :updated_by_id  => 1,
-          :created_by_id  => 1,
+        user = user_create(
+          :login     => mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+          :firstname => mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
+          :lastname  => mail[ 'x-zammad-customer-lastname'.to_sym ],
+          :email     => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
         )
       end
+
+      # create to and cc user
+      ['to', 'cc'].each { |item|
+        if mail[item.to_sym]
+          items = Mail::AddressList.new( mail[item.to_sym] )
+          items.addresses.each {|item|
+            user_create(
+              :firstname => item.display_name,
+              :lastname  => '',
+              :email     => item.address,
+            )
+          }
+        end
+      }
 
       # set current user
       UserInfo.current_user_id = user.id
@@ -479,6 +487,35 @@ class Channel::EmailParser
     return ticket, article, user
   end
 
+  def user_create(data)
+
+    # return existing
+    user = User.where( :login => data[:email].downcase ).first
+    return user if user
+
+    # create new user
+    roles = Role.where( :name => 'Customer' )
+
+    # fillup
+    ['firstname', 'lastname'].each { |item|
+      if data[item.to_sym] == nil
+        data[item.to_sym] = ''
+      end
+    }
+    data[:password]      = ''
+    data[:active]        = true
+    data[:roles]         = roles
+    data[:updated_by_id] = 1
+    data[:created_by_id] = 1
+
+    user = User.create(data)
+    user.update_attributes(
+      :updated_by_id => user.id,
+      :created_by_id => user.id,
+    )
+    user
+  end
+
   def set_attributes_by_x_headers( item_object, header_name, mail )
 
     # loop all x-zammad-hedaer-* headers
@@ -524,85 +561,6 @@ class Channel::EmailParser
       end
     }
 
-  end
-
-  def html2ascii(string)
-
-    # in case of invalid encodeing, strip invalid chars
-    # see also test/fixtures/mail21.box
-    # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
-    if !string.valid_encoding?
-      string = string.chars.select { |c| c.valid_encoding? }.join
-    end
-
-    # find <a href=....> and replace it with [x]
-    link_list = ''
-    counter   = 0
-    string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) { |item|
-      link = $2
-      counter   = counter + 1
-      link_list += "[#{counter}] #{link}\n"
-      "[#{counter}]"
-    }
-
-    # remove empty lines
-    string.gsub!( /^\s*/m, '' )
-
-    # fix some bad stuff from opera and others
-    string.gsub!( /(\n\r|\r\r\n|\r\n)/, "\n" )
-
-    # strip all other tags
-    string.gsub!( /\<(br|br\/|br\s\/)\>/, "\n" )
-
-    # strip all other tags
-    string.gsub!( /\<.+?\>/, '' )
-
-    # strip all &amp; &lt; &gt; &quot;
-    string.gsub!( '&amp;', '&' )
-    string.gsub!( '&lt;', '<' )
-    string.gsub!( '&gt;', '>' )
-    string.gsub!( '&quot;', '"' )
-
-    # encode html entities like "&#8211;"
-    string.gsub!( /(&\#(\d+);?)/x ) { |item|
-      $2.chr
-    }
-
-    # encode html entities like "&#3d;"
-    string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) { |item|
-      chr_orig = $1
-      hex      = $2.hex
-      if hex
-        chr = hex.chr
-        if chr
-          chr_orig = chr
-        else
-          chr_orig
-        end
-      else
-        chr_orig
-      end
-
-      # check valid encoding
-      begin
-        if !chr_orig.encode('UTF-8').valid_encoding?
-          chr_orig = '?'
-        end
-      rescue
-        chr_orig = '?'
-      end
-      chr_orig
-    }
-
-    # remove empty lines
-    string.gsub!( /^\s*\n\s*\n/m, "\n" )
-
-    # add extracted links
-    if link_list
-      string += "\n\n" + link_list
-    end
-
-    return string
   end
 end
 

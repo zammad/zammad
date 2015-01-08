@@ -86,10 +86,10 @@ returns
 
   def fullname
     fullname = ''
-    if self.firstname
+    if self.firstname && !self.firstname.empty?
       fullname = fullname + self.firstname
     end
-    if self.lastname
+    if self.lastname && !self.lastname.empty?
       if fullname != ''
         fullname = fullname + ' '
       end
@@ -132,16 +132,16 @@ returns
 
   result = [
     {
-      :id            =>2,
-      :o_id          =>2,
+      :id            => 2,
+      :o_id          => 2,
       :created_by_id => 3,
       :created_at    => '2013-09-28 00:57:21',
       :object        => "User",
       :type          => "created",
     },
     {
-      :id            =>2,
-      :o_id          =>2,
+      :id            => 2,
+      :o_id          => 2,
       :created_by_id => 3,
       :created_at    => '2013-09-28 00:59:21',
       :object        => "User",
@@ -414,23 +414,35 @@ returns
       scan = self.firstname.scan(/, /)
       if scan[0]
         name = self.firstname.split(', ', 2)
-        self.lastname  = name[0]
-        self.firstname = name[1]
+        if name[0] != nil
+          self.lastname  = name[0]
+        end
+        if name[1] != nil
+          self.firstname = name[1]
+        end
         return
       end
 
       # Firstname Lastname
       name = self.firstname.split(' ', 2)
-      self.firstname = name[0]
-      self.lastname  = name[1]
+      if name[0] != nil
+        self.firstname = name[0]
+      end
+      if name[1] != nil
+        self.lastname = name[1]
+      end
       return
 
-      # -no name- firstname.lastname@example.com
+    # -no name- firstname.lastname@example.com
     elsif ( !self.firstname || self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? ) && ( self.email && !self.email.empty? )
       scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
-        self.firstname = scan[0][0].capitalize
-        self.lastname  = scan[0][1].capitalize
+        if scan[0][0] != nil
+          self.firstname = scan[0][0].capitalize
+        end
+        if scan[0][1] != nil
+          self.lastname  = scan[0][1].capitalize
+        end
       end
     end
   end
