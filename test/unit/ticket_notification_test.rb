@@ -110,20 +110,50 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # add article to ticket
     article_note = Ticket::Article.create(
-      :ticket_id      => ticket1.id,
-      :from           => 'some person',
-      :subject        => 'some note',
-      :body           => 'some message',
-      :internal       => true,
-      :sender         => Ticket::Article::Sender.where(:name => 'Agent').first,
-      :type           => Ticket::Article::Type.where(:name => 'note').first,
-      :updated_by_id  => 1,
-      :created_by_id  => 1,
+      :ticket_id     => ticket1.id,
+      :from          => 'some person',
+      :subject       => 'some note',
+      :body          => 'some message',
+      :internal      => true,
+      :sender        => Ticket::Article::Sender.where(:name => 'Agent').first,
+      :type          => Ticket::Article::Type.where(:name => 'note').first,
+      :updated_by_id => agent1.id,
+      :created_by_id => agent1.id,
     )
 
-    # verify notifications to agent1 + agent2
+    # execute ticket events
+    Observer::Ticket::Notification.transaction
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
 
+    # verify notifications to not to agent1 but to agent2
+    assert_equal( 2, notification_check(ticket1, agent1), ticket1.id )
+    assert_equal( 3, notification_check(ticket1, agent2), ticket1.id )
 
+    # update ticket by user
+    ticket1.owner_id      = agent1.id
+    ticket1.updated_by_id = agent1.id
+    ticket1.save
+    article_note = Ticket::Article.create(
+      :ticket_id     => ticket1.id,
+      :from          => 'some person',
+      :subject       => 'some note',
+      :body          => 'some message',
+      :internal      => true,
+      :sender        => Ticket::Article::Sender.where(:name => 'Agent').first,
+      :type          => Ticket::Article::Type.where(:name => 'note').first,
+      :updated_by_id => agent1.id,
+      :created_by_id => agent1.id,
+    )
+
+    # execute ticket events
+    Observer::Ticket::Notification.transaction
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
+
+    # verify notifications to not to agent1 but to agent2
+    assert_equal( 2, notification_check(ticket1, agent1), ticket1.id )
+    assert_equal( 3, notification_check(ticket1, agent2), ticket1.id )
 
     # create ticket with agent1 as owner
     ticket2 = Ticket.create(
@@ -348,7 +378,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :to            => 'some_recipient@example.com',
       :subject       => 'some subject',
       :message_id    => 'some@id',
-      :body          => 'some message',
+      :body          => "some message\nnewline1 abc\nnewline2",
       :internal      => false,
       :sender        => Ticket::Article::Sender.where(:name => 'Customer').first,
       :type          => Ticket::Article::Type.where(:name => 'email').first,
@@ -380,6 +410,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priority/, template[:body] )
     assert_match( /1 low/, template[:body] )
     assert_match( /2 normal/, template[:body] )
+    assert_match( /update/, template[:subject] )
 
     # en notification
     body = NotificationFactory.build(
@@ -394,6 +425,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priority/, body )
     assert_match( /1 low/, body )
     assert_match( /2 normal/, body )
+    assert_match( /update/, body )
 
     # de template
     template = bg.template_update(agent1, ticket1, article, human_changes)
@@ -402,6 +434,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priority/, template[:body] )
     assert_match( /1 low/, template[:body] )
     assert_match( /2 normal/, template[:body] )
+    assert_match( /aktualis/, template[:subject] )
 
     # de notification
     body = NotificationFactory.build(
@@ -417,6 +450,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priorität/, body )
     assert_match( /1 niedrig/, body )
     assert_match( /2 normal/, body )
+    assert_match( /aktualis/, body )
 
   end
 

@@ -2,15 +2,12 @@
 
 class Observer::Ticket::Notification::BackgroundJob
   def initialize(params)
-    @ticket_id  = params[:ticket_id]
-    @article_id = params[:article_id]
-    @type       = params[:type]
-    @changes    = params[:changes]
+    @p = params
   end
   def perform
-    ticket  = Ticket.find(@ticket_id)
-    if @article_id
-      article = Ticket::Article.find(@article_id)
+    ticket  = Ticket.find(@p[:ticket_id])
+    if @p[:article_id]
+      article = Ticket::Article.find(@p[:article_id])
     end
 
     # find recipients
@@ -54,14 +51,21 @@ class Observer::Ticket::Notification::BackgroundJob
     recipient_list = ''
     recipients.each do |user|
 
-      next if ticket.updated_by_id == user.id
+      # ignore user who changed it by him self
+      if article
+        next if article.updated_by_id == user.id
+      else
+        next if ticket.updated_by_id == user.id
+      end
+
+      # ignore inactive users
       next if !user.active
 
       # create desktop notification
 
       # create online notification
       OnlineNotification.add(
-        :type             => @type,
+        :type             => @p[:type],
         :object           => 'Ticket',
         :o_id             => ticket.id,
         :seen             => false,
@@ -78,17 +82,20 @@ class Observer::Ticket::Notification::BackgroundJob
       end
       recipient_list += user.email.to_s
 
+      # ignore if no changes has been done
       changes = self.human_changes(user, ticket)
-      next if !changes || changes.empty?
+      if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
+        next
+      end
 
       # get user based notification template
       # if create, send create message / block update messages
-      if @type == 'create'
+      if @p[:type] == 'create'
         template = self.template_create(user, ticket, article, changes)
-      elsif @type == 'update'
+      elsif @p[:type] == 'update'
         template = self.template_update(user, ticket, article, changes)
       else
-        raise "unknown type for notification #{@type}"
+        raise "unknown type for notification #{@p[:type]}"
       end
 
       # prepare subject & body
@@ -109,7 +116,7 @@ class Observer::Ticket::Notification::BackgroundJob
       notification[:subject] = ticket.subject_build( notification[:subject] )
 
       # send notification
-      puts "send ticket notifiaction to agent (#{@type}/#{ticket.id}/#{user.email})"
+      puts "send ticket notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
 
       NotificationFactory.send(
         :recipient    => user,
@@ -133,13 +140,13 @@ class Observer::Ticket::Notification::BackgroundJob
 
   def human_changes(user, record)
 
-    return {} if !@changes
+    return {} if !@p[:changes]
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
     #puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
-    @changes.each {|key, value|
+    @p[:changes].each {|key, value|
 
       # if no config exists, use all attributes
       if !attribute_list || attribute_list.empty?

@@ -64,6 +64,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
           listObjects[ticket.id] = {}
         end
         listObjects[ticket.id][:article_id] = article.id
+        listObjects[ticket.id][:ticket_id]  = ticket.id
+
+        if !listObjects[ticket.id][:type]
+          listObjects[ticket.id][:type] = 'update'
+        end
 
       elsif event[:name] == 'Ticket'
         ticket  = Ticket.lookup( :id => event[:id] )
