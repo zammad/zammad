@@ -215,6 +215,7 @@ class Observer::Ticket::Notification::BackgroundJob
 #{article.body.text2html}
 </blockquote>
 &lt;/snip&gt;
+<br>
 <br>'
     end
 
@@ -280,6 +281,7 @@ State: i18n(#{ticket.state.name.text2html})<br>
 #{article.body.text2html}
 </blockquote>
 &lt;/snip&gt;
+<br>
 <br>'
     end
     if user.preferences[:locale] =~ /^de/i

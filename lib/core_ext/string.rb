@@ -19,8 +19,18 @@ class String
       line.length > options[:line_width] ? line.gsub(/(.{1,#{options[:line_width]}})(\s+|$)/, "\\1\n").strip : line
     end * "\n"
   end
+
+=begin
+
+  filename = 'Some::Module'.to_filename
+
+  returns
+    'some/module'
+
+=end
+
   def to_filename
-    camel_cased_word = self.to_s
+    camel_cased_word = "#{self}"
     camel_cased_word.gsub(/::/, '/').downcase
   end
 
@@ -43,10 +53,14 @@ class String
 
   text = html_string.html2text
 
+  returns
+
+    'string with text'
+
 =end
 
   def html2text
-    string = self
+    string = "#{self}"
 
     # in case of invalid encodeing, strip invalid chars
     # see also test/fixtures/mail21.box
