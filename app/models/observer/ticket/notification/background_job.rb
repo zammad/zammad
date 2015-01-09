@@ -211,7 +211,7 @@ class Observer::Ticket::Notification::BackgroundJob
     article_content = ''
     if article
       article_content = '&lt;snip&gt;
-<blockquote>
+<blockquote type="cite">
 #{article.body.text2html}
 </blockquote>
 &lt;/snip&gt;
