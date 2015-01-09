@@ -3076,9 +3076,18 @@ footer {
     overflow-wrap: break-word;
   }
 
+    /* email css reset */
     .text-bubble p {
       margin: 0;
     }
+
+    .text-bubble blockquote,
+    .text-bubble pre
+     {
+      margin: 0px;
+      padding: 8px 12px 8px 12px;
+    }
+
 
     .ticket-article-item.state--folde-out .text-bubble {
       border-color: hsl(0,0%,90%);

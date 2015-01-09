@@ -136,14 +136,19 @@ module Channel::EmailBuild
       border-collapse: collapse;
     }
     table {
-      border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;
-    }
-    p {
-      margin: 0;
+      border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;
     }
     p, table, div, td {
       max-width: 600px;
     }
+    p {
+      margin: 0;
+    }
+    blockquote, pre {
+      margin: 0px;
+      padding: 8px 12px 8px 12px;
+    }
+
     </style>
   <head>
   <body style="#{css}">#{html}</body>
