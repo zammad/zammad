@@ -410,7 +410,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priority/, template[:body] )
     assert_match( /1 low/, template[:body] )
     assert_match( /2 normal/, template[:body] )
-    assert_match( /update/, template[:subject] )
+    assert_match( /updated/i, template[:subject] )
 
     # en notification
     body = NotificationFactory.build(
