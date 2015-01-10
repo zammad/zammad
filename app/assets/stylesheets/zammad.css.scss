@@ -2540,7 +2540,12 @@ footer {
     padding: 0;
   }
 
+.tooltip {
+  font-family: inherit;
+}
+
 .popover {
+  font-family: inherit;
   width: 372px;
   max-width: 9999px;
   border-radius: 0;
@@ -2548,7 +2553,7 @@ footer {
   z-index: 1110;
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
 }
-  
+
   .popover-title {
     border: none;
     background: none;
