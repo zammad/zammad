@@ -233,7 +233,7 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 400 }
+      delay:      { show: 400, hide: 800 }
       placement:  position
       title: ->
         ticket_id = $(@).data('id')
@@ -270,7 +270,7 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 400 }
+      delay:      { show: 400, hide: 800 }
       placement:  "auto #{position}"
       title: ->
         user_id = $(@).data('id')
@@ -326,7 +326,7 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 400 }
+      delay:      { show: 400, hide: 800 }
       placement:  "auto #{position}"
       title: ->
         organization_id = $(@).data('id')
@@ -486,7 +486,7 @@ class App.ControllerModal extends App.Controller
     'click .js-cancel': 'hide'
     'click .js-close': 'hide'
 
-  className: 'modal fade zIndex-9'
+  className: 'modal fade'
 
   constructor: (options = {}) ->
     defaults =
