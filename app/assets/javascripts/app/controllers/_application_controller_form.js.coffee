@@ -13,7 +13,8 @@ class App.ControllerForm extends App.Controller
       @form = @formGen()
     if !@model
       @model = {}
-    @attributes = []
+    if !@attributes
+      @attributes = []
 
     # if element is given, prepend form to it
     if @el
