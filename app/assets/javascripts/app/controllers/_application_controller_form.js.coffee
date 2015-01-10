@@ -8,8 +8,14 @@ class App.ControllerForm extends App.Controller
     @handlers.push @_showHideToggle
     @handlers.push @_requiredMandantoryToggle
 
+    # set empty class attributes if needed
     if !@form
       @form = @formGen()
+    if !@model
+      @model = {}
+    @attributes = []
+
+    # if element is given, prepend form to it
     if @el
       @el.prepend( @form )
 
