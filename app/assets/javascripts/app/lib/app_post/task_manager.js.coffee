@@ -227,10 +227,14 @@ class _taskManagerSingleton extends App.Controller
       controller = @workers[ key ]
       if controller
         if key is thisKey
+
+          # execute controllers show
           if controller.show
             controller.show(params_app)
             App.Event.trigger('ui:rerender:task')
         else
+
+          # execute controllers hide
           if controller.hide
             controller.hide()
 

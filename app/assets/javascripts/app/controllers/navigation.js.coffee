@@ -89,11 +89,6 @@ class App.Navigation extends App.Controller
   renderResult: (result = []) =>
     el = @$('#global-search-result')
 
-    # destroy existing popovers
-    @ticketPopupsDestroy()
-    @userPopupsDestroy()
-    @organizationPopupsDestroy()
-
     # remove result if not result exists
     if _.isEmpty( result )
       @$('.search').removeClass('open')

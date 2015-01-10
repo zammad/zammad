@@ -216,6 +216,15 @@ class App.Controller extends Spine.Controller
 
   ticketPopups: (position = 'right') ->
 
+    # open ticket in new task if curent user agent
+    if @isRole('Agent')
+      @el.find('div.ticket-popover, span.ticket-popover').bind('click', (e) =>
+        id = $(e.target).data('id')
+        if id
+          ticket = App.Ticket.find(id)
+          @navigate ticket.uiUrl()
+      );
+
     @ticketPopupsDestroy()
 
     # show ticket popup
@@ -245,11 +254,13 @@ class App.Controller extends Spine.Controller
 
   userPopups: (position = 'right') ->
 
-    # open user in new task if user isn't customer
-    if !@isRole('Customer')
-      @el.find('.user-popover').bind('click', (e) =>
-        user_id = $(e.target).data('id')
-        @navigate "#user/profile/#{user_id}"
+    # open user in new task if current user is agent
+    if @isRole('Agent')
+      @el.find('div.user-popover, span.user-popover').bind('click', (e) =>
+        id = $(e.target).data('id')
+        if id
+          user = App.User.find(id)
+          @navigate user.uiUrl()
       );
 
     @userPopupsDestroy()
@@ -260,7 +271,7 @@ class App.Controller extends Spine.Controller
       container:  'body'
       html:       true
       delay:      { show: 400, hide: 400 }
-      placement:  position
+      placement:  "auto #{position}"
       title: ->
         user_id = $(@).data('id')
         user    = App.User.fullLocal( user_id )
@@ -299,6 +310,15 @@ class App.Controller extends Spine.Controller
 
   organizationPopups: (position = 'right') ->
 
+    # open org in new task if current user agent
+    if @isRole('Agent')
+      @el.find('div.organization-popover, span.organization-popover').bind('click', (e) =>
+        id = $(e.target).data('id')
+        if id
+          organization = App.Organization.find(id)
+          @navigate organization.uiUrl()
+      );
+
     @organizationPopupsDestroy()
 
     # show organization popup
@@ -307,7 +327,7 @@ class App.Controller extends Spine.Controller
       container:  'body'
       html:       true
       delay:      { show: 400, hide: 400 }
-      placement:  position
+      placement:  "auto #{position}"
       title: ->
         organization_id = $(@).data('id')
         organization    = App.Organization.fullLocal( organization_id )
@@ -360,7 +380,7 @@ class App.Controller extends Spine.Controller
         container:  'body'
         html:       true
         delay:      { show: 500, hide: 5200 }
-        placement:  data.position
+        placement:  "auto #{data.position}"
         title: ->
           $(@).find('[title="*"]').val()
 
