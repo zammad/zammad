@@ -186,6 +186,9 @@ class App.Navigation extends App.Controller
 
       @$('.search').addClass('focused')
 
+      # remove not needed popovers
+      $('.popover').remove()
+
       # check if search is needed
       term = @$('#global-search').val().trim()
       return if !term
@@ -198,6 +201,10 @@ class App.Navigation extends App.Controller
       @delay(
         =>
           @$('.search').removeClass('focused')
+
+          # remove not needed popovers
+          $('.popover').remove()
+
           @renderResult()
         320
       )
