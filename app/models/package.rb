@@ -40,7 +40,7 @@ class Package < ApplicationModel
       file.close
       return true
     end
-    return package.to_s
+    package.to_s
   end
 
   # Package.auto_install
@@ -57,7 +57,7 @@ class Package < ApplicationModel
     data.each {|file|
       self.install( :file => path + '/' + file )
     }
-    return data
+    data
   end
 
   # Package.unlink_all
@@ -88,7 +88,7 @@ class Package < ApplicationModel
       raise "Can't link package, '#{package_base_dir}' is no package source directory!"
     end
     logger.debug package.inspect
-    return package
+    package
   end
 
   # Package.unlink('/path/to/src/extention')
@@ -248,7 +248,7 @@ class Package < ApplicationModel
 
     # prebuild assets
 
-    return true
+    true
   end
 
   # Package.reinstall( package_name )
@@ -294,8 +294,10 @@ class Package < ApplicationModel
 
     # prebuild assets
 
-    # reload new files
-    Package.reload_classes
+    # reload new files (only if we are in uninstall modus)
+    if !data[:migration_not_down]
+      Package.reload_classes
+    end
 
     # delete package
     record = Package.where(
@@ -304,7 +306,7 @@ class Package < ApplicationModel
     ).first
     record.destroy
 
-    return true
+    true
   end
 
   # reload .rb files in case they have changed
@@ -333,7 +335,7 @@ class Package < ApplicationModel
       return
     end
     logger.debug package.inspect
-    return package
+    package
   end
 
   def self._get_bin( name, version )
@@ -430,7 +432,7 @@ class Package < ApplicationModel
       File.rename( backup_location, location )
     end
 
-    return true
+    true
   end
 
   class Migration < ApplicationModel
