@@ -75,15 +75,12 @@ class App.OnlineNotificationWidget extends App.Controller
         App.i18n.translateInline( 'Notifications' ) + " <span>#{counter}</span>"
       content: =>
         # insert data
-         html = $( App.view('widget/online_notification')(
-          items: items
-         ))
-         html.on('click', (e) =>
-          e.preventDefault()
-          @markAllAsSeen(items)
-         )
+       $( App.view('widget/online_notification')(items: items))
     ).on('shown.bs.popover', =>
       # show frontend times
+      $('#markAllAsSeen').bind('click', (e) =>
+        @markAllAsSeen(items)
+      );
       @frontendTimeUpdate()
     )
 
