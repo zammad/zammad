@@ -1,5 +1,5 @@
 <% for article in @articles: %>
-<div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' is-internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
+<div class="ticket-article-item <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' is-internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
 
 
   <div class="article-meta-clip top">
@@ -33,14 +33,14 @@
     </div>
   </div>
 
-  <div class="article-content zIndex-1 horizontal<%= ' reverse' if article.sender.name isnt 'Agent' %>">
+  <div class="article-content zIndex-1">
     <% if article.sender.name isnt 'Agent': %>
     <%    position = 'left' %>
     <% else: %>
     <%    position = 'right' %>
     <% end %>
     <%- article.created_by.avatar("40", position) %>
-    <div class="flex bubble-gap">
+    <div class="bubble-gap">
       <div class="internal-border">
         <div class="text-bubble">
           <div class="bubble-arrow"></div>
