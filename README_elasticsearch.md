@@ -1,6 +1,7 @@
-# Setup a elastic search
+# Setup a Elasticsearch
 
-* Install elastic search
+* Install Elasticsearch
+  http://www.elasticsearch.org/overview/elkdownloads/
 
 * Install attachment plugin
   cd /usr/share/elasticsearch
