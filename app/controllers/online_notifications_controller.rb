@@ -88,4 +88,12 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password} -H 
     model_update_render(OnlineNotification, params)
   end
 
+  def markAllAsSeen
+      notifications = OnlineNotification.list(current_user,100)
+      notifications.each do |notification|
+        OnlineNotification.seen({:id => notification['id']})
+      end
+      render :json => {data:'all cool'}
+  end
+
 end

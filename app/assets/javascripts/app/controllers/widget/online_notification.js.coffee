@@ -43,10 +43,18 @@ class App.OnlineNotificationWidget extends App.Controller
     else
       @el.find('.logo').append('<div class="activity-counter">' + count.toString() + '</div>')
 
-  markAllAsSeen: (items) =>
-    for item in items
-      if !item.seen
-        App.OnlineNotification.seen( 'Ticket', item.id )
+  markAllAsSeen: () =>
+    @ajax(
+      id:   'markAllAsSeen'
+      type: 'POST'
+      url:  @apiPath + '/online_notifications/markAllAsSeen'
+      data: JSON.stringify( '' )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+        else
+      fail: =>
+    )
 
   stop: =>
     @counterUpdate(0)
@@ -81,7 +89,7 @@ class App.OnlineNotificationWidget extends App.Controller
       # show frontend times
       $('#markAllAsSeen').bind('click', (e) =>
         e.preventDefault()
-        @markAllAsSeen(items)
+        @markAllAsSeen()
       );
       @frontendTimeUpdate()
     ).on('hide.bs.popover', =>
