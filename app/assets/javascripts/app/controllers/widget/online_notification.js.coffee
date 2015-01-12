@@ -56,7 +56,7 @@ class App.OnlineNotificationWidget extends App.Controller
     @stop()
 
     # show popover
-    items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC' )
+    items = App.OnlineNotification.search( sortBy: 'created_at', order: 'DESC' )
     counter = 0
     for item in items
       if !item.seen
@@ -77,11 +77,15 @@ class App.OnlineNotificationWidget extends App.Controller
         # insert data
        $( App.view('widget/online_notification')(items: items))
     ).on('shown.bs.popover', =>
+
       # show frontend times
       $('#markAllAsSeen').bind('click', (e) =>
+        e.preventDefault()
         @markAllAsSeen(items)
       );
       @frontendTimeUpdate()
+    ).on('hide.bs.popover', =>
+      $('#markAllAsSeen').unbind('click')
     )
 
   fetch: =>
