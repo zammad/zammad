@@ -16,6 +16,7 @@ class App.Ticket extends App.Model
       { name: 'last_contact_customer', display: 'Last contact (Customer)', type: 'time', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'first_response',        display: 'First response',          type: 'time', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'close_time',            display: 'Close time',              type: 'time', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
+      { name: 'pending_time',          display: 'Pending Time',            type: 'time', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'escalation_time',       display: 'Escalation',              type: 'time', null: true, style: 'width: 12%', class: 'escalation', parentClass: 'noTruncate' },
       { name: 'article_count',         display: 'Article#',  style: 'width: 12%' },
       { name: 'created_by_id',         display: 'Created by', relation: 'User', readonly: 1 },
@@ -29,10 +30,11 @@ class App.Ticket extends App.Model
 
   level: (user) ->
     state = App.TicketState.find( @state_id )
+    stateType = App.TicketStateType.find( state.state_type_id )
     level = 1
-    if state.name is 'new' || state.name is 'open'
+    if stateType.name is 'new' || stateType.name is 'open'
       level = 2
-    else if state.name is 'pending'
+    else if stateType.name is 'pending reminder' || stateType.name is 'pending action'
       level = 3
     level
 
