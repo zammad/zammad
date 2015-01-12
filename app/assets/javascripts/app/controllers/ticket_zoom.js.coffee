@@ -18,10 +18,9 @@ class App.TicketZoom extends App.Controller
 
     @navupdate '#'
 
-    @form_meta      = undefined
-    @ticket_id      = params.ticket_id
-    @article_id     = params.article_id
-    @signature      = undefined
+    @form_meta  = undefined
+    @ticket_id  = params.ticket_id
+    @article_id = params.article_id
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
@@ -136,9 +135,6 @@ class App.TicketZoom extends App.Controller
 
     # get edit form attributes
     @form_meta = data.form_meta
-
-    # get signature
-    @signature = data.signature
 
     # load assets
     App.Collection.loadAssets( data.assets )
@@ -860,14 +856,15 @@ class Edit extends App.Controller
         if data.ticket.id is @ticket.id
           #@setArticleType(data.type.name)
 
-          # preselect article type
-          @setArticleType( 'email' )
           @open_textarea(null, true)
           for key, value of data.article
             if key is 'body'
               @$('[data-name="' + key + '"]').html(value)
             else
               @$('[name="' + key + '"]').val(value)
+
+          # preselect article type
+          @setArticleType( 'email' )
     )
 
   isIE10: ->
@@ -905,7 +902,7 @@ class Edit extends App.Controller
     @$('[data-name="body"]').ce({
       mode:      'richtext'
       multiline: true
-      maxlength: 2500
+      maxlength: 5000
     })
 
     html5Upload.initialize(
@@ -1075,9 +1072,28 @@ class Edit extends App.Controller
     # show/hide attributes
     for articleType in @articleTypes
       if articleType.name is type
-        @$(".form-group").addClass('hide')
+        @$('.form-group').addClass('hide')
         for name in articleType.attributes
           @$("[name=#{name}]").closest('.form-group').removeClass('hide')
+
+    # check if signature need to be added
+    body      = @$('[data-name="body"]').html() || ''
+    signature = undefined
+    if @ticket.group.signature_id
+      signature = App.Signature.find( @ticket.group.signature_id )
+    if signature && signature.body && @type is 'email'
+      signatureFinished = App.Utils.text2html(
+        App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: @ticket } )
+      )
+      if App.Utils.signatureCheck( body, signatureFinished )
+        if !App.Utils.lastLineEmpty(body)
+          body = body + '<br>'
+        body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
+        @$('[data-name="body"]').html(body)
+
+    # remove old signature
+    else
+      @$('[data-name="body"]').find("[data-signature=true]").remove()
 
   detect_empty_textarea: =>
     if !@textarea.text().trim()
@@ -1487,12 +1503,6 @@ class ArticleView extends App.Controller
 
     # get current body
     body = @ui.el.find('[data-name="body"]').html() || ''
-
-    # check if signature need to be added
-    if @ui.signature && @ui.signature.body && type.name is 'email'
-      signature = App.Utils.text2html( @ui.signature.body )
-      if App.Utils.signatureCheck( body, signature )
-        body = body + signature
 
     # check if quote need to be added
     selectedText = App.ClipBoard.getSelected()

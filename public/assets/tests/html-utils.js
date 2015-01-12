@@ -439,4 +439,92 @@ test( "check signature", function() {
 
 });
 
+// replace tags
+test( "check replace tags", function() {
+
+  var message = "<div>#{user.firstname} #{user.lastname}</div>"
+  var result  = '<div>Bob Smith</div>'
+  var data    = {
+    user: {
+      firstname: 'Bob',
+      lastname:  'Smith',
+    },
+  }
+  var verify = App.Utils.replaceTags( message, data )
+  equal( verify, result )
+
+  message = "<div>#{user.firstname} #{user.lastname}</div>"
+  result  = '<div>Bob Smith</div>'
+  data    = {
+    user: {
+      firstname: function() { return 'Bob' },
+      lastname:  function() { return 'Smith' },
+    },
+  }
+  verify = App.Utils.replaceTags( message, data )
+  equal( verify, result )
+
+  message = "<div>#{user.firstname} #{user.lastname}</div>"
+  result  = '<div>Bob </div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+    },
+  }
+  verify = App.Utils.replaceTags( message, data )
+  equal( verify, result )
+
+});
+
+// check if last line is a empty line
+test( "check if last line is a empty line", function() {
+
+  var message = "123"
+  var result  = false
+  var verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div>123</div>"
+  result  = false
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<p><div>123 </div></p>"
+  result  = false
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div></div>"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"></div>"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"></div>  "
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"></div>  \n  \n\t"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\">  </div>  \n  \n\t"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"\n>  \n</div>  \n  \n\t"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+
+});
+
 }
