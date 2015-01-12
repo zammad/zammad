@@ -358,7 +358,7 @@ returns
 
 =begin
 
-create or update model (check exists based on name, login or locale)
+create or update model (check exists based on id, name, login or locale)
 
   result = Model.create_or_update( attributes )
 
@@ -369,7 +369,16 @@ returns
 =end
 
   def self.create_or_update(data)
-    if data[:name]
+    if data[:id]
+      records = self.where( :id => data[:id] )
+      records.each {|record|
+        record.update_attributes( data )
+        return record
+      }
+      record = self.new( data )
+      record.save
+      return record
+    elsif data[:name]
       records = self.where( :name => data[:name] )
       records.each {|record|
         if record.name == data[:name]
