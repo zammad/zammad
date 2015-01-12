@@ -1,4 +1,4 @@
-[![Build Status](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop)](http://ci.zammad.org/job/Zammad%20Unittest%20Develop/)
+[![Build Status develop](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop)](http://ci.zammad.org/job/Zammad%20Unittest%20Develop/) [![Build Status master](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Master)](http://ci.zammad.org/job/Zammad%20Unittest%20Master/)
 Welcome to Zammad
 =================
 
