@@ -18,7 +18,7 @@ p {
 }
 
 .u-highlight {
-  color: hsl(194,90%,45%);
+  color: #0F94D6;
 }
 
 a {
@@ -750,6 +750,16 @@ textarea,
   width: 31px;
   height: 28px;
   border-color: #ececec;
+}
+
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover, 
+.pagination > .active > span:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span:focus {
+  background: #0F94D6;
+  border-color: #0F94D6;
 }
 
 .pagination-counter {
@@ -1824,6 +1834,11 @@ footer {
 
 .tableOverview {
   padding: 10px 20px;
+}
+
+.tableOverview-edit {
+  @extend .u-clickable;
+  @extend .u-highlighted;
 }
 
 .bulkAction {
