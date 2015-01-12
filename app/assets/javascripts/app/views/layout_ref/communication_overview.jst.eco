@@ -44,7 +44,7 @@
     </div>
 
     <div class="ticket-article">
-      <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
+      <div class="ticket-article-item customer phone" data-id="1" id="article-1">
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal reverse">
+        <div class="article-content zIndex-1">
           <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
           <div class="flex bubble-gap internal-border">
             <div class="text-bubble"><div class="bubble-arrow"></div>Welcome!
@@ -98,7 +98,7 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
         <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
       </div>
 
-      <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
+      <div class="ticket-article-item agent note" data-id="23" id="article-23">      
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -109,8 +109,8 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal">
-          <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
+        <div class="article-content zIndex-1">
+          <span class="avatar user-popover" data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
             <div class="text-bubble"><div class="bubble-arrow"></div>Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div>
           </div>
@@ -136,7 +136,7 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
         <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
       </div>
 
-      <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
+      <div class="ticket-article-item customer phone" data-id="1" id="article-1">
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -147,7 +147,7 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal reverse">
+        <div class="article-content zIndex-1">
           <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
           <div class="flex bubble-gap internal-border">
             <div class="text-bubble"><div class="bubble-arrow"></div>Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
@@ -182,7 +182,7 @@ Grüße, Peter</div>
         <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
       </div>
 
-      <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
+      <div class="ticket-article-item agent note" data-id="23" id="article-23">      
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -193,7 +193,7 @@ Grüße, Peter</div>
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal">
+        <div class="article-content zIndex-1">
           <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
             <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,<br>

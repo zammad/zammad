@@ -18,7 +18,7 @@ p {
 }
 
 .u-highlight {
-  color: hsl(194,90%,45%);
+  color: #0F94D6;
 }
 
 a {
@@ -750,6 +750,16 @@ textarea,
   width: 31px;
   height: 28px;
   border-color: #ececec;
+}
+
+.pagination > .active > a, 
+.pagination > .active > span, 
+.pagination > .active > a:hover, 
+.pagination > .active > span:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span:focus {
+  background: #0F94D6;
+  border-color: #0F94D6;
 }
 
 .pagination-counter {
@@ -1824,6 +1834,11 @@ footer {
 
 .tableOverview {
   padding: 10px 20px;
+}
+
+.tableOverview-edit {
+  @extend .u-clickable;
+  @extend .u-highlight;
 }
 
 .bulkAction {
@@ -2955,6 +2970,13 @@ footer {
   margin-top: 55px;
 }
 
+.ticket-article,
+.ticket-edit {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 21px;
+}
+
   .ticket-title {
     max-width: 800px;
     padding: 0 81px;
@@ -2975,24 +2997,20 @@ footer {
     display: block;
   }
 
-.bubble-grid {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 21px;
-}
-
-  .bubble-gap {
-    margin-left: 15px !important;
-  }
-
-  .customer.ticket-article-item .bubble-gap {
-    margin-left: 0 !important;
-    margin-right: 15px !important;
-  }
-
 .ticket-article-item {
   padding-bottom: 33px;
   position: relative;
+  
+  .avatar {
+    position: absolute;
+    right: 0;
+    top: 5px;
+  }
+
+  &.agent .avatar {
+    right: auto;
+    left: 0;
+  }
 }
 
   /*
@@ -3004,20 +3022,16 @@ footer {
     overflow: hidden;
     position: relative;
     height: 100%;
+    margin: 0 55px;
   }
 
   .article-content {
     position: relative;
-    margin-right: 55px;
+    padding: 0 55px;
   }
 
-    .customer.ticket-article-item .article-content {
-      margin-right: 0;
-      margin-left: 55px;
-    }
 
   .article-content-meta {
-    padding: 0 55px;
     position: absolute;
     width: 100%;
   }
@@ -3039,7 +3053,7 @@ footer {
     }
 
     .article-meta-key {
-      width: 13%;
+      width: 20%;
       text-transform: uppercase;
     }
 
@@ -3079,6 +3093,7 @@ footer {
     box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
     position: relative;
     overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
     /* email css reset */
@@ -3196,6 +3211,10 @@ footer {
       vertical-align: top;
     }
 
+.article-add {
+  position: relative;
+}
+
 .ticket-edit {
   margin-top: auto;
   margin-bottom: 36px;
@@ -3215,7 +3234,9 @@ footer {
   }
 
 .editControls {
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 5px;
 }
 
   .editControls-item {
