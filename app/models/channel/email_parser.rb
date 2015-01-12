@@ -66,7 +66,14 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-      data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+      if field.name
+
+        # full line, encode, ready for storage
+        data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+
+        # if we need to access the lines by objects later again
+        data[ "raw-#{field.name.downcase.to_s}".to_sym ] = field
+      end
     }
 
     # get sender
@@ -367,9 +374,9 @@ class Channel::EmailParser
       end
 
       # create to and cc user
-      ['to', 'cc'].each { |item|
-        if mail[item.to_sym]
-          items = Mail::AddressList.new( mail[item.to_sym] )
+      ['raw-to', 'raw-cc'].each { |item|
+        if mail[item.to_sym] && mail[item.to_sym].tree
+          items = mail[item.to_sym].tree
           items.addresses.each {|item|
             user_create(
               :firstname => item.display_name,

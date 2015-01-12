@@ -598,6 +598,51 @@ Registration AG Ulm HRB 534075 * General Manager Holger Felgner
 [3] http://www.teamviewer.com",
         },
       },
+      {
+        :data     => IO.read('test/fixtures/mail30.box'),
+        :body_md5 => 'bba63e2dbe29e7b82d893c2554ff466a',
+        :params   => {
+          :from              => 'Manfred Haert <Manfred.Haert@example.com>',
+          :from_email        => 'Manfred.Haert@example.com',
+          :from_display_name => "Manfred Haert",
+          :subject           => "Antragswesen in TesT abbilden",
+          :to                => 'info@znuny.inc',
+          :body              => "Sehr geehrte Damen undHerren,
+
+wir hatten bereits letztes Jahr einen TesT-Workshop mit IhremHerrn XXX durchgeführt und würden nun gerne erneutIhre Dienste in Anspruch nehmen.
+
+Mittlerweile setzen wir TesT produktiv ein und würden nun gerne aneinem Anwendungsfall (Change-Management) die Machbarkeit desAbbildens eines derzeit \"per Papier\" durchgeführten Antragswesensin TesT prüfen wollen.
+
+Wir bitten gerne um ein entsprechendes Angebot.
+
+Für Rückfragen stehe ich gerne zur Verfügung. Vielen Dank!
+
+-- 
+ Freundliche Grüße
+i.A. Manfred Härt
+
+Test Somewhere GmbH
+Ferdinand-Straße 99
+99073 Korlben
+Bitte beachten Sie die neuen Rufnummern!
+Telefon: 011261 00000-2460
+Fax: 011261 0000-7460
+[1] mailto:manfred.haertel@example.com
+[2] http://www.example.com
+JETZT AUCH BEI FACEBOOK !
+[3] https://www.facebook.com/test
+___________________________________
+Test Somewhere GmbH
+ Diesee-Mail ist ausschließlich für den beabsichtigten Empfängerbestimmt. Sollten Sie irrtümlich diese e-Mail erhaltenhaben, unterrichten Sie uns bitte umgehend unter[4] kontakt@example.com und vernichten Sie diese Mitteilungeinschließlich der ggf. beigefügten Dateien.
+Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen Informationen nicht garantierenkönnen, bitten wir um Verständnis, dass wir zu Ihrem undunserem Schutz die rechtliche Verbindlichkeit dervorstehenden Erklärungen ausschließen, soweit wir mitIhnen keine anders lautenden Vereinbarungen getroffenhaben.
+
+
+[1] mailto:manfred.haertel@example.com
+[2] http://www.example.com
+[3] https://www.facebook.com/test
+[4] mailto:kontakt@example.com",
+        },
+      },
     ]
 
     files.each { |file|

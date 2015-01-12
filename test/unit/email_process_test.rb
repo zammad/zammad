@@ -1823,6 +1823,85 @@ AElFTkSuQmCC
           },
         },
       },
+      {
+        :data => 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: some subject
+
+Some Text',
+        :trusted => false,
+        :success => true,
+        :result => {
+          0 => {
+            :group    => 'Users',
+            :priority => '2 normal',
+            :title    => 'some subject',
+          },
+          1 => {
+            :sender   => 'Customer',
+            :type     => 'email',
+          },
+        },
+        :verify => {
+          :users => [
+            {
+              :firstname => 'Some',
+              :lastname  => 'Body',
+              :email     => 'somebody@example.com',
+            },
+            {
+              :firstname => 'Bob',
+              :lastname  => '',
+              :fullname  => 'Bob',
+              :email     => 'bod@example.com',
+            },
+            {
+              :firstname => '',
+              :lastname  => '',
+              :email     => 'any@example.com',
+              :fullname  => 'any@example.com',
+            },
+          ],
+        }
+      },
+      {
+        :data    => IO.read('test/fixtures/mail30.box'),
+        :success => true,
+        :result  => {
+          0 => {
+            :priority => '2 normal',
+            :title    => 'Antragswesen in TesT abbilden',
+          },
+          1 => {
+            :sender   => 'Customer',
+            :type     => 'email',
+          },
+        },
+        :verify => {
+          :users => [
+            {
+              :firstname => 'Bert',
+              :lastname  => 'Jörg',
+              :fullname  => 'Bert Jörg',
+              :email     => 'joerg.bert@example.com',
+            },
+            {
+              :firstname => 'Karl-Heinz',
+              :lastname  => 'Test',
+              :fullname  => 'Karl-Heinz Test',
+              :email     => 'karl-heinz.test@example.com',
+            },
+            {
+              :firstname => 'Manfred',
+              :lastname  => 'Haert',
+              :email     => 'manfred.haert@example.com',
+              :fullname  => 'Manfred Haert',
+            },
+          ],
+        }
+
+      },
     ]
     process(files)
   end
@@ -1970,49 +2049,6 @@ Some Text',
             :internal => true,
           },
         },
-      },
-      {
-        :data => 'From: Some Body <somebody@example.com>
-To: Bob <bod@example.com>
-Cc: any@example.com
-Subject: some subject
-
-Some Text',
-        :trusted => false,
-        :success => true,
-        :result => {
-          0 => {
-            :group    => group2.name,
-            :priority => '2 normal',
-            :title    => 'some subject',
-          },
-          1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => true,
-          },
-        },
-        :verify => {
-          :users => [
-            {
-              :firstname => 'Some',
-              :lastname  => 'Body',
-              :email     => 'somebody@example.com',
-            },
-            {
-              :firstname => 'Bob',
-              :lastname  => '',
-              :fullname  => 'Bob',
-              :email     => 'bod@example.com',
-            },
-            {
-              :firstname => '',
-              :lastname  => '',
-              :email     => 'any@example.com',
-              :fullname  => 'any@example.com',
-            },
-          ],
-        }
       },
     ]
     process(files)
