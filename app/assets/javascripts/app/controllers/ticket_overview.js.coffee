@@ -68,14 +68,13 @@ class Table extends App.ControllerContent
     # init fetch via ajax, all other updates on time via websockets
     else
       @ajax(
-        id:    'ticket_overview_' + @key,
-        type:  'GET',
-        url:   @apiPath + '/ticket_overviews',
-        data:  {
-          view:       @view,
-          view_mode:  @view_mode,
-        }
-        processData: true,
+        id:   'ticket_overview_' + @key
+        type: 'GET'
+        url:  @apiPath + '/ticket_overviews'
+        data:
+          view:      @view
+          view_mode: @view_mode
+        processData: true
         success: (data) =>
           data.ajax = true
           @load(data)
@@ -126,8 +125,6 @@ class Table extends App.ControllerContent
 
   render: ->
 
-
-
     # if customer and no ticket exists, show the following message only
     if !@ticket_list_show[0] && @isRole('Customer')
       @html App.view('customer_not_ticket_exists')()
@@ -160,10 +157,10 @@ class Table extends App.ControllerContent
     if @isRole('Customer')
       view_modes = []
     html = App.view('agent_ticket_view/content')(
-      overview:    @overview
-      view_modes:  view_modes
-      checkbox:    checkbox
-      edit:        edit
+      overview:   @overview
+      view_modes: view_modes
+      checkbox:   checkbox
+      edit:       edit
     )
     html = $(html)
 #    html.find('li').removeClass('active')
@@ -556,19 +553,19 @@ class App.OverviewSettings extends App.ControllerModal
         },
         {
           value:  'last_contact'
-          name:   'Last Contact'
+          name:   'Last Contact Time'
         },
         {
           value:  'last_contact_agent'
-          name:   'Last Contact Agent'
+          name:   'Last Contact Agent Time'
         },
         {
           value:  'last_contact_customer'
-          name:   'Last Contact Customer'
+          name:   'Last Contact Customer Time'
         },
         {
           value:  'first_response'
-          name:   'First Response'
+          name:   'First Response Time'
         },
         {
           value:  'close_time'
@@ -576,7 +573,11 @@ class App.OverviewSettings extends App.ControllerModal
         },
         {
           value:  'escalation_time'
-          name:   'Escalation'
+          name:   'Escalation Time'
+        },
+        {
+          value:  'pending_time'
+          name:   'Pending Reminder Time'
         },
         {
           value:  'article_count'
