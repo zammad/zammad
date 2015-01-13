@@ -242,6 +242,15 @@ class App.TicketCreate extends App.Controller
           # get current body
           body = @$('[data-name="body"]').html() || ''
           if App.Utils.signatureCheck( body, signatureFinished )
+
+            # if signature has changed, replace it
+            signature_id = @$('[data-signature=true]').data('signature-id')
+            if signature_id && signature_id.toString() isnt signature.id.toString()
+
+              # remove old signature
+              @$('[data-signature="true"]').remove()
+              body = @$('[data-name="body"]').html() || ''
+
             if !App.Utils.lastLineEmpty(body)
               body = body + '<br>'
             body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
@@ -250,7 +259,7 @@ class App.TicketCreate extends App.Controller
 
         # remove old signature
         else
-          @$('[data-name="body"]').find("[data-signature=true]").remove()
+          @$('[data-name="body"]').find('[data-signature=true]').remove()
 
     new App.ControllerForm(
       el:       @el.find('.ticket-form-top')
