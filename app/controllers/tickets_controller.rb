@@ -228,22 +228,6 @@ class TicketsController < ApplicationController
     ticket = Ticket.find( params[:id] )
     return if !ticket_permission( ticket )
 
-    # get signature
-    signature = {}
-    if ticket.group.signature
-      signature = ticket.group.signature.attributes
-
-      # replace tags
-      signature['body'] = NotificationFactory.build(
-        :locale  => current_user.preferences[:locale],
-        :string  => signature['body'],
-        :objects => {
-          :ticket   => ticket,
-          :user     => current_user,
-        }
-      )
-    end
-
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
 
@@ -292,7 +276,6 @@ class TicketsController < ApplicationController
     render :json => {
       :ticket_id          => ticket.id,
       :ticket_article_ids => article_ids,
-      :signature          => signature,
       :assets             => assets,
       :links              => link_list,
       :tags               => tags,

@@ -37,7 +37,7 @@ returns
         :user => session,
         :meta => meta,
       }
-      file.write Marshal.dump(data)
+      file.write data.to_json
     }
 
     # send update to browser
@@ -195,7 +195,7 @@ returns
     path = @path + '/' + client_id.to_s
     data[:meta][:last_ping] = Time.new.to_i.to_s
     File.open( path + '/session', 'wb' ) { |file|
-      file.write Marshal.dump(data)
+      file.write data.to_json
     }
     true
   end
@@ -234,7 +234,11 @@ returns
         file.flock( File::LOCK_EX )
         all = file.read
         file.flock( File::LOCK_UN )
-        data = Marshal.load( all )
+        dataJSON = JSON.parse( all )
+        if dataJSON
+          data = self.symbolize_keys(dataJSON)
+          data[:user] = dataJSON['user'] # for compat. reasons
+        end
       }
     rescue Exception => e
       puts e.inspect
@@ -565,6 +569,21 @@ returns
       end
     end
     puts "/LOOP #{client_id} - #{try_count}"
+  end
+
+  def self.symbolize_keys(hash)
+    hash.inject({}){|result, (key, value)|
+      new_key = case key
+                when String then key.to_sym
+                else key
+                end
+      new_value = case value
+                  when Hash then symbolize_keys(value)
+                  else value
+                  end
+      result[new_key] = new_value
+      result
+    }
   end
 
 end
