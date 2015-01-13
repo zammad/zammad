@@ -2041,10 +2041,6 @@ footer {
     text-decoration: none;
   }
 
-  .task .modified.priority.icon {
-    margin-right: 8px;
-  }
-
   .task.active {
     background: #389ed9;
   }
@@ -2106,7 +2102,7 @@ footer {
   .level-3 .modified.priority.icon:after {
     background-color: #faab00;
     border-color: #faab00;
-  }    
+  }
 
   .task .closeTask {
     position: absolute;
