@@ -93,7 +93,7 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password} -H 
       notifications.each do |notification|
         OnlineNotification.seen({:id => notification['id']})
       end
-      render :json => {data:'all cool'}
+      render :json => {data:'ok'}
   end
 
 end
