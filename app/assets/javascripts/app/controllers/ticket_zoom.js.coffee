@@ -1262,7 +1262,7 @@ class ArticleView extends App.Controller
     'click .show_toogle':           'show_toogle'
     'click [data-type=reply]':      'reply'
     'click [data-type=replyAll]':   'replyAll'
-    'click .text-bubble':           'toggle_meta'
+    'click .text-bubble':           'toggle_meta_with_delay'
     'click .text-bubble a':         'stopPropagation'
 
   constructor: ->
@@ -1327,7 +1327,17 @@ class ArticleView extends App.Controller
   stopPropagation: (e) ->
     e.stopPropagation()
 
-  toggle_meta: (e) ->
+  toggle_meta_with_delay: (e) =>
+    # allow double click select
+    # by adding a delay to the toggle
+
+    if @lastClick and +new Date - @lastClick < 150
+      clearTimeout(@toggleMetaTimeout)
+    else
+      @toggleMetaTimeout = setTimeout(@toggle_meta, 150, e)
+      @lastClick = +new Date
+
+  toggle_meta: (e) =>
     e.preventDefault()
 
     animSpeed = 300
