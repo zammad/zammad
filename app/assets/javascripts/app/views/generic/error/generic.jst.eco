@@ -1,0 +1,5 @@
+<div class="main flex">
+  <h1><%- @T('Error') %></h1>
+  <p><%- @T('Status Code') %>: <%= @status %></p>
+  <p><%= @detail %></p>
+</div>

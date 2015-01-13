@@ -1,0 +1,4 @@
+<div class="main flex">
+  <h1><%- @T('Not Found') %></h1>
+  <p><%- @T('Sorry, unable to find this ressource.') %></p>
+</div>

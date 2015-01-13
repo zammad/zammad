@@ -1,0 +1,4 @@
+<div class="main flex">
+  <h1><%- @T('Unauthorized') %></h1>
+  <p><%- @T('Sorry, you are not allowed to access this ressource.') %></p>
+</div>
