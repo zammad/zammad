@@ -44,14 +44,15 @@ class App.TicketZoom extends App.Controller
 
   meta: =>
     meta =
-      url:        @url()
-      id:         @ticket_id
-      iconClass:  "priority"
+      url:       @url()
+      id:        @ticket_id
+      iconClass: 'priority'
+      head:      @taskTitle
     if @ticket
-      @ticket = App.Ticket.fullLocal( @ticket.id )
+      @ticket    = App.Ticket.fullLocal( @ticket.id )
       meta.head  = @ticket.title
       meta.title = '#' + @ticket.number + ' - ' + @ticket.title
-      meta.class  = "level-#{@ticket.level()}"
+      meta.class = "level-#{@ticket.level()}"
     meta
 
   url: =>
@@ -66,6 +67,7 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
   changed: =>
+    return false if !@ticket
     formCurrent = @formParam( @el.find('.edit') )
     ticket      = App.Ticket.find(@ticket_id).attributes()
     modelDiff   = @getDiff( ticket, formCurrent )
@@ -114,11 +116,23 @@ class App.TicketZoom extends App.Controller
         # do not close window if request is aborted
         return if status is 'abort'
 
-        # do not close window on network error but if object is not found
-        return if status is 'error' && error isnt 'Not Found'
-
-        # remove task
-        App.TaskManager.remove( @task_key )
+        # show error message
+        if xhr.status is 401 || error is 'Unauthorized'
+          @taskTitle = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+          @html App.view('generic/error/unauthorized')()
+        else if xhr.status is 404 || error is 'Not Found'
+          @taskTitle = '» ' + App.i18n.translateInline('Not Found') + ' «'
+          @html App.view('generic/error/not_found')()
+        else
+          @taskTitle = '» ' + App.i18n.translateInline('Error') + ' «'
+          status     = xhr.status
+          detail     = xhr.responseText
+          if !status && !detail
+            detail = 'General communication error, maybe internet is not available!'
+          @html App.view('generic/error/generic')(
+            status: status
+            detail: detail
+          )
     )
 
 

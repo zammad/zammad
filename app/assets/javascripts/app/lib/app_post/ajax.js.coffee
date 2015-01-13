@@ -62,16 +62,15 @@ class _ajaxSingleton
       # do not show aborded requests
       return if status is 0
 
-      # do not show any error message on wrong login
-      return if status is 401 && !settings.url.match('login')
-
-      # do not show any error message with code 200
+      # 200, all is fine
       return if status is 200
 
-      # show human readable message
-      if status is 401
-        status = 'Access denied.'
-        detail = ''
+      # do not show any error message with code 401/404 (handled by controllers)
+      return if status is 401
+      return if status is 404
+
+      # do not show any error message with code 502
+      return if status is 502
 
       # show error message
       new App.ErrorModal(
