@@ -1,9 +1,9 @@
 class App.UserOrganizationAutocompletion extends App.Controller
   className: 'dropdown js-recipientDropdown zIndex-2'
   events:
-    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
-    'click .js-organisation':                 'showOrganisationMembers'
-    'click .js-back':                         'hideOrganisationMembers'
+    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
+    'click .js-organization':                 'showOrganizationMembers'
+    'click .js-back':                         'hideOrganizationMembers'
     'click .js-user':                         'selectUser'
     'click .js-user-new':                     'newUser'
     'focus input':                            'open'
@@ -148,9 +148,9 @@ class App.UserOrganizationAutocompletion extends App.Controller
           e.preventDefault()
           userId = @$('.recipientList').find('li.is-active').data('user-id')
           if !userId
-            organisationId = @$('.recipientList').find('li.is-active').data('organisation-id')
-            if organisationId
-              @showOrganisationMembers(undefined, @$('.recipientList').find('li.is-active'))
+            organizationId = @$('.recipientList').find('li.is-active').data('organization-id')
+            if organizationId
+              @showOrganizationMembers(undefined, @$('.recipientList').find('li.is-active'))
               return
           if userId is 'new'
             @newUser()
@@ -217,24 +217,24 @@ class App.UserOrganizationAutocompletion extends App.Controller
 
   emptyResultList: =>
     @$('.recipientList').empty()
-    @$('.recipientList-organisationMembers').remove()
+    @$('.recipientList-organizationMembers').remove()
 
-  showOrganisationMembers: (e,listEntry) =>
+  showOrganizationMembers: (e,listEntry) =>
     if e
       e.stopPropagation()
       listEntry = $(e.currentTarget)
 
-    organisationId = listEntry.data('organisation-id')
+    organizationId = listEntry.data('organization-id')
 
     @recipientList = @$('.recipientList')
-    @organisationList = @$("##{ organisationId }")
+    @organizationList = @$("##{ organizationId }")
 
-    # move organisation-list to the right and slide it in
+    # move organization-list to the right and slide it in
 
-    $.Velocity.hook(@organisationList, 'translateX', '100%')
-    @organisationList.removeClass('hide')
+    $.Velocity.hook(@organizationList, 'translateX', '100%')
+    @organizationList.removeClass('hide')
 
-    @organisationList.velocity
+    @organizationList.velocity
       properties:
         translateX: 0
       options:
@@ -246,12 +246,12 @@ class App.UserOrganizationAutocompletion extends App.Controller
         translateX: '-100%'
       options:
         speed: 300
-        complete: => @recipientList.height(@organisationList.height())
+        complete: => @recipientList.height(@organizationList.height())
 
-  hideOrganisationMembers: (e) =>
+  hideOrganizationMembers: (e) =>
     e && e.stopPropagation()
 
-    return if !@organisationList
+    return if !@organizationList
 
     # fade list back in
     @recipientList.velocity
@@ -264,13 +264,13 @@ class App.UserOrganizationAutocompletion extends App.Controller
 
     @recipientList.height('')
 
-    # slide out organisation-list and hide it
-    @organisationList.velocity
+    # slide out organization-list and hide it
+    @organizationList.velocity
       properties:
         translateX: '100%'
       options:
         speed: 300
-        complete: => @organisationList.addClass('hide')
+        complete: => @organizationList.addClass('hide')
 
   newUser: (e) =>
     if e

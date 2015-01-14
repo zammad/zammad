@@ -173,9 +173,9 @@ class App.Navigation extends App.Controller
                 data =
                   display:    "#{organization.displayName()}"
                   id:         organization.id
-                  class:      "organisation organization-popover"
+                  class:      "organization organization-popover"
                   url:        organization.uiUrl()
-                  iconClass:  "organisation"
+                  iconClass:  "organization"
                 area.result.push data
 
           @renderResult(result)
