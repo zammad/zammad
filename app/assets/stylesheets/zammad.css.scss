@@ -277,6 +277,11 @@ span[data-tooltip]:hover:before {
     box-shadow: none;
   }
 
+  &.btn--action {
+    padding: 7px 11px 5px;
+    @extend label;
+  }
+
   &.btn--primary {
     color: white;
     background: #419ed7;
@@ -781,7 +786,7 @@ textarea,
 }
 
 .page-header-title h1 {
-  margin-top: 13px;
+  margin-top: 9px;
 }
 
 .page-header-meta {
