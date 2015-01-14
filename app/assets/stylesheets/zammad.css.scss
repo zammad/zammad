@@ -265,7 +265,7 @@ span[data-tooltip]:hover:before {
   color: hsl(202,68%,54%);
   background: white;
   border-color: rgba(0,0,0,.1);
-  outline: none;
+  outline: none !important;
   
   &.is-disabled {
     pointer-events: none;
@@ -275,6 +275,7 @@ span[data-tooltip]:hover:before {
 
   &:active {
     box-shadow: none;
+    background: hsl(0,0%,98%);
   }
 
   &.btn--action {
@@ -284,18 +285,26 @@ span[data-tooltip]:hover:before {
 
   &.btn--primary {
     color: white;
-    background: #419ed7;
-    border-color: #419ed7;
+    background: hsl(203,65%,55%);
+    &:active {
+      background: hsl(203,65%,45%);
+    }
   }
 
   &.btn--success {
     color: white;
     background: hsl(145,51%,45%);
+    &:active {
+      background: hsl(145,51%,35%);
+    }
   }
 
   &.btn--danger {
     color: white;
     background: hsl(0,65%,55%);
+    &:active {
+      background: hsl(0,65%,45%);
+    }
   }
 
   &.btn--subtle {
@@ -306,6 +315,10 @@ span[data-tooltip]:hover:before {
     text-decoration: underline;
     background: none;
     @extend .u-clickable;
+    
+    &:active {
+      color: rgba(0,0,0,.42);
+    }
     
     &:hover {
       color: rgba(0,0,0,.5);
