@@ -615,6 +615,12 @@ fieldset > *:not(.form-group) .form-control {
 .form-group .help-message {
   cursor: help;
   opacity: 0.2;
+  top: -2px;
+  position: relative;
+  
+  .icon {
+    display: block;
+  }
 }
 
 .form-group:not(.formGroup--halfSize) {
