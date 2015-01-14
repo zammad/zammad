@@ -133,6 +133,9 @@ class App.TicketZoom extends App.Controller
             status: status
             detail: detail
           )
+
+        # update current task title
+        App.Event.trigger 'task:render'
     )
 
 
