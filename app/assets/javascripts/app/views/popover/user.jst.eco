@@ -1,15 +1,14 @@
 <% if @user['organization']: %>
-  <div class="customer-info">
-    <%- @P( @user['organization'] ) %>
-  </div>
+<div class="user-organization"><a href="<%- @user.organization.uiUrl() %>"><%= @user.organization.displayName() %></a></div>
 <% end %>
+<hr>
+<div class="horizontal two-columns">
 <% for row in @userData: %>
   <% if @user[row.name]: %>
-    <% if row.tag is 'richtext': %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @user[row.name] %></div>
-    <% else: %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
-    <% end %>
+  <div class="column">
+    <h3><%- @T( row.display ) %></h3>
+    <div class="u-textTruncate"><%- @L( @P( @user[row.name] ) ) %></div>
+  </div>
   <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
