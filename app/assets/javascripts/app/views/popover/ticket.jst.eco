@@ -1,23 +1,26 @@
 <div>
-  <div class="<%- @ticket.icon() %>" title="<%- @ticket.iconTitle() %>"></div>
+  <span class="<%- @ticket.icon() %>" title="<%- @ticket.iconTitle() %>"></span> <span class="<%- @ticket.iconTextClass() %>"><%- @ticket.iconTitle() %></span>
 </div>
 <hr>
-<h3>Personen</h3>
+<h3><%- @P('Agent') %></h3>
 <div class="person">
-  <%- @P( @ticket.owner ) %>
+  <%= @ticket.owner.displayName() %>
+  <% if @ticket.owner.organization_id: %>
+    <span class="organization"><%= @ticket.owner.organization.displayName() %></span>
+  <% end %>
 </div>
+<h3><%- @P('Customer') %></h3>
 <div class="person">
-  <%- @P( @ticket.customer ) %>
+  <%= @ticket.customer.displayName() %>
+  <% if @ticket.customer.organization_id: %>
+    <span class="organization"><%= @ticket.customer.organization.displayName() %></span>
+  <% end %>
 </div>
 <hr>
 <div class="horizontal two-columns">
   <div class="column">
     <h3>#</h3>
     <div class="u-textTruncate"><%- @P( @ticket.number ) %></div>
-  </div>
-  <div class="column">
-    <h3><%- @T( 'State' ) %></h3>
-    <div class="u-textTruncate"><%- @P( @ticket.state.name ) %></div>
   </div>
   <div class="column">
     <h3><%- @T( 'Priority' ) %></h3>
