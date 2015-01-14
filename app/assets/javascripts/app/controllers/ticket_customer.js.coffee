@@ -8,7 +8,7 @@ class App.TicketCustomer extends App.ControllerModal
     @button = true
 
     configure_attributes = [
-      { name: 'customer_id', display: 'Customer', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organisation/Company', minLengt: 2, disableCreateUser: true },
+      { name: 'customer_id', display: 'Customer', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: true },
     ]
 
     controller = new App.ControllerForm(

@@ -1,6 +1,6 @@
-<li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="<%- @organization.id %>">
+<li class="recipientList-entry u-clickable horizontal center js-organization" data-organization-id="<%- @organization.id %>">
   <div class="recipientList-iconSpacer centered">
-    <div class="white organisation icon"></div>
+    <div class="white organization icon"></div>
   </div>
   <div class="recipientList-name flex u-textTruncat">
     <%= @organization.displayName() %>

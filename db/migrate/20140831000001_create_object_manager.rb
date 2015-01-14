@@ -34,7 +34,7 @@ class CreateObjectManager < ActiveRecord::Migration
         :multiple       => false,
         :null           => false,
         :limit          => 200,
-        :placeholder    => 'Enter Person or Organisation/Company',
+        :placeholder    => 'Enter Person or Organization/Company',
         :minLengt       => 2,
         :translate      => false,
       },

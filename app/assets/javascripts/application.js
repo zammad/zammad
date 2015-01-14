@@ -25,6 +25,7 @@
 //= require ./app/lib/bootstrap/dropdown.js
 //= require ./app/lib/bootstrap/tooltip.js
 //= require ./app/lib/bootstrap/popover.js
+//= require ./app/lib/bootstrap/popover-enhance.js
 //= require ./app/lib/bootstrap/modal.js
 //= require ./app/lib/bootstrap/tab.js
 //= require ./app/lib/bootstrap/transition.js

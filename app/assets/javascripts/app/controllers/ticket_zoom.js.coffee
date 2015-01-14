@@ -907,7 +907,7 @@ class Edit extends App.Controller
     @setArticleType(@type)
 
     configure_attributes = [
-      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organisation/Company', minLengt: 2, disableCreateUser: false },
+      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: false },
     ]
 
     controller = new App.ControllerForm(

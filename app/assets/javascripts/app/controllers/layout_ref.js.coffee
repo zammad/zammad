@@ -11,9 +11,9 @@ App.Config.set( 'layout_ref', Index, 'Routes' )
 
 class Content extends App.ControllerContent
   events:
-    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
-    'click .js-organisation':                 'showOrganisationMembers'
-    'click .js-back':                         'hideOrganisationMembers'
+    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
+    'click .js-organization':                 'showOrganizationMembers'
+    'click .js-back':                         'hideOrganizationMembers'
 
   constructor: ->
     super
@@ -46,21 +46,21 @@ class Content extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/content')()
 
-  showOrganisationMembers: (e) =>
+  showOrganizationMembers: (e) =>
     e.stopPropagation()
 
     listEntry = $(e.currentTarget)
-    organisationId = listEntry.data('organisation-id')
+    organizationId = listEntry.data('organization-id')
 
     @recipientList = @$('.recipientList')
-    @organisationList = @$("##{ organisationId }")
+    @organizationList = @$("##{ organizationId }")
 
-    # move organisation-list to the right and slide it in
+    # move organization-list to the right and slide it in
 
-    $.Velocity.hook(@organisationList, 'translateX', '100%')
-    @organisationList.removeClass('hide')
+    $.Velocity.hook(@organizationList, 'translateX', '100%')
+    @organizationList.removeClass('hide')
 
-    @organisationList.velocity
+    @organizationList.velocity
       properties:
         translateX: 0
       options:
@@ -73,12 +73,12 @@ class Content extends App.ControllerContent
         translateX: '-100%'
       options:
         speed: 300
-        complete: => @recipientList.height(@organisationList.height())
+        complete: => @recipientList.height(@organizationList.height())
 
-  hideOrganisationMembers: (e) =>
+  hideOrganizationMembers: (e) =>
     e && e.stopPropagation()
 
-    return if !@organisationList
+    return if !@organizationList
 
     # fade list back in
 
@@ -92,13 +92,13 @@ class Content extends App.ControllerContent
 
     @recipientList.height('')
 
-    # slide out organisation-list and hide it
-    @organisationList.velocity
+    # slide out organization-list and hide it
+    @organizationList.velocity
       properties:
         translateX: '100%'
       options:
         speed: 300
-        complete: => @organisationList.addClass('hide')
+        complete: => @organizationList.addClass('hide')
 
 App.Config.set( 'layout_ref/content', Content, 'Routes' )
 

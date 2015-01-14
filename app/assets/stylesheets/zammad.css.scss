@@ -1294,15 +1294,15 @@ ol.tabs li {
        @-moz-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
             @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
 
-  .organisation.icon {
+  .organization.icon {
     height: 13px;
     width: 14px;
     background-position: 0 -118px;
   }
 
-  .icon-switch:hover .organisation.icon,
-  .task.active .organisation.icon,
-  .white.organisation.icon {
+  .icon-switch:hover .organization.icon,
+  .task.active .organization.icon,
+  .white.organization.icon {
     background-position: 0 -132px;
   }
 
@@ -2614,7 +2614,7 @@ footer {
     background: white;
   }
 
-  .popover .person .organisation {
+  .popover .person .organization {
     color: #a1a4a7;
   }
 
@@ -2622,8 +2622,8 @@ footer {
     margin: 8px 0;
   }
 
-  .popover .person .organisation:before { content: '('; }
-  .popover .person .organisation:after { content: ')'; }
+  .popover .person .organization:before { content: '('; }
+  .popover .person .organization:after { content: ')'; }
 
   .popover .column h3 {
     margin: 8px 0 1px;
@@ -4073,7 +4073,7 @@ footer {
   }
 
 .recipientList,
-.recipientList-organisationMembers {
+.recipientList-organizationMembers {
   list-style: none;
   padding: 0;
 }
@@ -4143,7 +4143,7 @@ footer {
     margin-bottom: -2px;
   }
 
-  .recipientList-organisationMembers {
+  .recipientList-organizationMembers {
     position: absolute;
     top: 0;
     left: 0;

@@ -26,7 +26,7 @@
           <a href="mailto:doreen.kubiak@gmail.com">doreen.kubiak@gmail.com</a>
         </div>
         <div class="profile-detailsEntry">
-          <label>Organisation</label>
+          <label>Organization</label>
           Steuerbüro C. Kaik
         </div>
         <div class="profile-detailsEntry">
@@ -56,10 +56,10 @@
       </div>
     </div>
     <div class="profile-section">
-      <!-- if user has organisation -->
+      <!-- if user has organization -->
       <div class="tabs wide-tabs horizontal">
         <div class="tab js-userTickets active">Tickets von Doreen Kubiak</div>
-        <div class="tab js-organisationTickets">Tickets von Steuerbüro C. Kaik</div>
+        <div class="tab js-organizationTickets">Tickets von Steuerbüro C. Kaik</div>
       </div>
       <!-- endif -->
       <div class="profile-ticketLists horizontal">

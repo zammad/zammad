@@ -4,7 +4,7 @@
     <div class="profile-section vertical centered">
       <div class="align-right profile-action js-action"></div>
       <div class="profile-organizationIcon">
-        <div class="organisation icon"></div>
+        <div class="organization icon"></div>
       </div>
       <h1><%= @organization.displayName() %></h1>
     </div>
