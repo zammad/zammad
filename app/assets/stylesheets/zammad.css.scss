@@ -3121,7 +3121,7 @@ footer {
     display: none;
   }
 
-  .text-bubble {
+  .textBubble {
     padding: 10px 20px;
     background: white;
     border-radius: 2px;
@@ -3130,32 +3130,67 @@ footer {
     position: relative;
     overflow-wrap: break-word;
     word-wrap: break-word;
-  }
-
+    
     /* email css reset */
-    .text-bubble p {
+    p {
       margin: 0;
     }
 
-    .text-bubble blockquote,
-    .text-bubble pre
-     {
+    blockquote,
+    pre {
       margin: 0px;
       padding: 8px 12px 8px 12px;
     }
+  }
 
+  .ticket-article-item.state--folde-out .textBubble {
+    border-color: hsl(0,0%,90%);
+  }
 
-    .ticket-article-item.state--folde-out .text-bubble {
-      border-color: hsl(0,0%,90%);
+  .textBubble-content {
+    overflow: hidden;
+    position: relative;
+  }
+    
+  .is-overflowing .textBubble-overflowContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    
+    .btn {
+      padding: 7px 0;
     }
 
-  .customer.ticket-article-item .text-bubble {
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -30px;
+      height: 30px;
+      background: linear-gradient(transparent, white);
+    }
+  }
+
+  .customer .is-overflowing .textBubble-overflowContainer {
+    background: #e5f0f5;
+    &:before {
+      background: linear-gradient(transparent, #e5f0f5);
+    }
+  }
+
+  .customer.ticket-article-item .textBubble {
     background: #e5f0f5;
     border-color: hsl(199,38%,92%);
     box-shadow: none;
+    &.is-overflowing:after { 
+      background: linear-gradient(transparent, #e5f0f5 60px);
+    }
   }
 
-    .customer.ticket-article-item.state--folde-out .text-bubble {
+    .customer.ticket-article-item.state--folde-out .textBubble {
       border-color: hsl(199,44%,85%);
     }
 

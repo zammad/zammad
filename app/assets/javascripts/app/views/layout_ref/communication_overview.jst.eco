@@ -196,12 +196,30 @@ Grüße, Peter</div>
         <div class="article-content zIndex-1">
           <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,<br>
+            <div class="textBubble is-overflowing"><div class="bubble-arrow"></div>
+              <div class="textBubble-content" style="height: 300px" data-height="539">Lieber HP,<br>
 anbei findest du die Midi Noten für Maria Maria "I Like it Loud".<br>
 Wünsche dir einen guten Auftritt in Hamburg.<br>
 <br>
+Deine Frau bekommt ein Kind haben wir gehört.<br>
+Gratulation dazu! Wir schicken dir was liebes.<br>
+<br>
+Und wenn du noch mal Probleme mit der Stimme hast sag bescheid – ich kenn da ein Wundermittel.<br>
+<br>
+Das ist eine Pille von einem Druiden aus dem Bayerischen Wald. Die ölt einem so richtig die Stimmbänder.<br>
+<br>
+Verwende ich immer wenn ich meine Frau anschreien will. Die macht meinen Tenor richtig zum Löwen.<br>
+<br>
+Ach ja und dein Freund Tim. Richt dem mal aus dass er das doch bitte sein lassen soll mit den Anrufen.<br>
+<br>Ich weiß schon dass ich ein hübscher bin. Aber ich hab ihm schon tausend mal gesagt, dass ich seine Gefühle leider nicht erwiedern kann.<br>
+<br>
+Bin verheiratet, hab Kind. Is doch offensichtlich, Junge!<br>
 Alles gute,<br>
 Oliver<br>
+                <div class="textBubble-overflowContainer">
+                  <div class="btn btn--text js-unfold">See More</div>
+                </div>
+              </div>
               <div class="attachments">
                 <div class="paperclip icon"></div>
                 <h3>2 <%- @T('Attached Files') %></h3>

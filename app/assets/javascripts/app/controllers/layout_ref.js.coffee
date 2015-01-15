@@ -104,6 +104,8 @@ App.Config.set( 'layout_ref/content', Content, 'Routes' )
 
 
 class CommunicationOverview extends App.ControllerContent
+  events:
+    'click .js-unfold': 'unfold'
 
   constructor: ->
     super
@@ -115,6 +117,22 @@ class CommunicationOverview extends App.ControllerContent
     pageHeader = @$('.page-header')
     scrollHolder = pageHeader.scrollParent()
     scrollBody = scrollHolder.get(0).scrollHeight - scrollHolder.height()
+
+  unfold: (e) ->
+    container = $(e.currentTarget).parents('.textBubble-content')
+
+    container.find('.textBubble-overflowContainer').velocity
+      properties:
+        opacity: 0
+      options:
+        duration: 300
+
+    container.velocity
+      properties:
+        height: container.attr('data-height')
+      options:
+        duration: 300
+        complete: -> container.parents('.textBubble').removeClass('is-overflowing')
 
   render: ->
     @html App.view('layout_ref/communication_overview')()
@@ -133,7 +151,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     '.attachmentUpload':            'attachmentUpload'
     '.attachmentUpload-progressBar':'progressBar'
     '.js-percentage':               'progressText'
-    '.text-bubble':                 'textBubble'
+    '.textBubble':                 'textBubble'
 
   events:
     'focus .js-textarea':                     'open_textarea'
