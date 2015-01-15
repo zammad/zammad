@@ -3190,7 +3190,7 @@ footer {
     }
 
   .ticket-article-item .attachments:not(:empty) {
-    border-top: 1px solid hsl(0,0%,93%);
+    border-top: 1px solid rgba(0,0,0,.04);
     white-space: normal;
     margin: 0 -20px;
     padding: 26px 20px 7px 72px;
@@ -3438,14 +3438,14 @@ footer {
     .recipient-list input::-moz-placeholder { opacity: 1; color: #666;  }
     .recipient-list input:-ms-input-placeholder {         color: #666; }
 
-  .ticket-edit .text-bubble {
+  .ticket-edit .textBubble {
     border-color: #b3b3b3;
     border-radius: 5px;
     padding-left: 12px;
     padding-right: 12px;
   }
 
-    .ticket-edit .text-bubble [contenteditable],
+    .ticket-edit .textBubble [contenteditable],
     .ticket-edit textarea,
     .ticketEdit-body {
       width: 100%;
