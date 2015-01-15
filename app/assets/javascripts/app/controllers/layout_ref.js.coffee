@@ -743,4 +743,15 @@ class LocalModalRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/local_modal', LocalModalRef, 'Routes' )
 
+class loadingPlaceholderRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/loading_placeholder')()
+
+App.Config.set( 'layout_ref/loading_placeholder', loadingPlaceholderRef, 'Routes' )
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

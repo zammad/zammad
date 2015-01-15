@@ -20,6 +20,7 @@
     <li><a href="#layout_ref/setup">Setup Wizard</a></li>
     <li><a href="#layout_ref/richtext">Richtext</a></li>
     <li><a href="#layout_ref/local_modal">Local Modal</a></li>
+    <li><a href="#layout_ref/loading_placeholder">Loading Placeholder</a></li>
   </ul>
 
 </div>

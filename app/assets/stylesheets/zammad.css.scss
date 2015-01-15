@@ -766,6 +766,18 @@ textarea,
     z-index: 1;
   }
 
+.loadingPlaceholder {
+  @extend .centered;
+  
+  .icon {
+    margin: -5px 14px 0 0;
+  }
+
+  h2 {
+    margin: 0;
+  }
+}
+
 .form-stacked .checkbox label {
   color: inherit;
   font-size: 13px;
@@ -773,7 +785,6 @@ textarea,
   vertical-align: baseline;
   letter-spacing: inherit;
 }
-
 
 .pagination {
   margin: 0;
