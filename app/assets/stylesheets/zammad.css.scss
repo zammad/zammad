@@ -2070,6 +2070,11 @@ footer {
     .tasks-navigation .icon-holder .icon {
       margin-right: 3px;
       margin-top: -3px;
+      
+      &.loading {
+        width: 14px;
+        height: 14px;
+      }
     }
 
   .task:hover {
