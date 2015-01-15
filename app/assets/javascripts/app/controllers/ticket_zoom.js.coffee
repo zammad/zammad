@@ -788,7 +788,7 @@ class Edit extends App.Controller
     '.attachmentUpload-progressBar':      'progressBar'
     '.js-percentage':                     'progressText'
     '.js-cancel':                         'cancelContainer'
-    '.text-bubble':                       'textBubble'
+    '.textBubble':                       'textBubble'
     '.editControls-item':                 'editControlItem'
     #'.editControls':                     'editControls'
     #'.recipient-picker':                 'recipientPicker'
@@ -1279,8 +1279,8 @@ class ArticleView extends App.Controller
     'click .show_toogle':           'show_toogle'
     'click [data-type=reply]':      'reply'
     'click [data-type=replyAll]':   'replyAll'
-    'click .text-bubble':           'toggle_meta_with_delay'
-    'click .text-bubble a':         'stopPropagation'
+    'click .textBubble':           'toggle_meta_with_delay'
+    'click .textBubble a':         'stopPropagation'
 
   constructor: ->
     super

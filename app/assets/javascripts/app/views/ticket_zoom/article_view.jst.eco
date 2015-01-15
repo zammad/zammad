@@ -42,7 +42,7 @@
     <%- article.created_by.avatar("40", position) %>
     <div class="bubble-gap">
       <div class="internal-border">
-        <div class="text-bubble">
+        <div class="textBubble">
           <div class="bubble-arrow"></div>
           <%- article.html %>
           <% if !_.isEmpty( article.attachments ): %>

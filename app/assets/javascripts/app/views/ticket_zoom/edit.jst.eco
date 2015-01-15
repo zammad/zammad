@@ -49,10 +49,10 @@
         <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control"></div>
       </div>
 
-      <div class="text-bubble">
+      <div class="textBubble">
         <div class="bubble-arrow"></div>
         <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
-        <!-- .text-bubble grows with textarea (and expanding clone) -->
+        <!-- .textBubble grows with textarea (and expanding clone) -->
         <div class="attachments"></div>
         <div class="article-attachment u-unclickable u-textTruncate">
           <div class="attachmentPlaceholder">

@@ -58,7 +58,7 @@
         <div class="article-content zIndex-1">
           <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Welcome!
+            <div class="textBubble"><div class="bubble-arrow"></div>Welcome!
 
 Thank you for installing Zammad.
 
@@ -112,7 +112,7 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
         <div class="article-content zIndex-1">
           <span class="avatar user-popover" data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div>
+            <div class="textBubble"><div class="bubble-arrow"></div>Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div>
           </div>
         </div>
         <div class="article-meta-clip bottom">
@@ -150,7 +150,7 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
         <div class="article-content zIndex-1">
           <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
+            <div class="textBubble"><div class="bubble-arrow"></div>Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
 
 Grüße, Peter</div>
           </div>
