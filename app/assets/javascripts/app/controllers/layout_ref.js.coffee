@@ -732,4 +732,15 @@ class RichText extends App.ControllerContent
 
 App.Config.set( 'layout_ref/richtext', RichText, 'Routes' )
 
+class LocalModalRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/local_modal')()
+
+App.Config.set( 'layout_ref/local_modal', LocalModalRef, 'Routes' )
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

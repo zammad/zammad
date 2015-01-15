@@ -329,7 +329,10 @@ class App.TicketZoom extends App.Controller
       showTicketHistory = =>
         new App.TicketHistory( ticket_id: @ticket.id )
       showTicketMerge = =>
-        new App.TicketMerge( ticket: @ticket, task_key: @task_key )
+        new App.TicketMerge
+          ticket: @ticket
+          task_key: @task_key
+          container: @el
       changeCustomer = (e, el) =>
         new App.TicketCustomer(
           ticket: @ticket

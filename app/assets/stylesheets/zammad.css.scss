@@ -4070,6 +4070,22 @@ footer {
     border: none;
   }
 
+.modal.modal--local {
+  display: block;
+  padding-left: 40px;
+  position: absolute;
+  overflow: auto;
+  background: hsla(210,17%,98%,.55);
+  
+  .modal-backdrop {
+    display: none;
+  }
+
+  .modal-dialog {
+    box-shadow: 0 0 40px hsla(210,17%,40%,.34);
+  }
+}
+
 .caret {
   position: absolute;
   top: 50%;

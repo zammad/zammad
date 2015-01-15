@@ -26,7 +26,10 @@
 //= require ./app/lib/bootstrap/tooltip.js
 //= require ./app/lib/bootstrap/popover.js
 //= require ./app/lib/bootstrap/popover-enhance.js
+
+// modified by Felix Jan-2014
 //= require ./app/lib/bootstrap/modal.js
+
 //= require ./app/lib/bootstrap/tab.js
 //= require ./app/lib/bootstrap/transition.js
 //= require ./app/lib/bootstrap/button.js

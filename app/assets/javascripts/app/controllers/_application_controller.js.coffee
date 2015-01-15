@@ -500,6 +500,7 @@ class App.ControllerModal extends App.Controller
       head:     '?'
       buttonClass: 'btn--success'
       centerButtons: []
+      container: null
 
     options = _.extend( defaults, options )
 
@@ -526,10 +527,14 @@ class App.ControllerModal extends App.Controller
     if @content
       @body.html @content
 
+    if @container
+      @el.addClass('modal--local')
+
     @el.modal
       keyboard: @keyboard
       show:     true
       backdrop: @backdrop
+      container:    @container
     .on
       'show.bs.modal':   @onShow
       'shown.bs.modal':  @onShown

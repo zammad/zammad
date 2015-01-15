@@ -19,6 +19,7 @@
     <li><a href="#layout_ref/organization_profile">Organization Profile</a></li>
     <li><a href="#layout_ref/setup">Setup Wizard</a></li>
     <li><a href="#layout_ref/richtext">Richtext</a></li>
+    <li><a href="#layout_ref/local_modal">Local Modal</a></li>
   </ul>
 
 </div>

@@ -1,0 +1,537 @@
+<div class="flex profile">
+  <div class="modal modal--local">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog">
+      <form>
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-close js-close">
+              <div class="close icon"></div>
+            </div>
+            <h1 class="modal-title">Edit Customer</h1>
+          </div>
+          <div class="modal-body">
+            <fieldset>
+              <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_firstname">Firstname <span>*</span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_firstname" type="text" name="firstname" value="Nicole" class="form-control " required="" autofocus="">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_lastname">Lastname <span>*</span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_lastname" type="text" name="lastname" value="Braun" class="form-control " required="">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_email">Email <span>*</span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_email" type="email" name="email" value="nicole.braun@zammad.org" class="form-control " required="">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_web">Web <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_web" type="url" name="web" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_phone">Phone <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_phone" type="phone" name="phone" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_mobile">Mobile <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_mobile" type="phone" name="mobile" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_fax">Fax <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_fax" type="phone" name="fax" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="select form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_organization_id">Organization <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><div class="u-positionOrigin">
+              <select id="User_968887_organization_id" class="form-control" name="organization_id">
+
+
+              <option value="">-</option>
+
+              <option value="1" selected="">Zammad Foundation</option>
+
+
+              </select>
+              <div class="select-arrow icon"></div>
+            </div>
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_department">Department <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_department" type="text" name="department" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group">
+              <div class="formGroup-label">
+                <label for="User_968887_street">Street <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_street" type="text" name="street" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_zip">Zip <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_zip" type="text" name="zip" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_968887_city">City <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_city" type="text" name="city" value="" class="form-control ">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group">
+              <div class="formGroup-label">
+                <label for="User_968887_password">Password <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_password" type="password" name="password" value="" class="form-control " autocomplete="off">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="input form-group">
+              <div class="formGroup-label">
+                <label for="User_968887_password_confirm">Password (confirm) <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><input id="User_968887_password_confirm" type="password" name="password_confirm" value="" class="form-control " autocomplete="off">
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="richtext form-group">
+              <div class="formGroup-label">
+                <label for="User_968887_note">Note <span></span></label>
+                
+                
+                
+                <div class="align-right help-message" title="Notes are visible to agents only, never to customers. ">
+                  <div class="help icon"></div>
+                </div>
+                
+              </div>
+              <div class="controls"><div class="richtext form-control">
+              <div contenteditable="true" id="User_968887_note" data-name="note" class=""></div>
+            </div>
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="checkbox form-group">
+              <div class="formGroup-label">
+                <label for="User_968887_role_ids">Roles <span>*</span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><div class=" checkbox">
+
+              <label><input type="checkbox" value="1" name="role_ids"> Admin - To configure your system.</label>
+
+              <label><input type="checkbox" value="2" name="role_ids"> Agent - To work on Tickets.</label>
+
+              <label><input type="checkbox" value="3" name="role_ids" checked=""> Customer - People who create Tickets ask for help.</label>
+
+            </div>
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="checkbox form-group">
+              <div class="formGroup-label">
+                <label for="User_968887_group_ids">Groups <span></span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><div class=" checkbox">
+
+              <label><input type="checkbox" value="1" name="group_ids"> Users - Standard Group/Pool for Tickets.</label>
+
+            </div>
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div><div class="boolean form-group">
+              <div class="formGroup-label">
+                <label for="User_968887_active">Active <span>*</span></label>
+                
+                
+                
+              </div>
+              <div class="controls"><div class="u-positionOrigin">
+              <select id="User_968887_active" class="form-control" name="active" required="">
+
+
+              <option value="{boolean}::true" selected="">active</option>
+
+              <option value="{boolean}::false">inactive</option>
+
+
+              </select>
+              <div class="select-arrow icon"></div>
+            </div>
+              
+              
+                <span class="help-inline"></span>
+                <span class="help-block"></span>
+              </div>
+            </div>
+            </fieldset>
+          </div>
+          <div class="modal-footer horizontal">
+            <a class="subtle-link standalone js-cancel" href="#/">Cancel & Go Back</a>
+            <button type="submit" class="btn btn--success js-submit align-right">Update & Back</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="profile-window">
+    <div class="profile-section vertical centered">
+      <div class="align-right profile-action dropdown dropdown--actions">
+        <div class="dropdown-toggle horizontal center" id="profileAction" data-toggle="dropdown">
+          <div class="light cog icon"></div>
+          <label>Aktion</label>
+          <span class="select-arrow icon"></span>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="profileAction">
+          <li role="presentation"><a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Änderungsprotokoll</a>
+          <li role="presentation"><a role="menuitem" tabindex="-1">Benutzer zusammenführen</a>
+          <li role="presentation"><a role="menuitem" tabindex="-1">Benutzer löschen</a>
+        </ul>
+      </div>
+      <div class="avatar size-80" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"></div>
+      <h1>Doreen Kubiak</h1>
+      <div class="profile-subtitle">Steuerbüro C. Kaik</div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-details  horizontal wrap">
+        <div class="profile-detailsEntry">
+          <label>Email</label>
+          <a href="mailto:doreen.kubiak@gmail.com">doreen.kubiak@gmail.com</a>
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Organization</label>
+          Steuerbüro C. Kaik
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Web</label>
+          <a href="http://ckaik.com" target="_blank">chaik.com</a>
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Strasse</label>
+          Johannitergasse 2/2
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Telefon</label>
+          +43 5522 36346
+        </div>
+        <div class="profile-detailsEntry">
+          <label>PLZ, ORT</label>
+          6800 Feldkirch
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Mobile-Nr.</label>
+          +43 699 4565789
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Land</label>
+          Österreich
+        </div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <!-- if user has organization -->
+      <div class="tabs wide-tabs horizontal">
+        <div class="tab js-userTickets active">Tickets von Doreen Kubiak</div>
+        <div class="tab js-organizationTickets">Tickets von Steuerbüro C. Kaik</div>
+      </div>
+      <!-- endif -->
+      <div class="profile-ticketLists horizontal">
+        <div class="profile-ticketList">
+          <label>Offene Tickets (0)</label>
+          <div class="profile-ticketsPlaceholder vertical centered">
+            <div class="mood icon supergood-state"></div>
+            Keine offenen Tickets
+          </div>
+          <a href="#">Alle Tickets von Doreen Kubiak …</a>
+        </div>
+        <div class="profile-ticketList">
+          <label>Bearbeitete Tickets (12)</label>
+          <ol class="tasks tasks--standalone">
+            <li class="task level-1">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="name">Micro-SIM doesn't work</div>
+                <div class="time">23 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="name">Superb Service!</div>
+                <div class="time">43 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="name">Print sheets strip off</div>
+                <div class="time">1 hour ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <div class="priority icon"></div>
+              </div>
+              <div class="flex">
+                <div class="name">Block not properly wrought</div>
+                <div class="time">2 hour ago</div>
+              </div>
+          </ol>
+          <a href="#">Alle Tickets von Steuerbüro C. Kaik …</a>
+        </div>
+      </div>
+    </div>
+    <div class="profile-section horizontal two-columns">
+      <div class="column status stat-widget vertical">
+        <h3>Status</h3>
+        <div class="stat-graphic">
+          <div class="stat-tickets vertical reverse end">
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+            <div class="stat-ticket icon supergood-state"></div>
+          </div>
+          <div class="stat-all-tickets icon"></div>
+        </div>
+        <!-- 
+          Achtung: hier müssen wir schauen, dass wir das Widget genauso verwenden wie im Dashboard. Sonst gibt's Verwirrung.
+        -->
+        <div class="stat-label">Tickets of my Group: 78 of 234</div>
+        <div class="stat-detail">Average: 22%</div>
+      </div>
+      <div class="column mood stat-widget vertical">
+        <h3>Stimmung</h3>
+        <div class="stat-graphic">
+          <div class="mood icon supergood-state"></div>
+        </div>
+        <div class="stat-label">3% of my tickets escalated.</div>
+        <div class="stat-detail">Average: 17%</div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <div class="frequency stat-widget vertical">
+        <h3>Frequency</h3>
+        <div class="stat-graphic">
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 80%"></div>
+              <div class="stat-bar secondary" style="height: 34%"></div>
+            </div>
+            <div class="stat-label">Jan</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 53%"></div>
+              <div class="stat-bar secondary" style="height: 47%"></div>
+            </div>
+            <div class="stat-label">Feb</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 46%"></div>
+              <div class="stat-bar secondary" style="height: 21%"></div>
+            </div>
+            <div class="stat-label">Mär</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 24%"></div>
+              <div class="stat-bar secondary" style="height: 18%"></div>
+            </div>
+            <div class="stat-label">Apr</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 13%"></div>
+              <div class="stat-bar secondary" style="height: 5%"></div>
+            </div>
+            <div class="stat-label">Mai</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 18%"></div>
+              <div class="stat-bar secondary" style="height: 10%"></div>
+            </div>
+            <div class="stat-label">Jun</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 50%"></div>
+              <div class="stat-bar secondary" style="height: 8%"></div>
+            </div>
+            <div class="stat-label">Jul</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 67%"></div>
+              <div class="stat-bar secondary" style="height: 13%"></div>
+            </div>
+            <div class="stat-label">Aug</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 34%"></div>
+              <div class="stat-bar secondary" style="height: 2%"></div>
+            </div>
+            <div class="stat-label">Sep</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 5%"></div>
+              <div class="stat-bar secondary" style="height: 0%"></div>
+            </div>
+            <div class="stat-label">Okt</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 25%"></div>
+              <div class="stat-bar secondary" style="height: 0%"></div>
+            </div>
+            <div class="stat-label">Nov</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 80%"></div>
+              <div class="stat-bar secondary" style="height: 5%"></div>
+            </div>
+            <div class="stat-label">Dez</div>
+          </div>
+        </div>
+        <div class="stat-legend">
+          <div class="stat-legendEntry primary"><span class="primary stat-circle"></span>Bearbeitet</div>
+          <div class="stat-legendEntry secondary"><span class="secondary stat-circle"></span>Offen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
