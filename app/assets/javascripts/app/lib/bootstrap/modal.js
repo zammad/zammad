@@ -8,8 +8,7 @@
 
  /*
   modified by Felix Jan-2014
-  - change $body to $container
-  - add this.$container = $(options.container || document.body)
+  - add this.$body = $(options.container || document.body)
 */
 
 
@@ -21,7 +20,7 @@
 
   var Modal = function (element, options) {
     this.options        = options
-    this.$container     = $(options.container || document.body)
+    this.$body          = $(options.container || document.body)
     this.$element       = $(element)
     this.$backdrop      =
     this.isShown        = null
@@ -64,7 +63,7 @@
     this.checkScrollbar()
     this.setScrollbar()
 
-    this.$container.addClass('modal-open')
+    this.$body.addClass('modal-open')
 
     this.escape()
     this.resize()
@@ -75,7 +74,7 @@
       var transition = $.support.transition && that.$element.hasClass('fade')
 
       if (!that.$element.parent().length) {
-        that.$element.appendTo(that.$container) // don't move modals dom position
+        that.$element.appendTo(that.$body) // don't move modals dom position
       }
 
       that.$element
@@ -167,7 +166,7 @@
     var that = this
     this.$element.hide()
     this.backdrop(function () {
-      that.$container.removeClass('modal-open')
+      that.$body.removeClass('modal-open')
       that.resetAdjustments()
       that.resetScrollbar()
       that.$element.trigger('hidden.bs.modal')
@@ -260,20 +259,20 @@
   }
 
   Modal.prototype.setScrollbar = function () {
-    var bodyPad = parseInt((this.$container.css('padding-right') || 0), 10)
-    if (this.bodyIsOverflowing) this.$container.css('padding-right', bodyPad + this.scrollbarWidth)
+    var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
+    if (this.bodyIsOverflowing) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
   }
 
   Modal.prototype.resetScrollbar = function () {
-    this.$container.css('padding-right', '')
+    this.$body.css('padding-right', '')
   }
 
   Modal.prototype.measureScrollbar = function () { // thx walsh
     var scrollDiv = document.createElement('div')
     scrollDiv.className = 'modal-scrollbar-measure'
-    this.$container.append(scrollDiv)
+    this.$body.append(scrollDiv)
     var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-    this.$container[0].removeChild(scrollDiv)
+    this.$body[0].removeChild(scrollDiv)
     return scrollbarWidth
   }
 
