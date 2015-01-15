@@ -307,6 +307,17 @@ span[data-tooltip]:hover:before {
     }
   }
 
+  &.btn--text {
+    padding-left: 0;
+    padding-right: 0;
+    color: hsl(203,65%,55%);
+    border: none;
+    background: none;
+    &:active {
+      color: hsl(203,65%,45%);
+    }
+  }
+
   &.btn--subtle {
     padding-left: 0;
     padding-right: 0;
