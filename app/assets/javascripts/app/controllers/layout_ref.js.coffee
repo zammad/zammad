@@ -120,8 +120,9 @@ class CommunicationOverview extends App.ControllerContent
 
   unfold: (e) ->
     container = $(e.currentTarget).parents('.textBubble-content')
+    overflowContainer = container.find('.textBubble-overflowContainer')
 
-    container.find('.textBubble-overflowContainer').velocity
+    overflowContainer.velocity
       properties:
         opacity: 0
       options:
@@ -132,7 +133,7 @@ class CommunicationOverview extends App.ControllerContent
         height: container.attr('data-height')
       options:
         duration: 300
-        complete: -> container.parents('.textBubble').removeClass('is-overflowing')
+        complete: -> overflowContainer.addClass('hide');
 
   render: ->
     @html App.view('layout_ref/communication_overview')()

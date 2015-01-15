@@ -3152,7 +3152,7 @@ footer {
     position: relative;
   }
     
-  .is-overflowing .textBubble-overflowContainer {
+  .textBubble-overflowContainer {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -3174,7 +3174,7 @@ footer {
     }
   }
 
-  .customer .is-overflowing .textBubble-overflowContainer {
+  .customer .textBubble-overflowContainer {
     background: #e5f0f5;
     &:before {
       background: linear-gradient(transparent, #e5f0f5);
@@ -3185,9 +3185,6 @@ footer {
     background: #e5f0f5;
     border-color: hsl(199,38%,92%);
     box-shadow: none;
-    &.is-overflowing:after { 
-      background: linear-gradient(transparent, #e5f0f5 60px);
-    }
   }
 
     .customer.ticket-article-item.state--folde-out .textBubble {

@@ -196,7 +196,7 @@ Grüße, Peter</div>
         <div class="article-content zIndex-1">
           <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
-            <div class="textBubble is-overflowing"><div class="bubble-arrow"></div>
+            <div class="textBubble"><div class="bubble-arrow"></div>
               <div class="textBubble-content" style="height: 300px" data-height="539">Lieber HP,<br>
 anbei findest du die Midi Noten für Maria Maria "I Like it Loud".<br>
 Wünsche dir einen guten Auftritt in Hamburg.<br>
