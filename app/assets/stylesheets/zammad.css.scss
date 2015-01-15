@@ -2086,6 +2086,10 @@ footer {
         width: 14px;
         height: 14px;
       }
+
+      &.error {
+        transform: scale(0.85);
+      }
     }
 
   .task:hover {
