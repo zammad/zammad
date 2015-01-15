@@ -754,4 +754,15 @@ class loadingPlaceholderRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/loading_placeholder', loadingPlaceholderRef, 'Routes' )
 
+class insufficientRightsRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/insufficient_rights')()
+
+App.Config.set( 'layout_ref/insufficient_rights', insufficientRightsRef, 'Routes' )
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
