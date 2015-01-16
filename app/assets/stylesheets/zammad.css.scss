@@ -1976,7 +1976,7 @@ footer {
 
 .navigation {
   width: 260px;
-  background: #26272e;
+  background: hsl(232,10%,16%);
   position: relative;
 }
 
@@ -1998,16 +1998,17 @@ footer {
     text-decoration: none;
   }
 
-  .main-navigation > li.active > a,
-  .main-navigation > li > a:hover,
-  .main-navigation > li > a:focus {
-    background: none;
-    color: #F0FAFF;
+  .main-navigation > li > a:hover {
+    background: hsl(230,10%,13%);
+    border-bottom-color: rgba(240, 250, 255, .08);
   }
 
-  .main-navigation > li.active > a .icon,
-  .main-navigation > li > a:hover .icon,
-  .main-navigation > li > a:focus .icon {
+  .main-navigation > li.active > a {
+    background: none;
+    color: white;
+  }
+
+  .main-navigation > li.active > a .icon {
     opacity: 1;
   }
 
