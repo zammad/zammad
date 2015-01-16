@@ -4,7 +4,7 @@
       <h1><%- @T( 'Join' ) %> <%= @C( 'product_name' ) %></h1>
       <form>
         <div class="form-controls">
-          <a class="subtle-link standalone pull-left" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+          <a class="subtle-link standalone pull-left" href="#login"><%- @T( 'Cancel & Go Back' ) %></a>
           <button class="btn btn--primary submit pull-right"><%- @T( 'Create my account' ) %></button>
         </div>
       </form>
