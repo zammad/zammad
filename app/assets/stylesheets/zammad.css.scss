@@ -789,6 +789,7 @@ textarea,
 
 .pagination {
   margin: 0;
+  @extend .horizontal;
 }
 
 .pagination > li > a, 
@@ -4399,6 +4400,10 @@ footer {
 }
 
 .scrollPageHeader {
+  // @extend .tabsSidebar-sidebarSpacer;
+  @extend .zIndex-6;
+  @extend .horizontal;
+  @extend .center;
   background: white;
   border-bottom: 1px solid hsl(0,0%,78%);
   height: 64px;
@@ -4418,6 +4423,8 @@ footer {
   .scrollPageHeader .ticket-title {
     max-width: initial;
     padding: 0;
+    min-width: 0;
+    @extend .flex;
   }
 
   .scrollPageHeader h1 {

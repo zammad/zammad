@@ -1,9 +1,9 @@
 <div class="tabsSidebar-holder">
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="ticketZoom">
-      <div class="scrollPageHeader tabsSidebar-sidebarSpacer zIndex-6 horizontal center">
+      <div class="scrollPageHeader">
         <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
-        <div class="ticket-title flex"></div>
+        <div class="ticket-title"></div>
         <div class="pagination-counter">
           <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
         </div>
