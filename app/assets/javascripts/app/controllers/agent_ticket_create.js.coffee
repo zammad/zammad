@@ -173,7 +173,12 @@ class App.TicketCreate extends App.Controller
             t.owner_id               = 0
             t.customer_id_completion = a.from
             t.subject                = a.subject || t.title
-            t.body                   = a.body
+
+            # convert non text/html from text 2 html
+            if a.content_type.match(/\/html/)
+              t.body = a.body
+            else
+              t.body  = App.Utils.text2html( a.body )
 
           # render page
           @render( options: t )

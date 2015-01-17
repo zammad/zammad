@@ -1653,11 +1653,11 @@ class Article extends App.Controller
           type: 'replyAll'
           href: '#'
         }
-      actions.push {
-        name: 'split'
-        type: 'split'
-        href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
-      }
+    actions.push {
+      name: 'split'
+      type: 'split'
+      href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
+    }
     @article.actions = actions
 
   attachments: ->
