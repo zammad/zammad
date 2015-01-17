@@ -1,4 +1,3 @@
-<div class="main flex">
-  <h1><%- @T('Unauthorized') %></h1>
-  <p><%- @T('Sorry, you are not allowed to access this ressource.') %></p>
+<div class="flex fullscreenMessage">
+  <div class="error icon"></div><h2><%- @T('Opps.. I\'m sorry, but you have insufficient rights to open this %s.', @objectName ) %></h2>
 </div>

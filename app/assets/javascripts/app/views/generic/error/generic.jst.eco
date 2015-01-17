@@ -1,5 +1,5 @@
-<div class="main flex">
-  <h1><%- @T('Error') %></h1>
+<div class="flex fullscreenMessage">
+  <div class="error icon"></div><h2><%- @T('Opps.. I\'m sorry, something went wrong!' ) %></h2>
   <p><%- @T('Status Code') %>: <%= @status %></p>
   <p><%= @detail %></p>
 </div>

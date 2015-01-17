@@ -119,10 +119,10 @@ class App.TicketZoom extends App.Controller
         # show error message
         if xhr.status is 401 || error is 'Unauthorized'
           @taskTitle = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
-          @html App.view('generic/error/unauthorized')()
+          @html App.view('generic/error/unauthorized')( objectName: 'Ticket' )
         else if xhr.status is 404 || error is 'Not Found'
           @taskTitle = '» ' + App.i18n.translateInline('Not Found') + ' «'
-          @html App.view('generic/error/not_found')()
+          @html App.view('generic/error/not_found')( objectName: 'Ticket' )
         else
           @taskTitle = '» ' + App.i18n.translateInline('Error') + ' «'
           status     = xhr.status
@@ -130,8 +130,9 @@ class App.TicketZoom extends App.Controller
           if !status && !detail
             detail = 'General communication error, maybe internet is not available!'
           @html App.view('generic/error/generic')(
-            status: status
-            detail: detail
+            status:     status
+            detail:     detail
+            objectName: 'Ticket'
           )
 
         # update current task title
