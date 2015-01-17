@@ -138,6 +138,18 @@ class CommunicationOverview extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/communication_overview')()
 
+    # set see more options
+    previewHeight = 240
+    @$('.textBubble-content').each( (index) ->
+      bubble = $( @ )
+      heigth = bubble.height()
+      if heigth > (previewHeight + 30)
+        bubble.attr('data-height', heigth)
+        bubble.css('height', "#{previewHeight}px")
+      else
+        bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
+    )
+
 App.Config.set( 'layout_ref/communication_overview', CommunicationOverview, 'Routes' )
 
 

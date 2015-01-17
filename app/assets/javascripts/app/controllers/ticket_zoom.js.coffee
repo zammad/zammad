@@ -440,6 +440,18 @@ class App.TicketZoom extends App.Controller
       ui:                 @
     )
 
+    # set see more options
+    previewHeight = 240
+    @$('.textBubble-content').each( (index) ->
+      bubble = $( @ )
+      heigth = bubble.height()
+      if heigth > (previewHeight + 30)
+        bubble.attr('data-height', heigth)
+        bubble.css('height', "#{previewHeight}px")
+      else
+        bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
+    )
+
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )
       offset = document.getElementById( 'article-' + @article_id ).offsetTop
@@ -1278,13 +1290,14 @@ class Edit extends App.Controller
 
 class ArticleView extends App.Controller
   events:
-    'click [data-type=public]':     'public_internal'
-    'click [data-type=internal]':   'public_internal'
-    'click .show_toogle':           'show_toogle'
-    'click [data-type=reply]':      'reply'
-    'click [data-type=replyAll]':   'replyAll'
-    'click .textBubble':           'toggle_meta_with_delay'
-    'click .textBubble a':         'stopPropagation'
+    'click [data-type=public]':   'public_internal'
+    'click [data-type=internal]': 'public_internal'
+    'click .show_toogle':         'show_toogle'
+    'click [data-type=reply]':    'reply'
+    'click [data-type=replyAll]': 'replyAll'
+    'click .textBubble':          'toggle_meta_with_delay'
+    'click .textBubble a':        'stopPropagation'
+    'click .js-unfold':           'unfold'
 
   constructor: ->
     super
@@ -1433,6 +1446,25 @@ class ArticleView extends App.Controller
 
       metaTopClip.velocity({ height: metaTop.outerHeight() }, animSpeed, 'easeOutQuad')
       metaBottomClip.velocity({ height: metaBottom.outerHeight() }, animSpeed, 'easeOutQuad')
+
+  unfold: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    container = $(e.currentTarget).parents('.textBubble-content')
+    overflowContainer = container.find('.textBubble-overflowContainer')
+
+    overflowContainer.velocity
+      properties:
+        opacity: 0
+      options:
+        duration: 300
+
+    container.velocity
+      properties:
+        height: container.attr('data-height')
+      options:
+        duration: 300
+        complete: -> overflowContainer.addClass('hide');
 
   isOrContains: (node, container) ->
     while node
