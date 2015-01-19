@@ -191,6 +191,7 @@
 
   // set height of widget
   Plugin.prototype.movePosition = function() {
+    if (!this._position) return
     var height       = this.$element.height() + 20
     var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
     var top          = -( widgetHeight + height ) + this._position.top
