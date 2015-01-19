@@ -77,13 +77,13 @@ class App.OnlineNotificationWidget extends App.Controller
       trigger:    'click'
       container:  'body'
       html:       true
-      delay:      { show: 100, hide: 0 }
       placement:  'right'
-      title: ->
-        App.i18n.translateInline( 'Notifications' ) + " <span>#{counter}</span>"
+      title: =>
+        # add header with counter and mark as read button
+        $( App.view('widget/online_notification_header')(counter: counter) )
       content: =>
         # insert data
-       $( App.view('widget/online_notification')(items: items))
+        $( App.view('widget/online_notification')(items: items) )
     ).on('shown.bs.popover', =>
 
       # show frontend times

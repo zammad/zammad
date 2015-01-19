@@ -2693,6 +2693,24 @@ footer {
     margin-bottom: 8px;
   }
 
+  .popover-notificationsTitle {
+    @extend h1;
+    @extend .horizontal;
+    @extend .justified;
+  }
+
+  .popover-notificationsCounter {
+    color: #e25253;
+    padding-left: 10px;
+  }
+
+  .popover-notificationsMarkRead {
+    @extend .btn;
+    @extend .btn--subtle;
+    @extend .align-right;
+    margin-top: -8px;
+  }
+
 .stat-widgets {
   margin: 0 -7px 20px;
 }
