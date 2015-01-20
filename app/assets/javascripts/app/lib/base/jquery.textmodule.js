@@ -351,9 +351,9 @@
     console.log('result', term, result)
     for (var i = 0; i < result.length; i++) {
       var item = result[i]
-      var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + item.name
+      var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + App.Utils.htmlEscape(item.name)
       if (item.keywords) {
-        template = template + " (" + item.keywords + ")"
+        template = template + " (" + App.Utils.htmlEscape(item.keywords) + ")"
       }
       template = template + "</a></li>"
       this.$widget.find('ul').append(template)
