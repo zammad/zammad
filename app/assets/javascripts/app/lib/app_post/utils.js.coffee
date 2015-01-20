@@ -114,7 +114,7 @@ class App.Utils
     @_removeAttributes( html )
 
     # remove tags, keep content
-    html.find('a, font').replaceWith( ->
+    html.find('a, font, small, time').replaceWith( ->
       $(@).contents()
     )
 

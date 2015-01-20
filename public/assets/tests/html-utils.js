@@ -296,6 +296,16 @@ test( "htmlClanup", function() {
   result = App.Utils.htmlClanup( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><small>some link to somewhere</small></a>"
+  should = "<div>some link to somewhere</div>"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><time>some link to somewhere</time></a>"
+  should = "<div>some link to somewhere</div>"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
   source = "<div><h1>some link to somewhere</h1><p><hr></p></div>"
   should = "<div>some link to somewhere</div><p></p><p></p>"
   result = App.Utils.htmlClanup( $(source) )
