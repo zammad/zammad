@@ -140,6 +140,10 @@ blockquote {
   display: block;
   outline-style: none;
   border-radius: 3px;
+
+  /* needed to make empty tags editable, otherwise no focus can be set */
+  min-height: 10px;
+  min-width: 20px;
 }
 [contenteditable]:hover,
 [contenteditable]:focus {
@@ -3176,16 +3180,17 @@ footer {
     overflow: hidden;
     position: relative;
   }
-    
+
   .textBubble-overflowContainer {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     background: white;
-    
+
     .btn {
       padding: 7px 0;
+      font-size: 10px;
     }
 
     &:before {
