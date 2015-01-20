@@ -1,8 +1,8 @@
-<div class="popover popover--notifications" role="tooltip">
+<div class="popover popover--notifications js-notificationsContainer" role="tooltip">
   <div class="arrow"></div>
   <div class="popover-notificationsHeader">
     <span class="popover-title"></span>
-    <a class="popover-notificationsMarkRead" id="markAllAsSeen"><%- @T( 'Mark all as read' ) %></a>
+    <a class="popover-notificationsMarkRead js-markAllAsRead"><%- @T( 'Mark all as read' ) %></a>
   </div>
   <div class="popover-content"></div>
 </div>

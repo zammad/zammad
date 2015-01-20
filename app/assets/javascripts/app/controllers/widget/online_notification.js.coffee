@@ -8,7 +8,7 @@ class App.OnlineNotificationWidget extends App.Controller
     @bind 'OnlineNotification::changed', =>
       @delay(
         => @fetch()
-        1000
+        1200
         'online-notification-changed'
       )
 
@@ -20,14 +20,14 @@ class App.OnlineNotificationWidget extends App.Controller
         if !@access()
           @el.find('activity-counter').html('')
           return
-        @start()
+        @createContainer()
 
     if @access()
-      @start()
-      @subscribeId = App.OnlineNotification.subscribe( @start )
+      @createContainer()
+      @subscribeId = App.OnlineNotification.subscribe( @updateContent )
 
   release: =>
-    @stop()
+    @removeContainer()
     App.OnlineNotification.unsubscribe( @subscribeId )
 
   access: ->
@@ -46,17 +46,13 @@ class App.OnlineNotificationWidget extends App.Controller
     else
       @toggle.append('<div class="activity-counter">' + count.toString() + '</div>')
 
-  markAllAsSeen: () =>
+  markAllAsRead: =>
     @ajax(
-      id:   'markAllAsSeen'
+      id:   'markAllAsRead'
       type: 'POST'
-      url:  @apiPath + '/online_notifications/markAllAsSeen'
+      url:  @apiPath + '/online_notifications/mark_all_as_read'
       data: JSON.stringify( '' )
       processData: true
-      success: (data, status, xhr) =>
-        if data.result is 'ok'
-        else
-      fail: =>
     )
 
   removeClickCatcher: () =>
@@ -65,34 +61,44 @@ class App.OnlineNotificationWidget extends App.Controller
     @clickCatcher = null
 
   onShow: =>
-    # show frontend times
-    $('#markAllAsSeen').bind('click', (e) =>
-      e.preventDefault()
-      @markAllAsSeen()
+    @updateContent()
+
+    # set heigth of notification popover
+    height = $('#app').height()
+    $('.js-notificationsContainer').css('height', "#{height-12}px")
+    $('.js-notificationsContainer .arrow').css('top', '20px')
+
+    # close notification list on click
+    $('.js-notificationsContainer').on('click', (e) =>
+      #console.log('CL')
+      @hidePopover()
     )
-    @frontendTimeUpdate()
-    
+
+    # mark all notifications as read
+    $('.js-markAllAsRead').on('click', (e) =>
+      e.preventDefault()
+      @markAllAsRead()
+    )
+
     # add clickCatcher
     @clickCatcher = new App.clickCatcher
-      holder: @el.offsetParent()
-      callback: @hidePopover
+      holder:      @el.offsetParent()
+      callback:    @hidePopover
       zIndexScale: 4
 
   onHide: =>
-    $('#markAllAsSeen').unbind('click')
     @removeClickCatcher()
 
   hidePopover: =>
     @toggle.popover('hide')
 
-  stop: =>
-    @counterUpdate(0)
-    @toggle.popover('destroy')
+  fetch: =>
+    load = (items) =>
+      App.OnlineNotification.refresh( items, { clear: true } )
+      @updateContent()
+    App.OnlineNotification.fetchFull(load)
 
-  start: =>
-    @stop()
-
-    # show popover
+  updateContent: =>
     items = App.OnlineNotification.search( sortBy: 'created_at', order: 'DESC' )
     counter = 0
     for item in items
@@ -100,26 +106,46 @@ class App.OnlineNotificationWidget extends App.Controller
         counter = counter + 1
     @counterUpdate(counter)
 
+    # update title
+    $('.js-notificationsContainer .popover-title').html(
+      App.i18n.translateInline( 'Notifications' ) + " <span class='popover-notificationsCounter'>#{counter}</span>"
+    )
+
+    # update content
     items = @prepareForObjectList(items)
+    $('.js-notificationsContainer .popover-content').html(
+      $( App.view('widget/online_notification_content')(items: items) )
+    )
 
-    @toggle.popover
-      trigger:    'click'
-      container:  'body'
-      html:       true
-      placement:  'right'
-      viewport: { "selector": "#app", "padding": 10 }
-      template: App.view('widget/online_notification')()
-      title: ->
-        App.i18n.translateInline( 'Notifications' ) + " <span class='popover-notificationsCounter'>#{counter}</span>"
-      content: =>
-        # insert data
-        $( App.view('widget/online_notification_content')(items: items) )
-    .on
-      'shown.bs.popover': @onShow
-      'hide.bs.popover': @onHide
+    # show frontend times
+    @frontendTimeUpdate()
 
-  fetch: =>
-    load = (items) =>
-      App.OnlineNotification.refresh( items, { clear: true } )
-      @start()
-    App.OnlineNotification.fetchFull(load)
+  createContainer: =>
+    @removeContainer()
+
+    # show popover
+    waitUntilOldPopoverIsRemoved = =>
+      @toggle.popover
+        trigger:   'click'
+        container: 'body'
+        html:      true
+        placement: 'right'
+        viewport:  { "selector": "#app", "padding": 10 }
+        template:  App.view('widget/online_notification')()
+        title:     ' '
+        content:   ' '
+      .on
+        'shown.bs.popover': @onShow
+        'hide.bs.popover':  @onHide
+
+      @updateContent()
+
+    @delay(
+      => waitUntilOldPopoverIsRemoved()
+      600
+      'popover'
+    )
+
+  removeContainer: =>
+    @counterUpdate(0)
+    @toggle.popover('destroy')

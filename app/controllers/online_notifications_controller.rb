@@ -88,12 +88,30 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password} -H 
     model_update_render(OnlineNotification, params)
   end
 
-  def markAllAsSeen
+=begin
+
+Resource:
+PUT /api/v1/online_notifications/mark_all_as_read
+
+Payload:
+{}
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login}:#{password} -X POST -d '{}'
+
+=end
+
+  def mark_all_as_read
       notifications = OnlineNotification.list(current_user,100)
       notifications.each do |notification|
-        OnlineNotification.seen({:id => notification['id']})
+        if !notification['seen']
+          OnlineNotification.seen( :id => notification['id'] )
+        end
       end
-      render :json => {data:'ok'}
+    render :json => {}, :status => :ok
   end
 
 end
