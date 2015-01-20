@@ -2090,8 +2090,13 @@ footer {
       margin-top: -3px;
       
       &.loading {
-        width: 14px;
-        height: 14px;
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        position: relative;
+        &:after {
+          @extend .priority.icon:after;
+        }
       }
 
       &.error {
