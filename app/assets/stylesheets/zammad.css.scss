@@ -2637,6 +2637,10 @@ footer {
   z-index: 1110;
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
   // max-height: calc(100vh - 20px);
+  
+  &.is-visible {
+    display: block;
+  }
 }
 
   .popover-title {
