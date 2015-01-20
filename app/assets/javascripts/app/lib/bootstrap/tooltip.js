@@ -8,15 +8,6 @@
  * ======================================================================== */
 
 
-/*
-
-  Modified 19-01-2014 by Felix
-  
-  add tooltip height desctriction to 100% viewport height - 18px padding
-  line 260-263
-
-*/
-
 +function ($) {
   'use strict';
 
@@ -185,8 +176,8 @@
 
       $tip
         .detach()
-        .css({ top: 0, left: 0 })
-        .addClass(placement + ' is-visible')
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
         .data('bs.' + this.type, this)
 
       this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
@@ -257,11 +248,6 @@
         })
       }
     }, offset), 0)
-
-    var maxHeight = $('#app').height() - 18
-    if(height > maxHeight){
-      $tip.height(maxHeight).addClass('is-overflowing')
-    }
 
     $tip.addClass('in')
 
