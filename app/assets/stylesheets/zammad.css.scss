@@ -2725,13 +2725,23 @@ footer {
     &.is-visible {
       @extend .vertical;
     }
+
+    .popover-content {
+      @extend .flex;
+    }
+
+    &.is-overflowing .popover-notificationsHeader {
+      box-shadow: 
+        0 1px hsla(240,4%,95%,.5),
+        0 2px hsla(240,4%,95%,.2);
+    }
   }
 
   .popover-notificationsHeader {
     @extend .horizontal;
     @extend .end;
-    @extend .popover-title;
-    padding-bottom: 29px;
+    padding-bottom: 22px;
+    margin: 21px 17px 0;
     
     .popover-title {
       @extend h1;

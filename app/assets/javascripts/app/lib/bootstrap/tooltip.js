@@ -259,8 +259,9 @@
     }, offset), 0)
 
     var maxHeight = $('#app').height() - 18
-    if(height > maxHeight)
-      $tip.height(maxHeight)
+    if(height > maxHeight){
+      $tip.height(maxHeight).addClass('is-overflowing')
+    }
 
     $tip.addClass('in')
 
