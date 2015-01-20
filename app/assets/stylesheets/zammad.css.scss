@@ -2122,7 +2122,8 @@ footer {
 
   .task.active .priority.icon,
   .task.active .modified.priority.icon,
-  .task.active .modified.priority.icon:after {
+  .task.active .modified.priority.icon:after,
+  .task.active .loading.icon:after {
     background-color: white;
     border-color: white;
   }
@@ -2140,7 +2141,8 @@ footer {
   .level-1.active,
   .level-1.active .priority.icon:after,
   .level-1 .modified.priority.icon,
-  .level-1 .modified.priority.icon:after {
+  .level-1 .modified.priority.icon:after,
+  .level-1.active .loading.icon:after {
     background-color: #38ae6a;
     border-color: #38ae6a;
     color: #38ae6a;
@@ -2155,7 +2157,8 @@ footer {
   .level-2.active,
   .level-2.active .priority.icon:after,
   .level-2 .modified.priority.icon,
-  .level-2 .modified.priority.icon:after {
+  .level-2 .modified.priority.icon:after,
+  .level-2.active .loading.icon:after {
     background-color: #f35910;
     border-color: #f35910;
     color: #f35910;
@@ -2170,7 +2173,8 @@ footer {
   .level-3.active,
   .level-3.active .priority.icon:after,
   .level-3 .modified.priority.icon,
-  .level-3 .modified.priority.icon:after {
+  .level-3 .modified.priority.icon:after,
+  .level-3.active .loading.icon:after {
     background-color: #faab00;
     border-color: #faab00;
   }
