@@ -1,6 +1,13 @@
-/* from here http://jsfiddle.net/WojtekKruszewski/Zf3m7/22/ */
+/* 
+  
+  Makes the popover stay when hovered over it
+
+  from here http://jsfiddle.net/WojtekKruszewski/Zf3m7/22/
+
+*/
 
 var originalLeave = $.fn.popover.Constructor.prototype.leave;
+
 $.fn.popover.Constructor.prototype.leave = function(obj){
   var self = obj instanceof this.constructor ?
     obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)

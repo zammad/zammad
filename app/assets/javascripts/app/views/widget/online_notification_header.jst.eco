@@ -1,0 +1,5 @@
+<span class="popover-notificationsTitle">
+  <%- @T( 'Notifications' ) %>
+  <span class="popover-notificationsCounter"><%= @counter %></span>
+  <a class="popover-notificationsMarkRead" id="markAllAsSeen"><%- @T( 'Mark all as read' ) %></a>
+</span>
