@@ -3241,14 +3241,14 @@ footer {
       right: 0;
       top: -30px;
       height: 30px;
-      background: linear-gradient(transparent, white);
+      background: linear-gradient(rgba(255,255,255,0), white);
     }
   }
 
   .customer .textBubble-overflowContainer {
     background: #e5f0f5;
     &:before {
-      background: linear-gradient(transparent, #e5f0f5);
+      background: linear-gradient(hsla(199,44%,93%,0), hsl(199,44%,93%));
     }
   }
 
