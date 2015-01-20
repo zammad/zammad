@@ -1797,7 +1797,7 @@ ol.tabs li {
   .loading.icon {
     width: 30px;
     height: 30px;
-    background: hsl(339,80%,62%);
+    background: hsl(145,51%,45%);
     -webkit-animation: rotateplane 1.2s infinite ease-in-out;
             animation: rotateplane 1.2s infinite ease-in-out;
   }
@@ -1808,25 +1808,26 @@ ol.tabs li {
   }
 
   @-webkit-keyframes rotateplane {
-    0% { -webkit-transform: perspective(120px); background: hsl(202,68%,54%); }
-    50% { -webkit-transform: perspective(120px) rotateY(180deg); background: hsl(145,51%,45%); }
-    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg); background: hsl(202,68%,54%); }
+    0% { -webkit-transform: perspective(120px); }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg); }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg); }
   }
 
   @keyframes rotateplane {
     0% { 
               transform: perspective(120px) rotateX(0deg) rotateY(0deg);
       -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-      background: hsl(202,68%,54%); 
     } 50% { 
               transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
       -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-      background: hsl(145,51%,45%);
     } 100% { 
               transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
       -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-      background: hsl(202,68%,54%);
     }
+  }
+
+  .loading.dot.icon {
+    border-radius: 100%;
   }
 
 
@@ -2097,15 +2098,6 @@ footer {
       &.loading {
         width: 10px;
         height: 10px;
-        border-radius: 100%;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin: -6px 0 0 -5px;
-        
-        &:after {
-          @extend .priority.icon:after;
-        }
       }
 
       &.error {
@@ -2127,8 +2119,7 @@ footer {
 
   .task.active .priority.icon,
   .task.active .modified.priority.icon,
-  .task.active .modified.priority.icon:after,
-  .task.active .loading.icon:after {
+  .task.active .modified.priority.icon:after {
     background-color: white;
     border-color: white;
   }
@@ -2146,8 +2137,7 @@ footer {
   .level-1.active,
   .level-1.active .priority.icon:after,
   .level-1 .modified.priority.icon,
-  .level-1 .modified.priority.icon:after,
-  .level-1.active .loading.icon:after {
+  .level-1 .modified.priority.icon:after {
     background-color: #38ae6a;
     border-color: #38ae6a;
     color: #38ae6a;
@@ -2162,8 +2152,7 @@ footer {
   .level-2.active,
   .level-2.active .priority.icon:after,
   .level-2 .modified.priority.icon,
-  .level-2 .modified.priority.icon:after,
-  .level-2.active .loading.icon:after {
+  .level-2 .modified.priority.icon:after {
     background-color: #f35910;
     border-color: #f35910;
     color: #f35910;
@@ -2178,8 +2167,7 @@ footer {
   .level-3.active,
   .level-3.active .priority.icon:after,
   .level-3 .modified.priority.icon,
-  .level-3 .modified.priority.icon:after,
-  .level-3.active .loading.icon:after {
+  .level-3 .modified.priority.icon:after {
     background-color: #faab00;
     border-color: #faab00;
   }
