@@ -297,12 +297,14 @@ test( "htmlClanup", function() {
   equal( result.html(), should, source )
 
   source = "<div><small>some link to somewhere</small></a>"
-  should = "<div>some link to somewhere</div>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlClanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><time>some link to somewhere</time></a>"
-  should = "<div>some link to somewhere</div>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlClanup( $(source) )
   equal( result.html(), should, source )
 
