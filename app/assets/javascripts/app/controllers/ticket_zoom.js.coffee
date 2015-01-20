@@ -43,16 +43,25 @@ class App.TicketZoom extends App.Controller
     )
 
   meta: =>
+
+    # default attributes
     meta =
       url:       @url()
       id:        @ticket_id
-      iconClass: 'priority'
-      head:      @taskTitle
+
+    # set icon and tilte if defined
+    if @taskIconClass
+      meta.iconClass = @taskIconClass
+    if @taskHead
+      meta.head = @taskHead
+
+    # set icon and title based on ticket
     if @ticket
-      @ticket    = App.Ticket.fullLocal( @ticket.id )
-      meta.head  = @ticket.title
-      meta.title = '#' + @ticket.number + ' - ' + @ticket.title
-      meta.class = "level-#{@ticket.level()}"
+      @ticket        = App.Ticket.fullLocal( @ticket.id )
+      meta.head      = @ticket.title
+      meta.title     = '#' + @ticket.number + ' - ' + @ticket.title
+      meta.class     = "level-#{@ticket.level()}"
+      meta.iconClass = 'priority'
     meta
 
   url: =>
@@ -118,15 +127,19 @@ class App.TicketZoom extends App.Controller
 
         # show error message
         if xhr.status is 401 || error is 'Unauthorized'
-          @taskTitle = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+          @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+          @taskIconClass = 'error'
           @html App.view('generic/error/unauthorized')( objectName: 'Ticket' )
         else if xhr.status is 404 || error is 'Not Found'
-          @taskTitle = '» ' + App.i18n.translateInline('Not Found') + ' «'
+          @taskHead      = '» ' + App.i18n.translateInline('Not Found') + ' «'
+          @taskIconClass = 'error'
           @html App.view('generic/error/not_found')( objectName: 'Ticket' )
         else
-          @taskTitle = '» ' + App.i18n.translateInline('Error') + ' «'
-          status     = xhr.status
-          detail     = xhr.responseText
+          @taskHead      = '» ' + App.i18n.translateInline('Error') + ' «'
+          @taskIconClass = 'error'
+
+          status = xhr.status
+          detail = xhr.responseText
           if !status && !detail
             detail = 'General communication error, maybe internet is not available!'
           @html App.view('generic/error/generic')(
@@ -441,7 +454,7 @@ class App.TicketZoom extends App.Controller
     )
 
     # set see more options
-    previewHeight = 240
+    previewHeight = 270
     @$('.textBubble-content').each( (index) ->
       bubble = $( @ )
       heigth = bubble.height()
@@ -1450,7 +1463,7 @@ class ArticleView extends App.Controller
   unfold: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    container = $(e.currentTarget).parents('.textBubble-content')
+    container         = $(e.currentTarget).parents('.textBubble-content')
     overflowContainer = container.find('.textBubble-overflowContainer')
 
     overflowContainer.velocity
