@@ -5,7 +5,7 @@
       <div class="white close icon"></div>
     </div>
   </div>
-  <div class="logo"></div>
+  <div class="logo js-toggleNavigation"></div>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
 </form>
 

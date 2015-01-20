@@ -1,4 +1,7 @@
 class App.OnlineNotificationWidget extends App.Controller
+  elements:
+    '.js-toggleNavigation': 'toggle'
+
   constructor: ->
     super
 
@@ -38,10 +41,10 @@ class App.OnlineNotificationWidget extends App.Controller
       @el.find('.activity-counter').remove()
       return
 
-    if @el.find('.logo .activity-counter')[0]
-      @el.find('.logo .activity-counter').html(count)
+    if @el.find('.js-toggleNavigation .activity-counter')[0]
+      @el.find('.js-toggleNavigation .activity-counter').html(count)
     else
-      @el.find('.logo').append('<div class="activity-counter">' + count.toString() + '</div>')
+      @toggle.append('<div class="activity-counter">' + count.toString() + '</div>')
 
   markAllAsSeen: () =>
     @ajax(
@@ -56,9 +59,35 @@ class App.OnlineNotificationWidget extends App.Controller
       fail: =>
     )
 
+  removeClickCatcher: () =>
+    return if !@clickCatcher
+    @clickCatcher.remove()
+    @clickCatcher = null
+
+  onShow: =>
+    # show frontend times
+    $('#markAllAsSeen').bind('click', (e) =>
+      e.preventDefault()
+      @markAllAsSeen()
+    )
+    @frontendTimeUpdate()
+    
+    # add clickCatcher
+    @clickCatcher = new App.clickCatcher
+      holder: @el.offsetParent()
+      callback: @hidePopover
+      zIndexScale: 4
+
+  onHide: =>
+    $('#markAllAsSeen').unbind('click')
+    @removeClickCatcher()
+
+  hidePopover: =>
+    @toggle.popover('hide')
+
   stop: =>
     @counterUpdate(0)
-    @el.find('.logo').popover('destroy')
+    @toggle.popover('destroy')
 
   start: =>
     @stop()
@@ -73,28 +102,21 @@ class App.OnlineNotificationWidget extends App.Controller
 
     items = @prepareForObjectList(items)
 
-    @el.find('.logo').popover(
+    @toggle.popover
       trigger:    'click'
       container:  'body'
       html:       true
       placement:  'right'
-      title: =>
-        # add header with counter and mark as read button
-        $( App.view('widget/online_notification_header')(counter: counter) )
+      viewport: { "selector": "#app", "padding": 10 }
+      template: App.view('widget/online_notification')()
+      title: ->
+        App.i18n.translateInline( 'Notifications' ) + " <span class='popover-notificationsCounter'>#{counter}</span>"
       content: =>
         # insert data
-        $( App.view('widget/online_notification')(items: items) )
-    ).on('shown.bs.popover', =>
-
-      # show frontend times
-      $('#markAllAsSeen').bind('click', (e) =>
-        e.preventDefault()
-        @markAllAsSeen()
-      );
-      @frontendTimeUpdate()
-    ).on('hide.bs.popover', =>
-      $('#markAllAsSeen').unbind('click')
-    )
+        $( App.view('widget/online_notification_content')(items: items) )
+    .on
+      'shown.bs.popover': @onShow
+      'hide.bs.popover': @onHide
 
   fetch: =>
     load = (items) =>

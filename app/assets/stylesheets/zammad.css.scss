@@ -567,7 +567,8 @@ h5 {
 }
 
 label,
-.checkbox.form-group label {
+.checkbox.form-group label,
+.label {
   text-transform: uppercase;
   color: hsl(0,0%,60%);
   display: block;
@@ -575,6 +576,8 @@ label,
   font-weight: normal;
   letter-spacing: 0.1em;
   margin-bottom: 4px;
+  text-align: left;
+  padding: 0;
 }
 
 fieldset {
@@ -2198,12 +2201,12 @@ footer {
     } 
 
 .search {
-  padding: 14px 15px 10px 10px;
+  padding: 14px 2px 10px 10px;
   border-bottom: 1px solid rgba(240, 250, 255, .05);
 }
   
   .search-holder {
-    margin-right: 15px;
+    margin-right: 2px;
     position: relative;
     transition: 240ms;
   }
@@ -2245,12 +2248,13 @@ footer {
   }
 
   .search .logo {
-    width: 41px;
+    width: 67px;
     height: 36px;
-    background: image_url("/assets/images/logo.svg");
+    background: image_url("/assets/images/logo.svg") no-repeat center;
     transition: 240ms;
     position: relative;
     @extend .u-clickable;
+    @extend .zIndex-5;
   }
 
     .logo .activity-counter {
@@ -2623,18 +2627,18 @@ footer {
   border: none;
   z-index: 1110;
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
+  // max-height: calc(100vh - 20px);
 }
 
   .popover-title {
     border: none;
     background: none;
-    padding: 20px 17px 4px;
+    padding: 21px 17px 4px;
   }
 
   .popover-content {
     padding: 0 17px 10px;
-    max-height: 600px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .popover.right { margin-left: 4px; }
@@ -2693,22 +2697,41 @@ footer {
     margin-bottom: 8px;
   }
 
-  .popover-notificationsTitle {
-    @extend h1;
+  .popover--notifications {
+    @extend .zIndex-5;
+    
+    &.is-visible {
+      @extend .vertical;
+    }
+  }
+
+  .popover-notificationsHeader {
     @extend .horizontal;
-    @extend .justified;
+    @extend .end;
+    @extend .popover-title;
+    padding-bottom: 29px;
+    
+    .popover-title {
+      @extend h1;
+      padding: 0;
+      line-height: 1;
+    }
   }
 
   .popover-notificationsCounter {
     color: #e25253;
-    padding-left: 10px;
+    padding-left: 3px;
   }
 
   .popover-notificationsMarkRead {
     @extend .btn;
     @extend .btn--subtle;
     @extend .align-right;
-    margin-top: -8px;
+    padding: 5px 0 0;
+    
+    &:hover {
+      padding: 5px 0 0;
+    }
   }
 
 .stat-widgets {
