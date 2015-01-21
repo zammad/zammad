@@ -284,6 +284,7 @@ span[data-tooltip]:hover:before {
 
   &.btn--action {
     @extend label;
+    height: 31px;
     padding: 7px 11px 5px !important;
   }
 
@@ -843,9 +844,6 @@ textarea,
   margin-top: 6px;
   margin-left: auto;
   @extend .horizontal;
-  /*
-  @extend .justify;
-  */
   @extend .self-start;
   
   .btn {
@@ -1338,17 +1336,19 @@ ol.tabs li {
       height: 6px;
       border-radius: 100%;
       background: #2c2d36;
+      will-change: opacity;
+      transform: translateZ(0);
     }
 
     .modified.priority.icon:after {
-      -webkit-animation: fade 1s ease 2s infinite alternate;
-         -moz-animation: fade 1s ease 2s infinite alternate;
-              animation: fade 1s ease 2s infinite alternate;
+      -webkit-animation: fade 2s ease-in-out infinite;
+         -moz-animation: fade 2s ease-in-out infinite;
+              animation: fade 2s ease-in-out infinite;
     }
 
-    @-webkit-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
-       @-moz-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
-            @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+    @-webkit-keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
+       @-moz-keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
+            @keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
 
   .organization.icon {
     height: 13px;
@@ -4168,11 +4168,14 @@ footer {
   display: block;
   padding-left: 40px;
   position: absolute;
-  overflow: auto;
-  background: hsla(210,17%,98%,.55);
+  bottom: auto;
+  min-height: 100vh;
   
   .modal-backdrop {
-    display: none;
+    position: absolute;
+    background: hsla(210,17%,93%,.55);
+    height: 100% !important;
+    opacity: 1;
   }
 
   .modal-dialog {
