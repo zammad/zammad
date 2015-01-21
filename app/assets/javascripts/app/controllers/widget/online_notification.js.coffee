@@ -47,6 +47,7 @@ class App.OnlineNotificationWidget extends App.Controller
       @toggle.append('<div class="activity-counter">' + count.toString() + '</div>')
 
   markAllAsRead: =>
+    @counterUpdate(0)
     @ajax(
       id:   'markAllAsRead'
       type: 'POST'
@@ -64,13 +65,19 @@ class App.OnlineNotificationWidget extends App.Controller
     @updateContent()
 
     # set heigth of notification popover
-    height = $('#app').height()
-    $('.js-notificationsContainer').css('height', "#{height-12}px")
+    heightApp            = $('#navigation').height()
+    heightPopoverHeader  = $('.js-notificationsContainer .popover-notificationsHeader').height()
+    heightPopoverContent = $('.js-notificationsContainer .popover-content').get(0).scrollHeight
+    height               = heightPopoverHeader + heightPopoverContent
+    if height > heightApp
+      height = heightApp - heightPopoverHeader - 56
+    $('.js-notificationsContainer .popover-content').css('height', "#{height}px")
+
+    # set popover arrow
     $('.js-notificationsContainer .arrow').css('top', '20px')
 
     # close notification list on click
     $('.js-notificationsContainer').on('click', (e) =>
-      #console.log('CL')
       @hidePopover()
     )
 
