@@ -2251,6 +2251,7 @@ footer {
 
   .search.focused .logo {
     opacity: 0;
+    z-index: -1;
   }
 
   .search .logo {
