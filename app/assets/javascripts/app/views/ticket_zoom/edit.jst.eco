@@ -2,87 +2,84 @@
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @article.form_id %>">
-  <div class="bubble-grid horizontal">
-    <div class="editControls">
-      <%- App.User.fullLocal( @S('id') ).avatar("40", 'right', 'zIndex-5') %>
-      <div class="dark pop-select zIndex-7 editControls-item">
-        <div class="pop-selected u-clickable centered">
-          <div class="gray <%- @article.type %> channel icon"></div>
-        </div>
-        <div class="pop-selector hide">
-          <div class="horizontal">
-            <% for atricleType in @articleTypes: %>
-            <div class="pop-selectable u-clickable centered" data-value="<%= atricleType.name %>">
-              <div class="white <%= atricleType.icon %> channel icon"></div>
-            </div>
-            <% end %>
-          </div>
-        </div>
+  <div class="editControls">
+    <%- App.User.fullLocal( @S('id') ).avatar("40", 'right', 'zIndex-5') %>
+    <div class="dark pop-select zIndex-7 editControls-item">
+      <div class="pop-selected u-clickable centered">
+        <div class="gray <%- @article.type %> channel icon"></div>
       </div>
-      <div class="visibility-toggle zIndex-7 u-clickable editControls-item">
-        <div class="internal-visibility centered" title="<%- @T("unset internal") %>">
-          <div class="internal visibility icon"></div>
-        </div>
-        <div class="public-visibility centered" title="<%- @T("set internal") %>">
-          <div class="public visibility icon"></div>
+      <div class="pop-selector hide">
+        <div class="horizontal">
+          <% for atricleType in @articleTypes: %>
+          <div class="pop-selectable u-clickable centered" data-value="<%= atricleType.name %>">
+            <div class="white <%= atricleType.icon %> channel icon"></div>
+          </div>
+          <% end %>
         </div>
       </div>
     </div>
-    <div class="flex article-content zIndex-5 bubble-gap">
+    <div class="visibility-toggle zIndex-7 u-clickable editControls-item">
+      <div class="internal-visibility centered" title="<%- @T("unset internal") %>">
+        <div class="internal visibility icon"></div>
+      </div>
+      <div class="public-visibility centered" title="<%- @T("set internal") %>">
+        <div class="public visibility icon"></div>
+      </div>
+    </div>
+  </div>
+  <div class="article-content zIndex-5 bubble-gap">
 <!--
-      <label class="recipients"><%- @T('Recipients') %>
-        <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_normal.jpg)"></div>
-        <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"></div>
-      </label>
+    <label class="recipients"><%- @T('Recipients') %>
+      <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_normal.jpg)"></div>
+      <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"></div>
+    </label>
 -->
-      <div class="internal-border">
+    <div class="internal-border">
 
-        <div class="input form-group">
-          <div class="formGroup-label">
-            <label for=""><%- @T('To') %></label>
-          </div>
-          <div class="controls"><input id="" type="text" name="to" value="<%= @article.to %>" class="form-control" required="required"></div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for=""><%- @T('To') %></label>
         </div>
-        <div class="input form-group">
-          <div class="formGroup-label">
-            <label for=""><%- @T('Cc') %></label>
-          </div>
-          <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control"></div>
+        <div class="controls"><input id="" type="text" name="to" value="<%= @article.to %>" class="form-control" required="required"></div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for=""><%- @T('Cc') %></label>
         </div>
+        <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control"></div>
+      </div>
 
-        <div class="text-bubble">
-          <div class="bubble-arrow"></div>
-          <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
-          <!-- .text-bubble grows with textarea (and expanding clone) -->
-          <div class="attachments"></div>
-          <div class="article-attachment u-unclickable u-textTruncate">
-            <div class="attachmentPlaceholder">
-              <span class="attachmentPlaceholder-hint"><%- @T('Antwort eingeben oder') %></span>
-              <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable">
-                <%- @T('Dateien wählen..') %>
-                <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
-              </span>
-            </div>
-            <div class="attachmentUpload hide u-clickable">
-              <div class="horizontal">
-                <div class="u-highlight">
-                  <%- @T(' Uploading ') %> (<span class="js-percentage">0</span>%) ...
-                </div>
-                <div class="attachmentUpload-cancel align-right js-cancel u-clickable">
-                  <div class="delete icon"></div><%- @T('Cancel Upload') %>
-                </div>
+      <div class="textBubble">
+        <div class="bubble-arrow"></div>
+        <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
+        <!-- .textBubble grows with textarea (and expanding clone) -->
+        <div class="attachments"></div>
+        <div class="article-attachment u-unclickable u-textTruncate">
+          <div class="attachmentPlaceholder">
+            <span class="attachmentPlaceholder-hint"><%- @T('Antwort eingeben oder') %></span>
+            <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable">
+              <%- @T('Dateien wählen..') %>
+              <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+            </span>
+          </div>
+          <div class="attachmentUpload hide u-clickable">
+            <div class="horizontal">
+              <div class="u-highlight">
+                <%- @T(' Uploading ') %> (<span class="js-percentage">0</span>%) ...
               </div>
-              <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+              <div class="attachmentUpload-cancel align-right js-cancel u-clickable">
+                <div class="delete icon"></div><%- @T('Cancel Upload') %>
+              </div>
             </div>
+            <div class="attachmentUpload-progressBar" style="width: 0%"></div>
           </div>
-          <div class="fit dropArea">
-            <div class="dropArea-inner fit centered">
-              <%- @T('Drop Files here') %>
-            </div>
+        </div>
+        <div class="fit dropArea">
+          <div class="dropArea-inner fit centered">
+            <%- @T('Drop Files here') %>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </form>

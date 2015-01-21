@@ -29,6 +29,7 @@ class App.TaskbarWidget extends App.Controller
       data =
         url:   '#'
         id:    false
+        iconClass: 'loading dot'
         title: App.i18n.translateInline('Loading...')
         head:  App.i18n.translateInline('Loading...')
       worker = App.TaskManager.worker( task.key  )

@@ -44,7 +44,7 @@
     </div>
 
     <div class="ticket-article">
-      <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
+      <div class="ticket-article-item customer phone" data-id="1" id="article-1">
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -55,20 +55,27 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal reverse">
+        <div class="article-content zIndex-1">
           <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Welcome!
-
-Thank you for installing Zammad.
-
-You will find updates and patches at <a href="http://zammad.org/" title="http://zammad.org/" target="_blank">http://zammad.org/</a>. Online
-documentation is available at <a href="http://guides.zammad.org/" title="http://guides.zammad.org/" target="_blank">http://guides.zammad.org/</a>. You can also
-use our forums at <a href="http://forums.zammad.org/" title="http://forums.zammad.org/" target="_blank">http://forums.zammad.org/</a>
-
-Regards,
-<a href="#" class="show_toogle">See more</a><div class="hide preview">
-The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad.org</a> Project</div></div>
+            <div class="textBubble">
+              <div class="bubble-arrow"></div>
+              <div class="textBubble-content">
+Welcome!
+<br/>
+Thank you for installing Zammad.<br/>
+<br/>
+You will find updates and patches at <a href="http://zammad.org/" title="http://zammad.org/" target="_blank">http://zammad.org/</a>. Online<br/>
+documentation is available at <a href="http://guides.zammad.org/" title="http://guides.zammad.org/" target="_blank">http://guides.zammad.org/</a>. You can also<br/>
+use our forums at <a href="http://forums.zammad.org/" title="http://forums.zammad.org/" target="_blank">http://forums.zammad.org/</a><br/>
+<br/>
+Regards,<br/>
+The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad.org</a> Project
+                <div class="textBubble-overflowContainer">
+                  <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="article-meta-clip bottom">
@@ -98,7 +105,7 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
         <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
       </div>
 
-      <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
+      <div class="ticket-article-item agent note" data-id="23" id="article-23">      
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -109,10 +116,10 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal">
-          <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
+        <div class="article-content zIndex-1">
+          <span class="avatar user-popover" data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div>
+            <div class="textBubble"><div class="bubble-arrow"></div>Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div>
           </div>
         </div>
         <div class="article-meta-clip bottom">
@@ -136,7 +143,7 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
         <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
       </div>
 
-      <div class="ticket-article-item bubble-grid customer phone" data-id="1" id="article-1">
+      <div class="ticket-article-item customer phone" data-id="1" id="article-1">
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -147,10 +154,10 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal reverse">
+        <div class="article-content zIndex-1">
           <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
+            <div class="textBubble"><div class="bubble-arrow"></div>Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
 
 Grüße, Peter</div>
           </div>
@@ -182,7 +189,7 @@ Grüße, Peter</div>
         <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
       </div>
 
-      <div class="ticket-article-item bubble-grid agent note" data-id="23" id="article-23">      
+      <div class="ticket-article-item agent note" data-id="23" id="article-23">      
         <div class="article-meta-clip top">
           <div class="article-content-meta top hide">
             <div class="article-meta top">
@@ -193,15 +200,34 @@ Grüße, Peter</div>
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1 horizontal">
+        <div class="article-content zIndex-1">
           <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
           <div class="flex bubble-gap internal-border">
-            <div class="text-bubble"><div class="bubble-arrow"></div>Lieber HP,<br>
+            <div class="textBubble">
+              <div class="bubble-arrow"></div>
+              <div class="textBubble-content">Lieber HP,<br>
 anbei findest du die Midi Noten für Maria Maria "I Like it Loud".<br>
 Wünsche dir einen guten Auftritt in Hamburg.<br>
 <br>
+Deine Frau bekommt ein Kind haben wir gehört.<br>
+Gratulation dazu! Wir schicken dir was liebes.<br>
+<br>
+Und wenn du noch mal Probleme mit der Stimme hast sag bescheid – ich kenn da ein Wundermittel.<br>
+<br>
+Das ist eine Pille von einem Druiden aus dem Bayerischen Wald. Die ölt einem so richtig die Stimmbänder.<br>
+<br>
+Verwende ich immer wenn ich meine Frau anschreien will. Die macht meinen Tenor richtig zum Löwen.<br>
+<br>
+Ach ja und dein Freund Tim. Richt dem mal aus dass er das doch bitte sein lassen soll mit den Anrufen.<br>
+<br>Ich weiß schon dass ich ein hübscher bin. Aber ich hab ihm schon tausend mal gesagt, dass ich seine Gefühle leider nicht erwiedern kann.<br>
+<br>
+Bin verheiratet, hab Kind. Is doch offensichtlich, Junge!<br>
 Alles gute,<br>
 Oliver<br>
+                <div class="textBubble-overflowContainer">
+                  <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+                </div>
+              </div>
               <div class="attachments">
                 <div class="paperclip icon"></div>
                 <h3>2 <%- @T('Attached Files') %></h3>
@@ -213,7 +239,8 @@ Oliver<br>
                   <div class="attachment-name u-highlight">lyrics_I_Like_it_Loud.txt</div>
                   <div class="attachment-size">17.1kb</div>
                 </div>
-              </div></div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="article-meta-clip bottom">

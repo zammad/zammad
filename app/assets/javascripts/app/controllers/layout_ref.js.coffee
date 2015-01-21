@@ -11,9 +11,9 @@ App.Config.set( 'layout_ref', Index, 'Routes' )
 
 class Content extends App.ControllerContent
   events:
-    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganisationMembers'
-    'click .js-organisation':                 'showOrganisationMembers'
-    'click .js-back':                         'hideOrganisationMembers'
+    'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
+    'click .js-organization':                 'showOrganizationMembers'
+    'click .js-back':                         'hideOrganizationMembers'
 
   constructor: ->
     super
@@ -46,21 +46,21 @@ class Content extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/content')()
 
-  showOrganisationMembers: (e) =>
+  showOrganizationMembers: (e) =>
     e.stopPropagation()
 
     listEntry = $(e.currentTarget)
-    organisationId = listEntry.data('organisation-id')
+    organizationId = listEntry.data('organization-id')
 
     @recipientList = @$('.recipientList')
-    @organisationList = @$("##{ organisationId }")
+    @organizationList = @$("##{ organizationId }")
 
-    # move organisation-list to the right and slide it in
+    # move organization-list to the right and slide it in
 
-    $.Velocity.hook(@organisationList, 'translateX', '100%')
-    @organisationList.removeClass('hide')
+    $.Velocity.hook(@organizationList, 'translateX', '100%')
+    @organizationList.removeClass('hide')
 
-    @organisationList.velocity
+    @organizationList.velocity
       properties:
         translateX: 0
       options:
@@ -73,12 +73,12 @@ class Content extends App.ControllerContent
         translateX: '-100%'
       options:
         speed: 300
-        complete: => @recipientList.height(@organisationList.height())
+        complete: => @recipientList.height(@organizationList.height())
 
-  hideOrganisationMembers: (e) =>
+  hideOrganizationMembers: (e) =>
     e && e.stopPropagation()
 
-    return if !@organisationList
+    return if !@organizationList
 
     # fade list back in
 
@@ -92,18 +92,20 @@ class Content extends App.ControllerContent
 
     @recipientList.height('')
 
-    # slide out organisation-list and hide it
-    @organisationList.velocity
+    # slide out organization-list and hide it
+    @organizationList.velocity
       properties:
         translateX: '100%'
       options:
         speed: 300
-        complete: => @organisationList.addClass('hide')
+        complete: => @organizationList.addClass('hide')
 
 App.Config.set( 'layout_ref/content', Content, 'Routes' )
 
 
 class CommunicationOverview extends App.ControllerContent
+  events:
+    'click .js-unfold': 'unfold'
 
   constructor: ->
     super
@@ -116,8 +118,37 @@ class CommunicationOverview extends App.ControllerContent
     scrollHolder = pageHeader.scrollParent()
     scrollBody = scrollHolder.get(0).scrollHeight - scrollHolder.height()
 
+  unfold: (e) ->
+    container = $(e.currentTarget).parents('.textBubble-content')
+    overflowContainer = container.find('.textBubble-overflowContainer')
+
+    overflowContainer.velocity
+      properties:
+        opacity: 0
+      options:
+        duration: 300
+
+    container.velocity
+      properties:
+        height: container.attr('data-height')
+      options:
+        duration: 300
+        complete: -> overflowContainer.addClass('hide');
+
   render: ->
     @html App.view('layout_ref/communication_overview')()
+
+    # set see more options
+    previewHeight = 240
+    @$('.textBubble-content').each( (index) ->
+      bubble = $( @ )
+      heigth = bubble.height()
+      if heigth > (previewHeight + 30)
+        bubble.attr('data-height', heigth)
+        bubble.css('height', "#{previewHeight}px")
+      else
+        bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
+    )
 
 App.Config.set( 'layout_ref/communication_overview', CommunicationOverview, 'Routes' )
 
@@ -133,7 +164,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     '.attachmentUpload':            'attachmentUpload'
     '.attachmentUpload-progressBar':'progressBar'
     '.js-percentage':               'progressText'
-    '.text-bubble':                 'textBubble'
+    '.textBubble':                 'textBubble'
 
   events:
     'focus .js-textarea':                     'open_textarea'
@@ -712,5 +743,38 @@ class RichText extends App.ControllerContent
     @html App.view('layout_ref/richtext')()
 
 App.Config.set( 'layout_ref/richtext', RichText, 'Routes' )
+
+class LocalModalRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/local_modal')()
+
+App.Config.set( 'layout_ref/local_modal', LocalModalRef, 'Routes' )
+
+class loadingPlaceholderRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/loading_placeholder')()
+
+App.Config.set( 'layout_ref/loading_placeholder', loadingPlaceholderRef, 'Routes' )
+
+class insufficientRightsRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/insufficient_rights')()
+
+App.Config.set( 'layout_ref/insufficient_rights', insufficientRightsRef, 'Routes' )
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

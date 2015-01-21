@@ -34,7 +34,7 @@ class CreateObjectManager < ActiveRecord::Migration
         :multiple       => false,
         :null           => false,
         :limit          => 200,
-        :placeholder    => 'Enter Person or Organisation/Company',
+        :placeholder    => 'Enter Person or Organization/Company',
         :minLengt       => 2,
         :translate      => false,
       },
@@ -168,7 +168,7 @@ class CreateObjectManager < ActiveRecord::Migration
         :null       => false,
         :default    => 2,
         :translate  => true,
-        :filter     => [1,2,3,4],
+        :filter     => [1,2,3,4,7],
       },
       :editable           => false,
       :active             => true,
@@ -190,7 +190,7 @@ class CreateObjectManager < ActiveRecord::Migration
           :Agent => {
             :nulloption => false,
             :null       => false,
-            :filter     => [2,3,4],
+            :filter     => [2,3,4,7],
           },
           :Customer => {
             :nulloption => false,
@@ -217,10 +217,10 @@ class CreateObjectManager < ActiveRecord::Migration
         :null       => true,
         :translate  => true,
         :required_if => {
-          :state_id => [3]
+          :state_id => [3,7]
         },
         :shown_if => {
-          :state_id => [3]
+          :state_id => [3,7]
         },
       },
       :editable           => false,

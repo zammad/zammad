@@ -25,6 +25,7 @@
       40: true, // left
       91: true, // cmd left
       92: true, // cmd right
+      224: true, // cmd left
     },
     extraAllowKey: {
       65: true, // a + ctrl - select all
@@ -38,6 +39,7 @@
       73: true, // i
       85: true, // u
     },
+    //maxlength: 20,
   };
 
   function Plugin( element, options ) {
@@ -58,11 +60,7 @@
     this.preventInput = false
 
     this.init();
-    // bind
-
-    // bind paste
   }
-
 
 
   Plugin.prototype.init = function () {
@@ -84,98 +82,55 @@
           e.preventDefault()
           return
         }
-        // limit check
-        if ( !_this.maxLengthOk( true ) ) {
+      }
+
+      // limit check
+      if ( !_this.allowKey(e) ) {
+        if ( !_this.maxLengthOk( 1 ) ) {
           e.preventDefault()
           return
         }
       }
     })
 
-    this.$element.on('keyup', function (e) {
-      console.log('KU', e.ctrlKey)
-      // do not remove tags on space, enter or backspace key, it's needed for FF
-      if ( _this.options.mode === 'textonly' ) {
-        if ( !_this.options.multiline ) {
-
-          // do tricky this for FF
-          if ( e.keyCode !== 32 && e.keyCode !== 13 && e.keyCode !== 8 )  {
-
-            // start request to remove tags
-            _this.htmlRemoveTags()
-          }
-          else {
-
-            // clear request to delete tags, in FF we need <br> anytime at the end
-            _this.htmlRemoveTagsClearClearTimeout()
-          }
-        }
-        else {
-          App.Utils.htmlRemoveRichtext(_this.$element)
-        }
-      }
-      else {
-        App.Utils.htmlClanup(_this.$element)
-      }
-    })
-
-
     // just paste text
     this.$element.on('paste', function (e) {
       console.log('paste')
+
+      // check existing + paste text for limit
+      var text
+      if (window.clipboardData) { // IE
+        text = window.clipboardData.getData('Text')
+      }
+      else {
+        text = (e.originalEvent || e).clipboardData.getData('text/plain')
+      }
+
+      if ( !_this.maxLengthOk( text.length) ) {
+        e.preventDefault()
+        return
+      }
+
+      // use setTimeout() with 0 to execute it right after paste event
       if ( _this.options.mode === 'textonly' ) {
         if ( !_this.options.multiline ) {
-          _this.htmlRemoveTags()
+          setTimeout($.proxy(function(){
+            App.Utils.htmlRemoveTags(this.$element)
+          }, _this), 0)
         }
         else {
-          App.Utils.htmlRemoveRichtext(_this.$element)
+          setTimeout($.proxy(function(){
+            App.Utils.htmlRemoveRichtext(this.$element)
+          }, _this), 0)
         }
       }
       else {
-        App.Utils.htmlClanup(_this.$element)
+        setTimeout($.proxy(function(){
+          App.Utils.htmlClanup(this.$element)
+        }, _this), 0)
       }
+
       return true
-      if ( this.options.mode === 'textonly' ) {
-        e.preventDefault()
-        var text
-        if (window.clipboardData) { // IE
-          text = window.clipboardData.getData('Text')
-        }
-        else {
-          text = (e.originalEvent || e).clipboardData.getData('text/plain')
-        }
-        var overlimit = false
-        if (text) {
-
-          // replace new lines
-          if ( !_this.options.multiline ) {
-            text = text.replace(/\n/g, '')
-            text = text.replace(/\r/g, '')
-            text = text.replace(/\t/g, '')
-          }
-
-          // limit length, limit paste string
-          if ( _this.options.maxlength ) {
-            var pasteLength   = text.length
-            var currentLength = _this.$element.text().length
-            var overSize      = ( currentLength + pasteLength ) - _this.options.maxlength
-            if ( overSize > 0 ) {
-              text      = text.substr( 0, pasteLength - overSize )
-              overlimit = true
-            }
-          }
-
-          // insert new text
-          if (document.selection) { // IE
-            var range = document.selection.createRange()
-            range.pasteHTML(text)
-          }
-          else {
-            document.execCommand('inserttext', false, text)
-          }
-          _this.maxLengthOk( overlimit )
-        }
-      }
     })
 
     // disable rich text b/u/i
@@ -188,23 +143,15 @@
     }
   }
 
-  // check if rich text key is pressed
-  Plugin.prototype.htmlRemoveTags = function() {
-
-    // clear old clear request
-    this.htmlRemoveTagsClearClearTimeout()
-
-    // set new clear request
-    this._setTimeOutReformat = setTimeout($.proxy(function(){
-      App.Utils.htmlRemoveTags(this.$element)
-    }, this), 100)
-    console.log('htmlRemoveTagsClearSetTimeout', this._setTimeOutReformat)
-  }
-  Plugin.prototype.htmlRemoveTagsClearClearTimeout = function() {
-    if (this._setTimeOutReformat) {
-      console.log('htmlRemoveTagsClearClearTimeout', this._setTimeOutReformat)
-      clearTimeout(this._setTimeOutReformat)
+  // check if key is allowed, even if length limit is reached
+  Plugin.prototype.allowKey = function(e) {
+    if ( this.options.allowKey[ e.keyCode ] ) {
+      return true
     }
+    if ( ( e.ctrlKey || e.metaKey ) && this.options.extraAllowKey[ e.keyCode ] ) {
+      return true
+    }
+    return false
   }
 
   // check if rich text key is pressed
@@ -225,10 +172,14 @@
 
   // max length check
   Plugin.prototype.maxLengthOk = function(typeAhead) {
+    if ( !this.options.maxlength ) {
+      return true
+    }
     var length = this.$element.text().length
     if (typeAhead) {
-      length = length + 1
+      length = length + typeAhead
     }
+    console.log('maxLengthOk', length, this.options.maxlength)
     if ( length > this.options.maxlength ) {
 
       // try to set error on framework form

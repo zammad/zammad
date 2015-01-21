@@ -1,0 +1,3 @@
+<div class="flex fullscreenMessage">
+  <div class="error icon"></div><h2><%- @T('Opps.. I\'m sorry, but you have insufficient rights to open this %s.', @objectName ) %></h2>
+</div>

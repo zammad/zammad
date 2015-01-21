@@ -295,7 +295,7 @@ EventMachine.run {
 
     idle_time_in_min = 4
 
-    # web sockets
+    # close unused web socket sessions
     @clients.each { |client_id, client|
       if ( client[:last_ping] + ( 60 * idle_time_in_min ) ) < Time.now
         log 'notice', "closing idle websocket connection", client_id
@@ -312,10 +312,10 @@ EventMachine.run {
       end
     }
 
-    # close unused sessions
+    # close unused ajax long polling sessions
     clients = Sessions.destory_idle_sessions(idle_time_in_min)
     clients.each { |client_id|
-      log 'notice', "closing idle connection", client_id
+      log 'notice', "closing idle long polling connection", client_id
     }
   end
 

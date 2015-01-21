@@ -296,6 +296,18 @@ test( "htmlClanup", function() {
   result = App.Utils.htmlClanup( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><small>some link to somewhere</small></a>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><time>some link to somewhere</time></a>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
+  result = App.Utils.htmlClanup( $(source) )
+  equal( result.html(), should, source )
+
   source = "<div><h1>some link to somewhere</h1><p><hr></p></div>"
   should = "<div>some link to somewhere</div><p></p><p></p>"
   result = App.Utils.htmlClanup( $(source) )
@@ -436,6 +448,94 @@ test( "check signature", function() {
   signature = "--\nSome Signature\nsome department"
   result    = App.Utils.signatureCheck( message, signature )
   equal( result, true )
+
+});
+
+// replace tags
+test( "check replace tags", function() {
+
+  var message = "<div>#{user.firstname} #{user.lastname}</div>"
+  var result  = '<div>Bob Smith</div>'
+  var data    = {
+    user: {
+      firstname: 'Bob',
+      lastname:  'Smith',
+    },
+  }
+  var verify = App.Utils.replaceTags( message, data )
+  equal( verify, result )
+
+  message = "<div>#{user.firstname} #{user.lastname}</div>"
+  result  = '<div>Bob Smith</div>'
+  data    = {
+    user: {
+      firstname: function() { return 'Bob' },
+      lastname:  function() { return 'Smith' },
+    },
+  }
+  verify = App.Utils.replaceTags( message, data )
+  equal( verify, result )
+
+  message = "<div>#{user.firstname} #{user.lastname}</div>"
+  result  = '<div>Bob </div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+    },
+  }
+  verify = App.Utils.replaceTags( message, data )
+  equal( verify, result )
+
+});
+
+// check if last line is a empty line
+test( "check if last line is a empty line", function() {
+
+  var message = "123"
+  var result  = false
+  var verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div>123</div>"
+  result  = false
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<p><div>123 </div></p>"
+  result  = false
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div></div>"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"></div>"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"></div>  "
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"></div>  \n  \n\t"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\">  </div>  \n  \n\t"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
+  message = "<div class=\"some_class\"\n>  \n</div>  \n  \n\t"
+  result  = true
+  verify  = App.Utils.lastLineEmpty( message )
+  equal( verify, result, message )
+
 
 });
 

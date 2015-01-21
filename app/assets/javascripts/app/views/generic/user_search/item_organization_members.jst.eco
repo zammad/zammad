@@ -1,4 +1,4 @@
-<ul class="recipientList-organisationMembers hide" id="<%- @organization.id %>">
+<ul class="recipientList-organizationMembers hide" id="<%- @organization.id %>">
   <li class="recipientList-controls u-clickable js-back">
     <div class="recipientList-backClickArea centered">
       <div class="recipientList-backButton">

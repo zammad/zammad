@@ -22,8 +22,8 @@
     this._name      = pluginName
 
     this.collection = []
-    this.active = false
-    this.buffer = ''
+    this.active     = false
+    this.buffer     = ''
 
     // check if ce exists
     if ( $.data(element, 'plugin_ce') ) {
@@ -52,18 +52,22 @@
           e.preventDefault()
           var id = _this.$widget.find('.dropdown-menu li.active a').data('id')
           _this.take(id)
+          return
         }
 
-        // arrow keys
-        if ( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
+        // arrow keys left/right
+        if ( e.keyCode === 37 || e.keyCode === 39 ) {
           e.preventDefault()
+          return
         }
 
         // up
         if ( e.keyCode === 38 ) {
+          e.preventDefault()
           if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
             var top = _this.$widget.find('.dropdown-menu li').last().addClass('active').position().top
             _this.$widget.find('.dropdown-menu').scrollTop( top );
+            return
           }
           else {
             var prev = _this.$widget.find('.dropdown-menu li.active').removeClass('active').prev()
@@ -72,15 +76,17 @@
               top = prev.addClass('active').position().top
             }
             _this.$widget.find('.dropdown-menu').scrollTop( top );
+            return
           }
         }
 
         // down
         if ( e.keyCode === 40 ) {
+          e.preventDefault()
           if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
             var top = _this.$widget.find('.dropdown-menu li').first().addClass('active').position().top
             _this.$widget.find('.dropdown-menu').scrollTop( top );
-
+            return
           }
           else {
             var next = _this.$widget.find('.dropdown-menu li.active').removeClass('active').next()
@@ -89,6 +95,7 @@
               top = next.addClass('active').position().top
             }
             _this.$widget.find('.dropdown-menu').scrollTop( top );
+            return
           }
         }
 
@@ -100,9 +107,15 @@
 
       // backspace
       if ( e.keyCode === 8 && _this.buffer ) {
+
+        // backspace + buffer === :: -> close textmodule
         if ( _this.buffer === '::' ) {
           _this.close()
+          e.preventDefault()
+          return
         }
+
+        // reduce buffer and show new result
         var length   = _this.buffer.length
         _this.buffer = _this.buffer.substr( 0, length-1 )
         console.log('BS backspace', _this.buffer)
@@ -115,22 +128,26 @@
       console.log('BUFF', _this.buffer, e.keyCode, String.fromCharCode(e.which) )
 
       // shift
-      if ( e.keyCode === 16 ) {
-        return
-      }
+      if ( e.keyCode === 16 ) return
 
       // enter
-      if ( e.keyCode === 13 ) {
-        return
-      }
+      if ( e.keyCode === 13 ) return
 
       // arrow keys
-      if ( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) {
-        return
+      if ( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) return
+
+      // observer other second key
+      if ( _this.buffer === ':' && String.fromCharCode(e.which) !== ':' ) {
+        _this.buffer = ''
       }
 
-      // enter :
-      if ( String.fromCharCode(e.which) === ':' ) {
+      // oberserve second :
+      if ( _this.buffer === ':' && String.fromCharCode(e.which) === ':' ) {
+        _this.buffer = _this.buffer + ':'
+      }
+
+      // oberserve first :
+      if ( !_this.buffer && String.fromCharCode(e.which) === ':' ) {
         _this.buffer = _this.buffer + ':'
       }
 
@@ -172,57 +189,38 @@
     this.$widget = this.$element.next()
   }
 
-  // update widget position
+  // set height of widget
+  Plugin.prototype.movePosition = function() {
+    if (!this._position) return
+    var height       = this.$element.height() + 20
+    var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
+    var top          = -( widgetHeight + height ) + this._position.top
+    this.$widget.css('top', top)
+    this.$widget.css('left', this._position.left)
+  }
+
+  // set position of widget
   Plugin.prototype.updatePosition = function() {
     this.$widget.find('.dropdown-menu').scrollTop( 300 );
     if ( !this.$element.is(':visible') ) return
 
     // get cursor position
     var marker = '<span id="js-cursor-position"></span>'
-
-    // IE9 and non-IE
-    sel = window.getSelection();
-    if (sel.getRangeAt && sel.rangeCount) {
-      range = sel.getRangeAt(0);
-      range.deleteContents();
-
-      // Range.createContextualFragment() would be useful here but is
-      // only relatively recently standardized and is not supported in
-      // some browsers (IE9, for one)
-      var el = document.createElement("div");
-      el.innerHTML = marker;
-      var frag = document.createDocumentFragment(), node, lastNode;
-      while ( (node = el.firstChild) ) {
-        lastNode = frag.appendChild(node);
-      }
-      range.insertNode(frag);
-
-      // Preserve the selection
-      if (lastNode) {
-        range = range.cloneRange();
-        range.setStartAfter(lastNode);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-    }
-    position = $('#js-cursor-position').position()
+    var range = this.getFirstRange();
+    var clone = range.cloneRange()
+    clone.pasteHtml(marker)
+    this._position = $('#js-cursor-position').position()
     $('#js-cursor-position').remove()
-    if (!position) return
+    if (!this._position) return
 
     // set position of widget
-    var height = this.$element.height()
-    var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
-    var top = -( widgetHeight + height ) + position.top
-    this.$widget.css('top', top)
-    this.$widget.css('left', position.left)
+    this.movePosition()
   }
 
   // open widget
   Plugin.prototype.open = function() {
     this.active = true
     this.updatePosition()
-
     b = $.proxy(function() {
       this.$widget.addClass('open')
     }, this)
@@ -231,9 +229,11 @@
 
   // close widget
   Plugin.prototype.close = function() {
-    this.active = false
-    this.cutInput()
     this.$widget.removeClass('open')
+    if ( this.active ) {
+      this.cutInput(true)
+    }
+    this.active = false
   }
 
   // check if widget is active/open
@@ -255,11 +255,15 @@
 
   // cut some content
   Plugin.prototype.cut = function(string) {
+    var range = this.getFirstRange();
+    if (!range) return
+    /*
     var sel = window.getSelection()
     if ( !sel || sel.rangeCount < 1) {
       return
     }
     var range = sel.getRangeAt(0)
+    */
     var clone = range.cloneRange()
 
     // improve error handling
@@ -267,9 +271,34 @@
     if (start < 0) {
       start = 0
     }
+
+    // for chrome, remove also leading space, add it later - otherwice space will be tropped
+    if (start) {
+      clone.setStart(range.startContainer, start-1)
+      clone.setEnd(range.startContainer, start)
+      var spacerChar = clone.toString()
+      if ( spacerChar === ' ' ) {
+        start = start - 1
+      }
+    }
+    //console.log('CUT FOR', string, "-"+clone.toString()+"-", start, range.startOffset)
     clone.setStart(range.startContainer, start)
     clone.setEnd(range.startContainer, range.startOffset)
     clone.deleteContents()
+
+    // for chrome, insert space again
+    if (start) {
+      if ( spacerChar === ' ' ) {
+        string = "&nbsp;"
+        if (document.selection) { // IE
+          var range = document.selection.createRange()
+          range.pasteHTML(string)
+        }
+        else {
+          document.execCommand('insertHTML', false, string)
+        }
+      }
+    }
   }
 
   // select text module and insert into text
@@ -291,15 +320,15 @@
     return
   }
 
+  Plugin.prototype.getFirstRange = function() {
+    var sel = rangy.getSelection();
+    return sel.rangeCount ? sel.getRangeAt(0) : null;
+  }
+
   // cut out search string from text
   Plugin.prototype.cutInput = function() {
     if (!this.buffer) return
     if (!this.$element.text()) return
-    var sel = window.getSelection()
-    if ( !sel || sel.rangeCount < 1) {
-      this.buffer = ''
-      return
-    }
     this.cut(this.buffer)
     this.buffer = ''
   }
@@ -322,9 +351,9 @@
     console.log('result', term, result)
     for (var i = 0; i < result.length; i++) {
       var item = result[i]
-      var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + item.name
+      var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + App.Utils.htmlEscape(item.name)
       if (item.keywords) {
-        template = template + " (" + item.keywords + ")"
+        template = template + " (" + App.Utils.htmlEscape(item.keywords) + ")"
       }
       template = template + "</a></li>"
       this.$widget.find('ul').append(template)
@@ -340,9 +369,8 @@
         _this.take(id)
       }
     )
-    this.updatePosition()
+    this.movePosition()
   }
-
 
   $.fn[pluginName] = function ( options ) {
     return this.each(function () {

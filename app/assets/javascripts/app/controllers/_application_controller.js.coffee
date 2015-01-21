@@ -233,7 +233,8 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 800 }
+      animation:  false
+      delay:      100
       placement:  position
       title: ->
         ticket_id = $(@).data('id')
@@ -270,7 +271,8 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 800 }
+      animation:  false
+      delay:      100
       placement:  "auto #{position}"
       title: ->
         user_id = $(@).data('id')
@@ -326,7 +328,8 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 800 }
+      animation:  false
+      delay:      100
       placement:  "auto #{position}"
       title: ->
         organization_id = $(@).data('id')
@@ -379,7 +382,8 @@ class App.Controller extends Spine.Controller
         trigger:    'hover'
         container:  'body'
         html:       true
-        delay:      { show: 500, hide: 5200 }
+        animation:  false
+        delay:      100
         placement:  "auto #{data.position}"
         title: ->
           $(@).find('[title="*"]').val()
@@ -496,6 +500,7 @@ class App.ControllerModal extends App.Controller
       head:     '?'
       buttonClass: 'btn--success'
       centerButtons: []
+      container: null
 
     options = _.extend( defaults, options )
 
@@ -522,10 +527,14 @@ class App.ControllerModal extends App.Controller
     if @content
       @body.html @content
 
+    if @container
+      @el.addClass('modal--local')
+
     @el.modal
       keyboard: @keyboard
       show:     true
       backdrop: @backdrop
+      container:    @container
     .on
       'show.bs.modal':   @onShow
       'shown.bs.modal':  @onShown

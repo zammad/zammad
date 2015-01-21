@@ -18,10 +18,9 @@ class App.TicketZoom extends App.Controller
 
     @navupdate '#'
 
-    @form_meta      = undefined
-    @ticket_id      = params.ticket_id
-    @article_id     = params.article_id
-    @signature      = undefined
+    @form_meta  = undefined
+    @ticket_id  = params.ticket_id
+    @article_id = params.article_id
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
@@ -44,15 +43,25 @@ class App.TicketZoom extends App.Controller
     )
 
   meta: =>
+
+    # default attributes
     meta =
-      url:        @url()
-      id:         @ticket_id
-      iconClass:  "priority"
+      url:       @url()
+      id:        @ticket_id
+
+    # set icon and tilte if defined
+    if @taskIconClass
+      meta.iconClass = @taskIconClass
+    if @taskHead
+      meta.head = @taskHead
+
+    # set icon and title based on ticket
     if @ticket
-      @ticket = App.Ticket.fullLocal( @ticket.id )
-      meta.head  = @ticket.title
-      meta.title = '#' + @ticket.number + ' - ' + @ticket.title
-      meta.class  = "level-#{@ticket.level()}"
+      @ticket        = App.Ticket.fullLocal( @ticket.id )
+      meta.head      = @ticket.title
+      meta.title     = '#' + @ticket.number + ' - ' + @ticket.title
+      meta.class     = "level-#{@ticket.level()}"
+      meta.iconClass = 'priority'
     meta
 
   url: =>
@@ -67,6 +76,7 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
   changed: =>
+    return false if !@ticket
     formCurrent = @formParam( @el.find('.edit') )
     ticket      = App.Ticket.find(@ticket_id).attributes()
     modelDiff   = @getDiff( ticket, formCurrent )
@@ -115,11 +125,31 @@ class App.TicketZoom extends App.Controller
         # do not close window if request is aborted
         return if status is 'abort'
 
-        # do not close window on network error but if object is not found
-        return if status is 'error' && error isnt 'Not Found'
+        # show error message
+        if xhr.status is 401 || error is 'Unauthorized'
+          @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+          @taskIconClass = 'error'
+          @html App.view('generic/error/unauthorized')( objectName: 'Ticket' )
+        else if xhr.status is 404 || error is 'Not Found'
+          @taskHead      = '» ' + App.i18n.translateInline('Not Found') + ' «'
+          @taskIconClass = 'error'
+          @html App.view('generic/error/not_found')( objectName: 'Ticket' )
+        else
+          @taskHead      = '» ' + App.i18n.translateInline('Error') + ' «'
+          @taskIconClass = 'error'
 
-        # remove task
-        App.TaskManager.remove( @task_key )
+          status = xhr.status
+          detail = xhr.responseText
+          if !status && !detail
+            detail = 'General communication error, maybe internet is not available!'
+          @html App.view('generic/error/generic')(
+            status:     status
+            detail:     detail
+            objectName: 'Ticket'
+          )
+
+        # update current task title
+        App.Event.trigger 'task:render'
     )
 
 
@@ -136,9 +166,6 @@ class App.TicketZoom extends App.Controller
 
     # get edit form attributes
     @form_meta = data.form_meta
-
-    # get signature
-    @signature = data.signature
 
     # load assets
     App.Collection.loadAssets( data.assets )
@@ -316,7 +343,10 @@ class App.TicketZoom extends App.Controller
       showTicketHistory = =>
         new App.TicketHistory( ticket_id: @ticket.id )
       showTicketMerge = =>
-        new App.TicketMerge( ticket: @ticket, task_key: @task_key )
+        new App.TicketMerge
+          ticket: @ticket
+          task_key: @task_key
+          container: @el
       changeCustomer = (e, el) =>
         new App.TicketCustomer(
           ticket: @ticket
@@ -421,6 +451,18 @@ class App.TicketZoom extends App.Controller
       ticket_article_ids: @ticket_article_ids
       el:                 @el.find('.ticket-article')
       ui:                 @
+    )
+
+    # set see more options
+    previewHeight = 270
+    @$('.textBubble-content').each( (index) ->
+      bubble = $( @ )
+      heigth = bubble.height()
+      if heigth > (previewHeight + 30)
+        bubble.attr('data-height', heigth)
+        bubble.css('height', "#{previewHeight}px")
+      else
+        bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
     )
 
     # scroll to article if given
@@ -775,7 +817,7 @@ class Edit extends App.Controller
     '.attachmentUpload-progressBar':      'progressBar'
     '.js-percentage':                     'progressText'
     '.js-cancel':                         'cancelContainer'
-    '.text-bubble':                       'textBubble'
+    '.textBubble':                       'textBubble'
     '.editControls-item':                 'editControlItem'
     #'.editControls':                     'editControls'
     #'.recipient-picker':                 'recipientPicker'
@@ -860,14 +902,15 @@ class Edit extends App.Controller
         if data.ticket.id is @ticket.id
           #@setArticleType(data.type.name)
 
-          # preselect article type
-          @setArticleType( 'email' )
           @open_textarea(null, true)
           for key, value of data.article
             if key is 'body'
               @$('[data-name="' + key + '"]').html(value)
             else
               @$('[name="' + key + '"]').val(value)
+
+          # preselect article type
+          @setArticleType( 'email' )
     )
 
   isIE10: ->
@@ -893,7 +936,7 @@ class Edit extends App.Controller
     @setArticleType(@type)
 
     configure_attributes = [
-      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organisation/Company', minLengt: 2, disableCreateUser: false },
+      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: false },
     ]
 
     controller = new App.ControllerForm(
@@ -905,7 +948,7 @@ class Edit extends App.Controller
     @$('[data-name="body"]').ce({
       mode:      'richtext'
       multiline: true
-      maxlength: 2500
+      maxlength: 5000
     })
 
     html5Upload.initialize(
@@ -1075,9 +1118,28 @@ class Edit extends App.Controller
     # show/hide attributes
     for articleType in @articleTypes
       if articleType.name is type
-        @$(".form-group").addClass('hide')
+        @$('.form-group').addClass('hide')
         for name in articleType.attributes
           @$("[name=#{name}]").closest('.form-group').removeClass('hide')
+
+    # check if signature need to be added
+    body      = @$('[data-name="body"]').html() || ''
+    signature = undefined
+    if @ticket.group.signature_id
+      signature = App.Signature.find( @ticket.group.signature_id )
+    if signature && signature.body && @type is 'email'
+      signatureFinished = App.Utils.text2html(
+        App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: @ticket } )
+      )
+      if App.Utils.signatureCheck( body, signatureFinished )
+        if !App.Utils.lastLineEmpty(body)
+          body = body + '<br>'
+        body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
+        @$('[data-name="body"]').html(body)
+
+    # remove old signature
+    else
+      @$('[data-name="body"]').find("[data-signature=true]").remove()
 
   detect_empty_textarea: =>
     if !@textarea.text().trim()
@@ -1241,13 +1303,14 @@ class Edit extends App.Controller
 
 class ArticleView extends App.Controller
   events:
-    'click [data-type=public]':     'public_internal'
-    'click [data-type=internal]':   'public_internal'
-    'click .show_toogle':           'show_toogle'
-    'click [data-type=reply]':      'reply'
-    'click [data-type=replyAll]':   'replyAll'
-    'click .text-bubble':           'toggle_meta'
-    'click .text-bubble a':         'stopPropagation'
+    'click [data-type=public]':   'public_internal'
+    'click [data-type=internal]': 'public_internal'
+    'click .show_toogle':         'show_toogle'
+    'click [data-type=reply]':    'reply'
+    'click [data-type=replyAll]': 'replyAll'
+    'click .textBubble':          'toggle_meta_with_delay'
+    'click .textBubble a':        'stopPropagation'
+    'click .js-unfold':           'unfold'
 
   constructor: ->
     super
@@ -1311,7 +1374,17 @@ class ArticleView extends App.Controller
   stopPropagation: (e) ->
     e.stopPropagation()
 
-  toggle_meta: (e) ->
+  toggle_meta_with_delay: (e) =>
+    # allow double click select
+    # by adding a delay to the toggle
+
+    if @lastClick and +new Date - @lastClick < 150
+      clearTimeout(@toggleMetaTimeout)
+    else
+      @toggleMetaTimeout = setTimeout(@toggle_meta, 150, e)
+      @lastClick = +new Date
+
+  toggle_meta: (e) =>
     e.preventDefault()
 
     animSpeed = 300
@@ -1386,6 +1459,25 @@ class ArticleView extends App.Controller
 
       metaTopClip.velocity({ height: metaTop.outerHeight() }, animSpeed, 'easeOutQuad')
       metaBottomClip.velocity({ height: metaBottom.outerHeight() }, animSpeed, 'easeOutQuad')
+
+  unfold: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    container         = $(e.currentTarget).parents('.textBubble-content')
+    overflowContainer = container.find('.textBubble-overflowContainer')
+
+    overflowContainer.velocity
+      properties:
+        opacity: 0
+      options:
+        duration: 300
+
+    container.velocity
+      properties:
+        height: container.attr('data-height')
+      options:
+        duration: 300
+        complete: -> overflowContainer.addClass('hide');
 
   isOrContains: (node, container) ->
     while node
@@ -1487,12 +1579,6 @@ class ArticleView extends App.Controller
 
     # get current body
     body = @ui.el.find('[data-name="body"]').html() || ''
-
-    # check if signature need to be added
-    if @ui.signature && @ui.signature.body && type.name is 'email'
-      signature = App.Utils.text2html( @ui.signature.body )
-      if App.Utils.signatureCheck( body, signature )
-        body = body + signature
 
     # check if quote need to be added
     selectedText = App.ClipBoard.getSelected()
@@ -1613,11 +1699,11 @@ class Article extends App.Controller
           type: 'replyAll'
           href: '#'
         }
-      actions.push {
-        name: 'split'
-        type: 'split'
-        href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
-      }
+    actions.push {
+      name: 'split'
+      type: 'split'
+      href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
+    }
     @article.actions = actions
 
   attachments: ->

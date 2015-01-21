@@ -44,6 +44,9 @@ class App.Ticket extends App.Model
   iconTitle: (user) ->
     App.TicketState.find( @state_id ).displayName()
 
+  iconTextClass: (user) ->
+    "level-#{ @level() }"
+
   iconActivity: (user) ->
     if @owner_id == user.id
       return 'important'

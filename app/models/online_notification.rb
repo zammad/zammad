@@ -47,23 +47,20 @@ add a new online notification for this user
 
 =begin
 
-add a new online notification for this user
+mark online notification as seen
 
-  OnlineNotification.add(
-    :type             => 'Assigned to you',
-    :object           => 'Ticket',
-    :o_id             => ticket.id,
-    :seen             => 1,
-    :created_by_id    => 1,
-    :user_id          => 2,
+  OnlineNotification.seen(
+    :id          => 2,
+    :user        => UserObject, #optional, if passed all 
+                       #notfications for the given user are marked as seen
   )
 
 =end
 
   def self.seen(data)
-    notification = OnlineNotification.find(data[:id])
-    notification.seen = true
-    notification.save
+      notification = OnlineNotification.find(data[:id])
+      notification.seen = true
+      notification.save
   end
 
 =begin
@@ -86,7 +83,7 @@ remove whole online notifications of an object
 
 return all online notifications of an user
 
-  notifications = OnlineNotification.list( user )
+  notifications = OnlineNotification.list( user, limit )
 
 =end
 

@@ -2050,6 +2050,28 @@ Some Text',
           },
         },
       },
+      {
+        :data => 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: some subject
+
+Some Text',
+        :trusted => false,
+        :success => true,
+        :result => {
+          0 => {
+            :group    => group2.name,
+            :priority => '2 normal',
+            :title    => 'some subject',
+          },
+          1 => {
+            :sender   => 'Customer',
+            :type     => 'email',
+            :internal => true,
+          },
+        },
+      },
     ]
     process(files)
     PostmasterFilter.destroy_all

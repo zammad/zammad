@@ -3,10 +3,10 @@ class App.TicketCreate extends App.Controller
     '.tabsSidebar'      : 'sidebar'
 
   events:
-    'click .type-tabs .tab':  'changeFormType'
-    'submit form':            'submit'
-    'click .submit':          'submit'
-    'click .cancel':          'cancel'
+    'click .type-tabs .tab': 'changeFormType'
+    'submit form':           'submit'
+    'click .submit':         'submit'
+    'click .cancel':         'cancel'
 
   constructor: (params) ->
     super
@@ -86,6 +86,9 @@ class App.TicketCreate extends App.Controller
 
     # update form
     @el.find('[name="formSenderType"]').val(type)
+
+    # force changing signature
+    @el.find('[name="group_id"]').trigger('change')
 
   meta: =>
     text = ''
@@ -167,10 +170,15 @@ class App.TicketCreate extends App.Controller
             a = App.TicketArticle.find( params.article_id )
 
             # reset owner
-            t.owner_id = 0
-            t.customer_id_autocompletion = a.from
-            t.subject = a.subject || t.title
-            t.body = a.body
+            t.owner_id               = 0
+            t.customer_id_completion = a.from
+            t.subject                = a.subject || t.title
+
+            # convert non text/html from text 2 html
+            if a.content_type.match(/\/html/)
+              t.body = a.body
+            else
+              t.body  = App.Utils.text2html( a.body )
 
           # render page
           @render( options: t )
@@ -191,10 +199,10 @@ class App.TicketCreate extends App.Controller
       @form_id = App.ControllerForm.formId()
 
     @html App.view('agent_ticket_create')(
-      head:     'New Ticket'
-      agent:    @isRole('Agent')
-      admin:    @isRole('Admin')
-      form_id:  @form_id
+      head:    'New Ticket'
+      agent:   @isRole('Agent')
+      admin:   @isRole('Admin')
+      form_id: @form_id
     )
 
     formChanges = (params, attribute, attributes, classname, form, ui) =>
@@ -220,6 +228,44 @@ class App.TicketCreate extends App.Controller
             # replace new option list
             form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
 
+    signatureChanges = (params, attribute, attributes, classname, form, ui) =>
+      if attribute && attribute.name is 'group_id'
+        signature = undefined
+        if params['group_id']
+          group = App.Group.find( params['group_id'] )
+          if group && group.signature_id
+            signature = App.Signature.find( group.signature_id )
+
+        # check if signature need to be added
+        type = @$('[name="formSenderType"]').val()
+
+        if signature isnt undefined &&  signature.body && type is 'email-out'
+          signatureFinished = App.Utils.text2html(
+            App.Utils.replaceTags( signature.body, { user: App.Session.get() } )
+          )
+
+          # get current body
+          body = @$('[data-name="body"]').html() || ''
+          if App.Utils.signatureCheck( body, signatureFinished )
+
+            # if signature has changed, replace it
+            signature_id = @$('[data-signature=true]').data('signature-id')
+            if signature_id && signature_id.toString() isnt signature.id.toString()
+
+              # remove old signature
+              @$('[data-signature="true"]').remove()
+              body = @$('[data-name="body"]').html() || ''
+
+            if !App.Utils.lastLineEmpty(body)
+              body = body + '<br>'
+            body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
+
+            @$('[data-name="body"]').html(body)
+
+        # remove old signature
+        else
+          @$('[data-name="body"]').find('[data-signature=true]').remove()
+
     new App.ControllerForm(
       el:       @el.find('.ticket-form-top')
       form_id:  @form_id
@@ -228,7 +274,8 @@ class App.TicketCreate extends App.Controller
       events:
         'change [name=customer_id]': @localUserInfo
       handlers: [
-        formChanges
+        formChanges,
+        signatureChanges,
       ]
       filter:     @form_meta.filter
       autofocus: true
@@ -236,21 +283,22 @@ class App.TicketCreate extends App.Controller
     )
 
     new App.ControllerForm(
-      el:       @el.find('.article-form-top')
-      form_id:  @form_id
-      model:    App.TicketArticle
-      screen:   'create_top'
-      params:    params
+      el:      @el.find('.article-form-top')
+      form_id: @form_id
+      model:   App.TicketArticle
+      screen:  'create_top'
+      params:  params
     )
     new App.ControllerForm(
-      el:       @el.find('.ticket-form-middle')
-      form_id:  @form_id
-      model:    App.Ticket
-      screen:   'create_middle'
+      el:      @el.find('.ticket-form-middle')
+      form_id: @form_id
+      model:   App.Ticket
+      screen:  'create_middle'
       events:
         'change [name=customer_id]': @localUserInfo
       handlers: [
-        formChanges
+        formChanges,
+        signatureChanges,
       ]
       filter:     @form_meta.filter
       params:     params
@@ -264,7 +312,8 @@ class App.TicketCreate extends App.Controller
       events:
         'change [name=customer_id]': @localUserInfo
       handlers: [
-        formChanges
+        formChanges,
+        signatureChanges,
       ]
       filter:   @form_meta.filter
       params:   params
@@ -330,7 +379,7 @@ class App.TicketCreate extends App.Controller
     if sender.name is 'Customer'
       params['article'] = {
         to:           (group && group.name) || ''
-        from:         params.customer_id_autocompletion
+        from:         params.customer_id_completion
         cc:           params.cc
         subject:      params.subject
         body:         params.body
@@ -342,7 +391,7 @@ class App.TicketCreate extends App.Controller
     else
       params['article'] = {
         from:         (group && group.name) || ''
-        to:           params.customer_id_autocompletion
+        to:           params.customer_id_completion
         cc:           params.cc
         subject:      params.subject
         body:         params.body
@@ -467,6 +516,7 @@ class Sidebar extends App.Controller
         icon: 'person'
         actions: [
           {
+            title:  'Edit Customer'
             name:  'Edit Customer'
             class: 'glyphicon glyphicon-edit'
             callback: editCustomer

@@ -9,10 +9,10 @@
   <div class="ticket-edit">
     <div class="article-content zIndex-5">
       <div class="internal-border">
-        <div class="text-bubble">
+        <div class="textBubble">
           <div class="bubble-arrow"></div>
           <div class="js-textarea ticketEdit-body" contenteditable="true"><%- @content %></div>
-          <!-- .text-bubble grows with textarea (and expanding clone) -->
+          <!-- .textBubble grows with textarea (and expanding clone) -->
           <div class="attachments"></div>
             <!--
             </div>

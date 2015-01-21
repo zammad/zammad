@@ -114,7 +114,7 @@ class App.Utils
     @_removeAttributes( html )
 
     # remove tags, keep content
-    html.find('a, font').replaceWith( ->
+    html.find('a, font, small, time').replaceWith( ->
       $(@).contents()
     )
 
@@ -166,3 +166,27 @@ class App.Utils
     else
       true
 
+  # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
+  @replaceTags: (template, objects) ->
+    template = template.replace( /#\{\s{0,2}(.+?)\s{0,2}\}/g, ( index, key ) ->
+      levels  = key.split(/\./)
+      dataRef = objects
+      for level in levels
+        if dataRef[level]
+          dataRef = dataRef[level]
+      if typeof dataRef is 'function'
+        value = dataRef()
+      else if typeof dataRef is 'string'
+        value = dataRef
+      else
+        value = ''
+      #console.log( "tag replacement #{key}, #{value} env: ", objects)
+      value
+    )
+
+  # true|false = App.Utils.lastLineEmpty( message )
+  @lastLineEmpty: (message) ->
+    messageCleanup = message.replace(/>\s+</g, '><').replace(/(\n|\r|\t)/g, '').trim()
+    return true if messageCleanup.match(/<(br|\s+?|\/)>$/im)
+    return true if messageCleanup.match(/<div(|\s.+?)><\/div>$/im)
+    false

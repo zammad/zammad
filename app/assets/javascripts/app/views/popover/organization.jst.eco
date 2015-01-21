@@ -1,18 +1,20 @@
+<hr>
+<div class="horizontal two-columns">
 <% for row in @organizationData: %>
   <% if @organization[row.name]: %>
-    <% if row.tag is 'richtext': %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @organization[row.name] %></div>
-    <% else: %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
-    <% end %>
+    <div class="column">
+      <h3><%- @T( row.display ) %></h3>
+      <div><%- @L( @P( @organization[row.name] ) ) %></div>
+    </div>
   <% end %>
 <% end %>
+</div>
 <% if  @organization.members: %>
   <hr>
-  <%- @T('Members') %>
-  <ul>
-    <% for user in @organization.members: %>
-    <li><%= user.displayName() %></li>
-    <% end %>
-  </ul>
+  <h3><%- @T('Members') %></h3>
+  <% for user in @organization.members: %>
+  <div class="person">
+  <%= user.displayName() %>
+  </div>
+  <% end %>
 <% end %>

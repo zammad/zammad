@@ -2,9 +2,12 @@
   <div class="tableOverview flex scrollable">
     <div class="horizontal">
       <div class="page-header-title">
-        <h1><%- @T( @overview.name ) %> <% if @edit: %><small><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a></small><% end %></h1>
+        <h1><%- @T( @overview.name ) %></h1>
       </div>
       <div class="page-header-meta">
+        <% if @edit: %>
+        <div class="btn btn--action" data-type="settings"><%- @T('Options') %></div>
+        <% end %>
         <ul class="pagination">
         <% for item in @view_modes: %>
           <li class="<%= item.class %>">

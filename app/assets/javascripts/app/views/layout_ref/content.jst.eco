@@ -80,24 +80,24 @@
           <div class="dropdown js-recipientDropdown">
 
             <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
-              <input id="customer_id_autocompletion2" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organisation/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+              <input id="customer_id_autocompletion2" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organization/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
               <span class="select-arrow icon"></span>
             </div>
 
             <div class="dropdown-menu" aria-labelledby="customer_id">
 
               <ul class="recipientList" role="menu">
-                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="AlbrechtBertschlerGmbG">
+                <li class="recipientList-entry u-clickable horizontal center js-organization" data-organization-id="AlbrechtBertschlerGmbG">
                   <div class="recipientList-iconSpacer centered">
-                    <div class="white organisation icon"></div>
+                    <div class="white organization icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Albrecht &amp; Bertschler GmbH
                     <span class="recipientList-detail">- 4 Personen</span>
                   </div>
-                  <div class="white right arrow icon"></div>                <li class="recipientList-entry u-clickable horizontal center js-organisation" data-organisation-id="BENCHMARKhumanresources">
+                  <div class="white right arrow icon"></div>                <li class="recipientList-entry u-clickable horizontal center js-organization" data-organization-id="BENCHMARKhumanresources">
                   <div class="recipientList-iconSpacer centered">
-                    <div class="white organisation icon"></div>
+                    <div class="white organization icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     BENCHMARK human resources
@@ -134,14 +134,14 @@
 
                 <li class="recipientList-entry u-clickable horizontal center">
                   <div class="recipientList-iconSpacer centered">
-                    <div class="white organisation icon"></div>
+                    <div class="white organization icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Benteler SGL Composite Technology GmbH
                     <span class="recipientList-detail"></span>
                   </div>
 
-                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                <li class="recipientList-entry u-clickable horizontal center js-organization">
                   <div class="recipientList-iconSpacer centered">
                     <div class="white team icon"></div>
                   </div>
@@ -151,9 +151,9 @@
                   </div>
                   <div class="white right arrow icon"></div>
 
-                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                <li class="recipientList-entry u-clickable horizontal center js-organization">
                   <div class="recipientList-iconSpacer centered">
-                    <div class="white organisation icon"></div>
+                    <div class="white organization icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Bernecker + Rainer Industrie-Elektronik Ges.m.b.H.
@@ -161,9 +161,9 @@
                   </div>
                   <div class="white right arrow icon"></div>
 
-                <li class="recipientList-entry u-clickable horizontal center js-organisation">
+                <li class="recipientList-entry u-clickable horizontal center js-organization">
                   <div class="recipientList-iconSpacer centered">
-                    <div class="white organisation icon"></div>
+                    <div class="white organization icon"></div>
                   </div>
                   <div class="recipientList-name flex u-textTruncat">
                     Bertsch Ecopower GmbH
@@ -178,7 +178,7 @@
                   <div class="recipientList-name flex u-textTruncat">
                     <%- @T('Create new Customer') %>
                   </div>
-              </ul>              <ul class="recipientList-organisationMembers hide" id="AlbrechtBertschlerGmbG">
+              </ul>              <ul class="recipientList-organizationMembers hide" id="AlbrechtBertschlerGmbG">
                 <li class="recipientList-controls u-clickable js-back">
                   <div class="recipientList-backClickArea centered">
                     <div class="recipientList-backButton">
@@ -222,7 +222,7 @@
                     Katharina Nussman
                     <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
                   </div>
-              </ul>              <ul class="recipientList-organisationMembers hide" id="BENCHMARKhumanresources">
+              </ul>              <ul class="recipientList-organizationMembers hide" id="BENCHMARKhumanresources">
                 <li class="recipientList-controls u-clickable js-back">
                   <div class="recipientList-backClickArea centered">
                     <div class="recipientList-backButton">

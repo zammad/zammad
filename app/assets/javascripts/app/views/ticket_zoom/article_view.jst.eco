@@ -1,5 +1,5 @@
 <% for article in @articles: %>
-<div class="ticket-article-item bubble-grid <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' is-internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
+<div class="ticket-article-item <%= article.sender.name.toLowerCase() %> <%= article.type.name %><%= ' is-internal' if article.internal is true %>" data-id="<%= article.id %>" id="article-<%= article.id %>">
 
 
   <div class="article-meta-clip top">
@@ -33,18 +33,23 @@
     </div>
   </div>
 
-  <div class="article-content zIndex-1 horizontal<%= ' reverse' if article.sender.name isnt 'Agent' %>">
+  <div class="article-content zIndex-1">
     <% if article.sender.name isnt 'Agent': %>
     <%    position = 'left' %>
     <% else: %>
     <%    position = 'right' %>
     <% end %>
     <%- article.created_by.avatar("40", position) %>
-    <div class="flex bubble-gap">
+    <div class="bubble-gap">
       <div class="internal-border">
-        <div class="text-bubble">
+        <div class="textBubble">
           <div class="bubble-arrow"></div>
+          <div class="textBubble-content">
           <%- article.html %>
+            <div class="textBubble-overflowContainer">
+              <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+            </div>
+          </div>
           <% if !_.isEmpty( article.attachments ): %>
             <div class="attachments">
               <div class="paperclip icon"></div>
@@ -59,17 +64,6 @@
           <% end %>
         </div>
       </div>
-      <% if article.actions: %>
-      <div>
-        <div class="article-actions horizontal stretch">
-          <% for action in article.actions: %>
-            <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action u-clickable<% if action.class: %> <%= action.class %><% end %>">
-              <span class="<%= action.type %> action icon"></span><%- @T( action.name ) %>
-            </a>
-          <% end %>
-        </div>
-      </div>
-      <% end %>
     </div>
   </div>
 
@@ -89,6 +83,18 @@
       </div>
     </div>
   </div>
+
+  <% if article.actions: %>
+  <div>
+    <div class="article-actions horizontal stretch">
+      <% for action in article.actions: %>
+        <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action u-clickable<% if action.class: %> <%= action.class %><% end %>">
+          <span class="<%= action.type %> action icon"></span><%- @T( action.name ) %>
+        </a>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
 
   <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="<%- article.created_at %>">?</time></small>
 </div>

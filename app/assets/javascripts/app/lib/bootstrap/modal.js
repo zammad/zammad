@@ -6,6 +6,11 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
+ /*
+  modified by Felix Jan-2014
+  - add this.$body = $(options.container || document.body)
+*/
+
 
 +function ($) {
   'use strict';
@@ -15,7 +20,7 @@
 
   var Modal = function (element, options) {
     this.options        = options
-    this.$body          = $(document.body)
+    this.$body          = $(options.container || document.body)
     this.$element       = $(element)
     this.$backdrop      =
     this.isShown        = null
@@ -57,6 +62,7 @@
 
     this.checkScrollbar()
     this.setScrollbar()
+
     this.$body.addClass('modal-open')
 
     this.escape()
