@@ -1,9 +1,10 @@
 <div>
   <div class="horizontal">
     <div class="page-header-title">
-      <h1 class="can-move"><%- @T( @overview.name ) %> <small><a href="#" data-type="settings" class="glyphicon glyphicon-edit"></a></small></h1>
+      <h1 class="can-move"><%- @T( @overview.name ) %></h1>
     </div>
-    <div class="page-header-meta horizontal">
+    <div class="page-header-meta">
+      <div class="btn btn--action" data-type="settings"><%- @T('Options') %></div>
       <div class="pagination-counter">
         <span class="pagination-items-range"><%- @items_from %>-<%- @items_till %></span> <%- @T("of") %> <span class="pagination-total-items"><%- @items_total %></span>
       </div>
