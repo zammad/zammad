@@ -284,6 +284,7 @@ span[data-tooltip]:hover:before {
 
   &.btn--action {
     @extend label;
+    height: 31px;
     padding: 7px 11px 5px !important;
   }
 
