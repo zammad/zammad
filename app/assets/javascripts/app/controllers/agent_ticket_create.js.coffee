@@ -516,6 +516,7 @@ class Sidebar extends App.Controller
         icon: 'person'
         actions: [
           {
+            title:  'Edit Customer'
             name:  'Edit Customer'
             class: 'glyphicon glyphicon-edit'
             callback: editCustomer

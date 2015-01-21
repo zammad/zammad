@@ -283,8 +283,8 @@ span[data-tooltip]:hover:before {
   }
 
   &.btn--action {
-    padding: 7px 11px 5px;
     @extend label;
+    padding: 7px 11px 5px !important;
   }
 
   &.btn--primary {
@@ -803,8 +803,8 @@ textarea,
 .pagination > li > span {
   padding: 0;
   width: 31px;
-  height: 28px;
-  border-color: #ececec;
+  height: 31px;
+  border-color: #e5e5e5;
 }
 
 .pagination > .active > a, 
@@ -818,8 +818,8 @@ textarea,
 }
 
 .pagination-counter {
-  margin-right: 19px;
-  line-height: 28px;
+  margin: 0 19px 0 10px;
+  line-height: 33px;
   color: #9c9c9b;
 }
 
@@ -840,12 +840,15 @@ textarea,
 }
 
 .page-header-meta {
-  margin-top: 5px;
+  margin-top: 6px;
   margin-left: auto;
-}
-
-.page-header-meta.horizontal .pagination {
-  margin-left: auto;
+  @extend .horizontal;
+  @extend .justify;
+  @extend .self-start;
+  
+  .btn {
+    margin: 0 9px 2px;
+  }
 }
 
 .dropdown-menu .count {
@@ -5218,6 +5221,13 @@ body.fit {
   -moz-align-items: flex-end;
   -webkit-align-items: flex-end;
   align-items: flex-end;
+}
+
+.self-start {
+  -webkit-align-self: start;
+     -moz-align-self: start;
+      -ms-align-self: start;
+          align-self: start;
 }
 
 .two-columns,
