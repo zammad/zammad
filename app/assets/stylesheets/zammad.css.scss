@@ -2710,10 +2710,15 @@ footer {
   }
 
   .popover--notifications {
+    min-height: 100px;
     @extend .zIndex-5;
-    
+
     &.is-visible {
       @extend .vertical;
+    }
+
+    .arrow {
+      top: 23px !important;
     }
 
     .popover-content {
@@ -2721,7 +2726,7 @@ footer {
     }
 
     &.is-overflowing .popover-notificationsHeader {
-      box-shadow: 
+      box-shadow:
         0 1px hsla(240,4%,95%,.5),
         0 2px hsla(240,4%,95%,.2);
     }
@@ -2732,7 +2737,7 @@ footer {
     @extend .end;
     padding-bottom: 22px;
     margin: 21px 17px 0;
-    
+
     .popover-title {
       @extend h1;
       padding: 0;

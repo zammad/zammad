@@ -64,17 +64,19 @@ class App.OnlineNotificationWidget extends App.Controller
   onShow: =>
     @updateContent()
 
-    # set heigth of notification popover
-    heightApp            = $('#navigation').height()
-    heightPopoverHeader  = $('.js-notificationsContainer .popover-notificationsHeader').height()
-    heightPopoverContent = $('.js-notificationsContainer .popover-content').get(0).scrollHeight
-    height               = heightPopoverHeader + heightPopoverContent
-    if height > heightApp
-      height = heightApp - heightPopoverHeader - 56
-    $('.js-notificationsContainer .popover-content').css('height', "#{height}px")
-
-    # set popover arrow
-    $('.js-notificationsContainer .arrow').css('top', '20px')
+    # set height of notification popover
+    notificationsContainer  = $('.js-notificationsContainer')
+    heightApp               = $('#app').height()
+    heightPopoverSpacer     = 36
+    heightPopoverHeader     = notificationsContainer.find('.popover-notificationsHeader').outerHeight()
+    heightPopoverContent    = notificationsContainer.find('.popover-content').get(0).scrollHeight
+    heightPopoverContentNew = heightPopoverContent
+    if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
+      heightPopoverContentNew = heightApp - heightPopoverHeader - heightPopoverSpacer
+      notificationsContainer.addClass('is-overflowing')
+    else
+      notificationsContainer.removeClass('is-overflowing')
+    notificationsContainer.find('.popover-content').css('height', "#{heightPopoverContentNew}px")
 
     # close notification list on click
     $('.js-notificationsContainer').on('click', (e) =>
