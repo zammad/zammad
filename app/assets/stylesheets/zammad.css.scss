@@ -1337,6 +1337,7 @@ ol.tabs li {
       border-radius: 100%;
       background: #2c2d36;
       will-change: opacity;
+      transform: translateZ(0);
     }
 
     .modified.priority.icon:after {
