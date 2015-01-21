@@ -4160,11 +4160,14 @@ footer {
   display: block;
   padding-left: 40px;
   position: absolute;
-  overflow: auto;
-  background: hsla(210,17%,98%,.55);
+  bottom: auto;
+  min-height: 100vh;
   
   .modal-backdrop {
-    display: none;
+    position: absolute;
+    background: hsla(210,17%,93%,.55);
+    height: 100% !important;
+    opacity: 1;
   }
 
   .modal-dialog {
