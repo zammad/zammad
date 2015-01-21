@@ -1335,17 +1335,18 @@ ol.tabs li {
       height: 6px;
       border-radius: 100%;
       background: #2c2d36;
+      will-change: opacity;
     }
 
     .modified.priority.icon:after {
-      -webkit-animation: fade 1s ease 2s infinite alternate;
-         -moz-animation: fade 1s ease 2s infinite alternate;
-              animation: fade 1s ease 2s infinite alternate;
+      -webkit-animation: fade 2s ease-in-out infinite;
+         -moz-animation: fade 2s ease-in-out infinite;
+              animation: fade 2s ease-in-out infinite;
     }
 
-    @-webkit-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
-       @-moz-keyframes fade { from { opacity: 0 } to { opacity: 1 } }
-            @keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+    @-webkit-keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
+       @-moz-keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
+            @keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
 
   .organization.icon {
     height: 13px;
