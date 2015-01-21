@@ -69,7 +69,7 @@ class Observer::Ticket::Notification::BackgroundJob
         :object           => 'Ticket',
         :o_id             => ticket.id,
         :seen             => false,
-        :created_by_id    => ticket.created_by_id || 1,
+        :created_by_id    => ticket.updated_by_id || 1,
         :user_id          => user.id,
       )
 
