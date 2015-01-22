@@ -35,7 +35,11 @@ class App.ControllerForm extends App.Controller
   formGen: ->
     App.Log.debug 'ControllerForm', 'formGen', @model.configure_attributes
 
-    fieldset = $('<fieldset></fieldset>')
+    # check if own fieldset should be generated
+    if @noFieldset
+      fieldset = @el
+    else
+      fieldset = $('<fieldset></fieldset>')
 
     # collect form attributes
     @attributes = []
@@ -80,9 +84,6 @@ class App.ControllerForm extends App.Controller
           attribute.name = attribute.name + '_confirm';
           item = @formGenItem( attribute, className, fieldset, attribute_count )
           item.appendTo(fieldset)
-
-    if @noFieldset
-      fieldset = fieldset.children()
 
     if @fullForm
       if !@formClass
