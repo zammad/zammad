@@ -292,7 +292,7 @@ State: i18n(#{ticket.state.name.text2html})<br>
 <br>'
     end
     if user.preferences[:locale] =~ /^de/i
-      subject = 'Ticket aktualisiert (#{ticket.title.text2html})'
+      subject = 'Ticket aktualisiert (#{ticket.title})'
       body    = '<div>Hallo #{recipient.firstname.text2html},</div>
 <br>
 <div>
@@ -309,7 +309,7 @@ Ticket (#{ticket.title.text2html}) wurde von "<b>#{ticket.updated_by.fullname.te
 </div>
 '
     else
-      subject = 'Updated Ticket (#{ticket.title.text2html})'
+      subject = 'Updated Ticket (#{ticket.title})'
       body    = '<div>Hi #{recipient.firstname.text2html},</div>
 <br>
 <div>
