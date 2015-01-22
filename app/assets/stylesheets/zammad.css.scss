@@ -1357,7 +1357,6 @@ ol.tabs li {
   }
 
   .icon-switch:hover .organization.icon,
-  .task.active .organization.icon,
   .white.organization.icon {
     background-position: 0 -132px;
   }
@@ -1369,7 +1368,6 @@ ol.tabs li {
   }
 
   .icon-switch:hover .user.icon,
-  .task.active .user.icon,
   .white.user.icon {
     background-position: -15px -132px;
   }
@@ -1381,7 +1379,6 @@ ol.tabs li {
   }
 
   .icon-switch:hover .note.icon,
-  .task.active .note.icon,
   .white.note.icon {
     background-position: -30px -132px;
   }
@@ -1393,7 +1390,6 @@ ol.tabs li {
   }
 
   .icon-switch:hover .pen.icon,
-  .task.active .pen.icon,
   .white.pen.icon {
     background-position: -45px -132px;
   }
@@ -1404,7 +1400,6 @@ ol.tabs li {
     background-position: -60px -118px;
   }
   .icon-switch:hover .important.icon,
-  .task.active .important.icon,
   .white.important.icon {
     background-position: -60px -132px;
   }
@@ -1415,7 +1410,6 @@ ol.tabs li {
     background-position: -75px -118px;
   }
   .icon-switch:hover .tools.icon,
-  .task.active .tools.icon,
   .white.tools.icon {
     background-position: -75px -132px;
   }
@@ -1426,7 +1420,6 @@ ol.tabs li {
     background-position: -90px -118px;
   }
   .icon-switch:hover .clock.icon,
-  .task.active .clock.icon,
   .white.clock.icon {
     background-position: -90px -132px;
   }
@@ -1434,10 +1427,37 @@ ol.tabs li {
   .team.icon {
     height: 13px;
     width: 20px;
-    background-position: -105px -118px;
+    background-position: -104px -118px;
   }
   .white.team.icon {
-    background-position: -105px -132px;
+    background-position: -104px -132px;
+  }
+
+  .cloud.icon {
+    height: 12px;
+    width: 15px;
+    background-position: -125px -119px;
+  }
+  .white.cloud.icon {
+    background-position: -125px -133px;
+  }
+
+  .package.icon {
+    height: 16px;
+    width: 15px;
+    background-position: -141px -112px;
+  }
+  .white.package.icon {
+    background-position: -141px -129px;
+  }
+
+  .list.icon {
+    height: 14px;
+    width: 15px;
+    background-position: -157px -116px;
+  }
+  .white.list.icon {
+    background-position: -157px -131px;
   }
 
   .channel.icon {
@@ -2076,6 +2096,8 @@ footer {
     padding: 10px 15px 7px 0;
     position: relative;
     @extend .u-clickable;
+    @extend .horizontal;
+    @extend .center;
   }
 
     .tasks-navigation .task {
