@@ -267,29 +267,6 @@ class App.TicketZoom extends App.Controller
           console.log('SHOW', ticket.id)
           el.find('.edit').html('')
 
-          formChanges = (params, attribute, attributes, classname, form, ui) =>
-            if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
-              dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
-              if dependency
-
-                for fieldNameToChange of dependency
-                  filter = []
-                  if dependency[fieldNameToChange]
-                    filter = dependency[fieldNameToChange]
-
-                  # find element to replace
-                  for item in attributes
-                    if item.name is fieldNameToChange
-                      item['filter'] = {}
-                      item['filter'][ fieldNameToChange ] = filter
-                      item.default = params[item.name]
-                      #if !item.default
-                      #  delete item['default']
-                      newElement = ui.formGenItem( item, classname, form )
-
-                  # replace new option list
-                  form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
-
           defaults   = ticket.attributes()
           task_state = @taskGet('ticket')
           modelDiff  = @getDiff( defaults, task_state )
@@ -305,7 +282,7 @@ class App.TicketZoom extends App.Controller
             screen:   'edit'
             params:   App.Ticket.find(ticket.id)
             handlers: [
-              formChanges
+              @ticketFormChanges
             ]
             filter:    @form_meta.filter
             params:    defaults

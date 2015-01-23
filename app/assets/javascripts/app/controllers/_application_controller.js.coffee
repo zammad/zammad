@@ -467,6 +467,31 @@ class App.Controller extends Spine.Controller
   ws_send: (data) ->
     App.Event.trigger( 'ws:send', JSON.stringify(data) )
 
+  # central method, is getting called on every ticket form change
+  ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>
+    if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
+      dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+      if !dependency
+        dependency = @form_meta.dependencies[attribute.name][ params[attribute.name] ]
+      if dependency
+        for fieldNameToChange of dependency
+          filter = []
+          if dependency[fieldNameToChange]
+            filter = dependency[fieldNameToChange]
+
+          # find element to replace
+          for item in attributes
+            if item.name is fieldNameToChange
+              item['filter'] = {}
+              item['filter'][ fieldNameToChange ] = filter
+              item.default = params[item.name]
+              #if !item.default
+              #  delete item['default']
+              newElement = ui.formGenItem( item, classname, form )
+
+          # replace new option list
+          form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
@@ -485,10 +510,10 @@ class App.ControllerModal extends App.Controller
     '.modal-body': 'body'
 
   events:
-    'submit form': 'onSubmit'
-    'click .js-submit:not(.is-disabled)': 'onSubmit'
+    'submit form':      'onSubmit'
+    'click .js-submit:  not(.is-disabled)': 'onSubmit'
     'click .js-cancel': 'hide'
-    'click .js-close': 'hide'
+    'click .js-close':  'hide'
 
   className: 'modal fade'
 

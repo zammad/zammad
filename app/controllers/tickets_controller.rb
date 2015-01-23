@@ -279,8 +279,10 @@ class TicketsController < ApplicationController
       :assets             => assets,
       :links              => link_list,
       :tags               => tags,
-      :form_meta          => attributes_to_change,
-      :edit_form          => attributes_to_change,
+      :form_meta          => {
+        :filter       => attributes_to_change[:filter],
+        :dependencies => attributes_to_change[:dependencies],
+      }
     }
   end
 
