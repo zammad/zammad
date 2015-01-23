@@ -30,8 +30,12 @@ class TestCase < Test::Unit::TestCase
     end
 
     caps = Selenium::WebDriver::Remote::Capabilities.send( browser )
-    caps.platform = ENV['BROWSER_OS'] || 'Windows 2008'
-    caps.version  = ENV['BROWSER_VERSION'] || '8'
+    if ENV['BROWSER_OS']
+      caps.platform = ENV['BROWSER_OS']
+    end
+    if ENV['BROWSER_VERSION']
+      caps.version  = ENV['BROWSER_VERSION']
+    end
     local_browser = Selenium::WebDriver.for(
       :remote,
       :url                  => ENV['REMOTE_URL'],
@@ -291,7 +295,6 @@ class TestCase < Test::Unit::TestCase
       assert( false, "(#{test[:name]} / #{test[:area]}) still exsists" )
       return
     elsif action[:execute] == 'create_user'
-
       instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
       instance.find_elements( { :css => 'a[href="#manage/users"]' } )[0].click
       sleep 2
@@ -327,6 +330,82 @@ class TestCase < Test::Unit::TestCase
         sleep 0.5
       }
       assert( true, "(#{test[:name]}) user creation failed" )
+      return
+
+    elsif action[:execute] == 'create_signature'
+      instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+      instance.find_elements( { :css => 'a[href="#channels/email"]' } )[0].click
+      instance.find_elements( { :css => 'a[href="#c-signature"]' } )[0].click
+      sleep 8
+      instance.find_elements( { :css => '#content #c-signature a[data-type="new"]' } )[0].click
+      sleep 2
+      element = instance.find_elements( { :css => '.modal input[name=name]' } )[0]
+      element.clear
+      element.send_keys( action[:name] )
+      element = instance.find_elements( { :css => '.modal textarea[name=body]' } )[0]
+      element.clear
+      element.send_keys( action[:body] )
+      instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+      (1..12).each {|loop|
+        element = instance.find_elements( { :css => 'body' } )[0]
+        text = element.text
+        if text =~ /#{Regexp.quote(action[:name])}/
+          assert( true, "(#{test[:name]}) signature created" )
+          return
+        end
+        sleep 1
+      }
+      assert( true, "(#{test[:name]}) signature creation failed" )
+      return
+
+    elsif action[:execute] == 'create_group'
+      instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+      instance.find_elements( { :css => 'a[href="#manage/groups"]' } )[0].click
+      sleep 2
+      instance.find_elements( { :css => 'a[data-type="new"]' } )[0].click
+      sleep 2
+      element = instance.find_elements( { :css => '.modal input[name=name]' } )[0]
+      element.clear
+      element.send_keys( action[:name] )
+      element = instance.find_elements( { :css => '.modal select[name="email_address_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :index, 1 )
+      #dropdown.select_by( :text, action[:group])
+      if action[:signature]
+        element = instance.find_elements( { :css => '.modal select[name="signature_id"]' } )[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by( :text, action[:signature])
+      end
+      instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+      (1..12).each {|loop|
+        element = instance.find_elements( { :css => 'body' } )[0]
+        text = element.text
+        if text =~ /#{Regexp.quote(action[:name])}/
+          assert( true, "(#{test[:name]}) group created" )
+
+          # add member
+          if action[:member]
+            action[:member].each {|login|
+              instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+              instance.find_elements( { :css => 'a[href="#manage/users"]' } )[0].click
+              sleep 2
+              element = instance.find_elements( { :css => '#content [name="search"]' } )[0]
+              element.clear
+              element.send_keys( login )
+              sleep 2
+              #instance.find_elements( { :css => '#content table [data-id]' } )[0].click
+              instance.execute_script( '$("#content table [data-id] td").first().click()' )
+              sleep 2
+              #instance.find_elements( { :css => 'label:contains(" ' + action[:name] + '")' } )[0].click
+              instance.execute_script( '$(\'label:contains(" ' + action[:name] + '")\').first().click()' )
+              instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+            }
+          end
+          return
+        end
+        sleep 1
+      }
+      assert( true, "(#{test[:name]}) group creation failed" )
       return
 
     elsif action[:execute] == 'verify_task_attributes'

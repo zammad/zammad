@@ -1479,10 +1479,10 @@ class ArticleView extends App.Controller
     e.preventDefault()
 
     # get reference article
-    article_id   = $(e.target).parents('[data-id]').data('id')
-    article      = App.TicketArticle.fullLocal( article_id )
-    type         = App.TicketArticleType.find( article.type_id )
-    customer     = App.User.find( article.created_by_id )
+    article_id = $(e.target).parents('[data-id]').data('id')
+    article    = App.TicketArticle.fullLocal( article_id )
+    type       = App.TicketArticleType.find( article.type_id )
+    customer   = App.User.find( article.created_by_id )
 
     @ui.el.find('.article-add').ScrollTo()
 
@@ -1511,7 +1511,8 @@ class ArticleView extends App.Controller
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       articleNew.to = to
 
-    else if type.name is 'email'
+    else if type.name is 'email' || type.name is 'phone' || type.name is 'web'
+
       if article.sender.name is 'Agent'
         articleNew.to = article.to
       else
@@ -1655,22 +1656,28 @@ class Article extends App.Controller
       ]
     #if @article.type.name is 'note'
     #     actions.push []
-    if @article.type.name is 'email'
+    if @article.type.name is 'email' || @article.type.name is 'phone' || @article.type.name is 'web'
       actions.push {
         name: 'reply'
         type: 'reply'
         href: '#'
       }
       recipients = []
-      if @article.to
-        localRecipients = emailAddresses.parseAddressList(@article.to)
-        if localRecipients
-          recipients = recipients.concat localRecipients
+      if @article.sender.name is 'Agent'
+        if @article.to
+            localRecipients = emailAddresses.parseAddressList(@article.to)
+            if localRecipients
+              recipients = recipients.concat localRecipients
+      else
+        if @article.from
+          localRecipients = emailAddresses.parseAddressList(@article.from)
+          if localRecipients
+            recipients = recipients.concat localRecipients
       if @article.cc
         localRecipients = emailAddresses.parseAddressList(@article.cc)
         if localRecipients
           recipients = recipients.concat localRecipients
-      if recipients.length > 0
+      if recipients.length > 1
         actions.push {
           name: 'reply all'
           type: 'replyAll'
