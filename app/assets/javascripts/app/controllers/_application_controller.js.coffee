@@ -510,10 +510,10 @@ class App.ControllerModal extends App.Controller
     '.modal-body': 'body'
 
   events:
-    'submit form':      'onSubmit'
-    'click .js-submit:  not(.is-disabled)': 'onSubmit'
-    'click .js-cancel': 'hide'
-    'click .js-close':  'hide'
+    'submit form':                        'onSubmit'
+    'click .js-submit:not(.is-disabled)': 'onSubmit'
+    'click .js-cancel':                   'hide'
+    'click .js-close':                    'hide'
 
   className: 'modal fade'
 
