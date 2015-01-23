@@ -22,6 +22,7 @@
     <li><a href="#layout_ref/local_modal">Local Modal</a></li>
     <li><a href="#layout_ref/loading_placeholder">Loading Placeholder</a></li>
     <li><a href="#layout_ref/insufficient_rights">Insufficient Rights Warning</a></li>
+    <li><a href="#layout_ref/error">Error</a></li>
   </ul>
 
 </div>

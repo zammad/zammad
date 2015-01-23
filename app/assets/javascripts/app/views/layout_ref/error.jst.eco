@@ -1,0 +1,3 @@
+<div class="flex fullscreenMessage">
+  <div class="error icon"></div><h2><%- @T('Status Code') %>: 1234. may be not internet connection...</h2>
+</div>
