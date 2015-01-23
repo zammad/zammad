@@ -440,8 +440,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # de template
     template = bg.template_update(agent1, ticket1, article, human_changes)
     assert( template[:subject] )
-    assert( template[:subject] )
-    assert_match( /Bobs's resumé/, template[:subject] )
     assert( template[:body] )
     assert_match( /Priority/, template[:body] )
     assert_match( /1 low/, template[:body] )
