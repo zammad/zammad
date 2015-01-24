@@ -472,6 +472,11 @@ class TestCase < Test::Unit::TestCase
         return
       end
       sleep 2
+
+      # check count of agents, should be only 1 / - selection on init screen
+      count = instance.find_elements( { :css => '.active .newTicket select[name="owner_id"] option' } ).count
+      assert_equal( 1, count, 'check if owner selection is empty per default'  )
+
       if action[:group]
         element = instance.find_elements( { :css => '.active .newTicket select[name="group_id"]' } )[0]
         dropdown = Selenium::WebDriver::Support::Select.new(element)
