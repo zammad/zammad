@@ -364,7 +364,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create(
-      :title         => 'some notification template test 1',
+      :title         => 'some notification template test 1 Bobs\'s resumé',
       :group         => Group.lookup( :name => 'Users'),
       :customer      => customer,
       :state         => Ticket::State.lookup( :name => 'new' ),
@@ -413,6 +413,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /updated/i, template[:subject] )
 
     # en notification
+    subject = NotificationFactory.build(
+      :locale  => agent2.preferences[:locale],
+      :string  => template[:subject],
+      :objects => {
+        :ticket    => ticket1,
+        :article   => article,
+        :recipient => agent2,
+      }
+    )
+    assert_match( /Bobs's resumé/, subject )
     body = NotificationFactory.build(
       :locale  => agent2.preferences[:locale],
       :string  => template[:body],
@@ -437,6 +447,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /aktualis/, template[:subject] )
 
     # de notification
+    subject = NotificationFactory.build(
+      :locale  => agent1.preferences[:locale],
+      :string  => template[:subject],
+      :objects => {
+        :ticket    => ticket1,
+        :article   => article,
+        :recipient => agent2,
+      }
+    )
+    assert_match( /Bobs's resumé/, subject )
     body = NotificationFactory.build(
       :locale  => agent1.preferences[:locale],
       :string  => template[:body],

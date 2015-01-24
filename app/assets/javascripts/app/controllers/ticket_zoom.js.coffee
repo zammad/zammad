@@ -267,29 +267,6 @@ class App.TicketZoom extends App.Controller
           console.log('SHOW', ticket.id)
           el.find('.edit').html('')
 
-          formChanges = (params, attribute, attributes, classname, form, ui) =>
-            if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
-              dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
-              if dependency
-
-                for fieldNameToChange of dependency
-                  filter = []
-                  if dependency[fieldNameToChange]
-                    filter = dependency[fieldNameToChange]
-
-                  # find element to replace
-                  for item in attributes
-                    if item.name is fieldNameToChange
-                      item['filter'] = {}
-                      item['filter'][ fieldNameToChange ] = filter
-                      item.default = params[item.name]
-                      #if !item.default
-                      #  delete item['default']
-                      newElement = ui.formGenItem( item, classname, form )
-
-                  # replace new option list
-                  form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
-
           defaults   = ticket.attributes()
           task_state = @taskGet('ticket')
           modelDiff  = @getDiff( defaults, task_state )
@@ -305,7 +282,7 @@ class App.TicketZoom extends App.Controller
             screen:   'edit'
             params:   App.Ticket.find(ticket.id)
             handlers: [
-              formChanges
+              @ticketFormChanges
             ]
             filter:    @form_meta.filter
             params:    defaults
@@ -1502,10 +1479,10 @@ class ArticleView extends App.Controller
     e.preventDefault()
 
     # get reference article
-    article_id   = $(e.target).parents('[data-id]').data('id')
-    article      = App.TicketArticle.fullLocal( article_id )
-    type         = App.TicketArticleType.find( article.type_id )
-    customer     = App.User.find( article.created_by_id )
+    article_id = $(e.target).parents('[data-id]').data('id')
+    article    = App.TicketArticle.fullLocal( article_id )
+    type       = App.TicketArticleType.find( article.type_id )
+    customer   = App.User.find( article.created_by_id )
 
     @ui.el.find('.article-add').ScrollTo()
 
@@ -1534,11 +1511,17 @@ class ArticleView extends App.Controller
       to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
       articleNew.to = to
 
-    else if type.name is 'email'
+    else if type.name is 'email' || type.name is 'phone' || type.name is 'web'
+
       if article.sender.name is 'Agent'
         articleNew.to = article.to
       else
         articleNew.to = article.from
+
+        # if sender is customer but in article.from is no email, try to get
+        # customers email via customer user
+        if articleNew.to && !articleNew.to.match(/@/)
+          articleNew.to = article.created_by.email
 
       # filter for uniq recipients
       recipientAddresses = {}
@@ -1678,22 +1661,28 @@ class Article extends App.Controller
       ]
     #if @article.type.name is 'note'
     #     actions.push []
-    if @article.type.name is 'email'
+    if @article.type.name is 'email' || @article.type.name is 'phone' || @article.type.name is 'web'
       actions.push {
         name: 'reply'
         type: 'reply'
         href: '#'
       }
       recipients = []
-      if @article.to
-        localRecipients = emailAddresses.parseAddressList(@article.to)
-        if localRecipients
-          recipients = recipients.concat localRecipients
+      if @article.sender.name is 'Agent'
+        if @article.to
+            localRecipients = emailAddresses.parseAddressList(@article.to)
+            if localRecipients
+              recipients = recipients.concat localRecipients
+      else
+        if @article.from
+          localRecipients = emailAddresses.parseAddressList(@article.from)
+          if localRecipients
+            recipients = recipients.concat localRecipients
       if @article.cc
         localRecipients = emailAddresses.parseAddressList(@article.cc)
         if localRecipients
           recipients = recipients.concat localRecipients
-      if recipients.length > 0
+      if recipients.length > 1
         actions.push {
           name: 'reply all'
           type: 'replyAll'

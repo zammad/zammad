@@ -64,29 +64,6 @@ class Index extends App.ControllerContent
         groupFilter = [groupFilter]
       @form_meta.filter.group_id = groupFilter
 
-    formChanges = (params, attribute, attributes, classname, form, ui) =>
-      if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
-        dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
-        if dependency
-
-          for fieldNameToChange of dependency
-            filter = []
-            if dependency[fieldNameToChange]
-              filter = dependency[fieldNameToChange]
-
-            # find element to replace
-            for item in attributes
-              if item.name is fieldNameToChange
-                item['filter'] = {}
-                item['filter'][ fieldNameToChange ] = filter
-                item.default = params[item.name]
-                #if !item.default
-                #  delete item['default']
-                newElement = ui.formGenItem( item, classname, form )
-
-            # replace new option list
-            form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
-
     @html App.view('customer_ticket_create')( head: 'New Ticket' )
 
     new App.ControllerForm(
@@ -95,7 +72,7 @@ class Index extends App.ControllerContent
       model:    App.Ticket
       screen:   'create_top'
       handlers: [
-        formChanges
+        @ticketFormChanges
       ]
       filter:    @form_meta.filter
       autofocus: true
@@ -115,7 +92,7 @@ class Index extends App.ControllerContent
       model:    App.Ticket
       screen:   'create_middle'
       handlers: [
-        formChanges
+        @ticketFormChanges
       ]
       filter:     @form_meta.filter
       params:     defaults

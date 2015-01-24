@@ -32,12 +32,12 @@ list attributes
 returns
 
   result = {
-    :type_id              => type_ids,
-    :state_id             => state_ids,
-    :priority_id          => priority_ids,
-    :owner_id             => owner_ids,
-    :group_id             => group_ids,
-    :group_id__owner_id   => groups_users,
+    :type_id            => type_ids,
+    :state_id           => state_ids,
+    :priority_id        => priority_ids,
+    :owner_id           => owner_ids,
+    :group_id           => group_ids,
+    :group_id__owner_id => groups_users,
   }
 
 =end
@@ -103,7 +103,7 @@ returns
       agents[ user.id ] = 1
     }
 
-    dependencies = { :group_id => { '' => [] } }
+    dependencies = { :group_id => { '' => { :owner_id => [] } } }
     Group.where( :active => true ).each { |group|
       assets = group.assets(assets)
       dependencies[:group_id][group.id] = { :owner_id => [] }
@@ -115,9 +115,9 @@ returns
     }
 
     return {
-      :assets               => assets,
-      :filter               => filter,
-      :dependencies         => dependencies,
+      :assets       => assets,
+      :filter       => filter,
+      :dependencies => dependencies,
     }
   end
 
@@ -126,8 +126,8 @@ returns
 list tickets by customer groupd in state categroie open and closed
 
   result = Ticket::ScreenOptions.list_by_customer(
-    :customer_id  => 123,
-    :limit        => 15, # optional, default 15
+    :customer_id => 123,
+    :limit       => 15, # optional, default 15
   )
 
 returns
@@ -147,13 +147,13 @@ returns
 
     # get tickets
     tickets_open = Ticket.where(
-      :customer_id  => data[:customer_id],
-      :state_id     => state_list_open
+      :customer_id => data[:customer_id],
+      :state_id    => state_list_open
     ).limit( data[:limit] || 15 ).order('created_at DESC')
 
     tickets_closed = Ticket.where(
-      :customer_id  => data[:customer_id],
-      :state_id     => state_list_closed
+      :customer_id => data[:customer_id],
+      :state_id    => state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
 
     return {

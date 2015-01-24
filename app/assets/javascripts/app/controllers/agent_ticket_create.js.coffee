@@ -205,29 +205,6 @@ class App.TicketCreate extends App.Controller
       form_id: @form_id
     )
 
-    formChanges = (params, attribute, attributes, classname, form, ui) =>
-      if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
-        dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
-        if dependency
-
-          for fieldNameToChange of dependency
-            filter = []
-            if dependency[fieldNameToChange]
-              filter = dependency[fieldNameToChange]
-
-            # find element to replace
-            for item in attributes
-              if item.name is fieldNameToChange
-                item['filter'] = {}
-                item['filter'][ fieldNameToChange ] = filter
-                item.default = params[item.name]
-                #if !item.default
-                #  delete item['default']
-                newElement = ui.formGenItem( item, classname, form )
-
-            # replace new option list
-            form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
-
     signatureChanges = (params, attribute, attributes, classname, form, ui) =>
       if attribute && attribute.name is 'group_id'
         signature = undefined
@@ -274,7 +251,7 @@ class App.TicketCreate extends App.Controller
       events:
         'change [name=customer_id]': @localUserInfo
       handlers: [
-        formChanges,
+        @ticketFormChanges,
         signatureChanges,
       ]
       filter:     @form_meta.filter
@@ -297,7 +274,7 @@ class App.TicketCreate extends App.Controller
       events:
         'change [name=customer_id]': @localUserInfo
       handlers: [
-        formChanges,
+        @ticketFormChanges,
         signatureChanges,
       ]
       filter:     @form_meta.filter
@@ -312,7 +289,7 @@ class App.TicketCreate extends App.Controller
       events:
         'change [name=customer_id]': @localUserInfo
       handlers: [
-        formChanges,
+        @ticketFormChanges,
         signatureChanges,
       ]
       filter:   @form_meta.filter

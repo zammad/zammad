@@ -115,6 +115,9 @@ class App.Navigation extends App.Controller
 
   render: () ->
 
+    # reset result cache
+    @searchResultCache = {}
+
     user = App.Session.get()
     @html App.view('navigation')(
       user: user
@@ -127,6 +130,11 @@ class App.Navigation extends App.Controller
     @renderPersonal()
 
     searchFunction = =>
+
+      # use cache for search result
+      if @searchResultCache[@term]
+        @renderResult( @searchResultCache[@term] )
+
       App.Ajax.request(
         id:    'search'
         type:  'GET'
@@ -138,6 +146,9 @@ class App.Navigation extends App.Controller
 
           # load assets
           App.Collection.loadAssets( data.assets )
+
+          # cache search result
+          @searchResultCache[@term] = data.result
 
           result = data.result
           for area in result
@@ -222,7 +233,7 @@ class App.Navigation extends App.Controller
       return if term is @term
       @term = term
       @$('.search').toggleClass('filled', !!@term)
-      @delay( searchFunction, 220, 'search' )
+      @delay( searchFunction, 200, 'search' )
     )
 
     # bind to empty search
