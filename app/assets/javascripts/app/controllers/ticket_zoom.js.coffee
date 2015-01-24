@@ -1518,6 +1518,11 @@ class ArticleView extends App.Controller
       else
         articleNew.to = article.from
 
+        # if sender is customer but in article.from is no email, try to get
+        # customers email via customer user
+        if articleNew.to && !articleNew.to.match(/@/)
+          articleNew.to = article.created_by.email
+
       # filter for uniq recipients
       recipientAddresses = {}
       recipient = emailAddresses.parseAddressList(articleNew.to)
