@@ -253,7 +253,7 @@ returns
 
       # check if time need to be counted
       counted = true
-      if history_item['value_from'] == 'pending'
+      if history_item['value_from'] == 'pending reminder'
         counted = false
       elsif history_item['value_from'] == 'close'
         counted = false
@@ -268,7 +268,7 @@ returns
       end
       total_time = total_time + diff
 
-      if history_item['value_to'] == 'pending'
+      if history_item['value_to'] == 'pending reminder'
         last_state_is_pending = true
       else
         last_state_is_pending = false
