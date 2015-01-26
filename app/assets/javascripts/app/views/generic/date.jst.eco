@@ -1,1 +1,14 @@
-<input id="<%= @attribute.id %>" type="<%= @attribute.type %>" class="form-control <%= @attribute.class %>" placeholder="<%= @attribute.placeholder %>" name="<%= @attribute.name %>" value="<%= @attribute.value %>" <%= @attribute.required %>>
+<div class="horizontal" data-name="<%= @attribute.nameRaw %>">
+  <input type="text" maxlength="2" name="<%= @attribute.name %>___day" value="<%= @day %>" placeholder="dd" style="width: 50px;">
+  .
+  <input type="text" maxlength="2" name="<%= @attribute.name %>___month" value="<%= @month %>" placeholder="mm" style="width: 50px;">
+  .
+  <input type="text" maxlength="4" name="<%= @attribute.name %>___year" value="<%= @year %>" placeholder="yyyy" style="width: 70px;">
+</div>
+<div>
+<a class="js-today"><%- @T('today') %></a>
+|
+<a class="js-minus-day"><%- @T('-1') %></a> <a class="js-plus-day"><%- @T('+1') %></a> <%- @T('day') %>
+|
+<a class="js-minus-week"><%- @T('-7') %></a> <a class="js-plus-week"><%- @T('+7') %></a> <%- @T('days') %>
+</div>
