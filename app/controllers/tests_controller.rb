@@ -2,48 +2,6 @@
 
 class TestsController < ApplicationController
 
-  # GET /tests/core
-  def core
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
-
-  # GET /tests/ui
-  def ui
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
-
-  # GET /tests/from
-  def form
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
-
-  # GET /tests/from_extended
-  def form
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
-
-  # GET /tests/table
-  def table
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
-
-  # GET /tests/html_utils
-  def html_utils
-    respond_to do |format|
-      format.html # index.html.erb
-    end
-  end
-
   # GET /test/wait
   def wait
     sleep params[:sec].to_i

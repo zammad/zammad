@@ -95,7 +95,7 @@ class App.ControllerForm extends App.Controller
       for eventSelector, callback of @events
         do (eventSelector, callback) =>
           evs = eventSelector.split(' ')
-          fieldset.find( evs[1] ).bind(evs[0], (e) => callback(e) )
+          fieldset.find( evs[1] ).bind( evs[0], (e) => callback(e) )
 
     # return form
     return fieldset
@@ -264,13 +264,13 @@ class App.ControllerForm extends App.Controller
           { name: 'inactive', value: false }
         ]
 
-      # update boolean types
-      for record in attribute.options
-        record.value = '{boolean}::' + record.value
+      # set data type
+      if attribute.name
+        attribute.name = '{boolean}' + attribute.name
 
       # finde selected item of list
       for record in attribute.options
-        if record.value is '{boolean}::' + attribute.value
+        if record.value is attribute.value
           record.selected = 'selected'
 
       # return item
@@ -283,7 +283,6 @@ class App.ControllerForm extends App.Controller
     # date
     else if attribute.tag is 'date'
       attribute.type = 'text'
-      item = $( App.view('generic/date')( attribute: attribute ) )
       #item.datetimepicker({
       #  format: 'Y.m.d'
       #});
@@ -291,10 +290,163 @@ class App.ControllerForm extends App.Controller
     # date
     else if attribute.tag is 'datetime'
       attribute.type = 'text'
-      item = $( App.view('generic/date')( attribute: attribute ) )
-      #item.datetimepicker({
-      #  format: 'Y.m.d H:i'
-      #});
+
+      # set data type
+      if attribute.name
+        attribute.nameRaw = attribute.name
+        attribute.name    = '{datetime}' + attribute.name
+      if attribute.value
+        if typeof( attribute.value ) is 'string'
+          unixtime = new Date( Date.parse( attribute.value ) )
+        else
+          unixtime = new Date( attribute.value )
+        year     = unixtime.getYear() + 1900
+        month    = unixtime.getMonth() + 1
+        day      = unixtime.getDate()
+        hour     = unixtime.getHours()
+        minute   = unixtime.getMinutes()
+      item = $( App.view('generic/datetime')(
+        attribute: attribute
+        year:      year
+        month:     month
+        day:       day
+        hour:      hour
+        minute:    minute
+      ) )
+      item.find('.js-today').bind('click', (e) ->
+        e.preventDefault()
+        name = $(@).closest('.form-group').find('[data-name]').attr('data-name')
+        today = new Date();
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val( today.getDate() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val( today.getMonth()+1 )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___year\"]").val( today.getFullYear() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___hour\"]").val( today.getHours() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___minute\"]").val( today.getMinutes() )
+      )
+
+      setNewTime = (diff, el) ->
+        name = $(el).closest('.form-group').find('[data-name]').attr('data-name')
+
+        day    = item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val()
+        month  = item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val()
+        year   = item.closest('.form-group').find("[name=\"{datetime}#{name}___year\"]").val()
+        hour   = item.closest('.form-group').find("[name=\"{datetime}#{name}___hour\"]").val()
+        minute = item.closest('.form-group').find("[name=\"{datetime}#{name}___minute\"]").val()
+        format = (number) ->
+          if parseInt(number) < 10
+            number = "0#{number}"
+          number
+        #console.log('ph', diff, "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z")
+        time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
+        time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
+        #console.log('T', time, time.getHours(), time.getMinutes())
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val( time.getDate() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val( time.getMonth()+1 )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___year\"]").val( time.getFullYear() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___hour\"]").val( time.getHours() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___minute\"]").val( time.getMinutes() )
+
+      item.find('.js-plus-hour').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60, @)
+      )
+      item.find('.js-minus-hour').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60, @)
+      )
+      item.find('.js-plus-day').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60 * 24, @)
+      )
+      item.find('.js-minus-day').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60 * 24, @)
+      )
+      item.find('.js-plus-week').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60 * 24 * 7, @)
+      )
+      item.find('.js-minus-week').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60 * 24 * 7, @)
+      )
+
+      item.find('input').bind('keyup blur focus', (e) ->
+
+        # do validation
+        name = $(@).attr('name')
+        if name
+          fieldPrefix = name.split('___')[0]
+
+        # remove old validation
+        item.find('.has-error').removeClass('has-error')
+        item.closest('.form-group').find('.help-inline').html('')
+
+        day    = item.closest('.form-group').find("[name=\"#{fieldPrefix}___day\"]").val()
+        month  = item.closest('.form-group').find("[name=\"#{fieldPrefix}___month\"]").val()
+        year   = item.closest('.form-group').find("[name=\"#{fieldPrefix}___year\"]").val()
+        hour   = item.closest('.form-group').find("[name=\"#{fieldPrefix}___hour\"]").val()
+        minute = item.closest('.form-group').find("[name=\"#{fieldPrefix}___minute\"]").val()
+
+        # validate exists
+        errors = {}
+        if !day
+          errors.day = 'missing'
+        if !month
+          errors.month = 'missing'
+        if !year
+          errors.year = 'missing'
+        if !hour
+          errors.hour = 'missing'
+        if !minute
+          errors.minute = 'missing'
+
+        # ranges
+        if day
+          daysInMonth = 31
+          if month && year
+            daysInMonth = new Date(year, month, 0).getDate();
+          console.log('222', month, year, daysInMonth)
+
+          if parseInt(day).toString() is 'NaN'
+            errors.day = 'invalid'
+          else if parseInt(day) > daysInMonth || parseInt(day) < 1
+            errors.day = 'invalid'
+
+        if month
+          if parseInt(month).toString() is 'NaN'
+            errors.month = 'invalid'
+          else if parseInt(month) > 12 || parseInt(month) < 1
+            errors.month = 'invalid'
+
+        if year
+          if parseInt(year).toString() is 'NaN'
+            errors.year = 'invalid'
+          else if parseInt(year) > 2100 || parseInt(year) < 2001
+            errors.year = 'invalid'
+
+        if hour
+          if parseInt(hour).toString() is 'NaN'
+            errors.hour = 'invalid'
+          else if parseInt(hour) > 23 || parseInt(hour) < 0
+            errors.hour = 'invalid'
+
+        if minute
+          if parseInt(minute).toString() is 'NaN'
+            errors.minute = 'invalid'
+          else if parseInt(minute) > 59
+            errors.minute = 'invalid'
+
+        if !_.isEmpty(errors)
+          for key, value of errors
+            item.closest('.form-group').addClass('has-error')
+            item.closest('.form-group').find("[name=\"#{fieldPrefix}___#{key}\"]").addClass('has-error')
+            #item.closest('.form-group').find('.help-inline').text( value )
+
+          e.preventDefault()
+          e.stopPropagation()
+          return
+      )
 
     # timezone
     else if attribute.tag is 'timezone'
@@ -614,95 +766,6 @@ class App.ControllerForm extends App.Controller
           for listItem in loopData
             if listItem.value is "#{ attribute.name }::#{key}"
               addItem( "#{ attribute.name }::#{key}", listItem.name, item.find('.add a'), value )
-
-    # select
-    else if attribute.tag is 'input_select'
-      item = $('<div class="input_select"></div>')
-
-      # select shown attributes
-      loopData = {}
-      if @params && @params[ attribute.name ]
-        loopData = @params[ attribute.name ]
-      loopData[''] = ''
-
-      # show each attribote
-      counter = 0
-      for key of loopData
-        counter =+ 1
-
-        # clone to keep it untouched for next loop
-        select = _.clone( attribute )
-        input  = _.clone( attribute )
-
-        # set field ids - not needed in this case
-        select.id = ''
-        input.id  = ''
-
-        # rename to be able to identify this option later
-        select.name = '{input_select}::' + select.name
-        input.name  = '{input_select}::' + input.name
-
-        # set sub attributes
-        for keysub of attribute.select
-          select[keysub] = attribute.select[keysub]
-        for keysub of attribute.input
-          input[keysub] = attribute.input[keysub]
-
-        # set hide for + options
-        itemClass = ''
-        if key is ''
-          itemClass = 'hide'
-          select['nulloption'] = true
-
-        # set selected value
-        select.value = key
-        input.value  = loopData[ key ]
-
-        # build options list based on config
-        @_getConfigOptionList( select )
-
-        # build options list based on relation
-        @_getRelationOptionList( select )
-
-        # add null selection if needed
-        @_addNullOption( select )
-
-        # sort attribute.options
-        @_sortOptions( select )
-
-        # finde selected/checked item of list
-        @_selectedOptions( select )
-
-        pearItem = $("<div class=" + itemClass + "></div>")
-        pearItem.append $( App.view('generic/select')( attribute: select ) )
-        pearItem.append $( App.view('generic/input')( attribute: input ) )
-        itemRemote = $('<a href="#" class="input_select_remove icon-minus"></a>')
-        itemRemote.bind('click', (e) ->
-          e.preventDefault()
-          $(@).parent().remove()
-        )
-        pearItem.append( itemRemote )
-        item.append( pearItem )
-
-        if key is ''
-          itemAdd = $('<div class="add"><a href="#" class="icon-plus"></a></div>')
-          itemAdd.bind('click', (e) ->
-            e.preventDefault()
-
-            # copy
-            newElement = $(@).prev().clone()
-            newElement.removeClass('hide')
-
-            # bind on remove
-            newElement.find('.input_select_remove').bind('click', (e) ->
-              e.preventDefault()
-              $(@).parent().remove()
-            )
-
-            # prepend
-            $(@).parent().find('.add').before( newElement )
-          )
-          item.append( itemAdd )
 
     # checkbox
     else if attribute.tag is 'checkbox'
@@ -1792,6 +1855,8 @@ class App.ControllerForm extends App.Controller
     for key in name
       el.find('[name="' + key + '"]').closest('.form-group').removeClass('hide')
       el.find('[name="' + key + '"]').removeClass('is-hidden')
+      el.find('[data-name="' + key + '"]').closest('.form-group').removeClass('hide')
+      el.find('[data-name="' + key + '"]').removeClass('is-hidden')
 
   _hide: (name, el = @el) ->
     if !_.isArray(name)
@@ -1799,6 +1864,8 @@ class App.ControllerForm extends App.Controller
     for key in name
       el.find('[name="' + key + '"]').closest('.form-group').addClass('hide')
       el.find('[name="' + key + '"]').addClass('is-hidden')
+      el.find('[data-name="' + key + '"]').closest('.form-group').addClass('hide')
+      el.find('[data-name="' + key + '"]').addClass('is-hidden')
 
   _mandantory: (name, el = @el) ->
     if !_.isArray(name)
@@ -1819,8 +1886,13 @@ class App.ControllerForm extends App.Controller
       if attribute.shown_if
         hit = false
         for refAttribute, refValue of attribute.shown_if
-          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
-            hit = true
+          if params[refAttribute]
+            if _.isArray( refValue )
+              for item in refValue
+                if params[refAttribute].toString() is item.toString()
+                  hit = true
+            else if params[refAttribute].toString() is refValue.toString()
+              hit = true
         if hit
           ui._show(attribute.name)
         else
@@ -1831,8 +1903,13 @@ class App.ControllerForm extends App.Controller
       if attribute.required_if
         hit = false
         for refAttribute, refValue of attribute.required_if
-          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
-            hit = true
+          if params[refAttribute]
+            if _.isArray( refValue )
+              for item in refValue
+                if params[refAttribute].toString() is item.toString()
+                  hit = true
+            else if params[refAttribute].toString() is refValue.toString()
+              hit = true
         if hit
           ui._mandantory(attribute.name)
         else
@@ -2066,33 +2143,70 @@ class App.ControllerForm extends App.Controller
     # get form elements
     array = lookupForm.serializeArray()
 
-    # 1:1 and boolean params
+    # array to names
     for key in array
 
       # check if item is-hidden and should not be used
       if lookupForm.find('[name="' + key.name + '"]').hasClass('is-hidden')
+        param[key.name] = undefined
         continue
 
-      # collect all other params
+      # collect all params, push it to an array if already exists
       if param[key.name]
         if typeof param[key.name] is 'string'
           param[key.name] = [ param[key.name], key.value]
         else
           param[key.name].push key.value
       else
-
-        # check boolean
-        attributeType = key.value.split '::'
-        if attributeType[0] is '{boolean}'
-          if attributeType[1] is 'true'
-            key.value = true
-          else
-            key.value = false
-#        else if attributeType[0] is '{boolean}'
-
         param[key.name] = key.value
 
-    # check :: fields
+    # data type conversion
+    for key of param
+
+      # get boolean
+      if key.substr(0,9) is '{boolean}'
+        newKey          = key.substr( 9, key.length )
+        param[ newKey ] = param[ key ]
+        delete param[ key ]
+        if param[ newKey ] && param[ newKey ].toString() is 'true'
+          param[ newKey ] = true
+        else
+          param[ newKey ] = false
+
+      # get {datetime}
+      else if key.substr(0,10) is '{datetime}'
+        newKey    = key.substr( 10, key.length )
+        namespace = newKey.split '___'
+
+        if !param[ namespace[0] ]
+          datetimeKey = "{datetime}#{namespace[0]}___"
+          year        = param[ "#{datetimeKey}year" ]
+          month       = param[ "#{datetimeKey}month" ]
+          day         = param[ "#{datetimeKey}day" ]
+          hour        = param[ "#{datetimeKey}hour" ]
+          minute      = param[ "#{datetimeKey}minute" ]
+          timezone    = (new Date()).getTimezoneOffset()/60
+          if year && month && day && hour && minute
+            format = (number) ->
+              if parseInt(number) < 10
+                number = "0#{number}"
+              number
+            try
+              time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
+              time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
+              param[ namespace[0] ] = time.toISOString()
+            catch err
+              console.log('ERR', err)
+
+        #console.log('T', time, time.getHours(), time.getMinutes())
+
+          delete param[ "#{datetimeKey}year" ]
+          delete param[ "#{datetimeKey}month" ]
+          delete param[ "#{datetimeKey}day" ]
+          delete param[ "#{datetimeKey}hour" ]
+          delete param[ "#{datetimeKey}minute" ]
+
+    # split :: fields, build objects
     inputSelectObject = {}
     for key of param
       parts = key.split '::'
@@ -2109,25 +2223,7 @@ class App.ControllerForm extends App.Controller
         inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ] = param[ key ]
         delete param[ key ]
 
-    # check {input_select}
-    for key of param
-      attributeType = key.split '::'
-      name = attributeType[1]
-#      console.log 'split', key, attributeType, param[ name ]
-      if attributeType[0] is '{input_select}' && !param[ name ]
-
-        # array need to be converted
-        inputSelectData = param[ key ]
-        inputSelectObject[ name ] = {}
-        for x in [0..inputSelectData.length] by 2
-#          console.log 'for by 111', x, inputSelectData, inputSelectData[x], inputSelectData[ x + 1 ]
-          if inputSelectData[ x ]
-            inputSelectObject[ name ][ inputSelectData[x] ] = inputSelectData[ x + 1 ]
-
-        # remove {input_select} items
-        delete param[ key ]
-
-    # set new {input_select} items
+    # set new object params
     for key of inputSelectObject
       param[ key ] = inputSelectObject[ key ]
 
@@ -2203,8 +2299,13 @@ class App.ControllerForm extends App.Controller
 
     # show new errors
     for key, msg of data.errors
-      lookupForm.find('[name="' + key + '"]').parents('div .form-group').addClass('has-error')
-      lookupForm.find('[name="' + key + '"]').parent().find('.help-inline').html(msg)
+      item = lookupForm.find('[name="' + key + '"]').closest('.form-group')
+      item.addClass('has-error')
+      item.find('.help-inline').html(msg)
+
+      item = lookupForm.find('[data-name="' + key + '"]').closest('.form-group')
+      item.addClass('has-error')
+      item.find('.help-inline').html(msg)
 
     # set autofocus
-    lookupForm.find('.has-error').find('input, textarea').first().focus()
+    lookupForm.find('.has-error').find('input, textarea, select').first().focus()

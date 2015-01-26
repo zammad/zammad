@@ -1345,10 +1345,11 @@ Ticket::StateType.create_if_not_exists( :id => 7, :name => 'removed', :updated_b
 
 Ticket::State.create_if_not_exists( :id => 1, :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id )
 Ticket::State.create_if_not_exists( :id => 2, :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id )
-Ticket::State.create_if_not_exists( :id => 3, :name => 'pending', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id  )
+Ticket::State.create_if_not_exists( :id => 3, :name => 'pending reminder', :state_type_id => Ticket::StateType.where(:name => 'pending reminder').first.id  )
 Ticket::State.create_if_not_exists( :id => 4, :name => 'closed', :state_type_id  => Ticket::StateType.where(:name => 'closed').first.id  )
 Ticket::State.create_if_not_exists( :id => 5, :name => 'merged', :state_type_id  => Ticket::StateType.where(:name => 'merged').first.id  )
-Ticket::State.create_if_not_exists( :id => 6, :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id  )
+Ticket::State.create_if_not_exists( :id => 6, :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :active => false )
+Ticket::State.create_if_not_exists( :id => 7, :name => 'pending close', :state_type_id => Ticket::StateType.where(:name => 'pending action').first.id, :next_state_id => 5 )
 
 Ticket::Priority.create_if_not_exists( :name => '1 low' )
 Ticket::Priority.create_if_not_exists( :name => '2 normal' )
@@ -1427,8 +1428,9 @@ Overview.create_if_not_exists(
   :prio       => 1010,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.state_id' => [3],
-    'tickets.owner_id' => 'current_user.id',
+    'tickets.state_id'     => [3],
+    'tickets.owner_id'     => 'current_user.id',
+    'tickets.pending_time' => { 'direction' => 'before', 'count'=> 1, 'area' => 'minute' },
   },
   :order => {
     :by        => 'created_at',
@@ -1484,12 +1486,33 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
+  :name       => 'All pending reached Tickets',
+  :link       => 'all_pending_reached',
+  :prio       => 1035,
+  :role_id    => overview_role.id,
+  :condition  => {
+    'tickets.state_id'     => [3],
+    'tickets.pending_time' => { 'direction' => 'before', 'count'=> 1, 'area' => 'minute' },
+  },
+  :order => {
+    :by        => 'created_at',
+    :direction => 'ASC',
+  },
+  :view => {
+    :d => [ 'title', 'customer', 'group', 'created_at' ],
+    :s => [ 'title', 'customer', 'group', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    :view_mode_default => 's',
+  },
+)
+
+Overview.create_if_not_exists(
   :name       => 'Escalated Tickets',
   :link       => 'all_escalated',
   :prio       => 1040,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.escalation_time' =>{ 'direction' => 'before', 'count'=> 5, 'area' => 'minute' },
+    'tickets.escalation_time' => { 'direction' => 'before', 'count'=> 5, 'area' => 'minute' },
   },
   :order => {
     :by        => 'escalation_time',
@@ -1510,8 +1533,8 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.state_id' => [ 1,2,3,4,6 ],
-    'tickets.customer_id'     => 'current_user.id',
+    'tickets.state_id'    => [ 1,2,3,4,6 ],
+    'tickets.customer_id' => 'current_user.id',
   },
   :order => {
     :by        => 'created_at',

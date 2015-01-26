@@ -757,6 +757,11 @@ textarea,
     border-color: red !important;
   }
 
+  input.has-error {
+    box-shadow: none;
+    border-color: red !important;
+  }
+
   .help-inline:not(:empty) {
     color: red;
     padding: 2px;
