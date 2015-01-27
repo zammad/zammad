@@ -597,6 +597,10 @@ test( "check attibute validation", function() {
   verify  = App.Utils.htmlAttributeCleanup( string )
   equal( verify, result, string )
 
+  string = "abc()=$\n123\rß"
+  result  = 'abc123'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
 
 });
 
