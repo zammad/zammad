@@ -190,3 +190,7 @@ class App.Utils
     return true if messageCleanup.match(/<(br|\s+?|\/)>$/im)
     return true if messageCleanup.match(/<div(|\s.+?)><\/div>$/im)
     false
+
+  # cleanString = App.Utils.htmlAttributeCleanup( string )
+  @htmlAttributeCleanup: (string) ->
+    string.replace(/(\!|\s|\r|\t|,|\.|\?|"|'|\^|#)/g, '')

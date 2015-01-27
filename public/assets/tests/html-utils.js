@@ -539,4 +539,60 @@ test( "check if last line is a empty line", function() {
 
 });
 
+// check attibute validation
+test( "check attibute validation", function() {
+
+  var string = '123'
+  var result  = '123'
+  var verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = '123!'
+  result  = '123'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = '12 3!'
+  result  = '123'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = '12-3!'
+  result  = '12-3'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = '12_3!'
+  result  = '12_3'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = '^12_3!'
+  result  = '12_3'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = '^1\n 2_3!'
+  result  = '12_3'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = 'abc?'
+  result  = 'abc'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = 'abc."'
+  result  = 'abc'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+  string = '#abc!^'
+  result  = 'abc'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
+
+});
+
 }

@@ -114,6 +114,10 @@ class _taskManagerSingleton extends App.Controller
     @workers
 
   add: ( key, callback, params, to_not_show = false ) ->
+
+    # input validation
+    key = App.Utils.htmlAttributeCleanup(key)
+
     active = true
     if to_not_show
       active = false
