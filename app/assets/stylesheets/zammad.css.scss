@@ -3748,6 +3748,10 @@ footer {
   margin-right: 0;
 }
 
+.tabsSidebar-sidebarSpacer.is-closed .scrollPageHeader {
+  @extend .tabsSidebar-sidebarSpacer.is-closed;
+}
+
 .tabsSidebar-holder {
   overflow: hidden;
   position: relative;
