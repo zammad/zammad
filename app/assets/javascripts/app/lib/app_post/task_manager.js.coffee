@@ -271,8 +271,12 @@ class _taskManagerSingleton extends App.Controller
     )
     @allTasks = allTasks || []
 
-    $('#content_permanent_' + key ).html('')
-    $('#content_permanent_' + key ).remove()
+    try
+      $('#content_permanent_' + key ).html('')
+      $('#content_permanent_' + key ).remove()
+    catch
+      @log 'notice', "invalid key '#{key}'"
+
 
     delete @workersStarted[ key ]
     delete @workers[ key ]
@@ -304,8 +308,11 @@ class _taskManagerSingleton extends App.Controller
 
     # release tasks
     for task in @allTasks
-      $('#content_permanent_' + task.key ).html('')
-      $('#content_permanent_' + task.key ).remove()
+      try
+        $('#content_permanent_' + task.key ).html('')
+        $('#content_permanent_' + task.key ).remove()
+      catch
+        @log 'notice', "invalid key '#{key}'"
 
       delete @workersStarted[ task.key ]
       delete @workers[ task.key ]

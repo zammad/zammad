@@ -592,6 +592,11 @@ test( "check attibute validation", function() {
   verify  = App.Utils.htmlAttributeCleanup( string )
   equal( verify, result, string )
 
+  string = 'abc()=$'
+  result  = 'abc'
+  verify  = App.Utils.htmlAttributeCleanup( string )
+  equal( verify, result, string )
+
 
 });
 

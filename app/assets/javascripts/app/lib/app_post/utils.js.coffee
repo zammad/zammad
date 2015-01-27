@@ -193,4 +193,4 @@ class App.Utils
 
   # cleanString = App.Utils.htmlAttributeCleanup( string )
   @htmlAttributeCleanup: (string) ->
-    string.replace(/(\!|\s|\r|\t|,|\.|\?|"|'|\^|#)/g, '')
+    string.replace(/(\!|\s|\r|\t|,|\.|\?|"|'|\^|#|=|\(|\)|\$)/g, '')
