@@ -107,8 +107,8 @@ class App.Utils
 
     html
 
-  # cleanHtmlWithRichText = App.Utils.htmlClanup( html )
-  @htmlClanup: (html) ->
+  # cleanHtmlWithRichText = App.Utils.htmlCleanup( html )
+  @htmlCleanup: (html) ->
 
     # remove style and class
     @_removeAttributes( html )

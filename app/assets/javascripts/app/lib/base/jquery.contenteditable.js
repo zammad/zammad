@@ -126,7 +126,7 @@
       }
       else {
         setTimeout($.proxy(function(){
-          App.Utils.htmlClanup(this.$element)
+          App.Utils.htmlCleanup(this.$element)
         }, _this), 0)
       }
 

@@ -701,7 +701,7 @@ class RichText extends App.ControllerContent
     @$('.js-textarea').on('keyup', (e) =>
       console.log('KU')
       textarea = @$('.js-textarea')
-      App.Utils.htmlClanup(textarea)
+      App.Utils.htmlCleanup(textarea)
     )
 
     @$('.js-textarea').on('paste', (e) =>
@@ -726,7 +726,7 @@ class RichText extends App.ControllerContent
 
         # cleanup
         textarea = @$('.js-textarea')
-        App.Utils.htmlClanup(textarea)
+        App.Utils.htmlCleanup(textarea)
 
         # remove marker for cursor
         textarea.find('[data-cursor=1]').focus()

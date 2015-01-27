@@ -278,44 +278,44 @@ test( "htmlRemoveRichtext", function() {
 
 });
 
-// htmlClanup
-test( "htmlClanup", function() {
+// htmlCleanup
+test( "htmlCleanup", function() {
 
   var source = "<div><a href=\"test\">test</a></div>"
   var should = "test"
-  var result = App.Utils.htmlClanup( $(source) )
+  var result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<a href=\"some_link\">some link to somewhere</a>"
   should = "some link to somewhere"
-  result = App.Utils.htmlClanup( $(source) )
+  result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><h1>some link to somewhere</h1></a>"
   should = "<div>some link to somewhere</div>"
-  result = App.Utils.htmlClanup( $(source) )
+  result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><small>some link to somewhere</small></a>"
   //should = "<div>some link to somewhere</div>"
   should = "some link to somewhere"
-  result = App.Utils.htmlClanup( $(source) )
+  result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><time>some link to somewhere</time></a>"
   //should = "<div>some link to somewhere</div>"
   should = "some link to somewhere"
-  result = App.Utils.htmlClanup( $(source) )
+  result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><h1>some link to somewhere</h1><p><hr></p></div>"
   should = "<div>some link to somewhere</div><p></p><p></p>"
-  result = App.Utils.htmlClanup( $(source) )
+  result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><br></div>"
   should = "<br>"
-  result = App.Utils.htmlClanup( $(source) )
+  result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><div class=\"xxx\"><br></div></div>"
