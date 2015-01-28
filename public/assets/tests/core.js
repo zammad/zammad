@@ -426,6 +426,63 @@ test( "config", function() {
   });
 });
 
+
+// clone
+test( "clone", function() {
+
+  // simple
+  var tests = [
+    {
+      key1: 123,
+      key2: 1234
+    },
+    {
+      key1: 123,
+      key2: '1234'
+    },
+    [1,2,4,5,6],
+    {
+      key1: 123,
+      key2: null,
+    },
+    {
+      key1: 123,
+      key2: undefined,
+    },
+    {
+      key1: 123,
+      key2: undefined,
+      key3: {
+        keya: 'some',
+        keyb: undefined,
+      },
+      key4: ['a', 'b', null, false, true, undefined],
+    },
+    undefined,
+    false,
+    true,
+    null,
+    {
+      key1: 123,
+      key2: undefined,
+      key3: {
+        keya: 'some',
+        keyb: undefined,
+      },
+      key4: ['a', 'b', {
+        a: 123,
+        b: [1,5,7,8,1213,1231321]
+      }],
+    },
+  ];
+
+  _.each(tests, function(test) {
+    var item = clone( test )
+    deepEqual( item, test, 'clone' );
+  });
+
+});
+
 // diff
 test( "diff", function() {
 

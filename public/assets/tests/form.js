@@ -501,7 +501,7 @@ test( "form dependend fields check", function() {
     select2: "false",
     selectmulti2: [ "true", "false" ],
     selectmultioption1: "false",
-    datetime1: undefined,
+    datetime1: null,
     datetime2: undefined,
     datetime3: '2015-01-11T12:40:00.000Z',
     datetime4: undefined,

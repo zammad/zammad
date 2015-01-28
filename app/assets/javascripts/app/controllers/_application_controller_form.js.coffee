@@ -2324,7 +2324,9 @@ class App.ControllerForm extends App.Controller
           month       = param[ "#{dateKey}month" ]
           day         = param[ "#{dateKey}day" ]
           timezone    = (new Date()).getTimezoneOffset()/60
-          if year && month && day && day && !lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
+          if lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
+            param[ namespace[0] ] = null
+          else if year && month && day && day
             format = (number) ->
               if parseInt(number) < 10
                 number = "0#{number}"
@@ -2360,7 +2362,9 @@ class App.ControllerForm extends App.Controller
           hour        = param[ "#{datetimeKey}hour" ]
           minute      = param[ "#{datetimeKey}minute" ]
           timezone    = (new Date()).getTimezoneOffset()/60
-          if year && month && day && hour && minute && !lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
+          if lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
+            param[ namespace[0] ] = null
+          else if year && month && day && hour && minute
             format = (number) ->
               if parseInt(number) < 10
                 number = "0#{number}"

@@ -604,4 +604,279 @@ test( "check attibute validation", function() {
 
 });
 
+// check form diff
+test( "check form diff", function() {
+
+  var dataNow = {
+     owner_id:     1,
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  var dataLast = {
+     owner_id:     '',
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  var diff = {}
+  var result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+     owner_id:     '1',
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  dataLast = {
+     owner_id:     '',
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  dataLast = {
+     owner_id:     1,
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+     owner_id:     '',
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  dataLast = {
+     pending_date: '2015-01-28T09:39:00Z',
+  }
+  diff = {
+    owner_id: '',
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    owner_id:  '',
+    state_ids: [1,5,6,7],
+  }
+  dataLast = {}
+  diff = {
+    owner_id:  '',
+    state_ids: ['1','5','6','7'],
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    owner_id:  1,
+    state_ids: [1,5,7,6],
+  }
+  dataLast = {
+    owner_id:  '',
+    state_ids: [1,5,6,7],
+  }
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+     owner_id:  1,
+     state_ids: [1,5,6,7],
+  }
+  dataLast = {
+    state_ids: ['1','5','7'],
+  }
+  diff = {
+    owner_id:  '',
+    state_ids: ['6'],
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+     owner_id:  '',
+     state_ids: [1,5,6,7],
+  }
+  dataLast = {
+    owner_id:  1,
+    state_ids: [1,5,6,7],
+  }
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+     owner_id:  '',
+     state_ids: [1,5,6,7],
+  }
+  dataLast = {
+    owner_id:  5,
+    state_ids: [1,5,6,7],
+  }
+  diff = {
+    owner_id: ''
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    state_id:     4,
+    pending_time: '2015-01-28T11:34:00Z'
+  }
+  dataLast = {
+    state_id:     5,
+    pending_time: undefined
+  }
+  diff = {
+    state_id:     '4',
+    pending_time: '2015-01-28T11:34:00Z'
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    pending_time: undefined
+  }
+  dataLast = {
+    pending_time: null
+  }
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    ticket: {
+      pending_time: undefined,
+    },
+  }
+  dataLast = {
+    ticket: {
+      pending_time: null,
+    },
+  }
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    test: '123',
+    ticket: {
+      pending_time: undefined,
+    },
+  }
+  dataLast = {
+    test: '123',
+    ticket: {
+      pending_time: null,
+    },
+  }
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    test: '123',
+  }
+  dataLast = {}
+  diff = {
+    test: '123',
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    test: '123',
+  }
+  dataLast = {
+    test: [1,2,3,4]
+  }
+  diff = {
+    test: '123',
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    test: '123',
+  }
+  dataLast = {
+    test: {
+      1: 1,
+      2: 2,
+    }
+  }
+  diff = {
+    test: '123',
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    test: [1,2,3,'4']
+  }
+  dataLast = {
+    test: '123',
+  }
+  diff = {
+    test: ['1','2','3','4']
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    test: {
+      1: 1,
+      2: 2,
+    }
+  }
+  dataLast = {
+    test: '123',
+  }
+  diff = {
+    test: {
+      1: '1',
+      2: '2',
+    }
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    test: '123',
+    ticket: {
+      pending_time: undefined,
+    },
+  }
+  dataLast = {
+    ticket: {
+      pending_time: null,
+    },
+  }
+  diff = {
+    test: '123',
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+});
+
 }

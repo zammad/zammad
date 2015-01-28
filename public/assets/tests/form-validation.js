@@ -201,7 +201,8 @@ test( "date validation check", function() {
   App.ControllerForm.validate( { errors: errors, form: el } )
 
   equal( el.find('[data-name="date1"]').closest('.form-group').hasClass('has-error'), true, 'check date1 has-error')
-  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date1 error message')
+  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
+  //equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date1 error message')
 
   // set new values
   el.find('[name="{date}date1___day"]').val('1')

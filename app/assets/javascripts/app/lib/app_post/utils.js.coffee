@@ -159,7 +159,7 @@ class App.Utils
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
 
-    console.log('SC', messageText, signatureText, quote(signatureText))
+    #console.log('SC', messageText, signatureText, quote(signatureText))
     regex = new RegExp( quote(signatureText), 'mi' )
     if messageText.match(regex)
       false
@@ -194,3 +194,58 @@ class App.Utils
   # cleanString = App.Utils.htmlAttributeCleanup( string )
   @htmlAttributeCleanup: (string) ->
     string.replace(/((?![-a-zA-Z0-9_]+).|\n|\r|\t)/gm, '')
+
+  # diff = App.Utils.formDiff( dataNow, dataLast )
+  @formDiff: ( dataNowRaw, dataLastRaw ) ->
+
+    # do type convertation to compare it against form
+    dataNow = clone(dataNowRaw)
+    @_formDiffNormalizer(dataNow)
+    dataLast = clone(dataLastRaw)
+    @_formDiffNormalizer(dataLast)
+
+    @_formDiffChanges( dataNow, dataLast )
+
+  @_formDiffChanges: (dataNow, dataLast, changes = {}) ->
+    for dataNowkey, dataNowValue of dataNow
+      if dataNow[dataNowkey] isnt dataLast[dataNowkey]
+        if _.isArray( dataNow[dataNowkey] ) && _.isArray( dataLast[dataNowkey] )
+          diff = _.difference( dataNow[dataNowkey], dataLast[dataNowkey] )
+          if !_.isEmpty( diff )
+            changes[dataNowkey] = diff
+        else if _.isObject( dataNow[dataNowkey] ) &&  _.isObject( dataLast[dataNowkey] )
+          changes = @_formDiffChanges( dataNow[dataNowkey], dataLast[dataNowkey], changes )
+        else
+          changes[dataNowkey] = dataNow[dataNowkey]
+    changes
+
+  @_formDiffNormalizer: (data) ->
+    if _.isArray( data )
+      for i in [0...data.length]
+        data[i] = @_formDiffNormalizer( data[i] )
+    else if _.isObject( data )
+      for key, value of data
+
+        if _.isArray( data[key] )
+          @_formDiffNormalizer( data[key] )
+        else if _.isObject( data[key] )
+          @_formDiffNormalizer( data[key] )
+        else
+          data[key] = @_formDiffNormalizerItem( key, data[key] )
+    else
+      @_formDiffNormalizerItem( '', data )
+
+
+  @_formDiffNormalizerItem: (key, value) ->
+
+    # handel owner/nobody behavior
+    if key is 'owner_id' && value.toString() is '1'
+      value = ''
+    else if typeof value is 'number'
+      value = value.toString()
+
+    # handle null/undefined behavior - we just handle both as the same
+    else if value is null
+      value = undefined
+
+    value
