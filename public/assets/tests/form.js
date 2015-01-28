@@ -36,7 +36,7 @@ test( "form elements check", function() {
         { name: 'richtext1', display: 'Richtext1', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext1']  },
         { name: 'richtext2', display: 'Richtext2', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext2']  },
         { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
-        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: true, default: defaults['datetime2']  },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: false, default: defaults['datetime2']  },
       ]
     },
     autofocus: true
@@ -119,8 +119,11 @@ test( "form params check", function() {
     richtext7: "<div>&nbsp;<div>&nbsp;\n</div>  \n</div>",
     richtext8: '<div>lalu <i>b</i> lalu</div>',
     datetime1: new Date( Date.parse('2015-01-11T12:40:00Z') ),
-    active1: true,
-    active2: false,
+    datetime3: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    date1:     '2015-01-11',
+    date3:     '2015-01-11',
+    active1:   true,
+    active2:   false,
   }
   new App.ControllerForm({
     el:        el,
@@ -150,6 +153,12 @@ test( "form params check", function() {
         { name: 'richtext8', display: 'Richtext8', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext8']  },
         { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
         { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: true, default: defaults['datetime2']  },
+        { name: 'datetime3', display: 'Datetime3', tag: 'datetime', null: false, default: defaults['datetime3']  },
+        { name: 'datetime4', display: 'Datetime4', tag: 'datetime', null: false, default: defaults['datetime4']  },
+        { name: 'date1',     display: 'Date1',     tag: 'date', null: true, default: defaults['date1']  },
+        { name: 'date2',     display: 'Date2',     tag: 'date', null: true, default: defaults['date2']  },
+        { name: 'date3',     display: 'Date3',     tag: 'date', null: false, default: defaults['date3']  },
+        { name: 'date4',     display: 'Date4',     tag: 'date', null: false, default: defaults['date4']  },
         { name: 'active1', display: 'Active1',  tag: 'boolean', type: 'boolean', default: defaults['active1'], null: false },
         { name: 'active2', display: 'Active2',  tag: 'boolean', type: 'boolean', default: defaults['active2'], null: false },
       ],
@@ -231,6 +240,13 @@ test( "form params check", function() {
     richtext7: '',
     richtext8: '<div>lalu <i>b</i> lalu</div>',
     datetime1: '2015-01-11T12:40:00.000Z',
+    datetime2: undefined,
+    datetime3: '2015-01-11T12:40:00.000Z',
+    datetime4: undefined,
+    date1: '2015-01-11',
+    date2: undefined,
+    date3: '2015-01-11',
+    date4: undefined,
     active1: true,
     active2: false,
   }
@@ -333,8 +349,12 @@ test( "form dependend fields check", function() {
     select2: false,
     selectmulti2: [ false, true ],
     selectmultioption1: false,
+    datetime1: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    datetime3: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    date1:     '2015-01-11',
+    date3:     '2015-01-11',
   }
-  new App.ControllerForm({
+  var form = new App.ControllerForm({
     el:        el,
     model:     {
       configure_attributes: [
@@ -345,6 +365,14 @@ test( "form dependend fields check", function() {
         { name: 'select2', display: 'Select2', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, default: true },
         { name: 'selectmulti2', display: 'SelectMulti2', tag: 'select', null: false, multiple: true, options: { true: 'internal', false: 'public' }, default: [] },
         { name: 'selectmultioption1', display: 'SelectMultiOption1', tag: 'select', null: true, multiple: true, options: [{ value: true, name: 'internal' }, { value: false, name: 'public' }], default: true },
+        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: true, default: defaults['datetime2']  },
+        { name: 'datetime3', display: 'Datetime3', tag: 'datetime', null: false, default: defaults['datetime3']  },
+        { name: 'datetime4', display: 'Datetime4', tag: 'datetime', null: false, default: defaults['datetime4']  },
+        { name: 'date1',     display: 'Date1',     tag: 'date', null: true, default: defaults['date1']  },
+        { name: 'date2',     display: 'Date2',     tag: 'date', null: true, default: defaults['date2']  },
+        { name: 'date3',     display: 'Date3',     tag: 'date', null: false, default: defaults['date3']  },
+        { name: 'date4',     display: 'Date4',     tag: 'date', null: false, default: defaults['date4']  },
       ],
     },
     params: defaults,
@@ -362,10 +390,30 @@ test( "form dependend fields check", function() {
       {
         bind: {
           name: 'select1',
+          value: ["true"]
+        },
+        change: {
+          name: 'datetime1',
+          action: 'hide'
+        },
+      },
+      {
+        bind: {
+          name: 'select1',
           value: ["false"]
         },
         change: {
           name: 'input2',
+          action: 'show'
+        },
+      },
+      {
+        bind: {
+          name: 'select1',
+          value: ["false"]
+        },
+        change: {
+          name: 'datetime1',
           action: 'show'
         },
       },
@@ -422,9 +470,26 @@ test( "form dependend fields check", function() {
     select1: "false",
     select2: "false",
     selectmulti2: [ "true", "false" ],
-    selectmultioption1: "false"
+    selectmultioption1: "false",
+    datetime1: '2015-01-11T12:40:00.000Z',
+    datetime2: undefined,
+    datetime3: '2015-01-11T12:40:00.000Z',
+    datetime4: undefined,
+    date1: '2015-01-11',
+    date2: undefined,
+    date3: '2015-01-11',
+    date4: undefined,
   }
   deepEqual( params, test_params, 'form param check' );
+
+  errors = form.validate(params)
+  test_errors = {
+    datetime4: "is required",
+    date4:     "is required",
+  }
+  deepEqual( errors, test_errors, 'validation errors check' )
+  App.ControllerForm.validate( { errors: errors, form: el } )
+
   el.find('[name="select1"]').val('true')
   el.find('[name="select1"]').trigger('change')
   params = App.ControllerForm.params( el )
@@ -435,7 +500,15 @@ test( "form dependend fields check", function() {
     select1: "true",
     select2: "false",
     selectmulti2: [ "true", "false" ],
-    selectmultioption1: "false"
+    selectmultioption1: "false",
+    datetime1: undefined,
+    datetime2: undefined,
+    datetime3: '2015-01-11T12:40:00.000Z',
+    datetime4: undefined,
+    date1: '2015-01-11',
+    date2: undefined,
+    date3: '2015-01-11',
+    date4: undefined,
   }
   deepEqual( params, test_params, 'form param check' );
 });

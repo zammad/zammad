@@ -396,6 +396,17 @@ class App.ControllerForm extends App.Controller
             errors.year = 'invalid'
 
         if !_.isEmpty(errors)
+
+          # if field is required, if not do not show error
+          if year is '' && day is '' && month
+            if attribute.null
+              e.preventDefault()
+              e.stopPropagation()
+              return
+            else
+              item.closest('.form-group').find('.help-inline').text( 'is required' )
+
+          # show invalid options
           for key, value of errors
             item.closest('.form-group').addClass('has-error')
             item.closest('.form-group').find("[name=\"#{fieldPrefix}___#{key}\"]").addClass('has-error')
@@ -556,6 +567,17 @@ class App.ControllerForm extends App.Controller
             errors.minute = 'invalid'
 
         if !_.isEmpty(errors)
+
+          # if field is required, if not do not show error
+          if year is '' && day is '' && month is '' && hour is '' && minute is ''
+            if attribute.null
+              e.preventDefault()
+              e.stopPropagation()
+              return
+            else
+              item.closest('.form-group').find('.help-inline').text( 'is required' )
+
+          # show invalid options
           for key, value of errors
             item.closest('.form-group').addClass('has-error')
             item.closest('.form-group').find("[name=\"#{fieldPrefix}___#{key}\"]").addClass('has-error')
@@ -2302,17 +2324,22 @@ class App.ControllerForm extends App.Controller
           month       = param[ "#{dateKey}month" ]
           day         = param[ "#{dateKey}day" ]
           timezone    = (new Date()).getTimezoneOffset()/60
-          if year && month && day
+          if year && month && day && day && !lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
             format = (number) ->
               if parseInt(number) < 10
                 number = "0#{number}"
               number
             try
               time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T00:00:00Z" ) )
+              if time && time.toString() is 'Invalid Date'
+                throw "Invalid Date #{year}-#{format(month)}-#{format(day)}"
               time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
-              param[ namespace[0] ] = time.toISOString()
+              param[ namespace[0] ] = "#{time.getFullYear()}-#{format(time.getMonth()+1)}-#{format(time.getDate())}"
             catch err
+              param[ namespace[0] ] = undefined
               console.log('ERR', err)
+          else
+            param[ namespace[0] ] = undefined
 
         #console.log('T', time, time.getHours(), time.getMinutes())
 
@@ -2333,17 +2360,22 @@ class App.ControllerForm extends App.Controller
           hour        = param[ "#{datetimeKey}hour" ]
           minute      = param[ "#{datetimeKey}minute" ]
           timezone    = (new Date()).getTimezoneOffset()/60
-          if year && month && day && hour && minute
+          if year && month && day && hour && minute && !lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
             format = (number) ->
               if parseInt(number) < 10
                 number = "0#{number}"
               number
             try
               time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
+              if time && time.toString() is 'Invalid Date'
+                throw "Invalid Date #{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z"
               time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
               param[ namespace[0] ] = time.toISOString()
             catch err
+              param[ namespace[0] ] = undefined
               console.log('ERR', err)
+          else
+            param[ namespace[0] ] = undefined
 
         #console.log('T', time, time.getHours(), time.getMinutes())
 
