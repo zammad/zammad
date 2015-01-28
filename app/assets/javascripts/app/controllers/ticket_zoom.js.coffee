@@ -79,7 +79,7 @@ class App.TicketZoom extends App.Controller
     return false if !@ticket
     formCurrent = @formParam( @el.find('.edit') )
     ticket      = App.Ticket.find(@ticket_id).attributes()
-    modelDiff   = @getDiff( ticket, formCurrent )
+    modelDiff   = App.Utils.formDiff( formCurrent, ticket  )
     return false if !modelDiff || _.isEmpty( modelDiff )
     return true
 
@@ -269,7 +269,7 @@ class App.TicketZoom extends App.Controller
 
           defaults   = ticket.attributes()
           task_state = @taskGet('ticket')
-          modelDiff  = @getDiff( defaults, task_state )
+          modelDiff  = App.Utils.formDiff( task_state, defaults )
           #if @isRole('Customer')
           #  delete defaults['state_id']
           #  delete defaults['state']
@@ -483,18 +483,19 @@ class App.TicketZoom extends App.Controller
       currentParams =
         ticket:  @formParam( @el.find('.edit') )
         article: @formParam( @el.find('.article-add') )
+      #console.log('lll', currentStore)
+      # remove not needed attributes
+      delete currentParams.article.form_id
 
       # get diff of model
       modelDiff =
-        ticket:  @getDiff( currentStore.ticket, currentParams.ticket )
-        article: @getDiff( currentStore.article, currentParams.article )
+        ticket:  App.Utils.formDiff( currentParams.ticket, currentStore.ticket )
+        article: App.Utils.formDiff( currentParams.article, currentStore.article )
       #console.log('modelDiff', modelDiff)
 
       # get diff of last save
       changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast )
-      #console.log('changedBetweenLastSave', changedBetweenLastSave)
       if !changedBetweenLastSave
-        #console.log('autosave DIFF result', changedBetweenLastSave)
         console.log('model DIFF ', modelDiff)
 
         @autosaveLast = clone(currentParams)
@@ -503,21 +504,11 @@ class App.TicketZoom extends App.Controller
         @taskUpdateAll( modelDiff )
     @interval( update, 3000, 'autosave' )
 
-  getDiff: (model, params) =>
-
-    # do type convertation to compare it against form
-    modelClone = clone(model)
-    for key, value of modelClone
-      if key is 'owner_id' && modelClone[key] is 1
-        modelClone[key] = ''
-      else if typeof value is 'number'
-        modelClone[key] = value.toString()
-    #console.log('LLL', modelClone)
-    result = difference( modelClone, params )
-
   markFormDiff: (diff = {}) =>
-    ticketForm  = @$('.edit')
-    articleForm = @$('.article-add')
+    ticketForm    = @$('.edit')
+    ticketSidebar = @$('.tabsSidebar-tab[data-tab="ticket"]')
+    articleForm   = @$('.article-add')
+    resetButton   = @$('.js-reset')
 
     params         = {}
     params.ticket  = @formParam( ticketForm )
@@ -526,23 +517,30 @@ class App.TicketZoom extends App.Controller
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)
+      ticketSidebar.removeClass('is-changed')
       ticketForm.removeClass('form-changed')
       ticketForm.find('.form-group').removeClass('is-changed')
-      @$('.js-reset').addClass('hide')
+      resetButton.addClass('hide')
 
     # set changes
     else
       ticketForm.addClass('form-changed')
+      if !_.isEmpty(diff.ticket)
+        ticketSidebar.addClass('is-changed')
+      else
+        ticketSidebar.removeClass('is-changed')
       for currentKey, currentValue of params.ticket
         element = @$('.edit [name="' + currentKey + '"]').parents('.form-group')
-        if diff.ticket[currentKey]
+        if !element.get(0)
+          element = @$('.edit [data-name="' + currentKey + '"]').parents('.form-group')
+        if currentKey of diff.ticket
           if !element.hasClass('is-changed')
             element.addClass('is-changed')
         else
           if element.hasClass('is-changed')
             element.removeClass('is-changed')
 
-      @$('.js-reset').removeClass('hide')
+      resetButton.removeClass('hide')
 
 
   submit: (e) =>
@@ -700,8 +698,12 @@ class App.TicketZoom extends App.Controller
     App.TaskManager.update( @task_key, { 'state': @localTaskData })
 
   taskReset: =>
+
     # hide reset button
     @$('.js-reset').addClass('hide')
+
+    # remove change flag on tab
+    @$('.tabsSidebar-tab[data-tab="ticket"]').removeClass('is-changed')
 
     # reset task state
     @localTaskData =
