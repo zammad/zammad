@@ -1998,6 +1998,11 @@ class App.ControllerForm extends App.Controller
       el.find('[data-name="' + key + '"]').closest('.form-group').removeClass('hide')
       el.find('[data-name="' + key + '"]').removeClass('is-hidden')
 
+    # hide old validation states
+    if el
+      el.find('.has-error').removeClass('has-error')
+      el.find('.help-inline').html('')
+
   _hide: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]

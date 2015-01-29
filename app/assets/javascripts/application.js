@@ -73,11 +73,49 @@ function difference(object1, object2) {
   return changes;
 }
 
-// taken from http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
+// clone, just data, no instances of objects
 function clone(item) {
+  if (!item) { return item; }
+
+  // ignore certain objects
+  var acceptedInstances = [ 'Object', 'Number', 'String', 'Boolean', 'Array' ];
+  if (item && item.constructor) {
+    if (!_.contains(acceptedInstances, item.constructor.name)) {
+      return;
+    }
+  }
+
+  var result;
+  // copy array
+  if ( _.isArray(item) )  {
+    result = [];
+    item.forEach(function(child, index, array) {
+        result[index] = clone( child );
+    });
+  }
+
+  // copy object
+  else if ( _.isObject(item) ) {
+    result = {};
+    for(var key in item) {
+      if (item.hasOwnProperty(key)) {
+        result[key] = clone(item[key])
+      }
+    }
+  }
+
+  // copy others
+  else {
+    result = item;
+  }
+  return result;
+}
+
+// taken from http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
+function clone2(item) {
     if (!item) { return item; } // null, undefined values check
 
-    var types = [ Number, String, Boolean ],
+    var types = [ Number, String, Boolean ], 
         result;
 
     // normalizing primitives if someone did new String('aaa'), or new Number('444');
@@ -90,13 +128,13 @@ function clone(item) {
     if (typeof result == "undefined") {
         if (Object.prototype.toString.call( item ) === "[object Array]") {
             result = [];
-            item.forEach(function(child, index, array) {
+            item.forEach(function(child, index, array) { 
                 result[index] = clone( child );
             });
         } else if (typeof item == "object") {
             // testing that this is DOM
             if (item.nodeType && typeof item.cloneNode == "function") {
-                var result = item.cloneNode( true );
+                var result = item.cloneNode( true );    
             } else if (!item.prototype) { // check that this is a literal
                 if (item instanceof Date) {
                     result = new Date(item);
@@ -121,6 +159,7 @@ function clone(item) {
             result = item;
         }
     }
+
     return result;
 }
 

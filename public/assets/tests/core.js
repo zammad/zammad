@@ -441,6 +441,7 @@ test( "clone", function() {
       key2: '1234'
     },
     [1,2,4,5,6],
+    'some string äöü',
     {
       key1: 123,
       key2: null,
@@ -480,6 +481,22 @@ test( "clone", function() {
     var item = clone( test )
     deepEqual( item, test, 'clone' );
   });
+
+  // complex test
+  var source = [
+    { name: 'some name' },
+    { name: 'some name2' },
+  ]
+  var reference = [
+    { name: 'some name' },
+    { name: 'some name2' },
+  ]
+  var result = clone( source )
+
+  // modify source later, should not have any result
+  source[0].name = 'some new name'
+
+  deepEqual( result, reference, 'clone' );
 
 });
 

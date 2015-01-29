@@ -877,6 +877,65 @@ test( "check form diff", function() {
   deepEqual( result, diff, 'check form diff' );
 
 
+  dataNow = undefined
+  dataLast = undefined
+
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {}
+  dataLast = {"number":"10012","title":"some subject 123äöü","group_id":1,"owner_id":1,"customer_id":2,"state_id":3,"priority_id":2,"article":{"from":"Test Master Agent","to":"","cc":"","body":"dasdad","content_type":"text/html","ticket_id":12,"type_id":9,"sender_id":1,"internal":false,"form_id":"523405147"},"updated_at":"2015-01-29T09:22:23.000Z","pending_time":"2015-01-28T22:22:00.000Z","id":12}
+  diff = {}
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+  // do not compare content of data instances/objects
+  no = function test_object() {
+    this.a = function() { return 123; }
+    this.b = function() { return '1234'; }
+    this.c = function() { return [123]; }
+    this.d = [1,2,3];
+    this.e = 'abc';
+  }
+  no1 = new no()
+  no2 = new no()
+  no3 = new no()
+
+  dataNow = {
+    number:'10013',
+    Article: [no1],
+  }
+  dataLast = {
+    number: "10012",
+    title: "some subject 123äöü",
+    Article: [ no2, no3 ],
+  }
+  diff = {
+    number:'10013',
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
+  dataNow = {
+    number:'10013',
+    Article: [no1,2],
+  }
+  dataLast = {
+    number: "10012",
+    title: "some subject 123äöü",
+    Article: [ no2, no3 ],
+  }
+  diff = {
+    number:'10013',
+    Article: ['2'],
+  }
+  result = App.Utils.formDiff( dataNow, dataLast )
+  deepEqual( result, diff, 'check form diff' );
+
+
 });
 
 }
