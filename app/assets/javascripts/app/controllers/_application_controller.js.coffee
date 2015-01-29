@@ -161,9 +161,9 @@ class App.Controller extends Spine.Controller
   # human readable file size
   humanFileSize: (size) =>
     if size > ( 1024 * 1024 )
-      size = Math.round( size / ( 1024 * 1024 ) ) + ' MBytes'
+      size = Math.round( size / ( 1024 * 1024 ) ) + ' MB'
     else if size > 1024
-      size = Math.round( size / 1024 ) + ' KBytes'
+      size = Math.round( size / 1024 ) + ' KB'
     else
       size = size + ' Bytes'
     size
