@@ -382,7 +382,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
 
   renderAttachment: (fileName, fileSize) =>
     @attachments.push([fileName, fileSize])
-    @attachmentsHolder.append App.view('ticket_zoom/attachment')
+    @attachmentsHolder.append App.view('generic/attachment_item')
       fileName: fileName
       fileSize: @humanFileSize(fileSize)
 
