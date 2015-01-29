@@ -3662,14 +3662,13 @@ footer {
     }
 
       .attachment-name {
-        @extend .u-textTruncate;
         margin-right: 5px;
       }
 
       .attachment-size {
-        @extend .u-textTruncate;
         white-space: nowrap;
-        min-width: 40px;
+        float: right;
+        margin-right: 10px;
       }
 
       .attachment-delete {
