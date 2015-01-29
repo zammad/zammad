@@ -1,12 +1,12 @@
 <div class="horizontal" data-name="<%= @attribute.nameRaw %>">
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___day" value="<%= @day %>" placeholder="dd" style="width: 50px;">
+  <input type="text" maxlength="2" name="<%= @attribute.name %>___day" value="<%= @day %>" placeholder="dd" style="width: 44px;">
   .
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___month" value="<%= @month %>" placeholder="mm" style="width: 50px;">
+  <input type="text" maxlength="2" name="<%= @attribute.name %>___month" value="<%= @month %>" placeholder="mm" style="width: 44px;">
   .
   <input type="text" maxlength="4" name="<%= @attribute.name %>___year" value="<%= @year %>" placeholder="yyyy" style="width: 70px;">
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___hour" value="<%= @hour %>" placeholder="00" style="width: 50px;">
+  <input type="text" maxlength="2" name="<%= @attribute.name %>___hour" value="<%= @hour %>" placeholder="00" style="width: 44px;">
   :
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___minute" value="<%= @minute %>" placeholder="00" style="width: 50px;">
+  <input type="text" maxlength="2" name="<%= @attribute.name %>___minute" value="<%= @minute %>" placeholder="00" style="width: 44px;">
 </div>
 <div>
 <a class="js-today"><%- @T('now') %></a>
