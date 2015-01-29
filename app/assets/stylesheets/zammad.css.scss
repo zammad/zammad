@@ -3655,6 +3655,7 @@ footer {
       font-size: 13px;
       padding: 1px 10px 1px 7px;
       cursor: default;
+      position: relative;
     }
 
     .attachment:hover {
@@ -3679,10 +3680,12 @@ footer {
       }
 
       .attachment:hover .attachment-delete {
-        @extend .u-textTruncate;
-        padding-left: 7px;
+        padding: 0 10px 0 30px;
+        float: right;
         display: block;
-        min-width: 80px;
+        position: absolute;
+        right: 0;
+        background: linear-gradient(to right, hsla(200,20%,97%,0), hsla(200,20%,97%,1) 20px);
       }
 
         .attachment-delete .icon {
