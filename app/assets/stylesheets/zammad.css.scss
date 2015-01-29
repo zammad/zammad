@@ -3661,17 +3661,28 @@ footer {
     }
 
       .attachment-name {
+        @extend .u-textTruncate;
         margin-right: 5px;
+      }
+
+      .attachment-size {
+        @extend .u-textTruncate;
+        white-space: nowrap;
+        min-width: 40px;
       }
 
       .attachment-delete {
         color: hsl(198,19%,72%);
         text-decoration: underline;
         display: none;
+        white-space: nowrap;
       }
 
       .attachment:hover .attachment-delete {
+        @extend .u-textTruncate;
+        padding-left: 7px;
         display: block;
+        min-width: 80px;
       }
 
         .attachment-delete .icon {
