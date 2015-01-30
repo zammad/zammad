@@ -16,6 +16,10 @@ gem 'json'
 group :assets do
   gem 'sass-rails' #, github: 'rails/sass-rails'
   gem 'coffee-rails'
+
+  # use dedicated version of coffee-script-source, 1.9.0 is broken
+  gem 'coffee-script-source', '1.8.0'
+
   gem 'uglifier'
 end
 
