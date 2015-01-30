@@ -292,11 +292,11 @@ class App.ControllerForm extends App.Controller
           unixtime = new Date( Date.parse( "#{attribute.value}T00:00:00Z" ) )
         else
           unixtime = new Date( attribute.value )
-        year     = unixtime.getYear() + 1900
-        month    = unixtime.getMonth() + 1
-        day      = unixtime.getDate()
-        hour     = unixtime.getHours()
-        minute   = unixtime.getMinutes()
+        year     = unixtime.getUTCFullYear()
+        month    = unixtime.getUTCMonth() + 1
+        day      = unixtime.getUTCDate()
+        hour     = unixtime.getUTCHours()
+        minute   = unixtime.getUTCMinutes()
       item = $( App.view('generic/date')(
         attribute: attribute
         year:      year
@@ -322,10 +322,10 @@ class App.ControllerForm extends App.Controller
           time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T00:00:00Z" ) )
         else
           time = new Date()
-        time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
-        item.closest('.form-group').find("[name=\"{date}#{name}___day\"]").val( time.getDate() )
-        item.closest('.form-group').find("[name=\"{date}#{name}___month\"]").val( time.getMonth()+1 )
-        item.closest('.form-group').find("[name=\"{date}#{name}___year\"]").val( time.getFullYear() )
+        #time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
+        item.closest('.form-group').find("[name=\"{date}#{name}___day\"]").val( time.getUTCDate() )
+        item.closest('.form-group').find("[name=\"{date}#{name}___month\"]").val( time.getUTCMonth()+1 )
+        item.closest('.form-group').find("[name=\"{date}#{name}___year\"]").val( time.getUTCFullYear() )
 
       item.find('.js-today').bind('click', (e) ->
         e.preventDefault()
@@ -430,7 +430,7 @@ class App.ControllerForm extends App.Controller
           unixtime = new Date( Date.parse( attribute.value ) )
         else
           unixtime = new Date( attribute.value )
-        year     = unixtime.getYear() + 1900
+        year     = unixtime.getFullYear()
         month    = unixtime.getMonth() + 1
         day      = unixtime.getDate()
         hour     = unixtime.getHours()
@@ -2325,11 +2325,11 @@ class App.ControllerForm extends App.Controller
 
         if !param[ namespace[0] ]
           dateKey = "{date}#{namespace[0]}___"
-          year        = param[ "#{dateKey}year" ]
-          month       = param[ "#{dateKey}month" ]
-          day         = param[ "#{dateKey}day" ]
-          timezone    = (new Date()).getTimezoneOffset()/60
-          if lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
+          year    = param[ "#{dateKey}year" ]
+          month   = param[ "#{dateKey}month" ]
+          day     = param[ "#{dateKey}day" ]
+
+          if lookupForm.find('[data-name = "' + namespace[0] + '"]').hasClass('is-hidden')
             param[ namespace[0] ] = null
           else if year && month && day && day
             format = (number) ->
@@ -2340,8 +2340,7 @@ class App.ControllerForm extends App.Controller
               time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T00:00:00Z" ) )
               if time && time.toString() is 'Invalid Date'
                 throw "Invalid Date #{year}-#{format(month)}-#{format(day)}"
-              time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
-              param[ namespace[0] ] = "#{time.getFullYear()}-#{format(time.getMonth()+1)}-#{format(time.getDate())}"
+              param[ namespace[0] ] = "#{time.getUTCFullYear()}-#{format(time.getUTCMonth()+1)}-#{format(time.getUTCDate())}"
             catch err
               param[ namespace[0] ] = undefined
               console.log('ERR', err)
@@ -2366,7 +2365,7 @@ class App.ControllerForm extends App.Controller
           day         = param[ "#{datetimeKey}day" ]
           hour        = param[ "#{datetimeKey}hour" ]
           minute      = param[ "#{datetimeKey}minute" ]
-          timezone    = (new Date()).getTimezoneOffset()/60
+
           if lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
             param[ namespace[0] ] = null
           else if year && month && day && hour && minute
