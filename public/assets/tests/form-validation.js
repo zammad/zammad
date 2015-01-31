@@ -136,9 +136,11 @@ test( "datetime validation check", function() {
   el.find('[name="{datetime}datetime1___minute"]').val('42')
 
   // check params
+  timeStamp = new Date( Date.parse("2015-01-01T12:42:00.000Z") )
+  timeStamp.setMinutes( timeStamp.getMinutes() + timeStamp.getTimezoneOffset() )
   params = App.ControllerForm.params( el )
   test_params = {
-    datetime1: "2015-01-01T11:42:00.000Z",
+    datetime1: timeStamp.toISOString(),
   }
   deepEqual( params, test_params, 'params check' )
 
