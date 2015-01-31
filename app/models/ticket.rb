@@ -128,6 +128,9 @@ returns
     # update articles
     Ticket::Article.where( :ticket_id => self.id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
 
+    # touch new ticket (to broadcast change)
+    Ticket.find( data[:ticket_id] ).touch
+
     # update history
 
     # create new merge article
