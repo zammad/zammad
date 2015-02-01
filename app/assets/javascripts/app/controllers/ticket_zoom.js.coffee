@@ -34,12 +34,16 @@ class App.TicketZoom extends App.Controller
     @bind(
       'Ticket:update'
       (data) =>
-        update = =>
-          if data.id.toString() is @ticket_id.toString()
-            @log 'notice', 'TRY', new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
-            if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-              @fetch( @ticket_id, false )
-        @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
+
+        # check if current ticket has changed
+        if data.id.toString() is @ticket_id.toString()
+
+          # check if we already have the request queued
+          #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
+          update = =>
+            @fetch( @ticket_id, false )
+          if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
+            @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
     )
 
   meta: =>
@@ -264,7 +268,6 @@ class App.TicketZoom extends App.Controller
           )
 
         show = (ticket) =>
-          console.log('SHOW', ticket.id)
           el.find('.edit').html('')
 
           defaults   = ticket.attributes()
