@@ -9,8 +9,8 @@ class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
 
   before_create  :check_attributes_protected, :check_limits, :cache_delete, :fill_up_user_create
-  before_update  :check_limits, :cache_delete_before, :fill_up_user_update
-  before_destroy :cache_delete_before, :destroy_dependencies
+  before_update  :check_limits, :fill_up_user_update
+  before_destroy :destroy_dependencies
 
   after_create  :cache_delete
   after_update  :cache_delete
@@ -225,19 +225,34 @@ returns
     #    puts 'g ' + group.class.to_s
     if o.respond_to?('cache_delete') then o.cache_delete end
   end
-  def cache_delete_before
-    old_object = self.class.where( :id => self.id ).first
-    if old_object
-      old_object.cache_delete
-    end
-    self.cache_delete
-  end
 
   def cache_delete
+
+    # delete id caches
     key = self.class.to_s + '::' + self.id.to_s
     Cache.delete( key.to_s )
     key = self.class.to_s + ':f:' + self.id.to_s
     Cache.delete( key.to_s )
+
+    # delete old name / login caches
+    if self.changed?
+      if self.changes.has_key?('name')
+        name = self.changes['name'][0].to_s
+        key = self.class.to_s + '::' + name
+        Cache.delete( key.to_s )
+        key = self.class.to_s + ':f:' + name
+        Cache.delete( key.to_s )
+      end
+      if self.changes.has_key?('login')
+        name = self.changes['login'][0].to_s
+        key = self.class.to_s + '::' + name
+        Cache.delete( key.to_s )
+        key = self.class.to_s + ':f:' + name
+        Cache.delete( key.to_s )
+      end
+    end
+
+    # delete name / login caches
     if self[:name]
       key = self.class.to_s + '::' + self.name.to_s
       Cache.delete( key.to_s )
@@ -260,6 +275,7 @@ returns
     end
     Cache.write( key.to_s, data )
   end
+
   def self.cache_get(data_id, full = false)
     if !full
       key = self.to_s + '::' + data_id.to_s
