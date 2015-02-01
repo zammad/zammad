@@ -16,14 +16,14 @@ class AgentTicketActionLevel1Test < TestCase
             :execute => 'create_ticket',
             :group   => 'Users',
             :subject => 'some subject 123äöü',
-            :body    => 'some body 123äöü',
+            :body    => 'some body 123äöü - with closed tab',
           },
 
           # check ticket
           {
             :execute      => 'match',
             :css          => '.content.active .ticket-article',
-            :value        => 'some body 123äöü',
+            :value        => 'some body 123äöü - with closed tab',
             :match_result => true,
           },
 
@@ -44,7 +44,7 @@ class AgentTicketActionLevel1Test < TestCase
           #},
           {
             :execute => 'set_ticket_attributes',
-            :body    => 'some body 1234 äöüß',
+            :body    => 'some body 1234 äöüß - with closed tab',
           },
           {
             :execute => 'click',
@@ -57,7 +57,7 @@ class AgentTicketActionLevel1Test < TestCase
           {
             :execute => 'watch_for',
             :area    => '.content.active .ticket-article',
-            :value   => 'some body 1234 äöüß',
+            :value   => 'some body 1234 äöüß - with closed tab',
           },
           {
             :execute => 'close_all_tasks',
@@ -74,14 +74,14 @@ class AgentTicketActionLevel1Test < TestCase
             :execute => 'create_ticket',
             :group   => 'Users',
             :subject => 'test to merge',
-            :body    => 'some body 123äöü 222 - test to merge',
+            :body    => 'some body 123äöü 222 - test to merge - with closed tab',
           },
 
           # check ticket
           {
             :execute => 'watch_for',
             :area    => '.content.active .ticket-article',
-            :value   => 'some body 123äöü 222 - test to merge',
+            :value   => 'some body 123äöü 222 - test to merge - with closed tab',
           },
 
           # update ticket
@@ -92,7 +92,7 @@ class AgentTicketActionLevel1Test < TestCase
           #},
           {
             :execute => 'set_ticket_attributes',
-            :body    => 'some body 1234 äöüß 333',
+            :body    => 'some body 1234 äöüß 333 - with closed tab',
           },
           {
             :execute => 'click',
@@ -105,7 +105,7 @@ class AgentTicketActionLevel1Test < TestCase
           {
             :execute => 'watch_for',
             :area    => '.content.active .ticket-article',
-            :value   => 'some body 1234 äöüß 333',
+            :value   => 'some body 1234 äöüß 333 - with closed tab',
           },
 
           # check if task is shown
@@ -158,7 +158,7 @@ class AgentTicketActionLevel1Test < TestCase
           {
             :execute      => 'match',
             :css          => 'body',
-            :value        => 'test to merge',
+            :value        => 'test to merge - with closed tab',
             :match_result => true,
           },
 
@@ -186,14 +186,14 @@ class AgentTicketActionLevel1Test < TestCase
             :execute => 'create_ticket',
             :group   => 'Users',
             :subject => 'some subject 123äöü',
-            :body    => 'some body 123äöü',
+            :body    => 'some body 123äöü - with open tab',
           },
 
           # check ticket
           {
             :execute      => 'match',
             :css          => '.content.active .ticket-article',
-            :value        => 'some body 123äöü',
+            :value        => 'some body 123äöü - with open tab',
             :match_result => true,
           },
 
@@ -218,14 +218,14 @@ class AgentTicketActionLevel1Test < TestCase
             :execute => 'create_ticket',
             :group   => 'Users',
             :subject => 'test to merge',
-            :body    => 'some body 123äöü 222 - test to merge',
+            :body    => 'some body 123äöü 222 - test to merge - with open tab',
           },
 
           # check ticket
           {
             :execute => 'watch_for',
             :area    => '.content.active .ticket-article',
-            :value   => 'some body 123äöü 222 - test to merge',
+            :value   => 'some body 123äöü 222 - test to merge - with open tab',
           },
 
           # check if task is shown
@@ -278,7 +278,7 @@ class AgentTicketActionLevel1Test < TestCase
           {
             :execute      => 'match',
             :css          => 'body',
-            :value        => 'test to merge',
+            :value        => 'test to merge - with open tab',
             :match_result => true,
           },
 

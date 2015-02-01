@@ -17,9 +17,8 @@ class Ticket < ApplicationModel
   before_create   :check_generate, :check_defaults, :check_title
   before_update   :check_defaults, :check_title
   before_destroy  :destroy_dependencies
-  after_create    :notify_clients_after_create
-  after_update    :notify_clients_after_update
-  after_destroy   :notify_clients_after_destroy
+
+  notify_clients_support
 
   activity_stream_support :ignore_attributes => {
     :create_article_type_id   => true,

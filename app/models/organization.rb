@@ -11,11 +11,9 @@ class Organization < ApplicationModel
   has_many                :members,  :class_name => 'User'
   validates               :name,     :presence => true
 
-  after_create            :notify_clients_after_create
-  after_update            :notify_clients_after_update
-
   activity_stream_support  :role => 'Admin'
   history_support
   search_index_support
+  notify_clients_support
 
 end

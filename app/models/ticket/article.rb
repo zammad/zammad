@@ -15,9 +15,7 @@ class Ticket::Article < ApplicationModel
   belongs_to    :updated_by,  :class_name => 'User'
   before_create :check_subject
   before_update :check_subject
-  after_create  :notify_clients_after_create
-  after_update  :notify_clients_after_update
-  after_destroy :notify_clients_after_destroy
+  notify_clients_support
 
   activity_stream_support :ignore_attributes => {
     :type_id   => true,

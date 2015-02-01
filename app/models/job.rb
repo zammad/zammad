@@ -9,9 +9,7 @@ class Job < ApplicationModel
   before_create   :updated_matching
   before_update   :updated_matching
 
-  after_create    :notify_clients_after_create
-  after_update    :notify_clients_after_update
-  after_destroy   :notify_clients_after_destroy
+  notify_clients_support
 
   def self.run
     time    = Time.new
@@ -27,12 +25,12 @@ class Job < ApplicationModel
     jobs = Job.where( :active => true )
     jobs.each do |job|
 
-      # only execute jobs, older then 2 min, to give admin posibility to change
-      next if job.updated_at > Time.now - 2.minutes
+      # only execute jobs, older then 1 min, to give admin posibility to change
+      next if job.updated_at > Time.now - 1.minutes
 
       # check if jobs need to be executed
       # ignore if job was running within last 10 min.
-      next if job.last_run_at > Time.now - 10.minutes
+      next if job.last_run_at && job.last_run_at > Time.now - 10.minutes
 
       # check day
       next if !job.timeplan['days'].include?( day_map[time.wday] )

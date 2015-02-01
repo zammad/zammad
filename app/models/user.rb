@@ -32,9 +32,10 @@ class User < ApplicationModel
 
   before_create   :check_name, :check_email, :check_login, :check_password
   before_update   :check_password, :check_email, :check_login
-  after_create    :avatar_check, :notify_clients_after_create
-  after_update    :avatar_check, :notify_clients_after_update
-  after_destroy   :avatar_destroy, :notify_clients_after_destroy
+  after_create    :avatar_check
+  after_update    :avatar_check
+  after_destroy   :avatar_destroy
+  notify_clients_support
 
   has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
   has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update

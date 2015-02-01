@@ -14,6 +14,7 @@ class ApplicationModel < ActiveRecord::Base
 
   after_create  :cache_delete
   after_update  :cache_delete
+  after_touch   :cache_delete
   after_destroy :cache_delete
 
   after_create  :attachments_buffer_check
@@ -414,6 +415,23 @@ returns
     else
       raise "Need name, login or locale for create_or_update()"
     end
+  end
+
+=begin
+
+activate client notify support on create, update, touch and destroy
+
+class Model < ApplicationModel
+  notify_clients_support
+end
+
+=end
+
+  def self.notify_clients_support
+    after_create    :notify_clients_after_create
+    after_update    :notify_clients_after_update
+    after_touch     :notify_clients_after_update
+    after_destroy   :notify_clients_after_destroy
   end
 
 =begin
