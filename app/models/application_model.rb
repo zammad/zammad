@@ -41,10 +41,10 @@ class ApplicationModel < ActiveRecord::Base
 
   attr_accessor :history_changes_last_done
 
-  @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
+  @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::StateType', 'Ticket::Priority', 'Group', 'User', 'Role' ]
 
   def check_attributes_protected
-    if Setting.get('import_mode') && @@import_class_list.include?( self.class.to_s )
+    if ( !Setting.get('system_init_done') || Setting.get('import_mode')) && @@import_class_list.include?( self.class.to_s )
       # do noting, use id as it is
     else
       self[:id] = nil
