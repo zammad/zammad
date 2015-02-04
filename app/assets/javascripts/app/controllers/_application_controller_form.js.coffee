@@ -320,12 +320,13 @@ class App.ControllerForm extends App.Controller
           number
         if !reset && (year isnt '' && month isnt '' && day isnt '')
           time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T00:00:00Z" ) )
+          time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
         else
           time = new Date()
-        #time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
-        item.closest('.form-group').find("[name=\"{date}#{name}___day\"]").val( time.getUTCDate() )
-        item.closest('.form-group').find("[name=\"{date}#{name}___month\"]").val( time.getUTCMonth()+1 )
-        item.closest('.form-group').find("[name=\"{date}#{name}___year\"]").val( time.getUTCFullYear() )
+          time.setMinutes( time.getMinutes() + diff )
+        item.closest('.form-group').find("[name=\"{date}#{name}___day\"]").val( time.getDate() )
+        item.closest('.form-group').find("[name=\"{date}#{name}___month\"]").val( time.getMonth()+1 )
+        item.closest('.form-group').find("[name=\"{date}#{name}___year\"]").val( time.getFullYear() )
 
       item.find('.js-today').bind('click', (e) ->
         e.preventDefault()
@@ -462,9 +463,10 @@ class App.ControllerForm extends App.Controller
           number
         if !reset && (year isnt '' && month isnt '' && day isnt '' && hour isnt '' && day isnt '')
           time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
+          time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
         else
           time = new Date()
-        time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
+          time.setMinutes( time.getMinutes() + diff )
         #console.log('T', time, time.getHours(), time.getMinutes())
         item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val( time.getDate() )
         item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val( time.getMonth()+1 )

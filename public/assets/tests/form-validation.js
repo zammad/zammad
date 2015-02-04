@@ -249,3 +249,83 @@ test( "date validation check", function() {
   equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
 
 });
+
+test( "datetime selector check", function() {
+
+  $('#forms').append('<hr><h1>datetime selector check</h1><form id="form4"></form>')
+
+  var el       = $('#form4')
+  var defaults = {}
+  var form     = new App.ControllerForm({
+    el:    el,
+    model: {
+      configure_attributes: [
+        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: false, default: defaults['datetime1'] },
+      ],
+    },
+    params: defaults,
+  });
+
+  // check params
+  params = App.ControllerForm.params( el )
+  test_params = {
+    datetime1: undefined,
+  }
+  deepEqual( params, test_params, 'params check' )
+
+  el.find('.js-today').click()
+
+  // check params
+  timeStamp = new Date()
+  currentTime = timeStamp.toISOString()
+  currentTime = currentTime.replace(/(\d\d\.\d\d\dZ)$/, '00.000Z')
+  params = App.ControllerForm.params( el )
+  test_params = {
+    datetime1: currentTime,
+  }
+  deepEqual( params, test_params, 'params check' )
+
+});
+
+test( "date selector check", function() {
+
+  $('#forms').append('<hr><h1>date selector check</h1><form id="form5"></form>')
+
+  var el       = $('#form5')
+  var defaults = {}
+  var form     = new App.ControllerForm({
+    el:    el,
+    model: {
+      configure_attributes: [
+        { name: 'date1', display: 'Datet1', tag: 'date', null: false, default: defaults['date1'] },
+      ],
+    },
+    params: defaults,
+  });
+
+  // check params
+  params = App.ControllerForm.params( el )
+  test_params = {
+    date1: undefined,
+  }
+  deepEqual( params, test_params, 'params check' )
+
+  el.find('.js-today').click()
+
+  // check params
+  format = function (number) {
+    if ( parseInt(number) < 10 ) {
+      number = '0' + number.toString()
+    }
+    return number
+  }
+
+  timeStamp = new Date()
+  currentTime = timeStamp.getFullYear() + '-' + format(timeStamp.getMonth()+1) + '-' + format(timeStamp.getDate())
+  params = App.ControllerForm.params( el )
+  test_params = {
+    date1: currentTime,
+  }
+  deepEqual( params, test_params, 'params check' )
+
+});
