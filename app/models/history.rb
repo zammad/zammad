@@ -27,7 +27,7 @@ add a new history entry for an object
     :id_to             => 3,
     :id_from           => 2,
     :value_from        => 'open',
-    :value_to          => 'pending',
+    :value_to          => 'pending reminder',
     :created_by_id     => 1,
     :created_at        => '2013-06-04 10:00:00',
     :updated_at        => '2013-06-04 10:00:00'
