@@ -124,17 +124,27 @@ class App.TicketZoom extends App.Controller
           @doNotLog = 1
           @recentView( 'Ticket', ticket_id )
 
-      error: (xhr, status, error) =>
+      error: (xhr) =>
+        statusText = xhr.statusText
+        status     = xhr.status
+        detail     = xhr.responseText
+        #console.log('error', status, statusText)
 
-        # do not close window if request is aborted
-        return if status is 'abort'
+        # ignore if request is aborted
+        if statusText is 'abort'
+          return
+
+        # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
+        if @ticketUpdatedAtLastCall && status is 0
+          console.log('network issues e. g. temp. not connection', status, statusText, detail)
+          return
 
         # show error message
-        if xhr.status is 401 || error is 'Unauthorized'
+        if status is 401 || statusText is 'Unauthorized'
           @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
           @taskIconClass = 'error'
           @html App.view('generic/error/unauthorized')( objectName: 'Ticket' )
-        else if xhr.status is 404 || error is 'Not Found'
+        else if status is 404 || statusText is 'Not Found'
           @taskHead      = '» ' + App.i18n.translateInline('Not Found') + ' «'
           @taskIconClass = 'error'
           @html App.view('generic/error/not_found')( objectName: 'Ticket' )
@@ -142,9 +152,7 @@ class App.TicketZoom extends App.Controller
           @taskHead      = '» ' + App.i18n.translateInline('Error') + ' «'
           @taskIconClass = 'error'
 
-          status = xhr.status
-          detail = xhr.responseText
-          if !status && !detail
+          if !detail
             detail = 'General communication error, maybe internet is not available!'
           @html App.view('generic/error/generic')(
             status:     status
