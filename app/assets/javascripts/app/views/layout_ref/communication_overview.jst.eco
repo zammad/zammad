@@ -243,6 +243,10 @@ Oliver<br>
                   <div class="attachment-name u-highlight">something with very long line which is slonger as the container arount it if you can see it I wish you a very happy day.txt</div>
                   <div class="attachment-size">17.1 kb</div>
                 </div>
+                <div class="attachment horizontal">
+                  <div class="attachment-name u-highlight">something-withverylonglinewhichisslongerasthecontainerarountitifyoucanseeitIwishyouaveryhappyday.txt</div>
+                  <div class="attachment-size">17.1 kb</div>
+                </div>
               </div>
             </div>
           </div>
