@@ -276,7 +276,8 @@ class App.UserOrganizationAutocompletion extends App.Controller
     if e
       e.preventDefault()
     new UserNew(
-      parent: @
+      parent:    @
+      container: @el.closest('.content')
     )
 
 class UserNew extends App.ControllerModal

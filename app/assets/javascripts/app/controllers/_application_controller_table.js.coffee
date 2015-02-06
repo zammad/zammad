@@ -235,13 +235,14 @@ class App.ControllerTable extends App.Controller
 
     # bind on delete dialog
     if data.model && destroy
-      table.delegate('[data-type="destroy"]', 'click', (e) ->
+      table.delegate('[data-type="destroy"]', 'click', (e) =>
         e.stopPropagation()
         e.preventDefault()
         itemId = $(e.target).parents('tr').data('id')
         item   = data.model.find(itemId)
         new App.ControllerGenericDestroyConfirm(
-          item: item
+          item:      item
+          container: @container
         )
       )
 

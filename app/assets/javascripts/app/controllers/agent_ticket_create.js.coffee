@@ -473,8 +473,8 @@ class Sidebar extends App.Controller
           )
 
         new App.WidgetUser(
-          el:       el
-          user_id:  user.id
+          el:      el
+          user_id: user.id
         )
 
       editCustomer = (e, el) =>
@@ -483,9 +483,10 @@ class Sidebar extends App.Controller
           genericObject: 'User'
           screen: 'edit'
           pageData:
-            title: 'Users'
-            object: 'User'
+            title:   'Users'
+            object:  'User'
             objects: 'Users'
+          container: @el.closest('.content')
         )
       items.push {
         head: 'Customer'
@@ -493,9 +494,9 @@ class Sidebar extends App.Controller
         icon: 'person'
         actions: [
           {
-            title:  'Edit Customer'
-            name:  'Edit Customer'
-            class: 'glyphicon glyphicon-edit'
+            title:    'Edit Customer'
+            name:     'Edit Customer'
+            class:    'glyphicon glyphicon-edit'
             callback: editCustomer
           },
         ]
@@ -508,14 +509,15 @@ class Sidebar extends App.Controller
             id: user.organization_id
             genericObject: 'Organization'
             pageData:
-              title: 'Organizations'
-              object: 'Organization'
+              title:   'Organizations'
+              object:  'Organization'
               objects: 'Organizations'
+            container: @el.closest('.content')
           )
         showOrganization = (el) =>
           new App.WidgetOrganization(
-            el:               el
-            organization_id:  user.organization_id
+            el:              el
+            organization_id: user.organization_id
           )
         items.push {
           head: 'Organization'
@@ -523,6 +525,7 @@ class Sidebar extends App.Controller
           icon: 'group'
           actions: [
             {
+              title:    'Edit Organization'
               name:     'Edit Organization'
               class:    'glyphicon glyphicon-edit'
               callback: editOrganization

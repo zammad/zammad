@@ -329,21 +329,26 @@ class App.TicketZoom extends App.Controller
           )
 
       showTicketHistory = =>
-        new App.TicketHistory( ticket_id: @ticket.id )
+        new App.TicketHistory(
+          ticket_id: @ticket.id
+          container: @el.closest('.content')
+        )
       showTicketMerge = =>
-        new App.TicketMerge
-          ticket: @ticket
-          task_key: @task_key
-          container: @el
+        new App.TicketMerge(
+          ticket:    @ticket
+          task_key:  @task_key
+          container: @el.closest('.content')
+        )
       changeCustomer = (e, el) =>
         new App.TicketCustomer(
-          ticket: @ticket
+          ticket:    @ticket
+          container: @el.closest('.content')
         )
       items = [
         {
-          head: 'Ticket'
-          name: 'ticket'
-          icon: 'message'
+          head:     'Ticket'
+          name:     'ticket'
+          icon:     'message'
           callback: editTicket
         }
       ]
@@ -375,6 +380,7 @@ class App.TicketZoom extends App.Controller
               title:   'Users'
               object:  'User'
               objects: 'Users'
+            container: @el.closest('.content')
           )
         showCustomer = (el) =>
           new App.WidgetUser(
@@ -382,9 +388,9 @@ class App.TicketZoom extends App.Controller
             user_id:  @ticket.customer_id
           )
         items.push {
-          head: 'Customer'
-          name: 'customer'
-          icon: 'person'
+          head:    'Customer'
+          name:    'customer'
+          icon:    'person'
           actions: [
             {
               title:    'Change Customer'
@@ -408,6 +414,7 @@ class App.TicketZoom extends App.Controller
                 title:   'Organizations'
                 object:  'Organization'
                 objects: 'Organizations'
+              container: @el.closest('.content')
             )
           showOrganization = (el) =>
             new App.WidgetOrganization(
@@ -429,8 +436,8 @@ class App.TicketZoom extends App.Controller
           }
 
       new App.Sidebar(
-        el:     @el.find('.tabsSidebar')
-        items:  items
+        el:    @el.find('.tabsSidebar')
+        items: items
       )
 
     # show article

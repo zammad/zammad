@@ -2,15 +2,15 @@ class App.ControllerGenericNew extends App.ControllerModal
   constructor: (params) ->
     super
 
-    @head  = App.i18n.translateContent( 'New' ) + ': ' + App.i18n.translateContent( @pageData.object )
+    @head   = App.i18n.translateContent( 'New' ) + ': ' + App.i18n.translateContent( @pageData.object )
     @cancel = true
     @button = true
 
     controller = new App.ControllerForm(
-      model:      App[ @genericObject ]
-      params:     @item
-      screen:     @screen || 'edit'
-      autofocus:  true
+      model:     App[ @genericObject ]
+      params:    @item
+      screen:    @screen || 'edit'
+      autofocus: true
     )
 
     @content = controller.form
@@ -98,8 +98,8 @@ class App.ControllerGenericEdit extends App.ControllerModal
 
 class App.ControllerGenericIndex extends App.Controller
   events:
-    'click [data-type=edit]':    'edit'
-    'click [data-type=new]':     'new'
+    'click [data-type = edit]':    'edit'
+    'click [data-type = new]':     'new'
 
   constructor: ->
     super
@@ -160,6 +160,7 @@ class App.ControllerGenericIndex extends App.Controller
         bindRow:
           events:
             'click': @edit
+        container: @container
       },
       @pageData.tableExtend
     )
@@ -177,6 +178,7 @@ class App.ControllerGenericIndex extends App.Controller
       id:            item.id
       pageData:      @pageData
       genericObject: @genericObject
+      container:     @container
     )
 
   new: (e) ->
@@ -184,6 +186,7 @@ class App.ControllerGenericIndex extends App.Controller
     new App.ControllerGenericNew(
       pageData:      @pageData
       genericObject: @genericObject
+      container:     @container
     )
 
 class App.ControllerGenericDestroyConfirm extends App.ControllerModal

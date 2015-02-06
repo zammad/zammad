@@ -7,9 +7,9 @@ class App.OrganizationHistory extends App.GenericHistory
 
     # get data
     @ajax(
-      id:    'organization_history',
-      type:  'GET',
-      url:   @apiPath + '/organizations/history/' + @organization_id,
+      id:    'organization_history'
+      type:  'GET'
+      url:   @apiPath + '/organizations/history/' + @organization_id
       success: (data, status, xhr) =>
 
         # load assets
