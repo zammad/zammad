@@ -486,10 +486,12 @@ test( "clone", function() {
   var source = [
     { name: 'some name' },
     { name: 'some name2' },
+    { fn: function() { return 'test' } },
   ]
   var reference = [
     { name: 'some name' },
     { name: 'some name2' },
+    { fn: undefined },
   ]
   var result = clone( source )
 
@@ -497,6 +499,33 @@ test( "clone", function() {
   source[0].name = 'some new name'
 
   deepEqual( result, reference, 'clone' );
+
+
+  // full test
+  var source = [
+    { name: 'some name' },
+    { name: 'some name2' },
+    { fn: function a() { return 'test' } },
+  ]
+  var reference = [
+    { name: 'some name' },
+    { name: 'some name2' },
+    { fn: function a() { return 'test' } },
+  ]
+  var result = clone( source, true )
+
+  // modify source later, should not have any result
+  source[0].name = 'some new name'
+  source[2].fn   = 'some new name'
+
+  deepEqual( result[0], reference[0], 'clone full' );
+  deepEqual( result[1], reference[1], 'clone full' );
+
+  equal( typeof reference[2].fn, 'function')
+  equal( typeof result[2].fn, 'function')
+
+  equal( reference[2].fn(), 'test')
+  equal( result[2].fn(), 'test')
 
 });
 

@@ -74,41 +74,49 @@ function difference(object1, object2) {
 }
 
 // clone, just data, no instances of objects
-function clone(item) {
-  if (!item) { return item; }
+function clone(item, full) {
+  if (!item) { return item }
 
   // ignore certain objects
-  var acceptedInstances = [ 'Object', 'Number', 'String', 'Boolean', 'Array' ];
+  var acceptedInstances = [ 'Object', 'Number', 'String', 'Boolean', 'Array' ]
+  if (full) {
+    acceptedInstances.push( 'Function' )
+  }
   if (item && item.constructor) {
     if (!_.contains(acceptedInstances, item.constructor.name)) {
-      return;
+      return
     }
   }
 
-  var result;
   // copy array
+  var result;
   if ( _.isArray(item) )  {
-    result = [];
+    result = []
     item.forEach(function(child, index, array) {
-        result[index] = clone( child );
+      result[index] = clone( child, full )
     });
+  }
+
+  // copy function
+  else if ( _.isFunction(item) ) {
+    result = item.bind({})
   }
 
   // copy object
   else if ( _.isObject(item) ) {
-    result = {};
+    result = {}
     for(var key in item) {
       if (item.hasOwnProperty(key)) {
-        result[key] = clone(item[key])
+        result[key] = clone( item[key], full )
       }
     }
   }
 
   // copy others
   else {
-    result = item;
+    result = item
   }
-  return result;
+  return result
 }
 
 // taken from http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
