@@ -61,6 +61,8 @@ class App.User extends App.Model
     if !@image || @image is 'none'
       return @uniqueAvatar(size, placement, cssClass)
     else
+      if @vip
+        cssClass += "#{cssClass} vip"
       "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
 
   uniqueAvatar: (size = 40, placement = '', cssClass = '', avatar) ->
@@ -80,6 +82,9 @@ class App.User extends App.Model
       data      = "data-id=\"#{@id}\""
     else
       data      = "data-avatar-id=\"#{avatar.id}\""
+
+    if @vip
+      cssClass += "#{cssClass} vip"
     "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
   @_fillUp: (data) ->
