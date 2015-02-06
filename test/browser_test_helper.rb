@@ -525,6 +525,55 @@ class TestCase < Test::Unit::TestCase
       }
       assert( false, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
       return
+    elsif action[:execute] == 'search_user'
+      element = instance.find_elements( { :css => '#global-search' } )[0]
+      element.click
+      element.clear
+      if @stack
+        action[:term].gsub! '###stack###', @stack
+      end
+      element.send_keys( action[:term] )
+      sleep 3
+      element = instance.find_element( { :partial_link_text => action[:term] } ).click
+      name = instance.find_elements( { :css => '.active h1' } )[0].text
+      if name !~ /#{action[:term]}/
+        assert( false, "(#{test[:name]}) unable to search/find user #{action[:term]}!" )
+        return
+      end
+      assert( true, "(#{test[:name]}) user #{action[:term]} found" )
+      return
+    elsif action[:execute] == 'search_organization'
+      element = instance.find_elements( { :css => '#global-search' } )[0]
+      element.click
+      element.clear
+      if @stack
+        action[:term].gsub! '###stack###', @stack
+      end
+      element.send_keys( action[:term] )
+      sleep 3
+      instance.find_elements( { :css => '.search .empty-search' } )[0].click
+      sleep 0.5
+      text = instance.find_elements( { :css => '#global-search' } )[0].attribute('value')
+      if !text
+        assert( false, "(#{test[:name]}) #global-search is not empty!" )
+        return
+      end
+      element = instance.find_elements( { :css => '#global-search' } )[0]
+      element.click
+      element.clear
+      if @stack
+        action[:term].gsub! '###stack###', @stack
+      end
+      element.send_keys( action[:term] )
+      sleep 2
+      element = instance.find_element( { :partial_link_text => action[:term] } ).click
+      name = instance.find_elements( { :css => '.active h1' } )[0].text
+      if name !~ /#{action[:term]}/
+        assert( false, "(#{test[:name]}) unable to search/find org #{action[:term]}!" )
+        return
+      end
+      assert( true, "(#{test[:name]}) org #{action[:term]} found" )
+      return
     elsif action[:execute] == 'search_ticket'
       element = instance.find_elements( { :css => '#global-search' } )[0]
       element.click
@@ -544,7 +593,7 @@ class TestCase < Test::Unit::TestCase
       element.clear
       action[:number].gsub! '###stack###', @stack
       element.send_keys( action[:number] )
-      sleep 3
+      sleep 2
       element = instance.find_element( { :partial_link_text => action[:number] } ).click
       number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
       if number !~ /#{action[:number]}/
@@ -684,14 +733,14 @@ class TestCase < Test::Unit::TestCase
         match = false
         if action[:no_quote]
           #puts "aaaa #{text}/#{action[:value]}"
-          if text =~ /#{action[:value]}/
+          if text =~ /#{action[:value]}/i
             if $1
               @stack = $1
             end
             match = $1 || true
           end
         else
-          if text =~ /#{Regexp.quote(action[:value])}/
+          if text =~ /#{Regexp.quote(action[:value])}/i
             match = true
           end
         end

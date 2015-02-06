@@ -26,12 +26,12 @@ class AgentOrganizationProfileTest < TestCase
           {
             :where   => :instance1,
             :execute => 'search_organization',
-            :term    => 'Zammad',
+            :term    => 'Zammad Foundation',
           },
           {
             :where   => :instance2,
             :execute => 'search_organization',
-            :term    => 'Zammad',
+            :term    => 'Zammad Foundation',
           },
 
           # update note
@@ -79,7 +79,7 @@ class AgentOrganizationProfileTest < TestCase
           # search and open org
           {
             :execute => 'search_organization',
-            :term    => 'Zammad',
+            :term    => 'Zammad Foundation',
           },
           {
             :execute      => 'match',
@@ -170,7 +170,7 @@ class AgentOrganizationProfileTest < TestCase
           # switch to org tab, verify if ticket is shown
           {
             :execute => 'search_organization',
-            :term    => 'Zammad',
+            :term    => 'Zammad Foundation',
           },
 
           {
