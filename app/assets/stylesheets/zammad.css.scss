@@ -2478,7 +2478,7 @@ footer {
 
   .user-menu .dropdown-menu > li > a:hover {
     color: #2594d4;
-    background: rgba(0,0,0,.05);    
+    background: rgba(0,0,0,.05);
   }
 
 .avatar {
@@ -2491,6 +2491,11 @@ footer {
   display: inline-block;
   vertical-align: bottom;
 }
+
+  :not(.navigation) .avatar.vip {
+    border: 2px dotted;
+    border-color: #fff;
+  }
 
   .avatar.size-50 {
     width: 50px;
@@ -2515,14 +2520,28 @@ footer {
     cursor: default;
   }
 
+  :not(.navigation) .unique.avatar.vip {
+    border: 2px dotted;
+    line-height: 40px;
+  }
+
   .unique.avatar.size-50 {
     font-size: 16px;
     line-height: 52px;
   }
 
+  :not(.navigation) .unique.avatar.size-50.vip {
+    line-height: 50px;
+  }
+
   .unique.avatar.size-80 {
     font-size: 20px;
     line-height: 84px;
+  }
+
+  :not(.navigation) .unique.avatar.size-80.vip {
+    font-size: 20px;
+    line-height: 82px;
   }
 
 .sidebar {

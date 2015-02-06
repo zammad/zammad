@@ -463,6 +463,7 @@ class UpdateObjectManager2 < ActiveRecord::Migration
         :maxlength    => 100,
         :null         => true,
         :autocomplete => 'off',
+        :item_class => 'formGroup--halfSize',
       },
       :editable => false,
       :active   => true,
@@ -593,7 +594,6 @@ class UpdateObjectManager2 < ActiveRecord::Migration
       :display     => 'Active',
       :data_type   => 'boolean',
       :data_option => {
-        :maxlength => 250,
         :null      => true,
         :default   => true,
       },
