@@ -9,13 +9,13 @@
 <div class="profile-section">
   <div class="profile-details horizontal wrap">
     <% for row in @userData: %>
-      <% if @user[row.name]: %>
-        <% if row.tag is 'richtext': %>
-          <div class="profile-detailsEntry" style="width: 100%;">
-            <label><%- @Ti( row.display ) %></label>
-            <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%- @user[row.name] %></div>
-          </div>
-        <% else: %>
+      <% if row.tag is 'richtext': %>
+        <div class="profile-detailsEntry" style="width: 100%;">
+          <label><%- @Ti( row.display ) %></label>
+          <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%- @user[row.name] %></div>
+        </div>
+      <% else: %>
+        <% if @user[row.name]: %>
           <div class="profile-detailsEntry">
             <label><%- @Ti( row.display ) %></label>
             <%- @L( @P( @user[row.name] ) ) %>
