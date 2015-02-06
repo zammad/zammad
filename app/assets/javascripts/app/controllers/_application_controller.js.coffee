@@ -556,10 +556,10 @@ class App.ControllerModal extends App.Controller
       @el.addClass('modal--local')
 
     @el.modal
-      keyboard: @keyboard
-      show:     true
-      backdrop: @backdrop
-      container:    @container
+      keyboard:  @keyboard
+      show:      true
+      backdrop:  @backdrop
+      container: @container
     .on
       'show.bs.modal':   @onShow
       'shown.bs.modal':  @onShown
