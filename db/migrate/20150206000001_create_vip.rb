@@ -8,10 +8,10 @@ class CreateVip < ActiveRecord::Migration
       :display     => 'VIP',
       :data_type   => 'boolean',
       :data_option => {
-        :null      => false,
-        :default   => false,
+        :null       => true,
+        :default    => false,
         :item_class => 'formGroup--halfSize',
-        :options => {
+        :options    => {
           :false => 'no',
           :true  => 'yes',
         },
@@ -20,9 +20,9 @@ class CreateVip < ActiveRecord::Migration
       :editable => false,
       :active   => true,
       :screens  => {
-        :edit         => {
+        :edit => {
           :Admin => {
-            :null => false,
+            :null => true,
           },
         },
         :view => {
