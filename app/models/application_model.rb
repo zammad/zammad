@@ -57,16 +57,26 @@ remove all not used model attributes of params
 
   result = Model.param_cleanup(params)
 
+  for object creation, ignore id's
+
+  result = Model.param_cleanup(params, true)
+
+
 returns
 
   result = params # params with valid attributes of model
 
 =end
 
-  def self.param_cleanup(params)
+  def self.param_cleanup(params, newObject = false)
 
     if params == nil
       raise "No params for #{self.to_s}!"
+    end
+
+    # ignore id for new objects
+    if newObject && params[:id]
+      params[:id] = nil
     end
 
     # only use object attributes

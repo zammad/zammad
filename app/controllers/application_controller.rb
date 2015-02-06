@@ -264,7 +264,7 @@ class ApplicationController < ActionController::Base
     begin
 
       # create object
-      generic_object = object.new( object.param_cleanup( params[object.to_app_model_url] ) )
+      generic_object = object.new( object.param_cleanup( params[object.to_app_model_url], true ) )
 
       # save object
       generic_object.save!
