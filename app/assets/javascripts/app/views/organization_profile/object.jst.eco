@@ -1,0 +1,39 @@
+<div class="profile-section vertical centered">
+  <div class="align-right profile-action js-action"></div>
+  <div class="profile-organizationIcon">
+    <div class="organization icon"></div>
+  </div>
+  <h1><%= @organization.displayName() %></h1>
+</div>
+<div class="profile-section">
+  <div class="profile-details horizontal wrap">
+    <% for row in @organizationData: %>
+      <% if row.tag is 'richtext': %>
+        <div class="profile-detailsEntry" style="width: 100%;">
+          <label><%- @Ti( row.display ) %></label>
+          <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%- @organization[row.name] %></div>
+        </div>
+      <% else: %>
+        <% if @organization[row.name]: %>
+          <div class="profile-detailsEntry">
+            <label><%- @Ti( row.display ) %></label>
+            <%- @L( @P( @organization[row.name] ) ) %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<% if @organization.members: %>
+<div class="profile-section profile-memberSection">
+  <label><%- @T('Members') %></label>
+  <div class="profile-details horizontal wrap">
+    <% for user in @organization.members: %>
+      <div class="profile-organizationMember">
+        <%- user.avatar("40") %>
+        <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% end %>

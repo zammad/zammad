@@ -1,7 +1,4 @@
 class App.UserProfile extends App.Controller
-  events:
-    'focusout [contenteditable]': 'update'
-
   constructor: (params) ->
     super
 
@@ -12,8 +9,8 @@ class App.UserProfile extends App.Controller
 
     @navupdate '#'
 
-    # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.User.full( @user_id, @render, false, true )
+    # fetch new data if needed
+    @subscribeId = App.User.full( @user_id, @render )
 
   release: =>
     App.User.unsubscribe(@subscribeId)
@@ -47,6 +44,40 @@ class App.UserProfile extends App.Controller
       @doNotLog = 1
       @recentView( 'User', @user_id )
 
+    @html App.view('user_profile/index')(
+      user: user
+    )
+
+    new Object(
+      el:   @$('.js-object-container')
+      user: user
+    )
+
+    new App.TicketStats(
+      el:   @$('.js-ticket-stats')
+      user: user
+    )
+
+    new App.UpdateTastbar(
+      genericObject: user
+    )
+
+
+class Object extends App.Controller
+  events:
+    'focusout [contenteditable]': 'update'
+
+  constructor: (params) ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.User.full( @user.id, @render, false, true )
+
+  release: =>
+    App.User.unsubscribe(@subscribeId)
+
+  render: (user) =>
+
     # get display data
     userData = []
     for attributeName, attributeConfig of App.User.attributesGet('view')
@@ -64,7 +95,7 @@ class App.UserProfile extends App.Controller
         if name isnt 'firstname' && name isnt 'lastname' && name isnt 'organization'
           userData.push attributeConfig
 
-    @html App.view('user_profile')(
+    @html App.view('user_profile/object')(
       user:     user
       userData: userData
     )
@@ -74,15 +105,6 @@ class App.UserProfile extends App.Controller
       multiline: true
       maxlength: 250
     })
-
-    new App.TicketStats(
-      el:   @$('.js-ticket-stats')
-      user: user
-    )
-
-    new App.UpdateTastbar(
-      genericObject: user
-    )
 
     # start action controller
     showHistory = =>
@@ -97,6 +119,7 @@ class App.UserProfile extends App.Controller
           title: 'Users'
           object: 'User'
           objects: 'Users'
+        container: @el.closest('.content')
       )
 
     actions = [
@@ -120,7 +143,7 @@ class App.UserProfile extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    user  = App.User.find( @user_id )
+    user  = App.User.find( @user.id )
     if user[name] isnt value
       data = {}
       data[name] = value

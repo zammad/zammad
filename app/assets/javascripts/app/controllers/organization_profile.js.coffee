@@ -1,7 +1,4 @@
 class App.OrganizationProfile extends App.Controller
-  events:
-    'focusout [contenteditable]': 'update'
-
   constructor: (params) ->
     super
 
@@ -12,11 +9,8 @@ class App.OrganizationProfile extends App.Controller
 
     @navupdate '#'
 
-    # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.Organization.full( @organization_id, @render, false, true )
-
-  release: =>
-    App.Organization.unsubscribe(@subscribeId)
+    # fetch new data if needed
+    App.Organization.full( @organization_id, @render )
 
   meta: =>
     meta =
@@ -48,6 +42,39 @@ class App.OrganizationProfile extends App.Controller
       @doNotLog = 1
       @recentView( 'Organization', @organization_id )
 
+    @html App.view('organization_profile/index')(
+      organization: organization
+    )
+
+    new Object(
+      el:           @$('.js-object-container')
+      organization: organization
+    )
+
+    new App.TicketStats(
+      el:           @$('.js-ticket-stats')
+      organization: organization
+    )
+
+    new App.UpdateTastbar(
+      genericObject: organization
+    )
+
+class Object extends App.Controller
+  events:
+    'focusout [contenteditable]': 'update'
+
+  constructor: (params) ->
+    super
+
+    # subscribe and reload data / fetch new data if triggered
+    @subscribeId = App.Organization.full( @organization.id, @render, false, true )
+
+  release: =>
+    App.Organization.unsubscribe(@subscribeId)
+
+  render: (organization) =>
+
     # get display data
     organizationData = []
     for attributeName, attributeConfig of App.Organization.attributesGet('view')
@@ -65,7 +92,7 @@ class App.OrganizationProfile extends App.Controller
         if name isnt 'name'
           organizationData.push attributeConfig
 
-    @html App.view('organization_profile')(
+    @html App.view('organization_profile/object')(
       organization:     organization
       organizationData: organizationData
     )
@@ -75,15 +102,6 @@ class App.OrganizationProfile extends App.Controller
       multiline: true
       maxlength: 250
     })
-
-    new App.TicketStats(
-      el:           @$('.js-ticket-stats')
-      organization: organization
-    )
-
-    new App.UpdateTastbar(
-      genericObject: organization
-    )
 
     # start action controller
     showHistory = =>
@@ -97,6 +115,7 @@ class App.OrganizationProfile extends App.Controller
           title: 'Organizations'
           object: 'Organization'
           objects: 'Organizations'
+        container: @el.closest('.content')
       )
 
     actions = [
@@ -120,12 +139,13 @@ class App.OrganizationProfile extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    org   = App.Organization.find( @organization_id )
+    org   = App.Organization.find( @organization.id )
     if org[name] isnt value
       data = {}
       data[name] = value
       org.updateAttributes( data )
       @log 'notice', 'update', name, value, org
+
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->
