@@ -15,11 +15,11 @@ class Index extends App.ControllerContent
     e.preventDefault()
     params = @formParam(e.target)
     App.Event.trigger(
-        'ws:send'
-          action: 'broadcast'
-          event:  'session:maintenance'
-          spool:  false
-          data:   params
+      'ws:send'
+        action: 'broadcast'
+        event:  'session:maintenance'
+        spool:  false
+        data:   params
     )
     @notify
       type:      'success'
