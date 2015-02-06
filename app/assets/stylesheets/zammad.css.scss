@@ -4400,17 +4400,6 @@ footer {
   position: relative;
 }
 
-.userInfo-avatar:after {
-  content: "";
-  background: image_url("/assets/images/sprite.svg");
-  background-position: -236px 0;
-  right: 0;
-  top: 0;
-  width: 97px;
-  height: 96px;
-  position: absolute;
-}
-
 .userList {
   list-style: none;
   padding: 0;
