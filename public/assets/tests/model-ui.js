@@ -23,6 +23,10 @@ test( "model ui basic tests", function() {
     name: 'date', display: 'date 1',  tag: 'date', null: true
   };
   App.Ticket.configure_attributes.push( attribute1 )
+  var attribute2 = {
+    name: 'textarea', display: 'textarea 1',  tag: 'textarea', null: true
+  };
+  App.Ticket.configure_attributes.push( attribute2 )
 
   var ticket = new App.Ticket()
   ticket.load({
@@ -31,6 +35,7 @@ test( "model ui basic tests", function() {
     state_id:   2,
     updated_at: '2014-11-07T23:43:08.000Z',
     date:       '2015-02-07',
+    textarea:   "some new\nline"
   })
 
   App.i18n.set('en')
@@ -41,6 +46,7 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'not_existing' ), '-')
   equal( App.viewPrint( ticket, 'updated_at' ), "<span class=\"humanTimeFromNow undefined\" data-time=\"2014-11-07T23:43:08.000Z\">?</span>")
   equal( App.viewPrint( ticket, 'date' ), '2015-02-07')
+  equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
 
 
   App.i18n.set('de')
@@ -51,6 +57,8 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'not_existing' ), '-')
   equal( App.viewPrint( ticket, 'updated_at' ), "<span class=\"humanTimeFromNow undefined\" data-time=\"2014-11-07T23:43:08.000Z\">?</span>")
   equal( App.viewPrint( ticket, 'date' ), '07.02.2015')
+  equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
+
 
   App.i18n.set('en')
   ticket.state_id = 3
