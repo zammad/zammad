@@ -410,14 +410,13 @@ test( "table test 2", function() {
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), 'adapter1', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'host1', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'user1', 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'true', 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'true', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'ja', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(5)').text().trim(), '', 'check row 1')
   equal( el.find('tbody > tr:nth-child(2) > td').length, 5, 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1)').text().trim(), 'adapter2', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'host2', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'user2', 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), 'true', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), 'ja', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(5)').text().trim(), '', 'check row 2')
 });
 

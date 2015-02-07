@@ -133,8 +133,9 @@ list tickets by customer groupd in state categroie open and closed
 returns
 
   result = {
-    :open   => tickets_open,
-    :closed => tickets_closed,
+    :ticket_ids_open   => tickets_open,
+    :ticket_ids_closed => tickets_closed,
+    :assets            => { ...list of assets... },
   }
 
 =end
@@ -150,15 +151,27 @@ returns
       :customer_id => data[:customer_id],
       :state_id    => state_list_open
     ).limit( data[:limit] || 15 ).order('created_at DESC')
+    assets = {}
+    ticket_ids_open = []
+    tickets_open.each {|ticket|
+      ticket_ids_open.push ticket.id
+      assets = ticket.assets(assets)
+    }
 
     tickets_closed = Ticket.where(
       :customer_id => data[:customer_id],
       :state_id    => state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
+    ticket_ids_closed = []
+    tickets_closed.each {|ticket|
+      ticket_ids_closed.push ticket.id
+      assets = ticket.assets(assets)
+    }
 
     return {
-      :open   => tickets_open,
-      :closed => tickets_closed,
+      :ticket_ids_open   => ticket_ids_open,
+      :ticket_ids_closed => ticket_ids_closed,
+      :assets            => assets,
     }
   end
 

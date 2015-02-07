@@ -369,7 +369,7 @@ class App.Controller extends Spine.Controller
 
   userTicketPopups: (params) ->
 
-    show = (data, tickets) =>
+    show = (data, ticket_list) =>
 
       if !data.position
         data.position = 'left'
@@ -390,15 +390,14 @@ class App.Controller extends Spine.Controller
 
         content: ->
           type = $(@).filter('[data-type]').data('type')
-          data = tickets[type] || []
-
-          # set human time
-          for ticket in data
-            ticket.humanTime = controller.humanTime(ticket.created_at)
+          tickets = []
+          if ticket_list[type]
+            for ticket_id in ticket_list[type]
+              tickets.push App.Ticket.fullLocal( ticket_id )
 
           # insert data
           App.view('popover/user_ticket_list')(
-            tickets: data,
+            tickets: tickets,
           )
       )
 
@@ -411,14 +410,18 @@ class App.Controller extends Spine.Controller
         }
         processData: true,
         success: (data, status, xhr) =>
-          App.Store.write( "user-ticket-popover::#{params.user_id}",  data.tickets )
-          show( params, data.tickets )
+          App.Store.write( "user-ticket-popover::#{params.user_id}",  data )
+
+          # load assets
+          App.Collection.loadAssets( data.assets )
+
+          show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       )
 
     # get data
-    tickets = App.Store.get( "user-ticket-popover::#{params.user_id}" )
-    if tickets
-      show( params, tickets )
+    data = App.Store.get( "user-ticket-popover::#{params.user_id}" )
+    if data
+      show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       @delay(
         =>
           fetch(params)

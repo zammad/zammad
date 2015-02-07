@@ -18,7 +18,7 @@
         <% if @user[row.name]: %>
           <div class="profile-detailsEntry">
             <label><%- @Ti( row.display ) %></label>
-            <%- @L( @P( @user[row.name] ) ) %>
+            <%- @P( @user, row.name ) %>
           </div>
         <% end %>
       <% end %>

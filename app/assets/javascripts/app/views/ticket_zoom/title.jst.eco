@@ -1,1 +1,1 @@
-<h1 contenteditable="true" class="ticket-title-update" data-placeholder="<%= @T('Enter Title...') %>"><%= @P( @ticket.title ) %></h1>
+<div contenteditable="true" class="ticket-title-update" data-placeholder="<%= @T('Enter Title...') %>"><%= @ticket.title %></div>

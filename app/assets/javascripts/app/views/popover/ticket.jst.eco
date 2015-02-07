@@ -2,17 +2,17 @@
   <span class="<%- @ticket.icon() %>" title="<%- @ticket.iconTitle() %>"></span> <span class="<%- @ticket.iconTextClass() %>"><%- @ticket.iconTitle() %></span>
 </div>
 <hr>
-<h3><%- @P('Agent') %></h3>
+<h3><%- @T('Agent') %></h3>
 <div class="person">
   <%= @ticket.owner.displayName() %>
-  <% if @ticket.owner.organization_id: %>
+  <% if @ticket.owner.organization: %>
     <span class="organization"><%= @ticket.owner.organization.displayName() %></span>
   <% end %>
 </div>
-<h3><%- @P('Customer') %></h3>
+<h3><%- @T('Customer') %></h3>
 <div class="person">
   <%= @ticket.customer.displayName() %>
-  <% if @ticket.customer.organization_id: %>
+  <% if @ticket.customer.organization: %>
     <span class="organization"><%= @ticket.customer.organization.displayName() %></span>
   <% end %>
 </div>
@@ -20,18 +20,18 @@
 <div class="horizontal two-columns">
   <div class="column">
     <h3>#</h3>
-    <div class="u-textTruncate"><%- @P( @ticket.number ) %></div>
+    <div class="u-textTruncate"><%- @P( @ticket, 'number' ) %></div>
   </div>
   <div class="column">
     <h3><%- @T( 'Priority' ) %></h3>
-    <div class="u-textTruncate"><%- @T( @ticket.priority.name ) %></div>
+    <div class="u-textTruncate"><%- @P( @ticket, 'priority' ) %></div>
   </div>
   <div class="column">
     <h3><%- @T( 'Created' ) %></h3>
-    <div class="u-textTruncate"><%- @P( @ticket.humanTime ) %></div>
+    <div class="u-textTruncate"><%- @P( @ticket, 'created_at' ) %></div>
   </div>
   <div class="column">
     <h3><%- @T( 'Group' ) %></h3>
-    <div class="u-textTruncate"><%- @P( @ticket.group ) %></div>
+    <div class="u-textTruncate"><%- @P( @ticket, 'group' ) %></div>
   </div>
 </div>

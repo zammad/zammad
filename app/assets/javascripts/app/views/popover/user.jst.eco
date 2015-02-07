@@ -7,11 +7,7 @@
   <% if @user[row.name]: %>
   <div class="column">
     <h3><%- @T( row.display ) %></h3>
-    <% if row.tag is 'richtext': %>
-      <div><%- @user[row.name] %></div>
-    <% else: %>
-      <div><%- @L( @P( @user[row.name] ) ) %></div>
-    <% end %>
+    <div><%- @P( @user, row.name ) %></div>
   </div>
   <% end %>
 <% end %>

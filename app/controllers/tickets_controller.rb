@@ -97,9 +97,7 @@ class TicketsController < ApplicationController
       :customer_id => params[:customer_id],
       :limit       => 15,
     )
-    render :json => {
-      :tickets => result
-    }
+    render :json => result
   end
 
   # GET /api/v1/ticket_history/1

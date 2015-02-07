@@ -156,11 +156,8 @@ class App.Navigation extends App.Controller
               area.result = []
               for id in area.ids
                 ticket = App.Ticket.find( id )
-                ticket.humanTime = @humanTime(ticket.created_at)
                 data =
                   display:    "##{ticket.number} - #{ticket.title}"
-                  createt_at: "#{ticket.created_at}"
-                  humanTime:  "#{ticket.humanTime}"
                   id:         ticket.id
                   class:      "task level-1 ticket-popover"
                   url:        ticket.uiUrl()

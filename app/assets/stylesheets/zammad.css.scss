@@ -714,6 +714,10 @@ textarea,
     background: none;
   }
 
+  textarea.form-control {
+    height: 118px;
+  }
+
   select.form-control {
     padding-left: 10px;
     padding-right: 34px;
@@ -3159,14 +3163,12 @@ footer {
     padding: 0 81px;
   }
 
-    .ticket-title h1 {
-      margin-top: 15px;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
   .ticket-title-update {
+    @extend h1;
     white-space: normal;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    text-align: center;
   }
 
   .task-subline {
@@ -3177,7 +3179,7 @@ footer {
 .ticket-article-item {
   padding-bottom: 33px;
   position: relative;
-  
+
   .avatar {
     position: absolute;
     right: 0;

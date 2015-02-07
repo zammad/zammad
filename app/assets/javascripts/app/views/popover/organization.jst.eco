@@ -4,11 +4,7 @@
   <% if @organization[row.name]: %>
     <div class="column">
       <h3><%- @T( row.display ) %></h3>
-      <% if row.tag is 'richtext': %>
-        <div><%- @organization[row.name] %></div>
-      <% else: %>
-        <div><%- @L( @P( @organization[row.name] ) ) %></div>
-      <% end %>
+      <div><%- @P( @organization, row.name ) %></div>
     </div>
   <% end %>
 <% end %>
@@ -18,7 +14,7 @@
   <h3><%- @T('Members') %></h3>
   <% for user in @organization.members: %>
   <div class="person">
-  <%= user.displayName() %>
+    <%= user.displayName() %>
   </div>
   <% end %>
 <% end %>

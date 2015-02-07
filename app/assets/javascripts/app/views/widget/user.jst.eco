@@ -10,7 +10,7 @@
     <div class="sidebar-block">
     <% if row.tag isnt 'richtext': %>
       <label><%- @T( row.display ) %></label>
-      <%- @L( @P( @user[row.name] ) ) %>
+      <%- @P( @user, row.name ) %>
     <% else: %>
       <label><%- @T( row.display ) %></label>
       <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%- @user[row.name] %></div>

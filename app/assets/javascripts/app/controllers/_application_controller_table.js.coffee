@@ -82,7 +82,7 @@ class App.ControllerTable extends App.Controller
       el:       element
       overview: ['time', 'area', 'level', 'browser', 'location', 'data']
       attributes: [
-        { name: 'time',     display: 'Time',      type: 'time' },
+        { name: 'time',     display: 'Time',      tag: 'datetime' },
         { name: 'area',     display: 'Area',      type: 'text' },
         { name: 'level',    display: 'Level',     type: 'text' },
         { name: 'browser',  display: 'Browser',   type: 'text' },
