@@ -2,9 +2,8 @@ App.Config.set( 'User', {
   prio:   1000,
   parent: '',
   callback: ->
-    item = {}
-    item['name']   = App.Session.get( 'login' )
-    item['image']  = App.Session.get( 'imageUrl' )
+    item         = {}
+    item['name'] = App.Session.get( 'login' )
     if App.Session.get()
       item['avatar'] = App.Session.get().avatar()
     return item

@@ -63,7 +63,8 @@ class App.User extends App.Model
     else
       if @vip
         cssClass += " vip"
-      "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
+      image = @imageUrl()
+      "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
 
   uniqueAvatar: (size, placement = '', cssClass = '', avatar) ->
     width  = 300
@@ -84,6 +85,12 @@ class App.User extends App.Model
       cssClass += " vip"
     "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
+  imageUrl: ->
+    return if !@image
+    # set image url
+    @constructor.apiPath + '/users/image/' + @image
+
+
   @_fillUp: (data) ->
 
     # set socal media links
@@ -93,9 +100,6 @@ class App.User extends App.Model
           data['accounts'][account]['link'] = 'http://twitter.com/' + data['accounts'][account]['username']
         if account == 'facebook'
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
-
-    # set image url
-    data.imageUrl = @apiPath + '/users/image/' + data.image
 
     if data.organization_id
       data.organization = App.Organization.find(data.organization_id)
