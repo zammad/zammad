@@ -206,13 +206,17 @@ class App.Controller extends Spine.Controller
     update = =>
       ui = @
       $('.humanTimeFromNow').each( ->
+        item = $(this)
 #        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
-        timestamp = $(this).data('time')
-        time = ui.humanTime( timestamp, $(this).hasClass('escalation') )
-        $(this).attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
-        $(this).html( time )
+        ui.frontendTimeUpdateItem(item)
       )
     App.Interval.set( update, 30000, 'frontendTimeUpdate', 'ui' )
+
+  frontendTimeUpdateItem: (item) =>
+    timestamp = item.data('time')
+    time      = @humanTime( timestamp, item.hasClass('escalation') )
+    item.attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
+    item.html( time )
 
   ticketPopups: (position = 'right') ->
 
@@ -241,12 +245,17 @@ class App.Controller extends Spine.Controller
         ticket    = App.Ticket.fullLocal( ticket_id )
         App.Utils.htmlEscape( ticket.title )
       content: ->
-        ticket_id        = $(@).data('id')
-        ticket           = App.Ticket.fullLocal( ticket_id )
-        ticket.humanTime = ui.humanTime(ticket.created_at)
-        App.view('popover/ticket')(
+        ticket_id = $(@).data('id')
+        ticket    = App.Ticket.fullLocal( ticket_id )
+        html = App.view('popover/ticket')(
           ticket: ticket
         )
+        html = $( html )
+        html.find('.humanTimeFromNow').each( ->
+          item = $(this)
+          ui.frontendTimeUpdateItem(item)
+        )
+        html
     )
 
   ticketPopupsDestroy: =>
