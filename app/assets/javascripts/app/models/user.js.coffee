@@ -52,23 +52,20 @@ class App.User extends App.Model
     else
       return '??'
 
-  avatar: (size = 40, placement = '', cssClass = '') ->
-    cssClass += " size-#{ size }"
+  avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar) ->
+    cssClass += " size-#{size}"
 
     if placement
       placement = "data-placement=\"#{placement}\""
 
-    if !@image || @image is 'none'
-      return @uniqueAvatar(size, placement, cssClass)
+    if !@image || @image is 'none' || unique
+      return @uniqueAvatar(size, placement, cssClass, avatar)
     else
       if @vip
-        cssClass += "#{cssClass} vip"
+        cssClass += " vip"
       "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
 
-  uniqueAvatar: (size = 40, placement = '', cssClass = '', avatar) ->
-    if size
-      cssClass += " size-#{ size }"
-
+  uniqueAvatar: (size, placement = '', cssClass = '', avatar) ->
     width  = 300
     height = 226
     size   = parseInt(size, 10)
@@ -78,13 +75,13 @@ class App.User extends App.Model
     y   = rng() * (height - size)
 
     if !avatar
-      cssClass += "#{cssClass} user-popover"
+      cssClass += " user-popover"
       data      = "data-id=\"#{@id}\""
     else
       data      = "data-avatar-id=\"#{avatar.id}\""
 
     if @vip
-      cssClass += "#{cssClass} vip"
+      cssClass += " vip"
     "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
   @_fillUp: (data) ->
