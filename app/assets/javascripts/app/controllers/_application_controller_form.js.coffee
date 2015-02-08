@@ -175,7 +175,7 @@ class App.ControllerForm extends App.Controller
   ###
 
   formGenItem: (attribute_config, classname, form, attribute_count ) ->
-    attribute = clone( attribute_config )
+    attribute = clone( attribute_config, true )
 
     # create item id
     attribute.id = classname + '_' + attribute.name
@@ -260,9 +260,32 @@ class App.ControllerForm extends App.Controller
       # build options list
       if _.isEmpty(attribute.options)
         attribute.options = [
-          { name: 'active', value: true }
-          { name: 'inactive', value: false }
+          { name: 'yes', value: true }
+          { name: 'no', value: false }
         ]
+
+      # set data type
+      if attribute.name
+        attribute.name = '{boolean}' + attribute.name
+
+      # finde selected item of list
+      for record in attribute.options
+        if record.value is attribute.value
+          record.selected = 'selected'
+
+      # return item
+      item = $( App.view('generic/select')( attribute: attribute ) )
+
+    else if attribute.tag is 'active'
+
+      # active attribute is always required
+      attribute.null = false
+
+      # build options list
+      attribute.options = [
+        { name: 'active', value: true }
+        { name: 'inactive', value: false }
+      ]
 
       # set data type
       if attribute.name

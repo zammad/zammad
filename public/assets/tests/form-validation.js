@@ -17,7 +17,7 @@ test( "form validation check", function() {
         { name: 'richtext1',        display: 'Richtext1', tag: 'richtext', maxlength: 100, null: false, type: 'richtext', multiline: true, upload: true, default: defaults['richtext1']  },
         { name: 'datetime1',        display: 'Datetime1', tag: 'datetime', null: false, default: defaults['datetime1']  },
         { name: 'date1',            display: 'Date1',     tag: 'date', null: false, default: defaults['date1']  },
-        { name: 'active1',          display: 'Active1',   tag: 'boolean', type: 'boolean', default: defaults['active1'], null: false },
+        { name: 'active1',          display: 'Active1',   tag: 'active', default: defaults['active1'] },
       ],
     },
     params: defaults,

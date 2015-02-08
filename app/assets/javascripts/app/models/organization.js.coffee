@@ -7,7 +7,7 @@ class App.Organization extends App.Model
     { name: 'shared',     display: 'Shared organization', tag: 'boolean',   note: 'Customers in the organization can view each other items.', type: 'boolean', default: true, null: false, info: false },
     { name: 'note',       display: 'Note',                tag: 'textarea',  note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
     { name: 'updated_at', display: 'Updated',             tag: 'datetime',  readonly: 1, info: false },
-    { name: 'active',     display: 'Active',              tag: 'boolean',   default: true, null: false, info: false },
+    { name: 'active',     display: 'Active',              tag: 'active',    default: true, info: false },
   ]
   @configure_overview = [
     'name',

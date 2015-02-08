@@ -4,7 +4,7 @@ class App.TicketState extends App.Model
   @url: @apiPath + '/ticket_states'
   @configure_attributes = [
     { name: 'name',       display: 'Name',    tag: 'input',     type: 'text', limit: 100, null: false, translate: true },
-    { name: 'active',     display: 'Active',  tag: 'boolean',   type: 'boolean', default: true, null: false },
+    { name: 'active',     display: 'Active',  tag: 'active',    default: true },
     { name: 'updated_at', display: 'Updated', tag: 'datetime',  readonly: 1 },
     { name: 'created_at', display: 'Created', tag: 'datetime',  readonly: 1 },
   ]

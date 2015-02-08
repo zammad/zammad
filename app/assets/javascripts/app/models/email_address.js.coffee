@@ -8,7 +8,7 @@ class App.EmailAddress extends App.Model
     { name: 'email',      display: 'Email',     tag: 'input', type: 'text', limit: 250, null: false },
     { name: 'note',       display: 'Note',      tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true },
     { name: 'updated_at', display: 'Updated',   tag: 'datetime', readonly: 1 },
-    { name: 'active',     display: 'Active',    tag: 'boolean', type: 'boolean', default: true, null: false },
+    { name: 'active',     display: 'Active',    tag: 'active',   default: true },
   ]
   @configure_overview = [
     'realname', 'email'

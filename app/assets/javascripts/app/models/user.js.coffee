@@ -22,7 +22,7 @@ class App.User extends App.Model
     { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
     { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role' },
     { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', invite_agent: true },
-    { name: 'active',           display: 'Active',        tag: 'boolean',  default: true, null: true },
+    { name: 'active',           display: 'Active',        tag: 'active',   default: true },
     { name: 'updated_at',       display: 'Updated',       tag: 'datetime', readonly: 1 },
   ]
   @configure_overview = [

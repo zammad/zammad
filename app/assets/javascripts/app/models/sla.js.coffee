@@ -31,7 +31,7 @@ class App.Sla extends App.Model
         group:     'Group'
         owner:     'Owner'
     },
-    { name: 'active',         display: 'Active',      tag: 'boolean',  note: 'boolean', default: true, null: false },
+    { name: 'active',         display: 'Active',      tag: 'active', default: true },
     { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
     { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1 },
     { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1 },

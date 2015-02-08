@@ -250,7 +250,7 @@ class Edit extends App.ControllerModal
 
 
     configureAttributesBottom = [
-      { name: 'active',     display: 'Active',              tag: 'boolean',   'default': true, 'null': false },
+      { name: 'active', display: 'Active', tag: 'active', default: true },
     ]
     controller = new App.ControllerForm(
       model:      { configure_attributes: configureAttributesBottom, className: '' },
