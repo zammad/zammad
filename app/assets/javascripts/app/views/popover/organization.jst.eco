@@ -1,20 +1,19 @@
 <hr>
-<div>
 <% for row in @organizationData: %>
   <% if @organization[row.name]: %>
-    <div class="column">
-      <h3><%- @T( row.display ) %></h3>
-      <div><%- @P( @organization, row.name ) %></div>
+    <div class="popover-block">
+      <label><%- @T( row.display ) %></label>
+      <%- @P( @organization, row.name ) %>
     </div>
   <% end %>
 <% end %>
 </div>
 <% if  @organization.members: %>
   <hr>
-  <h3><%- @T('Members') %></h3>
-  <% for user in @organization.members: %>
-  <div class="person">
-    <%= user.displayName() %>
+  <div class="popover-block">
+    <label><%- @T('Members') %></label>
+    <% for user in @organization.members: %>
+      <div class="person"><%= user.displayName() %></div>
+    <% end %>
   </div>
-  <% end %>
 <% end %>

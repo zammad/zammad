@@ -2572,11 +2572,17 @@ footer {
 
   .sidebar-block {
     margin: 20px 0;
-    word-wrap: break-word;
 
     &:first-child {
       margin-top: 0;
     }
+  }
+  .sidebar-block,
+  .sidebar-block > * {
+    @extend .u-textTruncate;
+  }
+  .sidebar-block [contenteditable=true] {
+    white-space: normal; // do no u-textTruncate, we want to edit it inline
   }
 
   .main + .sidebar {
@@ -2741,8 +2747,14 @@ footer {
   }
 
   .popover .user-organization {
+    @extend .u-textTruncate;
     margin-bottom: 8px;
     margin-top: -4px;
+  }
+
+  .popover-block {
+    @extend .sidebar-block;
+    margin: 10px 0;
   }
 
   .popover hr {
@@ -2752,7 +2764,15 @@ footer {
   .popover .person .organization:before { content: '('; }
   .popover .person .organization:after { content: ')'; }
 
-  .popover .column h3 {
+  .popover label {
+    font-size: 13px;
+    color: #a9bcc4;
+    font-weight: 200;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .popover .column label {
     margin: 8px 0 1px;
   }
 
@@ -4403,22 +4423,26 @@ footer {
   position: relative;
 }
 
+.organizationInfo-avatar {
+  @extend .userInfo-avatar;
+  padding: 18px 0 0 18px;
+}
+
 .userList {
   list-style: none;
   padding: 0;
-  
+
   li {
-    @extend .horizontal;
-    @extend .center;
+    position: relative;
     margin: 10px 0;
   }
 
   a {
     @extend .u-textTruncate;
-  }
-
-  .avatar {
-    margin-right: 7px;
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    left: 48px;
   }
 }
 

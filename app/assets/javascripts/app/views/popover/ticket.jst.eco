@@ -2,36 +2,40 @@
   <span class="<%- @ticket.icon() %>" title="<%- @ticket.iconTitle() %>"></span> <span class="<%- @ticket.iconTextClass() %>"><%- @ticket.iconTitle() %></span>
 </div>
 <hr>
-<h3><%- @T('Agent') %></h3>
-<div class="person">
-  <%= @ticket.owner.displayName() %>
-  <% if @ticket.owner.organization: %>
-    <span class="organization"><%= @ticket.owner.organization.displayName() %></span>
-  <% end %>
+<div class="popover-block">
+  <label><%- @T('Agent') %></label>
+  <div class="person">
+    <%= @ticket.owner.displayName() %>
+    <% if @ticket.owner.organization: %>
+      <span class="organization"><%= @ticket.owner.organization.displayName() %></span>
+    <% end %>
+  </div>
 </div>
-<h3><%- @T('Customer') %></h3>
-<div class="person">
-  <%= @ticket.customer.displayName() %>
-  <% if @ticket.customer.organization: %>
-    <span class="organization"><%= @ticket.customer.organization.displayName() %></span>
-  <% end %>
+<div class="popover-block">
+  <label><%- @T('Customer') %></label>
+  <div class="person">
+    <%= @ticket.customer.displayName() %>
+    <% if @ticket.customer.organization: %>
+      <span class="organization"><%= @ticket.customer.organization.displayName() %></span>
+    <% end %>
+  </div>
 </div>
 <hr>
 <div class="horizontal two-columns">
   <div class="column">
-    <h3>#</h3>
+    <label>#</label>
     <div class="u-textTruncate"><%- @P( @ticket, 'number' ) %></div>
   </div>
   <div class="column">
-    <h3><%- @T( 'Priority' ) %></h3>
+    <label><%- @T( 'Priority' ) %></label>
     <div class="u-textTruncate"><%- @P( @ticket, 'priority' ) %></div>
   </div>
   <div class="column">
-    <h3><%- @T( 'Created' ) %></h3>
+    <label><%- @T( 'Created' ) %></label>
     <div class="u-textTruncate"><%- @P( @ticket, 'created_at' ) %></div>
   </div>
   <div class="column">
-    <h3><%- @T( 'Group' ) %></h3>
+    <label><%- @T( 'Group' ) %></label>
     <div class="u-textTruncate"><%- @P( @ticket, 'group' ) %></div>
   </div>
 </div>

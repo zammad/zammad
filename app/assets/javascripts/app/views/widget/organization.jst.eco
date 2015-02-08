@@ -1,7 +1,8 @@
 <div class="sidebar-block">
-  <h3 class="u-textTruncate" title="<%- @Ti( 'Name') %>">
-    <%= @organization.displayName() %>
-  </h3>
+    <div class="avatar organizationInfo-avatar size-50">
+      <a href="<%- @organization.uiUrl() %>" class="organization icon"></a>
+    </div>
+    <h3 title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></h3>
 </div>
 
 <% for row in @organizationData: %>
