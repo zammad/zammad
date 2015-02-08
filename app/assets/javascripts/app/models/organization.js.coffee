@@ -27,6 +27,6 @@ class App.Organization extends App.Model
       data['members'] = []
       for user_id in data['member_ids']
         if App.User.exists( user_id )
-          user = App.User.find( user_id )
+          user = App.User.fullLocal( user_id )
           data['members'].push user
     data
