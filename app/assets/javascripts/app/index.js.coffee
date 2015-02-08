@@ -83,8 +83,9 @@ class App extends Spine.Controller
     isHtmlEscape = false
     if attribute_config.tag is 'textarea'
       isHtmlEscape = true
-      result = App.Utils.text2html( result )
+      result       = App.Utils.text2html( result )
 
+    # remember, html snippets are already escaped
     else if attribute_config.tag is 'richtext'
       isHtmlEscape = true
 
@@ -94,22 +95,20 @@ class App extends Spine.Controller
         result = attribute_config.options[result]
 
     # translate content
-    isTranslated = false
     if attribute_config.translate || ( isObject && item.translate && item.translate() )
-      isTranslated = true
       isHtmlEscape = true
-      result = App.i18n.translateContent( result )
+      result       = App.i18n.translateContent( result )
 
     # transform date
     if attribute_config.tag is 'date'
       isHtmlEscape = true
-      result = App.i18n.translateDate(result)
+      result       = App.i18n.translateDate(result)
 
     # use pretty time for datetime
     else if attribute_config.tag is 'datetime'
       isHtmlEscape = true
-      result = "<span class=\"humanTimeFromNow #{attribute_config.class}\" data-time=\"#{result}\">?</span>"
-      #result = App.i18n.translateTimestamp(result)
+      result       = "<span class=\"humanTimeFromNow #{attribute_config.class}\" data-time=\"#{result}\">?</span>"
+      #result      = App.i18n.translateTimestamp(result)
 
     if !isHtmlEscape && typeof result is 'string'
       result = App.Utils.htmlEscape(result)
