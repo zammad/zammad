@@ -702,7 +702,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   private
 
   def password_policy(password)
-    if Setting.get('password_min_size') > password.length
+    if Setting.get('password_min_size').to_i > password.length
       return ["Can\'t update password, it must be at least %s characters long!", Setting.get('password_min_size')]
     end
     if Setting.get('password_need_digit').to_i == 1 && password !~ /\d/
