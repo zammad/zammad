@@ -1938,6 +1938,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "to", :target => "
 Translation.create_if_not_exists( :locale => 'de', :source => "%s ago", :target => "vor %s" )
 Translation.create_if_not_exists( :locale => 'de', :source => "in %s", :target => "in %s" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Mark all as seen.", :target => "Alle als gelesen markieren." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Pending till", :target => "Warten bis" )
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "" )
 
 # install all packages in auto_install

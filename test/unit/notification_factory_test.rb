@@ -126,6 +126,21 @@ class NotificationFactoryTest < ActiveSupport::TestCase
         :string => '\#{puts `ls`}',
         :result => '\#{puts `ls`} (not allowed)',
       },
+      {
+        :locale => 'de',
+        :string => 'test i18n(new)',
+        :result => 'test neu',
+      },
+      {
+        :locale => 'de',
+        :string => 'test i18n()',
+        :result => 'test ',
+      },
+      {
+        :locale => 'de',
+        :string => 'test i18n(new) i18n(open)',
+        :result => 'test neu offen',
+      },
     ]
     tests.each { |test|
       result = NotificationFactory.build(

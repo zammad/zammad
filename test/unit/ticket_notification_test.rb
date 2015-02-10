@@ -406,16 +406,21 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :article_id => article.id,
       :type       => 'update',
       :changes    => {
-        :priority_id => [1, 2],
+        :priority_id  => [1, 2],
+        :pending_time => [nil, Time.parse("2015-01-11 23:33:47 UTC")],
       },
     )
 
     # check changed attributes
     human_changes = bg.human_changes(agent1,ticket1)
     assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
+    assert( human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute' )
     assert_equal( 'i18n(1 low)', human_changes['Priority'][0] )
     assert_equal( 'i18n(2 normal)', human_changes['Priority'][1] )
+    assert_equal( 'i18n()', human_changes['Pending till'][0] )
+    assert_equal( 'i18n(2015-01-11 23:33:47 UTC)', human_changes['Pending till'][1] )
     assert_not( human_changes['priority_id'] )
+    assert_not( human_changes['pending_till'] )
 
     # en template
     template = bg.template_update(agent2, ticket1, article, human_changes)
@@ -424,6 +429,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priority/, template[:body] )
     assert_match( /1 low/, template[:body] )
     assert_match( /2 normal/, template[:body] )
+    assert_match( /Pending till/, template[:body] )
+    assert_match( /2015-01-11 23:33:47 UTC/, template[:body] )
     assert_match( /updated/i, template[:subject] )
 
     # en notification
@@ -449,7 +456,10 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priority/, body )
     assert_match( /1 low/, body )
     assert_match( /2 normal/, body )
+    assert_match( /Pending till/, body )
+    assert_match( /2015-01-11 23:33:47 UTC/, body )
     assert_match( /update/, body )
+    assert_no_match( /i18n/, body )
 
     # de template
     template = bg.template_update(agent1, ticket1, article, human_changes)
@@ -458,6 +468,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priority/, template[:body] )
     assert_match( /1 low/, template[:body] )
     assert_match( /2 normal/, template[:body] )
+    assert_match( /Pending till/, template[:body] )
+    assert_match( /2015-01-11 23:33:47 UTC/, template[:body] )
     assert_match( /aktualis/, template[:subject] )
 
     # de notification
@@ -484,7 +496,10 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Priorität/, body )
     assert_match( /1 niedrig/, body )
     assert_match( /2 normal/, body )
+    assert_match( /Warten/, body )
+    assert_match( /2015-01-11 23:33:47 UTC/, body )
     assert_match( /aktualis/, body )
+    assert_no_match( /i18n/, body )
 
     bg = Observer::Ticket::Notification::BackgroundJob.new(
       :ticket_id  => ticket1.id,
@@ -500,7 +515,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     puts "hc #{human_changes.inspect}"
 
 
-   human_changes = bg.human_changes(agent2,ticket1)
+    human_changes = bg.human_changes(agent2,ticket1)
     puts "hc2 #{human_changes.inspect}"
 
     template = bg.template_update(agent1, ticket1, article, human_changes)
