@@ -406,8 +406,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :article_id => article.id,
       :type       => 'update',
       :changes    => {
-        :priority_id  => [1, 2],
-        :pending_time => [nil, Time.parse("2015-01-11 23:33:47 UTC")],
+        'priority_id'  => [1, 2],
+        'pending_time' => [nil, Time.parse("2015-01-11 23:33:47 UTC")],
       },
     )
 
@@ -420,6 +420,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_equal( 'i18n()', human_changes['Pending till'][0] )
     assert_equal( 'i18n(2015-01-11 23:33:47 UTC)', human_changes['Pending till'][1] )
     assert_not( human_changes['priority_id'] )
+    assert_not( human_changes['pending_time'] )
     assert_not( human_changes['pending_till'] )
 
     # en template
@@ -459,6 +460,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Pending till/, body )
     assert_match( /2015-01-11 23:33:47 UTC/, body )
     assert_match( /update/, body )
+    assert_no_match( /pending_till/, body )
     assert_no_match( /i18n/, body )
 
     # de template
@@ -499,6 +501,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /Warten/, body )
     assert_match( /2015-01-11 23:33:47 UTC/, body )
     assert_match( /aktualis/, body )
+    assert_no_match( /pending_till/, body )
     assert_no_match( /i18n/, body )
 
     bg = Observer::Ticket::Notification::BackgroundJob.new(
@@ -511,9 +514,18 @@ class TicketNotificationTest < ActiveSupport::TestCase
       },
     )
 
-    human_changes = bg.human_changes(agent1,ticket1)
     puts "hc #{human_changes.inspect}"
-
+    # check changed attributes
+    human_changes = bg.human_changes(agent1,ticket1)
+    assert( human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute' )
+    assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
+    assert_equal( 'i18n(2 normal)', human_changes['Priority'][0] )
+    assert_equal( 'i18n(3 high)', human_changes['Priority'][1] )
+    assert_equal( 'some notification template test 1', human_changes['Title'][0] )
+    assert_equal( 'some notification template test 1 #2', human_changes['Title'][1] )
+    assert_not( human_changes['priority_id'] )
+    assert_not( human_changes['pending_time'] )
+    assert_not( human_changes['pending_till'] )
 
     human_changes = bg.human_changes(agent2,ticket1)
     puts "hc2 #{human_changes.inspect}"
