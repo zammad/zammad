@@ -288,6 +288,20 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
 
 
+    # update article / not notification should be sent
+    article_inbound.internal = true
+    article_inbound.save
+
+    # execute ticket events
+    Observer::Ticket::Notification.transaction
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
+
+    # verify notifications not to agent1 and not to agent2
+    assert_equal( 2, notification_check(ticket3, agent1), ticket3.id )
+    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
+
+
     delete = ticket1.destroy
     assert( delete, "ticket1 destroy" )
 
@@ -471,6 +485,31 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match( /1 niedrig/, body )
     assert_match( /2 normal/, body )
     assert_match( /aktualis/, body )
+
+    bg = Observer::Ticket::Notification::BackgroundJob.new(
+      :ticket_id  => ticket1.id,
+      :article_id => article.id,
+      :type       => 'update',
+      :changes    => {
+        :title       => ['some notification template test 1', 'some notification template test 1 #2'],
+        :priority_id => [2, 3],
+      },
+    )
+
+    human_changes = bg.human_changes(agent1,ticket1)
+    puts "hc #{human_changes.inspect}"
+
+
+   human_changes = bg.human_changes(agent2,ticket1)
+    puts "hc2 #{human_changes.inspect}"
+
+    template = bg.template_update(agent1, ticket1, article, human_changes)
+    puts "t1 #{template.inspect}"
+
+    template = bg.template_update(agent2, ticket1, article, human_changes)
+    puts "t2 #{template.inspect}"
+
+
 
   end
 

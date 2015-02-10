@@ -128,6 +128,9 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
+    # ignore updates on articles / we just want send notifications on ticket updates
+    return if record.class.name == 'Ticket::Article'
+
     # ignore certain attributes
     real_changes = {}
     record.changes.each {|key, value|
