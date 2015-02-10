@@ -1,5 +1,8 @@
 <ul>
 <% for ticket in @tickets: %>
-  <li><a href="#ticket/zoom/<%= ticket.id %>" title="<%= ticket.title %>">T:<%= ticket.number %></a> <span title="<%- @P( ticket, 'created_at') %>"><%- @P( ticket, 'created_at') %></span><br/><%= ticket.title %></li>
+  <li>
+    <a href="#ticket/zoom/<%= ticket.id %>" title="<%= ticket.title %>">T:<%= ticket.number %></a> <%- @P( ticket, 'title') %><br/>
+    <%- @T('Created') %> <%- @P( ticket, 'created_at') %>
+  </li>
 <% end %>
 <ul>

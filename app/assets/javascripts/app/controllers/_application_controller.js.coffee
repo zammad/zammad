@@ -386,7 +386,7 @@ class App.Controller extends Spine.Controller
       @userTicketPopupsDestroy()
 
       # show user popup
-      controller = @
+      ui = @
       @userTicketPopupsList = @el.find(data.selector).popover(
         trigger:    'hover'
         container:  'body'
@@ -405,9 +405,15 @@ class App.Controller extends Spine.Controller
               tickets.push App.Ticket.fullLocal( ticket_id )
 
           # insert data
-          App.view('popover/user_ticket_list')(
-            tickets: tickets,
+          html = App.view('popover/user_ticket_list')(
+            tickets: tickets
           )
+          html = $( html )
+          html.find('.humanTimeFromNow').each( ->
+            item = $(this)
+            ui.frontendTimeUpdateItem(item)
+          )
+          html
       )
 
     fetch = (params) =>
