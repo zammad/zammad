@@ -11,30 +11,30 @@
       <input type="checkbox" value="<%= ticket.id %>" name="bulk" class="pull-left"/>
     </td>
     <td class="span1">
-      <img class="thumbnail user-popover" data-id="<%= ticket.customer_id %>" src="<%= ticket.customer.imageUrl %>" alt="">
+      <img class="thumbnail user-popover" data-id="<%= ticket.customer_id %>" src="<%- ticket.customer.imageUrl() %>" alt="">
     </td>
     <td class="span10">
       <h3><a href="#" data-type="edit"><%= ticket.title %></a> <small><%= ticket.number %> <span class="humanTimeFromNow" data-time="<%= ticket.created_at %>">?</span></small></h3>
       <div class="row">
         <div class="span2">
-          <b><%- @T( 'State' ) %></b> <%- @T( ticket.state.name ) %>
+          <b><%- @T( 'State' ) %></b> <%- @P( ticket, 'state' ) %>
         </div>
         <div class="span2">
-          <b><%- @T( 'Group' ) %></b> <%= ticket.group.name %>
+          <b><%- @T( 'Group' ) %></b> <%- @P( ticket, 'group' ) %>
         </div>
         <div class="span2">
-          <b><%- @T( 'Customer' ) %></b> <%= ticket.customer.displayName() %>
+          <b><%- @T( 'Customer' ) %></b> <%- @P( ticket, 'customer' ) %>
         </div>
       </div>
       <div class="row">
         <div class="span2">
-          <b><%- @T( 'Priority' ) %></b> <%- @T( ticket.priority.name ) %>
+          <b><%- @T( 'Priority' ) %></b> <%- @P( ticket, 'priority' ) %>
         </div>
         <div class="span2">
-          <b><%- @T( 'Owner' ) %></b> <%= ticket.owner.displayName() %>
+          <b><%- @T( 'Owner' ) %></b> <%- @P( ticket, 'owner' ) %>
         </div>
         <div class="span2">
-          <b><%- @T( 'Organization' ) %></b> <%= @P( ticket.customer.organization ) %>
+          <b><%- @T( 'Organization' ) %></b> <%- @P( ticket, 'organization' ) %>
         </div>
       </div>
     </div>

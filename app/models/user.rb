@@ -192,7 +192,7 @@ returns
     end
 
     # check failed logins
-    max_login_failed = Setting.get('password_max_login_failed') || 10
+    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
     if user && user.login_failed > max_login_failed
       return false
     end

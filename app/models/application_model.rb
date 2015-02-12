@@ -41,10 +41,10 @@ class ApplicationModel < ActiveRecord::Base
 
   attr_accessor :history_changes_last_done
 
-  @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::Priority', 'Group', 'User' ]
+  @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::StateType', 'Ticket::Priority', 'Group', 'User', 'Role' ]
 
   def check_attributes_protected
-    if Setting.get('import_mode') && @@import_class_list.include?( self.class.to_s )
+    if ( !Setting.get('system_init_done') || Setting.get('import_mode')) && @@import_class_list.include?( self.class.to_s )
       # do noting, use id as it is
     else
       self[:id] = nil
@@ -57,16 +57,26 @@ remove all not used model attributes of params
 
   result = Model.param_cleanup(params)
 
+  for object creation, ignore id's
+
+  result = Model.param_cleanup(params, true)
+
+
 returns
 
   result = params # params with valid attributes of model
 
 =end
 
-  def self.param_cleanup(params)
+  def self.param_cleanup(params, newObject = false)
 
     if params == nil
       raise "No params for #{self.to_s}!"
+    end
+
+    # ignore id for new objects
+    if newObject && params[:id]
+      params[:id] = nil
     end
 
     # only use object attributes

@@ -206,13 +206,17 @@ class App.Controller extends Spine.Controller
     update = =>
       ui = @
       $('.humanTimeFromNow').each( ->
+        item = $(this)
 #        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
-        timestamp = $(this).data('time')
-        time = ui.humanTime( timestamp, $(this).hasClass('escalation') )
-        $(this).attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
-        $(this).html( time )
+        ui.frontendTimeUpdateItem(item)
       )
     App.Interval.set( update, 30000, 'frontendTimeUpdate', 'ui' )
+
+  frontendTimeUpdateItem: (item) =>
+    timestamp = item.data('time')
+    time      = @humanTime( timestamp, item.hasClass('escalation') )
+    item.attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
+    item.html( time )
 
   ticketPopups: (position = 'right') ->
 
@@ -241,12 +245,17 @@ class App.Controller extends Spine.Controller
         ticket    = App.Ticket.fullLocal( ticket_id )
         App.Utils.htmlEscape( ticket.title )
       content: ->
-        ticket_id        = $(@).data('id')
-        ticket           = App.Ticket.fullLocal( ticket_id )
-        ticket.humanTime = ui.humanTime(ticket.created_at)
-        App.view('popover/ticket')(
+        ticket_id = $(@).data('id')
+        ticket    = App.Ticket.fullLocal( ticket_id )
+        html = App.view('popover/ticket')(
           ticket: ticket
         )
+        html = $( html )
+        html.find('.humanTimeFromNow').each( ->
+          item = $(this)
+          ui.frontendTimeUpdateItem(item)
+        )
+        html
     )
 
   ticketPopupsDestroy: =>
@@ -369,7 +378,7 @@ class App.Controller extends Spine.Controller
 
   userTicketPopups: (params) ->
 
-    show = (data, tickets) =>
+    show = (data, ticket_list) =>
 
       if !data.position
         data.position = 'left'
@@ -377,7 +386,7 @@ class App.Controller extends Spine.Controller
       @userTicketPopupsDestroy()
 
       # show user popup
-      controller = @
+      ui = @
       @userTicketPopupsList = @el.find(data.selector).popover(
         trigger:    'hover'
         container:  'body'
@@ -390,16 +399,21 @@ class App.Controller extends Spine.Controller
 
         content: ->
           type = $(@).filter('[data-type]').data('type')
-          data = tickets[type] || []
-
-          # set human time
-          for ticket in data
-            ticket.humanTime = controller.humanTime(ticket.created_at)
+          tickets = []
+          if ticket_list[type]
+            for ticket_id in ticket_list[type]
+              tickets.push App.Ticket.fullLocal( ticket_id )
 
           # insert data
-          App.view('popover/user_ticket_list')(
-            tickets: data,
+          html = App.view('popover/user_ticket_list')(
+            tickets: tickets
           )
+          html = $( html )
+          html.find('.humanTimeFromNow').each( ->
+            item = $(this)
+            ui.frontendTimeUpdateItem(item)
+          )
+          html
       )
 
     fetch = (params) =>
@@ -411,14 +425,18 @@ class App.Controller extends Spine.Controller
         }
         processData: true,
         success: (data, status, xhr) =>
-          App.Store.write( "user-ticket-popover::#{params.user_id}",  data.tickets )
-          show( params, data.tickets )
+          App.Store.write( "user-ticket-popover::#{params.user_id}",  data )
+
+          # load assets
+          App.Collection.loadAssets( data.assets )
+
+          show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       )
 
     # get data
-    tickets = App.Store.get( "user-ticket-popover::#{params.user_id}" )
-    if tickets
-      show( params, tickets )
+    data = App.Store.get( "user-ticket-popover::#{params.user_id}" )
+    if data
+      show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       @delay(
         =>
           fetch(params)
@@ -556,10 +574,10 @@ class App.ControllerModal extends App.Controller
       @el.addClass('modal--local')
 
     @el.modal
-      keyboard: @keyboard
-      show:     true
-      backdrop: @backdrop
-      container:    @container
+      keyboard:  @keyboard
+      show:      true
+      backdrop:  @backdrop
+      container: @container
     .on
       'show.bs.modal':   @onShow
       'shown.bs.modal':  @onShown

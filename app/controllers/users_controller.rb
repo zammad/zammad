@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Created User record.
   # @response_message 401        Invalid session.
   def create
-    user = User.new( User.param_cleanup(params) )
+    user = User.new( User.param_cleanup(params, true) )
 
     begin
       # check if it's first user
@@ -122,7 +122,7 @@ class UsersController < ApplicationController
         end
       end
 
-      user.save
+      user.save!
 
       # if first user was added, set system init done
       if count <= 2
@@ -702,7 +702,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   private
 
   def password_policy(password)
-    if Setting.get('password_min_size') > password.length
+    if Setting.get('password_min_size').to_i > password.length
       return ["Can\'t update password, it must be at least %s characters long!", Setting.get('password_min_size')]
     end
     if Setting.get('password_need_digit').to_i == 1 && password !~ /\d/

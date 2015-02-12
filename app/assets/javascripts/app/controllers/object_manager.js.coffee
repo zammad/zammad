@@ -7,10 +7,10 @@ class Index extends App.ControllerTabs
 
     # get data
     @ajax(
-      id:    'object_manager_attributes_list',
-      type:  'GET',
-      url:   @apiPath + '/object_manager_attributes_list',
-      processData: true,
+      id:    'object_manager_attributes_list'
+      type:  'GET'
+      url:   @apiPath + '/object_manager_attributes_list'
+      processData: true
       success: (data, status, xhr) =>
         @build(data.objects)
     )
@@ -19,9 +19,9 @@ class Index extends App.ControllerTabs
     @tabs = []
     for object in objects
       item =
-        name:       object,
-        target:     "c-#{object}",
-        controller: Items,
+        name:       object
+        target:     "c-#{object}"
+        controller: Items
         params:
           object: object
       @tabs.push item
@@ -120,18 +120,19 @@ class Items extends App.ControllerContent
         objects:   'ObjectManagerAttributes'
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
+      container:     @el.closest('.content')
     )
 
   edit: (e) =>
     e.preventDefault()
     id = $( e.target ).closest('tr').data('id')
     new Edit(
-      pageData:      {
+      pageData:
         object: 'ObjectManagerAttribute'
-      },
       genericObject: 'ObjectManagerAttribute'
-      callback:       @render
+      callback:      @render
       id:            id
+      container:     @el.closest('.content')
     )
 
   destroy: (e) ->
@@ -157,7 +158,6 @@ class Edit extends App.ControllerModal
       head:  @object
       items: []
     ) )
-
 
     item = App.ObjectManagerAttribute.find(@id)
 
@@ -249,9 +249,8 @@ class Edit extends App.ControllerModal
     @content.find('[name=data_type]').trigger('change')
 
 
-
     configureAttributesBottom = [
-      { name: 'active',     display: 'Active',              tag: 'boolean',   'default': true, 'null': false },
+      { name: 'active', display: 'Active', tag: 'active', default: true },
     ]
     controller = new App.ControllerForm(
       model:      { configure_attributes: configureAttributesBottom, className: '' },
@@ -261,8 +260,6 @@ class Edit extends App.ControllerModal
     )
 
     #@content = controller.form
-
-
 
 
     #@show(content)

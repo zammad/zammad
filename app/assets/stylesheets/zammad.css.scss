@@ -714,6 +714,10 @@ textarea,
     background: none;
   }
 
+  textarea.form-control {
+    height: 118px;
+  }
+
   select.form-control {
     padding-left: 10px;
     padding-right: 34px;
@@ -2478,7 +2482,7 @@ footer {
 
   .user-menu .dropdown-menu > li > a:hover {
     color: #2594d4;
-    background: rgba(0,0,0,.05);    
+    background: rgba(0,0,0,.05);
   }
 
 .avatar {
@@ -2491,6 +2495,11 @@ footer {
   display: inline-block;
   vertical-align: bottom;
 }
+
+  :not(.navigation) .avatar.vip {
+    border: 2px dotted;
+    border-color: #fff;
+  }
 
   .avatar.size-50 {
     width: 50px;
@@ -2515,14 +2524,28 @@ footer {
     cursor: default;
   }
 
+  :not(.navigation) .unique.avatar.vip {
+    border: 2px dotted;
+    line-height: 40px;
+  }
+
   .unique.avatar.size-50 {
     font-size: 16px;
     line-height: 52px;
   }
 
+  :not(.navigation) .unique.avatar.size-50.vip {
+    line-height: 50px;
+  }
+
   .unique.avatar.size-80 {
     font-size: 20px;
     line-height: 84px;
+  }
+
+  :not(.navigation) .unique.avatar.size-80.vip {
+    font-size: 20px;
+    line-height: 82px;
   }
 
 .sidebar {
@@ -2549,11 +2572,17 @@ footer {
 
   .sidebar-block {
     margin: 20px 0;
-    word-wrap: break-word;
 
     &:first-child {
       margin-top: 0;
     }
+  }
+  .sidebar-block,
+  .sidebar-block > * {
+    @extend .u-textTruncate;
+  }
+  .sidebar-block [contenteditable=true] {
+    white-space: normal; // do no u-textTruncate, we want to edit it inline
   }
 
   .main + .sidebar {
@@ -2718,8 +2747,14 @@ footer {
   }
 
   .popover .user-organization {
+    @extend .u-textTruncate;
     margin-bottom: 8px;
     margin-top: -4px;
+  }
+
+  .popover-block {
+    @extend .sidebar-block;
+    margin: 10px 0;
   }
 
   .popover hr {
@@ -2729,7 +2764,15 @@ footer {
   .popover .person .organization:before { content: '('; }
   .popover .person .organization:after { content: ')'; }
 
-  .popover .column h3 {
+  .popover label {
+    font-size: 13px;
+    color: #a9bcc4;
+    font-weight: 200;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .popover .column label {
     margin: 8px 0 1px;
   }
 
@@ -3140,14 +3183,12 @@ footer {
     padding: 0 81px;
   }
 
-    .ticket-title h1 {
-      margin-top: 15px;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
   .ticket-title-update {
+    @extend h1;
     white-space: normal;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    text-align: center;
   }
 
   .task-subline {
@@ -3158,7 +3199,7 @@ footer {
 .ticket-article-item {
   padding-bottom: 33px;
   position: relative;
-  
+
   .avatar {
     position: absolute;
     right: 0;
@@ -4178,6 +4219,7 @@ footer {
   border-radius: 0;
   border: 1px solid hsl(0,0%,90%);
   box-shadow: none;
+  word-wrap: break-word;
 }
 
   .modal-header {
@@ -4381,33 +4423,26 @@ footer {
   position: relative;
 }
 
-.userInfo-avatar:after {
-  content: "";
-  background: image_url("/assets/images/sprite.svg");
-  background-position: -236px 0;
-  right: 0;
-  top: 0;
-  width: 97px;
-  height: 96px;
-  position: absolute;
+.organizationInfo-avatar {
+  @extend .userInfo-avatar;
+  padding: 18px 0 0 18px;
 }
 
 .userList {
   list-style: none;
   padding: 0;
-  
+
   li {
-    @extend .horizontal;
-    @extend .center;
+    position: relative;
     margin: 10px 0;
   }
 
   a {
     @extend .u-textTruncate;
-  }
-
-  .avatar {
-    margin-right: 7px;
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    left: 48px;
   }
 }
 

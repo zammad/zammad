@@ -482,7 +482,7 @@ class Table extends App.ControllerContent
     new App.OverviewSettings(
       overview_id: @overview.id
       view_mode:   @view_mode
-      container: @el
+      container:   @el.closest('.content')
     )
 
 class App.OverviewSettings extends App.ControllerModal

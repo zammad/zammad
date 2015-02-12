@@ -15,7 +15,7 @@ class Ticket < ApplicationModel
   extend Ticket::Search
 
   before_create   :check_generate, :check_defaults, :check_title
-  before_update   :check_defaults, :check_title
+  before_update   :check_defaults, :check_title, :reset_pending_time
   before_destroy  :destroy_dependencies
 
   notify_clients_support
@@ -184,6 +184,21 @@ returns
       if self.organization_id != customer.organization_id
         self.organization_id = customer.organization_id
       end
+    end
+  end
+
+  def reset_pending_time
+
+    # ignore if no state has changed
+    return if !self.changes['state_id']
+
+    # check if new state isn't pending*
+    current_state      = Ticket::State.lookup( :id => self.state_id )
+    current_state_type = Ticket::StateType.lookup( :id => current_state.state_type_id )
+
+    # in case, set pending_time to nil
+    if current_state_type.name !~ /^pending/i
+      self.pending_time = nil
     end
   end
 

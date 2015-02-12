@@ -30,7 +30,7 @@ class App.Browser
     # define min. required browser version
     map =
       Chrome2: 37
-      Firefox: 28
+      Firefox: 31
       Explorer: 10
       Safari: 6
       Opera: 22

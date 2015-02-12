@@ -124,17 +124,27 @@ class App.TicketZoom extends App.Controller
           @doNotLog = 1
           @recentView( 'Ticket', ticket_id )
 
-      error: (xhr, status, error) =>
+      error: (xhr) =>
+        statusText = xhr.statusText
+        status     = xhr.status
+        detail     = xhr.responseText
+        #console.log('error', status, statusText)
 
-        # do not close window if request is aborted
-        return if status is 'abort'
+        # ignore if request is aborted
+        if statusText is 'abort'
+          return
+
+        # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
+        if @ticketUpdatedAtLastCall && status is 0
+          console.log('network issues e. g. temp. not connection', status, statusText, detail)
+          return
 
         # show error message
-        if xhr.status is 401 || error is 'Unauthorized'
+        if status is 401 || statusText is 'Unauthorized'
           @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
           @taskIconClass = 'error'
           @html App.view('generic/error/unauthorized')( objectName: 'Ticket' )
-        else if xhr.status is 404 || error is 'Not Found'
+        else if status is 404 || statusText is 'Not Found'
           @taskHead      = '» ' + App.i18n.translateInline('Not Found') + ' «'
           @taskIconClass = 'error'
           @html App.view('generic/error/not_found')( objectName: 'Ticket' )
@@ -142,9 +152,7 @@ class App.TicketZoom extends App.Controller
           @taskHead      = '» ' + App.i18n.translateInline('Error') + ' «'
           @taskIconClass = 'error'
 
-          status = xhr.status
-          detail = xhr.responseText
-          if !status && !detail
+          if !detail
             detail = 'General communication error, maybe internet is not available!'
           @html App.view('generic/error/generic')(
             status:     status
@@ -321,21 +329,26 @@ class App.TicketZoom extends App.Controller
           )
 
       showTicketHistory = =>
-        new App.TicketHistory( ticket_id: @ticket.id )
+        new App.TicketHistory(
+          ticket_id: @ticket.id
+          container: @el.closest('.content')
+        )
       showTicketMerge = =>
-        new App.TicketMerge
-          ticket: @ticket
-          task_key: @task_key
-          container: @el
+        new App.TicketMerge(
+          ticket:    @ticket
+          task_key:  @task_key
+          container: @el.closest('.content')
+        )
       changeCustomer = (e, el) =>
         new App.TicketCustomer(
-          ticket: @ticket
+          ticket:    @ticket
+          container: @el.closest('.content')
         )
       items = [
         {
-          head: 'Ticket'
-          name: 'ticket'
-          icon: 'message'
+          head:     'Ticket'
+          name:     'ticket'
+          icon:     'message'
           callback: editTicket
         }
       ]
@@ -367,6 +380,7 @@ class App.TicketZoom extends App.Controller
               title:   'Users'
               object:  'User'
               objects: 'Users'
+            container: @el.closest('.content')
           )
         showCustomer = (el) =>
           new App.WidgetUser(
@@ -374,9 +388,9 @@ class App.TicketZoom extends App.Controller
             user_id:  @ticket.customer_id
           )
         items.push {
-          head: 'Customer'
-          name: 'customer'
-          icon: 'person'
+          head:    'Customer'
+          name:    'customer'
+          icon:    'person'
           actions: [
             {
               title:    'Change Customer'
@@ -400,6 +414,7 @@ class App.TicketZoom extends App.Controller
                 title:   'Organizations'
                 object:  'Organization'
                 objects: 'Organizations'
+              container: @el.closest('.content')
             )
           showOrganization = (el) =>
             new App.WidgetOrganization(
@@ -421,8 +436,8 @@ class App.TicketZoom extends App.Controller
           }
 
       new App.Sidebar(
-        el:     @el.find('.tabsSidebar')
-        items:  items
+        el:    @el.find('.tabsSidebar')
+        items: items
       )
 
     # show article

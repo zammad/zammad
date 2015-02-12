@@ -1,7 +1,8 @@
 <div class="sidebar-block">
-  <h3 class="u-textTruncate" title="<%- @Ti( 'Name') %>">
-    <%= @organization.displayName() %>
-  </h3>
+    <div class="avatar organizationInfo-avatar size-50">
+      <a href="<%- @organization.uiUrl() %>" class="organization icon"></a>
+    </div>
+    <h3 title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></h3>
 </div>
 
 <% for row in @organizationData: %>
@@ -9,7 +10,7 @@
     <div class="sidebar-block">
     <% if row.tag isnt 'richtext': %>
       <label><%- @T( row.display ) %></label>
-      <%- @L( @P( @organization[row.name] ) ) %>
+      <%- @P( @organization, row.name ) %>
     <% else: %>
       <label><%- @T( row.display ) %></label>
       <div contenteditable="true" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @T('Add a Note') %>"><%- @organization[row.name] %></div>

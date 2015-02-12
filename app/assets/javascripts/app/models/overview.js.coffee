@@ -131,11 +131,11 @@ class App.Overview extends App.Model
         owner:                  'Owner'
       class:   'span4'
     },
-    { name: 'active',         display: 'Active',              tag: 'boolean',  note: 'boolean', 'default': true, 'null': false, 'class': 'span4' },
-    { name: 'created_by_id',  display: 'Created by', relation: 'User', readonly: 1 },
-    { name: 'created_at',     display: 'Created', type: 'time', readonly: 1 },
-    { name: 'updated_by_id',  display: 'Updated by', relation: 'User', readonly: 1 },
-    { name: 'updated_at',     display: 'Updated', type: 'time', readonly: 1 },
+    { name: 'active',         display: 'Active',      tag: 'active', default: true },
+    { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
+    { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1 },
+    { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1 },
+    { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1 },
   ]
   @configure_delete = true
   @configure_overview = [

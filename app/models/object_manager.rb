@@ -65,7 +65,7 @@ list of all attributes
 
 =begin
 
-add a new activity entry for an object
+add a new attribute entry for an object
 
   ObjectManager::Attribute.add(
     :object      => 'Ticket',
@@ -101,7 +101,6 @@ add a new activity entry for an object
     :updated_at        => '2014-06-04 10:00:00',
   )
 
-
 =end
 
   def self.add(data)
@@ -114,8 +113,8 @@ add a new activity entry for an object
 
     # check newest entry - is needed
     result = ObjectManager::Attribute.where(
-      :object_lookup_id            => data[:object_lookup_id],
-      :name                        => data[:name],
+      :object_lookup_id => data[:object_lookup_id],
+      :name             => data[:name],
     ).first
     if result
 #      raise "ERROR: attribute #{data[:name]} for #{data[:object]} already exists"
@@ -126,6 +125,30 @@ add a new activity entry for an object
     ObjectManager::Attribute.create(data)
   end
 
+
+=begin
+
+get the attribute model based on object and name
+
+  attribute = ObjectManager::Attribute.get(
+    :object => 'Ticket',
+    :name   => 'group_id',
+  )
+
+=end
+
+  def self.get(data)
+
+    # lookups
+    if data[:object]
+      data[:object_lookup_id] = ObjectLookup.by_name( data[:object] )
+    end
+
+    ObjectManager::Attribute.where(
+      :object_lookup_id => data[:object_lookup_id],
+      :name             => data[:name],
+    ).first
+  end
 
 =begin
 

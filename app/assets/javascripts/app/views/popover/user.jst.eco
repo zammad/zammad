@@ -5,19 +5,15 @@
 <div>
 <% for row in @userData: %>
   <% if @user[row.name]: %>
-  <div class="column">
-    <h3><%- @T( row.display ) %></h3>
-    <% if row.tag is 'richtext': %>
-      <div><%- @user[row.name] %></div>
-    <% else: %>
-      <div><%- @L( @P( @user[row.name] ) ) %></div>
-    <% end %>
+  <div class="popover-block">
+    <label><%- @T( row.display ) %></label>
+    <%- @P( @user, row.name ) %>
   </div>
   <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
-    <div class="customer-info">
-      <h3><%- @T( 'Linked Accounts' ) %></h3>
+    <div class="popover-block">
+      <label><%- @T( 'Linked Accounts' ) %></label>
       <% for account of @user['accounts']: %>
         <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
       <% end %>
@@ -25,8 +21,8 @@
 <% end %>
 <% if !_.isEmpty( @user['links'] ): %>
   <% for link in @user['links']: %>
-    <div class="customer-info">
-      <h3><%- @T( link['title'] ) %></h3>
+    <div class="popover-block">
+      <label><%- @T( link['title'] ) %></label>
       <% for item in link['items']: %>
         <% if item['url']: %>
           <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>

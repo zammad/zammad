@@ -1335,13 +1335,13 @@ Link::Object.create_if_not_exists( :name => 'Question/Answer' )
 Link::Object.create_if_not_exists( :name => 'Idea' )
 Link::Object.create_if_not_exists( :name => 'Bug' )
 
-Ticket::StateType.create_if_not_exists( :id => 1, :name => 'new', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :id => 2, :name => 'open', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :id => 3, :name => 'pending reminder', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :id => 4, :name => 'pending action', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :id => 5, :name => 'closed', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :id => 6, :name => 'merged', :updated_by_id  => 1 )
-Ticket::StateType.create_if_not_exists( :id => 7, :name => 'removed', :updated_by_id  => 1 )
+Ticket::StateType.create_if_not_exists( :id => 1, :name => 'new'  )
+Ticket::StateType.create_if_not_exists( :id => 2, :name => 'open'  )
+Ticket::StateType.create_if_not_exists( :id => 3, :name => 'pending reminder' )
+Ticket::StateType.create_if_not_exists( :id => 4, :name => 'pending action' )
+Ticket::StateType.create_if_not_exists( :id => 5, :name => 'closed' )
+Ticket::StateType.create_if_not_exists( :id => 6, :name => 'merged' )
+Ticket::StateType.create_if_not_exists( :id => 7, :name => 'removed' )
 
 Ticket::State.create_if_not_exists( :id => 1, :name => 'new', :state_type_id => Ticket::StateType.where(:name => 'new').first.id )
 Ticket::State.create_if_not_exists( :id => 2, :name => 'open', :state_type_id => Ticket::StateType.where(:name => 'open').first.id )
@@ -1938,6 +1938,7 @@ Translation.create_if_not_exists( :locale => 'de', :source => "to", :target => "
 Translation.create_if_not_exists( :locale => 'de', :source => "%s ago", :target => "vor %s" )
 Translation.create_if_not_exists( :locale => 'de', :source => "in %s", :target => "in %s" )
 Translation.create_if_not_exists( :locale => 'de', :source => "Mark all as seen.", :target => "Alle als gelesen markieren." )
+Translation.create_if_not_exists( :locale => 'de', :source => "Pending till", :target => "Warten bis" )
 #Translation.create_if_not_exists( :locale => 'de', :source => "", :target => "" )
 
 # install all packages in auto_install

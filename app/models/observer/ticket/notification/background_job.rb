@@ -165,13 +165,16 @@ class Observer::Ticket::Notification::BackgroundJob
       attribute_name           = key.to_s
       object_manager_attribute = attribute_list[attribute_name]
       if attribute_name[-3,3] == '_id'
-        attribute_name = attribute_name[ 0, attribute_name.length-3 ]
-      end
-      if key == attribute_name
-        changes[key] = value
+        attribute_name = attribute_name[ 0, attribute_name.length-3 ].to_s
       end
 
-      value_id = []
+      # add item to changes hash
+      if key.to_s == attribute_name
+        changes[attribute_name] = value
+      end
+
+      # if changed item is an _id field/reference, do an lookup for the realy values
+      value_id  = []
       value_str = [ value[0], value[1] ]
       if key.to_s[-3,3] == '_id'
         value_id[0] = value[0]
@@ -201,9 +204,16 @@ class Observer::Ticket::Notification::BackgroundJob
           end
         end
       end
+
+      # check if we have an dedcated display name for it
       display = attribute_name
       if object_manager_attribute && object_manager_attribute[:display]
-        display = object_manager_attribute[:display]
+
+        # delete old key
+        changes.delete( display )
+
+        # set new key
+        display = object_manager_attribute[:display].to_s
       end
       if object_manager_attribute && object_manager_attribute[:translate]
         changes[display] = ["i18n(#{value_str[0].to_s})", "i18n(#{value_str[1].to_s})"]

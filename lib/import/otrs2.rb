@@ -971,6 +971,12 @@ module Import::OTRS2
       # check if agent already exists
       user_old = User.where( :id => user_new[:id] ).first
 
+      # check if login is already used
+      login_in_use = User.where( "login = ? AND id != #{user_new[:id]}", user_new[:login].downcase ).count
+      if login_in_use > 0
+        user_new[:login] = "#{user_new[:login]}_#{user_new[:id]}"
+      end
+
       # create / update agent
       if user_old
         puts "update User.find(#{user_old[:id]})"

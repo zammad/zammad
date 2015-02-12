@@ -64,11 +64,16 @@ class App.ChannelEmailFilter extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailFilterEdit( {} )
+    new App.ChannelEmailFilterEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
-    new App.ChannelEmailFilterEdit( object: App.PostmasterFilter.find(id) )
+    new App.ChannelEmailFilterEdit(
+      object:    App.PostmasterFilter.find(id)
+      container: @el.closest('.content')
+    )
 
 class App.ChannelEmailFilterEdit extends App.ControllerModal
   constructor: ->
@@ -152,12 +157,17 @@ class App.ChannelEmailAddress extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailAddressEdit( {} )
+    new App.ChannelEmailAddressEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
     item = App.EmailAddress.find(id)
-    new App.ChannelEmailAddressEdit( object: item )
+    new App.ChannelEmailAddressEdit(
+      object:    item
+      container: @el.closest('.content')
+    )
 
 class App.ChannelEmailAddressEdit extends App.ControllerModal
   constructor: ->
@@ -238,12 +248,17 @@ class App.ChannelEmailSignature extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailSignatureEdit( {} )
+    new App.ChannelEmailSignatureEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
     item = App.Signature.find(id)
-    new App.ChannelEmailSignatureEdit( object: item )
+    new App.ChannelEmailSignatureEdit(
+      object:    item
+      container: @el.closest('.content')
+    )
 
 class App.ChannelEmailSignatureEdit extends App.ControllerModal
   constructor: ->
@@ -324,12 +339,17 @@ class App.ChannelEmailInbound extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailInboundEdit( {} )
+    new App.ChannelEmailInboundEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
     item = App.Channel.find(id)
-    new App.ChannelEmailInboundEdit( object: item )
+    new App.ChannelEmailInboundEdit(
+      object:    item
+      container: @el.closest('.content')
+    )
 
 
 class App.ChannelEmailInboundEdit extends App.ControllerModal

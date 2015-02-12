@@ -5,25 +5,25 @@ class App.User extends App.Model
 
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
-    { name: 'login',            display: 'Login',         tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', autocapitalize: false, signup: false, quick: false },
-    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', signup: true, info: true, invite_agent: true },
-    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, class: 'span4', signup: true, info: true, invite_agent: true },
-    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, class: 'span4', signup: true, info: true, invite_agent: true },
-    { name: 'web',              display: 'Web',           tag: 'input',    type: 'url',      limit: 100, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'phone',            display: 'Phone',         tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'mobile',           display: 'Mobile',        tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'fax',              display: 'Fax',           tag: 'input',    type: 'phone',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', class: 'span4', signup: false, info: true },
-    { name: 'department',       display: 'Department',    tag: 'input',    type: 'text',    limit: 200, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'street',           display: 'Street',        tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'zip',              display: 'Zip',           tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'city',             display: 'City',          tag: 'input',    type: 'text',    limit: 100, null: true,  class: 'span4', signup: false, info: true },
-    { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', class: 'span4', signup: true, },
-    { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, class: 'span4', info: true },
-    { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role', class: 'span4' },
-    { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', class: 'span4', invite_agent: true },
-    { name: 'active',           display: 'Active',        tag: 'boolean',  default: true, null: true, class: 'span4' },
-    { name: 'updated_at',       display: 'Updated',       type: 'time',    readonly: 1 },
+    { name: 'login',            display: 'Login',         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
+    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true },
+    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true },
+    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true },
+    { name: 'web',              display: 'Web',           tag: 'input',    type: 'url',      limit: 100, null: true, signup: false, info: true },
+    { name: 'phone',            display: 'Phone',         tag: 'input',    type: 'phone',    limit: 100, null: true, signup: false, info: true },
+    { name: 'mobile',           display: 'Mobile',        tag: 'input',    type: 'phone',    limit: 100, null: true, signup: false, info: true },
+    { name: 'fax',              display: 'Fax',           tag: 'input',    type: 'phone',    limit: 100, null: true, signup: false, info: true },
+    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true },
+    { name: 'department',       display: 'Department',    tag: 'input',    type: 'text',    limit: 200, null: true, signup: false, info: true },
+    { name: 'street',           display: 'Street',        tag: 'input',    type: 'text',    limit: 100, null: true, signup: false, info: true },
+    { name: 'zip',              display: 'Zip',           tag: 'input',    type: 'text',    limit: 100, null: true, signup: false, info: true },
+    { name: 'city',             display: 'City',          tag: 'input',    type: 'text',    limit: 100, null: true, signup: false, info: true },
+    { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', signup: true, },
+    { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
+    { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role' },
+    { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', invite_agent: true },
+    { name: 'active',           display: 'Active',        tag: 'active',   default: true },
+    { name: 'updated_at',       display: 'Updated',       tag: 'datetime', readonly: 1 },
   ]
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
@@ -52,21 +52,21 @@ class App.User extends App.Model
     else
       return '??'
 
-  avatar: (size = 40, placement = '', cssClass = '') ->
-    cssClass += " size-#{ size }"
+  avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar) ->
+    cssClass += " size-#{size}"
 
     if placement
       placement = "data-placement=\"#{placement}\""
 
-    if !@image || @image is 'none'
-      return @uniqueAvatar(size, placement, cssClass)
+    if !@image || @image is 'none' || unique
+      return @uniqueAvatar(size, placement, cssClass, avatar)
     else
-      "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{ @imageUrl })\" #{placement}></span>"
+      if @vip
+        cssClass += " vip"
+      image = @imageUrl()
+      "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
 
-  uniqueAvatar: (size = 40, placement = '', cssClass = '', avatar) ->
-    if size
-      cssClass += " size-#{ size }"
-
+  uniqueAvatar: (size, placement = '', cssClass = '', avatar) ->
     width  = 300
     height = 226
     size   = parseInt(size, 10)
@@ -76,11 +76,20 @@ class App.User extends App.Model
     y   = rng() * (height - size)
 
     if !avatar
-      cssClass += "#{cssClass} user-popover"
+      cssClass += " user-popover"
       data      = "data-id=\"#{@id}\""
     else
       data      = "data-avatar-id=\"#{avatar.id}\""
+
+    if @vip
+      cssClass += " vip"
     "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
+
+  imageUrl: ->
+    return if !@image
+    # set image url
+    @constructor.apiPath + '/users/image/' + @image
+
 
   @_fillUp: (data) ->
 
@@ -91,9 +100,6 @@ class App.User extends App.Model
           data['accounts'][account]['link'] = 'http://twitter.com/' + data['accounts'][account]['username']
         if account == 'facebook'
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
-
-    # set image url
-    data.imageUrl = @apiPath + '/users/image/' + data.image
 
     if data.organization_id
       data.organization = App.Organization.find(data.organization_id)
