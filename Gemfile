@@ -31,7 +31,7 @@ gem 'omniauth-google-oauth2'
 
 gem 'twitter', '~> 5.13.0'
 gem 'koala'
-gem 'mail', '~> 2.5.0'
+gem 'mail', '~> 2.6.0'
 
 gem 'mime-types'
 
