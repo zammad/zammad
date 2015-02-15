@@ -1333,11 +1333,11 @@ user_community = User.create_or_update(
 )
 
 Link::Type.create_if_not_exists( :id => 1, :name => 'normal' )
-Link::Object.create_if_not_exists( :id => 2, :name => 'Ticket' )
-Link::Object.create_if_not_exists( :id => 3, :name => 'Announcement' )
-Link::Object.create_if_not_exists( :id => 4, :name => 'Question/Answer' )
-Link::Object.create_if_not_exists( :id => 5, :name => 'Idea' )
-Link::Object.create_if_not_exists( :id => 6, :name => 'Bug' )
+Link::Object.create_if_not_exists( :id => 1, :name => 'Ticket' )
+Link::Object.create_if_not_exists( :id => 2, :name => 'Announcement' )
+Link::Object.create_if_not_exists( :id => 3, :name => 'Question/Answer' )
+Link::Object.create_if_not_exists( :id => 4, :name => 'Idea' )
+Link::Object.create_if_not_exists( :id => 5, :name => 'Bug' )
 
 Ticket::StateType.create_if_not_exists( :id => 1, :name => 'new'  )
 Ticket::StateType.create_if_not_exists( :id => 2, :name => 'open'  )
