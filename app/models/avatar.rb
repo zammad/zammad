@@ -5,7 +5,7 @@ class Avatar < ApplicationModel
 
 =begin
 
-add a avatar based on auto detection (email address)
+add an avatar based on auto detection (email address)
 
   Avatar.auto_detection(
     :object           => 'User',
@@ -72,7 +72,7 @@ add a avatar
       object_id = ObjectLookup.by_name( data[:object] )
     end
 
-    # add inital avatar
+    # add initial avatar
     add_init_avatar(object_id, data[:o_id])
 
     record = {
@@ -80,7 +80,8 @@ add a avatar
       :object_lookup_id => object_id,
       :default          => true,
       :deletable        => data[:deletable],
-      :inital           => false,
+      # @TODO Check how to fix typos in database fields inital -> initial
+      :initial           => false,
       :source           => data[:source],
       :source_url       => data[:url],
       :updated_by_id    => data[:updated_by_id],
@@ -120,6 +121,7 @@ add a avatar
       if !response.success?
         #puts "WARNING: Can't fetch '#{self.image_source}' (maybe no avatar available), http code: #{response.code.to_s}"
         #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
+        # @TODO remove comment and log instead
         return
       end
       #puts "NOTICE: Fetch '#{self.image_source}', http code: #{response.code.to_s}"
@@ -273,9 +275,9 @@ return all avatars of an user
     avatars = Avatar.where(
       :object_lookup_id  => object_id,
       :o_id              => o_id,
-    ).order( 'inital DESC, deletable ASC, created_at ASC, id DESC' )
+    ).order( 'initial DESC, deletable ASC, created_at ASC, id DESC' )
 
-    # add inital avatar
+    # add initial avatar
     add_init_avatar(object_id, o_id)
 
     avatar_list = []
@@ -358,7 +360,7 @@ returns:
         :object_lookup_id => object_id,
         :default          => true,
         :source           => 'init',
-        :inital           => true,
+        :initial           => true,
         :deletable        => false,
         :updated_by_id    => 1,
         :created_by_id    => 1,
