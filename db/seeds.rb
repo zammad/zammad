@@ -1254,6 +1254,7 @@ email_address = EmailAddress.create_if_not_exists(
   :created_by_id  => 1
 )
 signature = Signature.create_if_not_exists(
+  :id   => 1,
   :name => 'default',
   :body => '
   #{user.firstname} #{user.lastname}
@@ -1300,6 +1301,7 @@ Group.create_if_not_exists(
 )
 
 user = User.create_if_not_exists(
+  :id            => 1,
   :login         => '-',
   :firstname     => '-',
   :lastname      => '',
@@ -1315,9 +1317,11 @@ roles         = Role.where( :name => 'Customer' )
 organizations = Organization.all
 groups        = Group.all
 org_community = Organization.create_if_not_exists(
+  :id   => 1,
   :name => 'Zammad Foundation',
 )
 user_community = User.create_or_update(
+  :id              => 2,
   :login           => 'nicole.braun@zammad.org',
   :firstname       => 'Nicole',
   :lastname        => 'Braun',
@@ -1328,12 +1332,12 @@ user_community = User.create_or_update(
   :organization_id => org_community.id,
 )
 
-Link::Type.create_if_not_exists( :name => 'normal' )
-Link::Object.create_if_not_exists( :name => 'Ticket' )
-Link::Object.create_if_not_exists( :name => 'Announcement' )
-Link::Object.create_if_not_exists( :name => 'Question/Answer' )
-Link::Object.create_if_not_exists( :name => 'Idea' )
-Link::Object.create_if_not_exists( :name => 'Bug' )
+Link::Type.create_if_not_exists( :id => 1, :name => 'normal' )
+Link::Object.create_if_not_exists( :id => 2, :name => 'Ticket' )
+Link::Object.create_if_not_exists( :id => 3, :name => 'Announcement' )
+Link::Object.create_if_not_exists( :id => 4, :name => 'Question/Answer' )
+Link::Object.create_if_not_exists( :id => 5, :name => 'Idea' )
+Link::Object.create_if_not_exists( :id => 6, :name => 'Bug' )
 
 Ticket::StateType.create_if_not_exists( :id => 1, :name => 'new'  )
 Ticket::StateType.create_if_not_exists( :id => 2, :name => 'open'  )
@@ -1351,24 +1355,24 @@ Ticket::State.create_if_not_exists( :id => 5, :name => 'merged', :state_type_id 
 Ticket::State.create_if_not_exists( :id => 6, :name => 'removed', :state_type_id  => Ticket::StateType.where(:name => 'removed').first.id, :active => false )
 Ticket::State.create_if_not_exists( :id => 7, :name => 'pending close', :state_type_id => Ticket::StateType.where(:name => 'pending action').first.id, :next_state_id => 5 )
 
-Ticket::Priority.create_if_not_exists( :name => '1 low' )
-Ticket::Priority.create_if_not_exists( :name => '2 normal' )
-Ticket::Priority.create_if_not_exists( :name => '3 high' )
+Ticket::Priority.create_if_not_exists( :id => 1, :name => '1 low' )
+Ticket::Priority.create_if_not_exists( :id => 2, :name => '2 normal' )
+Ticket::Priority.create_if_not_exists( :id => 3, :name => '3 high' )
 
-Ticket::Article::Type.create_if_not_exists( :name => 'email', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'sms', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'chat', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'fax', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'phone', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'twitter status', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'twitter direct-message', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'facebook', :communication => true )
-Ticket::Article::Type.create_if_not_exists( :name => 'note', :communication => false )
-Ticket::Article::Type.create_if_not_exists( :name => 'web', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 1, :name => 'email', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 2, :name => 'sms', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 3, :name => 'chat', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 4, :name => 'fax', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 5, :name => 'phone', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 6, :name => 'twitter status', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 7, :name => 'twitter direct-message', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 8, :name => 'facebook', :communication => true )
+Ticket::Article::Type.create_if_not_exists( :id => 9, :name => 'note', :communication => false )
+Ticket::Article::Type.create_if_not_exists( :id => 10, :name => 'web', :communication => true )
 
-Ticket::Article::Sender.create_if_not_exists( :name => 'Agent' )
-Ticket::Article::Sender.create_if_not_exists( :name => 'Customer' )
-Ticket::Article::Sender.create_if_not_exists( :name => 'System' )
+Ticket::Article::Sender.create_if_not_exists( :id => 1, :name => 'Agent' )
+Ticket::Article::Sender.create_if_not_exists( :id => 2, :name => 'Customer' )
+Ticket::Article::Sender.create_if_not_exists( :id => 3, :name => 'System' )
 
 UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
@@ -1589,31 +1593,39 @@ Channel.create_if_not_exists(
 )
 
 network = Network.create_if_not_exists(
-  :name   => 'base',
+  :id   => 1,
+  :name => 'base',
 )
 
 Network::Category::Type.create_if_not_exists(
-  :name   => 'Announcement',
+  :id   => 1,
+  :name => 'Announcement',
 )
 Network::Category::Type.create_if_not_exists(
+  :id   => 2,
   :name => 'Idea',
 )
 Network::Category::Type.create_if_not_exists(
+  :id   => 1,
   :name => 'Question',
 )
 Network::Category::Type.create_if_not_exists(
+  :id   => 1,
   :name => 'Bug Report',
 )
 
 Network::Privacy.create_if_not_exists(
+  :id   => 1,
   :name => 'logged in',
   :key  => 'loggedIn',
 )
 Network::Privacy.create_if_not_exists(
+  :id   => 2,
   :name => 'logged in and moderator',
   :key  => 'loggedInModerator',
 )
 Network::Category.create_if_not_exists(
+  :id                       => 1,
   :name                     => 'Announcements',
   :network_id               => network.id,
   :allow_comments           => true,
@@ -1622,6 +1634,7 @@ Network::Category.create_if_not_exists(
   :allow_comments           => true,
 )
 Network::Category.create_if_not_exists(
+  :id                       => 2,
   :name                     => 'Questions',
   :network_id               => network.id,
   :allow_comments           => true,
@@ -1630,6 +1643,7 @@ Network::Category.create_if_not_exists(
 #  :network_categories_moderator_user_ids => User.where(:login => '-').first.id,
 )
 Network::Category.create_if_not_exists(
+  :id                       => 3,
   :name                     => 'Ideas',
   :network_id               => network.id,
   :allow_comments           => true,
@@ -1638,6 +1652,7 @@ Network::Category.create_if_not_exists(
   :allow_comments           => true,
 )
 Network::Category.create_if_not_exists(
+  :id                       => 4,
   :name                     => 'Bug Reports',
   :network_id               => network.id,
   :allow_comments           => true,
