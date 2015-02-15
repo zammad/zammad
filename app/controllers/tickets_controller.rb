@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
   def destroy
     ticket = Ticket.find( params[:id] )
 
-    # permissin check
+    # permission check
     return if !ticket_permission(ticket)
 
     ticket.destroy
