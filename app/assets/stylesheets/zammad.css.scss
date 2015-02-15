@@ -895,7 +895,7 @@ textarea,
   color: inherit;
   background-color: white;
   border-radius: 6px;
-  box-shadow: 
+  box-shadow:
     0 8px 17px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -911,18 +911,19 @@ textarea,
   margin-bottom: 5px;
 }
 
-.getstarted, 
+.getstarted,
 .reset_password,
 .signup,
 .darkBackground,
 .login {
   padding: 10px;
   background: hsl(234,10%,19%);
+  z-index: 501;
 }
 
 .content.getstarted {
   padding: 0;
-  
+
   .main {
     padding: 20px 10px;
   }
@@ -930,8 +931,8 @@ textarea,
 
 .login {
   padding: 24px 24px 97px;
-  color: hsl(212,8%,40%);  
-  
+  color: hsl(212,8%,40%);
+
   a {
     color: hsl(229,2%,51%);
   }
