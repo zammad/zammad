@@ -1606,11 +1606,11 @@ Network::Category::Type.create_if_not_exists(
   :name => 'Idea',
 )
 Network::Category::Type.create_if_not_exists(
-  :id   => 1,
+  :id   => 3,
   :name => 'Question',
 )
 Network::Category::Type.create_if_not_exists(
-  :id   => 1,
+  :id   => 4,
   :name => 'Bug Report',
 )
 
