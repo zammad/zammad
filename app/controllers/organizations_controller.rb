@@ -50,7 +50,7 @@ curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password}
 
     # only allow customer to fetch his own organization
     organizations = []
-    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
+    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role(Z_ROLENAME_AGENT)
       if current_user.organization_id
         organizations = Organization.where( :id => current_user.organization_id )
       end
@@ -80,7 +80,7 @@ curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
   def show
 
     # only allow customer to fetch his own organization
-    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
+    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role(Z_ROLENAME_AGENT)
       if !current_user.organization_id
         render :json => {}
         return
@@ -124,7 +124,7 @@ curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "C
 =end
 
   def create
-    return if deny_if_not_role('Agent')
+    return if deny_if_not_role(Z_ROLENAME_AGENT)
     model_create_render(Organization, params)
   end
 
@@ -155,7 +155,7 @@ curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "C
 =end
 
   def update
-    return if deny_if_not_role('Agent')
+    return if deny_if_not_role(Z_ROLENAME_AGENT)
     model_update_render(Organization, params)
   end
 
@@ -178,7 +178,7 @@ Test:
   def history
 
     # permissin check
-    if !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
+    if !is_role(Z_ROLENAME_ADMIN) && !is_role(Z_ROLENAME_AGENT)
       response_access_deny
       return
     end
