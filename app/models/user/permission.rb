@@ -18,7 +18,7 @@ returns
   def permission (data)
 
     # check customer
-    if data[:current_user].is_role('Customer')
+    if data[:current_user].is_role(Z_ROLENAME_CUSTOMER)
 
       # access ok if its own user
       return true if self.id == data[:current_user].id

@@ -241,7 +241,7 @@ class TicketsController < ApplicationController
     articles.each {|article|
 
       # ignore internal article if customer is requesting
-      next if article.internal == true && is_role('Customer')
+      next if article.internal == true && is_role(Z_ROLENAME_CUSTOMER)
 
       # load article ids
       article_ids.push article.id

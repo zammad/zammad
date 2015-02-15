@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def index
 
     # only allow customer to fetch him self
-    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+    if is_role(Z_ROLENAME_CUSTOMER) && !is_role('Admin') && !is_role('Agent')
       users = User.where( :id => current_user.id )
     else
       users = User.all
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
 
           # everybody else will go as customer per default
         else
-          role_ids.push Role.where( :name => 'Customer' ).first.id
+          role_ids.push Role.where( :name => Z_ROLENAME_CUSTOMER ).first.id
         end
         user.role_ids  = role_ids
         user.group_ids = group_ids
@@ -260,7 +260,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def search
 
-    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+    if is_role(Z_ROLENAME_CUSTOMER) && !is_role('Admin') && !is_role('Agent')
       response_access_deny
       return
     end
@@ -727,7 +727,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return true if is_role('Agent')
 
     # allow to update customer by him self
-    return true if is_role('Customer') && params[:id].to_i == current_user.id
+    return true if is_role(Z_ROLENAME_CUSTOMER) && params[:id].to_i == current_user.id
 
     response_access_deny
     return false
