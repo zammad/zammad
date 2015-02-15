@@ -6,6 +6,6 @@ class Group < ApplicationModel
   belongs_to               :signature
   validates                :name, :presence => true
 
-  activity_stream_support  :role => 'Admin'
+  activity_stream_support  :role => Z_ROLENAME_ADMIN
   history_support
 end

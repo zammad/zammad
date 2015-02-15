@@ -190,7 +190,7 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # check user
     if !params[:id]
@@ -256,7 +256,7 @@ class SessionsController < ApplicationController
   end
 
   def list
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     assets = {}
     sessions_clean = []
     SessionHelper.list.each {|session|
@@ -274,7 +274,7 @@ class SessionsController < ApplicationController
   end
 
   def delete
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     SessionHelper::destroy( params[:id] )
     render :json => {}
   end

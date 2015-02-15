@@ -51,7 +51,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   def base
 
     # check admin permissions
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # validate url
     messages = {}
@@ -132,7 +132,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   def email_probe
 
     # check admin permissions
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # validation
     user   = nil
@@ -546,7 +546,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   def email_outbound
 
     # check admin permissions
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # validate params
     if !params[:adapter]
@@ -565,7 +565,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   def email_inbound
 
     # check admin permissions
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # validate params
     if !params[:adapter]
@@ -585,7 +585,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   def email_verify
 
     # check admin permissions
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # send verify email to inbox
     if !params[:subject]
