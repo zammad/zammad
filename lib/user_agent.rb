@@ -43,6 +43,9 @@ returns
 
       http = Net::HTTP.new(uri.host, uri.port)
 
+      http.open_timeout = 8
+      http.read_timeout = 8
+
       if uri.scheme =~ /https/i
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
