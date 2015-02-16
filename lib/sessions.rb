@@ -498,6 +498,7 @@ returns
             thread_client(client_id)
             @@client_threads[client_id] = nil
             puts "close client (#{client_id}) thread"
+            ActiveRecord::Base.connection.close
           }
           sleep 0.5
         end

@@ -377,6 +377,7 @@ module Import::OTRS2
           end
           _ticket_result(records, locks)
         end
+        ActiveRecord::Base.connection.close
       }
     }
     (1..thread_count).each {|thread|

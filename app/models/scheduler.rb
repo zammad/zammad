@@ -57,6 +57,7 @@ class Scheduler < ApplicationModel
       job.pid = ''
       job.save
       logger.info " ...stopped thread for '#{job.method}'"
+      ActiveRecord::Base.connection.close
     }
   end
 
