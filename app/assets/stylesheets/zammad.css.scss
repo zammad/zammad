@@ -780,13 +780,13 @@ textarea,
   .content.fit {
     padding: 10px;
     background: #2c2d36;
-    z-index: 1;
+    z-index: 501;
   }
 
 .fullscreenMessage {
   padding: 22px;
   @extend .centered;
-  
+
   .icon {
     margin: -5px 14px 0 0;
   }
@@ -918,7 +918,6 @@ textarea,
 .login {
   padding: 10px;
   background: hsl(234,10%,19%);
-  z-index: 501;
 }
 
 .content.getstarted {
