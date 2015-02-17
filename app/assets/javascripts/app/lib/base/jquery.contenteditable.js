@@ -10,9 +10,10 @@
 
   var pluginName = 'ce',
   defaults = {
-    mode:     'richtext',
+    debug:     false,
+    mode:      'richtext',
     multiline: true,
-    allowKey: {
+    allowKey:  {
       8: true, // backspace
       9: true, // tab
       16: true, // shift
@@ -68,9 +69,9 @@
 
     // handle enter
     this.$element.on('keydown', function (e) {
-      console.log('keydown', e.keyCode)
+      _this.log('keydown', e.keyCode)
       if ( _this.preventInput ) {
-        console.log('preventInput', _this.preventInput)
+        this.log('preventInput', _this.preventInput)
         return
       }
 
@@ -95,7 +96,7 @@
 
     // just paste text
     this.$element.on('paste', function (e) {
-      console.log('paste')
+      _this.log('paste')
 
       // check existing + paste text for limit
       var text
@@ -136,6 +137,7 @@
     // disable rich text b/u/i
     if ( this.options.mode === 'textonly' ) {
       this.$element.on('keydown', function (e) {
+        var _this = this
         if ( _this.richTextKey(e) ) {
           e.preventDefault()
         }
@@ -179,7 +181,7 @@
     if (typeAhead) {
       length = length + typeAhead
     }
-    console.log('maxLengthOk', length, this.options.maxlength)
+    this.log('maxLengthOk', length, this.options.maxlength)
     if ( length > this.options.maxlength ) {
 
       // try to set error on framework form
@@ -232,6 +234,13 @@
       return text_plain
     }
     return this.$element.html().trim()
+  }
+
+  // log method
+  Plugin.prototype.log = function() {
+    if (this.options.debug) {
+      console.log(this._name, arguments)
+    }
   }
 
   $.fn[pluginName] = function ( options ) {

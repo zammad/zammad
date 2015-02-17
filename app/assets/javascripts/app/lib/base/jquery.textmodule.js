@@ -10,7 +10,9 @@
 */
 
   var pluginName = 'textmodule',
-  defaults = {}
+  defaults = {
+    debug: false
+  }
 
   function Plugin( element, options ) {
     this.element    = element
@@ -110,7 +112,7 @@
 
         // backspace + buffer === :: -> close textmodule
         if ( _this.buffer === '::' ) {
-          _this.close()
+          _this.close(true)
           e.preventDefault()
           return
         }
@@ -118,14 +120,14 @@
         // reduce buffer and show new result
         var length   = _this.buffer.length
         _this.buffer = _this.buffer.substr( 0, length-1 )
-        console.log('BS backspace', _this.buffer)
+        _this.log( 'BS backspace', _this.buffer )
         _this.result( _this.buffer.substr( 2, length-1 ) )
       }
     })
 
     // build buffer
     this.$element.on('keypress', function (e) {
-      console.log('BUFF', _this.buffer, e.keyCode, String.fromCharCode(e.which) )
+      _this.log('BUFF', _this.buffer, e.keyCode, String.fromCharCode(e.which) )
 
       // shift
       if ( e.keyCode === 16 ) return
@@ -156,9 +158,9 @@
         var sign = String.fromCharCode(e.which)
         if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
           _this.buffer = _this.buffer + sign
-          //console.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
+          //_this.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
         }
-        console.log('BUFF HINT', _this.buffer, _this.buffer.length, e.which, String.fromCharCode(e.which))
+        _this.log('BUFF HINT', _this.buffer, _this.buffer.length, e.which, String.fromCharCode(e.which))
 
         b = $.proxy(function() {
           this.result( this.buffer.substr(2,this.buffer.length) )
@@ -228,11 +230,12 @@
   }
 
   // close widget
-  Plugin.prototype.close = function() {
+  Plugin.prototype.close = function(cutInput) {
     this.$widget.removeClass('open')
-    if ( this.active ) {
+    if ( cutInput && this.active ) {
       this.cutInput(true)
     }
+    this.buffer = ''
     this.active = false
   }
 
@@ -281,7 +284,7 @@
         start = start - 1
       }
     }
-    //console.log('CUT FOR', string, "-"+clone.toString()+"-", start, range.startOffset)
+    //this.log('CUT FOR', string, "-"+clone.toString()+"-", start, range.startOffset)
     clone.setStart(range.startContainer, start)
     clone.setEnd(range.startContainer, range.startOffset)
     clone.deleteContents()
@@ -304,7 +307,7 @@
   // select text module and insert into text
   Plugin.prototype.take = function(id) {
     if (!id) {
-      this.close()
+      this.close(true)
       return
     }
     for (var i = 0; i < this.collection.length; i++) {
@@ -313,7 +316,7 @@
         var content = item.content
         this.cutInput()
         this.paste(content)
-        this.close()
+        this.close(true)
         return
       }
     }
@@ -348,7 +351,7 @@
     })
 
     this.$widget.find('ul').html('')
-    console.log('result', term, result)
+    this.log('result', term, result)
     for (var i = 0; i < result.length; i++) {
       var item = result[i]
       var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + App.Utils.htmlEscape(item.name)
@@ -370,6 +373,13 @@
       }
     )
     this.movePosition()
+  }
+
+  // log method
+  Plugin.prototype.log = function() {
+    if (this.options.debug) {
+      console.log(this._name, arguments)
+    }
   }
 
   $.fn[pluginName] = function ( options ) {
