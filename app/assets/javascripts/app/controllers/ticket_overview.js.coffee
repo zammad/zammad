@@ -1,140 +1,157 @@
-class Index extends App.Controller
-  constructor: ->
-    super
-    @render()
-
-  render: ->
-
-    @html App.view('agent_ticket_view')()
-
-    # redirect to first view
-    if !@view
-      cache = App.Store.get( 'navupdate_ticket_overview' )
-      if cache && !_.isEmpty( cache )
-        view = cache[0].link
-        @navigate "ticket/view/#{view}"
-        return
-
-    new Navbar(
-      el:   @el.find('.sidebar')
-      view: @view
-    )
-
-    if @view
-      new Table(
-        el:   @el.find('.main')
-        view: @view
-      )
-
-class Table extends App.ControllerContent
-  events:
-    'click [data-type=edit]':      'zoom'
-    'click [data-type=settings]':  'settings'
-    'click [data-type=viewmode]':  'viewmode'
-    'click [data-type=page]':      'page'
-
+class App.TicketOverview extends App.Controller
   constructor: ->
     super
 
     # check authentication
     return if !@authenticate()
 
-    @view_mode = localStorage.getItem( "mode:#{@view}" ) || 's'
-    @log 'notice', 'view:', @view, @view_mode
-
-    # set title
-    @title ''
-    @navupdate '#ticket/view'
-
-    @meta = {}
-    @bulk = {}
-
-    # set new key
-    @key = 'ticket_overview_' + @view
-
-    # bind to rebuild view event
-    @bind( 'ticket_overview_rebuild', @fetch )
-
-    # render
-    @fetch()
-
-  fetch: (force) =>
-
-    # use cache of first page
-    cache = App.Store.get( @key )
-    if !force && cache
-      @load(cache)
-
-    # init fetch via ajax, all other updates on time via websockets
-    else
-      @ajax(
-        id:   'ticket_overview_' + @key
-        type: 'GET'
-        url:  @apiPath + '/ticket_overviews'
-        data:
-          view:      @view
-          view_mode: @view_mode
-        processData: true
-        success: (data) =>
-          data.ajax = true
-          @load(data)
-        )
-
-  load: (data) =>
-    return if !data
-    return if !data.ticket_ids
-    return if !data.overview
-
-    @overview      = data.overview
-    @tickets_count = data.tickets_count
-    @ticket_ids    = data.ticket_ids
-
-    if data.ajax
-      data.ajax = false
-      App.Store.write( @key, data )
-
-      # load assets
-      App.Collection.loadAssets( data.assets )
-
-    # get meta data
-    @overview = data.overview
-    App.Overview.refresh( @overview, { clear: true } )
-
-    App.Overview.unbind('local:rerender')
-    App.Overview.bind 'local:rerender', (record) =>
-      @log 'notice', 'rerender...', record
-      @render()
-
-    App.Overview.unbind('local:refetch')
-    App.Overview.bind 'local:refetch', (record) =>
-      @log 'notice', 'refetch...', record
-      @fetch(true)
-
-    @ticket_list_show = []
-    for ticket_id in @ticket_ids
-      @ticket_list_show.push App.Ticket.fullLocal( ticket_id )
-
-    # remeber bulk attributes
-    @bulk = data.bulk
-
-    # set cache
-#    App.Store.write( @key, data )
-
-    # render page
     @render()
 
   render: ->
+    @html App.view('ticket_overview')()
+
+    @navBarController = new Navbar(
+      el:   @el.find('.sidebar')
+      view: @view
+    )
+
+    @contentController = new Table(
+      el:   @el.find('.main')
+      view: @view
+    )
+
+  active: (state) =>
+    @activeState = state
+
+  isActive: =>
+    @activeState
+
+  url: =>
+    '#ticket/view/' + @view
+
+  show: (params) =>
+
+    # highlight navbar
+    @navupdate '#ticket/view'
+
+    # redirect to last overview if we got called in first level
+    @view = params['view']
+    if !@view && @viewLast
+      @navigate "ticket/view/#{@viewLast}"
+      return
+
+    # build nav bar
+    if @navBarController
+      @navBarController.update(
+        view:        @view
+        activeState: true
+      )
+
+    # do not rerender overview if current overview is requested again
+    return if @viewLast is @view
+
+    # remember last view
+    @viewLast = @view
+
+    # build content
+    if @contentController
+      @contentController.update(
+        view: @view
+      )
+
+  hide: =>
+    if @navBarController
+      @navBarController.active(false)
+
+  changed: =>
+    false
+
+  release: =>
+    # no
+
+class Table extends App.Controller
+  events:
+    'click [data-type=edit]':     'zoom'
+    'click [data-type=settings]': 'settings'
+    'click [data-type=viewmode]': 'viewmode'
+    'click [data-type=page]':     'page'
+
+  constructor: ->
+    super
+
+    @cache = {}
+
+    # rebuild ticket overview data
+    @bind 'ticket_overview_rebuild', (data) =>
+      console.log('EVENT ticket_overview_rebuild', @view, data.view)
+
+      # remeber bulk attributes
+      @bulk = data.bulk
+
+      @cache[data.view] = data
+
+      # check if current view is updated
+      if @view is data.view
+        @render()
+
+
+  update: (params) =>
+    for key, value of params
+      @[key] = value
+
+    @view_mode = localStorage.getItem( "mode:#{@view}" ) || 's'
+    @log 'notice', 'view:', @view, @view_mode
+
+    @render()
+
+  fetch: (force) =>
+
+    # init fetch via ajax, all other updates on time via websockets
+    @ajax(
+      id:   'ticket_overview_' + @key
+      type: 'GET'
+      url:  @apiPath + '/ticket_overviews'
+      data:
+        view:      @view
+        view_mode: @view_mode
+      processData: true
+      success: (data) =>
+        if data.assets
+          App.Collection.loadAssets( data.assets )
+
+        # remeber bulk attributes
+        @bulk = data.bulk
+
+        @cache[data.view] = data
+        @render()
+      )
+
+  render: ->
+    return if !@cache
+    return if !@cache[@view]
+
+    overview      = @cache[@view].overview
+    tickets_count = @cache[@view].tickets_count
+    ticket_ids    = @cache[@view].ticket_ids
+
+    # get meta data
+    overview = @cache[@view].overview
+    App.Overview.refresh( overview, { clear: true } )
+
+    # get ticket list
+    ticket_list_show = []
+    for ticket_id in ticket_ids
+      ticket_list_show.push App.Ticket.fullLocal( ticket_id )
 
     # if customer and no ticket exists, show the following message only
-    if !@ticket_list_show[0] && @isRole('Customer')
+    if !ticket_list_show[0] && @isRole('Customer')
       @html App.view('customer_not_ticket_exists')()
       return
 
     @selected = @bulkGetSelected()
 
     # set page title
-    @overview = App.Overview.find( @overview.id )
-    @title @overview.name
+    overview = App.Overview.find( overview.id )
 
     # render init page
     checkbox = true
@@ -157,7 +174,7 @@ class Table extends App.ControllerContent
     if @isRole('Customer')
       view_modes = []
     html = App.view('agent_ticket_view/content')(
-      overview:   @overview
+      overview:   overview
       view_modes: view_modes
       checkbox:   checkbox
       edit:       edit
@@ -172,16 +189,17 @@ class Table extends App.ControllerContent
     table = ''
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
-        overview: @overview
-        objects:  @ticket_list_show
+        overview: overview
+        objects:  ticket_list_show
         checkbox: checkbox
       )
       table = $(table)
       table.delegate('[name="bulk_all"]', 'click', (e) ->
+        console.log('OOOO',  $(e.target).attr('checked') )
         if $(e.target).attr('checked')
-          $(e.target).parents().find('[name="bulk"]').attr('checked', true)
+          $(e.target).closest('table').find('[name="bulk"]').attr('checked', true)
         else
-          $(e.target).parents().find('[name="bulk"]').attr('checked', false)
+          $(e.target).closest('table').find('[name="bulk"]').attr('checked', false)
       )
       @el.find('.table-overview').append(table)
     else
@@ -226,12 +244,12 @@ class Table extends App.ControllerContent
         value
 
       new App.ControllerTable(
-        overview:     @overview.view.s
-        el:           @el.find('.table-overview')
+        overview:     overview.view.s
+        el:           @$('.table-overview')
         model:        App.Ticket
-        objects:      @ticket_list_show
+        objects:      ticket_list_show
         checkbox:     checkbox
-        groupBy:      @overview.group_by
+        groupBy:      overview.group_by
         bindRow:
           events:
             'click':  openTicket
@@ -451,9 +469,6 @@ class Table extends App.ControllerContent
 
           # refresh view after all tickets are proceeded
           if @bulk_count_index == @bulk_count
-
-            # rebuild navbar with updated ticket count of overviews
-            App.WebSocket.send( event: 'navupdate_ticket_overview' )
 
             # fetch overview data again
             @fetch()
@@ -687,17 +702,17 @@ class Navbar extends App.Controller
     super
 
     # rebuild ticket overview data
-    @bind 'navupdate_ticket_overview', (data) =>
-      if !_.isEmpty(data)
-        App.Store.write( 'navupdate_ticket_overview', data )
-        @render(data)
+    @bind 'ticket_overview_index', (data) =>
+      #console.log('EVENT ticket_overview_index')
+      @cache = data
+      @update()
 
-    cache = App.Store.get( 'navupdate_ticket_overview' )
-    if cache
-      @render( cache )
-    else
-      @render( [] )
+    # init fetch via ajax
+    ajaxInit = =>
 
+      # ignore if already pushed via websockets
+      return if @cache
+      #console.log('AJAX CALLL')
       # init fetch via ajax, all other updates on time via websockets
       @ajax(
         id:    'ticket_overviews',
@@ -705,17 +720,37 @@ class Navbar extends App.Controller
         url:   @apiPath + '/ticket_overviews',
         processData: true,
         success: (data) =>
-          App.Store.write( 'navupdate_ticket_overview', data )
-          @render(data)
+          @cache = data
+          @update()
         )
+    @delay( ajaxInit, 5000 )
 
-  render: (dataOrig) ->
+  active: (state) =>
+    @activeState = state
 
-    data = _.clone(dataOrig)
+  update: (params = {}) ->
+    for key, value of params
+      @[key] = value
+    @render()
+
+    if @activeState
+      meta =
+        title: ''
+      if @cache
+        for item in @cache
+          if item.link is @view
+            meta.title = item.name
+      @title meta.title
+
+  render: =>
+    #console.log('RENDER NAV')
+    return if !@cache
+    data = _.clone(@cache)
 
     # redirect to first view
-    if !@view && !_.isEmpty(data)
+    if @activeState && !@view && !_.isEmpty(data)
       view = data[0].link
+      #console.log('REDIRECT', "ticket/view/#{view}")
       @navigate "ticket/view/#{view}"
       return
 
@@ -724,6 +759,7 @@ class Navbar extends App.Controller
       item.target = '#ticket/view/' + item.link
       if item.link is @view
         item.active = true
+        activeOverview = item
       else
         item.active = false
 
@@ -784,8 +820,26 @@ class Router extends App.Controller
       else
         @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
 
-App.Config.set( 'ticket/view', Index, 'Routes' )
-App.Config.set( 'ticket/view/:view', Index, 'Routes' )
+class TicketOverviewRouter extends App.ControllerPermanent
+  constructor: (params) ->
+    super
+
+    # cleanup params
+    clean_params =
+      view: params.view
+
+    App.TaskManager.execute(
+      key:        'TicketOverview'
+      controller: 'TicketOverview'
+      params:     clean_params
+      show:       true
+      persistent: true
+    )
+
+App.Config.set( 'ticket/view', TicketOverviewRouter, 'Routes' )
+App.Config.set( 'ticket/view/:view', TicketOverviewRouter, 'Routes' )
 #App.Config.set( 'ticket/view/:view/:position/:direction', Router, 'Routes' )
+
+App.Config.set( 'TicketOverview', 'TicketOverview', 'permanentTask' )
 
 App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar' )

@@ -9,6 +9,7 @@ Zammad::Application.routes.draw do
   match '/tests-form-validation', :to => 'tests#form_validation', :via => :get
   match '/tests-table',           :to => 'tests#table',           :via => :get
   match '/tests-html-utils',      :to => 'tests#html_utils',      :via => :get
+  match '/tests-taskbar',         :to => 'tests#taskbar',         :via => :get
   match '/tests/wait/:sec',       :to => 'tests#wait',            :via => :get
 
 end

@@ -158,6 +158,12 @@ class Router extends App.ControllerPermanent
     clean_params =
       user_id:  params.user_id
 
-    App.TaskManager.add( 'User-' + @user_id, 'UserProfile', clean_params )
+    App.TaskManager.execute(
+      key:        'User-' + @user_id
+      controller: 'UserProfile'
+      params:     clean_params
+      show:       true
+    )
+
 
 App.Config.set( 'user/profile/:user_id', Router, 'Routes' )

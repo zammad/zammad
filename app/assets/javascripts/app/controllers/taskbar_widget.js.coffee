@@ -91,8 +91,8 @@ class App.TaskbarWidget extends App.Controller
         return
 
     # check if active task is closed
-    currentTask = App.TaskManager.get( key )
-    tasks = App.TaskManager.all()
+    currentTask      = App.TaskManager.get( key )
+    tasks            = App.TaskManager.all()
     active_is_closed = false
     for task in tasks
       if currentTask.active && task.key is key
@@ -101,19 +101,16 @@ class App.TaskbarWidget extends App.Controller
     # remove task
     App.TaskManager.remove( key )
 
-    # navigate to next task if needed
-    tasks = App.TaskManager.all()
-    if active_is_closed && !_.isEmpty( tasks )
-      task_last = undefined
-      for task in tasks
-        task_last = task
-      if task_last
-        worker = App.TaskManager.worker( task_last.key )
-        if worker
-          @navigate worker.url()
-        return
-    if _.isEmpty( tasks )
-      @navigate '#'
+    # if we do not need to move to an other task
+    return if !active_is_closed
+
+    # get new task url
+    nextTaskUrl = App.TaskManager.nextTaskUrl()
+    if nextTaskUrl
+      @navigate nextTaskUrl
+      return
+
+    @navigate '#'
 
 class Remove extends App.ControllerModal
   constructor: ->

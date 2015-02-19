@@ -44,14 +44,14 @@ class Sessions::Backend::TicketOverviewIndex
 
     if !@client
       return {
-        :event  => 'navupdate_ticket_overview',
+        :event  => 'ticket_overview_index',
         :data   => data,
       }
     end
 
     @client.log 'notify', "push overview_index for user #{ @user.id }"
     @client.send({
-      :event  => 'navupdate_ticket_overview',
+      :event  => ['ticket_overview_index'],
       :data   => data,
     })
   end

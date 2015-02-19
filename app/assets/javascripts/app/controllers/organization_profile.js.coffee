@@ -155,6 +155,11 @@ class Router extends App.ControllerPermanent
     clean_params =
       organization_id:  params.organization_id
 
-    App.TaskManager.add( 'Organization-' + @organization_id, 'OrganizationProfile', clean_params )
+    App.TaskManager.execute(
+      key:        'Organization-' + @organization_id
+      controller: 'OrganizationProfile'
+      params:     clean_params
+      show:       true
+    )
 
 App.Config.set( 'organization/profile/:organization_id', Router, 'Routes' )

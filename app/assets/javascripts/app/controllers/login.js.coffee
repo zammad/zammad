@@ -90,9 +90,6 @@ class Index extends App.ControllerContent
 
   success: (data, status, xhr) =>
 
-    # rebuild navbar with ticket overview counter
-    App.WebSocket.send( event: 'navupdate_ticket_overview' )
-
     # redirect to #
     requested_url = @Config.get( 'requested_url' )
     if requested_url && requested_url isnt '#login'

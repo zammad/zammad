@@ -105,16 +105,16 @@ class Sessions::Backend::TicketOverviewList
         })
         @client.send({
           :data   => {
+            :view          => item[:index].link.to_s,
             :overview      => overview_data[:overview],
             :ticket_ids    => overview_data[:ticket_ids],
             :tickets_count => overview_data[:tickets_count],
-            :bulk => {
+            :bulk          => {
               :group_id__owner_id => groups_users,
               :owner_id           => [],
             },
           },
-          :event      => [ 'ticket_overview_rebuild' ],
-          :collection => 'ticket_overview_' + item[:index].link.to_s,
+          :event => [ 'ticket_overview_rebuild' ],
         })
       end
     }

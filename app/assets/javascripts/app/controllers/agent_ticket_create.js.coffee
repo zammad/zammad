@@ -576,7 +576,12 @@ class Router extends App.ControllerPermanent
       type:       params.type
       id:         params.id
 
-    App.TaskManager.add( 'TicketCreateScreen-' + params['id'], 'TicketCreate', clean_params )
+    App.TaskManager.execute(
+      key:        'TicketCreateScreen-' + params['id']
+      controller: 'TicketCreate'
+      params:     clean_params
+      show:       true
+    )
 
 # create new ticket routes/controller
 App.Config.set( 'ticket/create', Router, 'Routes' )

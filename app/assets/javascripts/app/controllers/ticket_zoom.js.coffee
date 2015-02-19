@@ -1730,7 +1730,12 @@ class TicketZoomRouter extends App.ControllerPermanent
       article_id: params.article_id
       nav:        params.nav
 
-    App.TaskManager.add( 'Ticket-' + @ticket_id, 'TicketZoom', clean_params )
+    App.TaskManager.execute(
+      key:        'Ticket-' + @ticket_id
+      controller: 'TicketZoom'
+      params:     clean_params
+      show:       true
+    )
 
 App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
 App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
