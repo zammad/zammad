@@ -69,7 +69,7 @@ class App.TaskbarWidget extends App.Controller
           if !key
             throw "No such key attributes found for task item"
           order.push key
-        App.TaskManager.reorder( order  )
+        App.TaskManager.reorder( order )
 
     @el.sortable( dndOptions )
 
