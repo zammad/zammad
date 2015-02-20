@@ -24,7 +24,7 @@ module ExtraCollection
     Group.all.each {|item|
       assets = item.assets(assets)
     }
-    if !user.is_role('Customer')
+    if !user.is_role(Z_ROLENAME_CUSTOMER)
       collections[ Organization.to_app_model ] = []
       Organization.all.each {|item|
         assets = item.assets(assets)

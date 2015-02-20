@@ -47,7 +47,7 @@ class User < ApplicationModel
   store                   :preferences
 
   activity_stream_support(
-    :role              => 'Admin',
+    :role              => Z_ROLENAME_ADMIN,
     :ignore_attributes => {
       :last_login   => true,
       :image        => true,

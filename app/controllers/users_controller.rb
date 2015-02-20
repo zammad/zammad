@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def index
 
     # only allow customer to fetch him self
-    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
       users = User.where( :id => current_user.id )
     else
       users = User.all
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
         group_ids = []
         role_ids  = []
         if count <= 2
-          Role.where( :name => [ 'Admin', 'Agent'] ).each { |role|
+          Role.where( :name => [ Z_ROLENAME_ADMIN, 'Agent'] ).each { |role|
             role_ids.push role.id
           }
           Group.all().each { |group|
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
 
           # everybody else will go as customer per default
         else
-          role_ids.push Role.where( :name => 'Customer' ).first.id
+          role_ids.push Role.where( :name => Z_ROLENAME_CUSTOMER ).first.id
         end
         user.role_ids  = role_ids
         user.group_ids = group_ids
@@ -203,17 +203,17 @@ class UsersController < ApplicationController
       user.update_attributes( User.param_cleanup(params) )
 
       # only allow Admin's and Agent's
-      if is_role('Admin') && is_role('Agent') && params[:role_ids]
+      if is_role(Z_ROLENAME_ADMIN) && is_role('Agent') && params[:role_ids]
         user.role_ids = params[:role_ids]
       end
 
       # only allow Admin's
-      if is_role('Admin') && params[:group_ids]
+      if is_role(Z_ROLENAME_ADMIN) && params[:group_ids]
         user.group_ids = params[:group_ids]
       end
 
       # only allow Admin's and Agent's
-      if is_role('Admin') && is_role('Agent') && params[:organization_ids]
+      if is_role(Z_ROLENAME_ADMIN) && is_role('Agent') && params[:organization_ids]
         user.organization_ids = params[:organization_ids]
       end
 
@@ -235,7 +235,7 @@ class UsersController < ApplicationController
   # @response_message 200 User successfully deleted.
   # @response_message 401 Invalid session.
   def destroy
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(User, params)
   end
 
@@ -260,7 +260,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def search
 
-    if is_role('Customer') && !is_role('Admin') && !is_role('Agent')
+    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
       response_access_deny
       return
     end
@@ -324,7 +324,7 @@ class UsersController < ApplicationController
   def history
 
     # permissin check
-    if !is_role('Admin') && !is_role('Agent')
+    if !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
       response_access_deny
       return
     end
@@ -715,7 +715,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   end
 
   def permission_check_by_role
-    return true if is_role('Admin')
+    return true if is_role(Z_ROLENAME_ADMIN)
     return true if is_role('Agent')
 
     response_access_deny
@@ -723,11 +723,11 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   end
 
   def permission_check
-    return true if is_role('Admin')
+    return true if is_role(Z_ROLENAME_ADMIN)
     return true if is_role('Agent')
 
     # allow to update customer by him self
-    return true if is_role('Customer') && params[:id].to_i == current_user.id
+    return true if is_role(Z_ROLENAME_CUSTOMER) && params[:id].to_i == current_user.id
 
     response_access_deny
     return false

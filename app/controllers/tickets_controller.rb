@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
   def destroy
     ticket = Ticket.find( params[:id] )
 
-    # permissin check
+    # permission check
     return if !ticket_permission(ticket)
 
     ticket.destroy
@@ -241,7 +241,7 @@ class TicketsController < ApplicationController
     articles.each {|article|
 
       # ignore internal article if customer is requesting
-      next if article.internal == true && is_role('Customer')
+      next if article.internal == true && is_role(Z_ROLENAME_CUSTOMER)
 
       # load article ids
       article_ids.push article.id

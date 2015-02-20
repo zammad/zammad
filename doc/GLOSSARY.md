@@ -4,10 +4,10 @@
 
 * case
 
-   All request are named case. In other systems this is also called issues, ticket, etc.
+   All request are named case. In other systems this is also called issue, ticket, etc.
 
 * channel
-   Channels are the incoming and outgoing ways where articles flow. There are assigned to groups. Channels can be e-mail, chat, twitter, etc. New channels can be added via the plugin mechanism.
+   Channels are the incoming and outgoing ways where articles flow. They are assigned to groups. Channels can be e-mail, chat, twitter, etc. New channels can be added via the plugin mechanism.
 
 * group
 

@@ -74,14 +74,14 @@ returns
 =end
 
   def agent_of_group
-    Group.find( self.group_id ).users.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
+    Group.find( self.group_id ).users.where( :active => true ).joins(:roles).where( 'roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true ).uniq()
   end
 
 =begin
 
 get user access conditions
 
-  connditions = Ticket.access_condition( User.find(1) )
+  conditions = Ticket.access_condition( User.find(1) )
 
 returns
 
@@ -91,7 +91,7 @@ returns
 
   def self.access_condition(user)
     access_condition = []
-    if user.is_role('Agent')
+    if user.is_role(Z_ROLENAME_AGENT)
       group_ids = Group.select( 'groups.id' ).joins(:users).
       where( 'groups_users.user_id = ?', user.id ).
       where( 'groups.active = ?', true ).
@@ -136,7 +136,7 @@ returns
     Ticket::Article.create(
       :ticket_id  => self.id,
       :type_id    => Ticket::Article::Type.lookup( :name => 'note' ).id,
-      :sender_id  => Ticket::Article::Sender.lookup( :name => 'Agent' ).id,
+      :sender_id  => Ticket::Article::Sender.lookup( :name => Z_ROLENAME_AGENT ).id,
       :body       => 'merged',
       :internal   => false
     )

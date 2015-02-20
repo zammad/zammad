@@ -48,6 +48,7 @@ returns
 
       if uri.scheme =~ /https/i
         http.use_ssl = true
+        # @TODO verify_mode should be configurable
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
 
@@ -133,7 +134,7 @@ returns
         )
       end
 
-      raise "Unable to proccess http call '#{response.inspect}'"
+      raise "Unable to process http call '#{response.inspect}'"
     end
 
     def self.ftp(uri,options)

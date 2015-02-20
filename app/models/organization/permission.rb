@@ -30,7 +30,7 @@ returns
     end
 
     # check agent
-    return true if data[:current_user].is_role('Admin')
+    return true if data[:current_user].is_role(Z_ROLENAME_ADMIN)
     return true if data[:current_user].is_role('Agent')
     return false
   end
