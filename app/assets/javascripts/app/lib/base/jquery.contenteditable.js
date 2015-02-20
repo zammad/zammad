@@ -137,7 +137,6 @@
     // disable rich text b/u/i
     if ( this.options.mode === 'textonly' ) {
       this.$element.on('keydown', function (e) {
-        var _this = this
         if ( _this.richTextKey(e) ) {
           e.preventDefault()
         }
