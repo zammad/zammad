@@ -124,9 +124,9 @@ class _taskManagerSingleton extends Spine.Module
     # input validation
     params.key = App.Utils.htmlAttributeCleanup(params.key)
 
-    # in case later araives an init execute, ignore it
+    # in case an init execute arrives later but is aleady executed, ignore it
     if params.init && @workers[ params.key ]
-      console.log('IGNORE LATER INIT', params)
+      #console.log('IGNORE LATER INIT', params)
       return
 
     # remember latest active controller
@@ -430,6 +430,12 @@ class _taskManagerSingleton extends Spine.Module
 
   tasksInitial: =>
 
+    # set taskbar collection stored in database
+    tasks     = App.Taskbar.all()
+    @allTasks = []
+    for task in tasks
+      @allTasks.push task.attributes()
+
     # reopen tasks
     App.Event.trigger 'taskbar:init'
 
@@ -456,10 +462,6 @@ class _taskManagerSingleton extends Spine.Module
           )
 
     # initial load of taskbar collection
-    tasks     = App.Taskbar.all()
-    @allTasks = []
-    for task in tasks
-      @allTasks.push task.attributes()
     for task in @allTasks
       task_count += 1
       do (task) =>
