@@ -22,6 +22,24 @@ test( "taskbar basic tests", function() {
   equal( $('#taskbars .content.active').length, 1, "check available active contents" );
   equal( $('#taskbars .content.active').text(), "some test controller message:'#1',show:'true',hide:'false',active:'true'", "check active content!" );
 
+  // verify
+  task = App.TaskManager.get( 'TestKey1' )
+  equal( task.notify, false )
+  deepEqual( task.state, undefined )
+  deepEqual( task.params, { "message": "#1" } )
+
+  // update
+  App.TaskManager.update( 'TestKey1', { 'state': 'abc' } )
+  App.TaskManager.update( 'TestKey1', { 'params': { a: 12 } } )
+  App.TaskManager.notify( 'TestKey1' )
+
+  // verify
+  task = App.TaskManager.get( 'TestKey1' )
+  equal( task.notify, true )
+  deepEqual( task.state, 'abc' )
+  deepEqual( task.params, { "a": 12 } )
+
+
   App.TaskManager.execute({
     key:        'TestKey2',
     controller: 'TestController1',
