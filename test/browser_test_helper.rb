@@ -336,6 +336,50 @@ class TestCase < Test::Unit::TestCase
       assert( true, "(#{test[:name]}) user creation failed" )
       return
 
+    elsif action[:execute] == 'overview_count_remember'
+      instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
+      sleep 2
+      overviews = {}
+      instance.find_elements( { :css => '.content.active .sidebar a[href]' } ).each {|element|
+        url = element.attribute('href')
+        url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, "\\2")
+        overviews[url] = 0
+        #puts url.inspect
+        #puts element.inspect
+      }
+      overviews.each {|url, value|
+        count = instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
+        overviews[url] = count
+      }
+      @overview_count_remember = overviews
+      assert( !overviews.empty?, "(#{test[:name]}) overview_count_remember" )
+      return
+    elsif action[:execute] == 'overview_count_verify'
+      instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
+      sleep 2
+      overviews = {}
+      instance.find_elements( { :css => '.content.active .sidebar a[href]' } ).each {|element|
+        url = element.attribute('href')
+        url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, "\\2")
+        overviews[url] = 0
+      }
+      overviews.each {|url, value|
+        count = instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
+        overviews[url] = count
+      }
+      #puts "ov #{overviews.inspect}"
+      #puts "@ov #{@overview_count_remember.inspect}"
+      #puts "data #{action[:data].inspect}"
+      action[:data].each {|url,count|
+        if @overview_count_remember.has_key?(url)
+          count_is     = overviews[url].to_i
+          count_should = @overview_count_remember[url].to_i + count.to_i
+          assert_equal( count_should, count_is, "(#{test[:name]}) expected count of url #{url} is different overview_count_remember" )
+        else
+          assert( false, "(#{test[:name]}) no url #{url} exists in overview_count_remember" )
+        end
+      }
+      return
     elsif action[:execute] == 'create_signature'
       instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
       instance.find_elements( { :css => 'a[href="#channels/email"]' } )[0].click
@@ -415,17 +459,17 @@ class TestCase < Test::Unit::TestCase
     elsif action[:execute] == 'verify_task_attributes'
       if action[:title]
         text = instance.find_elements( { :css => '.tasks .active' } )[0].text.strip
-        assert_equal( action[:title], text  )
+        assert_equal( action[:title], text )
       end
       return
     elsif action[:execute] == 'verify_ticket_attributes'
       if action[:title]
         text = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0].text.strip
-        assert_equal( action[:title], text  )
+        assert_equal( action[:title], text )
       end
       if action[:body]
         text = instance.find_elements( { :css => '.content.active [data-name="body"]' } )[0].text.strip
-        assert_equal( action[:body], text  )
+        assert_equal( action[:body], text )
       end
       return
     elsif action[:execute] == 'set_ticket_attributes'
@@ -463,6 +507,8 @@ class TestCase < Test::Unit::TestCase
         element.send_keys( action[:body] )
       end
       return
+
+    # create ticket
     elsif action[:execute] == 'create_ticket'
       instance.find_elements( { :css => 'a[href="#new"]' } )[0].click
       instance.find_elements( { :css => 'a[href="#ticket/create"]' } )[0].click
@@ -525,6 +571,58 @@ class TestCase < Test::Unit::TestCase
       }
       assert( false, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
       return
+
+    # udpate ticket
+    elsif action[:execute] == 'update_ticket'
+
+      if action[:group]
+        element = instance.find_elements( { :css => '.active .sidebar select[name="group_id"]' } )[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by( :text, action[:group])
+        sleep 0.2
+      end
+
+      if action[:state]
+        element = instance.find_elements( { :css => '.active .sidebar select[name="state_id"]' } )[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by( :text, action[:state])
+        sleep 0.2
+      end
+
+      found = nil
+      (1..5).each {|loop|
+        if !found
+          text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
+          if text =~ /(Discard your unsaved changes.|Verwerfen der)/
+            assert( true, "(#{test[:name]}) discard message found" )
+            found = true
+          end
+          sleep 1
+        end
+      }
+      if !found
+        assert( false, "(#{test[:name]}) no discard message found" )
+      end
+
+      if action[:do_not_submit]
+        assert( true, "(#{test[:name]}) ticket updated without submit" )
+        return
+      end
+
+      instance.find_elements( { :css => '.content.active button.js-submit' } )[0].click
+
+      (1..10).each {|loop|
+        text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
+        if !text || text.empty?
+          assert( true, "(#{test[:name]}) ticket updated" )
+          return
+        end
+        sleep 1
+      }
+      assert( false, "(#{test[:name]}) unable to update ticket" )
+      return
+
+    # search user
     elsif action[:execute] == 'search_user'
       element = instance.find_elements( { :css => '#global-search' } )[0]
       element.click
@@ -542,6 +640,8 @@ class TestCase < Test::Unit::TestCase
       end
       assert( true, "(#{test[:name]}) user #{action[:term]} found" )
       return
+
+    # search org
     elsif action[:execute] == 'search_organization'
       element = instance.find_elements( { :css => '#global-search' } )[0]
       element.click
@@ -574,6 +674,8 @@ class TestCase < Test::Unit::TestCase
       end
       assert( true, "(#{test[:name]}) org #{action[:term]} found" )
       return
+
+    # search ticket
     elsif action[:execute] == 'search_ticket'
       element = instance.find_elements( { :css => '#global-search' } )[0]
       element.click

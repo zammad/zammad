@@ -18,9 +18,16 @@ class App.TicketZoom extends App.Controller
 
     @navupdate '#'
 
-    @form_meta  = undefined
-    @ticket_id  = params.ticket_id
-    @article_id = params.article_id
+    @form_meta   = undefined
+    @ticket_id   = params.ticket_id
+    @article_id  = params.article_id
+
+    # if we are in init task startup, ognore overview_dd
+    if !params.init
+      @overview_id = params.overview_id
+    else
+      @overview_id = false
+    console.log('C OVERVIEW_ID', params.overview_id)
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
@@ -71,12 +78,17 @@ class App.TicketZoom extends App.Controller
   url: =>
     '#ticket/zoom/' + @ticket_id
 
-  show: =>
+  show: (params) =>
+    return if @activeState
+    @activeState = true
+    console.log('S OVERVIEW_ID', params.overview_id)
+
     App.OnlineNotification.seen( 'Ticket', @ticket_id )
     @navupdate '#'
     @positionPageHeaderStart()
 
   hide: =>
+    @activeState = false
     @positionPageHeaderStop()
 
   changed: =>
@@ -235,9 +247,16 @@ class App.TicketZoom extends App.Controller
         isCustomer: @isRole('Customer')
       )
 
+      new OverviewNavigator(
+        el:          @$('.overview-navigator')
+        ticket_id:   @ticket.id
+        overview_id: @overview_id
+      )
+
       new TicketTitle(
-        ticket: @ticket
-        el:     @el.find('.ticket-title')
+        ticket:      @ticket
+        overview_id: @overview_id
+        el:          @el.find('.ticket-title')
       )
 
       new TicketMeta(
@@ -781,6 +800,73 @@ class TicketTitle extends App.Controller
 
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
+
+class OverviewNavigator extends App.Controller
+  events:
+    'click a': 'open'
+
+  constructor: ->
+    super
+
+    # rebuild overview navigator if overview has changed
+    @bind 'ticket_overview_rebuild', (data) =>
+      execute = =>
+        @render()
+      @delay(execute, 600, 'overview-navigator')
+
+    @render()
+
+  render: (overview) =>
+    console.log('RENDER OverviewNavigator', @overview_id)
+    if !@overview_id
+      @html('')
+      return
+
+    # get overview data
+    worker = App.TaskManager.worker( 'TicketOverview' )
+    return if !worker
+    overview = worker.overview(@overview_id)
+    return if !overview
+    current_position = 0
+    next             = false
+    previous         = false
+    for ticket_id in overview.ticket_ids
+      current_position += 1
+      next              = overview.ticket_ids[current_position]
+      previous          = overview.ticket_ids[current_position-2]
+      break if ticket_id is @ticket_id
+
+    # get next/previous ticket
+    if next
+      next = App.Ticket.find(next)
+    if previous
+      previous = App.Ticket.find(previous)
+
+    @html App.view('ticket_zoom/overview_navigator')(
+      title:            overview.overview.name
+      total_count:      overview.tickets_count
+      current_position: current_position
+      next:             next
+      previous:         previous
+    )
+
+  open: (e) =>
+    e.preventDefault()
+    id  = $(e.target).data('id')
+    url = $(e.target).attr('href')
+    if !id
+      id  = $(e.target).closest('a').data('id')
+      url = $(e.target).closest('a').attr('href')
+    console.log('id', id, 'url', url)
+    App.TaskManager.execute(
+      key:        'Ticket-' + id
+      controller: 'TicketZoom'
+      params:
+        ticket_id:   id
+        overview_id: @overview_id
+      show:       true
+    )
+    @navigate url
 
 class TicketMeta extends App.Controller
   constructor: ->

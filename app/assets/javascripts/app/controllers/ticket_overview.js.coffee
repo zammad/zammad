@@ -69,6 +69,10 @@ class App.TicketOverview extends App.Controller
   release: =>
     # no
 
+  overview: (overview_id) =>
+    return if !@contentController
+    @contentController.overview(overview_id)
+
 class Table extends App.Controller
   events:
     'click [data-type=edit]':     'zoom'
@@ -126,7 +130,17 @@ class Table extends App.Controller
         @render()
       )
 
+  overview: (overview_id) =>
+    return if !@cache
+
+    # find requested overview data
+    for url, data of @cache
+      if data.overview.id is overview_id
+        return data
+    false
+
   render: ->
+    console.log('RENDER', @cache, @view)
     return if !@cache
     return if !@cache[@view]
 
@@ -204,7 +218,17 @@ class Table extends App.Controller
       @el.find('.table-overview').append(table)
     else
       openTicket = (id,e) =>
+
+        # open ticket via task manager to provide task with overview info
         ticket = App.Ticket.fullLocal(id)
+        App.TaskManager.execute(
+          key:        'Ticket-' + ticket.id
+          controller: 'TicketZoom'
+          params:
+            ticket_id:   ticket.id
+            overview_id: overview.id
+          show:       true
+        )
         @navigate ticket.uiUrl()
       callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
         attribute.title = object.title
