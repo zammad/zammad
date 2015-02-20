@@ -616,16 +616,16 @@ test( "diff", function() {
 App.Auth.login({
   data: {
     username: 'not_existing',
-    password: 'not_existing'
+    password: 'not_existing',
   },
   success: function(data) {
     test( "auth - not existing user", function() {
-      ok( false, 'ok')
+      ok( false, 'ok' )
     })
   },
   error: function() {
     test( "auth - not existing user", function() {
-      ok( true, 'ok')
+      ok( true, 'ok' )
       authWithSession();
     })
   }
@@ -635,18 +635,18 @@ var authWithSession = function() {
   App.Auth.login({
     data: {
       username: 'nicole.braun@zammad.org',
-      password: 'test'
+      password: 'test',
     },
     success: function(data) {
       test( "auth - existing user", function() {
         ok( true, 'authenticated')
         var user = App.Session.get('login');
-        equal( 'nicole.braun@zammad.org', user, 'session login')
+        equal( 'nicole.braun@zammad.org', user, 'session login' )
       })
     },
     error: function() {
       test( "auth - existing user", function() {
-        ok( false, 'not authenticated')
+        ok( false, 'not authenticated' )
       })
     }
   });
