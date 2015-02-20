@@ -92,6 +92,7 @@ class Table extends App.Controller
       # remeber bulk attributes
       @bulk = data.bulk
 
+      # fill cache
       @cache[data.view] = data
 
       # check if current view is updated

@@ -6,6 +6,7 @@
         <div class="ticket-title"></div>
         <div class="overview-navigator"></div>
       </div>
+      <div class="overview-navigator horizontal"></div>
       <div class="page-header horizontal">
         <div class="flex vertical center">
           <%- @ticket.customer.avatar("50") %>

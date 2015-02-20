@@ -852,12 +852,18 @@ class OverviewNavigator extends App.Controller
 
   open: (e) =>
     e.preventDefault()
+
+    # get requested object and location
     id  = $(e.target).data('id')
     url = $(e.target).attr('href')
     if !id
       id  = $(e.target).closest('a').data('id')
       url = $(e.target).closest('a').attr('href')
-    console.log('id', id, 'url', url)
+
+    # return if we are unable to get id
+    return if !id
+
+    # open task via task manager to get overview information
     App.TaskManager.execute(
       key:        'Ticket-' + id
       controller: 'TicketZoom'

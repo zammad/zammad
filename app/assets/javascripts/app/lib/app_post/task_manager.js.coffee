@@ -124,6 +124,10 @@ class _taskManagerSingleton extends Spine.Module
     # input validation
     params.key = App.Utils.htmlAttributeCleanup(params.key)
 
+    # if we have init task startups, let the controller know this
+    if params.init
+      params.params.init = true
+
     # in case an init execute arrives later but is aleady executed, ignore it
     if params.init && @workers[ params.key ]
       #console.log('IGNORE LATER INIT', params)

@@ -298,6 +298,8 @@ class TestCase < Test::Unit::TestCase
       }
       assert( false, "(#{test[:name]} / #{test[:area]}) still exsists" )
       return
+
+    # create user
     elsif action[:execute] == 'create_user'
       instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
       instance.find_elements( { :css => 'a[href="#manage/users"]' } )[0].click
@@ -336,6 +338,7 @@ class TestCase < Test::Unit::TestCase
       assert( true, "(#{test[:name]}) user creation failed" )
       return
 
+    # overview remember
     elsif action[:execute] == 'overview_count_remember'
       instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
       sleep 2
@@ -354,6 +357,8 @@ class TestCase < Test::Unit::TestCase
       @overview_count_remember = overviews
       assert( !overviews.empty?, "(#{test[:name]}) overview_count_remember" )
       return
+
+    # overview verify
     elsif action[:execute] == 'overview_count_verify'
       instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
       sleep 2
@@ -380,6 +385,8 @@ class TestCase < Test::Unit::TestCase
         end
       }
       return
+
+    # create signature
     elsif action[:execute] == 'create_signature'
       instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
       instance.find_elements( { :css => 'a[href="#channels/email"]' } )[0].click
@@ -406,6 +413,47 @@ class TestCase < Test::Unit::TestCase
       assert( true, "(#{test[:name]}) signature creation failed" )
       return
 
+    # create overview
+    elsif action[:execute] == 'create_overview'
+      instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+      instance.find_elements( { :css => 'a[href="#manage/overviews"]' } )[0].click
+      instance.find_elements( { :css => '#content a[data-type="new"]' } )[0].click
+      sleep 2
+      element = instance.find_elements( { :css => '.modal input[name=name]' } )[0]
+      element.clear
+      element.send_keys( action[:name] )
+      element = instance.find_elements( { :css => '.modal input[name=link]' } )[0]
+      element.clear
+      element.send_keys( action[:link] )
+
+      element = instance.find_elements( { :css => '.modal select[name="role_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, action[:role])
+      sleep 0.2
+
+      element = instance.find_elements( { :css => '.modal input[name=prio]' } )[0]
+      element.clear
+      element.send_keys( action[:prio] )
+
+      element = instance.find_elements( { :css => '.modal select[name="order::direction"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, action['order::direction'])
+      sleep 0.2
+
+      instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+      (1..12).each {|loop|
+        element = instance.find_elements( { :css => 'body' } )[0]
+        text = element.text
+        if text =~ /#{Regexp.quote(action[:name])}/
+          assert( true, "(#{test[:name]}) overview created" )
+          return
+        end
+        sleep 1
+      }
+      assert( true, "(#{test[:name]}) overview creation failed" )
+      return
+
+    # create group
     elsif action[:execute] == 'create_group'
       instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
       instance.find_elements( { :css => 'a[href="#manage/groups"]' } )[0].click
@@ -704,6 +752,26 @@ class TestCase < Test::Unit::TestCase
       end
       assert( true, "(#{test[:name]}) ticket #{action[:number]} found" )
       return
+
+    # overview ticket
+    elsif action[:execute] == 'overview_ticket'
+      instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
+      sleep 1
+      instance.find_elements( { :css => ".content.active .sidebar a[href=##{action[:link]}]" } ).click
+      sleep 1
+
+      action[:number].gsub! '###stack###', @stack
+
+      element = instance.find_element( { :partial_link_text => action[:number] } ).click
+      number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
+      if number !~ /#{action[:number]}/
+        assert( false, "(#{test[:name]}) unable to search/find ticket #{action[:number]}!" )
+        return
+      end
+      assert( true, "(#{test[:name]}) ticket #{action[:number]} found" )
+      return
+
+    # close all tasks
     elsif action[:execute] == 'close_all_tasks'
       for i in 1..100
         sleep 1

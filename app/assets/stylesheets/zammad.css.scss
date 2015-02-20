@@ -3162,13 +3162,18 @@ footer {
 }
 
 .ticketZoom .page-header {
-  margin-top: 62px;
+  margin-top: 24px;
   margin-bottom: 0;
   padding: 0;
 }
 
 .ticketZoom .ticket-article {
   margin-top: 55px;
+}
+
+.ticketZoom > .overview-navigator {
+  margin-top: 32px;
+  padding-left: 20px;
 }
 
 .ticket-article,

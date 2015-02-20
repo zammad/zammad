@@ -1,4 +1,4 @@
-<div class="pagination-counter" title="<%- @T(@title) %>">
+<div class="pagination-counter align-right" title="<%- @T(@title) %>">
   <span class="pagination-item-current"><%= @current_position %></span>/<span class="pagination-total-items"><%= @total_count %></span>
 </div>
 <ul class="pagination">
@@ -9,6 +9,5 @@
   <li <% if !@next: %>class="disabled"<% end %> title="<%- @Ti( 'next in Overview' ) %>">
     <a class="centered" href="<% if @next: %><%- @next.uiUrl() %><% end %>" data-id="<% if @next: %><%- @next.id %><% end %>">
       <span class="right arrow icon"></span>
-    <% if @next: %>
     </a>
 </ul>
