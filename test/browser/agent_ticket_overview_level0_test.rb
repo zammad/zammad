@@ -3,72 +3,47 @@ require 'browser_test_helper'
 
 class AgentTicketOverviewLevel0Test < TestCase
   def test_I
-    tests = [
-      {
-        :name     => 'verify overview count',
-        :action   => [
-          {
-            :execute => 'close_all_tasks',
-          },
+    @browser = browser_instance
+    login(
+      :username => 'master@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all()
 
-          # remember it ticket count in overview
-          {
-            :execute => 'overview_count_remember',
-          },
+    # remember current overview count
+    overview_counter_before = overview_counter()
 
-          # create new open ticket
-          {
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'some subject 123äöü',
-            :body    => 'some body 123äöü - with closed tab',
-          },
+    # create new ticket
+    ticket1 = ticket_create(
+      :data    => {
+        :customer => 'nico*',
+        :group    => 'Users',
+        :title    => 'overview count test #1',
+        :body     => 'overview count test #1',
+      }
+    )
+    sleep 8
 
-          # remember ticket for later
-          {
-            :execute      => 'match',
-            :css          => '.active .page-header .ticket-number',
-            :value        => '^(.*)$',
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
+    # get new overview count
+    overview_counter_new = overview_counter()
+    assert_equal( overview_counter_before['#ticket/view/all_unassigned'] + 1, overview_counter_new['#ticket/view/all_unassigned'] )
 
-          # check new ticket count of open tickets in overview
-          {
-            :execute => 'overview_count_verify',
-            :data    => {
-              '#ticket/view/all_unassigned' => 1,
-            },
-          },
+    # open ticket by search
+    ticket_open_by_search(
+      :number  => ticket1[:number],
+    )
 
-          # close ticket
-          {
-            :execute => 'search_ticket',
-            :number  => '###stack###',
-          },
-          {
-            :execute => 'update_ticket',
-            :state   => 'closed',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
+    # close ticket
+    ticket_update(
+      :data    => {
+        :state => 'closed',
+      }
+    )
+    sleep 8
 
-          # verify new open tickets in overview
-          {
-            :execute => 'overview_count_verify',
-            :data    => {
-              '#ticket/view/all_unassigned' => 0,
-            },
-          },
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'master@example.com' })
+    # get current overview count
+    overview_counter_after = overview_counter()
+    assert_equal( overview_counter_before['#ticket/view/all_unassigned'], overview_counter_after['#ticket/view/all_unassigned'] )
   end
 end

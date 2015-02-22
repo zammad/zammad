@@ -71,6 +71,707 @@ class TestCase < Test::Unit::TestCase
     }
   end
 
+=begin
+
+  username = login(
+    :browser     => browser1,
+    :username    => 'someuser',
+    :password    => 'somepassword',
+    :url         => 'some url', # optional
+    :remember_me => true, # optional
+  )
+
+=end
+
+  def login(params)
+    instance = params[:browser] || @browser
+
+    if params[:url]
+      instance.get( params[:url] )
+    end
+
+    element = instance.find_elements( { :css => '#login input[name="username"]' } )[0]
+    if !element
+      raise "No login box found"
+    end
+    element.clear
+    element.send_keys( params[:username] )
+
+    element = instance.find_elements( { :css => '#login input[name="password"]' } )[0]
+    element.clear
+    element.send_keys( params[:password] )
+
+    if params[:remember_me]
+      instance.find_elements( { :css => '#login [name="remember_me"]' } )[0].click
+    end
+    instance.find_elements( { :css => '#login button' } )[0].click
+
+    sleep 4
+    login = instance.find_elements( { :css => '.user-menu .user a' } )[0].attribute('title')
+    if login != params[:username]
+      raise "login failed"
+    end
+    assert( true, "login ok" )
+    login
+  end
+
+=begin
+
+  logout(
+    :browser => browser1
+  )
+
+=end
+
+  def logout(params = {})
+    instance = params[:browser] || @browser
+
+    instance.find_elements( { :css => 'a[href="#current_user"]' } )[0].click
+    sleep 0.1
+    instance.find_elements( { :css => 'a[href="#logout"]' } )[0].click
+    (1..6).each {|loop|
+      login = instance.find_elements( { :css => '#login' } )[0]
+      if login
+        assert( true, "logout ok" )
+        return
+      end
+    }
+    raise "no login box found, seems logout was not successfully!"
+  end
+
+=begin
+
+  location(
+    :browser => browser1,
+    :url     => 'http://someurl',
+  )
+
+=end
+
+  def location(params)
+    instance = params[:browser] || @browser
+    instance.get( params[:url] )
+  end
+
+
+=begin
+
+  reload(
+    :browser => browser1,
+  )
+
+=end
+
+  def reload(params = {})
+    instance = params[:browser] || @browser
+    instance.navigate.refresh
+  end
+
+=begin
+
+  click(
+    :browser => browser1,
+    :css     => '.some_class',
+  )
+
+=end
+
+  def click(params)
+    instance = params[:browser] || @browser
+    instance.find_elements( { :css => params[:css] } )[0].click
+  end
+
+=begin
+
+  exists(
+    :browser => browser1,
+    :css     => '.some_class',
+  )
+
+=end
+
+  def exists(params)
+    instance = params[:browser] || @browser
+    if instance.find_elements( { :css => params[:css] } )[0]
+      return true
+    end
+    false
+  end
+
+=begin
+
+  set(
+    :browser => browser1,
+    :css     => '.some_class',
+    :value   => true,
+    :slow    => false,
+    :clear   => true, # todo
+  )
+
+=end
+
+  def set(params)
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { :css => params[:css] } )[0]
+    element.clear
+
+    if !params[:slow]
+      element.send_keys( params[:value] )
+    else
+      element.send_keys( '' )
+      keys = params[:value].to_s.split('')
+      keys.each {|key|
+        instance.action.send_keys(key).perform
+      }
+    end
+    sleep 0.1
+  end
+
+=begin
+
+  sendkey(
+    :browser => browser1,
+    :value   => :enter,
+  )
+
+=end
+
+  def sendkey(params)
+    instance = params[:browser] || @browser
+    if params[:value].class == Array
+      params[:value].each {|key|
+        instance.action.send_keys(key).perform
+      }
+      return
+    end
+    instance.action.send_keys(params[:value]).perform
+  end
+
+=begin
+
+  match(
+    :browser          => browser1,
+    :css              => '#content .text-1',
+    :value            => 'some test for browser and some other for browser',
+    :attribute        => 'some_attribute', # match on attribute
+    :should_not_match => true,
+    :no_quote         => false, # use regex
+  )
+
+=end
+
+  def match(params)
+    instance = params[:browser] || @browser
+    element = instance.find_elements( { :css => params[:css] } )[0]
+
+    if params[:css] =~ /select/
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      success  = false
+      if dropdown.selected_options
+        dropdown.selected_options.each {|option|
+          if option.text == params[:value]
+            success = true
+          end
+        }
+      end
+      if params[:should_not_match]
+        if success
+          raise "should not match '#{params[:value]}' in select list, but is matching"
+        end
+        return true
+      else
+        if !success
+          raise "not matching '#{params[:value]}' in select list"
+        end
+        return true
+      end
+    end
+
+    # match pn attribute
+    if params[:attribute]
+      text = element.attribute( params[:attribute] )
+    elsif params[:css] =~ /(input|textarea)/i
+      text = element.attribute('value')
+    else
+      text = element.text
+    end
+    match = false
+    if params[:no_quote]
+      #puts "aaaa #{text}/#{params[:value]}"
+      if text =~ /#{params[:value]}/i
+        match = $1 || true
+      end
+    else
+      if text =~ /#{Regexp.quote(params[:value])}/i
+        match = true
+      end
+    end
+    if match
+      if params[:should_not_match]
+        raise "matching '#{params[:value]}' in content '#{text}' but should not!"
+      end
+    else
+      if !params[:should_not_match]
+        raise "not matching '#{params[:value]}' in content '#{text}' but should!"
+      end
+    end
+    return match
+  end
+
+=begin
+
+  cookie(
+    :browser => browser1,
+    :name    => '^_zammad.+?',
+    :value   => '.+?',
+    :expires => nil,
+  )
+
+  cookie(
+    :browser          => browser1,
+    :name             => '^_zammad.+?',
+    :should_not_exist => true,
+  )
+
+=end
+
+  def cookie(params)
+    instance = params[:browser] || @browser
+
+    if !browser_support_cookies
+      assert( true, "'#{params[:value]}' ups browser is not supporting reading cookies, go ahead")
+      return true
+    end
+
+    cookies = instance.manage.all_cookies
+    cookies.each {|cookie|
+      #puts "CCC #{cookie.inspect}"
+      # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
+      if cookie[:name] =~ /#{params[:name]}/i
+        if params.has_key?( :value ) && cookie[:value].to_s =~ /#{params[:value]}/i
+          assert( true, "matching value '#{params[:value]}' in cookie '#{cookie.to_s}'" )
+        else
+          raise "not matching value '#{params[:value]}' in cookie '#{cookie.to_s}'"
+        end
+        if params.has_key?( :expires ) && cookie[:expires].to_s =~ /#{params[:expires]}/i
+          assert( true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie.to_s}'" )
+        else
+          raise "not matching expires '#{params[:expires]}' in cookie '#{cookie.to_s}'"
+        end
+
+        if params[:should_not_exist]
+          raise "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies.to_s}'"
+        end
+        return
+      end
+    }
+    if params[:should_not_exist]
+      assert( true, "cookie with name '#{params[:name]}' is not existing" )
+      return
+    end
+    raise "not matching name '#{params[:name]}' in cookie '#{cookies.to_s}'"
+  end
+
+=begin
+
+  watch_for(
+    :browser => browser1,
+    :css     => true,
+    :value   => 'some text',
+    :timeout => '16', # in sec, default 16
+  )
+
+=end
+
+  def watch_for(params = {})
+    instance = params[:browser] || @browser
+
+    timeout = 16
+    if params[:timeout]
+      timeout = params[:timeout]
+    end
+    loops = (timeout).to_i
+    text = ''
+    (1..loops).each { |loop|
+      element = instance.find_elements( { :css => params[:css] } )[0]
+      if element #&& element.displayed?
+        begin
+          text = element.text
+          if text =~ /#{params[:value]}/i
+            assert( true, "'#{params[:value]}' found in '#{text}'" )
+            return true
+          end
+        rescue
+          # just try again
+        end
+      end
+      sleep 1
+    }
+    raise "'#{params[:value]}' found in '#{text}'"
+  end
+
+
+=begin
+
+  tasks_close_all(
+    :browser         => browser1,
+    :discard_changes => true,
+  )
+
+=end
+
+  def tasks_close_all(params = {})
+    instance = params[:browser] || @browser
+
+    for i in 1..100
+      sleep 1
+      if instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0]
+        instance.mouse.move_to( instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0] )
+        sleep 0.2
+
+        click_element = instance.find_elements( { :css => '.navigation .tasks .task:first-child .js-close' } )[0]
+        if click_element
+          sleep 0.1
+          click_element.click
+
+          # accept task close warning
+          if params[:discard_changes]
+            sleep 1
+            instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+          end
+        end
+      else
+        break
+      end
+    end
+    assert( true, "all tasks closed" )
+  end
+
+=begin
+
+  username = overview_create(
+    :browser => browser1,
+    :data    => {
+      :name              => name,
+      :link              => name,
+      :role              => 'Agent',
+      :prio              => 1000,
+      'order::direction' => 'down',
+    }
+  )
+
+=end
+
+  def overview_create(params)
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+    instance.find_elements( { :css => 'a[href="#manage/overviews"]' } )[0].click
+    instance.find_elements( { :css => '#content a[data-type="new"]' } )[0].click
+    sleep 2
+
+    if data[:name]
+      element = instance.find_elements( { :css => '.modal input[name=name]' } )[0]
+      element.clear
+      element.send_keys( data[:name] )
+    end
+    if data[:link]
+      element = instance.find_elements( { :css => '.modal input[name=link]' } )[0]
+      element.clear
+      element.send_keys( data[:link] )
+    end
+    if data[:role]
+      element = instance.find_elements( { :css => '.modal select[name="role_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, data[:role])
+    end
+    if data[:prio]
+      element = instance.find_elements( { :css => '.modal input[name=prio]' } )[0]
+      element.clear
+      element.send_keys( data[:prio] )
+    end
+    if data['order::direction']
+      element = instance.find_elements( { :css => '.modal select[name="order::direction"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, data['order::direction'])
+    end
+
+    instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+    (1..12).each {|loop|
+      element = instance.find_elements( { :css => 'body' } )[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert( true, "overview created" )
+        overview = {
+          :name => name,
+        }
+        return overview
+      end
+      sleep 1
+    }
+    raise "overview creation failed"
+  end
+
+=begin
+
+  ticket = ticket_create(
+    :browser => browser1,
+    :data    => {
+      :customer => 'nico',
+      :group    => 'Users',
+      :subject  => 'overview #1',
+      :body     => 'overview #1',
+    },
+    :do_not_submit => true,
+  )
+
+  returns (in case of submitted)
+    {
+      :id     => 123,
+      :number => '100001',
+    }
+
+=end
+
+  def ticket_create(params)
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    instance.find_elements( { :css => 'a[href="#new"]' } )[0].click
+    instance.find_elements( { :css => 'a[href="#ticket/create"]' } )[0].click
+    element = instance.find_elements( { :css => '.active .newTicket' } )[0]
+    if !element
+      raise "no ticket create screen found!"
+    end
+    sleep 1
+
+    # check count of agents, should be only 1 / - selection on init screen
+    count = instance.find_elements( { :css => '.active .newTicket select[name="owner_id"] option' } ).count
+    assert_equal( 1, count, 'check if owner selection is empty per default'  )
+
+    if data[:group]
+      element = instance.find_elements( { :css => '.active .newTicket select[name="group_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, data[:group])
+      sleep 0.2
+    end
+    if data[:title]
+      element = instance.find_elements( { :css => '.active .newTicket input[name="title"]' } )[0]
+      element.clear
+      element.send_keys( data[:title] )
+      sleep 0.2
+    end
+    if data[:body]
+      #instance.execute_script( '$(".active .newTicket div[data-name=body]").focus()' )
+      sleep 0.5
+      element = instance.find_elements( { :css => '.active .newTicket div[data-name=body]' } )[0]
+      element.clear
+      element.send_keys( data[:body] )
+    end
+    if data[:customer]
+      element = instance.find_elements( { :css => '.active .newTicket input[name="customer_id_completion"]' } )[0]
+      element.click
+      element.clear
+      element.send_keys( data[:customer] )
+      sleep 4
+      element.send_keys( :arrow_down )
+      sleep 0.1
+      instance.find_elements( { :css => '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
+      sleep 0.3
+    end
+    if params[:do_not_submit]
+      assert( true, "ticket created without submit" )
+      return
+    end
+    sleep 0.8
+    #instance.execute_script( '$(".content.active .newTicket form").submit();' )
+    instance.find_elements( { :css => '.active .newTicket button.submit' } )[0].click
+    sleep 1
+    (1..16).each {|loop|
+      if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
+        assert( true, "ticket created" )
+        sleep 1
+        id = instance.current_url
+        id.gsub!(//, )
+        id.gsub!(/^.+?\/(\d+)$/, "\\1")
+
+        number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
+        ticket = {
+          :id     => id,
+          :number => number,
+        }
+        return ticket
+      end
+      sleep 0.5
+    }
+    raise "ticket creation failed, can't get zoom url"
+  end
+
+=begin
+
+  ticket_update(
+    :browser => browser1,
+    :data    => {
+      :group => 'some group',
+      :state => 'closed',
+    },
+    :do_not_submit => true,
+  )
+
+=end
+
+  def ticket_update(params)
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    if data[:group]
+      element = instance.find_elements( { :css => '.active .sidebar select[name="group_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, data[:group])
+      sleep 0.2
+    end
+
+    if data[:state]
+      element = instance.find_elements( { :css => '.active .sidebar select[name="state_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, data[:state])
+      sleep 0.2
+    end
+
+    found = nil
+    (1..5).each {|loop|
+      if !found
+        text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
+        if text =~ /(Discard your unsaved changes.|Verwerfen der)/
+          found = true
+        end
+        sleep 1
+      end
+    }
+    if !found
+      raise "no discard message found"
+    end
+
+    if params[:do_not_submit]
+      assert( true, "(#{test[:name]}) ticket updated without submit" )
+      return true
+    end
+
+    instance.find_elements( { :css => '.content.active button.js-submit' } )[0].click
+
+    (1..10).each {|loop|
+      text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
+      if !text || text.empty?
+        return true
+      end
+      sleep 1
+    }
+    raise "unable to update ticket"
+  end
+
+=begin
+
+  ticket_open_by_overview(
+    :browser => browser2,
+    :number  => ticket1[:number],
+    :link    => '#ticket/view/' + name,
+  )
+
+=end
+
+  def ticket_open_by_overview(params)
+    instance = params[:browser] || @browser
+
+    instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
+    sleep 1
+    instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
+    sleep 1
+    element = instance.find_elements( { :partial_link_text => params[:number] } )[0].click
+    sleep 1
+    number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
+    if number !~ /#{params[:number]}/
+      raise "unable to search/find ticket #{params[:number]}!"
+    end
+    assert( true, "ticket #{params[:number]} found" )
+  end
+
+=begin
+
+  ticket_open_by_search(
+    :browser => browser2,
+    :number  => ticket1[:number],
+  )
+
+=end
+
+  def ticket_open_by_search(params)
+    instance = params[:browser] || @browser
+
+    # search by number
+    element = instance.find_elements( { :css => '#global-search' } )[0]
+    element.click
+    element.clear
+    element.send_keys( params[:number] )
+    sleep 3
+
+    # empty search box by x
+    instance.find_elements( { :css => '.search .empty-search' } )[0].click
+    sleep 0.5
+    text = instance.find_elements( { :css => '#global-search' } )[0].attribute('value')
+    if !text
+      raise "#global-search is not empty!"
+    end
+
+    # search by number again
+    element = instance.find_elements( { :css => '#global-search' } )[0]
+    element.click
+    element.clear
+    element.send_keys( params[:number] )
+    sleep 1
+
+    # open ticket
+    element = instance.find_element( { :partial_link_text => params[:number] } ).click
+    number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
+    if number !~ /#{params[:number]}/
+      raise "unable to search/find ticket #{params[:number]}!"
+    end
+  end
+
+=begin
+
+  overview_count = overview_counter(
+    :browser => browser2,
+  )
+
+  returns
+    {
+      '#ticket/view/all_unassigned' => 42,
+    }
+
+=end
+
+  def overview_counter(params = {})
+    instance = params[:browser] || @browser
+
+    instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
+    sleep 2
+    overviews = {}
+    instance.find_elements( { :css => '.content.active .sidebar a[href]' } ).each {|element|
+      url = element.attribute('href')
+      url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, "\\2")
+      overviews[url] = 0
+      #puts url.inspect
+      #puts element.inspect
+    }
+    overviews.each {|url, value|
+      count = instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
+      overviews[url] = count.to_i
+    }
+    overviews
+  end
+
   # Add more helper methods to be used by all tests here...
   def browser_login(data)
     all_tests = [
@@ -204,20 +905,6 @@ class TestCase < Test::Unit::TestCase
         assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in title '#{title}'" )
       end
       return
-    elsif action[:element] == :cookie
-      if !browser_support_cookies
-        assert( true, "(#{test[:name]}) '#{action[:value]}' ups browser is not supporting reading cookies")
-        return
-      end
-      cookies = instance.manage.all_cookies
-      cookies.each {|cookie|
-        if cookie.to_s =~ /#{action[:value]}/i
-          assert( true, "(#{test[:name]}) matching '#{action[:value]}' in cookie '#{cookie.to_s}'" )
-          return
-        end
-      }
-      assert( false, "(#{test[:name]}) not matching '#{action[:value]}' in cookie '#{cookies.to_s}'" )
-      return
     elsif action[:element] == :alert
       element = instance.switch_to.alert
     elsif action[:execute] == 'login'
@@ -338,54 +1025,6 @@ class TestCase < Test::Unit::TestCase
       assert( true, "(#{test[:name]}) user creation failed" )
       return
 
-    # overview remember
-    elsif action[:execute] == 'overview_count_remember'
-      instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
-      sleep 2
-      overviews = {}
-      instance.find_elements( { :css => '.content.active .sidebar a[href]' } ).each {|element|
-        url = element.attribute('href')
-        url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, "\\2")
-        overviews[url] = 0
-        #puts url.inspect
-        #puts element.inspect
-      }
-      overviews.each {|url, value|
-        count = instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
-        overviews[url] = count
-      }
-      @overview_count_remember = overviews
-      assert( !overviews.empty?, "(#{test[:name]}) overview_count_remember" )
-      return
-
-    # overview verify
-    elsif action[:execute] == 'overview_count_verify'
-      instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
-      sleep 2
-      overviews = {}
-      instance.find_elements( { :css => '.content.active .sidebar a[href]' } ).each {|element|
-        url = element.attribute('href')
-        url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, "\\2")
-        overviews[url] = 0
-      }
-      overviews.each {|url, value|
-        count = instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
-        overviews[url] = count
-      }
-      #puts "ov #{overviews.inspect}"
-      #puts "@ov #{@overview_count_remember.inspect}"
-      #puts "data #{action[:data].inspect}"
-      action[:data].each {|url,count|
-        if @overview_count_remember.has_key?(url)
-          count_is     = overviews[url].to_i
-          count_should = @overview_count_remember[url].to_i + count.to_i
-          assert_equal( count_should, count_is, "(#{test[:name]}) expected count of url #{url} is different overview_count_remember" )
-        else
-          assert( false, "(#{test[:name]}) no url #{url} exists in overview_count_remember" )
-        end
-      }
-      return
-
     # create signature
     elsif action[:execute] == 'create_signature'
       instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
@@ -411,46 +1050,6 @@ class TestCase < Test::Unit::TestCase
         sleep 1
       }
       assert( true, "(#{test[:name]}) signature creation failed" )
-      return
-
-    # create overview
-    elsif action[:execute] == 'create_overview'
-      instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
-      instance.find_elements( { :css => 'a[href="#manage/overviews"]' } )[0].click
-      instance.find_elements( { :css => '#content a[data-type="new"]' } )[0].click
-      sleep 2
-      element = instance.find_elements( { :css => '.modal input[name=name]' } )[0]
-      element.clear
-      element.send_keys( action[:name] )
-      element = instance.find_elements( { :css => '.modal input[name=link]' } )[0]
-      element.clear
-      element.send_keys( action[:link] )
-
-      element = instance.find_elements( { :css => '.modal select[name="role_id"]' } )[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, action[:role])
-      sleep 0.2
-
-      element = instance.find_elements( { :css => '.modal input[name=prio]' } )[0]
-      element.clear
-      element.send_keys( action[:prio] )
-
-      element = instance.find_elements( { :css => '.modal select[name="order::direction"]' } )[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, action['order::direction'])
-      sleep 0.2
-
-      instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
-      (1..12).each {|loop|
-        element = instance.find_elements( { :css => 'body' } )[0]
-        text = element.text
-        if text =~ /#{Regexp.quote(action[:name])}/
-          assert( true, "(#{test[:name]}) overview created" )
-          return
-        end
-        sleep 1
-      }
-      assert( true, "(#{test[:name]}) overview creation failed" )
       return
 
     # create group
@@ -620,56 +1219,6 @@ class TestCase < Test::Unit::TestCase
       assert( false, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
       return
 
-    # udpate ticket
-    elsif action[:execute] == 'update_ticket'
-
-      if action[:group]
-        element = instance.find_elements( { :css => '.active .sidebar select[name="group_id"]' } )[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by( :text, action[:group])
-        sleep 0.2
-      end
-
-      if action[:state]
-        element = instance.find_elements( { :css => '.active .sidebar select[name="state_id"]' } )[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by( :text, action[:state])
-        sleep 0.2
-      end
-
-      found = nil
-      (1..5).each {|loop|
-        if !found
-          text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
-          if text =~ /(Discard your unsaved changes.|Verwerfen der)/
-            assert( true, "(#{test[:name]}) discard message found" )
-            found = true
-          end
-          sleep 1
-        end
-      }
-      if !found
-        assert( false, "(#{test[:name]}) no discard message found" )
-      end
-
-      if action[:do_not_submit]
-        assert( true, "(#{test[:name]}) ticket updated without submit" )
-        return
-      end
-
-      instance.find_elements( { :css => '.content.active button.js-submit' } )[0].click
-
-      (1..10).each {|loop|
-        text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
-        if !text || text.empty?
-          assert( true, "(#{test[:name]}) ticket updated" )
-          return
-        end
-        sleep 1
-      }
-      assert( false, "(#{test[:name]}) unable to update ticket" )
-      return
-
     # search user
     elsif action[:execute] == 'search_user'
       element = instance.find_elements( { :css => '#global-search' } )[0]
@@ -744,24 +1293,6 @@ class TestCase < Test::Unit::TestCase
       action[:number].gsub! '###stack###', @stack
       element.send_keys( action[:number] )
       sleep 2
-      element = instance.find_element( { :partial_link_text => action[:number] } ).click
-      number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
-      if number !~ /#{action[:number]}/
-        assert( false, "(#{test[:name]}) unable to search/find ticket #{action[:number]}!" )
-        return
-      end
-      assert( true, "(#{test[:name]}) ticket #{action[:number]} found" )
-      return
-
-    # overview ticket
-    elsif action[:execute] == 'overview_ticket'
-      instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
-      sleep 1
-      instance.find_elements( { :css => ".content.active .sidebar a[href=##{action[:link]}]" } ).click
-      sleep 1
-
-      action[:number].gsub! '###stack###', @stack
-
       element = instance.find_element( { :partial_link_text => action[:number] } ).click
       number = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
       if number !~ /#{action[:number]}/

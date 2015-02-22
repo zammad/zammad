@@ -5,83 +5,79 @@ class AgentTicketOverviewLevel1Test < TestCase
   def test_I
     name = 'name-' + rand(999999).to_s
 
-    tests = [
-      {
-        :name               => 'start',
-        :instance1          => browser_instance,
-        :instance2          => browser_instance,
-        :instance1_username => 'master@example.com',
-        :instance1_password => 'test',
-        :instance2_username => 'agent1@example.com',
-        :instance2_password => 'test',
-        :url                => browser_url,
-        :action             => [
-          {
-            :where   => :instance1,
-            :execute => 'close_all_tasks',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'close_all_tasks',
-          },
+    browser1 = browser_instance
+    login(
+      :browser  => browser1,
+      :username => 'master@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all( :browser => browser1 )
 
-          # create new overview
-          {
-            :where             => :instance1,
-            :execute           => 'create_overview',
-            :name              => name,
-            :link              => name,
-            :role              => 'Agent',
-            :prio              => 1000,
-            'order::direction' => 'down',
-          },
+    browser2 = browser_instance
+    login(
+      :browser  => browser2,
+      :username => 'agent1@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all( :browser => browser2 )
 
-          # create tickets
-          {
-            :where   => :instance1,
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'overview #1',
-            :body    => 'overview #1',
-          },
+    # create new overview
+    overview = overview_create(
+      :browser => browser1,
+      :data    => {
+        :name              => name,
+        :link              => name,
+        :role              => 'Agent',
+        :prio              => 1000,
+        'order::direction' => 'down',
+      }
+    )
+    sleep 1
 
-          # remember ticket for later
-          {
-            :where        => :instance1,
-            :execute      => 'match',
-            :css          => '.active .page-header .ticket-number',
-            :value        => '^(.*)$',
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'overview #2',
-            :body    => 'overview #2',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'overview #3',
-            :body    => 'overview #3',
-          },
+    # create tickets
+    ticket1 = ticket_create(
+      :browser => browser1,
+      :data    => {
+        :customer => 'nico*',
+        :group    => 'Users',
+        :title    => 'overview #1',
+        :body     => 'overview #1',
+      }
+    )
+    sleep 1
 
-          # click on first ticket on overview
-          {
-            :where   => :instance2,
-            :execute => 'overview_ticket',
-            :number  => '###stack###',
-            :link    => name,
-          },
+    ticket2 = ticket_create(
+      :browser => browser1,
+      :data    => {
+        :customer => 'nico*',
+        :group    => 'Users',
+        :title    => 'overview #2',
+        :body     => 'overview #2',
+      }
+    )
+    sleep 1
 
-          # use overview navigation to got to #2 & #3
+    ticket3 = ticket_create(
+      :browser => browser1,
+      :data    => {
+        :customer => 'nico*',
+        :group    => 'Users',
+        :title    => 'overview #3',
+        :body     => 'overview #3',
+      }
+    )
 
-        ],
-      },
-    ]
-    browser_double_test(tests)
+    # click on #1 on overview
+    ticket_open_by_overview(
+      :browser => browser2,
+      :number  => ticket1[:number],
+      :link    => '#ticket/view/' + name,
+    )
+
+    # use overview navigation to got to #2 & #3
+
+
   end
 end
