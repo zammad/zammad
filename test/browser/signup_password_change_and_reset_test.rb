@@ -33,8 +33,7 @@ class SignupPasswordChangeAndResetTest < TestCase
     click( :css => 'button.submit' )
     sleep 5
 
-    result = exists( :css => '.signup' )
-    assert( !result, ".signup still exists" )
+    exists_not( :css => '.signup' )
 
     match(
       :css              => '.user-menu .user a',
@@ -152,10 +151,9 @@ class SignupPasswordChangeAndResetTest < TestCase
     location( :url => browser_url + '/#password_reset' )
     sleep 1
 
-    match(
-      :css              => 'body',
-      :value            => 'password',
-      :should_not_match => true,
+    match_not(
+      :css   => 'body',
+      :value => 'password',
     )
     logout()
 

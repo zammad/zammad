@@ -7,197 +7,113 @@ class AgentUserManageTest < TestCase
     firstname           = 'Customer Firstname'
     lastname            = 'Customer Lastname'
     fullname            = "#{ firstname } #{ lastname } <#{ customer_user_email }>"
-    tests = [
-      {
-        :name     => 'create customer',
-        :action   => [
-          {
-            :execute => 'close_all_tasks',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket/create"]',
-          },
-          {
-            :execute => 'click',
-            :css     => '.active .newTicket [name="customer_id_completion"]',
-          },
-          {
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'click',
-            :css     => '.active .newTicket .recipientList-entry.js-user-new',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="firstname"]',
-            :value   => firstname,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="lastname"]',
-            :value   => lastname,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="email"]',
-            :value   => customer_user_email,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
 
-          # check is used is selected
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id"]',
-            :value        => '^\d+$',
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => firstname,
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => lastname,
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => customer_user_email,
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => fullname,
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
+    @browser = browser_instance
+    login(
+      :username => 'agent1@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all()
 
-          # call new ticket screen again
-          {
-            :execute         => 'close_all_tasks',
-            :discard_changes => 1,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket/create"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id"]',
-            :value        => '^\d+$',
-            :no_quote     => true,
-            :match_result => false,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => firstname,
-            :no_quote     => true,
-            :match_result => false,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .newTicket input[name="customer_id_completion"]',
-            :value   => customer_user_email,
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'click',
-            :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id"]',
-            :value        => '^\d+$',
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => firstname,
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => lastname,
-            :no_quote     => true,
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active input[name="customer_id_completion"]',
-            :value        => fullname,
-            :no_quote     => true,
-            :match_result => true,
-          },
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
+    sleep 1
+
+    # create customer
+    click( :css => 'a[href="#new"]' )
+    click( :css => 'a[href="#ticket/create"]' )
+    click( :css => '.active .newTicket [name="customer_id_completion"]' )
+    sendkey( :value => :arrow_down )
+    sleep 1
+    click( :css => '.active .newTicket .recipientList-entry.js-user-new' )
+    sleep 1
+
+    set(
+      :css   => '.modal input[name="firstname"]',
+      :value => firstname,
+    )
+    set(
+      :css   => '.modal input[name="lastname"]',
+      :value => lastname,
+    )
+    set(
+      :css   => '.modal input[name="email"]',
+      :value => customer_user_email,
+    )
+
+    click( :css => '.modal button.js-submit' )
+    sleep 4
+
+    # check is used to check selected
+    match(
+      :css      => '.active input[name="customer_id"]',
+      :value    => '^\d+$',
+      :no_quote => true,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => firstname,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => lastname,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => customer_user_email,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => fullname,
+    )
+    sleep 4
+
+    # call new ticket screen again
+    tasks_close_all( :discard_changes => 1 )
+
+    click( :css => 'a[href="#new"]' )
+    click( :css => 'a[href="#ticket/create"]' )
+    sleep 2
+
+    match(
+      :css      => '.active input[name="customer_id"]',
+      :value    => '',
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => '',
+    )
+    set(
+      :css   => '.active .newTicket input[name="customer_id_completion"]',
+      :value => customer_user_email,
+    )
+    sleep 3
+    sendkey( :value => :arrow_down )
+    sleep 1
+    click( :css => '.active .newTicket .recipientList-entry.js-user.is-active' )
+    sleep 1
+
+    # check is used to check selected
+    match(
+      :css      => '.active input[name="customer_id"]',
+      :value    => '^\d+$',
+      :no_quote => true,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => firstname,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => lastname,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => customer_user_email,
+    )
+    match(
+      :css      => '.active input[name="customer_id_completion"]',
+      :value    => fullname,
+    )
   end
+
 end

@@ -153,6 +153,22 @@ class TestCase < Test::Unit::TestCase
     instance.get( params[:url] )
   end
 
+=begin
+
+  location_check(
+    :browser => browser1,
+    :url     => 'http://someurl',
+  )
+
+=end
+
+  def location_check(params)
+    instance = params[:browser] || @browser
+    if instance.current_url !~ /#{Regexp.quote(params[:url])}/
+      raise "url #{instance.current_url} is not matching #{params[:url]}"
+    end
+    assert( true, "url #{instance.current_url} is matching #{params[:url]}" )
+  end
 
 =begin
 
@@ -192,10 +208,27 @@ class TestCase < Test::Unit::TestCase
 
   def exists(params)
     instance = params[:browser] || @browser
-    if instance.find_elements( { :css => params[:css] } )[0]
-      return true
+    if !instance.find_elements( { :css => params[:css] } )[0]
+      raise "#{params[:css]} dosn't exist, but should"
     end
-    false
+    true
+  end
+
+=begin
+
+  exists_not(
+    :browser => browser1,
+    :css     => '.some_class',
+  )
+
+=end
+
+  def exists_not(params)
+    instance = params[:browser] || @browser
+    if instance.find_elements( { :css => params[:css] } )[0]
+      raise "#{params[:css]} exists but should not"
+    end
+    true
   end
 
 =begin
@@ -226,6 +259,24 @@ class TestCase < Test::Unit::TestCase
       }
     end
     sleep 0.1
+  end
+
+=begin
+
+  select(
+    :browser => browser1,
+    :css     => '.some_class',
+    :value   => 'Some Value',
+  )
+
+=end
+
+  def select(params)
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { :css => params[:css] } )[0]
+    dropdown = Selenium::WebDriver::Support::Select.new(element)
+    dropdown.select_by(:text, params[:value])
   end
 
 =begin
@@ -317,6 +368,24 @@ class TestCase < Test::Unit::TestCase
       end
     end
     return match
+  end
+
+=begin
+
+  match_not(
+    :browser          => browser1,
+    :css              => '#content .text-1',
+    :value            => 'some test for browser and some other for browser',
+    :attribute        => 'some_attribute', # match on attribute
+    :should_not_match => true,
+    :no_quote         => false, # use regex
+  )
+
+=end
+
+  def match_not(params)
+    params[:should_not_match] = true
+    match(params)
   end
 
 =begin
