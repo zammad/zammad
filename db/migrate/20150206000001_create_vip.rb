@@ -24,6 +24,9 @@ class CreateVip < ActiveRecord::Migration
           :Admin => {
             :null => true,
           },
+          :Agent => {
+            :null => true,
+          },
         },
         :view => {
           '-all-' => {
