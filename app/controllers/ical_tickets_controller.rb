@@ -12,7 +12,7 @@ class IcalTicketsController < ApplicationController
   # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
-  # @response_message 500          Permission denied.
+  # @response_message 401          Permission denied.
   def all
 
     new_open_events_data   = new_open_events_data_get
@@ -31,7 +31,7 @@ class IcalTicketsController < ApplicationController
   # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
-  # @response_message 500          Permission denied.
+  # @response_message 401          Permission denied.
   def new_open
 
     events_data = new_open_events_data_get
@@ -46,7 +46,7 @@ class IcalTicketsController < ApplicationController
   # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
-  # @response_message 500          Permission denied.
+  # @response_message 401          Permission denied.
   def pending
     events_data = pending_events_data_get
 
@@ -60,7 +60,7 @@ class IcalTicketsController < ApplicationController
   # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
-  # @response_message 500          Permission denied.
+  # @response_message 401          Permission denied.
   def escalation
     events_data = escalation_events_data_get
 
