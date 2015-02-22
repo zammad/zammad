@@ -77,7 +77,80 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
 
     # use overview navigation to got to #2 & #3
+    match(
+      :browser => browser2,
+      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
+      :value   => '1/3',
+    )
+    match(
+      :browser => browser2,
+      :css     => '.active .page-header .ticket-number',
+      :value   => ticket1[:number],
+    )
 
+    click(
+      :browser => browser2,
+      :css     => '.ticketZoom .overview-navigator .next',
+    )
+    match(
+      :browser => browser2,
+      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
+      :value   => '2/3',
+    )
+    match(
+      :browser => browser2,
+      :css     => '.active .page-header .ticket-number',
+      :value   => ticket2[:number],
+    )
 
+    click(
+      :browser => browser2,
+      :css     => '.ticketZoom .overview-navigator .next',
+    )
+    match(
+      :browser => browser2,
+      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
+      :value   => '3/3',
+    )
+    match(
+      :browser => browser2,
+      :css     => '.active .page-header .ticket-number',
+      :value   => ticket3[:number],
+    )
+
+    # close ticket
+    ticket_update(
+      :browser => browser2,
+      :data    => {
+        :state => 'closed',
+      }
+    )
+    sleep 8
+
+    match(
+      :browser => browser2,
+      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
+      :value   => '3/3',
+    )
+    match(
+      :browser => browser2,
+      :css     => '.active .page-header .ticket-number',
+      :value   => ticket3[:number],
+    )
+    click(
+      :browser => browser2,
+      :css => '.ticketZoom .overview-navigator .previous',
+    )
+
+    match(
+      :browser => browser2,
+      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
+      :value   => '2/2',
+    )
+    match(
+      :browser => browser2,
+      :css     => '.active .page-header .ticket-number',
+      :value   => ticket2[:number],
+    )
   end
 end

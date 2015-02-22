@@ -495,23 +495,27 @@ class TestCase < Test::Unit::TestCase
 
     for i in 1..100
       sleep 1
-      if instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0]
-        instance.mouse.move_to( instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0] )
-        sleep 0.2
+      begin
+        if instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0]
+          instance.mouse.move_to( instance.find_elements( { :css => '.navigation .tasks .task:first-child' } )[0] )
+          sleep 0.2
 
-        click_element = instance.find_elements( { :css => '.navigation .tasks .task:first-child .js-close' } )[0]
-        if click_element
-          sleep 0.1
-          click_element.click
+          click_element = instance.find_elements( { :css => '.navigation .tasks .task:first-child .js-close' } )[0]
+          if click_element
+            sleep 0.1
+            click_element.click
 
-          # accept task close warning
-          if params[:discard_changes]
-            sleep 1
-            instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+            # accept task close warning
+            if params[:discard_changes]
+              sleep 1
+              instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+            end
           end
+        else
+          break
         end
-      else
-        break
+      rescue
+        # just try again
       end
     end
     assert( true, "all tasks closed" )
@@ -712,9 +716,13 @@ class TestCase < Test::Unit::TestCase
     found = nil
     (1..5).each {|loop|
       if !found
-        text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
-        if text =~ /(Discard your unsaved changes.|Verwerfen der)/
-          found = true
+        begin
+          text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
+          if text =~ /(Discard your unsaved changes.|Verwerfen der)/
+            found = true
+          end
+        rescue
+          # just try again
         end
         sleep 1
       end
