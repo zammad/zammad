@@ -101,7 +101,7 @@ class IcalTicketsController < ApplicationController
       events_data.push event_data
     end
 
-    return events_data
+    events_data
   end
 
   def pending_events_data_get
@@ -136,7 +136,7 @@ class IcalTicketsController < ApplicationController
       events_data.push event_data
     end
 
-    return events_data
+    events_data
   end
 
 
@@ -165,7 +165,7 @@ class IcalTicketsController < ApplicationController
       events_data.push event_data
     end
 
-    return events_data
+    events_data
   end
 
   def events_data_to_ical(events_data)
@@ -186,7 +186,7 @@ class IcalTicketsController < ApplicationController
 
     send_data(
       cal.to_ical,
-      :filename    => 'new_open.ical',
+      :filename    => 'zammad.ical',
       :type        => 'text/plain',
       :disposition => 'inline'
     )
