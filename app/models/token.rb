@@ -12,7 +12,8 @@ class Token < ActiveRecord::Base
     return if !token
 
     # check if token is still valid
-    if token.created_at < 1.day.ago
+    if !token.persistent &&
+        token.created_at < 1.day.ago
 
       # delete token
       token.delete

@@ -4,14 +4,15 @@ class ApplicationController < ActionController::Base
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user,
-  :authentication_check,
-  :config_frontend,
-  :is_role,
-  :model_create_render,
-  :model_update_render,
-  :model_restory_render,
-  :mode_show_rendeder,
-  :model_index_render
+                :authentication_check,
+                :authentication_check_action_token,
+                :config_frontend,
+                :is_role,
+                :model_create_render,
+                :model_update_render,
+                :model_restory_render,
+                :mode_show_rendeder,
+                :model_index_render
 
   skip_before_filter :verify_authenticity_token
   before_filter :set_user, :session_update
@@ -190,6 +191,24 @@ class ApplicationController < ActionController::Base
     end
 
     # return auth ok
+    true
+  end
+
+  def authentication_check_action_token(action)
+
+    user = Token.check(
+      :action => action,
+      :name   => params[:action_token],
+    )
+
+    if !user
+      puts params.inspect
+      response_access_deny
+      return
+    end
+
+    current_user_set( user )
+
     true
   end
 
