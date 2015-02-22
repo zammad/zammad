@@ -105,3 +105,6 @@ gem 'prawn'
 gem 'prawn-table'
 
 gem 'puma'
+
+# ical export
+gem 'icalendar'
