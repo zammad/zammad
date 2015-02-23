@@ -1411,7 +1411,7 @@ Overview.create_if_not_exists(
   :prio       => 1000,
   :role_id    => overview_role.id,
   :condition  => {
-    'tickets.state_id' => [ 1,2,3 ],
+    'tickets.state_id' => [ 1,2,3,7 ],
     'tickets.owner_id' => 'current_user.id',
   },
   :order => {
