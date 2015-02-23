@@ -889,6 +889,45 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  organization_open_by_search(
+    :browser => browser2,
+    :value   => 'some value',
+  )
+
+=end
+
+  def organization_open_by_search(params = {})
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { :css => '#global-search' } )[0]
+
+    element.click
+    element.clear
+    element.send_keys( params[:value] )
+    sleep 3
+    instance.find_elements( { :css => '.search .empty-search' } )[0].click
+    sleep 0.5
+    text = instance.find_elements( { :css => '#global-search' } )[0].attribute('value')
+    if !text
+      raise "#global-search is not empty!"
+    end
+    element = instance.find_elements( { :css => '#global-search' } )[0]
+    element.click
+    element.clear
+    element.send_keys( params[:value] )
+    sleep 2
+    element = instance.find_element( { :partial_link_text => params[:value] } ).click
+    name = instance.find_elements( { :css => '.active h1' } )[0].text
+    if name !~ /#{params[:value]}/
+      raise "unable to search/find org #{params[:value]}!"
+      return
+    end
+    assert( true, "org #{params[:value]} found" )
+    true
+  end
+
+=begin
+
   user_open_by_search(
     :browser => browser2,
     :value   => 'some value',
@@ -1455,59 +1494,6 @@ class TestCase < Test::Unit::TestCase
         sleep 0.5
       }
       assert( false, "(#{test[:name]}) ticket creation failed, can't get zoom url" )
-      return
-
-    # search user
-    elsif action[:execute] == 'search_user'
-      element = instance.find_elements( { :css => '#global-search' } )[0]
-      element.click
-      element.clear
-      if @stack
-        action[:term].gsub! '###stack###', @stack
-      end
-      element.send_keys( action[:term] )
-      sleep 3
-      element = instance.find_element( { :partial_link_text => action[:term] } ).click
-      name = instance.find_elements( { :css => '.active h1' } )[0].text
-      if name !~ /#{action[:term]}/
-        assert( false, "(#{test[:name]}) unable to search/find user #{action[:term]}!" )
-        return
-      end
-      assert( true, "(#{test[:name]}) user #{action[:term]} found" )
-      return
-
-    # search org
-    elsif action[:execute] == 'search_organization'
-      element = instance.find_elements( { :css => '#global-search' } )[0]
-      element.click
-      element.clear
-      if @stack
-        action[:term].gsub! '###stack###', @stack
-      end
-      element.send_keys( action[:term] )
-      sleep 3
-      instance.find_elements( { :css => '.search .empty-search' } )[0].click
-      sleep 0.5
-      text = instance.find_elements( { :css => '#global-search' } )[0].attribute('value')
-      if !text
-        assert( false, "(#{test[:name]}) #global-search is not empty!" )
-        return
-      end
-      element = instance.find_elements( { :css => '#global-search' } )[0]
-      element.click
-      element.clear
-      if @stack
-        action[:term].gsub! '###stack###', @stack
-      end
-      element.send_keys( action[:term] )
-      sleep 2
-      element = instance.find_element( { :partial_link_text => action[:term] } ).click
-      name = instance.find_elements( { :css => '.active h1' } )[0].text
-      if name !~ /#{action[:term]}/
-        assert( false, "(#{test[:name]}) unable to search/find org #{action[:term]}!" )
-        return
-      end
-      assert( true, "(#{test[:name]}) org #{action[:term]} found" )
       return
 
     # search ticket
