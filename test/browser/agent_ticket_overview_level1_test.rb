@@ -34,7 +34,6 @@ class AgentTicketOverviewLevel1Test < TestCase
         'order::direction' => 'down',
       }
     )
-    sleep 1
 
     # create tickets
     ticket1 = ticket_create(
@@ -46,7 +45,6 @@ class AgentTicketOverviewLevel1Test < TestCase
         :body     => 'overview #1',
       }
     )
-    sleep 1
 
     # keep connection alive
     click(
@@ -63,7 +61,6 @@ class AgentTicketOverviewLevel1Test < TestCase
         :body     => 'overview #2',
       }
     )
-    sleep 1
 
     ticket3 = ticket_create(
       :browser => browser1,

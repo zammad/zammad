@@ -195,6 +195,7 @@ class TestCase < Test::Unit::TestCase
   def click(params)
     instance = params[:browser] || @browser
     instance.find_elements( { :css => params[:css] } )[0].click
+    sleep 0.5
   end
 
 =begin
@@ -258,7 +259,7 @@ class TestCase < Test::Unit::TestCase
         instance.action.send_keys(key).perform
       }
     end
-    sleep 0.1
+    sleep 0.5
   end
 
 =begin
@@ -335,6 +336,7 @@ class TestCase < Test::Unit::TestCase
       return
     end
     instance.action.send_keys(params[:value]).perform
+    sleep 0.5
   end
 
 =begin
@@ -405,6 +407,7 @@ class TestCase < Test::Unit::TestCase
         raise "not matching '#{params[:value]}' in content '#{text}' but should!"
       end
     end
+    sleep 0.8
     return match
   end
 
@@ -507,6 +510,7 @@ class TestCase < Test::Unit::TestCase
           text = element.text
           if text =~ /#{params[:value]}/i
             assert( true, "'#{params[:value]}' found in '#{text}'" )
+            sleep 0.5
             return true
           end
         rescue
@@ -541,6 +545,7 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements( { :css => params[:css] } )[0]
       if !element #|| element.displayed?
         assert( true, "not found" )
+        sleep 1
         return true
       end
       sleep 1
@@ -585,6 +590,7 @@ class TestCase < Test::Unit::TestCase
         # just try again
       end
     end
+    sleep 1
     assert( true, "all tasks closed" )
   end
 
@@ -732,7 +738,7 @@ class TestCase < Test::Unit::TestCase
     (1..16).each {|loop|
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
         assert( true, "ticket created" )
-        sleep 1
+        sleep 0.5
         id = instance.current_url
         id.gsub!(//, )
         id.gsub!(/^.+?\/(\d+)$/, "\\1")
@@ -742,6 +748,7 @@ class TestCase < Test::Unit::TestCase
           :id     => id,
           :number => number,
         }
+        sleep 1
         return ticket
       end
       sleep 0.5

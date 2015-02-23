@@ -46,7 +46,6 @@ class AgentTicketActionLevel0Test < TestCase
     sendkey(
       :value => :arrow_down,
     )
-    sleep 1
     click( :css => '.active .shortcut > ul> li > a' )
 
     watch_for(
@@ -136,7 +135,6 @@ class AgentTicketActionLevel0Test < TestCase
       :browser => browser2,
       :value   => :arrow_down,
     )
-    sleep 1
     click(
       :browser => browser2,
       :css     => '.active .shortcut > ul> li > a',
@@ -160,25 +158,21 @@ class AgentTicketActionLevel0Test < TestCase
       :browser => browser2,
       :value   => :arrow_down,
     )
-    sleep 1
 
     click(
       :browser => browser2,
       :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
     )
-    sleep 1
 
     set(
       :browser => browser2,
       :css     => '.active div[data-name=body]',
       :value   => '::' + random,
     )
-    sleep 1
     sendkey(
       :browser => browser2,
       :value   => :arrow_down,
     )
-    sleep 1
     click(
       :browser => browser2,
       :css     => '.active .shortcut > ul> li > a',
@@ -210,19 +204,18 @@ class AgentTicketActionLevel0Test < TestCase
       :css     => '.active div[data-name=body]',
       :value   => 'test',
     )
-    sleep 1
 
     set(
       :browser => browser2,
       :css     => '.active div[data-name=body]',
       :value   => '::' + random,
     )
-    sleep 1
+
     sendkey(
       :browser => browser2,
       :value   => :arrow_down,
     )
-    sleep 1
+
     click(
       :browser => browser2,
       :css     => '.active .shortcut > ul> li > a',
@@ -259,13 +252,10 @@ class AgentTicketActionLevel0Test < TestCase
       :browser => browser2,
       :value   => :arrow_down,
     )
-    sleep 1
-
     click(
       :browser => browser2,
       :css     => '.modal .recipientList-entry.js-user.is-active',
     )
-    sleep 1
     click(
       :browser => browser2,
       :css     => '.modal-content .js-submit',
@@ -275,20 +265,17 @@ class AgentTicketActionLevel0Test < TestCase
       :browser => browser2,
       :css     => '.modal',
     )
-    sleep 1
 
     watch_for(
       :browser => browser2,
       :css     => '.active div[data-name=body]',
       :value   => '::' + random,
     )
-    sleep 1
 
     sendkey(
       :browser => browser2,
       :value   => :arrow_down,
     )
-    sleep 1
 
     click(
       :browser => browser2,

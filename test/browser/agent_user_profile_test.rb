@@ -67,7 +67,6 @@ class AgentUserProfileTest < TestCase
         :body     => 'user profile check ' + message,
       },
     )
-    sleep 1
 
     # switch to org tab, verify if ticket is shown
     user_open_by_search( :value => 'Braun' )

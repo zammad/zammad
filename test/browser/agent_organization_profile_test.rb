@@ -13,7 +13,6 @@ class AgentOrganizationProfileTest < TestCase
       :url      => browser_url,
     )
     tasks_close_all()
-    sleep 1
 
     # search and open org
     organization_open_by_search(
@@ -34,7 +33,6 @@ class AgentOrganizationProfileTest < TestCase
       :value   => 'some note 123'
     )
     click( :css => '.active .profile' )
-    sleep 1
 
     # check and change note again in edit screen
     click( :css => '.active .js-action .select-arrow' )
@@ -69,7 +67,6 @@ class AgentOrganizationProfileTest < TestCase
         :body     => 'org profile check ' + message,
       },
     )
-    sleep 1
 
     # switch to org tab, verify if ticket is shown
     organization_open_by_search(
