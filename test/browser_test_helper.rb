@@ -725,6 +725,8 @@ class TestCase < Test::Unit::TestCase
   ticket_update(
     :browser => browser1,
     :data    => {
+      :title => '',
+      :body  => 'some body',
       :group => 'some group',
       :state => 'closed',
     },
@@ -736,6 +738,41 @@ class TestCase < Test::Unit::TestCase
   def ticket_update(params)
     instance = params[:browser] || @browser
     data     = params[:data]
+
+
+    if data[:title]
+      #element = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0]
+      #element.clear
+      #sleep 0.5
+      #element = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0]
+      #element.send_keys( data[:title] )
+      #sleep 0.5
+      #element.send_keys( :tab )
+
+      instance.execute_script( '$(".content.active .page-header .ticket-title-update").focus()' )
+      instance.execute_script( '$(".content.active .page-header .ticket-title-update").text("' + data[:title] + '")' )
+      instance.execute_script( '$(".content.active .page-header .ticket-title-update").blur()' )
+      instance.execute_script( '$(".content.active .page-header .ticket-title-update").trigger("blur")' )
+#          {
+#            :where        => :instance2,
+#            :execute      => 'sendkey',
+#            :css          => '.content.active .page-header .ticket-title-update',
+#            :value        => 'TTT',
+#          },
+#          {
+#            :where        => :instance2,
+#            :execute      => 'sendkey',
+#            :css          => '.content.active .page-header .ticket-title-update',
+#            :value        => :tab,
+#          },
+    end
+    if data[:body]
+      #instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
+      sleep 0.5
+      element = instance.find_elements( { :css => '.content.active div[data-name=body]' } )[0]
+      element.clear
+      element.send_keys( data[:body] )
+    end
 
     if data[:group]
       element = instance.find_elements( { :css => '.active .sidebar select[name="group_id"]' } )[0]

@@ -19,12 +19,14 @@ class AAbUnitTest < TestCase
       :css   => '.result .failed',
       :value => '0',
     )
+
     location( :url => browser_url + '/tests-model' )
     sleep 8
     match(
       :css   => '.result .failed',
       :value => '0',
     )
+
     location( :url => browser_url + '/tests-model-ui' )
     sleep 8
     match(
@@ -40,15 +42,14 @@ class AAbUnitTest < TestCase
       :css   => '.result .failed',
       :value => '0',
     )
+
     location( :url => browser_url + '/tests-form-extended' )
     sleep 8
     match(
       :css   => '.result .failed',
       :value => '0',
     )
-  end
-  def test_form_validation
-    @browser = browser_instance
+
     location( :url => browser_url + '/tests-form-validation' )
     sleep 4
     match(
@@ -64,6 +65,7 @@ class AAbUnitTest < TestCase
       :css   => '.result .failed',
       :value => '0',
     )
+
     location( :url => browser_url + '/tests-html-utils' )
     sleep 4
     match(

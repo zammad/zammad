@@ -2,59 +2,7 @@
 require 'browser_test_helper'
 
 class AgentUserProfileTest < TestCase
-  def test_search_and_edit_verify_in_second
-    message = 'comment 1 ' + rand(99999999999999999).to_s
-
-    browser1 = browser_instance
-    login(
-      :browser  => browser1,
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
-    )
-    tasks_close_all(
-      :browser => browser1,
-    )
-
-    browser2 = browser_instance
-    login(
-      :browser  => browser2,
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
-    )
-    tasks_close_all(
-      :browser => browser2,
-    )
-
-    user_open_by_search(
-      :browser => browser1,
-      :value   => 'Braun',
-    )
-    user_open_by_search(
-      :browser => browser2,
-      :value   => 'Braun',
-    )
-
-    # update note
-    set(
-      :browser => browser1,
-      :css     => '.active [data-name="note"]',
-      :value   => message,
-    )
-    click(
-      :browser => browser1,
-      :css     => '.active .profile',
-    )
-
-    watch_for(
-      :browser => browser2,
-      :css     => '.active .profile-window',
-      :value   => message,
-    )
-  end
-
-  def test_search_and_edit_in_one
+  def test_user_profile
     message = '1 ' + rand(99999999).to_s
 
     @browser = browser_instance
@@ -127,5 +75,52 @@ class AgentUserProfileTest < TestCase
       :css   => '.active .profile-window',
       :value => 'user profile check ' + message,
     )
+    tasks_close_all()
+
+
+
+    # work with two browser windows
+    message = 'comment 1 ' + rand(99999999999999999).to_s
+
+    # use current session
+    browser1 = @browser
+
+    browser2 = browser_instance
+    login(
+      :browser  => browser2,
+      :username => 'agent1@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all(
+      :browser => browser2,
+    )
+
+    user_open_by_search(
+      :browser => browser1,
+      :value   => 'Braun',
+    )
+    user_open_by_search(
+      :browser => browser2,
+      :value   => 'Braun',
+    )
+
+    # update note
+    set(
+      :browser => browser1,
+      :css     => '.active [data-name="note"]',
+      :value   => message,
+    )
+    click(
+      :browser => browser1,
+      :css     => '.active .profile',
+    )
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.active .profile-window',
+      :value   => message,
+    )
+
   end
 end

@@ -125,7 +125,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
 
     # close ticket
-    sleep 1 # needed to selenium cache issues
+    sleep 2 # needed to selenium cache issues
     ticket_update(
       :browser => browser2,
       :data    => {

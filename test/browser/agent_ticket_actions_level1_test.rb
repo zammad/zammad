@@ -3,292 +3,150 @@ require 'browser_test_helper'
 
 class AgentTicketActionLevel1Test < TestCase
   def test_agent_ticket_merge_closed_tab
-    tests = [
-      {
-        :name   => 'agent ticket create 1',
-        :action => [
-          {
-            :execute => 'close_all_tasks',
-          },
 
-          # create ticket
-          {
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'some subject 123äöü',
-            :body    => 'some body 123äöü - with closed tab',
-          },
+    # merge ticket with closed tab
+    @browser = browser_instance
+    login(
+      :username => 'agent1@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all()
 
-          # check ticket
-          {
-            :execute      => 'match',
-            :css          => '.content.active .ticket-article',
-            :value        => 'some body 123äöü - with closed tab',
-            :match_result => true,
-          },
-
-          # remember old ticket where we want to merge to
-          {
-            :execute      => 'match',
-            :css          => '.content.active .page-header .ticket-number',
-            :value        => '^(.*)$',
-            :no_quote     => true,
-            :match_result => true,
-          },
-
-          # update ticket
-          #{
-          #  :execute => 'select',
-          #  :css     => '.active select[name="type_id"]',
-          #  :value   => 'note',
-          #},
-          {
-            :execute => 'set_ticket_attributes',
-            :body    => 'some body 1234 äöüß - with closed tab',
-          },
-          {
-            :execute => 'click',
-            :css     => '.content.active button.js-submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'watch_for',
-            :area    => '.content.active .ticket-article',
-            :value   => 'some body 1234 äöüß - with closed tab',
-          },
-          {
-            :execute => 'close_all_tasks',
-          },
-        ],
+    # create new ticket
+    ticket1 = ticket_create(
+      :data => {
+        :customer => 'nico',
+        :group    => 'Users',
+        :title    => 'some subject 123äöü - with closed tab',
+        :body     => 'some body 123äöü - with closed tab',
       },
+    )
+    sleep 1
 
-      {
-        :name   => 'agent ticket create 2',
-        :action => [
-
-          # create ticket
-          {
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'test to merge',
-            :body    => 'some body 123äöü 222 - test to merge - with closed tab',
-          },
-
-          # check ticket
-          {
-            :execute => 'watch_for',
-            :area    => '.content.active .ticket-article',
-            :value   => 'some body 123äöü 222 - test to merge - with closed tab',
-          },
-
-          # update ticket
-          #{
-          #  :execute => 'select',
-          #  :css     => '.content_permanent.active select[name="type_id"]',
-          #  :value   => 'note',
-          #},
-          {
-            :execute => 'set_ticket_attributes',
-            :body    => 'some body 1234 äöüß 333 - with closed tab',
-          },
-          {
-            :execute => 'click',
-            :css     => '.content.active button.js-submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'watch_for',
-            :area    => '.content.active .ticket-article',
-            :value   => 'some body 1234 äöüß 333 - with closed tab',
-          },
-
-          # check if task is shown
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'test to merge',
-            :match_result => true,
-          },
-        ],
+    # update ticket
+    ticket_update(
+      :data => {
+        :body => 'some body 1234 äöüß - with closed tab',
       },
-      {
-        :name   => 'agent ticket merge',
-        :action => [
-          {
-            :execute => 'click',
-            :css     => '.active div[data-tab="ticket"] .js-actions .select-arrow',
-          },
-          {
-            :execute => 'click',
-            :css     => '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="master_ticket_number"]',
-            :value   => '###stack###',
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
+    )
 
-          # check if merged to ticket is shown now
-          {
-            :execute      => 'match',
-            :css          => '.active .page-header .ticket-number',
-            :value        => '###stack###',
-            :match_result => true,
-          },
+    tasks_close_all()
 
-          # check if task is now gone
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'test to merge - with closed tab',
-            :match_result => true,
-          },
-
-          # close task/cleanup
-          {
-            :execute => 'close_all_tasks',
-          },
-        ],
+    # create second ticket to merge
+    ticket2 = ticket_create(
+      :data => {
+        :customer => 'nico',
+        :group    => 'Users',
+        :title    => 'test to merge - with closed tab',
+        :body     => 'some body 123äöü 222 - test to merge - with closed tab',
       },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
-  end
+    )
 
-  def test_agent_ticket_merge_open_tab
-    tests = [
-      {
-        :name   => 'agent ticket create 1',
-        :action => [
-          {
-            :execute => 'close_all_tasks',
-          },
-
-          # create ticket
-          {
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'some subject 123äöü',
-            :body    => 'some body 123äöü - with open tab',
-          },
-
-          # check ticket
-          {
-            :execute      => 'match',
-            :css          => '.content.active .ticket-article',
-            :value        => 'some body 123äöü - with open tab',
-            :match_result => true,
-          },
-
-          # remember old ticket where we want to merge to
-          {
-            :execute      => 'match',
-            :css          => '.content.active .page-header .ticket-number',
-            :value        => '^(.*)$',
-            :no_quote     => true,
-            :match_result => true,
-          },
-
-        ],
+    ticket_update(
+      :data => {
+        :body => 'some body 1234 äöüß 333 - with closed tab',
       },
+    )
 
-      {
-        :name   => 'agent ticket create 2',
-        :action => [
+    # check if task is shown
+    match(
+      :css   => '.tasks',
+      :value => 'test to merge - with closed tab',
+    )
 
-          # create ticket
-          {
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'test to merge',
-            :body    => 'some body 123äöü 222 - test to merge - with open tab',
-          },
+    # merge tickets
+    click( :css => '.active div[data-tab="ticket"] .js-actions .select-arrow' )
+    click( :css => '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
+    watch_for(
+      :css   => '.modal',
+      :value => 'merge',
+    )
 
-          # check ticket
-          {
-            :execute => 'watch_for',
-            :area    => '.content.active .ticket-article',
-            :value   => 'some body 123äöü 222 - test to merge - with open tab',
-          },
+    set(
+      :css   => '.modal input[name="master_ticket_number"]',
+      :value => ticket1[:number],
+    )
 
-          # check if task is shown
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'test to merge',
-            :match_result => true,
-          },
-        ],
+    click( :css => '.modal button[type="submit"]' )
+
+    # check if merged to ticket is shown now
+    watch_for(
+      :css   => '.active .page-header .ticket-number',
+      :value => ticket1[:number],
+    )
+    watch_for(
+      :css   => '.active .ticket-article',
+      :value => 'test to merge - with closed tab',
+    )
+
+    # check if task is now gone
+    match_not(
+      :css   => '.tasks',
+      :value => 'test to merge',
+    )
+    match(
+      :css   => '.tasks',
+      :value => 'some subject 123äöü - with closed tab',
+    )
+
+    # close task/cleanup
+    tasks_close_all()
+
+
+
+    # merge ticket with open tabs
+    ticket3 = ticket_create(
+      :data => {
+        :customer => 'nico',
+        :group    => 'Users',
+        :title    => 'some subject 123äöü - with open tab',
+        :body     => 'some body 123äöü - with open tab',
       },
-      {
-        :name   => 'agent ticket merge',
-        :action => [
-          {
-            :execute => 'click',
-            :css     => '.active div[data-tab="ticket"] .js-actions .select-arrow',
-          },
-          {
-            :execute => 'click',
-            :css     => '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="master_ticket_number"]',
-            :value   => '###stack###',
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
+    )
 
-          # check if merged to ticket is shown now
-          {
-            :execute      => 'match',
-            :css          => '.active .page-header .ticket-number',
-            :value        => '###stack###',
-            :match_result => true,
-          },
-
-          # check if task is now gone
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'test to merge - with open tab',
-            :match_result => true,
-          },
-
-          # close task/cleanup
-          {
-            :execute => 'close_all_tasks',
-          },
-        ],
+    ticket4 = ticket_create(
+      :data => {
+        :customer => 'nico',
+        :group    => 'Users',
+        :title    => 'test to merge - with open tab',
+        :body     => 'some body 123äöü 222 - test to merge - with open tab',
       },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
+    )
+
+    # merge tickets
+    click( :css => '.active div[data-tab="ticket"] .js-actions .select-arrow' )
+    click( :css => '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
+    watch_for(
+      :css   => '.modal',
+      :value => 'merge',
+    )
+
+    set(
+      :css   => '.modal input[name="master_ticket_number"]',
+      :value => ticket3[:number],
+    )
+    click( :css => '.modal button[type="submit"]' )
+
+    # check if merged to ticket is shown now
+    watch_for(
+      :css   => '.active .page-header .ticket-number',
+      :value => ticket3[:number],
+    )
+    watch_for(
+      :css   => '.active .ticket-article',
+      :value => 'test to merge - with open tab',
+    )
+
+    # check if task is now gone
+    match_not(
+      :css   => '.tasks',
+      :value => 'test to merge',
+    )
+    match(
+      :css   => '.tasks',
+      :value => 'some subject 123äöü - with open tab',
+    )
+
   end
 end

@@ -2,60 +2,8 @@
 require 'browser_test_helper'
 
 class AgentOrganizationProfileTest < TestCase
-  def test_search_and_edit_verify_in_second
-    message = 'comment 1 ' + rand(99999999999999999).to_s
-
-    browser1 = browser_instance
-    login(
-      :browser  => browser1,
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
-    )
-    tasks_close_all(
-      :browser => browser1,
-    )
-
-    browser2 = browser_instance
-    login(
-      :browser  => browser2,
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
-    )
-    tasks_close_all(
-      :browser => browser2,
-    )
-
-    organization_open_by_search(
-      :browser => browser1,
-      :value   => 'Zammad Foundation',
-    )
-    organization_open_by_search(
-      :browser => browser2,
-      :value   => 'Zammad Foundation',
-    )
-
-    # update note
-    set(
-      :browser => browser1,
-      :css     => '.active [data-name="note"]',
-      :value   => message,
-    )
-    click(
-      :browser => browser1,
-      :css     => '.active .profile',
-    )
-
-    # verify
-    watch_for(
-      :browser => browser2,
-      :css     => '.active .profile-window',
-      :value   => message,
-    )
-  end
-
-  def test_search_and_edit_in_one
+  def test_org_profile
+    # work in one browser window
     message = '1 ' + rand(99999999).to_s
 
     @browser = browser_instance
@@ -130,6 +78,53 @@ class AgentOrganizationProfileTest < TestCase
     watch_for(
       :css   => '.active .profile-window',
       :value => 'org profile check ' + message,
+    )
+    tasks_close_all()
+
+
+
+    # work with two browser windows
+    message = 'comment 1 ' + rand(99999999999999999).to_s
+
+    # use current session
+    browser1 = @browser
+
+    browser2 = browser_instance
+    login(
+      :browser  => browser2,
+      :username => 'agent1@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all(
+      :browser => browser2,
+    )
+
+    organization_open_by_search(
+      :browser => browser1,
+      :value   => 'Zammad Foundation',
+    )
+    organization_open_by_search(
+      :browser => browser2,
+      :value   => 'Zammad Foundation',
+    )
+
+    # update note
+    set(
+      :browser => browser1,
+      :css     => '.active [data-name="note"]',
+      :value   => message,
+    )
+    click(
+      :browser => browser1,
+      :css     => '.active .profile',
+    )
+
+    # verify
+    watch_for(
+      :browser => browser2,
+      :css     => '.active .profile-window',
+      :value   => message,
     )
   end
 end
