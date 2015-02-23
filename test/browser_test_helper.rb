@@ -281,6 +281,44 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  check(
+    :browser => browser1,
+    :css     => '.some_class',
+  )
+
+=end
+
+  def check(params)
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { :css => params[:css] } )[0]
+    checked = element.attribute('checked')
+    if !checked
+      element.click
+    end
+  end
+
+=begin
+
+  uncheck(
+    :browser => browser1,
+    :css     => '.some_class',
+  )
+
+=end
+
+  def uncheck(params)
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { :css => params[:css] } )[0]
+    checked = element.attribute('checked')
+    if checked
+      element.click
+    end
+  end
+
+=begin
+
   sendkey(
     :browser => browser1,
     :value   => :enter,

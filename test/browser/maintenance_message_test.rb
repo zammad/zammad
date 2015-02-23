@@ -8,215 +8,167 @@ class MaintenanceMessageTest < TestCase
     title_text   = "test <b>#{string}<\/b>"
     message_html = "message <b>1äöüß</b> #{string}\n\n\nhttp://zammad.org"
     message_text = "message <b>1äöüß<\/b> #{string}\n\nhttp:\/\/zammad.org"
-    tests        = [
-      {
-        :name     => 'check #1',
-        :instance1 => browser_instance,
-        :instance2 => browser_instance,
-        :instance1_username => 'master@example.com',
-        :instance1_password => 'test',
-        :instance2_username => 'agent1@example.com',
-        :instance2_password => 'test',
-        :url      => browser_url,
-        :action   => [
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#system/maintenance"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '#content input[name="head"]',
-            :value   => title_html,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '#content textarea[name="message"]',
-            :value   => message_html,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => '#content button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for',
-            :area    => '.modal',
-            :value   => title_text,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for',
-            :area    => '.modal',
-            :value   => message_text,
-          },
-          {
-            :where        => :instance1,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => message_text,
-            :match_result => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => 'div.modal-header .close',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-        ],
-      },
-      {
-        :name     => 'check #2',
-        :action   => [
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#system/maintenance"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '#content input[name="head"]',
-            :value   => title_html + ' #2',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '#content textarea[name="message"]',
-            :value   => message_html + ' #2',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => '#content button[type="submit"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for',
-            :area    => '.modal',
-            :value   => title_text,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for',
-            :area    => '.modal',
-            :value   => message_text + ' #2',
-          },
-          {
-            :where        => :instance1,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => message_text + ' #2',
-            :match_result => false,
-          },
-          {
-            :where    => :instance2,
-            :execute  => 'click',
-            :css      => 'div.modal-header .close',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-        ],
-      },
-      {
-        :name     => 'check #3',
-        :action   => [
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#system/maintenance"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '#content input[name="head"]',
-            :value   => title_html + ' #3' ,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '#content textarea[name="message"]',
-            :value   => message_html + ' #3',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'setCheck',
-            :css     => '#content input[name="reload"][value="1"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => '#content button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'check',
-            :css     => 'div.modal-backdrop.fade.in',
-            :result  => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for',
-            :area    => '.modal',
-            :value   => title_text,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for',
-            :area    => '.modal',
-            :value   => message_text + ' #3',
-          },
-          {
-            :where        => :instance1,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => message_text + ' #3',
-            :match_result => false,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for',
-            :area    => '.modal',
-            :value   => 'Reload application',
-          },
-        ],
-      },
-    ]
-    browser_double_test(tests)
+
+    # check #1
+    browser1 = browser_instance
+    login(
+      :browser  => browser1,
+      :username => 'master@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+
+    browser2 = browser_instance
+    login(
+      :browser  => browser2,
+      :username => 'agent1@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#manage"]',
+    )
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#system/maintenance"]',
+    )
+
+    set(
+      :browser => browser1,
+      :css     => '#content input[name="head"]',
+      :value   => title_html,
+    )
+    set(
+      :browser => browser1,
+      :css     => '#content input[name="message"]',
+      :value   => message_html,
+    )
+
+    click(
+      :browser => browser1,
+      :css     => '#content button[type="submit"]',
+    )
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.modal',
+      :value   => title_text,
+    )
+    watch_for(
+      :browser => browser2,
+      :css     => '.modal',
+      :value   => message_text,
+    )
+
+    match_not(
+      :browser => browser1,
+      :css     => 'body',
+      :value   => message_text,
+    )
+
+    click(
+      :browser => browser2,
+      :css     => 'div.modal-header .close',
+    )
+
+    # check #2
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#manage"]',
+    )
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#system/maintenance"]',
+    )
+
+    set(
+      :browser => browser1,
+      :css     => '#content input[name="head"]',
+      :value   => title_html + ' #2',
+    )
+    set(
+      :browser => browser1,
+      :css     => '#content input[name="message"]',
+      :value   => message_html + ' #2',
+    )
+
+    click(
+      :browser => browser1,
+      :css     => '#content button[type="submit"]',
+    )
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.modal',
+      :value   => title_html + ' #2',
+    )
+    watch_for(
+      :browser => browser2,
+      :css     => '.modal',
+      :value   => message_html + ' #2',
+    )
+
+    match_not(
+      :browser => browser1,
+      :css     => 'body',
+      :value   => message_text,
+    )
+
+    click(
+      :browser => browser2,
+      :css     => 'div.modal-header .close',
+    )
+
+    # check #3
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#manage"]',
+    )
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#system/maintenance"]',
+    )
+
+    set(
+      :browser => browser1,
+      :css     => '#content input[name="head"]',
+      :value   => title_html + ' #3',
+    )
+    set(
+      :browser => browser1,
+      :css     => '#content input[name="message"]',
+      :value   => message_html + ' #3',
+    )
+    check(
+      :browser => browser1,
+      :css     => '#content input[name="reload"][value="1"]',
+    )
+    click(
+      :browser => browser1,
+      :css     => '#content button[type="submit"]',
+    )
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.modal',
+      :value   => title_html + ' #3',
+    )
+    watch_for(
+      :browser => browser2,
+      :css     => '.modal',
+      :value   => message_html + ' #3',
+    )
+    watch_for(
+      :browser => browser2,
+      :css     => '.modal',
+      :value   => 'Reload application',
+    )
+
+    match_not(
+      :browser => browser1,
+      :css     => 'body',
+      :value   => message_text,
+    )
   end
 end
