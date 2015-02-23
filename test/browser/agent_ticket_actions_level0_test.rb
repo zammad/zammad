@@ -2,170 +2,62 @@
 require 'browser_test_helper'
 
 class AgentTicketActionLevel0Test < TestCase
-  def test_I
+  def test_text_modules
     random = 'text_module_test_' + rand(99999999).to_s
     random2 = 'text_module_test_' + rand(99999999).to_s
 
-    # user
-    tests = [
-      {
-        :name     => 'add #1',
-        :action   => [
-          {
-            :execute => 'close_all_tasks',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/text_modules"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some name' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="keywords"]',
-            :value   => random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal textarea[name="content"]',
-            :value   => 'some content' + random,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute => 'watch_for',
-            :area    => '#content table',
-            :value   => 'some name' + random,
-          },
-          {
-            :execute => 'watch_for_disappear',
-            :area    => '.modal',
-          },
-        ],
+    @browser = browser_instance
+    login(
+      :username => 'master@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all()
+
+    # create new text modules
+    text_module_create(
+      :data => {
+        :name     => 'some name' + random,
+        :keywords => random,
+        :content  => 'some content' + random,
       },
-      {
-        :name     => 'add #2',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/text_modules"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some name' + random2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="keywords"]',
-            :value   => random2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal textarea[name="content"]',
-            :value   => 'some content' + random2,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute => 'watch_for',
-            :area    => '#content table',
-            :value   => 'some name' + random2,
-          },
-          {
-            :execute => 'watch_for_disappear',
-            :area    => '.modal',
-          },
-        ],
+    )
+    text_module_create(
+      :data => {
+        :name     => 'some name' + random2,
+        :keywords => random2,
+        :content  => 'some content' + random2,
       },
-      {
-        :name     => 'verify usage',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket/create"]',
-          },
-          {
-            :execute => 'watch_for',
-            :area    => '.active div[data-name=body]',
-            :value   => '',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute => 'set_ticket_attributes',
-            :body   => 'test ::' + random,
-          },
-          {
-            :execute => 'watch_for',
-            :area    => '.active .shortcut',
-            :value   => random,
-          },
-          {
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'click',
-            :css     => '.active .shortcut > ul> li > a',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active div[data-name=body]',
-            :value        => 'some content' + random,
-            :match_result => true,
-          },
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'master@example.com' })
-  end
-  def test_II
+    )
+
+    # try to use them
+    click( :css => 'a[href="#new"]' )
+    click( :css => 'a[href="#ticket/create"]' )
+    sleep 2
+
+    set(
+      :css => '.active div[data-name=body]',
+      :value => 'test ::' + random
+    )
+    watch_for(
+      :css   => '.active .shortcut',
+      :value => random,
+    )
+    sendkey(
+      :value => :arrow_down,
+    )
+    sleep 1
+    click( :css => '.active .shortcut > ul> li > a' )
+
+    watch_for(
+      :css   => '.active div[data-name=body]',
+      :value => 'some content' + random,
+    )
+    tasks_close_all( :discard_changes => true )
+
+
+
+    # test with two browser windows
     random = 'text_II_module_test_' + rand(99999999).to_s
 
     user_rand = rand(99999999).to_s
@@ -175,408 +67,238 @@ class AgentTicketActionLevel0Test < TestCase
     email     = 'agent-text-module-' + user_rand + '@example.com'
     password  = 'agentpw'
 
-    # user
-    tests = [
-      {
-        :name     => 'start',
-        :instance1 => browser_instance,
-        :instance2 => browser_instance,
-        :instance1_username => 'master@example.com',
-        :instance1_password => 'test',
-        :instance2_username => 'agent1@example.com',
-        :instance2_password => 'test',
-        :action   => [
-          # create ticket
-          {
-            :where   => :instance2,
-            :execute => 'close_all_tasks',
-          },
-          {
-            :where         => :instance2,
-            :execute       => 'create_ticket',
-            :subject       => 'A',
-            :customer      => '',
-            :do_not_submit => true,
-          },
-          {
-            :where         => :instance2,
-            :execute       => 'create_ticket',
-            :customer      => '',
-            :subject       => 'B',
-            :do_not_submit => true,
-          },
+    # use current session
+    browser1 = @browser
 
-          # create new text module
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage/text_modules"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some name' + random,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.modal input[name="keywords"]',
-            :value   => random,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.modal textarea[name="content"]',
-            :value   => 'some content <%= @ticket.customer.lastname %>' + random,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'watch_for',
-            :area    => '#content table',
-            :value   => random,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'watch_for_disappear',
-            :area    => '.modal',
-          },
+    browser2 = browser_instance
+    login(
+      :browser  => browser2,
+      :username => 'agent1@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all(
+      :browser => browser2,
+    )
 
-        ],
+    # create new ticket
+    ticket_create(
+      :browser => browser2,
+      :data    => {
+        :customer => '',
+        :title    => 'A',
       },
-
-      # create user
-      {
-        :name     => 'create user',
-        :action   => [
-          {
-            :where     => :instance1,
-            :execute   => 'create_user',
-            :login     => login,
-            :firstname => firstname,
-            :lastname  => lastname,
-            :email     => email,
-            :password  => password,
-          },
-        ],
+      :do_not_submit => true,
+    )
+    ticket_create(
+      :browser => browser2,
+      :data    => {
+        :customer => '',
+        :title    => 'B',
       },
-      {
-        :name     => 'check if text module exists in instance2, for ready to use',
-        :action   => [
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set_ticket_attributes',
-            :body   => '::' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active .shortcut > ul> li > a',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-#         instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
-#execute] == 'js'
-#      result = instance.execute_script( action[:value
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active div[data-name=body]',
-            :value        => 'some content ' + random,
-            :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active .newTicket input[name="customer_id_completion"]',
-            :value   => 'nicole',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set_ticket_attributes',
-            :body   => '::' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active .shortcut > ul> li > a',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active div[data-name=body]',
-            :value        => 'some content Braun' + random,
-            :match_result => true,
-          },
-        ],
+      :do_not_submit => true,
+    )
+
+    # create new text module
+    text_module_create(
+      :browser => browser1,
+      :data    => {
+        :name     => 'some name' + random,
+        :keywords => random,
+        :content  => 'some content <%= @ticket.customer.lastname %>' + random,
       },
-      {
-        :name     => 'verify zoom',
-        :action   => [
+    )
 
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-
-          # create ticket
-          {
-            :where   => :instance2,
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'some subject 123äöü',
-            :body    => 'some body 123äöü',
-          },
-
-          # check ticket
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active div.ticket-article',
-            :value        => 'some body 123äöü',
-            :match_result => true,
-          },
-
-          # check ticket zoom
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set_ticket_attributes',
-            :body   => 'test',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set_ticket_attributes',
-            :body   => '::' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active .shortcut > ul> li > a',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active div[data-name=body]',
-            :value        => 'some content Braun' + random,
-            :match_result => true,
-          },
-        ],
+    # create user to test placeholder
+    user_create(
+      :browser => browser1,
+      :data => {
+        :login     => login,
+        :firstname => firstname,
+        :lastname  => lastname,
+        :email     => email,
+        :password  => password,
       },
-      {
-        :name     => 'change customer',
-        :action   => [
+    )
 
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active div[data-tab="ticket"] .js-actions .select-arrow',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active div[data-tab="ticket"] .js-actions a[data-type="customer-change"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.modal [name="customer_id_completion"]',
-            :value   => firstname,
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.modal .recipientList-entry.js-user.is-active',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.modal-content .js-submit',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'watch_for_disappear',
-            :area    => '.modal',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set_ticket_attributes',
-            :body   => '::' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :value   => [:arrow_down]
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active .shortcut > ul> li > a',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active div[data-name=body]',
-            :value        => 'some content ' + lastname,
-            :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-        ],
+    # check if text module exists in instance2, for ready to use
+    set(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => 'test ::' + random
+    )
+    watch_for(
+      :browser => browser2,
+      :css     => '.active .shortcut',
+      :value   => random,
+    )
+    sendkey(
+      :browser => browser2,
+      :value   => :arrow_down,
+    )
+    sleep 1
+    click(
+      :browser => browser2,
+      :css     => '.active .shortcut > ul> li > a',
+    )
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => 'some content' + random,
+    )
+    sleep 2
+
+
+    set(
+      :browser => browser2,
+      :css     => '.active .newTicket input[name="customer_id_completion"]',
+      :value   => 'nicole',
+    )
+    sleep 4
+    sendkey(
+      :browser => browser2,
+      :value   => :arrow_down,
+    )
+    sleep 1
+
+    click(
+      :browser => browser2,
+      :css     => '.active .newTicket .recipientList-entry.js-user.is-active',
+    )
+    sleep 1
+
+    set(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => '::' + random,
+    )
+    sleep 1
+    sendkey(
+      :browser => browser2,
+      :value   => :arrow_down,
+    )
+    sleep 1
+    click(
+      :browser => browser2,
+      :css     => '.active .shortcut > ul> li > a',
+    )
+    watch_for(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => 'some content Braun' + random,
+    )
+
+    # verify zoom
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#manage"]',
+    )
+
+    # create ticket
+    ticket_create(
+      :browser => browser2,
+      :data    => {
+        :group   => 'Users',
+        :subject => 'some subject 123äöü',
+        :body    => 'some body 123äöü',
       },
+    )
 
+    set(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => 'test',
+    )
+    sleep 1
 
-    ]
-    browser_double_test(tests)
+    set(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => '::' + random,
+    )
+    sleep 1
+    sendkey(
+      :browser => browser2,
+      :value   => :arrow_down,
+    )
+    sleep 1
+    click(
+      :browser => browser2,
+      :css     => '.active .shortcut > ul> li > a',
+    )
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => 'some content Braun' + random,
+    )
+
+    # change customer
+    click(
+      :browser => browser1,
+      :css     => 'a[href="#manage"]',
+    )
+    click(
+      :browser => browser2,
+      :css     => '.active div[data-tab="ticket"] .js-actions .select-arrow',
+    )
+    click(
+      :browser => browser2,
+      :css     => '.active div[data-tab="ticket"] .js-actions a[data-type="customer-change"]',
+    )
+    sleep 1
+
+    set(
+      :browser => browser2,
+      :css     => '.modal [name="customer_id_completion"]',
+      :value   => firstname,
+    )
+    sleep 4
+    sendkey(
+      :browser => browser2,
+      :value   => :arrow_down,
+    )
+    sleep 1
+
+    click(
+      :browser => browser2,
+      :css     => '.modal .recipientList-entry.js-user.is-active',
+    )
+    sleep 1
+    click(
+      :browser => browser2,
+      :css     => '.modal-content .js-submit',
+    )
+
+    watch_for_disappear(
+      :browser => browser2,
+      :css     => '.modal',
+    )
+    sleep 1
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => '::' + random,
+    )
+    sleep 1
+
+    sendkey(
+      :browser => browser2,
+      :value   => :arrow_down,
+    )
+    sleep 1
+
+    click(
+      :browser => browser2,
+      :css     => '.active .shortcut > ul> li > a',
+    )
+
+    watch_for(
+      :browser => browser2,
+      :css     => '.active div[data-name=body]',
+      :value   => 'some content ' + lastname,
+    )
   end
 end

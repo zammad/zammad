@@ -518,6 +518,35 @@ class TestCase < Test::Unit::TestCase
     raise "'#{params[:value]}' found in '#{text}'"
   end
 
+=begin
+
+  watch_for_disappear(
+    :browser => browser1,
+    :css     => true,
+    :timeout => '16', # in sec, default 16
+  )
+
+=end
+
+  def watch_for_disappear(params = {})
+    instance = params[:browser] || @browser
+
+    timeout = 16
+    if action[:timeout]
+      timeout = params[:timeout]
+    end
+    loops = (timeout).to_i
+    text = ''
+    (1..loops).each { |loop|
+      element = instance.find_elements( { :css => params[:css] } )[0]
+      if !element #|| element.displayed?
+        assert( true, "not found" )
+        return true
+      end
+      sleep 1
+    }
+    raise "#{test[:css]}) still exsists"
+  end
 
 =begin
 
@@ -1084,6 +1113,50 @@ class TestCase < Test::Unit::TestCase
       sleep 1
     }
     raise "sla creation failed"
+  end
+
+=begin
+
+  text_module_create(
+    :browser => browser2,
+    :data => {
+      :name     => 'some sla' + random,
+      :keywords => 'some keywords',
+      :content  => 'some content',
+    },
+  )
+
+=end
+
+  def text_module_create(params = {})
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+    instance.find_elements( { :css => 'a[href="#manage/text_modules"]' } )[0].click
+    sleep 2
+    instance.find_elements( { :css => 'a[data-type="new"]' } )[0].click
+    sleep 2
+    element = instance.find_elements( { :css => '.modal input[name=name]' } )[0]
+    element.clear
+    element.send_keys( data[:name] )
+    element = instance.find_elements( { :css => '.modal input[name=keywords]' } )[0]
+    element.clear
+    element.send_keys( data[:keywords] )
+    element = instance.find_elements( { :css => '.modal textarea[name=content]' } )[0]
+    element.clear
+    element.send_keys( data[:content] )
+    instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+    (1..8).each {|loop|
+      element = instance.find_elements( { :css => 'body' } )[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert( true, "text module created" )
+        return true
+      end
+      sleep 1
+    }
+    raise "text module creation failed"
   end
 
   # Add more helper methods to be used by all tests here...
