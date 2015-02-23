@@ -91,7 +91,7 @@ class ManageTest < TestCase
       :value => 'some sla update ' + random,
     )
 
-    relaod()
+    reload()
     sleep 2
 
     click( :css => 'a[href="#manage"]' )
