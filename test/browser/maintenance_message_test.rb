@@ -41,7 +41,7 @@ class MaintenanceMessageTest < TestCase
     )
     set(
       :browser => browser1,
-      :css     => '#content input[name="message"]',
+      :css     => '#content textarea[name="message"]',
       :value   => message_html,
     )
 
@@ -89,7 +89,7 @@ class MaintenanceMessageTest < TestCase
     )
     set(
       :browser => browser1,
-      :css     => '#content input[name="message"]',
+      :css     => '#content textarea[name="message"]',
       :value   => message_html + ' #2',
     )
 
@@ -101,12 +101,12 @@ class MaintenanceMessageTest < TestCase
     watch_for(
       :browser => browser2,
       :css     => '.modal',
-      :value   => title_html + ' #2',
+      :value   => title_text + ' #2',
     )
     watch_for(
       :browser => browser2,
       :css     => '.modal',
-      :value   => message_html + ' #2',
+      :value   => message_text + ' #2',
     )
 
     match_not(
@@ -137,7 +137,7 @@ class MaintenanceMessageTest < TestCase
     )
     set(
       :browser => browser1,
-      :css     => '#content input[name="message"]',
+      :css     => '#content textarea[name="message"]',
       :value   => message_html + ' #3',
     )
     check(
@@ -152,12 +152,12 @@ class MaintenanceMessageTest < TestCase
     watch_for(
       :browser => browser2,
       :css     => '.modal',
-      :value   => title_html + ' #3',
+      :value   => title_text + ' #3',
     )
     watch_for(
       :browser => browser2,
       :css     => '.modal',
-      :value   => message_html + ' #3',
+      :value   => message_text + ' #3',
     )
     watch_for(
       :browser => browser2,
