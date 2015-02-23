@@ -3,215 +3,103 @@ require 'browser_test_helper'
 
 class ManageTest < TestCase
   def test_user
-    random = 'manage-test-' + rand(999999).to_s
+    random     = 'manage-test-' + rand(999999).to_s
     user_email = random + '@example.com'
 
-    # user
-    tests = [
-      {
-        :name     => 'user',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/users"]',
-          },
-          {
-            :execute    => 'create_user',
-            :login      => 'some login' + random,
-            :firstname  => 'Manage Firstname' + random,
-            :lastname   => 'Manage Lastname' + random,
-            :email      => user_email,
-            :password   => 'some-pass',
-          },
-          {
-            :execute => 'set',
-            :css     => '.content .js-search',
-            :value   => user_email,
-          },
-          {
-            :execute  => 'watch_for',
-            :area     => 'body',
-            :value    => random,
-          },
-          {
-            :execute => 'click',
-            :css     => '.table-overview tr:last-child td',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="lastname"]',
-            :value   => '2Manage Lastname' + random,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute => 'watch_for',
-            :area    => 'body',
-            :value   => '2Manage Lastname' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-        ],
-      },
-      {
-        :name     => 'sla',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/slas"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some sla' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="first_response_time"]',
-            :value   => 61,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute => 'watch_for',
-            :area    => 'body',
-            :value   => random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute => 'click',
-            :css     => '.table-overview tr:last-child td',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some sla update ' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="first_response_time"]',
-            :value   => 121,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute  => 'watch_for',
-            :area     => 'body table',
-            :value    => 'some sla update ' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="destroy"]:last-child',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.js-submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some sla update ' + random,
-            :match_result => false,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/slas"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some sla update ' + random,
-            :match_result => false,
-          },
-          {
-            :execute => 'reload',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/slas"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some sla update ' + random,
-            :match_result => false,
-          },
+    # user management
+    @browser = browser_instance
+    login(
+      :username => 'master@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
 
-        ],
+    click( :css => 'a[href="#manage"]' )
+    click( :css => 'a[href="#manage/users"]' )
 
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'master@example.com' })
+    user_create(
+      :data => {
+        :login     => 'some login' + random,
+        :firstname => 'Manage Firstname' + random,
+        :lastname  => 'Manage Lastname' + random,
+        :email     => user_email,
+        :password  => 'some-pass',
+      }
+    )
+
+    click( :css => '.table-overview tr:last-child td' )
+    sleep 2
+
+    set(
+      :css   => '.modal input[name="lastname"]',
+      :value => '2Manage Lastname' + random,
+    )
+    click( :css => '.modal button.js-submit' )
+
+    watch_for(
+      :css   => 'body',
+      :value => '2Manage Lastname' + random,
+    )
+
+    # sla
+    sla_create(
+      :data => {
+        :name                => 'some sla' + random,
+        :first_response_time => 61
+      }
+    )
+    watch_for(
+      :css   => 'body',
+      :value => random,
+    )
+    sleep 1
+
+    click( :css => '.table-overview tr:last-child td' )
+    sleep 1
+
+    set(
+      :css   => '.modal input[name=name]',
+      :value => 'some sla update ' + random,
+    )
+    set(
+      :css   => '.modal input[name="first_response_time"]',
+      :value => 121,
+    )
+    click( :css => '.modal button.js-submit' )
+
+    watch_for(
+      :css   => 'body',
+      :value => 'some sla update ' + random,
+    )
+    sleep 4
+
+    click( :css => 'a[data-type="destroy"]:last-child' )
+    sleep 2
+
+    click( :css => '.modal button.js-submit' )
+    sleep 4
+    match_not(
+      :css   => 'body',
+      :value => 'some sla update ' + random,
+    )
+
+    click( :css => 'a[href="#manage"]' )
+    click( :css => 'a[href="#manage/slas"]' )
+    sleep 2
+    match_not(
+      :css   => 'body',
+      :value => 'some sla update ' + random,
+    )
+
+    relaod()
+    sleep 2
+
+    click( :css => 'a[href="#manage"]' )
+    click( :css => 'a[href="#manage/slas"]' )
+    sleep 2
+    match_not(
+      :css   => 'body',
+      :value => 'some sla update ' + random,
+    )
   end
 end

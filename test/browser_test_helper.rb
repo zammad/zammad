@@ -632,7 +632,7 @@ class TestCase < Test::Unit::TestCase
     :data    => {
       :customer => 'nico',
       :group    => 'Users',
-      :subject  => 'overview #1',
+      :title    => 'overview #1',
       :body     => 'overview #1',
     },
     :do_not_submit => true,
@@ -885,6 +885,129 @@ class TestCase < Test::Unit::TestCase
       overviews[url] = count.to_i
     }
     overviews
+  end
+
+=begin
+
+  user_open_by_search(
+    :browser => browser2,
+    :value   => 'some value',
+  )
+
+=end
+
+  def user_open_by_search(params = {})
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { :css => '#global-search' } )[0]
+    element.click
+    element.clear
+    element.send_keys( params[:value] )
+    sleep 3
+    element = instance.find_element( { :partial_link_text => params[:value] } ).click
+    name = instance.find_elements( { :css => '.active h1' } )[0].text
+    if name !~ /#{params[:value]}/
+      raise "unable to search/find user #{params[:value]}!"
+    end
+    assert( true, "user #{params[:term]} found" )
+    true
+  end
+
+=begin
+
+  user_create(
+    :browser => browser2,
+    :data => {
+      :login     => 'some login' + random,
+      :firstname => 'Manage Firstname' + random,
+      :lastname  => 'Manage Lastname' + random,
+      :email     => user_email,
+      :password  => 'some-pass',
+    },
+  )
+
+=end
+
+  def user_create(params = {})
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+    instance.find_elements( { :css => 'a[href="#manage/users"]' } )[0].click
+    sleep 2
+    instance.find_elements( { :css => 'a[data-type="new"]' } )[0].click
+    sleep 2
+    element = instance.find_elements( { :css => '.modal input[name=firstname]' } )[0]
+    element.clear
+    element.send_keys( data[:firstname] )
+    element = instance.find_elements( { :css => '.modal input[name=lastname]' } )[0]
+    element.clear
+    element.send_keys( data[:lastname] )
+    element = instance.find_elements( { :css => '.modal input[name=email]' } )[0]
+    element.clear
+    element.send_keys( data[:email] )
+    element = instance.find_elements( { :css => '.modal input[name=password]' } )[0]
+    element.clear
+    element.send_keys( data[:password] )
+    element = instance.find_elements( { :css => '.modal input[name=password_confirm]' } )[0]
+    element.clear
+    element.send_keys( data[:password] )
+    instance.find_elements( { :css => '.modal input[name="role_ids"][value="3"]' } )[0].click
+    instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+
+    sleep 2
+    set(
+      :browser => instance,
+      :css     => '.content .js-search',
+      :value   => data[:email],
+    )
+    watch_for(
+      :browser => instance,
+      :css     => 'body',
+      :value   => data[:lastname],
+    )
+
+    assert( true, "user created" )
+  end
+
+=begin
+
+  sla_create(
+    :browser => browser2,
+    :data => {
+       :name                => 'some sla' + random,
+       :first_response_time => 61
+    },
+  )
+
+=end
+
+  def sla_create(params = {})
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
+    instance.find_elements( { :css => 'a[href="#manage/slas"]' } )[0].click
+    sleep 2
+    instance.find_elements( { :css => 'a[data-type="new"]' } )[0].click
+    sleep 2
+    element = instance.find_elements( { :css => '.modal input[name=name]' } )[0]
+    element.clear
+    element.send_keys( data[:name] )
+    element = instance.find_elements( { :css => '.modal input[name=first_response_time]' } )[0]
+    element.clear
+    element.send_keys( data[:first_response_time] )
+    instance.find_elements( { :css => '.modal button.js-submit' } )[0].click
+    (1..8).each {|loop|
+      element = instance.find_elements( { :css => 'body' } )[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert( true, "sla created" )
+        return true
+      end
+      sleep 1
+    }
+    raise "sla creation failed"
   end
 
   # Add more helper methods to be used by all tests here...
