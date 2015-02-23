@@ -48,6 +48,12 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     sleep 1
 
+    # keep connection alive
+    click(
+      :browser => browser2,
+      :css     => '.search-holder',
+    )
+
     ticket2 = ticket_create(
       :browser => browser1,
       :data    => {
@@ -72,30 +78,30 @@ class AgentTicketOverviewLevel1Test < TestCase
     # click on #1 on overview
     ticket_open_by_overview(
       :browser => browser2,
-      :number  => ticket1[:number],
+      :number  => ticket3[:number],
       :link    => '#ticket/view/' + name,
     )
 
     # use overview navigation to got to #2 & #3
     match(
       :browser => browser2,
-      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
-      :value   => '1/3',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
+      :value   => '1/',
     )
     match(
       :browser => browser2,
       :css     => '.active .page-header .ticket-number',
-      :value   => ticket1[:number],
+      :value   => ticket3[:number],
     )
 
     click(
       :browser => browser2,
-      :css     => '.ticketZoom .overview-navigator .next',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .next',
     )
     match(
       :browser => browser2,
-      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
-      :value   => '2/3',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
+      :value   => '2/',
     )
     match(
       :browser => browser2,
@@ -105,17 +111,17 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     click(
       :browser => browser2,
-      :css     => '.ticketZoom .overview-navigator .next',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .next',
     )
     match(
       :browser => browser2,
-      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
-      :value   => '3/3',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
+      :value   => '3/',
     )
     match(
       :browser => browser2,
       :css     => '.active .page-header .ticket-number',
-      :value   => ticket3[:number],
+      :value   => ticket1[:number],
     )
 
     # close ticket
@@ -129,23 +135,23 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     match(
       :browser => browser2,
-      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
-      :value   => '3/3',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
+      :value   => '3/',
     )
     match(
       :browser => browser2,
       :css     => '.active .page-header .ticket-number',
-      :value   => ticket3[:number],
+      :value   => ticket1[:number],
     )
     click(
       :browser => browser2,
-      :css => '.ticketZoom .overview-navigator .previous',
+      :css => '.active .ticketZoom .overview-navigator.horizontal .previous',
     )
 
     match(
       :browser => browser2,
-      :css     => '.active .ticketZoom .overview-navigator .pagination-counter',
-      :value   => '2/2',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
+      :value   => '2/',
     )
     match(
       :browser => browser2,
