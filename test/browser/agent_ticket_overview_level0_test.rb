@@ -33,6 +33,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     ticket_open_by_search(
       :number  => ticket1[:number],
     )
+    sleep 1
 
     # close ticket
     ticket_update(
