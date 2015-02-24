@@ -22,6 +22,10 @@ class SettingTest < TestCase
     )
     click( :css => '#auth_facebook button[type=submit]' )
     watch_for(
+      :css   => '#notify',
+      :value => 'update successful',
+    )
+    match(
       :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
       :value => 'yes',
     )
@@ -37,6 +41,10 @@ class SettingTest < TestCase
     )
     click( :css => '#auth_facebook button[type=submit]' )
     watch_for(
+      :css   => '#notify',
+      :value => 'update successful',
+    )
+    match(
       :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
       :value => 'no',
     )
@@ -55,12 +63,15 @@ class SettingTest < TestCase
       :value => 'secret_test1234äöüß',
     )
     click( :css => '#auth_facebook_credentials button[type=submit]' )
-    sleep 4
     watch_for(
+      :css   => '#notify',
+      :value => 'update successful',
+    )
+    match(
       :css   => '#auth_facebook_credentials input[name=app_id]',
       :value => 'id_test1234äöüß',
     )
-    watch_for(
+    match(
       :css   => '#auth_facebook_credentials input[name=app_secret]',
       :value => 'secret_test1234äöüß',
     )
@@ -75,12 +86,15 @@ class SettingTest < TestCase
       :value => '---',
     )
     click( :css => '#auth_facebook_credentials button[type=submit]' )
-    sleep 4
     watch_for(
+      :css   => '#notify',
+      :value => 'update successful',
+    )
+    match(
       :css   => '#auth_facebook_credentials input[name=app_id]',
       :value => '---',
     )
-    watch_for(
+    match(
       :css   => '#auth_facebook_credentials input[name=app_secret]',
       :value => '---',
     )
