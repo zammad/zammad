@@ -3,149 +3,97 @@ require 'browser_test_helper'
 
 class SettingTest < TestCase
   def test_setting
-    tests = [
-      {
-        :name     => 'setting',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#settings/security"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#third_party_auth"]',
-          },
-          {
-            :execute => 'check',
-            :css     => '#auth_facebook select[name="auth_facebook"]',
-            :result  => true,
-          },
+    @browser = browser_instance
+    login(
+      :username => 'master@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all()
 
-          # set yes
-          {
-            :execute => 'select',
-            :css     => '#auth_facebook select[name="auth_facebook"]',
-            :value   => 'yes',
-          },
-          {
-            :execute => 'click',
-            :css     => '#auth_facebook button[type=submit]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook select[name="auth_facebook"]',
-            :value        => 'yes',
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook select[name="auth_facebook"]',
-            :value        => 'no',
-            :match_result => false,
-          },
+    click( :css => 'a[href="#manage"]' )
+    click( :css => 'a[href="#settings/security"]' )
+    click( :css => 'a[href="#third_party_auth"]' )
 
-          # set no
-          {
-            :execute => 'select',
-            :css     => '#auth_facebook select[name="auth_facebook"]',
-            :value   => 'no',
-          },
-          {
-            :execute => 'click',
-            :css     => '#auth_facebook button[type=submit]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook select[name="auth_facebook"]',
-            :value        => 'yes',
-            :match_result => false,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook select[name="auth_facebook"]',
-            :value        => 'no',
-            :match_result => true,
-          },
+    # set yes
+    select(
+      :css     => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value   => 'yes',
+    )
+    click( :css => '#auth_facebook button[type=submit]' )
+    watch_for(
+      :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value => 'yes',
+    )
+    match_not(
+      :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value => 'no',
+    )
 
-          # set key and secret
-          {
-            :execute => 'set',
-            :css     => '#auth_facebook_credentials input[name=app_id]',
-            :value   => 'id_test1234äöüß',
-          },
-          {
-            :execute => 'set',
-            :css     => '#auth_facebook_credentials input[name=app_secret]',
-            :value   => 'secret_test1234äöüß',
-          },
-          {
-            :execute => 'click',
-            :css     => '#auth_facebook_credentials button[type=submit]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook_credentials input[name=app_id]',
-            :value        => 'id_test1234äöüß',
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook_credentials input[name=app_secret]',
-            :value        => 'secret_test1234äöüß',
-            :match_result => true,
-          },
+    # set no
+    select(
+      :css     => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value   => 'no',
+    )
+    click( :css => '#auth_facebook button[type=submit]' )
+    watch_for(
+      :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value => 'no',
+    )
+    match_not(
+      :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value => 'yes',
+    )
 
-          # set key and secret again
-          {
-            :execute => 'set',
-            :css     => '#auth_facebook_credentials input[name=app_id]',
-            :value   => '---',
-          },
-          {
-            :execute => 'set',
-            :css     => '#auth_facebook_credentials input[name=app_secret]',
-            :value   => '---',
-          },
-          {
-            :execute => 'click',
-            :css     => '#auth_facebook_credentials button[type=submit]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook_credentials input[name=app_id]',
-            :value        => '---',
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => '#auth_facebook_credentials input[name=app_secret]',
-            :value        => '---',
-            :match_result => true,
-          },
+    # set key and secret
+    set(
+      :css     => '#auth_facebook_credentials input[name=app_id]',
+      :value   => 'id_test1234äöüß',
+    )
+    set(
+      :css   => '#auth_facebook_credentials input[name=app_secret]',
+      :value => 'secret_test1234äöüß',
+    )
+    click( :css => '#auth_facebook_credentials button[type=submit]' )
+    sleep 4
+    watch_for(
+      :css   => '#auth_facebook_credentials input[name=app_id]',
+      :value => 'id_test1234äöüß',
+    )
+    watch_for(
+      :css   => '#auth_facebook_credentials input[name=app_secret]',
+      :value => 'secret_test1234äöüß',
+    )
 
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'master@example.com' })
+    # set key and secret again
+    set(
+      :css     => '#auth_facebook_credentials input[name=app_id]',
+      :value   => '---',
+    )
+    set(
+      :css   => '#auth_facebook_credentials input[name=app_secret]',
+      :value => '---',
+    )
+    click( :css => '#auth_facebook_credentials button[type=submit]' )
+    sleep 4
+    watch_for(
+      :css   => '#auth_facebook_credentials input[name=app_id]',
+      :value => '---',
+    )
+    watch_for(
+      :css   => '#auth_facebook_credentials input[name=app_secret]',
+      :value => '---',
+    )
+
+    reload()
+
+    watch_for(
+      :css   => '#auth_facebook_credentials input[name=app_id]',
+      :value => '---',
+    )
+    watch_for(
+      :css   => '#auth_facebook_credentials input[name=app_secret]',
+      :value => '---',
+    )
   end
 end

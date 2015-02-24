@@ -275,9 +275,16 @@ class TestCase < Test::Unit::TestCase
   def select(params)
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { :css => params[:css] } )[0]
-    dropdown = Selenium::WebDriver::Support::Select.new(element)
-    dropdown.select_by(:text, params[:value])
+    begin
+      element  = instance.find_elements( { :css => params[:css] } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by(:text, params[:value])
+    rescue
+      # just try again
+      element  = instance.find_elements( { :css => params[:css] } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by(:text, params[:value])
+    end
   end
 
 =begin
@@ -379,7 +386,7 @@ class TestCase < Test::Unit::TestCase
       end
     end
 
-    # match pn attribute
+    # match on attribute
     if params[:attribute]
       text = element.attribute( params[:attribute] )
     elsif params[:css] =~ /(input|textarea)/i
@@ -486,10 +493,11 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   watch_for(
-    :browser => browser1,
-    :css     => true,
-    :value   => 'some text',
-    :timeout => '16', # in sec, default 16
+    :browser   => browser1,
+    :css       => true,
+    :value     => 'some text',
+    :attribute => 'some_attribute' # optional
+    :timeout   => '16', # in sec, default 16
   )
 
 =end
@@ -507,7 +515,15 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements( { :css => params[:css] } )[0]
       if element #&& element.displayed?
         begin
-          text = element.text
+
+          # match pn attribute
+          if params[:attribute]
+            text = element.attribute( params[:attribute] )
+          elsif params[:css] =~ /(input|textarea)/i
+            text = element.attribute('value')
+          else
+            text = element.text
+          end
           if text =~ /#{params[:value]}/i
             assert( true, "'#{params[:value]}' found in '#{text}'" )
             sleep 0.5
