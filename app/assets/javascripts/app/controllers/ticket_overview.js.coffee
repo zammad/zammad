@@ -75,10 +75,8 @@ class App.TicketOverview extends App.Controller
 
 class Table extends App.Controller
   events:
-    'click [data-type=edit]':     'zoom'
     'click [data-type=settings]': 'settings'
     'click [data-type=viewmode]': 'viewmode'
-    'click [data-type=page]':     'page'
 
   constructor: ->
     super
@@ -87,7 +85,7 @@ class Table extends App.Controller
 
     # rebuild ticket overview data
     @bind 'ticket_overview_rebuild', (data) =>
-      console.log('EVENT ticket_overview_rebuild', @view, data.view)
+      #console.log('EVENT ticket_overview_rebuild', @view, data.view)
 
       # remeber bulk attributes
       @bulk = data.bulk
@@ -99,6 +97,9 @@ class Table extends App.Controller
       if @view is data.view
         @render()
 
+    # force fetch ticket overview
+    @bind 'ticket_overview_fetch_force', =>
+      @fetch()
 
   update: (params) =>
     for key, value of params
@@ -107,13 +108,19 @@ class Table extends App.Controller
     @view_mode = localStorage.getItem( "mode:#{@view}" ) || 's'
     @log 'notice', 'view:', @view, @view_mode
 
-    @render()
+    return if !@view
 
-  fetch: (force) =>
+    # fetch inital data
+    if !@cache || !@cache[@view]
+      @fetch()
+    else
+      @render()
+
+  fetch: =>
 
     # init fetch via ajax, all other updates on time via websockets
     @ajax(
-      id:   'ticket_overview_' + @key
+      id:   'ticket_overview_' + @view + '_' + @view_mode
       type: 'GET'
       url:  @apiPath + '/ticket_overviews'
       data:
@@ -140,8 +147,8 @@ class Table extends App.Controller
         return data
     false
 
-  render: ->
-    console.log('RENDER', @cache, @view)
+  render: =>
+    #console.log('RENDER', @cache, @view)
     return if !@cache
     return if !@cache[@view]
 
@@ -150,7 +157,6 @@ class Table extends App.Controller
     ticket_ids    = @cache[@view].ticket_ids
 
     # get meta data
-    overview = @cache[@view].overview
     App.Overview.refresh( overview, { clear: true } )
 
     # get ticket list
@@ -166,7 +172,7 @@ class Table extends App.Controller
     @selected = @bulkGetSelected()
 
     # set page title
-    overview = App.Overview.find( overview.id )
+    @overview = App.Overview.find( overview.id )
 
     # render init page
     checkbox = true
@@ -189,14 +195,12 @@ class Table extends App.Controller
     if @isRole('Customer')
       view_modes = []
     html = App.view('agent_ticket_view/content')(
-      overview:   overview
+      overview:   @overview
       view_modes: view_modes
       checkbox:   checkbox
       edit:       edit
     )
     html = $(html)
-#    html.find('li').removeClass('active')
-#    html.find("[data-id=\"#{@start_page}\"]").parents('li').addClass('active')
 
     @html html
 
@@ -204,7 +208,7 @@ class Table extends App.Controller
     table = ''
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
-        overview: overview
+        overview: @overview
         objects:  ticket_list_show
         checkbox: checkbox
       )
@@ -227,7 +231,7 @@ class Table extends App.Controller
           controller: 'TicketZoom'
           params:
             ticket_id:   ticket.id
-            overview_id: overview.id
+            overview_id: @overview.id
           show:       true
         )
         @navigate ticket.uiUrl()
@@ -269,12 +273,12 @@ class Table extends App.Controller
         value
 
       new App.ControllerTable(
-        overview:     overview.view.s
+        overview:     @overview.view.s
         el:           @$('.table-overview')
         model:        App.Ticket
         objects:      ticket_list_show
         checkbox:     checkbox
-        groupBy:      overview.group_by
+        groupBy:      @overview.group_by
         bindRow:
           events:
             'click':  openTicket
@@ -353,20 +357,13 @@ class Table extends App.Controller
     @$('.js-action-step').removeClass('hide')
     @$('.js-confirm-step').addClass('hide')
 
-  page: (e) =>
-    e.preventDefault()
-    id = $(e.target).data('id')
-    @start_page = id
-    @fetch()
 
   viewmode: (e) =>
     e.preventDefault()
-    @start_page    = 1
-    mode = $(e.target).data('mode')
-    @view_mode = mode
-    localStorage.setItem( "mode:#{@view}", mode )
+    @view_mode = $(e.target).data('mode')
+    localStorage.setItem( "mode:#{@view}", @view_mode )
     @fetch()
-    @render()
+    #@render()
 
   articleTypeFilter = (items) =>
     for item in items
@@ -496,7 +493,7 @@ class Table extends App.Controller
           if @bulk_count_index == @bulk_count
 
             # fetch overview data again
-            @fetch()
+            App.Event.trigger('ticket_overview_fetch_force')
       )
     )
     @el.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
@@ -505,31 +502,20 @@ class Table extends App.Controller
       msg: App.i18n.translateContent('Bulk-Action executed!')
     }
 
-  zoom: (e) =>
-    e.preventDefault()
-    id = $(e.target).parents('[data-id]').data('id')
-    position = $(e.target).parents('[data-position]').data('position')
-
-    # set last overview
-    @Config.set('LastOverview', @view )
-    @Config.set('LastOverviewPosition', position )
-    @Config.set('LastOverviewTotal', @tickets_count )
-
-    @navigate 'ticket/zoom/' + id + '/nav/true'
-
   settings: (e) =>
     e.preventDefault()
     new App.OverviewSettings(
       overview_id: @overview.id
       view_mode:   @view_mode
       container:   @el.closest('.content')
+      callback:    @render,
     )
 
 class App.OverviewSettings extends App.ControllerModal
   constructor: ->
     super
     @overview = App.Overview.find(@overview_id)
-
+    console.log('overview_id', @overview_id)
     @configure_attributes_article = []
     if @view_mode is 'd'
       @configure_attributes_article.push({
@@ -699,26 +685,30 @@ class App.OverviewSettings extends App.ControllerModal
     params = @formParam(e.target)
 
     # check if refetch is needed
-    @reload_needed = 0
+    @reload_needed = false
     if @overview.order.by isnt params.order.by
       @overview.order.by = params.order.by
-      @reload_needed = 1
+      @reload_needed = true
 
     if @overview.order.direction isnt params.order.direction
       @overview.order.direction = params.order.direction
-      @reload_needed = 1
+      @reload_needed = true
 
     for key, value of params.view
       @overview.view[key] = value
 
     @overview.group_by = params.group_by
 
+    # rerender overview
+    if !@reload_needed
+      @callback()
+
     @overview.save(
       done: =>
+
+        # fetch overview data again
         if @reload_needed
-          @overview.trigger('local:refetch')
-        else
-          @overview.trigger('local:rerender')
+          App.Event.trigger('ticket_overview_fetch_force')
     )
     @hide()
 
@@ -732,23 +722,32 @@ class Navbar extends App.Controller
       @cache = data
       @update()
 
+
+    # force fetch ticket overview
+    @bind 'ticket_overview_fetch_force', =>
+      @fetch()
+
     # init fetch via ajax
     ajaxInit = =>
 
       # ignore if already pushed via websockets
       return if @cache
-      #console.log('AJAX CALLL')
-      # init fetch via ajax, all other updates on time via websockets
-      @ajax(
-        id:    'ticket_overviews',
-        type:  'GET',
-        url:   @apiPath + '/ticket_overviews',
-        processData: true,
-        success: (data) =>
-          @cache = data
-          @update()
-        )
+      @fetch()
+
     @delay( ajaxInit, 5000 )
+
+  fetch: =>
+    #console.log('AJAX CALLL')
+    # init fetch via ajax, all other updates on time via websockets
+    @ajax(
+      id:    'ticket_overviews',
+      type:  'GET',
+      url:   @apiPath + '/ticket_overviews',
+      processData: true,
+      success: (data) =>
+        @cache = data
+        @update()
+      )
 
   active: (state) =>
     @activeState = state
@@ -791,59 +790,6 @@ class Navbar extends App.Controller
     @html App.view('agent_ticket_view/navbar')(
       items: data
     )
-
-
-class Router extends App.Controller
-  constructor: ->
-    super
-
-    # set new key
-    @key = 'ticket_overview_' + @view
-
-    # get data
-    cache = App.Store.get( @key )
-    if cache
-      @tickets_count = cache.tickets_count
-      @ticket_ids    = cache.ticket_ids
-      @redirect()
-    else
-      @ajax(
-        type:       'GET'
-        url:        @apiPath + '/ticket_overviews'
-        data:
-          view:      @view
-          array:     true
-        processData: true
-        success:     @load
-      )
-
-  load: (data) =>
-    @ticket_ids    = data.ticket_ids
-    @tickets_count = data.tickets_count
-#    App.Store.write( data )
-    @redirect()
-
-  redirect: =>
-    @Config.set('LastOverview', @view )
-    @position = parseInt( @position )
-    @Config.set('LastOverviewPosition', @position )
-    @Config.set('LastOverviewTotal', @tickets_count )
-
-    # redirect
-    if @direction == 'next'
-      if @ticket_ids[ @position ] && @ticket_ids[ @position ]
-        position = @position + 1
-        @Config.set( 'LastOverviewPosition', position )
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position ] + '/nav/true'
-      else
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
-    else
-      if @ticket_ids[ @position - 2 ] && @ticket_ids[ @position - 2 ] + '/nav/true'
-        position = @position - 1
-        @Config.set( 'LastOverviewPosition', position )
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 2 ] + '/nav/true'
-      else
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
 
 class TicketOverviewRouter extends App.ControllerPermanent
   constructor: (params) ->

@@ -46,7 +46,7 @@ class Sessions::Backend::TicketOverviewList
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 6.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 20.seconds } )
 
     items = self.load
 
