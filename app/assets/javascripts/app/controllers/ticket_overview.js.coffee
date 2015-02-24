@@ -71,7 +71,7 @@ class App.TicketOverview extends App.Controller
 
   overview: (overview_id) =>
     return if !@contentController
-    @contentController.overview(overview_id)
+    @contentController.meta(overview_id)
 
 class Table extends App.Controller
   events:
@@ -138,7 +138,7 @@ class Table extends App.Controller
         @render()
       )
 
-  overview: (overview_id) =>
+  meta: (overview_id) =>
     return if !@cache
 
     # find requested overview data
