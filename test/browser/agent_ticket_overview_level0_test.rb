@@ -11,12 +11,135 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
     tasks_close_all()
 
-    # remember current overview count
-    overview_counter_before = overview_counter()
+    # test bulk action
 
     # create new ticket
     ticket1 = ticket_create(
-      :data    => {
+      :data => {
+        :customer => 'nico*',
+        :group    => 'Users',
+        :title    => 'overview count test #2',
+        :body     => 'overview count test #2',
+      }
+    )
+    ticket2 = ticket_create(
+      :data => {
+        :customer => 'nico*',
+        :group    => 'Users',
+        :title    => 'overview count test #3',
+        :body     => 'overview count test #3',
+      }
+    )
+
+    click( :css => '#navigation li.overviews a' )
+    click( :css => '.content.active .sidebar a[href="#ticket/view/all_unassigned"]' )
+    sleep 10
+
+    # select both via bulk action
+    click(
+      :css => '.active table tr td input[value="' + ticket1[:id] + '"] + .checkbox',
+    )
+    click(
+      :css => '.active table tr td input[value="' + ticket2[:id] + '"] + .checkbox',
+    )
+    exists(
+      :css => '.active table tr td input[value="' + ticket1[:id] + '"]:checked',
+    )
+    exists(
+      :css => '.active table tr td input[value="' + ticket2[:id] + '"]:checked',
+    )
+
+    # select close state & submit
+    select(
+      :css   => '.active .bulkAction [name="state_id"]',
+      :value => 'closed',
+    )
+    click(
+      :css => '.active .bulkAction .js-confirm',
+    )
+    click(
+      :css => '.active .bulkAction .js-submit',
+    )
+    sleep 3
+
+    exists_not(
+      :css => '.active table tr td input[value="' + ticket1[:id] + '"]',
+    )
+    exists_not(
+      :css => '.active table tr td input[value="' + ticket2[:id] + '"]',
+    )
+
+    # remember current overview count
+    overview_counter_before = overview_counter()
+
+
+    # click options and enable number and article count
+    click( :css => '.active [data-type="settings"]' )
+
+    watch_for(
+      :css   => '.modal h1',
+      :value => 'Edit',
+    )
+    check(
+      :css => '.modal input[value="number"]',
+    )
+    check(
+      :css => '.modal input[value="article_count"]',
+    )
+    click( :css => '.modal .js-submit' )
+    sleep 2
+
+    # check if number and article count is shown
+    match(
+      :css   => '.active table th:nth-child(3)',
+      :value => '#',
+    )
+    match(
+      :css   => '.active table th:nth-child(7)',
+      :value => 'Article#',
+    )
+
+    # reload browser
+    reload()
+
+    # check if number and article count is shown
+    match(
+      :css   => '.active table th:nth-child(3)',
+      :value => '#',
+    )
+    match(
+      :css   => '.active table th:nth-child(7)',
+      :value => 'Article#',
+    )
+
+    # disable number and article count
+    click( :css => '.active [data-type="settings"]' )
+
+    watch_for(
+      :css   => '.modal h1',
+      :value => 'Edit',
+    )
+    uncheck(
+      :css => '.modal input[value="number"]',
+    )
+    uncheck(
+      :css => '.modal input[value="article_count"]',
+    )
+    click( :css => '.modal .js-submit' )
+    sleep 2
+
+    # check if number and article count is gone
+    match_not(
+      :css   => '.active table th:nth-child(3)',
+      :value => '#',
+    )
+    exists_not(
+      :css => '.active table th:nth-child(7)',
+    )
+
+    # create new ticket
+    ticket3 = ticket_create(
+      :data => {
         :customer => 'nico*',
         :group    => 'Users',
         :title    => 'overview count test #1',
@@ -31,13 +154,13 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # open ticket by search
     ticket_open_by_search(
-      :number  => ticket1[:number],
+      :number => ticket3[:number],
     )
     sleep 1
 
     # close ticket
     ticket_update(
-      :data    => {
+      :data => {
         :state => 'closed',
       }
     )

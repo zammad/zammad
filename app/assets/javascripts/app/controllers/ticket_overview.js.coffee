@@ -416,7 +416,7 @@ class Table extends App.Controller
       noFieldset: true
     )
 
-    html.bind('submit', (e) =>
+    html.bind('js-submit', (e) =>
       e.preventDefault()
       @bulk_submit(e)
     )

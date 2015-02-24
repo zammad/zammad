@@ -76,6 +76,7 @@ class TicketOverviewsController < ApplicationController
 
     # return result
     render :json => {
+      :view          => params[:view],
       :overview      => overview[:overview],
       :ticket_ids    => overview[:ticket_ids],
       :tickets_count => overview[:tickets_count],
