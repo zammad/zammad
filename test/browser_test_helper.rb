@@ -536,7 +536,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     timeout = 16
-    if action[:timeout]
+    if params[:timeout]
       timeout = params[:timeout]
     end
     loops = (timeout).to_i
@@ -550,7 +550,7 @@ class TestCase < Test::Unit::TestCase
       end
       sleep 1
     }
-    raise "#{test[:css]}) still exsists"
+    raise "#{params[:css]}) still exsists"
   end
 
 =begin
@@ -850,9 +850,13 @@ class TestCase < Test::Unit::TestCase
     instance.find_elements( { :css => '.content.active button.js-submit' } )[0].click
 
     (1..10).each {|loop|
-      text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
-      if !text || text.empty?
-        return true
+      begin
+        text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
+        if !text || text.empty?
+          return true
+        end
+      rescue
+        # just try again
       end
       sleep 1
     }

@@ -84,16 +84,14 @@ class AgentTicketActionLevel0Test < TestCase
     ticket_create(
       :browser => browser2,
       :data    => {
-        :customer => '',
-        :title    => 'A',
+        :title => 'A',
       },
       :do_not_submit => true,
     )
     ticket_create(
       :browser => browser2,
       :data    => {
-        :customer => '',
-        :title    => 'B',
+        :title => 'B',
       },
       :do_not_submit => true,
     )
@@ -143,7 +141,7 @@ class AgentTicketActionLevel0Test < TestCase
     watch_for(
       :browser => browser2,
       :css     => '.active div[data-name=body]',
-      :value   => 'some content' + random,
+      :value   => 'some content ' + random,
     )
     sleep 2
 
@@ -193,9 +191,10 @@ class AgentTicketActionLevel0Test < TestCase
     ticket_create(
       :browser => browser2,
       :data    => {
-        :group   => 'Users',
-        :subject => 'some subject 123äöü',
-        :body    => 'some body 123äöü',
+        :customer => 'nico',
+        :group    => 'Users',
+        :title    => 'some subject 123äöü',
+        :body     => 'some body 123äöü',
       },
     )
 
@@ -266,7 +265,7 @@ class AgentTicketActionLevel0Test < TestCase
       :css     => '.modal',
     )
 
-    watch_for(
+    set(
       :browser => browser2,
       :css     => '.active div[data-name=body]',
       :value   => '::' + random,
