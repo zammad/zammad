@@ -31,7 +31,7 @@ class AACBasicRichtextTest < TestCase
       :value => 'some test for browser and some other for browser',
     )
 
-    # richtext multi line
+    # text multi line
     set(
       :css   => '#content .text-3',
       :value => 'some test for browser ',
@@ -46,5 +46,21 @@ class AACBasicRichtextTest < TestCase
       :css   => '#content .text-3',
       :value => "some test for browser\nand some other for browser",
     )
+
+    # richtext multi line
+    set(
+      :css   => '#content .text-5',
+      :value => 'some test for browser ',
+      :slow  => true,
+    )
+    sleep 1
+    sendkey( :value => :enter )
+    sendkey( :value => 'and some other for browser2' )
+    sleep 1
+
+    match(
+      :css   => '#content .text-5',
+      :value => "some test for browser\nand some other for browser2",
+    ) 
   end
 end
