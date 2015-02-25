@@ -42,13 +42,14 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     roles  = Role.where( :name => [ 'Customer'] )
     customer1 = User.create_or_update(
-      :login     => 'session-collections-customer-1',
-      :firstname => 'Session',
-      :lastname  => 'collections 2',
-      :email     => 'session-collections-customer-1@example.com',
-      :password  => 'customerpw',
-      :active    => true,
-      :roles     => roles,
+      :login           => 'session-collections-customer-1',
+      :firstname       => 'Session',
+      :lastname        => 'collections 2',
+      :email           => 'session-collections-customer-1@example.com',
+      :password        => 'customerpw',
+      :organization_id => nil,
+      :active          => true,
+      :roles           => roles,
     )
     customer1.roles = roles
     customer1.save
