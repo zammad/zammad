@@ -43,8 +43,7 @@ class Sessions::Backend::TicketOverviewList
   def push
 
     # check interval
-    timeout = Sessions::CacheIn.get( self.client_key )
-    return if timeout
+    return if Sessions::CacheIn.get( self.client_key )
 
     # reset check interval
     Sessions::CacheIn.set( self.client_key, true, { :expires_in => 6.seconds } )

@@ -71,7 +71,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    sleep 16
+    sleep 12
 
     # get whole collections
     result1 = collection_client1.push
@@ -102,7 +102,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( result1, result2, "check collections" )
 
     # check again after create
-    sleep 14
+    sleep 12
     result1 = collection_client1.push
     assert( !result1, "check collections - after create - recall" )
     sleep 1
@@ -112,7 +112,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     group.destroy
-    sleep 14
+    sleep 12
 
     # get whole collections
     result1 = collection_client1.push
@@ -163,7 +163,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     org = Organization.create( :name => 'SomeOrg2::' + rand(999999).to_s, :active => true )
-    sleep 16
+    sleep 12
 
     # get whole collections
     result1 = collection_client1.push
@@ -173,7 +173,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result2.empty?, "check collections - after create" )
     assert_equal( result1, result2, "check collections" )
 
-    sleep 16
+    sleep 12
 
     # next check should be empty
     result1 = collection_client1.push
@@ -183,7 +183,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     organization = Organization.first
     organization.touch
-    sleep 16
+    sleep 12
 
     # get whole collections
     result1 = collection_client1.push
@@ -241,14 +241,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result1, "check as agent1 - recall" )
 
     # next check should be empty
-    sleep 60
+    sleep 31
     result1 = as_client1.push
     assert( !result1, "check as agent1 - recall 2" )
 
     agent1.update_attribute( :email, 'activity-stream-agent11@example.com' )
     ticket = Ticket.create(:title => '12323', :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1 )
 
-    sleep 32
+    sleep 31
 
     # get as stream
     result1 = as_client1.push
@@ -271,7 +271,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result1, "check ticket_create - recall" )
 
     # next check should be empty
-    sleep 10
+    sleep 2
     result1 = ticket_create_client1.push
     assert( !result1, "check ticket_create - recall 2" )
 
