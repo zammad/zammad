@@ -1,9 +1,10 @@
 class Sessions::Backend::Collections
 
-  def initialize( user, client, client_id )
+  def initialize( user, client, client_id, ttl = 10 )
     @user      = user
     @client    = client
     @client_id = client_id
+    @ttl       = ttl
     @backends  = self.backend
   end
 
@@ -35,7 +36,7 @@ class Sessions::Backend::Collections
       next if file.classify == 'Sessions::Backend::Collections::Base'
       #puts "LOAD #{file.classify}---"
       #next if file == ''
-      backend = file.classify.constantize.new(@user, @client, @client_id)
+      backend = file.classify.constantize.new(@user, @client, @client_id, @ttl)
       if backend
         backends.push backend
       end

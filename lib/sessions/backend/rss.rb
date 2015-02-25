@@ -2,10 +2,11 @@ require 'rss'
 
 class Sessions::Backend::Rss
 
-  def initialize( user, client, client_id )
-    @user         = user
-    @client       = client
-    @client_id    = client_id
+  def initialize( user, client, client_id, ttl = 30 )
+    @user      = user
+    @client    = client
+    @ttl       = ttl
+    @client_id = client_id
   end
 
   def collection_key
@@ -38,7 +39,7 @@ class Sessions::Backend::Rss
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 5.minutes } )
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
 
     data = self.load
 

@@ -11,14 +11,14 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      :login         => 'activity-stream-agent-1',
-      :firstname     => 'Session',
-      :lastname      => 'activity stream ' + rand(99999).to_s,
-      :email         => 'activity-stream-agent1@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'activity-stream-agent-1',
+      :firstname => 'Session',
+      :lastname  => 'activity stream ' + rand(99999).to_s,
+      :email     => 'activity-stream-agent1@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent1.roles = roles
     assert( agent1.save, "create/update agent1" )
@@ -58,14 +58,14 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      :login         => 'activity-stream-agent-1',
-      :firstname     => 'Session',
-      :lastname      => 'activity stream ' + rand(99999).to_s,
-      :email         => 'activity-stream-agent1@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'activity-stream-agent-1',
+      :firstname => 'Session',
+      :lastname  => 'activity stream ' + rand(99999).to_s,
+      :email     => 'activity-stream-agent1@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent1.roles = roles
     assert( agent1.save, "create/update agent1" )

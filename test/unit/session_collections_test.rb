@@ -86,14 +86,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     sleep 1
     result2 = collection_client2.push
     assert( result2.empty?, "check collections - recall" )
-    sleep 0.2
     result3 = collection_client3.push
     assert( result3.empty?, "check collections - recall" )
 
     # change collection
     group = Group.first
     group.touch
-    sleep 16
+    sleep 11
 
     # get whole collections
     result1 = collection_client1.push
@@ -103,14 +102,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     result2 = collection_client2.push
     assert( result2, "check collections - after touch" )
     assert( check_if_collection_exists(result2, :Group), "check collections - after touch" )
-    sleep 0.2
     result3 = collection_client3.push
     assert( result3, "check collections - after touch" )
     assert( check_if_collection_exists(result3, :Group), "check collections - after touch" )
 
     # change collection
     org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true, :member_ids => [customer1.id] )
-    sleep 16
+    sleep 11
 
     # get whole collections
     result1 = collection_client1.push
@@ -120,19 +118,17 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     result2 = collection_client2.push
     assert( result2, "check collections - after create" )
     assert( check_if_collection_exists(result2, :Organization), "check collections - after create" )
-    sleep 0.5
     result3 = collection_client3.push
     assert( result3, "check collections - after create" )
-    assert( !check_if_collection_exists(result3, :Organization), "check collections - after create" )
+    assert( check_if_collection_exists(result3, :Organization), "check collections - after create" )
 
     # next check should be empty
-    sleep 16
+    sleep 11
     result1 = collection_client1.push
     assert( result1.empty?, "check collections - recall" )
     sleep 1
     result2 = collection_client2.push
     assert( result2.empty?, "check collections - recall" )
-    sleep 0.2
     result3 = collection_client3.push
     assert( result3.empty?, "check collections - recall" )
   end

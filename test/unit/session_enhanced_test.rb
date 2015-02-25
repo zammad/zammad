@@ -230,7 +230,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert( Sessions.session_exists?(client_id1_0), "check if session exists" )
     assert( Sessions.session_exists?(client_id1_1), "check if session exists" )
     assert( Sessions.session_exists?(client_id2), "check if session exists" )
-    sleep 19
+    sleep 11
 
     # check collections
     collections = {
@@ -251,7 +251,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     check_if_collection_reset_message_exists(client_id1_1, collections, 'init2')
     check_if_collection_reset_message_exists(client_id2, collections, 'init2')
 
-    sleep 20
+    sleep 11
 
     collections = {
       'Group'        => nil,
@@ -266,7 +266,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     group = Group.first
     group.touch
 
-    sleep 20
+    sleep 11
 
     # check collections
     collections = {

@@ -1,8 +1,9 @@
 class Sessions::Backend::TicketOverviewIndex
-  def initialize( user, client = nil, client_id = nil )
+  def initialize( user, client = nil, client_id = nil, ttl = 5 )
     @user               = user
     @client             = client
     @client_id          = client_id
+    @ttl                = ttl
     @last_change        = nil
     @last_ticket_change = nil
   end
@@ -36,7 +37,7 @@ class Sessions::Backend::TicketOverviewIndex
     return if Sessions::CacheIn.get( self.client_key )
 
     # reset check interval
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 5.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change

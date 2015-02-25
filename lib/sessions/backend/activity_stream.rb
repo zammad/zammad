@@ -1,10 +1,11 @@
 class Sessions::Backend::ActivityStream
 
-  def initialize( user, client = nil, client_id = nil )
-    @user         = user
-    @client       = client
-    @client_id    = client_id
-    @last_change  = nil
+  def initialize( user, client = nil, client_id = nil, ttl = 30 )
+    @user        = user
+    @client      = client
+    @client_id   = client_id
+    @ttl         = ttl
+    @last_change = nil
   end
 
   def load
@@ -38,7 +39,7 @@ class Sessions::Backend::ActivityStream
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 0.5.minutes } )
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
 
     data = self.load
 
