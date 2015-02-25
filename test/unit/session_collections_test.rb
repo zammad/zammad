@@ -53,9 +53,9 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     customer1.roles = roles
     customer1.save
 
-    collection_client1 = Sessions::Backend::Collections.new(agent1, nil, 'aaa-1', 5)
-    collection_client2 = Sessions::Backend::Collections.new(agent2, nil, 'bbb-2', 5)
-    collection_client3 = Sessions::Backend::Collections.new(customer1, nil, 'bbb-2', 5)
+    collection_client1 = Sessions::Backend::Collections.new(agent1, nil, 'aaa-1', 3)
+    collection_client2 = Sessions::Backend::Collections.new(agent2, nil, 'bbb-2', 3)
+    collection_client3 = Sessions::Backend::Collections.new(customer1, nil, 'bbb-2', 3)
 
     # get whole collections
     result1 = collection_client1.push
@@ -83,7 +83,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # next check should be empty
     result1 = collection_client1.push
     assert( result1.empty?, "check collections - recall" )
-    sleep 1
+    sleep 0.4
     result2 = collection_client2.push
     assert( result2.empty?, "check collections - recall" )
     result3 = collection_client3.push
@@ -92,13 +92,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    sleep 6
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
     assert( result1, "check collections - after touch" )
     assert( check_if_collection_exists(result1, :Group), "check collections - after touch" )
-    sleep 1
+    sleep 0.1
     result2 = collection_client2.push
     assert( result2, "check collections - after touch" )
     assert( check_if_collection_exists(result2, :Group), "check collections - after touch" )
@@ -108,13 +108,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     # change collection
     org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true, :member_ids => [customer1.id] )
-    sleep 6
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
     assert( result1, "check collections - after create" )
     assert( check_if_collection_exists(result1, :Organization, { :id => org.id, :member_ids => [customer1.id] } ), "check collections - after create with attributes" )
-    sleep 0.5
+    sleep 0.3
     result2 = collection_client2.push
     assert( result2, "check collections - after create" )
     assert( check_if_collection_exists(result2, :Organization), "check collections - after create" )
@@ -123,10 +123,9 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert( check_if_collection_exists(result3, :Organization), "check collections - after create" )
 
     # next check should be empty
-    sleep 6
+    sleep 1
     result1 = collection_client1.push
     assert( result1.empty?, "check collections - recall" )
-    sleep 1
     result2 = collection_client2.push
     assert( result2.empty?, "check collections - recall" )
     result3 = collection_client3.push
