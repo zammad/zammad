@@ -116,13 +116,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert( check_if_collection_exists(result1, :Organization, { :id => org.id, :member_ids => [customer1.id] } ), "check collections - after create with attributes" )
     sleep 0.3
     result2 = collection_client2.push
-    puts "r2 #{result2.inspect}"
     assert( result2, "check collections - after create" )
     assert( check_if_collection_exists(result2, :Organization), "check collections - after create" )
+
+    # user has no organization, so collection should be empty
     result3 = collection_client3.push
-    puts "r3 #{result3.inspect}"
     assert( result3, "check collections - after create" )
-    assert( check_if_collection_exists(result3, :Organization), "check collections - after create" )
+    assert( !check_if_collection_exists(result3, :Organization), "check collections - after create" )
 
     # next check should be empty
     sleep 1
