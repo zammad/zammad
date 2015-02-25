@@ -50,13 +50,13 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
-    collection_client1 = Sessions::Backend::Collections::Group.new(user, false, '123-1', 5)
-    collection_client2 = Sessions::Backend::Collections::Group.new(user, false, '234-2', 5)
+    collection_client1 = Sessions::Backend::Collections::Group.new(user, false, '123-1', 3)
+    collection_client2 = Sessions::Backend::Collections::Group.new(user, false, '234-2', 3)
 
     # get whole collections
     result1 = collection_client1.push
     assert( !result1.empty?, "check collections" )
-    sleep 1
+    sleep 0.6
     result2 = collection_client2.push
     assert( !result2.empty?, "check collections" )
     assert_equal( result1, result2, "check collections" )
@@ -71,12 +71,11 @@ class SessionBasicTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    sleep 6
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
     assert( !result1.empty?, "check collections - after touch" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2.empty?, "check collections - after touch" )
     assert_equal( result1, result2, "check collections" )
@@ -84,49 +83,44 @@ class SessionBasicTest < ActiveSupport::TestCase
     # check again after touch
     result1 = collection_client1.push
     assert( !result1, "check collections - after touch - recall" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2, "check collections - after touch - recall" )
     assert_equal( result1, result2, "check collections" )
 
     # change collection
     group = Group.create( :name => 'SomeGroup::' + rand(999999).to_s, :active => true )
-    sleep 6
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
     assert( !result1.empty?, "check collections - after create" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2.empty?, "check collections - after create" )
     assert_equal( result1, result2, "check collections" )
 
     # check again after create
-    sleep 6
+    sleep 4
     result1 = collection_client1.push
     assert( !result1, "check collections - after create - recall" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2, "check collections - after create - recall" )
     assert_equal( result1, result2, "check collections" )
 
     # change collection
     group.destroy
-    sleep 6
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
     assert( !result1.empty?, "check collections - after destroy" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2.empty?, "check collections - after destroy" )
     assert_equal( result1, result2, "check collections" )
 
     # check again after destroy
-    sleep 6
+    sleep 4
     result1 = collection_client1.push
     assert( !result1, "check collections - after destroy - recall" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2, "check collections - after destroy - recall" )
     assert_equal( result1, result2, "check collections" )
@@ -143,13 +137,12 @@ class SessionBasicTest < ActiveSupport::TestCase
     user = User.lookup(:id => 1)
     org = Organization.create( :name => 'SomeOrg1::' + rand(999999).to_s, :active => true )
 
-    collection_client1 = Sessions::Backend::Collections::Organization.new(user, false, '123-1', 5)
-    collection_client2 = Sessions::Backend::Collections::Organization.new(user, false, '234-2', 5)
+    collection_client1 = Sessions::Backend::Collections::Organization.new(user, false, '123-1', 3)
+    collection_client2 = Sessions::Backend::Collections::Organization.new(user, false, '234-2', 3)
 
     # get whole collections - should be nil, no org exists!
     result1 = collection_client1.push
     assert( !result1.empty?, "check collections" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2.empty?, "check collections" )
     assert_equal( result1, result2, "check collections" )
@@ -157,23 +150,22 @@ class SessionBasicTest < ActiveSupport::TestCase
     # next check - should still be nil, no org exists!
     result1 = collection_client1.push
     assert( !result1, "check collections - recall" )
-    sleep 1
+    sleep 0.6
     result2 = collection_client2.push
     assert( !result2, "check collections - recall" )
 
     # change collection
     org = Organization.create( :name => 'SomeOrg2::' + rand(999999).to_s, :active => true )
-    sleep 6
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
     assert( !result1.empty?, "check collections - after create" )
-    sleep 1
     result2 = collection_client2.push
     assert( !result2.empty?, "check collections - after create" )
     assert_equal( result1, result2, "check collections" )
 
-    sleep 6
+    sleep 4
 
     # next check should be empty
     result1 = collection_client1.push
@@ -183,7 +175,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     organization = Organization.first
     organization.touch
-    sleep 12
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
@@ -229,7 +221,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     agent1.roles = roles
     assert( agent1.save, "create/update agent1" )
 
-    as_client1 = Sessions::Backend::ActivityStream.new(agent1, false, '123-1', 5)
+    as_client1 = Sessions::Backend::ActivityStream.new(agent1, false, '123-1', 3)
 
     # get as stream
     result1 = as_client1.push
@@ -241,14 +233,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result1, "check as agent1 - recall" )
 
     # next check should be empty
-    sleep 6
+    sleep 4
     result1 = as_client1.push
     assert( !result1, "check as agent1 - recall 2" )
 
     agent1.update_attribute( :email, 'activity-stream-agent11@example.com' )
     ticket = Ticket.create(:title => '12323', :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1 )
 
-    sleep 6
+    sleep 4
 
     # get as stream
     result1 = as_client1.push
@@ -259,25 +251,25 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
-    ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, false, '123-1', 5)
+    ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, false, '123-1', 3)
 
     # get as stream
     result1 = ticket_create_client1.push
     assert( result1, "check ticket_create" )
-    sleep 1
+    sleep 0.6
 
     # next check should be empty
     result1 = ticket_create_client1.push
     assert( !result1, "check ticket_create - recall" )
 
     # next check should be empty
-    sleep 2
+    sleep 0.6
     result1 = ticket_create_client1.push
     assert( !result1, "check ticket_create - recall 2" )
 
     Group.create( :name => 'SomeTicketCreateGroup::' + rand(999999).to_s, :active => true )
 
-    sleep 6
+    sleep 4
 
     # get as stream
     result1 = ticket_create_client1.push

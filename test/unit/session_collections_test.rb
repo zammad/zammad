@@ -12,14 +12,14 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      :login         => 'session-collections-agent-1',
-      :firstname     => 'Session',
-      :lastname      => 'collections 1',
-      :email         => 'session-collections-agent-1@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'session-collections-agent-1',
+      :firstname => 'Session',
+      :lastname  => 'collections 1',
+      :email     => 'session-collections-agent-1@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent1.roles = roles
     agent1.save
@@ -28,34 +28,34 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent2 = User.create_or_update(
-      :login         => 'session-collections-agent-2',
-      :firstname     => 'Session',
-      :lastname      => 'collections 2',
-      :email         => 'session-collections-agent-2@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      :login     => 'session-collections-agent-2',
+      :firstname => 'Session',
+      :lastname  => 'collections 2',
+      :email     => 'session-collections-agent-2@example.com',
+      :password  => 'agentpw',
+      :active    => true,
+      :roles     => roles,
+      :groups    => groups,
     )
     agent2.roles = roles
     agent2.save
 
     roles  = Role.where( :name => [ 'Customer'] )
     customer1 = User.create_or_update(
-      :login         => 'session-collections-customer-1',
-      :firstname     => 'Session',
-      :lastname      => 'collections 2',
-      :email         => 'session-collections-customer-1@example.com',
-      :password      => 'customerpw',
-      :active        => true,
-      :roles         => roles,
+      :login     => 'session-collections-customer-1',
+      :firstname => 'Session',
+      :lastname  => 'collections 2',
+      :email     => 'session-collections-customer-1@example.com',
+      :password  => 'customerpw',
+      :active    => true,
+      :roles     => roles,
     )
     customer1.roles = roles
     customer1.save
 
-    collection_client1 = Sessions::Backend::Collections.new(agent1, nil, 'aaa-1')
-    collection_client2 = Sessions::Backend::Collections.new(agent2, nil, 'bbb-2')
-    collection_client3 = Sessions::Backend::Collections.new(customer1, nil, 'bbb-2')
+    collection_client1 = Sessions::Backend::Collections.new(agent1, nil, 'aaa-1', 5)
+    collection_client2 = Sessions::Backend::Collections.new(agent2, nil, 'bbb-2', 5)
+    collection_client3 = Sessions::Backend::Collections.new(customer1, nil, 'bbb-2', 5)
 
     # get whole collections
     result1 = collection_client1.push
@@ -92,7 +92,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    sleep 11
+    sleep 6
 
     # get whole collections
     result1 = collection_client1.push
@@ -108,7 +108,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     # change collection
     org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true, :member_ids => [customer1.id] )
-    sleep 11
+    sleep 6
 
     # get whole collections
     result1 = collection_client1.push
@@ -123,7 +123,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert( check_if_collection_exists(result3, :Organization), "check collections - after create" )
 
     # next check should be empty
-    sleep 11
+    sleep 6
     result1 = collection_client1.push
     assert( result1.empty?, "check collections - recall" )
     sleep 1
