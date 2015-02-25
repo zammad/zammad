@@ -37,4 +37,8 @@ Zammad::Application.configure do
     :live_reload_port => 35738,
     :source => :vendored
   )
+
+  # define cache store
+  config.cache_store = :file_store, 'tmp/cache_file_store_development'
+
 end

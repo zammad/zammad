@@ -1,9 +1,10 @@
 class Sessions::Backend::TicketOverviewIndex
   def initialize( user, client = nil, client_id = nil )
-    @user         = user
-    @client       = client
-    @client_id    = client_id
-    @last_change  = nil
+    @user               = user
+    @client             = client
+    @client_id          = client_id
+    @last_change        = nil
+    @last_ticket_change = nil
   end
 
   def load
@@ -31,13 +32,19 @@ class Sessions::Backend::TicketOverviewIndex
 
   def push
 
-    # check timeout
+    # check check interval
     timeout = Sessions::CacheIn.get( self.client_key )
     return if timeout
 
-    # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 20.seconds } )
+    # reset check interval
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 5.seconds } )
 
+    # check if min one ticket has changed
+    last_ticket_change = Ticket.latest_change
+    return if last_ticket_change == @last_ticket_change
+    @last_ticket_change = last_ticket_change
+
+    # load current data
     data = self.load
 
     return if !data

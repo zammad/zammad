@@ -46,4 +46,7 @@ Zammad::Application.configure do
   # Enable autoload
   config.dependency_loading = true
 
+  # define cache store
+  config.cache_store = :file_store, 'tmp/cache_file_store_test'
+
 end

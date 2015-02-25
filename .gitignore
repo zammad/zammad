@@ -13,7 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp/websocket/*
-/tmp/cache/*
+/tmp/cache*
 /tmp/pids/*
 /public/assets/*.*
 /public/assets/app/*

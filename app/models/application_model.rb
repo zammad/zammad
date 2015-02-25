@@ -445,6 +445,68 @@ returns
 
 =begin
 
+activate latest change on create, update, touch and destroy
+
+class Model < ApplicationModel
+  latest_change_support
+end
+
+=end
+
+  def self.latest_change_support
+    after_create  :latest_change_set_from_observer
+    after_update  :latest_change_set_from_observer
+    after_touch   :latest_change_set_from_observer
+    after_destroy :latest_change_set_from_observer_destroy
+  end
+
+  def latest_change_set_from_observer
+    self.class.latest_change_set(self.updated_at)
+  end
+  def latest_change_set_from_observer_destroy
+    self.class.latest_change_set(nil)
+  end
+
+  def self.latest_change_set(updated_at)
+    key        = "#{self.new.class.name}_latest_change"
+    expires_in = 31_536_000 # 1 year
+
+    if updated_at == nil
+      Cache.delete( key )
+    else
+      Cache.write( key, updated_at, { :expires_in => expires_in } )
+    end
+  end
+
+=begin
+
+  get latest updated_at object timestamp
+
+  latest_change = Ticket.latest_change
+
+returns
+
+  result = timestamp
+
+=end
+
+  def self.latest_change
+    key        = "#{self.new.class.name}_latest_change"
+    updated_at = Cache.get( key )
+
+    # if we do not have it cached, do lookup
+    if !updated_at
+      o = self.select(:updated_at).order(updated_at: :desc).limit(1).first
+      if o
+        updated_at = o.updated_at
+        self.latest_change_set(updated_at)
+      end
+    end
+    updated_at
+  end
+
+=begin
+
 activate client notify support on create, update, touch and destroy
 
 class Model < ApplicationModel

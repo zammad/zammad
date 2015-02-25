@@ -8,4 +8,5 @@ class Group < ApplicationModel
 
   activity_stream_support  :role => Z_ROLENAME_ADMIN
   history_support
+  latest_change_support
 end

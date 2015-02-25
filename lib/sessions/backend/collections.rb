@@ -1,10 +1,10 @@
 class Sessions::Backend::Collections
 
   def initialize( user, client, client_id )
-    @user       = user
-    @client     = client
-    @client_id  = client_id
-    @backends   = self.backend
+    @user      = user
+    @client    = client
+    @client_id = client_id
+    @backends  = self.backend
   end
 
 

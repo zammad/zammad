@@ -20,6 +20,8 @@ class Ticket < ApplicationModel
 
   notify_clients_support
 
+  latest_change_support
+
   activity_stream_support :ignore_attributes => {
     :create_article_type_id   => true,
     :create_article_sender_id => true,

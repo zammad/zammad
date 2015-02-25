@@ -1,16 +1,16 @@
 class Sessions::Backend::TicketCreate
   def initialize( user, client = nil, client_id = nil )
-    @user         = user
-    @client       = client
-    @client_id    = client_id
-    @last_change  = nil
+    @user        = user
+    @client      = client
+    @client_id   = client_id
+    @last_change = nil
   end
 
   def load
 
     # get attributes to update
     ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
-      :user   => @user.id,
+      :user => @user.id,
     )
 
     # no data exists
@@ -36,7 +36,7 @@ class Sessions::Backend::TicketCreate
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 30.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 60.seconds } )
 
     ticket_create_attributes = self.load
 

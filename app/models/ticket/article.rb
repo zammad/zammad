@@ -40,9 +40,11 @@ class Ticket::Article < ApplicationModel
 
   class Sender < ApplicationModel
     validates   :name, :presence => true
+    latest_change_support
   end
 
   class Type < ApplicationModel
     validates   :name, :presence => true
+    latest_change_support
   end
 end

@@ -15,5 +15,5 @@ class Organization < ApplicationModel
   history_support
   search_index_support
   notify_clients_support
-
+  latest_change_support
 end

@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
- 
+
 class CacheTest < ActiveSupport::TestCase
   test 'cache' do
     tests = [
@@ -109,5 +109,13 @@ class CacheTest < ActiveSupport::TestCase
         assert_equal( cache, test[:verify][:data], 'verify' )
       end
     }
+  end
+
+  # verify if second cache write overwrite first one
+  test 'cache reset' do
+    Cache.write( 'some_reset_key', 123 )
+    Cache.write( 'some_reset_key', 12356 )
+    cache = Cache.get( 'some_reset_key' )
+    assert_equal( cache, 12356, 'verify' )
   end
 end

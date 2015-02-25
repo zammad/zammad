@@ -12,10 +12,10 @@ module Sessions::CacheIn
   def self.set( key, value, params = {} )
 #    puts 'CacheIn.set:' + key + '-' + value.inspect
     if params[:expires_in]
-      @@expires_in[key] = Time.now + params[:expires_in]
+      @@expires_in[key]     = Time.now + params[:expires_in]
       @@expires_in_ttl[key] = params[:expires_in]
     end
-    @@data[ key ] = value
+    @@data[ key ]      = value
     @@data_time[ key ] = Time.now
   end
 
@@ -43,14 +43,6 @@ module Sessions::CacheIn
 
     # return false if key was set without expires_in
     false
-  end
-
-  def self.get_time( key, params = {} )
-    data = self.get( key, params )
-    if data
-      return @@data_time[key]
-    end
-    nil
   end
 
   def self.get( key, params = {} )
