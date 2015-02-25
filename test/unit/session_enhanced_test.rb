@@ -64,17 +64,17 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     sleep 1
-    Sessions.destory_idle_sessions(1)
+    Sessions.destory_idle_sessions(5)
     assert( Sessions.session_exists?(client_id1), "check if session exists after 1 sec" )
     assert( Sessions.session_exists?(client_id2), "check if session exists after 1 sec" )
     assert( Sessions.session_exists?(client_id3), "check if session exists after 1 sec" )
 
     # check if session still exists after idle cleanup with touched sessions
-    sleep 62
+    sleep 6
     Sessions.touch(client_id1)
     Sessions.touch(client_id2)
     Sessions.touch(client_id3)
-    Sessions.destory_idle_sessions(1)
+    Sessions.destory_idle_sessions(5)
     assert( Sessions.session_exists?(client_id1), "check if session exists after touch" )
     assert( Sessions.session_exists?(client_id2), "check if session exists after touch" )
     assert( Sessions.session_exists?(client_id3), "check if session exists after touch" )
@@ -155,15 +155,15 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert( Sessions.thread_client_exists?(client_id3), "check if client is running" )
 
     # check if session still exists after idle cleanup
-    sleep 62
-    client_ids = Sessions.destory_idle_sessions(1)
+    sleep 6
+    client_ids = Sessions.destory_idle_sessions(5)
 
     # check client sessions
     assert( !Sessions.session_exists?(client_id1), "check if session is removed" )
     assert( !Sessions.session_exists?(client_id2), "check if session is removed" )
     assert( !Sessions.session_exists?(client_id3), "check if session is removed" )
 
-    sleep 28
+    sleep 6
 
     # check client threads
     assert( !Sessions.thread_client_exists?(client_id1), "check if client is running" )
@@ -279,8 +279,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     check_if_collection_reset_message_exists(client_id2, collections, 'update')
 
     # check if session still exists after idle cleanup
-    sleep 62
-    client_ids = Sessions.destory_idle_sessions(1)
+    sleep 6
+    client_ids = Sessions.destory_idle_sessions(5)
 
     # check client sessions
     assert( !Sessions.session_exists?(client_id1_0), "check if session is removed" )

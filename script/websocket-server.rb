@@ -293,11 +293,11 @@ EventMachine.run {
   def check_unused_connections
     log 'notice', "check unused idle connections..."
 
-    idle_time_in_min = 4
+    idle_time_in_sec = 4 * 60
 
     # close unused web socket sessions
     @clients.each { |client_id, client|
-      if ( client[:last_ping] + ( 60 * idle_time_in_min ) ) < Time.now
+      if ( client[:last_ping] + idle_time_in_sec ) < Time.now
         log 'notice', "closing idle websocket connection", client_id
 
         # remember to not use this connection anymore
@@ -313,7 +313,7 @@ EventMachine.run {
     }
 
     # close unused ajax long polling sessions
-    clients = Sessions.destory_idle_sessions(idle_time_in_min)
+    clients = Sessions.destory_idle_sessions(idle_time_in_sec)
     clients.each { |client_id|
       log 'notice', "closing idle long polling connection", client_id
     }

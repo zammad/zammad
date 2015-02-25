@@ -165,11 +165,11 @@ returns
 
 =end
 
-  def self.destory_idle_sessions(idle_time_in_min = 4)
+  def self.destory_idle_sessions(idle_time_in_sec = 240)
     list_of_closed_sessions = []
     clients = Sessions.list
     clients.each { |client_id, client|
-      if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + ( 60 * idle_time_in_min ) ) < Time.now.to_i
+      if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.now.to_i
         list_of_closed_sessions.push client_id
         Sessions.destory( client_id )
       end
