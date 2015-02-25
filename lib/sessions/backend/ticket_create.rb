@@ -36,7 +36,7 @@ class Sessions::Backend::TicketCreate
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 60.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 30.seconds } )
 
     ticket_create_attributes = self.load
 
