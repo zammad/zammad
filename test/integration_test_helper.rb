@@ -15,6 +15,9 @@ class ActiveSupport::TestCase
 
   setup do
 
+    # clear cache
+    Cache.clear
+
     # set current user
     puts 'reset UserInfo.current_user_id'
     UserInfo.current_user_id = nil
