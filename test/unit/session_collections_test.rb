@@ -55,7 +55,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     collection_client1 = Sessions::Backend::Collections.new(agent1, nil, 'aaa-1', 3)
     collection_client2 = Sessions::Backend::Collections.new(agent2, nil, 'bbb-2', 3)
-    collection_client3 = Sessions::Backend::Collections.new(customer1, nil, 'bbb-2', 3)
+    collection_client3 = Sessions::Backend::Collections.new(customer1, nil, 'ccc-2', 3)
 
     # get whole collections
     result1 = collection_client1.push
