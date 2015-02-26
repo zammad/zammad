@@ -5,6 +5,7 @@ class AgentOrganizationProfileTest < TestCase
   def test_org_profile
     # work in one browser window
     message = '1 ' + rand(99999999).to_s
+    note    = 'some note ' + rand(99999999).to_s
 
     @browser = browser_instance
     login(
@@ -29,10 +30,12 @@ class AgentOrganizationProfileTest < TestCase
 
     # update note
     set(
-      :css     => '.active [data-name="note"]',
-      :value   => 'some note 123'
+      :css             => '.active .profile [data-name="note"]',
+      :value           => note,
+      :contenteditable => true,
     )
-    click( :css => '.active .profile' )
+    click( :css => '#global-search' )
+    sleep 2
 
     # check and change note again in edit screen
     click( :css => '.active .js-action .select-arrow' )
@@ -44,7 +47,7 @@ class AgentOrganizationProfileTest < TestCase
     )
     watch_for(
       :css   => '.active .modal',
-      :value => 'some note 123',
+      :value => note,
     )
 
     set(
@@ -108,13 +111,14 @@ class AgentOrganizationProfileTest < TestCase
 
     # update note
     set(
-      :browser => browser1,
-      :css     => '.active [data-name="note"]',
-      :value   => message,
+      :browser         => browser1,
+      :css             => '.active .profile [data-name="note"]',
+      :value           => message,
+      :contenteditable => true,
     )
     click(
       :browser => browser1,
-      :css     => '.active .profile',
+      :css     => '#global-search',
     )
 
     # verify

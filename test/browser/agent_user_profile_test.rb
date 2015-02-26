@@ -27,11 +27,12 @@ class AgentUserProfileTest < TestCase
 
     # update note
     set(
-      :css   => '.active [data-name="note"]',
-      :value => 'some note 123',
-    )
+      :css             => '.active [data-name="note"]',
+      :value           => 'some note 123',
+      :contenteditable => true,
 
-    click( :css => '.active .profile' )
+    )
+    click( :css => '#global-search' )
     sleep 2
 
     # check and change note again in edit screen
@@ -106,13 +107,14 @@ class AgentUserProfileTest < TestCase
 
     # update note
     set(
-      :browser => browser1,
-      :css     => '.active [data-name="note"]',
-      :value   => message,
+      :browser         => browser1,
+      :css             => '.active [data-name="note"]',
+      :value           => message,
+      :contenteditable => true,
     )
     click(
       :browser => browser1,
-      :css     => '.active .profile',
+      :css     => '#global-search',
     )
 
     watch_for(

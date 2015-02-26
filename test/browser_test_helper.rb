@@ -235,11 +235,13 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   set(
-    :browser => browser1,
-    :css     => '.some_class',
-    :value   => true,
-    :slow    => false,
-    :clear   => true, # todo
+    :browser         => browser1,
+    :css             => '.some_class',
+    :value           => true,
+    :slow            => false,
+    :blur            => true,
+    :clear           => true, # todo | default: true
+    :contenteditable => true
   )
 
 =end
@@ -247,7 +249,16 @@ class TestCase < Test::Unit::TestCase
   def set(params)
     instance = params[:browser] || @browser
 
+    # it's not working stable via selenium, use js
+    if params[:contenteditable]
+      #puts "---$('#{params[:css]}').html('#{params[:value]}')--"
+      instance.execute_script( "$('#{params[:css]}').focus().html('#{params[:value]}').trigger('change').blur()" )
+      sleep 1
+      return
+    end
+
     element = instance.find_elements( { :css => params[:css] } )[0]
+    #element.click
     element.clear
 
     if !params[:slow]
@@ -258,6 +269,10 @@ class TestCase < Test::Unit::TestCase
       keys.each {|key|
         instance.action.send_keys(key).perform
       }
+    end
+
+    if params[:blur]
+      instance.execute_script( "$('#{params[:css]}').blur()" )
     end
     sleep 0.5
   end
