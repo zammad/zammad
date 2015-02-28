@@ -38,7 +38,7 @@ class AgentOrganizationProfileTest < TestCase
     sleep 2
 
     # check and change note again in edit screen
-    click( :css => '.active .js-action .select-arrow' )
+    click( :css => '.active .js-action .select-arrow', :fast => true )
     click( :css => '.active .js-action a[data-type="edit"]' )
 
     watch_for(

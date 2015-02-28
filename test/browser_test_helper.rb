@@ -188,6 +188,7 @@ class TestCase < Test::Unit::TestCase
   click(
     :browser => browser1,
     :css     => '.some_class',
+    :fast    => false, # do not wait
   )
 
 =end
@@ -195,7 +196,9 @@ class TestCase < Test::Unit::TestCase
   def click(params)
     instance = params[:browser] || @browser
     instance.find_elements( { :css => params[:css] } )[0].click
-    sleep 0.5
+    if !params[:fast]
+      sleep 0.4
+    end
   end
 
 =begin
@@ -249,14 +252,6 @@ class TestCase < Test::Unit::TestCase
   def set(params)
     instance = params[:browser] || @browser
 
-    # it's not working stable via selenium, use js
-    if params[:contenteditable]
-      #puts "---$('#{params[:css]}').html('#{params[:value]}')--"
-      instance.execute_script( "$('#{params[:css]}').focus().html('#{params[:value]}').trigger('change').blur()" )
-      sleep 1
-      return
-    end
-
     element = instance.find_elements( { :css => params[:css] } )[0]
     #element.click
     element.clear
@@ -274,6 +269,15 @@ class TestCase < Test::Unit::TestCase
     if params[:blur]
       instance.execute_script( "$('#{params[:css]}').blur()" )
     end
+
+    # it's not working stable via selenium, use js
+    if params[:contenteditable]
+      value = instance.find_elements( { :css => params[:css] } )[0].text
+      if value != params[:value]
+        instance.execute_script( "$('#{params[:css]}').focus().html('#{params[:value]}').trigger('focusout')" )
+      end
+    end
+
     sleep 0.5
   end
 
@@ -376,7 +380,7 @@ class TestCase < Test::Unit::TestCase
 
   def match(params)
     instance = params[:browser] || @browser
-    element = instance.find_elements( { :css => params[:css] } )[0]
+    element  = instance.find_elements( { :css => params[:css] } )[0]
 
     if params[:css] =~ /select/
       dropdown = Selenium::WebDriver::Support::Select.new(element)
@@ -402,12 +406,25 @@ class TestCase < Test::Unit::TestCase
     end
 
     # match on attribute
-    if params[:attribute]
-      text = element.attribute( params[:attribute] )
-    elsif params[:css] =~ /(input|textarea)/i
-      text = element.attribute('value')
-    else
-      text = element.text
+    begin
+      if params[:attribute]
+        text = element.attribute( params[:attribute] )
+      elsif params[:css] =~ /(input|textarea)/i
+        text = element.attribute('value')
+      else
+        text = element.text
+      end
+    rescue
+
+      # just try again
+      element = instance.find_elements( { :css => params[:css] } )[0]
+      if params[:attribute]
+        text = element.attribute( params[:attribute] )
+      elsif params[:css] =~ /(input|textarea)/i
+        text = element.attribute('value')
+      else
+        text = element.text
+      end
     end
     match = false
     if params[:no_quote]
@@ -430,7 +447,7 @@ class TestCase < Test::Unit::TestCase
       end
     end
     sleep 0.8
-    return match
+    match
   end
 
 =begin
@@ -507,9 +524,33 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  file_upload(
+    :browser   => browser1,
+    :css       => '#content .text-1',
+    :value     => 'some text',
+  )
+
+=end
+
+  def file_upload(params = {})
+    instance = params[:browser] || @browser
+
+    filename = 'some-file.txt'
+    file = File.join(Dir.pwd, filename)
+    #file = 'some test lalal'
+
+    element = instance.find_elements( { :css => params[:css] } )[0].send_keys file
+    #instance.find_elements( { :css => params[:css] } )[0]
+    #element
+    #@driver.find_element(id: 'file-submit').click
+
+  end
+
+=begin
+
   watch_for(
     :browser   => browser1,
-    :css       => true,
+    :css       => '#content .text-1',
     :value     => 'some text',
     :attribute => 'some_attribute' # optional
     :timeout   => '16', # in sec, default 16
@@ -557,7 +598,7 @@ class TestCase < Test::Unit::TestCase
 
   watch_for_disappear(
     :browser => browser1,
-    :css     => true,
+    :css     => '#content .text-1',
     :timeout => '16', # in sec, default 16
   )
 
@@ -571,7 +612,7 @@ class TestCase < Test::Unit::TestCase
       timeout = params[:timeout]
     end
     loops = (timeout).to_i
-    text = ''
+    text  = ''
     (1..loops).each { |loop|
       element = instance.find_elements( { :css => params[:css] } )[0]
       if !element #|| element.displayed?
@@ -646,6 +687,7 @@ class TestCase < Test::Unit::TestCase
 
     instance.find_elements( { :css => 'a[href="#manage"]' } )[0].click
     instance.find_elements( { :css => 'a[href="#manage/overviews"]' } )[0].click
+    sleep 0.2
     instance.find_elements( { :css => '#content a[data-type="new"]' } )[0].click
     sleep 2
 
@@ -746,18 +788,43 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements( { :css => '.active .newTicket div[data-name=body]' } )[0]
       element.clear
       element.send_keys( data[:body] )
+
+      # it's not working stable via selenium, use js
+      value = instance.find_elements( { :css => '.content .newTicket div[data-name=body]' } )[0].text
+      puts "V #{value.inspect}"
+      if value != data[:body]
+        instance.execute_script( "$('.content.active div[data-name=body]').html('#{data[:body]}').trigger('focusout')" )
+      end
     end
     if data[:customer]
       element = instance.find_elements( { :css => '.active .newTicket input[name="customer_id_completion"]' } )[0]
       element.click
       element.clear
+
+      # workaround, sometimes focus is not triggered
       element.send_keys( data[:customer] )
       sleep 4
+
+      # check if pulldown is open, it's not working stable via selenium
+      res = instance.execute_script( "$('.active .newTicket .js-recipientDropdown').hasClass('open')" )
+      puts "res #{res.inspect}"
+      if !res
+        puts "IS NOT OPEN!, open it"
+        instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
+      end
       element.send_keys( :arrow_down )
-      sleep 0.1
+      sleep 0.3
       instance.find_elements( { :css => '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
       sleep 0.3
     end
+
+
+    #file_upload(
+    #  :browser   => instance,
+    #  :css       => '#content .text-1',
+    #  :value     => 'some text',
+    #)
+
     if params[:do_not_submit]
       assert( true, "ticket created without submit" )
       return
@@ -839,6 +906,14 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements( { :css => '.content.active div[data-name=body]' } )[0]
       element.clear
       element.send_keys( data[:body] )
+
+      # it's not working stable via selenium, use js
+      value = instance.find_elements( { :css => '.content.active div[data-name=body]' } )[0].text
+      puts "V #{value.inspect}"
+      if value != data[:body]
+        instance.execute_script( "$('.content.active div[data-name=body]').html('#{data[:body]}').trigger('focusout')" )
+      end
+
     end
 
     if data[:group]
@@ -917,7 +992,9 @@ class TestCase < Test::Unit::TestCase
     if number !~ /#{params[:number]}/
       raise "unable to search/find ticket #{params[:number]}!"
     end
+    sleep 1
     assert( true, "ticket #{params[:number]} found" )
+    true
   end
 
 =begin
@@ -960,6 +1037,8 @@ class TestCase < Test::Unit::TestCase
     if number !~ /#{params[:number]}/
       raise "unable to search/find ticket #{params[:number]}!"
     end
+    sleep 1
+    true
   end
 
 =begin
@@ -989,7 +1068,7 @@ class TestCase < Test::Unit::TestCase
       #puts element.inspect
     }
     overviews.each {|url, value|
-      count = instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
+      count          = instance.find_elements( { :css => ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
       overviews[url] = count.to_i
     }
     overviews
@@ -1031,6 +1110,7 @@ class TestCase < Test::Unit::TestCase
       return
     end
     assert( true, "org #{params[:value]} found" )
+    sleep 2
     true
   end
 
@@ -1057,6 +1137,7 @@ class TestCase < Test::Unit::TestCase
       raise "unable to search/find user #{params[:value]}!"
     end
     assert( true, "user #{params[:term]} found" )
+    sleep 2
     true
   end
 

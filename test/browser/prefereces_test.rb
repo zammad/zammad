@@ -26,6 +26,7 @@ class PreferencesTest < TestCase
       :value => 'English (United States)',
     )
     click( :css => '.content button[type="submit"]' )
+    sleep 2
     watch_for(
       :css   => 'body',
       :value => 'Language',
@@ -35,10 +36,12 @@ class PreferencesTest < TestCase
       :value => 'Deutsch',
     )
     click( :css => '.content button[type="submit"]' )
+    sleep 2
     watch_for(
       :css   => 'body',
       :value => 'Sprache',
     )
+    sleep 2
     reload()
     watch_for(
       :css   => 'body',

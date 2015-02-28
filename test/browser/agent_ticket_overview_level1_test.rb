@@ -143,7 +143,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     click(
       :browser => browser2,
-      :css => '.active .ticketZoom .overview-navigator.horizontal .previous',
+      :css     => '.active .ticketZoom .overview-navigator.horizontal .previous',
     )
 
     match(

@@ -37,10 +37,12 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      :css => '.active table tr td input[value="' + ticket1[:id] + '"] + .checkbox',
+      :css  => '.active table tr td input[value="' + ticket1[:id] + '"] + .checkbox',
+      :fast => true,
     )
     click(
-      :css => '.active table tr td input[value="' + ticket2[:id] + '"] + .checkbox',
+      :css  => '.active table tr td input[value="' + ticket2[:id] + '"] + .checkbox',
+      :fast => true,
     )
     exists(
       :css => '.active table tr td input[value="' + ticket1[:id] + '"]:checked',
@@ -60,7 +62,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     click(
       :css => '.active .bulkAction .js-submit',
     )
-    sleep 3
+    sleep 6
 
     exists_not(
       :css => '.active table tr td input[value="' + ticket1[:id] + '"]',
@@ -95,7 +97,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       :value => '#',
     )
     match(
-      :css   => '.active table th:nth-child(7)',
+      :css   => '.active table th:nth-child(8)',
       :value => 'Article#',
     )
 
@@ -108,7 +110,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       :value => '#',
     )
     match(
-      :css   => '.active table th:nth-child(7)',
+      :css   => '.active table th:nth-child(8)',
       :value => 'Article#',
     )
 
@@ -134,7 +136,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       :value => '#',
     )
     exists_not(
-      :css => '.active table th:nth-child(7)',
+      :css => '.active table th:nth-child(8)',
     )
 
     # create new ticket
