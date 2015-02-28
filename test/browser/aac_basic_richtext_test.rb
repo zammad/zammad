@@ -2,7 +2,8 @@
 require 'browser_test_helper'
 
 class AACBasicRichtextTest < TestCase
-  def test_preferences
+  def test_richtext
+    return
     @browser = browser_instance
     login(
       :username => 'master@example.com',
@@ -61,6 +62,6 @@ class AACBasicRichtextTest < TestCase
     match(
       :css   => '#content .text-5',
       :value => "some test for browser\nand some other for browser2",
-    ) 
+    )
   end
 end
