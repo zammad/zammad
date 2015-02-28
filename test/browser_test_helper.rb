@@ -524,6 +524,52 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  verify_title(
+    :browser => browser1,
+    :value   => 'some title',
+  )
+
+=end
+
+  def verify_title(params = {})
+    instance = params[:browser] || @browser
+
+    title = instance.title
+    if title =~ /#{params[:value]}/i
+      assert( true, "matching '#{params[:value]}' in title '#{title}'" )
+    else
+      raise "not matching '#{params[:value]}' in title '#{title}'"
+    end
+  end
+
+=begin
+
+  verify_task(
+    :browser => browser1,
+    :data    => {
+      :title => 'some title',
+    }
+  )
+
+=end
+
+  def verify_task(params = {})
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    if data[:title]
+      title = instance.find_elements( { :css => '.tasks .active' } )[0].text.strip
+      if title =~ /#{data[:title]}/i
+        assert( true, "matching '#{data[:title]}' in title '#{title}'" )
+      else
+        raise "not matching '#{data[:title]}' in title '#{title}'"
+      end
+    end
+    true
+  end
+
+=begin
+
   file_upload(
     :browser   => browser1,
     :css       => '#content .text-1',
@@ -596,11 +642,23 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+wait untill selector disabppears
+
   watch_for_disappear(
     :browser => browser1,
     :css     => '#content .text-1',
     :timeout => '16', # in sec, default 16
   )
+
+wait untill text in selector disabppears
+
+  watch_for_disappear(
+    :browser => browser1,
+    :css     => '#content .text-1',
+    :value   => 'some value as regexp',
+    :timeout => '16', # in sec, default 16
+  )
+
 
 =end
 
@@ -619,6 +677,18 @@ class TestCase < Test::Unit::TestCase
         assert( true, "not found" )
         sleep 1
         return true
+      end
+      if params[:value]
+        begin
+          text = instance.find_elements( { :css => params[:css] } )[0].text
+          if text !~ /#{params[:value]}/i
+            assert( true, "not matching '#{params[:value]}' in text '#{text}'" )
+            sleep 1
+            return true
+          end
+        rescue
+          # just try again
+        end
       end
       sleep 1
     }
@@ -818,12 +888,13 @@ class TestCase < Test::Unit::TestCase
       sleep 0.3
     end
 
-
-    #file_upload(
-    #  :browser   => instance,
-    #  :css       => '#content .text-1',
-    #  :value     => 'some text',
-    #)
+    if data[:attachment]
+      file_upload(
+        :browser   => instance,
+        :css       => '#content .text-1',
+        :value     => 'some text',
+      )
+    end
 
     if params[:do_not_submit]
       assert( true, "ticket created without submit" )
@@ -949,7 +1020,7 @@ class TestCase < Test::Unit::TestCase
     end
 
     if params[:do_not_submit]
-      assert( true, "(#{test[:name]}) ticket updated without submit" )
+      assert( true, "ticket updated without submit" )
       return true
     end
 
@@ -967,6 +1038,44 @@ class TestCase < Test::Unit::TestCase
       sleep 1
     }
     raise "unable to update ticket"
+  end
+
+=begin
+
+  ticket_verify(
+    :browser => browser1,
+    :data    => {
+      :title => 'some title',
+      :body  => 'some body',
+##      :group => 'some group',
+##      :state => 'closed',
+    },
+  )
+
+=end
+
+  def ticket_verify(params)
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    if data[:title]
+      title = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0].text.strip
+      if title =~ /#{data[:title]}/i
+        assert( true, "matching '#{data[:title]}' in title '#{title}'" )
+      else
+        raise "not matching '#{data[:title]}' in title '#{title}'"
+      end
+    end
+
+    if data[:body]
+      body = instance.find_elements( { :css => '.content.active [data-name="body"]' } )[0].text.strip
+      if body =~ /#{data[:body]}/i
+        assert( true, "matching '#{data[:body]}' in body '#{body}'" )
+      else
+        raise "not matching '#{data[:body]}' in body '#{body}'"
+      end
+    end
+    true
   end
 
 =begin
