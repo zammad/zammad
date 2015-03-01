@@ -18,22 +18,22 @@ class AgentTicketOverviewLevel0Test < TestCase
       :data => {
         :customer => 'nico*',
         :group    => 'Users',
-        :title    => 'overview count test #2',
-        :body     => 'overview count test #2',
+        :title    => 'overview count test #1',
+        :body     => 'overview count test #1',
       }
     )
     ticket2 = ticket_create(
       :data => {
         :customer => 'nico*',
         :group    => 'Users',
-        :title    => 'overview count test #3',
-        :body     => 'overview count test #3',
+        :title    => 'overview count test #2',
+        :body     => 'overview count test #2',
       }
     )
     sleep 6 # till overview is updated
     click( :css => '#navigation li.overviews a' )
     click( :css => '.content.active .sidebar a[href="#ticket/view/all_unassigned"]' )
-    sleep 2 # till overview is rendered
+    sleep 4 # till overview is rendered
 
     # select both via bulk action
     click(
@@ -62,7 +62,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     click(
       :css => '.active .bulkAction .js-submit',
     )
-    sleep 8
+    sleep 6
 
     exists_not(
       :css => '.active table tr td input[value="' + ticket1[:id] + '"]',
@@ -86,10 +86,22 @@ class AgentTicketOverviewLevel0Test < TestCase
       :css => '.modal input[value="number"]',
     )
     check(
+      :css => '.modal input[value="title"]',
+    )
+    check(
+      :css => '.modal input[value="customer"]',
+    )
+    check(
+      :css => '.modal input[value="group"]',
+    )
+    check(
+      :css => '.modal input[value="created_at"]',
+    )
+    check(
       :css => '.modal input[value="article_count"]',
     )
     click( :css => '.modal .js-submit' )
-    sleep 2
+    sleep 10
 
     # check if number and article count is shown
     match(
@@ -103,6 +115,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # reload browser
     reload()
+    sleep 4
 
     # check if number and article count is shown
     match(
@@ -144,8 +157,8 @@ class AgentTicketOverviewLevel0Test < TestCase
       :data => {
         :customer => 'nico*',
         :group    => 'Users',
-        :title    => 'overview count test #1',
-        :body     => 'overview count test #1',
+        :title    => 'overview count test #3',
+        :body     => 'overview count test #3',
       }
     )
     sleep 8
@@ -171,5 +184,8 @@ class AgentTicketOverviewLevel0Test < TestCase
     # get current overview count
     overview_counter_after = overview_counter()
     assert_equal( overview_counter_before['#ticket/view/all_unassigned'], overview_counter_after['#ticket/view/all_unassigned'] )
+
+    # cleanup
+    tasks_close_all()
   end
 end
