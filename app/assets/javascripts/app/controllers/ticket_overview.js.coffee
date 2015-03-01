@@ -2,9 +2,6 @@ class App.TicketOverview extends App.Controller
   constructor: ->
     super
 
-    # check authentication
-    return if !@authenticate()
-
     @render()
 
   render: ->
@@ -515,7 +512,7 @@ class App.OverviewSettings extends App.ControllerModal
   constructor: ->
     super
     @overview = App.Overview.find(@overview_id)
-    console.log('overview_id', @overview_id)
+
     @configure_attributes_article = []
     if @view_mode is 'd'
       @configure_attributes_article.push({
@@ -795,6 +792,9 @@ class TicketOverviewRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
 
+    # check authentication
+    return if !@authenticate()
+
     # cleanup params
     clean_params =
       view: params.view
@@ -809,8 +809,5 @@ class TicketOverviewRouter extends App.ControllerPermanent
 
 App.Config.set( 'ticket/view', TicketOverviewRouter, 'Routes' )
 App.Config.set( 'ticket/view/:view', TicketOverviewRouter, 'Routes' )
-#App.Config.set( 'ticket/view/:view/:position/:direction', Router, 'Routes' )
-
-App.Config.set( 'TicketOverview', 'TicketOverview', 'permanentTask' )
-
+App.Config.set( 'TicketOverview', { controller: 'TicketOverview', authentication: true }, 'permanentTask' )
 App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar' )

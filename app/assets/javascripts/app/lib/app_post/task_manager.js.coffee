@@ -80,6 +80,7 @@ class _taskManagerSingleton extends Spine.Module
     App.Event.bind(
       'auth:login'
       =>
+        @reset()
         @tasksInitial()
       'task'
     )
@@ -202,7 +203,7 @@ class _taskManagerSingleton extends Spine.Module
 
   startController: (params) =>
 
-    @log 'debug', 'controller start try...', params
+    #console.log 'debug', 'controller start try...', params
 
     # create clean params
     params_app             = _.clone(params.params)
@@ -444,31 +445,33 @@ class _taskManagerSingleton extends Spine.Module
     App.Event.trigger 'taskbar:init'
 
     # initial load of permanent tasks
-    task_count = 0
-    permanentTask = App.Config.get( 'permanentTask' )
+    authentication = App.Session.get('id')
+    permanentTask  = App.Config.get( 'permanentTask' )
+    task_count     = 0
     if permanentTask
-      for key, callback of permanentTask
-        task_count += 1
-        do (task) =>
-          App.Delay.set(
-            =>
-              @execute(
-                key:        key
-                controller: callback
-                params:     {}
-                show:       false
-                persistent: true
-                init:       true
-              )
-            task_count * 50
-            undefined
-            'task'
-          )
+      for key, config of permanentTask
+        if !config.authentication || ( config.authentication && authentication )
+          task_count += 1
+          do (key, config, task_count) =>
+            App.Delay.set(
+              =>
+                @execute(
+                  key:        key
+                  controller: config.controller
+                  params:     {}
+                  show:       false
+                  persistent: true
+                  init:       true
+                )
+              task_count * 350
+              undefined
+              'task'
+            )
 
     # initial load of taskbar collection
     for task in @allTasks
       task_count += 1
-      do (task) =>
+      do (task, task_count) =>
         App.Delay.set(
           =>
             @execute(

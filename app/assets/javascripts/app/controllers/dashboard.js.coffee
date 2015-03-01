@@ -1,10 +1,6 @@
 class App.Dashboard extends App.Controller
-
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
 
     if @isRole('Customer')
       @navigate '#'
@@ -158,6 +154,9 @@ class DashboardRouter extends App.ControllerPermanent
   constructor: (params) ->
     super
 
+    # check authentication
+    return if !@authenticate()
+
     App.TaskManager.execute(
       key:        'Dashboard'
       controller: 'Dashboard'
@@ -166,8 +165,6 @@ class DashboardRouter extends App.ControllerPermanent
       persistent: true
     )
 
-
 App.Config.set( 'dashboard', DashboardRouter, 'Routes' )
 App.Config.set( 'Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', role: ['Agent'], class: 'dashboard' }, 'NavBar' )
-
-App.Config.set( 'Dashboard', 'Dashboard', 'permanentTask' )
+App.Config.set( 'Dashboard', { controller: 'Dashboard', authentication: true }, 'permanentTask' )

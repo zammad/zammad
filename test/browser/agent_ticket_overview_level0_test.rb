@@ -30,10 +30,10 @@ class AgentTicketOverviewLevel0Test < TestCase
         :body     => 'overview count test #3',
       }
     )
-
+    sleep 6 # till overview is updated
     click( :css => '#navigation li.overviews a' )
     click( :css => '.content.active .sidebar a[href="#ticket/view/all_unassigned"]' )
-    sleep 10
+    sleep 2 # till overview is rendered
 
     # select both via bulk action
     click(
@@ -62,7 +62,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     click(
       :css => '.active .bulkAction .js-submit',
     )
-    sleep 6
+    sleep 8
 
     exists_not(
       :css => '.active table tr td input[value="' + ticket1[:id] + '"]',
