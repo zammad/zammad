@@ -274,7 +274,8 @@ class TestCase < Test::Unit::TestCase
     if params[:contenteditable]
       value = instance.find_elements( { :css => params[:css] } )[0].text
       if value != params[:value]
-        instance.execute_script( "$('#{params[:css]}').focus().html('#{params[:value]}').trigger('focusout')" )
+        body_quoted = quote( params[:value] )
+        instance.execute_script( "$('#{params[:css]}').focus().html('#{body_quoted}').trigger('focusout')" )
       end
     end
 
@@ -863,7 +864,8 @@ wait untill text in selector disabppears
       value = instance.find_elements( { :css => '.content .newTicket div[data-name=body]' } )[0].text
       puts "V #{value.inspect}"
       if value != data[:body]
-        instance.execute_script( "$('.content.active div[data-name=body]').html('#{data[:body]}').trigger('focusout')" )
+        body_quoted = quote( data[:body] )
+        instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
       end
     end
     if data[:customer]
@@ -982,7 +984,8 @@ wait untill text in selector disabppears
       value = instance.find_elements( { :css => '.content.active div[data-name=body]' } )[0].text
       puts "V #{value.inspect}"
       if value != data[:body]
-        instance.execute_script( "$('.content.active div[data-name=body]').html('#{data[:body]}').trigger('focusout')" )
+        body_quoted = quote( data[:body] )
+        instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
       end
 
     end
@@ -1389,6 +1392,14 @@ wait untill text in selector disabppears
       sleep 1
     }
     raise "text module creation failed"
+  end
+
+  def quote(string)
+    string_quoted = string
+    string_quoted.gsub!(/&/, '&amp;')
+    string_quoted.gsub!(/</, '&lt;')
+    string_quoted.gsub!(/>/, '&gt;')
+    string_quoted
   end
 
   # Add more helper methods to be used by all tests here...

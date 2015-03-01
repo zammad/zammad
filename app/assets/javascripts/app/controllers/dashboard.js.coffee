@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class App.Dashboard extends App.Controller
 
   constructor: ->
     super
@@ -9,10 +9,6 @@ class Index extends App.ControllerContent
     if @isRole('Customer')
       @navigate '#'
       return
-
-    # set title
-    @title 'Dashboard'
-    @navupdate '#dashboard'
 
     @plugins = {
       main: {
@@ -132,6 +128,46 @@ class Index extends App.ControllerContent
     ctx.closePath()
     ctx.fill()
 
-App.Config.set( 'dashboard', Index, 'Routes' )
+  active: (state) =>
+    @activeState = state
+
+  isActive: =>
+    @activeState
+
+  url: =>
+    '#dashboard'
+
+  show: (params) =>
+
+    # set title
+    @title 'Dashboard'
+
+    # highlight navbar
+    @navupdate '#dashboard'
+
+  hide: =>
+    # no
+
+  changed: =>
+    false
+
+  release: =>
+    # no
+
+class DashboardRouter extends App.ControllerPermanent
+  constructor: (params) ->
+    super
+
+    App.TaskManager.execute(
+      key:        'Dashboard'
+      controller: 'Dashboard'
+      params:     {}
+      show:       true
+      persistent: true
+    )
+
+
+App.Config.set( 'dashboard', DashboardRouter, 'Routes' )
 App.Config.set( 'Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', role: ['Agent'], class: 'dashboard' }, 'NavBar' )
 
+App.Config.set( 'Dashboard', 'Dashboard', 'permanentTask' )
