@@ -98,6 +98,10 @@ class Table extends App.Controller
     @bind 'ticket_overview_fetch_force', =>
       @fetch()
 
+    # force fetch ticket overview
+    @bind 'ticket_overview_local', =>
+      @render(true)
+
   update: (params) =>
     for key, value of params
       @[key] = value
@@ -144,17 +148,19 @@ class Table extends App.Controller
         return data
     false
 
-  render: =>
+  render: (overview_changed = false) =>
     #console.log('RENDER', @cache, @view)
     return if !@cache
     return if !@cache[@view]
 
+    # use cache
     overview      = @cache[@view].overview
     tickets_count = @cache[@view].tickets_count
     ticket_ids    = @cache[@view].ticket_ids
 
-    # get meta data
-    App.Overview.refresh( overview, { clear: true } )
+    # use cache if no local change
+    if !overview_changed
+      App.Overview.refresh( overview, { clear: true } )
 
     # get ticket list
     ticket_list_show = []
@@ -505,7 +511,6 @@ class Table extends App.Controller
       overview_id: @overview.id
       view_mode:   @view_mode
       container:   @el.closest('.content')
-      callback:    @render,
     )
 
 class App.OverviewSettings extends App.ControllerModal
@@ -696,18 +701,18 @@ class App.OverviewSettings extends App.ControllerModal
 
     @overview.group_by = params.group_by
 
-    # rerender overview
-    if !@reload_needed
-      @callback()
-
     @overview.save(
       done: =>
 
         # fetch overview data again
         if @reload_needed
           App.Event.trigger('ticket_overview_fetch_force')
+        else
+          App.Event.trigger('ticket_overview_local')
+
+        # hide modal
+        @hide()
     )
-    @hide()
 
 class Navbar extends App.Controller
   constructor: ->

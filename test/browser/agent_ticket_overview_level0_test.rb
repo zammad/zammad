@@ -74,7 +74,6 @@ class AgentTicketOverviewLevel0Test < TestCase
     # remember current overview count
     overview_counter_before = overview_counter()
 
-
     # click options and enable number and article count
     click( :css => '.active [data-type="settings"]' )
 
@@ -101,7 +100,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       :css => '.modal input[value="article_count"]',
     )
     click( :css => '.modal .js-submit' )
-    sleep 10
+    sleep 4
 
     # check if number and article count is shown
     match(
@@ -141,7 +140,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       :css => '.modal input[value="article_count"]',
     )
     click( :css => '.modal .js-submit' )
-    sleep 2
+    sleep 4
 
     # check if number and article count is gone
     match_not(
