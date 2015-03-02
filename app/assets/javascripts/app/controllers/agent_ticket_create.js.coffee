@@ -37,6 +37,11 @@ class App.TicketCreate extends App.Controller
       @log 'notice', 'error', defaults
       @render(defaults)
 
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render()
+
   changeFormType: (e) =>
     type = $(e.target).data('type')
     if !type

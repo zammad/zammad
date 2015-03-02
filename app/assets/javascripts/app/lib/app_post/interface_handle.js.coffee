@@ -91,13 +91,6 @@ class App.Content extends App.Controller
             new callback( params )
           controller( params )
 
-          # rerender view on ui:rerender event
-          App.Event.bind(
-            'ui:page:rerender', =>
-              controller( params )
-            'page'
-          )
-
           # scroll to top / remember last screen position
 #          @scrollTo( 0, 0, 100 )
         )

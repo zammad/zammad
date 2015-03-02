@@ -1,8 +1,8 @@
 <div class="dashboard main flex center">
   <div class="tabs wide-tabs horizontal">
-    <div class="tab my-stats active">My Stats</div>
-    <div class="tab my-groups">My Group</div>
-    <div class="tab all-stats">All</div>
+    <div class="tab my-stats active"><%- @T('My Stats') %></div>
+    <div class="tab my-groups"><%- @T('My Group') %></div>
+    <div class="tab all-stats"><%- @T('All') %></div>
   </div>
 
   <div class="stat-widgets three-columns horizontal">

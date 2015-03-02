@@ -5,7 +5,7 @@ class App.Navigation extends App.Controller
     super
     @render()
 
-    # rerender view
+    # rerender view, e. g. on langauge change
     @bind 'ui:rerender', (data) =>
       @renderMenu()
       @renderPersonal()

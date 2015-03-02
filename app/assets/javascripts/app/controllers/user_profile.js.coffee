@@ -7,10 +7,13 @@ class App.UserProfile extends App.Controller
       App.TaskManager.remove( @task_key )
       return
 
-    @navupdate '#'
-
     # fetch new data if needed
     @subscribeId = App.User.full( @user_id, @render )
+
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render( App.User.fullLocal( @user_id ) )
 
   release: =>
     App.User.unsubscribe(@subscribeId)

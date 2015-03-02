@@ -53,6 +53,11 @@ class App.Dashboard extends App.Controller
     # render page
     @render()
 
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render()
+
   render: ->
 
     @html App.view('dashboard')(
@@ -83,7 +88,7 @@ class App.Dashboard extends App.Controller
 
   renderWidgetClockFace: (time) =>
     canvas = @el.find 'canvas'
-    ctx = canvas.get(0).getContext '2d'
+    ctx    = canvas.get(0).getContext '2d'
     radius = 26
 
     @el.find('.time.stat-widget .stat-amount').text time

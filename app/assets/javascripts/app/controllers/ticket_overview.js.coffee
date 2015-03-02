@@ -102,6 +102,11 @@ class Table extends App.Controller
     @bind 'ticket_overview_local', =>
       @render(true)
 
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render()
+
   update: (params) =>
     for key, value of params
       @[key] = value

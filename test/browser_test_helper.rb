@@ -573,6 +573,29 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  open_task(
+    :browser => browser1,
+    :data    => {
+      :title => 'some title',
+    }
+  )
+
+=end
+
+  def open_task(params = {}, fallback = false)
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    element = instance.find_elements( { :partial_link_text => data[:title] } )[0]
+    if !element
+      raise "no task with title '#{data[:title]}' found"
+    end
+    element.click
+    true
+  end
+
+=begin
+
   file_upload(
     :browser   => browser1,
     :css       => '#content .text-1',
@@ -614,7 +637,7 @@ class TestCase < Test::Unit::TestCase
     if params[:timeout]
       timeout = params[:timeout]
     end
-    loops = (timeout).to_i
+    loops = (timeout).to_i * 2
     text = ''
     (1..loops).each { |loop|
       element = instance.find_elements( { :css => params[:css] } )[0]
@@ -638,7 +661,7 @@ class TestCase < Test::Unit::TestCase
           # just try again
         end
       end
-      sleep 1
+      sleep 0.5
     }
     raise "'#{params[:value]}' found in '#{text}'"
   end

@@ -7,10 +7,13 @@ class App.OrganizationProfile extends App.Controller
       App.TaskManager.remove( @task_key )
       return
 
-    @navupdate '#'
-
     # fetch new data if needed
     App.Organization.full( @organization_id, @render )
+
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render( App.Organization.fullLocal( @organization_id ) )
 
   meta: =>
     meta =

@@ -68,19 +68,13 @@ class _taskManagerSingleton extends Spine.Module
       @el = params.el
     else
       @el = $('#app')
-    @offlineModus      = params.offlineModus
-    @workers           = {}
-    @workersStarted    = {}
-    @allTasks          = []
-    @tasksToUpdate     = {}
-    @activeTaskHistory = []
+    @offlineModus = params.offlineModus
     @tasksInitial()
 
     # render on login
     App.Event.bind(
       'auth:login'
       =>
-        @reset()
         @tasksInitial()
       'task'
     )
@@ -95,6 +89,14 @@ class _taskManagerSingleton extends Spine.Module
 
     # send updates to server
     App.Interval.set( @taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task' )
+
+  init: ->
+    @workers           = {}
+    @workersStarted    = {}
+    @tasksStarted      = {}
+    @allTasks          = []
+    @tasksToUpdate     = {}
+    @activeTaskHistory = []
 
   all: ->
 
@@ -125,6 +127,12 @@ class _taskManagerSingleton extends Spine.Module
     # input validation
     params.key = App.Utils.htmlAttributeCleanup(params.key)
 
+    # remember started task / prevent to open task twice
+    createNewTask = true
+    if @tasksStarted[params.key]
+      createNewTask = false
+    @tasksStarted[params.key] = true
+
     # if we have init task startups, let the controller know this
     if params.init
       params.params.init = true
@@ -138,13 +146,14 @@ class _taskManagerSingleton extends Spine.Module
     if params.show
       @activeTaskHistory.push _.clone(params)
 
-    # create new task if not exists
+    # check if task already exists in storage / e. g. from last session
     task = @get( params.key )
+
     #console.log 'debug', 'execute', params, 'task', task
 
     # create new online task if not exists and if not persistent
-    if !task && !params.persistent
-      @log 'debug', 'add, create new taskbar in backend'
+    if !task && createNewTask && !params.persistent
+      #console.log 'debug', 'add, create new taskbar in backend'
       task = new App.Taskbar
       task.load(
         key:      params.key
@@ -286,6 +295,10 @@ class _taskManagerSingleton extends Spine.Module
 
   # remove task certain task from tasks
   remove: ( key ) =>
+
+    # remember started task
+    delete @tasksStarted[key]
+
     task = @get( key )
     return if !task
 
@@ -337,6 +350,7 @@ class _taskManagerSingleton extends Spine.Module
 
     delete @workersStarted[ key ]
     delete @workers[ key ]
+    delete @tasksStarted[ key ]
 
   # reset while tasks
   reset: =>
@@ -350,9 +364,7 @@ class _taskManagerSingleton extends Spine.Module
       @release(key)
 
     # clear instance vars
-    @tasksToUpdate     = {}
-    @allTasks          = []
-    @activeTaskHistory = []
+    @init()
 
     # clear in mem tasks
     App.Taskbar.deleteAll()
@@ -434,10 +446,10 @@ class _taskManagerSingleton extends Spine.Module
     return
 
   tasksInitial: =>
+    @init()
 
     # set taskbar collection stored in database
-    tasks     = App.Taskbar.all()
-    @allTasks = []
+    tasks = App.Taskbar.all()
     for task in tasks
       @allTasks.push task.attributes()
 

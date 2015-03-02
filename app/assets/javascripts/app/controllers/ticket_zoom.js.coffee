@@ -53,6 +53,11 @@ class App.TicketZoom extends App.Controller
             @delay( update, 1800, 'ticket-zoom-' + @ticket_id )
     )
 
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render(true)
+
   meta: =>
 
     # default attributes
@@ -239,7 +244,7 @@ class App.TicketZoom extends App.Controller
     App.Event.trigger 'task:render'
     @formEnable( @$('.submit') )
 
-    if !@renderDone
+    if force || !@renderDone
       @renderDone = true
       @html App.view('ticket_zoom')(
         ticket:     @ticket

@@ -50,7 +50,6 @@ class Index extends App.Controller
       =>
         App.i18n.set( @locale )
         App.Event.trigger( 'ui:rerender' )
-        App.Event.trigger( 'ui:page:rerender' )
         @notify(
           type: 'success'
           msg:  App.i18n.translateContent( 'Successfully!' )
