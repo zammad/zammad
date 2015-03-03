@@ -24,6 +24,6 @@ module Sso::Otrs
       return
     end
 
-    return user
+    user
   end
 end

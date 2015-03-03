@@ -82,10 +82,12 @@ class App.SettingsAreaItem extends App.Controller
         App.Event.trigger 'notify', {
           type:    'success'
           msg:     App.i18n.translateContent('Update successful!')
-          timeout: 1500
+          timeout: 2000
         }
         ui.render()
-        #App.Event.trigger( 'ui:rerender' )
+
+        App.Event.trigger( 'ui:rerender' )
+
         # login check
         App.Auth.loginCheck()
     )

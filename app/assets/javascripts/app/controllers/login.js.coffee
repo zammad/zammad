@@ -92,7 +92,7 @@ class Index extends App.ControllerContent
 
     # redirect to #
     requested_url = @Config.get( 'requested_url' )
-    if requested_url && requested_url isnt '#login'
+    if requested_url && requested_url isnt '#login' && requested_url isnt '#logout'
       @log 'notice', "REDIRECT to '#{requested_url}'"
       @navigate requested_url
 

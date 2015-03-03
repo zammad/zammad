@@ -189,7 +189,10 @@ class App.Controller extends Spine.Controller
     return true if @Session.get()
 
     # remember requested url
-    @Config.set( 'requested_url', window.location.hash )
+    if !checkOnly
+      location = window.location.hash
+      if location isnt '#login' && location isnt '#logout'
+        @Config.set( 'requested_url', location)
 
     return false if checkOnly
 

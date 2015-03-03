@@ -14,6 +14,6 @@ module Sso::Env
       return user if user
     end
 
-    return false
+    false
   end
 end

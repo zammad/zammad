@@ -130,6 +130,7 @@ class TestCase < Test::Unit::TestCase
     sleep 0.1
     instance.find_elements( { :css => 'a[href="#logout"]' } )[0].click
     (1..6).each {|loop|
+      sleep 1
       login = instance.find_elements( { :css => '#login' } )[0]
       if login
         assert( true, "logout ok" )
@@ -637,7 +638,7 @@ class TestCase < Test::Unit::TestCase
     if params[:timeout]
       timeout = params[:timeout]
     end
-    loops = (timeout).to_i * 2
+    loops = (timeout).to_i
     text = ''
     (1..loops).each { |loop|
       element = instance.find_elements( { :css => params[:css] } )[0]
@@ -661,7 +662,7 @@ class TestCase < Test::Unit::TestCase
           # just try again
         end
       end
-      sleep 0.5
+      sleep 1
     }
     raise "'#{params[:value]}' found in '#{text}'"
   end

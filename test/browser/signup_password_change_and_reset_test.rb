@@ -125,8 +125,8 @@ class SignupPasswordChangeAndResetTest < TestCase
       :value => 'Password changed successfully',
     )
     logout()
-    sleep 4
 
+    # check login with new pw
     login(
       :username => signup_user_email,
       :password => 'some-pass-new2',

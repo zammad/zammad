@@ -11,6 +11,18 @@ class SettingTest < TestCase
     )
     tasks_close_all()
 
+    # make sure, that we have english frontend
+    click( :css => 'a[href="#current_user"]' )
+    click( :css => 'a[href="#profile"]' )
+    click( :css => 'a[href="#profile/language"]' )
+    select(
+      :css   => '.language_item select[name="locale"]',
+      :value => 'English (United States)',
+    )
+    click( :css => '.content button[type="submit"]' )
+    sleep 2
+
+    # change settings
     click( :css => 'a[href="#manage"]' )
     click( :css => 'a[href="#settings/security"]' )
     click( :css => 'a[href="#third_party_auth"]' )
