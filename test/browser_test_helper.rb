@@ -638,7 +638,7 @@ class TestCase < Test::Unit::TestCase
     if params[:timeout]
       timeout = params[:timeout]
     end
-    loops = (timeout).to_i
+    loops = (timeout).to_i * 2
     text = ''
     (1..loops).each { |loop|
       element = instance.find_elements( { :css => params[:css] } )[0]
@@ -662,7 +662,7 @@ class TestCase < Test::Unit::TestCase
           # just try again
         end
       end
-      sleep 1
+      sleep 0.5
     }
     raise "'#{params[:value]}' found in '#{text}'"
   end
@@ -888,7 +888,7 @@ wait untill text in selector disabppears
 
       # it's not working stable via selenium, use js
       value = instance.find_elements( { :css => '.content .newTicket div[data-name=body]' } )[0].text
-      puts "V #{value.inspect}"
+      #puts "V #{value.inspect}"
       if value != data[:body]
         body_quoted = quote( data[:body] )
         instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
@@ -905,9 +905,9 @@ wait untill text in selector disabppears
 
       # check if pulldown is open, it's not working stable via selenium
       res = instance.execute_script( "$('.active .newTicket .js-recipientDropdown').hasClass('open')" )
-      puts "res #{res.inspect}"
+      #puts "res #{res.inspect}"
       if !res
-        puts "IS NOT OPEN!, open it"
+        #puts "IS NOT OPEN!, open it"
         instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
       end
       element.send_keys( :arrow_down )
