@@ -269,10 +269,12 @@ class PreferencesTest < TestCase
       :css   => 'body',
       :value => 'Sprache',
     )
-    sleep 4
+    sleep 6
 
     # check if language is still used after reload
     reload()
+    sleep 2
+
     watch_for(
       :css   => 'body',
       :value => 'Sprache',

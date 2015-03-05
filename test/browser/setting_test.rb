@@ -26,17 +26,23 @@ class SettingTest < TestCase
     click( :css => 'a[href="#manage"]' )
     click( :css => 'a[href="#settings/security"]' )
     click( :css => 'a[href="#third_party_auth"]' )
+    sleep 2
 
     # set yes
     select(
-      :css     => '#auth_facebook select[name="{boolean}auth_facebook"]',
-      :value   => 'yes',
+      :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value => 'yes',
+    )
+    match(
+      :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
+      :value => 'yes',
     )
     click( :css => '#auth_facebook button[type=submit]' )
     watch_for(
       :css   => '#notify',
       :value => 'update successful',
     )
+    sleep 4
     match(
       :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
       :value => 'yes',
@@ -56,6 +62,7 @@ class SettingTest < TestCase
       :css   => '#notify',
       :value => 'update successful',
     )
+    sleep 4
     match(
       :css   => '#auth_facebook select[name="{boolean}auth_facebook"]',
       :value => 'no',
@@ -79,6 +86,7 @@ class SettingTest < TestCase
       :css   => '#notify',
       :value => 'update successful',
     )
+    sleep 4
     match(
       :css   => '#auth_facebook_credentials input[name=app_id]',
       :value => 'id_test1234äöüß',
@@ -102,6 +110,7 @@ class SettingTest < TestCase
       :css   => '#notify',
       :value => 'update successful',
     )
+    sleep 4
     match(
       :css   => '#auth_facebook_credentials input[name=app_id]',
       :value => '---',
