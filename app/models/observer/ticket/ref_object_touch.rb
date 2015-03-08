@@ -9,9 +9,6 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
   def after_update(record)
     ref_object_touch(record)
   end
-  def after_touch(record)
-    ref_object_touch(record)
-  end
   def after_destroy(record)
     ref_object_touch(record)
   end
