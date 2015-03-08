@@ -100,19 +100,12 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     customer2.organization_id = organization1.id
     customer2.save
 
-    # check if customer1, ticket and organization has been touched
+    # check if customer1 and organization has been touched
     customer1 = User.find(customer1.id)
     if customer1.updated_at > 2.second.ago
       assert( true, "customer1.updated_at has been updated" )
     else
       assert( false, "customer1.updated_at has not been updated" )
-    end
-
-    ticket = Ticket.find(ticket.id)
-    if ticket.updated_at > 2.second.ago
-      assert( true, "ticket.updated_at has been updated" )
-    else
-      assert( false, "ticket.updated_at has not been updated" )
     end
 
     organization1 = Organization.find(organization1.id)

@@ -18,11 +18,6 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    # touch customers tickets
-    Ticket.select('id').where( :customer_id => record.id ).each {|ticket|
-      ticket.touch
-    }
-
     # touch old organization if changed
     member_ids = []
     organization_id_changed = record.changes['organization_id']
@@ -31,11 +26,6 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
         organization = Organization.find( organization_id_changed[0] )
         organization.touch
         member_ids = organization.member_ids
-
-        # touch customers tickets
-        Ticket.select('id').where( :organization_id => organization.id ).each {|ticket|
-          ticket.touch
-        }
       end
     end
 
@@ -43,11 +33,6 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     if record.organization
       record.organization.touch
       member_ids += record.organization.member_ids
-
-      # touch customers tickets
-      Ticket.select('id').where( :organization_id => record.organization_id ).each {|ticket|
-        ticket.touch
-      }
     end
 
     # touch old/current customer
