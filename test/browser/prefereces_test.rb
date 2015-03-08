@@ -79,9 +79,14 @@ class PreferencesTest < TestCase
     )
 
     # check language in ticket create
+    open_task(
+      :data    => {
+        :title => 'Anruf',
+      }
+    )
     verify_task(
       :data => {
-        :title => 'anruf',
+        :title => 'Anruf',
       }
     )
     open_task(
@@ -106,8 +111,10 @@ class PreferencesTest < TestCase
     )
 
     # check language in ticket zoom
-    ticket_open_by_search(
-      :number => ticket[:number],
+    open_task(
+      :data    => {
+        :title => 'preferences lang check #2',
+      }
     )
     watch_for(
       :css   => '.content.active',
@@ -186,9 +193,14 @@ class PreferencesTest < TestCase
     )
 
     # check language in ticket create
+    open_task(
+      :data    => {
+        :title => 'Call',
+      }
+    )
     verify_task(
       :data => {
-        :title => 'call',
+        :title => 'Call',
       }
     )
     open_task(
@@ -213,8 +225,10 @@ class PreferencesTest < TestCase
     )
 
     # check language in ticket zoom
-    ticket_open_by_search(
-      :number => ticket[:number],
+    open_task(
+      :data    => {
+        :title => 'preferences lang check #2',
+      }
     )
     watch_for(
       :css   => '.content.active',
@@ -269,11 +283,11 @@ class PreferencesTest < TestCase
       :css   => 'body',
       :value => 'Sprache',
     )
-    sleep 6
+    sleep 10
 
     # check if language is still used after reload
     reload()
-    sleep 2
+    sleep 10
 
     watch_for(
       :css   => 'body',

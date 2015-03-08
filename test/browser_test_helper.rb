@@ -1053,10 +1053,11 @@ wait untill text in selector disabppears
   ticket_update(
     :browser => browser1,
     :data    => {
-      :title => '',
-      :body  => 'some body',
-      :group => 'some group',
-      :state => 'closed',
+      :title    => '',
+      :customer => 'some_customer@example.com',
+      :body     => 'some body',
+      :group    => 'some group',
+      :state    => 'closed',
     },
     :do_not_submit => true,
   )
@@ -1096,6 +1097,56 @@ wait untill text in selector disabppears
 #            :value        => :tab,
 #          },
     end
+    if data[:customer]
+
+      # select tab
+      click( :browser => instance, :css => '.active .tabsSidebar-tab[data-tab="customer"]')
+
+      click( :browser => instance, :css => '.active div[data-tab="customer"] .js-actions .select-arrow' )
+      click( :browser => instance, :css => '.active div[data-tab="customer"] .js-actions a[data-type="customer-change"]' )
+      watch_for(
+        :browser => instance,
+        :css     => '.modal',
+        :value   => 'change',
+      )
+
+      element = instance.find_elements( { :css => '.modal input[name="customer_id_completion"]' } )[0]
+      element.click
+      element.clear
+
+      # workaround, sometimes focus is not triggered
+      element.send_keys( data[:customer] )
+      sleep 4
+
+      # check if pulldown is open, it's not working stable via selenium
+      res = instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').hasClass('open')" )
+      #puts "res #{res.inspect}"
+      if !res
+        #puts "IS NOT OPEN!, open it"
+        instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')" )
+      end
+      element.send_keys( :arrow_down )
+      sleep 0.3
+      instance.find_elements( { :css => '.modal .user_autocompletion .recipientList-entry.js-user.is-active' } )[0].click
+      sleep 0.3
+
+      click( :browser => instance, :css => '.modal .js-submit' )
+
+      watch_for_disappear(
+        :browser => instance,
+        :css     => '.modal',
+      )
+
+      watch_for(
+        :browser => instance,
+        :css     => '.active .tabsSidebar',
+        :value   => data[:customer],
+      )
+
+      # select tab
+      click( :browser => instance, :css => '.active .tabsSidebar-tab[data-tab="ticket"]')
+
+    end
     if data[:body]
       #instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
       sleep 0.5
@@ -1127,22 +1178,24 @@ wait untill text in selector disabppears
       sleep 0.2
     end
 
-    found = nil
-    (1..5).each {|loop|
-      if !found
-        begin
-          text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
-          if text =~ /(Discard your unsaved changes.|Verwerfen der)/
-            found = true
+    if data[:state] || data[:group] || data[:body]
+      found = nil
+      (1..5).each {|loop|
+        if !found
+          begin
+            text = instance.find_elements( { :css => '.content.active .js-reset' } )[0].text
+            if text =~ /(Discard your unsaved changes.|Verwerfen der)/
+              found = true
+            end
+          rescue
+            # just try again
           end
-        rescue
-          # just try again
+          sleep 1
         end
-        sleep 1
+      }
+      if !found
+        raise "no discard message found"
       end
-    }
-    if !found
-      raise "no discard message found"
     end
 
     if params[:do_not_submit]
@@ -1393,7 +1446,7 @@ wait untill text in selector disabppears
   user_create(
     :browser => browser2,
     :data => {
-      :login     => 'some login' + random,
+      #:login     => 'some login' + random,
       :firstname => 'Manage Firstname' + random,
       :lastname  => 'Manage Lastname' + random,
       :email     => user_email,
