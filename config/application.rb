@@ -42,7 +42,9 @@ module Zammad
       'observer::_ticket::_escalation_calculation',
       'observer::_ticket::_ref_object_touch',
       'observer::_tag::_ticket_history',
-      'observer::_user::_geo'
+      'observer::_user::_ref_object_touch',
+      'observer::_user::_geo',
+      'observer::_organization::_ref_object_touch'
 
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
