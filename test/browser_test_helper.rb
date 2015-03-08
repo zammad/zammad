@@ -3,6 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'selenium-webdriver'
 
 class TestCase < Test::Unit::TestCase
+  @@debug = true
   def browser
     ENV['BROWSER'] || 'firefox'
   end
@@ -53,7 +54,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_instance_preferences(local_browser)
-    #local_browser.manage.window.resize_to(1024, 1024)
+    local_browser.manage.window.resize_to(1024, 800)
     if ENV['REMOTE_URL'] !~ /saucelabs/i
       if @browsers.size < 1
         local_browser.manage.window.move_to(0, 0)
@@ -84,6 +85,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def login(params)
+    log('login', params)
     instance = params[:browser] || @browser
 
     if params[:url]
@@ -124,6 +126,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def logout(params = {})
+    log('logout', params)
+
     instance = params[:browser] || @browser
 
     instance.find_elements( { :css => 'a[href="#current_user"]' } )[0].click
@@ -150,6 +154,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def location(params)
+    log('location', params)
+
     instance = params[:browser] || @browser
     instance.get( params[:url] )
   end
@@ -164,6 +170,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def location_check(params)
+    log('location_check', params)
+
     instance = params[:browser] || @browser
     if instance.current_url !~ /#{Regexp.quote(params[:url])}/
       raise "url #{instance.current_url} is not matching #{params[:url]}"
@@ -180,6 +188,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def reload(params = {})
+    log('reload', params)
+
     instance = params[:browser] || @browser
     instance.navigate.refresh
   end
@@ -195,6 +205,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def click(params)
+    log('click', params)
+
     instance = params[:browser] || @browser
     instance.find_elements( { :css => params[:css] } )[0].click
     if !params[:fast]
@@ -212,6 +224,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def exists(params)
+    log('exists', params)
+
     instance = params[:browser] || @browser
     if !instance.find_elements( { :css => params[:css] } )[0]
       raise "#{params[:css]} dosn't exist, but should"
@@ -229,6 +243,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def exists_not(params)
+    log('exists_not', params)
+
     instance = params[:browser] || @browser
     if instance.find_elements( { :css => params[:css] } )[0]
       raise "#{params[:css]} exists but should not"
@@ -251,6 +267,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def set(params)
+    log('set', params)
+
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { :css => params[:css] } )[0]
@@ -294,17 +312,21 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def select(params)
+    log('select', params)
+
     instance = params[:browser] || @browser
 
     begin
       element  = instance.find_elements( { :css => params[:css] } )[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, params[:value])
+      puts "select - #{params.inspect}"
     rescue
       # just try again
       element  = instance.find_elements( { :css => params[:css] } )[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, params[:value])
+      puts "select2 - #{params.inspect}"
     end
   end
 
@@ -318,6 +340,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def check(params)
+    log('check', params)
+
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { :css => params[:css] } )[0]
@@ -337,6 +361,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def uncheck(params)
+    log('uncheck', params)
+
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { :css => params[:css] } )[0]
@@ -356,6 +382,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def sendkey(params)
+    log('sendkey', params)
+
     instance = params[:browser] || @browser
     if params[:value].class == Array
       params[:value].each {|key|
@@ -381,6 +409,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def match(params, fallback = false)
+    log('match', params)
+
     instance = params[:browser] || @browser
     element  = instance.find_elements( { :css => params[:css] } )[0]
 
@@ -416,11 +446,13 @@ class TestCase < Test::Unit::TestCase
       else
         text = element.text
       end
-    rescue
+    rescue => e
 
       # just try again
       if !fallback
         return match(params, true)
+      else
+        raise e.inspect
       end
     end
     match = false
@@ -461,6 +493,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def match_not(params)
+    log('match_not', params)
+
     params[:should_not_match] = true
     match(params)
   end
@@ -483,6 +517,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def cookie(params)
+    log('cookie', params)
+
     instance = params[:browser] || @browser
 
     if !browser_support_cookies
@@ -529,6 +565,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def verify_title(params = {})
+    log('verify_title', params)
+
     instance = params[:browser] || @browser
 
     title = instance.title
@@ -544,17 +582,24 @@ class TestCase < Test::Unit::TestCase
   verify_task(
     :browser => browser1,
     :data    => {
-      :title => 'some title',
+      :title    => 'some title',
+      :modified => true, # optional
     }
   )
 
 =end
 
   def verify_task(params = {}, fallback = false)
+    log('verify_task', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
+    sleep 1
+
     begin
+
+      # verify title
       if data[:title]
         title = instance.find_elements( { :css => '.tasks .active' } )[0].text.strip
         if title =~ /#{data[:title]}/i
@@ -563,10 +608,43 @@ class TestCase < Test::Unit::TestCase
           raise "not matching '#{data[:title]}' in title '#{title}'"
         end
       end
-    rescue
+puts "tv #{params.inspect}"
+      # verify modified
+      if data.has_key?(:modified)
+        exists      = instance.find_elements( { :css => '.tasks .active .icon' } )[0]
+        is_modified = instance.find_elements( { :css => '.tasks .active .icon.modified' } )[0]
+        puts "m #{data[:modified].inspect}"
+        if exists
+          puts " ecists"
+        end
+        if is_modified
+          puts " is_modified"
+        end
+        if data[:modified] == true
+          if is_modified
+            assert( true, "task '#{data[:title]}' is modifed" )
+          elsif !exists
+            raise "task '#{data[:title]}' not exists, should not modified"
+          else
+            raise "task '#{data[:title]}' is not modifed"
+          end
+        else
+          if !is_modified
+            assert( true, "task '#{data[:title]}' is modifed" )
+          elsif !exists
+            raise "task '#{data[:title]}' not exists, should be not modified"
+          else
+            raise "task '#{data[:title]}' is modifed, but should not"
+          end
+        end
+      end
+    rescue => e
+
       # just try again
       if !fallback
         verify_task(params, true)
+      else
+        raise 'ERROR: ' + e.inspect
       end
     end
     true
@@ -584,6 +662,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def open_task(params = {}, fallback = false)
+    log('open_task', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -606,6 +686,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def file_upload(params = {})
+    log('file_upload', params)
+
     instance = params[:browser] || @browser
 
     filename = 'some-file.txt'
@@ -632,6 +714,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def watch_for(params = {})
+    log('watch_for', params)
+
     instance = params[:browser] || @browser
 
     timeout = 16
@@ -690,6 +774,8 @@ wait untill text in selector disabppears
 =end
 
   def watch_for_disappear(params = {})
+    log('watch_for_disappear', params)
+
     instance = params[:browser] || @browser
 
     timeout = 16
@@ -732,6 +818,8 @@ wait untill text in selector disabppears
 =end
 
   def tasks_close_all(params = {})
+    log('tasks_close_all', params)
+
     instance = params[:browser] || @browser
 
     for i in 1..100
@@ -779,6 +867,8 @@ wait untill text in selector disabppears
 =end
 
   def overview_create(params)
+    log('overview_create', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -852,6 +942,8 @@ wait untill text in selector disabppears
 =end
 
   def ticket_create(params)
+    log('ticket_create', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -972,6 +1064,8 @@ wait untill text in selector disabppears
 =end
 
   def ticket_update(params)
+    log('ticket_update', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -1087,6 +1181,8 @@ wait untill text in selector disabppears
 =end
 
   def ticket_verify(params)
+    log('ticket_verify', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -1121,6 +1217,8 @@ wait untill text in selector disabppears
 =end
 
   def ticket_open_by_overview(params)
+    log('ticket_open_by_overview', params)
+
     instance = params[:browser] || @browser
 
     instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
@@ -1148,6 +1246,8 @@ wait untill text in selector disabppears
 =end
 
   def ticket_open_by_search(params)
+    log('ticket_open_by_search', params)
+
     instance = params[:browser] || @browser
 
     # search by number
@@ -1196,6 +1296,8 @@ wait untill text in selector disabppears
 =end
 
   def overview_counter(params = {})
+    log('overview_counter', params)
+
     instance = params[:browser] || @browser
 
     instance.find_elements( { :css => '#navigation li.overviews a' } )[0].click
@@ -1225,6 +1327,8 @@ wait untill text in selector disabppears
 =end
 
   def organization_open_by_search(params = {})
+    log('organization_open_by_search', params)
+
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { :css => '#global-search' } )[0]
@@ -1265,6 +1369,8 @@ wait untill text in selector disabppears
 =end
 
   def user_open_by_search(params = {})
+    log('user_open_by_search', params)
+
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { :css => '#global-search' } )[0]
@@ -1298,6 +1404,8 @@ wait untill text in selector disabppears
 =end
 
   def user_create(params = {})
+    log('user_create', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -1352,6 +1460,8 @@ wait untill text in selector disabppears
 =end
 
   def sla_create(params = {})
+    log('sla_create', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -1393,6 +1503,8 @@ wait untill text in selector disabppears
 =end
 
   def text_module_create(params = {})
+    log('text_module_create', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -1436,6 +1548,8 @@ wait untill text in selector disabppears
 =end
 
   def signature_create(params = {})
+    log('signature_create', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -1480,6 +1594,8 @@ wait untill text in selector disabppears
 =end
 
   def group_create(params = {})
+    log('group_create', params)
+
     instance = params[:browser] || @browser
     data     = params[:data]
 
@@ -1540,4 +1656,8 @@ wait untill text in selector disabppears
     string_quoted
   end
 
+  def log(method, params)
+    return if !@@debug
+    puts "#{Time.now.to_s}/#{method}: #{params.inspect}"
+  end
 end
