@@ -69,7 +69,7 @@ class AgentTicketActionsLevel2Test < TestCase
     ticket_update(
       :browser => browser2,
       :data    => {
-        :title   => 'TTTsome level 2 <b>subject</b> 123äöü',
+        :title => 'TTTsome level 2 <b>subject</b> 123äöü',
       },
       :do_not_submit => true,
     )
@@ -89,7 +89,8 @@ class AgentTicketActionsLevel2Test < TestCase
     verify_task(
       :browser => browser2,
       :data    => {
-        :title => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :title    => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :modified => false,
       }
     )
 
@@ -107,7 +108,8 @@ class AgentTicketActionsLevel2Test < TestCase
     verify_task(
       :browser => browser1,
       :data    => {
-        :title => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :title    => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :modified => true,
       }
     )
 
@@ -137,6 +139,13 @@ class AgentTicketActionsLevel2Test < TestCase
       :css     => '.active div.ticket-article',
       :value   => 'some update 4711',
     )
+    verify_task(
+      :browser => browser1,
+      :data    => {
+        :title    => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :modified => false,
+      }
+    )
 
     # verify if text in input body is now empty
     ticket_verify(
@@ -152,6 +161,15 @@ class AgentTicketActionsLevel2Test < TestCase
       :data    => {
         :body => 'some level 2 <b>body</b> in instance 2',
       },
+    )
+
+    # verify task
+    verify_task(
+      :browser => browser2,
+      :data    => {
+        :title    => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :modified => true,
+      }
     )
 
     # reload instances, verify again
@@ -177,7 +195,8 @@ class AgentTicketActionsLevel2Test < TestCase
     verify_task(
       :browser => browser2,
       :data    => {
-        :title => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :title    => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :modified => false, # modify was muted at reload ticket tab
       }
     )
 
@@ -194,7 +213,8 @@ class AgentTicketActionsLevel2Test < TestCase
     verify_task(
       :browser => browser1,
       :data    => {
-        :title => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :title    => 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        :modified => false,
       }
     )
 
@@ -209,7 +229,6 @@ class AgentTicketActionsLevel2Test < TestCase
       :css     => '.active div.ticket-article',
       :value   => 'some update 4711',
     )
-
 
     # verify if text in input body is now empty
     ticket_verify(

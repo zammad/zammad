@@ -262,6 +262,7 @@ class App.TicketZoom extends App.Controller
         ticket:      @ticket
         overview_id: @overview_id
         el:          @el.find('.ticket-title')
+        task_key:    @task_key
       )
 
       new TicketMeta(
@@ -639,26 +640,25 @@ class App.TicketZoom extends App.Controller
     # validate article
     articleParams = @formParam( @$('.article-add') )
     console.log "submit article", articleParams
-    articleAttributes = App.TicketArticle.attributesGet( 'edit' )
-    if articleParams['body'] #&& $( articleParams['body'] ).text()
-      articleParams.from      = @Session.get().displayName()
-      articleParams.ticket_id = ticket.id
-      articleParams.form_id   = @form_id
+    if articleParams['body']
+      articleParams.from         = @Session.get().displayName()
+      articleParams.ticket_id    = ticket.id
+      articleParams.form_id      = @form_id
       articleParams.content_type = 'text/html'
 
       if !articleParams['internal']
         articleParams['internal'] = false
 
       if @isRole('Customer')
-        sender            = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-        type              = App.TicketArticleType.findByAttribute( 'name', 'web' )
-        articleParams.type_id    = type.id
-        articleParams.sender_id  = sender.id
+        sender                  = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
+        type                    = App.TicketArticleType.findByAttribute( 'name', 'web' )
+        articleParams.type_id   = type.id
+        articleParams.sender_id = sender.id
       else
-        sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-        articleParams.sender_id  = sender.id
-        type              = App.TicketArticleType.findByAttribute( 'name', articleParams['type'] )
-        articleParams.type_id  = type.id
+        sender                  = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+        articleParams.sender_id = sender.id
+        type                    = App.TicketArticleType.findByAttribute( 'name', articleParams['type'] )
+        articleParams.type_id   = type.id
 
       article = new App.TicketArticle
       for key, value of articleParams
@@ -670,23 +670,25 @@ class App.TicketZoom extends App.Controller
         # check if recipient exists
         if !articleParams['to'] && !articleParams['cc']
           alert( App.i18n.translateContent('Need recipient in "To" or "Cc".') )
+          @formEnable(e)
           @autosaveStart()
           return
 
         # check if message exists
         if !articleParams['body']
           alert( App.i18n.translateContent('Text needed') )
+          @formEnable(e)
           @autosaveStart()
           return
 
       # check attachment
       if articleParams['body']
-        attachmentTranslated = App.i18n.translateContent('Attachment')
-        attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
-        if articleParams['body'].match(/attachment/i) || articleParams['body'].match( attachmentTranslatedRegExp )
-          if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-            @autosaveStart()
-            return
+        if App.Utils.checkAttachmentReference( articleParams['body'] )
+          if @$('.article-add .textBubble .attachments .attachment').length < 1
+            if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+              @formEnable(e)
+              @autosaveStart()
+              return
 
       article.load(articleParams)
       errors = article.validate()
@@ -713,6 +715,8 @@ class App.TicketZoom extends App.Controller
 
         # reset form after save
         @taskReset()
+
+        App.TaskManager.mute( @task_key )
 
         @fetch( ticket.id, true )
     )
@@ -799,6 +803,8 @@ class TicketTitle extends App.Controller
       @ticket.article = undefined
 
       @ticket.save()
+
+      App.TaskManager.mute( @task_key )
 
       # update taskbar with new meta data
       App.Event.trigger 'task:render'

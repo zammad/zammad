@@ -264,3 +264,12 @@ class App.Utils
       value = undefined
 
     value
+
+  # check if attachment is referenced in message
+  @checkAttachmentReference: (message) ->
+    return false if !message
+    return true if message.match(/attachment/i)
+    attachmentTranslated = App.i18n.translateContent('Attachment')
+    attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
+    return true if message.match( attachmentTranslatedRegExp )
+    false

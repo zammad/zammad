@@ -34,6 +34,11 @@ class App.TaskManager
       _instance ?= new _taskManagerSingleton
     _instance.notify( key )
 
+  @mute: ( key ) ->
+    if _instance == undefined
+      _instance ?= new _taskManagerSingleton
+    _instance.mute( key )
+
   @reorder: ( order ) ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
@@ -326,6 +331,14 @@ class _taskManagerSingleton extends Spine.Module
     if !task
       throw "No such task with '#{key}' to notify"
     task.notify = true
+    @taskUpdate( task )
+
+  # unset notify of task
+  mute: ( key ) =>
+    task = @get( key )
+    if !task
+      throw "No such task with '#{key}' to mute"
+    task.notify = false
     @taskUpdate( task )
 
   # set new order of tasks (needed for dnd)
