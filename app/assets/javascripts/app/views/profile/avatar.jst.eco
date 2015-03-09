@@ -12,7 +12,7 @@
 <div class="avatar-gallery horizontal wrap">
   <% for avatar in @avatars: %>
   <div class="avatar-holder">
-    <% if avatar.inital: %>
+    <% if avatar.initial: %>
       <% cssClass = '' %>
       <% if avatar.default: %>
       <%  cssClass = 'is-active' %>

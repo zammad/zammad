@@ -116,7 +116,7 @@ class Table extends App.Controller
 
     return if !@view
 
-    # fetch inital data
+    # fetch initial data
     if !@cache || !@cache[@view]
       @fetch()
     else

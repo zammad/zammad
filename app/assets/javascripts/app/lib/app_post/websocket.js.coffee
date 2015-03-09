@@ -87,7 +87,7 @@ class _webSocketSingleton extends App.Controller
       'ws'
     )
 
-    # inital connect
+    # initial connect
     @connect()
 
   channel: ->

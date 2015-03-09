@@ -80,8 +80,7 @@ add a avatar
       :object_lookup_id => object_id,
       :default          => true,
       :deletable        => data[:deletable],
-      # @TODO Check how to fix typos in database fields inital -> initial
-      :initial           => false,
+      :initial          => false,
       :source           => data[:source],
       :source_url       => data[:url],
       :updated_by_id    => data[:updated_by_id],
