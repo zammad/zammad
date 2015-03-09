@@ -3,7 +3,7 @@
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @article.form_id %>">
   <div class="editControls">
-    <%- App.User.fullLocal( @S('id') ).avatar("40", 'right', 'zIndex-5') %>
+    <div class="js-avatar"></div>
     <div class="dark pop-select zIndex-7 editControls-item">
       <div class="pop-selected u-clickable centered">
         <div class="gray <%- @article.type %> channel icon"></div>

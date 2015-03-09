@@ -86,6 +86,12 @@ class App.Navigation extends App.Controller
       active_tab: active_tab
     )
 
+    new App.WidgetAvatar(
+      el:       @$('.js-avatar')
+      user_id:  App.Session.get('id')
+      noPopups: true
+    )
+
   renderResult: (result = []) =>
     el = @$('#global-search-result')
 

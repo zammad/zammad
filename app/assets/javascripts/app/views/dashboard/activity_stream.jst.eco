@@ -1,19 +1,1 @@
 <h2 class="can-move"><%- @T( @head ) %></h2>
-<% for item in @items: %>
-<div class="activity-entry horizontal">
-  <a class="activity-avatar" href="<%- item.created_by.uiUrl() %>">
-    <%- item.created_by.avatar() %>
-  </a>
-  <a href="<%- item.link %>" class="activity-body flex horizontal">
-    <span class="activity-message flex">
-      <span class="activity-text">
-        <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> (<%= item.title %>)<% end %>
-      </span>
-      <span class="activity-time humanTimeFromNow" data-time="<%- item.created_at %>">?</span>
-    </span>
-    <span class="activity-icon">
-      <span class="<%- item.cssIcon %> icon"></span>
-    </span>
-  </a>
-</div>
-<% end %>

@@ -268,13 +268,14 @@ class App.Controller extends Spine.Controller
   userPopups: (position = 'right') ->
 
     # open user in new task if current user is agent
-    if @isRole('Agent')
-      @el.find('div.user-popover, span.user-popover').bind('click', (e) =>
-        id = $(e.target).data('id')
-        if id
-          user = App.User.find(id)
-          @navigate user.uiUrl()
-      );
+    return if !@isRole('Agent')
+
+    @el.find('div.user-popover, span.user-popover').bind('click', (e) =>
+      id = $(e.target).data('id')
+      if id
+        user = App.User.find(id)
+        @navigate user.uiUrl()
+    );
 
     @userPopupsDestroy()
 
@@ -325,13 +326,14 @@ class App.Controller extends Spine.Controller
   organizationPopups: (position = 'right') ->
 
     # open org in new task if current user agent
-    if @isRole('Agent')
-      @el.find('div.organization-popover, span.organization-popover').bind('click', (e) =>
-        id = $(e.target).data('id')
-        if id
-          organization = App.Organization.find(id)
-          @navigate organization.uiUrl()
-      );
+    return if !@isRole('Agent')
+
+    @el.find('div.organization-popover, span.organization-popover').bind('click', (e) =>
+      id = $(e.target).data('id')
+      if id
+        organization = App.Organization.find(id)
+        @navigate organization.uiUrl()
+    );
 
     @organizationPopupsDestroy()
 
