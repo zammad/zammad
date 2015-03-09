@@ -212,6 +212,10 @@ class App extends Spine.Controller
 
         result
 
+      # define file size helper
+      params.humanFileSize = ( size ) ->
+        App.Utils.humanFileSize(size)
+
       # define template
       JST["app/views/#{name}"](params)
     template

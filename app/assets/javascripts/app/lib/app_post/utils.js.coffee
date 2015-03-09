@@ -273,3 +273,13 @@ class App.Utils
     attachmentTranslatedRegExp = new RegExp( attachmentTranslated, 'i' )
     return true if message.match( attachmentTranslatedRegExp )
     false
+
+  # human readable file size
+  @humanFileSize: (size) =>
+    if size > ( 1024 * 1024 )
+      size = Math.round( size / ( 1024 * 1024 ) ) + ' MB'
+    else if size > 1024
+      size = Math.round( size / 1024 ) + ' KB'
+    else
+      size = size + ' Bytes'
+    size
