@@ -18,16 +18,17 @@ class App.TicketZoom extends App.Controller
 
     @navupdate '#'
 
-    @form_meta   = undefined
-    @ticket_id   = params.ticket_id
-    @article_id  = params.article_id
+    @form_meta            = undefined
+    @ticket_id            = params.ticket_id
+    @article_id           = params.article_id
+    @sidebarState         = {}
+    @ticketLastAttributes = {}
 
     # if we are in init task startup, ognore overview_dd
     if !params.init
       @overview_id = params.overview_id
     else
       @overview_id = false
-    console.log('C OVERVIEW_ID', params.overview_id)
 
     @key = 'ticket::' + @ticket_id
     cache = App.Store.get( @key )
@@ -62,8 +63,8 @@ class App.TicketZoom extends App.Controller
 
     # default attributes
     meta =
-      url:       @url()
-      id:        @ticket_id
+      url: @url()
+      id:  @ticket_id
 
     # set icon and tilte if defined
     if @taskIconClass
@@ -86,7 +87,6 @@ class App.TicketZoom extends App.Controller
   show: (params) =>
     return if @activeState
     @activeState = true
-    console.log('S OVERVIEW_ID', params.overview_id)
 
     App.OnlineNotification.seen( 'Ticket', @ticket_id )
     @navupdate '#'
@@ -369,7 +369,7 @@ class App.TicketZoom extends App.Controller
           ticket:    @ticket
           container: @el.closest('.content')
         )
-      items = [
+      @sidebarItems = [
         {
           head:     'Ticket'
           name:     'ticket'
@@ -378,7 +378,7 @@ class App.TicketZoom extends App.Controller
         }
       ]
       if !@isRole('Customer')
-        items[0]['actions'] = [
+        @sidebarItems[0]['actions'] = [
           {
             name:     'ticket-history'
             title:    'History'
@@ -412,7 +412,7 @@ class App.TicketZoom extends App.Controller
             el:       el
             user_id:  @ticket.customer_id
           )
-        items.push {
+        @sidebarItems.push {
           head:    'Customer'
           name:    'customer'
           icon:    'person'
@@ -446,7 +446,7 @@ class App.TicketZoom extends App.Controller
               el:              el
               organization_id: @ticket.organization_id
             )
-          items.push {
+          @sidebarItems.push {
             head: 'Organization'
             name: 'organization'
             icon: 'group'
@@ -460,9 +460,18 @@ class App.TicketZoom extends App.Controller
             callback: showOrganization
           }
 
+    # rerender whole sidebar if customer or organization has changed
+    if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
+      console.log('rerender sidebar')
+      new App.WidgetAvatar(
+        el:       @$('.page-header .js-avatar')
+        user_id:  @ticket.customer_id
+        size:     50
+      )
       new App.Sidebar(
-        el:    @el.find('.tabsSidebar')
-        items: items
+        el:           @el.find('.tabsSidebar')
+        sidebarState: @sidebarState
+        items:        @sidebarItems
       )
 
     # show article
@@ -493,14 +502,13 @@ class App.TicketZoom extends App.Controller
         @scrollTo( 0, offset )
       @delay( scrollTo, 100, false )
 
-    # enable user popups
-    @userPopups()
-
     @autosaveStart()
 
     @scrollToBottom()
 
     @positionPageHeaderStart()
+
+    @ticketLastAttributes = @ticket.attributes()
 
   scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
@@ -1035,6 +1043,14 @@ class Edit extends App.Controller
     )
     @setArticleType(@type)
 
+    new App.WidgetAvatar(
+      el:       @$('.js-avatar')
+      user_id:  App.Session.get('id')
+      size:     40
+      position: 'right'
+      class:    'zIndex-5'
+    )
+
     configure_attributes = [
       { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: false },
     ]
@@ -1400,17 +1416,26 @@ class Edit extends App.Controller
     # rerender edit area
     @render()
 
-
 class ArticleView extends App.Controller
+  constructor: ->
+    super
+
+    for ticket_article_id in @ticket_article_ids
+      el = $('<div></div>')
+      new ArticleViewItem(
+        ticket:            @ticket
+        ticket_article_id: ticket_article_id
+        el:                el
+        ui:                @ui
+      )
+      @el.append( el )
+
+class ArticleViewItem extends App.Controller
   events:
-    'click [data-type=public]':   'public_internal'
-    'click [data-type=internal]': 'public_internal'
-    'click .show_toogle':         'show_toogle'
-    'click [data-type=reply]':    'reply'
-    'click [data-type=replyAll]': 'replyAll'
-    'click .textBubble':          'toggle_meta_with_delay'
-    'click .textBubble a':        'stopPropagation'
-    'click .js-unfold':           'unfold'
+    'click .show_toogle':  'show_toogle'
+    'click .textBubble':   'toggle_meta_with_delay'
+    'click .textBubble a': 'stopPropagation'
+    'click .js-unfold':    'unfold'
 
   constructor: ->
     super
@@ -1418,46 +1443,36 @@ class ArticleView extends App.Controller
 
   render: ->
 
-    # get all articles
-    @articles = []
-    for article_id in @ticket_article_ids
-      article = App.TicketArticle.fullLocal( article_id )
-      @articles.push article
+    # get articles
+    @article = App.TicketArticle.fullLocal( @ticket_article_id )
 
-    # rework articles
-    for article in @articles
-      new Article( article: article )
+    # prepare html body
+    if @article.content_type is 'text/html'
+      @article['html'] = @article.body
+    else
+      @article['html'] = App.Utils.textCleanup( @article.body )
+      @article['html'] = App.Utils.text2html( @article.body )
 
     @html App.view('ticket_zoom/article_view')(
       ticket:     @ticket
-      articles:   @articles
+      article:    @article
       isCustomer: @isRole('Customer')
+    )
+
+    new App.WidgetAvatar(
+      el:      @$('.js-avatar')
+      user_id: @article.created_by_id
+      size:    40
+    )
+
+    new ArticleActions(
+      el:      @$('.js-article-actions')
+      ticket:  @ticket
+      article: @article
     )
 
     # show frontend times
     @frontendTimeUpdate()
-
-    # enable user popups
-    @userPopups()
-
-  public_internal: (e) ->
-    e.preventDefault()
-    article_id = $(e.target).parents('[data-id]').data('id')
-
-    # storage update
-    article = App.TicketArticle.find(article_id)
-    internal = true
-    if article.internal == true
-      internal = false
-    article.updateAttributes(
-      internal: internal
-    )
-
-    # runntime update
-    if internal
-      $(e.target).closest('.ticket-article-item').addClass('is-internal')
-    else
-      $(e.target).closest('.ticket-article-item').removeClass('is-internal')
 
   show_toogle: (e) ->
     e.stopPropagation()
@@ -1487,12 +1502,12 @@ class ArticleView extends App.Controller
   toggle_meta: (e) =>
     e.preventDefault()
 
-    animSpeed = 300
-    article = $(e.target).closest('.ticket-article-item')
-    metaTopClip = article.find('.article-meta-clip.top')
+    animSpeed      = 300
+    article        = $(e.target).closest('.ticket-article-item')
+    metaTopClip    = article.find('.article-meta-clip.top')
     metaBottomClip = article.find('.article-meta-clip.bottom')
-    metaTop = article.find('.article-content-meta.top')
-    metaBottom = article.find('.article-content-meta.bottom')
+    metaTop        = article.find('.article-content-meta.top')
+    metaBottom     = article.find('.article-content-meta.bottom')
 
     if @elementContainsSelection( article.get(0) )
       @stopPropagation(e)
@@ -1595,6 +1610,104 @@ class ArticleView extends App.Controller
       return true
     false
 
+class ArticleActions extends App.Controller
+  events:
+    'click [data-type=public]':   'public_internal'
+    'click [data-type=internal]': 'public_internal'
+    'click [data-type=reply]':    'reply'
+    'click [data-type=replyAll]': 'replyAll'
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    actions = @actionRow(@article)
+
+    if actions
+      @html App.view('ticket_zoom/article_view_actions')(
+        article: @article
+        actions: actions
+      )
+    else
+      @html ''
+
+  public_internal: (e) ->
+    e.preventDefault()
+    article_id = $(e.target).parents('[data-id]').data('id')
+
+    # storage update
+    article = App.TicketArticle.find(article_id)
+    internal = true
+    if article.internal == true
+      internal = false
+    article.updateAttributes(
+      internal: internal
+    )
+
+    # runntime update
+    if internal
+      $(e.target).closest('.ticket-article-item').addClass('is-internal')
+    else
+      $(e.target).closest('.ticket-article-item').removeClass('is-internal')
+
+    @render()
+
+  actionRow: (article) ->
+    if @isRole('Customer')
+      return []
+
+    actions = []
+    if article.internal is true
+      actions = [
+        {
+          name: 'set to public'
+          type: 'public'
+        }
+      ]
+    else
+      actions = [
+        {
+          name: 'set to internal'
+          type: 'internal'
+        }
+      ]
+    #if @article.type.name is 'note'
+    #     actions.push []
+    if article.type.name is 'email' || article.type.name is 'phone' || article.type.name is 'web'
+      actions.push {
+        name: 'reply'
+        type: 'reply'
+        href: '#'
+      }
+      recipients = []
+      if article.sender.name is 'Agent'
+        if article.to
+            localRecipients = emailAddresses.parseAddressList(article.to)
+            if localRecipients
+              recipients = recipients.concat localRecipients
+      else
+        if article.from
+          localRecipients = emailAddresses.parseAddressList(article.from)
+          if localRecipients
+            recipients = recipients.concat localRecipients
+      if article.cc
+        localRecipients = emailAddresses.parseAddressList(article.cc)
+        if localRecipients
+          recipients = recipients.concat localRecipients
+      if recipients.length > 1
+        actions.push {
+          name: 'reply all'
+          type: 'replyAll'
+          href: '#'
+        }
+    actions.push {
+      name: 'split'
+      type: 'split'
+      href: '#ticket/create/' + article.ticket_id + '/' + article.id
+    }
+    actions
+
   replyAll: (e) =>
     @reply(e, true)
 
@@ -1607,7 +1720,7 @@ class ArticleView extends App.Controller
     type       = App.TicketArticleType.find( article.type_id )
     customer   = App.User.find( article.created_by_id )
 
-    @ui.el.find('.article-add').ScrollTo()
+    @el.closest('.article-add').ScrollTo()
 
     # empty form
     articleNew = {
@@ -1617,7 +1730,7 @@ class ArticleView extends App.Controller
       in_reply_to: ''
     }
 
-    #@ui.el.find('[name="in_reply_to"]').val('')
+    #@el.closest('[name="in_reply_to"]').val('')
 
     if article.message_id
       articleNew.in_reply_to = article.message_id
@@ -1684,7 +1797,7 @@ class ArticleView extends App.Controller
           articleNew.cc = addAddresses(articleNew.cc, article.cc)
 
     # get current body
-    body = @ui.el.find('[data-name="body"]').html() || ''
+    body = @el.closest('[data-name="body"]').html() || ''
 
     # check if quote need to be added
     selectedText = App.ClipBoard.getSelected()
@@ -1704,124 +1817,6 @@ class ArticleView extends App.Controller
     articleNew.body = body
 
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
-
-
-class Article extends App.Controller
-  constructor: ->
-    super
-
-    # define actions
-    @actionRow()
-
-    # check attachments
-    @attachments()
-
-    # html rework
-    @preview()
-
-  preview: ->
-
-    if @article.content_type is 'text/html'
-      @article['html'] = @article.body
-      return
-
-    # build html body
-    @article['html'] = App.Utils.textCleanup( @article.body )
-
-    # if body has more then x lines / else search for signature
-    preview       = 10
-    preview_mode  = false
-    article_lines = @article['html'].split(/\n/)
-    if article_lines.length > preview
-      preview_mode = true
-      if article_lines[preview] is ''
-        article_lines.splice( preview, 0, '-----SEEMORE-----' )
-      else
-        article_lines.splice( preview - 1, 0, '-----SEEMORE-----' )
-      @article['html'] = article_lines.join("\n")
-    @article['html'] = App.Utils.linkify( @article['html'] )
-    notify = '<a href="#" class="show_toogle">' + App.i18n.translateContent('See more') + '</a>'
-
-    # preview mode
-    if preview_mode
-      @article_changed = false
-      @article['html'] = @article['html'].replace /^-----SEEMORE-----\n/m, (match) =>
-        @article_changed = true
-        notify + '<div class="hide preview">'
-      if @article_changed
-        @article['html'] = @article['html'] + '</div>'
-
-    # hide signatures and so on
-    else
-      @article_changed = false
-      @article['html'] = @article['html'].replace /^\n{0,10}(--|__)/m, (match) =>
-        @article_changed = true
-        notify + '<div class="hide preview">' + match
-      if @article_changed
-        @article['html'] = @article['html'] + '</div>'
-
-    @article['html'] = App.Utils.text2html( @article.body )
-
-  actionRow: ->
-    if @isRole('Customer')
-      @article.actions = []
-      return
-
-    actions = []
-    if @article.internal is true
-      actions = [
-        {
-          name: 'set to public'
-          type: 'public'
-        }
-      ]
-    else
-      actions = [
-        {
-          name: 'set to internal'
-          type: 'internal'
-        }
-      ]
-    #if @article.type.name is 'note'
-    #     actions.push []
-    if @article.type.name is 'email' || @article.type.name is 'phone' || @article.type.name is 'web'
-      actions.push {
-        name: 'reply'
-        type: 'reply'
-        href: '#'
-      }
-      recipients = []
-      if @article.sender.name is 'Agent'
-        if @article.to
-            localRecipients = emailAddresses.parseAddressList(@article.to)
-            if localRecipients
-              recipients = recipients.concat localRecipients
-      else
-        if @article.from
-          localRecipients = emailAddresses.parseAddressList(@article.from)
-          if localRecipients
-            recipients = recipients.concat localRecipients
-      if @article.cc
-        localRecipients = emailAddresses.parseAddressList(@article.cc)
-        if localRecipients
-          recipients = recipients.concat localRecipients
-      if recipients.length > 1
-        actions.push {
-          name: 'reply all'
-          type: 'replyAll'
-          href: '#'
-        }
-    actions.push {
-      name: 'split'
-      type: 'split'
-      href: '#ticket/create/' + @article.ticket_id + '/' + @article.id
-    }
-    @article.actions = actions
-
-  attachments: ->
-    if @article.attachments
-      for attachment in @article.attachments
-        attachment.size = @humanFileSize(attachment.size)
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->

@@ -485,7 +485,7 @@ class App.Sidebar extends App.Controller
     '.sidebar':         'sidebars'
 
   events:
-    'click .tabsSidebar-tab':  'toggleTab'
+    'click .tabsSidebar-tab':   'toggleTab'
     'click .tabsSidebar-close': 'toggleSidebar'
     'click .sidebar-header h2': 'toggleDropdown'
 
@@ -493,8 +493,17 @@ class App.Sidebar extends App.Controller
     super
     @render()
 
-    # get first tab
-    name = @tabs.first().data('tab')
+    # get active tab by name
+    if @name
+      name = @name
+
+    # get active tab last state
+    if !name && @sidebarState
+      name = @sidebarState.active
+
+    # get active tab by first tab
+    if !name
+      name = @tabs.first().data('tab')
 
     # activate first tab
     @toggleTabAction(name)
@@ -547,6 +556,10 @@ class App.Sidebar extends App.Controller
 
   toggleTabAction: (name) ->
     return if !name
+
+    # remember sidebarState for outsite
+    if @sidebarState
+      @sidebarState.active = name
 
     # remove active state
     @tabs.removeClass('active')
