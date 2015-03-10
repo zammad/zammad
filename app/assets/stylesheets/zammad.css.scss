@@ -271,6 +271,11 @@ span[data-tooltip]:hover:before {
   border-color: rgba(0,0,0,.1);
   outline: none !important;
   
+  &.btn--slim {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
   &.is-disabled {
     pointer-events: none;
     cursor: not-allowed;
@@ -283,9 +288,17 @@ span[data-tooltip]:hover:before {
   }
 
   &.btn--action {
-    @extend label;
+    text-transform: uppercase;
+    color: hsl(0,0%,60%);
+    font-size: 12px;
+    letter-spacing: 0.1em;
     height: 31px;
     padding: 7px 11px 5px !important;
+    
+    &.btn--slim {
+      padding-left: 7px !important;
+      padding-right: 7px !important;
+    }
   }
 
   &.btn--primary {
@@ -344,6 +357,20 @@ span[data-tooltip]:hover:before {
       margin-left: 20px;
     }
   }
+
+  &.btn--split--first {
+    border-radius: 3px 0 0 3px;
+  }
+  &.btn--split,
+  &.btn--split--last {
+    border-radius: 0;
+    border-left: none;
+    margin-left: 0;
+  }
+  &.btn--split--last {
+    border-radius: 0 3px 3px 0;
+  }
+
 }
 
 .btn + .btn {
@@ -369,6 +396,42 @@ span[data-tooltip]:hover:before {
   margin-top: 3px;
   margin-left: -10px;
   vertical-align: top;
+}
+
+.visibility-change {
+  /*
+  
+  Interactive Visibility Change Classes:
+  
+    <div class="visibility-change">
+      <div class="icon marker active" data-visible="active"></div>
+      <div class="icon marker" data-visible="hover"></div>
+    </div>
+    
+    Important: HTML Order active > hover > normal
+
+  */
+
+  [data-visible=active],
+  [data-visible=hover] {
+    display: none;
+  }
+
+  &.active [data-visible=active] {
+    display: block;
+    
+    & ~ [data-visible=normal] {
+      display: none
+    }
+  }
+
+  &:hover [data-visible=hover] {
+    display: block;
+    
+    & ~ [data-visible=normal] {
+      display: none
+    }
+  }
 }
 
 table {
@@ -828,7 +891,7 @@ textarea,
 }
 
 .pagination-counter {
-  margin: 0 19px 0 10px;
+  margin: 0 19px;
   line-height: 33px;
   color: #9c9c9b;
 }
@@ -856,7 +919,7 @@ textarea,
   @extend .self-start;
   
   .btn {
-    margin: 0 9px 2px;
+    margin: 0 0 2px 9px;
   }
 }
 
@@ -1664,14 +1727,24 @@ ol.tabs li {
   }
 
   .left.arrow.icon,
-  .right.arrow.icon {
+  .right.arrow.icon,
+  .down.arrow.icon,
+  .up.arrow.icon {
     width: 8px;
     height: 12px;
     opacity: .39;
   }
 
+  .down.arrow.icon,
+  .up.arrow.icon {
+    width: 12px;
+    height: 8px;
+  }
+
   .disabled.left.arrow.icon,
-  .disabled.right.arrow.icon {
+  .disabled.right.arrow.icon,
+  .disabled.up.arrow.icon,
+  .disabled.down.arrow.icon {
     opacity: .23;
   }
 
@@ -1679,16 +1752,32 @@ ol.tabs li {
     background-position: 0 -307px;
   }
 
-  .right.arrow.icon {
-    background-position: -9px -307px;
-  }
-
   .white.left.arrow.icon {
     background-position: -18px -307px;
   }
 
+  .right.arrow.icon {
+    background-position: -9px -307px;
+  }
+
   .white.right.arrow.icon {
     background-position: -27px -307px;
+  }
+
+  .up.arrow.icon {
+    background-position: -119px -307px;
+  }
+
+  .white.up.arrow.icon {
+    background-position: -132px -307px;
+  }
+
+  .down.arrow.icon {
+    background-position: -145px -307px;
+  }
+
+  .white.down.arrow.icon {
+    background-position: -158px -307px;
   }
 
   .checkbox.icon {
@@ -1817,9 +1906,13 @@ ol.tabs li {
   }
 
   .checkmark.icon {
-    width: 16px;
+    width: 17px;
     height: 15px;
-    background-position: -135px -347px;
+    background-position: -135px -348px;
+  }
+
+  .white.checkmark.icon {
+    background-position: -135px -364px;
   }
 
   .error.icon {
@@ -1862,6 +1955,24 @@ ol.tabs li {
 
   .loading.dot.icon {
     border-radius: 100%;
+  }
+
+  .marker.icon {
+    width: 17px;
+    height: 19px;
+    background-position: -167px -344px;
+  }
+
+  .marker.active.icon {
+    width: 17px;
+    height: 19px;
+    background-position: -167px -364px;
+  }
+
+  .color-swatch {
+    border-radius: 100%;
+    width: 11px;
+    height: 11px;
   }
 
 
@@ -3161,6 +3272,12 @@ footer {
   background: #f8f9fa;
 }
 
+.ticketZoom-controls {
+  @extend .horizontal;
+  @extend .justify-end;
+  @extend .center;
+}
+
 .ticketZoom .page-header {
   margin-top: 24px;
   margin-bottom: 0;
@@ -4288,6 +4405,8 @@ footer {
   padding: 0;
   min-width: 100%;
   color: white;
+  text-transform: initial;
+  letter-spacing: 0;
   background: hsl(234,10%,19%);
   border-radius: 0;
   border: none;
@@ -4337,12 +4456,35 @@ footer {
     display: block;
   }
 
-  .dropdown.dropdown--actions li {
-    padding: 0;
-  }
+  .dropdown.dropdown--actions {
+    li {
+      padding: 0;
+      @extend .horizontal;
+      @extend .center;
+    }
 
-  .dropdown.dropdown--actions a {
-    @extend .u-clickable;
+    .dropdown-iconSpacer,
+    .dropdown-activeSpacer {
+      @extend .horizontal;
+      @extend .center;
+    }
+
+    .dropdown-iconSpacer {
+      width: 25px;
+    }
+
+    .dropdown-activeSpacer {
+      width: 34px;
+      margin-left: auto;
+      @extend .justify-end;
+    }
+
+    a {
+      @extend .u-clickable;
+      @extend .horizontal;
+      min-width: 100%;
+      padding: 3px 18px;
+    }
   }
 
 .recipientList,
@@ -5082,6 +5224,22 @@ label + .wizard-buttonList {
             transform: scale(1.6);
   }
 }
+
+[data-highlightcolor=Yellow]::selection {      background: #f7e7b2; }
+[data-highlightcolor=Yellow]::-moz-selection { background: #f7e7b2; }
+
+[data-highlightcolor=Green]::selection {      background: #bce7b6; }
+[data-highlightcolor=Green]::-moz-selection { background: #bce7b6; }
+
+[data-highlightcolor=Blue]::selection {      background: #b3ddf9; }
+[data-highlightcolor=Blue]::-moz-selection { background: #b3ddf9; }
+
+[data-highlightcolor=Pink]::selection {      background: #fea9c5; }
+[data-highlightcolor=Pink]::-moz-selection { background: #fea9c5; }
+
+[data-highlightcolor=Purple]::selection {      background: #eac5ee; }
+[data-highlightcolor=Purple]::-moz-selection { background: #eac5ee; }
+
 
 
 .overview-navigator {

@@ -35,6 +35,11 @@
 //= require ./app/lib/bootstrap/button.js
 //= require ./app/lib/bootstrap/collapse.js
 
+//= require ./app/lib/rangy/rangy-core.js
+//= require ./app/lib/rangy/rangy-classapplier.js
+//= require ./app/lib/rangy/rangy-textrange.js
+//= require ./app/lib/rangy/rangy-highlighter.js
+
 //= require_tree ./app/lib/base
 
 //= require ./app/index.js.coffee

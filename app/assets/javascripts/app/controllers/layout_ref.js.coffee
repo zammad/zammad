@@ -789,4 +789,116 @@ class errorRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/error', errorRef, 'Routes' )
 
+
+class highlightRef extends App.ControllerContent
+  elements:
+    '.article-text': 'articles'
+
+  events:
+    'click .js-highlight': 'toggleHighlight'
+    'click .js-highlightColor': 'pickColor'
+
+  colors: [
+    {
+      name: 'Yellow'
+      color: "#f7e7b2"
+    },
+    {
+      name: 'Green'
+      color: "#bce7b6"
+    },
+    {
+      name: 'Blue'
+      color: "#b3ddf9"
+    },
+    {
+      name: 'Pink'
+      color: "#fea9c5"
+    },
+    {
+      name: 'Purple'
+      color: "#eac5ee"
+    }
+  ]
+
+  activeColorIndex: 0
+  highlightClass: "textHighlight"
+
+  constructor: ->
+    super
+    rangy.init()
+    @setColor()
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/highlight')
+      colors: @colors
+      activeColorIndex: @activeColorIndex
+
+  setColor: ->
+    if @applier
+      @applier.elementAttributes.style = "background: "+ @colors[@activeColorIndex].color
+    else
+      @applier = rangy.createClassApplier @highlightClass,
+        elementAttributes:
+          style: "background: "+ @colors[@activeColorIndex].color
+
+    if @isActive
+      @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
+
+  toggleHighlight: (e) =>
+    if @isActive
+      $(e.currentTarget).removeClass('active')
+      @isActive = false
+      @articles.off('mouseup', @onMouseUp)
+      @articles.removeAttr('data-highlightcolor')
+    else
+      selection = window.getSelection()
+      # if there's already something selected, 
+      # don't go into highlight mode
+      # just highlight the selected
+      if selection.isCollapsed
+        $(e.currentTarget).addClass('active')
+        @isActive = true
+        @articles.on('mouseup', @onMouseUp) #future: touchend
+        @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
+      else
+        @highlight selection
+
+  pickColor: (e) =>
+    @$('.js-highlightColor .visibility-change.active').removeClass('active')
+    $(e.currentTarget).find('.visibility-change').addClass('active')
+    @activeColorIndex =  $(e.currentTarget).attr('data-key')
+    @setColor() 
+
+  onMouseUp: =>
+    @highlight window.getSelection()
+
+  # 
+  # Highlight
+  # =========
+  # 
+  # - only works when the selection starts and ends inside an article
+  # - clears highlights in selection
+  # - or highlights the selection
+  # - clears the selection
+
+  highlight: (selection) ->
+    return false if !@isInScope selection
+
+    # highlight and clear
+    @applier.toggleSelection()
+
+    # remove selection
+    selection.removeAllRanges()
+
+  isInScope: (selection) ->
+    true
+
+  clearHighlights: (selection) ->
+    false
+
+
+App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
