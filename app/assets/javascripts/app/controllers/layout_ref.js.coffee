@@ -822,26 +822,49 @@ class highlightRef extends App.ControllerContent
   ]
 
   activeColorIndex: 0
-  highlightClass: "textHighlight"
+  highlightClassPrefix: "highlight-"
 
   constructor: ->
     super
     rangy.init()
+
+    @highlighter = rangy.createHighlighter(document, 'TextRange')
+
+    @addClassApplier entry for entry in @colors
+
     @setColor()
     @render()
+
+    @loadHighlights()
 
   render: ->
     @html App.view('layout_ref/highlight')
       colors: @colors
       activeColorIndex: @activeColorIndex
 
+  # for testing purposes the highlights get stored in localStorage
+  loadHighlights: ->
+    if highlights = localStorage['highlights']
+      @highlighter.deserialize localStorage['highlights']
+
+  # the serialization creates one string for the entiery ticket
+  # containing the offsets and the highlight classes
+  #
+  # we have to check how it works with having open several tickets – it might break
+  # 
+  # if classes can be changed in the admin interface
+  # we have to watch out to not end up with empty highlight classes
+  storeHighlights: ->
+    localStorage['highlights'] = @highlighter.serialize()
+
+  # the colors is set via css classes (can't do it inline with rangy)
+  # thus we have to create a stylesheet if the colors 
+  # can be changed in the admin interface
+  addClassApplier: (entry) ->
+    @highlighter.addClassApplier rangy.createCssClassApplier(@highlightClassPrefix + entry.name)
+
   setColor: ->
-    if @applier
-      @applier.elementAttributes.style = "background: "+ @colors[@activeColorIndex].color
-    else
-      @applier = rangy.createClassApplier @highlightClass,
-        elementAttributes:
-          style: "background: "+ @colors[@activeColorIndex].color
+    @highlightClass = @highlightClassPrefix + @colors[@activeColorIndex].name
 
     if @isActive
       @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
@@ -853,17 +876,21 @@ class highlightRef extends App.ControllerContent
       @articles.off('mouseup', @onMouseUp)
       @articles.removeAttr('data-highlightcolor')
     else
-      selection = window.getSelection()
+      selection = rangy.getSelection()
       # if there's already something selected, 
       # don't go into highlight mode
-      # just highlight the selected
-      if selection.isCollapsed
+      # just toggle the selected
+      if !selection.isCollapsed
+        @toggleHighlightAtSelection $(selection.anchorNode).closest @articles.selector
+      else
+        # toggle ui
         $(e.currentTarget).addClass('active')
+
+        # activate selection background
+        @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
+
         @isActive = true
         @articles.on('mouseup', @onMouseUp) #future: touchend
-        @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
-      else
-        @highlight selection
 
   pickColor: (e) =>
     @$('.js-highlightColor .visibility-change.active').removeClass('active')
@@ -871,32 +898,32 @@ class highlightRef extends App.ControllerContent
     @activeColorIndex =  $(e.currentTarget).attr('data-key')
     @setColor() 
 
-  onMouseUp: =>
-    @highlight window.getSelection()
+  onMouseUp: (e) =>
+    @toggleHighlightAtSelection $(e.currentTarget).closest @articles.selector
 
   # 
-  # Highlight
-  # =========
+  # toggle Highlight
+  # ================
   # 
   # - only works when the selection starts and ends inside an article
   # - clears highlights in selection
   # - or highlights the selection
   # - clears the selection
 
-  highlight: (selection) ->
-    return false if !@isInScope selection
+  toggleHighlightAtSelection: (article) ->
+    selection = rangy.getSelection()
 
-    # highlight and clear
-    @applier.toggleSelection()
+    if @highlighter.selectionOverlapsHighlight selection
+      @highlighter.unhighlightSelection()
+    else
+      @highlighter.highlightSelection @highlightClass,
+        selection: selection
+        containerElementId: article.get(0).id    
 
-    # remove selection
-    selection.removeAllRanges()
+      # remove selection
+      selection.removeAllRanges()
 
-  isInScope: (selection) ->
-    true
-
-  clearHighlights: (selection) ->
-    false
+    @storeHighlights()
 
 
 App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
