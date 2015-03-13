@@ -869,7 +869,7 @@ textarea,
 }
 
 .pagination {
-  margin: 0;
+  margin: 0 0 0 19px;
   @extend .horizontal;
 }
 
@@ -892,7 +892,7 @@ textarea,
 }
 
 .pagination-counter {
-  margin: 0 19px;
+  margin: 0 0 0 19px;
   line-height: 33px;
   color: #9c9c9b;
 }
