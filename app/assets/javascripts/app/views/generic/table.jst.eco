@@ -3,7 +3,7 @@
     <tr>
     <% if @checkbox: %>
       <th style="width: 40px" class="no-padding">
-        <label class="checkbox-replacement centered">
+        <label class="input-replacement centered">
           <input type="checkbox" value="" name="bulk_all"/>
           <span class="white checkbox icon"></span>
         </label>
@@ -39,14 +39,19 @@
   <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
       <td class="no-padding">
-        <label class="checkbox-replacement centered">
+        <label class="input-replacement">
           <input type="checkbox" value="<%= object.id %>" name="bulk"/>
           <span class="checkbox icon"></span>
         </label>
       </td>
     <% end %>
     <% if @radio: %>
-      <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
+      <td class="no-padding">
+        <label class="input-replacement">
+          <input type="radio" value="<%= object.id %>" name="radio"/>
+          <span class="radio icon"></span>
+        </label>
+      </td>
     <% end %>
     <% for item in @header: %>
       <% value = @P( object, item.name ) %>

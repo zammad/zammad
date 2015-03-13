@@ -486,14 +486,15 @@ table {
   padding: 0;
 }
 
-.checkbox-replacement {
+.input-replacement {
   padding: 0;
   margin: 0;
   height: 38px;
   @extend .u-clickable;
+  @extend .centered;
 }
 
-.checkbox-replacement input[type=checkbox] {
+.input-replacement input {
   display: none;
 }
 
@@ -1794,6 +1795,16 @@ ol.tabs li {
 
   :checked + .checkbox.icon {
     background-position: -47px -307px;
+  }
+
+  .radio.icon {
+    width: 12px;
+    height: 12px;
+    background-position: -171px -307px;
+  }
+
+  :checked + .radio.icon {
+    background-position: -184px -307px;
   }
 
   .arrow-right.icon {
