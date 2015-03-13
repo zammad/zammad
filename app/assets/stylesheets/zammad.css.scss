@@ -4374,6 +4374,14 @@ footer {
     border: none;
   }
 
+  .modal-leftFooter,
+  .modal-centerFooter,
+  .modal-rightFooter {
+    @extend .flex;
+    @extend .horizontal;
+    @extend .start;
+  }
+
 .modal.modal--local {
   display: block;
   padding-left: 40px;
@@ -5509,6 +5517,10 @@ body.fit {
 
 .three-columns > .column {
   width: 33.33%;
+}
+
+.align-left {
+  margin-right: auto;
 }
 
 .align-right {
