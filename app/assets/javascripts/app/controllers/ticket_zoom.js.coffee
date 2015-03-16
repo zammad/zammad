@@ -36,7 +36,9 @@ class App.TicketZoom extends App.Controller
       @load(cache)
     update = =>
       @fetch( @ticket_id, false )
-    @interval( update, 450000, 'pull_check' )
+
+    # check if ticket has beed updated every 30 min
+    @interval( update, 1800000, 'pull_check' )
 
     # fetch new data if triggered
     @bind(
