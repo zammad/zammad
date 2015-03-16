@@ -462,7 +462,6 @@ class App.TicketZoom extends App.Controller
 
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
-      console.log('rerender sidebar')
       new App.WidgetAvatar(
         el:       @$('.page-header .js-avatar')
         user_id:  @ticket.customer_id
@@ -836,7 +835,6 @@ class OverviewNavigator extends App.Controller
     @render()
 
   render: (overview) =>
-    console.log('RENDER OverviewNavigator', @overview_id)
     if !@overview_id
       @html('')
       return
