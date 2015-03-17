@@ -486,14 +486,15 @@ table {
   padding: 0;
 }
 
-.checkbox-replacement {
+.input-replacement {
   padding: 0;
   margin: 0;
   height: 38px;
   @extend .u-clickable;
+  @extend .centered;
 }
 
-.checkbox-replacement input[type=checkbox] {
+.input-replacement input {
   display: none;
 }
 
@@ -868,7 +869,7 @@ textarea,
 }
 
 .pagination {
-  margin: 0;
+  margin: 0 0 0 19px;
   @extend .horizontal;
 }
 
@@ -891,7 +892,7 @@ textarea,
 }
 
 .pagination-counter {
-  margin: 0 19px;
+  margin: 0 0 0 19px;
   line-height: 33px;
   color: #9c9c9b;
 }
@@ -1794,6 +1795,16 @@ ol.tabs li {
 
   :checked + .checkbox.icon {
     background-position: -47px -307px;
+  }
+
+  .radio.icon {
+    width: 12px;
+    height: 12px;
+    background-position: -171px -307px;
+  }
+
+  :checked + .radio.icon {
+    background-position: -184px -307px;
   }
 
   .arrow-right.icon {
@@ -3827,6 +3838,7 @@ footer {
 
       .attachment-name {
         margin-right: 5px;
+        word-break: break-all;
       }
 
       .attachment-size {
@@ -4374,6 +4386,14 @@ footer {
     border: none;
   }
 
+  .modal-leftFooter,
+  .modal-centerFooter,
+  .modal-rightFooter {
+    @extend .flex;
+    @extend .horizontal;
+    @extend .start;
+  }
+
 .modal.modal--local {
   display: block;
   padding-left: 40px;
@@ -4411,7 +4431,7 @@ footer {
   border-radius: 0;
   border: none;
   box-shadow: none;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
   .dropdown-toggle {
@@ -5509,6 +5529,10 @@ body.fit {
 
 .three-columns > .column {
   width: 33.33%;
+}
+
+.align-left {
+  margin-right: auto;
 }
 
 .align-right {

@@ -242,7 +242,7 @@ class Camera extends App.ControllerModal
     @button        = 'Save'
     @buttonClass   = 'btn--success is-disabled'
     @centerButtons = [{
-      className: 'btn--success js-shoot',
+      className: 'btn--success js-shoot is-disabled',
       text: 'Shoot'
     }]
 
@@ -258,25 +258,26 @@ class Camera extends App.ControllerModal
   onShootClick: =>
     if @photoTaken
       @photoTaken = false
-      @countdown  = 0
-      @submitButton.addClass('is-disabled')
+      @submitButton.addClass 'is-disabled'
       @shootButton
-        .removeClass('btn--danger')
-        .addClass('btn--success')
-        .text( App.i18n.translateInline('Shoot') )
+        .removeClass 'btn--danger'
+        .addClass 'btn--success'
+        .text App.i18n.translateInline('Shoot')
       @updatePreview()
     else
       @shoot()
       @shootButton
-        .removeClass('btn--success')
-        .addClass('btn--danger')
-        .text( App.i18n.translateInline('Discard') )
+        .removeClass 'btn--success'
+        .addClass 'btn--danger'
+        .text App.i18n.translateInline('Discard') 
 
   shoot: =>
     @photoTaken = true
-    @submitButton.removeClass('is-disabled')
+    @submitButton.removeClass 'is-disabled'
 
   onWebcamReady: (stream) =>
+    @shootButton.removeClass 'is-disabled'
+
     # in case the modal is closed before the
     # request was fullfilled
     if @hidden
@@ -286,14 +287,14 @@ class Camera extends App.ControllerModal
     # cache stream so that we can later turn it off
     @stream = stream
 
-    @video.attr 'src', window.URL.createObjectURL(stream)
-
     # setup the offset to center the webcam image perfectly
     # when the stream is ready
-    @video.on('canplay', @setupPreview)
+    @video.on 'canplay', @setupPreview
 
     # start to update the preview once its playing
-    @video.on('play', @updatePreview)
+    @video.on 'playing', @updatePreview
+
+    @video.attr 'src', window.URL.createObjectURL(stream)
 
     # start the stream
     @video.get(0).play()
@@ -316,47 +317,56 @@ class Camera extends App.ControllerModal
     @preview.attr
       width: @size
       height: @size
-    @offsetX = (@video.width() - @size)/2
     @centerX = @size/2
     @centerY = @size/2
 
-  updatePreview: =>
-    @ctx.clearRect(0, 0, @preview.width(), @preview.height())
-
     # create circle clip area
-    @ctx.save()
-
-    @ctx.beginPath()
-    @ctx.arc(@centerX, @centerY, @size/2, 0, 2 * Math.PI, false)
-    @ctx.closePath()
-    @ctx.clip()
+    @ctx.translate @centerX, @centerY
 
     # flip the image to look like a mirror
-    @ctx.scale(-1,1)
+    @ctx.scale -1, 1
 
-    # draw video frame
-    @ctx.drawImage(@video.get(0), @offsetX, 0, -@video.width(), @size)
-
-    # flip the image to look like a mirror
-    @ctx.scale(-1,1)
-
-    # add anti-aliasing
-    # http://stackoverflow.com/a/12395939
+    # settings for anti-aliasing
     @ctx.strokeStyle = @backgroundColor
     @ctx.lineWidth = 2
-    @ctx.arc(@centerX, @centerY, @size/2, 0, 2 * Math.PI, false)
-    @ctx.stroke()
 
-    # reset the clip area to be able to draw on the whole canvas
-    @ctx.restore()
+  updatePreview: =>
+    # try catch fixes a Firefox error
+    # were the drawImage wouldn't work
+    # because the video didn't get inizialized
+    # yet internally
+    # http://stackoverflow.com/questions/18580844/firefox-drawimagevideo-fails-with-ns-error-not-available-component-is-not-av
+    try
+      @ctx.globalCompositeOperation = 'source-over'
+      @ctx.clearRect 0, 0, @size, @size
+      @ctx.beginPath()
+      @ctx.arc 0, 0, @size/2, 0, 2 * Math.PI, false
+      @ctx.closePath()
+      @ctx.fill()
+      @ctx.globalCompositeOperation = 'source-atop'
 
-    # update the preview again as soon as
-    # the browser is ready to draw a new frame
-    if not @photoTaken
-      requestAnimationFrame @updatePreview
-    else
-      # cache raw video data
-      @cacheScreenshot()
+      # draw video frame
+      @ctx.drawImage @video.get(0), -@video.width()/2, -@size/2, @video.width(), @size
+
+      # add anti-aliasing
+      # http://stackoverflow.com/a/12395939
+      @ctx.beginPath()
+      @ctx.arc 0, 0, @size/2, 0, 2 * Math.PI, false
+      @ctx.closePath()
+      @ctx.stroke()
+
+      # update the preview again as soon as
+      # the browser is ready to draw a new frame
+      if not @photoTaken
+        requestAnimationFrame @updatePreview
+      else
+        # cache raw video data
+        @cacheScreenshot()
+    catch e
+      if e.name is "NS_ERROR_NOT_AVAILABLE"
+        setTimeout @updatePreview, 200
+      else
+        throw e
 
   initializeCache: ->
     # create virtual canvas
@@ -367,18 +377,21 @@ class Camera extends App.ControllerModal
     # reset video height
     @video.attr height: ''
 
-    @cache.attr
-      width:  @video.height()
-      height: @video.height()
+    # cache screenshot as big as possible (native webcam dimensions)
+    size = Math.min @video.height(), @video.width()
 
-    offsetX = (@video.width() - @video.height())/2
+    @cache.attr
+      width:  size
+      height: size
 
     # draw full resolution screenshot
     @cacheCtx.save()
 
-    # flip image
-    @cacheCtx.scale(-1,1)
-    @cacheCtx.drawImage(@video.get(0), offsetX, 0, -@video.width(), @video.height())
+    # transform and flip image
+    @cacheCtx.translate size/2, size/2
+    @cacheCtx.scale -1, 1
+
+    @cacheCtx.drawImage @video.get(0), -@video.width()/2, -@video.height()/2, @video.width(), @video.height()
 
     @cacheCtx.restore()
 
@@ -391,6 +404,8 @@ class Camera extends App.ControllerModal
 
   onSubmit: (e) =>
     e.preventDefault()
-    # send picture to the
-    @options.callback( @cache.get(0).toDataURL() )
+    # send picture to the callback
+    console.log @cache.get(0).toDataURL()
+    window.file = @cache.get(0).toDataURL()
+    @options.callback @cache.get(0).toDataURL()
     @hide()
