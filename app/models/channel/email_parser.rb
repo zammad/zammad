@@ -105,9 +105,9 @@ class Channel::EmailParser
       data[:from_display_name] = Mail::Address.new( from ).display_name ||
       ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
     rescue
-      data[:from_email]        = from
-      data[:from_local]        = from
-      data[:from_domain]       = from
+      data[:from_email]  = from
+      data[:from_local]  = from
+      data[:from_domain] = from
     end
 
     # do extra decoding because we needed to use field.value
@@ -195,7 +195,7 @@ class Channel::EmailParser
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
-        if !data[:body].valid_encoding?
+        if !data[:body].force_encoding("UTF-8").valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
         end
 

@@ -643,6 +643,28 @@ Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen I
 [4] mailto:kontakt@example.com",
         },
       },
+      {
+        :data     => IO.read('test/fixtures/mail31.box'),
+        :body_md5 => '10484f3b096e85e7001da387c18871d5',
+        :params   => {
+          :from              => '"bertha　mou" <zhengkang@ha.chinamobile.com>',
+          :from_email        => 'zhengkang@ha.chinamobile.com',
+          :from_display_name => "bertha　mou",
+          :subject           => "內應力產生与注塑工艺条件之间的关系；",
+          :to                => 'info@znuny.inc',
+        },
+      },
+      {
+        :data     => IO.read('test/fixtures/mail32.box'),
+        :body_md5 => '6bed82e0d079e521f506e4e5d3529107',
+        :params   => {
+          :from              => '"Dana.Qin" <Dana.Qin6e1@gmail.com>',
+          :from_email        => 'Dana.Qin6e1@gmail.com',
+          :from_display_name => "Dana.Qin",
+          :subject           => "发现最美车间主任",
+          :to                => 'info@znuny.inc',
+        },
+      },
     ]
 
     files.each { |file|

@@ -1900,7 +1900,54 @@ Some Text',
             },
           ],
         }
-
+      },
+      {
+        :data    => IO.read('test/fixtures/mail31.box'),
+        :success => true,
+        :result  => {
+          0 => {
+            :priority => '2 normal',
+            :title    => '內應力產生与注塑工艺条件之间的关系；',
+          },
+          1 => {
+            :sender   => 'Customer',
+            :type     => 'email',
+          },
+        },
+        :verify => {
+          :users => [
+            {
+              :firstname => 'bertha　mou',
+              :lastname  => '',
+              :fullname  => 'bertha　mou',
+              :email     => 'zhengkang@ha.chinamobile.com',
+            },
+          ],
+        }
+      },
+      {
+        :data    => IO.read('test/fixtures/mail32.box'),
+        :success => true,
+        :result  => {
+          0 => {
+            :priority => '2 normal',
+            :title    => '发现最美车间主任',
+          },
+          1 => {
+            :sender   => 'Customer',
+            :type     => 'email',
+          },
+        },
+        :verify => {
+          :users => [
+            {
+              :firstname => 'Dana.Qin',
+              :lastname  => '',
+              :fullname  => 'Dana.Qin',
+              :email     => 'dana.qin6e1@gmail.com',
+            },
+          ],
+        }
       },
     ]
     process(files)
