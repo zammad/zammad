@@ -25,11 +25,11 @@ class Index extends App.ControllerContent
 
     # get data
     @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      processData: true,
-      success: (data, status, xhr) =>
+      id:          'getting_started'
+      type:        'GET'
+      url:         @apiPath + '/getting_started'
+      processData: true
+      success:     (data, status, xhr) =>
 
         # redirect to login if master user already exists
         if @Config.get('system_init_done')
@@ -80,6 +80,11 @@ class Admin extends App.ControllerContent
       url:   @apiPath + '/getting_started'
       processData: true
       success: (data, status, xhr) =>
+
+        # check if user got created right now
+        #if true
+        #  @navigate '#getting_started/base'
+        #  return
 
         # redirect to login if master user already exists
         if @Config.get('system_init_done')
@@ -251,42 +256,41 @@ class Base extends App.ControllerContent
 
   submit: (e) =>
     e.preventDefault()
-
-    # get params
-    params = @formParam(e.target)
-
-    # add logo
-    params['logo'] = @logoPreview.attr('src')
-
-    # add resized image
-    if params['logo']
-      resizeLogo = new App.ImageService( params['logo'] )
-      params['logo_resize'] = resizeLogo.toDataURLForApp( @logoPreview.width(), @logoPreview.height() )
-
     @hideAlerts()
     @disable(e)
 
-    @ajax(
-      id:   'getting_started_base'
-      type: 'POST'
-      url:  @apiPath + '/getting_started/base'
-      data: JSON.stringify( params )
-      processData: true
-      success: (data, status, xhr) =>
-        if data.result is 'ok'
-          for key, value of data.settings
-            App.Config.set( key, value )
-          if App.Config.get('system_online_service')
-            @navigate 'getting_started/channel/email_pre_configured'
+    # get params
+    @params = @formParam(e.target)
+
+    # add logo
+    @params.logo = @logoPreview.attr('src')
+
+    store = (logoResizeDataUrl) =>
+      @params.logo_resize = logoResizeDataUrl
+      @ajax(
+        id:          'getting_started_base'
+        type:        'POST'
+        url:         @apiPath + '/getting_started/base'
+        data:        JSON.stringify(@params)
+        processData: true
+        success:     (data, status, xhr) =>
+          if data.result is 'ok'
+            for key, value of data.settings
+              App.Config.set( key, value )
+            if App.Config.get('system_online_service')
+              @navigate 'getting_started/channel/email_pre_configured'
+            else
+              @navigate 'getting_started/channel'
           else
-            @navigate 'getting_started/channel'
-        else
-          for key, value of data.messages
-            @showAlert( key, value )
+            for key, value of data.messages
+              @showAlert( key, value )
+            @enable(e)
+        fail: =>
           @enable(e)
-      fail: =>
-        @enable(e)
-    )
+      )
+
+    # add resized image
+    App.ImageService.resizeForAvatar( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
 
   hideAlerts: =>
     @$('.form-group').removeClass('has-error')

@@ -108,25 +108,27 @@ class Index extends App.Controller
   storeImage: (src) =>
 
     # store avatar globally
-    params =
-      avatar_full: src
-
-    # add resized image
-    avatar = new App.ImageService( src )
-    params['avatar_resize'] = avatar.toDataURLForAvatar( 'auto', 160 )
+    @oldDataUrl = src
 
     # store on server site
-    @ajax(
-      id:   'avatar_new'
-      type: 'POST'
-      url:  @apiPath + '/users/avatar'
-      data: JSON.stringify( params )
-      processData: true
-      success: (data, status, xhr) =>
-        avatarHolder = $(App.view('profile/avatar-holder')( src: src, avatar: data.avatar ) )
-        @avatarGallery.append(avatarHolder)
-        @pick avatarHolder.find('.avatar')
-    )
+    store = (newDataUrl) =>
+      @ajax(
+        id:   'avatar_new'
+        type: 'POST'
+        url:  @apiPath + '/users/avatar'
+        data: JSON.stringify(
+          avatar_full:   @oldDataUrl
+          avatar_resize: newDataUrl
+        )
+        processData: true
+        success: (data, status, xhr) =>
+          avatarHolder = $(App.view('profile/avatar-holder')( src: src, avatar: data.avatar ) )
+          @avatarGallery.append(avatarHolder)
+          @pick avatarHolder.find('.avatar')
+      )
+
+    # add resized image
+    App.ImageService.resizeForAvatar( src, 'auto', 160, store )
 
   onUpload: (event) =>
     callback = @storeImage
@@ -269,7 +271,7 @@ class Camera extends App.ControllerModal
       @shootButton
         .removeClass 'btn--success'
         .addClass 'btn--danger'
-        .text App.i18n.translateInline('Discard') 
+        .text App.i18n.translateInline('Discard')
 
   shoot: =>
     @photoTaken = true
