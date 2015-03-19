@@ -1482,9 +1482,9 @@ Overview.create_if_not_exists(
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'group', 'created_at' ],
-    :s => [ 'title', 'customer', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
+    :s => [ 'title', 'customer', 'group', 'state', 'owner','created_at' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
     :view_mode_default => 's',
   },
 )
@@ -1503,9 +1503,9 @@ Overview.create_if_not_exists(
     :direction => 'ASC',
   },
   :view => {
-    :d => [ 'title', 'customer', 'group', 'created_at' ],
-    :s => [ 'title', 'customer', 'group', 'created_at' ],
-    :m => [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    :d => [ 'title', 'customer', 'group', 'owner', 'created_at' ],
+    :s => [ 'title', 'customer', 'group', 'owner', 'created_at' ],
+    :m => [ 'number', 'title', 'customer', 'group', 'owner', 'created_at' ],
     :view_mode_default => 's',
   },
 )
