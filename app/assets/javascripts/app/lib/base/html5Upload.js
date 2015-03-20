@@ -70,7 +70,7 @@
     UploadManager.prototype = {
 
         initialize: function () {
-            console.log('Initializing upload manager');
+            //console.log('Initializing upload manager');
             var manager = this,
                 dropContainer = manager.dropContainer,
                 inputField = manager.inputField,
