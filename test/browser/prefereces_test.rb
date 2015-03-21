@@ -273,21 +273,22 @@ class PreferencesTest < TestCase
     click( :css => 'a[href="#current_user"]' )
     click( :css => 'a[href="#profile"]' )
     click( :css => 'a[href="#profile/language"]' )
+    sleep 10
     select(
       :css   => '.language_item select[name="locale"]',
       :value => 'Deutsch',
     )
     click( :css => '.content button[type="submit"]' )
-    sleep 2
+    sleep 4
     watch_for(
       :css   => 'body',
       :value => 'Sprache',
     )
-    sleep 10
+    sleep 16
 
     # check if language is still used after reload
     reload()
-    sleep 10
+    sleep 4
 
     watch_for(
       :css   => 'body',
