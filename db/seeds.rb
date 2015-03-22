@@ -214,12 +214,12 @@ Setting.create_if_not_exists(
         :tag      => 'select',
         :options  => {
           '' => '-',
-          'GeoIp::Freegeoip' => 'freegeoip.net',
+          'GeoIp::ZammadGeoIp' => 'Zammad GeoIP Service',
         },
       },
     ],
   },
-  :state    => 'GeoIp::Freegeoip',
+  :state    => 'GeoIp::ZammadGeoIp',
   :frontend => false
 )
 

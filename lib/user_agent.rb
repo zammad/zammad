@@ -17,7 +17,24 @@ http/https/ftp calls
 
   result = UserAgent.request( 'https://host/some_dir/some_file.bin' )
 
-  result = UserAgent.request( 'http://host/some_dir/some_file.bin', { :method => 'post', :data => { :param1 => 123 } } )
+  # post request
+  result = UserAgent.request(
+    'http://host/some_dir/some_file.bin',
+    {
+      :method => 'post',
+      :data   => { :param1 => 123 },
+    },
+  )
+
+  # get request
+  result = UserAgent.request(
+    'http://host/some_dir/some_file?param1=123',
+    {
+      :method       => 'get',
+      :open_timeout => 2,
+      :read_timeout => 4,
+    },
+  )
 
 returns
 
@@ -43,8 +60,8 @@ returns
 
       http = Net::HTTP.new(uri.host, uri.port)
 
-      http.open_timeout = 8
-      http.read_timeout = 8
+      http.open_timeout = options[:open_timeout] || 8
+      http.read_timeout = options[:read_timeout] || 8
 
       if uri.scheme =~ /https/i
         http.use_ssl = true
