@@ -15,10 +15,9 @@ class GeoIp::ZammadGeoIp
     url  = "/lookup?ip=#{CGI::escape address}"
     data = {}
     begin
-      response = UserAgent.request(
+      response = UserAgent.get(
         "#{host}#{url}",
         {
-          :method       => 'get',
           :open_timeout => 2,
           :read_timeout => 4,
         },

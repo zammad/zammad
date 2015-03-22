@@ -53,11 +53,13 @@ module Import::OTRS2
   def self.request(part)
     url = Setting.get('import_otrs_endpoint') + part + ';Key=' + Setting.get('import_otrs_endpoint_key')
     puts 'GET: ' + url
-    response = UserAgent.request(
+    response = UserAgent.get(
       url,
       {
-        :user     => Setting.get('import_otrs_user'),
-        :password => Setting.get('import_otrs_password'),
+        :open_timeout => 6,
+        :read_timeout => 60,
+        :user         => Setting.get('import_otrs_user'),
+        :password     => Setting.get('import_otrs_password'),
       },
     )
     if !response.success?
@@ -85,13 +87,14 @@ module Import::OTRS2
     end
     data['Key'] = Setting.get('import_otrs_endpoint_key')
     puts 'POST: ' + url
-    response = UserAgent.request(
+    response = UserAgent.post(
       url,
+      data,
       {
-        :method   => 'post',
-        :data     => data,
-        :user     => Setting.get('import_otrs_user'),
-        :password => Setting.get('import_otrs_password'),
+        :open_timeout => 6,
+        :read_timeout => 60,
+        :user         => Setting.get('import_otrs_user'),
+        :password     => Setting.get('import_otrs_password'),
       },
     )
     if !response.success?

@@ -4,7 +4,7 @@ class GeoLocation::Gmaps
 
   def self.geocode(address)
     url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI::escape address}&sensor=true"
-    response = UserAgent.request(url)
+    response = UserAgent.get(url)
     return if !response.success?
 
     result = JSON.parse( response.body )
@@ -20,7 +20,7 @@ class GeoLocation::Gmaps
 
   def self.reverse_geocode(lat,lng)
     url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{lat},#{lng}&sensor=true"
-    response = UserAgent.request(url)
+    response = UserAgent.get(url)
     return if !response.success?
 
     result = JSON.parse( response.body )

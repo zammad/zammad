@@ -1,6 +1,5 @@
 # encoding: utf-8
 require 'test_helper'
-require 'faraday'
 
 class RestTest < ActiveSupport::TestCase
 
@@ -235,9 +234,14 @@ class RestTest < ActiveSupport::TestCase
 
   end
   def get(user, pw, url)
-    conn = Faraday.new( :url => ENV['BROWSER_URL'] )
-    conn.basic_auth( user, pw )
-    response = conn.get url
+
+    response = UserAgent.get(
+      :url => ENV['BROWSER_URL'],
+      {
+        :user     => user,
+        :password => pw,
+      }
+    )
 #    puts 'URL: ' + url
 #    puts response.body.to_s
     data = JSON.parse( response.body )

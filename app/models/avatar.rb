@@ -22,7 +22,6 @@ add an avatar based on auto detection (email address)
 
     # return if we run import mode
     return if Setting.get('import_mode')
-
     return if !data[:url]
     return if data[:url].empty?
 
@@ -116,7 +115,13 @@ add a avatar
       end
 
       # fetch image
-      response = UserAgent.request( data[:url] )
+      response = UserAgent.get(
+        data[:url],
+        {
+          :open_timeout => 4,
+          :read_timeout => 6,
+        },
+      )
       if !response.success?
         #puts "WARNING: Can't fetch '#{self.image_source}' (maybe no avatar available), http code: #{response.code.to_s}"
         #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"

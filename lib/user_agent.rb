@@ -9,28 +9,13 @@ class UserAgent
 
 =begin
 
-http/https/ftp calls
+get http/https calls
 
-  result = UserAgent.request( 'ftp://host/some_dir/some_file.bin' )
+  result = UserAgent.get( 'http://host/some_dir/some_file?param1=123' )
 
-  result = UserAgent.request( 'http://host/some_dir/some_file.bin' )
-
-  result = UserAgent.request( 'https://host/some_dir/some_file.bin' )
-
-  # post request
-  result = UserAgent.request(
-    'http://host/some_dir/some_file.bin',
-    {
-      :method => 'post',
-      :data   => { :param1 => 123 },
-    },
-  )
-
-  # get request
-  result = UserAgent.request(
+  result = UserAgent.get(
     'http://host/some_dir/some_file?param1=123',
     {
-      :method       => 'get',
       :open_timeout => 2,
       :read_timeout => 4,
     },
@@ -42,6 +27,190 @@ returns
 
 =end
 
+  def self.get(url, options = {}, count = 10)
+    uri  = URI.parse(url)
+    http = get_http(uri, options)
+
+    # prepare request
+    request = Net::HTTP::Get.new( uri, {'User-Agent' => 'Zammad User Agent'} )
+
+    # http basic auth (if needed)
+    request = set_basic_auth(request, options)
+
+    # start http call
+    begin
+      response = http.request(request)
+      return process(response, uri, count, options)
+    rescue Exception => e
+      return Result.new(
+        :error   => e.inspect,
+        :success => false,
+        :code    => 0,
+      )
+    end
+  end
+
+=begin
+
+post http/https calls
+
+  result = UserAgent.post(
+    'http://host/some_dir/some_file',
+    {
+      :param1 => 1,
+      :param2 => 2,
+    },
+    {
+      :open_timeout => 2,
+      :read_timeout => 4,
+    },
+  )
+
+returns
+
+  result # result object
+
+=end
+
+  def self.post(url, params = {}, options = {}, count = 10)
+    uri  = URI.parse(url)
+    http = get_http(uri, options)
+
+    # prepare request
+    request = Net::HTTP::Post.new( uri, {'User-Agent' => 'Zammad User Agent'} )
+
+    # set params
+    request.set_form_data( params )
+
+    # http basic auth (if needed)
+    request = set_basic_auth(request, options)
+
+    # start http call
+    begin
+      response = http.request(request)
+      return process(response, uri, count, options)
+    rescue Exception => e
+      return Result.new(
+        :error   => e.inspect,
+        :success => false,
+        :code    => 0,
+      )
+    end
+  end
+
+=begin
+
+put http/https calls
+
+  result = UserAgent.put(
+    'http://host/some_dir/some_file',
+    {
+      :param1 => 1,
+      :param2 => 2,
+    },
+    {
+      :open_timeout => 2,
+      :read_timeout => 4,
+    },
+  )
+
+returns
+
+  result # result object
+
+=end
+
+  def self.put(url, params = {}, options = {}, count = 10)
+    uri  = URI.parse(url)
+    http = get_http(uri, options)
+
+    # prepare request
+    request = Net::HTTP::Put.new( uri, {'User-Agent' => 'Zammad User Agent'} )
+
+    # set params
+    request.set_form_data( params )
+
+    # http basic auth (if needed)
+    request = set_basic_auth(request, options)
+
+    # start http call
+    begin
+      response = http.request(request)
+      return process(response, uri, count, options)
+    rescue Exception => e
+      return Result.new(
+        :error   => e.inspect,
+        :success => false,
+        :code    => 0,
+      )
+    end
+  end
+
+=begin
+
+delete http/https calls
+
+  result = UserAgent.delete(
+    'http://host/some_dir/some_file',
+    {
+      :open_timeout => 2,
+      :read_timeout => 4,
+    },
+  )
+
+returns
+
+  result # result object
+
+=end
+
+  def self.delete(url, options = {}, count = 10)
+    uri  = URI.parse(url)
+    http = get_http(uri, options)
+
+    # prepare request
+    request = Net::HTTP::Delete.new( uri, {'User-Agent' => 'Zammad User Agent'} )
+
+    # http basic auth (if needed)
+    request = set_basic_auth(request, options)
+
+    # start http call
+    begin
+      response = http.request(request)
+      return process(response, uri, count, options)
+    rescue Exception => e
+      return Result.new(
+        :error   => e.inspect,
+        :success => false,
+        :code    => 0,
+      )
+    end
+  end
+
+=begin
+
+perform get http/https/ftp calls
+
+  result = UserAgent.request( 'ftp://host/some_dir/some_file.bin' )
+
+  result = UserAgent.request( 'http://host/some_dir/some_file.bin' )
+
+  result = UserAgent.request( 'https://host/some_dir/some_file.bin' )
+
+  # get request
+  result = UserAgent.request(
+    'http://host/some_dir/some_file?param1=123',
+    {
+      :open_timeout => 2,
+      :read_timeout => 4,
+    },
+  )
+
+returns
+
+  result # result object
+
+=end
 
   def self.request(url, options = {})
 
@@ -50,18 +219,17 @@ returns
     when /ftp/
       ftp(uri, options)
     when /http|https/
-      http(uri, options, 10)
+      get( url, options )
     end
 
   end
 
   private
-    def self.http(uri, options, count)
-
+    def self.get_http(uri, options)
       http = Net::HTTP.new(uri.host, uri.port)
 
-      http.open_timeout = options[:open_timeout] || 8
-      http.read_timeout = options[:read_timeout] || 8
+      http.open_timeout = options[:open_timeout] || 4
+      http.read_timeout = options[:read_timeout] || 10
 
       if uri.scheme =~ /https/i
         http.use_ssl = true
@@ -69,45 +237,19 @@ returns
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
 
-      if !options[:method] || options[:method] =~ /^get$/i
-        request = Net::HTTP::Get.new(uri.request_uri)
+      http
+    end
 
-        # http basic auth (if needed)
-        if options[:user] && options[:user] != '' && options[:password] && options[:password] != ''
-          request.basic_auth options[:user], options[:password]
-        end
+    def self.set_basic_auth(request, options)
 
-        begin
-          response = http.request(request)
-        rescue Exception => e
-          return Result.new(
-            :error   => e.inspect,
-            :success => false,
-            :code    => 0,
-          )
-        end
-      elsif options[:method] =~ /^post$/i
-        request = Net::HTTP::Post.new(uri.request_uri)
-
-        # http basic auth (if needed)
-        if options[:user] && options[:user] != '' && options[:password] && options[:password] != ''
-          request.basic_auth options[:user], options[:password]
-        end
-
-        begin
-          request.set_form_data( options[:data] )
-          response = http.request(request)
-        rescue Exception => e
-          return Result.new(
-            :error   => e.inspect,
-            :success => false,
-            :code    => 0,
-          )
-        end
-      else
-        raise "Unknown method '#{options[:method]}'"
+      # http basic auth (if needed)
+      if options[:user] && options[:user] != '' && options[:password] && options[:password] != ''
+        request.basic_auth options[:user], options[:password]
       end
+      request
+    end
 
+    def self.process(response, uri, count, options = {})
       if !response
         return Result.new(
           :error   => "Can't connect to #{uri.to_s}, got no response!",
@@ -138,9 +280,8 @@ returns
         )
       when Net::HTTPRedirection
         raise "Too many redirections for the original URL, halting." if count <= 0
-        url = response["location"]
-        uri = URI.parse(url)
-        return http(uri, options, count - 1)
+        url = response['location']
+        return get(url, options, count - 1)
 
       when Net::HTTPOK
         return Result.new(
@@ -178,7 +319,7 @@ returns
             return Result.new(
               :error   => e.inspect,
               :success => false,
-              :code    => 550,
+              :code    => '550',
             )
           end
         end
@@ -186,6 +327,7 @@ returns
         return Result.new(
           :error   => e.inspect,
           :success => false,
+          :code    => 0,
         )
       end
 
@@ -194,7 +336,7 @@ returns
       Result.new(
         :body    => contents,
         :success => true,
-        :code    => 200,
+        :code    => '200',
       )
     end
 
