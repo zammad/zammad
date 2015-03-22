@@ -25,8 +25,7 @@ class _trackSingleton
     @browser = App.Browser.detection()
     @data    = []
 #    @url     = 'http://localhost:3005/api/v1/ui'
-#    @url     = 'https://log.znuny.com/api/ui'
-    @url     = 'https://portal.znuny.com/api/v1/ui'
+    @url     = 'https://log.zammad.com/api/v1/ui'
 
     @log( 'start', 'notice', {} )
 
