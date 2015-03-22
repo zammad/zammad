@@ -221,9 +221,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     }
     sleep 5
     Sessions.create( client_id1_0, agent1.attributes, { :type => 'websocket' } )
-    sleep 5.5
+    sleep 6.5
     Sessions.create( client_id1_1, agent1.attributes, { :type => 'websocket' } )
-    sleep 1.2
+    sleep 3.2
     Sessions.create( client_id2, agent2.attributes, { :type => 'ajax' } )
 
     # check if session exists
