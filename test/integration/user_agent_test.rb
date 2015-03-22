@@ -3,6 +3,7 @@ require 'integration_test_helper'
 
 class UserAgentTest < ActiveSupport::TestCase
   host = 'https://r2d2.znuny.com'
+  #host = 'http://127.0.0.1:3003'
 
   # check
   test 'check some results' do
