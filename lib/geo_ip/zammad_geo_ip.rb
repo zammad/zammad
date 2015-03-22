@@ -11,7 +11,7 @@ class GeoIp::ZammadGeoIp
     return cache if cache
 
     # do lookup
-    host = "http://geo.zammad.com"
+    host = "https://geo.zammad.com"
     url  = "/lookup?ip=#{CGI::escape address}"
     data = {}
     begin
