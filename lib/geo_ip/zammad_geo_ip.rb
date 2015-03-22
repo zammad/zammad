@@ -28,6 +28,12 @@ class GeoIp::ZammadGeoIp
       end
 
       data = JSON.parse( response.body )
+
+      # compat. map
+      if data && data['country_code2']
+        data['country_code'] = data['country_code2']
+      end
+
       Cache.write( cache_key, data, { :expires_in => 90.days } )
     rescue => e
       puts "ERROR: #{host}#{url}: " + e.inspect
