@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
     #session[:ping] = Time.now.utc.iso8601
     session[:ping] = DateTime.now.iso8601
 
-    # check if remote ip need to be updated @TODO Move this into model
+    # check if remote ip need to be updated
     if !session[:remote_id] || session[:remote_id] != request.remote_ip
       session[:remote_id]  = request.remote_ip
       session[:geo]        = GeoIp.location( request.remote_ip )

@@ -16,8 +16,8 @@
     <% for session in @sessions: %>
     <tr>
       <td><% if session.data.user: %><%= session.data.user.displayName() %><% end %></td>
-      <td><% if session.data.user_agent: %><%= session.data.user_agent %><% end %></td>
-      <td><% if session.data.geo: %><%= session.data.geo.country_code %> <%= session.data.geo.city %><% end %></td>
+      <td title="<%= session.data.user_agent %>"><%= session.data.user_agent %></td>
+      <td title="<%= session.data.remote_id %>"><% if session.data.geo && session.data.geo.country_name: %><%= session.data.geo.country_name %> <%= session.data.geo.city_name %><% else: %><%= session.data.remote_id %><% end %></td>
       <td><span class="humanTimeFromNow" data-time="<%- session.created_at %>">?</span></td>
       <td><span class="humanTimeFromNow" data-time="<%- session.updated_at %>">?</span></td>
       <td><a href="#" data-session-id="<%- session.id %>" data-type="delete" class="glyphicon glyphicon-trash" title="<%- @T('Delete') %>"></a></td>
