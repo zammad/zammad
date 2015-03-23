@@ -314,6 +314,18 @@ returns
           :success      => true,
           :code         => response.code,
         )
+      when Net::HTTPCreated
+        data = nil
+        if options[:json] && response.body
+          data = JSON.parse( response.body )
+        end
+        return Result.new(
+          :data         => data,
+          :body         => response.body,
+          :content_type => response['Content-Type'],
+          :success      => true,
+          :code         => response.code,
+        )
       end
 
       raise "Unable to process http call '#{response.inspect}'"
