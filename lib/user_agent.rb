@@ -304,7 +304,7 @@ returns
 
       when Net::HTTPOK
         data = nil
-        if options[:json] && response.body
+        if options[:json] && !options[:jsonParseDisable] && response.body
           data = JSON.parse( response.body )
         end
         return Result.new(
@@ -316,7 +316,7 @@ returns
         )
       when Net::HTTPCreated
         data = nil
-        if options[:json] && response.body
+        if options[:json] && !options[:jsonParseDisable] && response.body
           data = JSON.parse( response.body )
         end
         return Result.new(
