@@ -55,6 +55,7 @@ module Import::OTRS2
     puts 'GET: ' + url
     response = UserAgent.get(
       url,
+      {},
       {
         :open_timeout => 6,
         :read_timeout => 60,

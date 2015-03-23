@@ -117,6 +117,7 @@ add a avatar
       # fetch image
       response = UserAgent.get(
         data[:url],
+        {},
         {
           :open_timeout => 4,
           :read_timeout => 6,

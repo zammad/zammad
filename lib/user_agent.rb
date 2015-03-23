@@ -16,6 +16,9 @@ get http/https calls
   result = UserAgent.get(
     'http://host/some_dir/some_file?param1=123',
     {
+      :param1 => 'some value',
+    },
+    {
       :open_timeout => 2,
       :read_timeout => 4,
     },
@@ -27,7 +30,7 @@ returns
 
 =end
 
-  def self.get(url, options = {}, count = 10)
+  def self.get(url, params = {}, options = {}, count = 10)
     uri  = URI.parse(url)
     http = get_http(uri, options)
 
@@ -37,10 +40,13 @@ returns
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
 
+    # set params
+    request = set_params(request, params, options)
+
     # start http call
     begin
       response = http.request(request)
-      return process(response, uri, count, options)
+      return process(response, uri, count, params, options)
     rescue Exception => e
       return Result.new(
         :error   => e.inspect,
@@ -80,7 +86,7 @@ returns
     request = Net::HTTP::Post.new( uri, {'User-Agent' => 'Zammad User Agent'} )
 
     # set params
-    request.set_form_data( params )
+    request = set_params(request, params, options)
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
@@ -88,7 +94,7 @@ returns
     # start http call
     begin
       response = http.request(request)
-      return process(response, uri, count, options)
+      return process(response, uri, count, params, options)
     rescue Exception => e
       return Result.new(
         :error   => e.inspect,
@@ -128,7 +134,7 @@ returns
     request = Net::HTTP::Put.new( uri, {'User-Agent' => 'Zammad User Agent'} )
 
     # set params
-    request.set_form_data( params )
+    request = set_params(request, params, options)
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
@@ -136,7 +142,7 @@ returns
     # start http call
     begin
       response = http.request(request)
-      return process(response, uri, count, options)
+      return process(response, uri, count, params, options)
     rescue Exception => e
       return Result.new(
         :error   => e.inspect,
@@ -177,7 +183,7 @@ returns
     # start http call
     begin
       response = http.request(request)
-      return process(response, uri, count, options)
+      return process(response, uri, count, {}, options)
     rescue Exception => e
       return Result.new(
         :error   => e.inspect,
@@ -219,7 +225,7 @@ returns
     when /ftp/
       ftp(uri, options)
     when /http|https/
-      get( url, options )
+      get( url, {}, options )
     end
 
   end
@@ -249,7 +255,20 @@ returns
       request
     end
 
-    def self.process(response, uri, count, options = {})
+    def self.set_params(request, params, options)
+      if options[:json]
+        request.add_field("Content-Type", "application/json")
+        if !params.empty?
+          request.body = params.to_json
+        end
+      else
+        if !params.empty?
+          request.set_form_data( params )
+        end
+      end
+      request
+    end
+    def self.process(response, uri, count, params, options)
       if !response
         return Result.new(
           :error   => "Can't connect to #{uri.to_s}, got no response!",
@@ -281,10 +300,15 @@ returns
       when Net::HTTPRedirection
         raise "Too many redirections for the original URL, halting." if count <= 0
         url = response['location']
-        return get(url, options, count - 1)
+        return get(url, params, options, count - 1)
 
       when Net::HTTPOK
+        data = nil
+        if options[:json] && response.body
+          data = JSON.parse( response.body )
+        end
         return Result.new(
+          :data         => data,
           :body         => response.body,
           :content_type => response['Content-Type'],
           :success      => true,
@@ -344,6 +368,7 @@ returns
     def initialize(options)
       @success      = options[:success]
       @body         = options[:body]
+      @data         = options[:data]
       @code         = options[:code]
       @content_type = options[:content_type]
       @error        = options[:error]
@@ -356,6 +381,9 @@ returns
     end
     def body
       @body
+    end
+    def data
+      @data
     end
     def code
       @code

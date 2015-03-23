@@ -17,7 +17,9 @@ class GeoIp::ZammadGeoIp
     begin
       response = UserAgent.get(
         "#{host}#{url}",
+        {},
         {
+          :json         => true,
           :open_timeout => 2,
           :read_timeout => 4,
         },
@@ -26,7 +28,7 @@ class GeoIp::ZammadGeoIp
         raise "ERROR: #{response.code.to_s}/#{response.body}"
       end
 
-      data = JSON.parse( response.body )
+      data = response.data
 
       # compat. map
       if data && data['country_code2']

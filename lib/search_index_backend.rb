@@ -43,18 +43,23 @@ create/update/delete index
       return SearchIndexBackend.remove( data[:name] )
     end
 
-    puts "# curl -X PUT \"#{url}\" -d '#{data[:data].to_json}'"
+    puts "# curl -X PUT \"#{url}\" \\"
+    #puts "-d '#{data[:data].to_json}'"
 
-    conn     = connection( url )
-    response = conn.put do |req|
-      req.url url
-      req.headers['Content-Type'] = 'application/json'
-      req.body = data[:data].to_json
-    end
-    puts "# #{response.status.to_s}"
+    response = UserAgent.put(
+      url,
+      data[:data],
+      {
+        :json         => true,
+        :open_timeout => 5,
+        :read_timeout => 14,
+        :user         => Setting.get('es_user'),
+        :password     => Setting.get('es_password'),
+      }
+    )
+    puts "# #{response.code.to_s}"
     return true if response.success?
-    data = JSON.parse( response.body )
-    raise data.inspect
+    raise response.body
   end
 
 =begin
@@ -70,18 +75,23 @@ add new object to search index
     url = build_url( type, data['id'] )
     return if !url
 
-    puts "# curl -X POST \"#{url}\" -d '#{data.to_json}'"
+    puts "# curl -X POST \"#{url}\" \\"
+    #puts "-d '#{data.to_json}'"
 
-    conn     = connection( url )
-    response = conn.post do |req|
-      req.url url
-      req.headers['Content-Type'] = 'application/json'
-      req.body = data.to_json
-    end
-    puts "# #{response.status.to_s}"
+    response = UserAgent.post(
+      url,
+      data,
+      {
+        :json         => true,
+        :open_timeout => 5,
+        :read_timeout => 14,
+        :user         => Setting.get('es_user'),
+        :password     => Setting.get('es_password'),
+      }
+    )
+    puts "# #{response.code.to_s}"
     return true if response.success?
-    data = JSON.parse( response.body )
-    raise data.inspect
+    raise response.body
   end
 
 =begin
@@ -100,13 +110,18 @@ remove whole data from index
 
     puts "# curl -X DELETE \"#{url}\""
 
-    conn     = connection( url )
-    response = conn.delete( url )
-    puts "# #{response.status.to_s}"
-    return false if !response.success?
-    data = JSON.parse( response.body )
-#    raise data.inspect
-    return { :data => data, :response => response }
+    response = UserAgent.delete(
+      url,
+      {
+        :open_timeout => 5,
+        :read_timeout => 14,
+        :user         => Setting.get('es_user'),
+        :password     => Setting.get('es_password'),
+      }
+    )
+    #puts "# #{response.code.to_s}"
+    return true if response.success?
+    #raise response.body
   end
 
 =begin
@@ -177,19 +192,27 @@ return search result
     }
     data['query']['bool']['must'].push condition
 
-    puts "# curl -X POST \"#{url}\" -d '#{data.to_json}'"
+    puts "# curl -X POST \"#{url}\" \\"
+    #puts " -d'#{data.to_json}'"
 
-    conn     = connection( url )
-    response = conn.get do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.body = data.to_json
-    end
-    puts "# #{response.status.to_s}"
-    data = JSON.parse( response.body )
+    response = UserAgent.get(
+      url,
+      data,
+      {
+        :json         => true,
+        :open_timeout => 5,
+        :read_timeout => 14,
+        :user         => Setting.get('es_user'),
+        :password     => Setting.get('es_password'),
+      }
+    )
+
+    puts "# #{response.code.to_s}"
     if !response.success?
       return []
 #      raise data.inspect
     end
+    data = response.data
 
     ids = []
     return ids if !data
@@ -237,16 +260,6 @@ return true if backend is configured
       url = "#{url}/#{index}"
     end
     url
-  end
-
-  def self.connection( url )
-    conn = Faraday.new( :url => url, :request => { :open_timeout => 5, :timeout => 10 } )
-    user = Setting.get('es_user')
-    pw   = Setting.get('es_password')
-    if user && !user.empty? && pw && !pw.empty?
-      conn.basic_auth( user, pw )
-    end
-    conn
   end
 
 end

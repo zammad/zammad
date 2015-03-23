@@ -231,7 +231,9 @@ class RestTest < ActiveSupport::TestCase
 
     response = UserAgent.get(
       "#{ENV['BROWSER_URL']}#{url}",
+      {},
       {
+        :json     => true,
         :user     => user,
         :password => pw,
       }
@@ -239,11 +241,7 @@ class RestTest < ActiveSupport::TestCase
     #puts 'URL: ' + url
     #puts response.code.to_s
     #puts response.body.to_s
-    data = nil
-    if response.body
-      data = JSON.parse( response.body )
-    end
-    return { :data => data, :response => response }
+    return { :data => response.data, :response => response }
   end
 end
 

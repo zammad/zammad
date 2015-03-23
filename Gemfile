@@ -58,15 +58,6 @@ gem 'net-ldap'
 
 gem 'writeexcel'
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug'
-
 # event machine
 gem 'eventmachine'
 gem 'em-websocket'
@@ -85,9 +76,6 @@ group :development, :test do
 
     # UI tests w/ Selenium
     gem 'selenium-webdriver'
-
-    # rest client lib for unit tests
-    gem 'faraday'
 
     # livereload on template changes (html, js, css)
     gem 'guard', '>= 2.2.2', :require => false

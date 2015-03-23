@@ -18,6 +18,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
+    assert(result.body =~ /"text\/plain"/)
 
     # get / 404
     result = UserAgent.get(
@@ -41,6 +42,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"post"/)
     assert(result.body =~ /"some value"/)
+    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
 
     # post / 404
     result = UserAgent.post(
@@ -67,6 +69,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"put"/)
     assert(result.body =~ /"some value"/)
+    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
 
     # put / 404
     result = UserAgent.put(
@@ -89,6 +92,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"delete"/)
+    assert(result.body =~ /"text\/plain"/)
 
     # delete / 404
     result = UserAgent.delete(
@@ -106,6 +110,7 @@ class UserAgentTest < ActiveSupport::TestCase
     # get / 200
     result = UserAgent.get(
       "#{host}/test_basic_auth/get/1?submitted=123",
+      {},
       {
         :user     => 'basic_auth_user',
         :password => 'test123',
@@ -117,10 +122,12 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
+    assert(result.body =~ /"text\/plain"/)
 
     # get / 401
     result = UserAgent.get(
       "#{host}/test_basic_auth/get/1?submitted=123",
+      {},
       {
         :user     => 'basic_auth_user_not_existing',
         :password => 'test<>123',
@@ -148,6 +155,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"post"/)
     assert(result.body =~ /"some value"/)
+    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
 
     # post / 401
     result = UserAgent.post(
@@ -182,6 +190,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"put"/)
     assert(result.body =~ /"some value"/)
+    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
 
     # put / 401
     result = UserAgent.put(
@@ -213,6 +222,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"delete"/)
+    assert(result.body =~ /"text\/plain"/)
 
     # delete / 401
     result = UserAgent.delete(
@@ -241,6 +251,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"abc"/)
+    assert(result.body =~ /"text\/plain"/)
 
 
     # get / 301
@@ -257,6 +268,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"abc"/)
+    assert(result.body =~ /"text\/plain"/)
 
 
     # get / 401
@@ -286,6 +298,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
+    assert(result.body =~ /"text\/plain"/)
 
     # ftp / 200
     result = UserAgent.request(
@@ -378,6 +391,7 @@ class UserAgentTest < ActiveSupport::TestCase
     # get / timeout
     result = UserAgent.get(
       "#{host}/test/get/3?submitted=123",
+      {},
       {
         :open_timeout => 1,
         :read_timeout => 1,
@@ -403,6 +417,62 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(false, result.success?)
     assert_equal(0, result.code)
     assert_equal(NilClass, result.body.class)
+  end
+
+  # check
+  test 'check json' do
+
+    # get / 200
+    result = UserAgent.get(
+      "#{host}/test/get/1",
+      {
+        :submitted => { :key => 'some value ' }
+      },
+      {
+        :json => true,
+      }
+    )
+    assert(result)
+    assert_equal(true, result.success?)
+    assert_equal('200', result.code)
+    assert_equal(String, result.body.class)
+    assert(result.body =~ /"content_type_requested"/)
+    assert(result.body =~ /"application\/json"/)
+    assert_equal('some value ', result.data['submitted']['key'])
+
+    # get / 401
+    result = UserAgent.get(
+      "#{host}/test/not_existing",
+      {
+        :submitted => { :key => 'some value ' }
+      },
+      {
+        :json => true,
+      }
+    )
+    assert(result)
+    assert_equal(false, result.success?)
+    assert_equal('404', result.code)
+    assert_equal(NilClass, result.body.class)
+    assert(!result.data)
+
+    # post / 200
+    result = UserAgent.post(
+      "#{host}/test/post/1",
+      {
+        :submitted => { :key => 'some value ' }
+      },
+      {
+        :json => true,
+      }
+    )
+    assert(result)
+    assert_equal(true, result.success?)
+    assert_equal('200', result.code)
+    assert_equal(String, result.body.class)
+    assert(result.body =~ /"content_type_requested"/)
+    assert(result.body =~ /"application\/json"/)
+    assert_equal('some value ', result.data['submitted']['key'])
   end
 
 end
