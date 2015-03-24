@@ -268,6 +268,7 @@ returns
       end
       request
     end
+
     def self.process(response, uri, count, params, options)
       if !response
         return Result.new(
@@ -284,7 +285,6 @@ returns
           :success => false,
           :code    => response.code,
         )
-
       when Net::HTTPClientError
         return Result.new(
           :error   => "Client Error: #{response.inspect}!",
@@ -301,7 +301,6 @@ returns
         raise "Too many redirections for the original URL, halting." if count <= 0
         url = response['location']
         return get(url, params, options, count - 1)
-
       when Net::HTTPOK
         data = nil
         if options[:json] && !options[:jsonParseDisable] && response.body
