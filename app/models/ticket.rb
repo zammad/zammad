@@ -213,6 +213,9 @@ returns
 
     # delete articles
     self.articles.destroy_all
+
+    # destroy online notifications
+    OnlineNotification.remove( self.class.to_s, self.id )
   end
 
 end

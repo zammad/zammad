@@ -13,12 +13,12 @@ class OnlineNotification < ApplicationModel
 add a new online notification for this user
 
   OnlineNotification.add(
-    :type             => 'Assigned to you',
-    :object           => 'Ticket',
-    :o_id             => ticket.id,
-    :seen             => false,
-    :created_by_id    => 1,
-    :user_id          => 2,
+    :type          => 'Assigned to you',
+    :object        => 'Ticket',
+    :o_id          => ticket.id,
+    :seen          => false,
+    :created_by_id => 1,
+    :user_id       => 2,
   )
 
 =end
@@ -50,9 +50,9 @@ add a new online notification for this user
 mark online notification as seen
 
   OnlineNotification.seen(
-    :id          => 2,
-    :user        => UserObject, #optional, if passed all 
-                       #notfications for the given user are marked as seen
+    :id   => 2,
+    :user => UserObject, # optional, if passed all
+                         # notfications for the given user are marked as seen
   )
 
 =end
@@ -92,6 +92,34 @@ return all online notifications of an user
     notifications = OnlineNotification.where(:user_id => user.id).
       order( 'created_at DESC, id DESC' ).
       limit( limit )
+    list = []
+    notifications.each do |item|
+      data = item.attributes
+      data['object']  = ObjectLookup.by_id( data['object_lookup_id'] )
+      data['type']    = TypeLookup.by_id( data['type_lookup_id'] )
+      data.delete('object_lookup_id')
+      data.delete('type_lookup_id')
+      list.push data
+    end
+    list
+  end
+
+=begin
+
+return all online notifications of an object
+
+  notifications = OnlineNotification.by_object( 'Ticket', 123 )
+
+=end
+
+  def self.by_object( object_name, o_id )
+    object_id = ObjectLookup.by_name( object_name )
+    notifications = OnlineNotification.where(
+      :object_lookup_id  => object_id,
+      :o_id              => o_id,
+    ).
+      order( 'created_at DESC, id DESC' ).
+      limit( 10_000 )
     list = []
     notifications.each do |item|
       data = item.attributes

@@ -2,8 +2,8 @@
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
-  role  = Role.lookup( :name => 'Agent' )
-  group = Group.lookup( :name => 'Users' )
+  role        = Role.lookup( :name => 'Agent' )
+  group       = Group.lookup( :name => 'Users' )
   agent_user1 = User.create_or_update(
     :login         => 'agent_online_notify1',
     :firstname     => 'Bob',
@@ -118,6 +118,10 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       ticket.destroy
       found = Ticket.where( :id => ticket_id ).first
       assert( !found, "Ticket destroyed")
+
+      # check if notifications for ticket still exist
+      notifications = OnlineNotification.by_object( 'Ticket', ticket_id )
+      assert( notifications.empty?, "still notifications for destroyed ticket available")
     }
   end
 
