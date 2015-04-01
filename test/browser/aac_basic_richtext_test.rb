@@ -3,7 +3,6 @@ require 'browser_test_helper'
 
 class AACBasicRichtextTest < TestCase
   def test_richtext
-    return
     @browser = browser_instance
     login(
       :username => 'master@example.com',
