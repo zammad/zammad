@@ -28,3 +28,37 @@ $.fn.popover.Constructor.prototype.leave = function(obj){
     })
   }
 };
+
+/*
+
+  Add global 10px padding
+
+*/
+
+$.fn.popover.Constructor.DEFAULTS.viewport.padding = 10;
+
+/* 
+
+  Extend zammad popover template
+
+  adds a popover-body around popover-title and popover-content 
+  to make the popover scrollable without hiding the arrow
+
+*/
+
+$.fn.popover.Constructor.DEFAULTS.template = '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-body"><h2 class="popover-title"></h2><div class="popover-content"></div></div></div>';
+
+/*
+
+  Add maxHeight to popovers
+
+*/
+
+var originalShow = $.fn.popover.Constructor.prototype.show;
+
+$.fn.popover.Constructor.prototype.show = function(){
+  originalShow.call(this);
+
+  var maxHeight = $(this.options.viewport.selector).height() - 2 * this.options.viewport.padding;
+  this.$tip.find('.popover-body').css('maxHeight', maxHeight);
+}

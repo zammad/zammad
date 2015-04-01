@@ -1,17 +1,14 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: "Fira Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.45;
   font-weight: normal;
   background: hsl(210,17%,98%);
+  height: 100%;
 }
-
-/* TODO: @mrflix, do we need this at this level?
-p, 
-ol, 
-ul {
-  color: #bcbcbb;
-}
-*/
 
 p {
   margin: 14px 0;
@@ -2818,8 +2815,11 @@ footer {
   z-index: 1110;
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
   word-wrap: break-word;
-  // max-height: calc(100vh - 20px);
 }
+
+  .popover-body {
+    overflow: auto;
+  }
 
   .popover-title {
     border: none;
@@ -2829,7 +2829,6 @@ footer {
 
   .popover-content {
     padding: 0 17px 10px;
-    overflow-y: auto;
   }
 
   .popover.right { margin-left: 4px; }
