@@ -77,6 +77,51 @@ class OnlineNotificationTest < ActiveSupport::TestCase
           },
         ]
       },
+
+      # test 2
+      {
+        :create => {
+          :ticket => {
+            :group_id       => Group.lookup( :name => 'Users' ).id,
+            :customer_id    => customer_user.id,
+            :owner_id       => User.lookup( :login => '-' ).id,
+            :title          => 'Unit Test 2 (äöüß)!',
+            :state_id       => Ticket::State.lookup( :name => 'new' ).id,
+            :priority_id    => Ticket::Priority.lookup( :name => '2 normal' ).id,
+            :updated_by_id  => agent_user1.id,
+            :created_by_id  => agent_user1.id,
+          },
+          :article => {
+            :updated_by_id  => agent_user1.id,
+            :created_by_id  => agent_user1.id,
+            :type_id        => Ticket::Article::Type.lookup( :name => 'phone' ).id,
+            :sender_id      => Ticket::Article::Sender.lookup( :name => 'Customer' ).id,
+            :from           => 'Unit Test <unittest@example.com>',
+            :body           => 'Unit Test 123',
+            :internal       => false
+          },
+        },
+        :update => {
+          :ticket => {
+            :title       => 'Unit Test 2 (äöüß) - update!',
+            :state_id    => Ticket::State.lookup( :name => 'open' ).id,
+            :priority_id => Ticket::Priority.lookup( :name => '1 low' ).id,
+            :updated_by_id  => customer_user.id,
+          },
+        },
+        :check => [
+         {
+            :type          => 'create',
+            :object        => 'Ticket',
+            :created_by_id => agent_user1.id,
+          },
+         {
+            :type          => 'update',
+            :object        => 'Ticket',
+            :created_by_id => customer_user.id,
+          },
+        ]
+      },
     ]
     tickets = []
     tests.each { |test|
@@ -112,6 +157,18 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       notification_check( OnlineNotification.list(agent_user2, 10), test[:check] )
     }
 
+    # merge tickets - also remove notifications of merged tickets
+    tickets[0].merge_to(
+      :ticket_id => tickets[1].id,
+      :user_id   => 1,
+    )
+    notifications = OnlineNotification.list_by_object( 'Ticket', tickets[0].id, false )
+    assert( notifications.empty?, "still not seen notifications for merged ticket available")
+
+    notifications = OnlineNotification.list_by_object( 'Ticket', tickets[1].id, true )
+    assert( notifications.empty?, "no notifications for master ticket available")
+
+
     # delete tickets
     tickets.each { |ticket|
       ticket_id = ticket.id
@@ -120,7 +177,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       assert( !found, "Ticket destroyed")
 
       # check if notifications for ticket still exist
-      notifications = OnlineNotification.by_object( 'Ticket', ticket_id )
+      notifications = OnlineNotification.list_by_object( 'Ticket', ticket_id )
       assert( notifications.empty?, "still notifications for destroyed ticket available")
     }
   end

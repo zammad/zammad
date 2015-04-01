@@ -116,6 +116,7 @@ merge tickets
   ticket = Ticket.find(123)
   result = ticket.merge_to(
     :ticket_id => 123,
+    :user_id   => 123,
   )
 
 returns
@@ -141,11 +142,13 @@ returns
 
     # create new merge article
     Ticket::Article.create(
-      :ticket_id  => self.id,
-      :type_id    => Ticket::Article::Type.lookup( :name => 'note' ).id,
-      :sender_id  => Ticket::Article::Sender.lookup( :name => Z_ROLENAME_AGENT ).id,
-      :body       => 'merged',
-      :internal   => false
+      :ticket_id     => self.id,
+      :type_id       => Ticket::Article::Type.lookup( :name => 'note' ).id,
+      :sender_id     => Ticket::Article::Sender.lookup( :name => Z_ROLENAME_AGENT ).id,
+      :body          => 'merged',
+      :internal      => false,
+      :created_by_id => data[:user_id],
+      :updated_by_id => data[:user_id],
     )
 
     # add history to both
@@ -167,6 +170,11 @@ returns
 
     # save ticket
     self.save
+
+    # set all online notifications to seen
+    OnlineNotification.seen_by_object( 'Ticket', self.id )
+
+    true
   end
 
   private

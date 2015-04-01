@@ -50,9 +50,7 @@ add a new online notification for this user
 mark online notification as seen
 
   OnlineNotification.seen(
-    :id   => 2,
-    :user => UserObject, # optional, if passed all
-                         # notfications for the given user are marked as seen
+    :id => 2,
   )
 
 =end
@@ -108,18 +106,33 @@ return all online notifications of an user
 
 return all online notifications of an object
 
-  notifications = OnlineNotification.by_object( 'Ticket', 123 )
+  notifications = OnlineNotification.list_by_object( 'Ticket', 123 )
+
+optional with seend attribute
+
+  notifications = OnlineNotification.list_by_object( 'Ticket', 123, false )
+
 
 =end
 
-  def self.by_object( object_name, o_id )
+  def self.list_by_object( object_name, o_id, seen = nil)
     object_id = ObjectLookup.by_name( object_name )
-    notifications = OnlineNotification.where(
-      :object_lookup_id  => object_id,
-      :o_id              => o_id,
-    ).
-      order( 'created_at DESC, id DESC' ).
-      limit( 10_000 )
+    if seen == nil
+      notifications = OnlineNotification.where(
+        :object_lookup_id  => object_id,
+        :o_id              => o_id,
+      ).
+        order( 'created_at DESC, id DESC' ).
+        limit( 10_000 )
+    else
+      notifications = OnlineNotification.where(
+        :object_lookup_id  => object_id,
+        :o_id              => o_id,
+        :seen              => seen,
+      ).
+        order( 'created_at DESC, id DESC' ).
+        limit( 10_000 )
+    end
     list = []
     notifications.each do |item|
       data = item.attributes
@@ -130,6 +143,27 @@ return all online notifications of an object
       list.push data
     end
     list
+  end
+
+=begin
+
+mark online notification as seen by object
+
+  OnlineNotification.seen_by_object( 'Ticket', 123 )
+
+=end
+
+  def self.seen_by_object(object_name, o_id)
+      object_id     = ObjectLookup.by_name( object_name )
+      notifications = OnlineNotification.where(
+        :object_lookup_id  => object_id,
+        :o_id              => o_id,
+        :seen              => false,
+      )
+      notifications.each do |notification|
+        notification.seen = true
+        notification.save
+      end
   end
 
 =begin
