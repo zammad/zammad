@@ -108,31 +108,16 @@ return all online notifications of an object
 
   notifications = OnlineNotification.list_by_object( 'Ticket', 123 )
 
-optional with seend attribute
-
-  notifications = OnlineNotification.list_by_object( 'Ticket', 123, false )
-
-
 =end
 
-  def self.list_by_object( object_name, o_id, seen = nil)
+  def self.list_by_object( object_name, o_id)
     object_id = ObjectLookup.by_name( object_name )
-    if seen == nil
-      notifications = OnlineNotification.where(
-        :object_lookup_id  => object_id,
-        :o_id              => o_id,
-      ).
-        order( 'created_at DESC, id DESC' ).
-        limit( 10_000 )
-    else
-      notifications = OnlineNotification.where(
-        :object_lookup_id  => object_id,
-        :o_id              => o_id,
-        :seen              => seen,
-      ).
-        order( 'created_at DESC, id DESC' ).
-        limit( 10_000 )
-    end
+    notifications = OnlineNotification.where(
+      :object_lookup_id => object_id,
+      :o_id             => o_id,
+    ).
+      order( 'created_at DESC, id DESC' ).
+      limit( 10_000 )
     list = []
     notifications.each do |item|
       data = item.attributes
@@ -164,6 +149,7 @@ mark online notification as seen by object
         notification.seen = true
         notification.save
       end
+      true
   end
 
 =begin

@@ -41,6 +41,7 @@ module Zammad
       'observer::_ticket::_reset_new_state',
       'observer::_ticket::_escalation_calculation',
       'observer::_ticket::_ref_object_touch',
+      'observer::_ticket::_online_notification_seen',
       'observer::_tag::_ticket_history',
       'observer::_user::_ref_object_touch',
       'observer::_user::_geo',

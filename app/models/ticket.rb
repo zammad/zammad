@@ -170,11 +170,27 @@ returns
 
     # save ticket
     self.save
+  end
 
-    # set all online notifications to seen
-    OnlineNotification.seen_by_object( 'Ticket', self.id )
+=begin
 
-    true
+know if online notifcation should be shown as already seen
+
+  ticket = Ticket.find(1)
+  seen = ticket.online_notification_seen_state
+
+returns
+
+  result = [user1, user2, ...]
+
+=end
+
+  def online_notification_seen_state
+    state      = Ticket::State.lookup( :id => self.state_id )
+    state_type = Ticket::StateType.lookup( :id => state.state_type_id )
+    return true if state_type.name == 'closed'
+    return true if state_type.name == 'merged'
+    false
   end
 
   private
