@@ -2915,6 +2915,7 @@ footer {
 
     .popover-content {
       @extend .flex;
+      overflow-y: scroll;
     }
 
     &.is-overflowing .popover-notificationsHeader {
