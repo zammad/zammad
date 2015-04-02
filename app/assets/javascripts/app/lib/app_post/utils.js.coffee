@@ -16,6 +16,26 @@ class App.Utils
     ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
     ascii.replace(/<div><\/div>/g, '<div><br></div>')
 
+  # rawText = App.Utils.html2text( html )
+  @html2text: ( html ) ->
+    html = $('<div>' + html + '</div>')
+
+    # insert new lines
+    html.find('div, p, pre, code, center, blockquote, form, textarea, address, table, tr').replaceWith( ->
+      content = $(@).html() + "\n"
+      content
+        .replace(/<br>/g, "\n")
+        .replace(/<br\/>/g, "\n")
+    )
+
+    # replace <br> as string, is/was not possible throuh replaceWith
+    htmlTmp = html.html().replace(/<br>/g, "\n")
+
+    # trim and cleanup
+    $('<div>' + htmlTmp + '</div>').text().trim()
+      .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
+      .replace(/\r/g, "\n")           # cleanup
+
   # htmlEscapedAndLinkified = App.Utils.linkify( rawText )
   @linkify: (ascii) ->
     window.linkify( ascii )
@@ -165,6 +185,76 @@ class App.Utils
       false
     else
       true
+
+  # messageWithMarker = App.Utils.signatureIdentify( message, sender )
+  @signatureIdentify: (message, sender = false) ->
+    textToSearch = @html2text( message )
+
+    # count lines, if we do have lower the 10, ignore this
+    textToSearchInLines = textToSearch.split("\n")
+    return message if textToSearchInLines.length < 10
+
+    quote = (str) ->
+      (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
+
+    # search for signature seperator "--\n"
+    searchForSeperator = (textToSearchInLines) ->
+      for line in textToSearchInLines
+        if line && line.match( /^\s{0,10}--\s{0,10}$/ )
+          return line
+      false
+    marker = searchForSeperator(textToSearchInLines)
+
+    # search for Apple Mail
+    # On 01/04/15 10:55, Bob Smith wrote:
+    searchForAppleMail = (textToSearchInLines) ->
+      for line in textToSearchInLines
+        if line && line.match( /^(On|Am)\s.+?\s(wrote|schrieb):/ )
+          return line
+      false
+    if !marker
+      marker = searchForAppleMail(textToSearchInLines)
+
+    # search for otrs
+    # 25.02.2015 10:26 - edv hotline schrieb:
+    searchForOtrs = (textToSearchInLines) ->
+      for line in textToSearchInLines
+        if line && line.match( /^.+?\s.+?\s-\s.+?\s(wrote|schrieb):/ )
+          return line
+      false
+    if !marker
+      marker = searchForOtrs(textToSearchInLines)
+
+    # search for Ms
+    # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
+    # Send: Donnerstag, 2. April 2015 10:00
+    searchForMs = (textToSearchInLines) ->
+      fromFound = undefined
+      for line in textToSearchInLines
+        if !marker
+
+          # find Sent
+          if fromFound
+            if line && line.match( /^(Sent|Gesendet):\s.+?/)
+              return fromFound
+            else
+              fromFound = undefined
+
+          # find From
+          else
+            if line && line.match( /^(From|Von):\s.+?/)
+              fromFound = line
+      false
+    if !marker
+      marker = searchForMs(textToSearchInLines)
+
+    # if no marker is found, return
+    return message if !marker
+
+    # insert marker
+    markerTemplate = '<span class="js-signatureMarker"></span>'
+    regex = new RegExp( "\>(\s{0,10}#{quote(marker)})\s{0,10}\<" )
+    message.replace( regex, ">#{markerTemplate}\$1<" )
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
   @replaceTags: (template, objects) ->

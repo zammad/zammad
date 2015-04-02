@@ -484,13 +484,17 @@ class App.TicketZoom extends App.Controller
     )
 
     # set see more options
-    previewHeight = 270
+    maxHeight = 450
     @$('.textBubble-content').each( (index) ->
-      bubble = $( @ )
-      heigth = bubble.height()
-      if heigth > (previewHeight + 30)
+      bubble    = $( @ )
+      offsetTop = bubble.find('.js-signatureMarker').position()
+      heigth    = bubble.height()
+      if offsetTop
         bubble.attr('data-height', heigth)
-        bubble.css('height', "#{previewHeight}px")
+        bubble.css('height', "#{offsetTop.top + 42}px")
+      else if heigth > maxHeight
+        bubble.attr('data-height', heigth)
+        bubble.css('height', "#{maxHeight}px")
       else
         bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
     )

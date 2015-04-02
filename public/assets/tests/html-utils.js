@@ -66,6 +66,41 @@ test( "text2html", function() {
 
 });
 
+// html2text
+test( "html2text", function() {
+
+  var source = "<div>Some</div><div>Value</div><div><br></div><div>Test</div>"
+  var should = "Some\nValue\n\n\nTest"
+  var result = App.Utils.html2text( source )
+  equal( result, should, source )
+
+  source = "<div>Some</div><div>Value</div>"
+  should = "Some\nValue"
+  result = App.Utils.html2text( source )
+  equal( result, should, source )
+
+  source = "<div>Some<br/>Value</div>"
+  should = "Some\nValue"
+  result = App.Utils.html2text( source )
+  equal( result, should, source )
+
+  source = "<div>Some</div><div>&lt;b&gt;Value&lt;/b&gt;</div>"
+  should = "Some\n<b>Value</b>"
+  result = App.Utils.html2text( source )
+  equal( result, should, source )
+
+  source = "<div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad.</div><div>&gt;</div><div>&gt; You will find ...</div>"
+  should = "> Welcome!\n>\n> Thank you for installing Zammad.\n>\n> You will find ..."
+  result = App.Utils.html2text( source )
+  equal( result, should, source )
+
+  source = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--<br/>Bob Smith</div>"
+  should = "test 123 \n\n\n\n\n\n\n\n\n\n\n--\nBob Smith"
+  result = App.Utils.html2text( source )
+  equal( result, should, source )
+
+});
+
 // linkify
 test( "linkify", function() {
 
@@ -448,6 +483,81 @@ test( "check signature", function() {
   signature = "--\nSome Signature\nsome department"
   result    = App.Utils.signatureCheck( message, signature )
   equal( result, true )
+
+});
+
+// identify signature
+test( "identify signature", function() {
+
+  var message = "<div>test 123 </div>"
+  var should  = '<div>test 123 </div>'
+  var result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/>--<br/>Bob Smith</div>"
+  should  = '<div>test 123 <br/>--<br/>Bob Smith</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--<br/>Bob Smith</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><span class="js-signatureMarker"></span>--<br/>Bob Smith</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/>--<br/>Bob Smith</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><span class="js-signatureMarker"></span>--<br/>Bob Smith</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/> -- <br/>Bob Smith</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><span class="js-signatureMarker"></span> -- <br/>Bob Smith</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--<br/>Bob Smith<br/><br/><br/><br/><br/>--<br/>Bob Smith</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><span class="js-signatureMarker"></span>--<br/>Bob Smith<br/><br/><br/><br/><br/>--<br/>Bob Smith</div>'
+  //should  = '<div>test 123 <br><br><br><br><br><br><br><br><br><br><br><span class="js-signatureMarker"></span>--<br>Bob Smith<br/><br/><br/><br/><br/>--<br/>Bob Smith</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>--</div><div>Bob Smith</div>"
+  should  = "<div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div>test 123</div><div><span class=\"js-signatureMarker\"></span>--</div><div>Bob Smith</div>"
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>--</span></p><p><span>Bob Smith</span></p><div></div>"
+  should = "<p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span><span class=\"js-signatureMarker\"></span>--</span></p><p><span>Bob Smith</span></p><div></div>"
+  result  = App.Utils.signatureIdentify( message )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>On 01/04/15 10:55, Bob Smith wrote:<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>On 01/04/15 10:55, Bob Smith wrote:<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>Am 01/04/15 10:55, Bob Smith schrieb:<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Am 01/04/15 10:55, Bob Smith schrieb:<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>01/04/15 10:55 - Bob Smith wrote:<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>01/04/15 10:55 - Bob Smith wrote:<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>01/04/15 10:55 - Bob Smith schrieb:<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>01/04/15 10:55 - Bob Smith schrieb:<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
 
 });
 
