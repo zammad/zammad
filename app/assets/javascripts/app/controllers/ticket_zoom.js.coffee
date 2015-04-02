@@ -90,6 +90,9 @@ class App.TicketZoom extends App.Controller
     return if @activeState
     @activeState = true
 
+    # set see more options
+    @setSeeMore()
+
     App.OnlineNotification.seen( 'Ticket', @ticket_id )
     @navupdate '#'
     @positionPageHeaderStart()
@@ -484,20 +487,7 @@ class App.TicketZoom extends App.Controller
     )
 
     # set see more options
-    maxHeight = 450
-    @$('.textBubble-content').each( (index) ->
-      bubble    = $( @ )
-      offsetTop = bubble.find('.js-signatureMarker').position()
-      heigth    = bubble.height()
-      if offsetTop
-        bubble.attr('data-height', heigth)
-        bubble.css('height', "#{offsetTop.top + 42}px")
-      else if heigth > maxHeight
-        bubble.attr('data-height', heigth)
-        bubble.css('height', "#{maxHeight}px")
-      else
-        bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
-    )
+    @setSeeMore()
 
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )
@@ -514,6 +504,33 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStart()
 
     @ticketLastAttributes = @ticket.attributes()
+
+  # set see more options
+  setSeeMore: =>
+    maxHeight = 450
+    @$('.textBubble-content').each( (index) ->
+      bubble    = $( @ )
+
+      # reset bubble heigth and "see more" opacity
+      bubble.css('height', '')
+      bubble.parent().find('.textBubble-overflowContainer').css('opacity', '')
+
+      # remember offset of "see more"
+      offsetTop = bubble.find('.js-signatureMarker').position()
+
+      # remember bubble heigth
+      heigth    = bubble.height()
+      if offsetTop
+        bubble.attr('data-height', heigth)
+        bubble.css('height', "#{offsetTop.top + 42}px")
+        bubble.parent().find('.textBubble-overflowContainer').removeClass('hide')
+      else if heigth > maxHeight
+        bubble.attr('data-height', heigth)
+        bubble.css('height', "#{maxHeight}px")
+        bubble.parent().find('.textBubble-overflowContainer').removeClass('hide')
+      else
+        bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
+    )
 
   scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
