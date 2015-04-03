@@ -555,18 +555,38 @@ test( "identify signature", function() {
   equal( result, should )
 
   // ms
-  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
-  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>'
   result  = App.Utils.signatureIdentify( message, true )
   equal( result, should )
 
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
-  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>'
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>'
   result  = App.Utils.signatureIdentify( message, true )
   equal( result, should )
 
   message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
-  should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  should  = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
+  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
+  should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
+  message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support &lt;<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
+  should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support &lt;<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
   result  = App.Utils.signatureIdentify( message, true )
   equal( result, should )
 

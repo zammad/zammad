@@ -243,27 +243,38 @@ class App.Utils
     # search for Ms
     # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
     # Send: Donnerstag, 2. April 2015 10:00
+    # To/Cc/Bcc: xxx
+    # Subject: xxx
+    # - or -
+    # From: xxx
+    # To/Cc/Bcc: xxx
+    # Date: 01.04.2015 12:41
+    # Subject: xxx
     searchForMs = (textToSearchInLines, markers) ->
-      lineCount = 0
-      fromFound = undefined
+      lineCount          = 0
+      fromFound          = undefined
+      foundInLines       = 0
+      subjectWithinLines = 5
       for line in textToSearchInLines
         lineCount += 1
 
         # find Sent
         if fromFound
-          if line && line.match( /^(Sent|Gesendet):\s.+?/)
+          if line && line.match( /^(Subject|Betreff):\s.+?/)
             marker =
               line:      fromFound
               lineCount: lineCount
               type:      'Ms'
             markers.push marker
-          else
+            return
+          if lineCount > ( foundInLines + subjectWithinLines )
             fromFound = undefined
 
         # find From
         else
           if line && line.match( /^(From|Von):\s.+?/ )
-            fromFound = line.replace(/\s{0,5}\[.+?\]/g, '')
+            fromFound    = line.replace(/\s{0,5}(\[|<).+?(\]|>)/g, '')
+            foundInLines = lineCount
     searchForMs(textToSearchInLines, markers)
 
     # if no marker is found, return

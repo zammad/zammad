@@ -507,7 +507,7 @@ class App.TicketZoom extends App.Controller
 
   # set see more options
   setSeeMore: =>
-    maxHeight = 450
+    maxHeight = 480
     @$('.textBubble-content').each( (index) ->
       bubble    = $( @ )
 
@@ -519,10 +519,10 @@ class App.TicketZoom extends App.Controller
       offsetTop = bubble.find('.js-signatureMarker').position()
 
       # remember bubble heigth
-      heigth    = bubble.height()
+      heigth = bubble.height()
       if offsetTop
         bubble.attr('data-height', heigth)
-        bubble.css('height', "#{offsetTop.top + 42}px")
+        bubble.css('height', "#{offsetTop.top + 30}px")
         bubble.parent().find('.textBubble-overflowContainer').removeClass('hide')
       else if heigth > maxHeight
         bubble.attr('data-height', heigth)
