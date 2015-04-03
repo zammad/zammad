@@ -18,10 +18,15 @@ class App.Utils
 
   # rawText = App.Utils.html2text( html )
   @html2text: ( html ) ->
+
+    # remove not needed new lines
+    html = html.replace(/>\n/g, '>')
+
+    # convert to jquery
     html = $('<div>' + html + '</div>')
 
     # insert new lines
-    html.find('div, p, pre, code, center, blockquote, form, textarea, address, table, tr').replaceWith( ->
+    html.find('div, p, pre, code, center, blockquote, form, textarea, address, tr').replaceWith( ->
       content = $(@).html() + "\n"
       content
         .replace(/<br>/g, "\n")
@@ -223,7 +228,7 @@ class App.Utils
           return line
       false
     if !marker
-      marker = searchForOtrs(textToSearchInLines)
+      markerOtrs = searchForOtrs(textToSearchInLines)
 
     # search for Ms
     # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
@@ -231,30 +236,34 @@ class App.Utils
     searchForMs = (textToSearchInLines) ->
       fromFound = undefined
       for line in textToSearchInLines
-        if !marker
 
-          # find Sent
-          if fromFound
-            if line && line.match( /^(Sent|Gesendet):\s.+?/)
-              return fromFound
-            else
-              fromFound = undefined
-
-          # find From
+        # find Sent
+        if fromFound
+          if line && line.match( /^(Sent|Gesendet):\s.+?/)
+            return fromFound
           else
-            if line && line.match( /^(From|Von):\s.+?/)
-              fromFound = line
+            fromFound = undefined
+
+        # find From
+        else
+          if line && line.match( /^(From|Von):\s.+?/ )
+            fromFound = line.replace(/\s{0,5}\[.+?\]/g, '')
       false
-    if !marker
-      marker = searchForMs(textToSearchInLines)
+    if !marker && !markerOtrs
+      markerMs = searchForMs(textToSearchInLines)
 
     # if no marker is found, return
-    return message if !marker
+    return message if !marker && !markerMs && !markerOtrs
 
     # insert marker
     markerTemplate = '<span class="js-signatureMarker"></span>'
-    regex = new RegExp( "\>(\s{0,10}#{quote(marker)})\s{0,10}\<" )
-    message.replace( regex, ">#{markerTemplate}\$1<" )
+    if marker
+      regex = new RegExp( "\>(\s{0,10}#{quote(marker)})\s{0,10}\<" )
+      message.replace( regex, ">#{markerTemplate}\$1<" )
+    else
+      marker = markerMs || markerOtrs
+      regex = new RegExp( "\>(\s{0,10}#{quote(marker)})" )
+      message.replace( regex, ">#{markerTemplate}\$1" )
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
   @replaceTags: (template, objects) ->

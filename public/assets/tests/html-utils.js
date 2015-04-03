@@ -99,6 +99,16 @@ test( "html2text", function() {
   result = App.Utils.html2text( source )
   equal( result, should, source )
 
+  source = "test 123 <br><br><br><br><br><br><br><br><br><br><br>--<br>Bob Smith"
+  should = "test 123 \n\n\n\n\n\n\n\n\n\n\n--\nBob Smith"
+  result = App.Utils.html2text( source )
+  equal( result, should, source )
+
+  source = "<div>1<br><br><br><br><br><br><br><br><br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  should = "1\n\n\n\n\n\n\n\n\n\n\n\Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nGesendet: Donnerstag, 2. April 2015 11:32"
+  result = App.Utils.html2text( source )
+  equal( result, should, source )
+
 });
 
 // linkify
@@ -529,6 +539,7 @@ test( "identify signature", function() {
   should = "<p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span>test 123</span></p><p><span><span class=\"js-signatureMarker\"></span>--</span></p><p><span>Bob Smith</span></p><div></div>"
   result  = App.Utils.signatureIdentify( message )
 
+  // apple
   message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>On 01/04/15 10:55, Bob Smith wrote:<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>On 01/04/15 10:55, Bob Smith wrote:<br/>lalala</div>'
   result  = App.Utils.signatureIdentify( message )
@@ -539,6 +550,7 @@ test( "identify signature", function() {
   result  = App.Utils.signatureIdentify( message )
   equal( result, should )
 
+  // ms
   message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
   result  = App.Utils.signatureIdentify( message )
@@ -549,6 +561,12 @@ test( "identify signature", function() {
   result  = App.Utils.signatureIdentify( message )
   equal( result, should )
 
+  message = "<div>1<br><br><br><br><br><br><br><br><br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  should  = "<div>1<br><br><br><br><br><br><br><br><br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+  // otrs
   message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/>01/04/15 10:55 - Bob Smith wrote:<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>01/04/15 10:55 - Bob Smith wrote:<br/>lalala</div>'
   result  = App.Utils.signatureIdentify( message )
@@ -558,6 +576,13 @@ test( "identify signature", function() {
   should  = '<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>01/04/15 10:55 - Bob Smith schrieb:<br/>lalala</div>'
   result  = App.Utils.signatureIdentify( message )
   equal( result, should )
+
+  message = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/></div><div>24.02.2015 14:20 - Roy Kaldung via Znuny Sales schrieb: &nbsp;</div>"
+  should  = "<div>test 123 <br/><br/><br/><br/><br/><br/><br/><br/><br/></div><div><span class=\"js-signatureMarker\"></span>24.02.2015 14:20 - Roy Kaldung via Znuny Sales schrieb: &nbsp;</div>"
+  result  = App.Utils.signatureIdentify( message )
+  equal( result, should )
+
+//</div>
 
 });
 
