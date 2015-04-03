@@ -6,7 +6,7 @@ class App.Utils
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
       .replace(/[ ]\n/g, "\n")        # remove tailing spaces
-      .replace(/\n{3,9}/g, "\n\n")    # remove multible empty lines
+      .replace(/\n{3,20}/g, "\n\n")    # remove multible empty lines
 
   # htmlEscapedAndLinkified = App.Utils.text2html( rawText )
   @text2html: ( ascii ) ->
@@ -22,24 +22,19 @@ class App.Utils
     # remove not needed new lines
     html = html.replace(/>\n/g, '>')
 
-    # convert to jquery
-    html = $('<div>' + html + '</div>')
-
     # insert new lines
-    html.find('div, p, pre, code, center, blockquote, form, textarea, address, tr').replaceWith( ->
-      content = $(@).html() + "\n"
-      content
-        .replace(/<br>/g, "\n")
-        .replace(/<br\/>/g, "\n")
-    )
-
-    # replace <br> as string, is/was not possible throuh replaceWith
-    htmlTmp = html.html().replace(/<br>/g, "\n")
+    html = html
+      .replace(/<br(|.+?)>/g, "\n")
+      .replace(/<br\/>/g, "\n")
+      .replace(/<(div)(|.+?)>/g, "")
+      .replace(/<(p|blockquote|form|textarea|address|tr)(|.+?)>/g, "\n")
+      .replace(/<\/(div|p|blockquote|form|textarea|address|tr)>/g, "\n")
 
     # trim and cleanup
-    $('<div>' + htmlTmp + '</div>').text().trim()
+    $('<div>' + html + '</div>').text().trim()
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
+      .replace(/\n{3,20}/g, "\n\n")   # remove multible empty lines
 
   # htmlEscapedAndLinkified = App.Utils.linkify( rawText )
   @linkify: (ascii) ->
@@ -191,56 +186,77 @@ class App.Utils
     else
       true
 
-  # messageWithMarker = App.Utils.signatureIdentify( message, sender )
-  @signatureIdentify: (message, sender = false) ->
+  # messageWithMarker = App.Utils.signatureIdentify( message, false )
+  @signatureIdentify: (message, test = false) ->
     textToSearch = @html2text( message )
 
     # count lines, if we do have lower the 10, ignore this
     textToSearchInLines = textToSearch.split("\n")
-    return message if textToSearchInLines.length < 10
+    if !test
+      return message if textToSearchInLines.length < 10
 
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
 
     # search for signature seperator "--\n"
-    searchForSeperator = (textToSearchInLines) ->
+    markers = []
+    searchForSeperator = (textToSearchInLines, markers) ->
+      lineCount = 0
       for line in textToSearchInLines
+        lineCount += 1
         if line && line.match( /^\s{0,10}--\s{0,10}$/ )
-          return line
-      false
-    marker = searchForSeperator(textToSearchInLines)
+          marker =
+            line:      line
+            lineCount: lineCount
+            type:      'seperator'
+          markers.push marker
+    searchForSeperator(textToSearchInLines, markers)
 
     # search for Apple Mail
     # On 01/04/15 10:55, Bob Smith wrote:
-    searchForAppleMail = (textToSearchInLines) ->
+    searchForAppleMail = (textToSearchInLines, markers) ->
+      lineCount = 0
       for line in textToSearchInLines
+        lineCount += 1
         if line && line.match( /^(On|Am)\s.+?\s(wrote|schrieb):/ )
-          return line
-      false
-    if !marker
-      marker = searchForAppleMail(textToSearchInLines)
+          marker =
+            line:      line
+            lineCount: lineCount
+            type:      'apple'
+          markers.push marker
+    searchForAppleMail(textToSearchInLines, markers)
 
     # search for otrs
     # 25.02.2015 10:26 - edv hotline schrieb:
-    searchForOtrs = (textToSearchInLines) ->
+    searchForOtrs = (textToSearchInLines, markers) ->
+      lineCount = 0
       for line in textToSearchInLines
+        lineCount += 1
         if line && line.match( /^.+?\s.+?\s-\s.+?\s(wrote|schrieb):/ )
-          return line
-      false
-    if !marker
-      markerOtrs = searchForOtrs(textToSearchInLines)
+          marker =
+            line:      line
+            lineCount: lineCount
+            type:      'Otrs'
+          markers.push marker
+    searchForOtrs(textToSearchInLines, markers)
 
     # search for Ms
     # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
     # Send: Donnerstag, 2. April 2015 10:00
-    searchForMs = (textToSearchInLines) ->
+    searchForMs = (textToSearchInLines, markers) ->
+      lineCount = 0
       fromFound = undefined
       for line in textToSearchInLines
+        lineCount += 1
 
         # find Sent
         if fromFound
           if line && line.match( /^(Sent|Gesendet):\s.+?/)
-            return fromFound
+            marker =
+              line:      fromFound
+              lineCount: lineCount
+              type:      'Ms'
+            markers.push marker
           else
             fromFound = undefined
 
@@ -248,21 +264,21 @@ class App.Utils
         else
           if line && line.match( /^(From|Von):\s.+?/ )
             fromFound = line.replace(/\s{0,5}\[.+?\]/g, '')
-      false
-    if !marker && !markerOtrs
-      markerMs = searchForMs(textToSearchInLines)
+    searchForMs(textToSearchInLines, markers)
 
     # if no marker is found, return
-    return message if !marker && !markerMs && !markerOtrs
+    return message if !markers || !markers[0]
 
     # insert marker
     markerTemplate = '<span class="js-signatureMarker"></span>'
-    if marker
-      regex = new RegExp( "\>(\s{0,10}#{quote(marker)})\s{0,10}\<" )
+
+    # get first marker
+    markers = _.sortBy(markers, 'lineCount')
+    if markers[0].type is 'seperator'
+      regex = new RegExp( "\>(\s{0,10}#{quote(markers[0].line)})\s{0,10}\<" )
       message.replace( regex, ">#{markerTemplate}\$1<" )
     else
-      marker = markerMs || markerOtrs
-      regex = new RegExp( "\>(\s{0,10}#{quote(marker)})" )
+      regex = new RegExp( "\>(\s{0,10}#{quote(markers[0].line)})" )
       message.replace( regex, ">#{markerTemplate}\$1" )
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
