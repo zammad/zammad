@@ -647,6 +647,17 @@ test( "identify signature", function() {
   result  = App.Utils.signatureIdentify( message, true )
   equal( result, should )
 
+  // gmail
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><blockquote class=\"ecxgmail_quote\">lalala</blockquote></div>"
+  should  = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class=\"js-signatureMarker\"></span><blockquote class=\"ecxgmail_quote\">lalala</blockquote></div>"
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Am 24. Dezember 2015 um 07:45 schrieb kathrine &lt;kathrine@example.com&gt;:<br/>lalala</div>"
+  should = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class=\"js-signatureMarker\"></span>Am 24. Dezember 2015 um 07:45 schrieb kathrine &lt;kathrine@example.com&gt;:<br/>lalala</div>"
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
 });
 
 // replace tags

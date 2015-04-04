@@ -225,7 +225,7 @@ class App.Utils
         lineCount += 1
 
         # Am 04.03.2015 um 12:47 schrieb Alf Aardvark:
-        if line && line.match( /^(Am)\s.{6,10}\s(um)\s.{3,10}\s(schrieb)\s.+?:/ )
+        if line && line.match( /^(Am)\s.{6,20}\s(um)\s.{3,10}\s(schrieb)\s.{1,250}:/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -235,7 +235,7 @@ class App.Utils
 
         # Thunderbird default - http://kb.mozillazine.org/Reply_header_settings
         # On 01-01-2007 11:00 AM, Alf Aardvark wrote:
-        if line && line.match( /^(On)\s.{6,10}\s.{3,10},\s.{1,100}(wrote):/ )
+        if line && line.match( /^(On)\s.{6,20}\s.{3,10},\s.{1,250}(wrote):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -245,7 +245,7 @@ class App.Utils
 
         # http://kb.mozillazine.org/Reply_header_settings
         # Alf Aardvark wrote, on 01-01-2007 11:00 AM:
-        if line && line.match( /^.{1,100}\s(wrote),\son\s.{3,20}:/ )
+        if line && line.match( /^.{1,250}\s(wrote),\son\s.{3,20}:/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -261,7 +261,7 @@ class App.Utils
         lineCount += 1
 
         # On 01/04/15 10:55, Bob Smith wrote:
-        if line && line.match( /^(On)\s.{6,10}\s.{3,10}\s.+?\s(wrote):/ )
+        if line && line.match( /^(On)\s.{6,20}\s.{3,10}\s.{1,250}\s(wrote):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -270,7 +270,7 @@ class App.Utils
           return
 
         # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:
-        if line && line.match( /^(Am)\s.{6,10}\s(um)\s.{3,10}\s(schrieb)\s.+?:/ )
+        if line && line.match( /^(Am)\s.{6,20}\s(um)\s.{3,10}\s(schrieb)\s.{1,250}:/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -286,7 +286,7 @@ class App.Utils
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^..{6,10}\s.{3,10}\s-\s.+?\s(wrote|schrieb):/ )
+        if line && line.match( /^.{6,10}\s.{3,10}\s-\s.{1,250}\s(wrote|schrieb):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -346,6 +346,13 @@ class App.Utils
     # <blockquote type="cite">
     if !markers || !markers[0]
       regex = new RegExp( "(<blockquote type=\"cite\">)" )
+      if message.match( regex )
+        return message.replace( regex, "#{markerTemplate}\$1" )
+
+    # gmail
+    # <div class="ecxgmail_quote">
+    if !markers || !markers[0]
+      regex = new RegExp( "(<blockquote class=\"ecxgmail_quote\">)" )
       if message.match( regex )
         return message.replace( regex, "#{markerTemplate}\$1" )
 
