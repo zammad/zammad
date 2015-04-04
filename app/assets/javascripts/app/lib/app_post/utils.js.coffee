@@ -198,6 +198,11 @@ class App.Utils
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
 
+    cleanup = (str) ->
+      if str.match(/(<|>|&)/)
+        str = str.replace(/(<|>|&).+?$/, '').trim()
+      str
+
     # search for signature seperator "--\n"
     markers = []
     searchForSeperator = (textToSearchInLines, markers) ->
@@ -210,34 +215,84 @@ class App.Utils
             lineCount: lineCount
             type:      'seperator'
           markers.push marker
+          return
     searchForSeperator(textToSearchInLines, markers)
 
+    # search for Thunderbird
+    searchForThunderbird = (textToSearchInLines, markers) ->
+      lineCount = 0
+      for line in textToSearchInLines
+        lineCount += 1
+
+        # Am 04.03.2015 um 12:47 schrieb Alf Aardvark:
+        if line && line.match( /^(Am)\s.{6,10}\s(um)\s.{3,10}\s(schrieb)\s.+?:/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'thunderbird'
+          markers.push marker
+          return
+
+        # Thunderbird default - http://kb.mozillazine.org/Reply_header_settings
+        # On 01-01-2007 11:00 AM, Alf Aardvark wrote:
+        if line && line.match( /^(On)\s.{6,10}\s.{3,10},\s.{1,100}(wrote):/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'thunderbird'
+          markers.push marker
+          return
+
+        # http://kb.mozillazine.org/Reply_header_settings
+        # Alf Aardvark wrote, on 01-01-2007 11:00 AM:
+        if line && line.match( /^.{1,100}\s(wrote),\son\s.{3,20}:/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'thunderbird'
+          markers.push marker
+          return
+    searchForThunderbird(textToSearchInLines, markers)
+
     # search for Apple Mail
-    # On 01/04/15 10:55, Bob Smith wrote:
     searchForAppleMail = (textToSearchInLines, markers) ->
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^(On|Am)\s.+?\s(wrote|schrieb):/ )
+
+        # On 01/04/15 10:55, Bob Smith wrote:
+        if line && line.match( /^(On)\s.{6,10}\s.{3,10}\s.+?\s(wrote):/ )
           marker =
-            line:      line
+            line:      cleanup(line)
             lineCount: lineCount
             type:      'apple'
           markers.push marker
+          return
+
+        # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:
+        if line && line.match( /^(Am)\s.{6,10}\s(um)\s.{3,10}\s(schrieb)\s.+?:/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'apple'
+          markers.push marker
+          return
     searchForAppleMail(textToSearchInLines, markers)
 
     # search for otrs
+    # 25.02.2015 10:26 - edv hotline wrote:
     # 25.02.2015 10:26 - edv hotline schrieb:
     searchForOtrs = (textToSearchInLines, markers) ->
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^.+?\s.+?\s-\s.+?\s(wrote|schrieb):/ )
+        if line && line.match( /^..{6,10}\s.{3,10}\s-\s.+?\s(wrote|schrieb):/ )
           marker =
-            line:      line
+            line:      cleanup(line)
             lineCount: lineCount
             type:      'Otrs'
           markers.push marker
+          return
     searchForOtrs(textToSearchInLines, markers)
 
     # search for Ms
@@ -277,11 +332,25 @@ class App.Utils
             foundInLines = lineCount
     searchForMs(textToSearchInLines, markers)
 
+    # marker template
+    markerTemplate = '<span class="js-signatureMarker"></span>'
+
+    # search for zammad
+    # <div data-signature="true" data-signature-id=".{1,3}">
+    if !markers || !markers[0]
+      regex = new RegExp( "(<div data-signature=\"true\" data-signature-id=\".{1,3}\">)" )
+      if message.match( regex )
+        return message.replace( regex, "#{markerTemplate}\$1" )
+
+    # search for <blockquote type="cite">
+    # <blockquote type="cite">
+    if !markers || !markers[0]
+      regex = new RegExp( "(<blockquote type=\"cite\">)" )
+      if message.match( regex )
+        return message.replace( regex, "#{markerTemplate}\$1" )
+
     # if no marker is found, return
     return message if !markers || !markers[0]
-
-    # insert marker
-    markerTemplate = '<span class="js-signatureMarker"></span>'
 
     # get first marker
     markers = _.sortBy(markers, 'lineCount')

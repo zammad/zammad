@@ -507,7 +507,7 @@ class App.TicketZoom extends App.Controller
 
   # set see more options
   setSeeMore: =>
-    maxHeight = 480
+    maxHeight = 560
     @$('.textBubble-content').each( (index) ->
       bubble    = $( @ )
 
