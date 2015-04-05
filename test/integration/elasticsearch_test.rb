@@ -260,7 +260,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
     assert(!result.empty?, 'result should not be empty')
     assert(result[0], 'record 1')
-    assert(!result[0], 'record 2')
+    assert(!result[1], 'record 2')
     assert_equal(result[0].id, customer1.id)
 
     # search as customer1
