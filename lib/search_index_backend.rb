@@ -52,14 +52,14 @@ create/update/delete index
       {
         :json         => true,
         :open_timeout => 5,
-        :read_timeout => 14,
+        :read_timeout => 20,
         :user         => Setting.get('es_user'),
         :password     => Setting.get('es_password'),
       }
     )
     puts "# #{response.code.to_s}"
     return true if response.success?
-    raise response.body
+    raise response.inspect
   end
 
 =begin
@@ -84,14 +84,14 @@ add new object to search index
       {
         :json         => true,
         :open_timeout => 5,
-        :read_timeout => 14,
+        :read_timeout => 20,
         :user         => Setting.get('es_user'),
         :password     => Setting.get('es_password'),
       }
     )
     puts "# #{response.code.to_s}"
     return true if response.success?
-    raise response.body
+    raise response.inspect
   end
 
 =begin
@@ -121,7 +121,7 @@ remove whole data from index
     )
     #puts "# #{response.code.to_s}"
     return true if response.success?
-    #raise response.body
+    puts "NOTICE: can't drop index: " response.inspect
   end
 
 =begin
