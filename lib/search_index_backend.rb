@@ -121,7 +121,7 @@ remove whole data from index
     )
     #puts "# #{response.code.to_s}"
     return true if response.success?
-    puts "NOTICE: can't drop index: " response.inspect
+    puts "NOTICE: can't drop index: " + response.inspect
   end
 
 =begin
