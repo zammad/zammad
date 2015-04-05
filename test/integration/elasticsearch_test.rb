@@ -56,10 +56,10 @@ class ElasticsearchTest < ActiveSupport::TestCase
     :created_by_id   => 1,
   )
   customer2 = User.create_or_update(
-    :login           => 'es-customer1@example.com',
+    :login           => 'es-customer2@example.com',
     :firstname       => 'ES',
-    :lastname        => 'Customer1',
-    :email           => 'es-customer1@example.com',
+    :lastname        => 'Customer2',
+    :email           => 'es-customer2@example.com',
     :password        => 'customerpw',
     :active          => true,
     :organization_id => organization1.id,

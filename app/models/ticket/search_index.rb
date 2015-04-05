@@ -30,7 +30,12 @@ returns
       }
     end
 
-    attributes = self.attributes
+    # for performance reasons, Model.search_index_reload will only collect if of object
+    # get whole data here
+    ticket = self.class.find(self.id)
+
+    # remove ignored attributes
+    attributes = ticket.attributes
     ignore_attributes.each {|key, value|
       next if value != true
       attributes.delete( key.to_s )
@@ -42,39 +47,54 @@ returns
       attributes[:tag] = tags
     end
 
-    attributes = search_index_attribute_lookup( attributes, self )
+    # lookup attributes of ref. objects (normally name and note)
+    attributes = search_index_attribute_lookup( attributes, ticket )
 
-    # add article data
+    # list ignored file extentions
+    ignore_attachments = [ '.png', '.jpg', '.jpeg', '.mpeg', '.mov' ]
+
+    # collect article data
     articles = Ticket::Article.where( :ticket_id => self.id )
     attributes['articles_all'] = []
-    attributes['articles_external'] = []
     articles.each {|article|
       article_attributes = article.attributes
-      article_attributes.delete('created_by_id')
-      article_attributes.delete('updated_by_id')
-      article_attributes.delete('updated_at')
-      article_attributes.delete('references')
-      article_attributes.delete('message_id_md5')
-      article_attributes.delete('message_id')
-      article_attributes.delete('in_reply_to')
-      article_attributes.delete('ticket_id')
+
+      # remove note needed attributes
+      ignore = ['created_by_id', 'updated_by_id', 'updated_at', 'references', 'message_id_md5', 'message_id', 'in_reply_to', 'ticket_id']
+      ignore.each {|attribute|
+        article_attributes.delete( attribute )
+      }
+
+      # lookup attributes of ref. objects (normally name and note)
       article_attributes = search_index_attribute_lookup( article_attributes, article )
+
+      # index raw text body
+      if article_attributes['content_type'] && article_attributes['content_type'] == 'text/html' && article_attributes['body']
+        article_attributes['body'] = article_attributes['body'].html2text
+      end
 
       # lookup attachments
       article.attachments.each {|attachment|
-        if !article_attributes['attachments']
-          article_attributes['attachments'] = []
+        if !attributes['attachments']
+          attributes['attachments'] = []
         end
-        data = {
-          "_name"   => attachment.filename,
-          "content" => Base64.encode64( attachment.content )
-        }
-        article_attributes['attachments'].push data
+
+        # check file size
+
+        # check ignored files
+        if attachment.filename
+          filename_extention = attachment.filename.downcase
+          filename_extention.gsub!(/^.*(\..+?)$/, "\\1")
+          if !ignore_attachments.include?( filename_extention.downcase )
+            data = {
+              "_name"   => attachment.filename,
+              "content" => Base64.encode64( attachment.content )
+            }
+            attributes['attachments'].push data
+          end
+        end
       }
       attributes['articles_all'].push article_attributes
-      if !article.internal
-        attributes['articles_external'].push article_attributes
-      end
     }
 
     return if !attributes

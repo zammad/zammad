@@ -30,15 +30,19 @@ returns
       }
     end
 
+    # for performance reasons, Model.search_index_reload will only collect if of object
+    # get whole data here
+    data = self.class.find(self.id)
+
     # remove ignored attributes
-    attributes = self.attributes
+    attributes = data.attributes
     ignore_attributes.each {|key, value|
       next if value != true
       attributes.delete( key.to_s )
     }
 
     # fill up with search data
-    attributes = search_index_attribute_lookup(attributes, self)
+    attributes = search_index_attribute_lookup(attributes, data)
     return if !attributes
 
     # update backend
