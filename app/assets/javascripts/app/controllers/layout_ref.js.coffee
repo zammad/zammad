@@ -159,7 +159,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     '.attachmentPlaceholder':       'attachmentPlaceholder'
     '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
     '.attachmentPlaceholder-hint':  'attachmentHint'
-    '.ticket-edit':                 'ticketEdit'
+    '.article-new':                 'articleNewEdit'
     '.attachments':                 'attachmentsHolder'
     '.attachmentUpload':            'attachmentUpload'
     '.attachmentUpload-progressBar':'progressBar'
@@ -215,13 +215,13 @@ class LayoutRefCommunicationReply extends App.ControllerContent
       @remove_textarea_catcher()
 
   open_textarea: (event, withoutAnimation) =>
-    if !@ticketEdit.hasClass('is-open')
+    if !@articleNewEdit.hasClass('is-open')
       duration = 300
 
       if withoutAnimation
         duration = 0
 
-      @ticketEdit.addClass('is-open')
+      @articleNewEdit.addClass('is-open')
 
       @textarea.velocity
         properties:
@@ -268,7 +268,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
 
   add_textarea_catcher: ->
     @textareaCatcher = new App.clickCatcher
-      holder: @ticketEdit.offsetParent()
+      holder: @articleNewEdit.offsetParent()
       callback: @close_textarea
       zIndexScale: 4
 
@@ -287,7 +287,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
         options:
           duration: 300
           easing: 'easeOutQuad'
-          complete: => @ticketEdit.removeClass('is-open')
+          complete: => @articleNewEdit.removeClass('is-open')
 
       @textBubble.velocity
         properties:
@@ -317,18 +317,18 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     @open_textarea() if @dragEventCounter is 0
 
     @dragEventCounter++
-    @ticketEdit.addClass('is-dropTarget')
+    @articleNewEdit.addClass('is-dropTarget')
 
   onDragleave: (event) =>
     @dragEventCounter--
 
-    @ticketEdit.removeClass('is-dropTarget') if @dragEventCounter is 0
+    @articleNewEdit.removeClass('is-dropTarget') if @dragEventCounter is 0
 
   onFileDrop: (event) =>
     event.preventDefault()
     event.stopPropagation()
     files = event.originalEvent.dataTransfer.files
-    @ticketEdit.removeClass('is-dropTarget')
+    @articleNewEdit.removeClass('is-dropTarget')
 
     @queueUpload(files)
 

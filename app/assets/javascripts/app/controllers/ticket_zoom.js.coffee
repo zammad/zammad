@@ -278,10 +278,9 @@ class App.TicketZoom extends App.Controller
 
       @form_id = App.ControllerForm.formId()
 
-      new Edit(
+      new ArticleNew(
         ticket:     @ticket
-        el:         @el.find('.ticket-edit')
-        #el:         @el.find('.edit')
+        el:         @el.find('.article-new')
         form_meta:  @form_meta
         form_id:    @form_id
         defaults:   @taskGet('article')
@@ -943,13 +942,13 @@ class TicketMeta extends App.Controller
   release: =>
     App.Ticket.unsubscribe( @subscribeId )
 
-class Edit extends App.Controller
+class ArticleNew extends App.Controller
   elements:
     '.js-textarea':                       'textarea'
     '.attachmentPlaceholder':             'attachmentPlaceholder'
     '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
     '.attachmentPlaceholder-hint':        'attachmentHint'
-    '.article-add':                       'ticketEdit'
+    '.article-add':                       'articleNewEdit'
     '.attachments':                       'attachmentsHolder'
     '.attachmentUpload':                  'attachmentUpload'
     '.attachmentUpload-progressBar':      'progressBar'
@@ -1069,7 +1068,7 @@ class Edit extends App.Controller
 
     ticket = App.Ticket.fullLocal( @ticket.id )
 
-    @html App.view('ticket_zoom/edit')(
+    @html App.view('ticket_zoom/article_new')(
       ticket:       ticket
       articleTypes: @articleTypes
       article:      @defaults
@@ -1298,14 +1297,14 @@ class Edit extends App.Controller
       @remove_textarea_catcher()
 
   open_textarea: (event, withoutAnimation) =>
-    console.log('ticketEdit', @ticketEdit.hasClass('is-open'))
-    if !@ticketEdit.hasClass('is-open')
+    console.log('articleNewEdit', @articleNewEdit.hasClass('is-open'))
+    if !@articleNewEdit.hasClass('is-open')
       duration = 300
 
       if withoutAnimation
         duration = 0
 
-      @ticketEdit.addClass('is-open')
+      @articleNewEdit.addClass('is-open')
 
       @textarea.velocity
         properties:
@@ -1350,9 +1349,9 @@ class Edit extends App.Controller
           duration: duration
 
   add_textarea_catcher: =>
-    if @ticketEdit.is(':visible')
+    if @articleNewEdit.is(':visible')
       @textareaCatcher = new App.clickCatcher
-        holder: @ticketEdit.offsetParent()
+        holder: @articleNewEdit.offsetParent()
         callback: @close_textarea
         zIndexScale: 4
 
@@ -1371,7 +1370,7 @@ class Edit extends App.Controller
         options:
           duration: 300
           easing: 'easeOutQuad'
-          complete: => @ticketEdit.removeClass('is-open')
+          complete: => @articleNewEdit.removeClass('is-open')
 
       @textBubble.velocity
         properties:
@@ -1401,12 +1400,12 @@ class Edit extends App.Controller
     @open_textarea() if @dragEventCounter is 0
 
     @dragEventCounter++
-    @ticketEdit.parent().addClass('is-dropTarget')
+    @articleNewEdit.parent().addClass('is-dropTarget')
 
   onDragleave: (event) =>
     @dragEventCounter--
 
-    @ticketEdit.parent().removeClass('is-dropTarget') if @dragEventCounter is 0
+    @articleNewEdit.parent().removeClass('is-dropTarget') if @dragEventCounter is 0
 
   renderAttachment: (file) =>
     @attachmentsHolder.append App.view('generic/attachment_item')

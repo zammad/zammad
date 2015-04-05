@@ -51,7 +51,7 @@
 
       <div class="textBubble">
         <div class="bubble-arrow"></div>
-        <div class="js-textarea ticketEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
+        <div class="js-textarea articleNewEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
         <!-- .textBubble grows with textarea (and expanding clone) -->
         <div class="attachments"></div>
         <div class="article-attachment u-unclickable u-textTruncate">

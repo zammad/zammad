@@ -3305,7 +3305,7 @@ footer {
 }
 
 .ticket-article,
-.ticket-edit {
+.article-new {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 21px;
@@ -3580,7 +3580,7 @@ footer {
   position: relative;
 }
 
-.ticket-edit {
+.article-new {
   margin-top: auto;
   margin-bottom: 36px;
 }
@@ -3664,13 +3664,13 @@ footer {
     visibility: hidden;
   }
 
-  .ticket-edit .recipient-picker {
+  .article-new .recipient-picker {
     height: 36px;
     position: relative;
     transition: 300ms;
   }
 
-  .ticket-edit .recipient-picker.is-open {
+  .article-new .recipient-picker.is-open {
     opacity: 1;
   }
 
@@ -3778,16 +3778,16 @@ footer {
     .recipient-list input::-moz-placeholder { opacity: 1; color: #666;  }
     .recipient-list input:-ms-input-placeholder {         color: #666; }
 
-  .ticket-edit .textBubble {
+  .article-new .textBubble {
     border-color: #b3b3b3;
     border-radius: 5px;
     padding-left: 12px;
     padding-right: 12px;
   }
 
-    .ticket-edit .textBubble [contenteditable],
-    .ticket-edit textarea,
-    .ticketEdit-body {
+    .article-new .textBubble [contenteditable],
+    .article-new textarea,
+    .articleNewEdit-body {
       width: 100%;
       position: relative;
       min-height: 20px;
@@ -3798,7 +3798,7 @@ footer {
       resize: none;
     }
 
-    .ticketEdit-body {
+    .articleNewEdit-body {
       height: auto;
       min-height: 38px;
     }
