@@ -55,6 +55,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     :updated_by_id   => 1,
     :created_by_id   => 1,
   )
+  sleep 1
   customer2 = User.create_or_update(
     :login           => 'es-customer2@example.com',
     :firstname       => 'ES',
@@ -67,6 +68,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     :updated_by_id   => 1,
     :created_by_id   => 1,
   )
+  sleep 1
   customer3 = User.create_or_update(
     :login           => 'es-customer3@example.com',
     :firstname       => 'ES',
@@ -164,7 +166,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
     ticket3.search_index_update_backend
 
-    sleep 4
+    sleep 6
 
     # search as agent
 
