@@ -44,6 +44,7 @@ module Zammad
       'observer::_ticket::_online_notification_seen',
       'observer::_tag::_ticket_history',
       'observer::_user::_ref_object_touch',
+      'observer::_user::_ticket_organization',
       'observer::_user::_geo',
       'observer::_organization::_ref_object_touch'
 

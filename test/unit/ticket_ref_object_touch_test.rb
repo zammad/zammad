@@ -29,7 +29,7 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
   customer1 = User.create_or_update(
     :login           => 'ticket-ref-object-update-customer1@example.com',
     :firstname       => 'Notification',
-    :lastname        => 'Agent1',
+    :lastname        => 'Customer1',
     :email           => 'ticket-ref-object-update-customer1@example.com',
     :password        => 'customerpw',
     :active          => true,
@@ -42,7 +42,7 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
   customer2 = User.create_or_update(
     :login           => 'ticket-ref-object-update-customer2@example.com',
     :firstname       => 'Notification',
-    :lastname        => 'Agent2',
+    :lastname        => 'Customer2',
     :email           => 'ticket-ref-object-update-customer2@example.com',
     :password        => 'customerpw',
     :active          => true,
