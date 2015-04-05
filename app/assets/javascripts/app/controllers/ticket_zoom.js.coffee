@@ -7,6 +7,7 @@ class App.TicketZoom extends App.Controller
   events:
     'click .js-submit':   'submit'
     'click .js-bookmark': 'bookmark'
+    'click .js-reset':    'reset'
 
   constructor: (params) ->
     super
@@ -287,184 +288,6 @@ class App.TicketZoom extends App.Controller
         ui:         @
       )
 
-      editTicket = (el) =>
-        el.append('<form class="edit"></form>')
-        @editEl = el
-
-        reset = (e) =>
-          e.preventDefault()
-          @taskReset()
-          show(@ticket)
-          new Edit(
-            ticket:     @ticket
-            el:         @el.find('.ticket-edit')
-            #el:         @el.find('.edit')
-            form_meta:  @form_meta
-            form_id:    @form_id
-            defaults:   @taskGet('article')
-            ui:         @
-          )
-
-        show = (ticket) =>
-          el.find('.edit').html('')
-
-          defaults   = ticket.attributes()
-          task_state = @taskGet('ticket')
-          modelDiff  = App.Utils.formDiff( task_state, defaults )
-          #if @isRole('Customer')
-          #  delete defaults['state_id']
-          #  delete defaults['state']
-          if !_.isEmpty( task_state )
-            defaults = _.extend( defaults, task_state )
-
-          new App.ControllerForm(
-            el:       el.find('.edit')
-            model:    App.Ticket
-            screen:   'edit'
-            params:   App.Ticket.find(ticket.id)
-            handlers: [
-              @ticketFormChanges
-            ]
-            filter:    @form_meta.filter
-            params:    defaults
-            #bookmarkable: true
-          )
-          #console.log('Ichanges', modelDiff, task_state, ticket.attributes())
-          #@markFormDiff( modelDiff )
-
-          # bind on reset link
-          @$('.js-reset').on(
-            'click'
-            (e) =>
-              reset(e)
-          )
-
-        @subscribeIdEdit = @ticket.subscribe(show)
-        show(@ticket)
-
-        if !@isRole('Customer')
-          el.append('<div class="tags"></div>')
-          new App.WidgetTag(
-            el:          el.find('.tags')
-            object_type: 'Ticket'
-            object:      @ticket
-            tags:        @tags
-          )
-          el.append('<div class="links"></div>')
-          new App.WidgetLink(
-            el:          el.find('.links')
-            object_type: 'Ticket'
-            object:      @ticket
-            links:       @links
-          )
-
-      showTicketHistory = =>
-        new App.TicketHistory(
-          ticket_id: @ticket.id
-          container: @el.closest('.content')
-        )
-      showTicketMerge = =>
-        new App.TicketMerge(
-          ticket:    @ticket
-          task_key:  @task_key
-          container: @el.closest('.content')
-        )
-      changeCustomer = (e, el) =>
-        new App.TicketCustomer(
-          ticket:    @ticket
-          container: @el.closest('.content')
-        )
-      @sidebarItems = [
-        {
-          head:     'Ticket'
-          name:     'ticket'
-          icon:     'message'
-          callback: editTicket
-        }
-      ]
-      if !@isRole('Customer')
-        @sidebarItems[0]['actions'] = [
-          {
-            name:     'ticket-history'
-            title:    'History'
-            callback: showTicketHistory
-          },
-          {
-            name:     'ticket-merge'
-            title:    'Merge'
-            callback: showTicketMerge
-          },
-          {
-            title:    'Change Customer'
-            name:     'customer-change'
-            callback: changeCustomer
-          },
-        ]
-      if !@isRole('Customer')
-        editCustomer = (e, el) =>
-          new App.ControllerGenericEdit(
-            id: @ticket.customer_id
-            genericObject: 'User'
-            screen: 'edit'
-            pageData:
-              title:   'Users'
-              object:  'User'
-              objects: 'Users'
-            container: @el.closest('.content')
-          )
-        showCustomer = (el) =>
-          new App.WidgetUser(
-            el:       el
-            user_id:  @ticket.customer_id
-          )
-        @sidebarItems.push {
-          head:    'Customer'
-          name:    'customer'
-          icon:    'person'
-          actions: [
-            {
-              title:    'Change Customer'
-              name:     'customer-change'
-              callback: changeCustomer
-            },
-            {
-              title:    'Edit Customer'
-              name:     'customer-edit'
-              callback: editCustomer
-            },
-          ]
-          callback: showCustomer
-        }
-        if @ticket.organization_id
-          editOrganization = (e, el) =>
-            new App.ControllerGenericEdit(
-              id: @ticket.organization_id,
-              genericObject: 'Organization'
-              pageData:
-                title:   'Organizations'
-                object:  'Organization'
-                objects: 'Organizations'
-              container: @el.closest('.content')
-            )
-          showOrganization = (el) =>
-            new App.WidgetOrganization(
-              el:              el
-              organization_id: @ticket.organization_id
-            )
-          @sidebarItems.push {
-            head: 'Organization'
-            name: 'organization'
-            icon: 'group'
-            actions: [
-              {
-                title:    'Edit Organization'
-                name:     'organization-edit'
-                callback: editOrganization
-              },
-            ]
-            callback: showOrganization
-          }
-
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
       new App.WidgetAvatar(
@@ -472,10 +295,15 @@ class App.TicketZoom extends App.Controller
         user_id:  @ticket.customer_id
         size:     50
       )
-      new App.Sidebar(
+      new TicketSidebar(
         el:           @el.find('.tabsSidebar')
         sidebarState: @sidebarState
-        items:        @sidebarItems
+        ticket:       @ticket
+        taskGet:      @taskGet
+        task_key:     @task_key
+        tags:         @tags
+        links:        @links
+        form_meta:    @form_meta
       )
 
     # show article
@@ -744,7 +572,7 @@ class App.TicketZoom extends App.Controller
         ticket.article = undefined
 
         # reset form after save
-        @taskReset()
+        @reset()
 
         App.TaskManager.mute( @task_key )
 
@@ -753,6 +581,22 @@ class App.TicketZoom extends App.Controller
 
   bookmark: (e) =>
     $(e.currentTarget).find('.bookmark.icon').toggleClass('filled')
+
+  reset: (e) =>
+    if e
+      e.preventDefault()
+
+    # reset task
+    @taskReset()
+
+    # reset edit ticket / reset new article
+    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id } )
+
+    # hide reset button
+    @$('.js-reset').addClass('hide')
+
+    # remove change flag on tab
+    @$('.tabsSidebar-tab[data-tab="ticket"]').removeClass('is-changed')
 
   taskGet: (area) =>
     return {} if !App.TaskManager.get(@task_key)
@@ -773,26 +617,191 @@ class App.TicketZoom extends App.Controller
     @localTaskData = data
     App.TaskManager.update( @task_key, { 'state': @localTaskData })
 
+  # reset task state
   taskReset: =>
-
-    # hide reset button
-    @$('.js-reset').addClass('hide')
-
-    # remove change flag on tab
-    @$('.tabsSidebar-tab[data-tab="ticket"]').removeClass('is-changed')
-
-    # reset task state
     @localTaskData =
       ticket:  {}
       article: {}
     App.TaskManager.update( @task_key, { 'state': @localTaskData })
 
-  @bind(
-    'ui::ticket::taskReset'
-    (data) =>
-      if data.ticket_id is @ticket.id
-        @taskReset()
-  )
+class TicketSidebar extends App.Controller
+  constructor: ->
+    super
+    ticket       = App.Ticket.fullLocal( @ticket.id )
+    @subscribeId = ticket.subscribe(@render)
+    @render(ticket)
+
+  release: =>
+    App.Ticket.unsubscribe( @subscribeId )
+
+  render: (ticket) =>
+
+    editTicket = (el) =>
+      el.append('<form class="edit"></form>')
+      @editEl = el
+
+      show = (ticket) =>
+        el.find('.edit').html('')
+
+        defaults   = ticket.attributes()
+        task_state = @taskGet('ticket')
+        modelDiff  = App.Utils.formDiff( task_state, defaults )
+        #if @isRole('Customer')
+        #  delete defaults['state_id']
+        #  delete defaults['state']
+        if !_.isEmpty( task_state )
+          defaults = _.extend( defaults, task_state )
+
+        new App.ControllerForm(
+          el:       el.find('.edit')
+          model:    App.Ticket
+          screen:   'edit'
+          params:   App.Ticket.find(ticket.id)
+          handlers: [
+            @ticketFormChanges
+          ]
+          filter:    @form_meta.filter
+          params:    defaults
+          #bookmarkable: true
+        )
+        #console.log('Ichanges', modelDiff, task_state, ticket.attributes())
+        #@markFormDiff( modelDiff )
+
+      show(ticket)
+      @bind(
+        'ui::ticket::taskReset'
+        (data) =>
+          if data.ticket_id is ticket.id
+            show(ticket)
+      )
+
+      if !@isRole('Customer')
+        el.append('<div class="tags"></div>')
+        new App.WidgetTag(
+          el:          el.find('.tags')
+          object_type: 'Ticket'
+          object:      ticket
+          tags:        @tags
+        )
+        el.append('<div class="links"></div>')
+        new App.WidgetLink(
+          el:          el.find('.links')
+          object_type: 'Ticket'
+          object:      ticket
+          links:       @links
+        )
+
+    showTicketHistory = =>
+      new App.TicketHistory(
+        ticket_id: ticket.id
+        container: @el.closest('.content')
+      )
+    showTicketMerge = =>
+      new App.TicketMerge(
+        ticket:    ticket
+        task_key:  @task_key
+        container: @el.closest('.content')
+      )
+    changeCustomer = (e, el) =>
+      new App.TicketCustomer(
+        ticket:    ticket
+        container: @el.closest('.content')
+      )
+    @sidebarItems = [
+      {
+        head:     'Ticket'
+        name:     'ticket'
+        icon:     'message'
+        callback: editTicket
+      }
+    ]
+    if !@isRole('Customer')
+      @sidebarItems[0]['actions'] = [
+        {
+          name:     'ticket-history'
+          title:    'History'
+          callback: showTicketHistory
+        },
+        {
+          name:     'ticket-merge'
+          title:    'Merge'
+          callback: showTicketMerge
+        },
+        {
+          title:    'Change Customer'
+          name:     'customer-change'
+          callback: changeCustomer
+        },
+      ]
+    if !@isRole('Customer')
+      editCustomer = (e, el) =>
+        new App.ControllerGenericEdit(
+          id: ticket.customer_id
+          genericObject: 'User'
+          screen: 'edit'
+          pageData:
+            title:   'Users'
+            object:  'User'
+            objects: 'Users'
+          container: @el.closest('.content')
+        )
+      showCustomer = (el) =>
+        new App.WidgetUser(
+          el:       el
+          user_id:  ticket.customer_id
+        )
+      @sidebarItems.push {
+        head:    'Customer'
+        name:    'customer'
+        icon:    'person'
+        actions: [
+          {
+            title:    'Change Customer'
+            name:     'customer-change'
+            callback: changeCustomer
+          },
+          {
+            title:    'Edit Customer'
+            name:     'customer-edit'
+            callback: editCustomer
+          },
+        ]
+        callback: showCustomer
+      }
+      if ticket.organization_id
+        editOrganization = (e, el) =>
+          new App.ControllerGenericEdit(
+            id: ticket.organization_id,
+            genericObject: 'Organization'
+            pageData:
+              title:   'Organizations'
+              object:  'Organization'
+              objects: 'Organizations'
+            container: @el.closest('.content')
+          )
+        showOrganization = (el) =>
+          new App.WidgetOrganization(
+            el:              el
+            organization_id: ticket.organization_id
+          )
+        @sidebarItems.push {
+          head: 'Organization'
+          name: 'organization'
+          icon: 'group'
+          actions: [
+            {
+              title:    'Edit Organization'
+              name:     'organization-edit'
+              callback: editOrganization
+            },
+          ]
+          callback: showOrganization
+        }
+    new App.Sidebar(
+      el:           @el
+      sidebarState: @sidebarState
+      items:        @sidebarItems
+    )
 
 class TicketTitle extends App.Controller
   events:
@@ -954,8 +963,6 @@ class Edit extends App.Controller
     #'.recipient-list .list-arrow':       'recipientListArrow'
 
   events:
-    #'click .submit':              'update'
-    'click [data-type="reset"]':   'reset'
     'click .visibility-toggle':    'toggleVisibility'
     'click .pop-selectable':       'selectArticleType'
     'click .pop-selected':         'showSelectableArticleType'
@@ -1016,7 +1023,6 @@ class Edit extends App.Controller
       open:   148
       closed: 20
 
-
     @dragEventCounter = 0
     @attachments      = []
 
@@ -1040,6 +1046,13 @@ class Edit extends App.Controller
 
           # preselect article type
           @setArticleType( 'email' )
+    )
+
+    @bind(
+      'ui::ticket::taskReset'
+      (data) =>
+        if data.ticket_id is @ticket.id
+          @render()
     )
 
   isIE10: ->
@@ -1427,15 +1440,6 @@ class Edit extends App.Controller
         if element.find('.attachment').length == 0
           element.empty()
     )
-
-  reset: (e) =>
-    e.preventDefault()
-
-    # reset task
-    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id } )
-
-    # rerender edit area
-    @render()
 
 class ArticleView extends App.Controller
   constructor: ->

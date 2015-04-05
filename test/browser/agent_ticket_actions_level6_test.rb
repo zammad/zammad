@@ -17,7 +17,7 @@ class AgentTicketActionLevel6Test < TestCase
     #
 
     # create new ticket with no attachment, attachment check should pop up
-    ticket1 = ticket_create(
+    ticket_create(
       :data => {
         :customer => 'nico',
         :group    => 'Users',
@@ -50,8 +50,8 @@ class AgentTicketActionLevel6Test < TestCase
 
     # check if ticket is shown
     location_check( :url => '#ticket/zoom/' )
-
-
+    sleep 2
+    ticket_number = @browser.find_elements( { :css => '.active .page-header .ticket-number' } )[0].text
 
     #
     # attachment checks - update ticket
@@ -112,24 +112,90 @@ class AgentTicketActionLevel6Test < TestCase
     # ticket customer change checks
     #
 
-    # update customer, check if new customer is shown in side bar
+    # use current session
+    browser1 = @browser
 
+    browser2 = browser_instance
+    login(
+      :browser  => browser2,
+      :username => 'master@example.com',
+      :password => 'test',
+      :url      => browser_url,
+    )
+    tasks_close_all(
+      :browser => browser2,
+    )
+    random     = 'ticket-actions-6-test-' + rand(999999).to_s
+    user_email = random + '@example.com'
+    user_create(
+      :browser => browser2,
+      :data => {
+        :firstname => 'Action6 Firstname' + random,
+        :lastname  => 'Action6 Lastname' + random,
+        :email     => user_email,
+        :password  => 'some-pass',
+      },
+    )
+
+    # update customer, check if new customer is shown in side bar
+    ticket_open_by_search(
+      :browser => browser2,
+      :number  => ticket_number,
+    )
+    ticket_update(
+      :browser => browser2,
+      :data => {
+        :customer => user_email,
+      },
+      :do_not_submit => true,
+    )
 
     # check if customer has changed in second browser
+    click( :browser => browser1, :css => '.active .tabsSidebar-tab[data-tab="customer"]')
+    watch_for(
+      :browser => browser1,
+      :css     => '.active .tabsSidebar',
+      :value   => user_email,
+    )
 
+    #
+    # modify customer
+    #
+
+    # modify customer
+    click( :browser => browser1, :css => '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click( :browser => browser1, :css => '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    sleep 2
+    set( :browser => browser1, :css => '.modal [name="address"]', :value => 'some new address' )
+    click( :browser => browser1, :css => '.modal .js-submit')
+
+    # verify is customer has chnaged other browser too
+    click( :browser => browser2, :css => '.active .tabsSidebar-tab[data-tab="customer"]')
+    watch_for(
+      :browser => browser2,
+      :css     => '.active .sidebar[data-tab="customer"]',
+      :value   => 'some new address',
+    )
 
     #
     # ticket customer organization change checks
     #
 
     # change org of customer, check if org is shown in sidebar
-
+    click( :browser => browser1, :css => '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click( :browser => browser1, :css => '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    sleep 2
+    select( :browser => browser1, :css => '.modal [name="organization_id"]', :value => 'Zammad Foundation' )
+    click( :browser => browser1, :css => '.modal .js-submit')
 
     # check if org has changed in second browser
-
-
-
-
+    sleep 3
+    click( :browser => browser2, :css => '.active .tabsSidebar-tab[data-tab="organization"]')
+    watch_for(
+      :browser => browser2,
+      :css     => '.active .sidebar[data-tab="organization"]',
+      :value   => 'Zammad Foundation',
+    )
 
     #
     # form change/reset checks
