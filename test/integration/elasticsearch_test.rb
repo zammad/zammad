@@ -107,6 +107,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :created_by_id => 1,
     )
     ticket1.search_index_update_backend
+    sleep 1
 
     ticket2 = Ticket.create(
       :title         => "something else",
@@ -141,6 +142,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
 
     ticket2.search_index_update_backend
+    sleep 1
 
     ticket3 = Ticket.create(
       :title         => "something else",
