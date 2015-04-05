@@ -352,7 +352,7 @@ class App.Utils
     # gmail
     # <div class="ecxgmail_quote">
     if !markers || !markers[0]
-      regex = new RegExp( "(<blockquote class=\"ecxgmail_quote\">)" )
+      regex = new RegExp( "(<blockquote class=\"(ecxgmail_quote|gmail_quote)\">)" )
       if message.match( regex )
         return message.replace( regex, "#{markerTemplate}\$1" )
 
