@@ -202,13 +202,23 @@ class TestCase < Test::Unit::TestCase
     :fast    => false, # do not wait
   )
 
+  click(
+    :browser => browser1,
+    :text    => '.partial_link_text',
+    :fast    => false, # do not wait
+  )
+
 =end
 
   def click(params)
     log('click', params)
 
     instance = params[:browser] || @browser
-    instance.find_elements( { :css => params[:css] } )[0].click
+    if params[:css]
+      instance.find_elements( { :css => params[:css] } )[0].click
+    else
+      instance.find_elements( { :partial_link_text => params[:text] } )[0].click
+    end
     if !params[:fast]
       sleep 0.4
     end
