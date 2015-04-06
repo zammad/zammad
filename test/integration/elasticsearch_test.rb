@@ -102,7 +102,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    article = Ticket::Article.create(
+    article1 = Ticket::Article.create(
       :ticket_id     => ticket1.id,
       :from          => 'some_sender@example.com',
       :to            => 'some_recipient@example.com',
@@ -116,14 +116,11 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :created_by_id => 1,
     )
 
-    # simulate upload
-    form_id = '123456789'
-
     # add attachments which should get index / .txt
     # "some normal text"
     Store.add(
-      :object        => 'UploadCache',
-      :o_id          => form_id,
+      :object        => 'Ticket::Article',
+      :o_id          => article1.id,
       :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-normal.txt"),
       :filename      => 'es-normal.txt',
       :preferences   => {},
@@ -132,8 +129,8 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # add attachments which should get index / .pdf
     Store.add(
-      :object        => 'UploadCache',
-      :o_id          => form_id,
+      :object        => 'Ticket::Article',
+      :o_id          => article1.id,
       :data          => File.read("#{Rails.root.to_s}/test/fixtures/test1.pdf"),
       :filename      => 'test1.pdf',
       :preferences   => {},
@@ -143,8 +140,8 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # add attachments which should get index / .box
     # "Old programmers never die"
     Store.add(
-      :object        => 'UploadCache',
-      :o_id          => form_id,
+      :object        => 'Ticket::Article',
+      :o_id          => article1.id,
       :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-box1.box"),
       :filename      => 'mail1.box',
       :preferences   => {},
@@ -154,17 +151,12 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # add to big attachment which should not get index
     # "some too big text"
     Store.add(
-      :object        => 'UploadCache',
-      :o_id          => form_id,
+      :object        => 'Ticket::Article',
+      :o_id          => article1.id,
       :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-too-big.txt"),
       :filename      => 'es-too-big.txt',
       :preferences   => {},
       :created_by_id => 1,
-    )
-
-    article.attachments = Store.list(
-      :object => 'UploadCache',
-      :o_id   => form_id,
     )
 
     sleep 1
@@ -178,7 +170,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    article = Ticket::Article.create(
+    article2 = Ticket::Article.create(
       :ticket_id     => ticket2.id,
       :from          => 'some_sender@example.org',
       :to            => 'some_recipient@example.org',
@@ -204,7 +196,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    article = Ticket::Article.create(
+    article3 = Ticket::Article.create(
       :ticket_id     => ticket3.id,
       :from          => 'some_sender@example.org',
       :to            => 'some_recipient@example.org',
