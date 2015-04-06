@@ -21,9 +21,9 @@ namespace :searchindex do
       :data   => {
         :mappings => {
           :Ticket => {
-            :_source => { :excludes => [ 'articles_all.attachments' ] },
+            :_source => { :excludes => [ 'articles.attachments' ] },
             :properties => {
-              :articles_all => {
+              :articles => {
                 :type       => 'nested',
                 :properties => {
                   :attachments => {
