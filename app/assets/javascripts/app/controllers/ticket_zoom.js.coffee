@@ -969,8 +969,8 @@ class ArticleNew extends App.Controller
     'click .recipient-list':       'stopPropagation'
     'click .list-entry-type div':  'change_type'
     'submit .recipient-list form': 'add_recipient'
-    'focus .js-textarea':          'open_textarea'
-    'input .js-textarea':          'detect_empty_textarea'
+    'focus .js-textarea':          'openTextarea'
+    'input .js-textarea':          'detectEmptyTextarea'
     #'dragenter':                  'onDragenter'
     #'dragleave':                  'onDragleave'
     #'drop':                       'onFileDrop'
@@ -1028,15 +1028,16 @@ class ArticleNew extends App.Controller
     @render()
 
     if @defaults.body or @isIE10()
-      @open_textarea(null, true)
+      @openTextarea(null, true)
 
+    # set article type and expand text area
     @bind(
       'ui::ticket::setArticleType'
       (data) =>
         if data.ticket.id is @ticket.id
           #@setArticleType(data.type.name)
 
-          @open_textarea(null, true)
+          @openTextarea(null, true)
           for key, value of data.article
             if key is 'body'
               @$('[data-name="' + key + '"]').html(value)
@@ -1047,10 +1048,12 @@ class ArticleNew extends App.Controller
           @setArticleType( 'email' )
     )
 
+    # reset new article screen
     @bind(
       'ui::ticket::taskReset'
       (data) =>
         if data.ticket_id is @ticket.id
+          @type = 'note'
           @render()
     )
 
@@ -1290,13 +1293,13 @@ class ArticleNew extends App.Controller
     else
       @$('[data-name="body"]').find("[data-signature=true]").remove()
 
-  detect_empty_textarea: =>
+  detectEmptyTextarea: =>
     if !@textarea.text().trim()
-      @add_textarea_catcher()
+      @addTextareaCatcher()
     else
-      @remove_textarea_catcher()
+      @removeTextareaCatcher()
 
-  open_textarea: (event, withoutAnimation) =>
+  openTextarea: (event, withoutAnimation) =>
     console.log('articleNewEdit', @articleNewEdit.hasClass('is-open'))
     if !@articleNewEdit.hasClass('is-open')
       duration = 300
@@ -1312,7 +1315,7 @@ class ArticleNew extends App.Controller
         options:
           duration: duration
           easing: 'easeOutQuad'
-          complete: => @add_textarea_catcher()
+          complete: => @addTextareaCatcher()
 
       @textBubble.velocity
         properties:
@@ -1348,20 +1351,20 @@ class ArticleNew extends App.Controller
         options:
           duration: duration
 
-  add_textarea_catcher: =>
+  addTextareaCatcher: =>
     if @articleNewEdit.is(':visible')
       @textareaCatcher = new App.clickCatcher
-        holder: @articleNewEdit.offsetParent()
-        callback: @close_textarea
+        holder:      @articleNewEdit.offsetParent()
+        callback:    @closeTextarea
         zIndexScale: 4
 
-  remove_textarea_catcher: ->
+  removeTextareaCatcher: ->
     return if !@textareaCatcher
     @textareaCatcher.remove()
     @textareaCatcher = null
 
-  close_textarea: =>
-    @remove_textarea_catcher()
+  closeTextarea: =>
+    @removeTextareaCatcher()
     if !@textarea.text().trim() && !@attachments.length && not @isIE10()
 
       @textarea.velocity
@@ -1397,7 +1400,7 @@ class ArticleNew extends App.Controller
   onDragenter: (event) =>
     # on the first event,
     # open textarea (it will only open if its closed)
-    @open_textarea() if @dragEventCounter is 0
+    @openTextarea() if @dragEventCounter is 0
 
     @dragEventCounter++
     @articleNewEdit.parent().addClass('is-dropTarget')
