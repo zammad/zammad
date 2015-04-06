@@ -4,15 +4,25 @@ require 'integration_test_helper'
 class ElasticsearchTest < ActiveSupport::TestCase
 
   # set config
+  if !ENV['ES_URL']
+    raise "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
+  end
+  Setting.set('es_url', ENV['ES_URL'])
+  if !ENV['ES_INDEX']
+    raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+  end
+  Setting.set('es_index', ENV['ES_INDEX'])
+
   # Setting.set('es_url', 'http://172.0.0.1:9200')
-  Setting.set('es_url', 'http://10.240.2.11:9200')
-  Setting.set('es_index', 'estest.local_zammad')
+  # Setting.set('es_index', 'estest.local_zammad')
   # Setting.set('es_user', 'elasticsearch')
   # Setting.set('es_password', 'zammad')
 
-  # set max attachment size
+  # set max attachment size in mb
+  Setting.set('es_attachment_max_size_in_mb', 1 )
 
   # set attachment types
+  Setting.set('es_attachment_ignore', [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ] )
 
   # drop/create indexes
   #Rake::Task["searchindex:drop"].execute
@@ -108,6 +118,57 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
+
+    # simulate upload
+
+
+
+    form_id = '123456789'
+
+    # add attachments which should get index / .txt
+    # "some normal text"
+    Store.add(
+      :object      => 'UploadCache',
+      :o_id        => form_id,
+      :data        => File.read("#{Rails.root.to_s}/test/fixtures/es-normal.txt"),
+      :filename    => 'es-normal.txt',
+      :preferences => {},
+    )
+
+    # add attachments which should get index / .pdf
+    Store.add(
+      :object      => 'UploadCache',
+      :o_id        => form_id,
+      :data        => File.read("#{Rails.root.to_s}/test/fixtures/test1.pdf"),
+      :filename    => 'test1.pdf',
+      :preferences => {},
+    )
+
+    # add attachments which should get index / .box
+    # "Old programmers never die"
+    Store.add(
+      :object      => 'UploadCache',
+      :o_id        => form_id,
+      :data        => File.read("#{Rails.root.to_s}/test/fixtures/es-box1.box"),
+      :filename    => 'mail1.box',
+      :preferences => {},
+    )
+
+    # add to big attachment which should not get index
+    # "some too big text"
+    Store.add(
+      :object      => 'UploadCache',
+      :o_id        => form_id,
+      :data        => File.read("#{Rails.root.to_s}/test/fixtures/es-too-big.txt"),
+      :filename    => 'es-too-big.txt',
+      :preferences => {},
+    )
+
+    article.attachments = Store.list(
+      :object => 'UploadCache',
+      :o_id   => form_id,
+    )
+
     sleep 1
 
     ticket2 = Ticket.create(
@@ -133,14 +194,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-
-    # add attachments which should get index
-
-    # add attachments which should not get index
-
-    # add to big attachment which should not get index
-
-
 
     sleep 1
 
@@ -200,9 +253,37 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket2.id)
 
     # search for indexed attachment
+    result = Ticket.search(
+      :current_user => agent,
+      :query        => '"some normal text"',
+      :limit        => 15,
+    )
+    assert(result[0], 'record 1')
+    assert_equal(result[0].id, ticket1.id)
+
+    result = Ticket.search(
+      :current_user => agent,
+      :query        => '"otrs.org"',
+      :limit        => 15,
+    )
+    assert(result[0], 'record 1')
+    assert_equal(result[0].id, ticket1.id)
+
 
     # search for not indexed attachment
+    result = Ticket.search(
+      :current_user => agent,
+      :query        => '"some too big text"',
+      :limit        => 15,
+    )
+    assert(!result[0], 'record 1')
 
+    result = Ticket.search(
+      :current_user => agent,
+      :query        => '"Old programmers never die"',
+      :limit        => 15,
+    )
+    assert(!result[0], 'record 1')
 
 
     # search for ticket with no permissions

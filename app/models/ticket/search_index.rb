@@ -20,9 +20,9 @@ returns
 
     # default ignored attributes
     ignore_attributes = {
-      :created_by_id            => true,
-      :updated_by_id            => true,
-      :active                   => true,
+      :created_by_id => true,
+      :updated_by_id => true,
+      :active        => true,
     }
     if self.class.search_index_support_config[:ignore_attributes]
       self.class.search_index_support_config[:ignore_attributes].each {|key, value|
@@ -51,11 +51,14 @@ returns
     attributes = search_index_attribute_lookup( attributes, ticket )
 
     # list ignored file extentions
-    ignore_attachments = [ '.png', '.jpg', '.jpeg', '.mpeg', '.mov' ]
+    attachments_ignore = Setting.set('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
+
+    # max attachment size
+    attachment_max_size_in_mb = Setting.set('es_attachment_max_size_in_mb') || 40
 
     # collect article data
     articles = Ticket::Article.where( :ticket_id => self.id )
-    attributes['articles_all'] = []
+    attributes['articles'] = []
     articles.each {|article|
       article_attributes = article.attributes
 
@@ -80,21 +83,23 @@ returns
         end
 
         # check file size
+        if true
 
-        # check ignored files
-        if attachment.filename
-          filename_extention = attachment.filename.downcase
-          filename_extention.gsub!(/^.*(\..+?)$/, "\\1")
-          if !ignore_attachments.include?( filename_extention.downcase )
-            data = {
-              "_name"   => attachment.filename,
-              "content" => Base64.encode64( attachment.content )
-            }
-            attributes['attachments'].push data
+          # check ignored files
+          if attachment.filename
+            filename_extention = attachment.filename.downcase
+            filename_extention.gsub!(/^.*(\..+?)$/, "\\1")
+            if !attachments_ignore.include?( filename_extention.downcase )
+              data = {
+                '_name'   => attachment.filename,
+                'content' => Base64.encode64( attachment.content )
+              }
+              attributes['attachments'].push data
+            end
           end
         end
       }
-      attributes['articles_all'].push article_attributes
+      attributes['articles'].push article_attributes
     }
 
     return if !attributes

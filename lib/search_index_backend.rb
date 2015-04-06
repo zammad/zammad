@@ -12,7 +12,7 @@ create/update/delete index
       :mappings => {
         :Ticket => {
           :properties => {
-            :articles_all => {
+            :articles => {
               :type       => 'nested',
               :properties => {
                 'attachments' => { :type => 'attachment' }
@@ -121,7 +121,8 @@ remove whole data from index
     )
     #puts "# #{response.code.to_s}"
     return true if response.success?
-    puts "NOTICE: can't drop index: " + response.inspect
+    #puts "NOTICE: can't drop index: " + response.inspect
+    false
   end
 
 =begin
@@ -209,8 +210,8 @@ return search result
 
     puts "# #{response.code.to_s}"
     if !response.success?
+      puts "ERROR: #{response.inspect}"
       return []
-#      raise data.inspect
     end
     data = response.data
 
