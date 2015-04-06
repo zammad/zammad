@@ -78,13 +78,12 @@ returns
 
       # lookup attachments
       article.attachments.each {|attachment|
-        if !attributes['attachments']
-          attributes['attachments'] = []
+        if !article_attributes['attachments']
+          article_attributes['attachments'] = []
         end
 
         # check file size
-        if true
-#        if attachment.content && attachment.content.size / 1024 / 1024 <= attachment_max_size_in_mb
+        if attachment.content && attachment.content.size / 1024 <= attachment_max_size_in_mb * 1024
 
           # check ignored files
           if attachment.filename
@@ -92,10 +91,10 @@ returns
             filename_extention.gsub!(/^.*(\..+?)$/, "\\1")
             if !attachments_ignore.include?( filename_extention.downcase )
               data = {
-                '_name'   => attachment.filename,
-                'content' => Base64.encode64( attachment.content )
+                '_name'    => attachment.filename,
+                '_content' => Base64.encode64( attachment.content )
               }
-              attributes['attachments'].push data
+              article_attributes['attachments'].push data
             end
           end
         end
