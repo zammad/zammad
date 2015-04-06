@@ -21,9 +21,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
   # set max attachment size in mb
   Setting.set('es_attachment_max_size_in_mb', 1 )
 
-  # set attachment types
-  Setting.set('es_attachment_ignore', [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ] )
-
   # drop/create indexes
   #Rake::Task["searchindex:drop"].execute
   #Rake::Task["searchindex:create"].execute

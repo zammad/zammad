@@ -6,7 +6,7 @@ class AddSearchIndex < ActiveRecord::Migration
       :area        => 'SearchIndex::Elasticsearch',
       :description => 'Define endpoint of Elastic Search.',
       :state       => '',
-      :frontend => false
+      :frontend    => false
     )
     Setting.create_or_update(
       :title       => 'Elasticsearch Endpoint User',
@@ -14,7 +14,7 @@ class AddSearchIndex < ActiveRecord::Migration
       :area        => 'SearchIndex::Elasticsearch',
       :description => 'Define http basic auth user of Elasticsearch.',
       :state       => '',
-      :frontend => false
+      :frontend    => false
     )
     Setting.create_or_update(
       :title       => 'Elastic Search Endpoint Password',
@@ -22,7 +22,7 @@ class AddSearchIndex < ActiveRecord::Migration
       :area        => 'SearchIndex::Elasticsearch',
       :description => 'Define http basic auth password of Elasticsearch.',
       :state       => '',
-      :frontend => false
+      :frontend    => false
     )
     Setting.create_or_update(
       :title       => 'Elastic Search Endpoint Index',
@@ -30,7 +30,23 @@ class AddSearchIndex < ActiveRecord::Migration
       :area        => 'SearchIndex::Elasticsearch',
       :description => 'Define Elasticsearch index name.',
       :state       => 'zammad',
-      :frontend => false
+      :frontend    => false
+    )
+    Setting.create_or_update(
+      :title       => 'Elastic Search Attachment Extentions',
+      :name        => 'es_attachment_ignore',
+      :area        => 'SearchIndex::Elasticsearch',
+      :description => 'Define attachment extentions which are ignored for Elasticsearch.',
+      :state       => [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ],
+      :frontend    => false
+    )
+    Setting.create_or_update(
+      :title       => 'Elastic Search Attachment Size',
+      :name        => 'es_attachment_max_size_in_mb',
+      :area        => 'SearchIndex::Elasticsearch',
+      :description => 'Define max. attachment size for Elasticsearch.',
+      :state       => 50,
+      :frontend    => false
     )
 
     Ticket.search_index_reload
