@@ -125,40 +125,44 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # add attachments which should get index / .txt
     # "some normal text"
     Store.add(
-      :object      => 'UploadCache',
-      :o_id        => form_id,
-      :data        => File.read("#{Rails.root.to_s}/test/fixtures/es-normal.txt"),
-      :filename    => 'es-normal.txt',
-      :preferences => {},
+      :object        => 'UploadCache',
+      :o_id          => form_id,
+      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-normal.txt"),
+      :filename      => 'es-normal.txt',
+      :preferences   => {},
+      :created_by_id => 1,
     )
 
     # add attachments which should get index / .pdf
     Store.add(
-      :object      => 'UploadCache',
-      :o_id        => form_id,
-      :data        => File.read("#{Rails.root.to_s}/test/fixtures/test1.pdf"),
-      :filename    => 'test1.pdf',
-      :preferences => {},
+      :object        => 'UploadCache',
+      :o_id          => form_id,
+      :data          => File.read("#{Rails.root.to_s}/test/fixtures/test1.pdf"),
+      :filename      => 'test1.pdf',
+      :preferences   => {},
+      :created_by_id => 1,
     )
 
     # add attachments which should get index / .box
     # "Old programmers never die"
     Store.add(
-      :object      => 'UploadCache',
-      :o_id        => form_id,
-      :data        => File.read("#{Rails.root.to_s}/test/fixtures/es-box1.box"),
-      :filename    => 'mail1.box',
-      :preferences => {},
+      :object        => 'UploadCache',
+      :o_id          => form_id,
+      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-box1.box"),
+      :filename      => 'mail1.box',
+      :preferences   => {},
+      :created_by_id => 1,
     )
 
     # add to big attachment which should not get index
     # "some too big text"
     Store.add(
-      :object      => 'UploadCache',
-      :o_id        => form_id,
-      :data        => File.read("#{Rails.root.to_s}/test/fixtures/es-too-big.txt"),
-      :filename    => 'es-too-big.txt',
-      :preferences => {},
+      :object        => 'UploadCache',
+      :o_id          => form_id,
+      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-too-big.txt"),
+      :filename      => 'es-too-big.txt',
+      :preferences   => {},
+      :created_by_id => 1,
     )
 
     article.attachments = Store.list(
