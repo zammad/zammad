@@ -117,9 +117,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     # simulate upload
-
-
-
     form_id = '123456789'
 
     # add attachments which should get index / .txt
@@ -256,7 +253,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for indexed attachment
     result = Ticket.search(
       :current_user => agent,
-      :query        => '"some normal text"',
+      :query        => 'some AND normal AND text',
       :limit        => 15,
     )
     assert(result[0], 'record 1')
@@ -264,7 +261,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       :current_user => agent,
-      :query        => '"otrs.org"',
+      :query        => 'otrs.org',
       :limit        => 15,
     )
     assert(result[0], 'record 1')
@@ -274,14 +271,14 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for not indexed attachment
     result = Ticket.search(
       :current_user => agent,
-      :query        => '"some too big text"',
+      :query        => 'some AND too AND big AND text',
       :limit        => 15,
     )
     assert(!result[0], 'record 1')
 
     result = Ticket.search(
       :current_user => agent,
-      :query        => '"Old programmers never die"',
+      :query        => 'Old AND programmers AND never AND die',
       :limit        => 15,
     )
     assert(!result[0], 'record 1')

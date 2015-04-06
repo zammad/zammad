@@ -37,7 +37,7 @@ class AddSearchIndex < ActiveRecord::Migration
       :name        => 'es_attachment_ignore',
       :area        => 'SearchIndex::Elasticsearch',
       :description => 'Define attachment extentions which are ignored for Elasticsearch.',
-      :state       => [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ],
+      :state       => [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe', '.box', '.mbox' ],
       :frontend    => false
     )
     Setting.create_or_update(

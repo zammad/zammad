@@ -51,10 +51,10 @@ returns
     attributes = search_index_attribute_lookup( attributes, ticket )
 
     # list ignored file extentions
-    attachments_ignore = Setting.set('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
+    attachments_ignore = Setting.get('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
 
     # max attachment size
-    attachment_max_size_in_mb = Setting.set('es_attachment_max_size_in_mb') || 40
+    attachment_max_size_in_mb = Setting.get('es_attachment_max_size_in_mb') || 40
 
     # collect article data
     articles = Ticket::Article.where( :ticket_id => self.id )
@@ -84,6 +84,7 @@ returns
 
         # check file size
         if true
+#        if attachment.content && attachment.content.size / 1024 / 1024 <= attachment_max_size_in_mb
 
           # check ignored files
           if attachment.filename
