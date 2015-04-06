@@ -3,11 +3,13 @@ require 'integration_test_helper'
 
 class ElasticsearchTest < ActiveSupport::TestCase
 
-  #Setting.set('es_url', 'http://172.0.0.1:9200')
+  # set config
+  # Setting.set('es_url', 'http://172.0.0.1:9200')
   Setting.set('es_url', 'http://10.240.2.11:9200')
   Setting.set('es_index', 'estest.local_zammad')
-  #Setting.set('es_user', 'elasticsearch')
-  #Setting.set('es_password', 'zammad')
+  # Setting.set('es_user', 'elasticsearch')
+  # Setting.set('es_password', 'zammad')
+
   # set max attachment size
 
   # set attachment types
@@ -106,7 +108,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    ticket1.search_index_update_backend
     sleep 1
 
     ticket2 = Ticket.create(
@@ -141,7 +142,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
 
 
-    ticket2.search_index_update_backend
     sleep 1
 
     ticket3 = Ticket.create(
@@ -166,7 +166,10 @@ class ElasticsearchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    ticket3.search_index_update_backend
+
+    # execute background jobs
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
 
     sleep 6
 
