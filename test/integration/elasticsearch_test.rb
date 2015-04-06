@@ -121,7 +121,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       :object        => 'Ticket::Article',
       :o_id          => article1.id,
-      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-normal.txt"),
+      :data          => File.open("#{Rails.root.to_s}/test/fixtures/es-normal.txt", 'rb') { |file| file.read },
       :filename      => 'es-normal.txt',
       :preferences   => {},
       :created_by_id => 1,
@@ -132,29 +132,29 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       :object        => 'Ticket::Article',
       :o_id          => article1.id,
-      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-pdf1.pdf"),
+      :data          => File.open("#{Rails.root.to_s}/test/fixtures/es-pdf1.pdf", 'rb') { |file| file.read },
       :filename      => 'es-pdf1.pdf',
       :preferences   => {},
       :created_by_id => 1,
     )
 
     # add attachments which should get index / .box
-    # "Old programmers never die"
+    # "Old programmers never die test99"
     Store.add(
       :object        => 'Ticket::Article',
       :o_id          => article1.id,
-      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-box1.box"),
+      :data          => File.open("#{Rails.root.to_s}/test/fixtures/es-box1.box", 'rb') { |file| file.read },
       :filename      => 'mail1.box',
       :preferences   => {},
       :created_by_id => 1,
     )
 
     # add to big attachment which should not get index
-    # "some too big text"
+    # "some too big text88"
     Store.add(
       :object        => 'Ticket::Article',
       :o_id          => article1.id,
-      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-too-big.txt"),
+      :data          => File.open("#{Rails.root.to_s}/test/fixtures/es-too-big.txt", 'rb') { |file| file.read },
       :filename      => 'es-too-big.txt',
       :preferences   => {},
       :created_by_id => 1,
@@ -264,14 +264,14 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for not indexed attachment
     result = Ticket.search(
       :current_user => agent,
-      :query        => '"some too big text"',
+      :query        => 'test88',
       :limit        => 15,
     )
     assert(!result[0], 'record 1')
 
     result = Ticket.search(
       :current_user => agent,
-      :query        => '"Old programmers never die"',
+      :query        => 'test99',
       :limit        => 15,
     )
     assert(!result[0], 'record 1')

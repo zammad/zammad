@@ -1,11 +1,11 @@
 # Setup a Elasticsearch
 
 * Install Elasticsearch
-  http://www.elasticsearch.org/overview/elkdownloads/
+  https://www.elastic.co/downloads/elasticsearch
 
 * Install attachment plugin
   cd /usr/share/elasticsearch
-  bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/2.0.0
+  bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/2.5.0
 
 * Configure elasticsearch
   /etc/sysconfig/elasticsearch
