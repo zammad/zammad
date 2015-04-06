@@ -128,11 +128,12 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     # add attachments which should get index / .pdf
+    # "Zammad Test77"
     Store.add(
       :object        => 'Ticket::Article',
       :o_id          => article1.id,
-      :data          => File.read("#{Rails.root.to_s}/test/fixtures/test1.pdf"),
-      :filename      => 'test1.pdf',
+      :data          => File.read("#{Rails.root.to_s}/test/fixtures/es-pdf1.pdf"),
+      :filename      => 'es-pdf1.pdf',
       :preferences   => {},
       :created_by_id => 1,
     )
@@ -245,7 +246,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for indexed attachment
     result = Ticket.search(
       :current_user => agent,
-      :query        => 'some AND normal AND text',
+      :query        => '"some normal text66"',
       :limit        => 15,
     )
     assert(result[0], 'record 1')
@@ -253,7 +254,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       :current_user => agent,
-      :query        => 'otrs.org',
+      :query        => 'test77',
       :limit        => 15,
     )
     assert(result[0], 'record 1')
@@ -263,14 +264,14 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for not indexed attachment
     result = Ticket.search(
       :current_user => agent,
-      :query        => 'some AND too AND big AND text',
+      :query        => '"some too big text"',
       :limit        => 15,
     )
     assert(!result[0], 'record 1')
 
     result = Ticket.search(
       :current_user => agent,
-      :query        => 'Old AND programmers AND never AND die',
+      :query        => '"Old programmers never die"',
       :limit        => 15,
     )
     assert(!result[0], 'record 1')
