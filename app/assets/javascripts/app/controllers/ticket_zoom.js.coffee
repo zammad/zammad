@@ -1053,7 +1053,8 @@ class ArticleNew extends App.Controller
       'ui::ticket::taskReset'
       (data) =>
         if data.ticket_id is @ticket.id
-          @type = 'note'
+          @type     = 'note'
+          @defaults = {}
           @render()
     )
 

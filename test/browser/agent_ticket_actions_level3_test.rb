@@ -184,6 +184,36 @@ class AgentTicketActionsLevel3Test < TestCase
       :no_quote => true,
     )
 
+    # change form of ticket, reset, reload and verify in instance 2
+    ticket_update(
+      :browser => browser2,
+      :data    => {
+        :body => '22 some level 3 <b>body</b> in instance 2',
+      },
+      :do_not_submit => true,
+    )
+
+    watch_for(
+      :browser  => browser2,
+      :css      => '.content.active .js-reset',
+      :value    => '(Discard your unsaved changes.|Verwerfen der)',
+      :no_quote => true,
+    )
+    sleep 2
+    reload(
+      :browser => browser2,
+    )
+    click(
+      :css     => '.content.active .js-reset',
+      :browser => browser2,
+    )
+    sleep 1
+    ticket_verify(
+      :browser => browser2,
+      :data => {
+        :body => '',
+      },
+    )
 
     # change form of ticket in instance 2
     ticket_update(
@@ -231,6 +261,13 @@ class AgentTicketActionsLevel3Test < TestCase
       :no_quote => true,
     )
 
+    # check if new article is empty
+    ticket_verify(
+      :browser => browser2,
+      :data => {
+        :body => '',
+      },
+    )
     watch_for(
       :browser => browser2,
       :css     => '.active div.ticket-article',
