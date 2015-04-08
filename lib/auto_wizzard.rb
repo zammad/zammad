@@ -2,7 +2,7 @@ module AutoWizzard
 
 =begin
 
-creates or updates Users and sets Settings based on the 'auto_wizzard.json' file placed in the root directory.
+creates or updates Users, EmailAddresses and sets Settings based on the 'auto_wizzard.json' file placed in the root directory.
 
 there is an example file 'contrib/auto_wizzard_example.json'
 
@@ -57,6 +57,26 @@ returns
 
       auto_wizzard_hash['Settings'].each { |setting_data|
         Setting.set( setting_data['name'], setting_data['value'] )
+      }
+    end
+
+    # add EmailAddresses
+    if auto_wizzard_hash['EmailAddresses']
+
+      auto_wizzard_hash['EmailAddresses'].each { |email_address_data|
+
+        email_address_data_symbolized = email_address_data.symbolize_keys
+
+        email_address_data_symbolized = email_address_data_symbolized.merge(
+          {
+            :updated_by_id => 1,
+            :created_by_id => 1
+          }
+        )
+
+        EmailAddress.create_if_not_exists(
+          email_address_data_symbolized
+        )
       }
     end
 

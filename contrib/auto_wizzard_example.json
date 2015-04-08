@@ -17,5 +17,11 @@
       "name": "product_name",
       "value": "Zammad Demo System"
     }
+  ],
+  "EmailAddresses": [
+    {
+      "realname": "Zammad Demo System",
+      "email": "zammad@localhost",
+    }
   ]
 }
