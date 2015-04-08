@@ -10,7 +10,9 @@ there is an example file 'contrib/auto_wizzard_example.json'
 
 returns
 
-  true if a 'auto_wizzard.json' file was found and processed
+  the id of the first created User if a 'auto_wizzard.json' file was found and processed, containing at least one entry in Users
+
+  1 if a 'auto_wizzard.json' file was found and processed, containing no Users
 
   nil if no 'auto_wizzard.json' file was found
 
@@ -25,6 +27,8 @@ returns
     auto_wizzard_file = File.read(auto_wizzard_file_name)
 
     auto_wizzard_hash = JSON.parse(auto_wizzard_file)
+
+    admin_user_id = 1
 
     # create Users
     if auto_wizzard_hash['Users']
@@ -41,14 +45,20 @@ returns
             :active        => true,
             :roles         => roles,
             :groups        => groups,
-            :updated_by_id => 1,
-            :created_by_id => 1
+            :updated_by_id => admin_user_id,
+            :created_by_id => admin_user_id
           }
         )
 
-        User.create_or_update(
+        created_user = User.create_or_update(
           user_data_symbolized
         )
+
+        # use first created user as admin
+        next if admin_user_id != 1
+
+        admin_user_id = created_user.id
+
       }
     end
 
@@ -69,8 +79,8 @@ returns
 
         email_address_data_symbolized = email_address_data_symbolized.merge(
           {
-            :updated_by_id => 1,
-            :created_by_id => 1
+            :updated_by_id => admin_user_id,
+            :created_by_id => admin_user_id
           }
         )
 
@@ -80,6 +90,6 @@ returns
       }
     end
 
-    true
+    admin_user_id
   end
 end
