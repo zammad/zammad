@@ -1,5 +1,21 @@
 module AutoWizzard
 
+=begin
+
+creates or updates Users and sets Settings based on the 'auto_wizzard.json' file placed in the root directory.
+
+there is an example file 'contrib/auto_wizzard_example.json'
+
+  AutoWizzard.setup()
+
+returns
+
+  true if a 'auto_wizzard.json' file was found and processed
+
+  nil if no 'auto_wizzard.json' file was found
+
+=end
+
   def self.setup
 
     auto_wizzard_file_name = 'auto_wizzard.json'
