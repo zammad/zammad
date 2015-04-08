@@ -36,8 +36,8 @@ class Index extends App.ControllerContent
           @navigate '#login'
           return
 
-        # check if auto wizzard is executed
-        if data.auto_wizzard == true
+        # check if auto wizard is executed
+        if data.auto_wizard == true
 
           # login check / get session user
           App.Auth.loginCheck()

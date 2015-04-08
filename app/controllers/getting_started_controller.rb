@@ -35,17 +35,17 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     return if setup_done_response
 
     # check it auto wizard is already done
-    auto_wizzard_admin = AutoWizzard.setup
-    if auto_wizzard_admin
+    auto_wizard_admin = AutoWizard.setup
+    if auto_wizard_admin
 
       # set current session user
-      current_user_set(auto_wizzard_admin)
+      current_user_set(auto_wizard_admin)
 
       # set system init to done
       Setting.set( 'system_init_done', true )
 
       render :json => {
-        :auto_wizzard          => true,
+        :auto_wizard           => true,
         :setup_done            => setup_done,
         :import_mode           => Setting.get('import_mode'),
         :import_backend        => Setting.get('import_backend'),
