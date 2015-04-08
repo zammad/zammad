@@ -96,6 +96,3 @@ gem 'puma'
 
 # ical export
 gem 'icalendar'
-
-# removed from Rails 4.0
-gem 'rails-observers'
