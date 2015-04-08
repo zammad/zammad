@@ -10,10 +10,12 @@
   ],
   "Settings": [
     {
-      "key": "value"
+      "name": "developer_mode",
+      "value": "true"
     },
     {
-      "another_key": "another_value"
+      "name": "product_name",
+      "value": "Zammad Demo System"
     }
   ]
 }
