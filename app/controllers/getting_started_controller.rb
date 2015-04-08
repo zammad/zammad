@@ -34,6 +34,26 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # check if first user already exists
     return if setup_done_response
 
+    # check it auto wizard is already done
+    auto_wizzard_admin = AutoWizzard.setup
+    if auto_wizzard_admin
+
+      # set current session user
+      current_user_set(auto_wizzard_admin)
+
+      # set system init to done
+      Setting.set( 'system_init_done', true )
+
+      render :json => {
+        :auto_wizzard          => true,
+        :setup_done            => setup_done,
+        :import_mode           => Setting.get('import_mode'),
+        :import_backend        => Setting.get('import_backend'),
+        :system_online_service => Setting.get('system_online_service'),
+      }
+      return
+    end
+
     # if master user already exists, we need to be authenticated
     if setup_done
       return if !authentication_check

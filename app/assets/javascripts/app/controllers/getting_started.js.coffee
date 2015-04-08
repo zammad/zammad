@@ -36,6 +36,17 @@ class Index extends App.ControllerContent
           @navigate '#login'
           return
 
+        # check if auto wizzard is executed
+        if data.auto_wizzard == true
+
+          # login check / get session user
+          App.Auth.loginCheck()
+
+          if App.Config.get('system_online_service')
+            @navigate 'getting_started/agents'
+          else
+            @navigate 'getting_started/channel'
+
         # check if import is active
         if data.import_mode == true
           @navigate '#import/' + data.import_backend
