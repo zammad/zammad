@@ -6,7 +6,7 @@ creates or updates Users and sets Settings based on the 'auto_wizzard.json' file
 
 there is an example file 'contrib/auto_wizzard_example.json'
 
-  AutoWizzard.setup()
+  AutoWizzard.setup
 
 returns
 
