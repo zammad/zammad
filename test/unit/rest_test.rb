@@ -91,13 +91,13 @@ class RestTest < ActiveSupport::TestCase
 
     # username auth
     request = get( 'rest-admin', 'adminpw', '/api/v1/users' )
-    assert_equal( request[:data].class, Array)
     assert_equal( request[:response].code, '200' )
+    assert_equal( request[:data].class, Array)
 
     # email auth
     request = get( 'rest-admin@example.com', 'adminpw', '/api/v1/users' )
-    assert_equal( request[:data].class, Array)
     assert_equal( request[:response].code, '200' )
+    assert_equal( request[:data].class, Array)
 
     # /users
 
