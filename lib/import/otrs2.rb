@@ -510,6 +510,9 @@ module Import::OTRS2
 
     result.each {|record|
 
+      # cleanup values
+      _cleanup(record)
+
       ticket_new = {
         :title         => '',
         :created_by_id => 1,
@@ -680,7 +683,7 @@ module Import::OTRS2
 #puts "HS: #{record['History'].inspect}"
       record['History'].each { |history|
         if history['HistoryType'] == 'NewTicket'
-          puts "HS.add( #{history.inspect} )"
+          #puts "HS.add( #{history.inspect} )"
           res = History.add(
             :id                 => history['HistoryID'],
             :o_id               => history['TicketID'],
@@ -689,7 +692,7 @@ module Import::OTRS2
             :created_at         => history['CreateTime'],
             :created_by_id      => history['CreateBy']
           )
-          puts "res #{res.inspect}"
+          #puts "res #{res.inspect}"
         end
         if history['HistoryType'] == 'StateUpdate'
           data = history['Name']
@@ -1242,5 +1245,20 @@ module Import::OTRS2
       else
         record['ValidID'] = true
       end
+  end
+
+  # cleanup invalid values
+
+  def self._cleanup(record)
+    record.each {|key, value|
+      if value == '0000-00-00 00:00:00'
+        record[key] = nil
+      end
+    }
+
+    # fix OTRS 3.1 bug, no close time if ticket is created
+    if record['StateType'] == 'closed' && ( !record['Closed'] || record['Closed'].empty? )
+      record['Closed'] = record['Created']
+    end
   end
 end
