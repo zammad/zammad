@@ -24,6 +24,7 @@ class OtrsImportTest < ActiveSupport::TestCase
         http      = $1
         fqdn      = $2
         system_id = $3
+        system_id.gsub!(/[A-z]/, "") # strip chars
     end
     assert_equal( system_id, Setting.get('system_id'), 'system_id' )
     assert_equal( fqdn, Setting.get('fqdn'), 'fqdn' )
