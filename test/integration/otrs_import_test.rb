@@ -36,6 +36,7 @@ class OtrsImportTest < ActiveSupport::TestCase
   # check count of imported items
   test 'check counts' do
     assert_equal( 603, Ticket.count, 'tickets' )
+    assert_equal( 3182, Ticket::Article.count, 'ticket articles' )
     assert_equal( 10, Ticket::State.count, 'ticket states' )
     assert_equal( 24, Group.count, 'groups' )
   end
