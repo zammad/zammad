@@ -3,17 +3,32 @@ require 'integration_test_helper'
 
 class OtrsImportTest < ActiveSupport::TestCase
 
-  Setting.set("import_otrs_endpoint", "http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator")
-  Setting.set("import_otrs_endpoint_key", "01234567899876543210")
+  if !ENV['IMPORT_OTRS_ENDPOINT']
+    raise "ERROR: Need IMPORT_OTRS_ENDPOINT - hint IMPORT_OTRS_ENDPOINT='http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator'"
+  end
+  if !ENV['IMPORT_OTRS_ENDPOINT_KEY']
+    raise "ERROR: Need IMPORT_OTRS_ENDPOINT_KEY - hint IMPORT_OTRS_ENDPOINT_KEY='01234567899876543210'"
+  end
+
+  Setting.set("import_otrs_endpoint", ENV['IMPORT_OTRS_ENDPOINT'])
+  Setting.set("import_otrs_endpoint_key", ENV['IMPORT_OTRS_ENDPOINT_KEY'])
   Setting.set("import_mode", true)
   Import::OTRS2.start
 
   # check settings items
   test 'check settings' do
-    assert_equal( '305', Setting.get('system_id'), 'system_id' )
-    assert_equal( 'vz305.demo.znuny.com', Setting.get('fqdn'), 'fqdn' )
-    assert_equal( 'http', Setting.get('http_type'), 'http_type' )
-    assert_equal( 'Example Company VZ305', Setting.get('organization'), 'organization' )
+    http      = nil
+    system_id = nil
+    fqdn      = nil
+    if ENV['IMPORT_OTRS_ENDPOINT'] =~ /^(http|https):\/\/((.+?)\..+?)\//
+        http      = $1
+        fqdn      = $2
+        system_id = $3
+    end
+    assert_equal( system_id, Setting.get('system_id'), 'system_id' )
+    assert_equal( fqdn, Setting.get('fqdn'), 'fqdn' )
+    assert_equal( http, Setting.get('http_type'), 'http_type' )
+    assert_equal( 'Example Company', Setting.get('organization'), 'organization' )
 
   end
 
