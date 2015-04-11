@@ -358,10 +358,10 @@ module Import::OTRS2
     end
 
     Thread.abort_on_exception = true
-    thread_count = 10
-    threads = {}
-    count = 0
-    locks = { :User => {} }
+    thread_count              = 8
+    threads                   = {}
+    count                     = 0
+    locks                     = { :User => {} }
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
         Thread.current[:thread_no] = thread
