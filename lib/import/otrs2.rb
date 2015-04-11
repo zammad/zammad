@@ -4,14 +4,14 @@ module Import::OTRS2
 
 =begin
 
-  result = request_json('Subaction=List', 1)
+  result = request_json( :Subaction => 'List', 1)
 
   return
 
    { some json structure }
 
 
-  result = request_json('Subaction=List')
+  result = request_json( :Subaction => 'List' )
 
   return
 
@@ -19,8 +19,8 @@ module Import::OTRS2
 
 =end
 
-  def self.request_json(part, data_only = false)
-    response = request(part)
+  def self.request_json(data, data_only = false)
+    response = post(data)
     if !response
       raise "Can't connect to Zammad Migrator"
     end
@@ -52,19 +52,19 @@ module Import::OTRS2
 
   def self.request(part)
     url = Setting.get('import_otrs_endpoint') + part + ';Key=' + Setting.get('import_otrs_endpoint_key')
-    puts 'GET: ' + url
+    log 'GET: ' + url
     response = UserAgent.get(
       url,
       {},
       {
-        :open_timeout => 6,
+        :open_timeout => 10,
         :read_timeout => 60,
         :user         => Setting.get('import_otrs_user'),
         :password     => Setting.get('import_otrs_password'),
       },
     )
     if !response.success?
-      puts "ERROR: #{response.error}"
+      log "ERROR: #{response.error}"
       return
     end
     response
@@ -84,10 +84,12 @@ module Import::OTRS2
 
   def self.post(data, url = nil)
     if !url
-      url = Setting.get('import_otrs_endpoint')
+      url            = Setting.get('import_otrs_endpoint')
+      data['Action'] = 'ZammadMigrator'
     end
     data['Key'] = Setting.get('import_otrs_endpoint_key')
-    puts 'POST: ' + url
+    log 'POST: ' + url
+    log 'PARAMS: ' + data.inspect
     response = UserAgent.post(
       url,
       data,
@@ -99,7 +101,7 @@ module Import::OTRS2
       },
     )
     if !response.success?
-      puts "ERROR: #{response.error}"
+      log "ERROR: #{response.error}"
       return
     end
     response
@@ -184,7 +186,7 @@ module Import::OTRS2
 =end
 
   def self.load( object, limit = '', offset = '', diff = 0 )
-    request_json( ";Subaction=Export;Object=#{object};Limit=#{limit};Offset=#{offset};Diff=#{diff}", 1 )
+    request_json( { :Subaction => 'Export', :Object => object, :Limit => limit, :Offset => offset, :Diff => diff }, 1 )
   end
 
 =begin
@@ -200,7 +202,7 @@ module Import::OTRS2
 =end
 
   def self.connection_test
-    return self.request_json('')
+    return self.request_json({})
   end
 
 =begin
@@ -228,7 +230,7 @@ module Import::OTRS2
     end
 
     # retrive statistic
-    statistic = self.request_json(';Subaction=List', 1)
+    statistic = self.request_json( { :Subaction => 'List' }, 1)
     if statistic
       Cache.write('import_otrs_stats', statistic)
     end
@@ -286,14 +288,14 @@ module Import::OTRS2
   #
 
   def self.start
-    puts 'Start import...'
+    log 'Start import...'
 
     # check if system is in import mode
     if !Setting.get('import_mode')
       raise "System is not in import mode!"
     end
 
-    result = request_json('')
+    result = request_json({})
     if !result['Success']
       "API key not valid!"
     end
@@ -348,7 +350,7 @@ module Import::OTRS2
         count += steps
         records = load('CustomerUser', steps, count-steps)
         if !records || !records[0]
-          puts "all customers imported."
+          log "all customers imported."
           run = false
           next
         end
@@ -356,30 +358,31 @@ module Import::OTRS2
     end
 
     Thread.abort_on_exception = true
-    thread_count = 8
+    thread_count = 10
     threads = {}
     count = 0
     locks = { :User => {} }
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
+        Thread.current[:thread_no] = thread
         sleep thread * 3
-        puts "Started import thread# #{thread} ..."
+        log "Started import thread# #{thread} ..."
         run = true
         steps = 20
         while run
           count += steps
-          puts "loading... thread# #{thread} ..."
+          log "loading... thread# #{thread} ..."
           offset = count-steps
           if offset != 0
             offset = count - steps + 1
           end
-          records = load( 'Ticket', steps, count-steps )
+          records = load( 'Ticket', steps, count-steps)
           if !records || !records[0]
-            puts "... thread# #{thread}, no more work."
+            log "... thread# #{thread}, no more work."
             run = false
             next
           end
-          _ticket_result(records, locks)
+          _ticket_result(records, locks, thread)
         end
         ActiveRecord::Base.connection.close
       }
@@ -401,7 +404,7 @@ module Import::OTRS2
   end
 
   def self.diff
-    puts 'Start diff...'
+    log 'Start diff...'
 
     # check if system is in import mode
     if !Setting.get('import_mode')
@@ -447,14 +450,14 @@ module Import::OTRS2
     locks = { :User => {} }
     while run
       count += steps
-      puts "loading... diff ..."
+      log "loading... diff ..."
       offset = count-steps
       if offset != 0
         offset = count - steps + 1
       end
       records = load( 'Ticket', steps, count-steps, 1 )
       if !records || !records[0]
-        puts "... no more work."
+        log "... no more work."
         run = false
         next
       end
@@ -463,7 +466,7 @@ module Import::OTRS2
 
   end
 
-  def self._ticket_result(result, locks)
+  def self._ticket_result(result, locks, thread = '-')
 #    puts result.inspect
     map = {
       :Ticket => {
@@ -553,10 +556,10 @@ module Import::OTRS2
 
       # set state types
       if ticket_old
-        puts "update Ticket.find(#{ticket_new[:id]})"
+        log "update Ticket.find(#{ticket_new[:id]})"
         ticket_old.update_attributes(ticket_new)
       else
-        puts "add Ticket.find(#{ticket_new[:id]})"
+        log "add Ticket.find(#{ticket_new[:id]})"
         ticket = Ticket.new(ticket_new)
         ticket.id = ticket_new[:id]
         ticket.save
@@ -590,7 +593,7 @@ module Import::OTRS2
 
           # create article user if not exists
           while locks[:User][ email ]
-            puts "user #{email} is locked"
+            log "user #{email} is locked"
             sleep 1
           end
 
@@ -670,10 +673,10 @@ module Import::OTRS2
 
         # set state types
         if article_old
-          puts "update Ticket::Article.find(#{article_new[:id]})"
+          log "update Ticket::Article.find(#{article_new[:id]})"
           article_old.update_attributes(article_new)
         else
-          puts "add Ticket::Article.find(#{article_new[:id]})"
+          log "add Ticket::Article.find(#{article_new[:id]})"
           article = Ticket::Article.new(article_new)
           article.id = article_new[:id]
           article.save
@@ -987,7 +990,7 @@ module Import::OTRS2
 
       # create / update agent
       if user_old
-        puts "update User.find(#{user_old[:id]})"
+        log "update User.find(#{user_old[:id]})"
 
         # only update roles if different (reduce sql statements)
         if user_old.role_ids == user_new[:role_ids]
@@ -996,7 +999,7 @@ module Import::OTRS2
 
         user_old.update_attributes(user_new)
       else
-        puts "add User.find(#{user_new[:id]})"
+        log "add User.find(#{user_new[:id]})"
         user = User.new(user_new)
         user.id = user_new[:id]
         user.save
@@ -1109,11 +1112,11 @@ module Import::OTRS2
           if user_old.role_ids == user_new[:role_ids]
             user_new.delete( :role_ids )
           end
-          puts "update User.find(#{user_old[:id]})"
+          log "update User.find(#{user_old[:id]})"
           user_old.update_attributes(user_new)
         end
       else
-        puts "add User.find(#{user_new[:id]})"
+        log "add User.find(#{user_new[:id]})"
         user = User.new(user_new)
         user.save
       end
@@ -1226,6 +1229,14 @@ module Import::OTRS2
     }
   end
 
+
+
+  # log
+
+  def self.log(message)
+    thread_no = Thread.current[:thread_no] || '-'
+    puts "#{Time.new.to_s}/thread##{thread_no}: #{message}"
+  end
 
   # set translate valid ids to active = true|false
 
