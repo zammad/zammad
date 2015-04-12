@@ -135,7 +135,7 @@ class _i18nSingleton extends Spine.Module
   translateContent: ( string, args... ) =>
     translated = App.Utils.htmlEscape( @translate( string, args... ) )
 #    replace = '<span class="translation" contenteditable="true" data-text="' + App.Utils.htmlEscape(string) + '">' + translated + '<span class="icon-edit"></span>'
-    if App.Config.get( 'Translation' )
+    if App.Config.get( 'translation_inline' )
       replace = '<span class="translation" contenteditable="true" data-text="' + App.Utils.htmlEscape(string) + '">' + translated + ''
   #    if !@_translated
   #       replace += '<span class="missing">XX</span>'
@@ -164,6 +164,8 @@ class _i18nSingleton extends Spine.Module
     else
       @_translated = false
       translated   = string
+      if App.Config.get('developer_mode')
+        @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
 
     # search %s
     for arg in args

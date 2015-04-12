@@ -9,7 +9,7 @@
   <div class="attachmentUpload hide u-clickable">
     <div class="horizontal">
       <div class="u-highlight">
-        <%- @T(' Uploading ') %> (<span class="js-percentage">0</span>%) ...
+        <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
       </div>
       <div class="attachmentUpload-cancel align-right js-cancel u-clickable">
         <div class="delete icon"></div><%- @T('Cancel Upload') %>

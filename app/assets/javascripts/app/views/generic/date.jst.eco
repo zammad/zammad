@@ -8,7 +8,7 @@
 <div>
 <a class="js-today"><%- @T('today') %></a>
 |
-<a class="js-minus-day"><%- @T('-1') %></a> <a class="js-plus-day"><%- @T('+1') %></a> <%- @T('day') %>
+<a class="js-minus-day">-1</a> <a class="js-plus-day">+1</a> <%- @T('day') %>
 |
-<a class="js-minus-week"><%- @T('-7') %></a> <a class="js-plus-week"><%- @T('+7') %></a> <%- @T('days') %>
+<a class="js-minus-week">-7</a> <a class="js-plus-week">+7</a> <%- @T('days') %>
 </div>
