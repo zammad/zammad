@@ -79,8 +79,10 @@ class Index extends App.ControllerContent
     reset   = field.closest('tr').find('.js-Reset')
     if current isnt initial
       reset.show()
+      reset.closest('tr').addClass('warning')
     else
       reset.hide()
+      reset.closest('tr').removeClass('warning')
 
 
 App.Config.set( 'Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

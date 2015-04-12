@@ -14,13 +14,13 @@
   <tbody>
     <tr>
       <td><%- @T('Datetime') %></td>
-      <td><input class="translationOverview-item" value="<%= @timestampFormat %>"></td>
+      <td class="translationOverview-itemContainer"><input class="translationOverview-item form-control" value="<%= @timestampFormat %>"></td>
       <td></td>
       <td></td>
     </tr>
     <tr>
       <td><%- @T('Date') %></td>
-      <td><input class="translationOverview-item" value="<%= @dateFormat %>"></td>
+      <td class="translationOverview-itemContainer"><input class="translationOverview-item form-control" value="<%= @dateFormat %>"></td>
       <td></td>
       <td></td>
     </tr>
@@ -41,9 +41,9 @@
     <% if @list: %>
       <% for item in @list: %>
       <tr>
-        <td><%= item[1] %></td>
-        <td><input class="js-Item translationOverview-item" value="<%= item[2] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>"></td>
-        <td><%= item[3]%></td>
+        <td title="<%= item[1] %>"><%= item[1] %></td>
+        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= item[2] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>"></td>
+        <td title="<%= item[3] %>"><%= item[3]%></td>
         <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
       </tr>
       <% end %>

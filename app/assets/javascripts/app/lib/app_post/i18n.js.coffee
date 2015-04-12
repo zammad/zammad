@@ -164,7 +164,7 @@ class _i18nSingleton extends Spine.Module
     else
       @_translated = false
       translated   = string
-      if App.Config.get('developer_mode')
+      if App.Config.get('developer_mode') is true
         @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
 
     # search %s

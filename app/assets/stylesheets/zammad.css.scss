@@ -5267,6 +5267,12 @@ label + .wizard-buttonList {
 
 
 .translationOverview {
+  tbody > tr > td {
+    padding: 20px 0 0 10px;
+  }
+  .translationOverview-itemContainer {
+    padding: 10px 0 10px 10px;
+  }
   .translationOverview-source {
     width: 25%;
   }
