@@ -1,7 +1,7 @@
 <% for item in @items: %>
   <% if item.child: %>
     <li class="<% if item.class: %><%- item.class %><% end %> dropup <% if @open_tab[item.target] : %>open<% end %>">
-      <a class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @T( item.name ) %>">
+      <a class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
         <span class="dropdown-nose"></span>
         <% if item.class is 'user': %>
           <span class="js-avatar"></span>
@@ -30,7 +30,7 @@
     </li>
   <% else: %>
     <li class="settings <% if @active_tab[item.target] : %>active<% end %>">
-      <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @T( item.name ) %>">
+      <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
         <span class="light cog icon"></span>
         <span class="dark cog icon"></span>
       </a>

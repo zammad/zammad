@@ -10,7 +10,7 @@
       <%- @P( @user, row.name ) %>
     <% else: %>
       <label><%- @T( row.display ) %></label>
-      <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%- @user[row.name] %></div>
+      <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @user[row.name] %></div>
     <% end %>
     </div>
   <% end %>

@@ -1,4 +1,4 @@
-<div class="pagination-counter align-right" title="<%- @T(@title) %>">
+<div class="pagination-counter align-right" title="<%- @Ti(@title) %>">
   <span class="pagination-item-current"><%= @current_position %></span>/<span class="pagination-total-items"><%= @total_count %></span>
 </div>
 <ul class="pagination">

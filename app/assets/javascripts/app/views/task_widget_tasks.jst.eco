@@ -4,7 +4,7 @@
       <div class="<% if item.task.active: %>white <% end %><%= item.data.iconClass %> icon<% if item.task.notify: %> modified<% end %>"></div>
     </div>
     <div class="name u-textTruncate flex"><%= item.data.head %></div>
-    <div class="closeTask js-close u-clickable horizontal centered" title="<%- @T('close') %>">
+    <div class="closeTask js-close u-clickable horizontal centered" title="<%- @Ti('close') %>">
       <div class="closeTask-inner centered">
         <div class="white close icon"></div>
       </div>

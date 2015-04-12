@@ -122,7 +122,7 @@
           <form>
             <div class="form-group">
               <label for="template-title"><%- @T('Template Title') %>:</label>
-              <input class="form-control" id="template-title" placeholder="<%- @T('Enter Template Name') %>">
+              <input class="form-control" id="template-title" placeholder="<%- @Ti('Enter Template Name') %>">
             </div>
             <p>This template saves the following attributes:</p>
             <ul class="template-attributes">

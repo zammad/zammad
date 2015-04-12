@@ -28,7 +28,7 @@
       <td>
         <a href="#" class="glyphicon glyphicon-chevron-up js-up"></a><a href="#" class="glyphicon glyphicon-chevron-down js-down"></a>
         <% if item.editable: %>
-          <a href="#" data-id="<%- item.id %>" data-type="delete" class="glyphicon glyphicon-trash" title="<%- @T('Delete') %>"></a>
+          <a href="#" data-id="<%- item.id %>" data-type="delete" class="glyphicon glyphicon-trash" title="<%- @Ti('Delete') %>"></a>
         <% end %>
       </td>
     </tr>

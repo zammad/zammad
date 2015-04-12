@@ -12,7 +12,7 @@
       <% if row.tag is 'richtext': %>
         <div class="profile-detailsEntry" style="width: 100%;">
           <label><%- @Ti( row.display ) %></label>
-          <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @T('Add a Note') %>"><%- @user[row.name] %></div>
+          <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @user[row.name] %></div>
         </div>
       <% else: %>
         <% if @user[row.name]: %>
