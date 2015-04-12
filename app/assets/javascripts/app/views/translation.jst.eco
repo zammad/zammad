@@ -1,0 +1,52 @@
+<div class="page-header-title">
+  <h1><%- @T('Translations') %><small></small></h1>
+</div>
+<h2><%- @T('Date & Datetime') %></h2>
+<table class="translationOverview table table-striped table-hover">
+  <thead>
+    <tr>
+      <th class="translationOverview-source"><%- @T('Type') %></th>
+      <th class="translationOverview-target"><%- @T('Target') %></th>
+      <th class="translationOverview-initial"><%- @T('Original') %></th>
+      <th class="translationOverview-action"><%- @T('Action') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%- @T('Datetime') %></td>
+      <td><input class="translationOverview-item" value="<%= @timestampFormat %>"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><%- @T('Date') %></td>
+      <td><input class="translationOverview-item" value="<%= @dateFormat %>"></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%- @T('Words') %></h2>
+<table class="translationOverview table table-striped table-hover">
+  <thead>
+    <tr>
+      <th class="translationOverview-source"><%- @T('Source') %></th>
+      <th class="translationOverview-target"><%- @T('Target') %></th>
+      <th class="translationOverview-initial"><%- @T('Original') %></th>
+      <th class="translationOverview-action"><%- @T('Action') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @list: %>
+      <% for item in @list: %>
+      <tr>
+        <td><%= item[1] %></td>
+        <td><input class="js-Item translationOverview-item" value="<%= item[2] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>"></td>
+        <td><%= item[3]%></td>
+        <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

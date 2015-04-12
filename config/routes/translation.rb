@@ -7,5 +7,6 @@ Zammad::Application.routes.draw do
   match api_path + '/translations/:id',          :to => 'translations#update',  :via => :put
   match api_path + '/translations/:id',          :to => 'translations#destroy', :via => :delete
 
-  match api_path + '/translations/lang/:locale', :to => 'translations#load',    :via => :get
+  match api_path + '/translations/lang/:locale',       :to => 'translations#load',  :via => :get
+  match api_path + '/translations/admin/lang/:locale', :to => 'translations#admin', :via => :get
 end

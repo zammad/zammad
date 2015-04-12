@@ -5266,6 +5266,23 @@ label + .wizard-buttonList {
 .highlight-Purple { background: #eac5ee; }
 
 
+.translationOverview {
+  .translationOverview-source {
+    width: 25%;
+  }
+  .translationOverview-target {
+    width: 35%;
+  }
+  .translationOverview-initial {
+    width: 25%;
+  }
+  .translationOverview-action {
+    width: 15%;
+  }
+  .translationOverview-item {
+    width: 100%;
+  }
+}
 
 .overview-navigator {
   display: inherit;

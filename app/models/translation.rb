@@ -6,24 +6,38 @@ class Translation < ApplicationModel
   after_update  :cache_clear
   after_destroy :cache_clear
 
-  def self.list(locale)
+  def self.list(locale, admin = false)
 
     # check cache
-    list = cache_get( locale )
+    if !admin
+      list = cache_get( locale )
+    end
     if !list
       list = []
-      translations = Translation.where( :locale => locale.downcase )
+      translations = Translation.where( :locale => locale.downcase ).order( :source )
       translations.each { |item|
-        data = [
-          item.id,
-          item.source,
-          item.target,
-        ]
-        list.push data
+        if admin
+          data = [
+            item.id,
+            item.source,
+            item.target,
+            item.target_initial,
+          ]
+          list.push data
+        else
+          data = [
+            item.id,
+            item.source,
+            item.target,
+          ]
+          list.push data
+        end
       }
 
       # set cache
-      cache_set( locale, list )
+      if !admin
+        cache_set( locale, list )
+      end
     end
 
     timestamp_map_default = 'yyyy-mm-dd HH:MM'
