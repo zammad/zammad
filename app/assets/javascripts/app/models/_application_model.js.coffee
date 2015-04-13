@@ -150,16 +150,36 @@ class App.Model extends Spine.Model
 
   attributes = App.Model.attributesGet(optionalScreen, optionalAttributesList)
 
+  returns
+    {
+      'name': {
+        name:    'name'
+        display: 'Name'
+        tag:     'input'
+        type:    'text'
+        limit:   100
+        null:    false
+      },
+      'assignment_timeout': {
+        name:    'assignment_timeout'
+        display: 'Assignment Timeout'
+        tag:     'input'
+        type:    'text'
+        limit:   100
+        null:    false
+      },
+    }
+
   ###
 
   @attributesGet: (screen = undefined, attributes = false) ->
     if !attributes
-      attributes = clone( App[ @.className ].configure_attributes )
+      attributes = clone( App[ @.className ].configure_attributes, true )
     else
-      attributes = clone( attributes )
+      attributes = clone( attributes, true )
 
     # in case if no configure_attributes exist
-    return if !attributes
+    return {} if !attributes
     attributesNew = {}
 
     # check params of screen if screen is requested
@@ -192,9 +212,11 @@ class App.Model extends Spine.Model
     return true if @id[0] isnt 'c'
     return false
 
+  # App.Model.fullLocal(id)
   @fullLocal: (id) ->
     @_fillUp( App[ @className ].find( id ) )
 
+  # App.Model.full(id, callback, force, bind)
   @full: (id, callback = false, force = false, bind = false) ->
     url = "#{@url}/#{id}?full=true"
 
@@ -208,7 +230,7 @@ class App.Model extends Spine.Model
       data = App[ @className ].find( id )
       data = @_fillUp( data )
       if callback
-        callback( data )
+        callback( data, 'full' )
       return subscribeId
 
     # store callback and requested id
@@ -303,7 +325,7 @@ class App.Model extends Spine.Model
     console.log("Collection has changed", changedItems, localOrServer)
 
   params =
-    initFetch: true # fetch inital collection
+    initFetch: true # fetch initial collection
 
   @subscribeId = App.Model.subscribe( methodWhichIsCalledAtLocalOrServerSiteChange )
 
@@ -322,7 +344,7 @@ class App.Model extends Spine.Model
       )
 
       # fetch() all on network notify
-      events = "#{@className}:create #{@className}:update #{@className}:destroy"
+      events = "#{@className}:create #{@className}:update #{@className}:touch #{@className}:destroy"
       App.Event.bind(
         events
         =>
@@ -403,7 +425,7 @@ class App.Model extends Spine.Model
       )
 
       # subscribe and render data after server change
-      events = "#{@className}:create #{@className}:update #{@className}:destroy"
+      events = "#{@className}:create #{@className}:update #{@className}:touch #{@className}:destroy"
       App.Event.bind(
         events
         (item) =>
