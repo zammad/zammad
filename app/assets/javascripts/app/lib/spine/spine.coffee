@@ -416,7 +416,7 @@ class Model extends Module
     # go to the source and load attributes
     @constructor.irecords[@id].load(atts)
     @trigger('refresh', this)
-    @trigger('change', this, 'refresh')
+    #@trigger('change', this, 'refresh') # do not trigger change on refresh, compat. to spine 1.3.x and lower
     this
 
   toJSON: ->
