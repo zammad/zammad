@@ -138,6 +138,18 @@ class App.Model extends Spine.Model
             errors[attributeName] = 'didn\'t match'
             errors["#{attributeName}_confirm"] = ''
 
+        # check datetime
+        if attribute.tag is 'datetime' && data['params'][attributeName] is null
+          errors[attributeName] = 'invalid'
+
+          # validate value
+
+        # check date
+        if attribute.tag is 'date' && data['params'][attributeName] is null
+          errors[attributeName] = 'invalid'
+
+          # validate value
+
     # return error object
     if !_.isEmpty(errors)
       console.log 'error', 'validation failed', errors

@@ -2367,7 +2367,7 @@ class App.ControllerForm extends App.Controller
                 throw "Invalid Date #{year}-#{format(month)}-#{format(day)}"
               param[ namespace[0] ] = "#{time.getUTCFullYear()}-#{format(time.getUTCMonth()+1)}-#{format(time.getUTCDate())}"
             catch err
-              param[ namespace[0] ] = undefined
+              param[ namespace[0] ] = null
               console.log('ERR', err)
           else
             param[ namespace[0] ] = undefined
@@ -2405,7 +2405,7 @@ class App.ControllerForm extends App.Controller
               time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
               param[ namespace[0] ] = time.toISOString()
             catch err
-              param[ namespace[0] ] = undefined
+              param[ namespace[0] ] = null
               console.log('ERR', err)
           else
             param[ namespace[0] ] = undefined
@@ -2511,13 +2511,21 @@ class App.ControllerForm extends App.Controller
 
     # show new errors
     for key, msg of data.errors
+
+      # use native fields
       item = lookupForm.find('[name="' + key + '"]').closest('.form-group')
       item.addClass('has-error')
       item.find('.help-inline').html(msg)
 
+      # use meta fields
       item = lookupForm.find('[data-name="' + key + '"]').closest('.form-group')
       item.addClass('has-error')
       item.find('.help-inline').html(msg)
 
-    # set autofocus
-    lookupForm.find('.has-error').find('input, textarea, select').first().focus()
+    # set autofocus by delay to make validation testable
+    App.Delay.set(
+      ->
+        lookupForm.find('.has-error').find('input, textarea, select').first().focus()
+      200
+      'validate'
+    )

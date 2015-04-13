@@ -153,20 +153,26 @@ test( "datetime validation check", function() {
   equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), false, 'check datetime1 has-error')
   equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
 
-  el.find('[name="{datetime}datetime1___day"]').val('47')
-  el.find('[name="{datetime}datetime1___month"]').val('1')
-  el.find('[name="{datetime}datetime1___year"]').val('2015')
-  el.find('[name="{datetime}datetime1___hour"]').val('12')
-  el.find('[name="{datetime}datetime1___minute"]').val('42')
+  el.find('[name="{datetime}datetime1___day"]').val('47').blur()
+  deepEqual( el.find('[name="{datetime}datetime1___day"]').hasClass('has-error'), true )
+  el.find('[name="{datetime}datetime1___month"]').val('1').blur()
+  deepEqual( el.find('[name="{datetime}datetime1___month"]').hasClass('has-error'), false )
+  el.find('[name="{datetime}datetime1___year"]').val('2015').blur()
+  deepEqual( el.find('[name="{datetime}datetime1___year"]').hasClass('has-error'), false )
+  el.find('[name="{datetime}datetime1___hour"]').val('12').blur()
+  deepEqual( el.find('[name="{datetime}datetime1___hour"]').hasClass('has-error'), false )
+  el.find('[name="{datetime}datetime1___minute"]').val('42').blur()
+  deepEqual( el.find('[name="{datetime}datetime1___minute"]').hasClass('has-error'), false )
+
   params = App.ControllerForm.params( el )
   errors = form.validate(params)
   test_errors = {
-    datetime1: "is required",
+    datetime1: "invalid",
   }
   deepEqual( errors, test_errors, 'validation errors check' )
   App.ControllerForm.validate( { errors: errors, form: el } )
   equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 has-error')
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
+  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'invalid', 'check datetime1 error message')
 
 });
 
@@ -227,26 +233,29 @@ test( "date validation check", function() {
   equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
 
   // set invalid values
-  el.find('[name="{date}date1___day"]').val('47')
-  el.find('[name="{date}date1___month"]').val('1')
-  el.find('[name="{date}date1___year"]').val('2015')
+  el.find('[name="{date}date1___day"]').val('47').blur()
+  deepEqual( el.find('[name="{date}date1___day"]').hasClass('has-error'), true )
+  el.find('[name="{date}date1___month"]').val('1').blur()
+  deepEqual( el.find('[name="{date}date1___month"]').hasClass('has-error'), false )
+  el.find('[name="{date}date1___year"]').val('2015').blur()
+  deepEqual( el.find('[name="{date}date1___year"]').hasClass('has-error'), false )
 
   // check params
   params = App.ControllerForm.params( el )
   test_params = {
-    date1: undefined,
+    date1: null,
   }
   deepEqual( params, test_params, 'params check' )
 
   // check errors
   errors = form.validate(params)
   test_errors = {
-    date1: "is required",
+    date1: "invalid",
   }
   deepEqual( errors, test_errors, 'validation errors check' )
   App.ControllerForm.validate( { errors: errors, form: el } )
   equal( el.find('[data-name="date1"]').closest('.form-group').hasClass('has-error'), true, 'check date1 has-error')
-  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
+  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), 'invalid', 'check date1 error message')
 
 });
 
