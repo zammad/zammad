@@ -204,9 +204,15 @@ test( "model basic tests", function() {
 // model
 test( "model loadAssets tests - 1", function() {
   window.refreshCounter1 = 0
-  var callback1 = function(state) {
+  var callback1 = function(state, triggerType) {
     window.refreshCounter1 = window.refreshCounter1 + 1
     equal( state.id, 9999, 'id check')
+    if (window.refreshCounter1 == 1) {
+      equal( 'full', triggerType, 'trigger type check')
+    }
+    else {
+      equal( 'refresh', triggerType, 'trigger type check')
+    }
 
     if ( window.refreshCounter1 == 1 ) {
       App.Collection.loadAssets({
@@ -226,7 +232,6 @@ test( "model loadAssets tests - 1", function() {
           }
         }
       })
-
     }
   }
   App.Collection.loadAssets({
@@ -237,6 +242,7 @@ test( "model loadAssets tests - 1", function() {
     }
   })
 
+  // do not force, but bild on every change/loadAssets
   App.TicketState.full(9999, callback1, false, true)
 
 });
@@ -251,10 +257,15 @@ App.Delay.set( function() {
 
 test( "model loadAssets tests - 2", function() {
   window.refreshCounter2 = 0
-  var callback2 = function(state) {
+  var callback2 = function(state, triggerType) {
     window.refreshCounter2 = window.refreshCounter2 + 1
     equal( state.id, 10000, 'id check')
-
+    if (window.refreshCounter2 == 1) {
+      equal( 'full', triggerType, 'trigger type check')
+    }
+    else {
+      equal( 'refresh', triggerType, 'trigger type check')
+    }
     if ( window.refreshCounter2 == 1 ) {
       App.Collection.loadAssets({
         TicketState: {
@@ -282,6 +293,7 @@ test( "model loadAssets tests - 2", function() {
     }
   })
 
+  // do not force, but bild on every change/loadAssets
   App.TicketState.full(10000, callback2, false, true)
 
 });
@@ -296,9 +308,15 @@ App.Delay.set( function() {
 
 test( "model loadAssets tests - 3", function() {
   window.refreshCounter3 = 0
-  var callback3 = function(state) {
+  var callback3 = function(state, triggerType) {
     window.refreshCounter3 = window.refreshCounter3 + 1
     equal( state.id, 10001, 'id check')
+    if (window.refreshCounter3 == 1) {
+      equal( 'full', triggerType, 'trigger type check')
+    }
+    else {
+      equal( 'refresh', triggerType, 'trigger type check')
+    }
 
     if ( window.refreshCounter3 == 1 ) {
       App.Collection.loadAssets({
@@ -327,6 +345,7 @@ test( "model loadAssets tests - 3", function() {
     }
   })
 
+  // do not force, but bild on every change/loadAssets
   App.TicketState.full(10001, callback3, false, true)
 
 });
