@@ -213,18 +213,15 @@ class Singleton extends Base
 
       Ajax.disable =>
         unless Spine.isBlank(data) or @record.destroyed
-          # ID change, need to do some shifting
-          if data.id and @record.id isnt data.id
-            @record.changeID(data.id)
           # Update with latest data
           @record.refresh(data)
 
-      @record.trigger('ajaxSuccess', data, status, xhr)
+      @record.trigger('ajaxSuccess', @record, @model.fromJSON(data), status, xhr)
       options.done?.apply(@record)
 
   failResponse: (options = {}) =>
     (xhr, statusText, error) =>
-      @record.trigger('ajaxError', xhr, statusText, error)
+      @record.trigger('ajaxError', @record, xhr, statusText, error)
       options.fail?.apply(@record)
 
 # Ajax endpoint
@@ -265,7 +262,7 @@ Model.Ajax =
 
   ajaxChange: (record, type, options = {}) ->
     return if options.ajax is false
-    record.ajax()[type](options.ajax, options)
+    record.ajax()[type]?(options.ajax, options)
 
 Model.Ajax.Methods =
   extended: ->

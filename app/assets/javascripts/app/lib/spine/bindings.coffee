@@ -22,23 +22,23 @@ class ValueSetter
     getter element
 
   _standardGetter: (element) ->
-    self = @
-    self["_#{element.attr("type")}Get"]?(element) || element.val()
+    self = this
+    self["_#{element.attr('type')}Get"]?(element) || element.val()
 
   _standardSetter: (element, value) ->
-    self = @
+    self = this
     element.each ->
       el = $(this)
-      self["_#{el.attr("type")}Set"]?(el, value) || el.val(value)
+      self["_#{el.attr('type')}Set"]?(el, value) || el.val(value)
 
   _checkboxSet: (element, value) ->
     if value
-      element.prop("checked", "checked")
+      element.prop('checked', 'checked')
     else
-      element.prop("checked", "")
+      element.prop('checked', '')
 
   _checkboxGet: (element) ->
-    element.is(":checked")
+    element.is(':checked')
 
 BindingsInstance =
 

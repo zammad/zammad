@@ -69,11 +69,8 @@ class Instance extends Spine.Module
     for key, value of options
       @[key] = value
 
-  exists: ->
-    return if @record[@fkey] then @model.exists(@record[@fkey]) else false
-
   find: ->
-    return @model.find(@record[@fkey])
+    @model.find(@record[@fkey])
 
   update: (value) ->
     return this unless value?
