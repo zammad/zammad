@@ -14,15 +14,12 @@ gem 'json'
 group :assets do
   gem 'sass-rails' #, github: 'rails/sass-rails'
   gem 'coffee-rails'
-
-  # use dedicated version of coffee-script-source, 1.9.0 is broken
-  gem 'coffee-script-source', '1.8.0'
+  gem 'coffee-script-source'
 
   # use dedicated version of sprockets, 3.0.0 is broken
   gem 'sprockets', '~> 2.0'
 
   gem 'uglifier'
-
   gem 'eco'
 end
 
@@ -88,7 +85,3 @@ gem 'kramdown'
 
 gem 'prawn'
 gem 'prawn-table'
-
-# ical export
-gem 'icalendar'
-
