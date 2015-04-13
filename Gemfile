@@ -4,8 +4,6 @@ gem 'rails', '4.1.9'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
-gem 'eco'
-
 # Bundle edge Rails instead:
 #gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
@@ -20,7 +18,12 @@ group :assets do
   # use dedicated version of coffee-script-source, 1.9.0 is broken
   gem 'coffee-script-source', '1.8.0'
 
+  # use dedicated version of sprockets, 3.0.0 is broken
+  gem 'sprockets', '~> 2.0'
+
   gem 'uglifier'
+
+  gem 'eco'
 end
 
 gem 'omniauth'
@@ -49,20 +52,16 @@ gem 'therubyracer'
 gem 'mysql2'
 #gem 'sqlite3'
 
-#platforms :jruby do
-#  gem 'jruby-openssl'
-#  gem 'activerecord-jdbcmysql-adapter'
-#end
-
 gem 'net-ldap'
 
 gem 'writeexcel'
+gem 'icalendar'
 
 # event machine
 gem 'eventmachine'
 gem 'em-websocket'
 
-# Gems used only for develo//test and not required
+# Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
 
@@ -82,17 +81,14 @@ group :development, :test do
     gem 'guard-livereload',  :require => false
     gem 'rack-livereload'
     gem 'rb-fsevent',        :require => false
-
-    # websocket unit tests
-#    gem 'em-websocket-client'
 end
 
-# to generate doc
+gem 'puma'
 gem 'kramdown'
+
 gem 'prawn'
 gem 'prawn-table'
 
-gem 'puma'
-
 # ical export
 gem 'icalendar'
+
