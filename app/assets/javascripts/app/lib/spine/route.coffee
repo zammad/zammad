@@ -9,9 +9,10 @@ escapeRegExp = /[-[\]{}()+?.,\\^$|#\s]/g
 
 class Path extends Spine.Module
 
-  constructor: (@path, @callback) ->
+  constructor: (path, callback) ->
     @names = []
-
+    @path = path
+    @callback = callback
     if typeof path is 'string'
       namedParam.lastIndex = 0
       while (match = namedParam.exec(path)) != null
