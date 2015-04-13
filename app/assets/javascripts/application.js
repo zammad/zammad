@@ -7,7 +7,7 @@
 
 //= require ./app/lib/core/jquery-2.1.3.js
 //= require ./app/lib/core/jquery-ui-1.11.2.js
-//= require ./app/lib/core/underscore-1.7.0.js
+//= require ./app/lib/core/underscore-1.8.3.js
 
 //= require ./app/lib/animations/velocity.min.js
 //= require ./app/lib/animations/velocity.ui.js
