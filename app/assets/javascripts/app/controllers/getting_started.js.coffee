@@ -58,7 +58,7 @@ class Index extends App.ControllerContent
 
   render: ->
 
-    @html App.view('getting_started/index')()
+    @html App.view('getting_started/intro')()
 
 App.Config.set( 'getting_started', Index, 'Routes' )
 
