@@ -465,6 +465,11 @@ class TestCase < Test::Unit::TestCase
         raise e.inspect
       end
     end
+
+    # do cleanups (needed for richtext tests)
+    text.gsub!(/\s+$/m, '')
+    params[:value].gsub!(/\s+$/m, '')
+
     match = false
     if params[:no_quote]
       #puts "aaaa #{text}/#{params[:value]}"
