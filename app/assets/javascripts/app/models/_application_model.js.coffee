@@ -139,14 +139,16 @@ class App.Model extends Spine.Model
             errors["#{attributeName}_confirm"] = ''
 
         # check datetime
-        if attribute.tag is 'datetime' && data['params'][attributeName] is null
-          errors[attributeName] = 'invalid'
+        if attribute.tag is 'datetime'
+          if data['params'][attributeName] is 'invalid'
+            errors[attributeName] = 'invalid'
 
           # validate value
 
         # check date
-        if attribute.tag is 'date' && data['params'][attributeName] is null
-          errors[attributeName] = 'invalid'
+        if attribute.tag is 'date'
+          if data['params'][attributeName] is 'invalid'
+            errors[attributeName] = 'invalid'
 
           # validate value
 

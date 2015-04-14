@@ -243,14 +243,14 @@ test( "date validation check", function() {
   // check params
   params = App.ControllerForm.params( el )
   test_params = {
-    date1: null,
+    date1: 'invalid',
   }
   deepEqual( params, test_params, 'params check' )
 
   // check errors
   errors = form.validate(params)
   test_errors = {
-    date1: "invalid",
+    date1: 'invalid',
   }
   deepEqual( errors, test_errors, 'validation errors check' )
   App.ControllerForm.validate( { errors: errors, form: el } )

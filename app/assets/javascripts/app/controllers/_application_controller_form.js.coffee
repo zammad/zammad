@@ -2367,7 +2367,7 @@ class App.ControllerForm extends App.Controller
                 throw "Invalid Date #{year}-#{format(month)}-#{format(day)}"
               param[ namespace[0] ] = "#{time.getUTCFullYear()}-#{format(time.getUTCMonth()+1)}-#{format(time.getUTCDate())}"
             catch err
-              param[ namespace[0] ] = null
+              param[ namespace[0] ] = 'invalid'
               console.log('ERR', err)
           else
             param[ namespace[0] ] = undefined
@@ -2405,7 +2405,7 @@ class App.ControllerForm extends App.Controller
               time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
               param[ namespace[0] ] = time.toISOString()
             catch err
-              param[ namespace[0] ] = null
+              param[ namespace[0] ] = 'invalid'
               console.log('ERR', err)
           else
             param[ namespace[0] ] = undefined
