@@ -43,8 +43,9 @@ class AACBasicRichtextTest < TestCase
     sleep 1
 
     match(
-      :css   => '#content .text-3',
-      :value => "some test for browser\nand some other for browser",
+      :css     => '#content .text-3',
+      :value   => "some test for browser\nand some other for browser",
+      :cleanup => true,
     )
 
     # richtext multi line
@@ -59,8 +60,9 @@ class AACBasicRichtextTest < TestCase
     sleep 1
 
     match(
-      :css   => '#content .text-5',
-      :value => "some test for browser\nand some other for browser2",
+      :css     => '#content .text-5',
+      :value   => "some test for browser\nand some other for browser2",
+      :cleanup => true,
     )
   end
 end
