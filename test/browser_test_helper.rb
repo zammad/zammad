@@ -1054,7 +1054,7 @@ wait untill text in selector disabppears
             :id     => id,
             :number => number,
           }
-          sleep 1
+          sleep 3 # wait until notify is gone
           return ticket
         end
       end
