@@ -6,44 +6,65 @@ class App.i18n
 
   @translateContent: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.translateContent( string, args )
 
   @translatePlain: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.translatePlain( string, args )
 
   @translateInline: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.translateInline( string, args )
 
   @translateTimestamp: ( args, offset = 0 ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.timestamp( args, offset )
 
   @translateDate: ( args, offset = 0 ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.date( args, offset )
 
   @get: ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.get()
 
   @set: ( args ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton( args )
+      _instance ?= new _i18nSingleton()
     _instance.set( args )
+
+  @setMap: (source, target) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.setMap( source, target )
+
+  @getNotTranslated: (locale) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.getNotTranslated( locale )
+
+  @removeNotTranslated: (locale, key) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.removeNotTranslated( locale, key )
+
+  @setNotTranslated: (locale, key) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.setNotTranslated( locale, key )
 
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 
   constructor: ( locale ) ->
-    @map = {}
+    @map             = {}
+    @_notTranslated   = {}
     @dateFormat      = 'yyyy-mm-dd'
     @timestampFormat = 'yyyy-mm-dd HH:MM'
 
@@ -165,6 +186,9 @@ class _i18nSingleton extends Spine.Module
       @_translated = false
       translated   = string
       if App.Config.get('developer_mode') is true
+        if !@_notTranslated[@locale]
+          @_notTranslated[@locale] = {}
+        @_notTranslated[@locale][string] = true
         @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
 
     # search %s
@@ -175,6 +199,18 @@ class _i18nSingleton extends Spine.Module
 
     # return translated string
     return translated
+
+  setMap: ( source, target ) =>
+    @map[source] = target
+
+  getNotTranslated: ( locale ) =>
+    @_notTranslated[locale || @locale]
+
+  removeNotTranslated: ( locale, key ) =>
+    delete @_notTranslated[locale][key]
+
+  setNotTranslated: ( locale, key ) =>
+    @_notTranslated[locale][key] = true
 
   date: ( time, offset ) =>
     @convert(time, offset, @dateFormat)

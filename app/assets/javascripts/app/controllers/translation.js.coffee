@@ -1,8 +1,4 @@
 class Index extends App.ControllerContent
-  events:
-    'blur input':      'update'
-    'click .js-Reset': 'reset'
-
   constructor: ->
     super
 
@@ -12,23 +8,144 @@ class Index extends App.ControllerContent
     @title 'Translations'
 
     @render()
+
+  render: =>
+    @html App.view('translation/index')()
+    configure_attributes = [
+      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: { de: 'Deutsch', en: 'English (United States)', 'en-CA': 'English (Canada)', 'en-GB': 'English (United Kingdom)' }, default: App.i18n.get()  },
+    ]
+    load = (params) =>
+      new TranslationToDo(
+        el:     @$('.js-ToDo')
+        locale: params.locale
+      )
+      new TranslationList(
+        el:     @$('.js-List')
+        locale: params.locale
+      )
+
+    new App.ControllerForm(
+      el:        @$('.language')
+      model:     { configure_attributes: configure_attributes }
+      autofocus: false
+      handlers:  [load]
+    )
+
+  release: =>
+    App.Event.trigger('ui:rerender')
+
+class TranslationToDo extends App.Controller
+  events:
+    'click .js-Create':  'create'
+    'click .js-TheSame': 'same'
+
+  constructor: ->
+    super
+    @render()
+    @bind(
+      'i18n:translation_todo_reload',
+      =>
+        @render()
+    )
+
+  render: =>
+    listNotTranslated = []
+    for key, value of App.i18n.getNotTranslated(@locale)
+      item = [ '', key, '', '']
+      listNotTranslated.push item
+
+    @html App.view('translation/todo')(
+      list: listNotTranslated
+    )
+
+  create: (e) =>
+    e.preventDefault()
+    field  = $(e.target).closest('tr').find('.js-Item')
+    source = field.data('source')
+    target = field.val()
+
+    # remove from not translated list
+    $(e.target).closest('tr').remove()
+
+    # local update
+    App.i18n.removeNotTranslated( @locale, source )
+    App.i18n.setMap( source, target )
+
+    # remote update
+    params =
+      locale:         @locale
+      source:         source
+      target:         target
+      target_initial: ''
+
+    @ajax(
+      id:          'translations'
+      type:        'POST'
+      url:         @apiPath + '/translations'
+      data:        JSON.stringify(params)
+      processData: false
+      success: (data, status, xhr) =>
+        App.Event.trigger('i18n:translation_list_reload')
+    )
+
+  same: (e) =>
+    e.preventDefault()
+    field  = $(e.target).closest('tr').find('.js-Item')
+    source = field.data('source')
+
+    # remove from not translated list
+    $(e.target).closest('tr').remove()
+
+    # local update
+    App.i18n.removeNotTranslated( @locale, source )
+    App.i18n.setMap( source, source )
+
+    # remote update
+    params =
+      locale:         @locale
+      source:         source
+      target:         source
+      target_initial: ''
+
+    @ajax(
+      id:          'translations'
+      type:        'POST'
+      url:         @apiPath + '/translations'
+      data:        JSON.stringify(params)
+      processData: false
+      success: (data, status, xhr) =>
+        App.Event.trigger('i18n:translation_list_reload')
+    )
+
+class TranslationList extends App.Controller
+  events:
+    'blur .js-translated input':          'update'
+    'click .js-translated .js-Reset':     'reset'
+
+  constructor: ->
+    super
     @load()
+    @bind(
+      'i18n:translation_list_reload',
+      =>
+        @load()
+    )
 
   load: =>
     @ajax(
       id:    'translations_admin'
       type:  'GET'
-      url:   @apiPath + '/translations/admin/lang/de'
+      url:   @apiPath + "/translations/admin/lang/#{@locale}"
       processData: true
       success: (data, status, xhr) =>
         @render(data)
     )
 
   render: (data = {}) =>
-    @html App.view('translation')(
-      list:            data.list
-      timestampFormat: data.timestampFormat
-      dateFormat:      data.dateFormat
+    @html App.view('translation/list')(
+      list:              data.list
+      timestampFormat:   data.timestampFormat
+      dateFormat:        data.dateFormat
     )
     ui = @
     @$('.js-Item').each( (e) ->
@@ -40,7 +157,31 @@ class Index extends App.ControllerContent
     e.preventDefault()
     field   = $(e.target).closest('tr').find('.js-Item')
     id      = field.data('id')
+    source  = field.data('source')
     initial = field.data('initial')
+
+    # if it's translated by user it self, delete it
+    if !initial || initial is ''
+      $(e.target).closest('tr').remove()
+      App.i18n.setMap( source, '' )
+      params =
+        id: id
+      @ajax(
+        id:          'translations'
+        type:        'DELETE'
+        url:         @apiPath + '/translations/' + id
+        data:        JSON.stringify(params)
+        processData: false
+        success: =>
+          console.log('aaa', @locale, source)
+          App.i18n.setNotTranslated( @locale, source )
+          App.Event.trigger('i18n:translation_todo_reload')
+      )
+      return
+
+    # update item
+    App.i18n.setMap( source, initial )
+
     field.val( initial )
     @updateRow(id)
     params =
@@ -58,8 +199,14 @@ class Index extends App.ControllerContent
   update: (e) ->
     e.preventDefault()
     id     = $( e.target ).data('id')
+    source = $( e.target ).data('source')
     target = $( e.target ).val()
     @updateRow(id)
+
+    # local update
+    App.i18n.setMap( source, target )
+
+    # remote update
     params =
       id:     id
       target: target
@@ -83,6 +230,5 @@ class Index extends App.ControllerContent
     else
       reset.hide()
       reset.closest('tr').removeClass('warning')
-
 
 App.Config.set( 'Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
