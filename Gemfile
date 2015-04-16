@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.1.9'
+gem 'rails', '4.1.10'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
