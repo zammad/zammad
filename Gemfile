@@ -16,6 +16,9 @@ group :assets do
   gem 'coffee-rails'
   gem 'coffee-script-source'
 
+  # use dedicated version of sprockets, 3.0.0 is broken
+  gem 'sprockets', '~> 2.0'
+
   gem 'uglifier'
   gem 'eco'
 end
