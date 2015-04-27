@@ -45,7 +45,7 @@ class ImportOtrsController < ApplicationController
     suffixes.each {|suffix|
       url = params[:url] + suffix + '?Action=ZammadMigrator'
       # strip multible / in url
-      url.gsub!(/([^:])(\/+\/)/, "\\1/")
+      url.gsub!(/([^:])(\/+\/)/, '\\1/')
       response = UserAgent.request( url )
 
       #Setting.set('import_mode', true)

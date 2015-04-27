@@ -29,7 +29,7 @@ module Import::OTRS2
     end
     result = json(response)
     if !result
-      raise "Invalid response"
+      raise 'Invalid response'
     end
     if data_only
       result['Result']
@@ -292,12 +292,12 @@ module Import::OTRS2
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-      raise "System is not in import mode!"
+      raise 'System is not in import mode!'
     end
 
     result = request_json({})
     if !result['Success']
-      "API key not valid!"
+      'API key not valid!'
     end
 
     # set settings
@@ -350,7 +350,7 @@ module Import::OTRS2
         count += steps
         records = load('CustomerUser', steps, count-steps)
         if !records || !records[0]
-          log "all customers imported."
+          log 'all customers imported.'
           run = false
           next
         end
@@ -408,7 +408,7 @@ module Import::OTRS2
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-      raise "System is not in import mode!"
+      raise 'System is not in import mode!'
     end
 
     # create states
@@ -450,14 +450,14 @@ module Import::OTRS2
     locks = { :User => {} }
     while run
       count += steps
-      log "loading... diff ..."
+      log 'loading... diff ...'
       offset = count-steps
       if offset != 0
         offset = count - steps + 1
       end
       records = load( 'Ticket', steps, count-steps, 1 )
       if !records || !records[0]
-        log "... no more work."
+        log '... no more work.'
         run = false
         next
       end

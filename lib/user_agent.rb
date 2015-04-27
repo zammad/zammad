@@ -267,7 +267,7 @@ returns
 
     def self.set_params(request, params, options)
       if options[:json]
-        request.add_field("Content-Type", "application/json")
+        request.add_field('Content-Type', 'application/json')
         if !params.empty?
           request.body = params.to_json
         end
@@ -308,7 +308,7 @@ returns
           :code    => response.code,
         )
       when Net::HTTPRedirection
-        raise "Too many redirections for the original URL, halting." if count <= 0
+        raise 'Too many redirections for the original URL, halting.' if count <= 0
         url = response['location']
         return get(url, params, options, count - 1)
       when Net::HTTPOK

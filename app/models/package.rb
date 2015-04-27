@@ -19,9 +19,9 @@ class Package < ApplicationModel
       package = self._parse( data[:string] )
     end
 
-    build_date = REXML::Element.new("build_date")
+    build_date = REXML::Element.new('build_date')
     build_date.text = Time.now.utc.iso8601
-    build_host = REXML::Element.new("build_host")
+    build_host = REXML::Element.new('build_host')
     build_host.text = Socket.gethostname
 
     package.root.insert_after( '//zpm/description', build_date )
@@ -33,7 +33,7 @@ class Package < ApplicationModel
       element.text = base64
     end
     if data[:output]
-      location = data[:output] + '/' + package.elements["zpm/name"].text + '-' + package.elements["zpm/version"].text + '.zpm'
+      location = data[:output] + '/' + package.elements['zpm/name'].text + '-' + package.elements['zpm/version'].text + '.zpm'
       logger.info "NOTICE: writting package to '#{location}'"
       file = File.new( location, 'wb' )
       file.write( package.to_s )
@@ -186,9 +186,9 @@ class Package < ApplicationModel
 
     # package meta data
     meta = {
-      :name           => package.elements["zpm/name"].text,
-      :version        => package.elements["zpm/version"].text,
-      :vendor         => package.elements["zpm/vendor"].text,
+      :name           => package.elements['zpm/name'].text,
+      :version        => package.elements['zpm/version'].text,
+      :vendor         => package.elements['zpm/vendor'].text,
       :state          => 'uninstalled',
       :created_by_id  => 1,
       :updated_by_id  => 1,
@@ -275,8 +275,8 @@ class Package < ApplicationModel
 
     # package meta data
     meta = {
-      :name           => package.elements["zpm/name"].text,
-      :version        => package.elements["zpm/version"].text,
+      :name           => package.elements['zpm/name'].text,
+      :version        => package.elements['zpm/version'].text,
     }
 
     # down migrations

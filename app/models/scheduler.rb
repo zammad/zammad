@@ -114,7 +114,7 @@ class Scheduler < ApplicationModel
 
       if count.zero?
         sleep(wait)
-        logger.info "*** worker loop"
+        logger.info '*** worker loop'
       else
         printf "*** #{count} jobs processed at %.4f j/s, %d failed ...\n" % [count / realtime, result.last]
       end

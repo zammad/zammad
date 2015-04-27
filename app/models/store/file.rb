@@ -14,7 +14,7 @@ class Store::File < ApplicationModel
       # load backend based on config
       adapter_name = Setting.get('storage_provider') || 'DB'
       if !adapter_name
-        raise "Missing storage_provider setting option"
+        raise 'Missing storage_provider setting option'
       end
       adapter = self.load_adapter( "Store::Provider::#{ adapter_name }" )
       adapter.add( data, sha )

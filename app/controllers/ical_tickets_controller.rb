@@ -179,7 +179,7 @@ class IcalTicketsController < ApplicationController
         e.dtend       = event_data[:dtend]
         e.summary     = event_data[:summary]
         e.description = event_data[:description]
-        e.ip_class    = "PRIVATE"
+        e.ip_class    = 'PRIVATE'
       end
 
     end

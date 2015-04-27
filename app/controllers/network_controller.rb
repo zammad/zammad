@@ -51,7 +51,7 @@ class NetworksController < ApplicationController
         format.html { redirect_to @network, :notice => 'Network was successfully created.' }
         format.json { render :json => @network, :status => :created }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.json { render :json => @network.errors, :status => :unprocessable_entity }
       end
     end
@@ -67,7 +67,7 @@ class NetworksController < ApplicationController
         format.html { redirect_to @network, :notice => 'Network was successfully updated.' }
         format.json { render :json => @network, :status => :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.json { render :json => @network.errors, :status => :unprocessable_entity }
       end
     end

@@ -84,10 +84,10 @@ class String
 
     # pre/code handling 1/2
     string.gsub!( /<pre>(.+?)<\/pre>/m ) { |placeholder|
-      placeholder = placeholder.gsub(/\n/, "###BR###")
+      placeholder = placeholder.gsub(/\n/, '###BR###')
     }
     string.gsub!( /<code>(.+?)<\/code>/m ) { |placeholder|
-      placeholder = placeholder.gsub(/\n/, "###BR###")
+      placeholder = placeholder.gsub(/\n/, '###BR###')
     }
 
     # remove all new lines

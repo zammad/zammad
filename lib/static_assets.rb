@@ -31,7 +31,7 @@ module StaticAssets
     if list && list[0]
       return Store.find( list[0] )
     end
-    raise "No such raw logo!"
+    raise 'No such raw logo!'
   end
 
   # store image in right size

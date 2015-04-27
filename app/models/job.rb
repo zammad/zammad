@@ -80,7 +80,7 @@ class Job < ApplicationModel
   end
 
   def self.match_minutes(minutes)
-    minutes.gsub!(/(\d)\d/, "\\1")
+    minutes.gsub!(/(\d)\d/, '\\1')
     minutes.to_s + '0'
   end
 end

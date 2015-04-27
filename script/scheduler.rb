@@ -28,9 +28,9 @@ runner_count = 2
     Dir.chdir dir
     RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
 
-    $stdout.reopen( dir + "/log/" + name + "_out.log", "w")
-    $stderr.reopen( dir + "/log/" + name + "_err.log", "w")
-    require File.join(dir, "config", "environment")
+    $stdout.reopen( dir + '/log/' + name + '_out.log', 'w')
+    $stderr.reopen( dir + '/log/' + name + '_err.log', 'w')
+    require File.join(dir, 'config', 'environment')
     require 'scheduler'
 
     Scheduler.run(count, runner_count)
@@ -48,9 +48,9 @@ Daemons.run_proc(name, daemon_options) do
   Dir.chdir dir
   RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
 
-  $stdout.reopen( dir + "/log/" + name + "_out.log", "w")
-  $stderr.reopen( dir + "/log/" + name + "_err.log", "w")
-  require File.join(dir, "config", "environment")
+  $stdout.reopen( dir + '/log/' + name + '_out.log', 'w')
+  $stderr.reopen( dir + '/log/' + name + '_err.log', 'w')
+  require File.join(dir, 'config', 'environment')
   require 'scheduler'
 
   Scheduler.worker

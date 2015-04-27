@@ -142,7 +142,7 @@ class Channel::EmailParser
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
           data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
-          if !data[:body].force_encoding("UTF-8").valid_encoding?
+          if !data[:body].force_encoding('UTF-8').valid_encoding?
             data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
           end
 
@@ -195,7 +195,7 @@ class Channel::EmailParser
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
-        if !data[:body].force_encoding("UTF-8").valid_encoding?
+        if !data[:body].force_encoding('UTF-8').valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
         end
 
@@ -576,7 +576,7 @@ module Mail
   module Encodings
     def Encodings.value_decode(str)
       # Optimization: If there's no encoded-words in the string, just return it
-      return str unless str.index("=?")
+      return str unless str.index('=?')
 
       str = str.gsub(/\?=(\s*)=\?/, '?==?') # Remove whitespaces between 'encoded-word's
 
@@ -604,7 +604,7 @@ module Mail
             end
           end
         end
-      end.join("")
+      end.join('')
     end
   end
 end

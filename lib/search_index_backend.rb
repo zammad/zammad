@@ -174,7 +174,7 @@ return search result
           :order => 'desc'
         }
       },
-      "_score"
+      '_score'
     ]
 
     data['query'] = query_extention || {}

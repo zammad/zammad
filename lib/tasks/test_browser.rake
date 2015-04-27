@@ -2,7 +2,7 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 
 namespace :test do
-  desc "Start browser tests"
+  desc 'Start browser tests'
   task :browser, [:opts] => :environment do |t, args|
 
     start = Time.now()
@@ -11,10 +11,10 @@ namespace :test do
     end
     Dir.glob('test/browser/*_test.rb').sort.each { |r|
       sh "#{args.opts} ruby -Itest #{r}" do |ok, res|
-        raise "Failed test. " + res.inspect if !ok
+        raise 'Failed test. ' + res.inspect if !ok
       end
     }
-    puts "All browser tests, elapsed: " + (Time.now() - start).to_s + " seconds"
+    puts 'All browser tests, elapsed: ' + (Time.now() - start).to_s + ' seconds'
 
   end
 end

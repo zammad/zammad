@@ -28,7 +28,7 @@ class Channel::TWITTER2
       channel[:options][:search].each { |search|
         puts " - searching for #{search[:item]}"
         tweets = []
-        @client.search( search[:item], :count => 50, :result_type => "recent" ).collect do |tweet|
+        @client.search( search[:item], :count => 50, :result_type => 'recent' ).collect do |tweet|
           tweets.push tweet
         end
         @article_type = 'twitter status'
@@ -38,7 +38,7 @@ class Channel::TWITTER2
 
     # mentions
     if channel[:options][:mentions]
-      puts " - searching for mentions"
+      puts ' - searching for mentions'
       tweets = @client.mentions_timeline
       @article_type = 'twitter status'
       fetch_loop( tweets, channel, channel[:options][:mentions][:group] )
@@ -46,7 +46,7 @@ class Channel::TWITTER2
 
     # direct messages
     if channel[:options][:direct_messages]
-      puts " - searching for direct_messages"
+      puts ' - searching for direct_messages'
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
       fetch_loop( tweets, channel, channel[:options][:direct_messages][:group] )
@@ -112,7 +112,7 @@ class Channel::TWITTER2
       begin
         sender = @client.user(tweet.from_user_id)
       rescue Exception => e
-        puts "Exception: twitter: " + e.inspect
+        puts 'Exception: twitter: ' + e.inspect
         return
       end
     end

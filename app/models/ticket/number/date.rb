@@ -9,7 +9,7 @@ module Ticket::Number::Date
     config = Setting.get('ticket_number_date')
 
     t = Time.now
-    date = t.strftime("%Y-%m-%d")
+    date = t.strftime('%Y-%m-%d')
 
     # read counter
     counter_increment = nil
@@ -33,7 +33,7 @@ module Ticket::Number::Date
     end
 
     system_id = Setting.get('system_id') || ''
-    number = t.strftime("%Y%m%d") + system_id.to_s + sprintf( "%04d", counter_increment)
+    number = t.strftime('%Y%m%d') + system_id.to_s + sprintf( '%04d', counter_increment)
 
     # calculate a checksum
     # The algorithm to calculate the checksum is derived from the one

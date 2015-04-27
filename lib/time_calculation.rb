@@ -49,7 +49,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     }
 
     if !config_ok
-      raise "sla config is invalid! " + config.inspect
+      raise 'sla config is invalid! ' + config.inspect
     end
 
     # shift working hours / if needed
