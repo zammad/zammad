@@ -535,7 +535,7 @@ class Channel::EmailParser
       next if key == 'created_by_id'
 
       # check if id exists
-      key_short = key[ key.length - 3 , key.length ]
+      key_short = key[ key.length - 3, key.length ]
       if key_short == '_id'
         key_short = key[ 0, key.length - 3 ]
         header = "x-zammad-#{header_name}-#{key_short}"

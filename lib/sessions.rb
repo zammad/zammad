@@ -395,7 +395,7 @@ returns
     path = @path + '/spool/'
     FileUtils.mkpath path
     file = Time.new.to_f.to_s + '-' + rand(99_999).to_s
-    File.open( path + '/' + file , 'wb' ) { |file|
+    File.open( path + '/' + file, 'wb' ) { |file|
       data = {
         msg: msg,
         timestamp: Time.now.to_i,
