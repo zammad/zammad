@@ -22,41 +22,41 @@ class Ticket < ApplicationModel
 
   latest_change_support
 
-  activity_stream_support :ignore_attributes => {
-    :create_article_type_id   => true,
-    :create_article_sender_id => true,
-    :article_count            => true,
+  activity_stream_support ignore_attributes: {
+    create_article_type_id: true,
+    create_article_sender_id: true,
+    article_count: true,
   }
 
-  history_support :ignore_attributes => {
-    :create_article_type_id   => true,
-    :create_article_sender_id => true,
-    :article_count            => true,
+  history_support ignore_attributes: {
+    create_article_type_id: true,
+    create_article_sender_id: true,
+    article_count: true,
   }
 
   search_index_support(
-    :ignore_attributes => {
-      :create_article_type_id   => true,
-      :create_article_sender_id => true,
-      :article_count            => true,
+    ignore_attributes: {
+      create_article_type_id: true,
+      create_article_sender_id: true,
+      article_count: true,
     },
-    :keep_attributes => {
-      :customer_id              => true,
-      :organization_id          => true,
+    keep_attributes: {
+      customer_id: true,
+      organization_id: true,
     },
   )
 
   belongs_to    :group
-  has_many      :articles,              :class_name => 'Ticket::Article', :after_add => :cache_update, :after_remove => :cache_update
+  has_many      :articles,              class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
   belongs_to    :organization
-  belongs_to    :state,                 :class_name => 'Ticket::State'
-  belongs_to    :priority,              :class_name => 'Ticket::Priority'
-  belongs_to    :owner,                 :class_name => 'User'
-  belongs_to    :customer,              :class_name => 'User'
-  belongs_to    :created_by,            :class_name => 'User'
-  belongs_to    :updated_by,            :class_name => 'User'
-  belongs_to    :create_article_type,   :class_name => 'Ticket::Article::Type'
-  belongs_to    :create_article_sender, :class_name => 'Ticket::Article::Sender'
+  belongs_to    :state,                 class_name: 'Ticket::State'
+  belongs_to    :priority,              class_name: 'Ticket::Priority'
+  belongs_to    :owner,                 class_name: 'User'
+  belongs_to    :customer,              class_name: 'User'
+  belongs_to    :created_by,            class_name: 'User'
+  belongs_to    :updated_by,            class_name: 'User'
+  belongs_to    :create_article_type,   class_name: 'Ticket::Article::Type'
+  belongs_to    :create_article_sender, class_name: 'Ticket::Article::Sender'
 
   self.inheritance_column = nil
 
@@ -76,7 +76,7 @@ returns
 =end
 
   def agent_of_group
-    Group.find( self.group_id ).users.where( :active => true ).joins(:roles).where( 'roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true ).uniq()
+    Group.find( self.group_id ).users.where( active: true ).joins(:roles).where( 'roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true ).uniq()
   end
 
 =begin
@@ -128,12 +128,12 @@ returns
   def merge_to(data)
 
     # update articles
-    Ticket::Article.where( :ticket_id => self.id ).each {|article|
+    Ticket::Article.where( ticket_id: self.id ).each {|article|
       article.touch
     }
 
     # quiet update of reassign of articles
-    Ticket::Article.where( :ticket_id => self.id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
+    Ticket::Article.where( ticket_id: self.id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
 
     # touch new ticket (to broadcast change)
     Ticket.find( data[:ticket_id] ).touch
@@ -142,31 +142,31 @@ returns
 
     # create new merge article
     Ticket::Article.create(
-      :ticket_id     => self.id,
-      :type_id       => Ticket::Article::Type.lookup( :name => 'note' ).id,
-      :sender_id     => Ticket::Article::Sender.lookup( :name => Z_ROLENAME_AGENT ).id,
-      :body          => 'merged',
-      :internal      => false,
-      :created_by_id => data[:user_id],
-      :updated_by_id => data[:user_id],
+      ticket_id: self.id,
+      type_id: Ticket::Article::Type.lookup( name: 'note' ).id,
+      sender_id: Ticket::Article::Sender.lookup( name: Z_ROLENAME_AGENT ).id,
+      body: 'merged',
+      internal: false,
+      created_by_id: data[:user_id],
+      updated_by_id: data[:user_id],
     )
 
     # add history to both
 
     # link tickets
     Link.add(
-      :link_type                => 'parent',
-      :link_object_source       => 'Ticket',
-      :link_object_source_value => data[:ticket_id],
-      :link_object_target       => 'Ticket',
-      :link_object_target_value => self.id
+      link_type: 'parent',
+      link_object_source: 'Ticket',
+      link_object_source_value: data[:ticket_id],
+      link_object_target: 'Ticket',
+      link_object_target_value: self.id
     )
 
     # set state to 'merged'
-    self.state_id = Ticket::State.lookup( :name => 'merged' ).id
+    self.state_id = Ticket::State.lookup( name: 'merged' ).id
 
     # rest owner
-    self.owner_id = User.where( :login => '-' ).first.id
+    self.owner_id = User.where( login: '-' ).first.id
 
     # save ticket
     self.save
@@ -186,8 +186,8 @@ returns
 =end
 
   def online_notification_seen_state
-    state      = Ticket::State.lookup( :id => self.state_id )
-    state_type = Ticket::StateType.lookup( :id => state.state_type_id )
+    state      = Ticket::State.lookup( id: self.state_id )
+    state_type = Ticket::StateType.lookup( id: state.state_type_id )
     return true if state_type.name == 'closed'
     return true if state_type.name == 'merged'
     false
@@ -224,8 +224,8 @@ returns
     return if !self.changes['state_id']
 
     # check if new state isn't pending*
-    current_state      = Ticket::State.lookup( :id => self.state_id )
-    current_state_type = Ticket::StateType.lookup( :id => current_state.state_type_id )
+    current_state      = Ticket::State.lookup( id: self.state_id )
+    current_state_type = Ticket::StateType.lookup( id: current_state.state_type_id )
 
     # in case, set pending_time to nil
     if current_state_type.name !~ /^pending/i

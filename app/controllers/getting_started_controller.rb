@@ -44,12 +44,12 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       # set system init to done
       Setting.set( 'system_init_done', true )
 
-      render :json => {
-        :auto_wizard           => true,
-        :setup_done            => setup_done,
-        :import_mode           => Setting.get('import_mode'),
-        :import_backend        => Setting.get('import_backend'),
-        :system_online_service => Setting.get('system_online_service'),
+      render json: {
+        auto_wizard: true,
+        setup_done: setup_done,
+        import_mode: Setting.get('import_mode'),
+        import_backend: Setting.get('import_backend'),
+        system_online_service: Setting.get('system_online_service'),
       }
       return
     end
@@ -60,11 +60,11 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # return result
-    render :json => {
-      :setup_done            => setup_done,
-      :import_mode           => Setting.get('import_mode'),
-      :import_backend        => Setting.get('import_backend'),
-      :system_online_service => Setting.get('system_online_service'),
+    render json: {
+      setup_done: setup_done,
+      import_mode: Setting.get('import_mode'),
+      import_backend: Setting.get('import_backend'),
+      system_online_service: Setting.get('system_online_service'),
     }
   end
 
@@ -97,9 +97,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     if !messages.empty?
-      render :json => {
-        :result   => 'invalid',
-        :messages => messages,
+      render json: {
+        result: 'invalid',
+        messages: messages,
       }
       return
     end
@@ -143,9 +143,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       Setting.set(key, value)
     }
 
-    render :json => {
-      :result   => 'ok',
-      :settings => settings,
+    render json: {
+      result: 'ok',
+      settings: settings,
     }
   end
 
@@ -163,10 +163,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     if !user || !domain
-      render :json => {
-        :result   => 'invalid',
-        :messages => {
-          :email => 'Invalid email.'
+      render json: {
+        result: 'invalid',
+        messages: {
+          email: 'Invalid email.'
         },
       }
       return
@@ -174,49 +174,49 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # check domain based attributes
     providerMap = {
-      :google => {
-        :domain => 'gmail.com|googlemail.com|gmail.de',
-        :inbound => {
-          :adapter => 'imap',
-          :options => {
-            :host     => 'imap.gmail.com',
-            :port     => '993',
-            :ssl      => true,
-            :user     => params[:email],
-            :password => params[:password],
+      google: {
+        domain: 'gmail.com|googlemail.com|gmail.de',
+        inbound: {
+          adapter: 'imap',
+          options: {
+            host: 'imap.gmail.com',
+            port: '993',
+            ssl: true,
+            user: params[:email],
+            password: params[:password],
           },
         },
-        :outbound => {
-          :adapter => 'smtp',
-          :options => {
-            :host      => 'smtp.gmail.com',
-            :port      => '25',
-            :start_tls => true,
-            :user      => params[:email],
-            :password  => params[:password],
+        outbound: {
+          adapter: 'smtp',
+          options: {
+            host: 'smtp.gmail.com',
+            port: '25',
+            start_tls: true,
+            user: params[:email],
+            password: params[:password],
           }
         },
       },
-      :microsoft => {
-        :domain => 'outlook.com|hotmail.com',
-        :inbound => {
-          :adapter => 'imap',
-          :options => {
-            :host     => 'imap-mail.outlook.com',
-            :port     => '993',
-            :ssl      => true,
-            :user     => params[:email],
-            :password => params[:password],
+      microsoft: {
+        domain: 'outlook.com|hotmail.com',
+        inbound: {
+          adapter: 'imap',
+          options: {
+            host: 'imap-mail.outlook.com',
+            port: '993',
+            ssl: true,
+            user: params[:email],
+            password: params[:password],
           },
         },
-        :outbound => {
-          :adapter => 'smtp',
-          :options => {
-            :host      => 'smtp-mail.outlook.com',
-            :port      => 25,
-            :start_tls => true,
-            :user      => params[:email],
-            :password  => params[:password],
+        outbound: {
+          adapter: 'smtp',
+          options: {
+            host: 'smtp-mail.outlook.com',
+            port: 25,
+            start_tls: true,
+            user: params[:email],
+            password: params[:password],
           }
         },
       },
@@ -238,20 +238,20 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           # probe inbound
           result = email_probe_inbound( settings[:inbound] )
           if result[:result] != 'ok'
-            render :json => result
+            render json: result
             return
           end
 
           # probe outbound
           result = email_probe_outbound( settings[:outbound], params[:email] )
           if result[:result] != 'ok'
-            render :json => result
+            render json: result
             return
           end
 
-          render :json => {
-            :result  => 'ok',
-            :setting => settings,
+          render json: {
+            result: 'ok',
+            setting: settings,
           }
           return
         end
@@ -263,23 +263,23 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if mail_exchangers && mail_exchangers[0] && mail_exchangers[0][0]
       inboundMx = [
         {
-          :adapter => 'imap',
-          :options => {
-            :host     => mail_exchangers[0][0],
-            :port     => 993,
-            :ssl      => true,
-            :user     => user,
-            :password => params[:password],
+          adapter: 'imap',
+          options: {
+            host: mail_exchangers[0][0],
+            port: 993,
+            ssl: true,
+            user: user,
+            password: params[:password],
           },
         },
         {
-          :adapter => 'imap',
-          :options => {
-            :host     => mail_exchangers[0][0],
-            :port     => 993,
-            :ssl      => true,
-            :user     => params[:email],
-            :password => params[:password],
+          adapter: 'imap',
+          options: {
+            host: mail_exchangers[0][0],
+            port: 993,
+            ssl: true,
+            user: params[:email],
+            password: params[:password],
           },
         },
       ]
@@ -287,103 +287,103 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
     inboundAuto = [
       {
-        :adapter => 'imap',
-        :options => {
-          :host     => "mail.#{domain}",
-          :port     => 993,
-          :ssl      => true,
-          :user     => user,
-          :password => params[:password],
+        adapter: 'imap',
+        options: {
+          host: "mail.#{domain}",
+          port: 993,
+          ssl: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'imap',
-        :options => {
-          :host     => "mail.#{domain}",
-          :port     => 993,
-          :ssl      => true,
-          :user     => params[:email],
-          :password => params[:password],
+        adapter: 'imap',
+        options: {
+          host: "mail.#{domain}",
+          port: 993,
+          ssl: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
       {
-        :adapter => 'imap',
-        :options => {
-          :host     => "imap.#{domain}",
-          :port     => 993,
-          :ssl      => true,
-          :user     => user,
-          :password => params[:password],
+        adapter: 'imap',
+        options: {
+          host: "imap.#{domain}",
+          port: 993,
+          ssl: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'imap',
-        :options => {
-          :host     => "imap.#{domain}",
-          :port     => 993,
-          :ssl      => true,
-          :user     => params[:email],
-          :password => params[:password],
+        adapter: 'imap',
+        options: {
+          host: "imap.#{domain}",
+          port: 993,
+          ssl: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
       {
-        :adapter => 'pop3',
-        :options => {
-          :host     => "mail.#{domain}",
-          :port     => 995,
-          :ssl      => true,
-          :user     => user,
-          :password => params[:password],
+        adapter: 'pop3',
+        options: {
+          host: "mail.#{domain}",
+          port: 995,
+          ssl: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'pop3',
-        :options => {
-          :host     => "mail.#{domain}",
-          :port     => 995,
-          :ssl      => true,
-          :user     => params[:email],
-          :password => params[:password],
+        adapter: 'pop3',
+        options: {
+          host: "mail.#{domain}",
+          port: 995,
+          ssl: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
       {
-        :adapter => 'pop3',
-        :options => {
-          :host     => "pop.#{domain}",
-          :port     => 995,
-          :ssl      => true,
-          :user     => user,
-          :password => params[:password],
+        adapter: 'pop3',
+        options: {
+          host: "pop.#{domain}",
+          port: 995,
+          ssl: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'pop3',
-        :options => {
-          :host     => "pop.#{domain}",
-          :port     => 995,
-          :ssl      => true,
-          :user     => params[:email],
-          :password => params[:password],
+        adapter: 'pop3',
+        options: {
+          host: "pop.#{domain}",
+          port: 995,
+          ssl: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
       {
-        :adapter => 'pop3',
-        :options => {
-          :host     => "pop3.#{domain}",
-          :port     => 995,
-          :ssl      => true,
-          :user     => user,
-          :password => params[:password],
+        adapter: 'pop3',
+        options: {
+          host: "pop3.#{domain}",
+          port: 995,
+          ssl: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'pop3',
-        :options => {
-          :host     => "pop3.#{domain}",
-          :port     => 995,
-          :ssl      => true,
-          :user     => params[:email],
-          :password => params[:password],
+        adapter: 'pop3',
+        options: {
+          host: "pop3.#{domain}",
+          port: 995,
+          ssl: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
     ]
@@ -402,8 +402,8 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     }
 
     if !success
-      render :json => {
-        :result => 'failed',
+      render json: {
+        result: 'failed',
       }
       return
     end
@@ -413,43 +413,43 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if mail_exchangers && mail_exchangers[0] && mail_exchangers[0][0]
       outboundMx = [
         {
-          :adapter => 'smtp',
-          :options => {
-            :host      => mail_exchangers[0][0],
-            :port      => 25,
-            :start_tls => true,
-            :user      => user,
-            :password  => params[:password],
+          adapter: 'smtp',
+          options: {
+            host: mail_exchangers[0][0],
+            port: 25,
+            start_tls: true,
+            user: user,
+            password: params[:password],
           },
         },
         {
-          :adapter => 'smtp',
-          :options => {
-            :host      => mail_exchangers[0][0],
-            :port      => 25,
-            :start_tls => true,
-            :user      => params[:email],
-            :password  => params[:password],
+          adapter: 'smtp',
+          options: {
+            host: mail_exchangers[0][0],
+            port: 25,
+            start_tls: true,
+            user: params[:email],
+            password: params[:password],
           },
         },
         {
-          :adapter => 'smtp',
-          :options => {
-            :host      => mail_exchangers[0][0],
-            :port      => 465,
-            :start_tls => true,
-            :user      => user,
-            :password  => params[:password],
+          adapter: 'smtp',
+          options: {
+            host: mail_exchangers[0][0],
+            port: 465,
+            start_tls: true,
+            user: user,
+            password: params[:password],
           },
         },
         {
-          :adapter => 'smtp',
-          :options => {
-            :host      => mail_exchangers[0][0],
-            :port      => 465,
-            :start_tls => true,
-            :user      => params[:email],
-            :password  => params[:password],
+          adapter: 'smtp',
+          options: {
+            host: mail_exchangers[0][0],
+            port: 465,
+            start_tls: true,
+            user: params[:email],
+            password: params[:password],
           },
         },
       ]
@@ -457,83 +457,83 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
     outboundAuto = [
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "mail.#{domain}",
-          :port      => 25,
-          :start_tls => true,
-          :user      => user,
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "mail.#{domain}",
+          port: 25,
+          start_tls: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "mail.#{domain}",
-          :port      => 25,
-          :start_tls => true,
-          :user      => params[:email],
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "mail.#{domain}",
+          port: 25,
+          start_tls: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "mail.#{domain}",
-          :port      => 465,
-          :start_tls => true,
-          :user      => user,
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "mail.#{domain}",
+          port: 465,
+          start_tls: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "mail.#{domain}",
-          :port      => 465,
-          :start_tls => true,
-          :user      => params[:email],
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "mail.#{domain}",
+          port: 465,
+          start_tls: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "smtp.#{domain}",
-          :port      => 25,
-          :start_tls => true,
-          :user      => user,
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "smtp.#{domain}",
+          port: 25,
+          start_tls: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "smtp.#{domain}",
-          :port      => 25,
-          :start_tls => true,
-          :user      => params[:email],
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "smtp.#{domain}",
+          port: 25,
+          start_tls: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "smtp.#{domain}",
-          :port      => 465,
-          :start_tls => true,
-          :user      => user,
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "smtp.#{domain}",
+          port: 465,
+          start_tls: true,
+          user: user,
+          password: params[:password],
         },
       },
       {
-        :adapter => 'smtp',
-        :options => {
-          :host      => "smtp.#{domain}",
-          :port      => 465,
-          :start_tls => true,
-          :user      => params[:email],
-          :password  => params[:password],
+        adapter: 'smtp',
+        options: {
+          host: "smtp.#{domain}",
+          port: 465,
+          start_tls: true,
+          user: params[:email],
+          password: params[:password],
         },
       },
     ]
@@ -551,15 +551,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     }
 
     if !success
-      render :json => {
-        :result => 'failed',
+      render json: {
+        result: 'failed',
       }
       return
     end
 
-    render :json => {
-      :result  => 'ok',
-      :setting => settings,
+    render json: {
+      result: 'ok',
+      setting: settings,
     }
   end
 
@@ -570,8 +570,8 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # validate params
     if !params[:adapter]
-      render :json => {
-        :result => 'invalid',
+      render json: {
+        result: 'invalid',
       }
       return
     end
@@ -579,7 +579,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # connection test
     result = email_probe_outbound( params, params[:email] )
 
-    render :json => result
+    render json: result
   end
 
   def email_inbound
@@ -589,8 +589,8 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # validate params
     if !params[:adapter]
-      render :json => {
-        :result => 'invalid',
+      render json: {
+        result: 'invalid',
       }
       return
     end
@@ -598,7 +598,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # connection test
     result = email_probe_inbound( params )
 
-    render :json => result
+    render json: result
     return
   end
 
@@ -623,15 +623,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
       begin
         if params[:inbound][:adapter] =~ /^imap$/i
-          found = Channel::IMAP.new.fetch( { :options => params[:inbound][:options] }, 'verify', subject )
+          found = Channel::IMAP.new.fetch( { options: params[:inbound][:options] }, 'verify', subject )
         else
-          found = Channel::POP3.new.fetch( { :options => params[:inbound][:options] }, 'verify', subject )
+          found = Channel::POP3.new.fetch( { options: params[:inbound][:options] }, 'verify', subject )
         end
       rescue Exception => e
-        render :json => {
-          :result  => 'invalid',
-          :message => e.to_s,
-          :subject => subject,
+        render json: {
+          result: 'invalid',
+          message: e.to_s,
+          subject: subject,
         }
         return
       end
@@ -639,70 +639,70 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       if found && found == 'verify ok'
 
         # remember address
-        address = EmailAddress.where( :email => params[:meta][:email] ).first
+        address = EmailAddress.where( email: params[:meta][:email] ).first
         if !address
           address = EmailAddress.first
         end
         if address
           address.update_attributes(
-            :realname      => params[:meta][:realname],
-            :email         => params[:meta][:email],
-            :active        => 1,
-            :updated_by_id => 1,
-            :created_by_id => 1,
+            realname: params[:meta][:realname],
+            email: params[:meta][:email],
+            active: 1,
+            updated_by_id: 1,
+            created_by_id: 1,
           )
         else
           EmailAddress.create(
-            :realname      => params[:meta][:realname],
-            :email         => params[:meta][:email],
-            :active        => 1,
-            :updated_by_id => 1,
-            :created_by_id => 1,
+            realname: params[:meta][:realname],
+            email: params[:meta][:email],
+            active: 1,
+            updated_by_id: 1,
+            created_by_id: 1,
           )
         end
 
         # store mailbox
         Channel.create(
-          :area          => 'Email::Inbound',
-          :adapter       => params[:inbound][:adapter],
-          :options       => params[:inbound][:options],
-          :group_id      => 1,
-          :active        => 1,
-          :updated_by_id => 1,
-          :created_by_id => 1,
+          area: 'Email::Inbound',
+          adapter: params[:inbound][:adapter],
+          options: params[:inbound][:options],
+          group_id: 1,
+          active: 1,
+          updated_by_id: 1,
+          created_by_id: 1,
         )
 
         # save settings
         if params[:outbound][:adapter] =~ /^smtp$/i
-          smtp = Channel.where( :adapter  => 'SMTP', :area => 'Email::Outbound' ).first
+          smtp = Channel.where( adapter: 'SMTP', area: 'Email::Outbound' ).first
           smtp.options = params[:outbound][:options]
           smtp.active  = true
           smtp.save!
-          sendmail = Channel.where( :adapter => 'Sendmail' ).first
+          sendmail = Channel.where( adapter: 'Sendmail' ).first
           sendmail.active = false
           sendmail.save!
         else
-          sendmail = Channel.where( :adapter => 'Sendmail', :area => 'Email::Outbound' ).first
+          sendmail = Channel.where( adapter: 'Sendmail', area: 'Email::Outbound' ).first
           sendmail.options = {}
           sendmail.active  = true
           sendmail.save!
-          smtp = Channel.where( :adapter => 'SMTP' ).first
+          smtp = Channel.where( adapter: 'SMTP' ).first
           smtp.active = false
           smtp.save
         end
 
-        render :json => {
-          :result => 'ok',
+        render json: {
+          result: 'ok',
         }
         return
       end
     }
 
     # check delivery for 30 sek.
-    render :json => {
-      :result  => 'invalid',
-      :message => 'Verification Email not found in mailbox.',
-      :subject => subject,
+    render json: {
+      result: 'invalid',
+      message: 'Verification Email not found in mailbox.',
+      subject: subject,
     }
   end
 
@@ -713,8 +713,8 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # validate params
     if !params[:adapter]
       result = {
-        :result  => 'invalid',
-        :message => 'Invalid, need adapter!',
+        result: 'invalid',
+        message: 'Invalid, need adapter!',
       }
       return result
     end
@@ -729,10 +729,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       }
     else
       mail = {
-        :from    => email,
-        :to      => 'emailtrytest@znuny.com',
-        :subject => 'test',
-        :body    => 'test',
+        from: email,
+        to: 'emailtrytest@znuny.com',
+        subject: 'test',
+        body: 'test',
       }
     end
 
@@ -758,7 +758,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         Channel::SMTP.new.send(
           mail,
           {
-            :options => params[:options]
+            options: params[:options]
           }
         )
       rescue Exception => e
@@ -771,9 +771,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           whiteMap.each {|key, message|
             if e.message =~ /#{Regexp.escape(key)}/i
               result = {
-                :result   => 'ok',
-                :settings => params,
-                :notice   => e.message,
+                result: 'ok',
+                settings: params,
+                notice: e.message,
               }
               return result
             end
@@ -786,15 +786,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           end
         }
         result = {
-          :result        => 'invalid',
-          :settings      => params,
-          :message       => e.message,
-          :message_human => message_human,
+          result: 'invalid',
+          settings: params,
+          message: e.message,
+          message_human: message_human,
         }
         return result
       end
       result = {
-        :result => 'ok',
+        result: 'ok',
       }
       return result
     end
@@ -812,15 +812,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         end
       }
       result = {
-        :result        => 'invalid',
-        :settings      => params,
-        :message       => e.message,
-        :message_human => message_human,
+        result: 'invalid',
+        settings: params,
+        message: e.message,
+        message_human: message_human,
       }
       return result
     end
     result = {
-      :result => 'ok',
+      result: 'ok',
     }
     return result
   end
@@ -843,7 +843,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if params[:adapter] =~ /^imap$/i
 
       begin
-        Channel::IMAP.new.fetch( { :options => params[:options] }, 'check' )
+        Channel::IMAP.new.fetch( { options: params[:options] }, 'check' )
       rescue Exception => e
         message_human = ''
         translationMap.each {|key, message|
@@ -852,21 +852,21 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           end
         }
         result = {
-          :result        => 'invalid',
-          :settings      => params,
-          :message       => e.message,
-          :message_human => message_human,
+          result: 'invalid',
+          settings: params,
+          message: e.message,
+          message_human: message_human,
         }
         return result
       end
       result = {
-        :result => 'ok',
+        result: 'ok',
       }
       return result
     end
 
     begin
-      Channel::POP3.new.fetch( { :options => params[:options] }, 'check' )
+      Channel::POP3.new.fetch( { options: params[:options] }, 'check' )
     rescue Exception => e
       message_human = ''
       translationMap.each {|key, message|
@@ -875,15 +875,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         end
       }
       result = {
-        :result        => 'invalid',
-        :settings      => params,
-        :message       => e.message,
-        :message_human => message_human,
+        result: 'invalid',
+        settings: params,
+        message: e.message,
+        message_human: message_human,
       }
       return result
     end
     result = {
-      :result => 'ok',
+      result: 'ok',
     }
     return result
   end
@@ -917,18 +917,18 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # get all groups
-    groups = Group.where( :active => true )
+    groups = Group.where( active: true )
 
     # get email addresses
-    addresses = EmailAddress.where( :active => true )
+    addresses = EmailAddress.where( active: true )
 
-    render :json => {
-      :setup_done            => true,
-      :import_mode           => Setting.get('import_mode'),
-      :import_backend        => Setting.get('import_backend'),
-      :system_online_service => Setting.get('system_online_service'),
-      :addresses             => addresses,
-      :groups                => groups,
+    render json: {
+      setup_done: true,
+      import_mode: Setting.get('import_mode'),
+      import_backend: Setting.get('import_backend'),
+      system_online_service: Setting.get('system_online_service'),
+      addresses: addresses,
+      groups: groups,
     }
     true
   end

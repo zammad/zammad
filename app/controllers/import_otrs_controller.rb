@@ -8,9 +8,9 @@ class ImportOtrsController < ApplicationController
 
     # validate
     if !params[:url] ||params[:url] !~ /^(http|https):\/\/.+?$/
-      render :json => {
-        :result  => 'invalid',
-        :message => 'Invalid!',
+      render json: {
+        result: 'invalid',
+        message: 'Invalid!',
       }
       return
     end
@@ -32,10 +32,10 @@ class ImportOtrsController < ApplicationController
           message_human = message
         end
       }
-      render :json => {
-        :result        => 'invalid',
-        :message_human => message_human,
-        :message       => response.error.to_s,
+      render json: {
+        result: 'invalid',
+        message_human: message_human,
+        message: response.error.to_s,
       }
       return
     end
@@ -53,9 +53,9 @@ class ImportOtrsController < ApplicationController
       Setting.set('import_otrs_endpoint', url)
       Setting.set('import_otrs_endpoint_key', '01234567899876543210')
       if response.body =~ /zammad migrator/
-        render :json => {
-          :url    => url,
-          :result => 'ok',
+        render json: {
+          url: url,
+          result: 'ok',
         }
         return
       elsif response.body =~ /(otrs\sag|otrs.com|otrs.org)/i
@@ -65,9 +65,9 @@ class ImportOtrsController < ApplicationController
 
 
     # return result
-    render :json => {
-        :result        => 'invalid',
-        :message_human => message_human,
+    render json: {
+        result: 'invalid',
+        message_human: message_human,
     }
   end
 
@@ -77,9 +77,9 @@ class ImportOtrsController < ApplicationController
     Setting.set('import_mode', true)
     welcome = Import::OTRS2.connection_test
     if !welcome
-      render :json => {
-        :message => 'Migrator can\'t read OTRS output!',
-        :result  => 'invalid',
+      render json: {
+        message: 'Migrator can\'t read OTRS output!',
+        result: 'invalid',
       }
       return
     end
@@ -87,8 +87,8 @@ class ImportOtrsController < ApplicationController
     # start migration
     Import::OTRS2.delay.start
 
-    render :json => {
-      :result  => 'ok',
+    render json: {
+      result: 'ok',
     }
   end
 
@@ -97,9 +97,9 @@ class ImportOtrsController < ApplicationController
 
     state = Import::OTRS2.get_current_state
 
-    render :json => {
-      :data   => state,
-      :result => 'in_progress',
+    render json: {
+      data: state,
+      result: 'in_progress',
     }
   end
 
@@ -119,8 +119,8 @@ class ImportOtrsController < ApplicationController
     if !setup_done
       return false
     end
-    render :json => {
-      :setup_done => true,
+    render json: {
+      setup_done: true,
     }
     true
   end

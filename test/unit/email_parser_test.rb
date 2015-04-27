@@ -5,25 +5,25 @@ class EmailParserTest < ActiveSupport::TestCase
   test 'parse' do
     files = [
       {
-        :data     => IO.read('test/fixtures/mail1.box'),
-        :body_md5 => 'b57d21dcac6b05e1aa67af51a9e4c1ec',
-        :params   => {
-          :from              => 'John.Smith@example.com',
-          :from_email        => 'John.Smith@example.com',
-          :from_display_name => '',
-          :subject           => 'CI Daten für PublicView ',
+        data: IO.read('test/fixtures/mail1.box'),
+        body_md5: 'b57d21dcac6b05e1aa67af51a9e4c1ec',
+        params: {
+          from: 'John.Smith@example.com',
+          from_email: 'John.Smith@example.com',
+          from_display_name: '',
+          subject: 'CI Daten für PublicView ',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail2.box'),
-        :body_md5 => '154c7d3ae7b94f99589df62882841b08',
-        :params   => {
-          :from              => 'Martin Edenhofer <martin@example.com>',
-          :from_email        => 'martin@example.com',
-          :from_display_name => 'Martin Edenhofer',
-          :subject           => 'aaäöüßad asd',
-          :body_md5          => "äöüß ad asd\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.\n",
-          :body              => "äöüß ad asd
+        data: IO.read('test/fixtures/mail2.box'),
+        body_md5: '154c7d3ae7b94f99589df62882841b08',
+        params: {
+          from: 'Martin Edenhofer <martin@example.com>',
+          from_email: 'martin@example.com',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'aaäöüßad asd',
+          body_md5: "äöüß ad asd\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.\n",
+          body: "äöüß ad asd
 
 -Martin
 
@@ -33,24 +33,24 @@ Old programmers never die. They just branch to a new address.
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail3.box'),
-        :body_md5 => '96a0a7847c1c60e82058db8f8bff8136',
-        :params   => {
-          :from              => '"Günther John | Example GmbH" <k.guenther@example.com>',
-          :from_email        => 'k.guenther@example.com',
-          :from_display_name => 'Günther John | Example GmbH',
-          :subject           => 'Ticket Templates',
+        data: IO.read('test/fixtures/mail3.box'),
+        body_md5: '96a0a7847c1c60e82058db8f8bff8136',
+        params: {
+          from: '"Günther John | Example GmbH" <k.guenther@example.com>',
+          from_email: 'k.guenther@example.com',
+          from_display_name: 'Günther John | Example GmbH',
+          subject: 'Ticket Templates',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail4.box'),
-        :body_md5 => '9fab9a0e8523011fde0f3ecd80f8d72c',
-        :params   => {
-          :from              => '"Günther Katja | Example GmbH" <k.guenther@example.com>',
-          :from_email        => 'k.guenther@example.com',
-          :from_display_name => 'Günther Katja | Example GmbH',
-          :subject           => 'AW: Ticket Templates [Ticket#11168]',
-          :body              => "Hallo Katja,
+        data: IO.read('test/fixtures/mail4.box'),
+        body_md5: '9fab9a0e8523011fde0f3ecd80f8d72c',
+        params: {
+          from: '"Günther Katja | Example GmbH" <k.guenther@example.com>',
+          from_email: 'k.guenther@example.com',
+          from_display_name: 'Günther Katja | Example GmbH',
+          subject: 'AW: Ticket Templates [Ticket#11168]',
+          body: "Hallo Katja,
 
 super! Ich freu mich!
 
@@ -74,24 +74,24 @@ Liebe Grüße!
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail5.box'),
-        :body_md5 => 'f34033e9a34bb5367062dd5df21115df',
-        :params   => {
-          :from              => 'marc.smith@example.com (Marc Smith)',
-          :from_email        => 'marc.smith@example.com',
-          :from_display_name => 'Marc Smith',
-          :subject           => 'Re: XXXX Betatest Ticket Templates [Ticket#11162]',
+        data: IO.read('test/fixtures/mail5.box'),
+        body_md5: 'f34033e9a34bb5367062dd5df21115df',
+        params: {
+          from: 'marc.smith@example.com (Marc Smith)',
+          from_email: 'marc.smith@example.com',
+          from_display_name: 'Marc Smith',
+          subject: 'Re: XXXX Betatest Ticket Templates [Ticket#11162]',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail6.box'),
-        :body_md5 => 'cc60217317756f45a6e02829c0a8c49c',
-        :params   => {
-          :from              => '"Hans BÄKOSchönland" <me@bogen.net>',
-          :from_email        => 'me@bogen.net',
-          :from_display_name => 'Hans BÄKOSchönland',
-          :subject           => 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких',
-          :body              => "this is a test
+        data: IO.read('test/fixtures/mail6.box'),
+        body_md5: 'cc60217317756f45a6e02829c0a8c49c',
+        params: {
+          from: '"Hans BÄKOSchönland" <me@bogen.net>',
+          from_email: 'me@bogen.net',
+          from_display_name: 'Hans BÄKOSchönland',
+          subject: 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких',
+          body: "this is a test
 
 ___
  [1] Compare Cable, DSL or Satellite plans: As low as $2.95.
@@ -106,14 +106,14 @@ Test5:=
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail7.box'),
-        :body_md5 => 'c78f6a91905538ee32bc0bf71f70fcf2',
-        :params   => {
-          :from              => 'Eike.Ehringer@example.com',
-          :from_email        => 'Eike.Ehringer@example.com',
-          :from_display_name => '',
-          :subject           => 'AW:Installation [Ticket#11392]',
-          :body             => "Hallo.
+        data: IO.read('test/fixtures/mail7.box'),
+        body_md5: 'c78f6a91905538ee32bc0bf71f70fcf2',
+        params: {
+          from: 'Eike.Ehringer@example.com',
+          from_email: 'Eike.Ehringer@example.com',
+          from_display_name: '',
+          subject: 'AW:Installation [Ticket#11392]',
+          body: "Hallo.
 Jetzt muss ich dir noch kurzfristig absagen für morgen.
 Lass uns evtl morgen Tel.
 
@@ -146,20 +146,20 @@ Managing Director: Martin Edenhofer",
         },
       },
       {
-        :data        => IO.read('test/fixtures/mail8.box'),
-        :body_md5    => 'ca502c70a1b006f5184d1f0bf79d5799',
-        :attachments => [
+        data: IO.read('test/fixtures/mail8.box'),
+        body_md5: 'ca502c70a1b006f5184d1f0bf79d5799',
+        attachments: [
           {
-            :md5      => 'c3ca4aab222eed8a148a716371b70129',
-            :filename => 'message.html',
+            md5: 'c3ca4aab222eed8a148a716371b70129',
+            filename: 'message.html',
           },
         ],
-        :params => {
-          :from              => 'Franz.Schaefer@example.com',
-          :from_email        => 'Franz.Schaefer@example.com',
-          :from_display_name => '',
-          :subject           => 'could not rename: ZZZAAuto',
-          :body_md5          => "Gravierend?
+        params: {
+          from: 'Franz.Schaefer@example.com',
+          from_email: 'Franz.Schaefer@example.com',
+          from_display_name: '',
+          subject: 'could not rename: ZZZAAuto',
+          body_md5: "Gravierend?
 
 Mit freundlichen Grüßen
 
@@ -186,199 +186,199 @@ Hof
         },
       },
       {
-        :data        => IO.read('test/fixtures/mail9.box'),
-        :body_md5    => 'c70de14cc69b17b07850b570d7a4fbe7',
-        :attachments => [
+        data: IO.read('test/fixtures/mail9.box'),
+        body_md5: 'c70de14cc69b17b07850b570d7a4fbe7',
+        attachments: [
           {
-            :md5      => '9964263c167ab47f8ec59c48e57cb905',
-            :filename => 'message.html',
+            md5: '9964263c167ab47f8ec59c48e57cb905',
+            filename: 'message.html',
           },
           {
-            :md5      => 'ddbdf67aa2f5c60c294008a54d57082b',
-            :filename => 'super-seven.jpg',
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'super-seven.jpg',
           },
         ],
-        :params => {
-          :from              => 'Martin Edenhofer <martin@example.de>',
-          :from_email        => 'martin@example.de',
-          :from_display_name => 'Martin Edenhofer',
-          :subject           => 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
-          :body              => "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.\n\n"
+        params: {
+          from: 'Martin Edenhofer <martin@example.de>',
+          from_email: 'martin@example.de',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+          body: "Enjoy!\n\n-Martin\n\n--\nOld programmers never die. They just branch to a new address.\n\n"
         },
       },
       {
-        :data        => IO.read('test/fixtures/mail10.box'),
-        :body_md5    => 'ddfad696bd34d83f607763180243f3c5',
-        :attachments => [
+        data: IO.read('test/fixtures/mail10.box'),
+        body_md5: 'ddfad696bd34d83f607763180243f3c5',
+        attachments: [
           {
-            :md5      => '52d946fdf1a9304d0799cceb2fcf0e36',
-            :filename => 'message.html',
+            md5: '52d946fdf1a9304d0799cceb2fcf0e36',
+            filename: 'message.html',
           },
           {
-            :md5      => 'a618d671348735744d4c9a4005b56799',
-            :filename => 'image001.jpg',
+            md5: 'a618d671348735744d4c9a4005b56799',
+            filename: 'image001.jpg',
           },
         ],
-        :params => {
-          :from              => 'Smith Sepp <smith@example.com>',
-          :from_email        => 'smith@example.com',
-          :from_display_name => 'Smith Sepp',
-          :subject           => 'Gruß aus Oberalteich',
+        params: {
+          from: 'Smith Sepp <smith@example.com>',
+          from_email: 'smith@example.com',
+          from_display_name: 'Smith Sepp',
+          subject: 'Gruß aus Oberalteich',
 #          :body         => "Herzliche Grüße aus Oberalteich sendet Herrn Smith\n\n \n\nSepp Smith  - Dipl.Ing. agr. (FH)\n\nGeschäftsführer der example Straubing-Bogen\n\nKlosterhof 1 | 94327 Bogen-Oberalteich\n\nTel: 09422-505601 | Fax: 09422-505620\n\nInternet: http://example-straubing-bogen.de <http://example-straubing-bogen.de/> \n\nFacebook: http://facebook.de/examplesrbog <http://facebook.de/examplesrbog> \n\n   -  European Foundation für Quality Management\n\n"
         },
       },
       {
-        :data        => IO.read('test/fixtures/mail11.box'),
-        :body_md5    => 'cf8b26d9fc4ce9abb19a36ce3a130c79',
-        :attachments => [
+        data: IO.read('test/fixtures/mail11.box'),
+        body_md5: 'cf8b26d9fc4ce9abb19a36ce3a130c79',
+        attachments: [
           {
-            :md5      => '08660cd33ce8c64b95bcf0207ff6c4d6',
-            :filename => 'message.html',
+            md5: '08660cd33ce8c64b95bcf0207ff6c4d6',
+            filename: 'message.html',
           },
         ],
-        :params => {
-          :from              => 'CYLEX Newsletter <carina.merkant@cylex.de>',
-          :from_email        => 'carina.merkant@cylex.de',
-          :from_display_name => 'CYLEX Newsletter',
-          :subject           => 'Eine schöne Adventszeit für ZNUNY GMBH - ENTERPRISE SERVICES FÜR OTRS',
-          :to                => 'enjoy_us@znuny.com',
+        params: {
+          from: 'CYLEX Newsletter <carina.merkant@cylex.de>',
+          from_email: 'carina.merkant@cylex.de',
+          from_display_name: 'CYLEX Newsletter',
+          subject: 'Eine schöne Adventszeit für ZNUNY GMBH - ENTERPRISE SERVICES FÜR OTRS',
+          to: 'enjoy_us@znuny.com',
         },
       },
       {
-        :data        => IO.read('test/fixtures/mail12.box'),
-        :body_md5    => '8b48e082bc77e927d395448875259172',
-        :attachments => [
+        data: IO.read('test/fixtures/mail12.box'),
+        body_md5: '8b48e082bc77e927d395448875259172',
+        attachments: [
           {
-            :md5      => '46cf0f95ea0c8211cbb704e1959b9173',
-            :filename => 'message.html',
+            md5: '46cf0f95ea0c8211cbb704e1959b9173',
+            filename: 'message.html',
           },
           {
-            :md5      => 'b6e70f587c4b1810facbb20bb5ec69ef',
-            :filename => 'image002.png',
+            md5: 'b6e70f587c4b1810facbb20bb5ec69ef',
+            filename: 'image002.png',
           },
         ],
-        :params => {
-          :from              => 'Alex.Smith@example.com',
-          :from_email        => 'Alex.Smith@example.com',
-          :from_display_name => '',
-          :subject           => 'AW: Agenda [Ticket#11995]',
-          :to                => 'example@znuny.com',
+        params: {
+          from: 'Alex.Smith@example.com',
+          from_email: 'Alex.Smith@example.com',
+          from_display_name: '',
+          subject: 'AW: Agenda [Ticket#11995]',
+          to: 'example@znuny.com',
         },
       },
       {
-        :data        => IO.read('test/fixtures/mail13.box'),
-        :body_md5    => '58806e006b14b04a535784a5462d09b0',
-        :attachments => [
+        data: IO.read('test/fixtures/mail13.box'),
+        body_md5: '58806e006b14b04a535784a5462d09b0',
+        attachments: [
           {
-            :md5      => '29cc1679f8a44c72be6be7c1da4278ac',
-            :filename => 'message.html',
+            md5: '29cc1679f8a44c72be6be7c1da4278ac',
+            filename: 'message.html',
           },
         ],
-        :params => {
-          :from              => 'thomas.smith@example.com',
-          :from_email        => 'thomas.smith@example.com',
-          :from_display_name => '',
-          :subject           => 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]',
-          :to                => 'q1@znuny.com',
+        params: {
+          from: 'thomas.smith@example.com',
+          from_email: 'thomas.smith@example.com',
+          from_display_name: '',
+          subject: 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]',
+          to: 'q1@znuny.com',
         },
       },
       {
-        :data        => IO.read('test/fixtures/mail14.box'),
-        :body_md5    => '154c7d3ae7b94f99589df62882841b08',
-        :attachments => [
+        data: IO.read('test/fixtures/mail14.box'),
+        body_md5: '154c7d3ae7b94f99589df62882841b08',
+        attachments: [
           {
-            :md5      => '5536be23f647953dc39c1673205d6f5b',
-            :filename => 'file-1',
+            md5: '5536be23f647953dc39c1673205d6f5b',
+            filename: 'file-1',
           },
           {
-            :md5      => '4eeeae078b920f9d0708353ba0f6aa63',
-            :filename => 'file-2',
+            md5: '4eeeae078b920f9d0708353ba0f6aa63',
+            filename: 'file-2',
           },
         ],
-        :params => {
-          :from              => '"Müller, Bernd" <Bernd.Mueller@example.com>',
-          :from_email        => 'Bernd.Mueller@example.com',
-          :from_display_name => 'Müller, Bernd',
-          :subject           => 'AW: OTRS [Ticket#118192]',
-          :to                => '\'Martin Edenhofer via Znuny Sales\' <sales@znuny.com>',
+        params: {
+          from: '"Müller, Bernd" <Bernd.Mueller@example.com>',
+          from_email: 'Bernd.Mueller@example.com',
+          from_display_name: 'Müller, Bernd',
+          subject: 'AW: OTRS [Ticket#118192]',
+          to: '\'Martin Edenhofer via Znuny Sales\' <sales@znuny.com>',
         },
       },
       # spam email
       {
-        :data        => IO.read('test/fixtures/mail15.box'),
-        :body_md5    => 'd41d8cd98f00b204e9800998ecf8427e',
-        :attachments => [
+        data: IO.read('test/fixtures/mail15.box'),
+        body_md5: 'd41d8cd98f00b204e9800998ecf8427e',
+        attachments: [
           # :preferences=>{"Message-ID"=>"<temp@test>", "Content-Type"=>"application/octet-stream; name=\"\xBC\xA8\xD0\xA7\xB9\xDC\xC0\xED,\xBE\xBF\xBE\xB9\xCB\xAD\xB4\xED\xC1\xCB.xls\"", "Mime-Type"=>"application/octet-stream", "Charset"=>"UTF-8"}}
           # mutt c1abb5fb77a9d2ab2017749a7987c074
           {
-            :md5      => '2ef81e47872d42efce7ef34bfa2de043',
-            :filename => 'file-1',
+            md5: '2ef81e47872d42efce7ef34bfa2de043',
+            filename: 'file-1',
           },
         ],
-        :params => {
-          :from              => '"Sara.Gang" <ynbe.ctrhk@gmail.com>',
-          :from_email        => 'ynbe.ctrhk@gmail.com',
-          :from_display_name => 'Sara.Gang',
-          :subject           => '绩效管理,究竟谁错了',
-          :to                => 'info42@znuny.com',
+        params: {
+          from: '"Sara.Gang" <ynbe.ctrhk@gmail.com>',
+          from_email: 'ynbe.ctrhk@gmail.com',
+          from_display_name: 'Sara.Gang',
+          subject: '绩效管理,究竟谁错了',
+          to: 'info42@znuny.com',
         },
       },
       # spam email
       {
-        :data     => IO.read('test/fixtures/mail16.box'),
-        :body_md5 => 'a2367adfa77857a078dad83826d659e8',
-        :params   => {
-          :from              => nil,
-          :from_email        => 'vipyimin@126.com',
-          :from_display_name => '',
-          :subject           => '【 直通美国排名第49大学 成功后付费 】',
-          :to                => '"enterprisemobility.apacservice" <enterprisemobility.apacservice@motorola.com>',
+        data: IO.read('test/fixtures/mail16.box'),
+        body_md5: 'a2367adfa77857a078dad83826d659e8',
+        params: {
+          from: nil,
+          from_email: 'vipyimin@126.com',
+          from_display_name: '',
+          subject: '【 直通美国排名第49大学 成功后付费 】',
+          to: '"enterprisemobility.apacservice" <enterprisemobility.apacservice@motorola.com>',
         },
       },
       # spam email
       {
-        :data     => IO.read('test/fixtures/mail17.box'),
-        :body_md5 => 'c32d6502f47435e613a2112625118270',
-        :params   => {
-          :from              => '"都琹" <ghgbwum@185.com.cn>',
-          :from_email        => 'ghgbwum@185.com.cn',
-          :from_display_name => '都琹',
-          :subject           => '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　人物                    互联网事百度新闻独家出品传媒换一批捷克戴维斯杯决赛前任命临时领队 前领队因病住院最新:盖世汽车讯 11月6日，通用汽车宣布今年10月份在华销量...减持三特索道 孟凯将全力发展湘鄂情江青摄影作品科技日报讯 （记者过国忠 通讯员陈飞燕）江苏省无线电科学研究所有限公司院士工作站日前正式建...[详细]',
-          :to                => 'info@znuny.com',
+        data: IO.read('test/fixtures/mail17.box'),
+        body_md5: 'c32d6502f47435e613a2112625118270',
+        params: {
+          from: '"都琹" <ghgbwum@185.com.cn>',
+          from_email: 'ghgbwum@185.com.cn',
+          from_display_name: '都琹',
+          subject: '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　人物                    互联网事百度新闻独家出品传媒换一批捷克戴维斯杯决赛前任命临时领队 前领队因病住院最新:盖世汽车讯 11月6日，通用汽车宣布今年10月份在华销量...减持三特索道 孟凯将全力发展湘鄂情江青摄影作品科技日报讯 （记者过国忠 通讯员陈飞燕）江苏省无线电科学研究所有限公司院士工作站日前正式建...[详细]',
+          to: 'info@znuny.com',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail18.box'),
-        :body_md5 => '66f20e8557095762ccad9a6cb6f59c3a',
-        :params   => {
-          :from              => 'postmaster@example.com',
-          :from_email        => 'postmaster@example.com',
-          :from_display_name => '',
-          :subject           => 'Benachrichtung zum =?unicode-1-1-utf-7?Q?+ANw-bermittlungsstatus (Fehlgeschlagen)?=',
-          :to                => 'sales@znuny.org',
+        data: IO.read('test/fixtures/mail18.box'),
+        body_md5: '66f20e8557095762ccad9a6cb6f59c3a',
+        params: {
+          from: 'postmaster@example.com',
+          from_email: 'postmaster@example.com',
+          from_display_name: '',
+          subject: 'Benachrichtung zum =?unicode-1-1-utf-7?Q?+ANw-bermittlungsstatus (Fehlgeschlagen)?=',
+          to: 'sales@znuny.org',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail19.box'),
-        :body_md5 => '3e42be74f967379a3053f21f4125ca66',
-        :params   => {
-          :from              => '"我" <>',
-          :from_email        => '"=?GB2312?B?ztI=?=" <>',
-          :from_display_name => '',
-          :subject           => '《欧美简讯》',
-          :to                => '377861373 <377861373@qq.com>',
+        data: IO.read('test/fixtures/mail19.box'),
+        body_md5: '3e42be74f967379a3053f21f4125ca66',
+        params: {
+          from: '"我" <>',
+          from_email: '"=?GB2312?B?ztI=?=" <>',
+          from_display_name: '',
+          subject: '《欧美简讯》',
+          to: '377861373 <377861373@qq.com>',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail20.box'),
-        :body_md5 => '65ca1367dfc26abcf49d30f68098f122',
-        :params   => {
-          :from              => 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
-          :from_email        => 'drugs-cheapest8@sicor.com',
-          :from_display_name => 'Health and Care-Mall',
-          :subject           => 'The Highest Grade Drugs And EXTRA LOW Price .',
-          :to                => 'info2@znuny.com',
-          :body              => "________________________________________________________________________Yeah but even when they. Beth liî ed her neck as well
+        data: IO.read('test/fixtures/mail20.box'),
+        body_md5: '65ca1367dfc26abcf49d30f68098f122',
+        params: {
+          from: 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
+          from_email: 'drugs-cheapest8@sicor.com',
+          from_display_name: 'Health and Care-Mall',
+          subject: 'The Highest Grade Drugs And EXTRA LOW Price .',
+          to: 'info2@znuny.com',
+          body: "________________________________________________________________________Yeah but even when they. Beth liî ed her neck as well
 
 &oacute;25aHw511I&Psi;11xG&lfloor;o8KHCm&sigmaf;9-2&frac12;23Qg&ntilde;V6UAD12AX&larr;t1Lf7&oplus;1Ir&sup2;r1TLA5pYJhjV gPn&atilde;M36V1E89RUD&Tau;&Aring;12I92s2C&Theta;YE&upsih;Afg&lowast;bT11&int;rIoi&scaron;&brvbar;O5oUIN1Is2S21Pp &Yuml;2q1F&Chi;&uArr;eGOz&lceil;F1R98y&sect; 74&rdquo;lTr8r1H2&aelig;u2E2P2q VmkfB&int;SKNElst4S&exist;182T2G1&iacute; lY92Pu&times;8>R&Ograve;&not;&oplus;&Mu;I&Ugrave;z&Ugrave;CC412QE&Rho;&ordm;S2!Xg&OElig;s. 
 2&gamma;&dArr;B[1] cwspC&ensp;L8I C K88H E1R?E2e31 !Calm dylan for school today.
@@ -410,26 +410,26 @@ Wade to give it seemed like this. Yeah but one for any longer. Everything you go
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail21.box'),
-        :body_md5 => 'f909a17fde261099903f3236f8755249',
-        :params   => {
-          :from              => 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
-          :from_email        => 'pharmacy_affordable1@ertelecom.ru',
-          :from_display_name => 'Viagra Super Force Online',
-          :subject           => 'World Best DRUGS Mall For a Reasonable Price.',
-          :to                => 'info@znuny.nix',
+        data: IO.read('test/fixtures/mail21.box'),
+        body_md5: 'f909a17fde261099903f3236f8755249',
+        params: {
+          from: 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
+          from_email: 'pharmacy_affordable1@ertelecom.ru',
+          from_display_name: 'Viagra Super Force Online',
+          subject: 'World Best DRUGS Mall For a Reasonable Price.',
+          to: 'info@znuny.nix',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail22.box'),
-        :body_md5 => '9e79cb133d52afe9e18e8438df539305',
-        :params   => {
-          :from              => 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
-          :from_email        => 'ireoniqla@lipetsk.ru',
-          :from_display_name => 'Gilbertina Suthar',
-          :subject           => 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
-          :to                => 'Info <info@znuny.nix>',
-          :body              => "Puzzled by judith bronte dave. Melvin will want her way through with.
+        data: IO.read('test/fixtures/mail22.box'),
+        body_md5: '9e79cb133d52afe9e18e8438df539305',
+        params: {
+          from: 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
+          from_email: 'ireoniqla@lipetsk.ru',
+          from_display_name: 'Gilbertina Suthar',
+          subject: 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
+          to: 'Info <info@znuny.nix>',
+          body: "Puzzled by judith bronte dave. Melvin will want her way through with.
 Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.
 Freemont and they talked with beppe.
 Thinking of bed and whenever adam.
@@ -449,47 +449,47 @@ Freemont and pulling out several minutes.
 
       },
       {
-        :data     => IO.read('test/fixtures/mail23.box'),
-        :body_md5 => '545a1b067fd10ac636c20b44f5df8868',
-        :params   => {
-          :from              => 'marketingmanager@nthcpghana.com',
-          :from_email        => 'marketingmanager@nthcpghana.com',
-          :from_display_name => '',
-          :subject           => nil,
-          :to                => 'undisclosed-recipients: ;',
+        data: IO.read('test/fixtures/mail23.box'),
+        body_md5: '545a1b067fd10ac636c20b44f5df8868',
+        params: {
+          from: 'marketingmanager@nthcpghana.com',
+          from_email: 'marketingmanager@nthcpghana.com',
+          from_display_name: '',
+          subject: nil,
+          to: 'undisclosed-recipients: ;',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail24.box'),
-        :body_md5 => 'd41d8cd98f00b204e9800998ecf8427e',
-        :params   => {
-          :from              => 'oracle@IG0-1-DB01.example.com',
-          :from_email        => 'oracle@IG0-1-DB01.example.com',
-          :from_display_name => '',
-          :subject           => 'Regelsets im Test-Status gefunden: 1',
-          :to                => 'support@example.com',
-          :body              => '',
+        data: IO.read('test/fixtures/mail24.box'),
+        body_md5: 'd41d8cd98f00b204e9800998ecf8427e',
+        params: {
+          from: 'oracle@IG0-1-DB01.example.com',
+          from_email: 'oracle@IG0-1-DB01.example.com',
+          from_display_name: '',
+          subject: 'Regelsets im Test-Status gefunden: 1',
+          to: 'support@example.com',
+          body: '',
         },
-        :attachments => [
+        attachments: [
           {
-            :data     => 'RULESET_ID;NAME;ACTIV;RUN_MODE;AUDIT_MODIFY_DATE
+            data: 'RULESET_ID;NAME;ACTIV;RUN_MODE;AUDIT_MODIFY_DATE
 387;DP DHL JOIN - EN : Einladung eAC;T;SM;1.09.14
 ',
-            :md5      => 'a61c76479fdc2f107fe2697ac5ad60ae',
-            :filename => 'rulesets-report.csv',
+            md5: 'a61c76479fdc2f107fe2697ac5ad60ae',
+            filename: 'rulesets-report.csv',
           },
         ],
       },
       {
-        :data     => IO.read('test/fixtures/mail25.box'),
-        :body_md5 => '436f71d8d8a4ffbd3f18fc9de7d7f767',
-        :params   => {
-          :from              => 'oracle@IG0-1-DB01.example.com',
-          :from_email        => 'oracle@IG0-1-DB01.example.com',
-          :from_display_name => '',
-          :subject           => 'Regelsets im Test-Status gefunden: 1',
-          :to                => 'support@example.com',
-          :body              => "begin 644 rulesets-report.csv
+        data: IO.read('test/fixtures/mail25.box'),
+        body_md5: '436f71d8d8a4ffbd3f18fc9de7d7f767',
+        params: {
+          from: 'oracle@IG0-1-DB01.example.com',
+          from_email: 'oracle@IG0-1-DB01.example.com',
+          from_display_name: '',
+          subject: 'Regelsets im Test-Status gefunden: 1',
+          to: 'support@example.com',
+          body: "begin 644 rulesets-report.csv
 M4E5,15-%5%])1#M.04U%.T%#5$E6.U)53E]-3T1%.T%51$E47TU/1$E&65]$
 M051%\"C,X-SM$4\"!$2$P@2D])3B`M($5.(#H@16EN;&%D=6YG(&5!0SM4.U--
 *.S$W+C`Y+C$T\"@``
@@ -499,15 +499,15 @@ end
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail26.box'),
-        :body_md5 => 'c68fd31c71a463c7ea820ccdf672c680',
-        :params   => {
-          :from              => 'gate <team@support.gate.de>',
-          :from_email        => 'team@support.gate.de',
-          :from_display_name => 'gate',
-          :subject           => 'Ihre Rechnung als PDF-Dokument',
-          :to                => 'Martin Edenhofer <billing@znuny.inc>',
-          :body              => "********************************************************************
+        data: IO.read('test/fixtures/mail26.box'),
+        body_md5: 'c68fd31c71a463c7ea820ccdf672c680',
+        params: {
+          from: 'gate <team@support.gate.de>',
+          from_email: 'team@support.gate.de',
+          from_display_name: 'gate',
+          subject: 'Ihre Rechnung als PDF-Dokument',
+          to: 'Martin Edenhofer <billing@znuny.inc>',
+          body: "********************************************************************
 
 gate                                                      Service
 
@@ -517,67 +517,67 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
 
 ",
         },
-        :attachments  => [
+        attachments: [
           {
-            :md5      => '5d6a49a266987af128bb7254abcb2896',
-            :filename => 'message.html',
+            md5: '5d6a49a266987af128bb7254abcb2896',
+            filename: 'message.html',
           },
           {
-            :md5      => '552e21cd4cd9918678e3c1a0df491bc3',
-            :filename => 'invoice_gatede_B181347.txt',
+            md5: '552e21cd4cd9918678e3c1a0df491bc3',
+            filename: 'invoice_gatede_B181347.txt',
           },
         ],
       },
       {
-        :data     => IO.read('test/fixtures/mail27.box'),
-        :body_md5 => 'd41d8cd98f00b204e9800998ecf8427e',
-        :params   => {
-          :from              => 'caoyaoewfzfw@21cn.com',
-          :from_email        => 'caoyaoewfzfw@21cn.com',
-          :from_display_name => '',
-          :subject           => "\r\n蠭龕中層管理者如何避免角色行为誤区",
-          :to                => 'duan@seat.com.cn, info@znuny.com, jinzh@kingdream.com',
-          :body              => '',
+        data: IO.read('test/fixtures/mail27.box'),
+        body_md5: 'd41d8cd98f00b204e9800998ecf8427e',
+        params: {
+          from: 'caoyaoewfzfw@21cn.com',
+          from_email: 'caoyaoewfzfw@21cn.com',
+          from_display_name: '',
+          subject: "\r\n蠭龕中層管理者如何避免角色行为誤区",
+          to: 'duan@seat.com.cn, info@znuny.com, jinzh@kingdream.com',
+          body: '',
         },
-        :attachments  => [
+        attachments: [
           {
-            :md5      => '498b8ae7b26033af1a08f85644d6695c',
-            :filename => 'message.html',
+            md5: '498b8ae7b26033af1a08f85644d6695c',
+            filename: 'message.html',
           },
         ],
       },
       {
-        :data     => IO.read('test/fixtures/mail28.box'),
-        :body_md5 => '5872ddcdfdf6bfe40f36cd0408fca667',
-        :params   => {
-          :from              => 'kontakt@example.de',
-          :from_email        => 'kontakt@example.de',
-          :from_display_name => '',
-          :subject           => 'Bewerbung auf Ihr Stellenangebot',
-          :to                => 'info@znuny.inc',
-          :body              => 'no visible content',
+        data: IO.read('test/fixtures/mail28.box'),
+        body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
+        params: {
+          from: 'kontakt@example.de',
+          from_email: 'kontakt@example.de',
+          from_display_name: '',
+          subject: 'Bewerbung auf Ihr Stellenangebot',
+          to: 'info@znuny.inc',
+          body: 'no visible content',
         },
-        :attachments  => [
+        attachments: [
           {
-            :md5      => '6605d016bda980cdc65fb72d232e4df9',
-            :filename => 'Znuny GmbH .pdf',
+            md5: '6605d016bda980cdc65fb72d232e4df9',
+            filename: 'Znuny GmbH .pdf',
           },
           {
-            :md5      => '6729bc7cbe44fc967a9d953c4af114b7',
-            :filename => 'Lebenslauf.pdf',
+            md5: '6729bc7cbe44fc967a9d953c4af114b7',
+            filename: 'Lebenslauf.pdf',
           },
         ],
       },
       {
-        :data     => IO.read('test/fixtures/mail29.box'),
-        :body_md5 => 'b6cc8164ce896046d631ddd44f8c9f6e',
-        :params   => {
-          :from              => 'Example Sales <sales@example.com>',
-          :from_email        => 'sales@example.com',
-          :from_display_name => 'Example Sales',
-          :subject           => 'Example licensing information: No channel available',
-          :to                => 'info@znuny.inc',
-          :body              => "Dear Mr. Edenhofer,We want to keep you updated on TeamViewer licensing shortages on a regular basis.
+        data: IO.read('test/fixtures/mail29.box'),
+        body_md5: 'b6cc8164ce896046d631ddd44f8c9f6e',
+        params: {
+          from: 'Example Sales <sales@example.com>',
+          from_email: 'sales@example.com',
+          from_display_name: 'Example Sales',
+          subject: 'Example licensing information: No channel available',
+          to: 'info@znuny.inc',
+          body: "Dear Mr. Edenhofer,We want to keep you updated on TeamViewer licensing shortages on a regular basis.
 We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.
 Additional session channels can be added at any time. Please visit our [1] TeamViewer Online Shop for pricing information.
 Thank you - and again all the best with TeamViewer!
@@ -599,15 +599,15 @@ Registration AG Ulm HRB 534075 * General Manager Holger Felgner
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail30.box'),
-        :body_md5 => 'bba63e2dbe29e7b82d893c2554ff466a',
-        :params   => {
-          :from              => 'Manfred Haert <Manfred.Haert@example.com>',
-          :from_email        => 'Manfred.Haert@example.com',
-          :from_display_name => 'Manfred Haert',
-          :subject           => 'Antragswesen in TesT abbilden',
-          :to                => 'info@znuny.inc',
-          :body              => "Sehr geehrte Damen undHerren,
+        data: IO.read('test/fixtures/mail30.box'),
+        body_md5: 'bba63e2dbe29e7b82d893c2554ff466a',
+        params: {
+          from: 'Manfred Haert <Manfred.Haert@example.com>',
+          from_email: 'Manfred.Haert@example.com',
+          from_display_name: 'Manfred Haert',
+          subject: 'Antragswesen in TesT abbilden',
+          to: 'info@znuny.inc',
+          body: "Sehr geehrte Damen undHerren,
 
 wir hatten bereits letztes Jahr einen TesT-Workshop mit IhremHerrn XXX durchgeführt und würden nun gerne erneutIhre Dienste in Anspruch nehmen.
 
@@ -644,25 +644,25 @@ Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen I
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail31.box'),
-        :body_md5 => '10484f3b096e85e7001da387c18871d5',
-        :params   => {
-          :from              => '"bertha　mou" <zhengkang@ha.chinamobile.com>',
-          :from_email        => 'zhengkang@ha.chinamobile.com',
-          :from_display_name => 'bertha　mou',
-          :subject           => '內應力產生与注塑工艺条件之间的关系；',
-          :to                => 'info@znuny.inc',
+        data: IO.read('test/fixtures/mail31.box'),
+        body_md5: '10484f3b096e85e7001da387c18871d5',
+        params: {
+          from: '"bertha　mou" <zhengkang@ha.chinamobile.com>',
+          from_email: 'zhengkang@ha.chinamobile.com',
+          from_display_name: 'bertha　mou',
+          subject: '內應力產生与注塑工艺条件之间的关系；',
+          to: 'info@znuny.inc',
         },
       },
       {
-        :data     => IO.read('test/fixtures/mail32.box'),
-        :body_md5 => '6bed82e0d079e521f506e4e5d3529107',
-        :params   => {
-          :from              => '"Dana.Qin" <Dana.Qin6e1@gmail.com>',
-          :from_email        => 'Dana.Qin6e1@gmail.com',
-          :from_display_name => 'Dana.Qin',
-          :subject           => '发现最美车间主任',
-          :to                => 'info@znuny.inc',
+        data: IO.read('test/fixtures/mail32.box'),
+        body_md5: '6bed82e0d079e521f506e4e5d3529107',
+        params: {
+          from: '"Dana.Qin" <Dana.Qin6e1@gmail.com>',
+          from_email: 'Dana.Qin6e1@gmail.com',
+          from_display_name: 'Dana.Qin',
+          subject: '发现最美车间主任',
+          to: 'info@znuny.inc',
         },
       },
     ]

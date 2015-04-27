@@ -13,153 +13,153 @@ class AaaGettingStartedTest < TestCase
     mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
 
     @browser = browser_instance
-    location( :url => browser_url )
+    location( url: browser_url )
     watch_for(
-      :css   => '.setup.wizard',
-      :value => 'setup new system',
+      css: '.setup.wizard',
+      value: 'setup new system',
     )
-    click( :css => '.js-start .btn--primary' )
+    click( css: '.js-start .btn--primary' )
     set(
-      :css   => '.js-admin input[name="firstname"]',
-      :value => 'Test Master',
-    )
-    set(
-      :css   => '.js-admin input[name="lastname"]',
-      :value => 'Agent',
+      css: '.js-admin input[name="firstname"]',
+      value: 'Test Master',
     )
     set(
-      :css   => '.js-admin input[name="email"]',
-      :value => 'master@example.com',
+      css: '.js-admin input[name="lastname"]',
+      value: 'Agent',
     )
     set(
-      :css   => '.js-admin input[name="firstname"]',
-      :value => 'Test Master',
+      css: '.js-admin input[name="email"]',
+      value: 'master@example.com',
     )
     set(
-      :css   => '.js-admin input[name="password"]',
-      :value => 'test1234äöüß',
+      css: '.js-admin input[name="firstname"]',
+      value: 'Test Master',
     )
     set(
-      :css   => '.js-admin input[name="password_confirm"]',
-      :value => 'test1234äöüß',
+      css: '.js-admin input[name="password"]',
+      value: 'test1234äöüß',
     )
-    click( :css => '.js-admin .btn--success' )
+    set(
+      css: '.js-admin input[name="password_confirm"]',
+      value: 'test1234äöüß',
+    )
+    click( css: '.js-admin .btn--success' )
     watch_for(
-      :css   => '.js-base h2',
-      :value => 'Organization',
+      css: '.js-base h2',
+      value: 'Organization',
     )
 
     # getting started - base
     match(
-      :css   => '.js-base h2',
-      :value => 'Organization',
+      css: '.js-base h2',
+      value: 'Organization',
     )
     set(
-      :css   => '.js-base input[name="organization"]',
-      :value => 'Some Organization',
+      css: '.js-base input[name="organization"]',
+      value: 'Some Organization',
     )
     set(
-      :css   => '.js-base input[name="url"]',
-      :value => 'some host',
+      css: '.js-base input[name="url"]',
+      value: 'some host',
     )
     click(
-      :css => '.js-base .btn--primary',
+      css: '.js-base .btn--primary',
     )
     watch_for(
-      :css   => 'body',
-      :value => 'A URL looks like',
+      css: 'body',
+      value: 'A URL looks like',
     )
     set(
-      :css   => '.js-base input[name="url"]',
-      :value => 'http://localhost:3333',
+      css: '.js-base input[name="url"]',
+      value: 'http://localhost:3333',
     )
     click(
-      :css => '.js-base .btn--primary',
+      css: '.js-base .btn--primary',
     )
     watch_for(
-      :css   => 'body',
-      :value => 'channel',
+      css: 'body',
+      value: 'channel',
     )
     location_check(
-      :url => '#getting_started/channel',
+      url: '#getting_started/channel',
     )
 
     # getting started - create email account
     match(
-      :css   => '.js-channel h2',
-      :value => 'Connect Channels',
+      css: '.js-channel h2',
+      value: 'Connect Channels',
     )
     click(
-      :css => '.js-channel .email .provider_name',
+      css: '.js-channel .email .provider_name',
     )
     set(
-      :css   => '.js-intro input[name="realname"]',
-      :value => 'Some Realname',
+      css: '.js-intro input[name="realname"]',
+      value: 'Some Realname',
     )
     set(
-      :css   => '.js-intro input[name="email"]',
-      :value => mailbox_user,
+      css: '.js-intro input[name="email"]',
+      value: mailbox_user,
     )
     set(
-      :css   => '.js-intro input[name="password"]',
-      :value => mailbox_password,
+      css: '.js-intro input[name="password"]',
+      value: mailbox_password,
     )
     click(
-      :css => '.js-intro .btn--primary',
+      css: '.js-intro .btn--primary',
     )
     watch_for(
-      :css     => 'body',
-      :value   => 'verify',
-      :timeout => 20,
+      css: 'body',
+      value: 'verify',
+      timeout: 20,
     )
     watch_for(
-      :css     => 'body',
-      :value   => 'invite',
-      :timeout => 100,
+      css: 'body',
+      value: 'invite',
+      timeout: 100,
     )
     location_check(
-      :url => '#getting_started/agents',
+      url: '#getting_started/agents',
     )
 
     # invite agent1
     match(
-      :css   => 'body',
-      :value => 'Invite',
+      css: 'body',
+      value: 'Invite',
     )
     set(
-      :css   => '.js-agent input[name="firstname"]',
-      :value => 'Agent 1',
+      css: '.js-agent input[name="firstname"]',
+      value: 'Agent 1',
     )
     set(
-      :css   => '.js-agent input[name="lastname"]',
-      :value => 'Test',
+      css: '.js-agent input[name="lastname"]',
+      value: 'Test',
     )
     set(
-      :css   => '.js-agent input[name="email"]',
-      :value => 'agent1@example.com',
+      css: '.js-agent input[name="email"]',
+      value: 'agent1@example.com',
     )
     click(
-      :css => '.js-agent input[name="group_ids"][value="1"]',
+      css: '.js-agent input[name="group_ids"][value="1"]',
     )
     click(
-      :css => '.js-agent .btn--success',
+      css: '.js-agent .btn--success',
     )
     watch_for(
-      :css   => 'body',
-      :value => 'Invitation sent',
+      css: 'body',
+      value: 'Invitation sent',
     )
     location_check(
-      :url => '#getting_started/agents',
+      url: '#getting_started/agents',
     )
     click(
-      :css => '.js-agent .btn--primary',
+      css: '.js-agent .btn--primary',
     )
     watch_for(
-      :css   => 'body',
-      :value => 'My Stats',
+      css: 'body',
+      value: 'My Stats',
     )
     location_check(
-      :url => '#dashboard',
+      url: '#dashboard',
     )
   end
 
@@ -171,9 +171,9 @@ class AaaGettingStartedTest < TestCase
       mailbox_user     = ENV["MAILBOX_AUTO#{count.to_s}"].split(':')[0]
       mailbox_password = ENV["MAILBOX_AUTO#{count.to_s}"].split(':')[1]
       account = {
-        :realname => 'auto account',
-        :email    => mailbox_user,
-        :password => mailbox_password,
+        realname: 'auto account',
+        email: mailbox_user,
+        password: mailbox_password,
       }
       accounts.push account
     }
@@ -184,44 +184,44 @@ class AaaGettingStartedTest < TestCase
     end
     @browser = browser_instance
     login(
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
     )
     accounts.each {|account|
 
       # getting started - auto mail
-      location( :url => browser_url + '/#getting_started/channel' )
+      location( url: browser_url + '/#getting_started/channel' )
       click(
-        :css => '.js-channel .email .provider_name',
+        css: '.js-channel .email .provider_name',
       )
       set(
-        :css   => '.js-intro input[name="realname"]',
-        :value => account[:realname],
+        css: '.js-intro input[name="realname"]',
+        value: account[:realname],
       )
       set(
-        :css   => '.js-intro input[name="email"]',
-        :value => account[:email],
+        css: '.js-intro input[name="email"]',
+        value: account[:email],
       )
       set(
-        :css   => '.js-intro input[name="password"]',
-        :value => account[:password],
+        css: '.js-intro input[name="password"]',
+        value: account[:password],
       )
       click(
-        :css => '.js-intro .btn--primary',
+        css: '.js-intro .btn--primary',
       )
       watch_for(
-        :css     => 'body',
-        :value   => 'verify',
-        :timeout => 20,
+        css: 'body',
+        value: 'verify',
+        timeout: 20,
       )
       watch_for(
-        :css     => 'body',
-        :value   => 'invite',
-        :timeout => 100,
+        css: 'body',
+        value: 'invite',
+        timeout: 100,
       )
       location_check(
-        :url => '#getting_started/agents',
+        url: '#getting_started/agents',
       )
     }
   end
@@ -236,13 +236,13 @@ class AaaGettingStartedTest < TestCase
       mailbox_inbound  = ENV["MAILBOX_MANUAL#{count.to_s}"].split(':')[2]
       mailbox_outbound = ENV["MAILBOX_MANUAL#{count.to_s}"].split(':')[3]
       account = {
-        :realname => 'manual account',
-        :email    => mailbox_user,
-        :password => mailbox_password,
-        :inbound  => {
+        realname: 'manual account',
+        email: mailbox_user,
+        password: mailbox_password,
+        inbound: {
           'options::host' => mailbox_inbound,
         },
-        :outbound  => {
+        outbound: {
           'options::host' => mailbox_outbound,
         },
       }
@@ -256,75 +256,75 @@ class AaaGettingStartedTest < TestCase
 
     @browser = browser_instance
     login(
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
     )
     accounts.each {|account|
 
       # getting started - manual mail
-      location( :url => browser_url + '/#getting_started/channel' )
+      location( url: browser_url + '/#getting_started/channel' )
 
       click(
-        :css => '.js-channel .email .provider_name',
+        css: '.js-channel .email .provider_name',
       )
       set(
-        :css   => '.js-intro input[name="realname"]',
-        :value => account[:realname],
+        css: '.js-intro input[name="realname"]',
+        value: account[:realname],
       )
       set(
-        :css     => '.js-intro input[name="email"]',
-        :value   => account[:email],
+        css: '.js-intro input[name="email"]',
+        value: account[:email],
       )
       set(
-        :css   => '.js-intro input[name="password"]',
-        :value => account[:password],
+        css: '.js-intro input[name="password"]',
+        value: account[:password],
       )
       click(
-        :css => '.js-intro .btn--primary',
+        css: '.js-intro .btn--primary',
       )
       watch_for(
-        :css     => '.js-inbound h2',
-        :value   => 'inbound',
-        :timeout => 220,
+        css: '.js-inbound h2',
+        value: 'inbound',
+        timeout: 220,
       )
       watch_for(
-        :css   => '.js-inbound',
-        :value => 'manual',
+        css: '.js-inbound',
+        value: 'manual',
       )
       set(
-        :css   => '.js-inbound input[name="options::host"]',
-        :value => account[:inbound]['options::host'],
+        css: '.js-inbound input[name="options::host"]',
+        value: account[:inbound]['options::host'],
       )
       click(
-        :css => '.js-inbound .btn--primary',
+        css: '.js-inbound .btn--primary',
       )
       watch_for(
-        :css   => '.js-outbound h2',
-        :value => 'outbound',
+        css: '.js-outbound h2',
+        value: 'outbound',
       )
       select(
-        :css   => '.js-outbound select[name="adapter"]',
-        :value => 'SMTP - configure your own outgoing SMTP settings',
+        css: '.js-outbound select[name="adapter"]',
+        value: 'SMTP - configure your own outgoing SMTP settings',
       )
       set(
-        :css   => '.js-outbound input[name="options::host"]',
-        :value => account[:outbound]['options::host'],
+        css: '.js-outbound input[name="options::host"]',
+        value: account[:outbound]['options::host'],
       )
       click(
-        :css => '.js-outbound .btn--primary',
+        css: '.js-outbound .btn--primary',
       )
       watch_for(
-        :css   => 'body',
-        :value => 'verify',
+        css: 'body',
+        value: 'verify',
       )
       watch_for(
-        :css     => 'body',
-        :value   => 'invite',
-        :timeout => 190,
+        css: 'body',
+        value: 'invite',
+        timeout: 190,
       )
       location_check(
-        :url => '#getting_started/agents',
+        url: '#getting_started/agents',
       )
     }
   end

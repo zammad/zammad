@@ -12,13 +12,13 @@ module StaticAssets
 
   # store image 1:1
   def self.store_raw( content, content_type )
-    Store.remove( :object => 'System::Logo', :o_id => 1 )
+    Store.remove( object: 'System::Logo', o_id: 1 )
     Store.add(
-      :object      => 'System::Logo',
-      :o_id        => 1,
-      :data        => content,
-      :filename    => 'image',
-      :preferences => {
+      object: 'System::Logo',
+      o_id: 1,
+      data: content,
+      filename: 'image',
+      preferences: {
         'Content-Type' => content_type
       },
     )
@@ -27,7 +27,7 @@ module StaticAssets
 
   # read raw 1:1
   def self.read_raw
-    list = Store.list( :object => 'System::Logo', :o_id => 1 )
+    list = Store.list( object: 'System::Logo', o_id: 1 )
     if list && list[0]
       return Store.find( list[0] )
     end
@@ -36,13 +36,13 @@ module StaticAssets
 
   # store image in right size
   def self.store( content, content_type )
-    Store.remove( :object => 'System::Logo', :o_id => 2 )
+    Store.remove( object: 'System::Logo', o_id: 2 )
     Store.add(
-      :object      => 'System::Logo',
-      :o_id        => 2,
-      :data        => content,
-      :filename    => 'image',
-      :preferences => {
+      object: 'System::Logo',
+      o_id: 2,
+      data: content,
+      filename: 'image',
+      preferences: {
         'Content-Type' => content_type
       },
     )
@@ -54,11 +54,11 @@ module StaticAssets
   def self.read
 
     # use reduced dimensions
-    list = Store.list( :object => 'System::Logo', :o_id => 2 )
+    list = Store.list( object: 'System::Logo', o_id: 2 )
 
     # as fallback use 1:1
     if !list || !list[0]
-      list = Store.list( :object => 'System::Logo', :o_id => 1 )
+      list = Store.list( object: 'System::Logo', o_id: 1 )
     end
 
     # store hash in config

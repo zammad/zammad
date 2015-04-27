@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class OnlineNotification < ApplicationModel
-  belongs_to :type_lookup,     :class_name => 'TypeLookup'
-  belongs_to :object_lookup,   :class_name => 'ObjectLookup'
+  belongs_to :type_lookup,     class_name: 'TypeLookup'
+  belongs_to :object_lookup,   class_name: 'ObjectLookup'
 
   after_create    :notify_clients_after_change
   after_update    :notify_clients_after_change
@@ -34,12 +34,12 @@ add a new online notification for this user
     end
 
     record = {
-      :o_id               => data[:o_id],
-      :object_lookup_id   => object_id,
-      :type_lookup_id     => type_id,
-      :seen               => data[:seen],
-      :user_id            => data[:user_id],
-      :created_by_id      => data[:created_by_id]
+      o_id: data[:o_id],
+      object_lookup_id: object_id,
+      type_lookup_id: type_id,
+      seen: data[:seen],
+      user_id: data[:user_id],
+      created_by_id: data[:created_by_id]
     }
 
     OnlineNotification.create(record)
@@ -72,8 +72,8 @@ remove whole online notifications of an object
   def self.remove( object_name, o_id )
     object_id = ObjectLookup.by_name( object_name )
     OnlineNotification.where(
-      :object_lookup_id  => object_id,
-      :o_id              => o_id,
+      object_lookup_id: object_id,
+      o_id: o_id,
     ).destroy_all
   end
 
@@ -87,7 +87,7 @@ return all online notifications of an user
 
   def self.list(user,limit)
 
-    notifications = OnlineNotification.where(:user_id => user.id).
+    notifications = OnlineNotification.where(user_id: user.id).
       order( 'created_at DESC, id DESC' ).
       limit( limit )
     list = []
@@ -113,8 +113,8 @@ return all online notifications of an object
   def self.list_by_object( object_name, o_id)
     object_id = ObjectLookup.by_name( object_name )
     notifications = OnlineNotification.where(
-      :object_lookup_id => object_id,
-      :o_id             => o_id,
+      object_lookup_id: object_id,
+      o_id: o_id,
     ).
       order( 'created_at DESC, id DESC' ).
       limit( 10_000 )
@@ -141,9 +141,9 @@ mark online notification as seen by object
   def self.seen_by_object(object_name, o_id)
       object_id     = ObjectLookup.by_name( object_name )
       notifications = OnlineNotification.where(
-        :object_lookup_id  => object_id,
-        :o_id              => o_id,
-        :seen              => false,
+        object_lookup_id: object_id,
+        o_id: o_id,
+        seen: false,
       )
       notifications.each do |notification|
         notification.seen = true
@@ -172,8 +172,8 @@ returns:
     notifications = OnlineNotification.list(user, limit)
     assets = ApplicationModel.assets_of_object_list(notifications)
     return {
-      :stream => notifications,
-      :assets => assets
+      stream: notifications,
+      assets: assets
     }
   end
 
@@ -181,8 +181,8 @@ returns:
     Sessions.send_to(
       self.user_id,
       {
-        :event => 'OnlineNotification::changed',
-        :data => {}
+        event: 'OnlineNotification::changed',
+        data: {}
       }
     )
   end

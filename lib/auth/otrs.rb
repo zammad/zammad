@@ -17,7 +17,7 @@ module Auth::Otrs
     return false if !result['groups_rw']
     return false if !result['user']
 
-    user = User.where( :login => result['user']['UserLogin'], :active => true ).first
+    user = User.where( login: result['user']['UserLogin'], active: true ).first
     return false if !user
 
     # sync / check permissions

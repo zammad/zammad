@@ -2,8 +2,8 @@
 
 class ActivityStream < ApplicationModel
   self.table_name = 'activity_streams'
-  belongs_to :activity_stream_type,     :class_name => 'TypeLookup'
-  belongs_to :activity_stream_object,   :class_name => 'ObjectLookup'
+  belongs_to :activity_stream_type,     class_name: 'TypeLookup'
+  belongs_to :activity_stream_object,   class_name: 'ObjectLookup'
 
 =begin
 
@@ -32,7 +32,7 @@ add a new activity entry for an object
 
     role_id = nil
     if data[:role]
-      role = Role.lookup( :name => data[:role] )
+      role = Role.lookup( name: data[:role] )
       if !role
         raise "No such Role #{data[:role]}"
       end
@@ -41,11 +41,11 @@ add a new activity entry for an object
 
     # check newest entry - is needed
     result = ActivityStream.where(
-      :o_id                      => data[:o_id],
+      o_id: data[:o_id],
       #:activity_stream_type_id  => type_id,
-      :role_id                   => role_id,
-      :activity_stream_object_id => object_id,
-      :created_by_id             => data[:created_by_id]
+      role_id: role_id,
+      activity_stream_object_id: object_id,
+      created_by_id: data[:created_by_id]
     ).order('created_at DESC, id DESC').first
 
     # resturn if old entry is really fresh
@@ -53,13 +53,13 @@ add a new activity entry for an object
 
     # create history
     record = {
-      :o_id                      => data[:o_id],
-      :activity_stream_type_id   => type_id,
-      :activity_stream_object_id => object_id,
-      :role_id                   => role_id,
-      :group_id                  => data[:group_id],
-      :created_at                => data[:created_at],
-      :created_by_id             => data[:created_by_id]
+      o_id: data[:o_id],
+      activity_stream_type_id: type_id,
+      activity_stream_object_id: object_id,
+      role_id: role_id,
+      group_id: data[:group_id],
+      created_at: data[:created_at],
+      created_by_id: data[:created_by_id]
     }
 
     ActivityStream.create(record)
@@ -76,8 +76,8 @@ remove whole activity entries of an object
   def self.remove( object_name, o_id )
     object_id = ObjectLookup.by_name( object_name )
     ActivityStream.where(
-      :activity_stream_object_id => object_id,
-      :o_id                      => o_id,
+      activity_stream_object_id: object_id,
+      o_id: o_id,
     ).destroy_all
   end
 
@@ -94,7 +94,7 @@ return all activity entries of an user
     group_ids = user.group_ids
 
     # do not return an activity stream for custoers
-    customer_role = Role.lookup( :name => 'Customer' )
+    customer_role = Role.lookup( name: 'Customer' )
 
     return [] if role_ids.include?(customer_role.id)
     if group_ids.empty?

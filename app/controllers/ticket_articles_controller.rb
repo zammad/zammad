@@ -7,14 +7,14 @@ class TicketArticlesController < ApplicationController
   def index
     @articles = Ticket::Article.all
 
-    render :json => @articles
+    render json: @articles
   end
 
   # GET /articles/1
   def show
     @article = Ticket::Article.find( params[:id] )
 
-    render :json => @article
+    render json: @article
   end
 
   # POST /articles
@@ -26,8 +26,8 @@ class TicketArticlesController < ApplicationController
     # find attachments in upload cache
     if form_id
       @article.attachments = Store.list(
-        :object => 'UploadCache',
-        :o_id   => form_id,
+        object: 'UploadCache',
+        o_id: form_id,
       )
     end
 
@@ -35,13 +35,13 @@ class TicketArticlesController < ApplicationController
 
       # remove attachments from upload cache
       Store.remove(
-        :object => 'UploadCache',
-        :o_id   => form_id,
+        object: 'UploadCache',
+        o_id: form_id,
       )
 
-      render :json => @article, :status => :created
+      render json: @article, status: :created
     else
-      render :json => @article.errors, :status => :unprocessable_entity
+      render json: @article.errors, status: :unprocessable_entity
     end
   end
 
@@ -50,9 +50,9 @@ class TicketArticlesController < ApplicationController
     @article = Ticket::Article.find( params[:id] )
 
     if @article.update_attributes( Ticket::Article.param_validation( params[:ticket_article] ) )
-      render :json => @article, :status => :ok
+      render json: @article, status: :ok
     else
-      render :json => @article.errors, :status => :unprocessable_entity
+      render json: @article.errors, status: :unprocessable_entity
     end
   end
 
@@ -69,8 +69,8 @@ class TicketArticlesController < ApplicationController
     Store.remove_item( params[:store_id] )
 
     # return result
-    render :json => {
-      :success  => true,
+    render json: {
+      success: true,
     }
   end
 
@@ -91,20 +91,20 @@ class TicketArticlesController < ApplicationController
       'Content-Type' => content_type
     }
     store = Store.add(
-      :object      => 'UploadCache',
-      :o_id        => params[:form_id],
-      :data        => file.read,
-      :filename    => file.original_filename,
-      :preferences => headers_store
+      object: 'UploadCache',
+      o_id: params[:form_id],
+      data: file.read,
+      filename: file.original_filename,
+      preferences: headers_store
     )
 
     # return result
-    render :json => {
-      :success  => true,
-      :data     => {
-        :store_id => store.id,
-        :filename => file.original_filename,
-        :size     => store.size,
+    render json: {
+      success: true,
+      data: {
+        store_id: store.id,
+        filename: file.original_filename,
+        size: store.size,
       }
     }
   end
@@ -115,12 +115,12 @@ class TicketArticlesController < ApplicationController
     # permissin check
     ticket = Ticket.find( params[:ticket_id] )
     if !ticket_permission(ticket)
-      render( :json => 'No such ticket.', :status => :unauthorized )
+      render( json: 'No such ticket.', status: :unauthorized )
       return
     end
     article = Ticket::Article.find( params[:article_id] )
     if ticket.id != article.ticket_id
-      render( :json => 'No access, article_id/ticket_id is not matching.', :status => :unauthorized )
+      render( json: 'No access, article_id/ticket_id is not matching.', status: :unauthorized )
       return
     end
 
@@ -132,7 +132,7 @@ class TicketArticlesController < ApplicationController
       end
     }
     if !access
-      render( :json => 'Requested file id is not linked with article_id.', :status => :unauthorized )
+      render( json: 'Requested file id is not linked with article_id.', status: :unauthorized )
       return
     end
 
@@ -140,9 +140,9 @@ class TicketArticlesController < ApplicationController
     file = Store.find(params[:id])
     send_data(
       file.content,
-      :filename    => file.filename,
-      :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
-      :disposition => 'inline'
+      filename: file.filename,
+      type: file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+      disposition: 'inline'
     )
   end
 
@@ -154,8 +154,8 @@ class TicketArticlesController < ApplicationController
     return if !ticket_permission( article.ticket )
 
     list = Store.list(
-      :object => 'Ticket::Article::Mail',
-      :o_id   => params[:id],
+      object: 'Ticket::Article::Mail',
+      o_id: params[:id],
     )
 
     # find file
@@ -163,9 +163,9 @@ class TicketArticlesController < ApplicationController
       file = Store.find(list.first)
       send_data(
         file.content,
-        :filename    => file.filename,
-        :type        => 'message/rfc822',
-        :disposition => 'inline'
+        filename: file.filename,
+        type: 'message/rfc822',
+        disposition: 'inline'
       )
     end
   end

@@ -8,7 +8,7 @@ module Auth::Ldap
     scope = Net::LDAP::SearchScope_WholeSubtree
 
     # ldap connect
-    ldap = Net::LDAP.new( :host => config[:host], :port => config[:port] )
+    ldap = Net::LDAP.new( host: config[:host], port: config[:port] )
 
     # set auth data if needed
     if config[:bind_dn] && config[:bind_pw]
@@ -33,7 +33,7 @@ module Auth::Ldap
     end
     user_dn = nil
     user_data = {}
-    ldap.search( :base => config[:base], :filter => filter, :scope => scope ) do |entry|
+    ldap.search( base: config[:base], filter: filter, scope: scope ) do |entry|
       user_data = {}
       user_dn = entry.dn
 
@@ -61,8 +61,8 @@ module Auth::Ldap
     # create/update user
     if config[:sync_params]
       user_attributes = {
-        :source        => 'ldap',
-        :updated_by_id => 1,
+        source: 'ldap',
+        updated_by_id: 1,
       }
       config[:sync_params].each {| local_data, ldap_data |
         if user_data[ ldap_data.downcase.to_sym ]
@@ -92,7 +92,7 @@ module Auth::Ldap
     if config[:always_roles]
       role_ids = user.role_ids
       config[:always_roles].each {|role_name|
-        role = Role.where( :name => role_name ).first
+        role = Role.where( name: role_name ).first
         next if !role
         if !role_ids.include?( role.id )
           role_ids.push role.id
@@ -106,7 +106,7 @@ module Auth::Ldap
     if config[:always_groups]
       group_ids = user.group_ids
       config[:always_groups].each {|group_name|
-        group = Group.where( :name => group_name ).first
+        group = Group.where( name: group_name ).first
         next if !group
         if !group_ids.include?( group.id )
           group_ids.push group.id

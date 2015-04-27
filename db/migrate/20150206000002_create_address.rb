@@ -1,6 +1,6 @@
 class CreateAddress < ActiveRecord::Migration
   def up
-    add_column :users, :address,  :string,  :limit => 500, :null => true
+    add_column :users, :address,  :string,  limit: 500, null: true
 
     User.all.each {|user|
       address = ''
@@ -21,8 +21,8 @@ class CreateAddress < ActiveRecord::Migration
 
     ['street', 'zip', 'city', 'department'].each {|attribute_name|
       attribute = ObjectManager::Attribute.get(
-        :object => 'User',
-        :name   => attribute_name,
+        object: 'User',
+        name: attribute_name,
       )
       if attribute
         attribute.active = false
@@ -31,36 +31,36 @@ class CreateAddress < ActiveRecord::Migration
     }
 
     ObjectManager::Attribute.add(
-      :object      => 'User',
-      :name        => 'address',
-      :display     => 'Address',
-      :data_type   => 'textarea',
-      :data_option => {
-        :type       => 'text',
-        :maxlength  => 500,
-        :null       => true,
-        :item_class => 'formGroup--halfSize',
+      object: 'User',
+      name: 'address',
+      display: 'Address',
+      data_type: 'textarea',
+      data_option: {
+        type: 'text',
+        maxlength: 500,
+        null: true,
+        item_class: 'formGroup--halfSize',
       },
-      :editable => false,
-      :active   => true,
-      :screens  => {
-        :signup       => {},
-        :invite_agent => {},
-        :edit         => {
+      editable: false,
+      active: true,
+      screens: {
+        signup: {},
+        invite_agent: {},
+        edit: {
           '-all-' => {
-            :null => true,
+            null: true,
           },
         },
-        :view => {
+        view: {
           '-all-' => {
-            :shown => true,
+            shown: true,
           },
         },
       },
-      :pending_migration => false,
-      :position          => 1350,
-      :created_by_id     => 1,
-      :updated_by_id     => 1,
+      pending_migration: false,
+      position: 1350,
+      created_by_id: 1,
+      updated_by_id: 1,
     )
 
   end

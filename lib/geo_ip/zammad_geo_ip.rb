@@ -19,9 +19,9 @@ class GeoIp::ZammadGeoIp
         "#{host}#{url}",
         {},
         {
-          :json         => true,
-          :open_timeout => 2,
-          :read_timeout => 4,
+          json: true,
+          open_timeout: 2,
+          read_timeout: 4,
         },
       )
       if !response.success? && response.code.to_s !~ /^40.$/
@@ -35,10 +35,10 @@ class GeoIp::ZammadGeoIp
         data['country_code'] = data['country_code2']
       end
 
-      Cache.write( cache_key, data, { :expires_in => 90.days } )
+      Cache.write( cache_key, data, { expires_in: 90.days } )
     rescue => e
       puts "ERROR: #{host}#{url}: " + e.inspect
-      Cache.write( cache_key, data, { :expires_in => 60.minutes } )
+      Cache.write( cache_key, data, { expires_in: 60.minutes } )
     end
     data
   end

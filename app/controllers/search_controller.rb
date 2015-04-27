@@ -30,40 +30,40 @@ class SearchController < ApplicationController
     else
       # do query
       users = User.search(
-        :query        => query,
-        :limit        => limit,
-        :current_user => current_user,
+        query: query,
+        limit: limit,
+        current_user: current_user,
       )
       user_result = []
       users.each do |user|
         item = {
-          :id   => user.id,
-          :type => user.class.to_s
+          id: user.id,
+          type: user.class.to_s
         }
         result.push item
         assets = user.assets(assets)
       end
 
       organizations = Organization.search(
-        :query        => query,
-        :limit        => limit,
-        :current_user => current_user,
+        query: query,
+        limit: limit,
+        current_user: current_user,
       )
 
       organization_result = []
       organizations.each do |organization|
         item = {
-          :id   => organization.id,
-          :type => organization.class.to_s
+          id: organization.id,
+          type: organization.class.to_s
         }
         result.push item
         assets = organization.assets(assets)
       end
     end
 
-    render :json => {
-      :assets => assets,
-      :result => result,
+    render json: {
+      assets: assets,
+      result: result,
     }
   end
 
@@ -72,9 +72,9 @@ class SearchController < ApplicationController
 
     # build result list
     tickets = Ticket.search(
-      :limit        => params[:limit],
-      :query        => params[:term],
-      :current_user => current_user,
+      limit: params[:limit],
+      query: params[:term],
+      current_user: current_user,
     )
     assets = {}
     ticket_result = []
@@ -85,9 +85,9 @@ class SearchController < ApplicationController
 
     # do query
     users = User.search(
-      :query        => params[:term],
-      :limit        => params[:limit],
-      :current_user => current_user,
+      query: params[:term],
+      limit: params[:limit],
+      current_user: current_user,
     )
     user_result = []
     users.each do |user|
@@ -96,9 +96,9 @@ class SearchController < ApplicationController
     end
 
     organizations = Organization.search(
-      :query        => params[:term],
-      :limit        => params[:limit],
-      :current_user => current_user,
+      query: params[:term],
+      limit: params[:limit],
+      current_user: current_user,
     )
 
     organization_result = []
@@ -110,30 +110,30 @@ class SearchController < ApplicationController
     result = []
     if ticket_result[0]
       data = {
-        :name => 'Ticket',
-        :ids  => ticket_result,
+        name: 'Ticket',
+        ids: ticket_result,
       }
       result.push data
     end
     if user_result[0]
       data = {
-        :name => 'User',
-        :ids  => user_result,
+        name: 'User',
+        ids: user_result,
       }
       result.push data
     end
     if organization_result[0]
       data = {
-        :name => 'Organization',
-        :ids  => organization_result,
+        name: 'Organization',
+        ids: organization_result,
       }
       result.push data
     end
 
     # return result
-    render :json => {
-      :assets => assets,
-      :result => result,
+    render json: {
+      assets: assets,
+      result: result,
     }
   end
 

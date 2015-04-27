@@ -73,8 +73,8 @@ returns
       end
     }
     return {
-      :history => list,
-      :assets  => assets,
+      history: list,
+      assets: assets,
     }
   end
 

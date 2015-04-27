@@ -12,16 +12,16 @@ class Sessions::Backend::TicketOverviewList
 
     # get whole collection
     overviews = Ticket::Overviews.all(
-      :current_user => @user,
+      current_user: @user,
     )
     result = []
     overviews.each { |overview|
       overview_data = Ticket::Overviews.list(
-        :view         => overview.link,
-        :current_user => @user,
-        :array        => true,
+        view: overview.link,
+        current_user: @user,
+        array: true,
       )
-      data = { :list => overview_data, :index => overview }
+      data = { list: overview_data, index: overview }
       result.push data
     }
 
@@ -47,7 +47,7 @@ class Sessions::Backend::TicketOverviewList
     return if Sessions::CacheIn.get( self.client_key )
 
     # reset check interval
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
@@ -73,7 +73,7 @@ class Sessions::Backend::TicketOverviewList
 
       # get groups
       group_ids = []
-      Group.where( :active => true ).each { |group|
+      Group.where( active: true ).each { |group|
         group_ids.push group.id
       }
       agents = {}
@@ -97,8 +97,8 @@ class Sessions::Backend::TicketOverviewList
 
       if !@client
         result = {
-          :event  => 'navupdate_ticket_overview',
-          :data   => item[:index],
+          event: 'navupdate_ticket_overview',
+          data: item[:index],
         }
         results.push result
       else
@@ -107,21 +107,21 @@ class Sessions::Backend::TicketOverviewList
 
         # send update to browser
         @client.send({
-          :data   => assets,
-          :event  => [ 'loadAssets' ]
+          data: assets,
+          event: [ 'loadAssets' ]
         })
         @client.send({
-          :data   => {
-            :view          => item[:index].link.to_s,
-            :overview      => overview_data[:overview],
-            :ticket_ids    => overview_data[:ticket_ids],
-            :tickets_count => overview_data[:tickets_count],
-            :bulk          => {
-              :group_id__owner_id => groups_users,
-              :owner_id           => [],
+          data: {
+            view: item[:index].link.to_s,
+            overview: overview_data[:overview],
+            ticket_ids: overview_data[:ticket_ids],
+            tickets_count: overview_data[:tickets_count],
+            bulk: {
+              group_id__owner_id: groups_users,
+              owner_id: [],
             },
           },
-          :event => [ 'ticket_overview_rebuild' ],
+          event: [ 'ticket_overview_rebuild' ],
         })
       end
     }

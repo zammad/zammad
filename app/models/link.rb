@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Link < ApplicationModel
-  belongs_to :link_type,    :class_name => 'Link::Type'
-  belongs_to :link_object,  :class_name => 'Link::Object'
+  belongs_to :link_type,    class_name: 'Link::Type'
+  belongs_to :link_object,  class_name: 'Link::Object'
 
   @map = {
     'normal' => 'normal',
@@ -20,7 +20,7 @@ class Link < ApplicationModel
 =end
 
   def self.list(data)
-    linkobject = self.link_object_get( :name => data[:link_object] )
+    linkobject = self.link_object_get( name: data[:link_object] )
     return if !linkobject
     items = []
 
@@ -75,19 +75,19 @@ class Link < ApplicationModel
   def self.add(data)
 
     if data.has_key?(:link_type)
-      linktype = self.link_type_get( :name => data[:link_type] )
+      linktype = self.link_type_get( name: data[:link_type] )
       data[:link_type_id] = linktype.id
       data.delete( :link_type )
     end
 
     if data.has_key?(:link_object_source)
-      linkobject = self.link_object_get( :name => data[:link_object_source] )
+      linkobject = self.link_object_get( name: data[:link_object_source] )
       data[:link_object_source_id] = linkobject.id
       data.delete( :link_object_source )
     end
 
     if data.has_key?(:link_object_target)
-      linkobject = self.link_object_get( :name => data[:link_object_target] )
+      linkobject = self.link_object_get( name: data[:link_object_target] )
       data[:link_object_target_id] = linkobject.id
       data.delete( :link_object_target )
     end
@@ -109,26 +109,26 @@ class Link < ApplicationModel
 
   def self.remove(data)
     if data.has_key?(:link_object_source)
-      linkobject = self.link_object_get( :name => data[:link_object_source] )
+      linkobject = self.link_object_get( name: data[:link_object_source] )
       data[:link_object_source_id] = linkobject.id
     end
 
     if data.has_key?(:link_object_target)
-      linkobject = self.link_object_get( :name => data[:link_object_target] )
+      linkobject = self.link_object_get( name: data[:link_object_target] )
       data[:link_object_target_id] = linkobject.id
     end
 
     # from one site
     if data.has_key?(:link_type)
-      linktype = self.link_type_get( :name => data[:link_type] )
+      linktype = self.link_type_get( name: data[:link_type] )
       data[:link_type_id] = linktype.id
     end
     links = Link.where(
-      :link_type_id             => data[:link_type_id],
-      :link_object_source_id    => data[:link_object_source_id],
-      :link_object_source_value => data[:link_object_source_value],
-      :link_object_target_id    => data[:link_object_target_id],
-      :link_object_target_value => data[:link_object_target_value]
+      link_type_id: data[:link_type_id],
+      link_object_source_id: data[:link_object_source_id],
+      link_object_source_value: data[:link_object_source_value],
+      link_object_target_id: data[:link_object_target_id],
+      link_object_target_value: data[:link_object_target_value]
     )
     links.each { |link|
       link.destroy
@@ -136,15 +136,15 @@ class Link < ApplicationModel
 
     # from the other site
     if data.has_key?(:link_type)
-      linktype = self.link_type_get( :name => @map[ data[:link_type] ] )
+      linktype = self.link_type_get( name: @map[ data[:link_type] ] )
       data[:link_type_id] = linktype.id
     end
     links = Link.where(
-      :link_type_id             => data[:link_type_id],
-      :link_object_target_id    => data[:link_object_source_id],
-      :link_object_target_value => data[:link_object_source_value],
-      :link_object_source_id    => data[:link_object_target_id],
-      :link_object_source_value => data[:link_object_target_value]
+      link_type_id: data[:link_type_id],
+      link_object_target_id: data[:link_object_source_id],
+      link_object_target_value: data[:link_object_source_value],
+      link_object_source_id: data[:link_object_target_id],
+      link_object_source_value: data[:link_object_target_value]
     )
     links.each { |link|
       link.destroy
@@ -153,20 +153,20 @@ class Link < ApplicationModel
 
   private
   def self.link_type_get(data)
-    linktype = Link::Type.where( :name => data[:name] ).first
+    linktype = Link::Type.where( name: data[:name] ).first
     if !linktype
       linktype = Link::Type.create(
-        :name => data[:name]
+        name: data[:name]
       )
     end
     return linktype
   end
 
   def self.link_object_get(data)
-    linkobject = Link::Object.where( :name => data[:name] ).first
+    linkobject = Link::Object.where( name: data[:name] ).first
     if !linkobject
       linkobject = Link::Object.create(
-        :name => data[:name]
+        name: data[:name]
       )
     end
     return linkobject
@@ -175,9 +175,9 @@ class Link < ApplicationModel
 end
 
 class Link::Type < ApplicationModel
-  validates :name, :presence => true
+  validates :name, presence: true
 end
 
 class Link::Object < ApplicationModel
-  validates :name, :presence => true
+  validates :name, presence: true
 end

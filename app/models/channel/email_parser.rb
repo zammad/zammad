@@ -130,7 +130,7 @@ class Channel::EmailParser
         data[:body] = Encode.conv( mail.text_part.charset, data[:body] )
 
         if !data[:body].valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
         end
 
       # html attachment/body may exists and will be converted to text
@@ -143,7 +143,7 @@ class Channel::EmailParser
           data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
           if !data[:body].force_encoding('UTF-8').valid_encoding?
-            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+            data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
           end
 
         # any other attachments
@@ -165,9 +165,9 @@ class Channel::EmailParser
           headers_store['Charset'] = mail.html_part.charset
         end
         attachment = {
-          :data        => mail.html_part.body.to_s,
-          :filename    => mail.html_part.filename || filename,
-          :preferences => headers_store
+          data: mail.html_part.body.to_s,
+          filename: mail.html_part.filename || filename,
+          preferences: headers_store
         }
         data[:attachments].push attachment
       end
@@ -196,7 +196,7 @@ class Channel::EmailParser
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
         if !data[:body].force_encoding('UTF-8').valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
         end
 
       # html part only, convert ot text and add it as attachment
@@ -209,7 +209,7 @@ class Channel::EmailParser
           data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
           if !data[:body].valid_encoding?
-            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+            data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
           end
 
           # any other attachments
@@ -228,9 +228,9 @@ class Channel::EmailParser
           headers_store['Charset'] = mail.charset
         end
         attachment = {
-          :data        => mail.body.decoded,
-          :filename    => mail.filename || filename,
-          :preferences => headers_store
+          data: mail.body.decoded,
+          filename: mail.filename || filename,
+          preferences: headers_store
         }
         data[:attachments].push attachment
       end
@@ -316,9 +316,9 @@ class Channel::EmailParser
     headers_store.delete('Content-Disposition')
 
     attach = {
-      :data        => file.body.to_s,
-      :filename    => filename,
-      :preferences => headers_store,
+      data: file.body.to_s,
+      filename: filename,
+      preferences: headers_store,
     }
     [attach]
   end
@@ -358,18 +358,18 @@ class Channel::EmailParser
 
       # create sender
       if mail[ 'x-zammad-customer-login'.to_sym ]
-        user = User.where( :login => mail[ 'x-zammad-customer-login'.to_sym ] ).first
+        user = User.where( login: mail[ 'x-zammad-customer-login'.to_sym ] ).first
       end
       if !user
-        user = User.where( :email => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] ).first
+        user = User.where( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] ).first
       end
       if !user
         puts 'create user...'
         user = user_create(
-          :login     => mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          :firstname => mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-          :lastname  => mail[ 'x-zammad-customer-lastname'.to_sym ],
-          :email     => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+          login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+          firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
+          lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
+          email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
         )
       end
 
@@ -379,9 +379,9 @@ class Channel::EmailParser
           items = mail[item.to_sym].tree
           items.addresses.each {|item|
             user_create(
-              :firstname => item.display_name,
-              :lastname  => '',
-              :email     => item.address,
+              firstname: item.display_name,
+              lastname: '',
+              email: item.address,
             )
           }
         end
@@ -404,7 +404,7 @@ class Channel::EmailParser
         end
 
         if state_type.name != 'new'
-          ticket.state = Ticket::State.where( :name => 'open' ).first
+          ticket.state = Ticket::State.where( name: 'open' ).first
           ticket.save
         end
       end
@@ -414,11 +414,11 @@ class Channel::EmailParser
 
         # set attributes
         ticket = Ticket.new(
-          :group_id           => channel[:group_id] || 1,
-          :customer_id        => user.id,
-          :title              => mail[:subject] || '',
-          :state_id    => Ticket::State.where( :name => 'new' ).first.id,
-          :priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+          group_id: channel[:group_id] || 1,
+          customer_id: user.id,
+          title: mail[:subject] || '',
+          state_id: Ticket::State.where( name: 'new' ).first.id,
+          priority_id: Ticket::Priority.where( name: '2 normal' ).first.id,
         )
 
         set_attributes_by_x_headers( ticket, 'ticket', mail )
@@ -431,16 +431,16 @@ class Channel::EmailParser
 
       # set attributes
       article = Ticket::Article.new(
-        :ticket_id    => ticket.id,
-        :type_id      => Ticket::Article::Type.where( :name => 'email' ).first.id,
-        :sender_id    => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-        :body         => mail[:body],
-        :from         => mail[:from],
-        :to           => mail[:to],
-        :cc           => mail[:cc],
-        :subject      => mail[:subject],
-        :message_id   => mail[:message_id],
-        :internal     => false,
+        ticket_id: ticket.id,
+        type_id: Ticket::Article::Type.where( name: 'email' ).first.id,
+        sender_id: Ticket::Article::Sender.where( name: 'Customer' ).first.id,
+        body: mail[:body],
+        from: mail[:from],
+        to: mail[:to],
+        cc: mail[:cc],
+        subject: mail[:subject],
+        message_id: mail[:message_id],
+        internal: false,
       )
 
       # x-headers lookup
@@ -451,22 +451,22 @@ class Channel::EmailParser
 
       # store mail plain
       Store.add(
-        :object      => 'Ticket::Article::Mail',
-        :o_id        => article.id,
-        :data        => msg,
-        :filename    => "ticket-#{ticket.number}-#{article.id}.eml",
-        :preferences => {}
+        object: 'Ticket::Article::Mail',
+        o_id: article.id,
+        data: msg,
+        filename: "ticket-#{ticket.number}-#{article.id}.eml",
+        preferences: {}
       )
 
       # store attachments
       if mail[:attachments]
         mail[:attachments].each do |attachment|
           Store.add(
-            :object      => 'Ticket::Article',
-            :o_id        => article.id,
-            :data        => attachment[:data],
-            :filename    => attachment[:filename],
-            :preferences => attachment[:preferences]
+            object: 'Ticket::Article',
+            o_id: article.id,
+            data: attachment[:data],
+            filename: attachment[:filename],
+            preferences: attachment[:preferences]
           )
         end
       end
@@ -497,11 +497,11 @@ class Channel::EmailParser
   def user_create(data)
 
     # return existing
-    user = User.where( :login => data[:email].downcase ).first
+    user = User.where( login: data[:email].downcase ).first
     return user if user
 
     # create new user
-    roles = Role.where( :name => 'Customer' )
+    roles = Role.where( name: 'Customer' )
 
     # fillup
     ['firstname', 'lastname'].each { |item|
@@ -517,8 +517,8 @@ class Channel::EmailParser
 
     user = User.create(data)
     user.update_attributes(
-      :updated_by_id => user.id,
-      :created_by_id => user.id,
+      updated_by_id: user.id,
+      created_by_id: user.id,
     )
     user
   end
@@ -547,12 +547,12 @@ class Channel::EmailParser
               item = assoc.class_name.constantize
 
               if item.respond_to?(:name)
-                if item.lookup( :name => mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( :name => mail[ header.to_sym ] ).id
+                if item.lookup( name: mail[ header.to_sym ] )
+                  item_object[key] = item.lookup( name: mail[ header.to_sym ] ).id
                 end
               elsif item.respond_to?(:login)
-                if item.lookup( :login => mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( :login => mail[ header.to_sym ] ).id
+                if item.lookup( login: mail[ header.to_sym ] )
+                  item_object[key] = item.lookup( login: mail[ header.to_sym ] ).id
                 end
               end
             end

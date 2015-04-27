@@ -43,9 +43,9 @@ class OtrsImportTest < ActiveSupport::TestCase
 
   # check imported users and permission
   test 'check users' do
-    role_admin    = Role.where( :name => 'Admin' ).first
-    role_agent    = Role.where( :name => 'Agent' ).first
-    role_customer = Role.where( :name => 'Customer' ).first
+    role_admin    = Role.where( name: 'Admin' ).first
+    role_agent    = Role.where( name: 'Agent' ).first
+    role_customer = Role.where( name: 'Customer' ).first
     #role_report   = Role.where( :name => 'Report' ).first
 
     user1 = User.find(2)
@@ -61,8 +61,8 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert( !user1.roles.include?( role_customer ) )
     #assert( !user1.roles.include?( role_report ) )
 
-    group_dasa = Group.where( :name => 'dasa' ).first
-    group_raw  = Group.where( :name => 'Raw' ).first
+    group_dasa = Group.where( name: 'dasa' ).first
+    group_raw  = Group.where( name: 'Raw' ).first
 
     assert( !user1.groups.include?( group_dasa ) )
     assert( user1.groups.include?( group_raw ) )
@@ -143,7 +143,7 @@ class OtrsImportTest < ActiveSupport::TestCase
 
   # check imported customers and organization relation
   test 'check customers / organizations' do
-    user1 = User.where( :login => 'jn' ).first
+    user1 = User.where( login: 'jn' ).first
     assert_equal( 'Johannes', user1.firstname )
     assert_equal( 'Nickel', user1.lastname )
     assert_equal( 'jn', user1.login )
@@ -152,7 +152,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'Znuny GmbH Berlin', organization1.name )
     assert_equal( 'äöüß', organization1.note )
 
-    user2 = User.where( :login => 'test90133' ).first
+    user2 = User.where( login: 'test90133' ).first
     assert_equal( 'test90133', user2.firstname )
     assert_equal( 'test90133', user2.lastname )
     assert_equal( 'test90133', user2.login )

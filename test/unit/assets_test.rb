@@ -4,54 +4,54 @@ require 'test_helper'
 class AssetsTest < ActiveSupport::TestCase
   test 'user' do
 
-    roles  = Role.where( :name => [ 'Agent', 'Admin'] )
+    roles  = Role.where( name: [ 'Agent', 'Admin'] )
     groups = Group.all
     org    = Organization.create_or_update(
-      :name => 'some org',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      name: 'some org',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
 
     user1 = User.create_or_update(
-      :login            => 'assets1@example.org',
-      :firstname        => 'assets1',
-      :lastname         => 'assets1',
-      :email            => 'assets1@example.org',
-      :password         => 'some_pass',
-      :active           => true,
-      :updated_by_id    => 1,
-      :created_by_id    => 1,
-      :organization_id  => org.id,
-      :roles            => roles,
-      :groups           => groups,
+      login: 'assets1@example.org',
+      firstname: 'assets1',
+      lastname: 'assets1',
+      email: 'assets1@example.org',
+      password: 'some_pass',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+      organization_id: org.id,
+      roles: roles,
+      groups: groups,
     )
     user1.save
 
     user2 = User.create_or_update(
-      :login         => 'assets2@example.org',
-      :firstname     => 'assets2',
-      :lastname      => 'assets2',
-      :email         => 'assets2@example.org',
-      :password      => 'some_pass',
-      :active        => true,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-      :roles         => roles,
-      :groups        => groups,
+      login: 'assets2@example.org',
+      firstname: 'assets2',
+      lastname: 'assets2',
+      email: 'assets2@example.org',
+      password: 'some_pass',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+      roles: roles,
+      groups: groups,
     )
     user2.save
 
     user3 = User.create_or_update(
-      :login         => 'assets3@example.org',
-      :firstname     => 'assets3',
-      :lastname      => 'assets3',
-      :email         => 'assets3@example.org',
-      :password      => 'some_pass',
-      :active        => true,
-      :updated_by_id => user1.id,
-      :created_by_id => user2.id,
-      :roles         => roles,
-      :groups        => groups,
+      login: 'assets3@example.org',
+      firstname: 'assets3',
+      lastname: 'assets3',
+      email: 'assets3@example.org',
+      password: 'some_pass',
+      active: true,
+      updated_by_id: user1.id,
+      created_by_id: user2.id,
+      roles: roles,
+      groups: groups,
     )
     user3.save
     assets = user3.assets({})

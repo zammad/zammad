@@ -15,9 +15,9 @@ class AgentTicketActionLevel5Test < TestCase
 
     @browser = browser_instance
     login(
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
     )
     tasks_close_all()
 
@@ -27,41 +27,41 @@ class AgentTicketActionLevel5Test < TestCase
 
     # create signatures
     signature_create(
-      :data => {
-        :name    => signature_name1,
-        :body    => signature_body1,
+      data: {
+        name: signature_name1,
+        body: signature_body1,
       },
     )
     signature_create(
-      :data => {
-        :name    => signature_name2,
-        :body    => signature_body2,
+      data: {
+        name: signature_name2,
+        body: signature_body2,
       },
     )
 
     # create groups
     group_create(
-      :data => {
-        :name      => group_name1,
-        :signature => signature_name1,
-        :member    => [
+      data: {
+        name: group_name1,
+        signature: signature_name1,
+        member: [
           'master@example.com'
         ],
       }
     )
     group_create(
-      :data => {
-        :name      => group_name2,
-        :signature => signature_name2,
-        :member    => [
+      data: {
+        name: group_name2,
+        signature: signature_name2,
+        member: [
           'master@example.com'
         ],
       }
     )
     group_create(
-      :data => {
-        :name   => group_name3,
-        :member => [
+      data: {
+        name: group_name3,
+        member: [
           'master@example.com'
         ],
       }
@@ -76,188 +76,188 @@ class AgentTicketActionLevel5Test < TestCase
 
     # create ticket
     ticket_create(
-      :data => {
-        :customer => 'nicole',
-        :group    => 'Users',
-        :title    => 'some subject 5 - 123äöü',
-        :body     => 'some body 5 - 123äöü',
+      data: {
+        customer: 'nicole',
+        group: 'Users',
+        title: 'some subject 5 - 123äöü',
+        body: 'some body 5 - 123äöü',
       },
-      :do_not_submit => true,
+      do_not_submit: true,
     )
 
     # select group
     select(
-      :css   => '.active [name="group_id"]',
-      :value => group_name1,
+      css: '.active [name="group_id"]',
+      value: group_name1,
     )
 
     # check content
     match(
-      :css   => '.active [data-name="body"]',
-      :value => 'some body 5',
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
     )
 
     # check signature
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
 
     # select create channel
     click(
-      :css => '.active [data-type="email-out"]',
+      css: '.active [data-type="email-out"]',
     )
 
     # group 1 is still selected
 
     # check content
     match(
-      :css   => '.active [data-name="body"]',
-      :value => 'some body 5',
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
     )
 
     # check signature
     match(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
 
     # select group
     select(
-      :css   => '.active [name="group_id"]',
-      :value => group_name2,
+      css: '.active [name="group_id"]',
+      value: group_name2,
     )
 
     # check content
     match(
-      :css   => '.active [data-name="body"]',
-      :value => 'some body 5',
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
     )
 
     # check signature
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
     # select group
     select(
-      :css   => '.active [name="group_id"]',
-      :value => group_name3,
+      css: '.active [name="group_id"]',
+      value: group_name3,
     )
 
     # check content
     match(
-      :css   => '.active [data-name="body"]',
-      :value => 'some body 5',
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
     )
 
     # check signature
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
     # select group
     select(
-      :css   => '.active [name="group_id"]',
-      :value => group_name1,
+      css: '.active [name="group_id"]',
+      value: group_name1,
     )
 
     # check content
     match(
-      :css   => '.active [data-name="body"]',
-      :value => 'some body 5',
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
     )
 
     # check signature
     match(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
     # select create channel
     click(
-      :css => '.active [data-type="phone-out"]',
+      css: '.active [data-type="phone-out"]',
     )
 
     # check content
     match(
-      :css   => '.active [data-name="body"]',
-      :value => 'some body 5',
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
     )
 
     # check signature
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
     #
     # check signature in zoom ticket
     #
     ticket_create(
-      :data => {
-        :customer => 'nicole',
-        :group    => group_name1,
-        :title    => 'some subject 5/2 - 123äöü',
-        :body     => 'some body 5/2 - 123äöü',
+      data: {
+        customer: 'nicole',
+        group: group_name1,
+        title: 'some subject 5/2 - 123äöü',
+        body: 'some body 5/2 - 123äöü',
       },
     )
 
     # execute reply
     click(
-      :css => '.active [data-type="reply"]',
+      css: '.active [data-type="reply"]',
     )
 
     # check if signature exists
     match(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
 =begin
@@ -282,20 +282,20 @@ class AgentTicketActionLevel5Test < TestCase
 
     # discard changes
     click(
-      :css => '.active .js-reset',
+      css: '.active .js-reset',
     )
     sleep 3
 
     # check if signature exists
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
 
   end

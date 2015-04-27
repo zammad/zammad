@@ -20,9 +20,9 @@ returns
 
     # default ignored attributes
     ignore_attributes = {
-      :created_by_id            => true,
-      :updated_by_id            => true,
-      :active                   => true,
+      created_by_id: true,
+      updated_by_id: true,
+      active: true,
     }
     if self.class.search_index_support_config[:ignore_attributes]
       self.class.search_index_support_config[:ignore_attributes].each {|key, value|
@@ -123,7 +123,7 @@ returns
       next if !relation_class
 
       # lookup ref object
-      relation_model = relation_class.lookup( :id => value )
+      relation_model = relation_class.lookup( id: value )
       next if !relation_model
 
       # get name of ref object

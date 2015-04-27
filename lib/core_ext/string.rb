@@ -12,7 +12,7 @@ class String
     unless args.blank?
       options[:line_width] = args[0] || 82
     end
-    options.reverse_merge!(:line_width => 82)
+    options.reverse_merge!(line_width: 82)
 
     lines = self
     lines.split("\n").collect do |line|

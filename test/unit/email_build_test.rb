@@ -36,11 +36,11 @@ class EmailBuildTest < ActiveSupport::TestCase
   </body>
 </html>'
     mail = Channel::EmailBuild.build(
-      :from         => 'sender@example.com',
-      :to           => 'recipient@example.com',
-      :body         => html,
-      :content_type => 'text/html',
-      :attachments  => [
+      from: 'sender@example.com',
+      to: 'recipient@example.com',
+      body: html,
+      content_type: 'text/html',
+      attachments: [
         {
           'Mime-Type'    => 'image/png',
           :content      => 'xxx',
@@ -91,10 +91,10 @@ class EmailBuildTest < ActiveSupport::TestCase
 > Thank you for installing Zammad. äöüß
 >'
     mail = Channel::EmailBuild.build(
-      :from         => 'sender@example.com',
-      :to           => 'recipient@example.com',
-      :body         => text,
-      :attachments  => [
+      from: 'sender@example.com',
+      to: 'recipient@example.com',
+      body: text,
+      attachments: [
         {
           'Mime-Type'    => 'image/png',
           :content      => 'xxx',
@@ -140,9 +140,9 @@ class EmailBuildTest < ActiveSupport::TestCase
 > Thank you for installing Zammad. äöüß
 >'
     mail = Channel::EmailBuild.build(
-      :from         => 'sender@example.com',
-      :to           => 'recipient@example.com',
-      :body         => text,
+      from: 'sender@example.com',
+      to: 'recipient@example.com',
+      body: text,
     )
 
     should = '> Welcome!

@@ -57,13 +57,13 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
       hours_to_shift = (time_diff / 3600 ).round
       move_items = {
-        :Mon => [],
-        :Tue => [],
-        :Wed => [],
-        :Thu => [],
-        :Fri => [],
-        :Sat => [],
-        :Sun => [],
+        Mon: [],
+        Tue: [],
+        Wed: [],
+        Thu: [],
+        Fri: [],
+        Sat: [],
+        Sun: [],
       }
       (1..hours_to_shift).each {|count|
         working_hours.each {|day, value|

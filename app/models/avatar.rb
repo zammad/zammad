@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Avatar < ApplicationModel
-  belongs_to :object_lookup,   :class_name => 'ObjectLookup'
+  belongs_to :object_lookup,   class_name: 'ObjectLookup'
 
 =begin
 
@@ -31,13 +31,13 @@ add an avatar based on auto detection (email address)
     puts "#{data[:url]}: #{url}"
 
     Avatar.add(
-      :object           => data[:object],
-      :o_id             => data[:o_id],
-      :url              => url,
-      :source           => 'gravatar.com',
-      :deletable        => false,
-      :updated_by_id    => 1,
-      :created_by_id    => 1,
+      object: data[:object],
+      o_id: data[:o_id],
+      url: url,
+      source: 'gravatar.com',
+      deletable: false,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
   end
 
@@ -75,24 +75,24 @@ add a avatar
     add_init_avatar(object_id, data[:o_id])
 
     record = {
-      :o_id             => data[:o_id],
-      :object_lookup_id => object_id,
-      :default          => true,
-      :deletable        => data[:deletable],
-      :initial          => false,
-      :source           => data[:source],
-      :source_url       => data[:url],
-      :updated_by_id    => data[:updated_by_id],
-      :created_by_id    => data[:created_by_id],
+      o_id: data[:o_id],
+      object_lookup_id: object_id,
+      default: true,
+      deletable: data[:deletable],
+      initial: false,
+      source: data[:source],
+      source_url: data[:url],
+      updated_by_id: data[:updated_by_id],
+      created_by_id: data[:created_by_id],
     }
 
     # check if avatar with url already exists
     avatar_already_exists = nil
     if data[:source] && !data[:source].empty?
       avatar_already_exists = Avatar.where(
-        :object_lookup_id => object_id,
-        :o_id             => data[:o_id],
-        :source           => data[:source],
+        object_lookup_id: object_id,
+        o_id: data[:o_id],
+        source: data[:source],
       ).first
     end
 
@@ -119,8 +119,8 @@ add a avatar
         data[:url],
         {},
         {
-          :open_timeout => 4,
-          :read_timeout => 6,
+          open_timeout: 4,
+          read_timeout: 6,
         },
       )
       if !response.success?
@@ -159,28 +159,28 @@ add a avatar
     object_name = "Avatar::#{data[:object]}"
     if data[:full]
       store_full = Store.add(
-        :object      => "#{object_name}::Full",
-        :o_id        => data[:o_id],
-        :data        => data[:full][:content],
-        :filename    => 'avatar_full',
-        :preferences => {
+        object: "#{object_name}::Full",
+        o_id: data[:o_id],
+        data: data[:full][:content],
+        filename: 'avatar_full',
+        preferences: {
           'Mime-Type' => data[:full][:mime_type]
         },
-        :created_by_id => data[:created_by_id],
+        created_by_id: data[:created_by_id],
       )
       record[:store_full_id] = store_full.id
       record[:store_hash]    = Digest::MD5.hexdigest( data[:full][:content] )
     end
     if data[:resize]
       store_resize = Store.add(
-        :object      => "#{object_name}::Resize",
-        :o_id        => data[:o_id],
-        :data        => data[:resize][:content],
-        :filename    => 'avatar',
-        :preferences => {
+        object: "#{object_name}::Resize",
+        o_id: data[:o_id],
+        data: data[:resize][:content],
+        filename: 'avatar',
+        preferences: {
           'Mime-Type' => data[:resize][:mime_type]
         },
-        :created_by_id => data[:created_by_id],
+        created_by_id: data[:created_by_id],
       )
       record[:store_resize_id] = store_resize.id
       record[:store_hash]      = Digest::MD5.hexdigest( data[:resize][:content] )
@@ -211,9 +211,9 @@ set avatars as default
   def self.set_default( object_name, o_id, avatar_id )
     object_id = ObjectLookup.by_name( object_name )
     avatar = Avatar.where(
-      :object_lookup_id => object_id,
-      :o_id             => o_id,
-      :id               => avatar_id,
+      object_lookup_id: object_id,
+      o_id: o_id,
+      id: avatar_id,
     ).first
     avatar.default = true
     avatar.save!
@@ -235,18 +235,18 @@ remove all avatars of an object
   def self.remove( object_name, o_id )
     object_id = ObjectLookup.by_name( object_name )
     Avatar.where(
-      :object_lookup_id => object_id,
-      :o_id             => o_id,
+      object_lookup_id: object_id,
+      o_id: o_id,
     ).destroy_all
 
     object_name_store = "Avatar::#{object_name}"
     Store.remove(
-      :object => "#{object_name_store}::Full",
-      :o_id   => o_id,
+      object: "#{object_name_store}::Full",
+      o_id: o_id,
     )
     Store.remove(
-      :object => "#{object_name_store}::Resize",
-      :o_id   => o_id,
+      object: "#{object_name_store}::Resize",
+      o_id: o_id,
     )
   end
 
@@ -261,9 +261,9 @@ remove one avatars of an object
   def self.remove_one( object_name, o_id, avatar_id )
     object_id = ObjectLookup.by_name( object_name )
     Avatar.where(
-      :object_lookup_id => object_id,
-      :o_id             => o_id,
-      :id               => avatar_id,
+      object_lookup_id: object_id,
+      o_id: o_id,
+      id: avatar_id,
     ).destroy_all
   end
 
@@ -278,8 +278,8 @@ return all avatars of an user
   def self.list(object_name, o_id)
     object_id = ObjectLookup.by_name( object_name )
     avatars = Avatar.where(
-      :object_lookup_id  => object_id,
-      :o_id              => o_id,
+      object_lookup_id: object_id,
+      o_id: o_id,
     ).order( 'initial DESC, deletable ASC, created_at ASC, id DESC' )
 
     # add initial avatar
@@ -311,7 +311,7 @@ returns:
 
   def self.get_by_hash(hash)
     avatar = Avatar.where(
-      :store_hash => hash,
+      store_hash: hash,
     ).first
     return if !avatar
     file = Store.find(avatar.store_resize_id)
@@ -332,9 +332,9 @@ returns:
   def self.get_default(object_name, o_id)
     object_id = ObjectLookup.by_name( object_name )
     Avatar.where(
-      :object_lookup_id => object_id,
-      :o_id             => o_id,
-      :default          => true,
+      object_lookup_id: object_id,
+      o_id: o_id,
+      default: true,
     ).first
   end
 
@@ -342,8 +342,8 @@ returns:
 
     def self.set_default_items(object_id, o_id, avatar_id)
       avatars = Avatar.where(
-        :object_lookup_id  => object_id,
-        :o_id              => o_id,
+        object_lookup_id: object_id,
+        o_id: o_id,
       ).order( 'created_at ASC, id DESC' )
       avatars.each do |avatar|
         next if avatar.id == avatar_id
@@ -355,20 +355,20 @@ returns:
     def self.add_init_avatar(object_id, o_id)
 
       count = Avatar.where(
-        :object_lookup_id  => object_id,
-        :o_id              => o_id,
+        object_lookup_id: object_id,
+        o_id: o_id,
       ).count
       return if count > 0
 
       Avatar.create(
-        :o_id             => o_id,
-        :object_lookup_id => object_id,
-        :default          => true,
-        :source           => 'init',
-        :initial           => true,
-        :deletable        => false,
-        :updated_by_id    => 1,
-        :created_by_id    => 1,
+        o_id: o_id,
+        object_lookup_id: object_id,
+        default: true,
+        source: 'init',
+        initial: true,
+        deletable: false,
+        updated_by_id: 1,
+        created_by_id: 1,
       )
     end
 end

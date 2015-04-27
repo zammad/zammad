@@ -4,7 +4,7 @@ require 'net/imap'
 
 module Channel::EmailSend
   def self.send(attr, notification = false)
-    channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
+    channel = Channel.where( area: 'Email::Outbound', active: true ).first
     begin
       c = eval 'Channel::' + channel[:adapter] + '.new'
       c.send(attr, channel, notification)

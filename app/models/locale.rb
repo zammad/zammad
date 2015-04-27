@@ -9,7 +9,7 @@ class Locale < ApplicationModel
       url,
       {},
       {
-        :json => true,
+        json: true,
       }
     )
 
@@ -17,7 +17,7 @@ class Locale < ApplicationModel
 
     result.data.each {|locale|
       puts locale.inspect
-      exists = Locale.where(:locale => locale['locale']).first
+      exists = Locale.where(locale: locale['locale']).first
       if exists
         exists.update(locale.symbolize_keys!)
       else

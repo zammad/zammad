@@ -52,12 +52,12 @@ curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password}
     organizations = []
     if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role(Z_ROLENAME_AGENT)
       if current_user.organization_id
-        organizations = Organization.where( :id => current_user.organization_id )
+        organizations = Organization.where( id: current_user.organization_id )
       end
     else
       organizations = Organization.all
     end
-    render :json => organizations
+    render json: organizations
   end
 
 =begin
@@ -82,7 +82,7 @@ curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
     # only allow customer to fetch his own organization
     if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role(Z_ROLENAME_AGENT)
       if !current_user.organization_id
-        render :json => {}
+        render json: {}
         return
       end
       if params[:id].to_i != current_user.organization_id
@@ -92,7 +92,7 @@ curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
     end
     if params[:full]
       full = Organization.full( params[:id] )
-      render :json => full
+      render json: full
       return
     end
     model_show_render(Organization, params)
@@ -190,7 +190,7 @@ Test:
     history = organization.history_get(true)
 
     # return result
-    render :json => history
+    render json: history
   end
 
 end

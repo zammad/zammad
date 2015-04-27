@@ -2,6 +2,6 @@
 
 class Template < ApplicationModel
   store           :options
-  validates       :name, :presence => true
+  validates       :name, presence: true
   notify_clients_support
 end

@@ -36,11 +36,11 @@ class Setting < ApplicationModel
   end
 
   def self.set(name, value)
-    setting = Setting.where( :name => name ).first
+    setting = Setting.where( name: name ).first
     if !setting
       raise "Can't find config setting '#{name}'"
     end
-    setting.state = { :value => value }
+    setting.state = { value: value }
     setting.save
     logger.info "Setting.set() name:#{name}, value:#{value.inspect}"
   end
@@ -60,7 +60,7 @@ class Setting < ApplicationModel
   def state_check
     if self.state || self.state == false
       if !self.state.respond_to?('has_key?') || !self.state.has_key?(:value)
-        self.state = { :value => self.state }
+        self.state = { value: self.state }
       end
     end
   end

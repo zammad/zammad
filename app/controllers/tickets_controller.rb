@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
   def index
     @tickets = Ticket.all
 
-    render :json => @tickets
+    render json: @tickets
   end
 
   # GET /api/v1/tickets/1
@@ -17,7 +17,7 @@ class TicketsController < ApplicationController
     # permissin check
     return if !ticket_permission(@ticket)
 
-    render :json => @ticket
+    render json: @ticket
   end
 
   # POST /api/v1/tickets
@@ -26,13 +26,13 @@ class TicketsController < ApplicationController
 
     # check if article is given
     if !params[:article]
-      render :json => 'article hash is missing', :status => :unprocessable_entity
+      render json: 'article hash is missing', status: :unprocessable_entity
       return
     end
 
     # create ticket
     if !ticket.save
-      render :json => ticket.errors, :status => :unprocessable_entity
+      render json: ticket.errors, status: :unprocessable_entity
       return
     end
 
@@ -41,10 +41,10 @@ class TicketsController < ApplicationController
       tags = params[:tags].split /,/
       tags.each {|tag|
         Tag.tag_add(
-          :object        => 'Ticket',
-          :o_id          => ticket.id,
-          :item          => tag,
-          :created_by_id => current_user.id,
+          object: 'Ticket',
+          o_id: ticket.id,
+          item: tag,
+          created_by_id: current_user.id,
         )
       }
     end
@@ -54,7 +54,7 @@ class TicketsController < ApplicationController
       article_create( ticket, params[:article] )
     end
 
-    render :json => ticket, :status => :created
+    render json: ticket, status: :created
   end
 
   # PUT /api/v1/tickets/1
@@ -70,9 +70,9 @@ class TicketsController < ApplicationController
         article_create( ticket, params[:article] )
       end
 
-      render :json => ticket, :status => :ok
+      render json: ticket, status: :ok
     else
-      render :json => ticket.errors, :status => :unprocessable_entity
+      render json: ticket.errors, status: :unprocessable_entity
     end
   end
 
@@ -94,10 +94,10 @@ class TicketsController < ApplicationController
 
     # return result
     result = Ticket::ScreenOptions.list_by_customer(
-      :customer_id => params[:customer_id],
-      :limit       => 15,
+      customer_id: params[:customer_id],
+      limit: 15,
     )
-    render :json => result
+    render json: result
   end
 
   # GET /api/v1/ticket_history/1
@@ -114,7 +114,7 @@ class TicketsController < ApplicationController
 
 
     # return result
-    render :json => history
+    render json: history
   end
 
   # GET /api/v1/ticket_related/1
@@ -130,8 +130,8 @@ class TicketsController < ApplicationController
     map( &:id )
     access_condition = [ 'group_id IN (?)', group_ids ]
     ticket_list = Ticket.where(
-      :customer_id  => ticket.customer_id,
-      :state_id     => Ticket::State.by_category( 'open' )
+      customer_id: ticket.customer_id,
+      state_id: Ticket::State.by_category( 'open' )
 
     )
     .where(access_condition)
@@ -158,10 +158,10 @@ class TicketsController < ApplicationController
     }
 
     # return result
-    render :json => {
-      :assets                   => assets,
-      :ticket_ids_by_customer   => ticket_ids_by_customer,
-      :ticket_ids_recent_viewed => ticket_ids_recent_viewed,
+    render json: {
+      assets: assets,
+      ticket_ids_by_customer: ticket_ids_by_customer,
+      ticket_ids_recent_viewed: ticket_ids_recent_viewed,
     }
   end
 
@@ -169,11 +169,11 @@ class TicketsController < ApplicationController
   def ticket_merge
 
     # check master ticket
-    ticket_master = Ticket.where( :number => params[:master_ticket_number] ).first
+    ticket_master = Ticket.where( number: params[:master_ticket_number] ).first
     if !ticket_master
-      render :json => {
-        :result  => 'faild',
-        :message => 'No such master ticket number!',
+      render json: {
+        result: 'faild',
+        message: 'No such master ticket number!',
       }
       return
     end
@@ -182,11 +182,11 @@ class TicketsController < ApplicationController
     return if !ticket_permission(ticket_master)
 
     # check slave ticket
-    ticket_slave = Ticket.where( :id => params[:slave_ticket_id] ).first
+    ticket_slave = Ticket.where( id: params[:slave_ticket_id] ).first
     if !ticket_slave
-      render :json => {
-        :result  => 'faild',
-        :message => 'No such slave ticket!',
+      render json: {
+        result: 'faild',
+        message: 'No such slave ticket!',
       }
       return
     end
@@ -196,9 +196,9 @@ class TicketsController < ApplicationController
 
     # check diffetent ticket ids
     if ticket_slave.id == ticket_master.id
-      render :json => {
-        :result  => 'faild',
-        :message => 'Can\'t merge ticket with it self!',
+      render json: {
+        result: 'faild',
+        message: 'Can\'t merge ticket with it self!',
       }
       return
     end
@@ -206,16 +206,16 @@ class TicketsController < ApplicationController
     # merge ticket
     success = ticket_slave.merge_to(
       {
-        :ticket_id     => ticket_master.id,
-        :created_by_id => current_user.id,
+        ticket_id: ticket_master.id,
+        created_by_id: current_user.id,
       }
     )
 
     # return result
-    render :json => {
-      :result        => 'success',
-      :master_ticket => ticket_master.attributes,
-      :slave_ticket  => ticket_slave.attributes,
+    render json: {
+      result: 'success',
+      master_ticket: ticket_master.attributes,
+      slave_ticket: ticket_slave.attributes,
     }
   end
 
@@ -227,14 +227,14 @@ class TicketsController < ApplicationController
     return if !ticket_permission( ticket )
 
     # get attributes to update
-    attributes_to_change = Ticket::ScreenOptions.attributes_to_change( :user => current_user, :ticket => ticket )
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change( user: current_user, ticket: ticket )
 
     # get related users
     assets = attributes_to_change[:assets]
     assets = ticket.assets(assets)
 
     # get related articles
-    articles = Ticket::Article.where( :ticket_id => params[:id] )
+    articles = Ticket::Article.where( ticket_id: params[:id] )
 
     # get related users
     article_ids = []
@@ -252,34 +252,34 @@ class TicketsController < ApplicationController
 
     # get links
     links = Link.list(
-      :link_object       => 'Ticket',
-      :link_object_value => ticket.id,
+      link_object: 'Ticket',
+      link_object_value: ticket.id,
     )
     link_list = []
     links.each { |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
-        linked_ticket = Ticket.lookup( :id => item['link_object_value'] )
+        linked_ticket = Ticket.lookup( id: item['link_object_value'] )
         assets = linked_ticket.assets(assets)
       end
     }
 
     # get tags
     tags = Tag.tag_list(
-      :object => 'Ticket',
-      :o_id   => ticket.id,
+      object: 'Ticket',
+      o_id: ticket.id,
     )
 
     # return result
-    render :json => {
-      :ticket_id          => ticket.id,
-      :ticket_article_ids => article_ids,
-      :assets             => assets,
-      :links              => link_list,
-      :tags               => tags,
-      :form_meta          => {
-        :filter       => attributes_to_change[:filter],
-        :dependencies => attributes_to_change[:dependencies],
+    render json: {
+      ticket_id: ticket.id,
+      ticket_article_ids: article_ids,
+      assets: assets,
+      links: link_list,
+      tags: tags,
+      form_meta: {
+        filter: attributes_to_change[:filter],
+        dependencies: attributes_to_change[:dependencies],
       }
     }
   end
@@ -289,9 +289,9 @@ class TicketsController < ApplicationController
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
-      :user       => current_user,
-      :ticket_id  => params[:ticket_id],
-      :article_id => params[:article_id]
+      user: current_user,
+      ticket_id: params[:ticket_id],
+      article_id: params[:article_id]
     )
 
     assets = attributes_to_change[:assets]
@@ -309,12 +309,12 @@ class TicketsController < ApplicationController
     end
 
     # return result
-    render :json => {
-      :split     => split,
-      :assets    => assets,
-      :form_meta => {
-        :filter       => attributes_to_change[:filter],
-        :dependencies => attributes_to_change[:dependencies],
+    render json: {
+      split: split,
+      assets: assets,
+      form_meta: {
+        filter: attributes_to_change[:filter],
+        dependencies: attributes_to_change[:dependencies],
       }
     }
   end
@@ -327,11 +327,11 @@ class TicketsController < ApplicationController
 
     # build result list
     tickets = Ticket.search(
-      :limit        => params[:limit],
-      :query        => params[:term],
-      :condition    => params[:condition],
-      :current_user => current_user,
-      :detail       => params[:detail]
+      limit: params[:limit],
+      query: params[:term],
+      condition: params[:condition],
+      current_user: current_user,
+      detail: params[:detail]
     )
     assets = {}
     ticket_result = []
@@ -341,10 +341,10 @@ class TicketsController < ApplicationController
     end
 
     # return result
-    render :json => {
-      :tickets       => ticket_result,
-      :tickets_count => tickets.count,
-      :assets        => assets,
+    render json: {
+      tickets: ticket_result,
+      tickets_count: tickets.count,
+      assets: assets,
     }
   end
 
@@ -373,11 +373,11 @@ class TicketsController < ApplicationController
         'tickets.customer_id' => user.id,
       }
       user_tickets_open = Ticket.search(
-        :limit        => limit,
+        limit: limit,
         #:query        => params[:term],
-        :condition    => condition,
-        :current_user => current_user,
-        :detail       => true,
+        condition: condition,
+        current_user: current_user,
+        detail: true,
       )
       user_tickets_open_ids = assets_of_tickets(user_tickets_open, assets)
 
@@ -387,11 +387,11 @@ class TicketsController < ApplicationController
         'tickets.customer_id' => user.id,
       }
       user_tickets_closed = Ticket.search(
-        :limit        => limit,
+        limit: limit,
         #:query        => params[:term],
-        :condition    => condition,
-        :current_user => current_user,
-        :detail       => true,
+        condition: condition,
+        current_user: current_user,
+        detail: true,
       )
       user_tickets_closed_ids = assets_of_tickets(user_tickets_closed, assets)
 
@@ -418,11 +418,11 @@ class TicketsController < ApplicationController
           count
 
         data = {
-          :month   => date_to_check.month,
-          :year    => date_to_check.year,
-          :text    => Date::MONTHNAMES[date_to_check.month],
-          :created => created,
-          :closed  => closed,
+          month: date_to_check.month,
+          year: date_to_check.year,
+          text: Date::MONTHNAMES[date_to_check.month],
+          created: created,
+          closed: closed,
         }
         user_ticket_volume_by_year.push data
       }
@@ -440,11 +440,11 @@ class TicketsController < ApplicationController
         'tickets.organization_id' => params[:organization_id],
       }
       org_tickets_open = Ticket.search(
-        :limit        => limit,
+        limit: limit,
         #:query        => params[:term],
-        :condition    => condition,
-        :current_user => current_user,
-        :detail       => true,
+        condition: condition,
+        current_user: current_user,
+        detail: true,
       )
       org_tickets_open_ids = assets_of_tickets(org_tickets_open, assets)
 
@@ -454,11 +454,11 @@ class TicketsController < ApplicationController
         'tickets.organization_id' => params[:organization_id],
       }
       org_tickets_closed = Ticket.search(
-        :limit        => limit,
+        limit: limit,
         #:query        => params[:term],
-        :condition    => condition,
-        :current_user => current_user,
-        :detail       => true,
+        condition: condition,
+        current_user: current_user,
+        detail: true,
       )
       org_tickets_closed_ids = assets_of_tickets(org_tickets_closed, assets)
 
@@ -479,25 +479,25 @@ class TicketsController < ApplicationController
         closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  ).where(condition).count
 
         data = {
-          :month   => date_to_check.month,
-          :year    => date_to_check.year,
-          :text    => Date::MONTHNAMES[date_to_check.month],
-          :created => created,
-          :closed  => closed,
+          month: date_to_check.month,
+          year: date_to_check.year,
+          text: Date::MONTHNAMES[date_to_check.month],
+          created: created,
+          closed: closed,
         }
         org_ticket_volume_by_year.push data
       }
     end
 
     # return result
-    render :json => {
-      :user_tickets_open_ids      => user_tickets_open_ids,
-      :user_tickets_closed_ids    => user_tickets_closed_ids,
-      :org_tickets_open_ids       => org_tickets_open_ids,
-      :org_tickets_closed_ids     => org_tickets_closed_ids,
-      :user_ticket_volume_by_year => user_ticket_volume_by_year,
-      :org_ticket_volume_by_year  => org_ticket_volume_by_year,
-      :assets                     => assets,
+    render json: {
+      user_tickets_open_ids: user_tickets_open_ids,
+      user_tickets_closed_ids: user_tickets_closed_ids,
+      org_tickets_open_ids: org_tickets_open_ids,
+      org_tickets_closed_ids: org_tickets_closed_ids,
+      user_ticket_volume_by_year: user_ticket_volume_by_year,
+      org_ticket_volume_by_year: org_ticket_volume_by_year,
+      assets: assets,
     }
   end
 
@@ -523,20 +523,20 @@ class TicketsController < ApplicationController
     # find attachments in upload cache
     if form_id
       article.attachments = Store.list(
-        :object => 'UploadCache',
-        :o_id   => form_id,
+        object: 'UploadCache',
+        o_id: form_id,
       )
     end
     if !article.save
-      render :json => article.errors, :status => :unprocessable_entity
+      render json: article.errors, status: :unprocessable_entity
       return
     end
 
     # remove attachments from upload cache
     if form_id
       Store.remove(
-        :object => 'UploadCache',
-        :o_id   => form_id,
+        object: 'UploadCache',
+        o_id: form_id,
       )
     end
   end

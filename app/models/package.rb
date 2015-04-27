@@ -55,7 +55,7 @@ class Package < ApplicationModel
       end
     end
     data.each {|file|
-      self.install( :file => path + '/' + file )
+      self.install( file: path + '/' + file )
     }
     data
   end
@@ -186,16 +186,16 @@ class Package < ApplicationModel
 
     # package meta data
     meta = {
-      :name           => package.elements['zpm/name'].text,
-      :version        => package.elements['zpm/version'].text,
-      :vendor         => package.elements['zpm/vendor'].text,
-      :state          => 'uninstalled',
-      :created_by_id  => 1,
-      :updated_by_id  => 1,
+      name: package.elements['zpm/name'].text,
+      version: package.elements['zpm/version'].text,
+      vendor: package.elements['zpm/vendor'].text,
+      state: 'uninstalled',
+      created_by_id: 1,
+      updated_by_id: 1,
     }
 
     # verify if package can get installed
-    package_db = Package.where( :name => meta[:name] ).first
+    package_db = Package.where( name: meta[:name] ).first
     if package_db
       if !data[:reinstall]
         if Gem::Version.new( package_db.version ) == Gem::Version.new( meta[:version] )
@@ -208,9 +208,9 @@ class Package < ApplicationModel
 
       # uninstall files of old package
       self.uninstall({
-        :name               => package_db.name,
-        :version            => package_db.version,
-        :migration_not_down => true,
+        name: package_db.name,
+        version: package_db.version,
+        migration_not_down: true,
       })
     end
 
@@ -218,12 +218,12 @@ class Package < ApplicationModel
     record = Package.create( meta )
     if !data[:reinstall]
       Store.add(
-        :object        => 'Package',
-        :o_id          => record.id,
-        :data          => package.to_s,
-        :filename      => meta[:name] + '-' + meta[:version] + '.zpm',
-        :preferences   => {},
-        :created_by_id => UserInfo.current_user_id || 1,
+        object: 'Package',
+        o_id: record.id,
+        data: package.to_s,
+        filename: meta[:name] + '-' + meta[:version] + '.zpm',
+        preferences: {},
+        created_by_id: UserInfo.current_user_id || 1,
       )
     end
 
@@ -253,13 +253,13 @@ class Package < ApplicationModel
 
   # Package.reinstall( package_name )
   def self.reinstall(package_name)
-    package = Package.where( :name => package_name ).first
+    package = Package.where( name: package_name ).first
     if !package
       raise "No such package '#{package_name}'"
     end
 
     file = self._get_bin( package.name, package.version )
-    self.install( :string => file, :reinstall => true )
+    self.install( string: file, reinstall: true )
   end
 
   # Package.uninstall( :name => 'package', :version => '0.1.1' )
@@ -275,8 +275,8 @@ class Package < ApplicationModel
 
     # package meta data
     meta = {
-      :name           => package.elements['zpm/name'].text,
-      :version        => package.elements['zpm/version'].text,
+      name: package.elements['zpm/name'].text,
+      version: package.elements['zpm/version'].text,
     }
 
     # down migrations
@@ -301,8 +301,8 @@ class Package < ApplicationModel
 
     # delete package
     record = Package.where(
-      :name     => meta[:name],
-      :version  => meta[:version],
+      name: meta[:name],
+      version: meta[:version],
     ).first
     record.destroy
 
@@ -340,15 +340,15 @@ class Package < ApplicationModel
 
   def self._get_bin( name, version )
     package = Package.where(
-      :name     => name,
-      :version  => version,
+      name: name,
+      version: version,
     ).first
     if !package
       raise "No such package '#{name}' version '#{version}'"
     end
     list = Store.list(
-      :object => 'Package',
-      :o_id   => package.id,
+      object: 'Package',
+      o_id: package.id,
     )
 
     # find file
@@ -442,7 +442,7 @@ class Package < ApplicationModel
       location = @@root + '/db/addon/' + package.underscore
 
       return true if !File.exists?( location )
-      migrations_done = Package::Migration.where( :name => package.underscore )
+      migrations_done = Package::Migration.where( name: package.underscore )
 
       # get existing migrations
       migrations_existing = []
@@ -474,26 +474,26 @@ class Package < ApplicationModel
 
         # down
         if direction == 'reverse'
-          done = Package::Migration.where( :name => package.underscore, :version => version ).first
+          done = Package::Migration.where( name: package.underscore, version: version ).first
           next if !done
           logger.info "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).down
-          record = Package::Migration.where( :name => package.underscore, :version => version ).first
+          record = Package::Migration.where( name: package.underscore, version: version ).first
           if record
             record.destroy
           end
 
           # up
         else
-          done = Package::Migration.where( :name => package.underscore, :version => version ).first
+          done = Package::Migration.where( name: package.underscore, version: version ).first
           next if done
           logger.info "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).up
-          Package::Migration.create( :name => package.underscore, :version => version )
+          Package::Migration.create( name: package.underscore, version: version )
         end
 
         # reload new files

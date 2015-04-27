@@ -8,11 +8,11 @@ class TwitterTest < ActiveSupport::TestCase
 
   # needed to check correct behavior
   Group.create_if_not_exists(
-    :id             => 2,
-    :name           => 'Twitter',
-    :note           => 'All Tweets.',
-    :updated_by_id  => 1,
-    :created_by_id  => 1
+    id: 2,
+    name: 'Twitter',
+    note: 'All Tweets.',
+    updated_by_id: 1,
+    created_by_id: 1
   )
 
   # app config
@@ -28,69 +28,69 @@ class TwitterTest < ActiveSupport::TestCase
   user2_token_secret = 'T8ph5afeSDjGDA9X1ZBlzEvoSiXfN266ZZUMj5UaY'
 
   # add channel
-  current = Channel.where( :adapter => 'Twitter2' )
+  current = Channel.where( adapter: 'Twitter2' )
   current.each {|r|
     r.destroy
   }
   Channel.create(
-    :adapter => 'Twitter2',
-    :area    => 'Twitter::Inbound',
-    :options => {
-      :consumer_key       => consumer_key,
-      :consumer_secret    => consumer_secret,
-      :oauth_token        => user1_token,
-      :oauth_token_secret => user1_token_secret,
-      :search             => [
+    adapter: 'Twitter2',
+    area: 'Twitter::Inbound',
+    options: {
+      consumer_key: consumer_key,
+      consumer_secret: consumer_secret,
+      oauth_token: user1_token,
+      oauth_token_secret: user1_token_secret,
+      search: [
         {
-          :item  => '#citheo42',
-          :group => 'Twitter',
+          item: '#citheo42',
+          group: 'Twitter',
         },
         {
-          :item  => '#citheo24',
-          :group => 'Users',
+          item: '#citheo24',
+          group: 'Users',
         },
       ],
-      :mentions => {
-        :group => 'Twitter',
+      mentions: {
+        group: 'Twitter',
       },
-      :direct_messages => {
-        :group => 'Twitter',
+      direct_messages: {
+        group: 'Twitter',
       }
     },
-    :active         => true,
-    :created_by_id  => 1,
-    :updated_by_id  => 1,
+    active: true,
+    created_by_id: 1,
+    updated_by_id: 1,
   )
 
   test 'new outbound and reply' do
 
     user  = User.find(2)
-    group = Group.where( :name => 'Twitter' ).first
-    state = Ticket::State.where( :name => 'new' ).first
-    priority = Ticket::Priority.where( :name => '2 normal' ).first
+    group = Group.where( name: 'Twitter' ).first
+    state = Ticket::State.where( name: 'new' ).first
+    priority = Ticket::Priority.where( name: '2 normal' ).first
     hash  = '#citheo42' + rand(9999).to_s
     text  = 'Today the weather is really nice... ' + hash
     ticket = Ticket.create(
-      :group_id       => group.id,
-      :customer_id    => user.id,
-      :title          => text[0,40],
-      :state_id       => state.id,
-      :priority_id    => priority.id,
-      :updated_by_id  => 1,
-      :created_by_id  => 1,
+      group_id: group.id,
+      customer_id: user.id,
+      title: text[0,40],
+      state_id: state.id,
+      priority_id: priority.id,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'outbound ticket created' )
     article = Ticket::Article.create(
-      :ticket_id      => ticket.id,
-      :type_id        => Ticket::Article::Type.where( :name => 'twitter status' ).first.id,
-      :sender_id      => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
-      :body           => text,
+      ticket_id: ticket.id,
+      type_id: Ticket::Article::Type.where( name: 'twitter status' ).first.id,
+      sender_id: Ticket::Article::Sender.where( name: 'Agent' ).first.id,
+      body: text,
 #      :from          => sender.name,
 #      :to            => to,
 #      :message_id    => tweet.id,
-      :internal       => false,
-      :updated_by_id  => 1,
-      :created_by_id  => 1,
+      internal: false,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( article, 'outbound article created' )
     assert_equal( article.ticket.articles.count, 1 )
@@ -103,7 +103,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = user2_token
       config.access_token_secret = user2_token_secret
     end
-    client.search(hash, :count => 50, :result_type => 'recent').collect do |tweet|
+    client.search(hash, count: 50, result_type: 'recent').collect do |tweet|
       assert_equal( tweet.id, article.message_id )
     end
 
@@ -112,7 +112,7 @@ class TwitterTest < ActiveSupport::TestCase
     tweet = client.update(
       reply_text,
       {
-        :in_reply_to_status_id => article.message_id
+        in_reply_to_status_id: article.message_id
       }
     )
 
@@ -136,19 +136,19 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = user1_token
       config.access_token_secret = user1_token_secret
     end
-    dms = client.direct_messages( :count => 200 )
+    dms = client.direct_messages( count: 200 )
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
 
     # direct message to @armin_theo
     client = Twitter::REST::Client.new(
-      :consumer_key         => consumer_key,
-      :consumer_secret      => consumer_secret,
-      :access_token         => user2_token,
-      :access_token_secret  => user2_token_secret
+      consumer_key: consumer_key,
+      consumer_secret: consumer_secret,
+      access_token: user2_token,
+      access_token_secret: user2_token_secret
     )
-    dms = client.direct_messages( :count => 200 )
+    dms = client.direct_messages( count: 200 )
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
@@ -171,7 +171,7 @@ class TwitterTest < ActiveSupport::TestCase
       Channel.fetch
 
       # check if ticket and article has been created
-      article = Ticket::Article.where( :message_id => dm.id ).last
+      article = Ticket::Article.where( message_id: dm.id ).last
     }
     puts '----------------------------------------'
     puts 'DM: ' + dm.inspect
@@ -189,15 +189,15 @@ class TwitterTest < ActiveSupport::TestCase
 
     # reply via ticket
     outbound_article = Ticket::Article.create(
-      :ticket_id      => ticket.id,
-      :type_id        => Ticket::Article::Type.where( :name => 'twitter direct-message' ).first.id,
-      :sender_id      => Ticket::Article::Sender.where( :name => 'Agent' ).first.id,
-      :body           => text,
+      ticket_id: ticket.id,
+      type_id: Ticket::Article::Type.where( name: 'twitter direct-message' ).first.id,
+      sender_id: Ticket::Article::Sender.where( name: 'Agent' ).first.id,
+      body: text,
 #      :from           => sender.name,
-      :to             => 'me_bauer',
-      :internal       => false,
-      :updated_by_id  => 1,
-      :created_by_id  => 1,
+      to: 'me_bauer',
+      internal: false,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( outbound_article, 'outbound article created' )
     assert_equal( outbound_article.ticket.articles.count, article_count + 1 )

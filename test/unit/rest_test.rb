@@ -11,67 +11,67 @@ class RestTest < ActiveSupport::TestCase
     end
 
     # create agent
-    roles  = Role.where( :name => ['Admin', 'Agent'] )
+    roles  = Role.where( name: ['Admin', 'Agent'] )
     groups = Group.all
 
     UserInfo.current_user_id = 1
     admin = User.create_or_update(
-      :login         => 'rest-admin',
-      :firstname     => 'Rest',
-      :lastname      => 'Agent',
-      :email         => 'rest-admin@example.com',
-      :password      => 'adminpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      login: 'rest-admin',
+      firstname: 'Rest',
+      lastname: 'Agent',
+      email: 'rest-admin@example.com',
+      password: 'adminpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
 
     # create agent
-    roles = Role.where( :name => 'Agent' )
+    roles = Role.where( name: 'Agent' )
     agent = User.create_or_update(
-      :login         => 'rest-agent@example.com',
-      :firstname     => 'Rest',
-      :lastname      => 'Agent',
-      :email         => 'rest-agent@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
+      login: 'rest-agent@example.com',
+      firstname: 'Rest',
+      lastname: 'Agent',
+      email: 'rest-agent@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
 
     # create customer without org
-    roles = Role.where( :name => 'Customer' )
+    roles = Role.where( name: 'Customer' )
     customer_without_org = User.create_or_update(
-      :login         => 'rest-customer1@example.com',
-      :firstname     => 'Rest',
-      :lastname      => 'Customer1',
-      :email         => 'rest-customer1@example.com',
-      :password      => 'customer1pw',
-      :active        => true,
-      :roles         => roles,
+      login: 'rest-customer1@example.com',
+      firstname: 'Rest',
+      lastname: 'Customer1',
+      email: 'rest-customer1@example.com',
+      password: 'customer1pw',
+      active: true,
+      roles: roles,
     )
 
     # create orgs
     organization = Organization.create_or_update(
-      :name => 'Rest Org',
+      name: 'Rest Org',
     )
     organization2 = Organization.create_or_update(
-      :name => 'Rest Org #2',
+      name: 'Rest Org #2',
     )
     organization3 = Organization.create_or_update(
-      :name => 'Rest Org #3',
+      name: 'Rest Org #3',
     )
 
     # create customer with org
     customer_with_org = User.create_or_update(
-      :login           => 'rest-customer2@example.com',
-      :firstname       => 'Rest',
-      :lastname        => 'Customer2',
-      :email           => 'rest-customer2@example.com',
-      :password        => 'customer2pw',
-      :active          => true,
-      :roles           => roles,
-      :organization_id => organization.id,
+      login: 'rest-customer2@example.com',
+      firstname: 'Rest',
+      lastname: 'Customer2',
+      email: 'rest-customer2@example.com',
+      password: 'customer2pw',
+      active: true,
+      roles: roles,
+      organization_id: organization.id,
     )
 
     # not existing user
@@ -233,15 +233,15 @@ class RestTest < ActiveSupport::TestCase
       "#{ENV['BROWSER_URL']}#{url}",
       {},
       {
-        :json     => true,
-        :user     => user,
-        :password => pw,
+        json: true,
+        user: user,
+        password: pw,
       }
     )
     #puts 'URL: ' + url
     #puts response.code.to_s
     #puts response.body.to_s
-    return { :data => response.data, :response => response }
+    return { data: response.data, response: response }
   end
 end
 

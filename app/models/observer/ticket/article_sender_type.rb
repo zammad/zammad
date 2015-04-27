@@ -6,7 +6,7 @@ class Observer::Ticket::ArticleSenderType < ActiveRecord::Observer
   def after_create(record)
 
     # get article count
-    count = Ticket::Article.where( :ticket_id => record.ticket_id ).count
+    count = Ticket::Article.where( ticket_id: record.ticket_id ).count
     return if count > 1
 
     record.ticket.create_article_type_id = record.type_id

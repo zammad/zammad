@@ -7,27 +7,27 @@ class AgentTicketActionLevel1Test < TestCase
     # merge ticket with closed tab
     @browser = browser_instance
     login(
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
     )
     tasks_close_all()
 
     # create new ticket
     ticket1 = ticket_create(
-      :data => {
-        :customer => 'nico',
-        :group    => 'Users',
-        :title    => 'some subject 123äöü - with closed tab',
-        :body     => 'some body 123äöü - with closed tab',
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'some subject 123äöü - with closed tab',
+        body: 'some body 123äöü - with closed tab',
       },
     )
     sleep 1
 
     # update ticket
     ticket_update(
-      :data => {
-        :body => 'some body 1234 äöüß - with closed tab',
+      data: {
+        body: 'some body 1234 äöüß - with closed tab',
       },
     )
 
@@ -35,59 +35,59 @@ class AgentTicketActionLevel1Test < TestCase
 
     # create second ticket to merge
     ticket2 = ticket_create(
-      :data => {
-        :customer => 'nico',
-        :group    => 'Users',
-        :title    => 'test to merge - with closed tab',
-        :body     => 'some body 123äöü 222 - test to merge - with closed tab',
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'test to merge - with closed tab',
+        body: 'some body 123äöü 222 - test to merge - with closed tab',
       },
     )
 
     ticket_update(
-      :data => {
-        :body => 'some body 1234 äöüß 333 - with closed tab',
+      data: {
+        body: 'some body 1234 äöüß 333 - with closed tab',
       },
     )
 
     # check if task is shown
     match(
-      :css   => '.tasks',
-      :value => 'test to merge - with closed tab',
+      css: '.tasks',
+      value: 'test to merge - with closed tab',
     )
 
     # merge tickets
-    click( :css => '.active div[data-tab="ticket"] .js-actions .select-arrow' )
-    click( :css => '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
+    click( css: '.active div[data-tab="ticket"] .js-actions .select-arrow' )
+    click( css: '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
     watch_for(
-      :css   => '.modal',
-      :value => 'merge',
+      css: '.modal',
+      value: 'merge',
     )
 
     set(
-      :css   => '.modal input[name="master_ticket_number"]',
-      :value => ticket1[:number],
+      css: '.modal input[name="master_ticket_number"]',
+      value: ticket1[:number],
     )
 
-    click( :css => '.modal button[type="submit"]' )
+    click( css: '.modal button[type="submit"]' )
 
     # check if merged to ticket is shown now
     watch_for(
-      :css   => '.active .page-header .ticket-number',
-      :value => ticket1[:number],
+      css: '.active .page-header .ticket-number',
+      value: ticket1[:number],
     )
     watch_for(
-      :css   => '.active .ticket-article',
-      :value => 'test to merge - with closed tab',
+      css: '.active .ticket-article',
+      value: 'test to merge - with closed tab',
     )
 
     # check if task is now gone
     match_not(
-      :css   => '.tasks',
-      :value => 'test to merge',
+      css: '.tasks',
+      value: 'test to merge',
     )
     match(
-      :css   => '.tasks',
-      :value => 'some subject 123äöü - with closed tab',
+      css: '.tasks',
+      value: 'some subject 123äöü - with closed tab',
     )
 
     # close task/cleanup
@@ -97,55 +97,55 @@ class AgentTicketActionLevel1Test < TestCase
 
     # merge ticket with open tabs
     ticket3 = ticket_create(
-      :data => {
-        :customer => 'nico',
-        :group    => 'Users',
-        :title    => 'some subject 123äöü - with open tab',
-        :body     => 'some body 123äöü - with open tab',
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'some subject 123äöü - with open tab',
+        body: 'some body 123äöü - with open tab',
       },
     )
 
     ticket4 = ticket_create(
-      :data => {
-        :customer => 'nico',
-        :group    => 'Users',
-        :title    => 'test to merge - with open tab',
-        :body     => 'some body 123äöü 222 - test to merge - with open tab',
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'test to merge - with open tab',
+        body: 'some body 123äöü 222 - test to merge - with open tab',
       },
     )
 
     # merge tickets
-    click( :css => '.active div[data-tab="ticket"] .js-actions .select-arrow' )
-    click( :css => '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
+    click( css: '.active div[data-tab="ticket"] .js-actions .select-arrow' )
+    click( css: '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
     watch_for(
-      :css   => '.modal',
-      :value => 'merge',
+      css: '.modal',
+      value: 'merge',
     )
 
     set(
-      :css   => '.modal input[name="master_ticket_number"]',
-      :value => ticket3[:number],
+      css: '.modal input[name="master_ticket_number"]',
+      value: ticket3[:number],
     )
-    click( :css => '.modal button[type="submit"]' )
+    click( css: '.modal button[type="submit"]' )
 
     # check if merged to ticket is shown now
     watch_for(
-      :css   => '.active .page-header .ticket-number',
-      :value => ticket3[:number],
+      css: '.active .page-header .ticket-number',
+      value: ticket3[:number],
     )
     watch_for(
-      :css   => '.active .ticket-article',
-      :value => 'test to merge - with open tab',
+      css: '.active .ticket-article',
+      value: 'test to merge - with open tab',
     )
 
     # check if task is now gone
     match_not(
-      :css   => '.tasks',
-      :value => 'test to merge',
+      css: '.tasks',
+      value: 'test to merge',
     )
     match(
-      :css   => '.tasks',
-      :value => 'some subject 123äöü - with open tab',
+      css: '.tasks',
+      value: 'some subject 123äöü - with open tab',
     )
 
   end

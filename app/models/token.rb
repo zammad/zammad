@@ -8,7 +8,7 @@ class Token < ActiveRecord::Base
   def self.check( data )
 
     # fetch token
-    token = Token.where( :action => data[:action], :name => data[:name] ).first
+    token = Token.where( action: data[:action], name: data[:name] ).first
     return if !token
 
     # check if token is still valid
@@ -29,6 +29,6 @@ class Token < ActiveRecord::Base
   def generate_token
     begin
       self.name = SecureRandom.hex(20)
-    end while Token.exists?( :name => self.name )
+    end while Token.exists?( name: self.name )
   end
 end

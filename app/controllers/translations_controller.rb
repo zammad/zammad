@@ -1,17 +1,17 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TranslationsController < ApplicationController
-  before_filter :authentication_check, :except => [:load]
+  before_filter :authentication_check, except: [:load]
 
   # GET /translations/lang/:locale
   def load
-    render :json => Translation.list( params[:locale] )
+    render json: Translation.list( params[:locale] )
   end
 
   # GET /translations/admin/lang/:locale
   def admin
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    render :json => Translation.list( params[:locale], true )
+    render json: Translation.list( params[:locale], true )
   end
 
   # GET /translations

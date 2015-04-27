@@ -4,7 +4,7 @@ class Job < ApplicationModel
   store     :timeplan
   store     :condition
   store     :execute
-  validates :name, :presence => true
+  validates :name, presence: true
 
   before_create   :updated_matching
   before_update   :updated_matching
@@ -22,7 +22,7 @@ class Job < ApplicationModel
       5 => 'fri',
       6 => 'sat',
     }
-    jobs = Job.where( :active => true )
+    jobs = Job.where( active: true )
     jobs.each do |job|
 
       # only execute jobs, older then 1 min, to give admin posibility to change

@@ -9,7 +9,7 @@ class ObjectLookup < ApplicationModel
     return @@cache_object[ id ] if @@cache_object[ id ]
 
     # lookup
-    lookup = self.lookup( :id => id )
+    lookup = self.lookup( id: id )
     return if !lookup
     @@cache_object[ id ] = lookup.name
     lookup.name
@@ -21,7 +21,7 @@ class ObjectLookup < ApplicationModel
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    lookup = self.lookup( :name => name )
+    lookup = self.lookup( name: name )
     if lookup
       @@cache_object[ name ] = lookup.id
       return lookup.id
@@ -29,7 +29,7 @@ class ObjectLookup < ApplicationModel
 
     # create
     lookup = self.create(
-      :name => name
+      name: name
     )
     @@cache_object[ name ] = lookup.id
     lookup.id

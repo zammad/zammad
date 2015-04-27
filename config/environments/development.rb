@@ -32,10 +32,10 @@ Zammad::Application.configure do
 
   # Automatically inject JavaScript needed for LiveReload
   config.middleware.use(Rack::LiveReload,
-    :min_delay        => 500,    # default 1000
-    :max_delay        => 10_000, # default 60_000
-    :live_reload_port => 35738,
-    :source => :vendored
+    min_delay: 500,    # default 1000
+    max_delay: 10_000, # default 60_000
+    live_reload_port: 35738,
+    source: :vendored
   )
 
   # define cache store

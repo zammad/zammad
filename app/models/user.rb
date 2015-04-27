@@ -37,38 +37,38 @@ class User < ApplicationModel
   after_destroy   :avatar_destroy
   notify_clients_support
 
-  has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
-  has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update
-  has_and_belongs_to_many :organizations,   :after_add => :cache_update, :after_remove => :cache_update
-  has_many                :tokens,          :after_add => :cache_update, :after_remove => :cache_update
-  has_many                :authorizations,  :after_add => :cache_update, :after_remove => :cache_update
-  belongs_to              :organization,    :class_name => 'Organization'
+  has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :roles,           after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update
+  has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
+  has_many                :authorizations,  after_add: :cache_update, after_remove: :cache_update
+  belongs_to              :organization,    class_name: 'Organization'
 
   store                   :preferences
 
   activity_stream_support(
-    :role              => Z_ROLENAME_ADMIN,
-    :ignore_attributes => {
-      :last_login   => true,
-      :image        => true,
-      :image_source => true,
+    role: Z_ROLENAME_ADMIN,
+    ignore_attributes: {
+      last_login: true,
+      image: true,
+      image_source: true,
     }
   )
   history_support(
-    :ignore_attributes => {
-      :password     => true,
-      :image        => true,
-      :image_source => true,
+    ignore_attributes: {
+      password: true,
+      image: true,
+      image_source: true,
     }
   )
   search_index_support(
-    :ignore_attributes => {
-      :password     => true,
-      :image        => true,
-      :image_source => true,
-      :source       => true,
-      :login_failed => true,
-      :preferences  => true,
+    ignore_attributes: {
+      password: true,
+      image: true,
+      image_source: true,
+      source: true,
+      login_failed: true,
+      preferences: true,
     }
   )
 
@@ -160,8 +160,8 @@ returns
     assets = ApplicationModel.assets_of_object_list(activity_stream)
 
     return {
-      :activity_stream => activity_stream,
-      :assets          => assets,
+      activity_stream: activity_stream,
+      assets: assets,
     }
   end
 
@@ -184,11 +184,11 @@ returns
     return if !password || password == ''
 
     # try to find user based on login
-    user = User.where( :login => username.downcase, :active => true ).first
+    user = User.where( login: username.downcase, active: true ).first
 
     # try second lookup with email
     if !user
-      user = User.where( :email => username.downcase, :active => true ).first
+      user = User.where( email: username.downcase, active: true ).first
     end
 
     # check failed logins
@@ -248,18 +248,18 @@ returns
     if hash['info']['urls'] then
       url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
     end
-    roles = Role.where( :name => 'Customer' )
+    roles = Role.where( name: 'Customer' )
     self.create(
-      :login         => hash['info']['nickname'] || hash['uid'],
-      :firstname     => hash['info']['name'],
-      :email         => hash['info']['email'],
-      :image         => hash['info']['image'],
+      login: hash['info']['nickname'] || hash['uid'],
+      firstname: hash['info']['name'],
+      email: hash['info']['email'],
+      image: hash['info']['image'],
       #      :url        => url.to_s,
-      :note          => hash['info']['description'],
-      :source        => hash['provider'],
-      :roles         => roles,
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      note: hash['info']['description'],
+      source: hash['provider'],
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
   end
 
@@ -279,11 +279,11 @@ returns
     return if !username || username == ''
 
     # try to find user based on login
-    user = User.where( :login => username.downcase, :active => true ).first
+    user = User.where( login: username.downcase, active: true ).first
 
     # try second lookup with email
     if !user
-      user = User.where( :email => username.downcase, :active => true ).first
+      user = User.where( email: username.downcase, active: true ).first
     end
 
     # check if email address exists
@@ -291,7 +291,7 @@ returns
     return if !user.email
 
     # generate token
-    token = Token.create( :action => 'PasswordReset', :user_id => user.id )
+    token = Token.create( action: 'PasswordReset', user_id: user.id )
 
     # send mail
     data = {}
@@ -313,20 +313,20 @@ Your #{config.product_name} Team'
     # prepare subject & body
     [:subject, :body].each { |key|
       data[key.to_sym] = NotificationFactory.build(
-        :locale  => user.preferences[:locale],
-        :string  => data[key.to_sym],
-        :objects => {
-          :token => token,
-          :user  => user,
+        locale: user.preferences[:locale],
+        string: data[key.to_sym],
+        objects: {
+          token: token,
+          user: user,
         }
       )
     }
 
     # send notification
     NotificationFactory.send(
-      :recipient => user,
-      :subject   => data[:subject],
-      :body      => data[:body]
+      recipient: user,
+      subject: data[:subject],
+      body: data[:body]
     )
     token
   end
@@ -344,7 +344,7 @@ returns
 =end
 
   def self.password_reset_check(token)
-    user = Token.check( :action => 'PasswordReset', :name => token )
+    user = Token.check( action: 'PasswordReset', name: token )
 
     # reset login failed if token is valid
     if user
@@ -369,14 +369,14 @@ returns
   def self.password_reset_via_token(token,password)
 
     # check token
-    user = Token.check( :action => 'PasswordReset', :name => token )
+    user = Token.check( action: 'PasswordReset', name: token )
     return if !user
 
     # reset password
-    user.update_attributes( :password => password )
+    user.update_attributes( password: password )
 
     # delete token
-    Token.where( :action => 'PasswordReset', :name => token ).first.destroy
+    Token.where( action: 'PasswordReset', name: token ).first.destroy
     user
   end
 
@@ -473,7 +473,7 @@ returns
       self.login = self.login.downcase
       check = true
       while check
-        exists = User.where( :login => self.login ).first
+        exists = User.where( login: self.login ).first
         if exists && exists.id != self.id
           self.login = self.login + rand(999).to_s
         else
@@ -490,12 +490,12 @@ returns
 
     # save/update avatar
     avatar = Avatar.auto_detection(
-      :object        => 'User',
-      :o_id          => self.id,
-      :url           => self.email,
-      :source        => 'app',
-      :updated_by_id => self.updated_by_id,
-      :created_by_id => self.updated_by_id,
+      object: 'User',
+      o_id: self.id,
+      url: self.email,
+      source: 'app',
+      updated_by_id: self.updated_by_id,
+      created_by_id: self.updated_by_id,
     )
 
     # update user link

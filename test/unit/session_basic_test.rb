@@ -3,7 +3,7 @@ require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
   test 'a cache' do
-    Sessions::CacheIn.set( 'last_run_test' , true, { :expires_in => 2.seconds } )
+    Sessions::CacheIn.set( 'last_run_test' , true, { expires_in: 2.seconds } )
     result = Sessions::CacheIn.get( 'last_run_test' )
     assert_equal( true, result, 'check 1' )
 
@@ -17,7 +17,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( true, result, 'check 1 - expired' )
 
     # renew expire
-    result = Sessions::CacheIn.get( 'last_run_test', :re_expire => true )
+    result = Sessions::CacheIn.get( 'last_run_test', re_expire: true )
     assert_equal( true, result, 'check 1 - re_expire' )
 
     # should not be expired
@@ -26,7 +26,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # ignore expired
     sleep 3
-    result = Sessions::CacheIn.get( 'last_run_test', :ignore_expire => true )
+    result = Sessions::CacheIn.get( 'last_run_test', ignore_expire: true )
     assert_equal( true, result, 'check 1 - ignore_expire' )
 
     # should be expired
@@ -37,7 +37,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( nil, result, 'check 2' )
 
     # check delete cache
-    Sessions::CacheIn.set( 'last_run_delete' , true, { :expires_in => 5.seconds } )
+    Sessions::CacheIn.set( 'last_run_delete' , true, { expires_in: 5.seconds } )
     result = Sessions::CacheIn.get( 'last_run_delete' )
     assert_equal( true, result, 'check 1' )
     Sessions::CacheIn.delete( 'last_run_delete' )
@@ -49,7 +49,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     require 'sessions/backend/collections/group.rb'
 
     UserInfo.current_user_id = 2
-    user = User.lookup(:id => 1)
+    user = User.lookup(id: 1)
     collection_client1 = Sessions::Backend::Collections::Group.new(user, false, '123-1', 3)
     collection_client2 = Sessions::Backend::Collections::Group.new(user, false, '234-2', 3)
 
@@ -88,7 +88,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( result1, result2, 'check collections' )
 
     # change collection
-    group = Group.create( :name => 'SomeGroup::' + rand(999999).to_s, :active => true )
+    group = Group.create( name: 'SomeGroup::' + rand(999999).to_s, active: true )
     sleep 4
 
     # get whole collections
@@ -126,16 +126,16 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( result1, result2, 'check collections' )
   end
 
-  user = User.lookup(:id => 1)
-  roles  = Role.where( :name => [ 'Agent', 'Admin'] )
+  user = User.lookup(id: 1)
+  roles  = Role.where( name: [ 'Agent', 'Admin'] )
   user.roles = roles
   user.save
 
   test 'b collections organization' do
     require 'sessions/backend/collections/organization.rb'
     UserInfo.current_user_id = 2
-    user = User.lookup(:id => 1)
-    org = Organization.create( :name => 'SomeOrg1::' + rand(999999).to_s, :active => true )
+    user = User.lookup(id: 1)
+    org = Organization.create( name: 'SomeOrg1::' + rand(999999).to_s, active: true )
 
     collection_client1 = Sessions::Backend::Collections::Organization.new(user, false, '123-1', 3)
     collection_client2 = Sessions::Backend::Collections::Organization.new(user, false, '234-2', 3)
@@ -155,7 +155,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result2, 'check collections - recall' )
 
     # change collection
-    org = Organization.create( :name => 'SomeOrg2::' + rand(999999).to_s, :active => true )
+    org = Organization.create( name: 'SomeOrg2::' + rand(999999).to_s, active: true )
     sleep 4
 
     # get whole collections
@@ -186,7 +186,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   end
 
   test 'b rss' do
-    user = User.lookup(:id => 1)
+    user = User.lookup(id: 1)
     collection_client1 = Sessions::Backend::Rss.new(user, false, '123-1')
 
     # get whole collections
@@ -204,19 +204,19 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'b activity stream' do
 
     # create users
-    roles  = Role.where( :name => [ 'Agent', 'Admin'] )
+    roles  = Role.where( name: [ 'Agent', 'Admin'] )
     groups = Group.all
 
     UserInfo.current_user_id = 2
     agent1 = User.create_or_update(
-      :login     => 'activity-stream-agent-1',
-      :firstname => 'Session',
-      :lastname  => 'activity stream ' + rand(99999).to_s,
-      :email     => 'activity-stream-agent1@example.com',
-      :password  => 'agentpw',
-      :active    => true,
-      :roles     => roles,
-      :groups    => groups,
+      login: 'activity-stream-agent-1',
+      firstname: 'Session',
+      lastname: 'activity stream ' + rand(99999).to_s,
+      email: 'activity-stream-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
     agent1.roles = roles
     assert( agent1.save, 'create/update agent1' )
@@ -238,7 +238,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result1, 'check as agent1 - recall 2' )
 
     agent1.update_attribute( :email, 'activity-stream-agent11@example.com' )
-    ticket = Ticket.create(:title => '12323', :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1 )
+    ticket = Ticket.create(title: '12323', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1 )
 
     sleep 4
 
@@ -250,7 +250,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'b ticket_create' do
 
     UserInfo.current_user_id = 2
-    user = User.lookup(:id => 1)
+    user = User.lookup(id: 1)
     ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, false, '123-1', 3)
 
     # get as stream
@@ -267,7 +267,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     result1 = ticket_create_client1.push
     assert( !result1, 'check ticket_create - recall 2' )
 
-    Group.create( :name => 'SomeTicketCreateGroup::' + rand(999999).to_s, :active => true )
+    Group.create( name: 'SomeTicketCreateGroup::' + rand(999999).to_s, active: true )
 
     sleep 4
 

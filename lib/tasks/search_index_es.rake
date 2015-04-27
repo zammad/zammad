@@ -7,7 +7,7 @@ namespace :searchindex do
     # drop indexes
     puts 'drop indexes...'
     SearchIndexBackend.index(
-      :action => 'delete',
+      action: 'delete',
     )
 
   end
@@ -17,17 +17,17 @@ namespace :searchindex do
     # create indexes
     puts 'create indexes...'
     SearchIndexBackend.index(
-      :action => 'create',
-      :data   => {
-        :mappings => {
-          :Ticket => {
-            :_source => { :excludes => [ 'articles.attachments' ] },
-            :properties => {
-              :articles => {
-                :type       => 'nested',
-                :properties => {
-                  :attachments => {
-                    :type   => 'attachment',
+      action: 'create',
+      data: {
+        mappings: {
+          Ticket: {
+            _source: { excludes: [ 'articles.attachments' ] },
+            properties: {
+              articles: {
+                type: 'nested',
+                properties: {
+                  attachments: {
+                    type: 'attachment',
                   }
                 }
               }

@@ -6,40 +6,40 @@ class AgentTicketActionLevel4Test < TestCase
 
     @browser = browser_instance
     login(
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
     )
     tasks_close_all()
 
     # create ticket
     ticket_create(
-      :data => {
-        :customer => 'nicole',
-        :group    => 'Users',
-        :title    => 'some subject 4 - 123äöü',
-        :body     => 'some body 4 - 123äöü',
+      data: {
+        customer: 'nicole',
+        group: 'Users',
+        title: 'some subject 4 - 123äöü',
+        body: 'some body 4 - 123äöü',
       },
-      :do_not_submit => true,
+      do_not_submit: true,
     )
     sleep 8
 
     # check if customer is shown in sidebar
     match(
-      :css   => '.active .sidebar[data-tab="customer"]',
-      :value => 'nicole',
+      css: '.active .sidebar[data-tab="customer"]',
+      value: 'nicole',
     )
 
     # check task title
     verify_task(
-      :data => {
-        :title => 'some subject 4 - 123äöü',
+      data: {
+        title: 'some subject 4 - 123äöü',
       }
     )
 
     # check page title
     verify_title(
-      :value => 'some subject 4 - 123äöü',
+      value: 'some subject 4 - 123äöü',
     )
 
     # reload instances, verify autosave
@@ -47,22 +47,22 @@ class AgentTicketActionLevel4Test < TestCase
 
     # check if customer is still shown in sidebar
     watch_for(
-      :css   => '.active .sidebar[data-tab="customer"]',
-      :value => 'nicole',
+      css: '.active .sidebar[data-tab="customer"]',
+      value: 'nicole',
     )
 
     # finally create ticket
-    click( :css => '.content.active button.submit' )
+    click( css: '.content.active button.submit' )
     sleep 5
 
     location_check(
-      :url => '#ticket/zoom/',
+      url: '#ticket/zoom/',
     )
 
     # check ticket
     match(
-      :css   => '.active div.ticket-article',
-      :value => 'some body 4 - 123äöü',
+      css: '.active div.ticket-article',
+      value: 'some body 4 - 123äöü',
     )
 
     ticket_id = nil
@@ -72,22 +72,22 @@ class AgentTicketActionLevel4Test < TestCase
 
     # check task title
     verify_task(
-      :data => {
-        :title => 'some subject 4 - 123äöü',
+      data: {
+        title: 'some subject 4 - 123äöü',
       }
     )
 
     # check page title
     verify_title(
-      :value => 'some subject 4 - 123äöü',
+      value: 'some subject 4 - 123äöü',
     )
 
     # check if task is not marked as modified
     exists(
-      :css => ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"]",
+      css: ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"]",
     )
     exists_not(
-      :css => ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"] .modified",
+      css: ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"] .modified",
     )
 
     # reload
@@ -96,25 +96,25 @@ class AgentTicketActionLevel4Test < TestCase
 
     # check task title
     verify_task(
-      :data => {
-        :title => 'some subject 4 - 123äöü',
+      data: {
+        title: 'some subject 4 - 123äöü',
       }
     )
 
     # check page title
     verify_title(
-      :value => 'some subject 4 - 123äöü',
+      value: 'some subject 4 - 123äöü',
     )
 
     # go to dashboard
     location(
-      :url => browser_url
+      url: browser_url
     )
     sleep 5
 
     # check page title
     verify_title(
-      :value => 'Dashboard',
+      value: 'Dashboard',
     )
 
     # reload
@@ -123,7 +123,7 @@ class AgentTicketActionLevel4Test < TestCase
 
     # check page title
     verify_title(
-      :value => 'Dashboard',
+      value: 'Dashboard',
     )
 
     # cleanup

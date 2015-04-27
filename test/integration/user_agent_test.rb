@@ -33,7 +33,7 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.post(
       "#{host}/test/post/1",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       }
     )
     assert(result)
@@ -48,7 +48,7 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.post(
       "#{host}/test/not_existing",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       }
     )
     assert(result)
@@ -60,7 +60,7 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.put(
       "#{host}/test/put/1",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       }
     )
     assert(result)
@@ -75,7 +75,7 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.put(
       "#{host}/test/not_existing",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       }
     )
     assert(result)
@@ -112,8 +112,8 @@ class UserAgentTest < ActiveSupport::TestCase
       "#{host}/test_basic_auth/get/1?submitted=123",
       {},
       {
-        :user     => 'basic_auth_user',
-        :password => 'test123',
+        user: 'basic_auth_user',
+        password: 'test123',
       }
     )
     assert(result)
@@ -129,8 +129,8 @@ class UserAgentTest < ActiveSupport::TestCase
       "#{host}/test_basic_auth/get/1?submitted=123",
       {},
       {
-        :user     => 'basic_auth_user_not_existing',
-        :password => 'test<>123',
+        user: 'basic_auth_user_not_existing',
+        password: 'test<>123',
       }
     )
     assert(result)
@@ -142,11 +142,11 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.post(
       "#{host}/test_basic_auth/post/1",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       },
       {
-        :user     => 'basic_auth_user',
-        :password => 'test123',
+        user: 'basic_auth_user',
+        password: 'test123',
       }
     )
     assert(result)
@@ -161,11 +161,11 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.post(
       "#{host}/test_basic_auth/post/1",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       },
       {
-        :user     => 'basic_auth_user_not_existing',
-        :password => 'test<>123',
+        user: 'basic_auth_user_not_existing',
+        password: 'test<>123',
       }
     )
     assert(result)
@@ -177,11 +177,11 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.put(
       "#{host}/test_basic_auth/put/1",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       },
       {
-        :user     => 'basic_auth_user',
-        :password => 'test123',
+        user: 'basic_auth_user',
+        password: 'test123',
       }
     )
     assert(result)
@@ -196,11 +196,11 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.put(
       "#{host}/test_basic_auth/put/1",
       {
-        :submitted => 'some value',
+        submitted: 'some value',
       },
       {
-        :user     => 'basic_auth_user_not_existing',
-        :password => 'test<>123',
+        user: 'basic_auth_user_not_existing',
+        password: 'test<>123',
       }
     )
     assert(result)
@@ -213,8 +213,8 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.delete(
       "#{host}/test_basic_auth/delete/1",
       {
-        :user     => 'basic_auth_user',
-        :password => 'test123',
+        user: 'basic_auth_user',
+        password: 'test123',
       }
     )
     assert(result)
@@ -228,8 +228,8 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.delete(
       "#{host}/test_basic_auth/delete/1",
       {
-        :user     => 'basic_auth_user_not_existing',
-        :password => 'test<>123',
+        user: 'basic_auth_user_not_existing',
+        password: 'test<>123',
       }
     )
     assert(result)
@@ -258,8 +258,8 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.request(
       "#{host}/test_basic_auth/redirect",
       {
-        :user     => 'basic_auth_user',
-        :password => 'test123',
+        user: 'basic_auth_user',
+        password: 'test123',
       }
     )
     assert(result)
@@ -275,8 +275,8 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.request(
       "#{host}/test_basic_auth/redirect",
       {
-        :user     => 'basic_auth_user_not_existing',
-        :password => 'test123',
+        user: 'basic_auth_user_not_existing',
+        password: 'test123',
       }
     )
     assert(result)
@@ -393,8 +393,8 @@ class UserAgentTest < ActiveSupport::TestCase
       "#{host}/test/get/3?submitted=123",
       {},
       {
-        :open_timeout => 1,
-        :read_timeout => 1,
+        open_timeout: 1,
+        read_timeout: 1,
       }
     )
     assert(result)
@@ -406,11 +406,11 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.post(
       "#{host}/test/post/3",
       {
-        :submitted => 'timeout',
+        submitted: 'timeout',
       },
       {
-        :open_timeout => 1,
-        :read_timeout => 1,
+        open_timeout: 1,
+        read_timeout: 1,
       }
     )
     assert(result)
@@ -426,10 +426,10 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.get(
       "#{host}/test/get/1",
       {
-        :submitted => { :key => 'some value ' }
+        submitted: { key: 'some value ' }
       },
       {
-        :json => true,
+        json: true,
       }
     )
     assert(result)
@@ -444,10 +444,10 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.get(
       "#{host}/test/not_existing",
       {
-        :submitted => { :key => 'some value ' }
+        submitted: { key: 'some value ' }
       },
       {
-        :json => true,
+        json: true,
       }
     )
     assert(result)
@@ -460,10 +460,10 @@ class UserAgentTest < ActiveSupport::TestCase
     result = UserAgent.post(
       "#{host}/test/post/1",
       {
-        :submitted => { :key => 'some value ' }
+        submitted: { key: 'some value ' }
       },
       {
-        :json => true,
+        json: true,
       }
     )
     assert(result)

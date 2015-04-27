@@ -34,7 +34,7 @@ returns
     # create Users
     if auto_wizard_hash['Users']
 
-      roles  = Role.where( :name => ['Agent', 'Admin'] )
+      roles  = Role.where( name: ['Agent', 'Admin'] )
       groups = Group.all
 
       auto_wizard_hash['Users'].each { |user_data|
@@ -43,11 +43,11 @@ returns
 
         user_data_symbolized = user_data_symbolized.merge(
           {
-            :active        => true,
-            :roles         => roles,
-            :groups        => groups,
-            :updated_by_id => admin_user.id,
-            :created_by_id => admin_user.id
+            active: true,
+            roles: roles,
+            groups: groups,
+            updated_by_id: admin_user.id,
+            created_by_id: admin_user.id
           }
         )
 
@@ -79,8 +79,8 @@ returns
 
         email_address_data_symbolized = email_address_data_symbolized.merge(
           {
-            :updated_by_id => admin_user.id,
-            :created_by_id => admin_user.id
+            updated_by_id: admin_user.id,
+            created_by_id: admin_user.id
           }
         )
 

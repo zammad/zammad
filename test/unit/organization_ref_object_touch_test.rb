@@ -4,72 +4,72 @@ require 'test_helper'
 class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
 
   # create base
-  groups = Group.where( :name => 'Users' )
-  roles  = Role.where( :name => 'Agent' )
+  groups = Group.where( name: 'Users' )
+  roles  = Role.where( name: 'Agent' )
   agent1 = User.create_or_update(
-    :login         => 'organization-ref-object-update-agent1@example.com',
-    :firstname     => 'Notification',
-    :lastname      => 'Agent1',
-    :email         => 'organization-ref-object-update-agent1@example.com',
-    :password      => 'agentpw',
-    :active        => true,
-    :roles         => roles,
-    :groups        => groups,
-    :updated_at    => '2015-02-05 16:37:00',
-    :updated_by_id => 1,
-    :created_by_id => 1,
+    login: 'organization-ref-object-update-agent1@example.com',
+    firstname: 'Notification',
+    lastname: 'Agent1',
+    email: 'organization-ref-object-update-agent1@example.com',
+    password: 'agentpw',
+    active: true,
+    roles: roles,
+    groups: groups,
+    updated_at: '2015-02-05 16:37:00',
+    updated_by_id: 1,
+    created_by_id: 1,
   )
-  roles  = Role.where( :name => 'Customer' )
+  roles  = Role.where( name: 'Customer' )
   organization1 = Organization.create_if_not_exists(
-    :name          => 'Ref Object Update Org 1',
-    :updated_at    => '2015-02-05 16:37:00',
-    :updated_by_id => 1,
-    :created_by_id => 1,
+    name: 'Ref Object Update Org 1',
+    updated_at: '2015-02-05 16:37:00',
+    updated_by_id: 1,
+    created_by_id: 1,
   )
   organization2 = Organization.create_if_not_exists(
-    :name          => 'Ref Object Update Org 2',
-    :updated_at    => '2015-02-05 16:37:00',
-    :updated_by_id => 1,
-    :created_by_id => 1,
+    name: 'Ref Object Update Org 2',
+    updated_at: '2015-02-05 16:37:00',
+    updated_by_id: 1,
+    created_by_id: 1,
   )
   customer1 = User.create_or_update(
-    :login           => 'organization-ref-object-update-customer1@example.com',
-    :firstname       => 'Notification',
-    :lastname        => 'Agent1',
-    :email           => 'organization-ref-object-update-customer1@example.com',
-    :password        => 'customerpw',
-    :active          => true,
-    :organization_id => organization1.id,
-    :roles           => roles,
-    :updated_at      => '2015-02-05 16:37:00',
-    :updated_by_id   => 1,
-    :created_by_id   => 1,
+    login: 'organization-ref-object-update-customer1@example.com',
+    firstname: 'Notification',
+    lastname: 'Agent1',
+    email: 'organization-ref-object-update-customer1@example.com',
+    password: 'customerpw',
+    active: true,
+    organization_id: organization1.id,
+    roles: roles,
+    updated_at: '2015-02-05 16:37:00',
+    updated_by_id: 1,
+    created_by_id: 1,
   )
   customer2 = User.create_or_update(
-    :login           => 'organization-ref-object-update-customer2@example.com',
-    :firstname       => 'Notification',
-    :lastname        => 'Agent2',
-    :email           => 'organization-ref-object-update-customer2@example.com',
-    :password        => 'customerpw',
-    :active          => true,
-    :organization_id => organization2.id,
-    :roles           => roles,
-    :updated_at      => '2015-02-05 16:37:00',
-    :updated_by_id   => 1,
-    :created_by_id   => 1,
+    login: 'organization-ref-object-update-customer2@example.com',
+    firstname: 'Notification',
+    lastname: 'Agent2',
+    email: 'organization-ref-object-update-customer2@example.com',
+    password: 'customerpw',
+    active: true,
+    organization_id: organization2.id,
+    roles: roles,
+    updated_at: '2015-02-05 16:37:00',
+    updated_by_id: 1,
+    created_by_id: 1,
   )
 
   test 'a - check if ticket and customer has been updated' do
 
     ticket = Ticket.create(
-      :title         => "some title1\n äöüß",
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => customer1.id,
-      :owner_id      => agent1.id,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: "some title1\n äöüß",
+      group: Group.lookup( name: 'Users'),
+      customer_id: customer1.id,
+      owner_id: agent1.id,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
     assert_equal( ticket.customer.id, customer1.id  )

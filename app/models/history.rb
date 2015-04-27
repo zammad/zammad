@@ -5,9 +5,9 @@ class History < ApplicationModel
   include History::Assets
 
   self.table_name = 'histories'
-  belongs_to :history_type,             :class_name => 'History::Type'
-  belongs_to :history_object,           :class_name => 'History::Object'
-  belongs_to :history_attribute,        :class_name => 'History::Attribute'
+  belongs_to :history_type,             class_name: 'History::Type'
+  belongs_to :history_object,           class_name: 'History::Object'
+  belongs_to :history_attribute,        class_name: 'History::Attribute'
   #  before_validation :check_type, :check_object
   #  attr_writer :history_type, :history_object
 
@@ -60,23 +60,23 @@ add a new history entry for an object
 
     # create history
     record = {
-      :id                          => data[:id],
-      :o_id                        => data[:o_id],
-      :history_type_id             => history_type.id,
-      :history_object_id           => history_object.id,
-      :history_attribute_id        => history_attribute_id,
-      :related_history_object_id   => related_history_object_id,
-      :related_o_id                => data[:related_o_id],
-      :value_from                  => data[:value_from],
-      :value_to                    => data[:value_to],
-      :id_from                     => data[:id_from],
-      :id_to                       => data[:id_to],
-      :created_at                  => data[:created_at],
-      :created_by_id               => data[:created_by_id]
+      id: data[:id],
+      o_id: data[:o_id],
+      history_type_id: history_type.id,
+      history_object_id: history_object.id,
+      history_attribute_id: history_attribute_id,
+      related_history_object_id: related_history_object_id,
+      related_o_id: data[:related_o_id],
+      value_from: data[:value_from],
+      value_to: data[:value_to],
+      id_from: data[:id_from],
+      id_to: data[:id_to],
+      created_at: data[:created_at],
+      created_by_id: data[:created_by_id]
     }
     history_record = nil
     if data[:id]
-      history_record = History.where( :id => data[:id] ).first
+      history_record = History.where( id: data[:id] ).first
     end
     if history_record
       history_record.update_attributes(record)
@@ -98,11 +98,11 @@ remove whole history entries of an object
 =end
 
   def self.remove( requested_object, requested_object_id )
-    history_object = History::Object.where( :name => requested_object ).first
+    history_object = History::Object.where( name: requested_object ).first
     return if !history_object
     History.where(
-      :history_object_id => history_object.id,
-      :o_id              => requested_object_id,
+      history_object_id: history_object.id,
+      o_id: requested_object_id,
     ).destroy_all
   end
 
@@ -152,8 +152,8 @@ returns
   def self.list( requested_object, requested_object_id, related_history_object = nil, assets = nil )
     if !related_history_object
       history_object = self.object_lookup( requested_object )
-      history = History.where( :history_object_id => history_object.id ).
-      where( :o_id => requested_object_id ).
+      history = History.where( history_object_id: history_object.id ).
+      where( o_id: requested_object_id ).
       order('created_at ASC, id ASC')
     else
       history_object_requested = self.object_lookup( requested_object )
@@ -208,8 +208,8 @@ returns
     end
     if assets
       return {
-        :list   => list,
-        :assets => asset_list,
+        list: list,
+        assets: asset_list,
       }
     end
     list
@@ -223,7 +223,7 @@ returns
     return @@cache_type[ id ] if @@cache_type[ id ]
 
     # lookup
-    history_type = History::Type.lookup( :id => id )
+    history_type = History::Type.lookup( id: id )
     @@cache_type[ id ] = history_type
     return history_type
   end
@@ -234,7 +234,7 @@ returns
     return @@cache_type[ name ] if @@cache_type[ name ]
 
     # lookup
-    history_type = History::Type.lookup( :name => name )
+    history_type = History::Type.lookup( name: name )
     if history_type
       @@cache_type[ name ] = history_type
       return history_type
@@ -242,7 +242,7 @@ returns
 
     # create
     history_type = History::Type.create(
-      :name   => name
+      name: name
     )
     @@cache_type[ name ] = history_type
     return history_type
@@ -254,7 +254,7 @@ returns
     return @@cache_object[ id ] if @@cache_object[ id ]
 
     # lookup
-    history_object = History::Object.lookup( :id => id )
+    history_object = History::Object.lookup( id: id )
     @@cache_object[ id ] = history_object
     return history_object
   end
@@ -265,7 +265,7 @@ returns
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    history_object = History::Object.lookup( :name => name )
+    history_object = History::Object.lookup( name: name )
     if history_object
       @@cache_object[ name ] = history_object
       return history_object
@@ -273,7 +273,7 @@ returns
 
     # create
     history_object = History::Object.create(
-      :name   => name
+      name: name
     )
     @@cache_object[ name ] = history_object
     return history_object
@@ -285,7 +285,7 @@ returns
     return @@cache_attribute[ id ] if @@cache_attribute[ id ]
 
     # lookup
-    history_attribute = History::Attribute.lookup( :id => id )
+    history_attribute = History::Attribute.lookup( id: id )
     @@cache_attribute[ id ] = history_attribute
     return history_attribute
   end
@@ -296,7 +296,7 @@ returns
     return @@cache_attribute[ name ] if @@cache_attribute[ name ]
 
     # lookup
-    history_attribute = History::Attribute.lookup( :name => name )
+    history_attribute = History::Attribute.lookup( name: name )
     if history_attribute
       @@cache_attribute[ name ] = history_attribute
       return history_attribute
@@ -304,7 +304,7 @@ returns
 
     # create
     history_attribute = History::Attribute.create(
-      :name   => name
+      name: name
     )
     @@cache_attribute[ name ] = history_attribute
     return history_attribute

@@ -74,8 +74,8 @@ class IcalTicketsController < ApplicationController
     condition = {
       'tickets.owner_id' => current_user.id,
       'tickets.state_id' => Ticket::State.where(
-        :state_type_id => Ticket::StateType.where(
-          :name => [
+        state_type_id: Ticket::StateType.where(
+          name: [
             'new',
             'open',
           ],
@@ -84,8 +84,8 @@ class IcalTicketsController < ApplicationController
     }
 
     tickets = Ticket.search(
-      :current_user => current_user,
-      :condition    => condition,
+      current_user: current_user,
+      condition: condition,
     )
 
     events_data = []
@@ -109,8 +109,8 @@ class IcalTicketsController < ApplicationController
     condition = {
       'tickets.owner_id' => current_user.id,
       'tickets.state_id' => Ticket::State.where(
-        :state_type_id => Ticket::StateType.where(
-          :name => [
+        state_type_id: Ticket::StateType.where(
+          name: [
             'pending reminder',
             'pending action',
           ],
@@ -119,8 +119,8 @@ class IcalTicketsController < ApplicationController
     }
 
     tickets = Ticket.search(
-      :current_user => current_user,
-      :condition    => condition,
+      current_user: current_user,
+      condition: condition,
     )
 
     events_data = []
@@ -148,8 +148,8 @@ class IcalTicketsController < ApplicationController
     ]
 
     tickets = Ticket.search(
-      :current_user => current_user,
-      :condition    => condition,
+      current_user: current_user,
+      condition: condition,
     )
 
     events_data = []
@@ -186,9 +186,9 @@ class IcalTicketsController < ApplicationController
 
     send_data(
       cal.to_ical,
-      :filename    => 'zammad.ical',
-      :type        => 'text/plain',
-      :disposition => 'inline'
+      filename: 'zammad.ical',
+      type: 'text/plain',
+      disposition: 'inline'
     )
   end
 

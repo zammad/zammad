@@ -5,7 +5,7 @@ class TaskbarController < ApplicationController
 
   def index
 
-    current_user_tasks = Taskbar.where( :user_id => current_user.id )
+    current_user_tasks = Taskbar.where( user_id: current_user.id )
     model_index_render_result(current_user_tasks)
 
   end
@@ -40,7 +40,7 @@ class TaskbarController < ApplicationController
   private
   def access(taskbar)
     if taskbar.user_id != current_user.id
-      render :json => { :error => 'Not allowed to access this task.' }, :status => :unprocessable_entity
+      render json: { error: 'Not allowed to access this task.' }, status: :unprocessable_entity
       return false
     end
     return true

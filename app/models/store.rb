@@ -5,9 +5,9 @@ class Store < ApplicationModel
   load 'store/file.rb'
 
   store       :preferences
-  belongs_to  :store_object,          :class_name => 'Store::Object'
-  belongs_to  :store_file,            :class_name => 'Store::File'
-  validates   :filename,              :presence => true
+  belongs_to  :store_object,          class_name: 'Store::Object'
+  belongs_to  :store_file,            class_name: 'Store::File'
+  validates   :filename,              presence: true
 
 =begin
 
@@ -33,7 +33,7 @@ returns
     data = data.stringify_keys
 
     # lookup store_object.id
-    store_object = Store::Object.create_if_not_exists( :name => data['object'] )
+    store_object = Store::Object.create_if_not_exists( name: data['object'] )
     data['store_object_id'] = store_object.id
 
     # add to real store
@@ -79,8 +79,8 @@ returns
 
   def self.list(data)
     # search
-    store_object_id = Store::Object.lookup( :name => data[:object] )
-    stores = Store.where( :store_object_id => store_object_id, :o_id => data[:o_id].to_i ).
+    store_object_id = Store::Object.lookup( name: data[:object] )
+    stores = Store.where( store_object_id: store_object_id, o_id: data[:o_id].to_i ).
     order('created_at ASC, id ASC')
     return stores
   end
@@ -102,9 +102,9 @@ returns
 
   def self.remove(data)
     # search
-    store_object_id = Store::Object.lookup( :name => data[:object] )
-    stores = Store.where( :store_object_id => store_object_id ).
-    where( :o_id => data[:o_id] ).
+    store_object_id = Store::Object.lookup( name: data[:object] )
+    stores = Store.where( store_object_id: store_object_id ).
+    where( o_id: data[:o_id] ).
     order('created_at ASC, id ASC')
     stores.each do |store|
 
@@ -130,7 +130,7 @@ returns
 
     # check backend for references
     store = Store.find(store_id)
-    files = Store.where( :store_file_id => store.store_file_id )
+    files = Store.where( store_file_id: store.store_file_id )
     if files.count == 1 && files.first.id == store.id
       Store::File.find( store.store_file_id ).destroy
     end
@@ -140,7 +140,7 @@ returns
   end
 
   def content
-    file = Store::File.where( :id => self.store_file_id ).first
+    file = Store::File.where( id: self.store_file_id ).first
     if !file
       raise "No such file #{ self.store_file_id }!"
     end
@@ -148,7 +148,7 @@ returns
   end
 
   def provider
-    file = Store::File.where( :id => self.store_file_id ).first
+    file = Store::File.where( id: self.store_file_id ).first
     if !file
       raise "No such file #{ self.store_file_id }!"
     end

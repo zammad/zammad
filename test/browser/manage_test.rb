@@ -9,97 +9,97 @@ class ManageTest < TestCase
     # user management
     @browser = browser_instance
     login(
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
     )
 
-    click( :css => 'a[href="#manage"]' )
-    click( :css => 'a[href="#manage/users"]' )
+    click( css: 'a[href="#manage"]' )
+    click( css: 'a[href="#manage/users"]' )
 
     user_create(
-      :data => {
-        :login     => 'some login' + random,
-        :firstname => 'Manage Firstname' + random,
-        :lastname  => 'Manage Lastname' + random,
-        :email     => user_email,
-        :password  => 'some-pass',
+      data: {
+        login: 'some login' + random,
+        firstname: 'Manage Firstname' + random,
+        lastname: 'Manage Lastname' + random,
+        email: user_email,
+        password: 'some-pass',
       }
     )
 
-    click( :css => '.table-overview tr:last-child td' )
+    click( css: '.table-overview tr:last-child td' )
     sleep 2
 
     set(
-      :css   => '.modal input[name="lastname"]',
-      :value => '2Manage Lastname' + random,
+      css: '.modal input[name="lastname"]',
+      value: '2Manage Lastname' + random,
     )
-    click( :css => '.modal button.js-submit' )
+    click( css: '.modal button.js-submit' )
 
     watch_for(
-      :css   => 'body',
-      :value => '2Manage Lastname' + random,
+      css: 'body',
+      value: '2Manage Lastname' + random,
     )
 
     # sla
     sla_create(
-      :data => {
-        :name                => 'some sla' + random,
-        :first_response_time => 61
+      data: {
+        name: 'some sla' + random,
+        first_response_time: 61
       }
     )
     watch_for(
-      :css   => 'body',
-      :value => random,
+      css: 'body',
+      value: random,
     )
     sleep 1
 
-    click( :css => '.table-overview tr:last-child td' )
+    click( css: '.table-overview tr:last-child td' )
     sleep 1
 
     set(
-      :css   => '.modal input[name=name]',
-      :value => 'some sla update ' + random,
+      css: '.modal input[name=name]',
+      value: 'some sla update ' + random,
     )
     set(
-      :css   => '.modal input[name="first_response_time"]',
-      :value => 121,
+      css: '.modal input[name="first_response_time"]',
+      value: 121,
     )
-    click( :css => '.modal button.js-submit' )
+    click( css: '.modal button.js-submit' )
 
     watch_for(
-      :css   => 'body',
-      :value => 'some sla update ' + random,
+      css: 'body',
+      value: 'some sla update ' + random,
     )
     sleep 4
 
-    click( :css => 'a[data-type="destroy"]:last-child' )
+    click( css: 'a[data-type="destroy"]:last-child' )
     sleep 2
 
-    click( :css => '.modal button.js-submit' )
+    click( css: '.modal button.js-submit' )
     sleep 4
     match_not(
-      :css   => 'body',
-      :value => 'some sla update ' + random,
+      css: 'body',
+      value: 'some sla update ' + random,
     )
 
-    click( :css => 'a[href="#manage"]' )
-    click( :css => 'a[href="#manage/slas"]' )
+    click( css: 'a[href="#manage"]' )
+    click( css: 'a[href="#manage/slas"]' )
     sleep 2
     match_not(
-      :css   => 'body',
-      :value => 'some sla update ' + random,
+      css: 'body',
+      value: 'some sla update ' + random,
     )
 
     reload()
     sleep 2
 
-    click( :css => 'a[href="#manage"]' )
-    click( :css => 'a[href="#manage/slas"]' )
+    click( css: 'a[href="#manage"]' )
+    click( css: 'a[href="#manage/slas"]' )
     sleep 2
     match_not(
-      :css   => 'body',
-      :value => 'some sla update ' + random,
+      css: 'body',
+      value: 'some sla update ' + random,
     )
   end
 end

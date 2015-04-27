@@ -2,82 +2,82 @@
 require 'test_helper'
 
 class ActivityStreamTest < ActiveSupport::TestCase
-  role  = Role.lookup( :name => 'Admin' )
-  group = Group.lookup( :name => 'Users' )
+  role  = Role.lookup( name: 'Admin' )
+  group = Group.lookup( name: 'Users' )
   admin_user = User.create_or_update(
-    :login         => 'admin',
-    :firstname     => 'Bob',
-    :lastname      => 'Smith',
-    :email         => 'bob@example.com',
-    :password      => 'some_pass',
-    :active        => true,
-    :role_ids      => [role.id],
-    :group_ids     => [group.id],
-    :updated_by_id => 1,
-    :created_by_id => 1
+    login: 'admin',
+    firstname: 'Bob',
+    lastname: 'Smith',
+    email: 'bob@example.com',
+    password: 'some_pass',
+    active: true,
+    role_ids: [role.id],
+    group_ids: [group.id],
+    updated_by_id: 1,
+    created_by_id: 1
   )
-  current_user = User.lookup( :login => 'nicole.braun@zammad.org' )
+  current_user = User.lookup( login: 'nicole.braun@zammad.org' )
 
   test 'ticket+user' do
     tests = [
 
       # test 1
       {
-        :create => {
-          :ticket => {
-            :group_id       => Group.lookup( :name => 'Users' ).id,
-            :customer_id    => current_user.id,
-            :owner_id       => User.lookup( :login => '-' ).id,
-            :title          => 'Unit Test 1 (äöüß)!',
-            :state_id       => Ticket::State.lookup( :name => 'new' ).id,
-            :priority_id    => Ticket::Priority.lookup( :name => '2 normal' ).id,
-            :updated_by_id  => current_user.id,
-            :created_by_id  => current_user.id,
+        create: {
+          ticket: {
+            group_id: Group.lookup( name: 'Users' ).id,
+            customer_id: current_user.id,
+            owner_id: User.lookup( login: '-' ).id,
+            title: 'Unit Test 1 (äöüß)!',
+            state_id: Ticket::State.lookup( name: 'new' ).id,
+            priority_id: Ticket::Priority.lookup( name: '2 normal' ).id,
+            updated_by_id: current_user.id,
+            created_by_id: current_user.id,
           },
-          :article => {
-              :updated_by_id  => current_user.id,
-              :created_by_id  => current_user.id,
-              :type_id        => Ticket::Article::Type.lookup( :name => 'phone' ).id,
-              :sender_id      => Ticket::Article::Sender.lookup( :name => 'Customer' ).id,
-              :from           => 'Unit Test <unittest@example.com>',
-              :body           => 'Unit Test 123',
-              :internal       => false
-          },
-        },
-        :update => {
-          :ticket => {
-            :title       => 'Unit Test 1 (äöüß) - update!',
-            :state_id    => Ticket::State.lookup( :name => 'open' ).id,
-            :priority_id => Ticket::Priority.lookup( :name => '1 low' ).id,
+          article: {
+              updated_by_id: current_user.id,
+              created_by_id: current_user.id,
+              type_id: Ticket::Article::Type.lookup( name: 'phone' ).id,
+              sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
+              from: 'Unit Test <unittest@example.com>',
+              body: 'Unit Test 123',
+              internal: false
           },
         },
-        :update2 => {
-          :ticket => {
-            :title       => 'Unit Test 2 (äöüß) - update!',
-            :priority_id => Ticket::Priority.lookup( :name => '2 normal' ).id,
+        update: {
+          ticket: {
+            title: 'Unit Test 1 (äöüß) - update!',
+            state_id: Ticket::State.lookup( name: 'open' ).id,
+            priority_id: Ticket::Priority.lookup( name: '1 low' ).id,
           },
         },
-        :check => [
+        update2: {
+          ticket: {
+            title: 'Unit Test 2 (äöüß) - update!',
+            priority_id: Ticket::Priority.lookup( name: '2 normal' ).id,
+          },
+        },
+        check: [
          {
-            :result => true,
-            :object => 'Ticket',
-            :type   => 'updated',
+            result: true,
+            object: 'Ticket',
+            type: 'updated',
           },
           {
-            :result => true,
-            :object => 'Ticket::Article',
-            :type   => 'created',
+            result: true,
+            object: 'Ticket::Article',
+            type: 'created',
           },
           {
-            :result => true,
-            :object => 'Ticket',
-            :type   => 'created',
+            result: true,
+            object: 'Ticket',
+            type: 'created',
           },
           {
-            :result => false,
-            :object => 'User',
-            :type   => 'updated',
-            :o_id   => current_user.id,
+            result: false,
+            object: 'User',
+            type: 'updated',
+            o_id: current_user.id,
           },
         ]
       },
@@ -141,7 +141,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     tickets.each { |ticket|
       ticket_id = ticket.id
       ticket.destroy
-      found = Ticket.where( :id => ticket_id ).first
+      found = Ticket.where( id: ticket_id ).first
       assert( !found, 'Ticket destroyed')
     }
   end
@@ -151,33 +151,33 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
       # test 1
       {
-        :create => {
-          :organization => {
-            :name               => 'some name',
-            :updated_by_id      => current_user.id,
-            :created_by_id      => current_user.id,
+        create: {
+          organization: {
+            name: 'some name',
+            updated_by_id: current_user.id,
+            created_by_id: current_user.id,
           },
         },
-        :update1 => {
-          :organization => {
-            :name               => 'some name (äöüß)',
+        update1: {
+          organization: {
+            name: 'some name (äöüß)',
           },
         },
-        :update2 => {
-          :organization => {
-            :name               => 'some name 2 (äöüß)',
+        update2: {
+          organization: {
+            name: 'some name 2 (äöüß)',
           },
         },
-        :check => [
+        check: [
           {
-            :result => true,
-            :object => 'Organization',
-            :type   => 'updated',
+            result: true,
+            object: 'Organization',
+            type: 'updated',
           },
           {
-            :result => true,
-            :object => 'Organization',
-            :type   => 'created',
+            result: true,
+            object: 'Organization',
+            type: 'created',
           },
         ]
       },
@@ -216,7 +216,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     organizations.each { |organization|
       organization_id = organization.id
       organization.destroy
-      found = Organization.where( :id => organization_id ).first
+      found = Organization.where( id: organization_id ).first
       assert( !found, 'Organization destroyed')
     }
   end
@@ -227,30 +227,30 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
       # test 1
       {
-        :create => {
-          :user => {
-            :login              => 'someemail@example.com',
-            :email              => 'Bob Smith II <someemail@example.com>',
-            :updated_by_id      => current_user.id,
-            :created_by_id      => current_user.id,
+        create: {
+          user: {
+            login: 'someemail@example.com',
+            email: 'Bob Smith II <someemail@example.com>',
+            updated_by_id: current_user.id,
+            created_by_id: current_user.id,
           },
         },
-        :update1 => {
-          :user => {
-            :firstname    => 'Bob U',
-            :lastname     => 'Smith U',
+        update1: {
+          user: {
+            firstname: 'Bob U',
+            lastname: 'Smith U',
           },
         },
-        :check => [
+        check: [
           {
-            :result => true,
-            :object => 'User',
-            :type   => 'created',
+            result: true,
+            object: 'User',
+            type: 'created',
           },
           {
-            :result => false,
-            :object => 'User',
-            :type   => 'updated',
+            result: false,
+            object: 'User',
+            type: 'updated',
           },
         ]
       },
@@ -283,7 +283,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     users.each { |user|
       user_id = user.id
       user.destroy
-      found = User.where( :id => user_id ).first
+      found = User.where( id: user_id ).first
       assert( !found, 'User destroyed')
     }
   end
@@ -293,36 +293,36 @@ class ActivityStreamTest < ActiveSupport::TestCase
 
       # test 1
       {
-        :create => {
-          :user => {
-            :login              => 'someemail@example.com',
-            :email              => 'Bob Smith II <someemail@example.com>',
-            :updated_by_id      => current_user.id,
-            :created_by_id      => current_user.id,
+        create: {
+          user: {
+            login: 'someemail@example.com',
+            email: 'Bob Smith II <someemail@example.com>',
+            updated_by_id: current_user.id,
+            created_by_id: current_user.id,
           },
         },
-        :update1 => {
-          :user => {
-            :firstname    => 'Bob U',
-            :lastname     => 'Smith U',
+        update1: {
+          user: {
+            firstname: 'Bob U',
+            lastname: 'Smith U',
           },
         },
-        :update2 => {
-          :user => {
-            :firstname    => 'Bob',
-            :lastname     => 'Smith',
+        update2: {
+          user: {
+            firstname: 'Bob',
+            lastname: 'Smith',
           },
         },
-        :check => [
+        check: [
           {
-            :result => true,
-            :object => 'User',
-            :type   => 'updated',
+            result: true,
+            object: 'User',
+            type: 'updated',
           },
           {
-            :result => true,
-            :object => 'User',
-            :type   => 'created',
+            result: true,
+            object: 'User',
+            type: 'created',
           },
         ]
       },
@@ -362,7 +362,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     users.each { |user|
       user_id = user.id
       user.destroy
-      found = User.where( :id => user_id ).first
+      found = User.where( id: user_id ).first
       assert( !found, 'User destroyed')
     }
   end

@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
     # auth failed
     if !user
-      render :json => { :error => 'login failed' }, :status => :unauthorized
+      render json: { error: 'login failed' }, status: :unauthorized
       return
     end
 
@@ -55,14 +55,14 @@ class SessionsController < ApplicationController
     end
 
     # return new session data
-    render :json => {
-      :session       => user,
-      :models        => models,
-      :collections   => collections,
-      :assets        => assets,
-      :logon_session => logon_session_key,
+    render json: {
+      session: user,
+      models: models,
+      collections: collections,
+      assets: assets,
+      logon_session: logon_session_key,
     },
-    :status => :created
+    status: :created
   end
 
   def show
@@ -86,10 +86,10 @@ class SessionsController < ApplicationController
       # get models
       models = SessionHelper::models()
 
-      render :json => {
-        :error  => 'no valid session',
-        :config => config_frontend,
-        :models => models,
+      render json: {
+        error: 'no valid session',
+        config: config_frontend,
+        models: models,
       }
       return
     end
@@ -108,12 +108,12 @@ class SessionsController < ApplicationController
     models = SessionHelper::models(user)
 
     # return current session
-    render :json => {
-      :session      => user,
-      :models       => models,
-      :collections  => collections,
-      :assets       => assets,
-      :config       => config_frontend,
+    render json: {
+      session: user,
+      models: models,
+      collections: collections,
+      assets: assets,
+      config: config_frontend,
     }
   end
 
@@ -127,7 +127,7 @@ class SessionsController < ApplicationController
     request.env['rack.session.options'][:expire_after] = -1.year
     request.env['rack.session.options'][:renew] = true
 
-    render :json => { }
+    render json: { }
   end
 
   def create_omniauth
@@ -195,17 +195,17 @@ class SessionsController < ApplicationController
     # check user
     if !params[:id]
       render(
-        :json   => { :message => 'no user given' },
-        :status => :not_found
+        json: { message: 'no user given' },
+        status: :not_found
       )
       return false
     end
 
-    user = User.lookup( :id => params[:id] )
+    user = User.lookup( id: params[:id] )
     if !user
       render(
-        :json   => {},
-        :status => :not_found
+        json: {},
+        status: :not_found
       )
       return false
     end
@@ -231,11 +231,11 @@ class SessionsController < ApplicationController
       return false
     end
 
-    user = User.lookup( :id => session[:switched_from_user_id] )
+    user = User.lookup( id: session[:switched_from_user_id] )
     if !user
       render(
-        :json   => {},
-        :status => :not_found
+        json: {},
+        status: :not_found
       )
       return false
     end
@@ -263,20 +263,20 @@ class SessionsController < ApplicationController
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']
-        user = User.lookup( :id => session.data['user_id'] )
+        user = User.lookup( id: session.data['user_id'] )
         assets = user.assets( assets )
       end
     }
-    render :json => {
-      :sessions => sessions_clean,
-      :assets   => assets,
+    render json: {
+      sessions: sessions_clean,
+      assets: assets,
     }
   end
 
   def delete
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     SessionHelper::destroy( params[:id] )
-    render :json => {}
+    render json: {}
   end
 
 end

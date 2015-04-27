@@ -8,7 +8,7 @@ class ActivityStreamController < ApplicationController
     activity_stream = current_user.activity_stream( params[:limit], true )
 
     # return result
-    render :json => activity_stream
+    render json: activity_stream
   end
 
 end

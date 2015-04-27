@@ -66,12 +66,12 @@ class Observer::Ticket::Notification::BackgroundJob
       # create online notification
       seen = ticket.online_notification_seen_state
       OnlineNotification.add(
-        :type             => @p[:type],
-        :object           => 'Ticket',
-        :o_id             => ticket.id,
-        :seen             => seen,
-        :created_by_id    => ticket.updated_by_id || 1,
-        :user_id          => user.id,
+        type: @p[:type],
+        object: 'Ticket',
+        o_id: ticket.id,
+        seen: seen,
+        created_by_id: ticket.updated_by_id || 1,
+        user_id: user.id,
       )
 
       # create email notification
@@ -103,12 +103,12 @@ class Observer::Ticket::Notification::BackgroundJob
       notification = {}
       [:subject, :body].each { |key|
         notification[key.to_sym] = NotificationFactory.build(
-          :locale  => user.preferences[:locale],
-          :string  => template[key],
-          :objects => {
-            :ticket    => ticket,
-            :article   => article,
-            :recipient => user,
+          locale: user.preferences[:locale],
+          string: template[key],
+          objects: {
+            ticket: ticket,
+            article: article,
+            recipient: user,
           }
         )
       }
@@ -120,21 +120,21 @@ class Observer::Ticket::Notification::BackgroundJob
       puts "send ticket notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
 
       NotificationFactory.send(
-        :recipient    => user,
-        :subject      => notification[:subject],
-        :body         => notification[:body],
-        :content_type => 'text/html',
+        recipient: user,
+        subject: notification[:subject],
+        body: notification[:body],
+        content_type: 'text/html',
       )
     end
 
     # add history record
     if recipient_list != ''
       History.add(
-        :o_id           => ticket.id,
-        :history_type   => 'notification',
-        :history_object => 'Ticket',
-        :value_to       => recipient_list,
-        :created_by_id  => ticket.updated_by_id || 1
+        o_id: ticket.id,
+        history_type: 'notification',
+        history_object: 'Ticket',
+        value_to: recipient_list,
+        created_by_id: ticket.updated_by_id || 1
       )
     end
   end
@@ -184,7 +184,7 @@ class Observer::Ticket::Notification::BackgroundJob
         if record.respond_to?( attribute_name ) && record.send(attribute_name)
           relation_class = record.send(attribute_name).class
           if relation_class && value_id[0]
-            relation_model = relation_class.lookup( :id => value_id[0] )
+            relation_model = relation_class.lookup( id: value_id[0] )
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
@@ -194,7 +194,7 @@ class Observer::Ticket::Notification::BackgroundJob
             end
           end
           if relation_class && value_id[1]
-            relation_model = relation_class.lookup( :id => value_id[1] )
+            relation_model = relation_class.lookup( id: value_id[1] )
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
@@ -281,8 +281,8 @@ State: i18n(#{ticket.state.name.text2html})<br>
     body += template_footer(user, ticket, article)
 
     template = {
-      :subject => subject,
-      :body    => body,
+      subject: subject,
+      body: body,
     }
     template
   end
@@ -342,8 +342,8 @@ Changes:<br>
     body += template_footer(user,ticket, article)
 
     template = {
-      :subject => subject,
-      :body    => body,
+      subject: subject,
+      body: body,
     }
     template
   end

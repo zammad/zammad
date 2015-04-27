@@ -92,8 +92,8 @@ returns
       end
     }
     return {
-      :history => history[:list],
-      :assets  => history[:assets],
+      history: history[:list],
+      assets: history[:assets],
     }
   end
 

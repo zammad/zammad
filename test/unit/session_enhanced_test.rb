@@ -5,43 +5,43 @@ class SessionEnhancedTest < ActiveSupport::TestCase
   test 'a check clients and send messages' do
 
     # create users
-    roles  = Role.where( :name => [ 'Agent'] )
+    roles  = Role.where( name: [ 'Agent'] )
     groups = Group.all
 
     UserInfo.current_user_id = 1
     agent1 = User.create_or_update(
-      :login     => 'session-agent-1',
-      :firstname => 'Session',
-      :lastname  => 'Agent 1',
-      :email     => 'session-agent1@example.com',
-      :password  => 'agentpw',
-      :active    => true,
-      :roles     => roles,
-      :groups    => groups,
+      login: 'session-agent-1',
+      firstname: 'Session',
+      lastname: 'Agent 1',
+      email: 'session-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
     agent1.roles = roles
     agent1.save
     agent2 = User.create_or_update(
-      :login     => 'session-agent-2',
-      :firstname => 'Session',
-      :lastname  => 'Agent 2',
-      :email     => 'session-agent2@example.com',
-      :password  => 'agentpw',
-      :active    => true,
-      :roles     => roles,
-      :groups    => groups,
+      login: 'session-agent-2',
+      firstname: 'Session',
+      lastname: 'Agent 2',
+      email: 'session-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
     agent2.roles = roles
     agent2.save
     agent3 = User.create_or_update(
-      :login     => 'session-agent-3',
-      :firstname => 'Session',
-      :lastname  => 'Agent 3',
-      :email     => 'session-agent3@example.com',
-      :password  => 'agentpw',
-      :active    => true,
-      :roles     => roles,
-      :groups    => groups,
+      login: 'session-agent-3',
+      firstname: 'Session',
+      lastname: 'Agent 3',
+      email: 'session-agent3@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
     agent3.roles = roles
     agent3.save
@@ -53,9 +53,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     Sessions.destory(client_id1)
     Sessions.destory(client_id2)
     Sessions.destory(client_id3)
-    Sessions.create( client_id1, agent1.attributes, { :type => 'websocket' } )
-    Sessions.create( client_id2, agent2.attributes, { :type => 'ajax' } )
-    Sessions.create( client_id3, agent3.attributes, { :type => 'ajax' } )
+    Sessions.create( client_id1, agent1.attributes, { type: 'websocket' } )
+    Sessions.create( client_id2, agent2.attributes, { type: 'ajax' } )
+    Sessions.create( client_id3, agent3.attributes, { type: 'ajax' } )
 
     # check if session exists
     assert( Sessions.session_exists?(client_id1), 'check if session exists' )
@@ -96,8 +96,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_equal( data[:user]['id'], agent3.id, 'check if user id is correct' )
 
     # send data to one client
-    Sessions.send( client_id1, { :msg => 'äöüß123' } )
-    Sessions.send( client_id1, { :msg => 'äöüß1234' } )
+    Sessions.send( client_id1, { msg: 'äöüß123' } )
+    Sessions.send( client_id1, { msg: 'äöüß1234' } )
     messages = Sessions.queue(client_id1)
     assert_equal( 3, messages.count, 'messages count')
     assert_equal( 'ws:login', messages[0]['event'], 'messages 1')
@@ -117,7 +117,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
 
     # broadcast to all clients
-    Sessions.broadcast( { :msg => 'ooo123123123123123123'} )
+    Sessions.broadcast( { msg: 'ooo123123123123123123'} )
     messages = Sessions.queue(client_id1)
     assert_equal( messages.count, 1, 'messages count')
     assert_equal( 'ooo123123123123123123', messages[0]['msg'], 'messages broadcast 1')
@@ -131,7 +131,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_equal( 'ooo123123123123123123', messages[0]['msg'], 'messages broadcast 1')
 
     # send dedicated message to user
-    Sessions.send_to( agent1.id, { :msg => 'ooo1231231231231231234'} )
+    Sessions.send_to( agent1.id, { msg: 'ooo1231231231231231234'} )
     messages = Sessions.queue(client_id1)
     assert_equal( messages.count, 1, 'messages count')
     assert_equal( 'ooo1231231231231231234', messages[0]['msg'], 'messages send 1')
@@ -177,35 +177,35 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
   test 'b check client and backends' do
     # create users
-    roles  = Role.where( :name => [ 'Agent'] )
+    roles  = Role.where( name: [ 'Agent'] )
     groups = Group.all
 
     UserInfo.current_user_id = 1
     agent1 = User.create_or_update(
-      :login     => 'session-agent-1',
-      :firstname => 'Session',
-      :lastname  => 'Agent 1',
-      :email     => 'session-agent1@example.com',
-      :password  => 'agentpw',
-      :active    => true,
-      :roles     => roles,
-      :groups    => groups,
+      login: 'session-agent-1',
+      firstname: 'Session',
+      lastname: 'Agent 1',
+      email: 'session-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
     agent1.roles = roles
     agent1.save
     agent2 = User.create_or_update(
-      :login     => 'session-agent-2',
-      :firstname => 'Session',
-      :lastname  => 'Agent 2',
-      :email     => 'session-agent2@example.com',
-      :password  => 'agentpw',
-      :active    => true,
-      :roles     => roles,
-      :groups    => groups,
+      login: 'session-agent-2',
+      firstname: 'Session',
+      lastname: 'Agent 2',
+      email: 'session-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
     )
     agent2.roles = roles
     agent2.save
-    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true )
+    org = Organization.create( name: 'SomeOrg::' + rand(999999).to_s, active: true )
 
     # create sessions
     client_id1_0 = '1234-1'
@@ -220,11 +220,11 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       Sessions.jobs
     }
     sleep 5
-    Sessions.create( client_id1_0, agent1.attributes, { :type => 'websocket' } )
+    Sessions.create( client_id1_0, agent1.attributes, { type: 'websocket' } )
     sleep 6.5
-    Sessions.create( client_id1_1, agent1.attributes, { :type => 'websocket' } )
+    Sessions.create( client_id1_1, agent1.attributes, { type: 'websocket' } )
     sleep 3.2
-    Sessions.create( client_id2, agent2.attributes, { :type => 'ajax' } )
+    Sessions.create( client_id2, agent2.attributes, { type: 'ajax' } )
 
     # check if session exists
     assert( Sessions.session_exists?(client_id1_0), 'check if session exists' )

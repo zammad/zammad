@@ -15,7 +15,7 @@ returns
 =end
 
   def self.agents
-    User.where( :active => true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
+    User.where( active: true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
   end
 
 =begin
@@ -63,7 +63,7 @@ returns
       state_ids.push params[:ticket].state.id
     end
     state_types.each {|type|
-      state_type = Ticket::StateType.where( :name => type ).first
+      state_type = Ticket::StateType.where( name: type ).first
       if state_type
         state_type.states.each {|state|
           assets = state.assets(assets)
@@ -75,7 +75,7 @@ returns
 
     # get priorities
     priority_ids = []
-    Ticket::Priority.where( :active => true ).each { |priority|
+    Ticket::Priority.where( active: true ).each { |priority|
       assets = priority.assets(assets)
       priority_ids.push priority.id
     }
@@ -89,7 +89,7 @@ returns
         types.push 'email'
       end
       types.each {|type_name|
-        type = Ticket::Article::Type.lookup( :name => type_name )
+        type = Ticket::Article::Type.lookup( name: type_name )
         if type
           type_ids.push type.id
         end
@@ -103,10 +103,10 @@ returns
       agents[ user.id ] = 1
     }
 
-    dependencies = { :group_id => { '' => { :owner_id => [] } } }
-    Group.where( :active => true ).each { |group|
+    dependencies = { group_id: { '' => { owner_id: [] } } }
+    Group.where( active: true ).each { |group|
       assets = group.assets(assets)
-      dependencies[:group_id][group.id] = { :owner_id => [] }
+      dependencies[:group_id][group.id] = { owner_id: [] }
       group.users.each {|user|
         next if !agents[ user.id ]
         assets = user.assets(assets)
@@ -115,9 +115,9 @@ returns
     }
 
     return {
-      :assets       => assets,
-      :filter       => filter,
-      :dependencies => dependencies,
+      assets: assets,
+      filter: filter,
+      dependencies: dependencies,
     }
   end
 
@@ -148,8 +148,8 @@ returns
 
     # get tickets
     tickets_open = Ticket.where(
-      :customer_id => data[:customer_id],
-      :state_id    => state_list_open
+      customer_id: data[:customer_id],
+      state_id: state_list_open
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     assets = {}
     ticket_ids_open = []
@@ -159,8 +159,8 @@ returns
     }
 
     tickets_closed = Ticket.where(
-      :customer_id => data[:customer_id],
-      :state_id    => state_list_closed
+      customer_id: data[:customer_id],
+      state_id: state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     ticket_ids_closed = []
     tickets_closed.each {|ticket|
@@ -169,9 +169,9 @@ returns
     }
 
     return {
-      :ticket_ids_open   => ticket_ids_open,
-      :ticket_ids_closed => ticket_ids_closed,
-      :assets            => assets,
+      ticket_ids_open: ticket_ids_open,
+      ticket_ids_closed: ticket_ids_closed,
+      assets: assets,
     }
   end
 

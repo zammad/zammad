@@ -5,57 +5,57 @@ class EmailProcessTest < ActiveSupport::TestCase
   test 'process simple' do
     files = [
       {
-        :data => 'From: me@example.com
+        data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject
 
 Some Text',
-        :trusted => false,
-        :success => true,
+        trusted: false,
+        success: true,
       },
       {
-        :data => "From: me@example.com
+        data: "From: me@example.com
 To: customer@example.com
 Subject: äöü some subject
 
 Some Textäöü",
-        :trusted => false,
-        :success => true,
-        :result  => {
+        trusted: false,
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => 'äöü some subject',
+            priority: '2 normal',
+            title: 'äöü some subject',
           },
           1 => {
-            :body     => 'Some Textäöü',
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => false,
+            body: 'Some Textäöü',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },
       {
-        :data => "From: me@example.com
+        data: "From: me@example.com
 To: customer@example.com
 Subject: äöü some subject
 
 Some Textäöü".encode('ISO-8859-1'),
-        :success => true,
-        :result  => {
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => '', # should be äöü some subject, but can not be parsed from mime tools
+            priority: '2 normal',
+            title: '', # should be äöü some subject, but can not be parsed from mime tools
           },
           1 => {
-            :body     => 'Some Textäöü',
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => false,
+            body: 'Some Textäöü',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },
       {
-        :data => "From: me@example.com
+        data: "From: me@example.com
 To: customer@example.com
 Subject: Subject: =?utf-8?B?44CQ5LiT5Lia5Li65oKo5rOo5YaM6aaZ5riv5Y+K5rW35aSW5YWs5Y+477yI5aW95aSE5aSa5aSa77yJ?=
         =?utf-8?B?44CR44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA?=
@@ -115,30 +115,30 @@ Subject: Subject: =?utf-8?B?44CQ5LiT5Lia5Li65oKo5rOo5YaM6aaZ5riv5Y+K5rW35aSW5YWs
         =?utf-8?B?5YWs5Y+46Zmi5aOr5bel5L2c56uZ5pel5YmN5q2j5byP5bu6Li4uW+ivpue7hl0=?=
 
 Some Text",
-        :trusted => false,
-        :success => true,
-        :result  => {
+        trusted: false,
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
+            priority: '2 normal',
+            title: '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
           },
           1 => {
-            :body   => 'Some Text',
-            :sender => 'Customer',
-            :type   => 'email',
+            body: 'Some Text',
+            sender: 'Customer',
+            type: 'email',
           },
         },
       },
       {
-        :data    => IO.read('test/fixtures/mail21.box'),
-        :success => true,
-        :result  => {
+        data: IO.read('test/fixtures/mail21.box'),
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => 'World Best DRUGS Mall For a Reasonable Price.',
+            priority: '2 normal',
+            title: 'World Best DRUGS Mall For a Reasonable Price.',
           },
           1 => {
-            :body => "_________________________________________________________________________________Please beth saw his head
+            body: "_________________________________________________________________________________Please beth saw his head
 
 92hH3&yuml;oI221G1&iquest;iH16u-2&loz;NQ422U1awAq&sup1;JLZ&mu;2IicgT1&zeta;2Y7&sube;t 63&lsquo;M236E2&Yacute;&rarr;DA2&dagger;I048CvJ9A&uarr;3iTc4&Eacute;I&Upsilon;vXO502N1FJS&eth;1r 154F1HPO11CRxZp tL&icirc;T9&ouml;XH1b3Es1W mN2Bg3&otilde;EbP&OElig;S2f&tau;T&oacute;Y4 sU2P2&zeta;&Delta;RFkcI21&trade;C&Oacute;Z3E&Lambda;Rq!Cass is good to ask what that 
 86&Euml;[1] 2u2C L I C1K   H E R E28MLuke had been thinking about that.
@@ -175,22 +175,22 @@ ___
 [1] http://piufup.medicatingsafemart.ru
 [2] http://www.avast.com/
 [3] http://www.avast.com/",
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => false,
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },
       {
-        :data    => IO.read('test/fixtures/mail22.box'),
-        :success => true,
-        :result  => {
+        data: IO.read('test/fixtures/mail22.box'),
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
+            priority: '2 normal',
+            title: 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
           },
           1 => {
-            :body => "Puzzled by judith bronte dave. Melvin will want her way through with.
+            body: "Puzzled by judith bronte dave. Melvin will want her way through with.
 Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.
 Freemont and they talked with beppe.
 Thinking of bed and whenever adam.
@@ -206,23 +206,23 @@ Just then returned to believe it here.
 Freemont and pulling out several minutes.
 
 [1] &#104;&#116;&#116;&#112;&#58;&#47;&#47;&#1072;&#1086;&#1089;&#1082;&#46;&#1088;&#1092;?jmlfwnwe&ucwkiyyc",
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => false,
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },
       {
-        :data    => IO.read('test/fixtures/mail23.box'),
-        :success => true,
-        :result  => {
+        data: IO.read('test/fixtures/mail23.box'),
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => '',
+            priority: '2 normal',
+            title: '',
           },
           1 => {
-            :from => 'marketingmanager@nthcpghana.com',
-            :body => '»ú·¿»·¾³·¨¹æ
+            from: 'marketingmanager@nthcpghana.com',
+            body: '»ú·¿»·¾³·¨¹æ
 Message-ID: <20140911055224675615@nthcpghana.com>
 From: =?utf-8?B?6IOh5qW35ZKM?= <marketingmanager@nthcpghana.com>
 To: <spviex@126.com>,
@@ -1817,134 +1817,134 @@ AElFTkSuQmCC
 ------=_NextPart_000_0FA8_01BB04D8.188AE890--
 
 ',
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => false,
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },
       {
-        :data => 'From: Some Body <somebody@example.com>
+        data: 'From: Some Body <somebody@example.com>
 To: Bob <bod@example.com>
 Cc: any@example.com
 Subject: some subject
 
 Some Text',
-        :trusted => false,
-        :success => true,
-        :result => {
+        trusted: false,
+        success: true,
+        result: {
           0 => {
-            :group    => 'Users',
-            :priority => '2 normal',
-            :title    => 'some subject',
+            group: 'Users',
+            priority: '2 normal',
+            title: 'some subject',
           },
           1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
+            sender: 'Customer',
+            type: 'email',
           },
         },
-        :verify => {
-          :users => [
+        verify: {
+          users: [
             {
-              :firstname => 'Some',
-              :lastname  => 'Body',
-              :email     => 'somebody@example.com',
+              firstname: 'Some',
+              lastname: 'Body',
+              email: 'somebody@example.com',
             },
             {
-              :firstname => 'Bob',
-              :lastname  => '',
-              :fullname  => 'Bob',
-              :email     => 'bod@example.com',
+              firstname: 'Bob',
+              lastname: '',
+              fullname: 'Bob',
+              email: 'bod@example.com',
             },
             {
-              :firstname => '',
-              :lastname  => '',
-              :email     => 'any@example.com',
-              :fullname  => 'any@example.com',
+              firstname: '',
+              lastname: '',
+              email: 'any@example.com',
+              fullname: 'any@example.com',
             },
           ],
         }
       },
       {
-        :data    => IO.read('test/fixtures/mail30.box'),
-        :success => true,
-        :result  => {
+        data: IO.read('test/fixtures/mail30.box'),
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => 'Antragswesen in TesT abbilden',
+            priority: '2 normal',
+            title: 'Antragswesen in TesT abbilden',
           },
           1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
+            sender: 'Customer',
+            type: 'email',
           },
         },
-        :verify => {
-          :users => [
+        verify: {
+          users: [
             {
-              :firstname => 'Bert',
-              :lastname  => 'Jörg',
-              :fullname  => 'Bert Jörg',
-              :email     => 'joerg.bert@example.com',
+              firstname: 'Bert',
+              lastname: 'Jörg',
+              fullname: 'Bert Jörg',
+              email: 'joerg.bert@example.com',
             },
             {
-              :firstname => 'Karl-Heinz',
-              :lastname  => 'Test',
-              :fullname  => 'Karl-Heinz Test',
-              :email     => 'karl-heinz.test@example.com',
+              firstname: 'Karl-Heinz',
+              lastname: 'Test',
+              fullname: 'Karl-Heinz Test',
+              email: 'karl-heinz.test@example.com',
             },
             {
-              :firstname => 'Manfred',
-              :lastname  => 'Haert',
-              :email     => 'manfred.haert@example.com',
-              :fullname  => 'Manfred Haert',
+              firstname: 'Manfred',
+              lastname: 'Haert',
+              email: 'manfred.haert@example.com',
+              fullname: 'Manfred Haert',
             },
           ],
         }
       },
       {
-        :data    => IO.read('test/fixtures/mail31.box'),
-        :success => true,
-        :result  => {
+        data: IO.read('test/fixtures/mail31.box'),
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => '內應力產生与注塑工艺条件之间的关系；',
+            priority: '2 normal',
+            title: '內應力產生与注塑工艺条件之间的关系；',
           },
           1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
+            sender: 'Customer',
+            type: 'email',
           },
         },
-        :verify => {
-          :users => [
+        verify: {
+          users: [
             {
-              :firstname => 'bertha　mou',
-              :lastname  => '',
-              :fullname  => 'bertha　mou',
-              :email     => 'zhengkang@ha.chinamobile.com',
+              firstname: 'bertha　mou',
+              lastname: '',
+              fullname: 'bertha　mou',
+              email: 'zhengkang@ha.chinamobile.com',
             },
           ],
         }
       },
       {
-        :data    => IO.read('test/fixtures/mail32.box'),
-        :success => true,
-        :result  => {
+        data: IO.read('test/fixtures/mail32.box'),
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => '发现最美车间主任',
+            priority: '2 normal',
+            title: '发现最美车间主任',
           },
           1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
+            sender: 'Customer',
+            type: 'email',
           },
         },
-        :verify => {
-          :users => [
+        verify: {
+          users: [
             {
-              :firstname => 'Dana.Qin',
-              :lastname  => '',
-              :fullname  => 'Dana.Qin',
-              :email     => 'dana.qin6e1@gmail.com',
+              firstname: 'Dana.Qin',
+              lastname: '',
+              fullname: 'Dana.Qin',
+              email: 'dana.qin6e1@gmail.com',
             },
           ],
         }
@@ -1955,17 +1955,17 @@ Some Text',
   test 'process trusted' do
     files = [
       {
-        :data => 'From: me@example.com
+        data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject
 X-Zammad-Ignore: true
 
 Some Text',
-        :trusted => true,
-        :success => false,
+        trusted: true,
+        success: false,
       },
       {
-        :data => 'From: me@example.com
+        data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-priority: 3 high
@@ -1974,17 +1974,17 @@ x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
 
 Some Text',
-        :trusted => true,
-        :success => true,
-        :result => {
+        trusted: true,
+        success: true,
+        result: {
           0 => {
-            :priority => '3 high',
-            :title    => 'some subject',
+            priority: '3 high',
+            title: 'some subject',
           },
           1 => {
-            :sender   => 'System',
-            :type     => 'phone',
-            :internal => true,
+            sender: 'System',
+            type: 'phone',
+            internal: true,
           },
         },
       },
@@ -1995,7 +1995,7 @@ Some Text',
   test 'process not trusted' do
     files = [
       {
-        :data => 'From: me@example.com
+        data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-Priority: 3 high
@@ -2004,17 +2004,17 @@ x-Zammad-Article-Type: phone
 x-Zammad-Article-Internal: true
 
 Some Text',
-        :trusted => false,
-        :success => true,
-        :result => {
+        trusted: false,
+        success: true,
+        result: {
           0 => {
-            :priority => '2 normal',
-            :title    => 'some subject',
+            priority: '2 normal',
+            title: 'some subject',
           },
           1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => false,
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },
@@ -2024,98 +2024,98 @@ Some Text',
 
   test 'process with postmaster filter' do
     group1 = Group.create_if_not_exists(
-      :name          => 'Test Group1',
-      :created_by_id => 1,
-      :updated_by_id => 1,
+      name: 'Test Group1',
+      created_by_id: 1,
+      updated_by_id: 1,
     )
     group2 = Group.create_if_not_exists(
-      :name          => 'Test Group2',
-      :created_by_id => 1,
-      :updated_by_id => 1,
+      name: 'Test Group2',
+      created_by_id: 1,
+      updated_by_id: 1,
     )
     PostmasterFilter.destroy_all
     PostmasterFilter.create(
-      :name  => 'not used',
-      :match => {
-        :from => 'nobody@example.com',
+      name: 'not used',
+      match: {
+        from: 'nobody@example.com',
       },
-      :perform => {
+      perform: {
         'X-Zammad-Ticket-priority' => '3 high',
       },
-      :channel       => 'email',
-      :active        => true,
-      :created_by_id => 1,
-      :updated_by_id => 1,
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
     )
     PostmasterFilter.create(
-      :name  => 'used',
-      :match => {
-        :from => 'me@example.com',
+      name: 'used',
+      match: {
+        from: 'me@example.com',
       },
-      :perform => {
+      perform: {
         'X-Zammad-Ticket-group_id'  => group1.id,
         'x-Zammad-Article-Internal' => true,
       },
-      :channel       => 'email',
-      :active        => true,
-      :created_by_id => 1,
-      :updated_by_id => 1,
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
     )
     PostmasterFilter.create(
-      :name  => 'used x-any-recipient',
-      :match => {
+      name: 'used x-any-recipient',
+      match: {
         'x-any-recipient' => 'any@example.com',
       },
-      :perform => {
+      perform: {
         'X-Zammad-Ticket-group_id'  => group2.id,
         'x-Zammad-Article-Internal' => true,
       },
-      :channel       => 'email',
-      :active        => true,
-      :created_by_id => 1,
-      :updated_by_id => 1,
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
     )
     files = [
       {
-        :data => 'From: me@example.com
+        data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject
 
 Some Text',
-        :trusted => false,
-        :success => true,
-        :result => {
+        trusted: false,
+        success: true,
+        result: {
           0 => {
-            :group    => group1.name,
-            :priority => '2 normal',
-            :title    => 'some subject',
+            group: group1.name,
+            priority: '2 normal',
+            title: 'some subject',
           },
           1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => true,
+            sender: 'Customer',
+            type: 'email',
+            internal: true,
           },
         },
       },
       {
-        :data => 'From: Some Body <somebody@example.com>
+        data: 'From: Some Body <somebody@example.com>
 To: Bob <bod@example.com>
 Cc: any@example.com
 Subject: some subject
 
 Some Text',
-        :trusted => false,
-        :success => true,
-        :result => {
+        trusted: false,
+        success: true,
+        result: {
           0 => {
-            :group    => group2.name,
-            :priority => '2 normal',
-            :title    => 'some subject',
+            group: group2.name,
+            priority: '2 normal',
+            title: 'some subject',
           },
           1 => {
-            :sender   => 'Customer',
-            :type     => 'email',
-            :internal => true,
+            sender: 'Customer',
+            type: 'email',
+            internal: true,
           },
         },
       },
@@ -2127,7 +2127,7 @@ Some Text',
   def process(files)
     files.each { |file|
       parser = Channel::EmailParser.new
-      result = parser.process( { :trusted => file[:trusted] }, file[:data] )
+      result = parser.process( { trusted: file[:trusted] }, file[:data] )
       if file[:success]
         if result && result.class == Array && result[1]
           assert( true )
@@ -2148,7 +2148,7 @@ Some Text',
             # verify if users are created
             if file[:verify][:users]
               file[:verify][:users].each { |user_result|
-                user = User.where(:email => user_result[:email]).first
+                user = User.where(email: user_result[:email]).first
                 if !user
                   assert( false, "No user '#{user_result[:email]}' found!" )
                   return

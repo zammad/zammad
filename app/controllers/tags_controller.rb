@@ -8,49 +8,49 @@ class TagsController < ApplicationController
     list = Tag.list()
 
     # return result
-    render :json => {
-      :tags => list,
+    render json: {
+      tags: list,
     }
   end
 
   # GET /api/v1/tags
   def list
     list = Tag.tag_list(
-      :object => params[:object],
-      :o_id   => params[:o_id],
+      object: params[:object],
+      o_id: params[:o_id],
     )
 
     # return result
-    render :json => {
-      :tags => list,
+    render json: {
+      tags: list,
     }
   end
 
   # POST /api/v1/tag/add
   def add
     success = Tag.tag_add(
-      :object        => params[:object],
-      :o_id          => params[:o_id],
-      :item          => params[:item],
+      object: params[:object],
+      o_id: params[:o_id],
+      item: params[:item],
     );
     if success
-      render :json => success, :status => :created
+      render json: success, status: :created
     else
-      render :json => success.errors, :status => :unprocessable_entity
+      render json: success.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /api/v1/tag/remove
   def remove
     success = Tag.tag_remove(
-      :object        => params[:object],
-      :o_id          => params[:o_id],
-      :item          => params[:item],
+      object: params[:object],
+      o_id: params[:o_id],
+      item: params[:item],
     );
     if success
-      render :json => success, :status => :created
+      render json: success, status: :created
     else
-      render :json => success.errors, :status => :unprocessable_entity
+      render json: success.errors, status: :unprocessable_entity
     end
   end
 

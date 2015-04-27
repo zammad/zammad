@@ -23,25 +23,25 @@ class ExampleTest < Test::Unit::TestCase
 
     def test_login_failed
        browser.get 'http://portal.znuny.com/'
-       element_username = browser.find_element :name => 'username'
+       element_username = browser.find_element name: 'username'
        element_username.send_keys 'roy@kaldung.de'
-       element_password = browser.find_element :name => 'password'
+       element_password = browser.find_element name: 'password'
        element_password.send_keys '123456'
        element_password.submit
-       wait = Selenium::WebDriver::Wait.new(:timeout => 10) # seconds
-       wait.until { browser.find_element(:id => 'app') }
+       wait = Selenium::WebDriver::Wait.new(timeout: 10) # seconds
+       wait.until { browser.find_element(id: 'app') }
        assert_equal browser.current_url, 'https://portal.znuny.com/#login'
     end
 
     def test_login_passed
        browser.get 'http://portal.znuny.com/'
-       element_username = browser.find_element :name => 'username'
+       element_username = browser.find_element name: 'username'
        element_username.send_keys 'roy@kaldung.com'
-       element_password = browser.find_element :name => 'password'
+       element_password = browser.find_element name: 'password'
        element_password.send_keys '090504'
        element_password.submit
-       wait = Selenium::WebDriver::Wait.new(:timeout => 10) # seconds
-       wait.until { browser.find_element(:id => 'app') }
+       wait = Selenium::WebDriver::Wait.new(timeout: 10) # seconds
+       wait.until { browser.find_element(id: 'app') }
        assert_equal browser.current_url, 'https://portal.znuny.com/#ticket_view/my_tickets'
     end
 end

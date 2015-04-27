@@ -39,7 +39,7 @@ class Sessions::Backend::ActivityStream
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
 
     data = self.load
 
@@ -47,17 +47,17 @@ class Sessions::Backend::ActivityStream
 
     if !@client
       return {
-        :event      => 'activity_stream_rebuild',
-        :collection => 'activity_stream',
-        :data       => data,
+        event: 'activity_stream_rebuild',
+        collection: 'activity_stream',
+        data: data,
       }
     end
 
     @client.log 'notify', "push activity_stream #{ data.first.class.to_s } for user #{ @user.id }"
     @client.send({
-      :event      => 'activity_stream_rebuild',
-      :collection => 'activity_stream',
-      :data       => data,
+      event: 'activity_stream_rebuild',
+      collection: 'activity_stream',
+      data: data,
     })
   end
 
