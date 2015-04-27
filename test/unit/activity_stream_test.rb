@@ -58,11 +58,11 @@ class ActivityStreamTest < ActiveSupport::TestCase
           },
         },
         check: [
-         {
-            result: true,
-            object: 'Ticket',
-            type: 'updated',
-          },
+          {
+             result: true,
+             object: 'Ticket',
+             type: 'updated',
+           },
           {
             result: true,
             object: 'Ticket::Article',

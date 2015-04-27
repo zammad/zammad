@@ -71,11 +71,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
           },
         },
         check: [
-         {
-            type: 'create',
-            object: 'Ticket',
-            created_by_id: agent_user1.id,
-          },
+          {
+             type: 'create',
+             object: 'Ticket',
+             created_by_id: agent_user1.id,
+           },
          {
             type: 'update',
             object: 'Ticket',
@@ -122,11 +122,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
           },
         },
         check: [
-         {
-            type: 'create',
-            object: 'Ticket',
-            created_by_id: agent_user1.id,
-          },
+          {
+             type: 'create',
+             object: 'Ticket',
+             created_by_id: agent_user1.id,
+           },
          {
             type: 'update',
             object: 'Ticket',
@@ -173,11 +173,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
           },
         },
         check: [
-         {
-            type: 'create',
-            object: 'Ticket',
-            created_by_id: agent_user1.id,
-          },
+          {
+             type: 'create',
+             object: 'Ticket',
+             created_by_id: agent_user1.id,
+           },
          {
             type: 'update',
             object: 'Ticket',
@@ -224,11 +224,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
           },
         },
         check: [
-         {
-            type: 'create',
-            object: 'Ticket',
-            created_by_id: agent_user1.id,
-          },
+          {
+             type: 'create',
+             object: 'Ticket',
+             created_by_id: agent_user1.id,
+           },
          {
             type: 'update',
             object: 'Ticket',
