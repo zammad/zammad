@@ -18,7 +18,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
-    assert(result.body =~ /"text\/plain"/)
+    assert(result.body =~ %r{"text/plain"})
 
     # get / 404
     result = UserAgent.get(
@@ -42,7 +42,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"post"/)
     assert(result.body =~ /"some value"/)
-    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
+    assert(result.body =~ %r{"application/x-www-form-urlencoded"})
 
     # post / 404
     result = UserAgent.post(
@@ -69,7 +69,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"put"/)
     assert(result.body =~ /"some value"/)
-    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
+    assert(result.body =~ %r{"application/x-www-form-urlencoded"})
 
     # put / 404
     result = UserAgent.put(
@@ -92,7 +92,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"delete"/)
-    assert(result.body =~ /"text\/plain"/)
+    assert(result.body =~ %r{"text/plain"})
 
     # delete / 404
     result = UserAgent.delete(
@@ -120,7 +120,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
-    assert(result.body =~ /"text\/plain"/)
+    assert(result.body =~ %r{"text/plain"})
 
     # get / 401
     result = UserAgent.get(
@@ -153,7 +153,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"post"/)
     assert(result.body =~ /"some value"/)
-    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
+    assert(result.body =~ %r{"application/x-www-form-urlencoded"})
 
     # post / 401
     result = UserAgent.post(
@@ -188,7 +188,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"put"/)
     assert(result.body =~ /"some value"/)
-    assert(result.body =~ /"application\/x-www-form-urlencoded"/)
+    assert(result.body =~ %r{"application/x-www-form-urlencoded"})
 
     # put / 401
     result = UserAgent.put(
@@ -219,7 +219,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"delete"/)
-    assert(result.body =~ /"text\/plain"/)
+    assert(result.body =~ %r{"text/plain"})
 
     # delete / 401
     result = UserAgent.delete(
@@ -248,7 +248,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"abc"/)
-    assert(result.body =~ /"text\/plain"/)
+    assert(result.body =~ %r{"text/plain"})
 
     # get / 301
     result = UserAgent.request(
@@ -264,7 +264,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"abc"/)
-    assert(result.body =~ /"text\/plain"/)
+    assert(result.body =~ %r{"text/plain"})
 
     # get / 401
     result = UserAgent.request(
@@ -293,7 +293,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
-    assert(result.body =~ /"text\/plain"/)
+    assert(result.body =~ %r{"text/plain"})
 
     # ftp / 200
     result = UserAgent.request(
@@ -430,7 +430,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"content_type_requested"/)
-    assert(result.body =~ /"application\/json"/)
+    assert(result.body =~ %r{"application/json"})
     assert_equal('some value ', result.data['submitted']['key'])
 
     # get / 401
@@ -464,7 +464,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('201', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"content_type_requested"/)
-    assert(result.body =~ /"application\/json"/)
+    assert(result.body =~ %r{"application/json"})
     assert_equal('some value ', result.data['submitted']['key'])
   end
 
