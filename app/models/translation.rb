@@ -15,7 +15,7 @@ load translations from online
 =end
 
   def self.load
-    url = 'http://localhost:3001/api/v1/translations'
+    url = 'https://i18n.zammad.com/api/v1/translations'
     if !UserInfo.current_user_id
       UserInfo.current_user_id = 1
     end
@@ -26,6 +26,7 @@ load translations from online
         :json => true,
       }
     )
+    raise "Can't load translations from #{url}: #{result.error}" if !result.success?
     result.data.each {|translation|
       #puts translation.inspect
 
@@ -84,7 +85,7 @@ push translations to online
         :json => true,
       }
     )
-    raise result.error if !result.success?
+    raise "Can't push translations to #{url}: #{result.error}" if !result.success?
     true
   end
 
