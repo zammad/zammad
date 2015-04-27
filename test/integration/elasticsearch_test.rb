@@ -260,7 +260,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(result[0], 'record 1')
     assert_equal(result[0].id, ticket1.id)
 
-
     # search for not indexed attachment
     result = Ticket.search(
       current_user: agent,
@@ -276,7 +275,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
     assert(!result[0], 'record 1')
 
-
     # search for ticket with no permissions
     result = Ticket.search(
       current_user: agent,
@@ -285,7 +283,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
     assert(result.empty?, 'result should be empty')
     assert(!result[0], 'record 1')
-
 
     # search as customer1
     result = Ticket.search(

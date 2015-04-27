@@ -7,11 +7,9 @@ class Channel::Facebook
   #  def fetch(:oauth_token, :oauth_token_secret)
   def fetch
 
-
   end
 
   def disconnect
-
 
   end
 

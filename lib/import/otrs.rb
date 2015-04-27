@@ -201,7 +201,6 @@ module Import::OTRS
     return
   end
 
-
   def self.ticket_diff()
     url = 'public.pl?Action=Export;Type=TicketDiff;Limit=30'
     response = request( url )

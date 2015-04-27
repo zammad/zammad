@@ -88,7 +88,6 @@ class ActivityStreamTest < ActiveSupport::TestCase
       ticket = nil
       article = nil
 
-
       ticket = Ticket.create( test[:create][:ticket] )
       test[:check][0][:o_id]          = ticket.id
       test[:check][2][:o_id]          = ticket.id
@@ -220,7 +219,6 @@ class ActivityStreamTest < ActiveSupport::TestCase
       assert( !found, 'Organization destroyed')
     }
   end
-
 
   test 'user with update check false' do
     tests = [

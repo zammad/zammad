@@ -121,7 +121,6 @@ returns
     { ... },
   ]
 
-
 return all history entries of an object and it's related history objects
 
   history_list = History.list( 'Ticket', 123, true )
@@ -134,7 +133,6 @@ returns
     { ... },
     { ... },
   ]
-
 
 return all history entries of an object and it's assets
 

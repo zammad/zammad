@@ -139,7 +139,6 @@ class IcalTicketsController < ApplicationController
     events_data
   end
 
-
   def escalation_events_data_get
 
     condition = [

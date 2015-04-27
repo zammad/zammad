@@ -55,7 +55,6 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'agent-1@example.com', user1.email )
     assert_equal( true, user1.active )
 
-
     assert( user1.roles.include?( role_agent ) )
     assert( !user1.roles.include?( role_admin ) )
     assert( !user1.roles.include?( role_customer ) )
@@ -66,7 +65,6 @@ class OtrsImportTest < ActiveSupport::TestCase
 
     assert( !user1.groups.include?( group_dasa ) )
     assert( user1.groups.include?( group_raw ) )
-
 
     user2 = User.find(3)
     assert_equal( 'agent-2 firstname äöüß', user2.firstname )

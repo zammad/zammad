@@ -148,7 +148,6 @@ class AgentTicketActionsLevel3Test < TestCase
       no_quote: true,
     )
 
-
     # reload instances, verify again
     reload(
       browser: browser1,

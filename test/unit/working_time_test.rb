@@ -335,7 +335,6 @@ class WorkingTimeTest < ActiveSupport::TestCase
         },
       },
 
-
       # test 6
       {
         start: '2012-12-17 08:00:00',

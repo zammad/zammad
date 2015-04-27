@@ -13,7 +13,6 @@ class EmailBuildTest < ActiveSupport::TestCase
     assert( result =~ /font-family/, 'test 1')
     assert( result =~ /<b>test<\/b>/, 'test 1')
 
-
     html   = 'invalid <!DOCTYPE html><html><b>test</b></html>'
     result = Channel::EmailBuild.html_complete_check( html )
 

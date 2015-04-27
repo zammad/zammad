@@ -147,7 +147,6 @@ class RestTest < ActiveSupport::TestCase
     assert_equal( request[:response].code, '401' )
     assert_equal( request[:data].class, NilClass)
 
-
     # /organizations
 
     # index
@@ -196,7 +195,6 @@ class RestTest < ActiveSupport::TestCase
     request = get( 'rest-customer2@example.com', 'customer2pw', '/api/v1/organizations/' + organization2.id.to_s )
     assert_equal( request[:response].code, '401' )
     assert_equal( request[:data].class, NilClass)
-
 
     # packages
     request = get( 'rest-admin@example.com', 'adminpw', '/api/v1/packages' )

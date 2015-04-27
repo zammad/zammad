@@ -76,7 +76,6 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         # next if ticket is already deleted
         next if !ticket
 
-
         if !listObjects[ticket.id]
           listObjects[ticket.id] = {}
         end

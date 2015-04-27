@@ -81,7 +81,6 @@ returns
     }
     filter[:priority_id] = priority_ids
 
-
     type_ids = []
     if params[:ticket]
       types = ['note', 'phone']

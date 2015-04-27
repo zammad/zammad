@@ -244,7 +244,6 @@ return true if backend is configured
     true
   end
 
-
   private
 
   def self.build_url( type = nil, o_id = nil )

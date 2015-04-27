@@ -115,7 +115,6 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_equal( 'ws:login', messages[0]['event'], 'messages 1')
     assert_equal( true, messages[0]['data']['success'], 'messages 1')
 
-
     # broadcast to all clients
     Sessions.broadcast( { msg: 'ooo123123123123123123'} )
     messages = Sessions.queue(client_id1)

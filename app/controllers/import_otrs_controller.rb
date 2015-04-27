@@ -5,7 +5,6 @@ class ImportOtrsController < ApplicationController
   def url_check
     return if setup_done_response
 
-
     # validate
     if !params[:url] ||params[:url] !~ /^(http|https):\/\/.+?$/
       render json: {
@@ -62,7 +61,6 @@ class ImportOtrsController < ApplicationController
         message_human = 'Host found, but no OTRS migrator is installed!'
       end
     }
-
 
     # return result
     render json: {

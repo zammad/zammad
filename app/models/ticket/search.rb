@@ -16,7 +16,6 @@ returns
 
   result = [ticket_model1, ticket_model2]
 
-
 search tickets via search index
 
   result = Ticket.search(
@@ -29,7 +28,6 @@ search tickets via search index
 returns
 
   result = [1,3,5,6,7]
-
 
 search tickets via database
 
@@ -44,7 +42,6 @@ search tickets via database
 returns
 
   result = [1,3,5,6,7]
-
 
 =end
 

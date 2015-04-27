@@ -93,8 +93,6 @@ class AgentTicketActionLevel1Test < TestCase
     # close task/cleanup
     tasks_close_all()
 
-
-
     # merge ticket with open tabs
     ticket3 = ticket_create(
       data: {

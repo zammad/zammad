@@ -151,7 +151,6 @@ class String
       chr_orig
     }
 
-
     # remove tailing empty spaces
     string.gsub!(/\s+\n$/, "\n")
 

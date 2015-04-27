@@ -75,7 +75,6 @@ class AaaStringTest < ActiveSupport::TestCase
     result = "test col  \ntest 4711"
     assert_equal( result, html.html2text )
 
-
     html   = "<!-- some comment -->
     <div>
     test<br><br><br>\n<br>\n<br>\n
@@ -103,7 +102,6 @@ you<br/>
 you
 -----&'
     assert_equal( should, html.html2text )
-
 
     html = ' <ul><li>#1</li><li>#2</li></ul>'
     should = '* #1

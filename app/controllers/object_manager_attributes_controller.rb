@@ -3,7 +3,6 @@
 class ObjectManagerAttributesController < ApplicationController
   before_filter :authentication_check
 
-
   # GET /object_manager_attributes_list
   def list
     return if deny_if_not_role(Z_ROLENAME_ADMIN)

@@ -12,14 +12,12 @@ class ObjectTypeLookupTest < ActiveSupport::TestCase
     assert( object_lookup_name, 'first by_id' )
     assert_equal( object_lookup_name, 'SomeObject' )
 
-
     object_lookup_id2 = ObjectLookup.by_name( 'Some_Object' )
     assert( object_lookup_id2, 'by_name - Some_Object' )
 
     object_lookup_name2 = ObjectLookup.by_id( object_lookup_id2 )
     assert( object_lookup_name2, 'by_id - Some_Object' )
     assert_equal( object_lookup_name2, 'Some_Object' )
-
 
     object_lookup_id3 = ObjectLookup.by_name( 'SomeObject' )
     assert( object_lookup_id3, 'by_name 2 - SomeObject' )
@@ -41,14 +39,12 @@ class ObjectTypeLookupTest < ActiveSupport::TestCase
     assert( type_lookup_name, 'first by_id' )
     assert_equal( type_lookup_name, 'SomeType' )
 
-
     type_lookup_id2 = TypeLookup.by_name( 'Some_Type' )
     assert( type_lookup_id2, 'by_name - Some_Type' )
 
     type_lookup_name2 = TypeLookup.by_id( type_lookup_id2 )
     assert( type_lookup_name2, 'by_id - Some_Type' )
     assert_equal( type_lookup_name2, 'Some_Type' )
-
 
     type_lookup_id3 = TypeLookup.by_name( 'SomeType' )
     assert( type_lookup_id3, 'by_name 2 - SomeType' )

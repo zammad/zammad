@@ -220,8 +220,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_equal( 1, notification_check(ticket2, agent1), ticket2.id )
     assert_equal( 0, notification_check(ticket2, agent2), ticket2.id )
 
-
-
     # create ticket with agent2 and agent1 as owner
     ticket3 = Ticket.create(
       title: 'some notification test 3',
@@ -287,7 +285,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_equal( 2, notification_check(ticket3, agent1), ticket3.id )
     assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
 
-
     # update article / not notification should be sent
     article_inbound.internal = true
     article_inbound.save
@@ -300,7 +297,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # verify notifications not to agent1 and not to agent2
     assert_equal( 2, notification_check(ticket3, agent1), ticket3.id )
     assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
-
 
     delete = ticket1.destroy
     assert( delete, 'ticket1 destroy' )
@@ -372,7 +368,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_equal( 1, listObjects[ticket1.id][:changes]['priority_id'][1] )
 
   end
-
 
   test 'ticket notification template' do
 
@@ -535,8 +530,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     template = bg.template_update(agent2, ticket1, article, human_changes)
     puts "t2 #{template.inspect}"
-
-
 
   end
 

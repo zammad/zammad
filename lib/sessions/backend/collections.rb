@@ -8,7 +8,6 @@ class Sessions::Backend::Collections
     @backends  = self.backend
   end
 
-
   def push
     results = []
     @backends.each {|backend|

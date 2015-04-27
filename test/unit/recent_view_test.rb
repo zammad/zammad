@@ -28,7 +28,6 @@ class RecentViewTest < ActiveSupport::TestCase
     user1   = User.find(2)
     RecentView.user_log_destroy(user1)
 
-
     RecentView.log( ticket1.class.to_s, ticket1.id, user1 )
     sleep 1
     RecentView.log( ticket2.class.to_s, ticket2.id, user1 )
@@ -68,7 +67,6 @@ class RecentViewTest < ActiveSupport::TestCase
     list = RecentView.list( user )
     assert( !list[0], 'check if recent view list is empty' )
 
-
     # log entry of not existing record
     RecentView.user_log_destroy(user)
     RecentView.log( 'User', 99_999_999, user )
@@ -76,7 +74,6 @@ class RecentViewTest < ActiveSupport::TestCase
     # check if list is empty
     list = RecentView.list( user )
     assert( !list[0], 'check if recent view list is empty' )
-
 
     # log entry of not existing model with permission check
     RecentView.user_log_destroy(user)
@@ -139,7 +136,6 @@ class RecentViewTest < ActiveSupport::TestCase
     list = RecentView.list( agent )
     assert( !list[0], 'check if recent view list is empty' )
 
-
     # access for customer via customer id
     ticket1 = Ticket.create(
       title: 'RecentViewTest 1 some title äöüß',
@@ -162,7 +158,6 @@ class RecentViewTest < ActiveSupport::TestCase
     assert( list[0]['object'], 'Ticket' )
     assert( !list[1], 'check if recent view list is empty' )
 
-
     # log entry
     organization = Organization.find(1)
     RecentView.user_log_destroy(customer)
@@ -171,7 +166,6 @@ class RecentViewTest < ActiveSupport::TestCase
     # check if list is empty
     list = RecentView.list( customer )
     assert( !list[0], 'check if recent view list is empty' )
-
 
     # log entry
     organization = Organization.find(1)
