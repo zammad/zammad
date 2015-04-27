@@ -734,6 +734,10 @@ class Navbar extends App.Controller
     @bind 'ticket_overview_fetch_force', =>
       @fetch()
 
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      @render()
+
     # init fetch via ajax
     ajaxInit = =>
 

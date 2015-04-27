@@ -4,6 +4,8 @@ module ExtraCollection
   def session( collections, assets, user )
 
     # all base stuff
+    collections[ Locale.to_app_model ] = Locale.where( :active => true )
+
     collections[ Taskbar.to_app_model ] = Taskbar.where( :user_id => user.id )
     collections[ Taskbar.to_app_model ].each {|item|
       assets = item.assets(assets)

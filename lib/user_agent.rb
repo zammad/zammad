@@ -24,9 +24,19 @@ get http/https calls
     },
   )
 
+get json object
+
+  result = UserAgent.get(
+    'http://host/some_dir/some_file?param1=123',
+    {},
+    {
+      :json => true,
+    }
+  )
+
 returns
 
-  result # result object
+  result.data # as json object
 
 =end
 

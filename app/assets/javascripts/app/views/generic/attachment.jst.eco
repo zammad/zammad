@@ -2,7 +2,7 @@
 <div class="article-attachment u-unclickable">
   <div class="attachmentPlaceholder">
     <span class="attachmentPlaceholder-inputHolder u-highlight u-clickable fileUpload">
-      Dateien wählen..
+      <%- @T('select attachment..') %>
       <input multiple="multiple" type="file" name="file" style="">
     </span>
   </div>

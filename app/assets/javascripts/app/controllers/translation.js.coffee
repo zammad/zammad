@@ -11,8 +11,12 @@ class Index extends App.ControllerContent
 
   render: =>
     @html App.view('translation/index')()
+    options = {}
+    locales = App.Locale.all()
+    for locale in locales
+      options[locale.locale] = locale.name
     configure_attributes = [
-      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: { de: 'Deutsch', en: 'English (United States)', 'en-CA': 'English (Canada)', 'en-GB': 'English (United Kingdom)' }, default: App.i18n.get()  },
+      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: options, default: App.i18n.get()  },
     ]
     load = (params) =>
       new TranslationToDo(
@@ -32,7 +36,9 @@ class Index extends App.ControllerContent
     )
 
   release: =>
-    App.Event.trigger('ui:rerender')
+    rerender = ->
+      App.Event.trigger('ui:rerender')
+    App.Delay.set(rerender, 400)
 
 class TranslationToDo extends App.Controller
   events:
@@ -49,6 +55,11 @@ class TranslationToDo extends App.Controller
     )
 
   render: =>
+
+    if !App.i18n.notTranslatedFeatureEnabled(@locale)
+      @html App.view('translation/english')()
+      return
+
     listNotTranslated = []
     for key, value of App.i18n.getNotTranslated(@locale)
       item = [ '', key, '', '']
@@ -142,6 +153,10 @@ class TranslationList extends App.Controller
     )
 
   render: (data = {}) =>
+
+    #if !App.i18n.notTranslatedFeatureEnabled(@locale)
+    #  return
+
     @html App.view('translation/list')(
       list:              data.list
       timestampFormat:   data.timestampFormat

@@ -8,11 +8,13 @@ class Index extends App.Controller
     @render()
 
   render: =>
-
-    html = $( App.view('profile/language')() )
-
+    html    = $( App.view('profile/language')() )
+    options = {}
+    locales = App.Locale.all()
+    for locale in locales
+      options[locale.locale] = locale.name
     configure_attributes = [
-      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: { de: 'Deutsch', en: 'English (United States)', 'en-CA': 'English (Canada)', 'en-GB': 'English (United Kingdom)' }, default: App.i18n.get()  },
+      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: options, default: App.i18n.get() },
     ]
 
     @form = new App.ControllerForm(

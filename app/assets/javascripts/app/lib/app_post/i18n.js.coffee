@@ -44,6 +44,11 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.setMap( source, target )
 
+  @notTranslatedFeatureEnabled: (locale) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.notTranslatedFeatureEnabled( locale )
+
   @getNotTranslated: (locale) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
@@ -63,10 +68,11 @@ class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 
   constructor: ( locale ) ->
-    @map             = {}
-    @_notTranslated   = {}
-    @dateFormat      = 'yyyy-mm-dd'
-    @timestampFormat = 'yyyy-mm-dd HH:MM'
+    @map               = {}
+    @_notTranslatedLog = false
+    @_notTranslated    = {}
+    @dateFormat        = 'yyyy-mm-dd'
+    @timestampFormat   = 'yyyy-mm-dd HH:MM'
 
     # observe if text has been translated
     $('body')
@@ -117,9 +123,12 @@ class _i18nSingleton extends Spine.Module
     @locale
 
   set: ( locale ) ->
-    if locale is 'en-US'
-      locale = 'en'
+    if locale is 'en'
+      locale = 'en-us'
     @locale = locale
+
+    # set if not translated should be logged
+    @_notTranslatedLog = @notTranslatedFeatureEnabled(locale)
 
     # set lang attribute of html tag
     $('html').prop( 'lang', locale.substr(0, 2) )
@@ -185,7 +194,7 @@ class _i18nSingleton extends Spine.Module
     else
       @_translated = false
       translated   = string
-      if App.Config.get('developer_mode') is true
+      if @_notTranslatedLog && App.Config.get('developer_mode') is true
         if !@_notTranslated[@locale]
           @_notTranslated[@locale] = {}
         @_notTranslated[@locale][string] = true
@@ -202,6 +211,11 @@ class _i18nSingleton extends Spine.Module
 
   setMap: ( source, target ) =>
     @map[source] = target
+
+  notTranslatedFeatureEnabled: (locale) =>
+    if locale.substr(0,2) is 'en'
+      return false
+    true
 
   getNotTranslated: ( locale ) =>
     @_notTranslated[locale || @locale]
