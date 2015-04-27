@@ -234,9 +234,9 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
           success = false
         end
         if test[:result]
-          assert( success, "install package not successful" )
+          assert( success, 'install package not successful' )
         else
-          assert( !success, "install package successful but should not" )
+          assert( !success, 'install package successful but should not' )
         end
       elsif test[:action] == 'uninstall'
         if test[:zpm]
@@ -253,9 +253,9 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
           end
         end
         if test[:result]
-          assert( success, "uninstall package not successful" )
+          assert( success, 'uninstall package not successful' )
         else
-          assert( !success, "uninstall package successful but should not" )
+          assert( !success, 'uninstall package successful but should not' )
         end
       elsif test[:action] == 'auto_install'
         if test[:zpm]

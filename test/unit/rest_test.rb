@@ -6,7 +6,7 @@ class RestTest < ActiveSupport::TestCase
   test 'users and orgs' do
 
     if !ENV['BROWSER_URL']
-      puts "NOTICE: Do not execute rest tests, no BROWSER_URL=http://some_host:port is defined! e. g. export BROWSER_URL=http://localhost:3000"
+      puts 'NOTICE: Do not execute rest tests, no BROWSER_URL=http://some_host:port is defined! e. g. export BROWSER_URL=http://localhost:3000'
       return
     end
 

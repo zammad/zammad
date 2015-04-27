@@ -14,7 +14,7 @@ class RecentViewTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket1, "ticket created" )
+    assert( ticket1, 'ticket created' )
     ticket2 = Ticket.create(
       :title         => 'RecentViewTest 2 some title äöüß',
       :group         => Group.lookup( :name => 'Users'),
@@ -24,7 +24,7 @@ class RecentViewTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket2, "ticket created" )
+    assert( ticket2, 'ticket created' )
     user1   = User.find(2)
     RecentView.user_log_destroy(user1)
 
@@ -121,7 +121,7 @@ class RecentViewTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket1, "ticket created" )
+    assert( ticket1, 'ticket created' )
 
     # log entry of not existing object
     RecentView.user_log_destroy(customer)
@@ -150,7 +150,7 @@ class RecentViewTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket1, "ticket created" )
+    assert( ticket1, 'ticket created' )
 
     # log entry
     RecentView.user_log_destroy(customer)

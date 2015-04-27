@@ -65,43 +65,43 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
     assert_equal( ticket.customer.id, customer1.id  )
     assert_equal( ticket.organization.id, organization1.id  )
 
     # check if customer and organization has been touched
     customer1 = User.find(customer1.id)
     if customer1.updated_at > 2.second.ago
-      assert( true, "customer1.updated_at has been updated" )
+      assert( true, 'customer1.updated_at has been updated' )
     else
-      assert( false, "customer1.updated_at has not been updated" )
+      assert( false, 'customer1.updated_at has not been updated' )
     end
 
     organization1 = Organization.find(organization1.id)
     if organization1.updated_at > 2.second.ago
-      assert( true, "organization1.updated_at has been updated" )
+      assert( true, 'organization1.updated_at has been updated' )
     else
-      assert( false, "organization1.updated_at has not been updated" )
+      assert( false, 'organization1.updated_at has not been updated' )
     end
 
     sleep 4
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
     # check if customer and organization has been touched
     customer1 = User.find(customer1.id)
     if customer1.updated_at > 2.second.ago
-      assert( true, "customer1.updated_at has been updated" )
+      assert( true, 'customer1.updated_at has been updated' )
     else
-      assert( false, "customer1.updated_at has not been updated" )
+      assert( false, 'customer1.updated_at has not been updated' )
     end
 
     organization1 = Organization.find(organization1.id)
     if organization1.updated_at > 2.second.ago
-      assert( true, "organization1.updated_at has been updated" )
+      assert( true, 'organization1.updated_at has been updated' )
     else
-      assert( false, "organization1.updated_at has not been updated" )
+      assert( false, 'organization1.updated_at has not been updated' )
     end
   end
 
@@ -118,43 +118,43 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
     assert_equal( ticket.customer.id, customer2.id  )
     assert_equal( ticket.organization, nil  )
 
     # check if customer and organization has been touched
     customer2 = User.find(customer2.id)
     if customer2.updated_at > 2.second.ago
-      assert( true, "customer2.updated_at has been updated" )
+      assert( true, 'customer2.updated_at has been updated' )
     else
-      assert( false, "customer2.updated_at has not been updated" )
+      assert( false, 'customer2.updated_at has not been updated' )
     end
 
     organization1 = Organization.find(organization1.id)
     if organization1.updated_at > 2.second.ago
-      assert( false, "organization1.updated_at has been updated" )
+      assert( false, 'organization1.updated_at has been updated' )
     else
-      assert( true, "organization1.updated_at has not been updated" )
+      assert( true, 'organization1.updated_at has not been updated' )
     end
 
     sleep 3
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
     # check if customer and organization has been touched
     customer2 = User.find(customer2.id)
     if customer2.updated_at > 2.second.ago
-      assert( true, "customer2.updated_at has been updated" )
+      assert( true, 'customer2.updated_at has been updated' )
     else
-      assert( false, "customer2.updated_at has not been updated" )
+      assert( false, 'customer2.updated_at has not been updated' )
     end
 
     organization1 = Organization.find(organization1.id)
     if organization1.updated_at > 2.second.ago
-      assert( false, "organization1.updated_at has been updated" )
+      assert( false, 'organization1.updated_at has been updated' )
     else
-      assert( true, "organization1.updated_at has not been updated" )
+      assert( true, 'organization1.updated_at has not been updated' )
     end
 
   end

@@ -10,9 +10,9 @@ class OtrsImportTest < ActiveSupport::TestCase
     raise "ERROR: Need IMPORT_OTRS_ENDPOINT_KEY - hint IMPORT_OTRS_ENDPOINT_KEY='01234567899876543210'"
   end
 
-  Setting.set("import_otrs_endpoint", ENV['IMPORT_OTRS_ENDPOINT'])
-  Setting.set("import_otrs_endpoint_key", ENV['IMPORT_OTRS_ENDPOINT_KEY'])
-  Setting.set("import_mode", true)
+  Setting.set('import_otrs_endpoint', ENV['IMPORT_OTRS_ENDPOINT'])
+  Setting.set('import_otrs_endpoint_key', ENV['IMPORT_OTRS_ENDPOINT_KEY'])
+  Setting.set('import_mode', true)
   Import::OTRS2.start
 
   # check settings items
@@ -24,7 +24,7 @@ class OtrsImportTest < ActiveSupport::TestCase
         http      = $1
         fqdn      = $2
         system_id = $3
-        system_id.gsub!(/[A-z]/, "") # strip chars
+        system_id.gsub!(/[A-z]/, '') # strip chars
     end
     assert_equal( system_id, Setting.get('system_id'), 'system_id' )
     assert_equal( fqdn, Setting.get('fqdn'), 'fqdn' )

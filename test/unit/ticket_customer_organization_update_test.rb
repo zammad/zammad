@@ -52,7 +52,7 @@ class TicketCustomerOrganizationUpdateTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
     assert_equal( customer1.id, ticket.customer.id )
     assert_equal( organization1.id, ticket.organization.id )
 

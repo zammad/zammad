@@ -298,7 +298,7 @@ Hof
         :params => {
           :from              => '"Müller, Bernd" <Bernd.Mueller@example.com>',
           :from_email        => 'Bernd.Mueller@example.com',
-          :from_display_name => "Müller, Bernd",
+          :from_display_name => 'Müller, Bernd',
           :subject           => 'AW: OTRS [Ticket#118192]',
           :to                => '\'Martin Edenhofer via Znuny Sales\' <sales@znuny.com>',
         },
@@ -318,7 +318,7 @@ Hof
         :params => {
           :from              => '"Sara.Gang" <ynbe.ctrhk@gmail.com>',
           :from_email        => 'ynbe.ctrhk@gmail.com',
-          :from_display_name => "Sara.Gang",
+          :from_display_name => 'Sara.Gang',
           :subject           => '绩效管理,究竟谁错了',
           :to                => 'info42@znuny.com',
         },
@@ -330,7 +330,7 @@ Hof
         :params   => {
           :from              => nil,
           :from_email        => 'vipyimin@126.com',
-          :from_display_name => "",
+          :from_display_name => '',
           :subject           => '【 直通美国排名第49大学 成功后付费 】',
           :to                => '"enterprisemobility.apacservice" <enterprisemobility.apacservice@motorola.com>',
         },
@@ -342,7 +342,7 @@ Hof
         :params   => {
           :from              => '"都琹" <ghgbwum@185.com.cn>',
           :from_email        => 'ghgbwum@185.com.cn',
-          :from_display_name => "都琹",
+          :from_display_name => '都琹',
           :subject           => '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　人物                    互联网事百度新闻独家出品传媒换一批捷克戴维斯杯决赛前任命临时领队 前领队因病住院最新:盖世汽车讯 11月6日，通用汽车宣布今年10月份在华销量...减持三特索道 孟凯将全力发展湘鄂情江青摄影作品科技日报讯 （记者过国忠 通讯员陈飞燕）江苏省无线电科学研究所有限公司院士工作站日前正式建...[详细]',
           :to                => 'info@znuny.com',
         },
@@ -534,10 +534,10 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
         :params   => {
           :from              => 'caoyaoewfzfw@21cn.com',
           :from_email        => 'caoyaoewfzfw@21cn.com',
-          :from_display_name => "",
+          :from_display_name => '',
           :subject           => "\r\n蠭龕中層管理者如何避免角色行为誤区",
           :to                => 'duan@seat.com.cn, info@znuny.com, jinzh@kingdream.com',
-          :body              => "",
+          :body              => '',
         },
         :attachments  => [
           {
@@ -552,10 +552,10 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
         :params   => {
           :from              => 'kontakt@example.de',
           :from_email        => 'kontakt@example.de',
-          :from_display_name => "",
-          :subject           => "Bewerbung auf Ihr Stellenangebot",
+          :from_display_name => '',
+          :subject           => 'Bewerbung auf Ihr Stellenangebot',
           :to                => 'info@znuny.inc',
-          :body              => "no visible content",
+          :body              => 'no visible content',
         },
         :attachments  => [
           {
@@ -574,8 +574,8 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
         :params   => {
           :from              => 'Example Sales <sales@example.com>',
           :from_email        => 'sales@example.com',
-          :from_display_name => "Example Sales",
-          :subject           => "Example licensing information: No channel available",
+          :from_display_name => 'Example Sales',
+          :subject           => 'Example licensing information: No channel available',
           :to                => 'info@znuny.inc',
           :body              => "Dear Mr. Edenhofer,We want to keep you updated on TeamViewer licensing shortages on a regular basis.
 We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.
@@ -604,8 +604,8 @@ Registration AG Ulm HRB 534075 * General Manager Holger Felgner
         :params   => {
           :from              => 'Manfred Haert <Manfred.Haert@example.com>',
           :from_email        => 'Manfred.Haert@example.com',
-          :from_display_name => "Manfred Haert",
-          :subject           => "Antragswesen in TesT abbilden",
+          :from_display_name => 'Manfred Haert',
+          :subject           => 'Antragswesen in TesT abbilden',
           :to                => 'info@znuny.inc',
           :body              => "Sehr geehrte Damen undHerren,
 
@@ -649,8 +649,8 @@ Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen I
         :params   => {
           :from              => '"bertha　mou" <zhengkang@ha.chinamobile.com>',
           :from_email        => 'zhengkang@ha.chinamobile.com',
-          :from_display_name => "bertha　mou",
-          :subject           => "內應力產生与注塑工艺条件之间的关系；",
+          :from_display_name => 'bertha　mou',
+          :subject           => '內應力產生与注塑工艺条件之间的关系；',
           :to                => 'info@znuny.inc',
         },
       },
@@ -660,8 +660,8 @@ Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen I
         :params   => {
           :from              => '"Dana.Qin" <Dana.Qin6e1@gmail.com>',
           :from_email        => 'Dana.Qin6e1@gmail.com',
-          :from_display_name => "Dana.Qin",
-          :subject           => "发现最美车间主任",
+          :from_display_name => 'Dana.Qin',
+          :subject           => '发现最美车间主任',
           :to                => 'info@znuny.inc',
         },
       },

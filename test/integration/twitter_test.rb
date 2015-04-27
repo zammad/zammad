@@ -79,7 +79,7 @@ class TwitterTest < ActiveSupport::TestCase
       :updated_by_id  => 1,
       :created_by_id  => 1,
     )
-    assert( ticket, "outbound ticket created" )
+    assert( ticket, 'outbound ticket created' )
     article = Ticket::Article.create(
       :ticket_id      => ticket.id,
       :type_id        => Ticket::Article::Type.where( :name => 'twitter status' ).first.id,
@@ -92,7 +92,7 @@ class TwitterTest < ActiveSupport::TestCase
       :updated_by_id  => 1,
       :created_by_id  => 1,
     )
-    assert( article, "outbound article created" )
+    assert( article, 'outbound article created' )
     assert_equal( article.ticket.articles.count, 1 )
     sleep 10
 
@@ -103,7 +103,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = user2_token
       config.access_token_secret = user2_token_secret
     end
-    client.search(hash, :count => 50, :result_type => "recent").collect do |tweet|
+    client.search(hash, :count => 50, :result_type => 'recent').collect do |tweet|
       assert_equal( tweet.id, article.message_id )
     end
 
@@ -173,16 +173,16 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.where( :message_id => dm.id ).last
     }
-    puts "----------------------------------------"
-    puts "DM: " + dm.inspect
-    puts "AT: " + article.inspect
-    puts "----------------------------------------"
+    puts '----------------------------------------'
+    puts 'DM: ' + dm.inspect
+    puts 'AT: ' + article.inspect
+    puts '----------------------------------------'
 
-    assert( article, "inbound article created" )
+    assert( article, 'inbound article created' )
 #    ticket  = Ticket.find( article.ticket.id )
     ticket  = article.ticket
-    assert( ticket, "ticket of inbound article exists" )
-    assert( ticket.articles, "ticket.articles exists" )
+    assert( ticket, 'ticket of inbound article exists' )
+    assert( ticket.articles, 'ticket.articles exists' )
     article_count = ticket.articles.count
     assert( article_count )
 #    assert_equal( ticket.state.name, 'new' )
@@ -199,7 +199,7 @@ class TwitterTest < ActiveSupport::TestCase
       :updated_by_id  => 1,
       :created_by_id  => 1,
     )
-    assert( outbound_article, "outbound article created" )
+    assert( outbound_article, 'outbound article created' )
     assert_equal( outbound_article.ticket.articles.count, article_count + 1 )
     sleep 10
 

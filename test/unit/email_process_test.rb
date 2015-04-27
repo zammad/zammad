@@ -39,7 +39,7 @@ Some Textäöü",
 To: customer@example.com
 Subject: äöü some subject
 
-Some Textäöü".encode("ISO-8859-1"),
+Some Textäöü".encode('ISO-8859-1'),
         :success => true,
         :result  => {
           0 => {

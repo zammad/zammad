@@ -71,7 +71,7 @@ class AaaStringTest < ActiveSupport::TestCase
     result = "test\ntest"
     assert_equal( result, html.html2text )
 
-    html   = "<table><tr><td>test</td><td>col</td></td></tr><tr><td>test</td><td>4711</td></tr></table>"
+    html   = '<table><tr><td>test</td><td>col</td></td></tr><tr><td>test</td><td>4711</td></tr></table>'
     result = "test col  \ntest 4711"
     assert_equal( result, html.html2text )
 

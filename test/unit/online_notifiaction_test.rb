@@ -258,10 +258,10 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       if test[:create][:online_notification]
         if test[:create][:online_notification][:seen_only_exists]
           notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
-          assert( notification_seen_only_exists_exists( notifications ), "not seen notifications for ticket available")
+          assert( notification_seen_only_exists_exists( notifications ), 'not seen notifications for ticket available')
         else
           notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
-          assert( !notification_seen_only_exists_exists( notifications ), "seen notifications for ticket available")
+          assert( !notification_seen_only_exists_exists( notifications ), 'seen notifications for ticket available')
         end
       end
 
@@ -285,10 +285,10 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       if test[:update][:online_notification]
         if test[:update][:online_notification][:seen_only_exists]
           notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
-          assert( notification_seen_only_exists_exists( notifications ), "not seen notifications for ticket available")
+          assert( notification_seen_only_exists_exists( notifications ), 'not seen notifications for ticket available')
         else
           notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
-          assert( !notification_seen_only_exists_exists( notifications ), "seen notifications for ticket available")
+          assert( !notification_seen_only_exists_exists( notifications ), 'seen notifications for ticket available')
         end
       end
     }
@@ -299,23 +299,23 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       :user_id   => 1,
     )
     notifications = OnlineNotification.list_by_object( 'Ticket', tickets[2].id )
-    assert( !notifications.empty?, "should have notifications")
-    assert( notification_seen_only_exists_exists(notifications), "still not seen notifications for merged ticket available")
+    assert( !notifications.empty?, 'should have notifications')
+    assert( notification_seen_only_exists_exists(notifications), 'still not seen notifications for merged ticket available')
 
     notifications = OnlineNotification.list_by_object( 'Ticket', tickets[3].id )
-    assert( !notifications.empty?, "should have notifications")
-    assert( !notification_seen_only_exists_exists(notifications), "no notifications for master ticket available")
+    assert( !notifications.empty?, 'should have notifications')
+    assert( !notification_seen_only_exists_exists(notifications), 'no notifications for master ticket available')
 
     # delete tickets
     tickets.each { |ticket|
       ticket_id = ticket.id
       ticket.destroy
       found = Ticket.where( :id => ticket_id ).first
-      assert( !found, "Ticket destroyed")
+      assert( !found, 'Ticket destroyed')
 
       # check if notifications for ticket still exist
       notifications = OnlineNotification.list_by_object( 'Ticket', ticket_id )
-      assert( notifications.empty?, "still notifications for destroyed ticket available")
+      assert( notifications.empty?, 'still notifications for destroyed ticket available')
     }
   end
 

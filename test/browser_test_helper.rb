@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'selenium-webdriver'
 
@@ -94,7 +94,7 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements( { :css => '#login input[name="username"]' } )[0]
     if !element
-      raise "No login box found"
+      raise 'No login box found'
     end
     element.clear
     element.send_keys( params[:username] )
@@ -111,9 +111,9 @@ class TestCase < Test::Unit::TestCase
     sleep 4
     login = instance.find_elements( { :css => '.user-menu .user a' } )[0].attribute('title')
     if login != params[:username]
-      raise "login failed"
+      raise 'login failed'
     end
-    assert( true, "login ok" )
+    assert( true, 'login ok' )
     login
   end
 
@@ -137,11 +137,11 @@ class TestCase < Test::Unit::TestCase
       sleep 1
       login = instance.find_elements( { :css => '#login' } )[0]
       if login
-        assert( true, "logout ok" )
+        assert( true, 'logout ok' )
         return
       end
     }
-    raise "no login box found, seems logout was not successfully!"
+    raise 'no login box found, seems logout was not successfully!'
   end
 
 =begin
@@ -632,10 +632,10 @@ puts "tv #{params.inspect}"
         is_modified = instance.find_elements( { :css => '.tasks .active .icon.modified' } )[0]
         puts "m #{data[:modified].inspect}"
         if exists
-          puts " ecists"
+          puts ' ecists'
         end
         if is_modified
-          puts " is_modified"
+          puts ' is_modified'
         end
         if data[:modified] == true
           if is_modified
@@ -804,7 +804,7 @@ wait untill text in selector disabppears
     (1..loops).each { |loop|
       element = instance.find_elements( { :css => params[:css] } )[0]
       if !element #|| element.displayed?
-        assert( true, "not found" )
+        assert( true, 'not found' )
         sleep 1
         return true
       end
@@ -865,7 +865,7 @@ wait untill text in selector disabppears
       end
     end
     sleep 1
-    assert( true, "all tasks closed" )
+    assert( true, 'all tasks closed' )
   end
 
 =begin
@@ -926,7 +926,7 @@ wait untill text in selector disabppears
       element = instance.find_elements( { :css => 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, "overview created" )
+        assert( true, 'overview created' )
         overview = {
           :name => name,
         }
@@ -934,7 +934,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    raise "overview creation failed"
+    raise 'overview creation failed'
   end
 
 =begin
@@ -968,7 +968,7 @@ wait untill text in selector disabppears
     instance.find_elements( { :css => 'a[href="#ticket/create"]' } )[0].click
     element = instance.find_elements( { :css => '.active .newTicket' } )[0]
     if !element
-      raise "no ticket create screen found!"
+      raise 'no ticket create screen found!'
     end
     sleep 1
 
@@ -1034,7 +1034,7 @@ wait untill text in selector disabppears
     end
 
     if params[:do_not_submit]
-      assert( true, "ticket created without submit" )
+      assert( true, 'ticket created without submit' )
       return
     end
     sleep 0.8
@@ -1043,11 +1043,11 @@ wait untill text in selector disabppears
     sleep 1
     (1..8).each {|loop|
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
-        assert( true, "ticket created" )
+        assert( true, 'ticket created' )
         sleep 2.5
         id = instance.current_url
         id.gsub!(//, )
-        id.gsub!(/^.+?\/(\d+)$/, "\\1")
+        id.gsub!(/^.+?\/(\d+)$/, '\\1')
 
         element = instance.find_elements( { :css => '.active .page-header .ticket-number' } )[0]
         if element
@@ -1211,12 +1211,12 @@ wait untill text in selector disabppears
         end
       }
       if !found
-        raise "no discard message found"
+        raise 'no discard message found'
       end
     end
 
     if params[:do_not_submit]
-      assert( true, "ticket updated without submit" )
+      assert( true, 'ticket updated without submit' )
       return true
     end
 
@@ -1233,7 +1233,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    raise "unable to update ticket"
+    raise 'unable to update ticket'
   end
 
 =begin
@@ -1332,7 +1332,7 @@ wait untill text in selector disabppears
     sleep 0.5
     text = instance.find_elements( { :css => '#global-search' } )[0].attribute('value')
     if !text
-      raise "#global-search is not empty!"
+      raise '#global-search is not empty!'
     end
 
     # search by number again
@@ -1375,7 +1375,7 @@ wait untill text in selector disabppears
     overviews = {}
     instance.find_elements( { :css => '.content.active .sidebar a[href]' } ).each {|element|
       url = element.attribute('href')
-      url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, "\\2")
+      url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, '\\2')
       overviews[url] = 0
       #puts url.inspect
       #puts element.inspect
@@ -1411,7 +1411,7 @@ wait untill text in selector disabppears
     sleep 0.5
     text = instance.find_elements( { :css => '#global-search' } )[0].attribute('value')
     if !text
-      raise "#global-search is not empty!"
+      raise '#global-search is not empty!'
     end
     element = instance.find_elements( { :css => '#global-search' } )[0]
     element.click
@@ -1514,7 +1514,7 @@ wait untill text in selector disabppears
       :value   => data[:lastname],
     )
 
-    assert( true, "user created" )
+    assert( true, 'user created' )
   end
 
 =begin
@@ -1551,12 +1551,12 @@ wait untill text in selector disabppears
       element = instance.find_elements( { :css => 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, "sla created" )
+        assert( true, 'sla created' )
         return true
       end
       sleep 1
     }
-    raise "sla creation failed"
+    raise 'sla creation failed'
   end
 
 =begin
@@ -1597,12 +1597,12 @@ wait untill text in selector disabppears
       element = instance.find_elements( { :css => 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, "text module created" )
+        assert( true, 'text module created' )
         return true
       end
       sleep 1
     }
-    raise "text module creation failed"
+    raise 'text module creation failed'
   end
 
 =begin
@@ -1640,12 +1640,12 @@ wait untill text in selector disabppears
       element = instance.find_elements( { :css => 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, "signature created" )
+        assert( true, 'signature created' )
         return true
       end
       sleep 1
     }
-    raise "signature creation failed"
+    raise 'signature creation failed'
   end
 
 =begin
@@ -1691,7 +1691,7 @@ wait untill text in selector disabppears
       element = instance.find_elements( { :css => 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, "group created" )
+        assert( true, 'group created' )
 
         # add member
         if data[:member]
@@ -1715,7 +1715,7 @@ wait untill text in selector disabppears
       sleep 1
       return true
     }
-    raise "group creation failed"
+    raise 'group creation failed'
   end
 
   def quote(string)
