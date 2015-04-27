@@ -35,10 +35,10 @@ class CreateTicket < ActiveRecord::Migration
       t.references :state,                                                null: false
       t.references :organization,                                         null: true
       t.column :number,                           :string,  limit: 60, null: false
-      t.column :title,                            :string,  limit: 250,null: false
+      t.column :title,                            :string,  limit: 250, null: false
       t.column :owner_id,                         :integer,               null: false
       t.column :customer_id,                      :integer,               null: false
-      t.column :note,                             :string,  limit: 250,null: true
+      t.column :note,                             :string,  limit: 250, null: true
       t.column :first_response,                   :timestamp,             null: true
       t.column :first_response_escal_date,        :timestamp,             null: true
       t.column :first_response_sla_time,          :timestamp,             null: true

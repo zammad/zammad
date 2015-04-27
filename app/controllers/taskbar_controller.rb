@@ -18,7 +18,7 @@ class TaskbarController < ApplicationController
   end
 
   def create
-    model_create_render(Taskbar,params)
+    model_create_render(Taskbar, params)
   end
 
   def update

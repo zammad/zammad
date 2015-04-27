@@ -6,6 +6,6 @@ Zammad::Application.routes.draw do
   match api_path + '/networks/:id',       to: 'networks#show',   via: :get
   match api_path + '/networks',           to: 'networks#create', via: :post
   match api_path + '/networks/:id',       to: 'networks#update', via: :put
-  match api_path + '/networks/:id',       to: 'networks#destroy',via: :delete
+  match api_path + '/networks/:id',       to: 'networks#destroy', via: :delete
 
 end

@@ -165,7 +165,7 @@ class Observer::Ticket::Notification::BackgroundJob
       # get attribute name
       attribute_name           = key.to_s
       object_manager_attribute = attribute_list[attribute_name]
-      if attribute_name[-3,3] == '_id'
+      if attribute_name[-3, 3] == '_id'
         attribute_name = attribute_name[ 0, attribute_name.length - 3 ].to_s
       end
 
@@ -177,7 +177,7 @@ class Observer::Ticket::Notification::BackgroundJob
       # if changed item is an _id field/reference, do an lookup for the realy values
       value_id  = []
       value_str = [ value[0], value[1] ]
-      if key.to_s[-3,3] == '_id'
+      if key.to_s[-3, 3] == '_id'
         value_id[0] = value[0]
         value_id[1] = value[1]
 
@@ -289,7 +289,7 @@ State: i18n(#{ticket.state.name.text2html})<br>
 
   def template_update(user, ticket, article, ticket_changes)
     changes = ''
-    ticket_changes.each {|key,value|
+    ticket_changes.each {|key, value|
       changes += "i18n(#{key.to_s.text2html}): #{value[0].to_s.text2html} -> #{value[1].to_s.text2html}<br>\n"
     }
     article_content = ''
@@ -339,7 +339,7 @@ Changes:<br>
     end
 
     body = template_header(user) + body
-    body += template_footer(user,ticket, article)
+    body += template_footer(user, ticket, article)
 
     template = {
       subject: subject,

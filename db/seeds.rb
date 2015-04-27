@@ -1406,7 +1406,7 @@ Overview.create_if_not_exists(
   prio: 1000,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [ 1,2,3,7 ],
+    'tickets.state_id' => [ 1, 2, 3, 7 ],
     'tickets.owner_id' => 'current_user.id',
   },
   order: {
@@ -1449,7 +1449,7 @@ Overview.create_if_not_exists(
   prio: 1020,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [1,2,3],
+    'tickets.state_id' => [1, 2, 3],
     'tickets.owner_id' => 1,
   },
   order: {
@@ -1470,7 +1470,7 @@ Overview.create_if_not_exists(
   prio: 1030,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [1,2,3],
+    'tickets.state_id' => [1, 2, 3],
   },
   order: {
     by: 'created_at',
@@ -1478,7 +1478,7 @@ Overview.create_if_not_exists(
   },
   view: {
     d: [ 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
-    s: [ 'title', 'customer', 'group', 'state', 'owner','created_at' ],
+    s: [ 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
     m: [ 'number', 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
     view_mode_default: 's',
   },
@@ -1532,7 +1532,7 @@ Overview.create_if_not_exists(
   prio: 1000,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id'    => [ 1,2,3,4,6 ],
+    'tickets.state_id'    => [ 1, 2, 3, 4, 6 ],
     'tickets.customer_id' => 'current_user.id',
   },
   order: {
@@ -1553,7 +1553,7 @@ Overview.create_if_not_exists(
   role_id: overview_role.id,
   organization_shared: true,
   condition: {
-    'tickets.state_id' => [ 1,2,3,4,6 ],
+    'tickets.state_id' => [ 1, 2, 3, 4, 6 ],
     'tickets.organization_id' => 'current_user.organization_id',
   },
   order: {

@@ -2153,7 +2153,7 @@ Some Text',
                   assert( false, "No user '#{user_result[:email]}' found!" )
                   return
                 end
-                user_result.each { |key,value|
+                user_result.each { |key, value|
                   if user.respond_to?( key )
                     assert_equal( value, user.send(key), "user check #{ key }"  )
                   else

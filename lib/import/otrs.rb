@@ -67,7 +67,7 @@ module Import::OTRS
       required_group_ro: 'groups_ro',
       required_group_rw: 'groups_rw',
     }
-    types.each {|config_key,result_key|
+    types.each {|config_key, result_key|
       if config[config_key]
         return false if !result[result_key].has_value?( config[config_key] )
       end
@@ -82,7 +82,7 @@ module Import::OTRS
       group_ro_role_map: 'groups_ro',
       group_rw_role_map: 'groups_rw',
     }
-    types.each {|config_key,result_key|
+    types.each {|config_key, result_key|
       next if !config[config_key]
       config[config_key].each {|otrs_group, role|
         next if !result[result_key].has_value?( otrs_group )
@@ -278,7 +278,7 @@ module Import::OTRS
           created_by_id: 1,
           updated_by_id: 1,
         }
-        map[:Ticket].each { |key,value|
+        map[:Ticket].each { |key, value|
           if record['Ticket'][key.to_s] && record['Ticket'][key.to_s].class == String
             ticket_new[value] = Encode.conv( 'utf8', record['Ticket'][key.to_s] )
           else
@@ -331,7 +331,7 @@ module Import::OTRS
             created_by_id: 1,
             updated_by_id: 1,
           }
-          map[:Article].each { |key,value|
+          map[:Article].each { |key, value|
             if article[key.to_s]
               article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
             end
@@ -572,7 +572,7 @@ module Import::OTRS
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if state[key.to_s]
           state_new[value] = state[key.to_s]
         end
@@ -623,7 +623,7 @@ module Import::OTRS
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if priority[key.to_s]
           priority_new[value] = priority[key.to_s]
         end
@@ -667,7 +667,7 @@ module Import::OTRS
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if group[key.to_s]
           group_new[value] = group[key.to_s]
         end
@@ -719,7 +719,7 @@ module Import::OTRS
           source: 'OTRS Import',
           role_ids: [ role.id ],
         }
-        map.each { |key,value|
+        map.each { |key, value|
           if user[key.to_s]
             user_new[value] = user[key.to_s]
           end
@@ -793,7 +793,7 @@ module Import::OTRS
           source: 'OTRS Import',
           role_ids: [role.id],
         }
-        map.each { |key,value|
+        map.each { |key, value|
           if user[key.to_s]
             user_new[value] = user[key.to_s]
           end

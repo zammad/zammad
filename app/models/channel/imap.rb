@@ -65,7 +65,7 @@ class Channel::IMAP < Channel::EmailParser
 
       # check for verify message
       if check_type == 'verify'
-        subject = @imap.fetch(message_id,'ENVELOPE')[0].attr['ENVELOPE'].subject
+        subject = @imap.fetch(message_id, 'ENVELOPE')[0].attr['ENVELOPE'].subject
         if subject && subject =~ /#{verify_string}/
           puts " - verify email #{verify_string} found"
           @imap.store(message_id, '+FLAGS', [:Deleted])
@@ -76,7 +76,7 @@ class Channel::IMAP < Channel::EmailParser
       else
 
         # delete email from server after article was created
-        msg = @imap.fetch(message_id,'RFC822')[0].attr['RFC822']
+        msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
         if process(channel, msg)
           @imap.store(message_id, '+FLAGS', [:Deleted])
         end

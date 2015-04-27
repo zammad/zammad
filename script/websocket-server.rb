@@ -76,7 +76,7 @@ if ARGV[0] == 'start' && @options[:d]
   Daemons.daemonize
 
   # create pid file
-  $daemon_pid = File.new( @options[:i].to_s,'w' )
+  $daemon_pid = File.new( @options[:i].to_s, 'w' )
   $daemon_pid.sync = true
   $daemon_pid.puts(Process.pid.to_s)
   $daemon_pid.close

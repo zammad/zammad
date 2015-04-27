@@ -366,7 +366,7 @@ returns
 
 =end
 
-  def self.password_reset_via_token(token,password)
+  def self.password_reset_via_token(token, password)
 
     # check token
     user = Token.check( action: 'PasswordReset', name: token )

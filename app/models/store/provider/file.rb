@@ -60,7 +60,7 @@ class Store::Provider::File
   end
 
   # write file to fs
-  def self.write_to_fs(data,sha)
+  def self.write_to_fs(data, sha)
 
     # install file
     permission = '600'

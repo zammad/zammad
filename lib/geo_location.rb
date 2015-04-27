@@ -37,13 +37,13 @@ returns
 
 =end
 
-  def self.reverse_geocode(lat,lng)
+  def self.reverse_geocode(lat, lng)
 
     # load backend
     backend = self.load_adapter_by_setting( 'geo_location_backend' )
     return if !backend
 
     # db lookup
-    backend.reverse_geocode(lat,lng)
+    backend.reverse_geocode(lat, lng)
   end
 end

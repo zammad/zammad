@@ -108,7 +108,7 @@ returns
 
     # set relations
     self.class.reflect_on_all_associations.map { |assoc|
-      real_key = assoc.name.to_s[0,assoc.name.to_s.length - 1] + '_ids'
+      real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
       if params.has_key?( real_key.to_sym )
         list_of_items = params[ real_key.to_sym ]
         if params[ real_key.to_sym ].class != Array
@@ -141,7 +141,7 @@ returns
     # set relations
     attributes = self.attributes
     self.class.reflect_on_all_associations.map { |assoc|
-      real_key = assoc.name.to_s[0,assoc.name.to_s.length - 1] + '_ids'
+      real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
       if self.respond_to?( real_key )
         attributes[ real_key ] = self.send( real_key )
       end
@@ -872,13 +872,13 @@ log object update history with all updated attributes, if configured - will be e
 
       # get attribute name
       attribute_name = key.to_s
-      if attribute_name[-3,3] == '_id'
+      if attribute_name[-3, 3] == '_id'
         attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
       end
 
       value_id = []
       value_str = [ value[0], value[1] ]
-      if key.to_s[-3,3] == '_id'
+      if key.to_s[-3, 3] == '_id'
         value_id[0] = value[0]
         value_id[1] = value[1]
 

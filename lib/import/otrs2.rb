@@ -520,7 +520,7 @@ module Import::OTRS2
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map[:Ticket].each { |key,value|
+      map[:Ticket].each { |key, value|
         if record[key.to_s] && record[key.to_s].class == String
           ticket_new[value] = Encode.conv( 'utf8', record[key.to_s] )
         else
@@ -571,7 +571,7 @@ module Import::OTRS2
           created_by_id: 1,
           updated_by_id: 1,
         }
-        map[:Article].each { |key,value|
+        map[:Article].each { |key, value|
           if article[key.to_s]
             article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
           end
@@ -820,7 +820,7 @@ module Import::OTRS2
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if state.has_key?(key.to_s)
           state_new[value] = state[key.to_s]
         end
@@ -869,7 +869,7 @@ module Import::OTRS2
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if priority.has_key?(key.to_s)
           priority_new[value] = priority[key.to_s]
         end
@@ -910,7 +910,7 @@ module Import::OTRS2
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if group.has_key?(key.to_s)
           group_new[value] = group[key.to_s]
         end
@@ -966,7 +966,7 @@ module Import::OTRS2
         role_ids: role_ids,
         group_ids: group_ids,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if user.has_key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
@@ -1091,7 +1091,7 @@ module Import::OTRS2
         organization_id: get_organization_id(user, organizations),
         role_ids: [ role_customer.id ],
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if user.has_key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
@@ -1155,7 +1155,7 @@ module Import::OTRS2
         created_by_id: 1,
         updated_by_id: 1,
       }
-      map.each { |key,value|
+      map.each { |key, value|
         if organization.has_key?(key.to_s)
           organization_new[value] = organization[key.to_s]
         end

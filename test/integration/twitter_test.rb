@@ -73,7 +73,7 @@ class TwitterTest < ActiveSupport::TestCase
     ticket = Ticket.create(
       group_id: group.id,
       customer_id: user.id,
-      title: text[0,40],
+      title: text[0, 40],
       state_id: state.id,
       priority_id: priority.id,
       updated_by_id: 1,

@@ -5,6 +5,6 @@ Zammad::Application.routes.draw do
   match api_path + '/taskbar/:id',        to: 'taskbar#show',   via: :get
   match api_path + '/taskbar',            to: 'taskbar#create', via: :post
   match api_path + '/taskbar/:id',        to: 'taskbar#update', via: :put
-  match api_path + '/taskbar/:id',        to: 'taskbar#destroy',via: :delete
+  match api_path + '/taskbar/:id',        to: 'taskbar#destroy', via: :delete
 
 end

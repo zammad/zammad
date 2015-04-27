@@ -340,7 +340,7 @@ returns
       raise "Unable to process http call '#{response.inspect}'"
     end
 
-    def self.ftp(uri,options)
+    def self.ftp(uri, options)
       host       = uri.host
       filename   = File.basename(uri.path)
       remote_dir = File.dirname(uri.path)
