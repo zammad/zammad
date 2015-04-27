@@ -9,7 +9,7 @@ module Ticket::Number::Increment
     config = Setting.get('ticket_number_increment')
 
     # read counter
-    min_digs  = config[:min_size] || 4;
+    min_digs  = config[:min_size] || 4
     counter_increment = nil
     Ticket::Counter.transaction do
       counter = Ticket::Counter.where( generator: 'Increment' ).lock(true).first
@@ -65,7 +65,7 @@ module Ticket::Number::Increment
       end
       number += chksum.to_s
     end
-    return number
+    number
   end
 
   def check(string)
@@ -82,6 +82,6 @@ module Ticket::Number::Increment
     elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i then
       ticket = Ticket.where( number: $1 ).first
     end
-    return ticket
+    ticket
   end
 end

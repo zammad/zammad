@@ -73,6 +73,6 @@ returns
       subject = subject[ 0, ticket_subject_size.to_i ] + '[...]'
     end
 
-    return subject
+    subject
   end
 end

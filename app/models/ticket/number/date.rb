@@ -62,7 +62,7 @@ module Ticket::Number::Date
       end
       number += chksum.to_s
     end
-    return number
+    number
   end
   def check(string)
 
@@ -78,6 +78,6 @@ module Ticket::Number::Date
     elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i then
       ticket = Ticket.where( number: $1 ).first
     end
-    return ticket
+    ticket
   end
 end

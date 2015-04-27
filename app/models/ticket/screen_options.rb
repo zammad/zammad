@@ -113,7 +113,7 @@ returns
       }
     }
 
-    return {
+    {
       assets: assets,
       filter: filter,
       dependencies: dependencies,
@@ -167,7 +167,7 @@ returns
       assets = ticket.assets(assets)
     }
 
-    return {
+    {
       ticket_ids_open: ticket_ids_open,
       ticket_ids_closed: ticket_ids_closed,
       assets: assets,

@@ -52,7 +52,7 @@ returns
     limit        = params[:limit] || 12
     current_user = params[:current_user]
     full         = false
-    if params[:full] || !params.has_key?(:full)
+    if params[:full] || !params.key?(:full)
       full = true
     end
 
@@ -140,7 +140,7 @@ returns
     tickets_all.each { |ticket|
       tickets.push Ticket.lookup( id: ticket.id )
     }
-    return tickets
+    tickets
   end
 
 end

@@ -41,7 +41,7 @@ returns
     data[:current_user].groups.each {|group|
       return true if self.group.id == group.id
     }
-    return false
+    false
   end
 
 end

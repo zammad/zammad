@@ -50,7 +50,7 @@ returns
         '(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
       ).order('firstname').limit(limit)
     end
-    return users
+    users
   end
 
 end

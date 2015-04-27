@@ -181,7 +181,7 @@ returns
     where( _condition( overview_selected.condition ) ).
     count()
 
-    return {
+    {
       tickets: tickets,
       tickets_count: tickets_count,
       overview: overview_selected_raw,
@@ -245,6 +245,6 @@ returns
       end
     }
     bind[0] = sql
-    return bind
+    bind
   end
 end

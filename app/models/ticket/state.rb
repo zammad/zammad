@@ -48,6 +48,6 @@ returns:
   def ignore_escalation?
     ignore_escalation = ['removed', 'closed', 'merged']
     return true if ignore_escalation.include?( self.name )
-    return false
+    false
   end
 end

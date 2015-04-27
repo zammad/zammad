@@ -712,7 +712,7 @@ class TestCase < Test::Unit::TestCase
     file = File.join(Dir.pwd, filename)
     #file = 'some test lalal'
 
-    element = instance.find_elements( { css: params[:css] } )[0].send_keys file
+    instance.find_elements( { css: params[:css] } )[0].send_keys file
     #instance.find_elements( { :css => params[:css] } )[0]
     #element
     #@driver.find_element(id: 'file-submit').click
