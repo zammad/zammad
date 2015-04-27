@@ -2169,7 +2169,7 @@ Some Text',
       elsif !file[:success]
         if result && result.class == Array && result[1]
         puts result.inspect
-          assert( false, 'ticket should not be created but is created' )
+        assert( false, 'ticket should not be created but is created' )
         else
           assert( true, 'ticket not created - nice' )
         end

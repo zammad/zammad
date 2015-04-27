@@ -18,7 +18,7 @@ class ExampleTest < Test::Unit::TestCase
 
     def test_first_page
         browser.get 'http://portal.znuny.com/'
-	assert_equal browser.current_url, 'https://portal.znuny.com/#login'
+	       assert_equal browser.current_url, 'https://portal.znuny.com/#login'
     end
 
     def test_login_failed

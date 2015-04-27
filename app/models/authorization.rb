@@ -87,8 +87,8 @@ class Authorization < ApplicationModel
 
   private
 
-    def delete_user_cache
-      self.user.cache_delete
-    end
+  def delete_user_cache
+    self.user.cache_delete
+  end
 
 end

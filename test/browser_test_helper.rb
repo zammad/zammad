@@ -625,7 +625,7 @@ class TestCase < Test::Unit::TestCase
           raise "not matching '#{data[:title]}' in title '#{title}'"
         end
       end
-puts "tv #{params.inspect}"
+      puts "tv #{params.inspect}"
       # verify modified
       if data.has_key?(:modified)
         exists      = instance.find_elements( { css: '.tasks .active .icon' } )[0]

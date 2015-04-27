@@ -111,7 +111,7 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
           OnlineNotification.seen( id: notification['id'] )
         end
       end
-    render json: {}, status: :ok
+      render json: {}, status: :ok
   end
 
 end

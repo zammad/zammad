@@ -719,14 +719,14 @@ class TicketSlaTest < ActiveSupport::TestCase
     )
     ticket = Ticket.find(ticket.id)
 
-     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
-     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
-     assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
-     assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
-     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
-     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 15:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
-     assert_equal( ticket.close_time_in_min, 30, 'ticket.close_time_in_min verify 3' )
-     assert_equal( ticket.close_time_diff_in_min, 210, 'ticket.close_time_diff_in_min# verify 3' )
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
+    assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 15:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_in_min, 30, 'ticket.close_time_in_min verify 3' )
+    assert_equal( ticket.close_time_diff_in_min, 210, 'ticket.close_time_diff_in_min# verify 3' )
 
     delete = sla.destroy
     assert( delete, 'sla destroy' )
@@ -750,19 +750,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( ticket, 'ticket created' )
 
     # state change to open from pending
-       History.add(
-      history_type: 'updated',
-      history_object: 'Ticket',
-      history_attribute: 'state',
-      o_id: ticket.id,
-      id_to: 2,
-      id_from: 3,
-      value_from: 'pending reminder',
-      value_to: 'open',
-      created_by_id: 1,
-      created_at: '2013-06-04 10:30:00 UTC',
-      updated_at: '2013-06-04 10:30:00 UTC',
-    )
+    History.add(
+   history_type: 'updated',
+   history_object: 'Ticket',
+   history_attribute: 'state',
+   o_id: ticket.id,
+   id_to: 2,
+   id_from: 3,
+   value_from: 'pending reminder',
+   value_to: 'open',
+   created_by_id: 1,
+   created_at: '2013-06-04 10:30:00 UTC',
+   updated_at: '2013-06-04 10:30:00 UTC',
+ )
 
     # state change to pending from open 11:00
     History.add(
