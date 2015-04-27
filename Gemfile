@@ -78,6 +78,9 @@ group :development, :test do
     gem 'guard-livereload',  :require => false
     gem 'rack-livereload'
     gem 'rb-fsevent',        :require => false
+
+    # code QA
+    gem 'rubocop'
 end
 
 gem 'puma'
