@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-module ApplicationModel::Assets
+class ApplicationModel
+  module Assets
 
 =begin
 
@@ -20,24 +21,24 @@ returns
 
 =end
 
-  def assets (data = {})
+    def assets (data = {})
 
-    if !data[ self.class.to_app_model ]
-      data[ self.class.to_app_model ] = {}
-    end
-    if !data[ self.class.to_app_model ][ self.id ]
-      data[ self.class.to_app_model ][ self.id ] = self.attributes_with_associations
-    end
-
-    return data if !self['created_by_id'] && !self['updated_by_id']
-    ['created_by_id', 'updated_by_id'].each {|item|
-      next if !self[ item ]
-      if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
-        user = User.lookup( id: self[ item ] )
-        data = user.assets( data )
+      if !data[ self.class.to_app_model ]
+        data[ self.class.to_app_model ] = {}
       end
-    }
-    data
-  end
+      if !data[ self.class.to_app_model ][ self.id ]
+        data[ self.class.to_app_model ][ self.id ] = self.attributes_with_associations
+      end
 
+      return data if !self['created_by_id'] && !self['updated_by_id']
+      ['created_by_id', 'updated_by_id'].each {|item|
+        next if !self[ item ]
+        if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
+          user = User.lookup( id: self[ item ] )
+          data = user.assets( data )
+        end
+      }
+      data
+    end
+  end
 end

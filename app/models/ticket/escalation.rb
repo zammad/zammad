@@ -319,7 +319,7 @@ returns
       return check_time if !escalation_time
       return escalation_time if !check_time
       return check_time if escalation_time > check_time
-      return escalation_time
+      escalation_time
     end
   end
 end

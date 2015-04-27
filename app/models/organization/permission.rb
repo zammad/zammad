@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-module Organization::Permission
+class Organization
+  module Permission
 
 =begin
 
@@ -15,24 +16,24 @@ returns
 
 =end
 
-  def permission (data)
+    def permission (data)
 
-    # check customer
-    if data[:current_user].is_role('Customer')
+      # check customer
+      if data[:current_user].is_role('Customer')
 
-      # access ok if its own organization
-      return false if data[:type] != 'ro'
-      return false if !data[:current_user].organization_id
-      return true if self.id == data[:current_user].organization_id
+        # access ok if its own organization
+        return false if data[:type] != 'ro'
+        return false if !data[:current_user].organization_id
+        return true if self.id == data[:current_user].organization_id
 
-      # no access
-      return false
+        # no access
+        return false
+      end
+
+      # check agent
+      return true if data[:current_user].is_role(Z_ROLENAME_ADMIN)
+      return true if data[:current_user].is_role('Agent')
+      false
     end
-
-    # check agent
-    return true if data[:current_user].is_role(Z_ROLENAME_ADMIN)
-    return true if data[:current_user].is_role('Agent')
-    return false
   end
-
 end

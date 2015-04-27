@@ -73,7 +73,7 @@ returns
           assets = record.assets(assets)
         end
       }
-      return {
+      {
         history: list,
         assets: assets,
       }
