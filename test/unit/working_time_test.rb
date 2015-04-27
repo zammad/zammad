@@ -58,7 +58,6 @@ class WorkingTimeTest < ActiveSupport::TestCase
       {
         start: '2012-12-23 08:00:00',
         end: '2012-12-27 10:30:42',
-#        :diff   => 0,
         diff: 151,
         config: {
           'Mon'                  => true,
@@ -334,7 +333,6 @@ class WorkingTimeTest < ActiveSupport::TestCase
           'end_of_workday'       => '6:00 pm',
         },
       },
-
 
       # test 6
       {
