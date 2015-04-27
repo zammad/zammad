@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable all
 require 'test_helper'
 
 class EmailProcessTest < ActiveSupport::TestCase

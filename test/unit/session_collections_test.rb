@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable Next, CyclomaticComplexity
 require 'test_helper'
 
 class SessionCollectionsTest < ActiveSupport::TestCase

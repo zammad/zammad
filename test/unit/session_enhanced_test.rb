@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable Next, UselessAssignment
 require 'test_helper'
 
 class SessionEnhancedTest < ActiveSupport::TestCase

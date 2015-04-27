@@ -1,6 +1,7 @@
 # encoding: utf-8
+# rubocop:disable Next, UselessAssignment
 require 'test_helper'
- 
+
 class PackageTest < ActiveSupport::TestCase
   test 'packages' do
     tests = [
@@ -264,7 +265,7 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
           end
           location = Rails.root.to_s + '/auto_install/unittest.zpm'
           file = File.new( location, 'wb' )
-          file.write( test[:zpm] ) 
+          file.write( test[:zpm] )
           file.close
         end
         begin

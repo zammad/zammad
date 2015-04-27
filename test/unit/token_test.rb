@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable Next
 require 'test_helper'
 
 class TokenTest < ActiveSupport::TestCase

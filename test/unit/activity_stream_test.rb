@@ -36,12 +36,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
           },
           article: {
             updated_by_id: current_user.id,
-              created_by_id: current_user.id,
-              type_id: Ticket::Article::Type.lookup( name: 'phone' ).id,
-              sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
-              from: 'Unit Test <unittest@example.com>',
-              body: 'Unit Test 123',
-              internal: false
+            created_by_id: current_user.id,
+            type_id: Ticket::Article::Type.lookup( name: 'phone' ).id,
+            sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
+            from: 'Unit Test <unittest@example.com>',
+            body: 'Unit Test 123',
+            internal: false,
           },
         },
         update: {
@@ -60,8 +60,8 @@ class ActivityStreamTest < ActiveSupport::TestCase
         check: [
           {
             result: true,
-             object: 'Ticket',
-             type: 'updated',
+            object: 'Ticket',
+            type: 'updated',
           },
           {
             result: true,
@@ -84,9 +84,6 @@ class ActivityStreamTest < ActiveSupport::TestCase
     ]
     tickets = []
     tests.each { |test|
-
-      ticket = nil
-      article = nil
 
       ticket = Ticket.create( test[:create][:ticket] )
       test[:check][0][:o_id]          = ticket.id
@@ -378,7 +375,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       activity_stream_list.each { |item|
         check_list += 1
         next if check_list != check_count
-#        next if match
+        #next if match
         #puts '--------'
         #puts item.inspect
         #puts check_item.inspect

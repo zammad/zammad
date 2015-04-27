@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable UselessAssignment
 require 'test_helper'
 
 class RestTest < ActiveSupport::TestCase
@@ -239,6 +240,6 @@ class RestTest < ActiveSupport::TestCase
     #puts 'URL: ' + url
     #puts response.code.to_s
     #puts response.body.to_s
-    return { data: response.data, response: response }
+    { data: response.data, response: response }
   end
 end

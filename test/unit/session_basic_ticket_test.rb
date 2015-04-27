@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable UselessAssignment
 require 'test_helper'
 
 class SessionBasicTicketTest < ActiveSupport::TestCase

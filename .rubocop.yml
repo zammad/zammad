@@ -8,6 +8,11 @@ AllCops:
 # https://github.com/bbatsov/rubocop#includingexcluding-files
 
 
+Metrics/LineLength:
+  Description: 'Limit lines to 80 characters.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
+  Enabled: false
+
 Style/NegatedIf:
   Description: >-
                  Favor unless over if for negative conditions

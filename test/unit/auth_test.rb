@@ -34,7 +34,7 @@ if user
     active: true,
   )
 else
-  user = User.create_if_not_exists(
+  User.create_if_not_exists(
     login: 'nicole.braun@zammad.org',
     firstname: 'Nicole',
     lastname: 'Braun',

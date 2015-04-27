@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable PerceivedComplexity, CyclomaticComplexity
 require 'test_helper'
 
 class HistoryTest < ActiveSupport::TestCase
@@ -22,12 +23,12 @@ class HistoryTest < ActiveSupport::TestCase
           },
           article: {
             updated_by_id: current_user.id,
-              created_by_id: current_user.id,
-              type_id: Ticket::Article::Type.lookup( name: 'phone' ).id,
-              sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
-              from: 'Unit Test <unittest@example.com>',
-              body: 'Unit Test 123',
-              internal: false
+            created_by_id: current_user.id,
+            type_id: Ticket::Article::Type.lookup( name: 'phone' ).id,
+            sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
+            from: 'Unit Test <unittest@example.com>',
+            body: 'Unit Test 123',
+            internal: false,
           },
         },
         ticket_update: {
@@ -89,12 +90,12 @@ class HistoryTest < ActiveSupport::TestCase
           },
           article: {
             created_by_id: current_user.id,
-              updated_by_id: current_user.id,
-              type_id: Ticket::Article::Type.lookup(name: 'phone' ).id,
-              sender_id: Ticket::Article::Sender.lookup(name: 'Customer' ).id,
-              from: 'Unit Test <unittest@example.com>',
-              body: 'Unit Test 123',
-              internal: false
+            updated_by_id: current_user.id,
+            type_id: Ticket::Article::Type.lookup(name: 'phone' ).id,
+            sender_id: Ticket::Article::Sender.lookup(name: 'Customer' ).id,
+            from: 'Unit Test <unittest@example.com>',
+            body: 'Unit Test 123',
+            internal: false,
           },
         },
         ticket_update: {
@@ -213,8 +214,9 @@ class HistoryTest < ActiveSupport::TestCase
           user: {
             firstname: 'Bob',
             lastname: 'Master',
-            email: 'master@example.com',          },
+            email: 'master@example.com',
             active: false,
+          },
         },
         history_check: [
           {
@@ -354,16 +356,10 @@ class HistoryTest < ActiveSupport::TestCase
   end
 
   def history_check( history_list, history_check )
-#      puts history_list.inspect
     history_check.each { |check_item|
-#        puts '+++++++++++'
-#        puts check_item.inspect
       match = false
       history_list.each { |history_item|
         next if match
-#          puts '--------'
-#          puts history_item.inspect
-#          puts history_item.history_object.name
         next if history_item['object'] != check_item[:history_object]
         next if history_item['type'] != check_item[:history_type]
         if check_item[:history_attribute]
