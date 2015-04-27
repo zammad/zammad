@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Store
-  class Provider
+  module Provider
     class DB < ApplicationModel
       self.table_name = 'store_provider_dbs'
 

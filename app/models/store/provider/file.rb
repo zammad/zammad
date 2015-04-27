@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Store
-  class Provider
-    class File
+  module Provider
+    module File
 
       def self.add(data, sha)
         write_to_fs(data, sha)
