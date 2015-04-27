@@ -93,7 +93,7 @@ push translations to online
 
 get list of translations
 
-  list = Translation.list('de')
+  list = Translation.list('de-de')
 
 =end
 
@@ -142,7 +142,7 @@ get list of translations
 
 translate strings in ruby context, e. g. for notifications
 
-  translated = Translation.translate('de', 'New')
+  translated = Translation.translate('de-de', 'New')
 
 =end
 

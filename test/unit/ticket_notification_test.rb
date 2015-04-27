@@ -16,7 +16,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     :roles         => roles,
     :groups        => groups,
     :preferences   => {
-      :locale => 'de',
+      :locale => 'de-de',
     },
     :updated_by_id => 1,
     :created_by_id => 1,
@@ -31,7 +31,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     :roles         => roles,
     :groups        => groups,
     :preferences   => {
-      :locale => 'en_CA',
+      :locale => 'en-ca',
     },
     :updated_by_id => 1,
     :created_by_id => 1,

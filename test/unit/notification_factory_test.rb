@@ -62,82 +62,82 @@ class NotificationFactoryTest < ActiveSupport::TestCase
         :result => 'Hi Nicole,',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'Hi #{recipient.firstname},',
         :result => 'Hi Nicole,',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'Hi #{recipient.firstname}, Group: #{ticket.group.name}',
         :result => 'Hi Nicole, Group: Users',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => '#{config.http_type} some text',
         :result => 'http some text',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'i18n(New) some text',
         :result => 'Neu some text',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => '\'i18n(#{ticket.state.name})\' ticket state',
         :result => '\'neu\' ticket state',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'a #{not_existing_object.test}',
         :result => 'a #{not_existing_object / no such object}',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'a #{ticket.level1}',
         :result => 'a #{ticket.level1 / no such method}',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'a #{ticket.level1.level2}',
         :result => 'a #{ticket.level1 / no such method}',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'a #{ticket.title.level2}',
         :result => 'a #{ticket.title.level2 / no such method}',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'by #{ticket.updated_by.fullname}',
         :result => 'by Nicole Braun',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'Subject #{article.from}, Group: #{ticket.group.name}',
         :result => 'Subject Zammad Feedback <feedback@example.org>, Group: Users',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'Body #{article.body}, Group: #{ticket.group.name}',
         :result => 'Body some text, Group: Users',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => '\#{puts `ls`}',
         :result => '\#{puts `ls`} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'test i18n(new)',
         :result => 'test neu',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'test i18n()',
         :result => 'test ',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'test i18n(new) i18n(open)',
         :result => 'test neu offen',
       },
@@ -181,17 +181,17 @@ class NotificationFactoryTest < ActiveSupport::TestCase
     )
     tests = [
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'Subject #{ticket.title}',
         :result => 'Subject some title <b>äöüß</b> 2',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'Subject #{article.from}, Group: #{ticket.group.name}',
         :result => 'Subject Zammad Feedback <feedback@example.org>, Group: Users',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'Body #{article.body}, Group: #{ticket.group.name}',
         :result => 'Body some text
 next line, Group: Users',
@@ -236,44 +236,44 @@ next line, Group: Users',
     )
     tests = [
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => '\#{puts `ls`}',
         :result => '\#{puts `ls`} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'attack#1 #{article.destroy}',
         :result => 'attack#1 #{article.destroy} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'attack#2 #{Article.where}',
         :result => 'attack#2 #{Article.where} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'attack#1 #{article.
         destroy}',
         :result => 'attack#1 #{article.
         destroy} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'attack#1 #{article.find}',
         :result => 'attack#1 #{article.find} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'attack#1 #{article.update(:name => "test")}',
         :result => 'attack#1 #{article.update(:name => "test")} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'attack#1 #{article.all}',
         :result => 'attack#1 #{article.all} (not allowed)',
       },
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'attack#1 #{article.delete}',
         :result => 'attack#1 #{article.delete} (not allowed)',
       },

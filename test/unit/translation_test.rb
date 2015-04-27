@@ -14,14 +14,14 @@ class TranslationTest < ActiveSupport::TestCase
 
       # test 2
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'New',
         :result => 'Neu',
       },
 
       # test 3
       {
-        :locale => 'de',
+        :locale => 'de-de',
         :string => 'not translated - lalala',
         :result => 'not translated - lalala',
       },
