@@ -127,7 +127,7 @@ class SessionsController < ApplicationController
     request.env['rack.session.options'][:expire_after] = -1.year
     request.env['rack.session.options'][:renew] = true
 
-    render json: { }
+    render json: {}
   end
 
   def create_omniauth
