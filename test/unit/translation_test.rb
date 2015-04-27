@@ -28,7 +28,7 @@ class TranslationTest < ActiveSupport::TestCase
     ]
     tests.each { |test|
       result = Translation.translate( test[:locale], test[:string] )
-      assert_equal( result, test[:result], "verify result" )
+      assert_equal( result, test[:result], 'verify result' )
     }
   end
 end

@@ -6,9 +6,9 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # cleanup
     delete = Sla.destroy_all
-    assert( delete, "sla destroy_all" )
+    assert( delete, 'sla destroy_all' )
     delete = Ticket.destroy_all
-    assert( delete, "ticket destroy_all" )
+    assert( delete, 'ticket destroy_all' )
 
     ticket = Ticket.create(
       :title         => 'some title äöüß',
@@ -21,16 +21,16 @@ class TicketSlaTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     sla = Sla.create(
       :name => 'test sla 1',
       :condition => {},
       :data => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "8:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '8:00',
+        'end_of_workday'       => '18:00',
       },
       :first_response_time => 120,
       :update_time         => 180,
@@ -45,15 +45,15 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 13:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
     delete = sla.destroy
-    assert( delete, "sla destroy 1" )
+    assert( delete, 'sla destroy 1' )
 
     sla = Sla.create(
       :name      => 'test sla 2',
-      :condition => { "tickets.priority_id" =>["1", "2", "3"] },
+      :condition => { 'tickets.priority_id' =>['1', '2', '3'] },
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "8:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '8:00',
+        'end_of_workday'       => '18:00',
       },
       :first_response_time => 60,
       :update_time         => 120,
@@ -213,7 +213,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_diff_in_min, -30, 'ticket.close_time_diff_in_min verify 9' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
     ticket = Ticket.create(
       :title         => 'some title äöüß',
@@ -226,7 +226,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       :created_at    => '2013-03-28 23:49:00 UTC',
       :updated_at    => '2013-03-28 23:49:00 UTC',
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
 
     assert_equal( ticket.title, 'some title äöüß', 'ticket.title verify' )
     assert_equal( ticket.group.name, 'Users', 'ticket.group verify' )
@@ -284,7 +284,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time, nil, 'ticket.close_time verify - outbound' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
 
     ticket = Ticket.create(
@@ -298,7 +298,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       :created_at    => '2013-03-28 23:49:00 UTC',
       :updated_at    => '2013-03-28 23:49:00 UTC',
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
 
     assert_equal( ticket.title, 'some title äöüß', 'ticket.title verify' )
     assert_equal( ticket.group.name, 'Users', 'ticket.group verify' )
@@ -328,19 +328,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time, nil, 'ticket.close_time verify - inbound' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
   end
 
   test 'ticket sla + timezone' do
 
     # cleanup
     delete = Sla.destroy_all
-    assert( delete, "sla destroy_all" )
+    assert( delete, 'sla destroy_all' )
     delete = Ticket.destroy_all
-    assert( delete, "ticket destroy_all" )
+    assert( delete, 'ticket destroy_all' )
 
     ticket = Ticket.create(
       :title         => 'some title äöüß',
@@ -353,7 +353,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 8:00-17:00
@@ -361,9 +361,9 @@ class TicketSlaTest < ActiveSupport::TestCase
       :name      => 'test sla 1',
       :condition => {},
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "9:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '9:00',
+        'end_of_workday'       => '18:00',
       },
       :timezone            => 'Europe/Berlin',
       :first_response_time => 120,
@@ -380,10 +380,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 13:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
     ticket = Ticket.create(
       :title         => 'some title äöüß',
       :group         => Group.lookup( :name => 'Users'),
@@ -395,7 +395,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
@@ -403,9 +403,9 @@ class TicketSlaTest < ActiveSupport::TestCase
       :name      => 'test sla 1',
       :condition => {},
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "9:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '9:00',
+        'end_of_workday'       => '18:00',
       },
       :timezone            => 'Europe/Berlin',
       :first_response_time => 120,
@@ -422,10 +422,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-10-21 13:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     ticket = Ticket.create(
       :title         => 'some title äöüß',
@@ -438,7 +438,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       :updated_by_id => 1,
       :created_by_id => 1,
     )
-    assert( ticket, "ticket created" )
+    assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
@@ -446,9 +446,9 @@ class TicketSlaTest < ActiveSupport::TestCase
       :name      => 'test sla 1',
       :condition => {},
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "9:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '9:00',
+        'end_of_workday'       => '18:00',
       },
       :timezone            => 'Europe/Berlin',
       :first_response_time => 120,
@@ -465,10 +465,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-10-21 11:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
   end
 
@@ -550,9 +550,9 @@ class TicketSlaTest < ActiveSupport::TestCase
       :name      => 'test sla 1',
       :condition => {},
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "9:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '9:00',
+        'end_of_workday'       => '18:00',
       },
       :timezone            => 'Europe/Berlin',
       :first_response_time => 120,
@@ -572,10 +572,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_in_min, 150, 'ticket.close_time_in_min verify 3' )
     assert_equal( ticket.close_time_diff_in_min, 100, 'ticket.close_time_diff_in_min# verify 3' )
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
     # test Ticket created in state pending and closed without reopen or state change
     ticket = Ticket.create(
@@ -614,9 +614,9 @@ class TicketSlaTest < ActiveSupport::TestCase
       :name      => 'test sla 1',
       :condition => {},
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "9:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '9:00',
+        'end_of_workday'       => '18:00',
       },
       :first_response_time => 120,
       :update_time         => 180,
@@ -637,10 +637,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_diff_in_min, 240, 'ticket.close_time_diff_in_min# verify 3' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
 
     # test Ticket created in state pending, changed state to openen, back to pending and closed
@@ -709,9 +709,9 @@ class TicketSlaTest < ActiveSupport::TestCase
       :name      => 'test sla 1',
       :condition => {},
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "9:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '9:00',
+        'end_of_workday'       => '18:00',
       },
       :first_response_time => 120,
       :update_time         => 180,
@@ -732,10 +732,10 @@ class TicketSlaTest < ActiveSupport::TestCase
      assert_equal( ticket.close_time_diff_in_min, 210, 'ticket.close_time_diff_in_min# verify 3' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
     ### Test Ticket created in state pending, changed state to openen, back to pending and back to open then
     ### close ticket
@@ -819,9 +819,9 @@ class TicketSlaTest < ActiveSupport::TestCase
       :name      => 'test sla 1',
       :condition => {},
       :data      => {
-        "Mon"=>"Mon", "Tue"=>"Tue", "Wed"=>"Wed", "Thu"=>"Thu", "Fri"=>"Fri", "Sat"=>"Sat", "Sun"=>"Sun",
-        "beginning_of_workday" => "9:00",
-        "end_of_workday"       => "18:00",
+        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'beginning_of_workday' => '9:00',
+        'end_of_workday'       => '18:00',
       },
       :first_response_time => 120,
       :update_time         => 180,
@@ -842,10 +842,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_diff_in_min, 180, 'ticket.close_time_diff_in_min# verify 3' )
 
     delete = sla.destroy
-    assert( delete, "sla destroy" )
+    assert( delete, 'sla destroy' )
 
     delete = ticket.destroy
-    assert( delete, "ticket destroy" )
+    assert( delete, 'ticket destroy' )
 
   end
 end

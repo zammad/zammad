@@ -83,7 +83,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :updated_by_id => customer.id,
       :created_by_id => customer.id,
     )
-    assert( ticket1, "ticket created - ticket notification simple" )
+    assert( ticket1, 'ticket created - ticket notification simple' )
 
     # execute ticket events
     Observer::Ticket::Notification.transaction
@@ -184,7 +184,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
-    assert( ticket2, "ticket created" )
+    assert( ticket2, 'ticket created' )
 
     # verify notifications to no one
     assert_equal( 0, notification_check(ticket2, agent1), ticket2.id )
@@ -251,7 +251,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
-    assert( ticket3, "ticket created" )
+    assert( ticket3, 'ticket created' )
 
     # verify notifications to agent1 and not to agent2
     assert_equal( 1, notification_check(ticket3, agent1), ticket3.id )
@@ -303,13 +303,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
 
     delete = ticket1.destroy
-    assert( delete, "ticket1 destroy" )
+    assert( delete, 'ticket1 destroy' )
 
     delete = ticket2.destroy
-    assert( delete, "ticket2 destroy" )
+    assert( delete, 'ticket2 destroy' )
 
     delete = ticket3.destroy
-    assert( delete, "ticket3 destroy" )
+    assert( delete, 'ticket3 destroy' )
 
   end
 
@@ -338,7 +338,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :updated_by_id => customer.id,
       :created_by_id => customer.id,
     )
-    assert( ticket1, "ticket created" )
+    assert( ticket1, 'ticket created' )
 
     # execute ticket events
     Observer::Ticket::Notification.transaction
@@ -399,7 +399,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :updated_by_id => customer.id,
       :created_by_id => customer.id,
     )
-    assert( ticket1, "ticket created - ticket notification template" )
+    assert( ticket1, 'ticket created - ticket notification template' )
 
     bg = Observer::Ticket::Notification::BackgroundJob.new(
       :ticket_id  => ticket1.id,
@@ -407,7 +407,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       :type       => 'update',
       :changes    => {
         'priority_id'  => [1, 2],
-        'pending_time' => [nil, Time.parse("2015-01-11 23:33:47 UTC")],
+        'pending_time' => [nil, Time.parse('2015-01-11 23:33:47 UTC')],
       },
     )
 

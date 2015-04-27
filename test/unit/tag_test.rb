@@ -97,11 +97,11 @@ class TagTest < ActiveSupport::TestCase
       if test[:tag_add]
         tags    = test[:tag_add]
         success = Tag.tag_add( tags )
-        assert( success, "Tag.tag_add successful")
+        assert( success, 'Tag.tag_add successful')
       else
         tags    = test[:tag_remove]
         success = Tag.tag_remove( tags )
-        assert( success, "Tag.tag_remove successful")
+        assert( success, 'Tag.tag_remove successful')
       end
       list = Tag.tag_list( tags )
       test[:verify][:items].each {|key, value|
@@ -122,9 +122,9 @@ class TagTest < ActiveSupport::TestCase
         tags = test[:tag_remove]
       end
       success = Tag.tag_remove( tags )
-      assert( success, "Tag.tag_remove successful")
+      assert( success, 'Tag.tag_remove successful')
       list = Tag.tag_list( tags )
-      assert( !list.include?( tags[:item] ), "Tag entry destroyed")
+      assert( !list.include?( tags[:item] ), 'Tag entry destroyed')
     }
   end
 end

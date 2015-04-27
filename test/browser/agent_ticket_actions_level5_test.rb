@@ -9,9 +9,9 @@ class AgentTicketActionLevel5Test < TestCase
     signature_body1 = "--\nsig body 1 äöüß " + suffix
     signature_name2 = 'sig name 2 äöüß ' + suffix
     signature_body2 = "--\nsig body 2 äöüß " + suffix
-    group_name1     = "group name 1 " + suffix
-    group_name2     = "group name 2 " + suffix
-    group_name3     = "group name 3 " + suffix
+    group_name1     = 'group name 1 ' + suffix
+    group_name2     = 'group name 2 ' + suffix
+    group_name3     = 'group name 3 ' + suffix
 
     @browser = browser_instance
     login(

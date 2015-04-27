@@ -163,7 +163,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     sleep 1
 
     ticket2 = Ticket.create(
-      :title         => "something else",
+      :title         => 'something else',
       :group         => Group.lookup( :name => 'Users'),
       :customer_id   => customer2.id,
       :state         => Ticket::State.lookup( :name => 'open' ),
@@ -189,7 +189,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     sleep 1
 
     ticket3 = Ticket.create(
-      :title         => "something else",
+      :title         => 'something else',
       :group         => Group.lookup( :name => 'WithoutAccess'),
       :customer_id   => customer3.id,
       :state         => Ticket::State.lookup( :name => 'open' ),

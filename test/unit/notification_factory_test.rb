@@ -152,7 +152,7 @@ class NotificationFactoryTest < ActiveSupport::TestCase
         },
         :locale  => test[:locale]
       )
-      assert_equal( test[:result], result, "verify result" )
+      assert_equal( test[:result], result, 'verify result' )
     }
 
     ticket.destroy
@@ -207,7 +207,7 @@ next line, Group: Users',
         },
         :locale  => test[:locale]
       )
-      assert_equal( test[:result], result, "verify result" )
+      assert_equal( test[:result], result, 'verify result' )
     }
 
     ticket.destroy
@@ -288,7 +288,7 @@ next line, Group: Users',
         },
         :locale  => test[:locale]
       )
-      assert_equal( test[:result], result, "verify result" )
+      assert_equal( test[:result], result, 'verify result' )
     }
 
     ticket.destroy

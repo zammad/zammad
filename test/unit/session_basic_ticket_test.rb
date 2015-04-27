@@ -21,23 +21,23 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
       :groups    => groups,
     )
     agent1.roles = roles
-    assert( agent1.save, "create/update agent1" )
+    assert( agent1.save, 'create/update agent1' )
 
     user = User.lookup( :id => agent1.id )
     client1 = Sessions::Backend::TicketOverviewIndex.new(user, false, '123-1', 3)
 
     # get as stream
     result1 = client1.push
-    assert( result1, "check ticket_overview_index" )
+    assert( result1, 'check ticket_overview_index' )
 
     # next check should be empty / no changes
     result1 = client1.push
-    assert( !result1, "check ticket_overview_index - recall" )
+    assert( !result1, 'check ticket_overview_index - recall' )
 
     # next check should be empty / no changes
     sleep 4
     result1 = client1.push
-    assert( !result1, "check ticket_overview_index - recall 2" )
+    assert( !result1, 'check ticket_overview_index - recall 2' )
 
     # create ticket
     ticket = Ticket.create( :title => '12323', :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1 )
@@ -45,7 +45,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = client1.push
-    assert( result1, "check ticket_overview_index - recall 3" )
+    assert( result1, 'check ticket_overview_index - recall 3' )
   end
 
   test 'b ticket_overview_list' do
@@ -67,7 +67,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
       :groups    => groups,
     )
     agent1.roles = roles
-    assert( agent1.save, "create/update agent1" )
+    assert( agent1.save, 'create/update agent1' )
 
     user = User.lookup( :id => agent1.id )
 
@@ -75,16 +75,16 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = client1.push
-    assert( result1, "check ticket_overview_list" )
+    assert( result1, 'check ticket_overview_list' )
 
     # next check should be empty / no changes
     result1 = client1.push
-    assert( !result1, "check ticket_overview_list - recall" )
+    assert( !result1, 'check ticket_overview_list - recall' )
 
     # next check should be empty / no changes
     sleep 4
     result1 = client1.push
-    assert( !result1, "check ticket_overview_list - recall 2" )
+    assert( !result1, 'check ticket_overview_list - recall 2' )
 
     # create ticket
     ticket = Ticket.create( :title => '12323', :group_id => 1, :priority_id => 1, :state_id => 1, :customer_id => 1 )
@@ -92,6 +92,6 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = client1.push
-    assert( result1, "check ticket_overview_list - recall 3" )
+    assert( result1, 'check ticket_overview_list - recall 3' )
   end
 end

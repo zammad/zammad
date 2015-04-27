@@ -302,7 +302,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 200
     result = UserAgent.request(
-      "ftp://ftp.gwdg.de/msgs/banner.msg",
+      'ftp://ftp.gwdg.de/msgs/banner.msg',
     )
     assert(result)
     assert_equal(true, result.success?)
@@ -312,7 +312,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 401
     result = UserAgent.request(
-      "ftp://ftp.gwdg.de/msgs/not_existing.msg",
+      'ftp://ftp.gwdg.de/msgs/not_existing.msg',
     )
     assert(result)
     assert_equal(false, result.success?)
@@ -321,7 +321,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # get / 200 / gzip
     result = UserAgent.request(
-      "https://httpbin.org/gzip",
+      'https://httpbin.org/gzip',
     )
     assert(result)
     assert_equal(true, result.success?)
@@ -331,7 +331,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # get / 200 / gzip
     result = UserAgent.request(
-      "http://httpbin.org/gzip",
+      'http://httpbin.org/gzip',
     )
     assert(result)
     assert_equal(true, result.success?)
@@ -341,7 +341,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # get / 200 / gzip
     result = UserAgent.request(
-      "https://httpbin.org/deflate",
+      'https://httpbin.org/deflate',
     )
     assert(result)
     assert_equal(true, result.success?)
@@ -351,7 +351,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # get / 200 / gzip
     result = UserAgent.request(
-      "http://httpbin.org/deflate",
+      'http://httpbin.org/deflate',
     )
     assert(result)
     assert_equal(true, result.success?)
@@ -367,7 +367,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # get / 0
     result = UserAgent.request(
-      "http://not.existing.host/test.php",
+      'http://not.existing.host/test.php',
     )
     assert(result)
     assert_equal(false, result.success?)
@@ -376,7 +376,7 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 0
     result = UserAgent.request(
-      "ftp://not.existing.host/test.bin",
+      'ftp://not.existing.host/test.bin',
     )
     assert(result)
     assert_equal(false, result.success?)

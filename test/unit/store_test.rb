@@ -59,7 +59,7 @@ class StoreTest < ActiveSupport::TestCase
     }
 
     success = Store::File.verify
-    assert success, "verify ok"
+    assert success, 'verify ok'
 
     Store::File.move( 'DB', 'File' )
 
@@ -85,7 +85,7 @@ class StoreTest < ActiveSupport::TestCase
     }
 
     success = Store::File.verify
-    assert success, "verify ok"
+    assert success, 'verify ok'
 
     Store::File.move( 'File', 'DB' )
 

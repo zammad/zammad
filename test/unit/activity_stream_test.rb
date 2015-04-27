@@ -142,7 +142,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       ticket_id = ticket.id
       ticket.destroy
       found = Ticket.where( :id => ticket_id ).first
-      assert( !found, "Ticket destroyed")
+      assert( !found, 'Ticket destroyed')
     }
   end
 
@@ -217,7 +217,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       organization_id = organization.id
       organization.destroy
       found = Organization.where( :id => organization_id ).first
-      assert( !found, "Organization destroyed")
+      assert( !found, 'Organization destroyed')
     }
   end
 
@@ -284,7 +284,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       user_id = user.id
       user.destroy
       found = User.where( :id => user_id ).first
-      assert( !found, "User destroyed")
+      assert( !found, 'User destroyed')
     }
   end
 
@@ -363,7 +363,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       user_id = user.id
       user.destroy
       found = User.where( :id => user_id ).first
-      assert( !found, "User destroyed")
+      assert( !found, 'User destroyed')
     }
   end
 
