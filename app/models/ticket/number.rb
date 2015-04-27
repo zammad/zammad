@@ -1,7 +1,8 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class Ticket::Number
-  include ApplicationLib
+class Ticket
+  class Number
+    include ApplicationLib
 
 =begin
 
@@ -15,16 +16,16 @@ returns
 
 =end
 
-  def self.generate
+    def self.generate
 
-    # generate number
-    (1..50_000).each { |i|
-      number = adapter.generate
-      ticket = Ticket.where( number: number ).first
-      return number if !ticket
-    }
-    raise "Can't generate new ticket number!"
-  end
+      # generate number
+      (1..50_000).each { |i|
+        number = adapter.generate
+        ticket = Ticket.where( number: number ).first
+        return number if !ticket
+      }
+      raise "Can't generate new ticket number!"
+    end
 
 =begin
 
@@ -38,21 +39,22 @@ returns
 
 =end
 
-  def self.check(string)
-    adapter.check(string)
-  end
-
-  def self.adapter
-
-    # load backend based on config
-    adapter_name = Setting.get('ticket_number')
-    if !adapter_name
-      raise 'Missing ticket_number setting option'
+    def self.check(string)
+      adapter.check(string)
     end
-    adapter = load_adapter(adapter_name)
-    if !adapter
-      raise "Can't load ticket_number adapter '#{adapter_name}'"
+
+    def self.adapter
+
+      # load backend based on config
+      adapter_name = Setting.get('ticket_number')
+      if !adapter_name
+        raise 'Missing ticket_number setting option'
+      end
+      adapter = load_adapter(adapter_name)
+      if !adapter
+        raise "Can't load ticket_number adapter '#{adapter_name}'"
+      end
+      adapter
     end
-    adapter
   end
 end

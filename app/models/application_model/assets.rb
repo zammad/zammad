@@ -31,11 +31,10 @@ returns
 
     return data if !self['created_by_id'] && !self['updated_by_id']
     ['created_by_id', 'updated_by_id'].each {|item|
-      if self[ item ]
-        if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
-          user = User.lookup( id: self[ item ] )
-          data = user.assets( data )
-        end
+      next if !self[ item ]
+      if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
+        user = User.lookup( id: self[ item ] )
+        data = user.assets( data )
       end
     }
     data

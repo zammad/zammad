@@ -16,7 +16,6 @@ class Locale < ApplicationModel
     raise "Can't load locales from #{url}: #{result.error}" if !result.success?
 
     result.data.each {|locale|
-      puts locale.inspect
       exists = Locale.where(locale: locale['locale']).first
       if exists
         exists.update(locale.symbolize_keys!)
