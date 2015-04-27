@@ -54,8 +54,6 @@ class AgentTicketActionLevel0Test < TestCase
     )
     tasks_close_all( discard_changes: true )
 
-
-
     # test with two browser windows
     random = 'text_II_module_test_' + rand(99_999_999).to_s
 
@@ -144,7 +142,6 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'some content ' + random,
     )
     sleep 2
-
 
     set(
       browser: browser2,

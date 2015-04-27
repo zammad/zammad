@@ -39,7 +39,6 @@ class Observer::User::Geo < ActiveRecord::Observer
     self.geo_update(record)
   end
 
-
   # update geo data of user
   def geo_update(record)
     address = ''

@@ -60,7 +60,6 @@ class SignupPasswordChangeAndResetTest < TestCase
     )
     click( css: '.content .btn--primary' )
 
-
     watch_for(
       css: 'body',
       value: 'current password is wrong',

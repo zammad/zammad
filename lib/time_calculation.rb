@@ -122,7 +122,6 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       return ((end_time - start_time) / 60 ).round
     end
 
-
     working_hours = self.working_hours(start_time, config, timezone)
 
     week_day_map = {
@@ -144,7 +143,6 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       month    = start_time.month
       year     = start_time.year
       hour     = start_time.hour
-
 
       # check if it's vacation day
       if config

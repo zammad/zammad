@@ -286,7 +286,6 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = ticket.destroy
     assert( delete, 'ticket destroy' )
 
-
     ticket = Ticket.create(
       title: 'some title äöüß',
       group: Group.lookup( name: 'Users'),
@@ -591,7 +590,6 @@ class TicketSlaTest < ActiveSupport::TestCase
     )
     assert( ticket, 'ticket created' )
 
-
     # set ticket from 11:30 to closed
     History.add(
       history_type: 'updated',
@@ -641,7 +639,6 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     delete = ticket.destroy
     assert( delete, 'ticket destroy' )
-
 
     # test Ticket created in state pending, changed state to openen, back to pending and closed
     ticket = Ticket.create(

@@ -61,7 +61,6 @@ remove all not used model attributes of params
 
   result = Model.param_cleanup(params, true)
 
-
 returns
 
   result = params # params with valid attributes of model
@@ -795,7 +794,6 @@ serve methode to configure and enable history support for this model
 class Model < ApplicationModel
   history_support
 end
-
 
 class Model < ApplicationModel
   history_support :ignore_attributes => { :article_count => true }

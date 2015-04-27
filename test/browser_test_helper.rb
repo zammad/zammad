@@ -787,7 +787,6 @@ wait untill text in selector disabppears
     :timeout => '16', # in sec, default 16
   )
 
-
 =end
 
   def watch_for_disappear(params = {})
@@ -1086,7 +1085,6 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
     data     = params[:data]
-
 
     if data[:title]
       #element = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0]

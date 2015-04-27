@@ -154,8 +154,6 @@ Setting.create_if_not_exists(
   frontend: true
 )
 
-
-
 Setting.create_if_not_exists(
   title: 'Storage Mechanism',
   name: 'storage',
@@ -912,7 +910,6 @@ Setting.create_if_not_exists(
   frontend: true
 )
 
-
 Setting.create_if_not_exists(
   title: 'Enable Ticket View/Update',
   name: 'customer_ticket_view',
@@ -1243,7 +1240,6 @@ Setting.create_if_not_exists(
   state: '',
   frontend: false
 )
-
 
 email_address = EmailAddress.create_if_not_exists(
   id: 1,

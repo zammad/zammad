@@ -107,7 +107,6 @@ class AgentTicketActionLevel6Test < TestCase
       value: 'test 6 - ticket 1-1',
     )
 
-
     #
     # ticket customer change checks
     #
@@ -200,7 +199,6 @@ class AgentTicketActionLevel6Test < TestCase
     #
     # form change/reset checks
     #
-
 
     # some form reset checks
   end

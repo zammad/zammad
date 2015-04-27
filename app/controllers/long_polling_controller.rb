@@ -53,7 +53,6 @@ class LongPollingController < ApplicationController
       Sessions.send( client_id, { event: 'spool:sent', data: { timestamp: Time.now.utc.to_i } } )
     end
 
-
     # receive message
     if params['data']['action'] == 'login'
       user_id = session[:user_id]

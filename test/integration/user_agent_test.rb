@@ -103,8 +103,6 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('404', result.code)
     assert_equal(NilClass, result.body.class)
 
-
-
     # with http basic auth
 
     # get / 200
@@ -208,7 +206,6 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('401', result.code)
     assert_equal(NilClass, result.body.class)
 
-
     # delete / 200
     result = UserAgent.delete(
       "#{host}/test_basic_auth/delete/1",
@@ -253,7 +250,6 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"abc"/)
     assert(result.body =~ /"text\/plain"/)
 
-
     # get / 301
     result = UserAgent.request(
       "#{host}/test_basic_auth/redirect",
@@ -269,7 +265,6 @@ class UserAgentTest < ActiveSupport::TestCase
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"abc"/)
     assert(result.body =~ /"text\/plain"/)
-
 
     # get / 401
     result = UserAgent.request(
@@ -361,7 +356,6 @@ class UserAgentTest < ActiveSupport::TestCase
 
   end
 
-
   # check
   test 'check not existing' do
 
@@ -383,7 +377,6 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(0, result.code)
     assert_equal(NilClass, result.body.class)
   end
-
 
   # check
   test 'check timeout' do

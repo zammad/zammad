@@ -112,7 +112,6 @@ class TicketsController < ApplicationController
     # get history of ticket
     history = ticket.history_get(true)
 
-
     # return result
     render json: history
   end
@@ -145,7 +144,6 @@ class TicketsController < ApplicationController
       ticket_ids_by_customer.push ticket.id
       assets = ticket.assets(assets)
     }
-
 
     ticket_ids_recent_viewed = []
     ticket_recent_view = RecentView.list( current_user, 8, 'Ticket' )

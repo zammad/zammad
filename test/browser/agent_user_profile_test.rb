@@ -77,8 +77,6 @@ class AgentUserProfileTest < TestCase
     )
     tasks_close_all()
 
-
-
     # work with two browser windows
     message = 'comment 1 ' + rand(99_999_999_999_999_999).to_s
 

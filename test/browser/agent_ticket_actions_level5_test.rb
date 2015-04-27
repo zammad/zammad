@@ -109,7 +109,6 @@ class AgentTicketActionLevel5Test < TestCase
       no_quote: true,
     )
 
-
     # select create channel
     click(
       css: '.active [data-type="email-out"]',
@@ -134,7 +133,6 @@ class AgentTicketActionLevel5Test < TestCase
       value: signature_body2,
       no_quote: true,
     )
-
 
     # select group
     select(

@@ -10,7 +10,6 @@ module Import::OTRS2
 
    { some json structure }
 
-
   result = request_json( :Subaction => 'List' )
 
   return
@@ -950,7 +949,6 @@ module Import::OTRS2
       UserPw: :password,
     };
 
-
     records.each { |user|
       _set_valid(user)
 
@@ -1177,11 +1175,9 @@ module Import::OTRS2
     }
   end
 
-
   # sync settings
 
   def self.setting(records)
-
 
     records.each { |setting|
 
@@ -1228,8 +1224,6 @@ module Import::OTRS2
 
     }
   end
-
-
 
   # log
 

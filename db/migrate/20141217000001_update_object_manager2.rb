@@ -620,7 +620,6 @@ class UpdateObjectManager2 < ActiveRecord::Migration
       updated_by_id: 1,
     )
 
-
     ObjectManager::Attribute.add(
       object: 'Organization',
       name: 'name',

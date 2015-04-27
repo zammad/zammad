@@ -125,7 +125,6 @@ add a new attribute entry for an object
     ObjectManager::Attribute.create(data)
   end
 
-
 =begin
 
 get the attribute model based on object and name

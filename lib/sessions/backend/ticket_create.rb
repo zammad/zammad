@@ -43,7 +43,6 @@ class Sessions::Backend::TicketCreate
 
     return if !ticket_create_attributes
 
-
     data = {
       assets: ticket_create_attributes[:assets],
       form_meta: {
@@ -51,7 +50,6 @@ class Sessions::Backend::TicketCreate
         dependencies: ticket_create_attributes[:dependencies],
       }
     }
-
 
     if !@client
       return {

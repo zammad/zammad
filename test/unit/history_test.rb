@@ -353,7 +353,6 @@ class HistoryTest < ActiveSupport::TestCase
     }
   end
 
-
   def history_check( history_list, history_check )
 #      puts history_list.inspect
     history_check.each { |check_item|

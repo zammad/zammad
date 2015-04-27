@@ -100,7 +100,6 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal( ticket.first_response.to_s, article_outbound.created_at.to_s, 'ticket.first_response verify - state update' )
     assert( ticket.close_time, 'ticket.close_time verify - state update' )
 
-
     # set pending time
     ticket.state_id     = Ticket::State.where(name: 'pending reminder').first.id
     ticket.pending_time = Time.parse('1977-10-27 22:00:00 +0000')
@@ -110,7 +109,6 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal( ticket.state.name, 'pending reminder', 'state verify' )
     assert_equal( ticket.pending_time, Time.parse('1977-10-27 22:00:00 +0000'), 'pending_time verify' )
 
-
     # reset pending state, should also reset pending time
     ticket.state_id = Ticket::State.where(name: 'closed').first.id
     ticket.save
@@ -119,11 +117,9 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal( ticket.state.name, 'closed', 'state verify' )
     assert_equal( ticket.pending_time, nil )
 
-
     delete = ticket.destroy
     assert( delete, 'ticket destroy' )
   end
-
 
   test 'ticket latest change' do
     ticket1 = Ticket.create(

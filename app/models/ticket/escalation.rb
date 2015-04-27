@@ -104,7 +104,6 @@ returns
       self.first_response_diff_in_min = sla_selected.first_response_time - self.first_response_in_min
     end
 
-
     # update time
     last_update = self.last_contact_agent
     if !last_update
@@ -130,7 +129,6 @@ returns
     if sla_selected.update_time && self.update_time_in_min
       self.update_time_diff_in_min = sla_selected.update_time - self.update_time_in_min
     end
-
 
     # close time
     if sla_selected.close_time

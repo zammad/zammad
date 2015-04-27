@@ -28,7 +28,6 @@ class DbAutoIncrementTest < ActiveSupport::TestCase
     assert_equal( Ticket::StateType.to_s, state_type.class.to_s )
     assert_equal( 'unit test 1 _ should be updated', state_type.name )
 
-
     Ticket::State.create_if_not_exists( id: 210, name: 'unit test 1', state_type_id: Ticket::StateType.where(name: 'unit test 1 _ should be updated').first.id, updated_by_id: 1, created_by_id: 1  )
     state = Ticket::State.where( name: 'unit test 1' ).first
     assert_equal( Ticket::State.to_s, state.class.to_s )
@@ -47,8 +46,6 @@ class DbAutoIncrementTest < ActiveSupport::TestCase
     state = Ticket::State.where( id: 210 ).first
     assert_equal( Ticket::State.to_s, state.class.to_s )
     assert_equal( 'unit test 1 _ should be updated', state.name )
-
-
 
     Setting.set('system_init_done', setting_backup)
 

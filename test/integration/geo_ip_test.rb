@@ -15,7 +15,6 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal(nil, result['latitude'])
     assert_equal(nil, result['longitude'])
 
-
     result = GeoIp.location( '195.65.29.254' )
     assert(result)
     assert_equal('Switzerland', result['country_name'])
@@ -24,7 +23,6 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal('EU', result['continent_code'])
     assert_equal(47.4299, result['latitude'])
     assert_equal(8.465100000000007, result['longitude'])
-
 
     result = GeoIp.location( '134.109.140.74' )
     assert(result)
@@ -35,7 +33,6 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal(50.83330000000001, result['latitude'])
     assert_equal(12.916699999999992, result['longitude'])
 
-
     result = GeoIp.location( '46.253.55.170' )
     assert(result)
     assert_equal('Germany', result['country_name'])
@@ -44,7 +41,6 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal('EU', result['continent_code'])
     assert_equal(51.5, result['latitude'])
     assert_equal(12.0, result['longitude'])
-
 
     result = GeoIp.location( '169.229.216.200' )
     assert(result)
