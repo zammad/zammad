@@ -518,6 +518,7 @@ end
   def self.notify_clients_support
     after_create    :notify_clients_after_create
     after_update    :notify_clients_after_update
+#    after_touch     :notify_clients_after_touch
     after_touch     :notify_clients_after_update
     after_destroy   :notify_clients_after_destroy
   end
@@ -531,6 +532,7 @@ used as callback in model file
 class OwnModel < ApplicationModel
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
+  after_touch     :notify_clients_after_touch
   after_destroy   :notify_clients_after_destroy
 
   [...]
@@ -559,6 +561,7 @@ used as callback in model file
 class OwnModel < ApplicationModel
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
+  after_touch     :notify_clients_after_touch
   after_destroy   :notify_clients_after_destroy
 
   [...]
@@ -580,6 +583,35 @@ class OwnModel < ApplicationModel
 
 =begin
 
+notify_clients_after_touch after model got touched
+
+used as callback in model file
+
+class OwnModel < ApplicationModel
+  after_create    :notify_clients_after_create
+  after_update    :notify_clients_after_update
+  after_touch     :notify_clients_after_touch
+  after_destroy   :notify_clients_after_destroy
+
+  [...]
+
+=end
+
+  def notify_clients_after_touch
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+    logger.debug "#{ self.class.name }.find(#{ self.id }) notify TOUCH " + self.updated_at.to_s
+    class_name = self.class.name
+    class_name.gsub!(/::/, '')
+    Sessions.broadcast(
+      :event => class_name + ':touch',
+      :data => { :id => self.id, :updated_at => self.updated_at }
+    )
+  end
+
+=begin
+
 notify_clients_after_destroy after model got destroyed
 
 used as callback in model file
@@ -587,6 +619,7 @@ used as callback in model file
 class OwnModel < ApplicationModel
   after_create    :notify_clients_after_create
   after_update    :notify_clients_after_update
+  after_touch     :notify_clients_after_touch
   after_destroy   :notify_clients_after_destroy
 
   [...]
