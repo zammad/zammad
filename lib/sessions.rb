@@ -394,7 +394,7 @@ returns
   def self.spool_create( msg )
     path = @path + '/spool/'
     FileUtils.mkpath path
-    file = Time.new.to_f.to_s + '-' + rand(99999).to_s
+    file = Time.new.to_f.to_s + '-' + rand(99_999).to_s
     File.open( path + '/' + file , 'wb' ) { |file|
       data = {
         :msg        => msg,
@@ -428,7 +428,7 @@ returns
         end
 
         # ignore message older then 48h
-        if spool['timestamp'] + (2 * 86400) < Time.now.to_i
+        if spool['timestamp'] + (2 * 86_400) < Time.now.to_i
           to_delete.push path + '/' + entry
           next
         end

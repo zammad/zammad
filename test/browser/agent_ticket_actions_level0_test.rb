@@ -3,8 +3,8 @@ require 'browser_test_helper'
 
 class AgentTicketActionLevel0Test < TestCase
   def test_text_modules
-    random  = 'text_module_test_' + rand(99999999).to_s
-    random2 = 'text_module_test_' + rand(99999999).to_s
+    random  = 'text_module_test_' + rand(99_999_999).to_s
+    random2 = 'text_module_test_' + rand(99_999_999).to_s
 
     @browser = browser_instance
     login(
@@ -57,9 +57,9 @@ class AgentTicketActionLevel0Test < TestCase
 
 
     # test with two browser windows
-    random = 'text_II_module_test_' + rand(99999999).to_s
+    random = 'text_II_module_test_' + rand(99_999_999).to_s
 
-    user_rand = rand(99999999).to_s
+    user_rand = rand(99_999_999).to_s
     login     = 'agent-text-module-' + user_rand
     firstname = 'Text' + user_rand
     lastname  = 'Module' + user_rand

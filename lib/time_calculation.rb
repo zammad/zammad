@@ -152,7 +152,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
           if config['holidays'].include?("#{year}-#{month}-#{day}")
 
             # jump to next day
-            start_time = start_time.beginning_of_day + 86400
+            start_time = start_time.beginning_of_day + 86_400
             next
           end
         end
@@ -162,7 +162,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       if working_hours[ week_day_map[week_day] ].empty?
 
         # jump to next day
-        start_time = start_time.beginning_of_day + 86400
+        start_time = start_time.beginning_of_day + 86_400
         next
       end
 
@@ -211,7 +211,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       }
 
       # loop to next day
-      start_time = start_time.beginning_of_day + 86400
+      start_time = start_time.beginning_of_day + 86_400
     end
 
     diff = count / 60
@@ -273,7 +273,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
           if config['holidays'].include?("#{year}-#{month}-#{day}")
 
             # jump to next day
-            start_time = start_time.beginning_of_day + 86400
+            start_time = start_time.beginning_of_day + 86_400
             next
           end
         end
@@ -283,7 +283,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       if working_hours[ week_day_map[week_day] ].empty?
 
         # jump to next day
-        start_time = start_time.beginning_of_day + 86400
+        start_time = start_time.beginning_of_day + 86_400
         next
       end
 
@@ -349,7 +349,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       end
 
       # loop to next day
-      start_time = start_time.beginning_of_day + 86400
+      start_time = start_time.beginning_of_day + 86_400
     end
 
     return start_time

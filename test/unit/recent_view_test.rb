@@ -71,7 +71,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # log entry of not existing record
     RecentView.user_log_destroy(user)
-    RecentView.log( 'User', 99999999, user )
+    RecentView.log( 'User', 99_999_999, user )
 
     # check if list is empty
     list = RecentView.list( user )
@@ -80,7 +80,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # log entry of not existing model with permission check
     RecentView.user_log_destroy(user)
-    RecentView.log( 'Overview', 99999999, user )
+    RecentView.log( 'Overview', 99_999_999, user )
 
     # check if list is empty
     list = RecentView.list( user )

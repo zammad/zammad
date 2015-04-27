@@ -14,7 +14,7 @@ module FillDB
     organization_pool = []
     if organizations && !organizations.zero?
       (1..organizations).each {|count|
-        organization = Organization.create( :name => 'FillOrganization::' + rand(999999).to_s, :active => true )
+        organization = Organization.create( :name => 'FillOrganization::' + rand(999_999).to_s, :active => true )
         organization_pool.push organization
       }
     else
@@ -27,7 +27,7 @@ module FillDB
       roles  = Role.where( :name => [ 'Agent'] )
       groups_all = Group.all
       (1..agents).each {|count|
-        suffix = rand(99999).to_s
+        suffix = rand(99_999).to_s
         user = User.create_or_update(
           :login         => "filldb-agent-#{suffix}",
           :firstname     => "agent #{suffix}",
@@ -51,7 +51,7 @@ module FillDB
       roles  = Role.where( :name => [ 'Customer'] )
       groups_all = Group.all
       (1..customers).each {|count|
-        suffix = rand(99999).to_s
+        suffix = rand(99_999).to_s
         organization = nil
         if !organization_pool.empty? && rand(2) == 1
           organization = organization_pool[ organization_pool.length-1 ]
@@ -77,7 +77,7 @@ module FillDB
     if groups && !groups.zero?
       puts "1..#{groups}"
       (1..groups).each {|count|
-        group = Group.create( :name => 'FillGroup::' + rand(999999).to_s, :active => true )
+        group = Group.create( :name => 'FillGroup::' + rand(999_999).to_s, :active => true )
         group_pool.push group
         Role.where(:name => 'Agent').first.users.where(:active => true).each {|user|
           user_groups = user.groups
@@ -98,7 +98,7 @@ module FillDB
         customer = customer_pool[ rand(customer_pool.length-1) ]
         agent    = agent_pool[ rand(agent_pool.length-1) ]
         ticket = Ticket.create(
-          :title          => 'some title äöüß' + rand(999999).to_s,
+          :title          => 'some title äöüß' + rand(999_999).to_s,
           :group          => group_pool[ rand(group_pool.length-1) ],
           :customer       => customer,
           :owner          => agent,
@@ -112,8 +112,8 @@ module FillDB
           :ticket_id      => ticket.id,
           :from           => customer.email,
           :to             => 'some_recipient@example.com',
-          :subject        => 'some subject' + rand(999999).to_s,
-          :message_id     => 'some@id-' + rand(999999).to_s,
+          :subject        => 'some subject' + rand(999_999).to_s,
+          :message_id     => 'some@id-' + rand(999_999).to_s,
           :body           => 'some message ...',
           :internal       => false,
           :sender         => Ticket::Article::Sender.where(:name => 'Customer').first,

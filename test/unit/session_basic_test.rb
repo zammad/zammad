@@ -88,7 +88,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( result1, result2, 'check collections' )
 
     # change collection
-    group = Group.create( :name => 'SomeGroup::' + rand(999999).to_s, :active => true )
+    group = Group.create( :name => 'SomeGroup::' + rand(999_999).to_s, :active => true )
     sleep 4
 
     # get whole collections
@@ -135,7 +135,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     require 'sessions/backend/collections/organization.rb'
     UserInfo.current_user_id = 2
     user = User.lookup(:id => 1)
-    org = Organization.create( :name => 'SomeOrg1::' + rand(999999).to_s, :active => true )
+    org = Organization.create( :name => 'SomeOrg1::' + rand(999_999).to_s, :active => true )
 
     collection_client1 = Sessions::Backend::Collections::Organization.new(user, false, '123-1', 3)
     collection_client2 = Sessions::Backend::Collections::Organization.new(user, false, '234-2', 3)
@@ -155,7 +155,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result2, 'check collections - recall' )
 
     # change collection
-    org = Organization.create( :name => 'SomeOrg2::' + rand(999999).to_s, :active => true )
+    org = Organization.create( :name => 'SomeOrg2::' + rand(999_999).to_s, :active => true )
     sleep 4
 
     # get whole collections
@@ -211,7 +211,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     agent1 = User.create_or_update(
       :login     => 'activity-stream-agent-1',
       :firstname => 'Session',
-      :lastname  => 'activity stream ' + rand(99999).to_s,
+      :lastname  => 'activity stream ' + rand(99_999).to_s,
       :email     => 'activity-stream-agent1@example.com',
       :password  => 'agentpw',
       :active    => true,
@@ -267,7 +267,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     result1 = ticket_create_client1.push
     assert( !result1, 'check ticket_create - recall 2' )
 
-    Group.create( :name => 'SomeTicketCreateGroup::' + rand(999999).to_s, :active => true )
+    Group.create( :name => 'SomeTicketCreateGroup::' + rand(999_999).to_s, :active => true )
 
     sleep 4
 

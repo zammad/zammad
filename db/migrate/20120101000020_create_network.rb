@@ -51,7 +51,7 @@ class CreateNetwork < ActiveRecord::Migration
     create_table :network_items do |t|
       t.references :network_category,                     :null => false
       t.column :title,                :string, :limit => 200,   :null => false
-      t.column :body,                 :string, :limit => 20000, :null => false
+      t.column :body,                 :string, :limit => 20_000, :null => false
       t.column :updated_by_id,        :integer,                 :null => false
       t.column :created_by_id,        :integer,                 :null => false
       t.timestamps
@@ -60,7 +60,7 @@ class CreateNetwork < ActiveRecord::Migration
 
     create_table :network_item_comments do |t|
       t.references :network_item,                               :null => false
-      t.column :body,                 :string, :limit => 20000, :null => false
+      t.column :body,                 :string, :limit => 20_000, :null => false
       t.column :updated_by_id,        :integer,               :null => false
       t.column :created_by_id,        :integer,               :null => false
       t.timestamps

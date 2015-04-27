@@ -13,7 +13,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     agent1 = User.create_or_update(
       :login     => 'activity-stream-agent-1',
       :firstname => 'Session',
-      :lastname  => 'activity stream ' + rand(99999).to_s,
+      :lastname  => 'activity stream ' + rand(99_999).to_s,
       :email     => 'activity-stream-agent1@example.com',
       :password  => 'agentpw',
       :active    => true,
@@ -59,7 +59,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     agent1 = User.create_or_update(
       :login     => 'activity-stream-agent-1',
       :firstname => 'Session',
-      :lastname  => 'activity stream ' + rand(99999).to_s,
+      :lastname  => 'activity stream ' + rand(99_999).to_s,
       :email     => 'activity-stream-agent1@example.com',
       :password  => 'agentpw',
       :active    => true,

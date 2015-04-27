@@ -4,8 +4,8 @@ require 'browser_test_helper'
 class AgentOrganizationProfileTest < TestCase
   def test_org_profile
     # work in one browser window
-    message = '1 ' + rand(99999999).to_s
-    note    = 'some note ' + rand(99999999).to_s
+    message = '1 ' + rand(99_999_999).to_s
+    note    = 'some note ' + rand(99_999_999).to_s
 
     @browser = browser_instance
     login(
@@ -84,7 +84,7 @@ class AgentOrganizationProfileTest < TestCase
 
 
     # work with two browser windows
-    message = 'comment 1 ' + rand(99999999999999999).to_s
+    message = 'comment 1 ' + rand(99_999_999_999_999_999).to_s
 
     # use current session
     browser1 = @browser

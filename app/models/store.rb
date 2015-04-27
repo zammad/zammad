@@ -57,8 +57,8 @@ returns
 get attachment of object
 
   list = Store.list(
-    :object       => 'Ticket::Article',
-    :o_id         => 4711,
+    :object => 'Ticket::Article',
+    :o_id   => 4711,
   )
 
 returns
@@ -66,9 +66,9 @@ returns
   result = [store1, store2]
 
   store1 = {
-    :size         => 94123,
-    :filename     => 'image.png',
-    :preferences  => {
+    :size        => 94123,
+    :filename    => 'image.png',
+    :preferences => {
       :content_type => 'image/png',
       :content_id   => 234,
     }
@@ -90,8 +90,8 @@ returns
 remove attachments of object from storage
 
   result = Store.remove(
-    :object       => 'Ticket::Article',
-    :o_id         => 4711,
+    :object => 'Ticket::Article',
+    :o_id   => 4711,
   )
 
 returns

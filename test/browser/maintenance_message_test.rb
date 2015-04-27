@@ -3,7 +3,7 @@ require 'browser_test_helper'
 
 class MaintenanceMessageTest < TestCase
   def test_websocket
-    string       = rand(99999999999999999).to_s
+    string       = rand(99_999_999_999_999_999).to_s
     title_html   = "test <b>#{string}</b>"
     title_text   = "test <b>#{string}<\/b>"
     message_html = "message <b>1äöüß</b> #{string}\n\n\nhttp://zammad.org"

@@ -39,7 +39,7 @@ module SessionHelper
     ActiveRecord::SessionStore::Session.where( :id => id ).first
   end
 
-  def self.list(limit = 10000)
+  def self.list(limit = 10_000)
     ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(limit)
   end
 

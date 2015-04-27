@@ -454,7 +454,7 @@ class CreateObjectManager < ActiveRecord::Migration
       :data_type  => 'richtext',
       :data_option => {
         :type      => 'richtext',
-        :maxlength => 20000,
+        :maxlength => 20_000,
         :upload    => true,
         :rows      => 8,
         :null      => true,

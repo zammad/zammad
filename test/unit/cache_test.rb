@@ -114,8 +114,8 @@ class CacheTest < ActiveSupport::TestCase
   # verify if second cache write overwrite first one
   test 'cache reset' do
     Cache.write( 'some_reset_key', 123 )
-    Cache.write( 'some_reset_key', 12356 )
+    Cache.write( 'some_reset_key', 12_356 )
     cache = Cache.get( 'some_reset_key' )
-    assert_equal( cache, 12356, 'verify' )
+    assert_equal( cache, 12_356, 'verify' )
   end
 end

@@ -110,7 +110,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
       {
         :start  => '2012-02-28 17:00:00',
         :end    => '2013-03-08 23:59:59',
-        :diff   => 160860,
+        :diff   => 160_860,
         :config => {
           'Mon'                  => true,
           'Tue'                  => true,
@@ -550,7 +550,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
     ]
     tests.each { |test|
       dest_time = TimeCalculation.dest_time( test[:start] + ' UTC', test[:diff], test[:config], test[:timezone] )
-      assert_equal( dest_time.gmtime, Time.parse( test[:dest_time] + ' UTC' ), "dest time - #{test[:dest_time].to_s}" )
+      assert_equal( dest_time.gmtime, Time.parse( test[:dest_time] + ' UTC' ), "dest time - #{test[:dest_time]}" )
     }
   end
 

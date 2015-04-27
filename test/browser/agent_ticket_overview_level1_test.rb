@@ -3,7 +3,7 @@ require 'browser_test_helper'
 
 class AgentTicketOverviewLevel1Test < TestCase
   def test_I
-    name = 'name-' + rand(999999).to_s
+    name = 'name-' + rand(999_999).to_s
 
     browser1 = browser_instance
     login(

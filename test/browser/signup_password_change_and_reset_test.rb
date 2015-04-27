@@ -3,7 +3,7 @@ require 'browser_test_helper'
 
 class SignupPasswordChangeAndResetTest < TestCase
   def test_signup
-    signup_user_email = 'signup-test-' + rand(999999).to_s + '@example.com'
+    signup_user_email = 'signup-test-' + rand(999_999).to_s + '@example.com'
     @browser = browser_instance
     location( :url => browser_url )
     click( :css => 'a[href="#signup"]' )

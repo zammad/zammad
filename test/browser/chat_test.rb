@@ -4,7 +4,7 @@ require 'browser_test_helper'
 class ChatTest < TestCase
   def test_websocket
     return # TODO: temp disable
-    message = 'message 1äöüß ' + rand(99999999999999999).to_s
+    message = 'message 1äöüß ' + rand(99_999_999_999_999_999).to_s
     tests = [
       {
         :name     => 'start',

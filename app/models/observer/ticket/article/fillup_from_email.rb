@@ -28,7 +28,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
 
     # generate message id
     fqdn = Setting.get('fqdn')
-    record.message_id = '<' + DateTime.current.to_s(:number) + '.' + record.ticket_id.to_s + '.' + rand(999999).to_s() + '@' + fqdn + '>'
+    record.message_id = '<' + DateTime.current.to_s(:number) + '.' + record.ticket_id.to_s + '.' + rand(999_999).to_s() + '@' + fqdn + '>'
 
     # set sender
     email_address = ticket.group.email_address

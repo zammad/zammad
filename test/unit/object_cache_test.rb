@@ -4,7 +4,7 @@ require 'test_helper'
 class ObjectCacheTest < ActiveSupport::TestCase
   test 'object cache' do
 
-    name = 'object cache test ' + rand(9999999).to_s
+    name = 'object cache test ' + rand(9_999_999).to_s
     group = Group.create(
       :name          => name,
       :updated_by_id => 1,

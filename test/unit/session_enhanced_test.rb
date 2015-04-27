@@ -205,7 +205,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     )
     agent2.roles = roles
     agent2.save
-    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true )
+    org = Organization.create( :name => 'SomeOrg::' + rand(999_999).to_s, :active => true )
 
     # create sessions
     client_id1_0 = '1234-1'

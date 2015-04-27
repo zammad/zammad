@@ -609,7 +609,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # send verify email to inbox
     if !params[:subject]
-      subject = '#' + rand(99999999999).to_s
+      subject = '#' + rand(99_999_999_999).to_s
     else
       subject = params[:subject]
     end

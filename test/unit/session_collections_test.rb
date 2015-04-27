@@ -108,7 +108,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert( check_if_collection_exists(result3, :Group), 'check collections - after touch' )
 
     # change collection
-    org = Organization.create( :name => 'SomeOrg::' + rand(999999).to_s, :active => true, :member_ids => [customer1.id] )
+    org = Organization.create( :name => 'SomeOrg::' + rand(999_999).to_s, :active => true, :member_ids => [customer1.id] )
     sleep 4
 
     # get whole collections
