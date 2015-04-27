@@ -45,5 +45,3 @@ class ExampleTest < Test::Unit::TestCase
        assert_equal browser.current_url, 'https://portal.znuny.com/#ticket_view/my_tickets'
     end
 end
-
-

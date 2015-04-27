@@ -55,5 +55,3 @@ Daemons.run_proc(name, daemon_options) do
 
   Scheduler.worker
 end
-
-

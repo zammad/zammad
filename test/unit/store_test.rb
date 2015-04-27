@@ -125,4 +125,3 @@ class StoreTest < ActiveSupport::TestCase
     }
   end
 end
-

@@ -48,4 +48,3 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
   end
 
 end
-

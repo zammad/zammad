@@ -244,4 +244,3 @@ class RestTest < ActiveSupport::TestCase
     return { data: response.data, response: response }
   end
 end
-

@@ -6,4 +6,3 @@
 Z_ROLENAME_ADMIN = 'Admin'
 Z_ROLENAME_AGENT = 'Agent'
 Z_ROLENAME_CUSTOMER = 'Customer'
-

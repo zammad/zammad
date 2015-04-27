@@ -6,4 +6,3 @@ class UpdateSession < ActiveRecord::Migration
   def down
   end
 end
-

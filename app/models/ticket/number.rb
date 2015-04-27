@@ -56,4 +56,3 @@ returns
     adapter
   end
 end
-
