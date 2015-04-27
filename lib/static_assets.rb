@@ -7,7 +7,7 @@ module StaticAssets
       data[:content]   = Base64.decode64($2)
       return data
     end
-    raise "Unable to parse data url: #{data_url.substr(0,100)}"
+    raise "Unable to parse data url: #{data_url.substr(0, 100)}"
   end
 
   # store image 1:1

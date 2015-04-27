@@ -42,10 +42,13 @@ returns
 
     # send update to browser
     if session && session['id']
-      self.send( client_id, {
-        event: 'ws:login',
-        data: { success: true },
-      })
+      self.send(
+        client_id,
+        {
+          event: 'ws:login',
+          data: { success: true },
+        }
+      )
     end
   end
 
@@ -269,7 +272,7 @@ returns
     while check
       if File::exists?( path + filename )
         count += 1
-        filename = filename  + '-' + count
+        filename = filename + '-' + count
       else
         check = false
       end
@@ -395,7 +398,7 @@ returns
     path = @path + '/spool/'
     FileUtils.mkpath path
     file = Time.new.to_f.to_s + '-' + rand(99_999).to_s
-    File.open( path + '/' + file , 'wb' ) { |file|
+    File.open( path + '/' + file, 'wb' ) { |file|
       data = {
         msg: msg,
         timestamp: Time.now.to_i,

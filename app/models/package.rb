@@ -207,11 +207,11 @@ class Package < ApplicationModel
       end
 
       # uninstall files of old package
-      self.uninstall({
+      self.uninstall(
         name: package_db.name,
         version: package_db.version,
         migration_not_down: true,
-      })
+      )
     end
 
     # store package
@@ -391,7 +391,7 @@ class Package < ApplicationModel
 
     # check if directories need to be created
     directories = location.split '/'
-    (0..(directories.length-2) ).each {|position|
+    (0..(directories.length - 2) ).each {|position|
       tmp_path = ''
       (1..position).each {|count|
         tmp_path = tmp_path + '/' + directories[count].to_s

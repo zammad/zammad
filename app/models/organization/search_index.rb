@@ -21,8 +21,8 @@ returns
 
       # get attribute name
       attribute_name = key.to_s
-      next if attribute_name[-3,3] != '_id'
-      attribute_name = attribute_name[ 0, attribute_name.length-3 ]
+      next if attribute_name[-3, 3] != '_id'
+      attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
 
       # check if attribute method exists
       next if !ref_object.respond_to?( attribute_name )

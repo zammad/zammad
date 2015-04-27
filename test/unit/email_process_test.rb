@@ -2153,7 +2153,7 @@ Some Text',
                   assert( false, "No user '#{user_result[:email]}' found!" )
                   return
                 end
-                user_result.each { |key,value|
+                user_result.each { |key, value|
                   if user.respond_to?( key )
                     assert_equal( value, user.send(key), "user check #{ key }"  )
                   else
@@ -2169,7 +2169,7 @@ Some Text',
       elsif !file[:success]
         if result && result.class == Array && result[1]
         puts result.inspect
-          assert( false, 'ticket should not be created but is created' )
+        assert( false, 'ticket should not be created but is created' )
         else
           assert( true, 'ticket not created - nice' )
         end

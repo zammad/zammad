@@ -340,35 +340,35 @@ returns:
 
   private
 
-    def self.set_default_items(object_id, o_id, avatar_id)
-      avatars = Avatar.where(
-        object_lookup_id: object_id,
-        o_id: o_id,
-      ).order( 'created_at ASC, id DESC' )
-      avatars.each do |avatar|
-        next if avatar.id == avatar_id
-        avatar.default = false
-        avatar.save!
-      end
+  def self.set_default_items(object_id, o_id, avatar_id)
+    avatars = Avatar.where(
+      object_lookup_id: object_id,
+      o_id: o_id,
+    ).order( 'created_at ASC, id DESC' )
+    avatars.each do |avatar|
+      next if avatar.id == avatar_id
+      avatar.default = false
+      avatar.save!
     end
+  end
 
-    def self.add_init_avatar(object_id, o_id)
+  def self.add_init_avatar(object_id, o_id)
 
-      count = Avatar.where(
-        object_lookup_id: object_id,
-        o_id: o_id,
-      ).count
-      return if count > 0
+    count = Avatar.where(
+      object_lookup_id: object_id,
+      o_id: o_id,
+    ).count
+    return if count > 0
 
-      Avatar.create(
-        o_id: o_id,
-        object_lookup_id: object_id,
-        default: true,
-        source: 'init',
-        initial: true,
-        deletable: false,
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-    end
+    Avatar.create(
+      o_id: o_id,
+      object_lookup_id: object_id,
+      default: true,
+      source: 'init',
+      initial: true,
+      deletable: false,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+  end
 end

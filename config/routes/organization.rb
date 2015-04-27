@@ -6,6 +6,6 @@ Zammad::Application.routes.draw do
   match api_path + '/organizations/:id',        to: 'organizations#show',   via: :get
   match api_path + '/organizations',            to: 'organizations#create', via: :post
   match api_path + '/organizations/:id',        to: 'organizations#update', via: :put
-  match api_path + '/organizations/history/:id',to: 'organizations#history',via: :get
+  match api_path + '/organizations/history/:id', to: 'organizations#history', via: :get
 
 end

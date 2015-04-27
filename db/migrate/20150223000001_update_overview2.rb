@@ -10,7 +10,7 @@ class UpdateOverview2 < ActiveRecord::Migration
         prio: 1000,
         role_id: overview_role.id,
         condition: {
-          'tickets.state_id' => [ 1,2,3,7 ],
+          'tickets.state_id' => [ 1, 2, 3, 7 ],
           'tickets.owner_id' => 'current_user.id',
         },
         order: {

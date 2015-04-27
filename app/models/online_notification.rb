@@ -85,7 +85,7 @@ return all online notifications of an user
 
 =end
 
-  def self.list(user,limit)
+  def self.list(user, limit)
 
     notifications = OnlineNotification.where(user_id: user.id).
       order( 'created_at DESC, id DESC' ).
@@ -167,7 +167,7 @@ returns:
 
 =end
 
-  def self.list_full(user,limit)
+  def self.list_full(user, limit)
 
     notifications = OnlineNotification.list(user, limit)
     assets = ApplicationModel.assets_of_object_list(notifications)

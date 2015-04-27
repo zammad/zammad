@@ -54,7 +54,7 @@ module FillDB
         suffix = rand(99_999).to_s
         organization = nil
         if !organization_pool.empty? && rand(2) == 1
-          organization = organization_pool[ organization_pool.length-1 ]
+          organization = organization_pool[ organization_pool.length - 1 ]
         end
         user = User.create_or_update(
           login: "filldb-customer-#{suffix}",
@@ -95,15 +95,15 @@ module FillDB
     state_pool = Ticket::State.all
     if tickets && !tickets.zero?
       (1..tickets).each {|count|
-        customer = customer_pool[ rand(customer_pool.length-1) ]
-        agent    = agent_pool[ rand(agent_pool.length-1) ]
+        customer = customer_pool[ rand(customer_pool.length - 1) ]
+        agent    = agent_pool[ rand(agent_pool.length - 1) ]
         ticket = Ticket.create(
           title: 'some title äöüß' + rand(999_999).to_s,
-          group: group_pool[ rand(group_pool.length-1) ],
+          group: group_pool[ rand(group_pool.length - 1) ],
           customer: customer,
           owner: agent,
-          state: state_pool[ rand(state_pool.length-1) ],
-          priority: priority_pool[ rand(priority_pool.length-1) ],
+          state: state_pool[ rand(state_pool.length - 1) ],
+          priority: priority_pool[ rand(priority_pool.length - 1) ],
           updated_by_id: agent.id,
           created_by_id: agent.id,
         )

@@ -6,7 +6,7 @@ class ImportOtrsController < ApplicationController
     return if setup_done_response
 
     # validate
-    if !params[:url] ||params[:url] !~ /^(http|https):\/\/.+?$/
+    if !params[:url] || params[:url] !~ /^(http|https):\/\/.+?$/
       render json: {
         result: 'invalid',
         message: 'Invalid!',
@@ -64,7 +64,7 @@ class ImportOtrsController < ApplicationController
 
     # return result
     render json: {
-        result: 'invalid',
+      result: 'invalid',
         message_human: message_human,
     }
   end

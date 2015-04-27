@@ -227,7 +227,7 @@ class Channel::TWITTER2
       ticket = Ticket.create(
         group_id: group_id,
         customer_id: user.id,
-        title: tweet.text[0,40],
+        title: tweet.text[0, 40],
         state_id: state_id,
         priority_id: priority_id,
       )

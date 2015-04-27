@@ -22,7 +22,7 @@ def checkForHeader(fileName)
   # detect file type
   if allLines[0] =~ /(^# Copyright)/ || allLines[1] =~ /(^# Copyright)/
     foundHeader = true
-  elsif allLines[1] =~/^=begin/ #assume external script
+  elsif allLines[1] =~ /^=begin/ #assume external script
     foundHeader = true
   end
   if allLines[0] =~ /(^#!\/)/
@@ -67,7 +67,7 @@ def checkForHeader(fileName)
 end
 
 #folder array
-folder = ['app/assets/javascripts/app','app/controllers/', 'app/models/', 'app/helpers/', 'app/mailers/' ]
+folder = ['app/assets/javascripts/app', 'app/controllers/', 'app/models/', 'app/helpers/', 'app/mailers/' ]
 folder.each do |folder|
   puts 'Working on folder' + folder.to_s
   rbfiles = File.join("../#{folder}**", '*.{rb,coffee}')

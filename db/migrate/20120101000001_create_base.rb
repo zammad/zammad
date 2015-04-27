@@ -33,7 +33,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :last_login,     :timestamp,             null: true
       t.column :source,         :string, limit: 200, null: true
       t.column :login_failed,   :integer,               null: false, default: 0
-      t.column :preferences,    :string, limit: 8000,null: true
+      t.column :preferences,    :string, limit: 8000, null: true
       t.column :updated_by_id,  :integer,               null: false
       t.column :created_by_id,  :integer,               null: false
       t.timestamps

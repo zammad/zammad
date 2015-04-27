@@ -116,7 +116,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_equal( true, messages[0]['data']['success'], 'messages 1')
 
     # broadcast to all clients
-    Sessions.broadcast( { msg: 'ooo123123123123123123'} )
+    Sessions.broadcast( { msg: 'ooo123123123123123123' } )
     messages = Sessions.queue(client_id1)
     assert_equal( messages.count, 1, 'messages count')
     assert_equal( 'ooo123123123123123123', messages[0]['msg'], 'messages broadcast 1')
@@ -130,7 +130,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_equal( 'ooo123123123123123123', messages[0]['msg'], 'messages broadcast 1')
 
     # send dedicated message to user
-    Sessions.send_to( agent1.id, { msg: 'ooo1231231231231231234'} )
+    Sessions.send_to( agent1.id, { msg: 'ooo1231231231231231234' } )
     messages = Sessions.queue(client_id1)
     assert_equal( messages.count, 1, 'messages count')
     assert_equal( 'ooo1231231231231231234', messages[0]['msg'], 'messages send 1')

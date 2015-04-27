@@ -28,7 +28,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '8:00',
         'end_of_workday'       => '18:00',
       },
@@ -49,9 +49,9 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     sla = Sla.create(
       name: 'test sla 2',
-      condition: { 'tickets.priority_id' =>['1', '2', '3'] },
+      condition: { 'tickets.priority_id' => ['1', '2', '3'] },
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '8:00',
         'end_of_workday'       => '18:00',
       },
@@ -360,7 +360,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -402,7 +402,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -445,7 +445,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -549,7 +549,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -612,7 +612,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -706,7 +706,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -719,14 +719,14 @@ class TicketSlaTest < ActiveSupport::TestCase
     )
     ticket = Ticket.find(ticket.id)
 
-     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
-     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
-     assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
-     assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
-     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
-     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 15:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
-     assert_equal( ticket.close_time_in_min, 30, 'ticket.close_time_in_min verify 3' )
-     assert_equal( ticket.close_time_diff_in_min, 210, 'ticket.close_time_diff_in_min# verify 3' )
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
+    assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-06-04 15:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_in_min, 30, 'ticket.close_time_in_min verify 3' )
+    assert_equal( ticket.close_time_diff_in_min, 210, 'ticket.close_time_diff_in_min# verify 3' )
 
     delete = sla.destroy
     assert( delete, 'sla destroy' )
@@ -816,7 +816,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },

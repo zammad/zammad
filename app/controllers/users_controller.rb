@@ -283,7 +283,7 @@ class UsersController < ApplicationController
       user_all.each { |user|
         realname = user.firstname.to_s + ' ' + user.lastname.to_s
         if user.email && user.email.to_s != ''
-          realname = realname + ' <' +  user.email.to_s + '>'
+          realname = realname + ' <' + user.email.to_s + '>'
         end
         a = { id: user.id, label: realname, value: realname }
         users.push a

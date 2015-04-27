@@ -3,7 +3,7 @@ require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
   test 'a cache' do
-    Sessions::CacheIn.set( 'last_run_test' , true, { expires_in: 2.seconds } )
+    Sessions::CacheIn.set( 'last_run_test', true, { expires_in: 2.seconds } )
     result = Sessions::CacheIn.get( 'last_run_test' )
     assert_equal( true, result, 'check 1' )
 
@@ -37,7 +37,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( nil, result, 'check 2' )
 
     # check delete cache
-    Sessions::CacheIn.set( 'last_run_delete' , true, { expires_in: 5.seconds } )
+    Sessions::CacheIn.set( 'last_run_delete', true, { expires_in: 5.seconds } )
     result = Sessions::CacheIn.get( 'last_run_delete' )
     assert_equal( true, result, 'check 1' )
     Sessions::CacheIn.delete( 'last_run_delete' )

@@ -43,7 +43,7 @@ class Sessions::Backend::Rss
 
     data = self.load
 
-    return if !data||data.empty?
+    return if !data || data.empty?
 
     if !@client
       return {
@@ -54,11 +54,11 @@ class Sessions::Backend::Rss
     end
 
     @client.log 'notify', "push rss for user #{@user.id}"
-    @client.send({
+    @client.send(
       event: 'rss_rebuild',
       collection: 'dashboard_rss',
       data: data,
-    })
+    )
   end
 
 end

@@ -89,7 +89,7 @@ return all activity entries of an user
 
 =end
 
-  def self.list(user,limit)
+  def self.list(user, limit)
     role_ids  = user.role_ids
     group_ids = user.group_ids
 

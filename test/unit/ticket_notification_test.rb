@@ -407,7 +407,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # check changed attributes
-    human_changes = bg.human_changes(agent1,ticket1)
+    human_changes = bg.human_changes(agent1, ticket1)
     assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
     assert( human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute' )
     assert_equal( 'i18n(1 low)', human_changes['Priority'][0] )
@@ -511,7 +511,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     puts "hc #{human_changes.inspect}"
     # check changed attributes
-    human_changes = bg.human_changes(agent1,ticket1)
+    human_changes = bg.human_changes(agent1, ticket1)
     assert( human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute' )
     assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
     assert_equal( 'i18n(2 normal)', human_changes['Priority'][0] )
@@ -522,7 +522,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_not( human_changes['pending_time'] )
     assert_not( human_changes['pending_till'] )
 
-    human_changes = bg.human_changes(agent2,ticket1)
+    human_changes = bg.human_changes(agent2, ticket1)
     puts "hc2 #{human_changes.inspect}"
 
     template = bg.template_update(agent1, ticket1, article, human_changes)

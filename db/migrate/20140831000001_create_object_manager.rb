@@ -168,7 +168,7 @@ class CreateObjectManager < ActiveRecord::Migration
         null: false,
         default: 2,
         translate: true,
-        filter: [1,2,3,4,7],
+        filter: [1, 2, 3, 4, 7],
       },
       editable: false,
       active: true,
@@ -182,7 +182,7 @@ class CreateObjectManager < ActiveRecord::Migration
             item_class: 'column',
             nulloption: false,
             null: true,
-            filter: [1,4],
+            filter: [1, 4],
             default: 1,
           },
         },
@@ -190,12 +190,12 @@ class CreateObjectManager < ActiveRecord::Migration
           Agent: {
             nulloption: false,
             null: false,
-            filter: [2,3,4,7],
+            filter: [2, 3, 4, 7],
           },
           Customer: {
             nulloption: false,
             null: true,
-            filter: [2,4],
+            filter: [2, 4],
             default: 2,
           },
         },
@@ -217,10 +217,10 @@ class CreateObjectManager < ActiveRecord::Migration
         null: true,
         translate: true,
         required_if: {
-          state_id: [3,7]
+          state_id: [3, 7]
         },
         shown_if: {
-          state_id: [3,7]
+          state_id: [3, 7]
         },
       },
       editable: false,
