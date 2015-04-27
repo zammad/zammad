@@ -644,7 +644,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
         content: file_resize[:content],
         mime_type: file_resize[:mime_type],
       },
-      source: 'upload ' + Time.now.to_s,
+      source: 'upload ' + Time.zone.now.to_s,
       deletable: true,
     )
 
@@ -719,7 +719,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return true if is_role('Agent')
 
     response_access_deny
-    return false
+    false
   end
 
   def permission_check
@@ -730,7 +730,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return true if is_role(Z_ROLENAME_CUSTOMER) && params[:id].to_i == current_user.id
 
     response_access_deny
-    return false
+    false
   end
 
 end

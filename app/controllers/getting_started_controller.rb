@@ -173,7 +173,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # check domain based attributes
-    providerMap = {
+    provider_map = {
       google: {
         domain: 'gmail.com|googlemail.com|gmail.de',
         inbound: {
@@ -231,7 +231,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if mail_exchangers && mail_exchangers[0] && mail_exchangers[0][0]
       domains.push mail_exchangers[0][0]
     end
-    providerMap.each {|provider, settings|
+    provider_map.each {|provider, settings|
       domains.each {|domain_to_check|
         if domain_to_check =~ /#{settings[:domain]}/i
 
@@ -259,9 +259,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     }
 
     # probe inbound
-    inboundMap = []
+    inbound_map = []
     if mail_exchangers && mail_exchangers[0] && mail_exchangers[0][0]
-      inboundMx = [
+      inbound_mx = [
         {
           adapter: 'imap',
           options: {
@@ -283,9 +283,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           },
         },
       ]
-      inboundMap = inboundMap + inboundMx
+      inbound_map = inbound_map + inbound_mx
     end
-    inboundAuto = [
+    inbound_auto = [
       {
         adapter: 'imap',
         options: {
@@ -387,10 +387,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         },
       },
     ]
-    inboundMap = inboundMap + inboundAuto
+    inbound_map = inbound_map + inbound_auto
     settings = {}
     success = false
-    inboundMap.each {|config|
+    inbound_map.each {|config|
       logger.info "INBOUND PROBE: #{config.inspect}"
       result = email_probe_inbound( config )
       logger.info "INBOUND RESULT: #{result.inspect}"
@@ -409,9 +409,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # probe outbound
-    outboundMap = []
+    outbound_map = []
     if mail_exchangers && mail_exchangers[0] && mail_exchangers[0][0]
-      outboundMx = [
+      outbound_mx = [
         {
           adapter: 'smtp',
           options: {
@@ -453,9 +453,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           },
         },
       ]
-      outboundMap = outboundMap + outboundMx
+      outbound_map = outbound_map + outbound_mx
     end
-    outboundAuto = [
+    outbound_auto = [
       {
         adapter: 'smtp',
         options: {
@@ -539,7 +539,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     ]
 
     success = false
-    outboundMap.each {|config|
+    outbound_map.each {|config|
       logger.info "OUTBOUND PROBE: #{config.inspect}"
       result = email_probe_outbound( config, params[:email] )
       logger.info "OUTBOUND RESULT: #{result.inspect}"
@@ -599,7 +599,6 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     result = email_probe_inbound( params )
 
     render json: result
-    return
   end
 
   def email_verify
@@ -737,7 +736,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # test connection
-    translationMap = {
+    translation_map = {
       'authentication failed'                                     => 'Authentication failed!',
       'Incorrect username'                                        => 'Authentication failed!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
@@ -747,10 +746,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if params[:adapter] =~ /^smtp$/i
 
       # in case, fill missing params
-      if !params[:options].has_key?(:port)
+      if !params[:options].key?(:port)
         params[:options][:port] = 25
       end
-      if !params[:options].has_key?(:ssl)
+      if !params[:options].key?(:ssl)
         params[:options][:ssl] = true
       end
 
@@ -765,10 +764,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
         # check if sending email was ok, but mailserver rejected
         if !subject
-          whiteMap = {
+          white_map = {
             'Recipient address rejected' => true,
           }
-          whiteMap.each {|key, message|
+          white_map.each {|key, message|
             if e.message =~ /#{Regexp.escape(key)}/i
               result = {
                 result: 'ok',
@@ -780,7 +779,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           }
         end
         message_human = ''
-        translationMap.each {|key, message|
+        translation_map.each {|key, message|
           if e.message =~ /#{Regexp.escape(key)}/i
             message_human = message
           end
@@ -806,7 +805,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       )
     rescue Exception => e
       message_human = ''
-      translationMap.each {|key, message|
+      translation_map.each {|key, message|
         if e.message =~ /#{Regexp.escape(key)}/i
           message_human = message
         end
@@ -822,7 +821,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     result = {
       result: 'ok',
     }
-    return result
+    result
   end
 
   def email_probe_inbound(params)
@@ -833,7 +832,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # connection test
-    translationMap = {
+    translation_map = {
       'authentication failed'                                     => 'Authentication failed!',
       'Incorrect username'                                        => 'Authentication failed!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
@@ -846,7 +845,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         Channel::IMAP.new.fetch( { options: params[:options] }, 'check' )
       rescue Exception => e
         message_human = ''
-        translationMap.each {|key, message|
+        translation_map.each {|key, message|
           if e.message =~ /#{Regexp.escape(key)}/i
             message_human = message
           end
@@ -869,7 +868,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       Channel::POP3.new.fetch( { options: params[:options] }, 'check' )
     rescue Exception => e
       message_human = ''
-      translationMap.each {|key, message|
+      translation_map.each {|key, message|
         if e.message =~ /#{Regexp.escape(key)}/i
           message_human = message
         end
@@ -885,7 +884,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     result = {
       result: 'ok',
     }
-    return result
+    result
   end
 
   def mxers(domain)

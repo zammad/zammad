@@ -171,7 +171,7 @@ class ApplicationController < ActionController::Base
       }
     end
 
-    return {
+    {
       auth: true
     }
   end

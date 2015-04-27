@@ -220,9 +220,7 @@ class TestCase < Test::Unit::TestCase
     else
       instance.find_elements( { partial_link_text: params[:text] } )[0].click
     end
-    if !params[:fast]
-      sleep 0.4
-    end
+    sleep 0.4 if !params[:fast]
   end
 
 =begin
@@ -357,9 +355,7 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements( { css: params[:css] } )[0]
     checked = element.attribute('checked')
-    if !checked
-      element.click
-    end
+    element.click if !checked
   end
 
 =begin
@@ -378,9 +374,7 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements( { css: params[:css] } )[0]
     checked = element.attribute('checked')
-    if checked
-      element.click
-    end
+    element.click if checked
   end
 
 =begin
@@ -760,8 +754,6 @@ class TestCase < Test::Unit::TestCase
             sleep 0.5
             return true
           end
-        rescue
-          # just try again
         end
       end
       sleep 0.5
@@ -816,8 +808,6 @@ wait untill text in selector disabppears
             sleep 1
             return true
           end
-        rescue
-          # just try again
         end
       end
       sleep 1
@@ -839,7 +829,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    for i in 1..100
+    (1..100).each do
       sleep 1
       begin
         if instance.find_elements( { css: '.navigation .tasks .task:first-child' } )[0]
@@ -860,8 +850,6 @@ wait untill text in selector disabppears
         else
           break
         end
-      rescue
-        # just try again
       end
     end
     sleep 1
@@ -1047,7 +1035,7 @@ wait untill text in selector disabppears
         sleep 2.5
         id = instance.current_url
         id.gsub!(//, )
-        id.gsub!(/^.+?\/(\d+)$/, '\\1')
+        id.gsub!(%r{^.+?/(\d+)$}, '\\1')
 
         element = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0]
         if element
@@ -1100,18 +1088,18 @@ wait untill text in selector disabppears
       instance.execute_script( '$(".content.active .page-header .ticket-title-update").text("' + data[:title] + '")' )
       instance.execute_script( '$(".content.active .page-header .ticket-title-update").blur()' )
       instance.execute_script( '$(".content.active .page-header .ticket-title-update").trigger("blur")' )
-#          {
-#            :where        => :instance2,
-#            :execute      => 'sendkey',
-#            :css          => '.content.active .page-header .ticket-title-update',
-#            :value        => 'TTT',
-#          },
-#          {
-#            :where        => :instance2,
-#            :execute      => 'sendkey',
-#            :css          => '.content.active .page-header .ticket-title-update',
-#            :value        => :tab,
-#          },
+      # {
+      #   :where        => :instance2,
+      #   :execute      => 'sendkey',
+      #   :css          => '.content.active .page-header .ticket-title-update',
+      #   :value        => 'TTT',
+      # },
+      # {
+      #   :where        => :instance2,
+      #   :execute      => 'sendkey',
+      #   :css          => '.content.active .page-header .ticket-title-update',
+      #   :value        => :tab,
+      # },
     end
     if data[:customer]
 
@@ -1203,8 +1191,6 @@ wait untill text in selector disabppears
             if text =~ /(Discard your unsaved changes.|Verwerfen der)/
               found = true
             end
-          rescue
-            # just try again
           end
           sleep 1
         end
@@ -1227,8 +1213,6 @@ wait untill text in selector disabppears
         if !text || text.empty?
           return true
         end
-      rescue
-        # just try again
       end
       sleep 1
     }
@@ -1374,7 +1358,7 @@ wait untill text in selector disabppears
     overviews = {}
     instance.find_elements( { css: '.content.active .sidebar a[href]' } ).each {|element|
       url = element.attribute('href')
-      url.gsub!(/(http|https):\/\/.+?\/(.+?)$/, '\\2')
+      url.gsub!(%r{(http|https)://.+?/(.+?)$}, '\\2')
       overviews[url] = 0
       #puts url.inspect
       #puts element.inspect

@@ -38,11 +38,12 @@ class TaskbarController < ApplicationController
   end
 
   private
+
   def access(taskbar)
     if taskbar.user_id != current_user.id
       render json: { error: 'Not allowed to access this task.' }, status: :unprocessable_entity
       return false
     end
-    return true
+    true
   end
 end

@@ -360,7 +360,7 @@ class TicketsController < ApplicationController
     limit                      = 100
     assets                     = {}
     access_condition           = Ticket.access_condition( current_user )
-    now                        = DateTime.now
+    now                        = Time.zone.now
     user_tickets_open_ids      = []
     user_tickets_closed_ids    = []
     user_ticket_volume_by_year = []
@@ -395,8 +395,8 @@ class TicketsController < ApplicationController
 
       # generate stats by user
       (0..11).each {|month_back|
-        date_to_check = DateTime.now - month_back.month
-        date_start = "#{date_to_check.year}-#{date_to_check.month}-#{01} 00:00:00"
+        date_to_check = Time.zone.now - month_back.month
+        date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
 
         condition = {
@@ -463,7 +463,7 @@ class TicketsController < ApplicationController
       # generate stats by org
       (0..11).each {|month_back|
         date_to_check = DateTime.now - month_back.month
-        date_start = "#{date_to_check.year}-#{date_to_check.month}-#{01} 00:00:00"
+        date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
 
         condition = {
@@ -507,7 +507,7 @@ class TicketsController < ApplicationController
       ticket_ids.push ticket.id
       assets = ticket.assets(assets)
     end
-    return ticket_ids
+    ticket_ids
   end
 
   def article_create(ticket, params)

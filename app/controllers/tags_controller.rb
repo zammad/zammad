@@ -32,7 +32,7 @@ class TagsController < ApplicationController
       object: params[:object],
       o_id: params[:o_id],
       item: params[:item],
-    );
+    )
     if success
       render json: success, status: :created
     else
@@ -46,7 +46,7 @@ class TagsController < ApplicationController
       object: params[:object],
       o_id: params[:o_id],
       item: params[:item],
-    );
+    )
     if success
       render json: success, status: :created
     else

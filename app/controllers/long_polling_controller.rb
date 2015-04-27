@@ -29,7 +29,7 @@ class LongPollingController < ApplicationController
 
       # error handling
       if params['data']['timestamp']
-        log 'notice', "request spool data > '#{Time.at( params['data']['timestamp'] ).to_s}'", client_id
+        log 'notice', "request spool data > '#{Time.at( params['data']['timestamp'] )}'", client_id
       else
         log 'notice', 'request spool init data', client_id
       end
@@ -75,13 +75,13 @@ class LongPollingController < ApplicationController
           if params['data']['recipient'] && params['data']['recipient']['user_id']
             params['data']['recipient']['user_id'].each { |user_id|
               if local_client[:user]['id'].to_s == user_id.to_s
-                log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id #{user_id})", local_client_id
+                log 'notice', "send broadcast from (#{client_id}) to (user_id #{user_id})", local_client_id
                 Sessions.send( local_client_id, params['data'] )
               end
             }
             # broadcast every client
           else
-            log 'notice', "send broadcast from (#{client_id.to_s})", local_client_id
+            log 'notice', "send broadcast from (#{client_id})", local_client_id
             Sessions.send( local_client_id, params['data'] )
           end
         else
@@ -124,7 +124,7 @@ class LongPollingController < ApplicationController
         count = count - 1
         queue = Sessions.queue( client_id )
         if queue && queue[0]
-          #          puts "send " + queue.inspect + client_id.to_s
+          # puts "send " + queue.inspect + client_id.to_s
           render json: queue
           return
         end
@@ -155,14 +155,14 @@ class LongPollingController < ApplicationController
     return if !params[:client_id]
     sessions = Sessions.sessions
     return if !sessions.include?( params[:client_id].to_s )
-    return params[:client_id].to_s
+    params[:client_id].to_s
   end
 
   def log( level, data, client_id = '-' )
     if false
       return if level == 'debug'
     end
-    puts "#{Time.now}:client(#{ client_id }) #{ data }"
+    puts "#{Time.zone.now}:client(#{ client_id }) #{ data }"
     #      puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
   end
 end
