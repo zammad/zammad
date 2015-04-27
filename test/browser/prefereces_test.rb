@@ -23,7 +23,7 @@ class PreferencesTest < TestCase
     )
 
     # start ticket zoom
-    ticket = ticket_create(
+    ticket_create(
       data: {
         customer: 'nicole',
         group: 'Users',

@@ -20,11 +20,11 @@ class OtrsImportTest < ActiveSupport::TestCase
     http      = nil
     system_id = nil
     fqdn      = nil
-    if ENV['IMPORT_OTRS_ENDPOINT'] =~ /^(http|https):\/\/((.+?)\..+?)\//
-        http      = $1
-        fqdn      = $2
-        system_id = $3
-        system_id.gsub!(/[A-z]/, '') # strip chars
+    if ENV['IMPORT_OTRS_ENDPOINT'] =~ %r{^(http|https)://((.+?)\..+?)/}
+      http      = $1
+      fqdn      = $2
+      system_id = $3
+      system_id.gsub!(/[A-z]/, '') # strip chars
     end
     assert_equal( system_id, Setting.get('system_id'), 'system_id' )
     assert_equal( fqdn, Setting.get('fqdn'), 'fqdn' )
@@ -171,11 +171,11 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'agent-2', ticket.owner.login )
     assert_equal( 'partner', ticket.customer.login )
     assert_equal( 'Partner der betreut', ticket.organization.name )
-    assert_equal( Time.parse('2014-11-20 22:33:41 +0000').gmtime.to_s, ticket.created_at.to_s )
+    assert_equal( Time.zone.parse('2014-11-20 22:33:41 +0000').gmtime.to_s, ticket.created_at.to_s )
     assert_equal( nil, ticket.close_time )
 
     # check history
-        # create entry
+    #  - create entry
 
     # ticket is created with state closed
     ticket = Ticket.find(729)
@@ -186,11 +186,11 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'agent-2', ticket.owner.login )
     assert_equal( 'jn2', ticket.customer.login )
     assert_equal( 'Znuny GmbH', ticket.organization.name )
-    assert_equal( Time.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.created_at.to_s )
-    assert_equal( Time.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.close_time.to_s )
+    assert_equal( Time.zone.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.created_at.to_s )
+    assert_equal( Time.zone.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.close_time.to_s )
 
     # check history
-        # create entry
+    #  - create entry
 
     # ticket is created open and now closed
     ticket = Ticket.find(730)
@@ -201,11 +201,11 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'agent-2', ticket.owner.login )
     assert_equal( 'betreuterkunde2', ticket.customer.login )
     assert_equal( 'Noch ein betreuter Kunde', ticket.organization.name )
-    assert_equal( Time.parse('2014-11-21 00:17:40 +0000').gmtime.to_s, ticket.created_at.to_s )
-    assert_equal( Time.parse('2014-11-21 00:21:08 +0000').gmtime.to_s, ticket.close_time.to_s )
+    assert_equal( Time.zone.parse('2014-11-21 00:17:40 +0000').gmtime.to_s, ticket.created_at.to_s )
+    assert_equal( Time.zone.parse('2014-11-21 00:21:08 +0000').gmtime.to_s, ticket.close_time.to_s )
 
     # check history
-        # create entry
-        # state change entry
+    #  - create entry
+    #  - state change entry
   end
 end

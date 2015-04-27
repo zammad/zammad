@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class AgentTicketOverviewLevel1Test < TestCase
-  def test_I
+  def test_i
     name = 'name-' + rand(999_999).to_s
 
     browser1 = browser_instance
@@ -24,7 +24,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     tasks_close_all( browser: browser2 )
 
     # create new overview
-    overview = overview_create(
+    overview_create(
       browser: browser1,
       data: {
         :name              => name,

@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class AgentTicketOverviewLevel0Test < TestCase
-  def test_I
+  def test_i
     @browser = browser_instance
     login(
       username: 'master@example.com',

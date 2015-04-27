@@ -5,7 +5,6 @@ class AgentTicketActionsLevel2Test < TestCase
   def test_work_with_two_browser_on_same_ticket
 
     # work on one ticket with two browsers
-    message = 'message 1äöüß ' + rand(99_999_999_999_999_999).to_s
 
     browser1 = browser_instance
     login(

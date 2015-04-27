@@ -1,4 +1,5 @@
 ENV['RAILS_ENV'] = 'test'
+# rubocop:disable Next, CyclomaticComplexity, PerceivedComplexity
 require File.expand_path('../../config/environment', __FILE__)
 require 'selenium-webdriver'
 
@@ -12,7 +13,7 @@ class TestCase < Test::Unit::TestCase
     if browser =~ /(internet_explorer|ie)/i
       return false
     end
-    return true
+    true
   end
 
   def browser_url
@@ -44,7 +45,7 @@ class TestCase < Test::Unit::TestCase
     )
     browser_instance_preferences(local_browser)
     @browsers[local_browser.hash] = local_browser
-    return local_browser
+    local_browser
   end
 
   def browser_instance_close(local_browser)
@@ -548,19 +549,19 @@ class TestCase < Test::Unit::TestCase
       #puts "CCC #{cookie.inspect}"
       # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
       if cookie[:name] =~ /#{params[:name]}/i
-        if params.has_key?( :value ) && cookie[:value].to_s =~ /#{params[:value]}/i
-          assert( true, "matching value '#{params[:value]}' in cookie '#{cookie.to_s}'" )
+        if params.key?( :value ) && cookie[:value].to_s =~ /#{params[:value]}/i
+          assert( true, "matching value '#{params[:value]}' in cookie '#{cookie}'" )
         else
-          raise "not matching value '#{params[:value]}' in cookie '#{cookie.to_s}'"
+          raise "not matching value '#{params[:value]}' in cookie '#{cookie}'"
         end
-        if params.has_key?( :expires ) && cookie[:expires].to_s =~ /#{params[:expires]}/i
-          assert( true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie.to_s}'" )
+        if params.key?( :expires ) && cookie[:expires].to_s =~ /#{params[:expires]}/i
+          assert( true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie}'" )
         else
-          raise "not matching expires '#{params[:expires]}' in cookie '#{cookie.to_s}'"
+          raise "not matching expires '#{params[:expires]}' in cookie '#{cookie}'"
         end
 
         if params[:should_not_exist]
-          raise "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies.to_s}'"
+          raise "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies}'"
         end
         return
       end
@@ -569,7 +570,7 @@ class TestCase < Test::Unit::TestCase
       assert( true, "cookie with name '#{params[:name]}' is not existing" )
       return
     end
-    raise "not matching name '#{params[:name]}' in cookie '#{cookies.to_s}'"
+    raise "not matching name '#{params[:name]}' in cookie '#{cookies}'"
   end
 
 =begin
@@ -627,7 +628,7 @@ class TestCase < Test::Unit::TestCase
       end
       puts "tv #{params.inspect}"
       # verify modified
-      if data.has_key?(:modified)
+      if data.key?(:modified)
         exists      = instance.find_elements( { css: '.tasks .active .icon' } )[0]
         is_modified = instance.find_elements( { css: '.tasks .active .icon.modified' } )[0]
         puts "m #{data[:modified].inspect}"
@@ -1293,7 +1294,7 @@ wait untill text in selector disabppears
     sleep 1
     instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
     sleep 1
-    element = instance.find_elements( { partial_link_text: params[:number] } )[0].click
+    instance.find_elements( { partial_link_text: params[:number] } )[0].click
     sleep 1
     number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
@@ -1341,7 +1342,7 @@ wait untill text in selector disabppears
     sleep 1
 
     # open ticket
-    element = instance.find_element( { partial_link_text: params[:number] } ).click
+    instance.find_element( { partial_link_text: params[:number] } ).click
     number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
       raise "unable to search/find ticket #{params[:number]}!"
@@ -1416,11 +1417,10 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys( params[:value] )
     sleep 2
-    element = instance.find_element( { partial_link_text: params[:value] } ).click
+    instance.find_element( { partial_link_text: params[:value] } ).click
     name = instance.find_elements( { css: '.active h1' } )[0].text
     if name !~ /#{params[:value]}/
       raise "unable to search/find org #{params[:value]}!"
-      return
     end
     assert( true, "org #{params[:value]} found" )
     sleep 2
@@ -1446,7 +1446,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys( params[:value] )
     sleep 3
-    element = instance.find_element( { partial_link_text: params[:value] } ).click
+    instance.find_element( { partial_link_text: params[:value] } ).click
     name = instance.find_elements( { css: '.active h1' } )[0].text
     if name !~ /#{params[:value]}/
       raise "unable to search/find user #{params[:value]}!"
@@ -1726,6 +1726,6 @@ wait untill text in selector disabppears
 
   def log(method, params)
     return if !@@debug
-    puts "#{Time.now.to_s}/#{method}: #{params.inspect}"
+    puts "#{Time.zone.now}/#{method}: #{params.inspect}"
   end
 end

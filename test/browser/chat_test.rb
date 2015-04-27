@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable all
 require 'browser_test_helper'
 
 class ChatTest < TestCase

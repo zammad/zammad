@@ -66,7 +66,7 @@ class AgentTicketActionLevel4Test < TestCase
     )
 
     ticket_id = nil
-    if @browser.current_url =~ /ticket\/zoom\/(.+?)$/i
+    if @browser.current_url =~ %r{ticket/zoom/(.+?)$}i
       ticket_id = $1
     end
 

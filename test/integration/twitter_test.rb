@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable UselessAssignment
 require 'integration_test_helper'
 
 class TwitterTest < ActiveSupport::TestCase
@@ -85,9 +86,9 @@ class TwitterTest < ActiveSupport::TestCase
       type_id: Ticket::Article::Type.where( name: 'twitter status' ).first.id,
       sender_id: Ticket::Article::Sender.where( name: 'Agent' ).first.id,
       body: text,
-#      :from          => sender.name,
-#      :to            => to,
-#      :message_id    => tweet.id,
+      #:from          => sender.name,
+      #:to            => to,
+      #:message_id    => tweet.id,
       internal: false,
       updated_by_id: 1,
       created_by_id: 1,
@@ -179,13 +180,13 @@ class TwitterTest < ActiveSupport::TestCase
     puts '----------------------------------------'
 
     assert( article, 'inbound article created' )
-#    ticket  = Ticket.find( article.ticket.id )
+    #ticket  = Ticket.find( article.ticket.id )
     ticket  = article.ticket
     assert( ticket, 'ticket of inbound article exists' )
     assert( ticket.articles, 'ticket.articles exists' )
     article_count = ticket.articles.count
     assert( article_count )
-#    assert_equal( ticket.state.name, 'new' )
+    #assert_equal( ticket.state.name, 'new' )
 
     # reply via ticket
     outbound_article = Ticket::Article.create(
@@ -193,7 +194,7 @@ class TwitterTest < ActiveSupport::TestCase
       type_id: Ticket::Article::Type.where( name: 'twitter direct-message' ).first.id,
       sender_id: Ticket::Article::Sender.where( name: 'Agent' ).first.id,
       body: text,
-#      :from           => sender.name,
+      #:from           => sender.name,
       to: 'me_bauer',
       internal: false,
       updated_by_id: 1,

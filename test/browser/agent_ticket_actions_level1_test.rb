@@ -34,7 +34,7 @@ class AgentTicketActionLevel1Test < TestCase
     tasks_close_all()
 
     # create second ticket to merge
-    ticket2 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group: 'Users',
@@ -103,7 +103,7 @@ class AgentTicketActionLevel1Test < TestCase
       },
     )
 
-    ticket4 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group: 'Users',

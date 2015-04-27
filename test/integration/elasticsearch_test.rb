@@ -1,4 +1,5 @@
 # encoding: utf-8
+# rubocop:disable UselessAssignment
 require 'integration_test_helper'
 
 class ElasticsearchTest < ActiveSupport::TestCase
@@ -121,7 +122,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root.to_s}/test/fixtures/es-normal.txt", 'rb') { |file| file.read },
+      data: File.open("#{Rails.root}/test/fixtures/es-normal.txt", 'rb') { |file| file.read },
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -132,7 +133,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root.to_s}/test/fixtures/es-pdf1.pdf", 'rb') { |file| file.read },
+      data: File.open("#{Rails.root}/test/fixtures/es-pdf1.pdf", 'rb') { |file| file.read },
       filename: 'es-pdf1.pdf',
       preferences: {},
       created_by_id: 1,
@@ -143,7 +144,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root.to_s}/test/fixtures/es-box1.box", 'rb') { |file| file.read },
+      data: File.open("#{Rails.root}/test/fixtures/es-box1.box", 'rb') { |file| file.read },
       filename: 'mail1.box',
       preferences: {},
       created_by_id: 1,
@@ -154,7 +155,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root.to_s}/test/fixtures/es-too-big.txt", 'rb') { |file| file.read },
+      data: File.open("#{Rails.root}/test/fixtures/es-too-big.txt", 'rb') { |file| file.read },
       filename: 'es-too-big.txt',
       preferences: {},
       created_by_id: 1,
