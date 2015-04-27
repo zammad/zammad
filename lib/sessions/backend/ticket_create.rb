@@ -59,10 +59,10 @@ class Sessions::Backend::TicketCreate
     end
 
     @client.log 'notify', "push ticket_create for user #{ @user.id }"
-    @client.send({
+    @client.send(
       collection: 'ticket_create_attributes',
       data: data,
-    })
+    )
   end
 
 end

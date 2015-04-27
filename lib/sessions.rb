@@ -42,10 +42,13 @@ returns
 
     # send update to browser
     if session && session['id']
-      self.send( client_id, {
-        event: 'ws:login',
-        data: { success: true },
-      })
+      self.send(
+        client_id,
+        {
+          event: 'ws:login',
+          data: { success: true },
+        }
+      )
     end
   end
 

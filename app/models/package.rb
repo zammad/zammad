@@ -207,11 +207,11 @@ class Package < ApplicationModel
       end
 
       # uninstall files of old package
-      self.uninstall({
+      self.uninstall(
         name: package_db.name,
         version: package_db.version,
         migration_not_down: true,
-      })
+      )
     end
 
     # store package

@@ -35,7 +35,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
             created_by_id: current_user.id,
           },
           article: {
-              updated_by_id: current_user.id,
+            updated_by_id: current_user.id,
               created_by_id: current_user.id,
               type_id: Ticket::Article::Type.lookup( name: 'phone' ).id,
               sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
@@ -59,10 +59,10 @@ class ActivityStreamTest < ActiveSupport::TestCase
         },
         check: [
           {
-             result: true,
+            result: true,
              object: 'Ticket',
              type: 'updated',
-           },
+          },
           {
             result: true,
             object: 'Ticket::Article',

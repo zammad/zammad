@@ -54,11 +54,11 @@ class Sessions::Backend::ActivityStream
     end
 
     @client.log 'notify', "push activity_stream #{ data.first.class.to_s } for user #{ @user.id }"
-    @client.send({
+    @client.send(
       event: 'activity_stream_rebuild',
       collection: 'activity_stream',
       data: data,
-    })
+    )
   end
 
 end

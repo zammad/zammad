@@ -54,11 +54,11 @@ class Sessions::Backend::Rss
     end
 
     @client.log 'notify', "push rss for user #{@user.id}"
-    @client.send({
+    @client.send(
       event: 'rss_rebuild',
       collection: 'dashboard_rss',
       data: data,
-    })
+    )
   end
 
 end

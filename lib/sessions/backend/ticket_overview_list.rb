@@ -106,11 +106,11 @@ class Sessions::Backend::TicketOverviewList
         @client.log 'notify', "push overview_list for user #{ @user.id }"
 
         # send update to browser
-        @client.send({
+        @client.send(
           data: assets,
           event: [ 'loadAssets' ]
-        })
-        @client.send({
+        )
+        @client.send(
           data: {
             view: item[:index].link.to_s,
             overview: overview_data[:overview],
@@ -122,7 +122,7 @@ class Sessions::Backend::TicketOverviewList
             },
           },
           event: [ 'ticket_overview_rebuild' ],
-        })
+        )
       end
     }
     return results if !@client

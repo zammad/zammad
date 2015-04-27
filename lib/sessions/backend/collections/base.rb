@@ -74,18 +74,18 @@ class Sessions::Backend::Collections::Base
       }
     end
     @client.log 'notify', "push assets for push_collection #{ items.first.class.to_s } for user #{ @user.id }"
-    @client.send({
+    @client.send(
       data: assets,
       event: [ 'loadAssets' ],
-    })
+    )
 
     @client.log 'notify', "push push_collection #{ items.first.class.to_s } for user #{ @user.id }"
-    @client.send({
+    @client.send(
       event: 'resetCollection',
       data: {
         items.first.class.to_app_model => all,
       },
-    })
+    )
   end
 
   def self.model_set(model)
