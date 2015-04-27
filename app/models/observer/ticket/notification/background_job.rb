@@ -70,7 +70,7 @@ class Observer::Ticket::Notification::BackgroundJob
         object: 'Ticket',
         o_id: ticket.id,
         seen: seen,
-        created_by_id: ticket.updated_by_id || 1,
+        created_by_id: ticket.updated_by_id ||  1,
         user_id: user.id,
       )
 
@@ -134,7 +134,7 @@ class Observer::Ticket::Notification::BackgroundJob
         history_type: 'notification',
         history_object: 'Ticket',
         value_to: recipient_list,
-        created_by_id: ticket.updated_by_id || 1
+        created_by_id: ticket.updated_by_id ||  1
       )
     end
   end
@@ -166,7 +166,7 @@ class Observer::Ticket::Notification::BackgroundJob
       attribute_name           = key.to_s
       object_manager_attribute = attribute_list[attribute_name]
       if attribute_name[-3,3] == '_id'
-        attribute_name = attribute_name[ 0, attribute_name.length-3 ].to_s
+        attribute_name = attribute_name[ 0, attribute_name.length - 3 ].to_s
       end
 
       # add item to changes hash

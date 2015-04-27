@@ -52,7 +52,7 @@ class Sessions::Backend::Collections::Base
     # load current data
     items = self.load
 
-    return if !items||items.empty?
+    return if !items || items.empty?
 
     # get relations of data
     all = []

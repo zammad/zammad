@@ -43,7 +43,7 @@ class Sessions::Backend::ActivityStream
 
     data = self.load
 
-    return if !data||data.empty?
+    return if !data || data.empty?
 
     if !@client
       return {

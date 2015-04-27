@@ -28,7 +28,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '8:00',
         'end_of_workday'       => '18:00',
       },
@@ -49,9 +49,9 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     sla = Sla.create(
       name: 'test sla 2',
-      condition: { 'tickets.priority_id' =>['1', '2', '3'] },
+      condition: { 'tickets.priority_id' => ['1', '2', '3'] },
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '8:00',
         'end_of_workday'       => '18:00',
       },
@@ -360,7 +360,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -402,7 +402,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -445,7 +445,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -549,7 +549,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -612,7 +612,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -706,7 +706,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
@@ -816,7 +816,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'test sla 1',
       condition: {},
       data: {
-        'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
+        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },

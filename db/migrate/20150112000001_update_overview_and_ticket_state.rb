@@ -14,7 +14,7 @@ class UpdateOverviewAndTicketState < ActiveRecord::Migration
         condition: {
           'tickets.state_id'     => [3],
           'tickets.owner_id'     => 'current_user.id',
-          'tickets.pending_time' => { 'direction' => 'before', 'count'=> 1, 'area' => 'minute' },
+          'tickets.pending_time' => { 'direction' => 'before', 'count' => 1, 'area' => 'minute' },
         },
         order: {
           by: 'created_at',

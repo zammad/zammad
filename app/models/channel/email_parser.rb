@@ -191,7 +191,7 @@ class Channel::EmailParser
     else
 
       # text part only
-      if !mail.mime_type || mail.mime_type.to_s ==  '' || mail.mime_type.to_s.downcase == 'text/plain'
+      if !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.downcase == 'text/plain'
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
@@ -535,9 +535,9 @@ class Channel::EmailParser
       next if key == 'created_by_id'
 
       # check if id exists
-      key_short = key[ key.length-3 , key.length ]
+      key_short = key[ key.length - 3 , key.length ]
       if key_short == '_id'
-        key_short = key[ 0, key.length-3 ]
+        key_short = key[ 0, key.length - 3 ]
         header = "x-zammad-#{header_name}-#{key_short}"
         if mail[ header.to_sym ]
           puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"

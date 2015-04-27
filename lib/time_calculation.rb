@@ -197,7 +197,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
         # keep it in current day
         if next_hour == 23
-          start_time += diff-1
+          start_time += diff - 1
         else
           start_time += diff
         end
@@ -334,7 +334,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
         # keep it in current day
         if next_hour == 23
-          start_time += diff-1
+          start_time += diff - 1
         else
           start_time += diff
         end

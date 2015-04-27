@@ -347,7 +347,7 @@ module Import::OTRS2
     run   = true
     while run
         count += steps
-        records = load('CustomerUser', steps, count-steps)
+        records = load('CustomerUser', steps, count - steps)
         if !records || !records[0]
           log 'all customers imported.'
           run = false
@@ -371,11 +371,11 @@ module Import::OTRS2
         while run
           count += steps
           log "loading... thread# #{thread} ..."
-          offset = count-steps
+          offset = count - steps
           if offset != 0
             offset = count - steps + 1
           end
-          records = load( 'Ticket', steps, count-steps)
+          records = load( 'Ticket', steps, count - steps)
           if !records || !records[0]
             log "... thread# #{thread}, no more work."
             run = false
@@ -450,11 +450,11 @@ module Import::OTRS2
     while run
       count += steps
       log 'loading... diff ...'
-      offset = count-steps
+      offset = count - steps
       if offset != 0
         offset = count - steps + 1
       end
-      records = load( 'Ticket', steps, count-steps, 1 )
+      records = load( 'Ticket', steps, count - steps, 1 )
       if !records || !records[0]
         log '... no more work.'
         run = false
@@ -1037,7 +1037,7 @@ module Import::OTRS2
           if group_lookup['Name'] == 'admin' && permissions && permissions.include?('rw')
             roles.push 'Admin'
           end
-          if group_lookup['Name'] =~ /^(stats|report)/ && permissions && ( permissions.include?('ro') || permissions.include?('rw') )
+          if group_lookup['Name'] =~ /^(stats|report)/ && permissions && ( permissions.include?('ro') ||  permissions.include?('rw') )
             roles.push 'Report'
           end
         end

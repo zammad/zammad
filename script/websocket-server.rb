@@ -64,14 +64,14 @@ puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#
 if ARGV[0] == 'stop'
 
   # read pid
-  pid =File.open( @options[:i].to_s  ).read
+  pid = File.open( @options[:i].to_s  ).read
   pid.gsub!(/\r|\n/, '')
 
   # kill
   Process.kill( 9, pid.to_i )
   exit
 end
-if ARGV[0] == 'start'  && @options[:d]
+if ARGV[0] == 'start' && @options[:d]
 
   Daemons.daemonize
 

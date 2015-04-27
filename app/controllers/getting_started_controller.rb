@@ -76,7 +76,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # validate url
     messages = {}
     if !Setting.get('system_online_service')
-      if !params[:url] ||params[:url] !~ /^(http|https):\/\/.+?$/
+      if !params[:url] || params[:url] !~ /^(http|https):\/\/.+?$/
         messages[:url] = 'A URL looks like http://zammad.example.com'
       end
     end

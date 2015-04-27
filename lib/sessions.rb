@@ -269,7 +269,7 @@ returns
     while check
       if File::exists?( path + filename )
         count += 1
-        filename = filename  + '-' + count
+        filename = filename + '-' + count
       else
         check = false
       end

@@ -267,7 +267,7 @@ class ApplicationController < ActionController::Base
       next if t.name =~ /^MST/
       next if t.name =~ /^ROC/
       next if t.name =~ /^ROK/
-      diff = t.current_period.utc_total_offset / 60 /60
+      diff = t.current_period.utc_total_offset / 60 / 60
       config['timezones'][ t.name ] = diff
     }
 

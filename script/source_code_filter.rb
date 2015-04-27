@@ -22,7 +22,7 @@ def checkForHeader(fileName)
   # detect file type
   if allLines[0] =~ /(^# Copyright)/ || allLines[1] =~ /(^# Copyright)/
     foundHeader = true
-  elsif allLines[1] =~/^=begin/ #assume external script
+  elsif allLines[1] =~ /^=begin/ #assume external script
     foundHeader = true
   end
   if allLines[0] =~ /(^#!\/)/

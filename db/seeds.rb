@@ -1429,7 +1429,7 @@ Overview.create_if_not_exists(
   condition: {
     'tickets.state_id'     => [3],
     'tickets.owner_id'     => 'current_user.id',
-    'tickets.pending_time' => { 'direction' => 'before', 'count'=> 1, 'area' => 'minute' },
+    'tickets.pending_time' => { 'direction' => 'before', 'count' => 1, 'area' => 'minute' },
   },
   order: {
     by: 'created_at',
@@ -1491,7 +1491,7 @@ Overview.create_if_not_exists(
   role_id: overview_role.id,
   condition: {
     'tickets.state_id'     => [3],
-    'tickets.pending_time' => { 'direction' => 'before', 'count'=> 1, 'area' => 'minute' },
+    'tickets.pending_time' => { 'direction' => 'before', 'count' => 1, 'area' => 'minute' },
   },
   order: {
     by: 'created_at',
@@ -1511,7 +1511,7 @@ Overview.create_if_not_exists(
   prio: 1040,
   role_id: overview_role.id,
   condition: {
-    'tickets.escalation_time' => { 'direction' => 'before', 'count'=> 5, 'area' => 'minute' },
+    'tickets.escalation_time' => { 'direction' => 'before', 'count' => 5, 'area' => 'minute' },
   },
   order: {
     by: 'escalation_time',
