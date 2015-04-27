@@ -750,7 +750,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( ticket, 'ticket created' )
 
     # state change to open from pending
-       History.add(
+    History.add(
       history_type: 'updated',
       history_object: 'Ticket',
       history_attribute: 'state',

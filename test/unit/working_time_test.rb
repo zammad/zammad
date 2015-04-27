@@ -548,7 +548,7 @@ class WorkingTimeTest < ActiveSupport::TestCase
     ]
     tests.each { |test|
       dest_time = TimeCalculation.dest_time( test[:start] + ' UTC', test[:diff], test[:config], test[:timezone] )
-      assert_equal( dest_time.gmtime, Time.parse( test[:dest_time] + ' UTC' ), "dest time - #{test[:dest_time]}" )
+      assert_equal( dest_time.gmtime, Time.zone.parse( test[:dest_time] + ' UTC' ), "dest time - #{test[:dest_time]}" )
     }
   end
 

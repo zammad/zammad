@@ -70,7 +70,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
-    article_inbound = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -109,7 +109,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_equal( 2, notification_check(ticket1, agent2), ticket1.id )
 
     # add article to ticket
-    article_note = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id: ticket1.id,
       from: 'some person',
       subject: 'some note',
@@ -134,7 +134,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.owner_id      = agent1.id
     ticket1.updated_by_id = agent1.id
     ticket1.save
-    article_note = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id: ticket1.id,
       from: 'some person',
       subject: 'some note',
@@ -166,7 +166,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: agent1.id,
       created_by_id: agent1.id,
     )
-    article_inbound = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id: ticket2.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -321,7 +321,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
-    article_inbound = Ticket::Article.create(
+    Ticket::Article.create(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -344,28 +344,28 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup( name: '3 high' )
     ticket1.save
 
-    list        = EventBuffer.list
-    listObjects = Observer::Ticket::Notification.get_uniq_changes(list)
+    list         = EventBuffer.list
+    list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
 
-    assert_equal( 'some notification event test 1', listObjects[ticket1.id][:changes]['title'][0] )
-    assert_equal( 'some notification event test 1 - #2', listObjects[ticket1.id][:changes]['title'][1] )
-    assert_not( listObjects[ticket1.id][:changes]['priority'] )
-    assert_equal( 2, listObjects[ticket1.id][:changes]['priority_id'][0] )
-    assert_equal( 3, listObjects[ticket1.id][:changes]['priority_id'][1] )
+    assert_equal( 'some notification event test 1', list_objects[ticket1.id][:changes]['title'][0] )
+    assert_equal( 'some notification event test 1 - #2', list_objects[ticket1.id][:changes]['title'][1] )
+    assert_not( list_objects[ticket1.id][:changes]['priority'] )
+    assert_equal( 2, list_objects[ticket1.id][:changes]['priority_id'][0] )
+    assert_equal( 3, list_objects[ticket1.id][:changes]['priority_id'][1] )
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #3"
     ticket1.priority = Ticket::Priority.lookup( name: '1 low' )
     ticket1.save
 
-    list        = EventBuffer.list
-    listObjects = Observer::Ticket::Notification.get_uniq_changes(list)
+    list         = EventBuffer.list
+    list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
 
-    assert_equal( 'some notification event test 1', listObjects[ticket1.id][:changes]['title'][0] )
-    assert_equal( 'some notification event test 1 - #2 - #3', listObjects[ticket1.id][:changes]['title'][1] )
-    assert_not( listObjects[ticket1.id][:changes]['priority'] )
-    assert_equal( 2, listObjects[ticket1.id][:changes]['priority_id'][0] )
-    assert_equal( 1, listObjects[ticket1.id][:changes]['priority_id'][1] )
+    assert_equal( 'some notification event test 1', list_objects[ticket1.id][:changes]['title'][0] )
+    assert_equal( 'some notification event test 1 - #2 - #3', list_objects[ticket1.id][:changes]['title'][1] )
+    assert_not( list_objects[ticket1.id][:changes]['priority'] )
+    assert_equal( 2, list_objects[ticket1.id][:changes]['priority_id'][0] )
+    assert_equal( 1, list_objects[ticket1.id][:changes]['priority_id'][1] )
 
   end
 
@@ -402,7 +402,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       type: 'update',
       changes: {
         'priority_id'  => [1, 2],
-        'pending_time' => [nil, Time.parse('2015-01-11 23:33:47 UTC')],
+        'pending_time' => [nil, Time.zone.parse('2015-01-11 23:33:47 UTC')],
       },
     )
 
