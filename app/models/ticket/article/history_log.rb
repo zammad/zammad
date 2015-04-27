@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class Ticket
-  class Article
-    module HistoryLog
+module Ticket::Article::HistoryLog
 
 =begin
 
@@ -17,18 +15,16 @@ returns
 
 =end
 
-      def history_log (type, user_id, data = {})
+  def history_log (type, user_id, data = {})
 
-        # if Ticketdata[:data[:Article has changed, remember related ticket to be able
-        # to show article changes in ticket history
-        data[:o_id]                   = self['id']
-        data[:history_type]           = type
-        data[:history_object]         = self.class.name
-        data[:related_o_id]           = self['ticket_id']
-        data[:related_history_object] = 'Ticket'
-        data[:created_by_id]          = user_id
-        History.add(data)
-      end
-    end
+    # if Ticketdata[:data[:Article has changed, remember related ticket to be able
+    # to show article changes in ticket history
+    data[:o_id]                   = self['id']
+    data[:history_type]           = type
+    data[:history_object]         = self.class.name
+    data[:related_o_id]           = self['ticket_id']
+    data[:related_history_object] = 'Ticket'
+    data[:created_by_id]          = user_id
+    History.add(data)
   end
 end

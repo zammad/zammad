@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
-class Ticket
-  module HistoryLog
+# rubocop:disable ClassAndModuleChildren
+module Ticket::HistoryLog
 
 =begin
 
@@ -16,15 +15,15 @@ returns
 
 =end
 
-    def history_log (type, user_id, data = {})
-      data[:o_id]                   = self['id']
-      data[:history_type]           = type
-      data[:history_object]         = self.class.name
-      data[:related_o_id]           = nil
-      data[:related_history_object] = nil
-      data[:created_by_id]          = user_id
-      History.add(data)
-    end
+  def history_log (type, user_id, data = {})
+    data[:o_id]                   = self['id']
+    data[:history_type]           = type
+    data[:history_object]         = self.class.name
+    data[:related_o_id]           = nil
+    data[:related_history_object] = nil
+    data[:created_by_id]          = user_id
+    History.add(data)
+  end
 
 =begin
 
@@ -58,25 +57,24 @@ returns
 
 =end
 
-    def history_get(fulldata = false)
-      list = History.list( self.class.name, self['id'], 'Ticket::Article' )
-      return list if !fulldata
+  def history_get(fulldata = false)
+    list = History.list( self.class.name, self['id'], 'Ticket::Article' )
+    return list if !fulldata
 
-      # get related objects
-      assets = {}
-      list.each {|item|
-        record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+    # get related objects
+    assets = {}
+    list.each {|item|
+      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      assets = record.assets(assets)
+
+      if item['related_object']
+        record = Kernel.const_get( item['related_object'] ).find( item['related_o_id'] )
         assets = record.assets(assets)
-
-        if item['related_object']
-          record = Kernel.const_get( item['related_object'] ).find( item['related_o_id'] )
-          assets = record.assets(assets)
-        end
-      }
-      {
-        history: list,
-        assets: assets,
-      }
-    end
+      end
+    }
+    {
+      history: list,
+      assets: assets,
+    }
   end
 end

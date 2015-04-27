@@ -1,88 +1,84 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# rubocop:disable ClassAndModuleChildren
+module Ticket::Number::Date
+  extend self
 
-class Ticket
-  class Number
-    module Date
-      extend self
+  def generate
 
-      def generate
+    # get config
+    config = Setting.get('ticket_number_date')
 
-        # get config
-        config = Setting.get('ticket_number_date')
+    t = Time.zone.now
+    date = t.strftime('%Y-%m-%d')
 
-        t = Time.zone.now
-        date = t.strftime('%Y-%m-%d')
-
-        # read counter
-        counter_increment = nil
-        Ticket::Counter.transaction do
-          counter = Ticket::Counter.where( generator: 'Date' ).lock(true).first
-          if !counter
-            counter = Ticket::Counter.new( generator: 'Date', content: '0' )
-          end
-
-          # increase counter
-          counter_increment, date_file = counter.content.to_s.split(';')
-          if date_file == date
-            counter_increment = counter_increment.to_i + 1
-          else
-            counter_increment = 1
-          end
-
-          # store new counter value
-          counter.content = counter_increment.to_s + ';' + date
-          counter.save
-        end
-
-        system_id = Setting.get('system_id') || ''
-        number = t.strftime('%Y%m%d') + system_id.to_s + sprintf( '%04d', counter_increment)
-
-        # calculate a checksum
-        # The algorithm to calculate the checksum is derived from the one
-        # Deutsche Bundesbahn (german railway company) uses for calculation
-        # of the check digit of their vehikel numbering.
-        # The checksum is calculated by alternately multiplying the digits
-        # with 1 and 2 and adding the resulsts from left to right of the
-        # vehikel number. The modulus to 10 of this sum is substracted from
-        # 10. See: http://www.pruefziffernberechnung.de/F/Fahrzeugnummer.shtml
-        # (german)
-        if config[:checksum]
-          chksum = 0
-          mult   = 1
-          (1..number.length).each do |i|
-            digit = number.to_s[i, 1]
-            chksum = chksum + ( mult * digit.to_i )
-            mult += 1
-            if mult == 3
-              mult = 1
-            end
-          end
-          chksum %= 10
-          chksum = 10 - chksum
-          if chksum == 10
-            chksum = 1
-          end
-          number += chksum.to_s
-        end
-        number
+    # read counter
+    counter_increment = nil
+    Ticket::Counter.transaction do
+      counter = Ticket::Counter.where( generator: 'Date' ).lock(true).first
+      if !counter
+        counter = Ticket::Counter.new( generator: 'Date', content: '0' )
       end
 
-      def check(string)
-
-        # get config
-        system_id           = Setting.get('system_id') || ''
-        ticket_hook         = Setting.get('ticket_hook')
-        ticket_hook_divider = Setting.get('ticket_hook_divider') || ''
-        ticket              = nil
-
-        # probe format
-        if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,50})/i
-          ticket = Ticket.where( number: $1 ).first
-        elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i
-          ticket = Ticket.where( number: $1 ).first
-        end
-        ticket
+      # increase counter
+      counter_increment, date_file = counter.content.to_s.split(';')
+      if date_file == date
+        counter_increment = counter_increment.to_i + 1
+      else
+        counter_increment = 1
       end
+
+      # store new counter value
+      counter.content = counter_increment.to_s + ';' + date
+      counter.save
     end
+
+    system_id = Setting.get('system_id') || ''
+    number = t.strftime('%Y%m%d') + system_id.to_s + sprintf( '%04d', counter_increment)
+
+    # calculate a checksum
+    # The algorithm to calculate the checksum is derived from the one
+    # Deutsche Bundesbahn (german railway company) uses for calculation
+    # of the check digit of their vehikel numbering.
+    # The checksum is calculated by alternately multiplying the digits
+    # with 1 and 2 and adding the resulsts from left to right of the
+    # vehikel number. The modulus to 10 of this sum is substracted from
+    # 10. See: http://www.pruefziffernberechnung.de/F/Fahrzeugnummer.shtml
+    # (german)
+    if config[:checksum]
+      chksum = 0
+      mult   = 1
+      (1..number.length).each do |i|
+        digit = number.to_s[i, 1]
+        chksum = chksum + ( mult * digit.to_i )
+        mult += 1
+        if mult == 3
+          mult = 1
+        end
+      end
+      chksum %= 10
+      chksum = 10 - chksum
+      if chksum == 10
+        chksum = 1
+      end
+      number += chksum.to_s
+    end
+    number
+  end
+
+  def check(string)
+
+    # get config
+    system_id           = Setting.get('system_id') || ''
+    ticket_hook         = Setting.get('ticket_hook')
+    ticket_hook_divider = Setting.get('ticket_hook_divider') || ''
+    ticket              = nil
+
+    # probe format
+    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,50})/i
+      ticket = Ticket.where( number: $1 ).first
+    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i
+      ticket = Ticket.where( number: $1 ).first
+    end
+    ticket
   end
 end

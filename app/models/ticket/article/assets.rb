@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class Ticket
-  class Article
-    module Assets
+module Ticket::Article::Assets
 
 =begin
 
@@ -23,35 +21,33 @@ returns
 
 =end
 
-      def assets (data)
+  def assets (data)
 
-        if !data[ Ticket.to_app_model ]
-          data[ Ticket.to_app_model ] = {}
-        end
-        if !data[ Ticket.to_app_model ][ self.ticket_id ]
-          ticket = Ticket.find( self.ticket_id )
-          data = ticket.assets(data)
-        end
-
-        if !data[ Ticket::Article.to_app_model ]
-          data[ Ticket::Article.to_app_model ] = {}
-        end
-        if !data[ Ticket::Article.to_app_model ][ self.id ]
-          data[ Ticket::Article.to_app_model ][ self.id ] = self.attributes
-
-          # add attachment list to article
-          data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = self.attachments
-        end
-
-        ['created_by_id', 'updated_by_id'].each {|item|
-          next if !self[ item ]
-          if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
-            user = User.lookup( id: self[ item ] )
-            data = user.assets( data )
-          end
-        }
-        data
-      end
+    if !data[ Ticket.to_app_model ]
+      data[ Ticket.to_app_model ] = {}
     end
+    if !data[ Ticket.to_app_model ][ self.ticket_id ]
+      ticket = Ticket.find( self.ticket_id )
+      data = ticket.assets(data)
+    end
+
+    if !data[ Ticket::Article.to_app_model ]
+      data[ Ticket::Article.to_app_model ] = {}
+    end
+    if !data[ Ticket::Article.to_app_model ][ self.id ]
+      data[ Ticket::Article.to_app_model ][ self.id ] = self.attributes
+
+      # add attachment list to article
+      data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = self.attachments
+    end
+
+    ['created_by_id', 'updated_by_id'].each {|item|
+      next if !self[ item ]
+      if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
+        user = User.lookup( id: self[ item ] )
+        data = user.assets( data )
+      end
+    }
+    data
   end
 end
