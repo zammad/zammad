@@ -43,7 +43,7 @@ module Import::OTRS
   end
 
   def self.auth(username, password)
-    response = post( "public.pl", { :Action => 'Export', :Type => 'Auth', :User => username, :Pw => password } )
+    response = post( 'public.pl', { :Action => 'Export', :Type => 'Auth', :User => username, :Pw => password } )
     return if !response
     return if !response.success?
 
@@ -52,7 +52,7 @@ module Import::OTRS
   end
 
   def self.session(session_id)
-    response = post( "public.pl", { :Action => 'Export', :Type => 'SessionCheck', :SessionID => session_id } )
+    response = post( 'public.pl', { :Action => 'Export', :Type => 'SessionCheck', :SessionID => session_id } )
     return if !response
     return if !response.success?
 
@@ -117,10 +117,10 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-        raise "System is not in import mode!"
+        raise 'System is not in import mode!'
     end
 
-    response = request("public.pl?Action=Export")
+    response = request('public.pl?Action=Export')
     return if !response
     return if !response.success?
 
@@ -181,7 +181,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-        raise "System is not in import mode!"
+        raise 'System is not in import mode!'
     end
 
     # create states
@@ -203,7 +203,7 @@ module Import::OTRS
 
 
   def self.ticket_diff()
-    url = "public.pl?Action=Export;Type=TicketDiff;Limit=30"
+    url = 'public.pl?Action=Export;Type=TicketDiff;Limit=30'
     response = request( url )
     return if !response
     return if !response.success?
@@ -212,7 +212,7 @@ module Import::OTRS
   end
 
   def self.ticket(ticket_ids)
-    url = "public.pl?Action=Export;Type=Ticket;"
+    url = 'public.pl?Action=Export;Type=Ticket;'
     ticket_ids.each {|ticket_id|
       url = url + "TicketID=#{CGI::escape ticket_id};"
     }
@@ -543,7 +543,7 @@ module Import::OTRS
   end
 
   def self.state
-    response = request( "public.pl?Action=Export;Type=State" )
+    response = request( 'public.pl?Action=Export;Type=State' )
     return if !response
     return if !response.success?
 
@@ -600,7 +600,7 @@ module Import::OTRS
     }
   end
   def self.priority
-    response = request( "public.pl?Action=Export;Type=Priority" )
+    response = request( 'public.pl?Action=Export;Type=Priority' )
     return if !response
     return if !response.success?
 
@@ -644,7 +644,7 @@ module Import::OTRS
     }
   end
   def self.ticket_group
-    response = request( "public.pl?Action=Export;Type=Queue" )
+    response = request( 'public.pl?Action=Export;Type=Queue' )
     return if !response
     return if !response.success?
 
@@ -688,7 +688,7 @@ module Import::OTRS
     }
   end
   def self.user
-    response = request( "public.pl?Action=Export;Type=User" )
+    response = request( 'public.pl?Action=Export;Type=User' )
     return if !response
     return if !response.success?
     result = json(response)

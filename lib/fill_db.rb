@@ -1,6 +1,6 @@
 module FillDB
   def self.load( agents, customers, groups, organizations, tickets )
-    puts "load db with:"
+    puts 'load db with:'
     puts " agents:#{agents}"
     puts " customers:#{customers}"
     puts " groups:#{groups}"

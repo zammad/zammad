@@ -344,7 +344,7 @@ returns
       }
       return
     else
-      raise "Need name, id or login for lookup()"
+      raise 'Need name, id or login for lookup()'
     end
   end
 
@@ -439,7 +439,7 @@ returns
       record.save
       return record
     else
-      raise "Need name, login or locale for create_or_update()"
+      raise 'Need name, login or locale for create_or_update()'
     end
   end
 

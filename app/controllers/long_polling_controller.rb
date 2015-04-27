@@ -12,7 +12,7 @@ class LongPollingController < ApplicationController
     if !client_id
       new_connection = true
       client_id = client_id_gen
-      log 'notice', "new client connection", client_id
+      log 'notice', 'new client connection', client_id
     end
     if !params['data']
       params['data'] = {}
@@ -31,7 +31,7 @@ class LongPollingController < ApplicationController
       if params['data']['timestamp']
         log 'notice', "request spool data > '#{Time.at( params['data']['timestamp'] ).to_s}'", client_id
       else
-        log 'notice', "request spool init data", client_id
+        log 'notice', 'request spool init data', client_id
       end
 
       if current_user
@@ -41,7 +41,7 @@ class LongPollingController < ApplicationController
             log 'notice', "send spool to (user_id=#{ current_user.id })", client_id
             Sessions.send( client_id, item[:message] )
           else
-            log 'notice', "send spool", client_id
+            log 'notice', 'send spool', client_id
             Sessions.send( client_id, item[:message] )
           end
         }
@@ -49,7 +49,7 @@ class LongPollingController < ApplicationController
 
       # send spool:sent event to client
       sleep 0.2
-      log 'notice', "send spool:sent event", client_id
+      log 'notice', 'send spool:sent event', client_id
       Sessions.send( client_id, { :event => 'spool:sent', :data => { :timestamp => Time.now.utc.to_i } } )
     end
 
@@ -86,7 +86,7 @@ class LongPollingController < ApplicationController
             Sessions.send( local_client_id, params['data'] )
           end
         else
-          log 'notice', "do not send broadcast to it self", client_id
+          log 'notice', 'do not send broadcast to it self', client_id
         end
       }
     end

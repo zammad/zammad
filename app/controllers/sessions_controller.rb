@@ -138,7 +138,7 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
 
     if !auth
-      logger.info("AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT")
+      logger.info('AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT')
 
       # redirect to app
       redirect_to '/'

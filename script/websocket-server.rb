@@ -26,30 +26,30 @@ require 'daemons'
 
 tls_options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: websocket-server.rb start|stop [options]"
+  opts.banner = 'Usage: websocket-server.rb start|stop [options]'
 
-  opts.on("-d", "--daemon", "start as daemon") do |d|
+  opts.on('-d', '--daemon', 'start as daemon') do |d|
     @options[:d] = d
   end
-  opts.on("-v", "--verbose", "enable debug messages") do |d|
+  opts.on('-v', '--verbose', 'enable debug messages') do |d|
     @options[:v] = d
   end
-  opts.on("-p", "--port [OPT]", "port of websocket server") do |p|
+  opts.on('-p', '--port [OPT]', 'port of websocket server') do |p|
     @options[:p] = p
   end
-  opts.on("-b", "--bind [OPT]", "bind address") do |b|
+  opts.on('-b', '--bind [OPT]', 'bind address') do |b|
     @options[:b] = b
   end
-  opts.on("-s", "--secure", "enable secure connections") do |s|
+  opts.on('-s', '--secure', 'enable secure connections') do |s|
     @options[:s] = s
   end
-  opts.on("-i", "--pid [OPT]", "pid, default is tmp/pids/websocket.pid") do |i|
+  opts.on('-i', '--pid [OPT]', 'pid, default is tmp/pids/websocket.pid') do |i|
     @options[:i] = i
   end
-  opts.on("-k", "--private-key [OPT]", "/path/to/server.key for secure connections") do |k|
+  opts.on('-k', '--private-key [OPT]', '/path/to/server.key for secure connections') do |k|
     tls_options[:private_key_file] = k
   end
-  opts.on("-c", "--certificate [OPT]", "/path/to/server.crt for secure connections") do |c|
+  opts.on('-c', '--certificate [OPT]', '/path/to/server.crt for secure connections') do |c|
     tls_options[:cert_chain_file] = c
   end
 end.parse!
@@ -66,7 +66,7 @@ if ARGV[0] == 'stop'
 
   # read pid
   pid =File.open( @options[:i].to_s  ).read
-  pid.gsub!(/\r|\n/, "")
+  pid.gsub!(/\r|\n/, '')
 
   # kill
   Process.kill( 9, pid.to_i )
@@ -77,7 +77,7 @@ if ARGV[0] == 'start'  && @options[:d]
   Daemons.daemonize
 
   # create pid file
-  $daemon_pid = File.new( @options[:i].to_s,"w" )
+  $daemon_pid = File.new( @options[:i].to_s,'w' )
   $daemon_pid.sync = true
   $daemon_pid.puts(Process.pid.to_s)
   $daemon_pid.close
@@ -142,7 +142,7 @@ EventMachine.run {
         if data['timestamp']
           log 'notice', "request spool data > '#{Time.at(data['timestamp']).to_s}'", client_id
         else
-          log 'notice', "request spool with init data", client_id
+          log 'notice', 'request spool with init data', client_id
         end
 
         if @clients[client_id] && @clients[client_id][:session] && @clients[client_id][:session]['id']
@@ -155,7 +155,7 @@ EventMachine.run {
               log 'notice', "send spool to (user_id=#{ @clients[client_id][:session]['id'] })", client_id
               @clients[client_id][:websocket].send( "[#{ msg }]" )
             else
-              log 'notice', "send spool", client_id
+              log 'notice', 'send spool', client_id
               @clients[client_id][:websocket].send( "[#{ msg }]" )
             end
           }
@@ -164,7 +164,7 @@ EventMachine.run {
         end
 
         # send spool:sent event to client
-        log 'notice', "send spool:sent event", client_id
+        log 'notice', 'send spool:sent event', client_id
         @clients[client_id][:websocket].send( '[{"event":"spool:sent","data":{"timestamp":' + Time.now.utc.to_i.to_s + '}}]' )
       end
 
@@ -222,7 +222,7 @@ EventMachine.run {
               end
             end
           else
-            log 'notice', "do not send broadcast to it self", client_id
+            log 'notice', 'do not send broadcast to it self', client_id
           end
         }
       end
@@ -264,7 +264,7 @@ EventMachine.run {
 
   EventMachine.add_periodic_timer(0.4) {
     next if @clients.size == 0
-    log 'debug', "checking for data to send..."
+    log 'debug', 'checking for data to send...'
     @clients.each { |client_id, client|
       next if client[:disconnect]
       log 'debug', 'checking for data...', client_id
@@ -272,7 +272,7 @@ EventMachine.run {
         queue = Sessions.queue( client_id )
         if queue && queue[0]
           #          log "send " + queue.inspect, client_id
-          log 'notice', "send data to client", client_id
+          log 'notice', 'send data to client', client_id
           client[:websocket].send( queue.to_json )
         end
       rescue => e
@@ -291,14 +291,14 @@ EventMachine.run {
   }
 
   def check_unused_connections
-    log 'notice', "check unused idle connections..."
+    log 'notice', 'check unused idle connections...'
 
     idle_time_in_sec = 4 * 60
 
     # close unused web socket sessions
     @clients.each { |client_id, client|
       if ( client[:last_ping] + idle_time_in_sec ) < Time.now
-        log 'notice', "closing idle websocket connection", client_id
+        log 'notice', 'closing idle websocket connection', client_id
 
         # remember to not use this connection anymore
         client[:disconnect] = true
@@ -315,7 +315,7 @@ EventMachine.run {
     # close unused ajax long polling sessions
     clients = Sessions.destory_idle_sessions(idle_time_in_sec)
     clients.each { |client_id|
-      log 'notice', "closing idle long polling connection", client_id
+      log 'notice', 'closing idle long polling connection', client_id
     }
   end
 

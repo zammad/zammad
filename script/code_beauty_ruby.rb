@@ -20,13 +20,13 @@
  ***************************************************************************/
 =end
 
-PVERSION = "Version 2.9, 10/24/2008"
+PVERSION = 'Version 2.9, 10/24/2008'
 
 module RBeautify
 
    # user-customizable values
 
-   RBeautify::TabStr = " "
+   RBeautify::TabStr = ' '
    RBeautify::TabSize = 2
 
    # indent regexp tests
@@ -71,7 +71,7 @@ module RBeautify
    ]
 
    def RBeautify.rb_make_tab(tab)
-      return (tab < 0)?"":TabStr * TabSize * tab
+      return (tab < 0)?'':TabStr * TabSize * tab
    end
 
    def RBeautify.rb_add_line(line,tab)
@@ -80,13 +80,13 @@ module RBeautify
       return line
    end
 
-   def RBeautify.beautify_string(source, path = "")
+   def RBeautify.beautify_string(source, path = '')
       comment_block = false
       in_here_doc = false
-      here_doc_term = ""
+      here_doc_term = ''
       program_end = false
       multiLine_array = []
-      multiLine_str = ""
+      multiLine_str = ''
       tab = 0
       output = []
       source.each do |line|
@@ -99,14 +99,14 @@ module RBeautify
                # combine continuing lines
                if(!(line =~ /^\s*#/) && line =~ /[^\\]\\\s*$/)
                   multiLine_array.push line
-                  multiLine_str += line.sub(/^(.*)\\\s*$/,"\\1")
+                  multiLine_str += line.sub(/^(.*)\\\s*$/,'\\1')
                   next
                end
 
                # add final line
                if(multiLine_str.length > 0)
                   multiLine_array.push line
-                  multiLine_str += line.sub(/^(.*)\\\s*$/,"\\1")
+                  multiLine_str += line.sub(/^(.*)\\\s*$/,'\\1')
                end
 
                tline = ((multiLine_str.length > 0)?multiLine_str:line).strip
@@ -117,7 +117,7 @@ module RBeautify
                   in_here_doc = false if tline =~ %r{\s*#{here_doc_term}\s*}
                else # not in here_doc
                   if tline =~ %r{=\s*<<}
-                     here_doc_term = tline.sub(%r{.*=\s*<<-?\s*([_|\w]+).*},"\\1")
+                     here_doc_term = tline.sub(%r{.*=\s*<<-?\s*([_|\w]+).*},'\\1')
                      in_here_doc = here_doc_term.size > 0
                   end
                end
@@ -131,24 +131,24 @@ module RBeautify
             if(!comment_line)
                # throw out sequences that will
                # only sow confusion
-               while tline.gsub!(/\{[^\{]*?\}/,"")
+               while tline.gsub!(/\{[^\{]*?\}/,'')
                end
-               while tline.gsub!(/\[[^\[]*?\]/,"")
+               while tline.gsub!(/\[[^\[]*?\]/,'')
                end
-               while tline.gsub!(/'.*?'/,"")
+               while tline.gsub!(/'.*?'/,'')
                end
-               while tline.gsub!(/".*?"/,"")
+               while tline.gsub!(/".*?"/,'')
                end
-               while tline.gsub!(/\`.*?\`/,"")
+               while tline.gsub!(/\`.*?\`/,'')
                end
-               while tline.gsub!(/\([^\(]*?\)/,"")
+               while tline.gsub!(/\([^\(]*?\)/,'')
                end
-               while tline.gsub!(/\/.*?\//,"")
+               while tline.gsub!(/\/.*?\//,'')
                end
-               while tline.gsub!(/%r(.).*?\1/,"")
+               while tline.gsub!(/%r(.).*?\1/,'')
                end
                # delete end-of-line comments
-               tline.sub!(/#[^\"]+$/,"")
+               tline.sub!(/#[^\"]+$/,'')
                # convert quotes
                tline.gsub!(/\\\"/,"'")
                OutdentExp.each do |re|
@@ -163,7 +163,7 @@ module RBeautify
                   output << rb_add_line(ml,tab)
                end
                multiLine_array.clear
-               multiLine_str = ""
+               multiLine_str = ''
             else
                output << rb_add_line(line,tab)
             end
@@ -189,7 +189,7 @@ module RBeautify
       error = false
       if(path == '-') # stdin source
          source = STDIN.read
-         dest,error = beautify_string(source,"stdin")
+         dest,error = beautify_string(source,'stdin')
          print dest
       else # named file source
          source = File.read(path)
@@ -198,7 +198,7 @@ module RBeautify
             # make a backup copy
             #File.open(path + "~","w") { |f| f.write(source) }
             # overwrite the original
-            File.open(path,"w") { |f| f.write(dest) }
+            File.open(path,'w') { |f| f.write(dest) }
          end
       end
       return error

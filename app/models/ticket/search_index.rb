@@ -88,7 +88,7 @@ returns
           # check ignored files
           if attachment.filename
             filename_extention = attachment.filename.downcase
-            filename_extention.gsub!(/^.*(\..+?)$/, "\\1")
+            filename_extention.gsub!(/^.*(\..+?)$/, '\\1')
             if !attachments_ignore.include?( filename_extention.downcase )
               data = {
                 '_name'    => attachment.filename,

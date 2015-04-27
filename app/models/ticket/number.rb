@@ -47,7 +47,7 @@ returns
     # load backend based on config
     adapter_name = Setting.get('ticket_number')
     if !adapter_name
-      raise "Missing ticket_number setting option"
+      raise 'Missing ticket_number setting option'
     end
     adapter = load_adapter(adapter_name)
     if !adapter

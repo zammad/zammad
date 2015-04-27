@@ -42,7 +42,7 @@ class Channel::IMAP < Channel::EmailParser
       @imap.select( channel[:options][:folder] )
     end
     if check_type == 'check'
-      puts "check only mode, fetch no emails"
+      puts 'check only mode, fetch no emails'
       disconnect
       return
     elsif check_type == 'verify'
@@ -68,7 +68,7 @@ class Channel::IMAP < Channel::EmailParser
         subject = @imap.fetch(message_id,'ENVELOPE')[0].attr['ENVELOPE'].subject
         if subject && subject =~ /#{verify_string}/
           puts " - verify email #{verify_string} found"
-          @imap.store(message_id, "+FLAGS", [:Deleted])
+          @imap.store(message_id, '+FLAGS', [:Deleted])
           @imap.expunge()
           disconnect
           return 'verify ok'
@@ -78,16 +78,16 @@ class Channel::IMAP < Channel::EmailParser
         # delete email from server after article was created
         msg = @imap.fetch(message_id,'RFC822')[0].attr['RFC822']
         if process(channel, msg)
-          @imap.store(message_id, "+FLAGS", [:Deleted])
+          @imap.store(message_id, '+FLAGS', [:Deleted])
         end
       end
     end
     @imap.expunge()
     disconnect
     if count == 0
-      puts " - no message"
+      puts ' - no message'
     end
-    puts "done"
+    puts 'done'
   end
 
   def disconnect

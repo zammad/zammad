@@ -27,11 +27,11 @@ class Channel::POP3 < Channel::EmailParser
     end
     @pop.start( channel[:options][:user], channel[:options][:password] )
     if check_type == 'check'
-      puts "check only mode, fetch no emails"
+      puts 'check only mode, fetch no emails'
       disconnect
       return
     elsif check_type == 'verify'
-      puts "verify mode, fetch no emails"
+      puts 'verify mode, fetch no emails'
     end
 
     mails     = @pop.mails
@@ -66,9 +66,9 @@ class Channel::POP3 < Channel::EmailParser
     end
     disconnect
     if count == 0
-      puts " - no message"
+      puts ' - no message'
     end
-    puts "done"
+    puts 'done'
   end
 
   def disconnect

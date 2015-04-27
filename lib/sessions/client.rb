@@ -2,9 +2,9 @@ class Sessions::Client
 
   def initialize( client_id )
     @client_id = client_id
-    self.log 'notify', "---client start ws connection---"
+    self.log 'notify', '---client start ws connection---'
     self.fetch
-    self.log 'notify', "---client exiting ws connection---"
+    self.log 'notify', '---client exiting ws connection---'
   end
 
   def fetch
@@ -56,7 +56,7 @@ class Sessions::Client
         pool.push
       }
 
-      self.log 'notice', "---/client-"
+      self.log 'notice', '---/client-'
 
       # start faster in the beginnig
       if loop_count < 20
