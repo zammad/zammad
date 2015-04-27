@@ -80,7 +80,10 @@ class TranslationToDo extends App.Controller
 
     # local update
     App.i18n.removeNotTranslated( @locale, source )
-    App.i18n.setMap( source, target )
+
+    # update runtime if same language is used
+    if App.i18n.get() is @locale
+      App.i18n.setMap( source, target, 'string' )
 
     # remote update
     params =
@@ -109,7 +112,10 @@ class TranslationToDo extends App.Controller
 
     # local update
     App.i18n.removeNotTranslated( @locale, source )
-    App.i18n.setMap( source, source )
+
+    # update runtime if same language is used
+    if App.i18n.get() is @locale
+      App.i18n.setMap( source, source, 'string' )
 
     # remote update
     params =
@@ -157,10 +163,17 @@ class TranslationList extends App.Controller
     #if !App.i18n.notTranslatedFeatureEnabled(@locale)
     #  return
 
+    @strings = []
+    @times = []
+    for item in data.list
+      if item[4] is 'time'
+        @times.push item
+      else
+        @strings.push item
+
     @html App.view('translation/list')(
-      list:              data.list
-      timestampFormat:   data.timestampFormat
-      dateFormat:        data.dateFormat
+      times:   @times
+      strings: @strings
     )
     ui = @
     @$('.js-Item').each( (e) ->
@@ -174,11 +187,19 @@ class TranslationList extends App.Controller
     id      = field.data('id')
     source  = field.data('source')
     initial = field.data('initial')
+    format  = field.data('format')
 
     # if it's translated by user it self, delete it
     if !initial || initial is ''
+
+      # locale reset
       $(e.target).closest('tr').remove()
-      App.i18n.setMap( source, '' )
+
+      # update runtime if same language is used
+      if App.i18n.get() is @locale
+        App.i18n.setMap( source, '', format )
+
+      # remote reset
       params =
         id: id
       @ajax(
@@ -188,17 +209,21 @@ class TranslationList extends App.Controller
         data:        JSON.stringify(params)
         processData: false
         success: =>
-          console.log('aaa', @locale, source)
           App.i18n.setNotTranslated( @locale, source )
           App.Event.trigger('i18n:translation_todo_reload')
       )
       return
 
-    # update item
-    App.i18n.setMap( source, initial )
 
+    # update runtime if same language is used
+    if App.i18n.get() is @locale
+      App.i18n.setMap( source, initial, format )
+
+    # locale reset
     field.val( initial )
     @updateRow(id)
+
+    # remote reset
     params =
       id:     id
       target: initial
@@ -215,11 +240,15 @@ class TranslationList extends App.Controller
     e.preventDefault()
     id     = $( e.target ).data('id')
     source = $( e.target ).data('source')
+    format = $( e.target ).data('format')
     target = $( e.target ).val()
-    @updateRow(id)
 
     # local update
-    App.i18n.setMap( source, target )
+    @updateRow(id)
+
+    # update runtime if same language is used
+    if App.i18n.get() is @locale
+      App.i18n.setMap( source, target, format )
 
     # remote update
     params =

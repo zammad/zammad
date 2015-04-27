@@ -3,7 +3,7 @@
 class Locale < ApplicationModel
 
   def self.load
-    url = 'http://localhost:3001/api/v1/locales'
+    url = 'https://i18n.zammad.com/api/v1/locales'
 
     result = UserAgent.get(
       url,

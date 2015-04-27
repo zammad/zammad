@@ -39,10 +39,10 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.set( args )
 
-  @setMap: (source, target) ->
+  @setMap: (source, target, format) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
-    _instance.setMap( source, target )
+    _instance.setMap( source, target, format )
 
   @notTranslatedFeatureEnabled: (locale) ->
     if _instance == undefined
@@ -68,7 +68,8 @@ class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 
   constructor: ( locale ) ->
-    @map               = {}
+    @mapTime           = {}
+    @mapString         = {}
     @_notTranslatedLog = false
     @_notTranslated    = {}
     @dateFormat        = 'yyyy-mm-dd'
@@ -98,13 +99,13 @@ class _i18nSingleton extends Spine.Module
         @log 'debug', 'translate Update', translation_new, $this.data, 'before'
         $this.data 'before', translation_new
 
-        # update runtime translation map
-        @map[ source ] = translation_new
+        # update runtime translation mapString
+        @mapString[ source ] = translation_new
 
         # replace rest in page
         $(".translation[data-text='#{source}']").html( translation_new )
 
-        # update permanent translation map
+        # update permanent translation mapString
         translation = App.Translation.findByAttribute( 'source', source )
         if translation
           translation.updateAttribute( 'target', translation_new )
@@ -133,7 +134,7 @@ class _i18nSingleton extends Spine.Module
     # set lang attribute of html tag
     $('html').prop( 'lang', locale.substr(0, 2) )
 
-    @map = {}
+    @mapString = {}
     App.Ajax.request(
       id:    'i18n-set-' + locale,
       type:   'GET',
@@ -141,22 +142,20 @@ class _i18nSingleton extends Spine.Module
       async:  false,
       success: (data, status, xhr) =>
 
-        # set timestamp format
-        if data.timestampFormat
-          @timestampFormat = data.timestampFormat
-
-        # set date format
-        if data.dateFormat
-          @dateFormat = data.dateFormat
-
         # load translation collection
         for object in data.list
 
-          # set runtime lookup table
-          @map[ object[1] ] = object[2]
+          # set date/timestamp format
+          if object[3] is 'time'
+            @mapTime[ object[1] ] = object[2]
 
-          # load in collection if needed
-          App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale } )
+          else
+
+            # set runtime lookup table
+            @mapString[ object[1] ] = object[2]
+
+            # load in collection if needed
+            App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale } )
     )
 
   translateInline: ( string, args... ) =>
@@ -188,9 +187,9 @@ class _i18nSingleton extends Spine.Module
     return '' if string is ''
 
     # return translation
-    if @map[string] isnt undefined
+    if @mapString[string] isnt undefined
       @_translated = true
-      translated   = @map[string]
+      translated   = @mapString[string]
     else
       @_translated = false
       translated   = string
@@ -209,8 +208,11 @@ class _i18nSingleton extends Spine.Module
     # return translated string
     return translated
 
-  setMap: ( source, target ) =>
-    @map[source] = target
+  setMap: ( source, target, format = 'string' ) =>
+    if format is 'time'
+      @mapTime[source] = target
+    else
+      @mapString[source] = target
 
   notTranslatedFeatureEnabled: (locale) =>
     if locale.substr(0,2) is 'en'
@@ -227,10 +229,10 @@ class _i18nSingleton extends Spine.Module
     @_notTranslated[locale][key] = true
 
   date: ( time, offset ) =>
-    @convert(time, offset, @dateFormat)
+    @convert(time, offset, @mapTime['date'] || @dateFormat)
 
   timestamp: ( time, offset ) =>
-    @convert(time, offset, @timestampFormat)
+    @convert(time, offset, @mapTime['timestamp'] || @timestampFormat)
 
   convert: ( time, offset, format ) =>
     s = ( num, digits ) ->

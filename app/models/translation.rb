@@ -28,12 +28,20 @@ load translations from online
     )
     result.data.each {|translation|
       #puts translation.inspect
-      exists = Translation.where(:locale => translation['locale'], :source => translation['source']).first
-      if exists
+
+      # handle case insensitive sql
+      exists     = Translation.where(:locale => translation['locale'], :format => translation['format'], :source => translation['source'])
+      translaten = nil
+      exists.each {|item|
+        if item.source == translation['source']
+          translaten = item
+        end
+      }
+      if translaten
 
         # verify if update is needed
-        exists.update_attributes(translation.symbolize_keys!)
-        exists.save
+        translaten.update_attributes(translation.symbolize_keys!)
+        translaten.save
       else
         Translation.create(translation.symbolize_keys!)
       end
@@ -51,6 +59,7 @@ push translations to online
 
   def self.push(locale)
 
+    # only push changed translations
     translations         = Translation.where(:locale => locale)
     translations_to_push = []
     translations.each {|translation|
@@ -61,7 +70,7 @@ push translations to online
 
     return true if translations_to_push.empty?
     #return translations_to_push
-    url = 'http://localhost:3001/api/v1/thanks_for_your_support'
+    url = 'https://i18n.zammad.com/api/v1/thanks_for_your_support'
 
     result = UserAgent.post(
       url,
@@ -103,6 +112,7 @@ get list of translations
             item.source,
             item.target,
             item.target_initial,
+            item.format,
           ]
           list.push data
         else
@@ -110,6 +120,7 @@ get list of translations
             item.id,
             item.source,
             item.target,
+            item.format,
           ]
           list.push data
         end
@@ -121,22 +132,8 @@ get list of translations
       end
     end
 
-    timestamp_map_default = 'yyyy-mm-dd HH:MM'
-    timestamp_map = {
-      :de => 'dd.mm.yyyy HH:MM',
-    }
-    timestamp = timestamp_map[ locale.to_sym ] || timestamp_map_default
-
-    date_map_default = 'yyyy-mm-dd'
-    date_map = {
-      :de => 'dd.mm.yyyy',
-    }
-    date = date_map[ locale.to_sym ] || date_map_default
-
     return {
-      :list            => list,
-      :timestampFormat => timestamp,
-      :dateFormat      => date,
+      :list => list,
     }
   end
 

@@ -1,5 +1,5 @@
 <h2><%- @T('Date & Datetime') %></h2>
-<table class="translationOverview table table-striped table-hover">
+<table class="translationOverview js-translated table table-striped table-hover">
   <thead>
     <tr>
       <th class="translationOverview-source"><%- @T('Type') %></th>
@@ -9,18 +9,16 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><%- @T('Datetime') %></td>
-      <td class="translationOverview-itemContainer"><input class="translationOverview-item form-control" value="<%= @timestampFormat %>"></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><%- @T('Date') %></td>
-      <td class="translationOverview-itemContainer"><input class="translationOverview-item form-control" value="<%= @dateFormat %>"></td>
-      <td></td>
-      <td></td>
-    </tr>
+   <% if @times: %>
+    <% for time in @times: %>
+      <tr>
+        <td title="<%= time[1] %>"><%= time[1] %></td>
+        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= time[2] %>" data-source="<%= time[1] %>" data-initial="<%= time[3] %>" data-id="<%= time[0] %>" data-format="<%= time[4] %>"></td>
+        <td title="<%= time[3] %>"><%= time[3]%></td>
+        <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
+      </tr>
+      <% end %>
+    <% end %>
   </tbody>
 </table>
 
@@ -35,11 +33,11 @@
     </tr>
   </thead>
   <tbody>
-    <% if @list: %>
-      <% for item in @list: %>
+    <% if @strings: %>
+      <% for item in @strings: %>
       <tr>
         <td title="<%= item[1] %>"><%= item[1] %></td>
-        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= item[2] %>" data-source="<%= item[1] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>"></td>
+        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= item[2] %>" data-source="<%= item[1] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>" data-format="<%= item[4] %>"></td>
         <td title="<%= item[3] %>"><%= item[3]%></td>
         <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
       </tr>
