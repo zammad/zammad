@@ -22,7 +22,7 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
     recent_viewed = RecentView.list_full( current_user, 10 )
 
     # return result
-    render :json => recent_viewed
+    render json: recent_viewed
   end
 
 =begin
@@ -49,7 +49,7 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
     RecentView.log( params[:object], params[:o_id], current_user )
 
     # return result
-    render :json => { :message => 'ok' }
+    render json: { message: 'ok' }
   end
 
 end

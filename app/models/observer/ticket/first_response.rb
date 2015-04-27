@@ -13,8 +13,8 @@ class Observer::Ticket::FirstResponse < ActiveRecord::Observer
     return true if record.internal
 
     # if sender is not agent
-    sender = Ticket::Article::Sender.lookup( :id => record.sender_id )
-    type   = Ticket::Article::Type.lookup( :id => record.type_id )
+    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
+    type   = Ticket::Article::Type.lookup( id: record.type_id )
     if sender.name != 'Agent' && type.name !~ /^phone/
       return true
     end

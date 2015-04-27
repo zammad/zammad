@@ -11,33 +11,33 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( delete, 'ticket destroy_all' )
 
     ticket = Ticket.create(
-      :title         => 'some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-03-21 09:30:00 UTC',
-      :updated_at    => '2013-03-21 09:30:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-03-21 09:30:00 UTC',
+      updated_at: '2013-03-21 09:30:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     sla = Sla.create(
-      :name => 'test sla 1',
-      :condition => {},
-      :data => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '8:00',
         'end_of_workday'       => '18:00',
       },
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 240,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_time verify 1' )
@@ -48,19 +48,19 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( delete, 'sla destroy 1' )
 
     sla = Sla.create(
-      :name      => 'test sla 2',
-      :condition => { 'tickets.priority_id' =>['1', '2', '3'] },
-      :data      => {
+      name: 'test sla 2',
+      condition: { 'tickets.priority_id' =>['1', '2', '3'] },
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '8:00',
         'end_of_workday'       => '18:00',
       },
-      :first_response_time => 60,
-      :update_time         => 120,
-      :close_time          => 180,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      first_response_time: 60,
+      update_time: 120,
+      close_time: 180,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.escalation_time verify 2' )
@@ -79,7 +79,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set first response in time
     ticket.update_attributes(
-      :first_response => '2013-03-21 10:00:00 UTC',
+      first_response: '2013-03-21 10:00:00 UTC',
     )
     puts ticket.inspect
 
@@ -99,7 +99,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set first reponse over time
     ticket.update_attributes(
-      :first_response => '2013-03-21 14:00:00 UTC',
+      first_response: '2013-03-21 14:00:00 UTC',
     )
     puts ticket.inspect
 
@@ -119,7 +119,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set update time in time
     ticket.update_attributes(
-      :last_contact_agent => '2013-03-21 11:00:00 UTC',
+      last_contact_agent: '2013-03-21 11:00:00 UTC',
     )
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_time verify 5' )
 
@@ -138,7 +138,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set update time over time
     ticket.update_attributes(
-      :last_contact_agent => '2013-03-21 12:00:00 UTC',
+      last_contact_agent: '2013-03-21 12:00:00 UTC',
     )
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_time verify 6' )
 
@@ -157,7 +157,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set close time in time
     ticket.update_attributes(
-      :close_time => '2013-03-21 11:30:00 UTC',
+      close_time: '2013-03-21 11:30:00 UTC',
     )
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.escalation_time verify 7' )
 
@@ -176,7 +176,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set close time over time
     ticket.update_attributes(
-      :close_time => '2013-03-21 13:00:00 UTC',
+      close_time: '2013-03-21 13:00:00 UTC',
     )
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.escalation_time verify 8' )
 
@@ -195,7 +195,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set close time over time
     ticket.update_attributes(
-      :state => Ticket::State.lookup( :name => 'closed' )
+      state: Ticket::State.lookup( name: 'closed' )
     )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify 9' )
 
@@ -216,15 +216,15 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( delete, 'ticket destroy' )
 
     ticket = Ticket.create(
-      :title         => 'some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
-      :created_at    => '2013-03-28 23:49:00 UTC',
-      :updated_at    => '2013-03-28 23:49:00 UTC',
+      title: 'some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2013-03-28 23:49:00 UTC',
+      updated_at: '2013-03-28 23:49:00 UTC',
     )
     assert( ticket, 'ticket created' )
 
@@ -234,19 +234,19 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create inbound article
     article_inbound = Ticket::Article.create(
-      :ticket_id     => ticket.id,
-      :from          => 'some_sender@example.com',
-      :to            => 'some_recipient@example.com',
-      :subject       => 'some subject',
-      :message_id    => 'some@id',
-      :body          => 'some message',
-      :internal      => false,
-      :sender        => Ticket::Article::Sender.where(:name => 'Customer').first,
-      :type          => Ticket::Article::Type.where(:name => 'email').first,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-      :created_at    => '2013-03-28 23:49:00 UTC',
-      :updated_at    => '2013-03-28 23:49:00 UTC',
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2013-03-28 23:49:00 UTC',
+      updated_at: '2013-03-28 23:49:00 UTC',
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.article_count, 1, 'ticket.article_count verify - inbound' )
@@ -258,19 +258,19 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create outbound article
     article_outbound = Ticket::Article.create(
-      :ticket_id     => ticket.id,
-      :from          => 'some_recipient@example.com',
-      :to            => 'some_sender@example.com',
-      :subject       => 'some subject',
-      :message_id    => 'some@id2',
-      :body          => 'some message 2',
-      :internal      => false,
-      :sender        => Ticket::Article::Sender.where(:name => 'Agent').first,
-      :type          => Ticket::Article::Type.where(:name => 'email').first,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-      :created_at    => '2013-03-29 08:00:03 UTC',
-      :updated_at    => '2013-03-29 08:00:03 UTC',
+      ticket_id: ticket.id,
+      from: 'some_recipient@example.com',
+      to: 'some_sender@example.com',
+      subject: 'some subject',
+      message_id: 'some@id2',
+      body: 'some message 2',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Agent').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2013-03-29 08:00:03 UTC',
+      updated_at: '2013-03-29 08:00:03 UTC',
     )
 
     ticket = Ticket.find(ticket.id)
@@ -288,15 +288,15 @@ class TicketSlaTest < ActiveSupport::TestCase
 
 
     ticket = Ticket.create(
-      :title         => 'some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
-      :created_at    => '2013-03-28 23:49:00 UTC',
-      :updated_at    => '2013-03-28 23:49:00 UTC',
+      title: 'some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2013-03-28 23:49:00 UTC',
+      updated_at: '2013-03-28 23:49:00 UTC',
     )
     assert( ticket, 'ticket created' )
 
@@ -306,18 +306,18 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # create inbound article
     article_inbound = Ticket::Article.create(
-      :ticket_id     => ticket.id,
-      :from          => 'some_sender@example.com',
-      :subject       => 'some subject',
-      :message_id    => 'some@id',
-      :body          => 'some message',
-      :internal      => false,
-      :sender        => Ticket::Article::Sender.where(:name => 'Customer').first,
-      :type          => Ticket::Article::Type.where(:name => 'phone').first,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-      :created_at    => '2013-03-28 23:49:00 UTC',
-      :updated_at    => '2013-03-28 23:49:00 UTC',
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'phone').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2013-03-28 23:49:00 UTC',
+      updated_at: '2013-03-28 23:49:00 UTC',
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.article_count, 1, 'ticket.article_count verify - inbound' )
@@ -343,35 +343,35 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( delete, 'ticket destroy_all' )
 
     ticket = Ticket.create(
-      :title         => 'some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-03-21 09:30:00 UTC',
-      :updated_at    => '2013-03-21 09:30:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-03-21 09:30:00 UTC',
+      updated_at: '2013-03-21 09:30:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 8:00-17:00
     sla = Sla.create(
-      :name      => 'test sla 1',
-      :condition => {},
-      :data      => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
-      :timezone            => 'Europe/Berlin',
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 240,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      timezone: 'Europe/Berlin',
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_time verify 1' )
@@ -385,35 +385,35 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = ticket.destroy
     assert( delete, 'ticket destroy' )
     ticket = Ticket.create(
-      :title         => 'some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-10-21 09:30:00 UTC',
-      :updated_at    => '2013-10-21 09:30:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-10-21 09:30:00 UTC',
+      updated_at: '2013-10-21 09:30:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
     sla = Sla.create(
-      :name      => 'test sla 1',
-      :condition => {},
-      :data      => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
-      :timezone            => 'Europe/Berlin',
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 240,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      timezone: 'Europe/Berlin',
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 11:30:00 UTC', 'ticket.escalation_time verify 1' )
@@ -428,35 +428,35 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( delete, 'sla destroy' )
 
     ticket = Ticket.create(
-      :title         => 'some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-10-21 06:30:00 UTC',
-      :updated_at    => '2013-10-21 06:30:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-10-21 06:30:00 UTC',
+      updated_at: '2013-10-21 06:30:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
     sla = Sla.create(
-      :name      => 'test sla 1',
-      :condition => {},
-      :data      => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
-      :timezone            => 'Europe/Berlin',
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 240,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      timezone: 'Europe/Berlin',
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 09:00:00 UTC', 'ticket.escalation_time verify 1' )
@@ -474,93 +474,93 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket escalation suspend' do
     ticket = Ticket.create(
-      :title         => 'some title äöüß3',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-06-04 09:00:00 UTC',
-      :updated_at    => '2013-06-04 09:00:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß3',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-06-04 09:00:00 UTC',
+      updated_at: '2013-06-04 09:00:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
 
     # set ticket at 10:00 to pending
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 3,
-      :id_from           => 2,
-      :value_from        => 'open',
-      :value_to          => 'pending reminder',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 10:00:00 UTC',
-      :updated_at        => '2013-06-04 10:00:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 3,
+      id_from: 2,
+      value_from: 'open',
+      value_to: 'pending reminder',
+      created_by_id: 1,
+      created_at: '2013-06-04 10:00:00 UTC',
+      updated_at: '2013-06-04 10:00:00 UTC',
     )
 
     # set ticket at 10:30 to open
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 2,
-      :id_from           => 3,
-      :value_from        => 'pending reminder',
-      :value_to          => 'open',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 10:30:00 UTC',
-      :updated_at        => '2013-06-04 10:30:00 UTC'
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 2,
+      id_from: 3,
+      value_from: 'pending reminder',
+      value_to: 'open',
+      created_by_id: 1,
+      created_at: '2013-06-04 10:30:00 UTC',
+      updated_at: '2013-06-04 10:30:00 UTC'
     )
 
     # set update time
     ticket.update_attributes(
-      :last_contact_agent => '2013-06-04 10:15:00 UTC',
+      last_contact_agent: '2013-06-04 10:15:00 UTC',
     )
 
     # set first response time
     ticket.update_attributes(
-      :first_response => '2013-06-04 10:45:00 UTC',
+      first_response: '2013-06-04 10:45:00 UTC',
     )
 
     # set ticket from 11:30 to closed
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 3,
-      :id_from           => 2,
-      :value_from        => 'open',
-      :value_to          => 'closed',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 12:00:00 UTC',
-      :updated_at        => '2013-06-04 12:00:00 UTC'
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 3,
+      id_from: 2,
+      value_from: 'open',
+      value_to: 'closed',
+      created_by_id: 1,
+      created_at: '2013-06-04 12:00:00 UTC',
+      updated_at: '2013-06-04 12:00:00 UTC'
     )
 
     ticket.update_attributes(
-      :close_time => '2013-06-04 12:00:00 UTC',
+      close_time: '2013-06-04 12:00:00 UTC',
     )
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
     sla = Sla.create(
-      :name      => 'test sla 1',
-      :condition => {},
-      :data      => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
-      :timezone            => 'Europe/Berlin',
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 250,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      timezone: 'Europe/Berlin',
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 250,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
@@ -579,51 +579,51 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # test Ticket created in state pending and closed without reopen or state change
     ticket = Ticket.create(
-      :title         => 'some title äöüß3',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'pending reminder' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-06-04 09:00:00 UTC',
-      :updated_at    => '2013-06-04 09:00:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß3',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'pending reminder' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-06-04 09:00:00 UTC',
+      updated_at: '2013-06-04 09:00:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
 
 
     # set ticket from 11:30 to closed
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 4,
-      :id_from           => 3,
-      :value_from        => 'pending reminder',
-      :value_to          => 'closed',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 12:00:00 UTC',
-      :updated_at        => '2013-06-04 12:00:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 4,
+      id_from: 3,
+      value_from: 'pending reminder',
+      value_to: 'closed',
+      created_by_id: 1,
+      created_at: '2013-06-04 12:00:00 UTC',
+      updated_at: '2013-06-04 12:00:00 UTC',
     )
     ticket.update_attributes(
-      :close_time => '2013-06-04 12:00:00 UTC',
+      close_time: '2013-06-04 12:00:00 UTC',
     )
 
     sla = Sla.create(
-      :name      => 'test sla 1',
-      :condition => {},
-      :data      => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 240,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
 
@@ -645,80 +645,80 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # test Ticket created in state pending, changed state to openen, back to pending and closed
     ticket = Ticket.create(
-      :title         => 'some title äöüß3',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'pending reminder' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-06-04 09:00:00 UTC',
-      :updated_at    => '2013-06-04 09:00:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß3',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'pending reminder' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-06-04 09:00:00 UTC',
+      updated_at: '2013-06-04 09:00:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
 
     # state change to open 10:30
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 2,
-      :id_from           => 3,
-      :value_from        => 'pending reminder',
-      :value_to          => 'open',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 10:30:00 UTC',
-      :updated_at        => '2013-06-04 10:30:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 2,
+      id_from: 3,
+      value_from: 'pending reminder',
+      value_to: 'open',
+      created_by_id: 1,
+      created_at: '2013-06-04 10:30:00 UTC',
+      updated_at: '2013-06-04 10:30:00 UTC',
     )
 
     # state change to pending 11:00
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 3,
-      :id_from           => 2,
-      :value_from        => 'open',
-      :value_to          => 'pending reminder',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 11:00:00 UTC',
-      :updated_at        => '2013-06-04 11:00:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 3,
+      id_from: 2,
+      value_from: 'open',
+      value_to: 'pending reminder',
+      created_by_id: 1,
+      created_at: '2013-06-04 11:00:00 UTC',
+      updated_at: '2013-06-04 11:00:00 UTC',
     )
 
     # set ticket from 12:00 to closed
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 4,
-      :id_from           => 3,
-      :value_from        => 'pending reminder',
-      :value_to          => 'closed',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 12:00:00 UTC',
-      :updated_at        => '2013-06-04 12:00:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 4,
+      id_from: 3,
+      value_from: 'pending reminder',
+      value_to: 'closed',
+      created_by_id: 1,
+      created_at: '2013-06-04 12:00:00 UTC',
+      updated_at: '2013-06-04 12:00:00 UTC',
     )
     ticket.update_attributes(
-      :close_time => '2013-06-04 12:00:00 UTC',
+      close_time: '2013-06-04 12:00:00 UTC',
     )
 
     sla = Sla.create(
-      :name      => 'test sla 1',
-      :condition => {},
-      :data      => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 240,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
 
@@ -740,95 +740,95 @@ class TicketSlaTest < ActiveSupport::TestCase
     ### Test Ticket created in state pending, changed state to openen, back to pending and back to open then
     ### close ticket
     ticket = Ticket.create(
-      :title         => 'some title äöüß3',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'pending reminder' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :created_at    => '2013-06-04 09:00:00 UTC',
-      :updated_at    => '2013-06-04 09:00:00 UTC',
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'some title äöüß3',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'pending reminder' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2013-06-04 09:00:00 UTC',
+      updated_at: '2013-06-04 09:00:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
 
     # state change to open from pending
        History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 2,
-      :id_from           => 3,
-      :value_from        => 'pending reminder',
-      :value_to          => 'open',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 10:30:00 UTC',
-      :updated_at        => '2013-06-04 10:30:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 2,
+      id_from: 3,
+      value_from: 'pending reminder',
+      value_to: 'open',
+      created_by_id: 1,
+      created_at: '2013-06-04 10:30:00 UTC',
+      updated_at: '2013-06-04 10:30:00 UTC',
     )
 
     # state change to pending from open 11:00
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 3,
-      :id_from           => 2,
-      :value_from        => 'open',
-      :value_to          => 'pending reminder',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 11:00:00 UTC',
-      :updated_at        => '2013-06-04 11:00:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 3,
+      id_from: 2,
+      value_from: 'open',
+      value_to: 'pending reminder',
+      created_by_id: 1,
+      created_at: '2013-06-04 11:00:00 UTC',
+      updated_at: '2013-06-04 11:00:00 UTC',
     )
 
     # state change to open 11:30
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 2,
-      :id_from           => 3,
-      :value_from        => 'pending reminder',
-      :value_to          => 'open',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 11:30:00 UTC',
-      :updated_at        => '2013-06-04 11:30:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 2,
+      id_from: 3,
+      value_from: 'pending reminder',
+      value_to: 'open',
+      created_by_id: 1,
+      created_at: '2013-06-04 11:30:00 UTC',
+      updated_at: '2013-06-04 11:30:00 UTC',
     )
 
     # set ticket from open to closed 12:00
     History.add(
-      :history_type      => 'updated',
-      :history_object    => 'Ticket',
-      :history_attribute => 'state',
-      :o_id              => ticket.id,
-      :id_to             => 4,
-      :id_from           => 3,
-      :value_from        => 'open',
-      :value_to          => 'closed',
-      :created_by_id     => 1,
-      :created_at        => '2013-06-04 12:00:00 UTC',
-      :updated_at        => '2013-06-04 12:00:00 UTC',
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket.id,
+      id_to: 4,
+      id_from: 3,
+      value_from: 'open',
+      value_to: 'closed',
+      created_by_id: 1,
+      created_at: '2013-06-04 12:00:00 UTC',
+      updated_at: '2013-06-04 12:00:00 UTC',
     )
     ticket.update_attributes(
-      :close_time => '2013-06-04 12:00:00 UTC',
+      close_time: '2013-06-04 12:00:00 UTC',
     )
 
     sla = Sla.create(
-      :name      => 'test sla 1',
-      :condition => {},
-      :data      => {
+      name: 'test sla 1',
+      condition: {},
+      data: {
         'Mon'=>'Mon', 'Tue'=>'Tue', 'Wed'=>'Wed', 'Thu'=>'Thu', 'Fri'=>'Fri', 'Sat'=>'Sat', 'Sun'=>'Sun',
         'beginning_of_workday' => '9:00',
         'end_of_workday'       => '18:00',
       },
-      :first_response_time => 120,
-      :update_time         => 180,
-      :close_time          => 240,
-      :active              => true,
-      :updated_by_id       => 1,
-      :created_by_id       => 1,
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
 

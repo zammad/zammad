@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
       headers['Access-Control-Max-Age']           = '1728000'
       headers['Access-Control-Allow-Credentials'] = 'true'
-      render :text => '', :content_type => 'text/plain'
+      render text: '', content_type: 'text/plain'
       return false
     end
   end
@@ -123,20 +123,20 @@ class ApplicationController < ActionController::Base
         # set basic auth user to current user
         current_user_set(userdata)
         return {
-          :auth => true
+          auth: true
         }
       end
 
       # return auth not ok
       return {
-        :auth    => false,
-        :message => message,
+        auth: false,
+        message: message,
       }
     end
 
     # check logon session
     if params['logon_session']
-      logon_session = ActiveRecord::SessionStore::Session.where( :session_id => params['logon_session'] ).first
+      logon_session = ActiveRecord::SessionStore::Session.where( session_id: params['logon_session'] ).first
       if logon_session
         userdata = User.find( logon_session.data[:user_id] )
       end
@@ -146,7 +146,7 @@ class ApplicationController < ActionController::Base
       # set logon session user to current user
       current_user_set(userdata)
       return {
-        :auth => true
+        auth: true
       }
     end
 
@@ -166,13 +166,13 @@ class ApplicationController < ActionController::Base
       puts 'no valid session, user_id'
       message = 'no valid session, user_id'
       return {
-        :auth    => false,
-        :message => message,
+        auth: false,
+        message: message,
       }
     end
 
     return {
-      :auth => true
+      auth: true
     }
   end
 
@@ -182,10 +182,10 @@ class ApplicationController < ActionController::Base
     # return auth not ok
     if result[:auth] == false
       render(
-        :json   => {
-          :error => result[:message],
+        json: {
+          error: result[:message],
         },
-        :status => :unauthorized
+        status: :unauthorized
       )
       return false
     end
@@ -197,8 +197,8 @@ class ApplicationController < ActionController::Base
   def authentication_check_action_token(action)
 
     user = Token.check(
-      :action => action,
-      :name   => params[:action_token],
+      action: action,
+      name: params[:action_token],
     )
 
     if !user
@@ -219,7 +219,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ticket_permission(ticket)
-    return true if ticket.permission( :current_user => current_user )
+    return true if ticket.permission( current_user: current_user )
     response_access_deny
     false
   end
@@ -236,14 +236,14 @@ class ApplicationController < ActionController::Base
 
   def valid_session_with_user
     return true if current_user
-    render :json => { :message => 'No session user!' }, :status => :unprocessable_entity
+    render json: { message: 'No session user!' }, status: :unprocessable_entity
     false
   end
 
   def response_access_deny
     render(
-      :json => {},
-      :status => :unauthorized
+      json: {},
+      status: :unauthorized
     )
     false
   end
@@ -252,7 +252,7 @@ class ApplicationController < ActionController::Base
 
     # config
     config = {}
-    Setting.select('name').where( :frontend => true ).each { |setting|
+    Setting.select('name').where( frontend: true ).each { |setting|
       config[setting.name] = Setting.get(setting.name)
     }
 
@@ -296,11 +296,11 @@ class ApplicationController < ActionController::Base
       puts e.message.inspect
       logger.error e.message
       logger.error e.backtrace.inspect
-      render :json => { :error => e.message }, :status => :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
   def model_create_render_item (generic_object)
-    render :json => generic_object.attributes_with_associations, :status => :created
+    render json: generic_object.attributes_with_associations, status: :created
   end
 
   def model_update_render (object, params)
@@ -319,11 +319,11 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       logger.error e.message
       logger.error e.backtrace.inspect
-      render :json => { :error => e.message }, :status => :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
   def model_update_render_item (generic_object)
-    render :json => generic_object.attributes_with_associations, :status => :ok
+    render json: generic_object.attributes_with_associations, status: :ok
   end
 
   def model_destory_render (object, params)
@@ -334,11 +334,11 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       logger.error e.message
       logger.error e.backtrace.inspect
-      render :json => { :error => e.message }, :status => :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
   def model_destory_render_item ()
-    render :json => {}, :status => :ok
+    render json: {}, status: :ok
   end
 
   def model_show_render (object, params)
@@ -346,7 +346,7 @@ class ApplicationController < ActionController::Base
 
       if params[:full]
         generic_object_full = object.full( params[:id] )
-        render :json => generic_object_full, :status => :ok
+        render json: generic_object_full, status: :ok
         return
       end
 
@@ -355,11 +355,11 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       logger.error e.message
       logger.error e.backtrace.inspect
-      render :json => { :error => e.message }, :status => :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
   def model_show_render_item (generic_object)
-    render :json => generic_object.attributes_with_associations, :status => :ok
+    render json: generic_object.attributes_with_associations, status: :ok
   end
 
   def model_index_render (object, params)
@@ -369,11 +369,11 @@ class ApplicationController < ActionController::Base
     rescue Exception => e
       logger.error e.message
       logger.error e.backtrace.inspect
-      render :json => { :error => e.message }, :status => :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
   def model_index_render_result (generic_objects)
-    render :json => generic_objects, :status => :ok
+    render json: generic_objects, status: :ok
   end
 
 end

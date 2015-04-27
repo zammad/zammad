@@ -42,7 +42,7 @@ class Sessions::Backend::Collections::Base
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
 
     # check if update has been done
     last_change = self.class.model.constantize.latest_change
@@ -67,22 +67,22 @@ class Sessions::Backend::Collections::Base
     }
     if !@client
       return {
-        :collection => {
+        collection: {
           items.first.class.to_app_model => all,
         },
-        :assets => assets,
+        assets: assets,
       }
     end
     @client.log 'notify', "push assets for push_collection #{ items.first.class.to_s } for user #{ @user.id }"
     @client.send({
-      :data   => assets,
-      :event  => [ 'loadAssets' ],
+      data: assets,
+      event: [ 'loadAssets' ],
     })
 
     @client.log 'notify', "push push_collection #{ items.first.class.to_s } for user #{ @user.id }"
     @client.send({
-      :event  => 'resetCollection',
-      :data   => {
+      event: 'resetCollection',
+      data: {
         items.first.class.to_app_model => all,
       },
     })

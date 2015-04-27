@@ -17,7 +17,7 @@ module Sso::Otrs
     return false if !result['groups_rw']
     return false if !result['user']
 
-    user = User.where( :login => result['user']['UserLogin'], :active => true ).first
+    user = User.where( login: result['user']['UserLogin'], active: true ).first
 
     if !user
       Rails.logger.notice "No such user #{result['user']['UserLogin']}, requested for SSO!"

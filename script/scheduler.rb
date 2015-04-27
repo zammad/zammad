@@ -8,10 +8,10 @@ require 'daemons'
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
 daemon_options = {
-  :multiple   => true,
-  :dir_mode   => :normal,
-  :dir        => File.join(dir, 'tmp', 'pids'),
-  :backtrace  => true
+  multiple: true,
+  dir_mode: :normal,
+  dir: File.join(dir, 'tmp', 'pids'),
+  backtrace: true
 }
 
 runner_count = 2

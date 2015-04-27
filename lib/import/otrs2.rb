@@ -57,10 +57,10 @@ module Import::OTRS2
       url,
       {},
       {
-        :open_timeout => 10,
-        :read_timeout => 60,
-        :user         => Setting.get('import_otrs_user'),
-        :password     => Setting.get('import_otrs_password'),
+        open_timeout: 10,
+        read_timeout: 60,
+        user: Setting.get('import_otrs_user'),
+        password: Setting.get('import_otrs_password'),
       },
     )
     if !response.success?
@@ -94,10 +94,10 @@ module Import::OTRS2
       url,
       data,
       {
-        :open_timeout => 6,
-        :read_timeout => 60,
-        :user         => Setting.get('import_otrs_user'),
-        :password     => Setting.get('import_otrs_password'),
+        open_timeout: 6,
+        read_timeout: 60,
+        user: Setting.get('import_otrs_user'),
+        password: Setting.get('import_otrs_password'),
       },
     )
     if !response.success?
@@ -139,7 +139,7 @@ module Import::OTRS2
   def self.auth(username, password)
     url = Setting.get('import_otrs_endpoint')
     url.gsub!('ZammadMigrator', 'ZammadSSO')
-    response = post( { :Action => 'ZammadSSO', :Subaction => 'Auth', :User => username, :Pw => password }, url )
+    response = post( { Action: 'ZammadSSO', Subaction: 'Auth', User: username, Pw: password }, url )
     return if !response
     return if !response.success?
 
@@ -162,7 +162,7 @@ module Import::OTRS2
   def self.session(session_id)
     url = Setting.get('import_otrs_endpoint')
     url.gsub!('ZammadMigrator', 'ZammadSSO')
-    response = post( { :Action => 'ZammadSSO', :Subaction => 'SessionCheck', :SessionID => session_id }, url )
+    response = post( { Action: 'ZammadSSO', Subaction: 'SessionCheck', SessionID: session_id }, url )
     return if !response
     return if !response.success?
     result = json(response)
@@ -186,7 +186,7 @@ module Import::OTRS2
 =end
 
   def self.load( object, limit = '', offset = '', diff = 0 )
-    request_json( { :Subaction => 'Export', :Object => object, :Limit => limit, :Offset => offset, :Diff => diff }, 1 )
+    request_json( { Subaction: 'Export', Object: object, Limit: limit, Offset: offset, Diff: diff }, 1 )
   end
 
 =begin
@@ -230,7 +230,7 @@ module Import::OTRS2
     end
 
     # retrive statistic
-    statistic = self.request_json( { :Subaction => 'List' }, 1)
+    statistic = self.request_json( { Subaction: 'List' }, 1)
     if statistic
       Cache.write('import_otrs_stats', statistic)
     end
@@ -265,17 +265,17 @@ module Import::OTRS2
     user = User.count
     user_total = data['User'] + data['CustomerUser']
     data = {
-      :Base   => {
-        :done  => base,
-        :total => base_total || 0,
+      Base: {
+        done: base,
+        total: base_total || 0,
       },
-      :User   => {
-        :done  => user,
-        :total => user_total || 0,
+      User: {
+        done: user,
+        total: user_total || 0,
       },
-      :Ticket => {
-        :done  => Ticket.count,
-        :total => data['Ticket'] || 0,
+      Ticket: {
+        done: Ticket.count,
+        total: data['Ticket'] || 0,
       },
     }
     data
@@ -361,7 +361,7 @@ module Import::OTRS2
     thread_count              = 8
     threads                   = {}
     count                     = 0
-    locks                     = { :User => {} }
+    locks                     = { User: {} }
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
         Thread.current[:thread_no] = thread
@@ -447,7 +447,7 @@ module Import::OTRS2
     count = 0
     run   = true
     steps = 20
-    locks = { :User => {} }
+    locks = { User: {} }
     while run
       count += steps
       log 'loading... diff ...'
@@ -469,45 +469,45 @@ module Import::OTRS2
   def self._ticket_result(result, locks, thread = '-')
 #    puts result.inspect
     map = {
-      :Ticket => {
-        :Changed                          => :updated_at,
-        :Created                          => :created_at,
-        :CreateBy                         => :created_by_id,
-        :TicketNumber                     => :number,
-        :QueueID                          => :group_id,
-        :StateID                          => :state_id,
-        :PriorityID                       => :priority_id,
-        :Owner                            => :owner,
-        :CustomerUserID                   => :customer,
-        :Title                            => :title,
-        :TicketID                         => :id,
-        :FirstResponse                    => :first_response,
+      Ticket: {
+        Changed: :updated_at,
+        Created: :created_at,
+        CreateBy: :created_by_id,
+        TicketNumber: :number,
+        QueueID: :group_id,
+        StateID: :state_id,
+        PriorityID: :priority_id,
+        Owner: :owner,
+        CustomerUserID: :customer,
+        Title: :title,
+        TicketID: :id,
+        FirstResponse: :first_response,
 #        :FirstResponseTimeDestinationDate => :first_response_escal_date,
 #        :FirstResponseInMin               => :first_response_in_min,
 #        :FirstResponseDiffInMin           => :first_response_diff_in_min,
-        :Closed                           => :close_time,
+        Closed: :close_time,
 #        :SoltutionTimeDestinationDate     => :close_time_escal_date,
 #        :CloseTimeInMin                   => :close_time_in_min,
 #        :CloseTimeDiffInMin               => :close_time_diff_in_min,
       },
-      :Article => {
-        :SenderType  => :sender,
-        :ArticleType => :type,
-        :TicketID    => :ticket_id,
-        :ArticleID   => :id,
-        :Body        => :body,
-        :From        => :from,
-        :To          => :to,
-        :Cc          => :cc,
-        :Subject     => :subject,
-        :InReplyTo   => :in_reply_to,
-        :MessageID   => :message_id,
+      Article: {
+        SenderType: :sender,
+        ArticleType: :type,
+        TicketID: :ticket_id,
+        ArticleID: :id,
+        Body: :body,
+        From: :from,
+        To: :to,
+        Cc: :cc,
+        Subject: :subject,
+        InReplyTo: :in_reply_to,
+        MessageID: :message_id,
 #        :ReplyTo    => :reply_to,
-        :References  => :references,
-        :Changed      => :updated_at,
-        :Created      => :created_at,
-        :ChangedBy    => :updated_by_id,
-        :CreatedBy    => :created_by_id,
+        References: :references,
+        Changed: :updated_at,
+        Created: :created_at,
+        ChangedBy: :updated_by_id,
+        CreatedBy: :created_by_id,
       },
     }
 
@@ -517,9 +517,9 @@ module Import::OTRS2
       _cleanup(record)
 
       ticket_new = {
-        :title         => '',
-        :created_by_id => 1,
-        :updated_by_id => 1,
+        title: '',
+        created_by_id: 1,
+        updated_by_id: 1,
       }
       map[:Ticket].each { |key,value|
         if record[key.to_s] && record[key.to_s].class == String
@@ -528,11 +528,11 @@ module Import::OTRS2
           ticket_new[value] = record[key.to_s]
         end
       }
-      ticket_old = Ticket.where( :id => ticket_new[:id] ).first
+      ticket_old = Ticket.where( id: ticket_new[:id] ).first
 
       # find owner
       if ticket_new[:owner]
-        user = User.lookup( :login => ticket_new[:owner].downcase )
+        user = User.lookup( login: ticket_new[:owner].downcase )
         if user
           ticket_new[:owner_id] = user.id
         else
@@ -543,7 +543,7 @@ module Import::OTRS2
 
       # find customer
       if ticket_new[:customer]
-        user = User.lookup( :login => ticket_new[:customer].downcase )
+        user = User.lookup( login: ticket_new[:customer].downcase )
         if user
           ticket_new[:customer_id] = user.id
         else
@@ -569,8 +569,8 @@ module Import::OTRS2
 
         # get article values
         article_new = {
-          :created_by_id => 1,
-          :updated_by_id => 1,
+          created_by_id: 1,
+          updated_by_id: 1,
         }
         map[:Article].each { |key,value|
           if article[key.to_s]
@@ -600,9 +600,9 @@ module Import::OTRS2
           # lock user
           locks[:User][ email ] = true
 
-          user = User.where( :email => email ).first
+          user = User.where( email: email ).first
           if !user
-            user = User.where( :login => email ).first
+            user = User.where( login: email ).first
           end
           if !user
             begin
@@ -615,17 +615,17 @@ module Import::OTRS2
             # do extra decoding because we needed to use field.value
             display_name = Mail::Field.new( 'X-From', display_name ).to_s
 
-            roles = Role.lookup( :name => 'Customer' )
+            roles = Role.lookup( name: 'Customer' )
             user = User.create(
-              :login          => email,
-              :firstname      => display_name,
-              :lastname       => '',
-              :email          => email,
-              :password       => '',
-              :active         => true,
-              :role_ids       => [roles.id],
-              :updated_by_id  => 1,
-              :created_by_id  => 1,
+              login: email,
+              firstname: display_name,
+              lastname: '',
+              email: email,
+              password: '',
+              active: true,
+              role_ids: [roles.id],
+              updated_by_id: 1,
+              created_by_id: 1,
             )
           end
           article_new[:created_by_id] = user.id
@@ -635,41 +635,41 @@ module Import::OTRS2
         end
 
         if article_new[:sender] == 'customer'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Customer' ).id
+          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
           article_new.delete( :sender )
         end
         if article_new[:sender] == 'agent'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'Agent' ).id
+          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
           article_new.delete( :sender )
         end
         if article_new[:sender] == 'system'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( :name => 'System' ).id
+          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
           article_new.delete( :sender )
         end
 
         if article_new[:type] == 'email-external'
-          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
+          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
           article_new[:internal] = false
         elsif article_new[:type] == 'email-internal'
-          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'email' ).id
+          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
           article_new[:internal] = true
         elsif article_new[:type] == 'note-external'
-          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
+          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
           article_new[:internal] = false
         elsif article_new[:type] == 'note-internal'
-          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'note' ).id
+          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
           article_new[:internal] = true
         elsif article_new[:type] == 'phone'
-          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'phone' ).id
+          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
           article_new[:internal] = false
         elsif article_new[:type] == 'webrequest'
-          article_new[:type_id] = Ticket::Article::Type.lookup( :name => 'web' ).id
+          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
           article_new[:internal] = false
         else
           article_new[:type_id] = 9
         end
         article_new.delete( :type )
-        article_old = Ticket::Article.where( :id => article_new[:id] ).first
+        article_old = Ticket::Article.where( id: article_new[:id] ).first
 
         # set state types
         if article_old
@@ -688,12 +688,12 @@ module Import::OTRS2
         if history['HistoryType'] == 'NewTicket'
           #puts "HS.add( #{history.inspect} )"
           res = History.add(
-            :id                 => history['HistoryID'],
-            :o_id               => history['TicketID'],
-            :history_type       => 'created',
-            :history_object     => 'Ticket',
-            :created_at         => history['CreateTime'],
-            :created_by_id      => history['CreateBy']
+            id: history['HistoryID'],
+            o_id: history['TicketID'],
+            history_type: 'created',
+            history_object: 'Ticket',
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
           )
           #puts "res #{res.inspect}"
         end
@@ -705,8 +705,8 @@ module Import::OTRS2
           if data =~ /%%(.+?)%%(.+?)%%/
             from    = $1
             to      = $2
-            state_from = Ticket::State.lookup( :name => from )
-            state_to   = Ticket::State.lookup( :name => to )
+            state_from = Ticket::State.lookup( name: from )
+            state_to   = Ticket::State.lookup( name: to )
             if state_from
               from_id = state_from.id
             end
@@ -715,17 +715,17 @@ module Import::OTRS2
             end
           end
           History.add(
-            :id                 => history['HistoryID'],
-            :o_id               => history['TicketID'],
-            :history_type       => 'updated',
-            :history_object     => 'Ticket',
-            :history_attribute  => 'state',
-            :value_from         => from,
-            :id_from            => from_id,
-            :value_to           => to,
-            :id_to              => to_id,
-            :created_at         => history['CreateTime'],
-            :created_by_id      => history['CreateBy']
+            id: history['HistoryID'],
+            o_id: history['TicketID'],
+            history_type: 'updated',
+            history_object: 'Ticket',
+            history_attribute: 'state',
+            value_from: from,
+            id_from: from_id,
+            value_to: to,
+            id_to: to_id,
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
           )
         end
         if history['HistoryType'] == 'Move'
@@ -740,17 +740,17 @@ module Import::OTRS2
             to_id   = $4
           end
           History.add(
-            :id                 => history['HistoryID'],
-            :o_id               => history['TicketID'],
-            :history_type       => 'updated',
-            :history_object     => 'Ticket',
-            :history_attribute  => 'group',
-            :value_from         => from,
-            :value_to           => to,
-            :id_from            => from_id,
-            :id_to              => to_id,
-            :created_at         => history['CreateTime'],
-            :created_by_id      => history['CreateBy']
+            id: history['HistoryID'],
+            o_id: history['TicketID'],
+            history_type: 'updated',
+            history_object: 'Ticket',
+            history_attribute: 'group',
+            value_from: from,
+            value_to: to,
+            id_from: from_id,
+            id_to: to_id,
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
           )
         end
         if history['HistoryType'] == 'PriorityUpdate'
@@ -765,29 +765,29 @@ module Import::OTRS2
             to_id   = $4
           end
           History.add(
-            :id                 => history['HistoryID'],
-            :o_id               => history['TicketID'],
-            :history_type       => 'updated',
-            :history_object     => 'Ticket',
-            :history_attribute  => 'priority',
-            :value_from         => from,
-            :value_to           => to,
-            :id_from            => from_id,
-            :id_to              => to_id,
-            :created_at         => history['CreateTime'],
-            :created_by_id      => history['CreateBy']
+            id: history['HistoryID'],
+            o_id: history['TicketID'],
+            history_type: 'updated',
+            history_object: 'Ticket',
+            history_attribute: 'priority',
+            value_from: from,
+            value_to: to,
+            id_from: from_id,
+            id_to: to_id,
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
           )
         end
         if history['ArticleID'] && history['ArticleID'] != 0
           History.add(
-            :id                 => history['HistoryID'],
-            :o_id               => history['ArticleID'],
-            :history_type       => 'created',
-            :history_object     => 'Ticket::Article',
-            :related_o_id       => history['TicketID'],
-            :related_history_object => 'Ticket',
-            :created_at         => history['CreateTime'],
-            :created_by_id      => history['CreateBy']
+            id: history['HistoryID'],
+            o_id: history['ArticleID'],
+            history_type: 'created',
+            history_object: 'Ticket::Article',
+            related_o_id: history['TicketID'],
+            related_history_object: 'Ticket',
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
           )
         end
       }
@@ -797,14 +797,14 @@ module Import::OTRS2
   # sync ticket states
   def self.state(records)
     map = {
-      :ChangeTime   => :updated_at,
-      :CreateTime   => :created_at,
-      :CreateBy     => :created_by_id,
-      :ChangeBy     => :updated_by_id,
-      :Name         => :name,
-      :ID           => :id,
-      :ValidID      => :active,
-      :Comment      => :note,
+      ChangeTime: :updated_at,
+      CreateTime: :created_at,
+      CreateBy: :created_by_id,
+      ChangeBy: :updated_by_id,
+      Name: :name,
+      ID: :id,
+      ValidID: :active,
+      Comment: :note,
     };
 
     # rename states to handle not uniq issues
@@ -818,8 +818,8 @@ module Import::OTRS2
 
       # get new attributes
       state_new = {
-        :created_by_id => 1,
-        :updated_by_id => 1,
+        created_by_id: 1,
+        updated_by_id: 1,
       }
       map.each { |key,value|
         if state.has_key?(key.to_s)
@@ -828,14 +828,14 @@ module Import::OTRS2
       }
 
       # check if state already exists
-      state_old = Ticket::State.where( :id => state_new[:id] ).first
+      state_old = Ticket::State.where( id: state_new[:id] ).first
 #      puts 'st: ' + state['TypeName']
 
       # set state types
       if state['TypeName'] == 'pending auto'
         state['TypeName'] = 'pending action'
       end
-      state_type = Ticket::StateType.where( :name =>  state['TypeName'] ).first
+      state_type = Ticket::StateType.where( name: state['TypeName'] ).first
       state_new[:state_type_id] = state_type.id
       if state_old
 #        puts 'TS: ' + state_new.inspect
@@ -852,14 +852,14 @@ module Import::OTRS2
   def self.priority(records)
 
     map = {
-      :ChangeTime => :updated_at,
-      :CreateTime => :created_at,
-      :CreateBy   => :created_by_id,
-      :ChangeBy   => :updated_by_id,
-      :Name       => :name,
-      :ID         => :id,
-      :ValidID    => :active,
-      :Comment    => :note,
+      ChangeTime: :updated_at,
+      CreateTime: :created_at,
+      CreateBy: :created_by_id,
+      ChangeBy: :updated_by_id,
+      Name: :name,
+      ID: :id,
+      ValidID: :active,
+      Comment: :note,
     };
 
     records.each { |priority|
@@ -867,8 +867,8 @@ module Import::OTRS2
 
       # get new attributes
       priority_new = {
-        :created_by_id => 1,
-        :updated_by_id => 1,
+        created_by_id: 1,
+        updated_by_id: 1,
       }
       map.each { |key,value|
         if priority.has_key?(key.to_s)
@@ -877,7 +877,7 @@ module Import::OTRS2
       }
 
       # check if state already exists
-      priority_old = Ticket::Priority.where( :id => priority_new[:id] ).first
+      priority_old = Ticket::Priority.where( id: priority_new[:id] ).first
 
       # set state types
       if priority_old
@@ -893,14 +893,14 @@ module Import::OTRS2
   # sync ticket groups / queues
   def self.ticket_group(records)
     map = {
-      :ChangeTime   => :updated_at,
-      :CreateTime   => :created_at,
-      :CreateBy     => :created_by_id,
-      :ChangeBy     => :updated_by_id,
-      :Name         => :name,
-      :QueueID      => :id,
-      :ValidID      => :active,
-      :Comment      => :note,
+      ChangeTime: :updated_at,
+      CreateTime: :created_at,
+      CreateBy: :created_by_id,
+      ChangeBy: :updated_by_id,
+      Name: :name,
+      QueueID: :id,
+      ValidID: :active,
+      Comment: :note,
     };
 
     records.each { |group|
@@ -908,8 +908,8 @@ module Import::OTRS2
 
       # get new attributes
       group_new = {
-        :created_by_id => 1,
-        :updated_by_id => 1,
+        created_by_id: 1,
+        updated_by_id: 1,
       }
       map.each { |key,value|
         if group.has_key?(key.to_s)
@@ -918,7 +918,7 @@ module Import::OTRS2
       }
 
       # check if state already exists
-      group_old = Group.where( :id => group_new[:id] ).first
+      group_old = Group.where( id: group_new[:id] ).first
 
       # set state types
       if group_old
@@ -935,19 +935,19 @@ module Import::OTRS2
   def self.user(records, groups, roles, queues)
 
     map = {
-      :ChangeTime    => :updated_at,
-      :CreateTime    => :created_at,
-      :CreateBy      => :created_by_id,
-      :ChangeBy      => :updated_by_id,
-      :UserID        => :id,
-      :ValidID       => :active,
-      :Comment       => :note,
-      :UserEmail     => :email,
-      :UserFirstname => :firstname,
-      :UserLastname  => :lastname,
+      ChangeTime: :updated_at,
+      CreateTime: :created_at,
+      CreateBy: :created_by_id,
+      ChangeBy: :updated_by_id,
+      UserID: :id,
+      ValidID: :active,
+      Comment: :note,
+      UserEmail: :email,
+      UserFirstname: :firstname,
+      UserLastname: :lastname,
 #      :UserTitle     =>
-      :UserLogin     => :login,
-      :UserPw        => :password,
+      UserLogin: :login,
+      UserPw: :password,
     };
 
 
@@ -962,11 +962,11 @@ module Import::OTRS2
 
       # get new attributes
       user_new = {
-        :created_by_id => 1,
-        :updated_by_id => 1,
-        :source        => 'OTRS Import',
-        :role_ids      => role_ids,
-        :group_ids     => group_ids,
+        created_by_id: 1,
+        updated_by_id: 1,
+        source: 'OTRS Import',
+        role_ids: role_ids,
+        group_ids: group_ids,
       }
       map.each { |key,value|
         if user.has_key?(key.to_s)
@@ -980,7 +980,7 @@ module Import::OTRS2
       end
 
       # check if agent already exists
-      user_old = User.where( :id => user_new[:id] ).first
+      user_old = User.where( id: user_new[:id] ).first
 
       # check if login is already used
       login_in_use = User.where( "login = ? AND id != #{user_new[:id]}", user_new[:login].downcase ).count
@@ -1046,7 +1046,7 @@ module Import::OTRS2
       }
     }
     roles.each {|role|
-      role_lookup = Role.lookup( :name => role )
+      role_lookup = Role.lookup( name: role )
       if role_lookup
         role_ids.push role_lookup.id
       end
@@ -1058,40 +1058,40 @@ module Import::OTRS2
 
   def self.customer(records, organizations)
     map = {
-      :ChangeTime    => :updated_at,
-      :CreateTime    => :created_at,
-      :CreateBy      => :created_by_id,
-      :ChangeBy      => :updated_by_id,
-      :ValidID       => :active,
-      :UserComment   => :note,
-      :UserEmail     => :email,
-      :UserFirstname => :firstname,
-      :UserLastname  => :lastname,
+      ChangeTime: :updated_at,
+      CreateTime: :created_at,
+      CreateBy: :created_by_id,
+      ChangeBy: :updated_by_id,
+      ValidID: :active,
+      UserComment: :note,
+      UserEmail: :email,
+      UserFirstname: :firstname,
+      UserLastname: :lastname,
 #      :UserTitle     => 
-      :UserLogin     => :login,
-      :UserPassword  => :password,
-      :UserPhone     => :phone,
-      :UserFax       => :fax,
-      :UserMobile    => :mobile,
-      :UserStreet    => :street,
-      :UserZip       => :zip,
-      :UserCity      => :city,
-      :UserCountry   => :country,
+      UserLogin: :login,
+      UserPassword: :password,
+      UserPhone: :phone,
+      UserFax: :fax,
+      UserMobile: :mobile,
+      UserStreet: :street,
+      UserZip: :zip,
+      UserCity: :city,
+      UserCountry: :country,
     };
 
-    role_agent    = Role.lookup( :name => 'Agent' )
-    role_customer = Role.lookup( :name => 'Customer' )
+    role_agent    = Role.lookup( name: 'Agent' )
+    role_customer = Role.lookup( name: 'Customer' )
 
     records.each { |user|
       _set_valid(user)
 
       # get new attributes
       user_new = {
-        :created_by_id   => 1,
-        :updated_by_id   => 1,
-        :source          => 'OTRS Import',
-        :organization_id => get_organization_id(user, organizations),
-        :role_ids        => [ role_customer.id ],
+        created_by_id: 1,
+        updated_by_id: 1,
+        source: 'OTRS Import',
+        organization_id: get_organization_id(user, organizations),
+        role_ids: [ role_customer.id ],
       }
       map.each { |key,value|
         if user.has_key?(key.to_s)
@@ -1100,7 +1100,7 @@ module Import::OTRS2
       }
 
       # check if customer already exists
-      user_old = User.where( :login => user_new[:login] ).first
+      user_old = User.where( login: user_new[:login] ).first
 
       # create / update agent
       if user_old
@@ -1128,7 +1128,7 @@ module Import::OTRS2
     if user['UserCustomerID']
       organizations.each {|organization|
         if user['UserCustomerID'] == organization['CustomerID']
-          organization = Organization.where(:name => organization['CustomerCompanyName'] ).first
+          organization = Organization.where(name: organization['CustomerCompanyName'] ).first
           organization_id = organization.id
         end
       }
@@ -1140,13 +1140,13 @@ module Import::OTRS2
 
   def self.organization(records)
     map = {
-      :ChangeTime             => :updated_at,
-      :CreateTime             => :created_at,
-      :CreateBy               => :created_by_id,
-      :ChangeBy               => :updated_by_id,
-      :CustomerCompanyName    => :name,
-      :ValidID                => :active,
-      :CustomerCompanyComment => :note,
+      ChangeTime: :updated_at,
+      CreateTime: :created_at,
+      CreateBy: :created_by_id,
+      ChangeBy: :updated_by_id,
+      CustomerCompanyName: :name,
+      ValidID: :active,
+      CustomerCompanyComment: :note,
     };
 
     records.each { |organization|
@@ -1154,8 +1154,8 @@ module Import::OTRS2
 
       # get new attributes
       organization_new = {
-        :created_by_id => 1,
-        :updated_by_id => 1,
+        created_by_id: 1,
+        updated_by_id: 1,
       }
       map.each { |key,value|
         if organization.has_key?(key.to_s)
@@ -1164,7 +1164,7 @@ module Import::OTRS2
       }
 
       # check if state already exists
-      organization_old = Organization.where( :name => organization_new[:name] ).first
+      organization_old = Organization.where( name: organization_new[:name] ).first
 
       # set state types
       if organization_old
@@ -1214,10 +1214,10 @@ module Import::OTRS2
       if setting['Key'] == 'Ticket::NumberGenerator'
         if setting['Value'] == 'Kernel::System::Ticket::Number::DateChecksum'
           Setting.set( 'ticket_number', 'Ticket::Number::Date' )
-          Setting.set( 'ticket_number_date', { :checksum => true } )
+          Setting.set( 'ticket_number_date', { checksum: true } )
         elsif setting['Value'] == 'Kernel::System::Ticket::Number::Date'
           Setting.set( 'ticket_number', 'Ticket::Number::Date' )
-          Setting.set( 'ticket_number_date', { :checksum => false } )
+          Setting.set( 'ticket_number_date', { checksum: false } )
         end
       end
 

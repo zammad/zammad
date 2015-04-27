@@ -9,75 +9,75 @@ class AgentOrganizationProfileTest < TestCase
 
     @browser = browser_instance
     login(
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
     )
     tasks_close_all()
 
     # search and open org
     organization_open_by_search(
-      :value => 'Zammad Foundation',
+      value: 'Zammad Foundation',
     )
     watch_for(
-      :css     => '.active .profile-window',
-      :value   => 'note',
+      css: '.active .profile-window',
+      value: 'note',
     )
     watch_for(
-      :css     => '.active .profile-window',
-      :value   => 'member',
+      css: '.active .profile-window',
+      value: 'member',
     )
 
     # update note
     set(
-      :css             => '.active .profile [data-name="note"]',
-      :value           => note,
-      :contenteditable => true,
+      css: '.active .profile [data-name="note"]',
+      value: note,
+      contenteditable: true,
     )
-    click( :css => '#global-search' )
+    click( css: '#global-search' )
     sleep 2
 
     # check and change note again in edit screen
-    click( :css => '.active .js-action .select-arrow', :fast => true )
-    click( :css => '.active .js-action a[data-type="edit"]' )
+    click( css: '.active .js-action .select-arrow', fast: true )
+    click( css: '.active .js-action a[data-type="edit"]' )
 
     watch_for(
-      :css   => '.active .modal',
-      :value => 'note',
+      css: '.active .modal',
+      value: 'note',
     )
     watch_for(
-      :css   => '.active .modal',
-      :value => note,
+      css: '.active .modal',
+      value: note,
     )
 
     set(
-      :css   => '.active .modal [data-name="note"]',
-      :value => 'some note abc',
+      css: '.active .modal [data-name="note"]',
+      value: 'some note abc',
     )
-    click( :css => '.active .modal button.js-submit' )
+    click( css: '.active .modal button.js-submit' )
 
     watch_for(
-      :css   => '.active .profile-window',
-      :value => 'some note abc',
+      css: '.active .profile-window',
+      value: 'some note abc',
     )
 
     # create new ticket
     ticket_create(
-      :data => {
-        :customer => 'nico',
-        :group    => 'Users',
-        :title    => 'org profile check ' + message,
-        :body     => 'org profile check ' + message,
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'org profile check ' + message,
+        body: 'org profile check ' + message,
       },
     )
 
     # switch to org tab, verify if ticket is shown
     organization_open_by_search(
-      :value => 'Zammad Foundation',
+      value: 'Zammad Foundation',
     )
     watch_for(
-      :css   => '.active .profile-window',
-      :value => 'org profile check ' + message,
+      css: '.active .profile-window',
+      value: 'org profile check ' + message,
     )
     tasks_close_all()
 
@@ -91,41 +91,41 @@ class AgentOrganizationProfileTest < TestCase
 
     browser2 = browser_instance
     login(
-      :browser  => browser2,
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      browser: browser2,
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
     )
     tasks_close_all(
-      :browser => browser2,
+      browser: browser2,
     )
 
     organization_open_by_search(
-      :browser => browser1,
-      :value   => 'Zammad Foundation',
+      browser: browser1,
+      value: 'Zammad Foundation',
     )
     organization_open_by_search(
-      :browser => browser2,
-      :value   => 'Zammad Foundation',
+      browser: browser2,
+      value: 'Zammad Foundation',
     )
 
     # update note
     set(
-      :browser         => browser1,
-      :css             => '.active .profile [data-name="note"]',
-      :value           => message,
-      :contenteditable => true,
+      browser: browser1,
+      css: '.active .profile [data-name="note"]',
+      value: message,
+      contenteditable: true,
     )
     click(
-      :browser => browser1,
-      :css     => '#global-search',
+      browser: browser1,
+      css: '#global-search',
     )
 
     # verify
     watch_for(
-      :browser => browser2,
-      :css     => '.active .profile-window',
-      :value   => message,
+      browser: browser2,
+      css: '.active .profile-window',
+      value: message,
     )
   end
 end

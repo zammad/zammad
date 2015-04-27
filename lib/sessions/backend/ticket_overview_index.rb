@@ -12,7 +12,7 @@ class Sessions::Backend::TicketOverviewIndex
 
     # get whole collection
     overview = Ticket::Overviews.list(
-      :current_user => @user,
+      current_user: @user,
     )
 
     # no data exists
@@ -37,7 +37,7 @@ class Sessions::Backend::TicketOverviewIndex
     return if Sessions::CacheIn.get( self.client_key )
 
     # reset check interval
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
@@ -51,15 +51,15 @@ class Sessions::Backend::TicketOverviewIndex
 
     if !@client
       return {
-        :event  => 'ticket_overview_index',
-        :data   => data,
+        event: 'ticket_overview_index',
+        data: data,
       }
     end
 
     @client.log 'notify', "push overview_index for user #{ @user.id }"
     @client.send({
-      :event  => ['ticket_overview_index'],
-      :data   => data,
+      event: ['ticket_overview_index'],
+      data: data,
     })
   end
 

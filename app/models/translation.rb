@@ -23,7 +23,7 @@ load translations from online
       url,
       {},
       {
-        :json => true,
+        json: true,
       }
     )
     raise "Can't load translations from #{url}: #{result.error}" if !result.success?
@@ -31,7 +31,7 @@ load translations from online
       #puts translation.inspect
 
       # handle case insensitive sql
-      exists     = Translation.where(:locale => translation['locale'], :format => translation['format'], :source => translation['source'])
+      exists     = Translation.where(locale: translation['locale'], format: translation['format'], source: translation['source'])
       translaten = nil
       exists.each {|item|
         if item.source == translation['source']
@@ -61,7 +61,7 @@ push translations to online
   def self.push(locale)
 
     # only push changed translations
-    translations         = Translation.where(:locale => locale)
+    translations         = Translation.where(locale: locale)
     translations_to_push = []
     translations.each {|translation|
       if translation.target != translation.target_initial
@@ -76,13 +76,13 @@ push translations to online
     result = UserAgent.post(
       url,
       {
-        :locale         => locale,
-        :translations   => translations_to_push,
-        :fqdn           => Setting.get('fqdn'),
-        :translator_key => '',
+        locale: locale,
+        translations: translations_to_push,
+        fqdn: Setting.get('fqdn'),
+        translator_key: '',
       },
       {
-        :json => true,
+        json: true,
       }
     )
     raise "Can't push translations to #{url}: #{result.error}" if !result.success?
@@ -105,7 +105,7 @@ get list of translations
     end
     if !list
       list = []
-      translations = Translation.where( :locale => locale.downcase ).order( :source )
+      translations = Translation.where( locale: locale.downcase ).order( :source )
       translations.each { |item|
         if admin
           data = [
@@ -134,7 +134,7 @@ get list of translations
     end
 
     return {
-      :list => list,
+      list: list,
     }
   end
 
@@ -149,13 +149,13 @@ translate strings in ruby context, e. g. for notifications
   def self.translate(locale, string)
 
     # translate string
-    records = Translation.where( :locale => locale, :source => string )
+    records = Translation.where( locale: locale, source: string )
     records.each {|record|
       return record.target if record.source == string
     }
 
     # fallback lookup in en
-    records = Translation.where( :locale => 'en', :source => string )
+    records = Translation.where( locale: 'en', source: string )
     records.each {|record|
       return record.target if record.source == string
     }

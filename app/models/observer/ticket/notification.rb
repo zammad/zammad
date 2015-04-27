@@ -54,7 +54,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
       # get current state of objects
       if event[:name] == 'Ticket::Article'
-        article = Ticket::Article.lookup( :id => event[:id] )
+        article = Ticket::Article.lookup( id: event[:id] )
 
         # next if article is already deleted
         next if !article
@@ -71,7 +71,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         end
 
       elsif event[:name] == 'Ticket'
-        ticket  = Ticket.lookup( :id => event[:id] )
+        ticket  = Ticket.lookup( id: event[:id] )
 
         # next if ticket is already deleted
         next if !ticket
@@ -115,10 +115,10 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     #    puts 'CREATED!!!!'
     #    puts record.inspect
     e = {
-      :name => record.class.name,
-      :type => 'create',
-      :data => record,
-      :id   => record.id,
+      name: record.class.name,
+      type: 'create',
+      data: record,
+      id: record.id,
     }
     EventBuffer.add(e)
   end
@@ -150,11 +150,11 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     return if real_changes.empty?
 
     e = {
-      :name    => record.class.name,
-      :type    => 'update',
-      :data    => record,
-      :changes => real_changes,
-      :id      => record.id,
+      name: record.class.name,
+      type: 'update',
+      data: record,
+      changes: real_changes,
+      id: record.id,
     }
     EventBuffer.add(e)
   end

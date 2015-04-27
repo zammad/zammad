@@ -9,22 +9,22 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::ActivityStreamLog
 
   belongs_to    :ticket
-  belongs_to    :type,        :class_name => 'Ticket::Article::Type'
-  belongs_to    :sender,      :class_name => 'Ticket::Article::Sender'
-  belongs_to    :created_by,  :class_name => 'User'
-  belongs_to    :updated_by,  :class_name => 'User'
+  belongs_to    :type,        class_name: 'Ticket::Article::Type'
+  belongs_to    :sender,      class_name: 'Ticket::Article::Sender'
+  belongs_to    :created_by,  class_name: 'User'
+  belongs_to    :updated_by,  class_name: 'User'
   before_create :check_subject
   before_update :check_subject
   notify_clients_support
 
-  activity_stream_support :ignore_attributes => {
-    :type_id   => true,
-    :sender_id => true,
+  activity_stream_support ignore_attributes: {
+    type_id: true,
+    sender_id: true,
   }
 
-  history_support :ignore_attributes => {
-    :type_id   => true,
-    :sender_id => true,
+  history_support ignore_attributes: {
+    type_id: true,
+    sender_id: true,
   }
 
   private
@@ -39,12 +39,12 @@ class Ticket::Article < ApplicationModel
   end
 
   class Sender < ApplicationModel
-    validates   :name, :presence => true
+    validates   :name, presence: true
     latest_change_support
   end
 
   class Type < ApplicationModel
-    validates   :name, :presence => true
+    validates   :name, presence: true
     latest_change_support
   end
 end

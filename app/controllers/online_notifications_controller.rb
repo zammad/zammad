@@ -48,7 +48,7 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
 
   def index
     if params[:full]
-      render :json => OnlineNotification.list_full(current_user, 50)
+      render json: OnlineNotification.list_full(current_user, 50)
       return
     end
 
@@ -108,10 +108,10 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
       notifications = OnlineNotification.list(current_user,100)
       notifications.each do |notification|
         if !notification['seen']
-          OnlineNotification.seen( :id => notification['id'] )
+          OnlineNotification.seen( id: notification['id'] )
         end
       end
-    render :json => {}, :status => :ok
+    render json: {}, status: :ok
   end
 
 end

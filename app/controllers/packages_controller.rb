@@ -7,8 +7,8 @@ class PackagesController < ApplicationController
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     packages = Package.all().order('name')
-    render :json => {
-      :packages => packages
+    render json: {
+      packages: packages
     }
   end
 
@@ -16,7 +16,7 @@ class PackagesController < ApplicationController
   def install
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
-    Package.install( :string => params[:file_upload].read )
+    Package.install( string: params[:file_upload].read )
 
     redirect_to '/#system/package'
   end
@@ -27,10 +27,10 @@ class PackagesController < ApplicationController
 
     package = Package.find( params[:id] )
 
-    Package.uninstall( :name => package.name, :version => package.version )
+    Package.uninstall( name: package.name, version: package.version )
 
-    render :json => {
-      :success => true
+    render json: {
+      success: true
     }
   end
 

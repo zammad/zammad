@@ -6,23 +6,23 @@ class RecentViewTest < ActiveSupport::TestCase
   test 'simple tests' do
 
     ticket1 = Ticket.create(
-      :title         => 'RecentViewTest 1 some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'RecentViewTest 1 some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket1, 'ticket created' )
     ticket2 = Ticket.create(
-      :title         => 'RecentViewTest 2 some title äöüß',
-      :group         => Group.lookup( :name => 'Users'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'RecentViewTest 2 some title äöüß',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket2, 'ticket created' )
     user1   = User.find(2)
@@ -90,36 +90,36 @@ class RecentViewTest < ActiveSupport::TestCase
   test 'permission tests' do
     customer = User.find(2)
 
-    groups = Group.where( :name => 'Users' )
-    roles  = Role.where( :name => 'Agent' )
+    groups = Group.where( name: 'Users' )
+    roles  = Role.where( name: 'Agent' )
     agent  = User.create_or_update(
-      :login         => 'recent-viewed-agent@example.com',
-      :firstname     => 'RecentViewed',
-      :lastname      => 'Agent',
-      :email         => 'recent-viewed-agent@example.com',
-      :password      => 'agentpw',
-      :active        => true,
-      :roles         => roles,
-      :groups        => groups,
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      login: 'recent-viewed-agent@example.com',
+      firstname: 'RecentViewed',
+      lastname: 'Agent',
+      email: 'recent-viewed-agent@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     Group.create_if_not_exists(
-      :name          => 'WithoutAccess',
-      :note          => 'Test for not access check.',
-      :updated_by_id => 1,
-      :created_by_id => 1
+      name: 'WithoutAccess',
+      note: 'Test for not access check.',
+      updated_by_id: 1,
+      created_by_id: 1
     )
 
     # no access for customer
     ticket1 = Ticket.create(
-      :title         => 'RecentViewTest 1 some title äöüß',
-      :group         => Group.lookup( :name => 'WithoutAccess'),
-      :customer_id   => 1,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'RecentViewTest 1 some title äöüß',
+      group: Group.lookup( name: 'WithoutAccess'),
+      customer_id: 1,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket1, 'ticket created' )
 
@@ -142,13 +142,13 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # access for customer via customer id
     ticket1 = Ticket.create(
-      :title         => 'RecentViewTest 1 some title äöüß',
-      :group         => Group.lookup( :name => 'WithoutAccess'),
-      :customer_id   => 2,
-      :state         => Ticket::State.lookup( :name => 'new' ),
-      :priority      => Ticket::Priority.lookup( :name => '2 normal' ),
-      :updated_by_id => 1,
-      :created_by_id => 1,
+      title: 'RecentViewTest 1 some title äöüß',
+      group: Group.lookup( name: 'WithoutAccess'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
     )
     assert( ticket1, 'ticket created' )
 

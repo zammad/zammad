@@ -32,7 +32,7 @@ returns
       next if !relation_class
 
       # lookup ref object
-      relation_model = relation_class.lookup( :id => value )
+      relation_model = relation_class.lookup( id: value )
       next if !relation_model
 
       # get name of ref object
@@ -49,7 +49,7 @@ returns
 
     # add org member for search index data
     attributes['member'] = []
-    users = User.where( :organization_id => self.id )
+    users = User.where( organization_id: self.id )
     users.each { |user|
       attributes['member'].push user.search_index_data
     }

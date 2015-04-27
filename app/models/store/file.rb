@@ -8,7 +8,7 @@ class Store::File < ApplicationModel
   def self.add(data)
     sha = Digest::SHA256.hexdigest( data )
 
-    file = Store::File.where( :sha => sha ).first
+    file = Store::File.where( sha: sha ).first
     if file == nil
 
       # load backend based on config
@@ -19,8 +19,8 @@ class Store::File < ApplicationModel
       adapter = self.load_adapter( "Store::Provider::#{ adapter_name }" )
       adapter.add( data, sha )
       file = Store::File.create(
-        :provider => adapter_name,
-        :sha      => sha,
+        provider: adapter_name,
+        sha: sha,
       )
     end
     file
@@ -33,7 +33,7 @@ class Store::File < ApplicationModel
       c = adapter.get( self.sha )
     else
       # fallback until migration is done
-      c = Store::Provider::DB.where( :md5 => self.md5 ).first.data
+      c = Store::Provider::DB.where( md5: self.md5 ).first.data
     end
     c
   end

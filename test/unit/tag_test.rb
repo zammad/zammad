@@ -7,15 +7,15 @@ class TagTest < ActiveSupport::TestCase
 
       # test 1
       {
-        :tag_add => {
-          :item          => 'tag1',
-          :object        => 'Object1',
-          :o_id          => 123,
-          :created_by_id => 1
+        tag_add: {
+          item: 'tag1',
+          object: 'Object1',
+          o_id: 123,
+          created_by_id: 1
         },
-        :verify => {
-          :object => 'Object1',
-          :items => {
+        verify: {
+          object: 'Object1',
+          items: {
             'tag1' => true,
             'tag2' => false,
           },
@@ -24,15 +24,15 @@ class TagTest < ActiveSupport::TestCase
 
       # test 2
       {
-        :tag_add => {
-          :item          => 'tag2',
-          :object        => 'Object1',
-          :o_id          => 123,
-          :created_by_id => 1
+        tag_add: {
+          item: 'tag2',
+          object: 'Object1',
+          o_id: 123,
+          created_by_id: 1
         },
-        :verify => {
-          :object => 'Object1',
-          :items => {
+        verify: {
+          object: 'Object1',
+          items: {
             'tag1' => true,
             'tag2' => true,
           },
@@ -41,15 +41,15 @@ class TagTest < ActiveSupport::TestCase
 
       # test 2
       {
-        :tag_add => {
-          :item          => 'tagöäüß1',
-          :object        => 'Object2',
-          :o_id          => 123,
-          :created_by_id => 1
+        tag_add: {
+          item: 'tagöäüß1',
+          object: 'Object2',
+          o_id: 123,
+          created_by_id: 1
         },
-        :verify => {
-          :object => 'Object2',
-          :items => {
+        verify: {
+          object: 'Object2',
+          items: {
             'tagöäüß1' => true,
             'tag2'     => false,
           },
@@ -58,15 +58,15 @@ class TagTest < ActiveSupport::TestCase
 
       # test 4
       {
-        :tag_add => {
-          :item          => 'Tagöäüß2',
-          :object        => 'Object2',
-          :o_id          => 123,
-          :created_by_id => 1
+        tag_add: {
+          item: 'Tagöäüß2',
+          object: 'Object2',
+          o_id: 123,
+          created_by_id: 1
         },
-        :verify => {
-          :object => 'Object2',
-          :items => {
+        verify: {
+          object: 'Object2',
+          items: {
             'tagöäüß1' => true,
             'tagöäüß2' => true,
             'tagöäüß3' => false,
@@ -76,15 +76,15 @@ class TagTest < ActiveSupport::TestCase
 
       # test 5
       {
-        :tag_remove => {
-          :item          => 'tag1',
-          :object        => 'Object1',
-          :o_id          => 123,
-          :created_by_id => 1
+        tag_remove: {
+          item: 'tag1',
+          object: 'Object1',
+          o_id: 123,
+          created_by_id: 1
         },
-        :verify => {
-          :object => 'Object1',
-          :items => {
+        verify: {
+          object: 'Object1',
+          items: {
             'tag1' => false,
             'tag2' => true,
           },

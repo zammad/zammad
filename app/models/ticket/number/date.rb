@@ -14,9 +14,9 @@ module Ticket::Number::Date
     # read counter
     counter_increment = nil
     Ticket::Counter.transaction do
-      counter = Ticket::Counter.where( :generator => 'Date' ).lock(true).first
+      counter = Ticket::Counter.where( generator: 'Date' ).lock(true).first
       if !counter
-        counter = Ticket::Counter.new( :generator => 'Date', :content => '0' )
+        counter = Ticket::Counter.new( generator: 'Date', content: '0' )
       end
 
       # increase counter
@@ -74,9 +74,9 @@ module Ticket::Number::Date
 
     # probe format
     if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,50})/i then
-      ticket = Ticket.where( :number => $1 ).first
+      ticket = Ticket.where( number: $1 ).first
     elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i then
-      ticket = Ticket.where( :number => $1 ).first
+      ticket = Ticket.where( number: $1 ).first
     end
     return ticket
   end

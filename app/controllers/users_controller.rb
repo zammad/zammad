@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
-  before_filter :authentication_check, :except => [:create, :password_reset_send, :password_reset_verify]
+  before_filter :authentication_check, except: [:create, :password_reset_send, :password_reset_verify]
 
   # @path       [GET] /users
   #
@@ -16,15 +16,15 @@ class UsersController < ApplicationController
 
     # only allow customer to fetch him self
     if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
-      users = User.where( :id => current_user.id )
+      users = User.where( id: current_user.id )
     else
       users = User.all
     end
     users_all = []
     users.each {|user|
-      users_all.push User.lookup( :id => user.id ).attributes_with_associations
+      users_all.push User.lookup( id: user.id ).attributes_with_associations
     }
-    render :json => users_all, :status => :ok
+    render json: users_all, status: :ok
   end
 
   # @path       [GET] /users/{id}
@@ -46,12 +46,12 @@ class UsersController < ApplicationController
 
     if params[:full]
       full = User.full( params[:id] )
-      render :json => full
+      render json: full
       return
     end
 
     user = User.find( params[:id] )
-    render :json => user
+    render json: user
   end
 
   # @path      [POST] /users
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 
         # check if feature is enabled
         if !Setting.get('user_create_account')
-          render :json => { :error => 'Feature not enabled!' }, :status => :unprocessable_entity
+          render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
 
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
         group_ids = []
         role_ids  = []
         if count <= 2
-          Role.where( :name => [ Z_ROLENAME_ADMIN, 'Agent'] ).each { |role|
+          Role.where( name: [ Z_ROLENAME_ADMIN, 'Agent'] ).each { |role|
             role_ids.push role.id
           }
           Group.all().each { |group|
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
 
           # everybody else will go as customer per default
         else
-          role_ids.push Role.where( :name => Z_ROLENAME_CUSTOMER ).first.id
+          role_ids.push Role.where( name: Z_ROLENAME_CUSTOMER ).first.id
         end
         user.role_ids  = role_ids
         user.group_ids = group_ids
@@ -115,9 +115,9 @@ class UsersController < ApplicationController
 
       # check if user already exists
       if user.email
-        exists = User.where( :email => user.email ).first
+        exists = User.where( email: user.email ).first
         if exists
-          render :json => { :error => 'User already exists!' }, :status => :unprocessable_entity
+          render json: { error: 'User already exists!' }, status: :unprocessable_entity
           return
         end
       end
@@ -133,7 +133,7 @@ class UsersController < ApplicationController
       if params[:invite] && current_user
 
         # generate token
-        token = Token.create( :action => 'PasswordReset', :user_id => user.id )
+        token = Token.create( action: 'PasswordReset', user_id: user.id )
 
         # send mail
         data = {}
@@ -156,28 +156,28 @@ class UsersController < ApplicationController
         # prepare subject & body
         [:subject, :body].each { |key|
           data[key.to_sym] = NotificationFactory.build(
-            :locale  => user.preferences[:locale],
-            :string  => data[key.to_sym],
-            :objects => {
-              :token        => token,
-              :user         => user,
-              :current_user => current_user,
+            locale: user.preferences[:locale],
+            string: data[key.to_sym],
+            objects: {
+              token: token,
+              user: user,
+              current_user: current_user,
             }
           )
         }
 
         # send notification
         NotificationFactory.send(
-          :recipient => user,
-          :subject   => data[:subject],
-          :body      => data[:body]
+          recipient: user,
+          subject: data[:subject],
+          body: data[:body]
         )
       end
 
       user_new = User.find( user.id )
-      render :json => user_new, :status => :created
+      render json: user_new, status: :created
     rescue Exception => e
-      render :json => { :error => e.message }, :status => :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
 
@@ -219,9 +219,9 @@ class UsersController < ApplicationController
 
       # get new data
       user_new = User.find( params[:id] )
-      render :json => user_new, :status => :ok
+      render json: user_new, status: :ok
     rescue Exception => e
-      render :json => { :error => e.message }, :status => :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
 
@@ -266,9 +266,9 @@ class UsersController < ApplicationController
     end
 
     query_params = {
-      :query        => params[:term],
-      :limit        => params[:limit],
-      :current_user => current_user,
+      query: params[:term],
+      limit: params[:limit],
+      current_user: current_user,
     }
     if params[:role_ids] && !params[:role_ids].empty?
       query_params[:role_ids] = params[:role_ids]
@@ -285,12 +285,12 @@ class UsersController < ApplicationController
         if user.email && user.email.to_s != ''
           realname = realname + ' <' +  user.email.to_s + '>'
         end
-        a = { :id => user.id, :label => realname, :value => realname }
+        a = { id: user.id, label: realname, value: realname }
         users.push a
       }
 
       # return result
-      render :json => users
+      render json: users
       return
     end
 
@@ -302,9 +302,9 @@ class UsersController < ApplicationController
     }
 
     # return result
-    render :json => {
-      :assets   => assets,
-      :user_ids => user_ids.uniq,
+    render json: {
+      assets: assets,
+      user_ids: user_ids.uniq,
     }
   end
 
@@ -336,7 +336,7 @@ class UsersController < ApplicationController
     history = user.history_get(true)
 
     # return result
-    render :json => history
+    render json: history
   end
 
 =begin
@@ -363,7 +363,7 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
 
     # check if feature is enabled
     if !Setting.get('user_lost_password')
-      render :json => { :error => 'Feature not enabled!' }, :status => :unprocessable_entity
+      render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
       return
     end
 
@@ -372,17 +372,17 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
 
       # only if system is in develop mode, send token back to browser for browser tests
       if Setting.get('developer_mode') == true
-        render :json => { :message => 'ok', :token => token.name }, :status => :ok
+        render json: { message: 'ok', token: token.name }, status: :ok
         return
       end
 
       # token sent to user, send ok to browser
-      render :json => { :message => 'ok' }, :status => :ok
+      render json: { message: 'ok' }, status: :ok
       return
     end
 
     # unable to generate token
-    render :json => { :message => 'failed' }, :status => :ok
+    render json: { message: 'failed' }, status: :ok
   end
 
 =begin
@@ -412,7 +412,7 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
       # check password policy
       result = password_policy(params[:password])
       if result != true
-        render :json => { :message => 'failed', :notice => result }, :status => :ok
+        render json: { message: 'failed', notice: result }, status: :ok
         return
       end
 
@@ -422,9 +422,9 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
       user = User.password_reset_check( params[:token] )
     end
     if user
-      render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
+      render json: { message: 'ok', user_login: user.login }, status: :ok
     else
-      render :json => { :message => 'failed' }, :status => :ok
+      render json: { message: 'failed' }, status: :ok
     end
   end
 
@@ -453,30 +453,30 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
 
     # check old password
     if !params[:password_old]
-      render :json => { :message => 'failed', :notice => ['Current password needed!'] }, :status => :ok
+      render json: { message: 'failed', notice: ['Current password needed!'] }, status: :ok
       return
     end
     user = User.authenticate( current_user.login, params[:password_old] )
     if !user
-      render :json => { :message => 'failed', :notice => ['Current password is wrong!'] }, :status => :ok
+      render json: { message: 'failed', notice: ['Current password is wrong!'] }, status: :ok
       return
     end
 
     # set new password
     if !params[:password_new]
-      render :json => { :message => 'failed', :notice => ['Please supply your new password!'] }, :status => :ok
+      render json: { message: 'failed', notice: ['Please supply your new password!'] }, status: :ok
       return
     end
 
     # check password policy
     result = password_policy(params[:password_new])
     if result != true
-      render :json => { :message => 'failed', :notice => result }, :status => :ok
+      render json: { message: 'failed', notice: result }, status: :ok
       return
     end
 
-    user.update_attributes( :password => params[:password_new] )
-    render :json => { :message => 'ok', :user_login => user.login }, :status => :ok
+    user.update_attributes( password: params[:password_new] )
+    render json: { message: 'ok', user_login: user.login }, status: :ok
   end
 
 =begin
@@ -502,7 +502,7 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
 
   def preferences
     if !current_user
-      render :json => { :message => 'No current user!' }, :status => :unprocessable_entity
+      render json: { message: 'No current user!' }, status: :unprocessable_entity
       return
     end
     if params[:user]
@@ -511,7 +511,7 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
       }
       current_user.save
     end
-    render :json => { :message => 'ok' }, :status => :ok
+    render json: { message: 'ok' }, status: :ok
   end
 
 =begin
@@ -537,32 +537,32 @@ curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "C
 
   def account_remove
     if !current_user
-      render :json => { :message => 'No current user!' }, :status => :unprocessable_entity
+      render json: { message: 'No current user!' }, status: :unprocessable_entity
       return
     end
 
     # provider + uid to remove
     if !params[:provider]
-      render :json => { :message => 'provider needed!' }, :status => :unprocessable_entity
+      render json: { message: 'provider needed!' }, status: :unprocessable_entity
       return
     end
     if !params[:uid]
-      render :json => { :message => 'uid needed!' }, :status => :unprocessable_entity
+      render json: { message: 'uid needed!' }, status: :unprocessable_entity
       return
     end
 
     # remove from database
     record = Authorization.where(
-      :user_id  => current_user.id,
-      :provider => params[:provider],
-      :uid      => params[:uid],
+      user_id: current_user.id,
+      provider: params[:provider],
+      uid: params[:uid],
     )
     if !record.first
-      render :json => { :message => 'No record found!' }, :status => :unprocessable_entity
+      render json: { message: 'No record found!' }, status: :unprocessable_entity
       return
     end
     record.destroy_all
-    render :json => { :message => 'ok' }, :status => :ok
+    render json: { message: 'ok' }, status: :ok
   end
 
 =begin
@@ -589,9 +589,9 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
     if file
       send_data(
         file.content,
-        :filename    => file.filename,
-        :type        => file.preferences['Content-Type'] || file.preferences['Mime-Type'],
-        :disposition => 'inline'
+        filename: file.filename,
+        type: file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+        disposition: 'inline'
       )
       return
     end
@@ -600,9 +600,9 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
     image = 'R0lGODdhMAAwAOMAAMzMzJaWlr6+vqqqqqOjo8XFxbe3t7GxsZycnAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAEcxDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru98TwuAA+KQAQqJK8EAgBAgMEqmkzUgBIeSwWGZtR5XhSqAULACCoGCJGwlm1MGQrq9RqgB8fm4ZTUgDBIEcRR9fz6HiImKi4yNjo+QkZKTlJWWkBEAOw=='
     send_data(
       Base64.decode64(image),
-      :filename    => 'image.gif',
-      :type        => 'image/gif',
-      :disposition => 'inline'
+      filename: 'image.gif',
+      type: 'image/gif',
+      disposition: 'inline'
     )
   end
 
@@ -634,24 +634,24 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     file_resize = StaticAssets.data_url_attributes( params[:avatar_resize] )
 
     avatar = Avatar.add(
-      :object           => 'User',
-      :o_id             => current_user.id,
-      :full             => {
-        :content   => file_full[:content],
-        :mime_type => file_full[:mime_type],
+      object: 'User',
+      o_id: current_user.id,
+      full: {
+        content: file_full[:content],
+        mime_type: file_full[:mime_type],
       },
-      :resize           => {
-        :content   => file_resize[:content],
-        :mime_type => file_resize[:mime_type],
+      resize: {
+        content: file_resize[:content],
+        mime_type: file_resize[:mime_type],
       },
-      :source           => 'upload ' + Time.now.to_s,
-      :deletable        => true,
+      source: 'upload ' + Time.now.to_s,
+      deletable: true,
     )
 
     # update user link
-    current_user.update_attributes( :image => avatar.store_hash )
+    current_user.update_attributes( image: avatar.store_hash )
 
-    render :json => { :avatar => avatar }, :status => :ok
+    render json: { avatar: avatar }, status: :ok
   end
 
   def avatar_set_default
@@ -659,7 +659,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # get & validate image
     if !params[:id]
-      render :json => { :message => 'No id of avatar!' }, :status => :unprocessable_entity
+      render json: { message: 'No id of avatar!' }, status: :unprocessable_entity
       return
     end
 
@@ -667,9 +667,9 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     avatar = Avatar.set_default( 'User', current_user.id, params[:id] )
 
     # update user link
-    current_user.update_attributes( :image => avatar.store_hash )
+    current_user.update_attributes( image: avatar.store_hash )
 
-    render :json => {}, :status => :ok
+    render json: {}, status: :ok
   end
 
   def avatar_destroy
@@ -677,7 +677,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # get & validate image
     if !params[:id]
-      render :json => { :message => 'No id of avatar!' }, :status => :unprocessable_entity
+      render json: { message: 'No id of avatar!' }, status: :unprocessable_entity
       return
     end
 
@@ -686,9 +686,9 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # update user link
     avatar = Avatar.get_default( 'User', current_user.id )
-    current_user.update_attributes( :image => avatar.store_hash )
+    current_user.update_attributes( image: avatar.store_hash )
 
-    render :json => {}, :status => :ok
+    render json: {}, status: :ok
   end
 
   def avatar_list
@@ -696,7 +696,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # list of avatars
     result = Avatar.list( 'User', current_user.id )
-    render :json => { :avatars => result }, :status => :ok
+    render json: { avatars: result }, status: :ok
   end
 
   private

@@ -20,7 +20,7 @@ returns
     # generate number
     (1..50_000).each { |i|
       number = adapter.generate
-      ticket = Ticket.where( :number => number ).first
+      ticket = Ticket.where( number: number ).first
       return number if !ticket
     }
     raise "Can't generate new ticket number!"

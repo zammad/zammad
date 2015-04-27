@@ -59,9 +59,9 @@ returns
       return process(response, uri, count, params, options)
     rescue Exception => e
       return Result.new(
-        :error   => e.inspect,
-        :success => false,
-        :code    => 0,
+        error: e.inspect,
+        success: false,
+        code: 0,
       )
     end
   end
@@ -107,9 +107,9 @@ returns
       return process(response, uri, count, params, options)
     rescue Exception => e
       return Result.new(
-        :error   => e.inspect,
-        :success => false,
-        :code    => 0,
+        error: e.inspect,
+        success: false,
+        code: 0,
       )
     end
   end
@@ -155,9 +155,9 @@ returns
       return process(response, uri, count, params, options)
     rescue Exception => e
       return Result.new(
-        :error   => e.inspect,
-        :success => false,
-        :code    => 0,
+        error: e.inspect,
+        success: false,
+        code: 0,
       )
     end
   end
@@ -196,9 +196,9 @@ returns
       return process(response, uri, count, {}, options)
     rescue Exception => e
       return Result.new(
-        :error   => e.inspect,
-        :success => false,
-        :code    => 0,
+        error: e.inspect,
+        success: false,
+        code: 0,
       )
     end
   end
@@ -282,30 +282,30 @@ returns
     def self.process(response, uri, count, params, options)
       if !response
         return Result.new(
-          :error   => "Can't connect to #{uri.to_s}, got no response!",
-          :success => false,
-          :code    => 0,
+          error: "Can't connect to #{uri.to_s}, got no response!",
+          success: false,
+          code: 0,
         )
       end
 
       case response
       when Net::HTTPNotFound
         return Result.new(
-          :error   => "No such file #{uri.to_s}, 404!",
-          :success => false,
-          :code    => response.code,
+          error: "No such file #{uri.to_s}, 404!",
+          success: false,
+          code: response.code,
         )
       when Net::HTTPClientError
         return Result.new(
-          :error   => "Client Error: #{response.inspect}!",
-          :success => false,
-          :code    => response.code,
+          error: "Client Error: #{response.inspect}!",
+          success: false,
+          code: response.code,
         )
       when Net::HTTPInternalServerError
         return Result.new(
-          :error   => "Server Error: #{response.inspect}!",
-          :success => false,
-          :code    => response.code,
+          error: "Server Error: #{response.inspect}!",
+          success: false,
+          code: response.code,
         )
       when Net::HTTPRedirection
         raise 'Too many redirections for the original URL, halting.' if count <= 0
@@ -317,11 +317,11 @@ returns
           data = JSON.parse( response.body )
         end
         return Result.new(
-          :data         => data,
-          :body         => response.body,
-          :content_type => response['Content-Type'],
-          :success      => true,
-          :code         => response.code,
+          data: data,
+          body: response.body,
+          content_type: response['Content-Type'],
+          success: true,
+          code: response.code,
         )
       when Net::HTTPCreated
         data = nil
@@ -329,11 +329,11 @@ returns
           data = JSON.parse( response.body )
         end
         return Result.new(
-          :data         => data,
-          :body         => response.body,
-          :content_type => response['Content-Type'],
-          :success      => true,
-          :code         => response.code,
+          data: data,
+          body: response.body,
+          content_type: response['Content-Type'],
+          success: true,
+          code: response.code,
         )
       end
 
@@ -362,26 +362,26 @@ returns
             ftp.getbinaryfile( filename, temp_file )
           rescue => e
             return Result.new(
-              :error   => e.inspect,
-              :success => false,
-              :code    => '550',
+              error: e.inspect,
+              success: false,
+              code: '550',
             )
           end
         end
       rescue => e
         return Result.new(
-          :error   => e.inspect,
-          :success => false,
-          :code    => 0,
+          error: e.inspect,
+          success: false,
+          code: 0,
         )
       end
 
       contents = temp_file.read
       temp_file.close
       Result.new(
-        :body    => contents,
-        :success => true,
-        :code    => '200',
+        body: contents,
+        success: true,
+        code: '200',
       )
     end
 

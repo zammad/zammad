@@ -9,7 +9,7 @@ class Sessions::Backend::Collections::Organization < Sessions::Backend::Collecti
       all = Organization.all
     else
       if @user.organization_id
-        all = Organization.where( :id => @user.organization_id )
+        all = Organization.where( id: @user.organization_id )
       end
     end
 

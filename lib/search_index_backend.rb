@@ -50,11 +50,11 @@ create/update/delete index
       url,
       data[:data],
       {
-        :json         => true,
-        :open_timeout => 5,
-        :read_timeout => 20,
-        :user         => Setting.get('es_user'),
-        :password     => Setting.get('es_password'),
+        json: true,
+        open_timeout: 5,
+        read_timeout: 20,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
       }
     )
     puts "# #{response.code.to_s}"
@@ -82,11 +82,11 @@ add new object to search index
       url,
       data,
       {
-        :json         => true,
-        :open_timeout => 5,
-        :read_timeout => 20,
-        :user         => Setting.get('es_user'),
-        :password     => Setting.get('es_password'),
+        json: true,
+        open_timeout: 5,
+        read_timeout: 20,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
       }
     )
     puts "# #{response.code.to_s}"
@@ -113,10 +113,10 @@ remove whole data from index
     response = UserAgent.delete(
       url,
       {
-        :open_timeout => 5,
-        :read_timeout => 14,
-        :user         => Setting.get('es_user'),
-        :password     => Setting.get('es_password'),
+        open_timeout: 5,
+        read_timeout: 14,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
       }
     )
     #puts "# #{response.code.to_s}"
@@ -170,8 +170,8 @@ return search result
     data['sort'] =
     [
       {
-        :updated_at => {
-          :order => 'desc'
+        updated_at: {
+          order: 'desc'
         }
       },
       '_score'
@@ -200,11 +200,11 @@ return search result
       url,
       data,
       {
-        :json         => true,
-        :open_timeout => 5,
-        :read_timeout => 14,
-        :user         => Setting.get('es_user'),
-        :password     => Setting.get('es_password'),
+        json: true,
+        open_timeout: 5,
+        read_timeout: 14,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
       }
     )
 
@@ -222,8 +222,8 @@ return search result
     data['hits']['hits'].each { |item|
       puts "... #{item['_type'].to_s} #{item['_id'].to_s}"
       data = {
-        :id   => item['_id'],
-        :type => item['_type'],
+        id: item['_id'],
+        type: item['_type'],
       }
       ids.push data
     }

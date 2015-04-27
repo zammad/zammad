@@ -33,7 +33,7 @@ returns
       items = SearchIndexBackend.search( query, limit, 'User' )
       users = []
       items.each { |item|
-        users.push User.lookup( :id => item[:id] )
+        users.push User.lookup( id: item[:id] )
       }
       return users
     end

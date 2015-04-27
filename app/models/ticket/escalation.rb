@@ -17,7 +17,7 @@ returns
   def self.rebuild_all
     state_list_open = Ticket::State.by_category( 'open' )
 
-    tickets = Ticket.where( :state_id => state_list_open )
+    tickets = Ticket.where( state_id: state_list_open )
     tickets.each {|ticket|
       ticket.escalation_calculation
     }
@@ -39,7 +39,7 @@ returns
   def escalation_calculation
 
     # set escalation off if ticket is already closed
-    state = Ticket::State.lookup( :id => self.state_id )
+    state = Ticket::State.lookup( id: self.state_id )
     if state.ignore_escalation?
 
       # nothing to change
@@ -177,8 +177,8 @@ returns
     sla_selected = nil
     sla_list = Cache.get( 'SLA::List::Active' )
     if sla_list == nil
-      sla_list = Sla.where( :active => true )
-      Cache.write( 'SLA::List::Active', sla_list, { :expires_in => 1.hour } )
+      sla_list = Sla.where( active: true )
+      Cache.write( 'SLA::List::Active', sla_list, { expires_in: 1.hour } )
     end
     sla_list.each {|sla|
       if !sla.condition || sla.condition.empty?

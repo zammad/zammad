@@ -30,8 +30,8 @@ end
 
 class ObjectManager::Attribute < ApplicationModel
   self.table_name = 'object_manager_attributes'
-  belongs_to :object_lookup,   :class_name => 'ObjectLookup'
-  validates               :name, :presence => true
+  belongs_to :object_lookup,   class_name: 'ObjectLookup'
+  validates               :name, presence: true
   store                   :screens
   store                   :data_option
 
@@ -113,8 +113,8 @@ add a new attribute entry for an object
 
     # check newest entry - is needed
     result = ObjectManager::Attribute.where(
-      :object_lookup_id => data[:object_lookup_id],
-      :name             => data[:name],
+      object_lookup_id: data[:object_lookup_id],
+      name: data[:name],
     ).first
     if result
 #      raise "ERROR: attribute #{data[:name]} for #{data[:object]} already exists"
@@ -145,8 +145,8 @@ get the attribute model based on object and name
     end
 
     ObjectManager::Attribute.where(
-      :object_lookup_id => data[:object_lookup_id],
-      :name             => data[:name],
+      object_lookup_id: data[:object_lookup_id],
+      name: data[:name],
     ).first
   end
 
@@ -175,15 +175,15 @@ returns:
 
     # get attributes in right order
     result = ObjectManager::Attribute.where(
-      :object_lookup_id => object_lookup_id,
-      :active => true,
+      object_lookup_id: object_lookup_id,
+      active: true,
     ).order('position ASC')
     attributes = []
     result.each {|item|
       data = {
-        :name     => item.name,
-        :display  => item.display,
-        :tag      => item.data_type,
+        name: item.name,
+        display: item.display,
+        tag: item.data_type,
         #:null     => item.null,
       }
       if item.screens

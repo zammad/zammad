@@ -36,7 +36,7 @@ class Scheduler < ApplicationModel
       if job.period
         while true
           self._start_job( job, runner, runner_count )
-          job = Scheduler.lookup( :id => job.id )
+          job = Scheduler.lookup( id: job.id )
 
           # exit is job got deleted
           break if !job
@@ -124,7 +124,7 @@ class Scheduler < ApplicationModel
   def self.check( name, time_warning = 10, time_critical = 20 )
     time_warning_time  = Time.now - time_warning.minutes
     time_critical_time = Time.now - time_critical.minutes
-    scheduler = Scheduler.where( :name => name ).first
+    scheduler = Scheduler.where( name: name ).first
     if !scheduler
       puts "CRITICAL - no such scheduler jobs '#{name}'"
       return true

@@ -33,7 +33,7 @@ returns
       if data[ Organization.to_app_model ][ self.id ]['member_ids']
         data[ Organization.to_app_model ][ self.id ]['member_ids'].each {|user_id|
           if !data[ User.to_app_model ][ user_id ]
-            user = User.lookup( :id => user_id )
+            user = User.lookup( id: user_id )
             data = user.assets( data )
           end
         }
@@ -42,7 +42,7 @@ returns
     ['created_by_id', 'updated_by_id'].each {|item|
       if self[ item ]
         if !data[ User.to_app_model ][ self[ item ] ]
-          user = User.lookup( :id => self[ item ] )
+          user = User.lookup( id: self[ item ] )
           data = user.assets( data )
         end
       end

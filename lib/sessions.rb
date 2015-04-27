@@ -34,8 +34,8 @@ returns
     meta[:last_ping] = Time.new.to_i.to_s
     File.open( path + '/session', 'wb' ) { |file|
       data = {
-        :user => session,
-        :meta => meta,
+        user: session,
+        meta: meta,
       }
       file.write data.to_json
     }
@@ -43,8 +43,8 @@ returns
     # send update to browser
     if session && session['id']
       self.send( client_id, {
-        :event  => 'ws:login',
-        :data   => { :success => true },
+        event: 'ws:login',
+        data: { success: true },
       })
     end
   end
@@ -397,8 +397,8 @@ returns
     file = Time.new.to_f.to_s + '-' + rand(99_999).to_s
     File.open( path + '/' + file , 'wb' ) { |file|
       data = {
-        :msg        => msg,
-        :timestamp  => Time.now.to_i,
+        msg: msg,
+        timestamp: Time.now.to_i,
       }
       file.write data.to_json
     }
@@ -444,8 +444,8 @@ returns
             message_parsed['recipient']['user_id'].each { |user_id|
               if current_user_id == user_id
                 item = {
-                  :type    => 'direct',
-                  :message => message_parsed,
+                  type: 'direct',
+                  message: message_parsed,
                 }
                 data.push item
               end
@@ -454,8 +454,8 @@ returns
           # spool to every client
           else
             item = {
-              :type    => 'broadcast',
-              :message => message_parsed,
+              type: 'broadcast',
+              message: message_parsed,
             }
             data.push item
           end
@@ -488,7 +488,7 @@ returns
         next if !session_data
         next if !session_data[:user]
         next if !session_data[:user]['id']
-        user = User.lookup( :id => session_data[:user]['id'] )
+        user = User.lookup( id: session_data[:user]['id'] )
         next if !user
 
         # start client thread

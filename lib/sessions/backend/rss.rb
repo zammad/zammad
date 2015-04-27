@@ -23,7 +23,7 @@ class Sessions::Backend::Rss
     rss_items = Rss.fetch( url, 8 )
 
     # set new timeout
-    Sessions::CacheIn.set( self.collection_key, rss_items, { :expires_in => 1.hours } )
+    Sessions::CacheIn.set( self.collection_key, rss_items, { expires_in: 1.hours } )
 
     rss_items
   end
@@ -39,7 +39,7 @@ class Sessions::Backend::Rss
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
 
     data = self.load
 
@@ -47,17 +47,17 @@ class Sessions::Backend::Rss
 
     if !@client
       return {
-        :event      => 'rss_rebuild',
-        :collection => 'dashboard_rss',
-        :data       => data,
+        event: 'rss_rebuild',
+        collection: 'dashboard_rss',
+        data: data,
       }
     end
 
     @client.log 'notify', "push rss for user #{@user.id}"
     @client.send({
-      :event      => 'rss_rebuild',
-      :collection => 'dashboard_rss',
-      :data       => data,
+      event: 'rss_rebuild',
+      collection: 'dashboard_rss',
+      data: data,
     })
   end
 

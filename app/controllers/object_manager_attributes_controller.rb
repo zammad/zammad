@@ -7,8 +7,8 @@ class ObjectManagerAttributesController < ApplicationController
   # GET /object_manager_attributes_list
   def list
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    render :json => {
-      :objects => ObjectManager.listFrontendObjects,
+    render json: {
+      objects: ObjectManager.listFrontendObjects,
     }
     #model_index_render(ObjectManager::Attribute, params)
   end
@@ -16,7 +16,7 @@ class ObjectManagerAttributesController < ApplicationController
   # GET /object_manager_attributes
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    render :json => ObjectManager::Attribute.list_full
+    render json: ObjectManager::Attribute.list_full
     #model_index_render(ObjectManager::Attribute, params)
   end
 

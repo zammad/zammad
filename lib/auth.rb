@@ -20,15 +20,15 @@ returns
     # use std. auth backends
     config = [
       {
-        :adapter => 'Auth::Internal',
+        adapter: 'Auth::Internal',
       },
       {
-        :adapter => 'Auth::Developer',
+        adapter: 'Auth::Developer',
       },
     ]
 
     # added configured backends
-    Setting.where( :area => 'Security::Authentication' ).each {|setting|
+    Setting.where( area: 'Security::Authentication' ).each {|setting|
       if setting.state[:value]
         config.push setting.state[:value]
       end

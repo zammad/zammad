@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Tag < ApplicationModel
-  belongs_to :tag_object,       :class_name => 'Tag::Object'
-  belongs_to :tag_item,         :class_name => 'Tag::Item'
+  belongs_to :tag_object,       class_name: 'Tag::Object'
+  belongs_to :tag_item,         class_name: 'Tag::Item'
 
   @@cache_item = {}
   @@cache_object = {}
@@ -19,10 +19,10 @@ class Tag < ApplicationModel
 
     # create history
     Tag.create(
-      :tag_object_id  => tag_object_id,
-      :tag_item_id    => tag_item_id,
-      :o_id           => data[:o_id],
-      :created_by_id  => data[:created_by_id],
+      tag_object_id: tag_object_id,
+      tag_item_id: tag_item_id,
+      o_id: data[:o_id],
+      created_by_id: data[:created_by_id],
     )
     return true
   end
@@ -39,9 +39,9 @@ class Tag < ApplicationModel
 
     # create history
     result = Tag.where(
-      :tag_object_id  => tag_object_id,
-      :tag_item_id    => tag_item_id,
-      :o_id           => data[:o_id],
+      tag_object_id: tag_object_id,
+      tag_item_id: tag_item_id,
+      o_id: data[:o_id],
     )
     result.each { |item|
       item.destroy
@@ -52,8 +52,8 @@ class Tag < ApplicationModel
   def self.tag_list( data )
     tag_object_id_requested = self.tag_object_lookup( data[:object] )
     tag_search = Tag.where(
-      :tag_object_id => tag_object_id_requested,
-      :o_id          => data[:o_id],
+      tag_object_id: tag_object_id_requested,
+      o_id: data[:o_id],
     )
     tags = []
     tag_search.each {|tag|
@@ -83,7 +83,7 @@ class Tag < ApplicationModel
     return @@cache_item[ name ] if @@cache_item[ name ]
 
     # lookup
-    tag_item = Tag::Item.where( :name => name ).first
+    tag_item = Tag::Item.where( name: name ).first
     if tag_item
       @@cache_item[ name ] = tag_item.id
       return tag_item.id
@@ -91,7 +91,7 @@ class Tag < ApplicationModel
 
     # create
     tag_item = Tag::Item.create(
-      :name => name
+      name: name
     )
     @@cache_item[ name ] = tag_item.id
     return tag_item.id
@@ -114,7 +114,7 @@ class Tag < ApplicationModel
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    tag_object = Tag::Object.where( :name => name ).first
+    tag_object = Tag::Object.where( name: name ).first
     if tag_object
       @@cache_object[ name ] = tag_object.id
       return tag_object.id
@@ -122,7 +122,7 @@ class Tag < ApplicationModel
 
     # create
     tag_object = Tag::Object.create(
-      :name => name
+      name: name
     )
     @@cache_object[ name ] = tag_object.id
     return tag_object.id

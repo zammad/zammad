@@ -11,7 +11,7 @@ class Sessions::Backend::TicketCreate
 
     # get attributes to update
     ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
-      :user => @user.id,
+      user: @user.id,
     )
 
     # no data exists
@@ -37,7 +37,7 @@ class Sessions::Backend::TicketCreate
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => @ttl.seconds } )
+    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
 
     ticket_create_attributes = self.load
 
@@ -45,25 +45,25 @@ class Sessions::Backend::TicketCreate
 
 
     data = {
-      :assets    => ticket_create_attributes[:assets],
-      :form_meta => {
-        :filter       => ticket_create_attributes[:filter],
-        :dependencies => ticket_create_attributes[:dependencies],
+      assets: ticket_create_attributes[:assets],
+      form_meta: {
+        filter: ticket_create_attributes[:filter],
+        dependencies: ticket_create_attributes[:dependencies],
       }
     }
 
 
     if !@client
       return {
-        :collection => 'ticket_create_attributes',
-        :data       => data,
+        collection: 'ticket_create_attributes',
+        data: data,
       }
     end
 
     @client.log 'notify', "push ticket_create for user #{ @user.id }"
     @client.send({
-      :collection => 'ticket_create_attributes',
-      :data       => data,
+      collection: 'ticket_create_attributes',
+      data: data,
     })
   end
 

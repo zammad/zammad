@@ -4,23 +4,23 @@ require 'browser_test_helper'
 class AuthTest < TestCase
   def test_authentication
     @browser = browser_instance
-    location( :url => browser_url )
+    location( url: browser_url )
     match(
-      :css   => '#login',
-      :value => 'username',
+      css: '#login',
+      value: 'username',
     )
-    click( :css => '#login button' )
+    click( css: '#login button' )
 
     sleep 4
     match(
-      :css   => '#login',
-      :value => 'username',
+      css: '#login',
+      value: 'username',
     )
 
     # login with username/password
     login(
-      :username => 'nicole.braun@zammad.org',
-      :password => 'test',
+      username: 'nicole.braun@zammad.org',
+      password: 'test',
     )
 
     # reload page
@@ -28,57 +28,57 @@ class AuthTest < TestCase
 
     # check if cookie is temporarily
     watch_for(
-      :css   => 'body',
-      :value => 'Overviews',
+      css: 'body',
+      value: 'Overviews',
     )
 
     # verify session cookie
     cookie(
-      :name    => '^_zammad.+?',
-      :value   => '.+?',
-      :expires => '',
+      name: '^_zammad.+?',
+      value: '.+?',
+      expires: '',
     )
   end
 
   def test_authentication_new_browser_without_permanent_cookie_no_session_should_be
     @browser = browser_instance
-    location( :url => browser_url )
+    location( url: browser_url )
     match(
-      :css   => '#login',
-      :value => 'username',
+      css: '#login',
+      value: 'username',
     )
   end
 
   def test_new_browser_with_permanent_cookie_login
     @browser = browser_instance
-    location( :url => browser_url )
+    location( url: browser_url )
 
     # login with username/password
     login(
-      :username    => 'nicole.braun@zammad.org',
-      :password    => 'test',
-      :remember_me => true,
+      username: 'nicole.braun@zammad.org',
+      password: 'test',
+      remember_me: true,
     )
 
     # check if cookie is temporarily
     watch_for(
-      :css   => 'body',
-      :value => 'Overviews',
+      css: 'body',
+      value: 'Overviews',
     )
 
     # verify session cookie
     cookie(
-      :name    => '^_zammad.+?',
-      :value   => '.+?',
-      :expires => '\d{4}-\d{1,2}-\d{1,2}.+?',
+      name: '^_zammad.+?',
+      value: '.+?',
+      expires: '\d{4}-\d{1,2}-\d{1,2}.+?',
     )
 
     logout()
 
     # verify session cookie
     cookie(
-      :name             => '^_zammad.+?',
-      :should_not_exist => true,
+      name: '^_zammad.+?',
+      should_not_exist: true,
     )
   end
 

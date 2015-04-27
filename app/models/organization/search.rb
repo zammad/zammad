@@ -33,7 +33,7 @@ returns
       items = SearchIndexBackend.search( query, limit, 'Organization' )
       organizations = []
       items.each { |item|
-        organizations.push Organization.lookup( :id => item[:id] )
+        organizations.push Organization.lookup( id: item[:id] )
       }
       return organizations
     end

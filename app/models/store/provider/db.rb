@@ -5,20 +5,20 @@ class Store::Provider::DB < ApplicationModel
 
   def self.add(data, sha)
     Store::Provider::DB.create(
-      :data => data,
-      :sha  => sha,
+      data: data,
+      sha: sha,
     )
     true
   end
 
   def self.get(sha)
-    file = Store::Provider::DB.where( :sha => sha ).first
+    file = Store::Provider::DB.where( sha: sha ).first
     return if !file
     file.data
   end
 
   def self.delete(sha)
-    Store::Provider::DB.where( :sha => sha ).destroy_all
+    Store::Provider::DB.where( sha: sha ).destroy_all
     true
   end
 

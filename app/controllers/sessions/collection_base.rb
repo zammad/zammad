@@ -4,9 +4,9 @@ module ExtraCollection
   def session( collections, assets, user )
 
     # all base stuff
-    collections[ Locale.to_app_model ] = Locale.where( :active => true )
+    collections[ Locale.to_app_model ] = Locale.where( active: true )
 
-    collections[ Taskbar.to_app_model ] = Taskbar.where( :user_id => user.id )
+    collections[ Taskbar.to_app_model ] = Taskbar.where( user_id: user.id )
     collections[ Taskbar.to_app_model ].each {|item|
       assets = item.assets(assets)
     }
@@ -34,7 +34,7 @@ module ExtraCollection
     else
       if user.organization_id
         collections[ Organization.to_app_model ] = []
-        Organization.where( :id => user.organization_id ).each {|item|
+        Organization.where( id: user.organization_id ).each {|item|
           assets = item.assets(assets)
         }
       end

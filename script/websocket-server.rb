@@ -14,14 +14,14 @@ require 'daemons'
 
 # Look for -o with argument, and -I and -D boolean arguments
 @options = {
-  :p => 6042,
-  :b => '0.0.0.0',
-  :s => false,
-  :v => false,
-  :d => false,
-  :k => '/path/to/server.key',
-  :c => '/path/to/server.crt',
-  :i => Dir.pwd.to_s + '/tmp/pids/websocket.pid'
+  p: 6042,
+  b: '0.0.0.0',
+  s: false,
+  v: false,
+  d: false,
+  k: '/path/to/server.key',
+  c: '/path/to/server.crt',
+  i: Dir.pwd.to_s + '/tmp/pids/websocket.pid'
 }
 
 tls_options = {}
@@ -85,19 +85,19 @@ end
 
 @clients = {}
 EventMachine.run {
-  EventMachine::WebSocket.start( :host => @options[:b], :port => @options[:p], :secure => @options[:s], :tls_options => tls_options ) do |ws|
+  EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: tls_options ) do |ws|
 
     # register client connection
     ws.onopen {
       client_id = ws.object_id.to_s
       log 'notice', 'Client connected.', client_id
-      Sessions.create( client_id, {}, { :type => 'websocket' } )
+      Sessions.create( client_id, {}, { type: 'websocket' } )
 
       if !@clients.include? client_id
         @clients[client_id] = {
-          :websocket   => ws,
-          :last_ping   => Time.new,
-          :error_count => 0,
+          websocket: ws,
+          last_ping: Time.new,
+          error_count: 0,
         }
       end
     }
@@ -171,7 +171,7 @@ EventMachine.run {
       # get session
       if data['action'] == 'login'
         @clients[client_id][:session] = data['session']
-        Sessions.create( client_id, data['session'], { :type => 'websocket' } )
+        Sessions.create( client_id, data['session'], { type: 'websocket' } )
 
         # remember ping, send pong back
       elsif data['action'] == 'ping'

@@ -28,7 +28,7 @@ class Sessions::Client
       return if !session_data
       return if !session_data[:user]
       return if !session_data[:user]['id']
-      user = User.lookup( :id => session_data[:user]['id'] )
+      user = User.lookup( id: session_data[:user]['id'] )
       return if !user
 
       # init new backends

@@ -20,9 +20,9 @@ returns
 
     # default ignored attributes
     ignore_attributes = {
-      :created_by_id => true,
-      :updated_by_id => true,
-      :active        => true,
+      created_by_id: true,
+      updated_by_id: true,
+      active: true,
     }
     if self.class.search_index_support_config[:ignore_attributes]
       self.class.search_index_support_config[:ignore_attributes].each {|key, value|
@@ -42,7 +42,7 @@ returns
     }
 
     # add tags
-    tags = Tag.tag_list( :object=> 'Ticket', :o_id => self.id )
+    tags = Tag.tag_list( object: 'Ticket', o_id: self.id )
     if tags && !tags.empty?
       attributes[:tag] = tags
     end
@@ -57,7 +57,7 @@ returns
     attachment_max_size_in_mb = Setting.get('es_attachment_max_size_in_mb') || 40
 
     # collect article data
-    articles = Ticket::Article.where( :ticket_id => self.id )
+    articles = Ticket::Article.where( ticket_id: self.id )
     attributes['articles'] = []
     articles.each {|article|
       article_attributes = article.attributes

@@ -25,7 +25,7 @@ class Channel::Facebook
       'id',
       'comments',
       {
-        :message => self.body
+        message: self.body
       }
     )
     #            client.direct_message_create(

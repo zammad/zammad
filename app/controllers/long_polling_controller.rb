@@ -50,7 +50,7 @@ class LongPollingController < ApplicationController
       # send spool:sent event to client
       sleep 0.2
       log 'notice', 'send spool:sent event', client_id
-      Sessions.send( client_id, { :event => 'spool:sent', :data => { :timestamp => Time.now.utc.to_i } } )
+      Sessions.send( client_id, { event: 'spool:sent', data: { timestamp: Time.now.utc.to_i } } )
     end
 
 
@@ -62,7 +62,7 @@ class LongPollingController < ApplicationController
         user = User.find( user_id ).attributes
       end
       log 'notice', "send auth login (user_id #{user_id})", client_id
-      Sessions.create( client_id, user, { :type => 'ajax' } )
+      Sessions.create( client_id, user, { type: 'ajax' } )
 
       # broadcast
     elsif params['data']['action'] == 'broadcast'
@@ -92,10 +92,10 @@ class LongPollingController < ApplicationController
     end
 
     if new_connection
-      result = { :client_id => client_id }
-      render :json => result
+      result = { client_id: client_id }
+      render json: result
     else
-      render :json => {}
+      render json: {}
     end
   end
 
@@ -105,7 +105,7 @@ class LongPollingController < ApplicationController
     # check client id
     client_id = client_id_verify
     if !client_id
-      render :json => { :error => 'Invalid client_id receive!' }, :status => :unprocessable_entity
+      render json: { error: 'Invalid client_id receive!' }, status: :unprocessable_entity
       return
     end
 
@@ -126,7 +126,7 @@ class LongPollingController < ApplicationController
         queue = Sessions.queue( client_id )
         if queue && queue[0]
           #          puts "send " + queue.inspect + client_id.to_s
-          render :json => queue
+          render json: queue
           return
         end
         8.times {|loop|
@@ -134,14 +134,14 @@ class LongPollingController < ApplicationController
         }
         #sleep 2
         if count == 0
-          render :json => { :action => 'pong' }
+          render json: { action: 'pong' }
           return
         end
       end
     rescue Exception => e
       puts e.inspect
       puts e.backtrace
-      render :json => { :error => 'Invalid client_id in receive loop!' }, :status => :unprocessable_entity
+      render json: { error: 'Invalid client_id in receive loop!' }, status: :unprocessable_entity
       return
     end
   end

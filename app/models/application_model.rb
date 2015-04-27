@@ -316,14 +316,14 @@ returns
       return cache if cache
 
       #      puts "Fillup- + #{self.to_s}.#{data[:id].to_s}"
-      record = self.where( :id => data[:id] ).first
+      record = self.where( id: data[:id] ).first
       self.cache_set( data[:id], record )
       return record
     elsif data[:name]
       cache = self.cache_get( data[:name] )
       return cache if cache
 
-      records = self.where( :name => data[:name] )
+      records = self.where( name: data[:name] )
       records.each {|record|
         if record.name == data[:name]
           self.cache_set( data[:name], record )
@@ -335,7 +335,7 @@ returns
       cache = self.cache_get( data[:login] )
       return cache if cache
 
-      records = self.where( :login => data[:login] )
+      records = self.where( login: data[:login] )
       records.each {|record|
         if record.login == data[:login]
           self.cache_set( data[:login], record )
@@ -362,20 +362,20 @@ returns
 
   def self.create_if_not_exists(data)
     if data[:id]
-      record = self.where( :id => data[:id] ).first
+      record = self.where( id: data[:id] ).first
       return record if record
     elsif data[:name]
-      records = self.where( :name => data[:name] )
+      records = self.where( name: data[:name] )
       records.each {|record|
         return record if record.name == data[:name]
       }
     elsif data[:login]
-      records = self.where( :login => data[:login] )
+      records = self.where( login: data[:login] )
       records.each {|record|
         return record if record.login == data[:login]
       }
     elsif data[:locale] && data[:source]
-      records = self.where( :locale => data[:locale], :source => data[:source] )
+      records = self.where( locale: data[:locale], source: data[:source] )
       records.each {|record|
         return record if record.source == data[:source]
       }
@@ -397,7 +397,7 @@ returns
 
   def self.create_or_update(data)
     if data[:id]
-      records = self.where( :id => data[:id] )
+      records = self.where( id: data[:id] )
       records.each {|record|
         record.update_attributes( data )
         return record
@@ -406,7 +406,7 @@ returns
       record.save
       return record
     elsif data[:name]
-      records = self.where( :name => data[:name] )
+      records = self.where( name: data[:name] )
       records.each {|record|
         if record.name == data[:name]
           record.update_attributes( data )
@@ -417,7 +417,7 @@ returns
       record.save
       return record
     elsif data[:login]
-      records = self.where( :login => data[:login] )
+      records = self.where( login: data[:login] )
       records.each {|record|
         if record.login.downcase == data[:login].downcase
           record.update_attributes( data )
@@ -428,7 +428,7 @@ returns
       record.save
       return record
     elsif data[:locale]
-      records = self.where( :locale => data[:locale] )
+      records = self.where( locale: data[:locale] )
       records.each {|record|
         if record.locale.downcase == data[:locale].downcase
           record.update_attributes( data )
@@ -474,7 +474,7 @@ end
     if updated_at == nil
       Cache.delete( key )
     else
-      Cache.write( key, updated_at, { :expires_in => expires_in } )
+      Cache.write( key, updated_at, { expires_in: expires_in } )
     end
   end
 
@@ -547,8 +547,8 @@ class OwnModel < ApplicationModel
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':create',
-      :data => { :id => self.id, :updated_at => self.updated_at }
+      event: class_name + ':create',
+      data: { id: self.id, updated_at: self.updated_at }
     )
   end
 
@@ -576,8 +576,8 @@ class OwnModel < ApplicationModel
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':update',
-      :data => { :id => self.id, :updated_at => self.updated_at }
+      event: class_name + ':update',
+      data: { id: self.id, updated_at: self.updated_at }
     )
   end
 
@@ -633,8 +633,8 @@ class OwnModel < ApplicationModel
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':destroy',
-      :data => { :id => self.id, :updated_at => self.updated_at }
+      event: class_name + ':destroy',
+      data: { id: self.id, updated_at: self.updated_at }
     )
   end
 
@@ -749,10 +749,10 @@ log object update activity stream, if configured - will be executed automaticall
 
     # default ignored attributes
     ignore_attributes = {
-      :created_at               => true,
-      :updated_at               => true,
-      :created_by_id            => true,
-      :updated_by_id            => true,
+      created_at: true,
+      updated_at: true,
+      created_by_id: true,
+      updated_by_id: true,
     }
     if self.class.activity_stream_support_config[:ignore_attributes]
       self.class.activity_stream_support_config[:ignore_attributes].each {|key, value|
@@ -856,10 +856,10 @@ log object update history with all updated attributes, if configured - will be e
 
     # default ignored attributes
     ignore_attributes = {
-      :created_at               => true,
-      :updated_at               => true,
-      :created_by_id            => true,
-      :updated_by_id            => true,
+      created_at: true,
+      updated_at: true,
+      created_by_id: true,
+      updated_by_id: true,
     }
     if self.class.history_support_config[:ignore_attributes]
       self.class.history_support_config[:ignore_attributes].each {|key, value|
@@ -887,7 +887,7 @@ log object update history with all updated attributes, if configured - will be e
         if self.respond_to?( attribute_name ) && self.send(attribute_name)
           relation_class = self.send(attribute_name).class
           if relation_class && value_id[0]
-            relation_model = relation_class.lookup( :id => value_id[0] )
+            relation_model = relation_class.lookup( id: value_id[0] )
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
@@ -897,7 +897,7 @@ log object update history with all updated attributes, if configured - will be e
             end
           end
           if relation_class && value_id[1]
-            relation_model = relation_class.lookup( :id => value_id[1] )
+            relation_model = relation_class.lookup( id: value_id[1] )
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
@@ -909,11 +909,11 @@ log object update history with all updated attributes, if configured - will be e
         end
       end
       data = {
-        :history_attribute      => attribute_name,
-        :value_from             => value_str[0].to_s,
-        :value_to               => value_str[1].to_s,
-        :id_from                => value_id[0],
-        :id_to                  => value_id[1],
+        history_attribute: attribute_name,
+        value_from: value_str[0].to_s,
+        value_to: value_str[1].to_s,
+        id_from: value_id[0],
+        id_to: value_id[1],
       }
       #puts "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       self.history_log( 'updated', self.updated_by_id, data )
@@ -948,7 +948,7 @@ returns
 =end
 
   def attachments
-    Store.list( :object => self.class.to_s, :o_id => self.id )
+    Store.list( object: self.class.to_s, o_id: self.id )
   end
 
 =begin
@@ -985,8 +985,8 @@ return object and assets
     object = self.find(id)
     assets = object.assets({})
     {
-      :id     => id,
-      :assets => assets,
+      id: id,
+      assets: assets,
     }
   end
 
@@ -1044,12 +1044,12 @@ get assets of object list
     article_store = []
     attachments_buffer.each do |attachment|
       article_store.push Store.add(
-        :object        => self.class.to_s,
-        :o_id          => self.id,
-        :data          => attachment.content,
-        :filename      => attachment.filename,
-        :preferences   => attachment.preferences,
-        :created_by_id => self.created_by_id,
+        object: self.class.to_s,
+        o_id: self.id,
+        data: attachment.content,
+        filename: attachment.filename,
+        preferences: attachment.preferences,
+        created_by_id: self.created_by_id,
       )
     end
     attachments_buffer = nil

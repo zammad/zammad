@@ -12,9 +12,9 @@ module Ticket::Number::Increment
     min_digs  = config[:min_size] || 4;
     counter_increment = nil
     Ticket::Counter.transaction do
-      counter = Ticket::Counter.where( :generator => 'Increment' ).lock(true).first
+      counter = Ticket::Counter.where( generator: 'Increment' ).lock(true).first
       if !counter
-        counter = Ticket::Counter.new( :generator => 'Increment', :content => '0' )
+        counter = Ticket::Counter.new( generator: 'Increment', content: '0' )
       end
       counter_increment = counter.content.to_i
 
@@ -78,9 +78,9 @@ module Ticket::Number::Increment
 
     # probe format
     if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,48})/i then
-      ticket = Ticket.where( :number => $1 ).first
+      ticket = Ticket.where( number: $1 ).first
     elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i then
-      ticket = Ticket.where( :number => $1 ).first
+      ticket = Ticket.where( number: $1 ).first
     end
     return ticket
   end

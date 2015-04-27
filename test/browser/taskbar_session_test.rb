@@ -7,31 +7,31 @@ class TaskbarSessionTest < TestCase
     # check taken over session block screen with same user
     browser1 = browser_instance
     login(
-      :browser  => browser1,
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      browser: browser1,
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
     )
 
     browser2 = browser_instance
     login(
-      :browser  => browser2,
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      browser: browser2,
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
     )
 
     sleep 8
 
     match(
-      :browser => browser1,
-      :css     => 'body',
-      :value   => 'Reload application',
+      browser: browser1,
+      css: 'body',
+      value: 'Reload application',
     )
     match_not(
-      :browser => browser2,
-      :css     => 'body',
-      :value   => 'Reload application',
+      browser: browser2,
+      css: 'body',
+      value: 'Reload application',
     )
 
   end
@@ -41,31 +41,31 @@ class TaskbarSessionTest < TestCase
     # check taken over session block screen with same user
     browser1 = browser_instance
     login(
-      :browser  => browser1,
-      :username => 'master@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      browser: browser1,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
     )
 
     browser2 = browser_instance
     login(
-      :browser  => browser2,
-      :username => 'agent1@example.com',
-      :password => 'test',
-      :url      => browser_url,
+      browser: browser2,
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
     )
 
     sleep 8
 
     match_not(
-      :browser => browser1,
-      :css     => 'body',
-      :value   => 'Reload application',
+      browser: browser1,
+      css: 'body',
+      value: 'Reload application',
     )
     match_not(
-      :browser => browser2,
-      :css     => 'body',
-      :value   => 'Reload application',
+      browser: browser2,
+      css: 'body',
+      value: 'Reload application',
     )
   end
 

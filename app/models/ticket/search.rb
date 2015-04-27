@@ -104,7 +104,7 @@ returns
       end
       tickets = []
       items.each { |item|
-        tickets.push Ticket.lookup( :id => item[:id] )
+        tickets.push Ticket.lookup( id: item[:id] )
       }
       return tickets
     end
@@ -141,7 +141,7 @@ returns
 
     tickets = []
     tickets_all.each { |ticket|
-      tickets.push Ticket.lookup( :id => ticket.id )
+      tickets.push Ticket.lookup( id: ticket.id )
     }
     return tickets
   end

@@ -9,7 +9,7 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # if sender is customer, do not change anything
-    sender = Ticket::Article::Sender.lookup( :id => record.sender_id )
+    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
     return if sender == nil
     return if sender['name'] == 'Customer'
 
