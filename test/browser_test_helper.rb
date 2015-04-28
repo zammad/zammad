@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] = 'test'
-# rubocop:disable Next, CyclomaticComplexity, PerceivedComplexity, HandleExceptions
+# rubocop:disable Next, CyclomaticComplexity, PerceivedComplexity, HandleExceptions, ClassVars, NonLocalExitFromIterator
 require File.expand_path('../../config/environment', __FILE__)
 require 'selenium-webdriver'
 
