@@ -38,7 +38,7 @@ test( "model ui basic tests", function() {
     textarea:   "some new\nline"
   })
 
-  App.i18n.set('en')
+  App.i18n.set('en-us')
   equal( App.viewPrint( ticket, 'id' ), 1000)
   equal( App.viewPrint( ticket, 'title' ), 'some title &lt;&gt;&amp;')
   equal( App.viewPrint( ticket, 'state' ), 'open')
@@ -49,7 +49,7 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
 
 
-  App.i18n.set('de')
+  App.i18n.set('de-de')
   equal( App.viewPrint( ticket, 'id' ), 1000)
   equal( App.viewPrint( ticket, 'title' ), 'some title &lt;&gt;&amp;')
   equal( App.viewPrint( ticket, 'state' ), 'offen')
@@ -60,7 +60,7 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
 
 
-  App.i18n.set('en')
+  App.i18n.set('en-us')
   ticket.state_id = 3
   equal( App.viewPrint( ticket, 'state' ), 'closed &lt;&gt;&amp;')
   equal( App.viewPrint( ticket, 'state_id' ), 'closed &lt;&gt;&amp;')

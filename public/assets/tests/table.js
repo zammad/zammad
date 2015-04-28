@@ -1,6 +1,6 @@
 // form
 test( "table test", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table simple I</h1><div id="table1"></div>')
   var el = $('#table1')
@@ -358,7 +358,7 @@ test( "table test", function() {
 });
 
 test( "table test 2", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with hash</h1><div id="table-hash1"></div>')
   var el = $('#table-hash1')
@@ -421,7 +421,7 @@ test( "table test 2", function() {
 });
 
 test( "table test 3", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with link</h1><div id="table-link1"></div>')
   var el = $('#table-link1')
@@ -520,7 +520,7 @@ test( "table test 3", function() {
 });
 
 test( "table test 4", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with data</h1><div id="table-data1"></div>')
   var el = $('#table-data1')

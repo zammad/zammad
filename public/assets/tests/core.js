@@ -258,9 +258,9 @@ App.Delay.set( function() {
 test( "i18n", function() {
 
   // de
-  App.i18n.set('de');
+  App.i18n.set('de-de');
   var translated = App.i18n.translateContent('yes');
-  equal( translated, 'ja', 'de - yes / ja translated correctly' );
+  equal( translated, 'ja', 'de-de - yes / ja translated correctly' );
 
   translated = App.i18n.translateContent('<test&now>//*äöüß');
   equal( translated, '&lt;test&amp;now&gt;//*äöüß', 'de - <test&now>//*äöüß' );
@@ -268,18 +268,18 @@ test( "i18n", function() {
   var time_local = new Date();
   var offset = time_local.getTimezoneOffset();
   var timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
-  equal( timestamp, '06.11.2012 21:07', 'de - timestamp translated correctly' );
+  equal( timestamp, '06.11.2012 21:07', 'de-de - timestamp translated correctly' );
 
   // en
-  App.i18n.set('en');
+  App.i18n.set('en-us');
   translated = App.i18n.translateContent('yes');
-  equal( translated, 'yes', 'en - yes translated correctly' );
+  equal( translated, 'yes', 'en-us - yes translated correctly' );
 
   translated = App.i18n.translateContent('<test&now>');
-  equal( translated, '&lt;test&amp;now&gt;', 'en - <test&now>' );
+  equal( translated, '&lt;test&amp;now&gt;', 'en-us - <test&now>' );
 
   timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
-  equal( timestamp, '2012-11-06 21:07', 'en - timestamp translated correctly' );
+  equal( timestamp, '11/06/2012 21:07', 'en - timestamp translated correctly' );
 });
 
 // events
