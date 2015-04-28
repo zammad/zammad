@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] = 'test'
-# rubocop:disable Next, CyclomaticComplexity, PerceivedComplexity
+# rubocop:disable Next, CyclomaticComplexity, PerceivedComplexity, HandleExceptions
 require File.expand_path('../../config/environment', __FILE__)
 require 'selenium-webdriver'
 
@@ -754,6 +754,8 @@ class TestCase < Test::Unit::TestCase
             sleep 0.5
             return true
           end
+        rescue
+          # try again
         end
       end
       sleep 0.5
@@ -808,6 +810,8 @@ wait untill text in selector disabppears
             sleep 1
             return true
           end
+        rescue
+          # try again
         end
       end
       sleep 1
@@ -850,6 +854,8 @@ wait untill text in selector disabppears
         else
           break
         end
+      rescue
+        # try again
       end
     end
     sleep 1
@@ -1191,6 +1197,8 @@ wait untill text in selector disabppears
             if text =~ /(Discard your unsaved changes.|Verwerfen der)/
               found = true
             end
+          rescue
+            # try again
           end
           sleep 1
         end
@@ -1213,6 +1221,8 @@ wait untill text in selector disabppears
         if !text || text.empty?
           return true
         end
+      rescue
+        # try again
       end
       sleep 1
     }
