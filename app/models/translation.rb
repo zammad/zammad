@@ -27,26 +27,29 @@ load translations from online
       }
     )
     raise "Can't load translations from #{url}: #{result.error}" if !result.success?
-    result.data.each {|translation|
-      #puts translation.inspect
 
-      # handle case insensitive sql
-      exists     = Translation.where(locale: translation['locale'], format: translation['format'], source: translation['source'])
-      translaten = nil
-      exists.each {|item|
-        if item.source == translation['source']
-          translaten = item
+    ActiveRecord::Base.transaction do
+      result.data.each {|translation|
+        #puts translation.inspect
+
+        # handle case insensitive sql
+        exists     = Translation.where(locale: translation['locale'], format: translation['format'], source: translation['source'])
+        translaten = nil
+        exists.each {|item|
+          if item.source == translation['source']
+            translaten = item
+          end
+        }
+        if translaten
+
+          # verify if update is needed
+          translaten.update_attributes(translation.symbolize_keys!)
+          translaten.save
+        else
+          Translation.create(translation.symbolize_keys!)
         end
       }
-      if translaten
-
-        # verify if update is needed
-        translaten.update_attributes(translation.symbolize_keys!)
-        translaten.save
-      else
-        Translation.create(translation.symbolize_keys!)
-      end
-    }
+    end
     true
   end
 
