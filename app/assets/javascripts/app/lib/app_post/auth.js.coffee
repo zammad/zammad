@@ -113,7 +113,7 @@ class App.Auth
     if preferences && preferences.locale
       locale = preferences.locale
     if !locale
-      locale = window.navigator.userLanguage || window.navigator.language || 'en'
+      locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
     App.i18n.set( locale )
 
     App.Event.trigger( 'auth:login', data.session )

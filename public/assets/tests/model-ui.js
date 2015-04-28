@@ -45,7 +45,7 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'state_id' ), 'open')
   equal( App.viewPrint( ticket, 'not_existing' ), '-')
   equal( App.viewPrint( ticket, 'updated_at' ), "<span class=\"humanTimeFromNow undefined\" data-time=\"2014-11-07T23:43:08.000Z\">?</span>")
-  equal( App.viewPrint( ticket, 'date' ), '2015-02-07')
+  equal( App.viewPrint( ticket, 'date' ), '02/07/2015')
   equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
 
 
