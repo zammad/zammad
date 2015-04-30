@@ -245,7 +245,7 @@ returns
 
   def self.create_from_hash!(hash)
     url = ''
-    if hash['info']['urls'] then
+    if hash['info']['urls']
       url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
     end
     roles = Role.where( name: 'Customer' )
