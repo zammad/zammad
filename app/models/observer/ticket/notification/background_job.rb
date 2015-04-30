@@ -128,15 +128,15 @@ class Observer::Ticket::Notification::BackgroundJob
     end
 
     # add history record
-    if recipient_list != ''
-      History.add(
-        o_id: ticket.id,
-        history_type: 'notification',
-        history_object: 'Ticket',
-        value_to: recipient_list,
-        created_by_id: ticket.updated_by_id ||  1
-      )
-    end
+    return if recipient_list == ''
+
+    History.add(
+      o_id: ticket.id,
+      history_type: 'notification',
+      history_object: 'Ticket',
+      value_to: recipient_list,
+      created_by_id: ticket.updated_by_id ||  1
+    )
   end
 
   def human_changes(user, record)

@@ -15,11 +15,12 @@ class Observer::Session < ActiveRecord::Observer
   def check(record)
     return if !record.data
     return if record[:request_type]
+
     # remember request type
-    if record.data['request_type']
-      record[:request_type] = record.data['request_type']
-      record.data.delete('request_type')
-    end
+    return if !record.data['request_type']
+
+    record[:request_type] = record.data['request_type']
+    record.data.delete('request_type')
   end
 
 end

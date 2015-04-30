@@ -201,21 +201,23 @@ returns
   end
 
   def check_title
-    if self.title
-      self.title.gsub!(/\s|\t|\r/, ' ')
-    end
+
+    return if !self.title
+
+    self.title.gsub!(/\s|\t|\r/, ' ')
   end
 
   def check_defaults
     if !self.owner_id
       self.owner_id = 1
     end
-    if self.customer_id
-      customer = User.find( self.customer_id )
-      if self.organization_id != customer.organization_id
-        self.organization_id = customer.organization_id
-      end
-    end
+
+    return if !self.customer_id
+
+    customer = User.find( self.customer_id )
+    return if self.organization_id == customer.organization_id
+
+    self.organization_id = customer.organization_id
   end
 
   def reset_pending_time
@@ -228,9 +230,9 @@ returns
     current_state_type = Ticket::StateType.lookup( id: current_state.state_type_id )
 
     # in case, set pending_time to nil
-    if current_state_type.name !~ /^pending/i
-      self.pending_time = nil
-    end
+    return if current_state_type.name =~ /^pending/i
+
+    self.pending_time = nil
   end
 
   def destroy_dependencies

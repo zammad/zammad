@@ -42,9 +42,10 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
       need_update = true
       customer[:preferences][:tickets_closed] = tickets_closed
     end
-    if need_update
-      customer.save
-    end
+
+    return if !need_update
+
+    customer.save
   end
 
 end

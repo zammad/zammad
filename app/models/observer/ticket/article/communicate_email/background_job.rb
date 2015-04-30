@@ -44,17 +44,18 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         recipient_list += record[key]
       end
     }
-    if recipient_list != ''
-      History.add(
-        o_id: record.id,
-        history_type: 'email',
-        history_object: 'Ticket::Article',
-        related_o_id: ticket.id,
-        related_history_object: 'Ticket',
-        value_from: record.subject,
-        value_to: recipient_list,
-        created_by_id: record.created_by_id,
-      )
-    end
+
+    return if recipient_list == ''
+
+    History.add(
+      o_id: record.id,
+      history_type: 'email',
+      history_object: 'Ticket::Article',
+      related_o_id: ticket.id,
+      related_history_object: 'Ticket',
+      value_from: record.subject,
+      value_to: recipient_list,
+      created_by_id: record.created_by_id,
+    )
   end
 end

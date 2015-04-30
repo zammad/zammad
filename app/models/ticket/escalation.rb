@@ -152,10 +152,11 @@ returns
     if sla_selected.close_time && self.close_time_in_min
       self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
     end
-    if self.changed?
-      self.callback_loop = true
-      self.save
-    end
+
+    return if !self.changed?
+
+    self.callback_loop = true
+    self.save
   end
 
 =begin

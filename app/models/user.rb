@@ -449,9 +449,10 @@ returns
   end
 
   def check_email
-    if self.email
-      self.email = self.email.downcase
-    end
+
+    return if !self.email
+
+    self.email = self.email.downcase
   end
 
   def check_login
@@ -469,16 +470,16 @@ returns
     end
 
     # check if login already exists
-    if self.login
-      self.login = self.login.downcase
-      check = true
-      while check
-        exists = User.where( login: self.login ).first
-        if exists && exists.id != self.id
-          self.login = self.login + rand(999).to_s
-        else
-          check = false
-        end
+    return if !self.login
+
+    self.login = self.login.downcase
+    check      = true
+    while check
+      exists = User.where( login: self.login ).first
+      if exists && exists.id != self.id
+        self.login = self.login + rand(999).to_s
+      else
+        check = false
       end
     end
   end
@@ -499,10 +500,10 @@ returns
     )
 
     # update user link
-    if avatar
-      self.update_column( :image, avatar.store_hash )
-      self.cache_delete
-    end
+    return if !avatar
+
+    self.update_column( :image, avatar.store_hash )
+    self.cache_delete
   end
 
   def avatar_destroy
@@ -524,9 +525,9 @@ returns
     end
 
     # crypt password if not already crypted
-    if self.password && self.password !~ /^\{sha2\}/
-      crypted       = Digest::SHA2.hexdigest( self.password )
-      self.password = "{sha2}#{crypted}"
-    end
+    return if !( self.password && self.password !~ /^\{sha2\}/ )
+
+    crypted       = Digest::SHA2.hexdigest( self.password )
+    self.password = "{sha2}#{crypted}"
   end
 end

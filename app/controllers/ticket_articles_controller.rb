@@ -159,15 +159,15 @@ class TicketArticlesController < ApplicationController
     )
 
     # find file
-    if list
-      file = Store.find(list.first)
-      send_data(
-        file.content,
-        filename: file.filename,
-        type: 'message/rfc822',
-        disposition: 'inline'
-      )
-    end
+    return if !list
+
+    file = Store.find(list.first)
+    send_data(
+      file.content,
+      filename: file.filename,
+      type: 'message/rfc822',
+      disposition: 'inline'
+    )
   end
 
 end

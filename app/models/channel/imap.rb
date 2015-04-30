@@ -91,8 +91,9 @@ class Channel::IMAP < Channel::EmailParser
   end
 
   def disconnect
-    if @imap
-      @imap.disconnect()
-    end
+
+    return if !@imap
+
+    @imap.disconnect()
   end
 end

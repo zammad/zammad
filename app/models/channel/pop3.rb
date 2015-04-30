@@ -72,9 +72,10 @@ class Channel::POP3 < Channel::EmailParser
   end
 
   def disconnect
-    if @pop
-      @pop.finish
-    end
+
+    return if !@pop
+
+    @pop.finish
   end
 
 end

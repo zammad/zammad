@@ -531,6 +531,7 @@ class TicketsController < ApplicationController
 
     # remove attachments from upload cache
     return if !form_id
+
     Store.remove(
       object: 'UploadCache',
       o_id: form_id,

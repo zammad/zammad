@@ -13,9 +13,10 @@ class Channel::TWITTER2
   end
 
   def disconnect
-    if @client
-      @client = nil
-    end
+
+    return if !@client
+
+    @client = nil
   end
 
   def fetch (channel)
@@ -288,16 +289,15 @@ class Channel::TWITTER2
       return dm
     end
 
-    if attr[:type] == 'twitter status'
-      message = client.update(
-        attr[:body].to_s,
-        {
-          in_reply_to_status_id: attr[:in_reply_to]
-        }
-      )
-      #      puts message.inspect
-      return message
-    end
+    return if attr[:type] != 'twitter status'
 
+    message = client.update(
+      attr[:body].to_s,
+      {
+        in_reply_to_status_id: attr[:in_reply_to]
+      }
+    )
+    #      puts message.inspect
+    return message
   end
 end

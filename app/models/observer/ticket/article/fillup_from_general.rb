@@ -14,9 +14,9 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
     return if sender['name'] == 'Customer'
 
     # set from if not given
-    if !record.from
-      user = User.find( record.created_by_id )
-      record.from = "#{user.firstname} #{user.lastname}"
-    end
+    return if record.from
+
+    user        = User.find( record.created_by_id )
+    record.from = "#{user.firstname} #{user.lastname}"
   end
 end

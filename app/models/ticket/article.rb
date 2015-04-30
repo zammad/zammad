@@ -30,9 +30,10 @@ class Ticket::Article < ApplicationModel
   private
 
   def check_subject
-    if self.subject
-      self.subject.gsub!(/\s|\t|\r/, ' ')
-    end
+
+    return if !self.subject
+
+    self.subject.gsub!(/\s|\t|\r/, ' ')
   end
 
   class Flag < ApplicationModel
