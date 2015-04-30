@@ -76,7 +76,7 @@ module Auth::Ldap
       else
         user.update_attributes( user_attributes )
         puts "NOTICE: user updated '#{user.login}'"
-      end    
+      end
     end
 
     # return if it was not possible to create user

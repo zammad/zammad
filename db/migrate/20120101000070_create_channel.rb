@@ -1,6 +1,6 @@
 class CreateChannel < ActiveRecord::Migration
   def up
-    
+
     create_table :channels do |t|
       t.references :group,                                null: true
       t.column :adapter,        :string, limit: 100,   null: false

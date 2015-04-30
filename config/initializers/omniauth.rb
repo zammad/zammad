@@ -1,6 +1,6 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
 
-  # twitter database connect 
+  # twitter database connect
   provider :twitter_database, 'not_change_will_be_set_by_databse', 'not_change_will_be_set_by_databse',
     client_options: { authorize_path: '/oauth/authorize', site: 'https://api.twitter.com' }
 
