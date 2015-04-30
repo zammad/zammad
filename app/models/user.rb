@@ -415,10 +415,10 @@ returns
       scan = self.firstname.scan(/, /)
       if scan[0]
         name = self.firstname.split(', ', 2)
-        if name[0] != nil
+        if !name[0].nil?
           self.lastname  = name[0]
         end
-        if name[1] != nil
+        if !name[1].nil?
           self.firstname = name[1]
         end
         return
@@ -426,10 +426,10 @@ returns
 
       # Firstname Lastname
       name = self.firstname.split(' ', 2)
-      if name[0] != nil
+      if !name[0].nil?
         self.firstname = name[0]
       end
-      if name[1] != nil
+      if !name[1].nil?
         self.lastname = name[1]
       end
       return
@@ -438,10 +438,10 @@ returns
     elsif ( !self.firstname || self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? ) && ( self.email && !self.email.empty? )
       scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
-        if scan[0][0] != nil
+        if !scan[0][0].nil?
           self.firstname = scan[0][0].capitalize
         end
-        if scan[0][1] != nil
+        if !scan[0][1].nil?
           self.lastname  = scan[0][1].capitalize
         end
       end

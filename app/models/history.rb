@@ -193,7 +193,7 @@ returns
         data.delete( 'value_to' )
         data.delete( 'value_from' )
       end
-      if data['related_history_object_id'] != nil
+      if !data['related_history_object_id'].nil?
         data['related_object'] = self.object_lookup_id( data['related_history_object_id'] ).name
       end
       data.delete( 'related_history_object_id' )
