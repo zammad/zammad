@@ -123,36 +123,38 @@ class TicketsController < ApplicationController
     assets = ticket.assets({})
 
     # open tickets by customer
-    group_ids = Group.select( 'groups.id' ).joins(:users).
-    where( 'groups_users.user_id = ?', current_user.id ).
-    where( 'groups.active = ?', true ).
-    map( &:id )
-    access_condition = [ 'group_id IN (?)', group_ids ]
-    ticket_list = Ticket.where(
-      customer_id: ticket.customer_id,
-      state_id: Ticket::State.by_category( 'open' )
+    group_ids = Group.select( 'groups.id' )
+                .joins(:users)
+                .where( 'groups_users.user_id = ?', current_user.id )
+                .where( 'groups.active = ?', true )
+                .map( &:id )
 
-    )
-    .where(access_condition)
-    .where( 'id != ?', [ ticket.id ] )
-    .order('created_at DESC')
-    .limit(6)
+    access_condition = [ 'group_id IN (?)', group_ids ]
+
+    ticket_lists = Ticket
+                   .where(
+                     customer_id: ticket.customer_id,
+                     state_id: Ticket::State.by_category( 'open' )
+                   )
+                   .where(access_condition)
+                   .where( 'id != ?', [ ticket.id ] )
+                   .order('created_at DESC')
+                   .limit(6)
 
     # get related assets
     ticket_ids_by_customer = []
-    ticket_list.each {|ticket|
-      ticket_ids_by_customer.push ticket.id
-      assets = ticket.assets(assets)
+    ticket_lists.each {|ticket_list|
+      ticket_ids_by_customer.push ticket_list.id
+      assets = ticket_list.assets(assets)
     }
 
     ticket_ids_recent_viewed = []
-    ticket_recent_view = RecentView.list( current_user, 8, 'Ticket' )
-    ticket_recent_view.each {|item|
-      if item['object'] == 'Ticket'
-        ticket_ids_recent_viewed.push item['o_id']
-        ticket = Ticket.find( item['o_id'] )
-        assets = ticket.assets(assets)
-      end
+    recent_views       = RecentView.list( current_user, 8, 'Ticket' )
+    recent_views.each {|recent_view|
+      next if recent_view['object'] != 'Ticket'
+      ticket_ids_recent_viewed.push recent_view['o_id']
+      recent_view_ticket = Ticket.find( recent_view['o_id'] )
+      assets             = recent_view_ticket.assets(assets)
     }
 
     # return result
@@ -202,11 +204,9 @@ class TicketsController < ApplicationController
     end
 
     # merge ticket
-    success = ticket_slave.merge_to(
-      {
-        ticket_id: ticket_master.id,
-        created_by_id: current_user.id,
-      }
+    ticket_slave.merge_to(
+      ticket_id: ticket_master.id,
+      created_by_id: current_user.id,
     )
 
     # return result
@@ -395,7 +395,7 @@ class TicketsController < ApplicationController
 
       # generate stats by user
       (0..11).each {|month_back|
-        date_to_check = Time.zone.now - month_back.month
+        date_to_check = now - month_back.month
         date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
 
@@ -404,16 +404,16 @@ class TicketsController < ApplicationController
         }
 
         # created
-        created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end ).
-          where(access_condition).
-          where(condition).
-          count
+        created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end )
+                  .where(access_condition)
+                  .where(condition)
+                  .count
 
         # closed
-        closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  ).
-          where(access_condition).
-          where(condition).
-          count
+        closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  )
+                 .where(access_condition)
+                 .where(condition)
+                 .count
 
         data = {
           month: date_to_check.month,
@@ -431,7 +431,6 @@ class TicketsController < ApplicationController
     org_tickets_closed_ids    = []
     org_ticket_volume_by_year = []
     if params[:organization_id] && !params[:organization_id].empty?
-      organization = Organization.find( params[:organization_id] )
 
       condition = {
         'tickets.state_id'        => Ticket::State.by_category('open'),
@@ -462,7 +461,7 @@ class TicketsController < ApplicationController
 
       # generate stats by org
       (0..11).each {|month_back|
-        date_to_check = DateTime.now - month_back.month
+        date_to_check = now - month_back.month
         date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
 
@@ -531,11 +530,10 @@ class TicketsController < ApplicationController
     end
 
     # remove attachments from upload cache
-    if form_id
-      Store.remove(
-        object: 'UploadCache',
-        o_id: form_id,
-      )
-    end
+    return if !form_id
+    Store.remove(
+      object: 'UploadCache',
+      o_id: form_id,
+    )
   end
 end
