@@ -820,7 +820,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if state.has_key?(key.to_s)
+        if state.key?(key.to_s)
           state_new[value] = state[key.to_s]
         end
       }
@@ -869,7 +869,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if priority.has_key?(key.to_s)
+        if priority.key?(key.to_s)
           priority_new[value] = priority[key.to_s]
         end
       }
@@ -910,7 +910,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if group.has_key?(key.to_s)
+        if group.key?(key.to_s)
           group_new[value] = group[key.to_s]
         end
       }
@@ -965,7 +965,7 @@ module Import::OTRS2
         group_ids: group_ids,
       }
       map.each { |key, value|
-        if user.has_key?(key.to_s)
+        if user.key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
       }
@@ -1089,7 +1089,7 @@ module Import::OTRS2
         role_ids: [ role_customer.id ],
       }
       map.each { |key, value|
-        if user.has_key?(key.to_s)
+        if user.key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
       }
@@ -1153,7 +1153,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if organization.has_key?(key.to_s)
+        if organization.key?(key.to_s)
           organization_new[value] = organization[key.to_s]
         end
       }

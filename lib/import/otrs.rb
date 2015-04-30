@@ -69,7 +69,7 @@ module Import::OTRS
     }
     types.each {|config_key, result_key|
       if config[config_key]
-        return false if !result[result_key].has_value?( config[config_key] )
+        return false if !result[result_key].value?( config[config_key] )
       end
     }
 
@@ -85,7 +85,7 @@ module Import::OTRS
     types.each {|config_key, result_key|
       next if !config[config_key]
       config[config_key].each {|otrs_group, role|
-        next if !result[result_key].has_value?( otrs_group )
+        next if !result[result_key].value?( otrs_group )
         role_ids = user.role_ids
         role = Role.where( name: role ).first
         next if !role

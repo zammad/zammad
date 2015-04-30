@@ -191,7 +191,7 @@ EventMachine.run {
               if data['recipient'].class != Hash
                 log 'error', "recipient attribute isn't a hash '#{ data['recipient'].inspect }'"
               else
-                if !data['recipient'].has_key?('user_id')
+                if !data['recipient'].key?('user_id')
                   log 'error', "need recipient.user_id attribute '#{ data['recipient'].inspect }'"
                 else
                   if data['recipient']['user_id'].class != Array

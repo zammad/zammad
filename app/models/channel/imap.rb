@@ -7,7 +7,7 @@ class Channel::IMAP < Channel::EmailParser
   def fetch (channel, check_type = '', verify_string = '')
     ssl  = true
     port = 993
-    if channel[:options].has_key?(:ssl) && channel[:options][:ssl].to_s == 'false'
+    if channel[:options].key?(:ssl) && channel[:options][:ssl].to_s == 'false'
       ssl  = false
       port = 143
     end

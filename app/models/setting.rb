@@ -61,7 +61,7 @@ class Setting < ApplicationModel
 
     return if !(self.state || self.state == false)
 
-    return if !( !self.state.respond_to?('has_key?') || !self.state.has_key?(:value) )
+    return if !( !self.state.respond_to?('has_key?') || !self.state.key?(:value) )
 
     self.state = { value: self.state }
   end
