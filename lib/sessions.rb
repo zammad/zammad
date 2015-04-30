@@ -68,7 +68,7 @@ returns
     path = @path + '/'
 
     # just make sure that spool path exists
-    if !File::exists?( path )
+    if !File::exist?( path )
       FileUtils.mkpath path
     end
 
@@ -270,7 +270,7 @@ returns
     check = true
     count = 0
     while check
-      if File::exists?( path + filename )
+      if File::exist?( path + filename )
         count += 1
         filename = filename + '-' + count
       else
@@ -284,7 +284,7 @@ returns
       file.flock( File::LOCK_UN )
       file.close
     }
-    return false if !File.exists?( path + 'a-' + filename )
+    return false if !File.exist?( path + 'a-' + filename )
     FileUtils.mv( path + 'a-' + filename, path + filename )
     true
   end
@@ -419,7 +419,7 @@ returns
     }
     files.sort.each {|entry|
       filename = path + '/' + entry
-      next if !File::exists?( filename )
+      next if !File::exist?( filename )
       File.open( filename, 'rb' ) { |file|
         all = file.read
         spool = JSON.parse( all )
@@ -474,7 +474,7 @@ returns
   def self.jobs
 
     # just make sure that spool path exists
-    if !File::exists?( @path )
+    if !File::exist?( @path )
       FileUtils.mkpath @path
     end
 
