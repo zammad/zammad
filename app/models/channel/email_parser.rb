@@ -526,7 +526,7 @@ class Channel::EmailParser
   def set_attributes_by_x_headers( item_object, header_name, mail )
 
     # loop all x-zammad-hedaer-* headers
-    item_object.attributes.each{|key, value|
+    item_object.attributes.each {|key, value|
 
       # ignore read only attributes
       next if key == 'updated_at'

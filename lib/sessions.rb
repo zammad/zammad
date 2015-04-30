@@ -576,7 +576,7 @@ returns
   end
 
   def self.symbolize_keys(hash)
-    hash.inject({}){|result, (key, value)|
+    hash.inject({}) {|result, (key, value)|
       new_key = case key
                 when String then key.to_sym
                 else key
