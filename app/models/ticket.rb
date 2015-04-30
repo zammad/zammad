@@ -94,10 +94,10 @@ returns
   def self.access_condition(user)
     access_condition = []
     if user.is_role(Z_ROLENAME_AGENT)
-      group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', user.id ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
+      group_ids = Group.select( 'groups.id' ).joins(:users)
+      .where( 'groups_users.user_id = ?', user.id )
+      .where( 'groups.active = ?', true )
+      .map( &:id )
       access_condition = [ 'group_id IN (?)', group_ids ]
     else
       if !user.organization || ( !user.organization.shared || user.organization.shared == false )

@@ -87,9 +87,9 @@ return all online notifications of an user
 
   def self.list(user, limit)
 
-    notifications = OnlineNotification.where(user_id: user.id).
-      order( 'created_at DESC, id DESC' ).
-      limit( limit )
+    notifications = OnlineNotification.where(user_id: user.id)
+      .order( 'created_at DESC, id DESC' )
+      .limit( limit )
     list = []
     notifications.each do |item|
       data = item.attributes
@@ -115,9 +115,9 @@ return all online notifications of an object
     notifications = OnlineNotification.where(
       object_lookup_id: object_id,
       o_id: o_id,
-    ).
-      order( 'created_at DESC, id DESC' ).
-      limit( 10_000 )
+    )
+      .order( 'created_at DESC, id DESC' )
+      .limit( 10_000 )
     list = []
     notifications.each do |item|
       data = item.attributes

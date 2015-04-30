@@ -150,9 +150,9 @@ returns
   def self.list( requested_object, requested_object_id, related_history_object = nil, assets = nil )
     if !related_history_object
       history_object = self.object_lookup( requested_object )
-      history = History.where( history_object_id: history_object.id ).
-      where( o_id: requested_object_id ).
-      order('created_at ASC, id ASC')
+      history = History.where( history_object_id: history_object.id )
+      .where( o_id: requested_object_id )
+      .order('created_at ASC, id ASC')
     else
       history_object_requested = self.object_lookup( requested_object )
       history_object_related   = self.object_lookup( related_history_object )
@@ -162,8 +162,8 @@ returns
         requested_object_id,
         history_object_related.id,
         requested_object_id,
-      ).
-      order('created_at ASC, id ASC')
+      )
+      .order('created_at ASC, id ASC')
     end
     asset_list = {}
     list = []

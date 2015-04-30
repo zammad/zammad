@@ -108,14 +108,14 @@ returns
     #    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
     # get only tickets with permissions
     if data[:current_user].is_role('Customer')
-      group_ids = Group.select( 'groups.id' ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
+      group_ids = Group.select( 'groups.id' )
+      .where( 'groups.active = ?', true )
+      .map( &:id )
     else
-      group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', [ data[:current_user].id ] ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
+      group_ids = Group.select( 'groups.id' ).joins(:users)
+      .where( 'groups_users.user_id = ?', [ data[:current_user].id ] )
+      .where( 'groups.active = ?', true )
+      .map( &:id )
     end
 
     # overview meta for navbar
@@ -147,20 +147,20 @@ returns
       if overview_selected.group_by && !overview_selected.group_by.empty?
         order_by = overview_selected.group_by + '_id, ' + order_by
       end
-      tickets = Ticket.select( 'id' ).
-      where( group_id: group_ids ).
-      where( _condition( overview_selected.condition ) ).
-      order( order_by ).
-      limit( 500 )
+      tickets = Ticket.select( 'id' )
+      .where( group_id: group_ids )
+      .where( _condition( overview_selected.condition ) )
+      .order( order_by )
+      .limit( 500 )
 
       ticket_ids = []
       tickets.each { |ticket|
         ticket_ids.push ticket.id
       }
 
-      tickets_count = Ticket.where( group_id: group_ids ).
-      where( _condition( overview_selected.condition ) ).
-      count()
+      tickets_count = Ticket.where( group_id: group_ids )
+      .where( _condition( overview_selected.condition ) )
+      .count()
 
       return {
         ticket_ids: ticket_ids,
@@ -171,15 +171,15 @@ returns
 
     # get tickets for overview
     data[:start_page] ||= 1
-    tickets = Ticket.where( group_id: group_ids ).
-    where( _condition( overview_selected.condition ) ).
-    order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )#.
+    tickets = Ticket.where( group_id: group_ids )
+    .where( _condition( overview_selected.condition ) )
+    .order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )#.
     #      limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] ).
     #      offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
 
-    tickets_count = Ticket.where( group_id: group_ids ).
-    where( _condition( overview_selected.condition ) ).
-    count()
+    tickets_count = Ticket.where( group_id: group_ids )
+    .where( _condition( overview_selected.condition ) )
+    .count()
 
     {
       tickets: tickets,
