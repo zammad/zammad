@@ -61,9 +61,9 @@ def checkForHeader(fileName)
   t_file.unlink
 
   # beautify ruby file
-  if !isCoffee
-    t_file = RBeautify.beautify_file(fileName)
-  end
+  return if isCoffee
+
+  t_file = RBeautify.beautify_file(fileName)
 end
 
 #folder array

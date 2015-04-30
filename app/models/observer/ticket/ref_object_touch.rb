@@ -40,8 +40,8 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
     end
 
     # touch new/current organization
-    if record.organization
-      record.organization.touch
-    end
+    return if !record.organization
+
+    record.organization.touch
   end
 end

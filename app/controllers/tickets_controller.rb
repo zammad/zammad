@@ -531,11 +531,11 @@ class TicketsController < ApplicationController
     end
 
     # remove attachments from upload cache
-    if form_id
-      Store.remove(
-        object: 'UploadCache',
-        o_id: form_id,
-      )
-    end
+    return if !form_id
+
+    Store.remove(
+      object: 'UploadCache',
+      o_id: form_id,
+    )
   end
 end

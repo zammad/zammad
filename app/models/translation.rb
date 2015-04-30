@@ -168,9 +168,9 @@ translate strings in ruby context, e. g. for notifications
 
   private
   def set_initial
-    if !target_initial
-      self.target_initial = self.target
-    end
+
+    return if target_initial
+    self.target_initial = self.target
   end
   def cache_clear
     Cache.delete( 'Translation::' + self.locale.downcase )

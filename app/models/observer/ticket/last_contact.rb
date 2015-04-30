@@ -31,16 +31,15 @@ class Observer::Ticket::LastContact < ActiveRecord::Observer
     end
 
     # if sender is not agent
-    if sender.name == 'Agent'
+    return if sender.name != 'Agent'
 
-      # set last_contact_agent
-      record.ticket.last_contact_agent = record.created_at
+    # set last_contact_agent
+    record.ticket.last_contact_agent = record.created_at
 
-      # set last_contact
-      record.ticket.last_contact = record.created_at
+    # set last_contact
+    record.ticket.last_contact = record.created_at
 
-      # save ticket
-      record.ticket.save
-    end
+    # save ticket
+    record.ticket.save
   end
 end

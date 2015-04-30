@@ -44,11 +44,11 @@ class ApplicationModel < ActiveRecord::Base
   @@import_class_list = ['Ticket', 'Ticket::Article', 'History', 'Ticket::State', 'Ticket::StateType', 'Ticket::Priority', 'Group', 'User', 'Role' ]
 
   def check_attributes_protected
-    if !Setting.get('system_init_done') || ( Setting.get('import_mode') && @@import_class_list.include?( self.class.to_s ) )
-      # do noting, use id as it is
-    else
-      self[:id] = nil
-    end
+
+    # do noting, use id as it is
+    return if !Setting.get('system_init_done') || ( Setting.get('import_mode') && @@import_class_list.include?( self.class.to_s ) )
+
+    self[:id] = nil
   end
 
 =begin
@@ -197,14 +197,15 @@ returns
         self.updated_by_id = UserInfo.current_user_id
       end
     end
-    if self.class.column_names.include? 'created_by_id'
-      if UserInfo.current_user_id
-        if self.created_by_id && self.created_by_id != UserInfo.current_user_id
-          logger.info "NOTICE create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
-        end
-        self.created_by_id = UserInfo.current_user_id
-      end
+
+    return if !self.class.column_names.include? 'created_by_id'
+
+    return if !UserInfo.current_user_id
+
+    if self.created_by_id && self.created_by_id != UserInfo.current_user_id
+      logger.info "NOTICE create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
     end
+    self.created_by_id = UserInfo.current_user_id
   end
 
 =begin
@@ -223,9 +224,9 @@ returns
 
   def fill_up_user_update
     return if !self.class.column_names.include? 'updated_by_id'
-    if UserInfo.current_user_id
-      self.updated_by_id = UserInfo.current_user_id
-    end
+    return if !UserInfo.current_user_id
+
+    self.updated_by_id = UserInfo.current_user_id
   end
 
   def cache_update(o)
@@ -268,12 +269,13 @@ returns
       key = self.class.to_s + ':f:' + self.name.to_s
       Cache.delete( key.to_s )
     end
-    if self[:login]
-      key = self.class.to_s + '::' + self.login.to_s
-      Cache.delete( key.to_s )
-      key = self.class.to_s + ':f:' + self.login.to_s
-      Cache.delete( key.to_s )
-    end
+
+    return if !self[:login]
+
+    key = self.class.to_s + '::' + self.login.to_s
+    Cache.delete( key.to_s )
+    key = self.class.to_s + ':f:' + self.login.to_s
+    Cache.delete( key.to_s )
   end
 
   def self.cache_set(data_id, data, full = false)
@@ -962,9 +964,9 @@ store attachments for this object
     self.attachments_buffer = attachments
 
     # update if object already exists
-    if self.id && self.id != 0
-      attachments_buffer_check
-    end
+    return if !( self.id && self.id != 0 )
+
+    attachments_buffer_check
   end
 
 =begin
