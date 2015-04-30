@@ -22,11 +22,11 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     time_diff = 0
     if timezone
       begin
-         time_diff = Time.parse(start_time.to_s).in_time_zone(timezone).utc_offset
-      rescue Exception => e
-        puts "ERROR: Can't fine tomezone #{timezone}"
-        puts e.inspect
-        puts e.backtrace
+        time_diff = Time.parse(start_time.to_s).in_time_zone(timezone).utc_offset
+     rescue Exception => e
+       puts "ERROR: Can't fine tomezone #{timezone}"
+       puts e.inspect
+       puts e.backtrace
       end
     end
     beginning_of_workday = Time.parse("1977-10-27 #{config['beginning_of_workday']}")
@@ -169,7 +169,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
         diff = end_time - start_time
 
         if diff > 59 * 60
-            diff = start_time - start_time.beginning_of_hour
+          diff = start_time - start_time.beginning_of_hour
         end
         start_time += diff
 

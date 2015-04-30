@@ -56,7 +56,7 @@ mark online notification as seen
 =end
 
   def self.seen(data)
-      notification = OnlineNotification.find(data[:id])
+    notification = OnlineNotification.find(data[:id])
       notification.seen = true
       notification.save
   end
@@ -139,17 +139,17 @@ mark online notification as seen by object
 =end
 
   def self.seen_by_object(object_name, o_id)
-      object_id     = ObjectLookup.by_name( object_name )
-      notifications = OnlineNotification.where(
-        object_lookup_id: object_id,
-        o_id: o_id,
-        seen: false,
-      )
-      notifications.each do |notification|
-        notification.seen = true
-        notification.save
-      end
-      true
+    object_id     = ObjectLookup.by_name( object_name )
+    notifications = OnlineNotification.where(
+      object_lookup_id: object_id,
+      o_id: o_id,
+      seen: false,
+    )
+    notifications.each do |notification|
+      notification.seen = true
+      notification.save
+    end
+    true
   end
 
 =begin

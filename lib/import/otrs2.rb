@@ -346,14 +346,14 @@ module Import::OTRS2
     steps = 30
     run   = true
     while run
-        count += steps
-        records = load('CustomerUser', steps, count - steps)
-        if !records || !records[0]
-          log 'all customers imported.'
-          run = false
-          next
-        end
-        customer(records, organizations)
+      count += steps
+      records = load('CustomerUser', steps, count - steps)
+      if !records || !records[0]
+        log 'all customers imported.'
+        run = false
+        next
+      end
+      customer(records, organizations)
     end
 
     Thread.abort_on_exception = true
@@ -944,7 +944,6 @@ module Import::OTRS2
       UserEmail: :email,
       UserFirstname: :firstname,
       UserLastname: :lastname,
-#      :UserTitle     =>
       UserLogin: :login,
       UserPw: :password,
     };
@@ -1065,7 +1064,6 @@ module Import::OTRS2
       UserEmail: :email,
       UserFirstname: :firstname,
       UserLastname: :lastname,
-#      :UserTitle     => 
       UserLogin: :login,
       UserPassword: :password,
       UserPhone: :phone,
@@ -1236,20 +1234,20 @@ module Import::OTRS2
 
   def self._set_valid(record)
 
-      # map
-      if record['ValidID'].to_s == '3'
-        record['ValidID'] = false
-      elsif record['ValidID'].to_s == '2'
-        record['ValidID'] = false
-      elsif record['ValidID'].to_s == '1'
-        record['ValidID'] = true
-      elsif record['ValidID'].to_s == '0'
-        record['ValidID'] = false
+    # map
+    if record['ValidID'].to_s == '3'
+      record['ValidID'] = false
+    elsif record['ValidID'].to_s == '2'
+      record['ValidID'] = false
+    elsif record['ValidID'].to_s == '1'
+      record['ValidID'] = true
+    elsif record['ValidID'].to_s == '0'
+      record['ValidID'] = false
 
-      # fallback
-      else
-        record['ValidID'] = true
-      end
+    # fallback
+    else
+      record['ValidID'] = true
+    end
   end
 
   # cleanup invalid values

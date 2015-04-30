@@ -22,7 +22,7 @@ class Sessions::Backend::ActivityStream
 
     # update last changed
     if activity_stream && activity_stream.first
-       @last_change = activity_stream.first['created_at']
+      @last_change = activity_stream.first['created_at']
     end
 
     @user.activity_stream( 25, true )

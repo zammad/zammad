@@ -117,7 +117,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-        raise 'System is not in import mode!'
+      raise 'System is not in import mode!'
     end
 
     response = request('public.pl?Action=Export')
@@ -181,7 +181,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-        raise 'System is not in import mode!'
+      raise 'System is not in import mode!'
     end
 
     # create states
@@ -702,48 +702,44 @@ module Import::OTRS
       UserEmail: :email,
       UserFirstname: :firstname,
       UserLastname: :lastname,
-#      :UserTitle     => 
       UserLogin: :login,
       UserPw: :password,
     };
 
     result.each { |user|
 #      puts 'USER: ' + user.inspect
-        _set_valid(user)
+      _set_valid(user)
 
-        role = Role.lookup( name: 'Agent' )
-        # get new attributes
-        user_new = {
-          created_by_id: 1,
-          updated_by_id: 1,
-          source: 'OTRS Import',
-          role_ids: [ role.id ],
-        }
-        map.each { |key, value|
-          if user[key.to_s]
-            user_new[value] = user[key.to_s]
-          end
-        }
+      role = Role.lookup( name: 'Agent' )
+      # get new attributes
+      user_new = {
+        created_by_id: 1,
+        updated_by_id: 1,
+        source: 'OTRS Import',
+        role_ids: [ role.id ],
+      }
+      map.each { |key, value|
+        if user[key.to_s]
+          user_new[value] = user[key.to_s]
+        end
+      }
 
-        # check if state already exists
-#        user_old = User.where( :login => user_new[:login] ).first
-        user_old = User.where( id: user_new[:id] ).first
+      # check if state already exists
+      user_old = User.where( id: user_new[:id] ).first
 
         # set state types
-        if user_old
-          puts "update User.find(#{user_new[:id]})"
-#          puts 'Update User' + user_new.inspect
-          user_new.delete( :role_ids )
-          user_old.update_attributes(user_new)
-        else
-          puts "add User.find(#{user_new[:id]})"
-#          puts 'Add User' + user_new.inspect
-          user = User.new(user_new)
-          user.id = user_new[:id]
-          user.save
-        end
-
-#      end
+      if user_old
+        puts "update User.find(#{user_new[:id]})"
+#        puts 'Update User' + user_new.inspect
+        user_new.delete( :role_ids )
+        user_old.update_attributes(user_new)
+      else
+        puts "add User.find(#{user_new[:id]})"
+#        puts 'Add User' + user_new.inspect
+        user = User.new(user_new)
+        user.id = user_new[:id]
+        user.save
+      end
     }
   end
   def self.customer
@@ -767,7 +763,6 @@ module Import::OTRS
         UserEmail: :email,
         UserFirstname: :firstname,
         UserLastname: :lastname,
-  #      :UserTitle     => 
         UserLogin: :login,
         UserPassword: :password,
         UserPhone: :phone,
@@ -800,7 +795,7 @@ module Import::OTRS
         }
 
         # check if state already exists
-  #        user_old = User.where( :login => user_new[:login] ).first
+#        user_old = User.where( :login => user_new[:login] ).first
         user_old = User.where( login: user_new[:login] ).first
 
         # set state types
@@ -819,17 +814,17 @@ module Import::OTRS
   end
   def self._set_valid(record)
       # map
-      if record['ValidID'] == '3'
-        record['ValidID'] = '2'
-      end
-      if record['ValidID'] == '2'
-        record['ValidID'] = false
-      end
-      if record['ValidID'] == '1'
-        record['ValidID'] = true
-      end
-      if record['ValidID'] == '0'
-        record['ValidID'] = false
-      end
+    if record['ValidID'] == '3'
+      record['ValidID'] = '2'
+    end
+    if record['ValidID'] == '2'
+      record['ValidID'] = false
+    end
+    if record['ValidID'] == '1'
+      record['ValidID'] = true
+    end
+    if record['ValidID'] == '0'
+      record['ValidID'] = false
+    end
   end
 end
