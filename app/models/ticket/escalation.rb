@@ -262,7 +262,7 @@ returns
       if counted
         # puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
         total_time_without_pending = total_time_without_pending + diff
-      else
+      # else
       # puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
       end
       total_time = total_time + diff
