@@ -525,7 +525,8 @@ returns
     end
 
     # crypt password if not already crypted
-    return if !( self.password && self.password !~ /^\{sha2\}/ )
+    return if !self.password
+    return if self.password =~ /^\{sha2\}/
 
     crypted       = Digest::SHA2.hexdigest( self.password )
     self.password = "{sha2}#{crypted}"
