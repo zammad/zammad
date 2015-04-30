@@ -64,7 +64,7 @@ module Auth::Ldap
         source: 'ldap',
         updated_by_id: 1,
       }
-      config[:sync_params].each {| local_data, ldap_data |
+      config[:sync_params].each {|local_data, ldap_data|
         if user_data[ ldap_data.downcase.to_sym ]
           user_attributes[ local_data.downcase.to_sym] = user_data[ ldap_data.downcase.to_sym ]
         end

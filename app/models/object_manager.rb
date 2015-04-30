@@ -187,7 +187,7 @@ returns:
       }
       if item.screens
         data[:screen] = {}
-        item.screens.each {|screen, roles_options |
+        item.screens.each {|screen, roles_options|
           data[:screen][screen] = {}
           roles_options.each {|role, options|
             if role == '-all-'

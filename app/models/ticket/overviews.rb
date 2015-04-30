@@ -72,7 +72,7 @@ returns
       end
 
       # replace e.g. 'current_user.id' with current_user.id
-      overview.condition.each { |item, value |
+      overview.condition.each { |item, value|
         if value && value.class.to_s == 'String'
           parts = value.split( '.', 2 )
           if parts[0] && parts[1] && parts[0] == 'current_user'
