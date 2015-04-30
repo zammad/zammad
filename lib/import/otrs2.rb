@@ -803,7 +803,7 @@ module Import::OTRS2
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     # rename states to handle not uniq issues
     Ticket::State.all.each {|state|
@@ -858,7 +858,7 @@ module Import::OTRS2
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     records.each { |priority|
       _set_valid(priority)
@@ -899,7 +899,7 @@ module Import::OTRS2
       QueueID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     records.each { |group|
       _set_valid(group)
@@ -945,7 +945,7 @@ module Import::OTRS2
       UserLastname: :lastname,
       UserLogin: :login,
       UserPw: :password,
-    };
+    }
 
     records.each { |user|
       _set_valid(user)
@@ -1072,7 +1072,7 @@ module Import::OTRS2
       UserZip: :zip,
       UserCity: :city,
       UserCountry: :country,
-    };
+    }
 
     role_agent    = Role.lookup( name: 'Agent' )
     role_customer = Role.lookup( name: 'Customer' )
@@ -1142,7 +1142,7 @@ module Import::OTRS2
       CustomerCompanyName: :name,
       ValidID: :active,
       CustomerCompanyComment: :note,
-    };
+    }
 
     records.each { |organization|
       _set_valid(organization)

@@ -8,7 +8,7 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
   def after_create(record)
 
     # just process ticket object tags
-    return true if record.tag_object.name != 'Ticket';
+    return true if record.tag_object.name != 'Ticket'
 
     # add ticket history
     History.add(
@@ -22,7 +22,7 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
   def after_destroy(record)
 
     # just process ticket object tags
-    return true if record.tag_object.name != 'Ticket';
+    return true if record.tag_object.name != 'Ticket'
 
     # add ticket history
     History.add(

@@ -555,7 +555,7 @@ module Import::OTRS
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     Ticket::State.all.each {|state|
       state.name = state.name + '_tmp'
@@ -611,7 +611,7 @@ module Import::OTRS
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     result.each { |priority|
       _set_valid(priority)
@@ -655,7 +655,7 @@ module Import::OTRS
       QueueID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     result.each { |group|
       _set_valid(group)
@@ -702,7 +702,7 @@ module Import::OTRS
       UserLastname: :lastname,
       UserLogin: :login,
       UserPw: :password,
-    };
+    }
 
     result.each { |user|
 #      puts 'USER: ' + user.inspect
@@ -770,7 +770,7 @@ module Import::OTRS
         UserZip: :zip,
         UserCity: :city,
         UserCountry: :country,
-      };
+      }
 
       done = true
       result.each { |user|
