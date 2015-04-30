@@ -305,6 +305,11 @@ class App.Utils
     # To/Cc/Bcc: xxx
     # Date: 01.04.2015 12:41
     # Subject: xxx
+    # - or -
+    # De : xxx
+    # À/?/?: xxx
+    # Envoyé : mercredi 29 avril 2015 17:31
+    # Objet : xxx
     searchForMs = (textToSearchInLines, markers) ->
       lineCount          = 0
       fromFound          = undefined
@@ -315,7 +320,7 @@ class App.Utils
 
         # find Sent
         if fromFound
-          if line && line.match( /^(Subject|Betreff):\s.+?/)
+          if line && line.match( /^(Subject|Betreff|Objet)(\s|):\s.+?/) # en/de/fr | sometimes ms adds a space to "xx : value"
             marker =
               line:      fromFound
               lineCount: lineCount
@@ -327,7 +332,7 @@ class App.Utils
 
         # find From
         else
-          if line && line.match( /^(From|Von):\s.+?/ )
+          if line && line.match( /^(From|Von|De)(\s|):\s.+?/ ) # en/de/fr | sometimes ms adds a space to "xx : value"
             fromFound    = line.replace(/\s{0,5}(\[|<).+?(\]|>)/g, '')
             foundInLines = lineCount
     searchForMs(textToSearchInLines, markers)

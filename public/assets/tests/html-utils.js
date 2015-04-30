@@ -599,6 +599,13 @@ test( "identify signature", function() {
   result  = App.Utils.signatureIdentify( message, true )
   equal( result, should )
 
+  // fr
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>'
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
+
   // thunderbird
   // de
   message = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div>Am 04.03.2015 um 12:47 schrieb Martin Edenhofer via Znuny Sales:</div><div>&gt; Hallo Christian,</div>"
