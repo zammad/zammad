@@ -136,7 +136,7 @@ get list of translations
       end
     end
 
-    return {
+    {
       list: list,
     }
   end
@@ -163,7 +163,7 @@ translate strings in ruby context, e. g. for notifications
       return record.target if record.source == string
     }
 
-    return string
+    string
   end
 
   private

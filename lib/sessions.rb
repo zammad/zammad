@@ -468,7 +468,7 @@ returns
     to_delete.each {|file|
       File.delete(file)
     }
-    return data
+    data
   end
 
   def self.jobs

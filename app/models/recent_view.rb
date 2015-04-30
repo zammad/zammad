@@ -67,7 +67,7 @@ class RecentView < ApplicationModel
     # get related object
     assets = ApplicationModel.assets_of_object_list(recent_viewed)
 
-    return {
+    {
       stream: recent_viewed,
       assets: assets,
     }

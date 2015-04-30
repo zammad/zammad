@@ -134,7 +134,7 @@ class Channel::TWITTER2
       ticket = fetch_ticket_create(user, tweet, sender, channel, group)
     end
     article = fetch_article_create(user, ticket, tweet, sender)
-    return user, ticket, article
+    [user, ticket, article]
   end
 
   def fetch_user_create(tweet, sender)
@@ -177,7 +177,7 @@ class Channel::TWITTER2
     # set current user
     UserInfo.current_user_id = user.id
 
-    return user
+    user
   end
 
   def fetch_ticket_create(user, tweet, sender, channel, group)
@@ -298,6 +298,6 @@ class Channel::TWITTER2
       }
     )
     #      puts message.inspect
-    return message
+    message
   end
 end

@@ -143,7 +143,7 @@ module Import::OTRS2
     return if !response.success?
 
     result = json(response)
-    return result
+    result
   end
 
 =begin
@@ -165,7 +165,7 @@ module Import::OTRS2
     return if !response
     return if !response.success?
     result = json(response)
-    return result
+    result
   end
 
 =begin
@@ -201,7 +201,7 @@ module Import::OTRS2
 =end
 
   def self.connection_test
-    return self.request_json({})
+    self.request_json({})
   end
 
 =begin
@@ -439,7 +439,6 @@ module Import::OTRS2
     # get changed tickets
     self.ticket_diff
 
-    return
   end
 
   def self.ticket_diff

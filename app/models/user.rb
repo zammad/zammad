@@ -159,7 +159,7 @@ returns
     # get related objects
     assets = ApplicationModel.assets_of_object_list(activity_stream)
 
-    return {
+    {
       activity_stream: activity_stream,
       assets: assets,
     }

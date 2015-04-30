@@ -15,6 +15,6 @@ module Auth::Internal
     # plain auth check
     return user if user.password == password
 
-    return false
+    false
   end
 end

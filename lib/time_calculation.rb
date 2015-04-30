@@ -93,7 +93,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
         }
       }
     end
-    return working_hours
+    working_hours
   end
 
 =begin
@@ -350,7 +350,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       start_time = start_time.beginning_of_day + 86_400
     end
 
-    return start_time
+    start_time
   end
 
 end

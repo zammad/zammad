@@ -32,7 +32,7 @@ class Setting < ApplicationModel
 
     # store for class requests
     @@current[:settings_config] = config
-    return config
+    config
   end
 
   def self.set(name, value)
@@ -47,7 +47,7 @@ class Setting < ApplicationModel
 
   def self.get(name)
     self.load
-    return @@current[:settings_config][name]
+    @@current[:settings_config][name]
   end
 
   private

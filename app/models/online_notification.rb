@@ -171,7 +171,7 @@ returns:
 
     notifications = OnlineNotification.list(user, limit)
     assets = ApplicationModel.assets_of_object_list(notifications)
-    return {
+    {
       stream: notifications,
       assets: assets
     }

@@ -82,7 +82,7 @@ returns
     store_object_id = Store::Object.lookup( name: data[:object] )
     stores = Store.where( store_object_id: store_object_id, o_id: data[:o_id].to_i ).
     order('created_at ASC, id ASC')
-    return stores
+    stores
   end
 
 =begin
@@ -111,7 +111,7 @@ returns
       # check backend for references
       Store.remove_item( store.id )
     end
-    return true
+    true
   end
 
 =begin
@@ -136,7 +136,7 @@ returns
     end
 
     store.destroy
-    return true
+    true
   end
 
   def content

@@ -49,7 +49,7 @@ class Link < ApplicationModel
       items.push link
     }
 
-    return items
+    items
   end
 
 =begin
@@ -159,7 +159,7 @@ class Link < ApplicationModel
         name: data[:name]
       )
     end
-    return linktype
+    linktype
   end
 
   def self.link_object_get(data)
@@ -169,7 +169,7 @@ class Link < ApplicationModel
         name: data[:name]
       )
     end
-    return linkobject
+    linkobject
   end
 
 end

@@ -23,6 +23,6 @@ module Auth::Otrs
     # sync / check permissions
     Import::OTRS.permission_sync( user, result, config )
 
-    return user
+    user
   end
 end

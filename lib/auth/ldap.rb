@@ -119,6 +119,6 @@ module Auth::Ldap
     # take session down
     # - not needed, done by Net::LDAP -
 
-    return user
+    user
   end
 end

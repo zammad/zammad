@@ -24,7 +24,7 @@ class Tag < ApplicationModel
       o_id: data[:o_id],
       created_by_id: data[:created_by_id],
     )
-    return true
+    true
   end
 
   def self.tag_remove(data)
@@ -46,7 +46,7 @@ class Tag < ApplicationModel
     result.each { |item|
       item.destroy
     }
-    return true
+    true
   end
 
   def self.tag_list( data )
@@ -59,7 +59,7 @@ class Tag < ApplicationModel
     tag_search.each {|tag|
       tags.push self.tag_item_lookup_id( tag.tag_item_id )
     }
-    return tags
+    tags
   end
 
   private
@@ -72,7 +72,7 @@ class Tag < ApplicationModel
     # lookup
     tag_item = Tag::Item.find(id)
     @@cache_item[ id ] = tag_item.name
-    return tag_item.name
+    tag_item.name
   end
 
   def self.tag_item_lookup( name )
@@ -94,7 +94,7 @@ class Tag < ApplicationModel
       name: name
     )
     @@cache_item[ name ] = tag_item.id
-    return tag_item.id
+    tag_item.id
   end
 
   def self.tag_object_lookup_id( id )
@@ -105,7 +105,7 @@ class Tag < ApplicationModel
     # lookup
     tag_object = Tag::Object.find(id)
     @@cache_object[ id ] = tag_object.name
-    return tag_object.name
+    tag_object.name
   end
 
   def self.tag_object_lookup( name )
@@ -125,7 +125,7 @@ class Tag < ApplicationModel
       name: name
     )
     @@cache_object[ name ] = tag_object.id
-    return tag_object.id
+    tag_object.id
   end
 
   class Object < ActiveRecord::Base

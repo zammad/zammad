@@ -491,7 +491,7 @@ class Channel::EmailParser
     }
 
     # return new objects
-    return ticket, article, user
+    [ticket, article, user]
   end
 
   def user_create(data)

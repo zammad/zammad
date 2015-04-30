@@ -15,7 +15,7 @@ module Import::OTRS
       puts "ERROR: #{response.error}"
       return
     end
-    return response
+    response
   end
   def self.post(base, data)
     url = Setting.get('import_otrs_endpoint') + '/' + base
@@ -34,7 +34,7 @@ module Import::OTRS
       puts "ERROR: #{response.error}"
       return
     end
-    return response
+    response
   end
 
   def self.json(response)
@@ -48,7 +48,7 @@ module Import::OTRS
     return if !response.success?
 
     result = json(response)
-    return result
+    result
   end
 
   def self.session(session_id)
@@ -57,7 +57,7 @@ module Import::OTRS
     return if !response.success?
 
     result = json(response)
-    return result
+    result
   end
 
   def self.permission_sync(user, result, config)
@@ -167,8 +167,7 @@ module Import::OTRS
       threads[thread].join
     }
 
-    return
-  end
+      end
 
   def self.diff_worker
     return if !Setting.get('import_mode')
@@ -198,7 +197,6 @@ module Import::OTRS
 
     self.ticket_diff()
 
-    return
   end
 
   def self.ticket_diff()

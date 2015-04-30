@@ -223,7 +223,7 @@ returns
     # lookup
     history_type = History::Type.lookup( id: id )
     @@cache_type[ id ] = history_type
-    return history_type
+    history_type
   end
 
   def self.type_lookup( name )
@@ -243,7 +243,7 @@ returns
       name: name
     )
     @@cache_type[ name ] = history_type
-    return history_type
+    history_type
   end
 
   def self.object_lookup_id( id )
@@ -254,7 +254,7 @@ returns
     # lookup
     history_object = History::Object.lookup( id: id )
     @@cache_object[ id ] = history_object
-    return history_object
+    history_object
   end
 
   def self.object_lookup( name )
@@ -274,7 +274,7 @@ returns
       name: name
     )
     @@cache_object[ name ] = history_object
-    return history_object
+    history_object
   end
 
   def self.attribute_lookup_id( id )
@@ -285,7 +285,7 @@ returns
     # lookup
     history_attribute = History::Attribute.lookup( id: id )
     @@cache_attribute[ id ] = history_attribute
-    return history_attribute
+    history_attribute
   end
 
   def self.attribute_lookup( name )
@@ -305,7 +305,7 @@ returns
       name: name
     )
     @@cache_attribute[ name ] = history_attribute
-    return history_attribute
+    history_attribute
   end
 
   private
