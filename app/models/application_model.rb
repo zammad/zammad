@@ -606,8 +606,8 @@ class OwnModel < ApplicationModel
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
-      :event => class_name + ':touch',
-      :data => { :id => self.id, :updated_at => self.updated_at }
+      event: class_name + ':touch',
+      data: { id: self.id, updated_at: self.updated_at }
     )
   end
 
