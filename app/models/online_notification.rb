@@ -57,8 +57,8 @@ mark online notification as seen
 
   def self.seen(data)
     notification = OnlineNotification.find(data[:id])
-      notification.seen = true
-      notification.save
+    notification.seen = true
+    notification.save
   end
 
 =begin
