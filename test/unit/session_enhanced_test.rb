@@ -163,7 +163,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert( !Sessions.session_exists?(client_id2), 'check if session is removed' )
     assert( !Sessions.session_exists?(client_id3), 'check if session is removed' )
 
-    sleep 6
+    sleep 10
 
     # check client threads
     assert( !Sessions.thread_client_exists?(client_id1), 'check if client is running' )
