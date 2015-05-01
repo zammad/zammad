@@ -538,6 +538,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map[:Ticket].each { |key, value|
+        next if !record.key?(key.to_s)
         ticket_new[value] = record[key.to_s]
       }
       ticket_old = Ticket.where( id: ticket_new[:id] ).first
@@ -597,6 +598,7 @@ module Import::OTRS2
           }
 
           map[:Article].each { |key, value|
+            next if !article.key?(key.to_s)
             article_new[value] = article[key.to_s]
           }
 
@@ -789,9 +791,8 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if state.key?(key.to_s)
-          state_new[value] = state[key.to_s]
-        end
+        next if !state.key?(key.to_s)
+        state_new[value] = state[key.to_s]
       }
 
       # check if state already exists
@@ -838,9 +839,8 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if priority.key?(key.to_s)
-          priority_new[value] = priority[key.to_s]
-        end
+        next if !priority.key?(key.to_s)
+        priority_new[value] = priority[key.to_s]
       }
 
       # check if state already exists
@@ -879,9 +879,8 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if group.key?(key.to_s)
-          group_new[value] = group[key.to_s]
-        end
+        next if !group.key?(key.to_s)
+        group_new[value] = group[key.to_s]
       }
 
       # check if state already exists
@@ -934,9 +933,8 @@ module Import::OTRS2
         group_ids: group_ids,
       }
       map.each { |key, value|
-        if user.key?(key.to_s)
-          user_new[value] = user[key.to_s]
-        end
+        next if !user.key?(key.to_s)
+        user_new[value] = user[key.to_s]
       }
 
       # set pw
@@ -1012,9 +1010,8 @@ module Import::OTRS2
     }
     roles.each {|role|
       role_lookup = Role.lookup( name: role )
-      if role_lookup
-        role_ids.push role_lookup.id
-      end
+      next if !role_lookup
+      role_ids.push role_lookup.id
     }
     role_ids
   end
@@ -1058,9 +1055,8 @@ module Import::OTRS2
         role_ids: [ role_customer.id ],
       }
       map.each { |key, value|
-        if user.key?(key.to_s)
-          user_new[value] = user[key.to_s]
-        end
+        next if !user.key?(key.to_s)
+        user_new[value] = user[key.to_s]
       }
 
       # check if customer already exists
@@ -1091,10 +1087,9 @@ module Import::OTRS2
     organization_id = nil
     if user['UserCustomerID']
       organizations.each {|organization|
-        if user['UserCustomerID'] == organization['CustomerID']
-          organization = Organization.where(name: organization['CustomerCompanyName'] ).first
-          organization_id = organization.id
-        end
+        next if user['UserCustomerID'] != organization['CustomerID']
+        organization    = Organization.where(name: organization['CustomerCompanyName'] ).first
+        organization_id = organization.id
       }
     end
     organization_id
@@ -1121,9 +1116,8 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if organization.key?(key.to_s)
-          organization_new[value] = organization[key.to_s]
-        end
+        next if !organization.key?(key.to_s)
+        organization_new[value] = organization[key.to_s]
       }
 
       # check if state already exists
@@ -1185,7 +1179,6 @@ module Import::OTRS2
       if setting['Key'] == 'Ticket::Hook'
         Setting.set( 'ticket_hook', setting['Value'] )
       end
-
     }
   end
 
