@@ -35,7 +35,7 @@ returns
         # get linked accounts
         attributes['accounts'] = {}
         authorizations = self.authorizations()
-        authorizations.each do | authorization |
+        authorizations.each do |authorization|
           attributes['accounts'][authorization.provider] = {
             uid: authorization[:uid],
             username: authorization[:username]

@@ -15,7 +15,7 @@ module Import::OTRS
       puts "ERROR: #{response.error}"
       return
     end
-    return response
+    response
   end
   def self.post(base, data)
     url = Setting.get('import_otrs_endpoint') + '/' + base
@@ -34,7 +34,7 @@ module Import::OTRS
       puts "ERROR: #{response.error}"
       return
     end
-    return response
+    response
   end
 
   def self.json(response)
@@ -48,7 +48,7 @@ module Import::OTRS
     return if !response.success?
 
     result = json(response)
-    return result
+    result
   end
 
   def self.session(session_id)
@@ -57,7 +57,7 @@ module Import::OTRS
     return if !response.success?
 
     result = json(response)
-    return result
+    result
   end
 
   def self.permission_sync(user, result, config)
@@ -69,7 +69,7 @@ module Import::OTRS
     }
     types.each {|config_key, result_key|
       if config[config_key]
-        return false if !result[result_key].has_value?( config[config_key] )
+        return false if !result[result_key].value?( config[config_key] )
       end
     }
 
@@ -85,7 +85,7 @@ module Import::OTRS
     types.each {|config_key, result_key|
       next if !config[config_key]
       config[config_key].each {|otrs_group, role|
-        next if !result[result_key].has_value?( otrs_group )
+        next if !result[result_key].value?( otrs_group )
         role_ids = user.role_ids
         role = Role.where( name: role ).first
         next if !role
@@ -117,7 +117,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-        raise 'System is not in import mode!'
+      raise 'System is not in import mode!'
     end
 
     response = request('public.pl?Action=Export')
@@ -167,8 +167,7 @@ module Import::OTRS
       threads[thread].join
     }
 
-    return
-  end
+      end
 
   def self.diff_worker
     return if !Setting.get('import_mode')
@@ -181,7 +180,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-        raise 'System is not in import mode!'
+      raise 'System is not in import mode!'
     end
 
     # create states
@@ -198,7 +197,6 @@ module Import::OTRS
 
     self.ticket_diff()
 
-    return
   end
 
   def self.ticket_diff()
@@ -557,7 +555,7 @@ module Import::OTRS
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     Ticket::State.all.each {|state|
       state.name = state.name + '_tmp'
@@ -613,7 +611,7 @@ module Import::OTRS
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     result.each { |priority|
       _set_valid(priority)
@@ -657,7 +655,7 @@ module Import::OTRS
       QueueID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     result.each { |group|
       _set_valid(group)
@@ -702,48 +700,44 @@ module Import::OTRS
       UserEmail: :email,
       UserFirstname: :firstname,
       UserLastname: :lastname,
-#      :UserTitle     => 
       UserLogin: :login,
       UserPw: :password,
-    };
+    }
 
     result.each { |user|
 #      puts 'USER: ' + user.inspect
-        _set_valid(user)
+      _set_valid(user)
 
-        role = Role.lookup( name: 'Agent' )
-        # get new attributes
-        user_new = {
-          created_by_id: 1,
-          updated_by_id: 1,
-          source: 'OTRS Import',
-          role_ids: [ role.id ],
-        }
-        map.each { |key, value|
-          if user[key.to_s]
-            user_new[value] = user[key.to_s]
-          end
-        }
+      role = Role.lookup( name: 'Agent' )
+      # get new attributes
+      user_new = {
+        created_by_id: 1,
+        updated_by_id: 1,
+        source: 'OTRS Import',
+        role_ids: [ role.id ],
+      }
+      map.each { |key, value|
+        if user[key.to_s]
+          user_new[value] = user[key.to_s]
+        end
+      }
 
-        # check if state already exists
-#        user_old = User.where( :login => user_new[:login] ).first
-        user_old = User.where( id: user_new[:id] ).first
+      # check if state already exists
+      user_old = User.where( id: user_new[:id] ).first
 
         # set state types
-        if user_old
-          puts "update User.find(#{user_new[:id]})"
-#          puts 'Update User' + user_new.inspect
-          user_new.delete( :role_ids )
-          user_old.update_attributes(user_new)
-        else
-          puts "add User.find(#{user_new[:id]})"
-#          puts 'Add User' + user_new.inspect
-          user = User.new(user_new)
-          user.id = user_new[:id]
-          user.save
-        end
-
-#      end
+      if user_old
+        puts "update User.find(#{user_new[:id]})"
+#        puts 'Update User' + user_new.inspect
+        user_new.delete( :role_ids )
+        user_old.update_attributes(user_new)
+      else
+        puts "add User.find(#{user_new[:id]})"
+#        puts 'Add User' + user_new.inspect
+        user = User.new(user_new)
+        user.id = user_new[:id]
+        user.save
+      end
     }
   end
   def self.customer
@@ -767,7 +761,6 @@ module Import::OTRS
         UserEmail: :email,
         UserFirstname: :firstname,
         UserLastname: :lastname,
-  #      :UserTitle     => 
         UserLogin: :login,
         UserPassword: :password,
         UserPhone: :phone,
@@ -777,7 +770,7 @@ module Import::OTRS
         UserZip: :zip,
         UserCity: :city,
         UserCountry: :country,
-      };
+      }
 
       done = true
       result.each { |user|
@@ -800,7 +793,7 @@ module Import::OTRS
         }
 
         # check if state already exists
-  #        user_old = User.where( :login => user_new[:login] ).first
+#        user_old = User.where( :login => user_new[:login] ).first
         user_old = User.where( login: user_new[:login] ).first
 
         # set state types
@@ -819,17 +812,17 @@ module Import::OTRS
   end
   def self._set_valid(record)
       # map
-      if record['ValidID'] == '3'
-        record['ValidID'] = '2'
-      end
-      if record['ValidID'] == '2'
-        record['ValidID'] = false
-      end
-      if record['ValidID'] == '1'
-        record['ValidID'] = true
-      end
-      if record['ValidID'] == '0'
-        record['ValidID'] = false
-      end
+    if record['ValidID'] == '3'
+      record['ValidID'] = '2'
+    end
+    if record['ValidID'] == '2'
+      record['ValidID'] = false
+    end
+    if record['ValidID'] == '1'
+      record['ValidID'] = true
+    end
+    if record['ValidID'] == '0'
+      record['ValidID'] = false
+    end
   end
 end

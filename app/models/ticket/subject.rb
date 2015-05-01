@@ -34,7 +34,7 @@ returns
     end
 
     # left position
-    return "[#{ticket_hook}#{ticket_hook_divider}#{self.number}] " + subject
+    "[#{ticket_hook}#{ticket_hook_divider}#{self.number}] " + subject
   end
 
 =begin

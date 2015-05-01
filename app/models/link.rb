@@ -49,7 +49,7 @@ class Link < ApplicationModel
       items.push link
     }
 
-    return items
+    items
   end
 
 =begin
@@ -74,19 +74,19 @@ class Link < ApplicationModel
 
   def self.add(data)
 
-    if data.has_key?(:link_type)
+    if data.key?(:link_type)
       linktype = self.link_type_get( name: data[:link_type] )
       data[:link_type_id] = linktype.id
       data.delete( :link_type )
     end
 
-    if data.has_key?(:link_object_source)
+    if data.key?(:link_object_source)
       linkobject = self.link_object_get( name: data[:link_object_source] )
       data[:link_object_source_id] = linkobject.id
       data.delete( :link_object_source )
     end
 
-    if data.has_key?(:link_object_target)
+    if data.key?(:link_object_target)
       linkobject = self.link_object_get( name: data[:link_object_target] )
       data[:link_object_target_id] = linkobject.id
       data.delete( :link_object_target )
@@ -108,18 +108,18 @@ class Link < ApplicationModel
 =end
 
   def self.remove(data)
-    if data.has_key?(:link_object_source)
+    if data.key?(:link_object_source)
       linkobject = self.link_object_get( name: data[:link_object_source] )
       data[:link_object_source_id] = linkobject.id
     end
 
-    if data.has_key?(:link_object_target)
+    if data.key?(:link_object_target)
       linkobject = self.link_object_get( name: data[:link_object_target] )
       data[:link_object_target_id] = linkobject.id
     end
 
     # from one site
-    if data.has_key?(:link_type)
+    if data.key?(:link_type)
       linktype = self.link_type_get( name: data[:link_type] )
       data[:link_type_id] = linktype.id
     end
@@ -135,7 +135,7 @@ class Link < ApplicationModel
     }
 
     # from the other site
-    if data.has_key?(:link_type)
+    if data.key?(:link_type)
       linktype = self.link_type_get( name: @map[ data[:link_type] ] )
       data[:link_type_id] = linktype.id
     end
@@ -159,7 +159,7 @@ class Link < ApplicationModel
         name: data[:name]
       )
     end
-    return linktype
+    linktype
   end
 
   def self.link_object_get(data)
@@ -169,7 +169,7 @@ class Link < ApplicationModel
         name: data[:name]
       )
     end
-    return linkobject
+    linkobject
   end
 
 end

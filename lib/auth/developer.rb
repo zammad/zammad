@@ -8,6 +8,6 @@ module Auth::Developer
       return user if password == 'test'
     end
 
-    return false
+    false
   end
 end

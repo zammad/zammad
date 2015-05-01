@@ -386,6 +386,13 @@ returns
   end
 
   class Result
+
+    attr_reader :error
+    attr_reader :body
+    attr_reader :data
+    attr_reader :code
+    attr_reader :content_type
+
     def initialize(options)
       @success      = options[:success]
       @body         = options[:body]
@@ -394,23 +401,9 @@ returns
       @content_type = options[:content_type]
       @error        = options[:error]
     end
-    def error
-      @error
-    end
+
     def success?
       @success
-    end
-    def body
-      @body
-    end
-    def data
-      @data
-    end
-    def code
-      @code
-    end
-    def content_type
-      @content_type
     end
   end
 end

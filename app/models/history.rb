@@ -150,9 +150,9 @@ returns
   def self.list( requested_object, requested_object_id, related_history_object = nil, assets = nil )
     if !related_history_object
       history_object = self.object_lookup( requested_object )
-      history = History.where( history_object_id: history_object.id ).
-      where( o_id: requested_object_id ).
-      order('created_at ASC, id ASC')
+      history = History.where( history_object_id: history_object.id )
+      .where( o_id: requested_object_id )
+      .order('created_at ASC, id ASC')
     else
       history_object_requested = self.object_lookup( requested_object )
       history_object_related   = self.object_lookup( related_history_object )
@@ -162,8 +162,8 @@ returns
         requested_object_id,
         history_object_related.id,
         requested_object_id,
-      ).
-      order('created_at ASC, id ASC')
+      )
+      .order('created_at ASC, id ASC')
     end
     asset_list = {}
     list = []
@@ -193,7 +193,7 @@ returns
         data.delete( 'value_to' )
         data.delete( 'value_from' )
       end
-      if data['related_history_object_id'] != nil
+      if !data['related_history_object_id'].nil?
         data['related_object'] = self.object_lookup_id( data['related_history_object_id'] ).name
       end
       data.delete( 'related_history_object_id' )
@@ -223,7 +223,7 @@ returns
     # lookup
     history_type = History::Type.lookup( id: id )
     @@cache_type[ id ] = history_type
-    return history_type
+    history_type
   end
 
   def self.type_lookup( name )
@@ -243,7 +243,7 @@ returns
       name: name
     )
     @@cache_type[ name ] = history_type
-    return history_type
+    history_type
   end
 
   def self.object_lookup_id( id )
@@ -254,7 +254,7 @@ returns
     # lookup
     history_object = History::Object.lookup( id: id )
     @@cache_object[ id ] = history_object
-    return history_object
+    history_object
   end
 
   def self.object_lookup( name )
@@ -274,7 +274,7 @@ returns
       name: name
     )
     @@cache_object[ name ] = history_object
-    return history_object
+    history_object
   end
 
   def self.attribute_lookup_id( id )
@@ -285,7 +285,7 @@ returns
     # lookup
     history_attribute = History::Attribute.lookup( id: id )
     @@cache_attribute[ id ] = history_attribute
-    return history_attribute
+    history_attribute
   end
 
   def self.attribute_lookup( name )
@@ -305,7 +305,7 @@ returns
       name: name
     )
     @@cache_attribute[ name ] = history_attribute
-    return history_attribute
+    history_attribute
   end
 
   private

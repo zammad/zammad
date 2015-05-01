@@ -62,7 +62,7 @@ gem 'em-websocket'
 # in production environments by default.
 group :development, :test do
 
-    gem 'test-unit'
+  gem 'test-unit'
     gem 'spring'
     gem 'sqlite3'
 

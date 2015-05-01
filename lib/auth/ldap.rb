@@ -64,7 +64,7 @@ module Auth::Ldap
         source: 'ldap',
         updated_by_id: 1,
       }
-      config[:sync_params].each {| local_data, ldap_data |
+      config[:sync_params].each {|local_data, ldap_data|
         if user_data[ ldap_data.downcase.to_sym ]
           user_attributes[ local_data.downcase.to_sym] = user_data[ ldap_data.downcase.to_sym ]
         end
@@ -76,7 +76,7 @@ module Auth::Ldap
       else
         user.update_attributes( user_attributes )
         puts "NOTICE: user updated '#{user.login}'"
-      end    
+      end
     end
 
     # return if it was not possible to create user
@@ -119,6 +119,6 @@ module Auth::Ldap
     # take session down
     # - not needed, done by Net::LDAP -
 
-    return user
+    user
   end
 end

@@ -71,7 +71,7 @@ class Package < ApplicationModel
         File.delete( entry )
       end
       backup_file = entry + '.link_backup'
-      if File.exists?( backup_file )
+      if File.exist?( backup_file )
         logger.info "Restore backup file of #{backup_file} -> #{entry}."
         File.rename( backup_file, entry )
       end
@@ -114,7 +114,7 @@ class Package < ApplicationModel
       end
 
       backup_file = dest.to_s + '.link_backup'
-      if File.exists?( backup_file )
+      if File.exist?( backup_file )
         logger.info "Restore backup file of #{backup_file} -> #{dest.to_s}."
         File.rename( backup_file, dest.to_s )
       end
@@ -145,7 +145,7 @@ class Package < ApplicationModel
       dest = @@root + '/' + file
 
       if File.directory?( entry.to_s )
-        if !File.exists?( dest.to_s )
+        if !File.exist?( dest.to_s )
           logger.info "Create dir: #{dest.to_s}"
           FileUtils.mkdir_p( dest.to_s )
         end
@@ -153,7 +153,7 @@ class Package < ApplicationModel
 
       if File.file?( entry.to_s ) && ( File.file?( dest.to_s ) && !File.symlink?( dest.to_s ) )
         backup_file = dest.to_s + '.link_backup'
-        if File.exists?( backup_file )
+        if File.exist?( backup_file )
           raise "Can't link #{entry.to_s} -> #{dest.to_s}, destination and .link_backup already exists!"
         else
           logger.info "Create backup file of #{dest.to_s} -> #{backup_file}."
@@ -441,7 +441,7 @@ class Package < ApplicationModel
     def self.migrate( package, direction = 'normal' )
       location = @@root + '/db/addon/' + package.underscore
 
-      return true if !File.exists?( location )
+      return true if !File.exist?( location )
       migrations_done = Package::Migration.where( name: package.underscore )
 
       # get existing migrations

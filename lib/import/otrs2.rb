@@ -149,7 +149,7 @@ module Import::OTRS2
     return if !response.success?
 
     result = json(response)
-    return result
+    result
   end
 
 =begin
@@ -171,7 +171,7 @@ module Import::OTRS2
     return if !response
     return if !response.success?
     result = json(response)
-    return result
+    result
   end
 
 =begin
@@ -207,7 +207,7 @@ module Import::OTRS2
 =end
 
   def self.connection_test
-    return self.request_json({})
+    self.request_json({})
   end
 
 =begin
@@ -352,14 +352,14 @@ module Import::OTRS2
     steps = 50
     run   = true
     while run
-        count += steps
-        records = load('CustomerUser', steps, count - steps)
-        if !records || !records[0]
-          log 'all customers imported.'
-          run = false
-          next
-        end
-        customer(records, organizations)
+      count += steps
+      records = load('CustomerUser', steps, count - steps)
+      if !records || !records[0]
+        log 'all customers imported.'
+        run = false
+        next
+      end
+      customer(records, organizations)
     end
 
     Thread.abort_on_exception = true
@@ -452,7 +452,6 @@ module Import::OTRS2
     # get changed tickets
     self.ticket_diff
 
-    return
   end
 
   def self.ticket_diff
@@ -820,7 +819,7 @@ module Import::OTRS2
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     # rename states to handle not uniq issues
     Ticket::State.all.each {|state|
@@ -837,7 +836,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if state.has_key?(key.to_s)
+        if state.key?(key.to_s)
           state_new[value] = state[key.to_s]
         end
       }
@@ -875,7 +874,7 @@ module Import::OTRS2
       ID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     records.each { |priority|
       _set_valid(priority)
@@ -886,7 +885,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if priority.has_key?(key.to_s)
+        if priority.key?(key.to_s)
           priority_new[value] = priority[key.to_s]
         end
       }
@@ -916,7 +915,7 @@ module Import::OTRS2
       QueueID: :id,
       ValidID: :active,
       Comment: :note,
-    };
+    }
 
     records.each { |group|
       _set_valid(group)
@@ -927,7 +926,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if group.has_key?(key.to_s)
+        if group.key?(key.to_s)
           group_new[value] = group[key.to_s]
         end
       }
@@ -960,10 +959,9 @@ module Import::OTRS2
       UserEmail: :email,
       UserFirstname: :firstname,
       UserLastname: :lastname,
-#      :UserTitle     =>
       UserLogin: :login,
       UserPw: :password,
-    };
+    }
 
     records.each { |user|
       _set_valid(user)
@@ -983,7 +981,7 @@ module Import::OTRS2
         group_ids: group_ids,
       }
       map.each { |key, value|
-        if user.has_key?(key.to_s)
+        if user.key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
       }
@@ -1081,7 +1079,6 @@ module Import::OTRS2
       UserEmail: :email,
       UserFirstname: :firstname,
       UserLastname: :lastname,
-#      :UserTitle     => 
       UserLogin: :login,
       UserPassword: :password,
       UserPhone: :phone,
@@ -1091,7 +1088,7 @@ module Import::OTRS2
       UserZip: :zip,
       UserCity: :city,
       UserCountry: :country,
-    };
+    }
 
     role_agent    = Role.lookup( name: 'Agent' )
     role_customer = Role.lookup( name: 'Customer' )
@@ -1108,7 +1105,7 @@ module Import::OTRS2
         role_ids: [ role_customer.id ],
       }
       map.each { |key, value|
-        if user.has_key?(key.to_s)
+        if user.key?(key.to_s)
           user_new[value] = user[key.to_s]
         end
       }
@@ -1161,7 +1158,7 @@ module Import::OTRS2
       CustomerCompanyName: :name,
       ValidID: :active,
       CustomerCompanyComment: :note,
-    };
+    }
 
     records.each { |organization|
       _set_valid(organization)
@@ -1172,7 +1169,7 @@ module Import::OTRS2
         updated_by_id: 1,
       }
       map.each { |key, value|
-        if organization.has_key?(key.to_s)
+        if organization.key?(key.to_s)
           organization_new[value] = organization[key.to_s]
         end
       }
@@ -1252,20 +1249,20 @@ module Import::OTRS2
 
   def self._set_valid(record)
 
-      # map
-      if record['ValidID'].to_s == '3'
-        record['ValidID'] = false
-      elsif record['ValidID'].to_s == '2'
-        record['ValidID'] = false
-      elsif record['ValidID'].to_s == '1'
-        record['ValidID'] = true
-      elsif record['ValidID'].to_s == '0'
-        record['ValidID'] = false
+    # map
+    if record['ValidID'].to_s == '3'
+      record['ValidID'] = false
+    elsif record['ValidID'].to_s == '2'
+      record['ValidID'] = false
+    elsif record['ValidID'].to_s == '1'
+      record['ValidID'] = true
+    elsif record['ValidID'].to_s == '0'
+      record['ValidID'] = false
 
-      # fallback
-      else
-        record['ValidID'] = true
-      end
+    # fallback
+    else
+      record['ValidID'] = true
+    end
   end
 
   # cleanup invalid values

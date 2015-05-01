@@ -34,6 +34,6 @@ module Rss
       return
     end
 
-    return items
+    items
   end
 end

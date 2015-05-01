@@ -13,7 +13,7 @@ module SessionHelper
       (default_collection, assets ) = ExtraCollection.session( default_collection, assets, user )
     end
 
-    return default_collection, assets
+    [default_collection, assets]
   end
 
   def self.models(user = nil)

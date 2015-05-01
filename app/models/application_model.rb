@@ -81,7 +81,7 @@ returns
     # only use object attributes
     data = {}
     self.new.attributes.each {|item|
-      if params.has_key?(item[0])
+      if params.key?(item[0])
         #        puts 'use ' + item[0].to_s + '-' + params[item[0]].to_s
         data[item[0].to_sym] = params[item[0]]
       end
@@ -109,7 +109,7 @@ returns
     # set relations
     self.class.reflect_on_all_associations.map { |assoc|
       real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      if params.has_key?( real_key.to_sym )
+      if params.key?( real_key.to_sym )
         list_of_items = params[ real_key.to_sym ]
         if params[ real_key.to_sym ].class != Array
           list_of_items = [ params[ real_key.to_sym ] ]
@@ -246,14 +246,14 @@ returns
 
     # delete old name / login caches
     if self.changed?
-      if self.changes.has_key?('name')
+      if self.changes.key?('name')
         name = self.changes['name'][0].to_s
         key = self.class.to_s + '::' + name
         Cache.delete( key.to_s )
         key = self.class.to_s + ':f:' + name
         Cache.delete( key.to_s )
       end
-      if self.changes.has_key?('login')
+      if self.changes.key?('login')
         name = self.changes['login'][0].to_s
         key = self.class.to_s + '::' + name
         Cache.delete( key.to_s )
@@ -844,7 +844,7 @@ log object update history with all updated attributes, if configured - will be e
     changes = self.changes
     if self.history_changes_last_done
       self.history_changes_last_done.each {|key, value|
-        if changes.has_key?(key) && changes[key] == value
+        if changes.key?(key) && changes[key] == value
           changes.delete(key)
         end
       }

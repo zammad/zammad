@@ -54,7 +54,5 @@ returns
         return user_auth
       end
     }
-    return
-
-  end
+      end
 end

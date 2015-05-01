@@ -20,7 +20,7 @@ module Channel::EmailBuild
 
     # set organization
     organization = Setting.get('organization')
-    if organization then;
+    if organization
       mail['Organization'] = organization.to_s
     end
 

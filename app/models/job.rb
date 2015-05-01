@@ -42,9 +42,9 @@ class Job < ApplicationModel
       next if !job.timeplan['minutes'].include?( match_minutes(time.min.to_s) )
 
       # find tickets to change
-      tickets = Ticket.where( job.condition.permit! ).
-        order( '`tickets`.`created_at` DESC' ).
-        limit( 1_000 )
+      tickets = Ticket.where( job.condition.permit! )
+        .order( '`tickets`.`created_at` DESC' )
+        .limit( 1_000 )
       job.processed = tickets.count
       tickets.each do |ticket|
         #puts "CHANGE #{job.execute.inspect}"

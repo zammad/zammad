@@ -26,6 +26,6 @@ class GeoLocation::Gmaps
     result = JSON.parse( response.body )
 
     address = result['results'].first['address_components'].first['long_name']
-    return address
+    address
   end
 end

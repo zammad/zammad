@@ -80,9 +80,9 @@ returns
   def self.list(data)
     # search
     store_object_id = Store::Object.lookup( name: data[:object] )
-    stores = Store.where( store_object_id: store_object_id, o_id: data[:o_id].to_i ).
-    order('created_at ASC, id ASC')
-    return stores
+    stores = Store.where( store_object_id: store_object_id, o_id: data[:o_id].to_i )
+    .order('created_at ASC, id ASC')
+    stores
   end
 
 =begin
@@ -103,15 +103,15 @@ returns
   def self.remove(data)
     # search
     store_object_id = Store::Object.lookup( name: data[:object] )
-    stores = Store.where( store_object_id: store_object_id ).
-    where( o_id: data[:o_id] ).
-    order('created_at ASC, id ASC')
+    stores = Store.where( store_object_id: store_object_id )
+    .where( o_id: data[:o_id] )
+    .order('created_at ASC, id ASC')
     stores.each do |store|
 
       # check backend for references
       Store.remove_item( store.id )
     end
-    return true
+    true
   end
 
 =begin
@@ -136,7 +136,7 @@ returns
     end
 
     store.destroy
-    return true
+    true
   end
 
   def content

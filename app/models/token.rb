@@ -22,7 +22,7 @@ class Token < ActiveRecord::Base
     end
 
     # return token if valid
-    return token.user
+    token.user
   end
 
   private
