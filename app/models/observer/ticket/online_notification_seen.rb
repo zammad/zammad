@@ -22,6 +22,7 @@ class Observer::Ticket::OnlineNotificationSeen < ActiveRecord::Observer
     return true if !record.online_notification_seen_state
 
     # set all online notifications to seen
-    OnlineNotification.seen_by_object( 'Ticket', record.id )
+    # send background job
+    Delayed::Job.enqueue( Observer::Ticket::UserTicketCounter::BackgroundJob.new( record.id ) )
   end
 end
