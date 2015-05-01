@@ -24,10 +24,13 @@ class ActiveSupport::TestCase
   # load seeds
   load "#{Rails.root}/db/seeds.rb"
 
+  # proccess background jobs
+  Delayed::Worker.new.work_off
+
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
 
-  setup do
+  def setup
 
     # clear cache
     Cache.clear
@@ -35,6 +38,16 @@ class ActiveSupport::TestCase
     # set current user
     puts 'reset UserInfo.current_user_id'
     UserInfo.current_user_id = nil
+  end
+
+  # cleanup jobs
+  def teardown
+    puts 'teardown'
+
+    # check if jobs are proccessed
+    if !Delayed::Job.all.empty?
+      Delayed::Job.all.destroy_all
+    end
   end
 
   # Add more helper methods to be used by all tests here...
