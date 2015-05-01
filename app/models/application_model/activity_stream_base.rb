@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
-class ApplicationModel
-  module ActivityStreamBase
+# rubocop:disable ClassAndModuleChildren
+module ApplicationModel::ActivityStreamBase
 
 =begin
 
@@ -19,28 +18,27 @@ returns
 
 =end
 
-    def activity_stream_log (type, user_id, force = false)
+  def activity_stream_log (type, user_id, force = false)
 
-      # return if we run import mode
-      return if Setting.get('import_mode')
+    # return if we run import mode
+    return if Setting.get('import_mode')
 
-      # return if we run on init mode
-      return if !Setting.get('system_init_done')
+    # return if we run on init mode
+    return if !Setting.get('system_init_done')
 
-      role       = self.class.activity_stream_support_config[:role]
-      updated_at = self.updated_at
-      if force
-        updated_at = Time.new
-      end
-      ActivityStream.add(
-        o_id: self['id'],
-        type: type,
-        object: self.class.name,
-        group_id: self['group_id'],
-        role: role,
-        created_at: updated_at,
-        created_by_id: user_id,
-      )
+    role       = self.class.activity_stream_support_config[:role]
+    updated_at = self.updated_at
+    if force
+      updated_at = Time.new
     end
+    ActivityStream.add(
+      o_id: self['id'],
+      type: type,
+      object: self.class.name,
+      group_id: self['group_id'],
+      role: role,
+      created_at: updated_at,
+      created_by_id: user_id,
+    )
   end
 end
