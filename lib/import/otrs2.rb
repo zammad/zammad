@@ -366,8 +366,6 @@ module Import::OTRS2
     thread_count              = 8
     threads                   = {}
     count                     = 0
-    memory_clear_after_loops  = 10
-    memory_clear_loop_counter = 0
     locks                     = { User: {} }
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
@@ -377,11 +375,6 @@ module Import::OTRS2
         run = true
         steps = 20
         while run
-          memory_clear_loop_counter++
-          if memory_clear_loop_counter == memory_clear_after_loops
-            GC.start
-            memory_clear_loop_counter = 0
-          end
           count += steps
           log "loading... thread# #{thread} ..."
           offset = count - steps
