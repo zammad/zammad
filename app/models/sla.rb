@@ -10,6 +10,7 @@ class Sla < ApplicationModel
   after_destroy :escalation_calculation_rebuild
 
   private
+
   def escalation_calculation_rebuild
     Cache.delete( 'SLA::List::Active' )
     Ticket::Escalation.rebuild_all

@@ -12,6 +12,7 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
   end
 
   private
+
   def _check(record)
     #      puts 'check close time'
 

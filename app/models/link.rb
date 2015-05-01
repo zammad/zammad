@@ -152,6 +152,7 @@ class Link < ApplicationModel
   end
 
   private
+
   def self.link_type_get(data)
     linktype = Link::Type.where( name: data[:name] ).first
     if !linktype

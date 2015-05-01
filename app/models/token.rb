@@ -26,6 +26,7 @@ class Token < ActiveRecord::Base
   end
 
   private
+
   def generate_token
     begin
       self.name = SecureRandom.hex(20)

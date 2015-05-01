@@ -12,6 +12,7 @@ class Observer::Ticket::OnlineNotificationSeen < ActiveRecord::Observer
   end
 
   private
+
   def _check(record)
 
     # return if we run import mode
