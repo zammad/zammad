@@ -82,7 +82,7 @@ class Package < ApplicationModel
   def self._package_base_dir?(package_base_dir)
     package = false
     Dir.glob(  package_base_dir + '/*.szpm') do |entry|
-      package = entry.sub( /^.*\/(.+?)\.szpm$/, '\1')
+      package = entry.sub( %r{^.*/(.+?)\.szpm$}, '\1')
     end
     if package == false
       raise "Can't link package, '#{package_base_dir}' is no package source directory!"
@@ -133,7 +133,7 @@ class Package < ApplicationModel
       entry = entry.sub( '//', '/' )
       file = entry
       file = file.sub( /#{package_base_dir.to_s}/, '' )
-      file = file.sub( /^\//, '' )
+      file = file.sub( %r{^/}, '' )
 
       # ignore files
       if file =~ /^README/
