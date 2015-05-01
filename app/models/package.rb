@@ -47,7 +47,7 @@ class Package < ApplicationModel
   # install all packages located under auto_install/*.zpm
   def self.auto_install
     path = @@root + '/auto_install/'
-    return if ! File.exist?( path )
+    return if !File.exist?( path )
     data = []
     Dir.foreach( path ) do |entry|
       if entry =~ /\.zpm/ && entry !~ /^\./
