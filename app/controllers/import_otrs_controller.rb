@@ -65,7 +65,7 @@ class ImportOtrsController < ApplicationController
     # return result
     render json: {
       result: 'invalid',
-        message_human: message_human,
+      message_human: message_human,
     }
   end
 

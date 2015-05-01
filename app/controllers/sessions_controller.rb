@@ -55,14 +55,14 @@ class SessionsController < ApplicationController
     end
 
     # return new session data
-    render json: {
-      session: user,
-      models: models,
-      collections: collections,
-      assets: assets,
-      logon_session: logon_session_key,
-    },
-    status: :created
+    render  status: :created,
+            json: {
+              session: user,
+              models: models,
+              collections: collections,
+              assets: assets,
+              logon_session: logon_session_key,
+            }
   end
 
   def show
