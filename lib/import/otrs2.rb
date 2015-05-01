@@ -340,9 +340,7 @@ module Import::OTRS2
     end
 
     # get agents groups
-    ActiveRecord::Base.transaction do
-      groups = load('Group')
-    end
+    groups = load('Group')
 
     # get agents roles
     roles = load('Role')
@@ -581,28 +579,27 @@ module Import::OTRS2
         ticket.save
       end
 
+      # utf8 encode
+      record['Articles'].each { |article|
+        article.each { |key, value|
+          next if !value
+          next if value.class != String
+          article[key] = Encode.conv( 'utf8', value )
+        }
+      }
+
+      # lookup customers to create first
       record['Articles'].each { |article|
 
-        # get article values
-        article_new = {
-          created_by_id: 1,
-          updated_by_id: 1,
-        }
-        map[:Article].each { |key, value|
-          if article[key.to_s]
-            article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
-          end
-        }
-
         # create customer/sender if needed
-        if article_new[:sender] == 'customer' && article_new[:created_by_id].to_i == 1 && !article_new[:from].empty?
+        if article['sender'] == 'customer' && article['created_by_id'].to_i == 1 && !article['from'].empty?
 
           email = nil
           begin
-            email = Mail::Address.new( article_new[:from] ).address
+            email = Mail::Address.new( article['from'] ).address
           rescue
-            email = article_new[:from]
-            if article_new[:from] =~ /<(.+?)>/
+            email = article['from']
+            if article['from'] =~ /<(.+?)>/
               email = $1
             end
           end
@@ -622,10 +619,10 @@ module Import::OTRS2
           end
           if !user
             begin
-              display_name = Mail::Address.new( article_new[:from] ).display_name ||
-                ( Mail::Address.new( article_new[:from] ).comments && Mail::Address.new( article_new[:from] ).comments[0] )
+              display_name = Mail::Address.new( article['from'] ).display_name ||
+                ( Mail::Address.new( article['from'] ).comments && Mail::Address.new( article['from'] ).comments[0] )
             rescue
-              display_name = article_new[:from]
+              display_name = article['from']
             end
 
             # do extra decoding because we needed to use field.value
@@ -644,63 +641,78 @@ module Import::OTRS2
               created_by_id: 1,
             )
           end
-          article_new[:created_by_id] = user.id
+          article['created_by_id'] = user.id
 
           # unlock user
           locks[:User][ email ] = false
         end
-
-        if article_new[:sender] == 'customer'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
-          article_new.delete( :sender )
-        end
-        if article_new[:sender] == 'agent'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
-          article_new.delete( :sender )
-        end
-        if article_new[:sender] == 'system'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
-          article_new.delete( :sender )
-        end
-
-        if article_new[:type] == 'email-external'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
-          article_new[:internal] = false
-        elsif article_new[:type] == 'email-internal'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
-          article_new[:internal] = true
-        elsif article_new[:type] == 'note-external'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
-          article_new[:internal] = false
-        elsif article_new[:type] == 'note-internal'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
-          article_new[:internal] = true
-        elsif article_new[:type] == 'phone'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
-          article_new[:internal] = false
-        elsif article_new[:type] == 'webrequest'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
-          article_new[:internal] = false
-        else
-          article_new[:type_id] = 9
-        end
-        article_new.delete( :type )
-        article_old = Ticket::Article.where( id: article_new[:id] ).first
-
-        # set state types
-        if article_old
-          log "update Ticket::Article.find(#{article_new[:id]})"
-          article_old.update_attributes(article_new)
-        else
-          log "add Ticket::Article.find(#{article_new[:id]})"
-          article = Ticket::Article.new(article_new)
-          article.id = article_new[:id]
-          article.save
-        end
-
       }
-  #puts "HS: #{record['History'].inspect}"
+
       ActiveRecord::Base.transaction do
+        record['Articles'].each { |article|
+
+          # get article values
+          article_new = {
+            created_by_id: 1,
+            updated_by_id: 1,
+          }
+
+          map[:Article].each { |key, value|
+            if article[key.to_s]
+              article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
+            end
+          }
+
+          if article_new[:sender] == 'customer'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
+            article_new.delete( :sender )
+          end
+          if article_new[:sender] == 'agent'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
+            article_new.delete( :sender )
+          end
+          if article_new[:sender] == 'system'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
+            article_new.delete( :sender )
+          end
+
+          if article_new[:type] == 'email-external'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+            article_new[:internal] = false
+          elsif article_new[:type] == 'email-internal'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+            article_new[:internal] = true
+          elsif article_new[:type] == 'note-external'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+            article_new[:internal] = false
+          elsif article_new[:type] == 'note-internal'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+            article_new[:internal] = true
+          elsif article_new[:type] == 'phone'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
+            article_new[:internal] = false
+          elsif article_new[:type] == 'webrequest'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
+            article_new[:internal] = false
+          else
+            article_new[:type_id] = 9
+          end
+          article_new.delete( :type )
+          article_old = Ticket::Article.where( id: article_new[:id] ).first
+
+          # set state types
+          if article_old
+            log "update Ticket::Article.find(#{article_new[:id]})"
+            article_old.update_attributes(article_new)
+          else
+            log "add Ticket::Article.find(#{article_new[:id]})"
+            article = Ticket::Article.new(article_new)
+            article.id = article_new[:id]
+            article.save
+          end
+        }
+
+        #puts "HS: #{record['History'].inspect}"
         record['History'].each { |history|
           if history['HistoryType'] == 'NewTicket'
             #puts "HS.add( #{history.inspect} )"
@@ -807,8 +819,8 @@ module Import::OTRS2
               created_by_id: history['CreateBy']
             )
           end
-        end
-      }
+        }
+      end
     }
   end
 
