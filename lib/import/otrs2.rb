@@ -89,12 +89,18 @@ module Import::OTRS2
     data['Key'] = Setting.get('import_otrs_endpoint_key')
     log 'POST: ' + url
     log 'PARAMS: ' + data.inspect
+    open_timeout = 10
+    read_timeout = 120
+    if data.empty?
+      open_timeout = 6
+      read_timeout = 20
+    end
     response = UserAgent.post(
       url,
       data,
       {
-        open_timeout: 6,
-        read_timeout: 60,
+        open_timeout: open_timeout,
+        read_timeout: read_timeout,
         user: Setting.get('import_otrs_user'),
         password: Setting.get('import_otrs_password'),
       },
@@ -343,7 +349,7 @@ module Import::OTRS2
 
     # create customers
     count = 0
-    steps = 30
+    steps = 50
     run   = true
     while run
         count += steps
@@ -360,6 +366,8 @@ module Import::OTRS2
     thread_count              = 8
     threads                   = {}
     count                     = 0
+    memory_clear_after_loops  = 10
+    memory_clear_loop_counter = 0
     locks                     = { User: {} }
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
@@ -369,6 +377,11 @@ module Import::OTRS2
         run = true
         steps = 20
         while run
+          memory_clear_loop_counter++
+          if memory_clear_loop_counter == memory_clear_after_loops
+            GC.start
+            memory_clear_loop_counter = 0
+          end
           count += steps
           log "loading... thread# #{thread} ..."
           offset = count - steps
@@ -512,284 +525,287 @@ module Import::OTRS2
 
     result.each {|record|
 
-      # cleanup values
-      _cleanup(record)
+      ActiveRecord::Base.transaction do
 
-      ticket_new = {
-        title: '',
-        created_by_id: 1,
-        updated_by_id: 1,
-      }
-      map[:Ticket].each { |key, value|
-        if record[key.to_s] && record[key.to_s].class == String
-          ticket_new[value] = Encode.conv( 'utf8', record[key.to_s] )
-        else
-          ticket_new[value] = record[key.to_s]
-        end
-      }
-      ticket_old = Ticket.where( id: ticket_new[:id] ).first
+        # cleanup values
+        _cleanup(record)
 
-      # find owner
-      if ticket_new[:owner]
-        user = User.lookup( login: ticket_new[:owner].downcase )
-        if user
-          ticket_new[:owner_id] = user.id
-        else
-          ticket_new[:owner_id] = 1
-        end
-        ticket_new.delete(:owner)
-      end
-
-      # find customer
-      if ticket_new[:customer]
-        user = User.lookup( login: ticket_new[:customer].downcase )
-        if user
-          ticket_new[:customer_id] = user.id
-        else
-          ticket_new[:customer_id] =  1
-        end
-        ticket_new.delete(:customer)
-      else
-        ticket_new[:customer_id] = 1
-      end
-
-      # set state types
-      if ticket_old
-        log "update Ticket.find(#{ticket_new[:id]})"
-        ticket_old.update_attributes(ticket_new)
-      else
-        log "add Ticket.find(#{ticket_new[:id]})"
-        ticket = Ticket.new(ticket_new)
-        ticket.id = ticket_new[:id]
-        ticket.save
-      end
-
-      record['Articles'].each { |article|
-
-        # get article values
-        article_new = {
+        ticket_new = {
+          title: '',
           created_by_id: 1,
           updated_by_id: 1,
         }
-        map[:Article].each { |key, value|
-          if article[key.to_s]
-            article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
+        map[:Ticket].each { |key, value|
+          if record[key.to_s] && record[key.to_s].class == String
+            ticket_new[value] = Encode.conv( 'utf8', record[key.to_s] )
+          else
+            ticket_new[value] = record[key.to_s]
           end
         }
+        ticket_old = Ticket.where( id: ticket_new[:id] ).first
 
-        # create customer/sender if needed
-        if article_new[:sender] == 'customer' && article_new[:created_by_id].to_i == 1 && !article_new[:from].empty?
-
-          email = nil
-          begin
-            email = Mail::Address.new( article_new[:from] ).address
-          rescue
-            email = article_new[:from]
-            if article_new[:from] =~ /<(.+?)>/
-              email = $1
-            end
+        # find owner
+        if ticket_new[:owner]
+          user = User.lookup( login: ticket_new[:owner].downcase )
+          if user
+            ticket_new[:owner_id] = user.id
+          else
+            ticket_new[:owner_id] = 1
           end
-
-          # create article user if not exists
-          while locks[:User][ email ]
-            log "user #{email} is locked"
-            sleep 1
-          end
-
-          # lock user
-          locks[:User][ email ] = true
-
-          user = User.where( email: email ).first
-          if !user
-            user = User.where( login: email ).first
-          end
-          if !user
-            begin
-              display_name = Mail::Address.new( article_new[:from] ).display_name ||
-                ( Mail::Address.new( article_new[:from] ).comments && Mail::Address.new( article_new[:from] ).comments[0] )
-            rescue
-              display_name = article_new[:from]
-            end
-
-            # do extra decoding because we needed to use field.value
-            display_name = Mail::Field.new( 'X-From', display_name ).to_s
-
-            roles = Role.lookup( name: 'Customer' )
-            user = User.create(
-              login: email,
-              firstname: display_name,
-              lastname: '',
-              email: email,
-              password: '',
-              active: true,
-              role_ids: [roles.id],
-              updated_by_id: 1,
-              created_by_id: 1,
-            )
-          end
-          article_new[:created_by_id] = user.id
-
-          # unlock user
-          locks[:User][ email ] = false
+          ticket_new.delete(:owner)
         end
 
-        if article_new[:sender] == 'customer'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
-          article_new.delete( :sender )
-        end
-        if article_new[:sender] == 'agent'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
-          article_new.delete( :sender )
-        end
-        if article_new[:sender] == 'system'
-          article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
-          article_new.delete( :sender )
-        end
-
-        if article_new[:type] == 'email-external'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
-          article_new[:internal] = false
-        elsif article_new[:type] == 'email-internal'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
-          article_new[:internal] = true
-        elsif article_new[:type] == 'note-external'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
-          article_new[:internal] = false
-        elsif article_new[:type] == 'note-internal'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
-          article_new[:internal] = true
-        elsif article_new[:type] == 'phone'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
-          article_new[:internal] = false
-        elsif article_new[:type] == 'webrequest'
-          article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
-          article_new[:internal] = false
+        # find customer
+        if ticket_new[:customer]
+          user = User.lookup( login: ticket_new[:customer].downcase )
+          if user
+            ticket_new[:customer_id] = user.id
+          else
+            ticket_new[:customer_id] =  1
+          end
+          ticket_new.delete(:customer)
         else
-          article_new[:type_id] = 9
+          ticket_new[:customer_id] = 1
         end
-        article_new.delete( :type )
-        article_old = Ticket::Article.where( id: article_new[:id] ).first
 
         # set state types
-        if article_old
-          log "update Ticket::Article.find(#{article_new[:id]})"
-          article_old.update_attributes(article_new)
+        if ticket_old
+          log "update Ticket.find(#{ticket_new[:id]})"
+          ticket_old.update_attributes(ticket_new)
         else
-          log "add Ticket::Article.find(#{article_new[:id]})"
-          article = Ticket::Article.new(article_new)
-          article.id = article_new[:id]
-          article.save
+          log "add Ticket.find(#{ticket_new[:id]})"
+          ticket = Ticket.new(ticket_new)
+          ticket.id = ticket_new[:id]
+          ticket.save
         end
 
-      }
-#puts "HS: #{record['History'].inspect}"
-      record['History'].each { |history|
-        if history['HistoryType'] == 'NewTicket'
-          #puts "HS.add( #{history.inspect} )"
-          res = History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'created',
-            history_object: 'Ticket',
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-          #puts "res #{res.inspect}"
-        end
-        if history['HistoryType'] == 'StateUpdate'
-          data = history['Name']
-          # "%%new%%open%%"
-          from = nil
-          to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%/
-            from    = $1
-            to      = $2
-            state_from = Ticket::State.lookup( name: from )
-            state_to   = Ticket::State.lookup( name: to )
-            if state_from
-              from_id = state_from.id
+        record['Articles'].each { |article|
+
+          # get article values
+          article_new = {
+            created_by_id: 1,
+            updated_by_id: 1,
+          }
+          map[:Article].each { |key, value|
+            if article[key.to_s]
+              article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
             end
-            if state_to
-              to_id = state_to.id
+          }
+
+          # create customer/sender if needed
+          if article_new[:sender] == 'customer' && article_new[:created_by_id].to_i == 1 && !article_new[:from].empty?
+
+            email = nil
+            begin
+              email = Mail::Address.new( article_new[:from] ).address
+            rescue
+              email = article_new[:from]
+              if article_new[:from] =~ /<(.+?)>/
+                email = $1
+              end
             end
+
+            # create article user if not exists
+            while locks[:User][ email ]
+              log "user #{email} is locked"
+              sleep 1
+            end
+
+            # lock user
+            locks[:User][ email ] = true
+
+            user = User.where( email: email ).first
+            if !user
+              user = User.where( login: email ).first
+            end
+            if !user
+              begin
+                display_name = Mail::Address.new( article_new[:from] ).display_name ||
+                  ( Mail::Address.new( article_new[:from] ).comments && Mail::Address.new( article_new[:from] ).comments[0] )
+              rescue
+                display_name = article_new[:from]
+              end
+
+              # do extra decoding because we needed to use field.value
+              display_name = Mail::Field.new( 'X-From', display_name ).to_s
+
+              roles = Role.lookup( name: 'Customer' )
+              user = User.create(
+                login: email,
+                firstname: display_name,
+                lastname: '',
+                email: email,
+                password: '',
+                active: true,
+                role_ids: [roles.id],
+                updated_by_id: 1,
+                created_by_id: 1,
+              )
+            end
+            article_new[:created_by_id] = user.id
+
+            # unlock user
+            locks[:User][ email ] = false
           end
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
-            history_attribute: 'state',
-            value_from: from,
-            id_from: from_id,
-            value_to: to,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
-        if history['HistoryType'] == 'Move'
-          data = history['Name']
-          # "%%Queue1%%5%%Postmaster%%1"
-          from = nil
-          to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-            from    = $1
-            from_id = $2
-            to      = $3
-            to_id   = $4
+
+          if article_new[:sender] == 'customer'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
+            article_new.delete( :sender )
           end
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
-            history_attribute: 'group',
-            value_from: from,
-            value_to: to,
-            id_from: from_id,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
-        if history['HistoryType'] == 'PriorityUpdate'
-          data = history['Name']
-          # "%%3 normal%%3%%5 very high%%5"
-          from = nil
-          to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-            from    = $1
-            from_id = $2
-            to      = $3
-            to_id   = $4
+          if article_new[:sender] == 'agent'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
+            article_new.delete( :sender )
           end
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
-            history_attribute: 'priority',
-            value_from: from,
-            value_to: to,
-            id_from: from_id,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
-        if history['ArticleID'] && history['ArticleID'] != 0
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['ArticleID'],
-            history_type: 'created',
-            history_object: 'Ticket::Article',
-            related_o_id: history['TicketID'],
-            related_history_object: 'Ticket',
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
-      }
+          if article_new[:sender] == 'system'
+            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
+            article_new.delete( :sender )
+          end
+
+          if article_new[:type] == 'email-external'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+            article_new[:internal] = false
+          elsif article_new[:type] == 'email-internal'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+            article_new[:internal] = true
+          elsif article_new[:type] == 'note-external'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+            article_new[:internal] = false
+          elsif article_new[:type] == 'note-internal'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+            article_new[:internal] = true
+          elsif article_new[:type] == 'phone'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
+            article_new[:internal] = false
+          elsif article_new[:type] == 'webrequest'
+            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
+            article_new[:internal] = false
+          else
+            article_new[:type_id] = 9
+          end
+          article_new.delete( :type )
+          article_old = Ticket::Article.where( id: article_new[:id] ).first
+
+          # set state types
+          if article_old
+            log "update Ticket::Article.find(#{article_new[:id]})"
+            article_old.update_attributes(article_new)
+          else
+            log "add Ticket::Article.find(#{article_new[:id]})"
+            article = Ticket::Article.new(article_new)
+            article.id = article_new[:id]
+            article.save
+          end
+
+        }
+  #puts "HS: #{record['History'].inspect}"
+        record['History'].each { |history|
+          if history['HistoryType'] == 'NewTicket'
+            #puts "HS.add( #{history.inspect} )"
+            res = History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'created',
+              history_object: 'Ticket',
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+            #puts "res #{res.inspect}"
+          end
+          if history['HistoryType'] == 'StateUpdate'
+            data = history['Name']
+            # "%%new%%open%%"
+            from = nil
+            to   = nil
+            if data =~ /%%(.+?)%%(.+?)%%/
+              from    = $1
+              to      = $2
+              state_from = Ticket::State.lookup( name: from )
+              state_to   = Ticket::State.lookup( name: to )
+              if state_from
+                from_id = state_from.id
+              end
+              if state_to
+                to_id = state_to.id
+              end
+            end
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'updated',
+              history_object: 'Ticket',
+              history_attribute: 'state',
+              value_from: from,
+              id_from: from_id,
+              value_to: to,
+              id_to: to_id,
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          end
+          if history['HistoryType'] == 'Move'
+            data = history['Name']
+            # "%%Queue1%%5%%Postmaster%%1"
+            from = nil
+            to   = nil
+            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+              from    = $1
+              from_id = $2
+              to      = $3
+              to_id   = $4
+            end
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'updated',
+              history_object: 'Ticket',
+              history_attribute: 'group',
+              value_from: from,
+              value_to: to,
+              id_from: from_id,
+              id_to: to_id,
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          end
+          if history['HistoryType'] == 'PriorityUpdate'
+            data = history['Name']
+            # "%%3 normal%%3%%5 very high%%5"
+            from = nil
+            to   = nil
+            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+              from    = $1
+              from_id = $2
+              to      = $3
+              to_id   = $4
+            end
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'updated',
+              history_object: 'Ticket',
+              history_attribute: 'priority',
+              value_from: from,
+              value_to: to,
+              id_from: from_id,
+              id_to: to_id,
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          end
+          if history['ArticleID'] && history['ArticleID'] != 0
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['ArticleID'],
+              history_type: 'created',
+              history_object: 'Ticket::Article',
+              related_o_id: history['TicketID'],
+              related_history_object: 'Ticket',
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          end
+        }
+      end
     }
   end
 
