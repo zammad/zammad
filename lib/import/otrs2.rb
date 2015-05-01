@@ -1296,7 +1296,7 @@ module Import::OTRS2
 
     # unlock user
     locks[:User][ email ] = false
-    
+
     true
   end
 

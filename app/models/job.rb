@@ -43,8 +43,8 @@ class Job < ApplicationModel
 
       # find tickets to change
       tickets = Ticket.where( job.condition.permit! )
-        .order( '`tickets`.`created_at` DESC' )
-        .limit( 1_000 )
+                .order( '`tickets`.`created_at` DESC' )
+                .limit( 1_000 )
       job.processed = tickets.count
       tickets.each do |ticket|
         #puts "CHANGE #{job.execute.inspect}"
