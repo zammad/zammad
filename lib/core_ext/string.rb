@@ -86,7 +86,7 @@ class String
     string.gsub!( %r{<pre>(.+?)</pre>}m ) { |placeholder|
       placeholder = placeholder.gsub(/\n/, '###BR###')
     }
-    string.gsub!( %r{<code>(.+?)</code>/}m ) { |placeholder|
+    string.gsub!( %r{<code>(.+?)</code>}m ) { |placeholder|
       placeholder = placeholder.gsub(/\n/, '###BR###')
     }
 
@@ -106,9 +106,9 @@ class String
     string.gsub!(%r{<hr(|/| [^>]*)>}i, "___\n")
 
     # add new lines
-    string.gsub!( %r{\<(br|table)(|/| [^>]*)\>}i, "\n" )
-    string.gsub!( %r{\</(div|p|pre|blockquote|table|tr)(|\s.+?)\>}i, "\n" )
-    string.gsub!( %r{/</td\>}i, ' '  )
+    string.gsub!( %r{<(br|table)(|/| [^>]*)>}i, "\n" )
+    string.gsub!( %r{</(div|p|pre|blockquote|table|tr)(|\s.+?)>}i, "\n" )
+    string.gsub!( %r{</td>}i, ' '  )
 
     # strip all other tags
     string.gsub!( /\<.+?\>/, '' )
