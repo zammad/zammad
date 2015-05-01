@@ -530,17 +530,15 @@ module Import::OTRS2
       # cleanup values
       _cleanup(record)
 
+      _utf8_encode(record)
+
       ticket_new = {
         title: '',
         created_by_id: 1,
         updated_by_id: 1,
       }
       map[:Ticket].each { |key, value|
-        if record[key.to_s] && record[key.to_s].class == String
-          ticket_new[value] = Encode.conv( 'utf8', record[key.to_s] )
-        else
-          ticket_new[value] = record[key.to_s]
-        end
+        ticket_new[value] = record[key.to_s]
       }
       ticket_old = Ticket.where( id: ticket_new[:id] ).first
 
@@ -581,71 +579,12 @@ module Import::OTRS2
 
       # utf8 encode
       record['Articles'].each { |article|
-        article.each { |key, value|
-          next if !value
-          next if value.class != String
-          article[key] = Encode.conv( 'utf8', value )
-        }
+        _utf8_encode(article)
       }
 
       # lookup customers to create first
       record['Articles'].each { |article|
-
-        # create customer/sender if needed
-        if article['sender'] == 'customer' && article['created_by_id'].to_i == 1 && !article['from'].empty?
-
-          email = nil
-          begin
-            email = Mail::Address.new( article['from'] ).address
-          rescue
-            email = article['from']
-            if article['from'] =~ /<(.+?)>/
-              email = $1
-            end
-          end
-
-          # create article user if not exists
-          while locks[:User][ email ]
-            log "user #{email} is locked"
-            sleep 1
-          end
-
-          # lock user
-          locks[:User][ email ] = true
-
-          user = User.where( email: email ).first
-          if !user
-            user = User.where( login: email ).first
-          end
-          if !user
-            begin
-              display_name = Mail::Address.new( article['from'] ).display_name ||
-                ( Mail::Address.new( article['from'] ).comments && Mail::Address.new( article['from'] ).comments[0] )
-            rescue
-              display_name = article['from']
-            end
-
-            # do extra decoding because we needed to use field.value
-            display_name = Mail::Field.new( 'X-From', display_name ).to_s
-
-            roles = Role.lookup( name: 'Customer' )
-            user = User.create(
-              login: email,
-              firstname: display_name,
-              lastname: '',
-              email: email,
-              password: '',
-              active: true,
-              role_ids: [roles.id],
-              updated_by_id: 1,
-              created_by_id: 1,
-            )
-          end
-          article['created_by_id'] = user.id
-
-          # unlock user
-          locks[:User][ email ] = false
-        end
+        _article_based_customers(article, locks)
       }
 
       ActiveRecord::Base.transaction do
@@ -658,9 +597,7 @@ module Import::OTRS2
           }
 
           map[:Article].each { |key, value|
-            if article[key.to_s]
-              article_new[value] = Encode.conv( 'utf8', article[key.to_s] )
-            end
+            article_new[value] = article[key.to_s]
           }
 
           if article_new[:sender] == 'customer'
@@ -1164,7 +1101,6 @@ module Import::OTRS2
   end
 
   # sync organizations
-
   def self.organization(records)
     map = {
       ChangeTime: :updated_at,
@@ -1205,7 +1141,6 @@ module Import::OTRS2
   end
 
   # sync settings
-
   def self.setting(records)
 
     records.each { |setting|
@@ -1255,14 +1190,12 @@ module Import::OTRS2
   end
 
   # log
-
   def self.log(message)
     thread_no = Thread.current[:thread_no] || '-'
     puts "#{Time.new.to_s}/thread##{thread_no}: #{message}"
   end
 
   # set translate valid ids to active = true|false
-
   def self._set_valid(record)
 
     # map
@@ -1282,7 +1215,6 @@ module Import::OTRS2
   end
 
   # cleanup invalid values
-
   def self._cleanup(record)
     record.each {|key, value|
       if value == '0000-00-00 00:00:00'
@@ -1295,4 +1227,77 @@ module Import::OTRS2
       record['Closed'] = record['Created']
     end
   end
+
+  # utf8 convert
+  def self._utf8_encode(data)
+    data.each { |key, value|
+      next if !value
+      next if value.class != String
+      data[key] = Encode.conv( 'utf8', value )
+    }
+  end
+
+  # create customers for article
+  def self._article_based_customers(article, locks)
+
+    # create customer/sender if needed
+    return if article['sender'] != 'customer'
+    return if article['created_by_id'].to_i != 1
+    return if article['from'].empty?
+
+    email = nil
+    begin
+      email = Mail::Address.new( article['from'] ).address
+    rescue
+      email = article['from']
+      if article['from'] =~ /<(.+?)>/
+        email = $1
+      end
+    end
+
+    # create article user if not exists
+    while locks[:User][ email ]
+      log "user #{email} is locked"
+      sleep 1
+    end
+
+    # lock user
+    locks[:User][ email ] = true
+
+    user = User.where( email: email ).first
+    if !user
+      user = User.where( login: email ).first
+    end
+    if !user
+      begin
+        display_name = Mail::Address.new( article['from'] ).display_name ||
+          ( Mail::Address.new( article['from'] ).comments && Mail::Address.new( article['from'] ).comments[0] )
+      rescue
+        display_name = article['from']
+      end
+
+      # do extra decoding because we needed to use field.value
+      display_name = Mail::Field.new( 'X-From', display_name ).to_s
+
+      roles = Role.lookup( name: 'Customer' )
+      user = User.create(
+        login: email,
+        firstname: display_name,
+        lastname: '',
+        email: email,
+        password: '',
+        active: true,
+        role_ids: [roles.id],
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    article['created_by_id'] = user.id
+
+    # unlock user
+    locks[:User][ email ] = false
+    
+    true
+  end
+
 end
