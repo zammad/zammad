@@ -3,18 +3,18 @@
 class Observer::Ticket::CloseTime < ActiveRecord::Observer
   observe 'ticket'
 
-  def after_create(record)
+  def before_create(record)
     _check(record)
   end
 
-  def after_update(record)
+  def before_update(record)
     _check(record)
   end
 
   private
 
   def _check(record)
-    #      puts 'check close time'
+    #puts 'check close time'
 
     # return if we run import mode
     return if Setting.get('import_mode')
@@ -29,8 +29,5 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
 
     # set close_time
     record.close_time = Time.now
-
-    # save ticket
-    record.save
   end
 end
