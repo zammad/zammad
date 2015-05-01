@@ -299,6 +299,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       ticket_id: tickets[3].id,
       user_id: 1,
     )
+    Delayed::Worker.new.work_off
     notifications = OnlineNotification.list_by_object( 'Ticket', tickets[2].id )
     assert( !notifications.empty?, 'should have notifications')
     assert( notification_seen_only_exists_exists(notifications), 'still not seen notifications for merged ticket available')
@@ -315,6 +316,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       assert( !found, 'Ticket destroyed')
 
       # check if notifications for ticket still exist
+      Delayed::Worker.new.work_off
       notifications = OnlineNotification.list_by_object( 'Ticket', ticket_id )
       assert( notifications.empty?, 'still notifications for destroyed ticket available')
     }
