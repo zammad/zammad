@@ -151,8 +151,8 @@ returns
     if !related_history_object
       history_object = self.object_lookup( requested_object )
       history = History.where( history_object_id: history_object.id )
-      .where( o_id: requested_object_id )
-      .order('created_at ASC, id ASC')
+                .where( o_id: requested_object_id )
+                .order('created_at ASC, id ASC')
     else
       history_object_requested = self.object_lookup( requested_object )
       history_object_related   = self.object_lookup( related_history_object )

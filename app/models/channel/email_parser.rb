@@ -103,7 +103,7 @@ class Channel::EmailParser
       data[:from_local]        = Mail::Address.new( from ).local
       data[:from_domain]       = Mail::Address.new( from ).domain
       data[:from_display_name] = Mail::Address.new( from ).display_name ||
-      ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
+                                 ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
     rescue
       data[:from_email]  = from
       data[:from_local]  = from

@@ -81,7 +81,7 @@ returns
     attributes
   end
 
-  private
+    private
 
 =begin
 

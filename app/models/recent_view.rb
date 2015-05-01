@@ -38,12 +38,12 @@ class RecentView < ApplicationModel
   def self.list( user, limit = 10, type = nil )
     if !type
       recent_views = RecentView.where( created_by_id: user.id )
-      .order('created_at DESC, id DESC')
-      .limit(limit)
+                     .order('created_at DESC, id DESC')
+                     .limit(limit)
     else
       recent_views = RecentView.select('DISTINCT(o_id), recent_view_object_id').where( created_by_id: user.id, recent_view_object_id: ObjectLookup.by_name(type) )
-      .order('created_at DESC, id DESC')
-      .limit(limit)
+                     .order('created_at DESC, id DESC')
+                     .limit(limit)
     end
 
     list = []

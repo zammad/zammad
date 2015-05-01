@@ -51,6 +51,7 @@ class Setting < ApplicationModel
   end
 
   private
+
   def delete_cache
     @@current[:settings_config] = nil
   end

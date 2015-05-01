@@ -70,7 +70,7 @@ class Observer::Ticket::Notification::BackgroundJob
         object: 'Ticket',
         o_id: ticket.id,
         seen: seen,
-        created_by_id: ticket.updated_by_id ||  1,
+        created_by_id: ticket.updated_by_id || 1,
         user_id: user.id,
       )
 
@@ -135,7 +135,7 @@ class Observer::Ticket::Notification::BackgroundJob
       history_type: 'notification',
       history_object: 'Ticket',
       value_to: recipient_list,
-      created_by_id: ticket.updated_by_id ||  1
+      created_by_id: ticket.updated_by_id || 1
     )
   end
 

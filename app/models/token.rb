@@ -13,7 +13,7 @@ class Token < ActiveRecord::Base
 
     # check if token is still valid
     if !token.persistent &&
-        token.created_at < 1.day.ago
+       token.created_at < 1.day.ago
 
       # delete token
       token.delete
@@ -26,6 +26,7 @@ class Token < ActiveRecord::Base
   end
 
   private
+
   def generate_token
     begin
       self.name = SecureRandom.hex(20)

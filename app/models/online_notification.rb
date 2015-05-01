@@ -57,8 +57,8 @@ mark online notification as seen
 
   def self.seen(data)
     notification = OnlineNotification.find(data[:id])
-      notification.seen = true
-      notification.save
+    notification.seen = true
+    notification.save
   end
 
 =begin
@@ -88,8 +88,8 @@ return all online notifications of an user
   def self.list(user, limit)
 
     notifications = OnlineNotification.where(user_id: user.id)
-      .order( 'created_at DESC, id DESC' )
-      .limit( limit )
+                    .order( 'created_at DESC, id DESC' )
+                    .limit( limit )
     list = []
     notifications.each do |item|
       data = item.attributes
@@ -116,8 +116,9 @@ return all online notifications of an object
       object_lookup_id: object_id,
       o_id: o_id,
     )
-      .order( 'created_at DESC, id DESC' )
-      .limit( 10_000 )
+    .order( 'created_at DESC, id DESC' )
+    .limit( 10_000 )
+
     list = []
     notifications.each do |item|
       data = item.attributes

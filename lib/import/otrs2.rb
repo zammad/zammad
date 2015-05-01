@@ -1004,7 +1004,7 @@ module Import::OTRS2
           if group_lookup['Name'] == 'admin' && permissions && permissions.include?('rw')
             roles.push 'Admin'
           end
-          if group_lookup['Name'] =~ /^(stats|report)/ && permissions && ( permissions.include?('ro') ||  permissions.include?('rw') )
+          if group_lookup['Name'] =~ /^(stats|report)/ && permissions && ( permissions.include?('ro') || permissions.include?('rw') )
             roles.push 'Report'
           end
         end
@@ -1296,7 +1296,7 @@ module Import::OTRS2
 
     # unlock user
     locks[:User][ email ] = false
-    
+
     true
   end
 

@@ -6,7 +6,7 @@ class ImportOtrsController < ApplicationController
     return if setup_done_response
 
     # validate
-    if !params[:url] || params[:url] !~ /^(http|https):\/\/.+?$/
+    if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result: 'invalid',
         message: 'Invalid!',
@@ -44,7 +44,7 @@ class ImportOtrsController < ApplicationController
     suffixes.each {|suffix|
       url = params[:url] + suffix + '?Action=ZammadMigrator'
       # strip multible / in url
-      url.gsub!(/([^:])(\/+\/)/, '\\1/')
+      url.gsub!(%r{([^:])(/+/)}, '\\1/')
       response = UserAgent.request( url )
 
       #Setting.set('import_mode', true)
@@ -65,7 +65,7 @@ class ImportOtrsController < ApplicationController
     # return result
     render json: {
       result: 'invalid',
-        message_human: message_human,
+      message_human: message_human,
     }
   end
 

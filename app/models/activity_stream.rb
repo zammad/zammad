@@ -99,12 +99,12 @@ return all activity entries of an user
     return [] if role_ids.include?(customer_role.id)
     if group_ids.empty?
       stream = ActivityStream.where('(role_id IN (?) AND group_id is NULL)', role_ids )
-      .order( 'created_at DESC, id DESC' )
-      .limit( limit )
+               .order( 'created_at DESC, id DESC' )
+               .limit( limit )
     else
       stream = ActivityStream.where('(role_id IN (?) AND group_id is NULL) OR ( role_id IN (?) AND group_id IN (?) ) OR ( role_id is NULL AND group_id IN (?) )', role_ids, role_ids, group_ids, group_ids )
-      .order( 'created_at DESC, id DESC' )
-      .limit( limit )
+               .order( 'created_at DESC, id DESC' )
+               .limit( limit )
     end
     list = []
     stream.each do |item|

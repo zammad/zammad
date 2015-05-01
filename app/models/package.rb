@@ -47,7 +47,7 @@ class Package < ApplicationModel
   # install all packages located under auto_install/*.zpm
   def self.auto_install
     path = @@root + '/auto_install/'
-    return if ! File.exist?( path )
+    return if !File.exist?( path )
     data = []
     Dir.foreach( path ) do |entry|
       if entry =~ /\.zpm/ && entry !~ /^\./
@@ -82,7 +82,7 @@ class Package < ApplicationModel
   def self._package_base_dir?(package_base_dir)
     package = false
     Dir.glob(  package_base_dir + '/*.szpm') do |entry|
-      package = entry.sub( /^.*\/(.+?)\.szpm$/, '\1')
+      package = entry.sub( %r{^.*/(.+?)\.szpm$}, '\1')
     end
     if package == false
       raise "Can't link package, '#{package_base_dir}' is no package source directory!"
@@ -133,7 +133,7 @@ class Package < ApplicationModel
       entry = entry.sub( '//', '/' )
       file = entry
       file = file.sub( /#{package_base_dir.to_s}/, '' )
-      file = file.sub( /^\//, '' )
+      file = file.sub( %r{^/}, '' )
 
       # ignore files
       if file =~ /^README/

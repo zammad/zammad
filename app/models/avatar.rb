@@ -110,7 +110,7 @@ add a avatar
 
       # twitter workaround to get bigger avatar images
       # see also https://dev.twitter.com/overview/general/user-profile-images-and-banners
-      if data[:url] =~ /\/\/pbs.twimg.com\//i
+      if data[:url] =~ %r{//pbs.twimg.com/}i
         data[:url].sub!(/normal\.png$/, 'bigger.png')
       end
 

@@ -63,24 +63,24 @@ gem 'em-websocket'
 group :development, :test do
 
   gem 'test-unit'
-    gem 'spring'
-    gem 'sqlite3'
+  gem 'spring'
+  gem 'sqlite3'
 
-    # code coverage
-    gem 'simplecov'
-    gem 'simplecov-rcov'
+  # code coverage
+  gem 'simplecov'
+  gem 'simplecov-rcov'
 
-    # UI tests w/ Selenium
-    gem 'selenium-webdriver'
+  # UI tests w/ Selenium
+  gem 'selenium-webdriver'
 
-    # livereload on template changes (html, js, css)
-    gem 'guard', '>= 2.2.2', require: false
-    gem 'guard-livereload',  require: false
-    gem 'rack-livereload'
-    gem 'rb-fsevent',        require: false
+  # livereload on template changes (html, js, css)
+  gem 'guard', '>= 2.2.2', require: false
+  gem 'guard-livereload',  require: false
+  gem 'rack-livereload'
+  gem 'rb-fsevent',        require: false
 
-    # code QA
-    gem 'rubocop'
+  # code QA
+  gem 'rubocop'
 end
 
 gem 'puma'

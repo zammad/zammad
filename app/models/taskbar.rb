@@ -7,6 +7,7 @@ class Taskbar < ApplicationModel
   before_update   :update_last_contact, :set_user
 
   private
+
   def update_last_contact
     self.last_contact = Time.now
   end

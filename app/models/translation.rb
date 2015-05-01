@@ -167,6 +167,7 @@ translate strings in ruby context, e. g. for notifications
   end
 
   private
+
   def set_initial
 
     return if target_initial
