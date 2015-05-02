@@ -135,7 +135,7 @@
     </div>
     <div class="profile-section">
       <div class="frequency stat-widget vertical">
-        <h3>Frequency</h3>
+        <h3><%- @T('Frequency') %></h3>
         <div class="stat-graphic">
           <div class="stats-row">
             <div class="stat-bars">

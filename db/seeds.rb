@@ -292,7 +292,7 @@ Setting.create_if_not_exists(
   title: 'Lost Password',
   name: 'user_lost_password',
   area: 'Security::Base',
-  description: 'Activates lost password feature for agents, in the agent interface.',
+  description: 'Activates lost password feature for users.',
   options: {
     form: [
       {
