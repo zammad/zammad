@@ -494,7 +494,7 @@ returns
   def self.latest_change
     key        = "#{self.new.class.name}_latest_change"
     updated_at = Cache.get( key )
-
+puts "LOG AA #{key}/#{updated_at}"
     # if we do not have it cached, do lookup
     if !updated_at
       o = self.select(:updated_at).order(updated_at: :desc).limit(1).first
@@ -502,7 +502,10 @@ returns
         updated_at = o.updated_at
         self.latest_change_set(updated_at)
       end
+      puts "LOG AA Lookup #{key}/#{updated_at}"
+
     end
+    puts "LOG AA RETURN #{key}/#{updated_at}"
     updated_at
   end
 
