@@ -496,7 +496,7 @@ test( "table test 3", function() {
     },
   })
   equal( el.find('table > thead > tr').length, 1, 'row count')
-  equal( el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Realname', 'check header')
+  equal( el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'richtiger Name', 'check header')
   equal( el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Some Name', 'check header')
   equal( el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), 'realname 55', 'check row 1')
