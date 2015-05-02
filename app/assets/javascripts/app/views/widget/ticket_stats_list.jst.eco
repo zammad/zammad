@@ -17,7 +17,7 @@
 <% else: %>
 <div class="profile-ticketsPlaceholder vertical centered">
   <div class="<%- @iconClass %>"></div>
-  <%- @T('No Tickets') %>
+  <%- @T('none') %>
 </div>
 <% end %>
 <% if @ticket_ids.length > @ticket_ids_show.length: %>

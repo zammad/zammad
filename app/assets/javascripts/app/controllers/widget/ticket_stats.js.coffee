@@ -73,7 +73,7 @@ class App.TicketStats extends App.Controller
     new TicketStatsList(
       el:         @$('.js-user-open-tickets')
       user:       @user
-      head:       'Open Ticket'
+      head:       'Open Tickets'
       iconClass:  iconClass
       ticket_ids: data.user_tickets_open_ids
       limit:      limit
@@ -81,7 +81,7 @@ class App.TicketStats extends App.Controller
     new TicketStatsList(
       el:         @$('.js-user-closed-tickets')
       user:       @user
-      head:       'Closed Ticket'
+      head:       'Closed Tickets'
       ticket_ids: data.user_tickets_closed_ids
       limit:      limit
     )
@@ -97,7 +97,7 @@ class App.TicketStats extends App.Controller
     new TicketStatsList(
       el:         @$('.js-org-open-tickets')
       user:       @user
-      head:       'Open Ticket'
+      head:       'Open Tickets'
       iconClass:  iconClass
       ticket_ids: data.org_tickets_open_ids
       limit:      limit
@@ -105,7 +105,7 @@ class App.TicketStats extends App.Controller
     new TicketStatsList(
       el:         @$('.js-org-closed-tickets')
       user:       @user
-      head:       'Closed Ticket'
+      head:       'Closed Tickets'
       ticket_ids: data.org_tickets_closed_ids
       limit:      limit
     )

@@ -22,7 +22,7 @@
 <% if @organization.members: %>
 <hr>
 <user class="sidebar-block">
-  <label><%- @T('Member') %></label>
+  <label><%- @T('Members') %></label>
   <ul class="userList">
 <% for user in @organization.members: %>
     <li>

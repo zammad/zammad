@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="visibility-toggle zIndex-7 u-clickable editControls-item">
-      <div class="internal-visibility centered" title="<%- @Ti("unset internal") %>">
+      <div class="internal-visibility centered" title="<%- @Ti("set public") %>">
         <div class="internal visibility icon"></div>
       </div>
       <div class="public-visibility centered" title="<%- @Ti("set internal") %>">
