@@ -69,41 +69,41 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
     assert_equal( ticket.customer.id, customer1.id  )
     assert_equal( ticket.organization.id, organization1.id  )
 
-    sleep 5
+    sleep 6
 
     customer1.firstname = 'firstname customer1'
     customer1.save
 
     # check if organization has been touched
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 2.second.ago
+    if organization1.updated_at > 4.second.ago
       assert( true, 'organization1.updated_at has been updated' )
     else
       assert( false, 'organization1.updated_at has not been updated' )
     end
 
-    sleep 4
+    sleep 6
 
     ticket.customer_id = customer2.id
     ticket.save
 
     # check if customer1, customer2 and organization has been touched
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 2.second.ago
+    if customer1.updated_at > 4.second.ago
       assert( true, 'customer1.updated_at has been updated' )
     else
       assert( false, 'customer1.updated_at has not been updated' )
     end
 
     customer2 = User.find(customer2.id)
-    if customer2.updated_at > 2.second.ago
+    if customer2.updated_at > 4.second.ago
       assert( true, 'customer2.updated_at has been updated' )
     else
       assert( false, 'customer2.updated_at has not been updated' )
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 2.second.ago
+    if organization1.updated_at > 4.second.ago
       assert( true, 'organization1.updated_at has been updated' )
     else
       assert( false, 'organization1.updated_at has not been updated' )
@@ -111,6 +111,5 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
 
     delete = ticket.destroy
     assert( delete, 'ticket destroy' )
-
   end
 end

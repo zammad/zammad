@@ -75,41 +75,41 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     assert_equal( ticket.customer.id, customer1.id  )
     assert_equal( ticket.organization.id, organization1.id  )
 
-    sleep 5
+    sleep 6
 
     organization1.name = 'Ref Object Update Org 1/1'
     organization1.save
 
     # check if ticket and customer has been touched
     ticket = Ticket.find(ticket.id)
-    if ticket.updated_at > 2.second.ago
+    if ticket.updated_at > 4.second.ago
       assert( true, 'ticket.updated_at has been updated' )
     else
       assert( false, 'ticket.updated_at has not been updated' )
     end
 
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 2.second.ago
+    if customer1.updated_at > 4.second.ago
       assert( true, 'customer1.updated_at has been updated' )
     else
       assert( false, 'customer1.updated_at has not been updated' )
     end
 
-    sleep 4
+    sleep 6
 
     customer2.organization_id = organization1.id
     customer2.save
 
     # check if customer1 and organization has been touched
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 2.second.ago
+    if customer1.updated_at > 4.second.ago
       assert( true, 'customer1.updated_at has been updated' )
     else
       assert( false, 'customer1.updated_at has not been updated' )
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 2.second.ago
+    if organization1.updated_at > 4.second.ago
       assert( true, 'organization1.updated_at has been updated' )
     else
       assert( false, 'organization1.updated_at has not been updated' )
