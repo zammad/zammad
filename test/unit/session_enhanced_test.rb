@@ -155,7 +155,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert( Sessions.thread_client_exists?(client_id3), 'check if client is running' )
 
     # check if session still exists after idle cleanup
-    sleep 6
+    sleep 8
     client_ids = Sessions.destory_idle_sessions(5)
 
     # check client sessions
