@@ -280,6 +280,18 @@ test( "i18n", function() {
 
   timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
   equal( timestamp, '11/06/2012 21:07', 'en - timestamp translated correctly' );
+
+  // locale alias test
+  // de
+  App.i18n.set('de');
+  var translated = App.i18n.translateContent('yes');
+  equal( translated, 'ja', 'de - yes / ja translated correctly' );
+
+  // locale detection test
+  // de-ch
+  App.i18n.set('de-ch');
+  var translated = App.i18n.translateContent('yes');
+  equal( translated, 'ja', 'de - yes / ja translated correctly' );
 });
 
 // events
