@@ -1035,7 +1035,7 @@ wait untill text in selector disabppears
     #instance.execute_script( '$(".content.active .newTicket form").submit();' )
     instance.find_elements( { css: '.active .newTicket button.submit' } )[0].click
     sleep 1
-    (1..8).each {|loop|
+    (1..10).each {|loop|
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
         assert( true, 'ticket created' )
         sleep 2.5
@@ -1056,7 +1056,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    raise "ticket creation failed, can't get zoom url"
+    raise "ticket creation failed, can't get zoom url (current url is '#{ instance.current_url }')"
   end
 
 =begin
