@@ -61,13 +61,12 @@ class App.Auth
       for key, value of data.config
         App.Config.set( key, value )
 
+      # refresh default collections
+      if data.collections
+        App.Collection.resetCollections( data.collections )
+
       # empty session
       App.Session.init()
-
-      # rebuild navbar with new navbar items
-      App.Event.trigger( 'auth' )
-      App.Event.trigger( 'auth:logout' )
-      App.Event.trigger( 'ui:rerender' )
 
       # update model definition
       if data.models
@@ -75,6 +74,15 @@ class App.Auth
           for attribute in attributes
             App[model].attributes.push attribute.name
             App[model].configure_attributes.push attribute
+
+      # set locale
+      locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
+      App.i18n.set( locale )
+
+      # rebuild navbar with new navbar items
+      App.Event.trigger( 'auth' )
+      App.Event.trigger( 'auth:logout' )
+      App.Event.trigger( 'ui:rerender' )
 
       return false;
 

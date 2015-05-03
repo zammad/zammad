@@ -124,21 +124,33 @@ class _i18nSingleton extends Spine.Module
     @locale
 
   set: ( locale ) ->
-    if locale is 'en'
-      locale = 'en-us'
-    @locale = locale
+
+    # prepare locale
+    localeToSet = locale.toLowerCase()
+
+    # try aliases
+    locales = App.Locale.all()
+    for locale in locales
+      if locale.alias is locale
+        localeToSet = locale.locale
+
+    # check if locale need to be changed
+    return if localeToSet is @locale
+
+    # set locale
+    @locale = localeToSet
 
     # set if not translated should be logged
-    @_notTranslatedLog = @notTranslatedFeatureEnabled(locale)
+    @_notTranslatedLog = @notTranslatedFeatureEnabled(@locale)
 
     # set lang attribute of html tag
-    $('html').prop( 'lang', locale.substr(0, 2) )
+    $('html').prop( 'lang', @locale.substr(0, 2) )
 
     @mapString = {}
     App.Ajax.request(
-      id:    'i18n-set-' + locale,
+      id:    'i18n-set-' + @locale,
       type:   'GET',
-      url:    App.Config.get('api_path') + '/translations/lang/' + locale,
+      url:    App.Config.get('api_path') + '/translations/lang/' + @locale,
       async:  false,
       success: (data, status, xhr) =>
 
