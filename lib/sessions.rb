@@ -32,12 +32,13 @@ returns
     path = @path + '/' + client_id.to_s
     FileUtils.mkpath path
     meta[:last_ping] = Time.new.to_i.to_s
+    data = {
+      user: session,
+      meta: meta,
+    }
+    content = data.to_s
     File.open( path + '/session', 'wb' ) { |file|
-      data = {
-        user: session,
-        meta: meta,
-      }
-      file.write data.to_json
+      file.write content
     }
 
     # send update to browser
