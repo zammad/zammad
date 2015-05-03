@@ -12,10 +12,10 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'activity-stream-agent-1',
+      login: 'session-basic-ticket-agent-1',
       firstname: 'Session',
-      lastname: 'activity stream ' + rand(99_999).to_s,
-      email: 'activity-stream-agent1@example.com',
+      lastname: 'session basic ' + rand(99_999).to_s,
+      email: 'session-basic-ticket-agent-1@example.com',
       password: 'agentpw',
       active: true,
       roles: roles,
@@ -58,10 +58,10 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'activity-stream-agent-1',
+      login: 'session-basic-ticket-agent-1',
       firstname: 'Session',
-      lastname: 'activity stream ' + rand(99_999).to_s,
-      email: 'activity-stream-agent1@example.com',
+      lastname: 'session basic ' + rand(99_999).to_s,
+      email: 'session-basic-ticket-agent-1@example.com',
       password: 'agentpw',
       active: true,
       roles: roles,
