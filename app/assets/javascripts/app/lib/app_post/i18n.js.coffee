@@ -123,16 +123,40 @@ class _i18nSingleton extends Spine.Module
   get: ->
     @locale
 
-  set: ( locale ) ->
+  set: ( localeToSet ) ->
 
     # prepare locale
-    localeToSet = locale.toLowerCase()
+    localeToSet = localeToSet.toLowerCase()
+
+    # check if locale exists
+    localeFound = false
+    locales     = App.Locale.all()
+    for locale in locales
+      if locale.locale is localeToSet
+        localeFound = true
 
     # try aliases
-    locales = App.Locale.all()
-    for locale in locales
-      if locale.alias is locale
-        localeToSet = locale.locale
+    if !localeFound
+      for locale in locales
+        if locale.alias is localeToSet
+          localeToSet = locale.locale
+
+    # if no locale and no alias was found, try to find correct one
+    if !localeFound
+
+      # try to find by alias
+      localeToSet = localeToSet.substr(0, 2)
+      for locale in locales
+        if locale.alias is localeToSet
+          localeToSet = locale.locale
+          localeFound = true
+
+      # try to find by locale
+      if !localeFound
+        for locale in locales
+          if locale.locale is localeToSet
+            localeToSet = locale.locale
+            localeFound = true
 
     # check if locale need to be changed
     return if localeToSet is @locale

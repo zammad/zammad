@@ -54,7 +54,8 @@ test( "check pretty date", function() {
       mm = '0' + mm
   }
   var yyyy = pastDate.getFullYear();
-  equal( result, yyyy+'-'+mm+'-'+dd, '30 days')
+  // mm/dd/yyyy
+  equal( result, mm+'/'+dd+'/'+yyyy, '30 days')
 
   // future
   current = new Date()
