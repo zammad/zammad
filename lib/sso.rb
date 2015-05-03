@@ -65,5 +65,6 @@ returns
         return user_auth
       end
     }
+    nil
   end
 end
