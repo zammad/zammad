@@ -46,7 +46,60 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( nil, nil, 'check delete' )
   end
 
-  test 'b collections group' do
+  test 'c session create / update' do
+
+    # create users
+    roles  = Role.where( name: [ 'Agent'] )
+    groups = Group.all
+
+    UserInfo.current_user_id = 1
+    agent1 = User.create_or_update(
+      login: 'session-agent-1',
+      firstname: 'Session',
+      lastname: 'Agent 1',
+      email: 'session-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+    agent1.roles = roles
+    agent1.save
+
+    # create sessions
+    client_id1 = '123456789'
+    Sessions.create( client_id1, {}, { type: 'websocket' } )
+
+    # check if session exists
+    assert( Sessions.session_exists?(client_id1), 'check if session exists' )
+
+    # check session data
+    data = Sessions.get(client_id1)
+    assert( data[:meta], 'check if meta exists' )
+    assert( data[:user], 'check if user exists' )
+    assert_equal( data[:user]['id'], nil, 'check if user id is correct' )
+
+    # recreate session
+    Sessions.create( client_id1, agent1.attributes, { type: 'websocket' } )
+
+    # check if session exists
+    assert( Sessions.session_exists?(client_id1), 'check if session exists' )
+
+    # check session data
+    data = Sessions.get(client_id1)
+    assert( data[:meta], 'check if meta exists' )
+    assert( data[:user], 'check if user exists' )
+    assert_equal( data[:user]['id'], agent1.id, 'check if user id is correct' )
+
+    # destroy session
+    Sessions.destory(client_id1)
+
+    # check if session exists
+    assert( !Sessions.session_exists?(client_id1), 'check if session exists' )
+
+  end
+
+  test 'c collections group' do
     require 'sessions/backend/collections/group.rb'
 
     UserInfo.current_user_id = 2
@@ -132,7 +185,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   user.roles = roles
   user.save
 
-  test 'b collections organization' do
+  test 'c collections organization' do
     require 'sessions/backend/collections/organization.rb'
     UserInfo.current_user_id = 2
     user = User.lookup(id: 1)
@@ -186,7 +239,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal( result1, result2, 'check collections' )
   end
 
-  test 'b rss' do
+  test 'c rss' do
     user = User.lookup(id: 1)
     collection_client1 = Sessions::Backend::Rss.new(user, false, '123-1')
 
@@ -202,7 +255,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( !result1, 'check rss - recall' )
   end
 
-  test 'b activity stream' do
+  test 'c activity stream' do
 
     # create users
     roles  = Role.where( name: [ 'Agent', 'Admin'] )
@@ -248,7 +301,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert( result1, 'check as agent1 - recall 3' )
   end
 
-  test 'b ticket_create' do
+  test 'c ticket_create' do
 
     UserInfo.current_user_id = 2
     user = User.lookup(id: 1)

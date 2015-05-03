@@ -46,6 +46,11 @@ returns
       file.write content
     }
 
+    # destory old session if needed
+    if File::exist?( path )
+      Sessions.destory(client_id)
+    end
+
     # move to destination directory
     FileUtils.mv( path_tmp, path )
 
@@ -240,6 +245,11 @@ returns
     session_dir  = "#{@path}/#{client_id}"
     session_file = "#{session_dir}/session"
     data         = nil
+    if !File.exist? session_dir
+      self.destory(client_id)
+      puts "ERROR: missing session directory for '#{client_id}', remove session."
+      return
+    end
     if !File.exist? session_file
       self.destory(client_id)
       puts "ERROR: missing session file for '#{client_id}', remove session."
