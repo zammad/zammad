@@ -93,7 +93,7 @@ class ImportOtrsController < ApplicationController
   def import_status
     return if setup_done_response
 
-    state = Import::OTRS2.get_current_state
+    state = Import::OTRS2.current_state
 
     render json: {
       data: state,

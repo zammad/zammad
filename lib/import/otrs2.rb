@@ -212,9 +212,9 @@ module Import::OTRS2
 
 =begin
 
-  get object statisitic from server ans save it in cache
+  get object statistic from server ans save it in cache
 
-  result = get_statisitic('Subaction=List')
+  result = statistic('Subaction=List')
 
   return
 
@@ -226,7 +226,7 @@ module Import::OTRS2
 
 =end
 
-  def self.get_statisitic
+  def self.statistic
 
     # check cache
     cache = Cache.get('import_otrs_stats')
@@ -246,7 +246,7 @@ module Import::OTRS2
 
   return current import state
 
-  result = get_current_state
+  result = current_state
 
   return
 
@@ -263,8 +263,8 @@ module Import::OTRS2
 
 =end
 
-  def self.get_current_state
-    data = self.get_statisitic
+  def self.current_state
+    data = self.statistic
     base = Group.count + Ticket::State.count + Ticket::Priority.count
     base_total = data['Queue'] + data['State'] + data['Priority']
     user = User.count

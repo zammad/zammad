@@ -77,8 +77,8 @@ class TestCase < Test::Unit::TestCase
   def screenshot(params)
     instance = params[:browser] || @browser
     comment = params[:comment] || ''
-    filename = "tmp/#{Time.zone.now.strftime("screenshot_%Y_%m_%d__%H_%M_%S")}_#{comment}_#{instance.hash}.png"
-    log('screenshot', {filename: filename})
+    filename = "tmp/#{Time.zone.now.strftime('screenshot_%Y_%m_%d__%H_%M_%S')}_#{comment}_#{instance.hash}.png"
+    log('screenshot', { filename: filename })
     instance.save_screenshot(filename)
   end
 
