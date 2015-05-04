@@ -45,12 +45,12 @@ class ActiveSupport::TestCase
     puts 'teardown'
 
     # check if jobs are proccessed
-    if !Delayed::Job.all.empty?
-      Delayed::Job.where('failed_at != NULL').each {|job|
-        assert( false, "not processable job #{jobs.inspect}" )
-      }
-      Delayed::Job.all.destroy_all
-    end
+    return if Delayed::Job.all.empty?
+
+    Delayed::Job.where('failed_at != NULL').each {|job|
+      assert( false, "not processable job #{jobs.inspect}" )
+    }
+    Delayed::Job.all.destroy_all
   end
 
   # Add more helper methods to be used by all tests here...
