@@ -21,13 +21,13 @@ class Channel::TWITTER2
 
   def fetch (channel)
 
-    logger.info "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
+    Rails.logger.info "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
     @client = connect(channel)
 
     # search results
     if channel[:options][:search]
       channel[:options][:search].each { |search|
-        logger.info " - searching for #{search[:item]}"
+        Rails.logger.info " - searching for #{search[:item]}"
         tweets = []
         @client.search( search[:item], count: 50, result_type: 'recent' ).collect do |tweet|
           tweets.push tweet
@@ -39,7 +39,7 @@ class Channel::TWITTER2
 
     # mentions
     if channel[:options][:mentions]
-      logger.info ' - searching for mentions'
+      Rails.logger.info ' - searching for mentions'
       tweets = @client.mentions_timeline
       @article_type = 'twitter status'
       fetch_loop( tweets, channel, channel[:options][:mentions][:group] )
@@ -47,12 +47,12 @@ class Channel::TWITTER2
 
     # direct messages
     if channel[:options][:direct_messages]
-      logger.info ' - searching for direct_messages'
+      Rails.logger.info ' - searching for direct_messages'
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
       fetch_loop( tweets, channel, channel[:options][:direct_messages][:group] )
     end
-    logger.info 'done'
+    Rails.logger.info 'done'
     disconnect
   end
 
@@ -68,7 +68,7 @@ class Channel::TWITTER2
         all_tweets.push tweet
       end
     else
-      logger.error 'UNKNOWN: ' + result_class.to_s
+      Rails.logger.error 'UNKNOWN: ' + result_class.to_s
     end
 
     # find tweets
@@ -86,7 +86,7 @@ class Channel::TWITTER2
         # reset current_user
         UserInfo.current_user_id = 1
 
-        logger.info 'import tweet'
+        Rails.logger.info 'import tweet'
         fetch_import( tweet, channel, group )
       end
 
@@ -113,7 +113,7 @@ class Channel::TWITTER2
       begin
         sender = @client.user(tweet.from_user_id)
       rescue Exception => e
-        logger.error 'Exception: twitter: ' + e.inspect
+        Rails.logger.error 'Exception: twitter: ' + e.inspect
         return
       end
     end
@@ -121,16 +121,16 @@ class Channel::TWITTER2
     # check if parent exists
     user = nil, ticket = nil, article = nil
     if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
-      logger.info 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
+      Rails.logger.info 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
       tweet_sub = @client.status( tweet.in_reply_to_status_id )
-      #logger.debug tweet_sub.inspect
+      #Rails.logger.debug tweet_sub.inspect
       (user, ticket, article) = fetch_import(tweet_sub, channel, group)
     end
 
     # create stuff
     user = fetch_user_create(tweet, sender)
     if !ticket
-      logger.info 'create new ticket...'
+      Rails.logger.info 'create new ticket...'
       ticket = fetch_ticket_create(user, tweet, sender, channel, group)
     end
     article = fetch_article_create(user, ticket, tweet, sender)
@@ -144,11 +144,11 @@ class Channel::TWITTER2
     auth = Authorization.where( uid: sender.id, provider: 'twitter' ).first
     user = nil
     if auth
-      logger.info 'user_id', auth.user_id
+      Rails.logger.info 'user_id', auth.user_id
       user = User.where( id: auth.user_id ).first
     end
     if !user
-      logger.info 'create user...'
+      Rails.logger.info 'create user...'
       roles = Role.where( name: 'Customer' )
       user = User.create(
         login: sender.screen_name,
@@ -163,7 +163,7 @@ class Channel::TWITTER2
         updated_by_id: 1,
         created_by_id: 1
       )
-      logger.info 'autentication create...'
+      Rails.logger.info 'autentication create...'
       authentication = Authorization.create(
         uid: sender.id,
         username: sender.screen_name,
@@ -171,7 +171,7 @@ class Channel::TWITTER2
         provider: 'twitter'
       )
     else
-      logger.info 'user exists'#, user.inspect
+      Rails.logger.info 'user exists'#, user.inspect
     end
 
     # set current user
@@ -182,13 +182,13 @@ class Channel::TWITTER2
 
   def fetch_ticket_create(user, tweet, sender, channel, group)
 
-    #logger.info '+++++++++++++++++++++++++++' + tweet.inspect
+    #Rails.logger.info '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
     if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
-      logger.info 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
+      Rails.logger.info 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
       article = Ticket::Article.where( message_id: tweet.in_reply_to_status_id.to_s ).first
       if article
-        logger.info 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
+        Rails.logger.info 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
         return article.ticket
       end
     end
@@ -269,7 +269,7 @@ class Channel::TWITTER2
   end
 
   def send(attr, notification = false)
-    #    logger.debug('tweeeeettttt!!!!!!')
+    #    Rails.logger.debug('tweeeeettttt!!!!!!')
     channel = Channel.where( area: 'Twitter::Inbound', active: true ).first
 
     client = Twitter::REST::Client.new do |config|
@@ -279,13 +279,13 @@ class Channel::TWITTER2
       config.access_token_secret = channel[:options][:oauth_token_secret]
     end
     if attr[:type] == 'twitter direct-message'
-      logger.info 'to:' + attr[:to].to_s
+      Rails.logger.info 'to:' + attr[:to].to_s
       dm = client.create_direct_message(
         attr[:to].to_s,
         attr[:body].to_s,
         {}
       )
-      # logger.info dm.inspect
+      # Rails.logger.info dm.inspect
       return dm
     end
 
@@ -297,7 +297,7 @@ class Channel::TWITTER2
         in_reply_to_status_id: attr[:in_reply_to]
       }
     )
-    # logger.debug message.inspect
+    # Rails.logger.debug message.inspect
     message
   end
 end

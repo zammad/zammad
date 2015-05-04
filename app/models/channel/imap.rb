@@ -12,7 +12,7 @@ class Channel::IMAP < Channel::EmailParser
       port = 143
     end
 
-    logger.info "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
+    Rails.logger.info "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
 
     # on check, reduce open_timeout to have faster probing
     timeout = 12
@@ -42,11 +42,11 @@ class Channel::IMAP < Channel::EmailParser
       @imap.select( channel[:options][:folder] )
     end
     if check_type == 'check'
-      logger.info 'check only mode, fetch no emails'
+      Rails.logger.info 'check only mode, fetch no emails'
       disconnect
       return
     elsif check_type == 'verify'
-      logger.info "verify mode, fetch no emails #{verify_string}"
+      Rails.logger.info "verify mode, fetch no emails #{verify_string}"
     end
 
     message_ids = @imap.search(['ALL'])
@@ -60,14 +60,14 @@ class Channel::IMAP < Channel::EmailParser
 
     message_ids.each do |message_id|
       count += 1
-      logger.info " - message #{count.to_s}/#{count_all.to_s}"
-      #logger.info msg.to_s
+      Rails.logger.info " - message #{count.to_s}/#{count_all.to_s}"
+      #Rails.logger.info msg.to_s
 
       # check for verify message
       if check_type == 'verify'
         subject = @imap.fetch(message_id, 'ENVELOPE')[0].attr['ENVELOPE'].subject
         if subject && subject =~ /#{verify_string}/
-          logger.info " - verify email #{verify_string} found"
+          Rails.logger.info " - verify email #{verify_string} found"
           @imap.store(message_id, '+FLAGS', [:Deleted])
           @imap.expunge()
           disconnect
@@ -85,9 +85,9 @@ class Channel::IMAP < Channel::EmailParser
     @imap.expunge()
     disconnect
     if count == 0
-      logger.info ' - no message'
+      Rails.logger.info ' - no message'
     end
-    logger.info 'done'
+    Rails.logger.info 'done'
   end
 
   def disconnect

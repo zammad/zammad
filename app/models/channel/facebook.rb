@@ -15,7 +15,7 @@ class Channel::Facebook
 
   def send
 
-    logger.debug('face!!!!!!!!!!!!!!')
+    Rails.logger.debug('face!!!!!!!!!!!!!!')
     graph_api = Koala::Facebook::API.new(
       'AAACqTciZAPsQBAHO9DbM333y2DcL5kccHyIObZB7WhaZBVUXUIeBNChkshvShCgiN6uwZC3r3l4cDvAZAPTArNIkemEraojzN1veNPZBADQAZDZD'
     )

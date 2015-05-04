@@ -12,7 +12,7 @@ class Channel::POP3 < Channel::EmailParser
       port = 110
     end
 
-    logger.info "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
+    Rails.logger.info "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
 
     @pop = Net::POP3.new( channel[:options][:host], port )
 
@@ -27,11 +27,11 @@ class Channel::POP3 < Channel::EmailParser
     end
     @pop.start( channel[:options][:user], channel[:options][:password] )
     if check_type == 'check'
-      logger.info 'check only mode, fetch no emails'
+      Rails.logger.info 'check only mode, fetch no emails'
       disconnect
       return
     elsif check_type == 'verify'
-      logger.info 'verify mode, fetch no emails'
+      Rails.logger.info 'verify mode, fetch no emails'
     end
 
     mails     = @pop.mails
@@ -45,13 +45,13 @@ class Channel::POP3 < Channel::EmailParser
 
     mails.each do |m|
       count += 1
-      logger.info " - message #{count.to_s}/#{count_all.to_s}"
+      Rails.logger.info " - message #{count.to_s}/#{count_all.to_s}"
 
       # check for verify message
       if check_type == 'verify'
         mail = m.pop
         if mail && mail =~ /#{verify_string}/
-          logger.info " - verify email #{verify_string} found"
+          Rails.logger.info " - verify email #{verify_string} found"
           m.delete
           disconnect
           return 'verify ok'
@@ -66,9 +66,9 @@ class Channel::POP3 < Channel::EmailParser
     end
     disconnect
     if count == 0
-      logger.info ' - no message'
+      Rails.logger.info ' - no message'
     end
-    logger.info 'done'
+    Rails.logger.info 'done'
   end
 
   def disconnect
