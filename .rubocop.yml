@@ -1,3 +1,9 @@
+# Default enabled cops
+# https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
+
+# TODO:
+# https://github.com/bbatsov/rubocop#includingexcluding-files
+
 AllCops:
   RunRailsCops: true
   Exclude:
@@ -5,13 +11,6 @@ AllCops:
     - 'bin/rake'
     - 'bin/spring'
     - 'db/schema.rb'
-
-# Default enabled
-# https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
-
-# TODO:
-# https://github.com/bbatsov/rubocop#includingexcluding-files
-
 
 Metrics/LineLength:
   Description: 'Limit lines to 80 characters.'
@@ -136,7 +135,6 @@ Style/SelfAssignment:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#self-assignment'
   Enabled: false
 
-# [Corrected] Redundant curly braces around a hash parameter.
 Style/BracesAroundHashParameters:
   Description: 'Enforce braces style around hash parameters.'
   Enabled: false
@@ -146,10 +144,7 @@ Rails/FindEach:
   Enabled: false
 
 
-
-
-
-
+# TODO
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
@@ -206,4 +201,89 @@ Metrics/AbcSize:
   Description: >-
                  A calculated magnitude based on number of assignments,
                  branches, and conditions.
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+Style/Next:
+  Enabled: false
+Rails/Output:
+  Enabled: false
+Lint/UselessAccessModifier:
+  Enabled: false
+Style/CommentIndentation:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Lint/StringConversionInInterpolation:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Style/FileName:
+  Enabled: false
+Style/GlobalVars:
+  Enabled: false
+Rails/TimeZone:
+  Enabled: false
+Rails/TimeZone:
+  Enabled: false
+Metrics/BlockNesting:
+  Enabled: false
+Lint/RescueException:
+  Enabled: false
+Style/EachWithObject:
+  Enabled: false
+Style/PredicateName:
+  Enabled: false
+Style/ClassVars:
+  Enabled: false
+Lint/LiteralInCondition:
+  Enabled: false
+Style/PredicateName:
+  Enabled: false
+Style/SpaceBeforeComment:
+  Enabled: false
+Lint/UselessAssignment:
+  Enabled: false
+Lint/NonLocalExitFromIterator:
+  Enabled: false
+Style/ColonMethodCall:
+  Enabled: false
+Rails/Date:
+  Enabled: false
+Style/VariableName:
+  Enabled: false
+Lint/UnreachableCode:
+  Enabled: false
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+Style/InfiniteLoop:
+  Enabled: false
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+Rails/Validation:
+  Enabled: false
+Style/MultilineOperationIndentation:
+  Enabled: false
+Style/OneLineConditional:
+  Enabled: false
+Style/ClassMethods:
+  Enabled: false
+Lint/Eval:
+  Enabled: false
+Rails/HasAndBelongsToMany:
+  Enabled: false
+Style/MethodName:
+  Enabled: false
+Style/ModuleFunction:
+  Enabled: false
+Style/AccessModifierIndentation:
+  Enabled: false
+Lint/Loop:
+  Enabled: false
+Style/For:
+  Enabled: false
+Style/WhileUntilDo:
   Enabled: false
