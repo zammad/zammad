@@ -10,17 +10,17 @@
 
           <li class="tab u-textTruncate" data-type="phone-in">
             <div class="gray received-calls channel icon"></div>
-            <%- @T( 'Received Call' ) %>
+            <%- @T('Received Call') %>
           </li>
 
           <li class="tab u-textTruncate" data-type="phone-out">
             <div class="gray outbound-calls channel icon"></div>
-            <%- @T( 'Outbound Call' ) %>
+            <%- @T('Outbound Call') %>
           </li>
 
          <li class="tab u-textTruncate" data-type="email-out">
             <div class="gray email channel icon"></div>
-            <%- @T( 'Send E-Mail' ) %>
+            <%- @T('Send Email') %>
           </li>
         </ul>
 
@@ -37,8 +37,8 @@
           </div>
 
           <div class="form-actions horizontal">
-            <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-            <button type="submit" class="btn btn--success submit align-right"><%- @T( 'Create' ) %></button>
+            <a class="subtle-link standalone cancel" href="#/"><%- @T('Cancel & Go Back') %></a>
+            <button type="submit" class="btn btn--success submit align-right"><%- @T('Create') %></button>
           </div>
         </form>
       </div>
@@ -105,18 +105,18 @@
     <div class="ticket_template">
       <div class="drox hide"><!-- Template Wizard Step One -/->
         <div class="drox-header">
-          <h2>Choose Template:</h2>
+          <h2><%- @T('Choose Template') %></h2>
         </div>
         <div class="drox-body">
-          <p>No template created yet.</p>
-          <p>With templates you can pre-fill ticket attributes.</p>
-          <p>Choose attributes and then save them as a new template.</p>
-          <p><a class="create u-clickable">Save new template</a></p>
+          <p><%- @T('No template created yet.') %></p>
+          <p><%- @T('With templates you can pre-fill ticket attributes.') %></p>
+          <p><%- @T('Choose attributes and then save them as a new template.') %></p>
+          <p><a class="create u-clickable"><%- @T('Save new template') %></a></p>
         </div>
       </div>
       <div class="drox hide"><!-- Template Wizard Step Two -/->
         <div class="drox-header">
-          <h2>Create Template:</h2>
+          <h2><%- @T('Create Template') %></h2>
         </div>
         <div class="drox-body">
           <form>
@@ -124,25 +124,25 @@
               <label for="template-title"><%- @T('Template Title') %>:</label>
               <input class="form-control" id="template-title" placeholder="<%- @Ti('Enter Template Name') %>">
             </div>
-            <p>This template saves the following attributes:</p>
+            <p><%- @T('This template saves the following attributes') %>:</p>
             <ul class="template-attributes">
               <li class="template-attribute horizontal">
-                <div class="key">Owner</div> | <div class="value flex u-textTruncate">Web-Dev</div>
+                <div class="key"><%- @T('Owner') %></div> | <div class="value flex u-textTruncate">Web-Dev</div>
                 <div class="delete u-clickable">&times;</div>
               <li class="template-attribute horizontal">
-                <div class="key">Type</div> | <div class="value flex u-textTruncate">Question</div>
+                <div class="key"><%- @T('Type') %></div> | <div class="value flex u-textTruncate">Question</div>
                 <div class="delete u-clickable">&times;</div>
               <li class="template-attribute horizontal">
-                <div class="key">Status</div> | <div class="value flex u-textTruncate">open</div>
+                <div class="key"><%- @T('Status') %></div> | <div class="value flex u-textTruncate">open</div>
                 <div class="delete u-clickable">&times;</div>
               <li class="template-attribute horizontal">
-                <div class="key">Priority</div> | <div class="value flex u-textTruncate">high</div>
+                <div class="key"><%- @T('Priority') %></div> | <div class="value flex u-textTruncate">high</div>
                 <div class="delete u-clickable">&times;</div>
               <li class="template-attribute horizontal">
-                <div class="key">Tag</div> | <div class="value flex u-textTruncate">New Website</div>
+                <div class="key"><%- @T('Tag') %></div> | <div class="value flex u-textTruncate">New Website</div>
                 <div class="delete u-clickable">&times;</div>
               <li class="template-attribute horizontal">
-                <div class="key">Tag</div> | <div class="value flex u-textTruncate">Feedback</div>
+                <div class="key"><%- @T('Tag') %></div> | <div class="value flex u-textTruncate">Feedback</div>
                 <div class="delete u-clickable">&times;</div>
             </ul>
             <div class="horizontal">
@@ -154,14 +154,14 @@
       </div>
       <div class="drox hide"><!-- Template Chooser, shown instead of Template Wizard Step One when there are templates there -/->
         <div class="drox-header">
-          <h2>Choose Template:</h2>
+          <h2><%- @T('Choose Template') %></h2>
         </div>
         <div class="drox-body">
           <ul class="templates">
             <li class="u-clickable u-highlight">Feedback New Website
           </ul>
-          <p>Choose attributes and then save them as a new template.</p>
-          <p><a class="create u-clickable">Save new template</a></p>
+          <p><%- @T('Choose attributes and then save them as a new template.') %></p>
+          <p><a class="create u-clickable"><%- @T('Save new template') %></a></p>
         </div>
       </div>
     </div>
