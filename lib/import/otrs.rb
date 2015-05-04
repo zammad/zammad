@@ -167,7 +167,7 @@ module Import::OTRS
       threads[thread].join
     }
 
-      end
+  end
 
   def self.diff_worker
     return if !Setting.get('import_mode')
