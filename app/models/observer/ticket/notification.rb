@@ -111,8 +111,8 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    # logger.info 'CREATED!!!!'
-    # logger.info record.inspect
+    # Rails.logger.info 'CREATED!!!!'
+    # Rails.logger.info record.inspect
     e = {
       name: record.class.name,
       type: 'create',
@@ -163,10 +163,10 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    # logger.info 'after_update'
-    # logger.info record.inspect
-    # logger.info '-----'
-    # logger.info @a.inspect
+    # Rails.logger.info 'after_update'
+    # Rails.logger.info record.inspect
+    # Rails.logger.info '-----'
+    # Rails.logger.info @a.inspect
     # AuditTrail.new(record, "UPDATED")
   end
 end

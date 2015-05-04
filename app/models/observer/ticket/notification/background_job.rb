@@ -117,7 +117,7 @@ class Observer::Ticket::Notification::BackgroundJob
       notification[:subject] = ticket.subject_build( notification[:subject] )
 
       # send notification
-      logger.info "send ticket notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
+      Rails.logger.info "send ticket notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
 
       NotificationFactory.send(
         recipient: user,
