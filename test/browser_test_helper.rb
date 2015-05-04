@@ -69,7 +69,7 @@ class TestCase < Test::Unit::TestCase
   def teardown
     return if !@browsers
     @browsers.each { |hash, local_browser|
-      screenshot( :browser => local_browser, :comment => 'teardown' )
+      screenshot( browser: local_browser, comment: 'teardown' )
       browser_instance_close(local_browser)
     }
   end
@@ -78,7 +78,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     comment = params[:comment] || ''
     filename = "tmp/#{Time.zone.now.strftime("screenshot_%Y_%m_%d__%H_%M_%S")}_#{comment}_#{instance.hash}.png"
-    log('screenshot', {:filename => filename})
+    log('screenshot', {filename: filename})
     instance.save_screenshot(filename)
   end
 
@@ -104,11 +104,11 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements( { css: '#login input[name="username"]' } )[0]
     if !element
-      screenshot( :browser => instance, :comment => 'login_failed' )
+      screenshot( browser: instance, comment: 'login_failed' )
       raise 'No login box found'
     end
 
-    screenshot( :browser => instance, :comment => 'login' )
+    screenshot( browser: instance, comment: 'login' )
 
     element.clear
     element.send_keys( params[:username] )
@@ -125,10 +125,10 @@ class TestCase < Test::Unit::TestCase
     sleep 4
     login = instance.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     if login != params[:username]
-      screenshot( :browser => instance, :comment => 'login_failed' )
+      screenshot( browser: instance, comment: 'login_failed' )
       raise 'login failed'
     end
-    screenshot( :browser => instance, :comment => 'login_ok' )
+    screenshot( browser: instance, comment: 'login_ok' )
     assert( true, 'login ok' )
     login
   end
@@ -153,12 +153,12 @@ class TestCase < Test::Unit::TestCase
       sleep 1
       login = instance.find_elements( { css: '#login' } )[0]
       if login
-        screenshot( :browser => instance, :comment => 'logout_ok' )
+        screenshot( browser: instance, comment: 'logout_ok' )
         assert( true, 'logout ok' )
         return
       end
     }
-    screenshot( :browser => instance, :comment => 'logout_failed' )
+    screenshot( browser: instance, comment: 'logout_failed' )
     raise 'no login box found, seems logout was not successfully!'
   end
 
@@ -176,7 +176,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     instance.get( params[:url] )
-    screenshot( :browser => instance, :comment => 'location' )
+    screenshot( browser: instance, comment: 'location' )
   end
 
 =begin
@@ -193,7 +193,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if instance.current_url !~ /#{Regexp.quote(params[:url])}/
-      screenshot( :browser => instance, :comment => 'location_check_failed' )
+      screenshot( browser: instance, comment: 'location_check_failed' )
       raise "url #{instance.current_url} is not matching #{params[:url]}"
     end
     assert( true, "url #{instance.current_url} is matching #{params[:url]}" )
@@ -211,9 +211,9 @@ class TestCase < Test::Unit::TestCase
     log('reload', params)
 
     instance = params[:browser] || @browser
-    screenshot( :browser => instance, :comment => 'reload_before' )
+    screenshot( browser: instance, comment: 'reload_before' )
     instance.navigate.refresh
-    screenshot( :browser => instance, :comment => 'reload_after' )
+    screenshot( browser: instance, comment: 'reload_after' )
   end
 
 =begin
@@ -258,7 +258,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if !instance.find_elements( { css: params[:css] } )[0]
-      screenshot( :browser => instance, :comment => 'exists_failed' )
+      screenshot( browser: instance, comment: 'exists_failed' )
       raise "#{params[:css]} dosn't exist, but should"
     end
     true
@@ -278,7 +278,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if instance.find_elements( { css: params[:css] } )[0]
-      screenshot( :browser => instance, :comment => 'exists_not_failed' )
+      screenshot( browser: instance, comment: 'exists_not_failed' )
       raise "#{params[:css]} exists but should not"
     end
     true
@@ -704,7 +704,7 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements( { partial_link_text: data[:title] } )[0]
     if !element
-      screenshot( :browser => instance, :comment => 'open_task_failed' )
+      screenshot( browser: instance, comment: 'open_task_failed' )
       raise "no task with title '#{data[:title]}' found"
     end
     element.click
@@ -784,7 +784,7 @@ class TestCase < Test::Unit::TestCase
       end
       sleep 0.5
     }
-    screenshot( :browser => instance, :comment => 'watch_for_failed' )
+    screenshot( browser: instance, comment: 'watch_for_failed' )
     raise "'#{params[:value]}' found in '#{text}'"
   end
 
@@ -841,7 +841,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( :browser => instance, :comment => 'disappear_failed' )
+    screenshot( browser: instance, comment: 'disappear_failed' )
     raise "#{params[:css]}) still exsists"
   end
 
@@ -954,7 +954,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( :browser => instance, :comment => 'overview_create_failed' )
+    screenshot( browser: instance, comment: 'overview_create_failed' )
     raise 'overview creation failed'
   end
 
@@ -989,7 +989,7 @@ wait untill text in selector disabppears
     instance.find_elements( { css: 'a[href="#ticket/create"]' } )[0].click
     element = instance.find_elements( { css: '.active .newTicket' } )[0]
     if !element
-      screenshot( :browser => instance, :comment => 'ticket_create_failed' )
+      screenshot( browser: instance, comment: 'ticket_create_failed' )
       raise 'no ticket create screen found!'
     end
     sleep 1
@@ -1079,13 +1079,13 @@ wait untill text in selector disabppears
             number: number,
           }
           sleep 3 # wait until notify is gone
-          screenshot( :browser => instance, :comment => 'ticket_create_ok' )
+          screenshot( browser: instance, comment: 'ticket_create_ok' )
           return ticket
         end
       end
       sleep 1
     }
-    screenshot( :browser => instance, :comment => 'ticket_create_failed' )
+    screenshot( browser: instance, comment: 'ticket_create_failed' )
     raise "ticket creation failed, can't get zoom url (current url is '#{ instance.current_url }')"
   end
 
@@ -1234,7 +1234,7 @@ wait untill text in selector disabppears
         end
       }
       if !found
-        screenshot( :browser => instance, :comment => 'ticket_update_discard_message_failed' )
+        screenshot( browser: instance, comment: 'ticket_update_discard_message_failed' )
         raise 'no discard message found'
       end
     end
@@ -1250,7 +1250,7 @@ wait untill text in selector disabppears
       begin
         text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
         if !text || text.empty?
-          screenshot( :browser => instance, :comment => 'ticket_update_ok' )
+          screenshot( browser: instance, comment: 'ticket_update_ok' )
           return true
         end
       rescue
@@ -1258,7 +1258,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( :browser => instance, :comment => 'ticket_update_failed' )
+    screenshot( browser: instance, comment: 'ticket_update_failed' )
     raise 'unable to update ticket'
   end
 
@@ -1325,7 +1325,7 @@ wait untill text in selector disabppears
     sleep 1
     number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
-      screenshot( :browser => instance, :comment => 'ticket_open_by_overview_failed' )
+      screenshot( browser: instance, comment: 'ticket_open_by_overview_failed' )
       raise "unable to search/find ticket #{params[:number]}!"
     end
     sleep 1
@@ -1373,7 +1373,7 @@ wait untill text in selector disabppears
     instance.find_element( { partial_link_text: params[:number] } ).click
     number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
-      screenshot( :browser => instance, :comment => 'ticket_open_by_search_failed' )
+      screenshot( browser: instance, comment: 'ticket_open_by_search_failed' )
       raise "unable to search/find ticket #{params[:number]}!"
     end
     sleep 1
@@ -1449,7 +1449,7 @@ wait untill text in selector disabppears
     instance.find_element( { partial_link_text: params[:value] } ).click
     name = instance.find_elements( { css: '.active h1' } )[0].text
     if name !~ /#{params[:value]}/
-      screenshot( :browser => instance, :comment => 'organization_open_by_search_failed' )
+      screenshot( browser: instance, comment: 'organization_open_by_search_failed' )
       raise "unable to search/find org #{params[:value]}!"
     end
     assert( true, "org #{params[:value]} found" )
@@ -1479,7 +1479,7 @@ wait untill text in selector disabppears
     instance.find_element( { partial_link_text: params[:value] } ).click
     name = instance.find_elements( { css: '.active h1' } )[0].text
     if name !~ /#{params[:value]}/
-      screenshot( :browser => instance, :comment => 'user_open_by_search_failed' )
+      screenshot( browser: instance, comment: 'user_open_by_search_failed' )
       raise "unable to search/find user #{params[:value]}!"
     end
     assert( true, "user #{params[:term]} found" )
@@ -1585,7 +1585,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( :browser => instance, :comment => 'sla_create_failed' )
+    screenshot( browser: instance, comment: 'sla_create_failed' )
     raise 'sla creation failed'
   end
 
@@ -1632,7 +1632,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( :browser => instance, :comment => 'text_module_create_failed' )
+    screenshot( browser: instance, comment: 'text_module_create_failed' )
     raise 'text module creation failed'
   end
 
@@ -1676,7 +1676,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( :browser => instance, :comment => 'signature_create_failed' )
+    screenshot( browser: instance, comment: 'signature_create_failed' )
     raise 'signature creation failed'
   end
 
@@ -1747,7 +1747,7 @@ wait untill text in selector disabppears
       sleep 1
       return true
     }
-    screenshot( :browser => instance, :comment => 'group_create_failed' )
+    screenshot( browser: instance, comment: 'group_create_failed' )
     raise 'group creation failed'
   end
 
