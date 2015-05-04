@@ -228,12 +228,8 @@ returns
   end
 
   def cache_update(o)
-    if self.respond_to?('cache_delete')
-      self.cache_delete
-    end
-    if o.respond_to?('cache_delete')
-      o.cache_delete
-    end
+    self.cache_delete if self.respond_to?('cache_delete')
+    o.cache_delete if o.respond_to?('cache_delete')
   end
 
   def cache_delete
@@ -492,7 +488,9 @@ returns
   def self.latest_change
     key        = "#{self.new.class.name}_latest_change"
     updated_at = Cache.get( key )
-puts "LOG AA #{key}/#{updated_at}"
+
+    logger.debug "request latest_change for #{key}/#{updated_at}"
+
     # if we do not have it cached, do lookup
     if !updated_at
       o = self.select(:updated_at).order(updated_at: :desc).limit(1).first
@@ -500,10 +498,9 @@ puts "LOG AA #{key}/#{updated_at}"
         updated_at = o.updated_at
         self.latest_change_set(updated_at)
       end
-      puts "LOG AA Lookup #{key}/#{updated_at}"
-
+      logger.debug "lookup latest_change for #{key}/#{updated_at}"
     end
-    puts "LOG AA RETURN #{key}/#{updated_at}"
+    logger.debug "return latest_change for #{key}/#{updated_at}"
     updated_at
   end
 
