@@ -116,7 +116,7 @@ class Scheduler < ApplicationModel
         sleep(wait)
         logger.info '*** worker loop'
       else
-        printf "*** #{count} jobs processed at %.4f j/s, %d failed ...\n" % [count / realtime, result.last]
+        format "*** #{count} jobs processed at %.4f j/s, %d failed ...\n", count / realtime, result.last
       end
     end
   end
