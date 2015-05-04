@@ -1,5 +1,10 @@
 AllCops:
   RunRailsCops: true
+  Exclude:
+    - 'bin/rails'
+    - 'bin/rake'
+    - 'bin/spring'
+    - 'db/schema.rb'
 
 # Default enabled
 # https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
