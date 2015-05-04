@@ -99,15 +99,15 @@ class ApplicationController < ActionController::Base
 
   def authentication_check_only
 
-    #puts 'authentication_check'
+    logger.debug 'authentication_check'
     session[:request_type] = 1
-    #puts params.inspect
-    #puts session.inspect
-    #puts cookies.inspect
+    #logger.debug params.inspect
+    #logger.debug session.inspect
+    #logger.debug cookies.inspect
 
     # check http basic auth
     authenticate_with_http_basic do |username, password|
-      #puts 'http basic auth check'
+      logger.debug 'http basic auth check'
       session[:request_type] = 2
 
       userdata = User.authenticate( username, password )
@@ -165,7 +165,7 @@ class ApplicationController < ActionController::Base
 
     # return auth not ok (no session exists)
     if !session[:user_id]
-      puts 'no valid session, user_id'
+      logger.debug 'no valid session, user_id'
       message = 'no valid session, user_id'
       return {
         auth: false,
@@ -204,7 +204,7 @@ class ApplicationController < ActionController::Base
     )
 
     if !user
-      puts params.inspect
+      logger.debug params.inspect
       response_access_deny
       return
     end
@@ -295,7 +295,6 @@ class ApplicationController < ActionController::Base
 
       model_create_render_item(generic_object)
     rescue Exception => e
-      puts e.message.inspect
       logger.error e.message
       logger.error e.backtrace.inspect
       render json: { error: e.message }, status: :unprocessable_entity

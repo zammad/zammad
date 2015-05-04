@@ -8,12 +8,12 @@ class Avatar < ApplicationModel
 add an avatar based on auto detection (email address)
 
   Avatar.auto_detection(
-    :object           => 'User',
-    :o_id             => user.id,
-    :url              => 'somebody@example.com',
-    :source           => 'web',
-    :updated_by_id    => 1,
-    :created_by_id    => 1,
+    :object        => 'User',
+    :o_id          => user.id,
+    :url           => 'somebody@example.com',
+    :source        => 'web',
+    :updated_by_id => 1,
+    :created_by_id => 1,
   )
 
 =end
@@ -28,7 +28,7 @@ add an avatar based on auto detection (email address)
     # dry gravatar lookup
     hash = Digest::MD5.hexdigest(data[:url])
     url  = "http://www.gravatar.com/avatar/#{hash}.jpg?s=160&d=404"
-    puts "#{data[:url]}: #{url}"
+    logger.info "Avatar.auto_detection found #{data[:url]}: #{url}"
 
     Avatar.add(
       object: data[:object],
@@ -46,10 +46,10 @@ add an avatar based on auto detection (email address)
 add a avatar
 
   Avatar.add(
-    :object           => 'User',
-    :o_id             => user.id,
-    :default          => true,
-    :full             => {
+    :object  => 'User',
+    :o_id    => user.id,
+    :default => true,
+    :full    => {
       :content   => '...',
       :mime_type => 'image/png',
     },
@@ -57,9 +57,9 @@ add a avatar
       :content   => '...',
       :mime_type => 'image/png',
     },
-    :source           => 'web',
-    :updated_by_id    => 1,
-    :created_by_id    => 1,
+    :source        => 'web',
+    :updated_by_id => 1,
+    :created_by_id => 1,
   )
 
 =end
@@ -124,12 +124,10 @@ add a avatar
         },
       )
       if !response.success?
-        #puts "WARNING: Can't fetch '#{self.image_source}' (maybe no avatar available), http code: #{response.code.to_s}"
-        #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
-        # @TODO remove comment and log instead
+        logger.info "Can't fetch '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
         return
       end
-      #puts "NOTICE: Fetch '#{self.image_source}', http code: #{response.code.to_s}"
+      logger.info "Fetch '#{data[:url]}', http code: #{response.code}"
       mime_type = 'image'
       if data[:url] =~ /\.png/i
         mime_type = 'image/png'

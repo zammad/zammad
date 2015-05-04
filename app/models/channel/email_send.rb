@@ -9,9 +9,9 @@ module Channel::EmailSend
       c = eval 'Channel::' + channel[:adapter] + '.new'
       c.send(attr, channel, notification)
     rescue Exception => e
-      puts "can't use " + 'Channel::' + channel[:adapter]
-      puts e.inspect
-      puts e.backtrace
+      Rails.logger.error "can't use " + 'Channel::' + channel[:adapter]
+      Rails.logger.error e.inspect
+      Rails.logger.error e.backtrace
     end
   end
 end

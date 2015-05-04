@@ -9,7 +9,6 @@ delete a cache
 =end
 
   def self.delete( key )
-#    puts 'Cache.delete' + key.to_s
     Rails.cache.delete( key.to_s )
   end
 
@@ -31,11 +30,10 @@ write a cache
     if !params[:expires_in]
       params[:expires_in] = 24.hours
     end
-#    puts 'Cache.write: ' + key.to_s
     begin
       Rails.cache.write( key.to_s, data, params)
     rescue Exception => e
-      puts "NOTICE: #{e.message}"
+      Rails.logger.error "NOTICE: #{e.message}"
     end
   end
 
@@ -48,7 +46,6 @@ get a cache
 =end
 
   def self.get( key )
-#    puts 'Cache.get: ' + key.to_s
     Rails.cache.read( key.to_s )
   end
 
@@ -61,7 +58,6 @@ clear whole cache store
 =end
 
   def self.clear
-#    puts 'Cache.clear...'
     # workaround, set test cache before clear whole cache, Rails.cache.clear complains about not existing cache dir
     Cache.write( 'test', 1 )
 

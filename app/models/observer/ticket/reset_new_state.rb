@@ -4,7 +4,6 @@ class Observer::Ticket::ResetNewState < ActiveRecord::Observer
   observe 'ticket::_article'
 
   def after_create(record)
-    #    puts 'check reset new state'
 
     # return if we run import mode
     return if Setting.get('import_mode')

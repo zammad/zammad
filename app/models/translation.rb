@@ -30,7 +30,6 @@ load translations from online
 
     ActiveRecord::Base.transaction do
       result.data.each {|translation|
-        #puts translation.inspect
 
         # handle case insensitive sql
         exists     = Translation.where(locale: translation['locale'], format: translation['format'], source: translation['source'])

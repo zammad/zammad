@@ -1,3 +1,4 @@
+# rubocop:disable Rails/Output
 module FillDB
   def self.load( agents, customers, groups, organizations, tickets )
     puts 'load db with:'

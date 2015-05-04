@@ -43,8 +43,8 @@ create/update/delete index
       return SearchIndexBackend.remove( data[:name] )
     end
 
-    puts "# curl -X PUT \"#{url}\" \\"
-    #puts "-d '#{data[:data].to_json}'"
+    Rails.logger.info "# curl -X PUT \"#{url}\" \\"
+    #Rails.logger.info "-d '#{data[:data].to_json}'"
 
     response = UserAgent.put(
       url,
@@ -75,8 +75,8 @@ add new object to search index
     url = build_url( type, data['id'] )
     return if !url
 
-    puts "# curl -X POST \"#{url}\" \\"
-    #puts "-d '#{data.to_json}'"
+    Rails.logger.info "# curl -X POST \"#{url}\" \\"
+    #Rails.logger.info "-d '#{data.to_json}'"
 
     response = UserAgent.post(
       url,
@@ -89,7 +89,7 @@ add new object to search index
         password: Setting.get('es_password'),
       }
     )
-    puts "# #{response.code.to_s}"
+    Rails.logger.info "# #{response.code.to_s}"
     return true if response.success?
     raise response.inspect
   end
@@ -119,9 +119,9 @@ remove whole data from index
         password: Setting.get('es_password'),
       }
     )
-    #puts "# #{response.code.to_s}"
+    #Rails.logger.info "# #{response.code.to_s}"
     return true if response.success?
-    #puts "NOTICE: can't drop index: " + response.inspect
+    #Rails.logger.info "NOTICE: can't drop index: " + response.inspect
     false
   end
 
@@ -193,8 +193,8 @@ return search result
     }
     data['query']['bool']['must'].push condition
 
-    puts "# curl -X POST \"#{url}\" \\"
-    #puts " -d'#{data.to_json}'"
+    Rails.logger.info "# curl -X POST \"#{url}\" \\"
+    #Rails.logger.info " -d'#{data.to_json}'"
 
     response = UserAgent.get(
       url,
@@ -208,7 +208,7 @@ return search result
       }
     )
 
-    puts "# #{response.code.to_s}"
+    Rails.logger.info "# #{response.code.to_s}"
     if !response.success?
       puts "ERROR: #{response.inspect}"
       return []

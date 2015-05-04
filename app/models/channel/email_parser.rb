@@ -337,8 +337,8 @@ class Channel::EmailParser
       begin
         backend.run( channel, mail )
       rescue Exception => e
-        puts "can't run postmaster pre filter #{backend}"
-        puts e.inspect
+        Rails.logger.error "can't run postmaster pre filter #{backend}"
+        Rails.logger.error e.inspect
         return false
       end
     }
@@ -364,7 +364,6 @@ class Channel::EmailParser
         user = User.where( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] ).first
       end
       if !user
-        puts 'create user...'
         user = user_create(
           login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
           firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
@@ -485,8 +484,8 @@ class Channel::EmailParser
       begin
         backend.run( channel, mail, ticket, article, user )
       rescue Exception => e
-        puts "can't run postmaster post filter #{backend}"
-        puts e.inspect
+        Rails.logger.error "can't run postmaster post filter #{backend}"
+        Rails.logger.error e.inspect
       end
     }
 
@@ -540,10 +539,10 @@ class Channel::EmailParser
         key_short = key[ 0, key.length - 3 ]
         header = "x-zammad-#{header_name}-#{key_short}"
         if mail[ header.to_sym ]
-          puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+          Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
           item_object.class.reflect_on_all_associations.map { |assoc|
             if assoc.name.to_s == key_short
-              puts "NOTICE: ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
+              Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
               item = assoc.class_name.constantize
 
               if item.respond_to?(:name)
@@ -563,7 +562,7 @@ class Channel::EmailParser
       # check if attribute exists
       header = "x-zammad-#{header_name}-#{key}"
       if mail[ header.to_sym ]
-        puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+        Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
         item_object[key] = mail[ header.to_sym ]
       end
     }

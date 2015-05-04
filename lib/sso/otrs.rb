@@ -20,7 +20,7 @@ module Sso::Otrs
     user = User.where( login: result['user']['UserLogin'], active: true ).first
 
     if !user
-      Rails.logger.notice "No such user #{result['user']['UserLogin']}, requested for SSO!"
+      Rails.logger.info "No such user #{result['user']['UserLogin']}, requested for SSO!"
       return
     end
 

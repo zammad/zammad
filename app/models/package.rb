@@ -317,9 +317,9 @@ class Package < ApplicationModel
           begin
             load entry
           rescue => e
-            puts "TRIED TO RELOAD '#{entry}'"
-            puts 'ERROR: ' + e.inspect
-            puts 'Traceback: ' + e.backtrace.inspect
+            logger.error "TRIED TO RELOAD '#{entry}'"
+            logger.error 'ERROR: ' + e.inspect
+            logger.error 'Traceback: ' + e.backtrace.inspect
           end
         end
       }
@@ -331,7 +331,7 @@ class Package < ApplicationModel
     begin
       package = REXML::Document.new( xml )
     rescue => e
-      puts 'ERROR: ' + e.inspect
+      logger.error 'ERROR: ' + e.inspect
       return
     end
     logger.debug package.inspect

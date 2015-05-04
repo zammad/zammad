@@ -24,7 +24,6 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
 
   # set frist response
   def first_response_update(record)
-    #    puts 'check first response'
 
     # return if we run import mode
     return if Setting.get('import_mode')
@@ -62,7 +61,6 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
 
   # set last contact
   def last_contact_update(record)
-    #    puts 'check last contact'
 
     # if article in internal
     return true if record.internal

@@ -6,10 +6,10 @@ module Rss
     return items if items
 
     begin
-      puts 'fetch rss...'
+      Rails.logger.info "fetch rss... #{url}"
       response = UserAgent.request(url)
       if !response.success?
-        raise "Can't fetch '#{url}', http code: #{response.code.to_s}"
+        raise "Can't fetch '#{url}', http code: #{response.code}"
         return
       end
       rss     = SimpleRSS.parse response.body
@@ -29,8 +29,8 @@ module Rss
       }
       Cache.write( cache_key, items, expires_in: 4.hours )
     rescue Exception => e
-      puts "can't fetch #{url}"
-      puts e.inspect
+      Rails.logger.error "can't fetch #{url}"
+      Rails.logger.error e.inspect
       return
     end
 

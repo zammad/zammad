@@ -21,13 +21,13 @@ class Channel::TWITTER2
 
   def fetch (channel)
 
-    puts "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
+    logger.info "fetching tweets (oauth_token#{channel[:options][:oauth_token]})"
     @client = connect(channel)
 
     # search results
     if channel[:options][:search]
       channel[:options][:search].each { |search|
-        puts " - searching for #{search[:item]}"
+        logger.info " - searching for #{search[:item]}"
         tweets = []
         @client.search( search[:item], count: 50, result_type: 'recent' ).collect do |tweet|
           tweets.push tweet
@@ -39,7 +39,7 @@ class Channel::TWITTER2
 
     # mentions
     if channel[:options][:mentions]
-      puts ' - searching for mentions'
+      logger.info ' - searching for mentions'
       tweets = @client.mentions_timeline
       @article_type = 'twitter status'
       fetch_loop( tweets, channel, channel[:options][:mentions][:group] )
@@ -47,12 +47,12 @@ class Channel::TWITTER2
 
     # direct messages
     if channel[:options][:direct_messages]
-      puts ' - searching for direct_messages'
+      logger.info ' - searching for direct_messages'
       tweets = @client.direct_messages
       @article_type = 'twitter direct-message'
       fetch_loop( tweets, channel, channel[:options][:direct_messages][:group] )
     end
-    puts 'done'
+    logger.info 'done'
     disconnect
   end
 
@@ -68,7 +68,7 @@ class Channel::TWITTER2
         all_tweets.push tweet
       end
     else
-      puts 'UNKNOWN: ' + result_class.to_s
+      logger.error 'UNKNOWN: ' + result_class.to_s
     end
 
     # find tweets
@@ -86,7 +86,7 @@ class Channel::TWITTER2
         # reset current_user
         UserInfo.current_user_id = 1
 
-        puts 'import tweet'
+        logger.info 'import tweet'
         fetch_import( tweet, channel, group )
       end
 
@@ -113,7 +113,7 @@ class Channel::TWITTER2
       begin
         sender = @client.user(tweet.from_user_id)
       rescue Exception => e
-        puts 'Exception: twitter: ' + e.inspect
+        logger.error 'Exception: twitter: ' + e.inspect
         return
       end
     end
@@ -121,16 +121,16 @@ class Channel::TWITTER2
     # check if parent exists
     user = nil, ticket = nil, article = nil
     if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
-      puts 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
+      logger.info 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
       tweet_sub = @client.status( tweet.in_reply_to_status_id )
-      #        puts tweet_sub.inspect
+      #logger.debug tweet_sub.inspect
       (user, ticket, article) = fetch_import(tweet_sub, channel, group)
     end
 
     # create stuff
     user = fetch_user_create(tweet, sender)
     if !ticket
-      puts 'create new ticket...'
+      logger.info 'create new ticket...'
       ticket = fetch_ticket_create(user, tweet, sender, channel, group)
     end
     article = fetch_article_create(user, ticket, tweet, sender)
@@ -144,11 +144,11 @@ class Channel::TWITTER2
     auth = Authorization.where( uid: sender.id, provider: 'twitter' ).first
     user = nil
     if auth
-      puts 'user_id', auth.user_id
+      logger.info 'user_id', auth.user_id
       user = User.where( id: auth.user_id ).first
     end
     if !user
-      puts 'create user...'
+      logger.info 'create user...'
       roles = Role.where( name: 'Customer' )
       user = User.create(
         login: sender.screen_name,
@@ -163,7 +163,7 @@ class Channel::TWITTER2
         updated_by_id: 1,
         created_by_id: 1
       )
-      puts 'autentication create...'
+      logger.info 'autentication create...'
       authentication = Authorization.create(
         uid: sender.id,
         username: sender.screen_name,
@@ -171,7 +171,7 @@ class Channel::TWITTER2
         provider: 'twitter'
       )
     else
-      puts 'user exists'#, user.inspect
+      logger.info 'user exists'#, user.inspect
     end
 
     # set current user
@@ -182,13 +182,13 @@ class Channel::TWITTER2
 
   def fetch_ticket_create(user, tweet, sender, channel, group)
 
-    #    puts '+++++++++++++++++++++++++++' + tweet.inspect
+    #logger.info '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
     if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
-      puts 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
+      logger.info 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
       article = Ticket::Article.where( message_id: tweet.in_reply_to_status_id.to_s ).first
       if article
-        puts 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
+        logger.info 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
         return article.ticket
       end
     end
@@ -279,13 +279,13 @@ class Channel::TWITTER2
       config.access_token_secret = channel[:options][:oauth_token_secret]
     end
     if attr[:type] == 'twitter direct-message'
-      puts 'to:' + attr[:to].to_s
+      logger.info 'to:' + attr[:to].to_s
       dm = client.create_direct_message(
         attr[:to].to_s,
         attr[:body].to_s,
         {}
       )
-      #      puts dm.inspect
+      # logger.info dm.inspect
       return dm
     end
 
@@ -297,7 +297,7 @@ class Channel::TWITTER2
         in_reply_to_status_id: attr[:in_reply_to]
       }
     )
-    #      puts message.inspect
+    # logger.debug message.inspect
     message
   end
 end

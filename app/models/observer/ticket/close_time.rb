@@ -14,7 +14,6 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
   private
 
   def _check(record)
-    #puts 'check close time'
 
     # return if we run import mode
     return if Setting.get('import_mode')

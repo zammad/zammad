@@ -76,7 +76,10 @@ Zammad::Application.configure do
   config.dependency_loading = true
 
   # Use default logging formatter so that PID and timestamp are not suppressed
-  config.log_formatter = ::Logger::Formatter.new
+  #config.log_formatter = ::Logger::Formatter.new
+
+  # format log
+  config.log_formatter = Logger::Formatter.new
 
   # define cache store
   config.cache_store = :file_store, 'tmp/cache_file_store_production'

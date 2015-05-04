@@ -81,10 +81,8 @@ returns
     # only use object attributes
     data = {}
     self.new.attributes.each {|item|
-      if params.key?(item[0])
-        #        puts 'use ' + item[0].to_s + '-' + params[item[0]].to_s
-        data[item[0].to_sym] = params[item[0]]
-      end
+      next if !params.key?(item[0])
+      data[item[0].to_sym] = params[item[0]]
     }
 
     # we do want to set this via database
@@ -230,10 +228,12 @@ returns
   end
 
   def cache_update(o)
-    #    puts 'u ' + self.class.to_s
-    if self.respond_to?('cache_delete') then self.cache_delete end
-    #    puts 'g ' + group.class.to_s
-    if o.respond_to?('cache_delete') then o.cache_delete end
+    if self.respond_to?('cache_delete')
+      self.cache_delete
+    end
+    if o.respond_to?('cache_delete')
+      o.cache_delete
+    end
   end
 
   def cache_delete
@@ -312,11 +312,9 @@ returns
 
   def self.lookup(data)
     if data[:id]
-      #      puts "GET- + #{self.to_s}.#{data[:id].to_s}"
       cache = self.cache_get( data[:id] )
       return cache if cache
 
-      #      puts "Fillup- + #{self.to_s}.#{data[:id].to_s}"
       record = self.where( id: data[:id] ).first
       self.cache_set( data[:id], record )
       return record
@@ -821,7 +819,7 @@ log object create history, if configured - will be executed automatically
 
   def history_create
     return if !self.class.history_support_config
-    #puts 'create ' + self.changes.inspect
+    #logger.debug 'create ' + self.changes.inspect
     self.history_log( 'created', self.created_by_id )
 
   end
@@ -853,7 +851,7 @@ log object update history with all updated attributes, if configured - will be e
       }
     end
     self.history_changes_last_done = changes
-    #puts 'updated ' + self.changes.inspect
+    #logger.info 'updated ' + self.changes.inspect
 
     return if changes['id'] && !changes['id'][0]
 
@@ -918,7 +916,7 @@ log object update history with all updated attributes, if configured - will be e
         id_from: value_id[0],
         id_to: value_id[1],
       }
-      #puts "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
+      #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       self.history_log( 'updated', self.updated_by_id, data )
     }
   end
@@ -1087,7 +1085,7 @@ check string/varchar size and cut them if needed
       if column && limit
         current_length = attribute[1].to_s.length
         if limit < current_length
-          logger.info "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
+          logger.warn "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
           self[ attribute[0] ] = attribute[1][ 0, limit ]
         end
       end

@@ -8,7 +8,7 @@ module Channel::Filter::Database
     # process postmaster filter
     filters = PostmasterFilter.where( active: true, channel: 'email' )
     filters.each {|filter|
-      puts " proccess filter #{filter.name} ..."
+      Rails.logger.info " proccess filter #{filter.name} ..."
       match = true
       loop = false
       filter[:match].each {|key, value|
@@ -19,21 +19,21 @@ module Channel::Filter::Database
             scan = mail[ key.downcase.to_sym ].scan(/#{value}/i)
           end
           if match && scan[0]
-            puts "  matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
+            Rails.logger.info "  matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
             match = true
           else
-            puts "  is not matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
+            Rails.logger.info "  is not matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
             match = false
           end
         rescue Exception => e
           match = false
-          puts "can't use match rule #{value} on #{mail[ key.to_sym ]}"
-          puts e.inspect
+          Rails.logger.error "can't use match rule #{value} on #{mail[ key.to_sym ]}"
+          Rails.logger.error e.inspect
         end
       }
       if loop && match
         filter[:perform].each {|key, value|
-          puts "  perform '#{ key.downcase }' = '#{value}'"
+          Rails.logger.info "  perform '#{ key.downcase }' = '#{value}'"
           mail[ key.downcase.to_sym ] = value
         }
       end

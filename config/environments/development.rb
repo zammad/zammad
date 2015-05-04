@@ -42,4 +42,6 @@ Zammad::Application.configure do
   # define cache store
   config.cache_store = :file_store, 'tmp/cache_file_store_development'
 
+  # format log
+  config.log_formatter = Logger::Formatter.new
 end

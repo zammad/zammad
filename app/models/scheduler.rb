@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
+# rubocop:disable Rails/Output
 class Scheduler < ApplicationModel
 
   def self.run( runner, runner_count )
@@ -14,7 +14,7 @@ class Scheduler < ApplicationModel
       begin
         ActiveRecord::Base.connection.reconnect!
       rescue => e
-        puts "Can't reconnect to database #{ e.inspect }"
+        logger.error "Can't reconnect to database #{ e.inspect }"
       end
 
       # read/load jobs and check if it is alredy started
@@ -70,13 +70,13 @@ class Scheduler < ApplicationModel
       logger.info "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count})..."
       eval job.method()
     rescue => e
-      puts "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count}) exited with error #{ e.inspect }"
+      logger.error "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count}) exited with error #{ e.inspect }"
 
       # reconnect in case db connection is lost
       begin
         ActiveRecord::Base.connection.reconnect!
       rescue => e
-        puts "Can't reconnect to database #{ e.inspect }"
+        logger.error "Can't reconnect to database #{ e.inspect }"
       end
 
       try_run_max = 10
@@ -129,7 +129,7 @@ class Scheduler < ApplicationModel
       puts "CRITICAL - no such scheduler jobs '#{name}'"
       return true
     end
-    #puts "S " + scheduler.inspect
+    logger.debug scheduler.inspect
     if !scheduler.last_run
       puts "CRITICAL - scheduler jobs never started '#{name}'"
       exit 2

@@ -45,10 +45,10 @@ class Store
       Store::File.all.each {|item|
         content = item.content
         sha = Digest::SHA256.hexdigest( content )
-        puts "CHECK: Store::File.find(#{item.id}) "
+        logger.info "CHECK: Store::File.find(#{item.id}) "
         if sha != item.sha
           success = false
-          puts "DIFF: sha diff of Store::File.find(#{item.id}) "
+          logger.error "DIFF: sha diff of Store::File.find(#{item.id}) "
           if fix_it
             item.update_attribute( :sha, sha )
           end
@@ -77,7 +77,7 @@ class Store
         # remove from old provider
         adapter_source.delete( item.sha )
 
-        puts "NOTICE: Moved file #{item.sha} from #{source} to #{target}"
+        logger.info "NOTICE: Moved file #{item.sha} from #{source} to #{target}"
       }
       true
     end

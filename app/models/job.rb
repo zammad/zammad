@@ -47,19 +47,19 @@ class Job < ApplicationModel
                 .limit( 1_000 )
       job.processed = tickets.count
       tickets.each do |ticket|
-        #puts "CHANGE #{job.execute.inspect}"
+        logger.debug "CHANGE #{job.execute.inspect}"
         changed = false
         job.execute.each do |key, value|
           changed = true
           attribute = key.split('.', 2).last
-          #puts "-- #{Ticket.columns_hash[ attribute ].type.to_s}"
+          logger.debug "-- #{Ticket.columns_hash[ attribute ].type}"
           #value = 4
           #if Ticket.columns_hash[ attribute ].type == :integer
-          #  puts "to i #{attribute}/#{value.inspect}/#{value.to_i.inspect}"
+          #  logger.debug "to i #{attribute}/#{value.inspect}/#{value.to_i.inspect}"
           #  #value = value.to_i
           #end
           ticket[attribute] = value
-          #puts "set #{attribute} = #{value.inspect}"
+          logger.debug "set #{attribute} = #{value.inspect}"
         end
         next if !changed
         ticket.updated_by_id = 1

@@ -10,9 +10,9 @@ class Channel < ApplicationModel
         c = eval 'Channel::' + channel[:adapter].upcase + '.new'
         c.fetch(channel)
       rescue Exception => e
-        puts "can't use " + 'Channel::' + channel[:adapter].upcase
-        puts e.inspect
-        puts e.backtrace
+        logger.error "can't use " + 'Channel::' + channel[:adapter].upcase
+        logger.error e.inspect
+        logger.error e.backtrace
         c.disconnect
       end
     }

@@ -38,18 +38,18 @@ class Store::Provider::File
   # unlink file from fs
   def self.unlink_from_fs(sha)
     if File.exist?( get_locaton(sha) )
-      puts "NOTICE: storge remove '#{ get_locaton(sha) }'"
+      Rails.logger.info "storge remove '#{ get_locaton(sha) }'"
       File.delete( get_locaton(sha) )
     end
   end
 
   # read file from fs
   def self.read_from_fs(sha)
-    puts "read from fs #{ get_locaton(sha) }"
+    Rails.logger.info "read from fs #{ get_locaton(sha) }"
     if !File.exist?( get_locaton(sha) )
       raise "ERROR: No such file #{ get_locaton(sha) }"
     end
-    data = File.open( get_locaton(sha), 'rb' )
+    data    = File.open( get_locaton(sha), 'rb' )
     content = data.read
 
     # check sha
@@ -66,7 +66,7 @@ class Store::Provider::File
     # install file
     permission = '600'
     if !File.exist?( get_locaton(sha) )
-      puts "NOTICE: storge write '#{ get_locaton(sha) }' (#{permission})"
+      Rails.logger.info "storge write '#{ get_locaton(sha) }' (#{permission})"
       file = File.new( get_locaton(sha), 'wb' )
       file.write( data )
       file.close
