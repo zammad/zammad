@@ -526,7 +526,7 @@ returns
           @@client_threads[client_id] = Thread.new {
             thread_client(client_id)
             @@client_threads[client_id] = nil
-            puts "close client (#{client_id}) thread"
+            Rails.logger.debug "close client (#{client_id}) thread"
             ActiveRecord::Base.connection.close
           }
           sleep 0.5
@@ -567,7 +567,7 @@ returns
 =end
 
   def self.thread_client(client_id, try_count = 0, try_run_time = Time.now)
-    Rails.logger.info "LOOP #{client_id} - #{try_count}"
+    Rails.logger.debug "LOOP #{client_id} - #{try_count}"
     begin
       Sessions::Client.new(client_id)
     rescue => e
@@ -598,7 +598,7 @@ returns
         raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
       end
     end
-    Rails.logger.info "/LOOP #{client_id} - #{try_count}"
+    Rails.logger.debug "/LOOP #{client_id} - #{try_count}"
   end
 
   def self.symbolize_keys(hash)
