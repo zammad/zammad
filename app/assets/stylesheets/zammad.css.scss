@@ -2908,10 +2908,12 @@ footer {
 
   .popover--notifications {
     min-height: 100px;
+    width: auto;
+    min-width: 372px;
     @extend .zIndex-5;
 
-    &.is-visible {
-      @extend .vertical;
+    &.fade {
+      display: inline-block !important;
     }
 
     .arrow {
@@ -2952,10 +2954,15 @@ footer {
     @extend .btn;
     @extend .btn--subtle;
     @extend .align-right;
+<<<<<<< HEAD
     padding: 5px 0 0;
 
+=======
+    padding: 5px 0 0 10px;
+    
+>>>>>>> fix notifications language problem
     &:hover {
-      padding: 5px 0 0;
+      padding: 5px 0 0 10px;
     }
   }
 
