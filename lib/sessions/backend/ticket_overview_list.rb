@@ -24,13 +24,13 @@ class Sessions::Backend::TicketOverviewList
       data = { list: overview_data, index: overview }
       result.push data
     }
-    puts "LOG A #{result.inspect}"
+    Rails.logger.debug "LOG A #{result.inspect}"
     # no data exists
     return if !result || result.empty?
 
     # no change exists
     return if @last_change == result
-    puts "LOG B #{result.inspect}"
+    Rails.logger.debug "LOG B #{result.inspect}"
 
     # remember last state
     @last_change = result
@@ -45,22 +45,22 @@ class Sessions::Backend::TicketOverviewList
   def push
 
     # check interval
-    puts "LOG 1 #{@user.inspect}"
+    Rails.logger.debug "LOG 1 #{@user.inspect}"
     return if Sessions::CacheIn.get( self.client_key )
 
     # reset check interval
-    puts "LOG 2 #{@ttl.seconds}"
+    Rails.logger.debug "LOG 2 #{@ttl.seconds}"
     Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
-    puts "LOG 3 #{last_ticket_change}/#{@last_ticket_change}"
+    Rails.logger.debug "LOG 3 #{last_ticket_change}/#{@last_ticket_change}"
     return if last_ticket_change == @last_ticket_change
     @last_ticket_change = last_ticket_change
 
     # load current data
     items = self.load
-    puts "LOG 4 #{items.inspect}"
+    Rails.logger.debug "LOG 4 #{items.inspect}"
     return if !items
 
     # push overviews
@@ -107,7 +107,7 @@ class Sessions::Backend::TicketOverviewList
         results.push result
       else
 
-        @client.log 'notify', "push overview_list for user #{ @user.id }"
+        @client.log "push overview_list for user #{ @user.id }"
 
         # send update to browser
         @client.send(

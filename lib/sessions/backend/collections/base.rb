@@ -73,13 +73,13 @@ class Sessions::Backend::Collections::Base
         assets: assets,
       }
     end
-    @client.log 'notify', "push assets for push_collection #{ items.first.class.to_s } for user #{ @user.id }"
+    @client.log "push assets for push_collection #{ items.first.class.to_s } for user #{ @user.id }"
     @client.send(
       data: assets,
       event: [ 'loadAssets' ],
     )
 
-    @client.log 'notify', "push push_collection #{ items.first.class.to_s } for user #{ @user.id }"
+    @client.log "push push_collection #{ items.first.class.to_s } for user #{ @user.id }"
     @client.send(
       event: 'resetCollection',
       data: {

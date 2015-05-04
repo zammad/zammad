@@ -29,7 +29,7 @@ class Sessions::Backend::ActivityStream
   end
 
   def client_key
-    "as::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+    "as::load::#{ self.class }::#{ @user.id }::#{ @client_id }"
   end
 
   def push
@@ -53,7 +53,7 @@ class Sessions::Backend::ActivityStream
       }
     end
 
-    @client.log 'notify', "push activity_stream #{ data.first.class.to_s } for user #{ @user.id }"
+    @client.log "push activity_stream #{ data.first.class } for user #{ @user.id }"
     @client.send(
       event: 'activity_stream_rebuild',
       collection: 'activity_stream',
