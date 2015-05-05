@@ -225,8 +225,6 @@ Style/GlobalVars:
   Enabled: false
 Rails/TimeZone:
   Enabled: false
-Rails/TimeZone:
-  Enabled: false
 Metrics/BlockNesting:
   Enabled: false
 Lint/RescueException:
