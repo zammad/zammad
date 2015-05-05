@@ -256,8 +256,6 @@ Style/ColonMethodCall:
   Enabled: false
 Rails/Date:
   Enabled: false
-Style/VariableName:
-  Enabled: false
 Lint/UnreachableCode:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:

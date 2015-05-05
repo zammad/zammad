@@ -15,7 +15,7 @@ class ImportOtrsController < ApplicationController
     end
 
     # connection test
-    translationMap = {
+    translation_map = {
       'authentication failed'                                     => 'Authentication failed!',
       'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
       'No route to host'                                          => 'No route to host!',
@@ -26,7 +26,7 @@ class ImportOtrsController < ApplicationController
     response = UserAgent.request(params[:url])
     if !response.success? && response.code.to_s !~ /^40.$/
       message_human = ''
-      translationMap.each {|key, message|
+      translation_map.each {|key, message|
         if response.error.to_s =~ /#{Regexp.escape(key)}/i
           message_human = message
         end

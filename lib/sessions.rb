@@ -260,10 +260,10 @@ returns
         file.flock( File::LOCK_EX )
         all = file.read
         file.flock( File::LOCK_UN )
-        dataJSON = JSON.parse( all )
-        if dataJSON
-          data = self.symbolize_keys(dataJSON)
-          data[:user] = dataJSON['user'] # for compat. reasons
+        data_json = JSON.parse( all )
+        if data_json
+          data = self.symbolize_keys(data_json)
+          data[:user] = data_json['user'] # for compat. reasons
         end
       }
     rescue Exception => e

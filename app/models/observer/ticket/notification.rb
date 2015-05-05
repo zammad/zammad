@@ -18,8 +18,8 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     EventBuffer.reset
 
     # get uniq objects
-    listObjects = get_uniq_changes(list)
-    listObjects.each {|ticket_id, item|
+    list_objects = get_uniq_changes(list)
+    list_objects.each {|ticket_id, item|
 
       # send background job
       Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( item ) )
@@ -49,7 +49,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 =end
 
   def self.get_uniq_changes(events)
-    listObjects = {}
+    list_objects = {}
     events.each { |event|
 
       # get current state of objects
@@ -60,14 +60,14 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         next if !article
 
         ticket = article.ticket
-        if !listObjects[ticket.id]
-          listObjects[ticket.id] = {}
+        if !list_objects[ticket.id]
+          list_objects[ticket.id] = {}
         end
-        listObjects[ticket.id][:article_id] = article.id
-        listObjects[ticket.id][:ticket_id]  = ticket.id
+        list_objects[ticket.id][:article_id] = article.id
+        list_objects[ticket.id][:ticket_id]  = ticket.id
 
-        if !listObjects[ticket.id][:type]
-          listObjects[ticket.id][:type] = 'update'
+        if !list_objects[ticket.id][:type]
+          list_objects[ticket.id][:type] = 'update'
         end
 
       elsif event[:name] == 'Ticket'
@@ -76,25 +76,25 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         # next if ticket is already deleted
         next if !ticket
 
-        if !listObjects[ticket.id]
-          listObjects[ticket.id] = {}
+        if !list_objects[ticket.id]
+          list_objects[ticket.id] = {}
         end
-        listObjects[ticket.id][:ticket_id] = ticket.id
+        list_objects[ticket.id][:ticket_id] = ticket.id
 
-        if !listObjects[ticket.id][:type] || listObjects[ticket.id][:type] == 'update'
-          listObjects[ticket.id][:type] = event[:type]
+        if !list_objects[ticket.id][:type] || list_objects[ticket.id][:type] == 'update'
+          list_objects[ticket.id][:type] = event[:type]
         end
 
         # merge changes
         if event[:changes]
-          if !listObjects[ticket.id][:changes]
-            listObjects[ticket.id][:changes] = event[:changes]
+          if !list_objects[ticket.id][:changes]
+            list_objects[ticket.id][:changes] = event[:changes]
           else
             event[:changes].each {|key, value|
-              if !listObjects[ticket.id][:changes][key]
-                listObjects[ticket.id][:changes][key] = value
+              if !list_objects[ticket.id][:changes][key]
+                list_objects[ticket.id][:changes][key] = value
               else
-                listObjects[ticket.id][:changes][key][1] = value[1]
+                list_objects[ticket.id][:changes][key][1] = value[1]
               end
             }
           end
@@ -103,7 +103,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         raise "unknown object for notification #{event[:name]}"
       end
     }
-    listObjects
+    list_objects
   end
 
   def after_create(record)
