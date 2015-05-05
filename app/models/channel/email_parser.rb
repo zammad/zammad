@@ -573,7 +573,7 @@ end
 # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
 module Mail
   module Encodings
-    def Encodings.value_decode(str)
+    def self.value_decode(str)
       # Optimization: If there's no encoded-words in the string, just return it
       return str unless str.index('=?')
 

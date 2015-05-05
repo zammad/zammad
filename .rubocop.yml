@@ -272,8 +272,6 @@ Style/MultilineOperationIndentation:
   Enabled: false
 Style/OneLineConditional:
   Enabled: false
-Style/ClassMethods:
-  Enabled: false
 Lint/Eval:
   Enabled: false
 Style/ModuleFunction:
