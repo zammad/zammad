@@ -264,8 +264,6 @@ Lint/ShadowingOuterLocalVariable:
   Enabled: false
 Style/InfiniteLoop:
   Enabled: false
-Lint/AmbiguousRegexpLiteral:
-  Enabled: false
 Lint/Eval:
   Enabled: false
 Style/ModuleFunction:

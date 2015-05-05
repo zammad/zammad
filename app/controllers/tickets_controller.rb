@@ -38,7 +38,7 @@ class TicketsController < ApplicationController
 
     # create tags if given
     if params[:tags] && !params[:tags].empty?
-      tags = params[:tags].split /,/
+      tags = params[:tags].split(/,/)
       tags.each {|tag|
         Tag.tag_add(
           object: 'Ticket',
