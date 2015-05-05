@@ -281,5 +281,3 @@ Lint/Loop:
   Enabled: false
 Style/For:
   Enabled: false
-Style/WhileUntilDo:
-  Enabled: false

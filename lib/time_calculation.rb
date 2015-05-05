@@ -137,7 +137,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     count = 0
     calculation = true
     first_loop  = true
-    while calculation do
+    while calculation
       week_day = start_time.wday
       day      = start_time.day
       month    = start_time.month
@@ -257,7 +257,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     count       = diff_in_min * 60
     calculation = true
     first_loop  = true
-    while calculation do
+    while calculation
       week_day = start_time.wday
       day      = start_time.day
       month    = start_time.month
