@@ -891,7 +891,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     begin
       mxs = Resolv::DNS.open do |dns|
         ress = dns.getresources(domain, Resolv::DNS::Resource::IN::MX)
-        ress.map { |r| [r.exchange.to_s, IPSocket::getaddress(r.exchange.to_s), r.preference] }
+        ress.map { |r| [r.exchange.to_s, IPSocket.getaddress(r.exchange.to_s), r.preference] }
       end
     rescue Exception => e
       logger.error e.message

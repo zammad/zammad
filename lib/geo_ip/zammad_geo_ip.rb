@@ -12,7 +12,7 @@ class GeoIp::ZammadGeoIp
 
     # do lookup
     host = 'https://geo.zammad.com'
-    url  = "/lookup?ip=#{CGI::escape address}"
+    url  = "/lookup?ip=#{CGI.escape address}"
     data = {}
     begin
       response = UserAgent.get(

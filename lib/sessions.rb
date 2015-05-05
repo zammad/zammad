@@ -47,7 +47,7 @@ returns
     }
 
     # destory old session if needed
-    if File::exist?( path )
+    if File.exist?( path )
       Sessions.destory(client_id)
     end
 
@@ -82,7 +82,7 @@ returns
     path = "#{@path}/"
 
     # just make sure that spool path exists
-    if !File::exist?( path )
+    if !File.exist?( path )
       FileUtils.mkpath path
     end
 
@@ -293,7 +293,7 @@ returns
     check    = true
     count    = 0
     while check
-      if File::exist?( path + filename )
+      if File.exist?( path + filename )
         count += 1
         filename = "#{filename}-#{count}"
       else
@@ -445,7 +445,7 @@ returns
     }
     files.sort.each {|entry|
       filename = "#{path}/#{entry}"
-      next if !File::exist?( filename )
+      next if !File.exist?( filename )
       File.open( filename, 'rb' ) { |file|
         all   = file.read
         spool = JSON.parse( all )
@@ -500,7 +500,7 @@ returns
   def self.jobs
 
     # just make sure that spool path exists
-    if !File::exist?( @path )
+    if !File.exist?( @path )
       FileUtils.mkpath @path
     end
 

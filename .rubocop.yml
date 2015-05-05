@@ -252,8 +252,6 @@ Lint/UselessAssignment:
   Enabled: false
 Lint/NonLocalExitFromIterator:
   Enabled: false
-Style/ColonMethodCall:
-  Enabled: false
 Rails/Date:
   Enabled: false
 Lint/UnreachableCode:

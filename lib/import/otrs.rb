@@ -211,7 +211,7 @@ module Import::OTRS
   def self.ticket(ticket_ids)
     url = 'public.pl?Action=Export;Type=Ticket;'
     ticket_ids.each {|ticket_id|
-      url = url + "TicketID=#{CGI::escape ticket_id};"
+      url = url + "TicketID=#{CGI.escape ticket_id};"
     }
     response = request( url )
     return if !response

@@ -3,7 +3,7 @@
 class GeoLocation::Gmaps
 
   def self.geocode(address)
-    url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI::escape address}&sensor=true"
+    url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape address}&sensor=true"
     response = UserAgent.get(url)
     return if !response.success?
 

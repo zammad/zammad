@@ -34,13 +34,13 @@ class SessionsController < ApplicationController
     user.activity_stream_log( 'session started', user.id, true )
 
     # auto population of default collections
-    collections, assets = SessionHelper::default_collections(user)
+    collections, assets = SessionHelper.default_collections(user)
 
     # add session user assets
     assets = user.assets(assets)
 
     # get models
-    models = SessionHelper::models(user)
+    models = SessionHelper.models(user)
 
     # check logon session
     logon_session_key = nil
@@ -76,7 +76,7 @@ class SessionsController < ApplicationController
 
     # check logon session
     if params['logon_session']
-      session = SessionHelper::get( params['logon_session'] )
+      session = SessionHelper.get( params['logon_session'] )
       if session
         user_id = session.data[:user_id]
       end
@@ -84,7 +84,7 @@ class SessionsController < ApplicationController
 
     if !user_id
       # get models
-      models = SessionHelper::models()
+      models = SessionHelper.models()
 
       render json: {
         error: 'no valid session',
@@ -102,13 +102,13 @@ class SessionsController < ApplicationController
     user = User.find( user_id )
 
     # auto population of default collections
-    collections, assets = SessionHelper::default_collections(user)
+    collections, assets = SessionHelper.default_collections(user)
 
     # add session user assets
     assets = user.assets(assets)
 
     # get models
-    models = SessionHelper::models(user)
+    models = SessionHelper.models(user)
 
     # return current session
     render json: {
@@ -278,7 +278,7 @@ class SessionsController < ApplicationController
 
   def delete
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    SessionHelper::destroy( params[:id] )
+    SessionHelper.destroy( params[:id] )
     render json: {}
   end
 
