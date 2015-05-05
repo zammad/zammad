@@ -102,7 +102,7 @@ module NotificationFactory
 
   def self.send(data)
     sender = Setting.get('notification_sender')
-    Rails.logger.info "NOTICE: SEND NOTIFICATION TO: #{data[:recipient][:email]} (from #{sender})"
+    Rails.logger.info "Send notification to: #{data[:recipient][:email]} (from #{sender})"
 
     content_type = 'text/plain'
     if data[:content_type]
