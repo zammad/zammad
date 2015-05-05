@@ -57,7 +57,7 @@ create/update/delete index
         password: Setting.get('es_password'),
       }
     )
-    puts "# #{response.code.to_s}"
+    Rails.logger.info "# #{response.code}"
     return true if response.success?
     raise response.inspect
   end
@@ -108,7 +108,7 @@ remove whole data from index
     url = build_url( type, o_id )
     return if !url
 
-    puts "# curl -X DELETE \"#{url}\""
+    Rails.logger.info "# curl -X DELETE \"#{url}\""
 
     response = UserAgent.delete(
       url,
@@ -210,7 +210,7 @@ return search result
 
     Rails.logger.info "# #{response.code.to_s}"
     if !response.success?
-      puts "ERROR: #{response.inspect}"
+      Rails.logger.error "ERROR: #{response.inspect}"
       return []
     end
     data = response.data
@@ -220,7 +220,7 @@ return search result
     return ids if !data['hits']
     return ids if !data['hits']['hits']
     data['hits']['hits'].each { |item|
-      puts "... #{item['_type'].to_s} #{item['_id'].to_s}"
+      Rails.logger.info "... #{item['_type'].to_s} #{item['_id'].to_s}"
       data = {
         id: item['_id'],
         type: item['_type'],

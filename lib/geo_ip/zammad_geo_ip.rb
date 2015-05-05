@@ -37,7 +37,7 @@ class GeoIp::ZammadGeoIp
 
       Cache.write( cache_key, data, { expires_in: 90.days } )
     rescue => e
-      puts "ERROR: #{host}#{url}: " + e.inspect
+      Rails.logger.error "#{host}#{url}: #{e.inspect}"
       Cache.write( cache_key, data, { expires_in: 60.minutes } )
     end
     data

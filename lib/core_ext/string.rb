@@ -41,7 +41,7 @@ class String
     return if ActiveRecord::Base.connection_config[:adapter] != 'mysql2'
     self.each_char.select {|c|
       if c.bytes.count > 3
-        puts "WARNING: strip out 4 bytes utf8 chars '#{c}' of '#{ self }'"
+        Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{ self }'"
         next
       end
       c
