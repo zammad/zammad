@@ -268,8 +268,6 @@ Lint/AmbiguousRegexpLiteral:
   Enabled: false
 Rails/Validation:
   Enabled: false
-Style/MultilineOperationIndentation:
-  Enabled: false
 Lint/Eval:
   Enabled: false
 Style/ModuleFunction:

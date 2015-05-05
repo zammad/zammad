@@ -46,7 +46,7 @@ class String
       end
       c
     }
-    .join('')
+    .join('') # rubocop:disable Style/MultilineOperationIndentation
   end
 
 =begin

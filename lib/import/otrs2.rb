@@ -1262,7 +1262,7 @@ module Import::OTRS2
     if !user
       begin
         display_name = Mail::Address.new( article['from'] ).display_name ||
-          ( Mail::Address.new( article['from'] ).comments && Mail::Address.new( article['from'] ).comments[0] )
+                       ( Mail::Address.new( article['from'] ).comments && Mail::Address.new( article['from'] ).comments[0] )
       rescue
         display_name = article['from']
       end

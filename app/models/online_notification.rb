@@ -116,8 +116,8 @@ return all online notifications of an object
       object_lookup_id: object_id,
       o_id: o_id,
     )
-    .order( 'created_at DESC, id DESC' )
-    .limit( 10_000 )
+    .order( 'created_at DESC, id DESC' ) # rubocop:disable Style/MultilineOperationIndentation
+    .limit( 10_000 ) # rubocop:disable Style/MultilineOperationIndentation
 
     list = []
     notifications.each do |item|

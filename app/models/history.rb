@@ -163,7 +163,7 @@ returns
         history_object_related.id,
         requested_object_id,
       )
-      .order('created_at ASC, id ASC')
+      .order('created_at ASC, id ASC') # rubocop:disable Style/MultilineOperationIndentation
     end
     asset_list = {}
     list = []
