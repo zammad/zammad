@@ -201,6 +201,55 @@ test( "model basic tests", function() {
 
 });
 
+// search
+test( "model search tests", function() {
+
+  App.TicketPriority.refresh( [
+    {
+      id:         1,
+      name:       '1 low',
+      note:       'some note 1',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
+      created_at: '2014-06-10T10:17:33.000Z',
+    },
+    {
+      id:         3,
+      name:       '3 high',
+      note:       'some note 3',
+      active:     true,
+      created_at: '2014-06-10T10:17:44.000Z',
+    },
+    {
+      id:         4,
+      name:       '4 very high',
+      note:       'some note 4',
+      active:     true,
+      created_at: '2014-06-10T10:17:54.000Z',
+    },
+  ] )
+  priorities = App.TicketPriority.search({sortBy:'created_at', order: 'ASC'})
+  equal( '2 normal', priorities[0].name, 'check 1 entry')
+  equal( '3 high', priorities[1].name, 'check 2 entry')
+  equal( '4 very high', priorities[2].name, 'check 3 entry')
+  equal( '1 low', priorities[3].name, 'check 4 entry')
+  equal( undefined, priorities[4], 'check 5 entry')
+
+  priorities = App.TicketPriority.search({sortBy:'created_at', order: 'DESC'})
+  equal( '1 low', priorities[0].name, 'check 4 entry')
+  equal( '4 very high', priorities[1].name, 'check 3 entry')
+  equal( '3 high', priorities[2].name, 'check 2 entry')
+  equal( '2 normal', priorities[3].name, 'check 1 entry')
+  equal( undefined, priorities[4], 'check 5 entry')
+
+});
+
 // model
 test( "model loadAssets tests - 1", function() {
   window.refreshCounter1 = 0
