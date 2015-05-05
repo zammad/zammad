@@ -42,7 +42,6 @@ class ActiveSupport::TestCase
 
   # cleanup jobs
   def teardown
-    puts 'teardown'
 
     # check if jobs are proccessed
     return if Delayed::Job.all.empty?

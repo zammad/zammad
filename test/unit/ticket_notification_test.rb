@@ -509,7 +509,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       },
     )
 
-    puts "hc #{human_changes.inspect}"
+    #puts "hc #{human_changes.inspect}"
     # check changed attributes
     human_changes = bg.human_changes(agent1, ticket1)
     assert( human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute' )
@@ -523,13 +523,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_not( human_changes['pending_till'] )
 
     human_changes = bg.human_changes(agent2, ticket1)
-    puts "hc2 #{human_changes.inspect}"
+    #puts "hc2 #{human_changes.inspect}"
 
     template = bg.template_update(agent1, ticket1, article, human_changes)
-    puts "t1 #{template.inspect}"
+    #puts "t1 #{template.inspect}"
 
     template = bg.template_update(agent2, ticket1, article, human_changes)
-    puts "t2 #{template.inspect}"
+    #puts "t2 #{template.inspect}"
 
   end
 

@@ -48,6 +48,8 @@ returns
       # auth ok
       if user_auth
 
+        Rails.logger.info "Authentication against #{config_item[:adapter]} for user #{user.login} ok."
+
         # remember last login date
         user_auth.update_last_login
 

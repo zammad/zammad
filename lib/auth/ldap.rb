@@ -18,11 +18,11 @@ module Auth::Ldap
     # ldap bind
     begin
       if !ldap.bind
-        puts "NOTICE: Can't bind to '#{config[:host]}', #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
+        Rails.logger.info "Can't bind to '#{config[:host]}', #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
         return
       end
     rescue Exception => e
-      puts "NOTICE: Can't connect to '#{config[:host]}', #{e.to_s}"
+      Rails.logger.info "Can't connect to '#{config[:host]}', #{e.to_s}"
       return
     end
 
@@ -47,14 +47,14 @@ module Auth::Ldap
     end
 
     if user_dn == nil
-      puts "NOTICE: ldap entry found for user '#{username}' with filter #{filter} failed!"
+      Rails.logger.info "ldap entry found for user '#{username}' with filter #{filter} failed!"
       return nil
     end
 
     # try ldap bind with user credentals
     auth = ldap.authenticate user_dn, password
     if !ldap.bind( auth )
-      puts "NOTICE: ldap bind with '#{user_dn}' failed!"
+      Rails.logger.info "ldap bind with '#{user_dn}' failed!"
       return false
     end
 
@@ -72,10 +72,10 @@ module Auth::Ldap
       if !user
         user_attributes[:created_by_id] = 1
         user = User.create( user_attributes )
-        puts "NOTICE: user created '#{user.login}'"
+        Rails.logger.debug "user created '#{user.login}'"
       else
         user.update_attributes( user_attributes )
-        puts "NOTICE: user updated '#{user.login}'"
+        Rails.logger.debug "user updated '#{user.login}'"
       end
     end
 

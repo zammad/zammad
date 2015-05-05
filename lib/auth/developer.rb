@@ -5,7 +5,10 @@ module Auth::Developer
 
     # development systems
     if Setting.get('developer_mode') == true
-      return user if password == 'test'
+      if password == 'test'
+        Rails.logger.info "System in developer mode, authentication for user #{user.login} ok."
+        return user
+      end
     end
 
     false
