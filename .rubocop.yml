@@ -12,6 +12,8 @@ AllCops:
     - 'bin/spring'
     - 'db/schema.rb'
 
+# Zammad StyleGuide
+
 Metrics/LineLength:
   Description: 'Limit lines to 80 characters.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
@@ -143,6 +145,9 @@ Rails/FindEach:
   Description: 'Prefer all.find_each over all.find.'
   Enabled: false
 
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
 
 # TODO
 
@@ -268,8 +273,6 @@ Style/OneLineConditional:
 Style/ClassMethods:
   Enabled: false
 Lint/Eval:
-  Enabled: false
-Rails/HasAndBelongsToMany:
   Enabled: false
 Style/ModuleFunction:
   Enabled: false
