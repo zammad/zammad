@@ -266,8 +266,6 @@ Style/InfiniteLoop:
   Enabled: false
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
-Rails/Validation:
-  Enabled: false
 Lint/Eval:
   Enabled: false
 Style/ModuleFunction:

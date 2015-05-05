@@ -1,12 +1,13 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Authorization < ApplicationModel
-  belongs_to              :user
-  after_create            :delete_user_cache
-  after_update            :delete_user_cache
-  after_destroy           :delete_user_cache
-  validates_presence_of   :user_id, :uid, :provider
-  validates_uniqueness_of :uid,     scope: :provider
+  belongs_to    :user
+  after_create  :delete_user_cache
+  after_update  :delete_user_cache
+  after_destroy :delete_user_cache
+  validates     :user_id,  presence: true
+  validates     :uid,      presence: true, uniqueness: { scope: :provider }
+  validates     :provider, presence: true
 
   def self.find_from_hash(hash)
     auth = Authorization.where( provider: hash['provider'], uid: hash['uid'] ).first
