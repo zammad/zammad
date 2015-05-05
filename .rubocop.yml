@@ -147,7 +147,7 @@ Rails/FindEach:
 
 Rails/HasAndBelongsToMany:
   Description: 'Prefer has_many :through to has_and_belongs_to_many.'
-  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
+#  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
   Enabled: false
 
 
