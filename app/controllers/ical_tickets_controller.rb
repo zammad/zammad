@@ -93,8 +93,8 @@ class IcalTicketsController < ApplicationController
 
       event_data = {}
 
-      event_data[:dtstart]     = Icalendar::Values::Date.new( Date.today )
-      event_data[:dtend]       = Icalendar::Values::Date.new( Date.today )
+      event_data[:dtstart]     = Icalendar::Values::Date.new( Time.zone.today )
+      event_data[:dtend]       = Icalendar::Values::Date.new( Time.zone.today )
       event_data[:summary]     = "#{ ticket.state.name } ticket: '#{ ticket.title }'"
       event_data[:description] = "T##{ ticket.number }"
 
