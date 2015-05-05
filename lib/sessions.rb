@@ -505,7 +505,7 @@ returns
     end
 
     Thread.abort_on_exception = true
-    while true
+    loop do
       client_ids = self.sessions
       client_ids.each { |client_id|
 

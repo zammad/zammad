@@ -7,7 +7,7 @@ class Scheduler < ApplicationModel
     Thread.abort_on_exception = true
 
     jobs_started = {}
-    while true
+    loop do
       logger.info "Scheduler running (runner #{runner} of #{runner_count})..."
 
       # reconnect in case db connection is lost
@@ -34,7 +34,7 @@ class Scheduler < ApplicationModel
 
     Thread.new {
       if job.period
-        while true
+        loop do
           self._start_job( job, runner, runner_count )
           job = Scheduler.lookup( id: job.id )
 

@@ -21,7 +21,7 @@ class Sessions::Client
     backend_pool = []
     user_id_last_run = nil
     loop_count = 0
-    while true
+    loop do
 
       # get connection user
       session_data = Sessions.get( @client_id )

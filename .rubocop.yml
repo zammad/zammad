@@ -262,8 +262,6 @@ Lint/UnreachableCode:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
-Style/InfiniteLoop:
-  Enabled: false
 Lint/Eval:
   Enabled: false
 Style/ModuleFunction:
