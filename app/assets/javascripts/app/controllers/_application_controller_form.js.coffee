@@ -2142,8 +2142,7 @@ class App.ControllerForm extends App.Controller
     return if !App[attribute.relation]
 
     attribute.options = []
-
-    list = []
+    list              = []
     if attribute.filter
 
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter', attribute.filter
@@ -2154,7 +2153,7 @@ class App.ControllerForm extends App.Controller
 
         all = App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
-        list = attribute.filter( all, 'collection' )
+        list = attribute.filter( all, 'collection', @params )
 
       # data based filter
       else if attribute.filter[ attribute.name ]
