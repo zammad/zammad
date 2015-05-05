@@ -271,11 +271,5 @@ Lint/Eval:
   Enabled: false
 Rails/HasAndBelongsToMany:
   Enabled: false
-Style/MethodName:
-  Enabled: false
 Style/ModuleFunction:
-  Enabled: false
-Style/AccessModifierIndentation:
-  Enabled: false
-Lint/Loop:
   Enabled: false

@@ -7,7 +7,7 @@ class ObjectManagerAttributesController < ApplicationController
   def list
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     render json: {
-      objects: ObjectManager.listFrontendObjects,
+      objects: ObjectManager.list_frontend_objects,
     }
     #model_index_render(ObjectManager::Attribute, params)
   end

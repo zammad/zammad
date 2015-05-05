@@ -6,11 +6,11 @@ class ObjectManager
 
 list all backend managed object
 
-  ObjectManager.listObjects()
+  ObjectManager.list_objects()
 
 =end
 
-  def self.listObjects
+  def self.list_objects
     ['Ticket', 'TicketArticle', 'User', 'Organization', 'Group' ]
   end
 
@@ -18,11 +18,11 @@ list all backend managed object
 
 list all frontend managed object
 
-  ObjectManager.listFrontendObjects()
+  ObjectManager.list_frontend_objects()
 
 =end
 
-  def self.listFrontendObjects
+  def self.list_frontend_objects
     ['Ticket', 'User', 'Organization' ] #, 'Group' ]
   end
 
