@@ -279,5 +279,3 @@ Style/AccessModifierIndentation:
   Enabled: false
 Lint/Loop:
   Enabled: false
-Style/For:
-  Enabled: false

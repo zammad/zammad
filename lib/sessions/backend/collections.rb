@@ -29,7 +29,7 @@ class Sessions::Backend::Collections
     # load collections to deliver from external files
     dir = File.expand_path('../../../../', __FILE__)
     files = Dir.glob( "#{dir}/lib/sessions/backend/collections/*.rb" )
-    for file in files
+    files.each { |file|
       file.gsub!("#{dir}/lib/", '')
       file.gsub!(/\.rb$/, '')
       next if file.classify == 'Sessions::Backend::Collections::Base'
@@ -39,7 +39,7 @@ class Sessions::Backend::Collections
       if backend
         backends.push backend
       end
-    end
+    }
 
     backends
   end

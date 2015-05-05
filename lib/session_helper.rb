@@ -8,10 +8,10 @@ module SessionHelper
     # load collections to deliver from external files
     dir = File.expand_path('../../', __FILE__)
     files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb" )
-    for file in files
+    files.each { |file|
       load file
       (default_collection, assets ) = ExtraCollection.session( default_collection, assets, user )
-    end
+    }
 
     [default_collection, assets]
   end
