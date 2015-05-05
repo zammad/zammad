@@ -77,7 +77,7 @@ class Store
         # remove from old provider
         adapter_source.delete( item.sha )
 
-        logger.info "NOTICE: Moved file #{item.sha} from #{source} to #{target}"
+        logger.info "Moved file #{item.sha} from #{source} to #{target}"
       }
       true
     end

@@ -207,8 +207,6 @@ Style/RedundantSelf:
   Enabled: false
 Style/Next:
   Enabled: false
-Rails/Output:
-  Enabled: false
 Lint/UselessAccessModifier:
   Enabled: false
 Style/CommentIndentation:

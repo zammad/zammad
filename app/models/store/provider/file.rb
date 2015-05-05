@@ -45,7 +45,7 @@ class Store::Provider::File
 
   # read file from fs
   def self.read_from_fs(sha)
-    Rails.logger.info "read from fs #{ get_locaton(sha) }"
+    Rails.logger.debug "read from fs #{ get_locaton(sha) }"
     if !File.exist?( get_locaton(sha) )
       raise "ERROR: No such file #{ get_locaton(sha) }"
     end
@@ -66,7 +66,7 @@ class Store::Provider::File
     # install file
     permission = '600'
     if !File.exist?( get_locaton(sha) )
-      Rails.logger.info "storge write '#{ get_locaton(sha) }' (#{permission})"
+      Rails.logger.debug "storge write '#{ get_locaton(sha) }' (#{permission})"
       file = File.new( get_locaton(sha), 'wb' )
       file.write( data )
       file.close

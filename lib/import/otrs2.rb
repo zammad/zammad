@@ -797,7 +797,6 @@ module Import::OTRS2
 
       # check if state already exists
       state_old = Ticket::State.where( id: state_new[:id] ).first
-#      puts 'st: ' + state['TypeName']
 
       # set state types
       if state['TypeName'] == 'pending auto'
@@ -806,7 +805,6 @@ module Import::OTRS2
       state_type = Ticket::StateType.where( name: state['TypeName'] ).first
       state_new[:state_type_id] = state_type.id
       if state_old
-#        puts 'TS: ' + state_new.inspect
         state_old.update_attributes(state_new)
       else
         state = Ticket::State.new(state_new)
@@ -1185,7 +1183,7 @@ module Import::OTRS2
   # log
   def self.log(message)
     thread_no = Thread.current[:thread_no] || '-'
-    puts "#{Time.new.to_s}/thread##{thread_no}: #{message}"
+    Rails.logger.info "thread##{thread_no}: #{message}"
   end
 
   # set translate valid ids to active = true|false
