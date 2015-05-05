@@ -277,5 +277,3 @@ Style/ModuleFunction:
   Enabled: false
 Style/AccessModifierIndentation:
   Enabled: false
-Lint/Loop:
-  Enabled: false

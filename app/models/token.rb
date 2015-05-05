@@ -28,8 +28,11 @@ class Token < ActiveRecord::Base
   private
 
   def generate_token
-    begin
+
+    loop do
       self.name = SecureRandom.hex(20)
-    end while Token.exists?( name: self.name )
+
+      break if !Token.exists?( name: self.name )
+    end
   end
 end
