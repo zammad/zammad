@@ -244,8 +244,6 @@ Style/ClassVars:
   Enabled: false
 Lint/LiteralInCondition:
   Enabled: false
-Style/PredicateName:
-  Enabled: false
 Style/SpaceBeforeComment:
   Enabled: false
 Lint/UselessAssignment:
