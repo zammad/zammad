@@ -239,21 +239,21 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           result = email_probe_inbound( settings[:inbound] )
           if result[:result] != 'ok'
             render json: result
-            return
+            return # rubocop:disable Lint/NonLocalExitFromIterator
           end
 
           # probe outbound
           result = email_probe_outbound( settings[:outbound], params[:email] )
           if result[:result] != 'ok'
             render json: result
-            return
+            return # rubocop:disable Lint/NonLocalExitFromIterator
           end
 
           render json: {
             result: 'ok',
             setting: settings,
           }
-          return
+          return # rubocop:disable Lint/NonLocalExitFromIterator
         end
       }
     }
@@ -632,7 +632,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           message: e.to_s,
           subject: subject,
         }
-        return
+        return # rubocop:disable Lint/NonLocalExitFromIterator
       end
 
       if found && found == 'verify ok'
@@ -693,7 +693,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         render json: {
           result: 'ok',
         }
-        return
+        return # rubocop:disable Lint/NonLocalExitFromIterator
       end
     }
 

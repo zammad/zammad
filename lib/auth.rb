@@ -41,7 +41,7 @@ returns
 
       # load backend
       backend = self.load_adapter( config_item[:adapter] )
-      return if !backend
+      next if !backend
 
       user_auth = backend.check( username, password, config_item, user )
 

@@ -56,7 +56,7 @@ class ImportOtrsController < ApplicationController
           url: url,
           result: 'ok',
         }
-        return
+        return # rubocop:disable Lint/NonLocalExitFromIterator
       elsif response.body =~ /(otrs\sag|otrs.com|otrs.org)/i
         message_human = 'Host found, but no OTRS migrator is installed!'
       end
