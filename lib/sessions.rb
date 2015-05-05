@@ -602,7 +602,7 @@ returns
   end
 
   def self.symbolize_keys(hash)
-    hash.inject({}) {|result, (key, value)|
+    hash.each_with_object({}) {|(key, value), result|
       new_key = case key
                 when String then key.to_sym
                 else key
@@ -612,7 +612,6 @@ returns
                   else value
                   end
       result[new_key] = new_value
-      result
     }
   end
 

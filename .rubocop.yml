@@ -236,8 +236,6 @@ Metrics/BlockNesting:
   Enabled: false
 Lint/RescueException:
   Enabled: false
-Style/EachWithObject:
-  Enabled: false
 Style/PredicateName:
   Enabled: false
 Style/ClassVars:
