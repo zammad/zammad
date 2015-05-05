@@ -275,5 +275,3 @@ Style/MethodName:
   Enabled: false
 Style/ModuleFunction:
   Enabled: false
-Style/AccessModifierIndentation:
-  Enabled: false
