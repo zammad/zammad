@@ -109,13 +109,13 @@ class Package < ApplicationModel
       dest = @@root + '/' + file
 
       if File.symlink?( dest.to_s )
-        logger.info "Unlink file: #{dest.to_s}"
+        logger.info "Unlink file: #{dest}"
         File.delete( dest.to_s )
       end
 
       backup_file = dest.to_s + '.link_backup'
       if File.exist?( backup_file )
-        logger.info "Restore backup file of #{backup_file} -> #{dest.to_s}."
+        logger.info "Restore backup file of #{backup_file} -> #{dest}."
         File.rename( backup_file, dest.to_s )
       end
     end
@@ -146,7 +146,7 @@ class Package < ApplicationModel
 
       if File.directory?( entry.to_s )
         if !File.exist?( dest.to_s )
-          logger.info "Create dir: #{dest.to_s}"
+          logger.info "Create dir: #{dest}"
           FileUtils.mkdir_p( dest.to_s )
         end
       end
@@ -154,9 +154,9 @@ class Package < ApplicationModel
       if File.file?( entry.to_s ) && ( File.file?( dest.to_s ) && !File.symlink?( dest.to_s ) )
         backup_file = dest.to_s + '.link_backup'
         if File.exist?( backup_file )
-          raise "Can't link #{entry.to_s} -> #{dest.to_s}, destination and .link_backup already exists!"
+          raise "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
         else
-          logger.info "Create backup file of #{dest.to_s} -> #{backup_file}."
+          logger.info "Create backup file of #{dest} -> #{backup_file}."
           File.rename( dest.to_s, backup_file )
         end
       end
@@ -165,7 +165,7 @@ class Package < ApplicationModel
         if File.symlink?( dest.to_s )
           File.delete( dest.to_s )
         end
-        logger.info "Link file: #{entry.to_s} -> #{dest.to_s}"
+        logger.info "Link file: #{entry} -> #{dest}"
         File.symlink( entry.to_s, dest.to_s )
       end
     end

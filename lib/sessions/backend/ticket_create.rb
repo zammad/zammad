@@ -27,7 +27,7 @@ class Sessions::Backend::TicketCreate
   end
 
   def client_key
-    "as::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+    "as::load::#{ self.class }::#{ @user.id }::#{ @client_id }"
   end
 
   def push

@@ -10,7 +10,7 @@ class Sessions::Backend::Rss
   end
 
   def collection_key
-    "rss::load::#{ self.class.to_s }::#{ @user.id }"
+    "rss::load::#{ self.class }::#{ @user.id }"
   end
 
   def load
@@ -29,7 +29,7 @@ class Sessions::Backend::Rss
   end
 
   def client_key
-    "rss::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+    "rss::load::#{ self.class }::#{ @user.id }::#{ @client_id }"
   end
 
   def push

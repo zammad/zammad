@@ -22,7 +22,7 @@ module Auth::Ldap
         return
       end
     rescue Exception => e
-      Rails.logger.info "Can't connect to '#{config[:host]}', #{e.to_s}"
+      Rails.logger.info "Can't connect to '#{config[:host]}', #{e}"
       return
     end
 

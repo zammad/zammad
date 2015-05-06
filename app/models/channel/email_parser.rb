@@ -72,7 +72,7 @@ class Channel::EmailParser
         data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
 
         # if we need to access the lines by objects later again
-        data[ "raw-#{field.name.downcase.to_s}".to_sym ] = field
+        data[ "raw-#{field.name.downcase}".to_sym ] = field
       end
     }
 

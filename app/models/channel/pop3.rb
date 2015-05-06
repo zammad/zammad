@@ -45,7 +45,7 @@ class Channel::POP3 < Channel::EmailParser
 
     mails.each do |m|
       count += 1
-      Rails.logger.info " - message #{count.to_s}/#{count_all.to_s}"
+      Rails.logger.info " - message #{count}/#{count_all}"
 
       # check for verify message
       if check_type == 'verify'

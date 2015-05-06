@@ -21,7 +21,7 @@ returns
   def self.setup
 
     auto_wizard_file_name = 'auto_wizard.json'
-    auto_wizard_file_name = "#{Rails.root.to_s}/#{auto_wizard_file_name}"
+    auto_wizard_file_name = "#{Rails.root}/#{auto_wizard_file_name}"
 
     return if !File.file?(auto_wizard_file_name)
 

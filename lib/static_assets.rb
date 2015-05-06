@@ -76,7 +76,7 @@ module StaticAssets
     return if !file
 
     hash = Digest::MD5.hexdigest( file.content )
-    path = "#{Rails.root.to_s}/public/assets/images/#{hash}"
+    path = "#{Rails.root}/public/assets/images/#{hash}"
     File.open( path, 'wb' ) do |f|
       f.puts file.content
     end

@@ -58,7 +58,7 @@ if ARGV[0] != 'start' && ARGV[0] != 'stop'
   exit
 end
 
-puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s].to_s },pid:#{@options[:i].to_s})"
+puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s] },pid:#{@options[:i]})"
 #puts options.inspect
 
 if ARGV[0] == 'stop'
@@ -139,7 +139,7 @@ EventMachine.run {
 
         # error handling
         if data['timestamp']
-          log 'notice', "request spool data > '#{Time.at(data['timestamp']).to_s}'", client_id
+          log 'notice', "request spool data > '#{Time.at(data['timestamp'])}'", client_id
         else
           log 'notice', 'request spool with init data', client_id
         end
@@ -199,7 +199,7 @@ EventMachine.run {
                   else
                     data['recipient']['user_id'].each { |user_id|
                       if local_client[:user]['id'].to_i == user_id.to_i
-                        log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id=#{user_id})", local_client_id
+                        log 'notice', "send broadcast from (#{client_id}) to (user_id=#{user_id})", local_client_id
                         if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
                           @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
                         else
@@ -213,7 +213,7 @@ EventMachine.run {
 
               # broadcast every client
             else
-              log 'notice', "send broadcast from (#{client_id.to_s})", local_client_id
+              log 'notice', "send broadcast from (#{client_id})", local_client_id
               if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
                 @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
               else

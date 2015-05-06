@@ -89,7 +89,7 @@ add new object to search index
         password: Setting.get('es_password'),
       }
     )
-    Rails.logger.info "# #{response.code.to_s}"
+    Rails.logger.info "# #{response.code}"
     return true if response.success?
     raise response.inspect
   end
@@ -208,7 +208,7 @@ return search result
       }
     )
 
-    Rails.logger.info "# #{response.code.to_s}"
+    Rails.logger.info "# #{response.code}"
     if !response.success?
       Rails.logger.error "ERROR: #{response.inspect}"
       return []
@@ -220,7 +220,7 @@ return search result
     return ids if !data['hits']
     return ids if !data['hits']['hits']
     data['hits']['hits'].each { |item|
-      Rails.logger.info "... #{item['_type'].to_s} #{item['_id'].to_s}"
+      Rails.logger.info "... #{item['_type']} #{item['_id']}"
       data = {
         id: item['_id'],
         type: item['_type'],

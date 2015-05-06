@@ -234,8 +234,6 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 Style/ClassAndModuleChildren:
   Enabled: false
-Lint/StringConversionInInterpolation:
-  Enabled: false
 Style/GlobalVars:
   Enabled: false
 Rails/TimeZone:

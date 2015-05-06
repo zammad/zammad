@@ -283,7 +283,7 @@ returns
   def self.process(response, uri, count, params, options)
     if !response
       return Result.new(
-        error: "Can't connect to #{uri.to_s}, got no response!",
+        error: "Can't connect to #{uri}, got no response!",
         success: false,
         code: 0,
       )
@@ -292,7 +292,7 @@ returns
     case response
     when Net::HTTPNotFound
       return Result.new(
-        error: "No such file #{uri.to_s}, 404!",
+        error: "No such file #{uri}, 404!",
         success: false,
         code: response.code,
       )

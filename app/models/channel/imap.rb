@@ -60,7 +60,7 @@ class Channel::IMAP < Channel::EmailParser
 
     message_ids.each do |message_id|
       count += 1
-      Rails.logger.info " - message #{count.to_s}/#{count_all.to_s}"
+      Rails.logger.info " - message #{count}/#{count_all}"
       #Rails.logger.info msg.to_s
 
       # check for verify message

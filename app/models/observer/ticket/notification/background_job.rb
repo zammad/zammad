@@ -217,7 +217,7 @@ class Observer::Ticket::Notification::BackgroundJob
         display = object_manager_attribute[:display].to_s
       end
       if object_manager_attribute && object_manager_attribute[:translate]
-        changes[display] = ["i18n(#{value_str[0].to_s})", "i18n(#{value_str[1].to_s})"]
+        changes[display] = ["i18n(#{value_str[0]})", "i18n(#{value_str[1]})"]
       else
         changes[display] = [value_str[0].to_s, value_str[1].to_s]
       end

@@ -70,7 +70,7 @@ returns
   def self.param_cleanup(params, newObject = false)
 
     if params == nil
-      raise "No params for #{self.to_s}!"
+      raise "No params for #{self}!"
     end
 
     # ignore id for new objects
@@ -190,7 +190,7 @@ returns
     if self.class.column_names.include? 'updated_by_id'
       if UserInfo.current_user_id
         if self.updated_by_id && self.updated_by_id != UserInfo.current_user_id
-          logger.info "NOTICE create - self.updated_by_id is different: #{self.updated_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+          logger.info "NOTICE create - self.updated_by_id is different: #{self.updated_by_id}/#{UserInfo.current_user_id}"
         end
         self.updated_by_id = UserInfo.current_user_id
       end
@@ -201,7 +201,7 @@ returns
     return if !UserInfo.current_user_id
 
     if self.created_by_id && self.created_by_id != UserInfo.current_user_id
-      logger.info "NOTICE create - self.created_by_id is different: #{self.created_by_id.to_s}/#{UserInfo.current_user_id.to_s}"
+      logger.info "NOTICE create - self.created_by_id is different: #{self.created_by_id}/#{UserInfo.current_user_id}"
     end
     self.created_by_id = UserInfo.current_user_id
   end
@@ -1082,7 +1082,7 @@ check string/varchar size and cut them if needed
       if column && limit
         current_length = attribute[1].to_s.length
         if limit < current_length
-          logger.warn "WARNING: cut string because of database length #{self.class.to_s}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1].to_s})"
+          logger.warn "WARNING: cut string because of database length #{self.class}.#{attribute[0]}(#{limit} but is #{current_length}:#{attribute[1]})"
           self[ attribute[0] ] = attribute[1][ 0, limit ]
         end
       end
