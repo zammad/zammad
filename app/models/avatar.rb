@@ -336,8 +336,6 @@ returns:
     ).first
   end
 
-  private
-
   def self.set_default_items(object_id, o_id, avatar_id)
     avatars = Avatar.where(
       object_lookup_id: object_id,

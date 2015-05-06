@@ -62,8 +62,6 @@ class Tag < ApplicationModel
     tags
   end
 
-  private
-
   def self.tag_item_lookup_id( id )
 
     # use cache

@@ -240,8 +240,6 @@ returns
 
   end
 
-  private
-
   def self.get_http(uri, options)
     http = Net::HTTP.new(uri.host, uri.port)
 

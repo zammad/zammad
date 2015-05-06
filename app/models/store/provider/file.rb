@@ -3,20 +3,52 @@
 
 class Store::Provider::File
 
+  # write file to fs
   def self.add(data, sha)
-    write_to_fs(data, sha)
+
+    # install file
+    permission = '600'
+    if !File.exist?( get_locaton(sha) )
+      Rails.logger.debug "storge write '#{ get_locaton(sha) }' (#{permission})"
+      file = File.new( get_locaton(sha), 'wb' )
+      file.write( data )
+      file.close
+    end
+    File.chmod( permission.to_i(8), get_locaton(sha) )
+
+    # check sha
+    local_sha = Digest::SHA256.hexdigest( get(sha) )
+    if sha != local_sha
+      raise "ERROR: Corrupt file in fs #{ get_locaton(sha) }, sha should be #{sha} but is #{local_sha}"
+    end
+
     true
   end
 
+  # read file from fs
   def self.get(sha)
-    read_from_fs(sha)
+    Rails.logger.debug "read from fs #{ get_locaton(sha) }"
+    if !File.exist?( get_locaton(sha) )
+      raise "ERROR: No such file #{ get_locaton(sha) }"
+    end
+    data    = File.open( get_locaton(sha), 'rb' )
+    content = data.read
+
+    # check sha
+    local_sha = Digest::SHA256.hexdigest( content )
+    if local_sha != sha
+      raise "ERROR: Corrupt file in fs #{ get_locaton(sha) }, sha should be #{sha} but is #{local_sha}"
+    end
+    content
   end
 
+  # unlink file from fs
   def self.delete(sha)
-    unlink_from_fs(sha)
+    if File.exist?( get_locaton(sha) )
+      Rails.logger.info "storge remove '#{ get_locaton(sha) }'"
+      File.delete( get_locaton(sha) )
+    end
   end
-
-  private
 
   # generate file location
   def self.get_locaton(sha)
@@ -35,50 +67,4 @@ class Store::Provider::File
     location += file
   end
 
-  # unlink file from fs
-  def self.unlink_from_fs(sha)
-    if File.exist?( get_locaton(sha) )
-      Rails.logger.info "storge remove '#{ get_locaton(sha) }'"
-      File.delete( get_locaton(sha) )
-    end
-  end
-
-  # read file from fs
-  def self.read_from_fs(sha)
-    Rails.logger.debug "read from fs #{ get_locaton(sha) }"
-    if !File.exist?( get_locaton(sha) )
-      raise "ERROR: No such file #{ get_locaton(sha) }"
-    end
-    data    = File.open( get_locaton(sha), 'rb' )
-    content = data.read
-
-    # check sha
-    local_sha = Digest::SHA256.hexdigest( content )
-    if local_sha != sha
-      raise "ERROR: Corrupt file in fs #{ get_locaton(sha) }, sha should be #{sha} but is #{local_sha}"
-    end
-    content
-  end
-
-  # write file to fs
-  def self.write_to_fs(data, sha)
-
-    # install file
-    permission = '600'
-    if !File.exist?( get_locaton(sha) )
-      Rails.logger.debug "storge write '#{ get_locaton(sha) }' (#{permission})"
-      file = File.new( get_locaton(sha), 'wb' )
-      file.write( data )
-      file.close
-    end
-    File.chmod( permission.to_i(8), get_locaton(sha) )
-
-    # check sha
-    local_sha = Digest::SHA256.hexdigest( read_from_fs(sha) )
-    if sha != local_sha
-      raise "ERROR: Corrupt file in fs #{ get_locaton(sha) }, sha should be #{sha} but is #{local_sha}"
-    end
-
-    true
-  end
 end

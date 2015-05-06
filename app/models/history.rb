@@ -213,8 +213,6 @@ returns
     list
   end
 
-  private
-
   def self.type_lookup_id( id )
 
     # use cache

@@ -244,8 +244,6 @@ return true if backend is configured
     true
   end
 
-  private
-
   def self.build_url( type = nil, o_id = nil )
     return if !SearchIndexBackend.enabled?
     index = Setting.get('es_index').to_s + "_#{Rails.env}"

@@ -83,8 +83,6 @@ class RecentView < ApplicationModel
     )
   end
 
-  private
-
   def self.access(object, o_id, user)
 
     # check if object exists

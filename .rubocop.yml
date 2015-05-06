@@ -226,8 +226,6 @@ Style/RedundantSelf:
   Enabled: false
 Style/Next:
   Enabled: false
-Lint/UselessAccessModifier:
-  Enabled: false
 Style/CommentIndentation:
   Enabled: false
 Metrics/CyclomaticComplexity:
