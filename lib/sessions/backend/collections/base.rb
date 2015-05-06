@@ -23,25 +23,22 @@ class Sessions::Backend::Collections::Base
 
     # check role based access
     if self.class.is_role
-      access = nil
+      access = false
       self.class.is_role.each {|role|
-        if @user.is_role(role)
-          access = true
-        end
+        next if !@user.is_role(role)
+        access = true
+        break
       }
       return if !access
     end
     if self.class.is_not_role
-
-      is_role = false
+      access = false
       self.class.is_not_role.each {|role|
-
-        next if !@user.is_role(role)
-
-        is_role = true
+        next if @user.is_role(role)
+        access = true
         break
       }
-      return if is_role
+      return if !access
     end
 
     # check timeout
