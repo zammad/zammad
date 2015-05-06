@@ -54,10 +54,10 @@ class Store::Provider::File
   def self.get_locaton(sha)
 
     # generate directory
-    base = Rails.root.to_s + '/storage/fs/'
-    parts = sha.scan(/.{1,4}/)
-    path = parts[ 1..10 ].join('/') + '/'
-    file = parts[ 11..parts.count ].join('')
+    base     = "#{Rails.root}/storage/fs/"
+    parts    = sha.scan(/.{1,4}/)
+    path     = parts[ 1..10 ].join('/') + '/'
+    file     = parts[ 11..parts.count ].join('')
     location = "#{base}/#{path}"
 
     # create directory if not exists
