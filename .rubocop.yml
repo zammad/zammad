@@ -153,6 +153,13 @@ Rails/HasAndBelongsToMany:
 
 # TODO
 
+Style/FileName:
+  Description: 'Use snake_case for source file names.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
+  Enabled: true
+  Exclude:
+    - 'script/websocket-server.rb'
+
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
   Enabled: false
@@ -225,8 +232,6 @@ Style/ClassAndModuleChildren:
 Lint/StringConversionInInterpolation:
   Enabled: false
 Metrics/PerceivedComplexity:
-  Enabled: false
-Style/FileName:
   Enabled: false
 Style/GlobalVars:
   Enabled: false
