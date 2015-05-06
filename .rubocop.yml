@@ -150,6 +150,11 @@ Rails/HasAndBelongsToMany:
 #  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
   Enabled: false
 
+Metrics/PerceivedComplexity:
+  Description: >-
+                 A complexity metric geared towards measuring complexity for a
+                 human reader.
+  Enabled: false
 
 # TODO
 
@@ -230,8 +235,6 @@ Metrics/CyclomaticComplexity:
 Style/ClassAndModuleChildren:
   Enabled: false
 Lint/StringConversionInInterpolation:
-  Enabled: false
-Metrics/PerceivedComplexity:
   Enabled: false
 Style/GlobalVars:
   Enabled: false
