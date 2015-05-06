@@ -156,6 +156,10 @@ Metrics/PerceivedComplexity:
                  human reader.
   Enabled: false
 
+  Style/ClassAndModuleChildren:
+  Description: 'Checks style of children classes and modules.'
+  Enabled: false
+
 # TODO
 
 Style/FileName:
@@ -229,8 +233,6 @@ Style/Next:
 Style/CommentIndentation:
   Enabled: false
 Metrics/CyclomaticComplexity:
-  Enabled: false
-Style/ClassAndModuleChildren:
   Enabled: false
 Style/GlobalVars:
   Enabled: false
