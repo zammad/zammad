@@ -1,13 +1,12 @@
 <% for item in @items: %>
   <% if item.child: %>
     <li class="<% if item.class: %><%- item.class %><% end %> dropup <% if @open_tab[item.target] : %>open<% end %>">
-      <a class="list-button horizontal centered dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
+      <a class="list-button dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
         <span class="dropdown-nose"></span>
         <% if item.class is 'user': %>
           <span class="js-avatar"></span>
         <% else: %>
-          <span class="green plus icon"></span>
-          <span class="white plus icon"></span>
+          <svg class="plus icon"><use xlink:href="#icon-plus" /></svg>
         <% end %>
       </a>
       <ul class="dropdown-menu" role="menu">
@@ -22,7 +21,7 @@
             <a href="<%= item.target %>" class="horizontal center">
               <span class="flex u-textTruncate"><%- @T( item.name ) %></span>
               <% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %>
-              <% if item.iconClass: %><span class="<%= item.iconClass %> icon"></span><% end %>
+              <% if item.iconClass: %><svg class="<%= item.iconClass %> icon"><use xlink:href="#icon-<%= item.iconClass %>" /></svg><% end %>
             </a>
           </li>
         <% end %>
@@ -31,8 +30,7 @@
   <% else: %>
     <li class="settings <% if @active_tab[item.target] : %>active<% end %>">
       <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
-        <span class="light cog icon"></span>
-        <span class="dark cog icon"></span>
+        <svg class="cog icon"><use xlink:href="#icon-cog" /></svg>
       </a>
     </li>
   <% end %>

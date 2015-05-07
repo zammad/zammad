@@ -1,11 +1,12 @@
 <form class="search horizontal">
   <div class="search-holder flex">
     <input id="global-search" type="search" autocomplete="off">
-    <div class="empty-search horizontal centered">
-      <div class="white close icon"></div>
+    <svg class="magnifier icon"><use xlink:href="#icon-magnifier" /></svg>
+    <div class="empty-search">
+      <svg class="close icon"><use xlink:href="#icon-close" /></svg>
     </div>
   </div>
-  <div class="logo js-toggleNavigation"></div>
+  <svg class="logo js-toggleNavigation"><use xlink:href="#icon-logo" /></svg>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
 </form>
 
