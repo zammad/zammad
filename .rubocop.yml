@@ -168,6 +168,12 @@ Metrics/AbcSize:
                  branches, and conditions.
   Enabled: false
 
+Metrics/CyclomaticComplexity:
+  Description: >-
+                 A complexity metric that is strongly correlated to the number
+                 of test cases needed to validate a method.
+  Enabled: true
+
 # TODO
 
 Style/FileName:
@@ -184,8 +190,6 @@ Style/Documentation:
 Style/RedundantSelf:
   Enabled: false
 Style/CommentIndentation:
-  Enabled: false
-Metrics/CyclomaticComplexity:
   Enabled: false
 Style/GlobalVars:
   Enabled: false
