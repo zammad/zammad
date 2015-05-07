@@ -107,17 +107,18 @@ returns
     # set relations
     self.class.reflect_on_all_associations.map { |assoc|
       real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      if params.key?( real_key.to_sym )
-        list_of_items = params[ real_key.to_sym ]
-        if params[ real_key.to_sym ].class != Array
-          list_of_items = [ params[ real_key.to_sym ] ]
-        end
-        list = []
-        list_of_items.each {|item|
-          list.push( assoc.klass.find(item) )
-        }
-        self.send( assoc.name.to_s + '=', list )
+
+      next if !params.key?( real_key.to_sym )
+
+      list_of_items = params[ real_key.to_sym ]
+      if params[ real_key.to_sym ].class != Array
+        list_of_items = [ params[ real_key.to_sym ] ]
       end
+      list = []
+      list_of_items.each {|item|
+        list.push( assoc.klass.find(item) )
+      }
+      self.send( assoc.name.to_s + '=', list )
     }
   end
 

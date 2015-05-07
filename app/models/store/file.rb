@@ -46,12 +46,13 @@ class Store
         content = item.content
         sha = Digest::SHA256.hexdigest( content )
         logger.info "CHECK: Store::File.find(#{item.id}) "
-        if sha != item.sha
-          success = false
-          logger.error "DIFF: sha diff of Store::File.find(#{item.id}) "
-          if fix_it
-            item.update_attribute( :sha, sha )
-          end
+
+        next if sha == item.sha
+
+        success = false
+        logger.error "DIFF: sha diff of Store::File.find(#{item.id}) "
+        if fix_it
+          item.update_attribute( :sha, sha )
         end
       }
       success

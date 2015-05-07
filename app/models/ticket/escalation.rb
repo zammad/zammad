@@ -189,15 +189,16 @@ returns
           [ 'tickets.group_id', 'group_id' ]
         ]
         map.each {|item|
-          if sla.condition[ item[0] ]
-            if sla.condition[ item[0] ].class == String
-              sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
-            end
-            if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
-              hit = true
-            else
-              hit = false
-            end
+
+          next if !sla.condition[ item[0] ]
+
+          if sla.condition[ item[0] ].class == String
+            sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
+          end
+          if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
+            hit = true
+          else
+            hit = false
           end
         }
         if hit

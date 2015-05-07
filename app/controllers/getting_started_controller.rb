@@ -233,28 +233,28 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
     provider_map.each {|provider, settings|
       domains.each {|domain_to_check|
-        if domain_to_check =~ /#{settings[:domain]}/i
 
-          # probe inbound
-          result = email_probe_inbound( settings[:inbound] )
-          if result[:result] != 'ok'
-            render json: result
-            return # rubocop:disable Lint/NonLocalExitFromIterator
-          end
+        next if domain_to_check !~ /#{settings[:domain]}/i
 
-          # probe outbound
-          result = email_probe_outbound( settings[:outbound], params[:email] )
-          if result[:result] != 'ok'
-            render json: result
-            return # rubocop:disable Lint/NonLocalExitFromIterator
-          end
-
-          render json: {
-            result: 'ok',
-            setting: settings,
-          }
+        # probe inbound
+        result = email_probe_inbound( settings[:inbound] )
+        if result[:result] != 'ok'
+          render json: result
           return # rubocop:disable Lint/NonLocalExitFromIterator
         end
+
+        # probe outbound
+        result = email_probe_outbound( settings[:outbound], params[:email] )
+        if result[:result] != 'ok'
+          render json: result
+          return # rubocop:disable Lint/NonLocalExitFromIterator
+        end
+
+        render json: {
+          result: 'ok',
+          setting: settings,
+        }
+        return # rubocop:disable Lint/NonLocalExitFromIterator
       }
     }
 
@@ -394,11 +394,12 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       logger.info "INBOUND PROBE: #{config.inspect}"
       result = email_probe_inbound( config )
       logger.info "INBOUND RESULT: #{result.inspect}"
-      if result[:result] == 'ok'
-        success = true
-        settings[:inbound] = config
-        break
-      end
+
+      next if result[:result] != 'ok'
+
+      success = true
+      settings[:inbound] = config
+      break
     }
 
     if !success
@@ -543,11 +544,12 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       logger.info "OUTBOUND PROBE: #{config.inspect}"
       result = email_probe_outbound( config, params[:email] )
       logger.info "OUTBOUND RESULT: #{result.inspect}"
-      if result[:result] == 'ok'
-        success = true
-        settings[:outbound] = config
-        break
-      end
+
+      next if result[:result] != 'ok'
+
+      success = true
+      settings[:outbound] = config
+      break
     }
 
     if !success
@@ -635,66 +637,66 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         return # rubocop:disable Lint/NonLocalExitFromIterator
       end
 
-      if found && found == 'verify ok'
+      next if !found
+      next if found != 'verify ok'
 
-        # remember address
-        address = EmailAddress.where( email: params[:meta][:email] ).first
-        if !address
-          address = EmailAddress.first
-        end
-        if address
-          address.update_attributes(
-            realname: params[:meta][:realname],
-            email: params[:meta][:email],
-            active: 1,
-            updated_by_id: 1,
-            created_by_id: 1,
-          )
-        else
-          EmailAddress.create(
-            realname: params[:meta][:realname],
-            email: params[:meta][:email],
-            active: 1,
-            updated_by_id: 1,
-            created_by_id: 1,
-          )
-        end
-
-        # store mailbox
-        Channel.create(
-          area: 'Email::Inbound',
-          adapter: params[:inbound][:adapter],
-          options: params[:inbound][:options],
-          group_id: 1,
+      # remember address
+      address = EmailAddress.where( email: params[:meta][:email] ).first
+      if !address
+        address = EmailAddress.first
+      end
+      if address
+        address.update_attributes(
+          realname: params[:meta][:realname],
+          email: params[:meta][:email],
           active: 1,
           updated_by_id: 1,
           created_by_id: 1,
         )
-
-        # save settings
-        if params[:outbound][:adapter] =~ /^smtp$/i
-          smtp = Channel.where( adapter: 'SMTP', area: 'Email::Outbound' ).first
-          smtp.options = params[:outbound][:options]
-          smtp.active  = true
-          smtp.save!
-          sendmail = Channel.where( adapter: 'Sendmail' ).first
-          sendmail.active = false
-          sendmail.save!
-        else
-          sendmail = Channel.where( adapter: 'Sendmail', area: 'Email::Outbound' ).first
-          sendmail.options = {}
-          sendmail.active  = true
-          sendmail.save!
-          smtp = Channel.where( adapter: 'SMTP' ).first
-          smtp.active = false
-          smtp.save
-        end
-
-        render json: {
-          result: 'ok',
-        }
-        return # rubocop:disable Lint/NonLocalExitFromIterator
+      else
+        EmailAddress.create(
+          realname: params[:meta][:realname],
+          email: params[:meta][:email],
+          active: 1,
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
       end
+
+      # store mailbox
+      Channel.create(
+        area: 'Email::Inbound',
+        adapter: params[:inbound][:adapter],
+        options: params[:inbound][:options],
+        group_id: 1,
+        active: 1,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+
+      # save settings
+      if params[:outbound][:adapter] =~ /^smtp$/i
+        smtp = Channel.where( adapter: 'SMTP', area: 'Email::Outbound' ).first
+        smtp.options = params[:outbound][:options]
+        smtp.active  = true
+        smtp.save!
+        sendmail = Channel.where( adapter: 'Sendmail' ).first
+        sendmail.active = false
+        sendmail.save!
+      else
+        sendmail = Channel.where( adapter: 'Sendmail', area: 'Email::Outbound' ).first
+        sendmail.options = {}
+        sendmail.active  = true
+        sendmail.save!
+        smtp = Channel.where( adapter: 'SMTP' ).first
+        smtp.active = false
+        smtp.save
+      end
+
+      render json: {
+        result: 'ok',
+      }
+      return # rubocop:disable Lint/NonLocalExitFromIterator
     }
 
     # check delivery for 30 sek.
@@ -768,14 +770,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
             'Recipient address rejected' => true,
           }
           white_map.each {|key, message|
-            if e.message =~ /#{Regexp.escape(key)}/i
-              result = {
-                result: 'ok',
-                settings: params,
-                notice: e.message,
-              }
-              return result
-            end
+
+            next if e.message !~ /#{Regexp.escape(key)}/i
+
+            result = {
+              result: 'ok',
+              settings: params,
+              notice: e.message,
+            }
+            return result
           }
         end
         message_human = ''

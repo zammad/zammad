@@ -470,14 +470,16 @@ returns
 
           # spool to recipient list
           if message_parsed['recipient'] && message_parsed['recipient']['user_id']
+
             message_parsed['recipient']['user_id'].each { |user_id|
-              if current_user_id == user_id
-                item = {
-                  type: 'direct',
-                  message: message_parsed,
-                }
-                data.push item
-              end
+
+              next if current_user_id != user_id
+
+              item = {
+                type: 'direct',
+                message: message_parsed,
+              }
+              data.push item
             }
 
           # spool to every client
@@ -521,16 +523,16 @@ returns
         next if !user
 
         # start client thread
-        if !@@client_threads[client_id]
-          @@client_threads[client_id] = true
-          @@client_threads[client_id] = Thread.new {
-            thread_client(client_id)
-            @@client_threads[client_id] = nil
-            Rails.logger.debug "close client (#{client_id}) thread"
-            ActiveRecord::Base.connection.close
-          }
-          sleep 0.5
-        end
+        next if @@client_threads[client_id]
+
+        @@client_threads[client_id] = true
+        @@client_threads[client_id] = Thread.new {
+          thread_client(client_id)
+          @@client_threads[client_id] = nil
+          Rails.logger.debug "close client (#{client_id}) thread"
+          ActiveRecord::Base.connection.close
+        }
+        sleep 0.5
       }
 
       # system settings

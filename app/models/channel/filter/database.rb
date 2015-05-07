@@ -10,9 +10,9 @@ module Channel::Filter::Database
     filters.each {|filter|
       Rails.logger.info " proccess filter #{filter.name} ..."
       match = true
-      loop = false
+      looped = false
       filter[:match].each {|key, value|
-        loop = true
+        looped = true
         begin
           scan = []
           if mail
@@ -31,12 +31,14 @@ module Channel::Filter::Database
           Rails.logger.error e.inspect
         end
       }
-      if loop && match
-        filter[:perform].each {|key, value|
-          Rails.logger.info "  perform '#{ key.downcase }' = '#{value}'"
-          mail[ key.downcase.to_sym ] = value
-        }
-      end
+
+      next if !looped
+      next if !match
+
+      filter[:perform].each {|key, value|
+        Rails.logger.info "  perform '#{ key.downcase }' = '#{value}'"
+        mail[ key.downcase.to_sym ] = value
+      }
     }
 
   end

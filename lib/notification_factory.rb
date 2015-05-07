@@ -63,11 +63,12 @@ module NotificationFactory
             object_refs = object_refs.send( method.to_sym )
 
             # add body quote
-            if object_name == 'article' && method == 'body'
-              if data[:objects][:article].content_type == 'text/html'
-                object_refs = object_refs.html2text.chomp
-              end
-            end
+            next if object_name != 'article'
+            next if method != 'body'
+
+            next if data[:objects][:article].content_type != 'text/html'
+
+            object_refs = object_refs.html2text.chomp
           }
           if !value
             placeholder = object_refs

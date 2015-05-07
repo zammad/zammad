@@ -218,8 +218,6 @@ Metrics/AbcSize:
 
 Style/RedundantSelf:
   Enabled: false
-Style/Next:
-  Enabled: false
 Style/CommentIndentation:
   Enabled: false
 Metrics/CyclomaticComplexity:

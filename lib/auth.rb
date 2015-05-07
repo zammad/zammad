@@ -45,16 +45,15 @@ returns
 
       user_auth = backend.check( username, password, config_item, user )
 
-      # auth ok
-      if user_auth
+      # auth not ok
+      next if !user_auth
 
-        Rails.logger.info "Authentication against #{config_item[:adapter]} for user #{user_auth.login} ok."
+      Rails.logger.info "Authentication against #{config_item[:adapter]} for user #{user_auth.login} ok."
 
-        # remember last login date
-        user_auth.update_last_login
+      # remember last login date
+      user_auth.update_last_login
 
-        return user_auth
-      end
+      return user_auth
     }
     nil
   end

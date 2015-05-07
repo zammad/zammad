@@ -64,12 +64,13 @@ returns
     end
     state_types.each {|type|
       state_type = Ticket::StateType.where( name: type ).first
-      if state_type
-        state_type.states.each {|state|
-          assets = state.assets(assets)
-          state_ids.push state.id
-        }
-      end
+
+      next if !state_type
+
+      state_type.states.each {|state|
+        assets = state.assets(assets)
+        state_ids.push state.id
+      }
     }
     filter[:state_id] = state_ids
 

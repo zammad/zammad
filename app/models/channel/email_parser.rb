@@ -66,35 +66,37 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-      if field.name
 
-        # full line, encode, ready for storage
-        data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+      next if !field.name
 
-        # if we need to access the lines by objects later again
-        data[ "raw-#{field.name.downcase}".to_sym ] = field
-      end
+      # full line, encode, ready for storage
+      data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+
+      # if we need to access the lines by objects later again
+      data[ "raw-#{field.name.downcase}".to_sym ] = field
     }
 
     # get sender
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
-      if !from
-        if mail[ item.to_sym ]
-          from = mail[ item.to_sym ].value
-        end
-      end
+
+      next if !mail[ item.to_sym ]
+
+      from = mail[ item.to_sym ].value
+
+      break if from
     }
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
     ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
-      if mail[item.to_sym]
-        if data['x-any-recipient'.to_sym] != ''
-          data['x-any-recipient'.to_sym] += ', '
-        end
-        data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
+
+      next if !mail[item.to_sym]
+
+      if data['x-any-recipient'.to_sym] != ''
+        data['x-any-recipient'.to_sym] += ', '
       end
+      data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
     }
 
     # set extra headers
@@ -374,16 +376,18 @@ class Channel::EmailParser
 
       # create to and cc user
       ['raw-to', 'raw-cc'].each { |item|
-        if mail[item.to_sym] && mail[item.to_sym].tree
-          items = mail[item.to_sym].tree
-          items.addresses.each {|item|
-            user_create(
-              firstname: item.display_name,
-              lastname: '',
-              email: item.address,
-            )
-          }
-        end
+
+        next if !mail[item.to_sym]
+        next if !mail[item.to_sym].tree
+
+        items = mail[item.to_sym].tree
+        items.addresses.each {|item|
+          user_create(
+            firstname: item.display_name,
+            lastname: '',
+            email: item.address,
+          )
+        }
       }
 
       # set current user
@@ -541,18 +545,19 @@ class Channel::EmailParser
         if mail[ header.to_sym ]
           Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
           item_object.class.reflect_on_all_associations.map { |assoc|
-            if assoc.name.to_s == key_short
-              Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
-              item = assoc.class_name.constantize
 
-              if item.respond_to?(:name)
-                if item.lookup( name: mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( name: mail[ header.to_sym ] ).id
-                end
-              elsif item.respond_to?(:login)
-                if item.lookup( login: mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( login: mail[ header.to_sym ] ).id
-                end
+            next if assoc.name.to_s != key_short
+
+            Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
+            item = assoc.class_name.constantize
+
+            if item.respond_to?(:name)
+              if item.lookup( name: mail[ header.to_sym ] )
+                item_object[key] = item.lookup( name: mail[ header.to_sym ] ).id
+              end
+            elsif item.respond_to?(:login)
+              if item.lookup( login: mail[ header.to_sym ] )
+                item_object[key] = item.lookup( login: mail[ header.to_sym ] ).id
               end
             end
           }

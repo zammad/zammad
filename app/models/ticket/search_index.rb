@@ -83,21 +83,22 @@ returns
         end
 
         # check file size
-        if attachment.content && attachment.content.size / 1024 <= attachment_max_size_in_mb * 1024
+        next if !attachment.content
+        next if attachment.content.size / 1024 > attachment_max_size_in_mb * 1024
 
-          # check ignored files
-          if attachment.filename
-            filename_extention = attachment.filename.downcase
-            filename_extention.gsub!(/^.*(\..+?)$/, '\\1')
-            if !attachments_ignore.include?( filename_extention.downcase )
-              data = {
-                '_name'    => attachment.filename,
-                '_content' => Base64.encode64( attachment.content )
-              }
-              article_attributes['attachments'].push data
-            end
-          end
-        end
+        # check ignored files
+        next if !attachment.filename
+
+        filename_extention = attachment.filename.downcase
+        filename_extention.gsub!(/^.*(\..+?)$/, '\\1')
+
+        next if attachments_ignore.include?( filename_extention.downcase )
+
+        data = {
+          '_name'    => attachment.filename,
+          '_content' => Base64.encode64( attachment.content )
+        }
+        article_attributes['attachments'].push data
       }
       attributes['articles'].push article_attributes
     }

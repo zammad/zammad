@@ -747,18 +747,20 @@ module Import::OTRS2
             created_by_id: history['CreateBy']
           )
         end
-        if history['ArticleID'] && history['ArticleID'] != 0
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['ArticleID'],
-            history_type: 'created',
-            history_object: 'Ticket::Article',
-            related_o_id: history['TicketID'],
-            related_history_object: 'Ticket',
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
+
+        next if !history['ArticleID']
+        next if history['ArticleID'] == 0
+
+        History.add(
+          id: history['HistoryID'],
+          o_id: history['ArticleID'],
+          history_type: 'created',
+          history_object: 'Ticket::Article',
+          related_o_id: history['TicketID'],
+          related_history_object: 'Ticket',
+          created_at: history['CreateTime'],
+          created_by_id: history['CreateBy']
+        )
       }
     }
   end
@@ -974,11 +976,12 @@ module Import::OTRS2
     # lookup by groups
     user['GroupIDs'].each {|group_id, permissions|
       queues.each {|queue_lookup|
-        if queue_lookup['GroupID'] == group_id
-          if permissions && permissions.include?('rw')
-            queue_ids.push queue_lookup['QueueID']
-          end
-        end
+
+        next if queue_lookup['GroupID'] != group_id
+        next if !permissions
+        next if !permissions.include?('rw')
+
+        queue_ids.push queue_lookup['QueueID']
       }
     }
 
@@ -996,14 +999,18 @@ module Import::OTRS2
     role_ids = []
     user['GroupIDs'].each {|group_id, permissions|
       groups.each {|group_lookup|
-        if group_id == group_lookup['ID']
-          if group_lookup['Name'] == 'admin' && permissions && permissions.include?('rw')
-            roles.push 'Admin'
-          end
-          if group_lookup['Name'] =~ /^(stats|report)/ && permissions && ( permissions.include?('ro') || permissions.include?('rw') )
-            roles.push 'Report'
-          end
+
+        next if group_id != group_lookup['ID']
+        next if permissions
+
+        if group_lookup['Name'] == 'admin' && permissions.include?('rw')
+          roles.push 'Admin'
         end
+
+        next if group_lookup['Name'] !~ /^(stats|report)/
+        next if !( permissions.include?('ro') || permissions.include?('rw') )
+
+        roles.push 'Report'
       }
     }
     roles.each {|role|

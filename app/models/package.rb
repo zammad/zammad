@@ -313,14 +313,15 @@ class Package < ApplicationModel
   def self.reload_classes
     %w(app lib).each {|dir|
       Dir.glob( Rails.root.join( dir + '/**/*') ).each {|entry|
-        if entry =~ /\.rb$/
-          begin
-            load entry
-          rescue => e
-            logger.error "TRIED TO RELOAD '#{entry}'"
-            logger.error 'ERROR: ' + e.inspect
-            logger.error 'Traceback: ' + e.backtrace.inspect
-          end
+
+        next if entry !~ /\.rb$/
+
+        begin
+          load entry
+        rescue => e
+          logger.error "TRIED TO RELOAD '#{entry}'"
+          logger.error 'ERROR: ' + e.inspect
+          logger.error 'Traceback: ' + e.backtrace.inspect
         end
       }
     }
@@ -396,11 +397,11 @@ class Package < ApplicationModel
       (1..position).each {|count|
         tmp_path = tmp_path + '/' + directories[count].to_s
       }
-      if tmp_path != ''
-        if !File.exist?(tmp_path)
-          Dir.mkdir( tmp_path, 0755)
-        end
-      end
+
+      next if tmp_path == ''
+      next if File.exist?(tmp_path)
+
+      Dir.mkdir(tmp_path, 0755)
     }
 
     # install file
