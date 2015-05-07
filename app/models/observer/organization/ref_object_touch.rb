@@ -19,9 +19,7 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # touch organizations tickets
-    Ticket.select('id').where( organization_id: record.id ).each {|ticket|
-      ticket.touch
-    }
+    Ticket.select('id').where( organization_id: record.id ).each(&:touch)
 
     # touch current members
     record.member_ids.uniq.each {|user_id|

@@ -18,9 +18,7 @@ returns
     state_list_open = Ticket::State.by_category( 'open' )
 
     tickets = Ticket.where( state_id: state_list_open )
-    tickets.each {|ticket|
-      ticket.escalation_calculation
-    }
+    tickets.each(&:escalation_calculation)
   end
 
 =begin

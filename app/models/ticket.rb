@@ -128,9 +128,7 @@ returns
   def merge_to(data)
 
     # update articles
-    Ticket::Article.where( ticket_id: self.id ).each {|article|
-      article.touch
-    }
+    Ticket::Article.where( ticket_id: self.id ).each(&:touch)
 
     # quiet update of reassign of articles
     Ticket::Article.where( ticket_id: self.id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )

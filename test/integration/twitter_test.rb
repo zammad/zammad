@@ -30,9 +30,7 @@ class TwitterTest < ActiveSupport::TestCase
 
   # add channel
   current = Channel.where( adapter: 'Twitter2' )
-  current.each {|r|
-    r.destroy
-  }
+  current.each(&:destroy)
   Channel.create(
     adapter: 'Twitter2',
     area: 'Twitter::Inbound',

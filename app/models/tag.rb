@@ -43,9 +43,7 @@ class Tag < ApplicationModel
       tag_item_id: tag_item_id,
       o_id: data[:o_id],
     )
-    result.each { |item|
-      item.destroy
-    }
+    result.each(&:destroy)
     true
   end
 

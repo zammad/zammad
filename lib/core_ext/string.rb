@@ -66,7 +66,7 @@ class String
     # see also test/fixtures/mail21.box
     # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
     if !string.valid_encoding?
-      string = string.chars.select { |c| c.valid_encoding? }.join
+      string = string.chars.select(&:valid_encoding?).join
     end
 
     # find <a href=....> and replace it with [x]

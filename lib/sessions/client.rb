@@ -52,9 +52,7 @@ class Sessions::Client
       self.log "---client - looking for data of user #{user.id}"
 
       # push messages from backends
-      backend_pool.each {|pool|
-        pool.push
-      }
+      backend_pool.each(&:push)
 
       self.log '---/client-'
 

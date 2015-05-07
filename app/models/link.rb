@@ -130,9 +130,7 @@ class Link < ApplicationModel
       link_object_target_id: data[:link_object_target_id],
       link_object_target_value: data[:link_object_target_value]
     )
-    links.each { |link|
-      link.destroy
-    }
+    links.each(&:destroy)
 
     # from the other site
     if data.key?(:link_type)
@@ -146,9 +144,7 @@ class Link < ApplicationModel
       link_object_source_id: data[:link_object_target_id],
       link_object_source_value: data[:link_object_target_value]
     )
-    links.each { |link|
-      link.destroy
-    }
+    links.each(&:destroy)
   end
 
   def self.link_type_get(data)
