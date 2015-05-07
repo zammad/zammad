@@ -3,7 +3,7 @@
 # process all database filter
 module Channel::Filter::Database
 
-  def self.run( channel, mail )
+  def self.run( _channel, mail )
 
     # process postmaster filter
     filters = PostmasterFilter.where( active: true, channel: 'email' )

@@ -137,7 +137,7 @@ class Channel::TWITTER2
     [user, ticket, article]
   end
 
-  def fetch_user_create(tweet, sender)
+  def fetch_user_create(_tweet, sender)
     # create sender in db
     #    puts tweet.inspect
     #    user = User.where( :login => tweet.sender.screen_name ).first
@@ -180,7 +180,7 @@ class Channel::TWITTER2
     user
   end
 
-  def fetch_ticket_create(user, tweet, sender, channel, group)
+  def fetch_ticket_create(user, tweet, _sender, _channel, group)
 
     #Rails.logger.info '+++++++++++++++++++++++++++' + tweet.inspect
     # check if ticket exists
@@ -237,7 +237,7 @@ class Channel::TWITTER2
     ticket
   end
 
-  def fetch_article_create( user, ticket, tweet, sender )
+  def fetch_article_create( _user, ticket, tweet, sender )
 
     # find if record already exists
     article = Ticket::Article.where( message_id: tweet.id.to_s ).first
@@ -268,7 +268,7 @@ class Channel::TWITTER2
 
   end
 
-  def send(attr, notification = false)
+  def send(attr, _notification = false)
     #    Rails.logger.debug('tweeeeettttt!!!!!!')
     channel = Channel.where( area: 'Twitter::Inbound', active: true ).first
 

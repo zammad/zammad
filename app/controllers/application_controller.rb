@@ -363,7 +363,7 @@ class ApplicationController < ActionController::Base
     render json: generic_object.attributes_with_associations, status: :ok
   end
 
-  def model_index_render (object, params)
+  def model_index_render (object, _params)
     begin
       generic_objects = object.all
       model_index_render_result( generic_objects )

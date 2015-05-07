@@ -158,7 +158,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     EventBuffer.add(e)
   end
 
-  def after_update(record)
+  def after_update(_record)
 
     # return if we run import mode
     return if Setting.get('import_mode')

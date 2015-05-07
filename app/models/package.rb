@@ -416,7 +416,7 @@ class Package < ApplicationModel
     true
   end
 
-  def self._delete_file(file, permission, data)
+  def self._delete_file(file, _permission, _data)
     location = @@root + '/' + file
 
     # install file

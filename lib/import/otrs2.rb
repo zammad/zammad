@@ -480,7 +480,7 @@ module Import::OTRS2
 
   end
 
-  def self._ticket_result(result, locks, thread = '-')
+  def self._ticket_result(result, locks, _thread = '-')
 #    puts result.inspect
     map = {
       Ticket: {
@@ -968,7 +968,7 @@ module Import::OTRS2
     }
   end
 
-  def self.get_queue_ids(user, groups, roles, queues)
+  def self.get_queue_ids(user, _groups, _roles, queues)
     queue_ids = []
 
     # lookup by groups
@@ -991,7 +991,7 @@ module Import::OTRS2
     queue_ids
   end
 
-  def self.get_roles_ids(user, groups, roles, queues)
+  def self.get_roles_ids(user, groups, roles, _queues)
     roles    = ['Agent']
     role_ids = []
     user['GroupIDs'].each {|group_id, permissions|

@@ -150,7 +150,7 @@ return search result
 
 =end
 
-  def self.search( query, limit = 10, index = nil, query_extention = {} )
+  def self.search( query, _limit = 10, index = nil, query_extention = {} )
     return [] if !query
 
     url = build_url()

@@ -696,7 +696,7 @@ class TestCase < Test::Unit::TestCase
 
 =end
 
-  def open_task(params = {}, fallback = false)
+  def open_task(params = {}, _fallback = false)
     log('open_task', params)
 
     instance = params[:browser] || @browser
