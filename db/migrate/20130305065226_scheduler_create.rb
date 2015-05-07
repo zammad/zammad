@@ -19,7 +19,7 @@ class SchedulerCreate < ActiveRecord::Migration
     add_index :schedulers, [:name], unique: true
     Scheduler.create_or_update(
       name: 'Import OTRS diff load',
-      method: 'Import::OTRS2.diff_worker',
+      method: 'Import::OTRS.diff_worker',
       period: 60 * 3,
       prio: 1,
       active: true,

@@ -10,7 +10,7 @@ module Sso::Otrs
     return false if !params['SessionID']
 
     # connect to OTRS
-    result = Import::OTRS2.session( params['SessionID'] )
+    result = Import::OTRS.session( params['SessionID'] )
 
     return false if !result
     return false if !result['groups_ro']

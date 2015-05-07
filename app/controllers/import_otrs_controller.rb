@@ -73,7 +73,7 @@ class ImportOtrsController < ApplicationController
     return if setup_done_response
 
     Setting.set('import_mode', true)
-    welcome = Import::OTRS2.connection_test
+    welcome = Import::OTRS.connection_test
     if !welcome
       render json: {
         message: 'Migrator can\'t read OTRS output!',
@@ -83,7 +83,7 @@ class ImportOtrsController < ApplicationController
     end
 
     # start migration
-    Import::OTRS2.delay.start
+    Import::OTRS.delay.start
 
     render json: {
       result: 'ok',
@@ -93,7 +93,7 @@ class ImportOtrsController < ApplicationController
   def import_status
     return if setup_done_response
 
-    state = Import::OTRS2.current_state
+    state = Import::OTRS.current_state
 
     render json: {
       data: state,

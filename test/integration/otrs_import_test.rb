@@ -13,7 +13,7 @@ class OtrsImportTest < ActiveSupport::TestCase
   Setting.set('import_otrs_endpoint', ENV['IMPORT_OTRS_ENDPOINT'])
   Setting.set('import_otrs_endpoint_key', ENV['IMPORT_OTRS_ENDPOINT_KEY'])
   Setting.set('import_mode', true)
-  Import::OTRS2.start
+  Import::OTRS.start
 
   # check settings items
   test 'check settings' do
