@@ -19,6 +19,7 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
       value_to: record.tag_item.name,
     )
   end
+
   def after_destroy(record)
 
     # just process ticket object tags

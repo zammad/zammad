@@ -7,6 +7,7 @@ class String
     end
     body_quote
   end
+
   def word_wrap(*args)
     options = args.extract_options!
     unless args.blank?

@@ -11,6 +11,7 @@ class AAbUnitTest < TestCase
       value: '0',
     )
   end
+
   def test_ui
     @browser = browser_instance
     location( url: browser_url + '/tests-ui' )
@@ -34,6 +35,7 @@ class AAbUnitTest < TestCase
       value: '0',
     )
   end
+
   def test_form
     @browser = browser_instance
     location( url: browser_url + '/tests-form' )
@@ -57,6 +59,7 @@ class AAbUnitTest < TestCase
       value: '0',
     )
   end
+
   def test_table
     @browser = browser_instance
     location( url: browser_url + '/tests-table' )

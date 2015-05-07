@@ -173,11 +173,6 @@ Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
   Enabled: false
 
-Style/EmptyLineBetweenDefs:
-  Description: 'Use empty lines between defs.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#empty-lines-between-methods'
-  Enabled: false
-
 Rails/ActionFilter:
   Description: 'Enforces consistent use of action filter methods.'
   Enabled: false

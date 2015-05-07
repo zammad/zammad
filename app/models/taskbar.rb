@@ -11,6 +11,7 @@ class Taskbar < ApplicationModel
   def update_last_contact
     self.last_contact = Time.now
   end
+
   def set_user
     self.user_id = UserInfo.current_user_id
   end

@@ -56,9 +56,11 @@ class Setting < ApplicationModel
   def delete_cache
     @@current[:settings_config] = nil
   end
+
   def set_initial
     self.state_initial = self.state
   end
+
   def state_check
 
     return if !(self.state || self.state == false)

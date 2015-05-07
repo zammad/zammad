@@ -8,6 +8,7 @@ class Observer::Session < ActiveRecord::Observer
   def before_create(record)
     check(record)
   end
+
   def before_update(record)
     check(record)
   end

@@ -6,9 +6,11 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
   def after_create(record)
     ref_object_touch(record)
   end
+
   def after_update(record)
     ref_object_touch(record)
   end
+
   def after_destroy(record)
     ref_object_touch(record)
   end

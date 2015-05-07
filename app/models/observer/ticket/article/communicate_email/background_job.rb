@@ -2,6 +2,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
   def initialize(id)
     @article_id = id
   end
+
   def perform
     record = Ticket::Article.find( @article_id )
 

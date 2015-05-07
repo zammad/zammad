@@ -4,6 +4,7 @@ class Observer::Ticket::Notification::BackgroundJob
   def initialize(params)
     @p = params
   end
+
   def perform
     ticket  = Ticket.find(@p[:ticket_id])
     if @p[:article_id]

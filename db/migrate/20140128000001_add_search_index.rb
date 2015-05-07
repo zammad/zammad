@@ -53,6 +53,7 @@ class AddSearchIndex < ActiveRecord::Migration
     User.search_index_reload
     Organization.search_index_reload
   end
+
   def down
   end
 end

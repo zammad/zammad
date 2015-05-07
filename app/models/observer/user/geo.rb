@@ -6,6 +6,7 @@ class Observer::User::Geo < ActiveRecord::Observer
   def before_create(record)
     check_geo(record)
   end
+
   def before_update(record)
     check_geo(record)
   end

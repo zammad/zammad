@@ -20,6 +20,7 @@ class TaskbarTaskTest < TestCase
     )
     sleep 10
   end
+
   def test_persistant_task_b
     @browser = browser_instance
     login(
@@ -41,6 +42,7 @@ class TaskbarTaskTest < TestCase
 
     exists_not( css: '.active .newTicket input[name="title"]' )
   end
+
   def test_persistant_task_with_relogin
     @browser = browser_instance
     login(

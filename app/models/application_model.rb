@@ -459,6 +459,7 @@ end
   def latest_change_set_from_observer
     self.class.latest_change_set(self.updated_at)
   end
+
   def latest_change_set_from_observer_destroy
     self.class.latest_change_set(nil)
   end
@@ -1030,6 +1031,7 @@ get assets of object list
   def attachments_buffer
     @attachments_buffer_data
   end
+
   def attachments_buffer=(attachments)
     @attachments_buffer_data = attachments
   end
