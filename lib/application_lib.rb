@@ -42,12 +42,12 @@ returns
       # load adapter
 
       # will only work on ruby 2.0
-#      Object.const_get(adapter)
+      #Object.const_get(adapter)
 
       # will work on ruby 1.9 and 2.0
-#      adapter.split('::').inject(Object) do |mod, class_name|
-#        mod.const_get(class_name)
-#      end
+      #adapter.split('::').inject(Object) do |mod, class_name|
+      #    mod.const_get(class_name)
+      #end
 
       # will work with active_support
       adapter = adapter.constantize

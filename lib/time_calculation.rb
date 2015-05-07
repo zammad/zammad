@@ -268,7 +268,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       month    = start_time.month
       year     = start_time.year
       hour     = start_time.hour
-#puts "start outer loop #{start_time}-#{week_day}-#{year}-#{month}-#{day}-#{hour}|c#{count}"
+      #puts "start outer loop #{start_time}-#{week_day}-#{year}-#{month}-#{day}-#{hour}|c#{count}"
 
       # check if it's vacation day
       if config

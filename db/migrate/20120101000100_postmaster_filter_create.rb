@@ -12,9 +12,6 @@ class PostmasterFilterCreate < ActiveRecord::Migration
       t.timestamps
     end
     add_index :postmaster_filters, [:channel]
-
-#    add_column :groups, :email_address_id,          :integer, :null => true
-
   end
 
   def down

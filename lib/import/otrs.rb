@@ -481,7 +481,6 @@ module Import::OTRS
   end
 
   def self._ticket_result(result, locks, _thread = '-')
-#    puts result.inspect
     map = {
       Ticket: {
         Changed: :updated_at,
@@ -496,13 +495,13 @@ module Import::OTRS
         Title: :title,
         TicketID: :id,
         FirstResponse: :first_response,
-#        :FirstResponseTimeDestinationDate => :first_response_escal_date,
-#        :FirstResponseInMin               => :first_response_in_min,
-#        :FirstResponseDiffInMin           => :first_response_diff_in_min,
+        #FirstResponseTimeDestinationDate: :first_response_escal_date,
+        #FirstResponseInMin: :first_response_in_min,
+        #FirstResponseDiffInMin: :first_response_diff_in_min,
         Closed: :close_time,
-#        :SoltutionTimeDestinationDate     => :close_time_escal_date,
-#        :CloseTimeInMin                   => :close_time_in_min,
-#        :CloseTimeDiffInMin               => :close_time_diff_in_min,
+        #SoltutionTimeDestinationDate: :close_time_escal_date,
+        #CloseTimeInMin: :close_time_in_min,
+        #CloseTimeDiffInMin: :close_time_diff_in_min,
       },
       Article: {
         SenderType: :sender,
@@ -516,7 +515,7 @@ module Import::OTRS
         Subject: :subject,
         InReplyTo: :in_reply_to,
         MessageID: :message_id,
-#        :ReplyTo    => :reply_to,
+        #ReplyTo: :reply_to,
         References: :references,
         Changed: :updated_at,
         Created: :created_at,
@@ -988,8 +987,8 @@ module Import::OTRS
     # lookup by roles
 
     # roles of user
-      # groups of roles
-        # queues of group
+    #   groups of roles
+    #     queues of group
 
     queue_ids
   end

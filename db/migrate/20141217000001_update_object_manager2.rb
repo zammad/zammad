@@ -497,7 +497,6 @@ class UpdateObjectManager2 < ActiveRecord::Migration
         maxlength: 250,
         null: true,
         note: 'Notes are visible to agents only, never to customers.',
-#        :item_class => 'formGroup--halfSize',
       },
       editable: false,
       active: true,

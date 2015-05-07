@@ -25,7 +25,7 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
         body: record.body,
         in_reply_to: record.in_reply_to
       },
-      #      Rails.application.config.channel_twitter
+    #Rails.application.config.channel_twitter
     )
     record.message_id = message.id
     record.save

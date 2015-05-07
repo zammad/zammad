@@ -117,7 +117,6 @@ add a new attribute entry for an object
       name: data[:name],
     )
     if result
-#      raise "ERROR: attribute #{data[:name]} for #{data[:object]} already exists"
       return result.update_attributes(data)
     end
 

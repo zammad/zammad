@@ -577,8 +577,6 @@ returns
       Rails.logger.error e.backtrace.join("\n  ")
       sleep 10
       begin
-#        ActiveRecord::Base.remove_connection
-#        ActiveRecord::Base.connection_pool.reap
         ActiveRecord::Base.connection_pool.release_connection
       rescue => e
         Rails.logger.error "Can't reconnect to database #{ e.inspect }"

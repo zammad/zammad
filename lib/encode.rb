@@ -35,6 +35,6 @@ module Encode
       Rails.logger.error 'ERROR: ' + e.inspect
       string
     end
-#    Iconv.conv( 'UTF8', charset, string )
+    #Iconv.conv( 'UTF8', charset, string )
   end
 end

@@ -519,8 +519,7 @@ end
   def self.notify_clients_support
     after_create    :notify_clients_after_create
     after_update    :notify_clients_after_update
-#    after_touch     :notify_clients_after_touch
-    after_touch     :notify_clients_after_update
+    after_touch     :notify_clients_after_touch
     after_destroy   :notify_clients_after_destroy
   end
 

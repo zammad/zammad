@@ -3,12 +3,12 @@ module NotificationFactory
 =begin
 
   result_string = NotificationFactory.build(
-    :string  => 'Hi #{recipient.firstname},',
-    :objects => {
-      :ticket    => ticket,
-      :recipient => User.find(2),
+    string:  'Hi #{recipient.firstname},',
+    objects: {
+      ticket   : ticket,
+      recipient: User.find(2),
     },
-    :locale  => 'en',
+    locale: 'en',
   )
 
 =end
@@ -94,10 +94,10 @@ module NotificationFactory
 =begin
 
   success = NotificationFactory.send(
-    :recipient    => User.find(123),
-    :subject      => 'sime subject',
-    :body         => 'some body',
-    :content_type => '', # optional, e. g. 'text/html'
+    recipient:     User.find(123),
+    subject:      'sime subject',
+    body:         'some body',
+    content_type: '', # optional, e. g. 'text/html'
   )
 
 =end
@@ -113,7 +113,7 @@ module NotificationFactory
 
     Channel::EmailSend.send(
       {
-#        :in_reply_to => self.in_reply_to,
+        # in_reply_to: in_reply_to,
         from: sender,
         to: data[:recipient][:email],
         subject: data[:subject],

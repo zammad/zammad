@@ -40,7 +40,7 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :users, [:login], unique: true
     add_index :users, [:email]
-#    add_index :users, [:email], :unique => true
+    #add_index :users, [:email], unique: => true
     add_index :users, [:image]
     add_index :users, [:department]
     add_index :users, [:phone]
@@ -74,7 +74,7 @@ class CreateBase < ActiveRecord::Migration
     create_table :groups do |t|
       t.references :signature,                                 null: true
       t.references :email_address,                             null: true
-      t.column :name,                 :string,  limit: 100, null: false
+      t.column :name,                 :string,  limit: 160, null: false
       t.column :assignment_timeout,   :integer,                null: true
       t.column :follow_up_possible,   :string,  limit: 100, null: false, default: 'yes'
       t.column :follow_up_assignment, :boolean,                null: false, default: true
