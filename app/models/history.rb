@@ -185,11 +185,11 @@ returns
       data.delete('history_attribute_id')
 
       data.delete( 'updated_at' )
-      if data['id_to'] == nil && data['id_from'] == nil
+      if data['id_to'].nil? && data['id_from'].nil?
         data.delete( 'id_to' )
         data.delete( 'id_from' )
       end
-      if data['value_to'] == nil && data['value_from'] == nil
+      if data['value_to'].nil? && data['value_from'].nil?
         data.delete( 'value_to' )
         data.delete( 'value_from' )
       end
@@ -198,7 +198,7 @@ returns
       end
       data.delete( 'related_history_object_id' )
 
-      if data['related_o_id'] == nil
+      if data['related_o_id'].nil?
         data.delete( 'related_o_id' )
       end
 

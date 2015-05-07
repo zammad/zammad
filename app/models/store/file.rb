@@ -10,7 +10,7 @@ class Store
       sha = Digest::SHA256.hexdigest( data )
 
       file = Store::File.where( sha: sha ).first
-      if file == nil
+      if file.nil?
 
         # load backend based on config
         adapter_name = Setting.get('storage_provider') || 'DB'

@@ -73,8 +73,8 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     if sender.name == 'Customer'
 
       # check if last communication is done by agent, else do not set last_contact_customer
-      if record.ticket.last_contact_customer == nil ||
-         record.ticket.last_contact_agent == nil ||
+      if record.ticket.last_contact_customer.nil? ||
+         record.ticket.last_contact_agent.nil? ||
          record.ticket.last_contact_agent.to_i > record.ticket.last_contact_customer.to_i
 
         # set last_contact customer

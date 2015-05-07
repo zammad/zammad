@@ -69,7 +69,7 @@ returns
 
   def self.param_cleanup(params, newObject = false)
 
-    if params == nil
+    if params.nil?
       raise "No params for #{self}!"
     end
 
@@ -467,7 +467,7 @@ end
     key        = "#{self.new.class.name}_latest_change"
     expires_in = 31_536_000 # 1 year
 
-    if updated_at == nil
+    if updated_at.nil?
       Cache.delete( key )
     else
       Cache.write( key, updated_at, { expires_in: expires_in } )
@@ -1037,7 +1037,7 @@ get assets of object list
   def attachments_buffer_check
 
     # do nothing if no attachment exists
-    return 1 if attachments_buffer == nil
+    return 1 if attachments_buffer.nil?
 
     # store attachments
     article_store = []

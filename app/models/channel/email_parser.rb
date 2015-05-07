@@ -508,7 +508,7 @@ class Channel::EmailParser
 
     # fillup
     %w(firstname lastname).each { |item|
-      if data[item.to_sym] == nil
+      if data[item.to_sym].nil?
         data[item.to_sym] = ''
       end
     }

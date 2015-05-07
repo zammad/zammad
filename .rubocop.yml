@@ -186,11 +186,6 @@ Rails/FindBy:
   Description: 'Prefer find_by over where.first.'
   Enabled: false
 
-Style/NilComparison:
-  Description: 'Prefer x.nil? to x == nil.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#predicate-methods'
-  Enabled: false
-
 Style/SymbolProc:
   Description: 'Use symbols as procs instead of blocks when possible.'
   Enabled: false

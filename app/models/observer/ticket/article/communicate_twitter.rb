@@ -10,7 +10,7 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
 
     # if sender is customer, do not communication
     sender = Ticket::Article::Sender.lookup( id: record.sender_id )
-    return 1 if sender == nil
+    return 1 if sender.nil?
     return 1 if sender['name'] == 'Customer'
 
     # only apply on tweets

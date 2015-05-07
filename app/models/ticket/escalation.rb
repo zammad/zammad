@@ -175,7 +175,7 @@ returns
   def escalation_calculation_get_sla
     sla_selected = nil
     sla_list = Cache.get( 'SLA::List::Active' )
-    if sla_list == nil
+    if sla_list.nil?
       sla_list = Sla.where( active: true )
       Cache.write( 'SLA::List::Active', sla_list, { expires_in: 1.hour } )
     end
