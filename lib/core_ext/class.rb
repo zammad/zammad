@@ -7,6 +7,7 @@ class Class
       .tr('-', '_')
       .downcase
   end
+
   def to_app_model
     camel_cased_word = self.to_s
     camel_cased_word.gsub(/::/, '').to_sym

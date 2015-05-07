@@ -112,10 +112,10 @@ add a new attribute entry for an object
     data.delete(:object)
 
     # check newest entry - is needed
-    result = ObjectManager::Attribute.where(
+    result = ObjectManager::Attribute.find_by(
       object_lookup_id: data[:object_lookup_id],
       name: data[:name],
-    ).first
+    )
     if result
 #      raise "ERROR: attribute #{data[:name]} for #{data[:object]} already exists"
       return result.update_attributes(data)
@@ -143,10 +143,10 @@ get the attribute model based on object and name
       data[:object_lookup_id] = ObjectLookup.by_name( data[:object] )
     end
 
-    ObjectManager::Attribute.where(
+    ObjectManager::Attribute.find_by(
       object_lookup_id: data[:object_lookup_id],
       name: data[:name],
-    ).first
+    )
   end
 
 =begin

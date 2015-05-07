@@ -66,35 +66,37 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-      if field.name
 
-        # full line, encode, ready for storage
-        data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+      next if !field.name
 
-        # if we need to access the lines by objects later again
-        data[ "raw-#{field.name.downcase}".to_sym ] = field
-      end
+      # full line, encode, ready for storage
+      data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+
+      # if we need to access the lines by objects later again
+      data[ "raw-#{field.name.downcase}".to_sym ] = field
     }
 
     # get sender
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
-      if !from
-        if mail[ item.to_sym ]
-          from = mail[ item.to_sym ].value
-        end
-      end
+
+      next if !mail[ item.to_sym ]
+
+      from = mail[ item.to_sym ].value
+
+      break if from
     }
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
     ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
-      if mail[item.to_sym]
-        if data['x-any-recipient'.to_sym] != ''
-          data['x-any-recipient'.to_sym] += ', '
-        end
-        data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
+
+      next if !mail[item.to_sym]
+
+      if data['x-any-recipient'.to_sym] != ''
+        data['x-any-recipient'.to_sym] += ', '
       end
+      data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
     }
 
     # set extra headers
@@ -333,7 +335,7 @@ class Channel::EmailParser
     }
 
     # filter( channel, mail )
-    filters.each {|prio, backend|
+    filters.each {|_prio, backend|
       begin
         backend.run( channel, mail )
       rescue Exception => e
@@ -358,10 +360,10 @@ class Channel::EmailParser
 
       # create sender
       if mail[ 'x-zammad-customer-login'.to_sym ]
-        user = User.where( login: mail[ 'x-zammad-customer-login'.to_sym ] ).first
+        user = User.find_by( login: mail[ 'x-zammad-customer-login'.to_sym ] )
       end
       if !user
-        user = User.where( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] ).first
+        user = User.find_by( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] )
       end
       if !user
         user = user_create(
@@ -374,16 +376,18 @@ class Channel::EmailParser
 
       # create to and cc user
       ['raw-to', 'raw-cc'].each { |item|
-        if mail[item.to_sym] && mail[item.to_sym].tree
-          items = mail[item.to_sym].tree
-          items.addresses.each {|item|
-            user_create(
-              firstname: item.display_name,
-              lastname: '',
-              email: item.address,
-            )
-          }
-        end
+
+        next if !mail[item.to_sym]
+        next if !mail[item.to_sym].tree
+
+        items = mail[item.to_sym].tree
+        items.addresses.each {|item|
+          user_create(
+            firstname: item.display_name,
+            lastname: '',
+            email: item.address,
+          )
+        }
       }
 
       # set current user
@@ -403,7 +407,7 @@ class Channel::EmailParser
         end
 
         if state_type.name != 'new'
-          ticket.state = Ticket::State.where( name: 'open' ).first
+          ticket.state = Ticket::State.find_by( name: 'open' )
           ticket.save
         end
       end
@@ -416,8 +420,8 @@ class Channel::EmailParser
           group_id: channel[:group_id] || 1,
           customer_id: user.id,
           title: mail[:subject] || '',
-          state_id: Ticket::State.where( name: 'new' ).first.id,
-          priority_id: Ticket::Priority.where( name: '2 normal' ).first.id,
+          state_id: Ticket::State.find_by( name: 'new' ).id,
+          priority_id: Ticket::Priority.find_by( name: '2 normal' ).id,
         )
 
         set_attributes_by_x_headers( ticket, 'ticket', mail )
@@ -431,8 +435,8 @@ class Channel::EmailParser
       # set attributes
       article = Ticket::Article.new(
         ticket_id: ticket.id,
-        type_id: Ticket::Article::Type.where( name: 'email' ).first.id,
-        sender_id: Ticket::Article::Sender.where( name: 'Customer' ).first.id,
+        type_id: Ticket::Article::Type.find_by( name: 'email' ).id,
+        sender_id: Ticket::Article::Sender.find_by( name: 'Customer' ).id,
         body: mail[:body],
         from: mail[:from],
         to: mail[:to],
@@ -480,7 +484,7 @@ class Channel::EmailParser
     }
 
     # filter( channel, mail )
-    filters.each {|prio, backend|
+    filters.each {|_prio, backend|
       begin
         backend.run( channel, mail, ticket, article, user )
       rescue Exception => e
@@ -496,7 +500,7 @@ class Channel::EmailParser
   def user_create(data)
 
     # return existing
-    user = User.where( login: data[:email].downcase ).first
+    user = User.find_by( login: data[:email].downcase )
     return user if user
 
     # create new user
@@ -504,7 +508,7 @@ class Channel::EmailParser
 
     # fillup
     %w(firstname lastname).each { |item|
-      if data[item.to_sym] == nil
+      if data[item.to_sym].nil?
         data[item.to_sym] = ''
       end
     }
@@ -525,7 +529,7 @@ class Channel::EmailParser
   def set_attributes_by_x_headers( item_object, header_name, mail )
 
     # loop all x-zammad-hedaer-* headers
-    item_object.attributes.each {|key, value|
+    item_object.attributes.each {|key, _value|
 
       # ignore read only attributes
       next if key == 'updated_at'
@@ -541,18 +545,19 @@ class Channel::EmailParser
         if mail[ header.to_sym ]
           Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
           item_object.class.reflect_on_all_associations.map { |assoc|
-            if assoc.name.to_s == key_short
-              Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
-              item = assoc.class_name.constantize
 
-              if item.respond_to?(:name)
-                if item.lookup( name: mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( name: mail[ header.to_sym ] ).id
-                end
-              elsif item.respond_to?(:login)
-                if item.lookup( login: mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( login: mail[ header.to_sym ] ).id
-                end
+            next if assoc.name.to_s != key_short
+
+            Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
+            item = assoc.class_name.constantize
+
+            if item.respond_to?(:name)
+              if item.lookup( name: mail[ header.to_sym ] )
+                item_object[key] = item.lookup( name: mail[ header.to_sym ] ).id
+              end
+            elsif item.respond_to?(:login)
+              if item.lookup( login: mail[ header.to_sym ] )
+                item_object[key] = item.lookup( login: mail[ header.to_sym ] ).id
               end
             end
           }

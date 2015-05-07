@@ -172,6 +172,7 @@ translate strings in ruby context, e. g. for notifications
     return if target_initial
     self.target_initial = self.target
   end
+
   def cache_clear
     Cache.delete( 'Translation::' + self.locale.downcase )
   end

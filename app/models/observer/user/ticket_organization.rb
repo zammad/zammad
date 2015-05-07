@@ -6,6 +6,7 @@ class Observer::User::TicketOrganization < ActiveRecord::Observer
   def after_create(record)
     check_organization(record)
   end
+
   def after_update(record)
     check_organization(record)
   end

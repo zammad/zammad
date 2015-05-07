@@ -198,13 +198,14 @@ EventMachine.run {
                     log 'error', "recipient.user_id attribute isn't an array '#{ data['recipient']['user_id'].inspect }'"
                   else
                     data['recipient']['user_id'].each { |user_id|
-                      if local_client[:user]['id'].to_i == user_id.to_i
-                        log 'notice', "send broadcast from (#{client_id}) to (user_id=#{user_id})", local_client_id
-                        if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                          @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
-                        else
-                          Sessions.send( local_client_id, data )
-                        end
+
+                      next if local_client[:user]['id'].to_i != user_id.to_i
+
+                      log 'notice', "send broadcast from (#{client_id}) to (user_id=#{user_id})", local_client_id
+                      if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
+                        @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
+                      else
+                        Sessions.send( local_client_id, data )
                       end
                     }
                   end
@@ -242,14 +243,14 @@ EventMachine.run {
 
     # websocket
     log 'notice', "Status: websocket clients: #{ @clients.size }"
-    @clients.each { |client_id, client|
+    @clients.each { |client_id, _client|
       log 'notice', 'working...', client_id
     }
 
     # ajax
     client_list = Sessions.list
     clients = 0
-    client_list.each {|client_id, client|
+    client_list.each {|_client_id, client|
       next if client[:meta][:type] == 'websocket'
       clients = clients + 1
     }
@@ -296,19 +297,20 @@ EventMachine.run {
 
     # close unused web socket sessions
     @clients.each { |client_id, client|
-      if ( client[:last_ping] + idle_time_in_sec ) < Time.now
-        log 'notice', 'closing idle websocket connection', client_id
 
-        # remember to not use this connection anymore
-        client[:disconnect] = true
+      next if ( client[:last_ping] + idle_time_in_sec ) >= Time.now
 
-        # try to close regular
-        client[:websocket].close_websocket
+      log 'notice', 'closing idle websocket connection', client_id
 
-        # delete session from client list
-        sleep 0.3
-        @clients.delete(client_id)
-      end
+      # remember to not use this connection anymore
+      client[:disconnect] = true
+
+      # try to close regular
+      client[:websocket].close_websocket
+
+      # delete session from client list
+      sleep 0.3
+      @clients.delete(client_id)
     }
 
     # close unused ajax long polling sessions

@@ -76,7 +76,7 @@ add a new history entry for an object
     }
     history_record = nil
     if data[:id]
-      history_record = History.where( id: data[:id] ).first
+      history_record = History.find_by( id: data[:id] )
     end
     if history_record
       history_record.update_attributes(record)
@@ -98,7 +98,7 @@ remove whole history entries of an object
 =end
 
   def self.remove( requested_object, requested_object_id )
-    history_object = History::Object.where( name: requested_object ).first
+    history_object = History::Object.find_by( name: requested_object )
     return if !history_object
     History.where(
       history_object_id: history_object.id,
@@ -185,11 +185,11 @@ returns
       data.delete('history_attribute_id')
 
       data.delete( 'updated_at' )
-      if data['id_to'] == nil && data['id_from'] == nil
+      if data['id_to'].nil? && data['id_from'].nil?
         data.delete( 'id_to' )
         data.delete( 'id_from' )
       end
-      if data['value_to'] == nil && data['value_from'] == nil
+      if data['value_to'].nil? && data['value_from'].nil?
         data.delete( 'value_to' )
         data.delete( 'value_from' )
       end
@@ -198,7 +198,7 @@ returns
       end
       data.delete( 'related_history_object_id' )
 
-      if data['related_o_id'] == nil
+      if data['related_o_id'].nil?
         data.delete( 'related_o_id' )
       end
 

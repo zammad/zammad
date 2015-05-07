@@ -18,9 +18,9 @@ returns
   def self.generate
 
     # generate number
-    (1..50_000).each { |i|
+    (1..50_000).each {
       number = adapter.generate
-      ticket = Ticket.where( number: number ).first
+      ticket = Ticket.find_by( number: number )
       return number if !ticket
     }
     raise "Can't generate new ticket number!"

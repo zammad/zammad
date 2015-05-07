@@ -31,11 +31,12 @@ module Ticket::Number::Increment
       min_digs = min_digs.to_i - 1
     end
     fillup = Setting.get('system_id') || '1'
-    ( 1..100 ).each do |i|
-      if ( fillup.length.to_i + counter_increment.to_s.length.to_i ) < min_digs.to_i
-        fillup = fillup + '0'
-      end
-    end
+    ( 1..100 ).each {
+
+      next if ( fillup.length.to_i + counter_increment.to_s.length.to_i ) >= min_digs.to_i
+
+      fillup = fillup + '0'
+    }
     number = fillup.to_s + counter_increment.to_s
 
     # calculate a checksum
@@ -78,9 +79,9 @@ module Ticket::Number::Increment
 
     # probe format
     if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,48})/i
-      ticket = Ticket.where( number: $1 ).first
+      ticket = Ticket.find_by( number: $1 )
     elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i
-      ticket = Ticket.where( number: $1 ).first
+      ticket = Ticket.find_by( number: $1 )
     end
     ticket
   end

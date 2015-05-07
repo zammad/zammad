@@ -35,17 +35,21 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     working_hours = {}
     [:Mon, :Tue, :Wed, :Thu, :Fri, :Sat, :Sun].each {|day|
       working_hours[day] = []
-      if config[day.to_s] == true || config[day.to_s] == day.to_s
-        config_ok = true
-        (0..23).each {|hour|
-          time = Time.parse("1977-10-27 #{hour}:00:00")
-          if time >= beginning_of_workday && time <= end_of_workday
-            working_hours[day].push true
-          else
-            working_hours[day].push nil
-          end
-        }
+
+      next if !config[day.to_s]
+      if config[day.to_s] != true && config[day.to_s] != day.to_s
+        next
       end
+
+      config_ok = true
+      (0..23).each {|hour|
+        time = Time.parse("1977-10-27 #{hour}:00:00")
+        if time >= beginning_of_workday && time <= end_of_workday
+          working_hours[day].push true
+        else
+          working_hours[day].push nil
+        end
+      }
     }
 
     if !config_ok
@@ -65,25 +69,26 @@ put working hours matrix and timezone in function, returns UTC working hours mat
         Sat: [],
         Sun: [],
       }
-      (1..hours_to_shift).each {|count|
+      (1..hours_to_shift).each {
         working_hours.each {|day, value|
-          if working_hours[day]
-            to_move = working_hours[day].shift
-            if day == :Mon
-              move_items[:Tue].push to_move
-            elsif day == :Tue
-              move_items[:Wed].push to_move
-            elsif day == :Wed
-              move_items[:Thu].push to_move
-            elsif day == :Thu
-              move_items[:Fri].push to_move
-            elsif day == :Fri
-              move_items[:Sat].push to_move
-            elsif day == :Sat
-              move_items[:Sun].push to_move
-            elsif day == :Sun
-              move_items[:Mon].push to_move
-            end
+
+          next if !value
+
+          to_move = working_hours[day].shift
+          if day == :Mon
+            move_items[:Tue].push to_move
+          elsif day == :Tue
+            move_items[:Wed].push to_move
+          elsif day == :Wed
+            move_items[:Thu].push to_move
+          elsif day == :Thu
+            move_items[:Fri].push to_move
+          elsif day == :Fri
+            move_items[:Sat].push to_move
+          elsif day == :Sat
+            move_items[:Sun].push to_move
+          elsif day == :Sun
+            move_items[:Mon].push to_move
           end
         }
       }

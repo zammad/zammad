@@ -73,12 +73,17 @@ returns
 
       # replace e.g. 'current_user.id' with current_user.id
       overview.condition.each { |item, value|
-        if value && value.class.to_s == 'String'
-          parts = value.split( '.', 2 )
-          if parts[0] && parts[1] && parts[0] == 'current_user'
-            overview.condition[item] = data[:current_user][parts[1].to_sym]
-          end
-        end
+
+        next if !value
+        next if value.class.to_s != 'String'
+
+        parts = value.split( '.', 2 )
+
+        next if !parts[0]
+        next if !parts[1]
+        next if parts[0] != 'current_user'
+
+        overview.condition[item] = data[:current_user][parts[1].to_sym]
       }
     }
 

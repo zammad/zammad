@@ -47,6 +47,7 @@ class UpdateAuth < ActiveRecord::Migration
       frontend: false
     )
   end
+
   def down
   end
 end

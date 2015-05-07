@@ -17,7 +17,7 @@ class Locale < ApplicationModel
 
     ActiveRecord::Base.transaction do
       result.data.each {|locale|
-        exists = Locale.where(locale: locale['locale']).first
+        exists = Locale.find_by(locale: locale['locale'])
         if exists
           exists.update(locale.symbolize_keys!)
         else

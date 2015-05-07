@@ -46,7 +46,7 @@ class ActiveSupport::TestCase
     return if Delayed::Job.all.empty?
 
     Delayed::Job.where('failed_at != NULL').each {|job|
-      assert( false, "not processable job #{jobs.inspect}" )
+      assert( false, "not processable job #{job.inspect}" )
     }
     Delayed::Job.all.destroy_all
   end

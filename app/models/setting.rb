@@ -25,8 +25,9 @@ class Setting < ApplicationModel
     # config lookups
     config.each { |key, value|
       next if value.class.to_s != 'String'
-      config[key].gsub!( /\#\{config\.(.+?)\}/ ) { |s|
-        s = config[$1].to_s
+
+      config[key].gsub!( /\#\{config\.(.+?)\}/ ) {
+        config[$1].to_s
       }
     }
 
@@ -36,7 +37,7 @@ class Setting < ApplicationModel
   end
 
   def self.set(name, value)
-    setting = Setting.where( name: name ).first
+    setting = Setting.find_by( name: name )
     if !setting
       raise "Can't find config setting '#{name}'"
     end
@@ -55,9 +56,11 @@ class Setting < ApplicationModel
   def delete_cache
     @@current[:settings_config] = nil
   end
+
   def set_initial
     self.state_initial = self.state
   end
+
   def state_check
 
     return if !(self.state || self.state == false)

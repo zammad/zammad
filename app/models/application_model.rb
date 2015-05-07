@@ -69,7 +69,7 @@ returns
 
   def self.param_cleanup(params, newObject = false)
 
-    if params == nil
+    if params.nil?
       raise "No params for #{self}!"
     end
 
@@ -107,17 +107,18 @@ returns
     # set relations
     self.class.reflect_on_all_associations.map { |assoc|
       real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      if params.key?( real_key.to_sym )
-        list_of_items = params[ real_key.to_sym ]
-        if params[ real_key.to_sym ].class != Array
-          list_of_items = [ params[ real_key.to_sym ] ]
-        end
-        list = []
-        list_of_items.each {|item|
-          list.push( assoc.klass.find(item) )
-        }
-        self.send( assoc.name.to_s + '=', list )
+
+      next if !params.key?( real_key.to_sym )
+
+      list_of_items = params[ real_key.to_sym ]
+      if params[ real_key.to_sym ].class != Array
+        list_of_items = [ params[ real_key.to_sym ] ]
       end
+      list = []
+      list_of_items.each {|item|
+        list.push( assoc.klass.find(item) )
+      }
+      self.send( assoc.name.to_s + '=', list )
     }
   end
 
@@ -311,7 +312,7 @@ returns
       cache = self.cache_get( data[:id] )
       return cache if cache
 
-      record = self.where( id: data[:id] ).first
+      record = self.find_by( id: data[:id] )
       self.cache_set( data[:id], record )
       return record
     elsif data[:name]
@@ -357,7 +358,7 @@ returns
 
   def self.create_if_not_exists(data)
     if data[:id]
-      record = self.where( id: data[:id] ).first
+      record = self.find_by( id: data[:id] )
       return record if record
     elsif data[:name]
       records = self.where( name: data[:name] )
@@ -458,6 +459,7 @@ end
   def latest_change_set_from_observer
     self.class.latest_change_set(self.updated_at)
   end
+
   def latest_change_set_from_observer_destroy
     self.class.latest_change_set(nil)
   end
@@ -466,7 +468,7 @@ end
     key        = "#{self.new.class.name}_latest_change"
     expires_in = 31_536_000 # 1 year
 
-    if updated_at == nil
+    if updated_at.nil?
       Cache.delete( key )
     else
       Cache.write( key, updated_at, { expires_in: expires_in } )
@@ -760,7 +762,7 @@ log object update activity stream, if configured - will be executed automaticall
     end
 
     log = false
-    self.changes.each {|key, value|
+    self.changes.each {|key, _value|
 
       # do not log created_at and updated_at attributes
       next if ignore_attributes[key.to_sym] == true
@@ -1029,6 +1031,7 @@ get assets of object list
   def attachments_buffer
     @attachments_buffer_data
   end
+
   def attachments_buffer=(attachments)
     @attachments_buffer_data = attachments
   end
@@ -1036,7 +1039,7 @@ get assets of object list
   def attachments_buffer_check
 
     # do nothing if no attachment exists
-    return 1 if attachments_buffer == nil
+    return 1 if attachments_buffer.nil?
 
     # store attachments
     article_store = []

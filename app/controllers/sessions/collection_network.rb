@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module ExtraCollection
-  def session( collections, assets, user )
+  def session( collections, assets, _user )
 
     collections[ Network.to_app_model ]                 = Network.all
     collections[ Network::Category.to_app_model ]       = Network::Category.all

@@ -8,7 +8,7 @@ class Token < ActiveRecord::Base
   def self.check( data )
 
     # fetch token
-    token = Token.where( action: data[:action], name: data[:name] ).first
+    token = Token.find_by( action: data[:action], name: data[:name] )
     return if !token
 
     # check if token is still valid

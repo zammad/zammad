@@ -18,9 +18,7 @@ returns
     state_list_open = Ticket::State.by_category( 'open' )
 
     tickets = Ticket.where( state_id: state_list_open )
-    tickets.each {|ticket|
-      ticket.escalation_calculation
-    }
+    tickets.each(&:escalation_calculation)
   end
 
 =begin
@@ -175,7 +173,7 @@ returns
   def escalation_calculation_get_sla
     sla_selected = nil
     sla_list = Cache.get( 'SLA::List::Active' )
-    if sla_list == nil
+    if sla_list.nil?
       sla_list = Sla.where( active: true )
       Cache.write( 'SLA::List::Active', sla_list, { expires_in: 1.hour } )
     end
@@ -189,15 +187,16 @@ returns
           [ 'tickets.group_id', 'group_id' ]
         ]
         map.each {|item|
-          if sla.condition[ item[0] ]
-            if sla.condition[ item[0] ].class == String
-              sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
-            end
-            if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
-              hit = true
-            else
-              hit = false
-            end
+
+          next if !sla.condition[ item[0] ]
+
+          if sla.condition[ item[0] ].class == String
+            sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
+          end
+          if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
+            hit = true
+          else
+            hit = false
           end
         }
         if hit

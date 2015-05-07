@@ -2,6 +2,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
   def initialize(id)
     @article_id = id
   end
+
   def perform
     record = Ticket::Article.find( @article_id )
 
@@ -37,12 +38,14 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     # add history record
     recipient_list = ''
     [:to, :cc].each { |key|
-      if record[key] && record[key] != ''
-        if recipient_list != ''
-          recipient_list += ','
-        end
-        recipient_list += record[key]
+
+      next if !record[key]
+      next if record[key] == ''
+
+      if recipient_list != ''
+        recipient_list += ','
       end
+      recipient_list += record[key]
     }
 
     return if recipient_list == ''

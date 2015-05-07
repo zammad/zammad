@@ -2,6 +2,7 @@ class Observer::Ticket::UserTicketCounter::BackgroundJob
   def initialize(id)
     @customer_id = id
   end
+
   def perform
 
     # open ticket count

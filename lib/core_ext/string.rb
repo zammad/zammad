@@ -7,6 +7,7 @@ class String
     end
     body_quote
   end
+
   def word_wrap(*args)
     options = args.extract_options!
     unless args.blank?
@@ -66,13 +67,13 @@ class String
     # see also test/fixtures/mail21.box
     # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
     if !string.valid_encoding?
-      string = string.chars.select { |c| c.valid_encoding? }.join
+      string = string.chars.select(&:valid_encoding?).join
     end
 
     # find <a href=....> and replace it with [x]
     link_list = ''
     counter   = 0
-    string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) { |item|
+    string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) {
       link = $2
       counter   = counter + 1
       link_list += "[#{counter}] #{link}\n"
@@ -121,12 +122,12 @@ class String
     string.gsub!( '&nbsp;', ' ' )
 
     # encode html entities like "&#8211;"
-    string.gsub!( /(&\#(\d+);?)/x ) { |item|
+    string.gsub!( /(&\#(\d+);?)/x ) {
       $2.chr
     }
 
     # encode html entities like "&#3d;"
-    string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) { |item|
+    string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) {
       chr_orig = $1
       hex      = $2.hex
       if hex

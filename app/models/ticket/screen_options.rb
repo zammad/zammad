@@ -63,13 +63,14 @@ returns
       state_ids.push params[:ticket].state.id
     end
     state_types.each {|type|
-      state_type = Ticket::StateType.where( name: type ).first
-      if state_type
-        state_type.states.each {|state|
-          assets = state.assets(assets)
-          state_ids.push state.id
-        }
-      end
+      state_type = Ticket::StateType.find_by( name: type )
+
+      next if !state_type
+
+      state_type.states.each {|state|
+        assets = state.assets(assets)
+        state_ids.push state.id
+      }
     }
     filter[:state_id] = state_ids
 

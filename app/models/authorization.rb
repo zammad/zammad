@@ -10,7 +10,7 @@ class Authorization < ApplicationModel
   validates     :provider, presence: true
 
   def self.find_from_hash(hash)
-    auth = Authorization.where( provider: hash['provider'], uid: hash['uid'] ).first
+    auth = Authorization.find_by( provider: hash['provider'], uid: hash['uid'] )
     if auth
 
       # update auth tokens

@@ -2,7 +2,7 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 
 namespace :searchindex do
-  task :drop, [:opts] => :environment do |t, args|
+  task :drop, [:opts] => :environment do |_t, _args|
 
     # drop indexes
     puts 'drop indexes...'
@@ -12,7 +12,7 @@ namespace :searchindex do
 
   end
 
-  task :create, [:opts] => :environment do |t, args|
+  task :create, [:opts] => :environment do |_t, _args|
 
     # create indexes
     puts 'create indexes...'
@@ -39,7 +39,7 @@ namespace :searchindex do
 
   end
 
-  task :reload, [:opts] => :environment do |t, args|
+  task :reload, [:opts] => :environment do |_t, _args|
 
     puts 'reload data...'
     User.search_index_reload
@@ -48,7 +48,7 @@ namespace :searchindex do
 
   end
 
-  task :rebuild, [:opts] => :environment do |t, args|
+  task :rebuild, [:opts] => :environment do |_t, _args|
 
     Rake::Task['searchindex:drop'].execute
     Rake::Task['searchindex:create'].execute

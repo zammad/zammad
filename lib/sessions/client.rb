@@ -36,8 +36,8 @@ class Sessions::Client
         user_id_last_run = user.id
 
         # release old objects
-        backend_pool.each {|pool|
-          pool = nil
+        backend_pool.collect! {
+          nil
         }
 
         # create new pool
@@ -52,9 +52,7 @@ class Sessions::Client
       self.log "---client - looking for data of user #{user.id}"
 
       # push messages from backends
-      backend_pool.each {|pool|
-        pool.push
-      }
+      backend_pool.each(&:push)
 
       self.log '---/client-'
 

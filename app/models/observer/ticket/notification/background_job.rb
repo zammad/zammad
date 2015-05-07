@@ -4,6 +4,7 @@ class Observer::Ticket::Notification::BackgroundJob
   def initialize(params)
     @p = params
   end
+
   def perform
     ticket  = Ticket.find(@p[:ticket_id])
     if @p[:article_id]
@@ -225,7 +226,7 @@ class Observer::Ticket::Notification::BackgroundJob
     changes
   end
 
-  def template_create(user, ticket, article, ticket_changes)
+  def template_create(user, ticket, article, _ticket_changes)
     article_content = ''
     if article
       article_content = '&lt;snip&gt;
@@ -348,7 +349,7 @@ Changes:<br>
     template
   end
 
-  def template_header(user)
+  def template_header(_user)
     '
 <style type="text/css">
   .header {
@@ -385,7 +386,7 @@ Changes:<br>
 '
   end
 
-  def template_footer(user, ticket, article)
+  def template_footer(_user, _ticket, _article)
     '
 <p>
   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">i18n(View this directly here)</a>

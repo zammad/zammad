@@ -140,7 +140,7 @@ returns
   end
 
   def content
-    file = Store::File.where( id: self.store_file_id ).first
+    file = Store::File.find_by( id: self.store_file_id )
     if !file
       raise "No such file #{ self.store_file_id }!"
     end
@@ -148,7 +148,7 @@ returns
   end
 
   def provider
-    file = Store::File.where( id: self.store_file_id ).first
+    file = Store::File.find_by( id: self.store_file_id )
     if !file
       raise "No such file #{ self.store_file_id }!"
     end

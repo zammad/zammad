@@ -6,9 +6,11 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
   def after_create(record)
     ref_object_touch(record)
   end
+
   def after_update(record)
     ref_object_touch(record)
   end
+
   def after_destroy(record)
     ref_object_touch(record)
   end
@@ -19,9 +21,7 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # touch organizations tickets
-    Ticket.select('id').where( organization_id: record.id ).each {|ticket|
-      ticket.touch
-    }
+    Ticket.select('id').where( organization_id: record.id ).each(&:touch)
 
     # touch current members
     record.member_ids.uniq.each {|user_id|

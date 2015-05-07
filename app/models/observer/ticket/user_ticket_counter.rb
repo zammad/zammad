@@ -6,6 +6,7 @@ class Observer::Ticket::UserTicketCounter < ActiveRecord::Observer
   def after_create(record)
     user_ticket_counter_update(record)
   end
+
   def after_update(record)
     user_ticket_counter_update(record)
   end

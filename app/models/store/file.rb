@@ -9,8 +9,8 @@ class Store
     def self.add(data)
       sha = Digest::SHA256.hexdigest( data )
 
-      file = Store::File.where( sha: sha ).first
-      if file == nil
+      file = Store::File.find_by( sha: sha )
+      if file.nil?
 
         # load backend based on config
         adapter_name = Setting.get('storage_provider') || 'DB'
@@ -34,7 +34,7 @@ class Store
         c = adapter.get( self.sha )
       else
         # fallback until migration is done
-        c = Store::Provider::DB.where( md5: self.md5 ).first.data
+        c = Store::Provider::DB.find_by( md5: self.md5 ).data
       end
       c
     end
@@ -46,12 +46,13 @@ class Store
         content = item.content
         sha = Digest::SHA256.hexdigest( content )
         logger.info "CHECK: Store::File.find(#{item.id}) "
-        if sha != item.sha
-          success = false
-          logger.error "DIFF: sha diff of Store::File.find(#{item.id}) "
-          if fix_it
-            item.update_attribute( :sha, sha )
-          end
+
+        next if sha == item.sha
+
+        success = false
+        logger.error "DIFF: sha diff of Store::File.find(#{item.id}) "
+        if fix_it
+          item.update_attribute( :sha, sha )
         end
       }
       success

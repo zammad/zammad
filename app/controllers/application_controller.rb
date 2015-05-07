@@ -64,6 +64,7 @@ class ApplicationController < ActionController::Base
     return if !session[:user_id]
     @_current_user = User.find( session[:user_id] )
   end
+
   def current_user_set(user)
     session[:user_id] = user.id
     @_current_user = user
@@ -282,97 +283,92 @@ class ApplicationController < ActionController::Base
 
   # model helper
   def model_create_render (object, params)
-    begin
 
-      # create object
-      generic_object = object.new( object.param_cleanup( params[object.to_app_model_url], true ) )
+    # create object
+    generic_object = object.new( object.param_cleanup( params[object.to_app_model_url], true ) )
 
-      # save object
-      generic_object.save!
+    # save object
+    generic_object.save!
 
-      # set relations
-      generic_object.param_set_associations( params )
+    # set relations
+    generic_object.param_set_associations( params )
 
-      model_create_render_item(generic_object)
-    rescue Exception => e
-      logger.error e.message
-      logger.error e.backtrace.inspect
-      render json: { error: e.message }, status: :unprocessable_entity
-    end
+    model_create_render_item(generic_object)
+  rescue Exception => e
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    render json: { error: e.message }, status: :unprocessable_entity
   end
+
   def model_create_render_item (generic_object)
     render json: generic_object.attributes_with_associations, status: :created
   end
 
   def model_update_render (object, params)
-    begin
 
-      # find object
-      generic_object = object.find( params[:id] )
+    # find object
+    generic_object = object.find( params[:id] )
 
-      # save object
-      generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model_url] ) )
+    # save object
+    generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model_url] ) )
 
-      # set relations
-      generic_object.param_set_associations( params )
+    # set relations
+    generic_object.param_set_associations( params )
 
-      model_update_render_item( generic_object )
-    rescue Exception => e
-      logger.error e.message
-      logger.error e.backtrace.inspect
-      render json: { error: e.message }, status: :unprocessable_entity
-    end
+    model_update_render_item( generic_object )
+  rescue Exception => e
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    render json: { error: e.message }, status: :unprocessable_entity
   end
+
   def model_update_render_item (generic_object)
     render json: generic_object.attributes_with_associations, status: :ok
   end
 
   def model_destory_render (object, params)
-    begin
-      generic_object = object.find( params[:id] )
-      generic_object.destroy
-      model_destory_render_item()
-    rescue Exception => e
-      logger.error e.message
-      logger.error e.backtrace.inspect
-      render json: { error: e.message }, status: :unprocessable_entity
-    end
+    generic_object = object.find( params[:id] )
+    generic_object.destroy
+    model_destory_render_item()
+  rescue Exception => e
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    render json: { error: e.message }, status: :unprocessable_entity
   end
+
   def model_destory_render_item ()
     render json: {}, status: :ok
   end
 
   def model_show_render (object, params)
-    begin
 
-      if params[:full]
-        generic_object_full = object.full( params[:id] )
-        render json: generic_object_full, status: :ok
-        return
-      end
-
-      generic_object = object.find( params[:id] )
-      model_show_render_item(generic_object)
-    rescue Exception => e
-      logger.error e.message
-      logger.error e.backtrace.inspect
-      render json: { error: e.message }, status: :unprocessable_entity
+    if params[:full]
+      generic_object_full = object.full( params[:id] )
+      render json: generic_object_full, status: :ok
+      return
     end
+
+    generic_object = object.find( params[:id] )
+    model_show_render_item(generic_object)
+  rescue Exception => e
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    render json: { error: e.message }, status: :unprocessable_entity
   end
+
   def model_show_render_item (generic_object)
     render json: generic_object.attributes_with_associations, status: :ok
   end
 
-  def model_index_render (object, params)
-    begin
-      generic_objects = object.all
-      model_index_render_result( generic_objects )
-    rescue Exception => e
-      logger.error e.message
-      logger.error e.backtrace.inspect
-      render json: { error: e.message }, status: :unprocessable_entity
-    end
+  def model_index_render (object, _params)
+    generic_objects = object.all
+    model_index_render_result( generic_objects )
+  rescue Exception => e
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    render json: { error: e.message }, status: :unprocessable_entity
   end
+
   def model_index_render_result (generic_objects)
     render json: generic_objects, status: :ok
   end

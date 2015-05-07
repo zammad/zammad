@@ -300,7 +300,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       if message['event'] == 'resetCollection'
         #puts "rc: "
         if message['data']
-          message['data'].each {|key, value|
+          message['data'].each {|key, _value|
             #puts "rc: #{key}"
             collections_result[key] = true
           }
@@ -308,7 +308,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       end
     }
     #puts "c: #{collections_result.inspect}"
-    collections_orig.each {|key, value|
+    collections_orig.each {|key, _value|
       assert_equal( collections_orig[key], collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})" )
     }
   end

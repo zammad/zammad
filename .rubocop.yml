@@ -173,41 +173,8 @@ Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
   Enabled: false
 
-Style/EmptyLineBetweenDefs:
-  Description: 'Use empty lines between defs.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#empty-lines-between-methods'
-  Enabled: false
-
 Rails/ActionFilter:
   Description: 'Enforces consistent use of action filter methods.'
-  Enabled: false
-
-Rails/FindBy:
-  Description: 'Prefer find_by over where.first.'
-  Enabled: false
-
-Style/NilComparison:
-  Description: 'Prefer x.nil? to x == nil.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#predicate-methods'
-  Enabled: false
-
-Style/SymbolProc:
-  Description: 'Use symbols as procs instead of blocks when possible.'
-  Enabled: false
-
-Style/RedundantBegin:
-  Description: "Don't use begin blocks when they are not needed."
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#begin-implicit'
-  Enabled: false
-
-Lint/UnusedBlockArgument:
-  Description: 'Checks for unused block arguments.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars'
-  Enabled: false
-
-Lint/UnusedMethodArgument:
-  Description: 'Checks for unused method arguments.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars'
   Enabled: false
 
 Style/SignalException:
@@ -222,8 +189,6 @@ Metrics/AbcSize:
   Enabled: false
 
 Style/RedundantSelf:
-  Enabled: false
-Style/Next:
   Enabled: false
 Style/CommentIndentation:
   Enabled: false

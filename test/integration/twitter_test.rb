@@ -30,9 +30,7 @@ class TwitterTest < ActiveSupport::TestCase
 
   # add channel
   current = Channel.where( adapter: 'Twitter2' )
-  current.each {|r|
-    r.destroy
-  }
+  current.each(&:destroy)
   Channel.create(
     adapter: 'Twitter2',
     area: 'Twitter::Inbound',
@@ -165,7 +163,7 @@ class TwitterTest < ActiveSupport::TestCase
 
     # fetch check system account
     article = nil
-    (1..4).each {|loop|
+    (1..4).each {
       next if article
       sleep 25
 

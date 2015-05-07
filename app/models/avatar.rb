@@ -89,11 +89,11 @@ add a avatar
     # check if avatar with url already exists
     avatar_already_exists = nil
     if data[:source] && !data[:source].empty?
-      avatar_already_exists = Avatar.where(
+      avatar_already_exists = Avatar.find_by(
         object_lookup_id: object_id,
         o_id: data[:o_id],
         source: data[:source],
-      ).first
+      )
     end
 
     # fetch image
@@ -208,11 +208,11 @@ set avatars as default
 
   def self.set_default( object_name, o_id, avatar_id )
     object_id = ObjectLookup.by_name( object_name )
-    avatar = Avatar.where(
+    avatar = Avatar.find_by(
       object_lookup_id: object_id,
       o_id: o_id,
       id: avatar_id,
-    ).first
+    )
     avatar.default = true
     avatar.save!
 
@@ -308,9 +308,9 @@ returns:
 =end
 
   def self.get_by_hash(hash)
-    avatar = Avatar.where(
+    avatar = Avatar.find_by(
       store_hash: hash,
-    ).first
+    )
     return if !avatar
     file = Store.find(avatar.store_resize_id)
   end
@@ -329,11 +329,11 @@ returns:
 
   def self.get_default(object_name, o_id)
     object_id = ObjectLookup.by_name( object_name )
-    Avatar.where(
+    Avatar.find_by(
       object_lookup_id: object_id,
       o_id: o_id,
       default: true,
-    ).first
+    )
   end
 
   def self.set_default_items(object_id, o_id, avatar_id)

@@ -14,7 +14,7 @@ module FillDB
     # organizations
     organization_pool = []
     if organizations && !organizations.zero?
-      (1..organizations).each {|count|
+      (1..organizations).each {
         organization = Organization.create( name: 'FillOrganization::' + rand(999_999).to_s, active: true )
         organization_pool.push organization
       }
@@ -27,7 +27,7 @@ module FillDB
     if agents && !agents.zero?
       roles  = Role.where( name: [ 'Agent'] )
       groups_all = Group.all
-      (1..agents).each {|count|
+      (1..agents).each {
         suffix = rand(99_999).to_s
         user = User.create_or_update(
           login: "filldb-agent-#{suffix}",
@@ -51,7 +51,7 @@ module FillDB
     if customers && !customers.zero?
       roles  = Role.where( name: [ 'Customer'] )
       groups_all = Group.all
-      (1..customers).each {|count|
+      (1..customers).each {
         suffix = rand(99_999).to_s
         organization = nil
         if !organization_pool.empty? && rand(2) == 1
@@ -77,7 +77,7 @@ module FillDB
     group_pool = []
     if groups && !groups.zero?
       puts "1..#{groups}"
-      (1..groups).each {|count|
+      (1..groups).each {
         group = Group.create( name: 'FillGroup::' + rand(999_999).to_s, active: true )
         group_pool.push group
         Role.where(name: 'Agent').first.users.where(active: true).each {|user|
@@ -95,7 +95,7 @@ module FillDB
     priority_pool = Ticket::Priority.all
     state_pool = Ticket::State.all
     if tickets && !tickets.zero?
-      (1..tickets).each {|count|
+      (1..tickets).each {
         customer = customer_pool[ rand(customer_pool.length - 1) ]
         agent    = agent_pool[ rand(agent_pool.length - 1) ]
         ticket = Ticket.create(

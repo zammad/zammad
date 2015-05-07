@@ -28,6 +28,7 @@ class UpdateTicketNumber < ActiveRecord::Migration
       frontend: false
     )
   end
+
   def down
   end
 end

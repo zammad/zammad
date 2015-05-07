@@ -46,7 +46,7 @@ module Auth::Ldap
       end
     end
 
-    if user_dn == nil
+    if user_dn.nil?
       Rails.logger.info "ldap entry found for user '#{username}' with filter #{filter} failed!"
       return nil
     end
