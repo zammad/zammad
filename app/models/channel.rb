@@ -7,7 +7,7 @@ class Channel < ApplicationModel
     channels = Channel.where( 'active = ? AND area LIKE ?', true, '%::Inbound' )
     channels.each { |channel|
       begin
-        c = eval 'Channel::' + channel[:adapter].upcase + '.new'
+        c = eval 'Channel::' + channel[:adapter].upcase + '.new'  # rubocop:disable Lint/Eval
         c.fetch(channel)
       rescue Exception => e
         logger.error "can't use " + 'Channel::' + channel[:adapter].upcase

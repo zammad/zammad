@@ -6,7 +6,7 @@ module Channel::EmailSend
   def self.send(attr, notification = false)
     channel = Channel.find_by( area: 'Email::Outbound', active: true )
     begin
-      c = eval 'Channel::' + channel[:adapter] + '.new'
+      c = eval 'Channel::' + channel[:adapter] + '.new' # rubocop:disable Lint/Eval
       c.send(attr, channel, notification)
     rescue Exception => e
       Rails.logger.error "can't use " + 'Channel::' + channel[:adapter]

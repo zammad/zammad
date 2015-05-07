@@ -68,7 +68,7 @@ class Scheduler < ApplicationModel
       job.pid = Thread.current.object_id
       job.save
       logger.info "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count})..."
-      eval job.method()
+      eval job.method() # rubocop:disable Lint/Eval
     rescue => e
       logger.error "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count}) exited with error #{ e.inspect }"
 
