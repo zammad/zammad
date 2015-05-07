@@ -1266,12 +1266,11 @@ ol.tabs li {
   }
 
 .icon {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: image_url("/assets/images/sprite.svg");
-  background-repeat: no-repeat;
-  background-position: 20px 20px; /* make icon empty */
+}
+
+.signout.icon {
+  width: 15px;
+  height: 19px;
 }
 
   .add.icon,
@@ -1319,7 +1318,6 @@ ol.tabs li {
 
   .dashboard.icon,
   .overviews.icon,
-  .customers.icon,
   .group.icon,
   .message.icon,
   .tools.icon,
@@ -1336,8 +1334,7 @@ ol.tabs li {
     background-position: -24px 0;
   }
 
-  .group.icon,
-  .customers.icon {
+  .group.icon {
     background-position: -48px 0;
   }
 
@@ -1499,6 +1496,7 @@ ol.tabs li {
     width: 20px;
     background-position: -104px -118px;
   }
+  .icon-switch:hover .team.icon,
   .white.team.icon {
     background-position: -104px -132px;
   }
@@ -2172,7 +2170,7 @@ footer {
   }
 
   .main-navigation > li.active > a .icon {
-    opacity: 1;
+    fill: currentColor;
   }
 
   .main-navigation li.active > a {
@@ -2181,8 +2179,10 @@ footer {
 
   .navigation .nav-item-icon .icon {
     margin-right: 15px;
-    opacity: 0.25;
     vertical-align: bottom;
+    width: 24px;
+    height: 24px;
+    fill: hsl(206,7%,37%);
   }
 
 .tasks {
@@ -2382,6 +2382,14 @@ footer {
     width: 40px;
     z-index: 1;
     visibility: hidden;
+    @extend .centered;
+  }
+
+  .empty-search .close.icon {
+    fill: white;
+    opacity: 0.5;
+    width: 13px;
+    height: 13px;
   }
 
     .filled.search .empty-search {
@@ -2393,13 +2401,24 @@ footer {
     padding: 5px 10px 5px 33px;
     height: 30px;
     color: #ECECEC;
+    background: #31373b;
     line-height: 20px;
-    background: #31373b image-url("/assets/images/sprite.svg") no-repeat 10px -26px;
     outline: none;
     border: none;
     border-radius: 15px;
     position: relative;
     z-index: 1;
+  }
+
+  .search .magnifier.icon {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    width: 15px;
+    height: 15px;
+    z-index: 2;
+    opacity: 0.5;
+    fill: white;
   }
 
   .search.focused .search-holder {
@@ -2414,7 +2433,6 @@ footer {
   .search .logo {
     width: 67px;
     height: 36px;
-    background: image_url("/assets/images/logo.svg") no-repeat center;
     transition: 240ms;
     position: relative;
     @extend .u-clickable;
@@ -2506,6 +2524,7 @@ footer {
       height: 60px;
       position: relative;
       text-decoration: none;
+      @extend .centered;
       @extend .u-clickable;
     }
     
@@ -2527,20 +2546,26 @@ footer {
       background: #38ae6a;
     }
 
-    .user-menu .dark.cog,
-    .user-menu > li:hover .light.cog,
-    .user-menu > li.active .light.cog,
-    .user-menu .white.plus,
-    .user-menu > li:hover .green.plus,
-    .user-menu > li.active .green.plus {
-      display: none;
+    .user-menu .cog.icon {
+      width: 20px;
+      height: 20px;
+      fill: hsl(0,0%,30%);
     }
 
-    .user-menu > li.settings:hover .dark.cog,
-    .user-menu > li.settings.active .dark.cog,
-    .user-menu > li.add:hover .white.plus,
-    .user-menu > li.add.active .white.plus {
-      display: block;
+    .user-menu .plus.icon {
+      width: 17px;
+      height: 17px;
+      fill: hsl(145,51%,45%);
+    }
+
+    .user-menu > li.settings:hover .cog.icon,
+    .user-menu > li.settings.active .cog.icon {
+      fill: hsl(232,10%,16%);
+    }
+
+    .user-menu > li.add:hover .plus.icon,
+    .user-menu > li.add.active .plus.icon {
+      fill: white;
     }
 
     .user-menu > li:not(:last-child) {
@@ -4064,11 +4089,13 @@ footer {
   }
 
   .tabsSidebar-tab .icon {
-    opacity: 0.3;
+    width: 24px;
+    height: 24px;
+    fill: hsl(197,19%,78%);
   }
 
   .tabsSidebar-tab.active .icon {
-    opacity: 1;
+    fill: hsl(206,7%,37%);
   }
 
   .sidebar .text-muted {
@@ -4317,13 +4344,21 @@ footer {
   display: block;
 }
 
-.switchBackToUser.fit {
+.switchBackToUser {
+  @extend .fit;
+  @extend .horizontal;
+  @extend .center;
+  @extend .zIndex-7;
   background: hsl(200,87%,45%);
   color: #fff;
   height: 45px;
   padding: 0 17px;
-  top: -45px;
+  top: -45px !important;
   border-bottom: 5px solid hsl(205,90%,60%);
+}
+.switchBackToUser-icon {
+  width: 19px;
+  height: 18px;
 }
   .switchBackToUser-text {
     margin-left: 10px;
@@ -4332,6 +4367,13 @@ footer {
     width: 40px;
     height: 40px;
     margin-right: -10px;
+    @extend .centered;
+    
+    .icon {
+      fill: white;
+      width: 13px;
+      height: 13px;
+    }
   }
 
 #app.switchBackToUserSpace {

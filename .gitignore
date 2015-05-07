@@ -41,3 +41,4 @@ db/schema.rb
 
 # Ignore Rubymine config
 /.idea
+node_modules

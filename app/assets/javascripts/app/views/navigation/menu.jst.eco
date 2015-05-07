@@ -3,7 +3,7 @@
   <li class="dropdown <%= item.class %> <% if @open_tab[item.target] : %>open<% end %>">
     <a href="<%= item.target %>" class="dropdown-toggle horizontal center" data-toggle="dropdown">
         <span class="nav-item-icon">
-          <span class="<%= item.class %> icon"></span>
+          <svg class="icon"><use xlink:href="#icon-<%= item.class %>" /></svg>
         </span>
         <span class="nav-item-name flex">
           <%- @T( item.name ) %>
@@ -26,7 +26,7 @@
     <li class="<%= item.class %> <% if @active_tab[item.target] : %>active<% end %>">
       <a class="horizontal center" href="<%= item.target %>">
         <span class="nav-item-icon">
-          <span class="<%= item.class %> icon"></span>
+          <svg class="icon"><use xlink:href="#icon-<%= item.class %>" /></svg>
         </span>
         <span class="nav-item-name flex">
           <%- @T( item.name ) %>

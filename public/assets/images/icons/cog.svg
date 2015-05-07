@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>cog</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="cog" sketch:type="MSArtboardGroup" fill="#50E3C2">
+            <path d="M20,11.09 L20,8.814 L19.678,8.709 L17.242,7.914 L16.592,6.344 L17.842,3.701 L16.232,2.09 L15.93,2.246 L13.644,3.405 L12.076,2.755 L11.09,0 L8.814,0 L7.914,2.758 L6.344,3.408 L3.699,2.16 L2.09,3.768 L2.244,4.072 L3.402,6.356 L2.754,7.925 L0,8.911 L0,11.187 L0.32,11.291 L2.758,12.088 L3.408,13.656 L2.158,16.301 L3.768,17.911 L4.068,17.757 L6.353,16.597 L7.924,17.248 L8.91,20 L11.186,20 L11.291,19.68 L12.086,17.244 L13.654,16.594 L16.299,17.842 L17.908,16.234 L17.756,15.932 L16.596,13.648 L17.246,12.078 L20,11.09 L20,11.09 Z M10,13.188 C8.24,13.188 6.812,11.762 6.812,10 C6.812,8.24 8.24,6.815 10,6.815 C11.76,6.815 13.185,8.24 13.185,10 C13.185,11.762 11.76,13.188 10,13.188 L10,13.188 L10,13.188 Z" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
