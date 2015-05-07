@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 # rubocop:disable ClassAndModuleChildren
 module Ticket::Number::Date
-  extend self
+  module_function
 
   def generate
 

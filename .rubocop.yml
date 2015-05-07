@@ -212,5 +212,3 @@ Lint/UnreachableCode:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
-Style/ModuleFunction:
-  Enabled: false
