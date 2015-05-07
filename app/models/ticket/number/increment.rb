@@ -31,11 +31,12 @@ module Ticket::Number::Increment
       min_digs = min_digs.to_i - 1
     end
     fillup = Setting.get('system_id') || '1'
-    ( 1..100 ).each do |_i|
-      if ( fillup.length.to_i + counter_increment.to_s.length.to_i ) < min_digs.to_i
-        fillup = fillup + '0'
-      end
-    end
+    ( 1..100 ).each {
+
+      next if ( fillup.length.to_i + counter_increment.to_s.length.to_i ) >= min_digs.to_i
+
+      fillup = fillup + '0'
+    }
     number = fillup.to_s + counter_increment.to_s
 
     # calculate a checksum
