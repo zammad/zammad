@@ -174,6 +174,11 @@ Metrics/CyclomaticComplexity:
                  of test cases needed to validate a method.
   Enabled: false
 
+Metrics/BlockNesting:
+  Description: 'Avoid excessive block nesting'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count'
+  Enabled: false
+
 # TODO
 
 Style/FileName:
@@ -192,8 +197,6 @@ Style/CommentIndentation:
 Style/GlobalVars:
   Enabled: false
 Rails/TimeZone:
-  Enabled: false
-Metrics/BlockNesting:
   Enabled: false
 Lint/RescueException:
   Enabled: false
