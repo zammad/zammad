@@ -132,6 +132,24 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'websocket port',
+  name: 'websocket_port',
+  area: 'System::WebSocket',
+  description: 'Defines the port of the websocket server.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'websocket_port',
+        tag: 'input',
+      },
+    ],
+  },
+  state: '6042',
+  frontend: true
+)
+Setting.create_if_not_exists(
   title: 'http type',
   name: 'http_type',
   area: 'System::Base',

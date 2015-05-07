@@ -185,7 +185,8 @@ class _webSocketSingleton extends App.Controller
     if @backend is 'websocket'
       @ws = new window.WebSocket( protocol + window.location.hostname + '/ws' )
     else if @backend is 'websocketPort'
-      @ws = new window.WebSocket( protocol + window.location.hostname + ':6042/' )
+      websocket_port = App.Config.get('websocket_port') || '6042'
+      @ws            = new window.WebSocket( protocol + window.location.hostname + ':' + websocket_port + '/' )
     else
       @_ajaxInit()
 
