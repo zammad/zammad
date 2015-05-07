@@ -3,7 +3,7 @@ require 'rubygems'
 
 namespace :test do
   desc 'Start browser tests'
-  task :browser, [:opts] => :environment do |t, args|
+  task :browser, [:opts] => :environment do |_t, args|
 
     start = Time.now()
     if !args.opts

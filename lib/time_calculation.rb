@@ -69,10 +69,10 @@ put working hours matrix and timezone in function, returns UTC working hours mat
         Sat: [],
         Sun: [],
       }
-      (1..hours_to_shift).each {|count|
+      (1..hours_to_shift).each {
         working_hours.each {|day, value|
 
-          next if !working_hours[day]
+          next if !value
 
           to_move = working_hours[day].shift
           if day == :Mon

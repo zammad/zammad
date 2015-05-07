@@ -25,8 +25,9 @@ class Setting < ApplicationModel
     # config lookups
     config.each { |key, value|
       next if value.class.to_s != 'String'
-      config[key].gsub!( /\#\{config\.(.+?)\}/ ) { |s|
-        s = config[$1].to_s
+
+      config[key].gsub!( /\#\{config\.(.+?)\}/ ) {
+        config[$1].to_s
       }
     }
 

@@ -19,7 +19,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
     # get uniq objects
     list_objects = get_uniq_changes(list)
-    list_objects.each {|ticket_id, item|
+    list_objects.each {|_ticket_id, item|
 
       # send background job
       Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( item ) )

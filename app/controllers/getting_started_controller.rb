@@ -231,7 +231,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     if mail_exchangers && mail_exchangers[0] && mail_exchangers[0][0]
       domains.push mail_exchangers[0][0]
     end
-    provider_map.each {|provider, settings|
+    provider_map.each {|_provider, settings|
       domains.each {|domain_to_check|
 
         next if domain_to_check !~ /#{settings[:domain]}/i
@@ -616,7 +616,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
     result = email_probe_outbound( params[:outbound], params[:meta][:email], subject )
 
-    (1..5).each {|loop|
+    (1..5).each {
       sleep 10
 
       # fetch mailbox
@@ -769,7 +769,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           white_map = {
             'Recipient address rejected' => true,
           }
-          white_map.each {|key, message|
+          white_map.each {|key, _message|
 
             next if e.message !~ /#{Regexp.escape(key)}/i
 

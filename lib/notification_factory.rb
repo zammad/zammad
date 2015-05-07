@@ -81,10 +81,11 @@ module NotificationFactory
     }
 
     # translate
-    data[:string].gsub!( /i18n\((|.+?)\)/ ) { |placeholder|
+    data[:string].gsub!( /i18n\((|.+?)\)/ ) {
       string      = $1
       locale      = data[:locale] || 'en'
-      placeholder = Translation.translate( locale, string )
+
+      Translation.translate( locale, string )
     }
 
     data[:string]

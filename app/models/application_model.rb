@@ -761,7 +761,7 @@ log object update activity stream, if configured - will be executed automaticall
     end
 
     log = false
-    self.changes.each {|key, value|
+    self.changes.each {|key, _value|
 
       # do not log created_at and updated_at attributes
       next if ignore_attributes[key.to_sym] == true

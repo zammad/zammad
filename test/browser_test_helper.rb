@@ -68,7 +68,7 @@ class TestCase < Test::Unit::TestCase
 
   def teardown
     return if !@browsers
-    @browsers.each { |hash, local_browser|
+    @browsers.each { |_hash, local_browser|
       screenshot( browser: local_browser, comment: 'teardown' )
       browser_instance_close(local_browser)
     }
@@ -149,7 +149,7 @@ class TestCase < Test::Unit::TestCase
     instance.find_elements( { css: 'a[href="#current_user"]' } )[0].click
     sleep 0.1
     instance.find_elements( { css: 'a[href="#logout"]' } )[0].click
-    (1..6).each {|loop|
+    (1..6).each {
       sleep 1
       login = instance.find_elements( { css: '#login' } )[0]
       if login
@@ -760,7 +760,7 @@ class TestCase < Test::Unit::TestCase
     end
     loops = (timeout).to_i * 2
     text = ''
-    (1..loops).each { |loop|
+    (1..loops).each {
       element = instance.find_elements( { css: params[:css] } )[0]
       if element #&& element.displayed?
         begin
@@ -820,7 +820,7 @@ wait untill text in selector disabppears
     end
     loops = (timeout).to_i
     text  = ''
-    (1..loops).each { |loop|
+    (1..loops).each {
       element = instance.find_elements( { css: params[:css] } )[0]
       if !element #|| element.displayed?
         assert( true, 'not found' )
@@ -942,7 +942,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
-    (1..12).each {|loop|
+    (1..12).each {
       element = instance.find_elements( { css: 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1063,7 +1063,7 @@ wait untill text in selector disabppears
     #instance.execute_script( '$(".content.active .newTicket form").submit();' )
     instance.find_elements( { css: '.active .newTicket button.submit' } )[0].click
     sleep 1
-    (1..10).each {|loop|
+    (1..10).each {
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
         assert( true, 'ticket created' )
         sleep 2.5
@@ -1220,7 +1220,7 @@ wait untill text in selector disabppears
 
     if data[:state] || data[:group] || data[:body]
       found = nil
-      (1..5).each {|loop|
+      (1..5).each {
         if !found
           begin
             text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
@@ -1246,7 +1246,7 @@ wait untill text in selector disabppears
 
     instance.find_elements( { css: '.content.active button.js-submit' } )[0].click
 
-    (1..10).each {|loop|
+    (1..10).each {
       begin
         text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
         if !text || text.empty?
@@ -1408,7 +1408,7 @@ wait untill text in selector disabppears
       #puts url.inspect
       #puts element.inspect
     }
-    overviews.each {|url, value|
+    overviews.each {|url, _value|
       count          = instance.find_elements( { css: ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
       overviews[url] = count.to_i
     }
@@ -1576,7 +1576,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys( data[:first_response_time] )
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
-    (1..8).each {|loop|
+    (1..8).each {
       element = instance.find_elements( { css: 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1623,7 +1623,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys( data[:content] )
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
-    (1..8).each {|loop|
+    (1..8).each {
       element = instance.find_elements( { css: 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1667,7 +1667,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys( data[:body] )
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
-    (1..12).each {|loop|
+    (1..12).each {
       element = instance.find_elements( { css: 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1719,7 +1719,7 @@ wait untill text in selector disabppears
       dropdown.select_by( :text, data[:signature])
     end
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
-    (1..12).each {|loop|
+    (1..12).each {
       element = instance.find_elements( { css: 'body' } )[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/

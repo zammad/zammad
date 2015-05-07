@@ -165,7 +165,7 @@ class TwitterTest < ActiveSupport::TestCase
 
     # fetch check system account
     article = nil
-    (1..4).each {|loop|
+    (1..4).each {
       next if article
       sleep 25
 

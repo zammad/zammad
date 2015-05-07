@@ -243,14 +243,14 @@ EventMachine.run {
 
     # websocket
     log 'notice', "Status: websocket clients: #{ @clients.size }"
-    @clients.each { |client_id, client|
+    @clients.each { |client_id, _client|
       log 'notice', 'working...', client_id
     }
 
     # ajax
     client_list = Sessions.list
     clients = 0
-    client_list.each {|client_id, client|
+    client_list.each {|_client_id, client|
       next if client[:meta][:type] == 'websocket'
       clients = clients + 1
     }

@@ -36,8 +36,8 @@ class Sessions::Client
         user_id_last_run = user.id
 
         # release old objects
-        backend_pool.each {|pool|
-          pool = nil
+        backend_pool.collect! {
+          nil
         }
 
         # create new pool

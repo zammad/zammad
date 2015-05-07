@@ -18,7 +18,7 @@ returns
   def self.generate
 
     # generate number
-    (1..50_000).each { |i|
+    (1..50_000).each {
       number = adapter.generate
       ticket = Ticket.where( number: number ).first
       return number if !ticket

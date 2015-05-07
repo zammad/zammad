@@ -112,7 +112,7 @@ class LongPollingController < ApplicationController
     begin
 
       # update last ping
-      4.times {|loop|
+      4.times {
         sleep 0.25
       }
       #sleep 1
@@ -128,7 +128,7 @@ class LongPollingController < ApplicationController
           render json: queue
           return
         end
-        8.times {|loop|
+        8.times {
           sleep 0.25
         }
         #sleep 2

@@ -335,7 +335,7 @@ class Channel::EmailParser
     }
 
     # filter( channel, mail )
-    filters.each {|prio, backend|
+    filters.each {|_prio, backend|
       begin
         backend.run( channel, mail )
       rescue Exception => e
@@ -484,7 +484,7 @@ class Channel::EmailParser
     }
 
     # filter( channel, mail )
-    filters.each {|prio, backend|
+    filters.each {|_prio, backend|
       begin
         backend.run( channel, mail, ticket, article, user )
       rescue Exception => e
@@ -529,7 +529,7 @@ class Channel::EmailParser
   def set_attributes_by_x_headers( item_object, header_name, mail )
 
     # loop all x-zammad-hedaer-* headers
-    item_object.attributes.each {|key, value|
+    item_object.attributes.each {|key, _value|
 
       # ignore read only attributes
       next if key == 'updated_at'
