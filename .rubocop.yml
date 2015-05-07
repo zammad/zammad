@@ -204,8 +204,6 @@ Style/PredicateName:
   Enabled: false
 Style/ClassVars:
   Enabled: false
-Style/SpaceBeforeComment:
-  Enabled: false
 Lint/UselessAssignment:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
