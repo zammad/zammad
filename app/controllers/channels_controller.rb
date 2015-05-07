@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class ChannelsController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
 =begin
 

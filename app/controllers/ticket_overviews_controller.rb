@@ -3,7 +3,7 @@
 require 'ticket/overviews'
 
 class TicketOverviewsController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
   # GET /api/v1/ticket_overviews
   def show

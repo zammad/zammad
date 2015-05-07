@@ -3,7 +3,7 @@
 require 'icalendar'
 
 class IcalTicketsController < ApplicationController
-  before_filter  { authentication_check_action_token 'iCal' }
+  before_action  { authentication_check_action_token 'iCal' }
 
   # @path       [GET] /ical/tickets_all/:action_token
   #

@@ -14,12 +14,12 @@ class ApplicationController < ActionController::Base
                 :mode_show_rendeder,
                 :model_index_render
 
-  skip_before_filter :verify_authenticity_token
-  before_filter :set_user, :session_update
-  before_filter :cors_preflight_check
+  skip_before_action :verify_authenticity_token
+  before_action :set_user, :session_update
+  before_action :cors_preflight_check
 
-  after_filter  :set_access_control_headers
-  after_filter  :trigger_events
+  after_action  :set_access_control_headers
+  after_action  :trigger_events
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers

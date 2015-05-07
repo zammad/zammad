@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TagsController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
   # GET /api/v1/tags
   def index

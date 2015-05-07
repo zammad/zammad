@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class JobsController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)

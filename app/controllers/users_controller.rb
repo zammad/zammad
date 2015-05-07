@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
-  before_filter :authentication_check, except: [:create, :password_reset_send, :password_reset_verify]
+  before_action :authentication_check, except: [:create, :password_reset_send, :password_reset_verify]
 
   # @path       [GET] /users
   #
