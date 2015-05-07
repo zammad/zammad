@@ -42,19 +42,19 @@ add a new history entry for an object
 
     # lookups
     if data[:history_type]
-      history_type = self.type_lookup( data[:history_type] )
+      history_type = type_lookup( data[:history_type] )
     end
     if data[:history_object]
-      history_object = self.object_lookup( data[:history_object] )
+      history_object = object_lookup( data[:history_object] )
     end
     related_history_object_id = nil
     if data[:related_history_object]
-      related_history_object = self.object_lookup( data[:related_history_object] )
+      related_history_object = object_lookup( data[:related_history_object] )
       related_history_object_id = related_history_object.id
     end
     history_attribute_id = nil
     if data[:history_attribute]
-      history_attribute = self.attribute_lookup( data[:history_attribute] )
+      history_attribute = attribute_lookup( data[:history_attribute] )
       history_attribute_id = history_attribute.id
     end
 
@@ -149,13 +149,13 @@ returns
 
   def self.list( requested_object, requested_object_id, related_history_object = nil, assets = nil )
     if !related_history_object
-      history_object = self.object_lookup( requested_object )
+      history_object = object_lookup( requested_object )
       history = History.where( history_object_id: history_object.id )
                 .where( o_id: requested_object_id )
                 .order('created_at ASC, id ASC')
     else
-      history_object_requested = self.object_lookup( requested_object )
-      history_object_related   = self.object_lookup( related_history_object )
+      history_object_requested = object_lookup( requested_object )
+      history_object_related   = object_lookup( related_history_object )
       history = History.where(
         '((history_object_id = ? AND o_id = ?) OR (history_object_id = ? AND related_o_id = ? ))',
         history_object_requested.id,
@@ -174,13 +174,13 @@ returns
       end
 
       data = item.attributes
-      data['object']    = self.object_lookup_id( data['history_object_id'] ).name
-      data['type']      = self.type_lookup_id( data['history_type_id'] ).name
+      data['object']    = object_lookup_id( data['history_object_id'] ).name
+      data['type']      = type_lookup_id( data['history_type_id'] ).name
       data.delete('history_object_id')
       data.delete('history_type_id')
 
       if data['history_attribute_id']
-        data['attribute'] = self.attribute_lookup_id( data['history_attribute_id'] ).name
+        data['attribute'] = attribute_lookup_id( data['history_attribute_id'] ).name
       end
       data.delete('history_attribute_id')
 
@@ -194,7 +194,7 @@ returns
         data.delete( 'value_from' )
       end
       if !data['related_history_object_id'].nil?
-        data['related_object'] = self.object_lookup_id( data['related_history_object_id'] ).name
+        data['related_object'] = object_lookup_id( data['related_history_object_id'] ).name
       end
       data.delete( 'related_history_object_id' )
 

@@ -187,8 +187,6 @@ Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
   Enabled: false
 
-Style/RedundantSelf:
-  Enabled: false
 Style/CommentIndentation:
   Enabled: false
 Style/GlobalVars:

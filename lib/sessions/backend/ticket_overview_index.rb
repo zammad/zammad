@@ -34,10 +34,10 @@ class Sessions::Backend::TicketOverviewIndex
   def push
 
     # check check interval
-    return if Sessions::CacheIn.get( self.client_key )
+    return if Sessions::CacheIn.get( client_key )
 
     # reset check interval
-    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
@@ -45,7 +45,7 @@ class Sessions::Backend::TicketOverviewIndex
     @last_ticket_change = last_ticket_change
 
     # load current data
-    data = self.load
+    data = load
 
     return if !data
 

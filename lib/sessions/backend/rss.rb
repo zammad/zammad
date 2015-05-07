@@ -16,14 +16,14 @@ class Sessions::Backend::Rss
   def load
 
     # check timeout
-    cache = Sessions::CacheIn.get( self.collection_key )
+    cache = Sessions::CacheIn.get( collection_key )
     return cache if cache
 
     url = 'http://www.heise.de/newsticker/heise-atom.xml'
     rss_items = Rss.fetch( url, 8 )
 
     # set new timeout
-    Sessions::CacheIn.set( self.collection_key, rss_items, { expires_in: 1.hours } )
+    Sessions::CacheIn.set( collection_key, rss_items, { expires_in: 1.hours } )
 
     rss_items
   end
@@ -35,13 +35,13 @@ class Sessions::Backend::Rss
   def push
 
     # check timeout
-    timeout = Sessions::CacheIn.get( self.client_key )
+    timeout = Sessions::CacheIn.get( client_key )
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
-    data = self.load
+    data = load
 
     return if !data || data.empty?
 

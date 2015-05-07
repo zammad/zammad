@@ -62,7 +62,7 @@ class RecentView < ApplicationModel
   end
 
   def self.list_full( user, limit = 10 )
-    recent_viewed = self.list( user, limit )
+    recent_viewed = list( user, limit )
 
     # get related object
     assets = ApplicationModel.assets_of_object_list(recent_viewed)
@@ -75,7 +75,7 @@ class RecentView < ApplicationModel
 
   def notify_clients
     Sessions.send_to(
-      self.created_by_id,
+      created_by_id,
       {
         event: 'RecentView::changed',
         data: {}

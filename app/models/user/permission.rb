@@ -22,7 +22,7 @@ returns
       if data[:current_user].is_role(Z_ROLENAME_CUSTOMER)
 
         # access ok if its own user
-        return true if self.id == data[:current_user].id
+        return true if id == data[:current_user].id
 
         # no access
         return false

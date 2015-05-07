@@ -46,11 +46,11 @@ class Sessions::Backend::TicketOverviewList
 
     # check interval
     Rails.logger.debug "LOG 1 #{@user.inspect}"
-    return if Sessions::CacheIn.get( self.client_key )
+    return if Sessions::CacheIn.get( client_key )
 
     # reset check interval
     Rails.logger.debug "LOG 2 #{@ttl.seconds}"
-    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
@@ -59,7 +59,7 @@ class Sessions::Backend::TicketOverviewList
     @last_ticket_change = last_ticket_change
 
     # load current data
-    items = self.load
+    items = load
     Rails.logger.debug "LOG 4 #{items.inspect}"
     return if !items
 

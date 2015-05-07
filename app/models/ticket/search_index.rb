@@ -32,7 +32,7 @@ returns
 
     # for performance reasons, Model.search_index_reload will only collect if of object
     # get whole data here
-    ticket = self.class.find(self.id)
+    ticket = self.class.find(id)
 
     # remove ignored attributes
     attributes = ticket.attributes
@@ -42,7 +42,7 @@ returns
     }
 
     # add tags
-    tags = Tag.tag_list( object: 'Ticket', o_id: self.id )
+    tags = Tag.tag_list( object: 'Ticket', o_id: id )
     if tags && !tags.empty?
       attributes[:tag] = tags
     end
@@ -57,7 +57,7 @@ returns
     attachment_max_size_in_mb = Setting.get('es_attachment_max_size_in_mb') || 40
 
     # collect article data
-    articles = Ticket::Article.where( ticket_id: self.id )
+    articles = Ticket::Article.where( ticket_id: id )
     attributes['articles'] = []
     articles.each {|article|
       article_attributes = article.attributes

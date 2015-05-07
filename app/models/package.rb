@@ -13,10 +13,10 @@ class Package < ApplicationModel
   def self.build(data)
 
     if data[:file]
-      xml     = self._read_file( data[:file], data[:root] || true )
-      package = self._parse(xml)
+      xml     = _read_file( data[:file], data[:root] || true )
+      package = _parse(xml)
     elsif data[:string]
-      package = self._parse( data[:string] )
+      package = _parse( data[:string] )
     end
 
     build_date = REXML::Element.new('build_date')
@@ -28,7 +28,7 @@ class Package < ApplicationModel
     package.root.insert_after( '//zpm/description', build_host )
     package.elements.each('zpm/filelist/file') do |element|
       location = element.attributes['location']
-      content = self._read_file( location, data[:root] )
+      content = _read_file( location, data[:root] )
       base64  = Base64.encode64(content)
       element.text = base64
     end
@@ -55,7 +55,7 @@ class Package < ApplicationModel
       end
     end
     data.each {|file|
-      self.install( file: path + '/' + file )
+      install( file: path + '/' + file )
     }
     data
   end
@@ -178,10 +178,10 @@ class Package < ApplicationModel
   # Package.install( :string => zpm_as_string )
   def self.install(data)
     if data[:file]
-      xml     = self._read_file( data[:file], true )
-      package = self._parse(xml)
+      xml     = _read_file( data[:file], true )
+      package = _parse(xml)
     elsif data[:string]
-      package = self._parse( data[:string] )
+      package = _parse( data[:string] )
     end
 
     # package meta data
@@ -207,7 +207,7 @@ class Package < ApplicationModel
       end
 
       # uninstall files of old package
-      self.uninstall(
+      uninstall(
         name: package_db.name,
         version: package_db.version,
         migration_not_down: true,
@@ -233,7 +233,7 @@ class Package < ApplicationModel
       permission = element.attributes['permission'] || '644'
       base64     = element.text
       content    = Base64.decode64(base64)
-      content    = self._write_file(location, permission, content)
+      content    = _write_file(location, permission, content)
     end
 
     # update package state
@@ -258,8 +258,8 @@ class Package < ApplicationModel
       fail "No such package '#{package_name}'"
     end
 
-    file = self._get_bin( package.name, package.version )
-    self.install( string: file, reinstall: true )
+    file = _get_bin( package.name, package.version )
+    install( string: file, reinstall: true )
   end
 
   # Package.uninstall( :name => 'package', :version => '0.1.1' )
@@ -267,10 +267,10 @@ class Package < ApplicationModel
   def self.uninstall( data )
 
     if data[:string]
-      package = self._parse( data[:string] )
+      package = _parse( data[:string] )
     else
-      file    = self._get_bin( data[:name], data[:version] )
-      package = self._parse(file)
+      file    = _get_bin( data[:name], data[:version] )
+      package = _parse(file)
     end
 
     # package meta data
@@ -289,7 +289,7 @@ class Package < ApplicationModel
       permission = element.attributes['permission'] || '644'
       base64     = element.text
       content    = Base64.decode64(base64)
-      content    = self._delete_file(location, permission, content)
+      content    = _delete_file(location, permission, content)
     end
 
     # prebuild assets

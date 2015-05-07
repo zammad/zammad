@@ -170,11 +170,11 @@ translate strings in ruby context, e. g. for notifications
   def set_initial
 
     return if target_initial
-    self.target_initial = self.target
+    self.target_initial = target
   end
 
   def cache_clear
-    Cache.delete( 'Translation::' + self.locale.downcase )
+    Cache.delete( 'Translation::' + locale.downcase )
   end
   def self.cache_set(locale, data)
     Cache.write( 'Translation::' + locale.downcase, data )

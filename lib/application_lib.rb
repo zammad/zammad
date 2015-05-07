@@ -22,7 +22,7 @@ returns
       return if !adapter
 
       # load backend
-      self.load_adapter(adapter)
+      load_adapter(adapter)
     end
 
 =begin

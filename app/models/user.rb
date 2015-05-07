@@ -87,17 +87,17 @@ returns
 
   def fullname
     fullname = ''
-    if self.firstname && !self.firstname.empty?
-      fullname = fullname + self.firstname
+    if firstname && !firstname.empty?
+      fullname = fullname + firstname
     end
-    if self.lastname && !self.lastname.empty?
+    if lastname && !lastname.empty?
       if fullname != ''
         fullname = fullname + ' '
       end
-      fullname = fullname + self.lastname
+      fullname = fullname + lastname
     end
-    if fullname == '' && self.email
-      fullname = self.email
+    if fullname == '' && email
+      fullname = email
     end
     fullname
   end
@@ -116,7 +116,7 @@ returns
 =end
 
   def is_role( role_name )
-    self.roles.each { |role|
+    roles.each { |role|
       return role if role.name == role_name
     }
     false
@@ -250,7 +250,7 @@ returns
       url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
     end
     roles = Role.where( name: 'Customer' )
-    self.create(
+    create(
       login: hash['info']['nickname'] || hash['uid'],
       firstname: hash['info']['name'],
       email: hash['info']['email'],
@@ -401,21 +401,21 @@ returns
     self.login_failed = 0
 
     # set updated by user
-    self.updated_by_id = self.id
+    self.updated_by_id = id
 
-    self.save
+    save
   end
 
   private
 
   def check_name
 
-    if ( self.firstname && !self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? )
+    if ( firstname && !firstname.empty? ) && ( !lastname || lastname.empty? )
 
       # Lastname, Firstname
-      scan = self.firstname.scan(/, /)
+      scan = firstname.scan(/, /)
       if scan[0]
-        name = self.firstname.split(', ', 2)
+        name = firstname.split(', ', 2)
         if !name[0].nil?
           self.lastname  = name[0]
         end
@@ -426,7 +426,7 @@ returns
       end
 
       # Firstname Lastname
-      name = self.firstname.split(' ', 2)
+      name = firstname.split(' ', 2)
       if !name[0].nil?
         self.firstname = name[0]
       end
@@ -436,8 +436,8 @@ returns
       return
 
     # -no name- firstname.lastname@example.com
-    elsif ( !self.firstname || self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? ) && ( self.email && !self.email.empty? )
-      scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
+    elsif ( !firstname || firstname.empty? ) && ( !lastname || lastname.empty? ) && ( email && !email.empty? )
+      scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
         if !scan[0][0].nil?
           self.firstname = scan[0][0].capitalize
@@ -451,34 +451,34 @@ returns
 
   def check_email
 
-    return if !self.email
+    return if !email
 
-    self.email = self.email.downcase
+    self.email = email.downcase
   end
 
   def check_login
 
     # use email as login if not given
-    if !self.login && self.email
-      self.login = self.email
+    if !login && email
+      self.login = email
     end
 
     # if email has changed, login is old email, change also login
-    if self.changes && self.changes['email']
-      if self.changes['email'][0] == self.login
-        self.login = self.email
+    if changes && changes['email']
+      if changes['email'][0] == login
+        self.login = email
       end
     end
 
     # check if login already exists
-    return if !self.login
+    return if !login
 
-    self.login = self.login.downcase
+    self.login = login.downcase
     check      = true
     while check
-      exists = User.find_by( login: self.login )
-      if exists && exists.id != self.id
-        self.login = self.login + rand(999).to_s
+      exists = User.find_by( login: login )
+      if exists && exists.id != id
+        self.login = login + rand(999).to_s
       else
         check = false
       end
@@ -487,49 +487,49 @@ returns
 
   def avatar_check
 
-    return if !self.email
-    return if self.email.empty?
+    return if !email
+    return if email.empty?
 
     # save/update avatar
     avatar = Avatar.auto_detection(
       object: 'User',
-      o_id: self.id,
-      url: self.email,
+      o_id: id,
+      url: email,
       source: 'app',
-      updated_by_id: self.updated_by_id,
-      created_by_id: self.updated_by_id,
+      updated_by_id: updated_by_id,
+      created_by_id: updated_by_id,
     )
 
     # update user link
     return if !avatar
 
-    self.update_column( :image, avatar.store_hash )
-    self.cache_delete
+    update_column( :image, avatar.store_hash )
+    cache_delete
   end
 
   def avatar_destroy
-    Avatar.remove( 'User', self.id )
+    Avatar.remove( 'User', id )
   end
 
   def check_password
 
     # set old password again if not given
-    if self.password == '' || !self.password
+    if password == '' || !password
 
       # get current record
-      if self.id
+      if id
         #current = User.find(self.id)
         #self.password = current.password
-        self.password = self.password_was
+        self.password = password_was
       end
 
     end
 
     # crypt password if not already crypted
-    return if !self.password
-    return if self.password =~ /^\{sha2\}/
+    return if !password
+    return if password =~ /^\{sha2\}/
 
-    crypted       = Digest::SHA2.hexdigest( self.password )
+    crypted       = Digest::SHA2.hexdigest( password )
     self.password = "{sha2}#{crypted}"
   end
 end

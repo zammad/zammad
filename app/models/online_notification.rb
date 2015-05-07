@@ -180,7 +180,7 @@ returns:
 
   def notify_clients_after_change
     Sessions.send_to(
-      self.user_id,
+      user_id,
       {
         event: 'OnlineNotification::changed',
         data: {}

@@ -24,7 +24,7 @@ returns
         # access ok if its own organization
         return false if data[:type] != 'ro'
         return false if !data[:current_user].organization_id
-        return true if self.id == data[:current_user].organization_id
+        return true if id == data[:current_user].organization_id
 
         # no access
         return false

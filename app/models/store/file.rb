@@ -17,7 +17,7 @@ class Store
         if !adapter_name
           fail 'Missing storage_provider setting option'
         end
-        adapter = self.load_adapter( "Store::Provider::#{ adapter_name }" )
+        adapter = load_adapter( "Store::Provider::#{ adapter_name }" )
         adapter.add( data, sha )
         file = Store::File.create(
           provider: adapter_name,
@@ -29,12 +29,12 @@ class Store
 
     # read content
     def content
-      adapter = self.class.load_adapter("Store::Provider::#{ self.provider }")
-      if self.sha
-        c = adapter.get( self.sha )
+      adapter = self.class.load_adapter("Store::Provider::#{ provider }")
+      if sha
+        c = adapter.get( sha )
       else
         # fallback until migration is done
-        c = Store::Provider::DB.find_by( md5: self.md5 ).data
+        c = Store::Provider::DB.find_by( md5: md5 ).data
       end
       c
     end
@@ -86,8 +86,8 @@ class Store
     private
 
     def destroy_provider
-      adapter = self.class.load_adapter("Store::Provider::#{ self.provider }")
-      adapter.delete( self.sha )
+      adapter = self.class.load_adapter("Store::Provider::#{ provider }")
+      adapter.delete( sha )
     end
   end
 end

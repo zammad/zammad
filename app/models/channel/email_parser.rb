@@ -180,10 +180,10 @@ class Channel::EmailParser
 
           # protect process to work fine with spam emails, see test/fixtures/mail15.box
           begin
-            attachs = self._get_attachment( part, data[:attachments], mail )
+            attachs = _get_attachment( part, data[:attachments], mail )
             data[:attachments].concat( attachs )
           rescue
-            attachs = self._get_attachment( part, data[:attachments], mail )
+            attachs = _get_attachment( part, data[:attachments], mail )
             data[:attachments].concat( attachs )
           end
         }
@@ -252,7 +252,7 @@ class Channel::EmailParser
     if !file.parts.empty?
       a = []
       file.parts.each {|p|
-        attachment = self._get_attachment( p, attachments, mail )
+        attachment = _get_attachment( p, attachments, mail )
         a.concat( attachment )
       }
       return a

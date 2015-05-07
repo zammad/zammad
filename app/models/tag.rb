@@ -11,10 +11,10 @@ class Tag < ApplicationModel
 
     # lookups
     if data[:object]
-      tag_object_id = self.tag_object_lookup( data[:object] )
+      tag_object_id = tag_object_lookup( data[:object] )
     end
     if data[:item]
-      tag_item_id = self.tag_item_lookup( data[:item] )
+      tag_item_id = tag_item_lookup( data[:item] )
     end
 
     # create history
@@ -31,10 +31,10 @@ class Tag < ApplicationModel
 
     # lookups
     if data[:object]
-      tag_object_id = self.tag_object_lookup( data[:object] )
+      tag_object_id = tag_object_lookup( data[:object] )
     end
     if data[:item]
-      tag_item_id = self.tag_item_lookup( data[:item] )
+      tag_item_id = tag_item_lookup( data[:item] )
     end
 
     # create history
@@ -48,14 +48,14 @@ class Tag < ApplicationModel
   end
 
   def self.tag_list( data )
-    tag_object_id_requested = self.tag_object_lookup( data[:object] )
+    tag_object_id_requested = tag_object_lookup( data[:object] )
     tag_search = Tag.where(
       tag_object_id: tag_object_id_requested,
       o_id: data[:o_id],
     )
     tags = []
     tag_search.each {|tag|
-      tags.push self.tag_item_lookup_id( tag.tag_item_id )
+      tags.push tag_item_lookup_id( tag.tag_item_id )
     }
     tags
   end

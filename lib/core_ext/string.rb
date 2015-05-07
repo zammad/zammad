@@ -1,6 +1,6 @@
 class String
   def message_quote
-    quote = self.split("\n")
+    quote = split("\n")
     body_quote = ''
     quote.each do |line|
       body_quote = body_quote + '> ' + line + "\n"
@@ -40,7 +40,7 @@ class String
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
   def utf8_to_3bytesutf8
     return if ActiveRecord::Base.connection_config[:adapter] != 'mysql2'
-    self.each_char.select {|c|
+    each_char.select {|c|
       if c.bytes.count > 3
         Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{ self }'"
         next

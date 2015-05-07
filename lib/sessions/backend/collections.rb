@@ -5,7 +5,7 @@ class Sessions::Backend::Collections
     @client    = client
     @client_id = client_id
     @ttl       = ttl
-    @backends  = self.backend
+    @backends  = backend
   end
 
   def push

@@ -80,13 +80,13 @@ returns
 
     # only use object attributes
     data = {}
-    self.new.attributes.each {|item|
+    new.attributes.each {|item|
       next if !params.key?(item[0])
       data[item[0].to_sym] = params[item[0]]
     }
 
     # we do want to set this via database
-    self.param_validation(data)
+    param_validation(data)
   end
 
 =begin
@@ -118,7 +118,7 @@ returns
       list_of_items.each {|item|
         list.push( assoc.klass.find(item) )
       }
-      self.send( assoc.name.to_s + '=', list )
+      send( assoc.name.to_s + '=', list )
     }
   end
 
@@ -142,7 +142,7 @@ returns
     self.class.reflect_on_all_associations.map { |assoc|
       real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
       if self.respond_to?( real_key )
-        attributes[ real_key ] = self.send( real_key )
+        attributes[ real_key ] = send( real_key )
       end
     }
     attributes
@@ -190,8 +190,8 @@ returns
   def fill_up_user_create
     if self.class.column_names.include? 'updated_by_id'
       if UserInfo.current_user_id
-        if self.updated_by_id && self.updated_by_id != UserInfo.current_user_id
-          logger.info "NOTICE create - self.updated_by_id is different: #{self.updated_by_id}/#{UserInfo.current_user_id}"
+        if updated_by_id && updated_by_id != UserInfo.current_user_id
+          logger.info "NOTICE create - self.updated_by_id is different: #{updated_by_id}/#{UserInfo.current_user_id}"
         end
         self.updated_by_id = UserInfo.current_user_id
       end
@@ -201,8 +201,8 @@ returns
 
     return if !UserInfo.current_user_id
 
-    if self.created_by_id && self.created_by_id != UserInfo.current_user_id
-      logger.info "NOTICE create - self.created_by_id is different: #{self.created_by_id}/#{UserInfo.current_user_id}"
+    if created_by_id && created_by_id != UserInfo.current_user_id
+      logger.info "NOTICE create - self.created_by_id is different: #{created_by_id}/#{UserInfo.current_user_id}"
     end
     self.created_by_id = UserInfo.current_user_id
   end
@@ -229,29 +229,29 @@ returns
   end
 
   def cache_update(o)
-    self.cache_delete if self.respond_to?('cache_delete')
+    cache_delete if self.respond_to?('cache_delete')
     o.cache_delete if o.respond_to?('cache_delete')
   end
 
   def cache_delete
 
     # delete id caches
-    key = self.class.to_s + '::' + self.id.to_s
+    key = self.class.to_s + '::' + id.to_s
     Cache.delete( key.to_s )
-    key = self.class.to_s + ':f:' + self.id.to_s
+    key = self.class.to_s + ':f:' + id.to_s
     Cache.delete( key.to_s )
 
     # delete old name / login caches
     if self.changed?
-      if self.changes.key?('name')
-        name = self.changes['name'][0].to_s
+      if changes.key?('name')
+        name = changes['name'][0].to_s
         key = self.class.to_s + '::' + name
         Cache.delete( key.to_s )
         key = self.class.to_s + ':f:' + name
         Cache.delete( key.to_s )
       end
-      if self.changes.key?('login')
-        name = self.changes['login'][0].to_s
+      if changes.key?('login')
+        name = changes['login'][0].to_s
         key = self.class.to_s + '::' + name
         Cache.delete( key.to_s )
         key = self.class.to_s + ':f:' + name
@@ -269,26 +269,26 @@ returns
 
     return if !self[:login]
 
-    key = self.class.to_s + '::' + self.login.to_s
+    key = self.class.to_s + '::' + login.to_s
     Cache.delete( key.to_s )
-    key = self.class.to_s + ':f:' + self.login.to_s
+    key = self.class.to_s + ':f:' + login.to_s
     Cache.delete( key.to_s )
   end
 
   def self.cache_set(data_id, data, full = false)
     if !full
-      key = self.to_s + '::' + data_id.to_s
+      key = to_s + '::' + data_id.to_s
     else
-      key = self.to_s + ':f:' + data_id.to_s
+      key = to_s + ':f:' + data_id.to_s
     end
     Cache.write( key.to_s, data )
   end
 
   def self.cache_get(data_id, full = false)
     if !full
-      key = self.to_s + '::' + data_id.to_s
+      key = to_s + '::' + data_id.to_s
     else
-      key = self.to_s + ':f:' + data_id.to_s
+      key = to_s + ':f:' + data_id.to_s
     end
     Cache.get( key.to_s )
   end
@@ -309,32 +309,32 @@ returns
 
   def self.lookup(data)
     if data[:id]
-      cache = self.cache_get( data[:id] )
+      cache = cache_get( data[:id] )
       return cache if cache
 
-      record = self.find_by( id: data[:id] )
-      self.cache_set( data[:id], record )
+      record = find_by( id: data[:id] )
+      cache_set( data[:id], record )
       return record
     elsif data[:name]
-      cache = self.cache_get( data[:name] )
+      cache = cache_get( data[:name] )
       return cache if cache
 
-      records = self.where( name: data[:name] )
+      records = where( name: data[:name] )
       records.each {|record|
         if record.name == data[:name]
-          self.cache_set( data[:name], record )
+          cache_set( data[:name], record )
           return record
         end
       }
       return
     elsif data[:login]
-      cache = self.cache_get( data[:login] )
+      cache = cache_get( data[:login] )
       return cache if cache
 
-      records = self.where( login: data[:login] )
+      records = where( login: data[:login] )
       records.each {|record|
         if record.login == data[:login]
-          self.cache_set( data[:login], record )
+          cache_set( data[:login], record )
           return record
         end
       }
@@ -358,25 +358,25 @@ returns
 
   def self.create_if_not_exists(data)
     if data[:id]
-      record = self.find_by( id: data[:id] )
+      record = find_by( id: data[:id] )
       return record if record
     elsif data[:name]
-      records = self.where( name: data[:name] )
+      records = where( name: data[:name] )
       records.each {|record|
         return record if record.name == data[:name]
       }
     elsif data[:login]
-      records = self.where( login: data[:login] )
+      records = where( login: data[:login] )
       records.each {|record|
         return record if record.login == data[:login]
       }
     elsif data[:locale] && data[:source]
-      records = self.where( locale: data[:locale], source: data[:source] )
+      records = where( locale: data[:locale], source: data[:source] )
       records.each {|record|
         return record if record.source == data[:source]
       }
     end
-    self.create(data)
+    create(data)
   end
 
 =begin
@@ -393,45 +393,45 @@ returns
 
   def self.create_or_update(data)
     if data[:id]
-      records = self.where( id: data[:id] )
+      records = where( id: data[:id] )
       records.each {|record|
         record.update_attributes( data )
         return record
       }
-      record = self.new( data )
+      record = new( data )
       record.save
       return record
     elsif data[:name]
-      records = self.where( name: data[:name] )
+      records = where( name: data[:name] )
       records.each {|record|
         if record.name == data[:name]
           record.update_attributes( data )
           return record
         end
       }
-      record = self.new( data )
+      record = new( data )
       record.save
       return record
     elsif data[:login]
-      records = self.where( login: data[:login] )
+      records = where( login: data[:login] )
       records.each {|record|
         if record.login.downcase == data[:login].downcase
           record.update_attributes( data )
           return record
         end
       }
-      record = self.new( data )
+      record = new( data )
       record.save
       return record
     elsif data[:locale]
-      records = self.where( locale: data[:locale] )
+      records = where( locale: data[:locale] )
       records.each {|record|
         if record.locale.downcase == data[:locale].downcase
           record.update_attributes( data )
           return record
         end
       }
-      record = self.new( data )
+      record = new( data )
       record.save
       return record
     else
@@ -457,7 +457,7 @@ end
   end
 
   def latest_change_set_from_observer
-    self.class.latest_change_set(self.updated_at)
+    self.class.latest_change_set(updated_at)
   end
 
   def latest_change_set_from_observer_destroy
@@ -465,7 +465,7 @@ end
   end
 
   def self.latest_change_set(updated_at)
-    key        = "#{self.new.class.name}_latest_change"
+    key        = "#{new.class.name}_latest_change"
     expires_in = 31_536_000 # 1 year
 
     if updated_at.nil?
@@ -488,17 +488,17 @@ returns
 =end
 
   def self.latest_change
-    key        = "#{self.new.class.name}_latest_change"
+    key        = "#{new.class.name}_latest_change"
     updated_at = Cache.get( key )
 
     logger.debug "request latest_change for #{key}/#{updated_at}"
 
     # if we do not have it cached, do lookup
     if !updated_at
-      o = self.select(:updated_at).order(updated_at: :desc).limit(1).first
+      o = select(:updated_at).order(updated_at: :desc).limit(1).first
       if o
         updated_at = o.updated_at
-        self.latest_change_set(updated_at)
+        latest_change_set(updated_at)
       end
       logger.debug "lookup latest_change for #{key}/#{updated_at}"
     end
@@ -544,12 +544,12 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ self.id }) notify created " + self.created_at.to_s
+    logger.debug "#{ self.class.name }.find(#{ id }) notify created " + created_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
       event: class_name + ':create',
-      data: { id: self.id, updated_at: self.updated_at }
+      data: { id: id, updated_at: updated_at }
     )
   end
 
@@ -573,12 +573,12 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ self.id }) notify UPDATED " + self.updated_at.to_s
+    logger.debug "#{ self.class.name }.find(#{ id }) notify UPDATED " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
       event: class_name + ':update',
-      data: { id: self.id, updated_at: self.updated_at }
+      data: { id: id, updated_at: updated_at }
     )
   end
 
@@ -602,12 +602,12 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ self.id }) notify TOUCH " + self.updated_at.to_s
+    logger.debug "#{ self.class.name }.find(#{ id }) notify TOUCH " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
       event: class_name + ':touch',
-      data: { id: self.id, updated_at: self.updated_at }
+      data: { id: id, updated_at: updated_at }
     )
   end
 
@@ -630,12 +630,12 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ self.id }) notify DESTOY " + self.updated_at.to_s
+    logger.debug "#{ self.class.name }.find(#{ id }) notify DESTOY " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
       event: class_name + ':destroy',
-      data: { id: self.id, updated_at: self.updated_at }
+      data: { id: id, updated_at: updated_at }
     )
   end
 
@@ -672,7 +672,7 @@ update search index, if configured - will be executed automatically
 
     # start background job to transfer data to search index
     return if !SearchIndexBackend.enabled?
-    Delayed::Job.enqueue( ApplicationModel::BackgroundJobSearchIndex.new( self.class.to_s, self.id ) )
+    Delayed::Job.enqueue( ApplicationModel::BackgroundJobSearchIndex.new( self.class.to_s, id ) )
   end
 
 =begin
@@ -686,7 +686,7 @@ delete search index object, will be executed automatically
 
   def search_index_destroy
     return if !self.class.search_index_support_config
-    SearchIndexBackend.remove( self.class.to_s, self.id )
+    SearchIndexBackend.remove( self.class.to_s, id )
   end
 
 =begin
@@ -699,9 +699,9 @@ reload search index with full data
 
   def self.search_index_reload
     return if !@search_index_support_config
-    all_ids = self.select('id').all.order('created_at DESC')
+    all_ids = select('id').all.order('created_at DESC')
     all_ids.each { |item_with_id|
-      item = self.find( item_with_id.id )
+      item = find( item_with_id.id )
       item.search_index_update_backend
     }
   end
@@ -762,7 +762,7 @@ log object update activity stream, if configured - will be executed automaticall
     end
 
     log = false
-    self.changes.each {|key, _value|
+    changes.each {|key, _value|
 
       # do not log created_at and updated_at attributes
       next if ignore_attributes[key.to_sym] == true
@@ -786,7 +786,7 @@ delete object activity stream, will be executed automatically
 
   def activity_stream_destroy
     return if !self.class.activity_stream_support_config
-    ActivityStream.remove( self.class.to_s, self.id )
+    ActivityStream.remove( self.class.to_s, id )
   end
 
 =begin
@@ -819,7 +819,7 @@ log object create history, if configured - will be executed automatically
   def history_create
     return if !self.class.history_support_config
     #logger.debug 'create ' + self.changes.inspect
-    self.history_log( 'created', self.created_by_id )
+    history_log( 'created', created_by_id )
 
   end
 
@@ -842,8 +842,8 @@ log object update history with all updated attributes, if configured - will be e
 
     # new record also triggers update, so ignore new records
     changes = self.changes
-    if self.history_changes_last_done
-      self.history_changes_last_done.each {|key, value|
+    if history_changes_last_done
+      history_changes_last_done.each {|key, value|
         if changes.key?(key) && changes[key] == value
           changes.delete(key)
         end
@@ -884,8 +884,8 @@ log object update history with all updated attributes, if configured - will be e
         value_id[0] = value[0]
         value_id[1] = value[1]
 
-        if self.respond_to?( attribute_name ) && self.send(attribute_name)
-          relation_class = self.send(attribute_name).class
+        if self.respond_to?( attribute_name ) && send(attribute_name)
+          relation_class = send(attribute_name).class
           if relation_class && value_id[0]
             relation_model = relation_class.lookup( id: value_id[0] )
             if relation_model
@@ -916,7 +916,7 @@ log object update history with all updated attributes, if configured - will be e
         id_to: value_id[1],
       }
       #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
-      self.history_log( 'updated', self.updated_by_id, data )
+      history_log( 'updated', updated_by_id, data )
     }
   end
 
@@ -931,7 +931,7 @@ delete object history, will be executed automatically
 
   def history_destroy
     return if !self.class.history_support_config
-    History.remove( self.class.to_s, self.id )
+    History.remove( self.class.to_s, id )
   end
 
 =begin
@@ -948,7 +948,7 @@ returns
 =end
 
   def attachments
-    Store.list( object: self.class.to_s, o_id: self.id )
+    Store.list( object: self.class.to_s, o_id: id )
   end
 
 =begin
@@ -964,7 +964,7 @@ store attachments for this object
     self.attachments_buffer = attachments
 
     # update if object already exists
-    return if !( self.id && self.id != 0 )
+    return if !( id && id != 0 )
 
     attachments_buffer_check
   end
@@ -982,7 +982,7 @@ return object and assets
 =end
 
   def self.full(id)
-    object = self.find(id)
+    object = find(id)
     assets = object.assets({})
     {
       id: id,
@@ -1046,11 +1046,11 @@ get assets of object list
     attachments_buffer.each do |attachment|
       article_store.push Store.add(
         object: self.class.to_s,
-        o_id: self.id,
+        o_id: id,
         data: attachment.content,
         filename: attachment.filename,
         preferences: attachment.preferences,
-        created_by_id: self.created_by_id,
+        created_by_id: created_by_id,
       )
     end
     attachments_buffer = nil
@@ -1066,7 +1066,7 @@ delete object recent viewed list, will be executed automatically
 =end
 
   def recent_view_destroy
-    RecentView.log_destroy( self.class.to_s, self.id )
+    RecentView.log_destroy( self.class.to_s, id )
   end
 
 =begin
@@ -1076,7 +1076,7 @@ check string/varchar size and cut them if needed
 =end
 
   def check_limits
-    self.attributes.each {|attribute|
+    attributes.each {|attribute|
       next if !self[ attribute[0] ]
       next if self[ attribute[0] ].class != String
       next if self[ attribute[0] ].empty?

@@ -37,7 +37,7 @@ class Observer::User::Geo < ActiveRecord::Observer
     return if ( current_location == next_location ) && record.preferences['lat'] && record.preferences['lng']
 
     # geo update
-    self.geo_update(record)
+    geo_update(record)
   end
 
   # update geo data of user

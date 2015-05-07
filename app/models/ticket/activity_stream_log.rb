@@ -31,7 +31,7 @@ returns
       object: self.class.name,
       group_id: self['group_id'],
       role: role,
-      created_at: self.updated_at,
+      created_at: updated_at,
       created_by_id: user_id,
     )
   end

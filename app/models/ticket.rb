@@ -76,7 +76,7 @@ returns
 =end
 
   def agent_of_group
-    Group.find( self.group_id ).users.where( active: true ).joins(:roles).where( 'roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true ).uniq()
+    Group.find( group_id ).users.where( active: true ).joins(:roles).where( 'roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true ).uniq()
   end
 
 =begin
@@ -128,10 +128,10 @@ returns
   def merge_to(data)
 
     # update articles
-    Ticket::Article.where( ticket_id: self.id ).each(&:touch)
+    Ticket::Article.where( ticket_id: id ).each(&:touch)
 
     # quiet update of reassign of articles
-    Ticket::Article.where( ticket_id: self.id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
+    Ticket::Article.where( ticket_id: id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
 
     # touch new ticket (to broadcast change)
     Ticket.find( data[:ticket_id] ).touch
@@ -140,7 +140,7 @@ returns
 
     # create new merge article
     Ticket::Article.create(
-      ticket_id: self.id,
+      ticket_id: id,
       type_id: Ticket::Article::Type.lookup( name: 'note' ).id,
       sender_id: Ticket::Article::Sender.lookup( name: Z_ROLENAME_AGENT ).id,
       body: 'merged',
@@ -157,7 +157,7 @@ returns
       link_object_source: 'Ticket',
       link_object_source_value: data[:ticket_id],
       link_object_target: 'Ticket',
-      link_object_target_value: self.id
+      link_object_target_value: id
     )
 
     # set state to 'merged'
@@ -167,7 +167,7 @@ returns
     self.owner_id = User.find_by( login: '-' ).id
 
     # save ticket
-    self.save
+    save
   end
 
 =begin
@@ -184,7 +184,7 @@ returns
 =end
 
   def online_notification_seen_state
-    state      = Ticket::State.lookup( id: self.state_id )
+    state      = Ticket::State.lookup( id: state_id )
     state_type = Ticket::StateType.lookup( id: state.state_type_id )
     return true if state_type.name == 'closed'
     return true if state_type.name == 'merged'
@@ -194,26 +194,26 @@ returns
   private
 
   def check_generate
-    return if self.number
+    return if number
     self.number = Ticket::Number.generate
   end
 
   def check_title
 
-    return if !self.title
+    return if !title
 
-    self.title.gsub!(/\s|\t|\r/, ' ')
+    title.gsub!(/\s|\t|\r/, ' ')
   end
 
   def check_defaults
-    if !self.owner_id
+    if !owner_id
       self.owner_id = 1
     end
 
-    return if !self.customer_id
+    return if !customer_id
 
-    customer = User.find( self.customer_id )
-    return if self.organization_id == customer.organization_id
+    customer = User.find( customer_id )
+    return if organization_id == customer.organization_id
 
     self.organization_id = customer.organization_id
   end
@@ -221,10 +221,10 @@ returns
   def reset_pending_time
 
     # ignore if no state has changed
-    return if !self.changes['state_id']
+    return if !changes['state_id']
 
     # check if new state isn't pending*
-    current_state      = Ticket::State.lookup( id: self.state_id )
+    current_state      = Ticket::State.lookup( id: state_id )
     current_state_type = Ticket::StateType.lookup( id: current_state.state_type_id )
 
     # in case, set pending_time to nil
@@ -236,10 +236,10 @@ returns
   def destroy_dependencies
 
     # delete articles
-    self.articles.destroy_all
+    articles.destroy_all
 
     # destroy online notifications
-    OnlineNotification.remove( self.class.to_s, self.id )
+    OnlineNotification.remove( self.class.to_s, id )
   end
 
 end

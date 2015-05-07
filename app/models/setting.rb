@@ -47,7 +47,7 @@ class Setting < ApplicationModel
   end
 
   def self.get(name)
-    self.load
+    load
     @@current[:settings_config][name]
   end
 
@@ -58,15 +58,15 @@ class Setting < ApplicationModel
   end
 
   def set_initial
-    self.state_initial = self.state
+    self.state_initial = state
   end
 
   def state_check
 
-    return if !(self.state || self.state == false)
+    return if !(state || state == false)
 
-    return if !( !self.state.respond_to?('has_key?') || !self.state.key?(:value) )
+    return if !( !state.respond_to?('has_key?') || !state.key?(:value) )
 
-    self.state = { value: self.state }
+    self.state = { value: state }
   end
 end

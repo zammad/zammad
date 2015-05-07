@@ -22,7 +22,7 @@ class Scheduler < ApplicationModel
       jobs.each {|job|
         next if jobs_started[ job.id ]
         jobs_started[ job.id ] = true
-        self.start_job( job, runner, runner_count )
+        start_job( job, runner, runner_count )
       }
       sleep 90
     end
@@ -35,7 +35,7 @@ class Scheduler < ApplicationModel
     Thread.new {
       if job.period
         loop do
-          self._start_job( job, runner, runner_count )
+          _start_job( job, runner, runner_count )
           job = Scheduler.lookup( id: job.id )
 
           # exit is job got deleted
@@ -51,7 +51,7 @@ class Scheduler < ApplicationModel
           sleep job.period
         end
       else
-        self._start_job( job, runner, runner_count )
+        _start_job( job, runner, runner_count )
       end
       #        raise "Exception from thread"
       job.pid = ''
@@ -90,7 +90,7 @@ class Scheduler < ApplicationModel
 
       # restart job again
       if try_run_max > try_count
-        self._start_job( job, runner, runner_count, try_count, try_run_time)
+        _start_job( job, runner, runner_count, try_count, try_run_time)
       else
         raise "STOP thread for #{job.method} (runner #{runner} of #{runner_count} after #{try_count} tries"
       end

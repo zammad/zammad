@@ -37,17 +37,17 @@ returns
   def escalation_calculation
 
     # set escalation off if ticket is already closed
-    state = Ticket::State.lookup( id: self.state_id )
+    state = Ticket::State.lookup( id: state_id )
     if state.ignore_escalation?
 
       # nothing to change
-      return true if !self.escalation_time
+      return true if !escalation_time
 
       self.escalation_time            = nil
       #      self.first_response_escal_date  = nil
       #      self.close_time_escal_date      = nil
       self.callback_loop = true
-      self.save
+      save
       return true
     end
 
@@ -58,13 +58,13 @@ returns
     if !sla_selected
 
       # nothing to change
-      return true if !self.escalation_time
+      return true if !escalation_time
 
       self.escalation_time            = nil
       #      self.first_response_escal_date  = nil
       #      self.close_time_escal_date      = nil
       self.callback_loop = true
-      self.save
+      save
       return true
     end
 
@@ -79,82 +79,82 @@ returns
     if sla_selected.first_response_time
 
       # get escalation date without pending time
-      self.first_response_escal_date = TimeCalculation.dest_time( self.created_at, sla_selected.first_response_time, sla_selected.data, sla_selected.timezone )
+      self.first_response_escal_date = TimeCalculation.dest_time( created_at, sla_selected.first_response_time, sla_selected.data, sla_selected.timezone )
 
       # get pending time between created and first response escal. time
-      time_in_pending = escalation_suspend( self.created_at, self.first_response_escal_date, 'relative', sla_selected, sla_selected.first_response_time )
+      time_in_pending = escalation_suspend( created_at, first_response_escal_date, 'relative', sla_selected, sla_selected.first_response_time )
 
       # get new escalation time (original escal_date + time_in_pending)
-      self.first_response_escal_date = TimeCalculation.dest_time( self.first_response_escal_date, time_in_pending.to_i, sla_selected.data, sla_selected.timezone )
+      self.first_response_escal_date = TimeCalculation.dest_time( first_response_escal_date, time_in_pending.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
-      self.escalation_time = calculation_higher_time( self.escalation_time, self.first_response_escal_date, self.first_response )
+      self.escalation_time = calculation_higher_time( escalation_time, first_response_escal_date, first_response )
     end
-    if self.first_response# && !self.first_response_in_min
+    if first_response# && !self.first_response_in_min
 
       # get response time in min between created and first response
-      self.first_response_in_min = escalation_suspend( self.created_at, self.first_response, 'real', sla_selected )
+      self.first_response_in_min = escalation_suspend( created_at, first_response, 'real', sla_selected )
 
     end
 
     # set time to show if sla is raised ot in
-    if sla_selected.first_response_time && self.first_response_in_min
-      self.first_response_diff_in_min = sla_selected.first_response_time - self.first_response_in_min
+    if sla_selected.first_response_time && first_response_in_min
+      self.first_response_diff_in_min = sla_selected.first_response_time - first_response_in_min
     end
 
     # update time
-    last_update = self.last_contact_agent
+    last_update = last_contact_agent
     if !last_update
-      last_update = self.created_at
+      last_update = created_at
     end
     if sla_selected.update_time
       self.update_time_escal_date = TimeCalculation.dest_time( last_update, sla_selected.update_time, sla_selected.data, sla_selected.timezone  )
 
       # get pending time between created and update escal. time
-      time_in_pending = escalation_suspend( last_update, self.update_time_escal_date, 'relative', sla_selected, sla_selected.update_time )
+      time_in_pending = escalation_suspend( last_update, update_time_escal_date, 'relative', sla_selected, sla_selected.update_time )
 
       # get new escalation time (original escal_date + time_in_pending)
-      self.update_time_escal_date = TimeCalculation.dest_time( self.update_time_escal_date, time_in_pending.to_i, sla_selected.data, sla_selected.timezone )
+      self.update_time_escal_date = TimeCalculation.dest_time( update_time_escal_date, time_in_pending.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
-      self.escalation_time = calculation_higher_time( self.escalation_time, self.update_time_escal_date, false )
+      self.escalation_time = calculation_higher_time( escalation_time, update_time_escal_date, false )
     end
-    if self.last_contact_agent
-      self.update_time_in_min = TimeCalculation.business_time_diff( self.created_at, self.last_contact_agent, sla_selected.data, sla_selected.timezone  )
+    if last_contact_agent
+      self.update_time_in_min = TimeCalculation.business_time_diff( created_at, last_contact_agent, sla_selected.data, sla_selected.timezone  )
     end
 
     # set sla time
-    if sla_selected.update_time && self.update_time_in_min
-      self.update_time_diff_in_min = sla_selected.update_time - self.update_time_in_min
+    if sla_selected.update_time && update_time_in_min
+      self.update_time_diff_in_min = sla_selected.update_time - update_time_in_min
     end
 
     # close time
     if sla_selected.close_time
 
       # get escalation date without pending time
-      self.close_time_escal_date = TimeCalculation.dest_time( self.created_at, sla_selected.close_time, sla_selected.data, sla_selected.timezone  )
+      self.close_time_escal_date = TimeCalculation.dest_time( created_at, sla_selected.close_time, sla_selected.data, sla_selected.timezone  )
 
       # get pending time between created and close escal. time
-      extended_escalation = escalation_suspend( self.created_at, self.close_time_escal_date, 'relative', sla_selected, sla_selected.close_time )
+      extended_escalation = escalation_suspend( created_at, close_time_escal_date, 'relative', sla_selected, sla_selected.close_time )
 
       # get new escalation time (original escal_date + time_in_pending)
-      self.close_time_escal_date = TimeCalculation.dest_time( self.close_time_escal_date, extended_escalation.to_i, sla_selected.data, sla_selected.timezone )
+      self.close_time_escal_date = TimeCalculation.dest_time( close_time_escal_date, extended_escalation.to_i, sla_selected.data, sla_selected.timezone )
 
       # set ticket escalation
-      self.escalation_time = calculation_higher_time( self.escalation_time, self.close_time_escal_date, self.close_time )
+      self.escalation_time = calculation_higher_time( escalation_time, close_time_escal_date, close_time )
     end
-    if self.close_time # && !self.close_time_in_min
-      self.close_time_in_min = escalation_suspend( self.created_at, self.close_time, 'real', sla_selected )
+    if close_time # && !self.close_time_in_min
+      self.close_time_in_min = escalation_suspend( created_at, close_time, 'real', sla_selected )
     end
     # set sla time
-    if sla_selected.close_time && self.close_time_in_min
-      self.close_time_diff_in_min = sla_selected.close_time - self.close_time_in_min
+    if sla_selected.close_time && close_time_in_min
+      self.close_time_diff_in_min = sla_selected.close_time - close_time_in_min
     end
 
     return if !self.changed?
 
     self.callback_loop = true
-    self.save
+    save
   end
 
 =begin
@@ -220,7 +220,7 @@ returns
     total_time_without_pending = 0
     total_time = 0
     #get history for ticket
-    history_list = self.history_get
+    history_list = history_get
 
     #loop through hist. changes and get time
     last_state            = nil

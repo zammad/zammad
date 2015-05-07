@@ -56,7 +56,7 @@ returns
 
   def self.list (data)
 
-    overviews = self.all(data)
+    overviews = all(data)
     return if !overviews
 
     # build up attributes hash

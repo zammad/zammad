@@ -56,7 +56,7 @@ returns
 
     # send update to browser
     if session && session['id']
-      self.send(
+      send(
         client_id,
         {
           event: 'ws:login',
@@ -110,7 +110,7 @@ returns
 =end
 
   def self.session_exists?(client_id)
-    client_ids = self.sessions
+    client_ids = sessions
     client_ids.include? client_id.to_s
   end
 
@@ -146,10 +146,10 @@ returns
 =end
 
   def self.list
-    client_ids = self.sessions
+    client_ids = sessions
     session_list = {}
     client_ids.each { |client_id|
-      data = self.get(client_id)
+      data = get(client_id)
       next if !data
       session_list[client_id] = data
     }
@@ -210,7 +210,7 @@ returns
 =end
 
   def self.touch( client_id )
-    data = self.get(client_id)
+    data = get(client_id)
     return false if !data
     path = "#{@path}/#{client_id}"
     data[:meta][:last_ping] = Time.new.to_i.to_s
@@ -246,12 +246,12 @@ returns
     session_file = "#{session_dir}/session"
     data         = nil
     if !File.exist? session_dir
-      self.destory(client_id)
+      destory(client_id)
       Rails.logger.error "missing session directory for '#{client_id}', remove session."
       return
     end
     if !File.exist? session_file
-      self.destory(client_id)
+      destory(client_id)
       Rails.logger.errror "missing session file for '#{client_id}', remove session."
       return
     end
@@ -262,13 +262,13 @@ returns
         file.flock( File::LOCK_UN )
         data_json = JSON.parse( all )
         if data_json
-          data = self.symbolize_keys(data_json)
+          data = symbolize_keys(data_json)
           data[:user] = data_json['user'] # for compat. reasons
         end
       }
     rescue Exception => e
       Rails.logger.error e.inspect
-      self.destory(client_id)
+      destory(client_id)
       Rails.logger.error "ERROR: reading session file '#{session_file}', remove session."
       return
     end
@@ -327,7 +327,7 @@ returns
   def self.send_to( user_id, data )
 
     # list all current clients
-    client_list = self.sessions
+    client_list = sessions
     client_list.each {|client_id|
       session = Sessions.get(client_id)
       next if !session
@@ -354,7 +354,7 @@ returns
   def self.broadcast( data )
 
     # list all current clients
-    client_list = self.sessions
+    client_list = sessions
     client_list.each {|client_id|
       Sessions.send( client_id, data )
     }
@@ -508,7 +508,7 @@ returns
 
     Thread.abort_on_exception = true
     loop do
-      client_ids = self.sessions
+      client_ids = sessions
       client_ids.each { |client_id|
 
         # connection already open, ignore

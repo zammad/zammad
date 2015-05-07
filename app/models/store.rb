@@ -140,17 +140,17 @@ returns
   end
 
   def content
-    file = Store::File.find_by( id: self.store_file_id )
+    file = Store::File.find_by( id: store_file_id )
     if !file
-      fail "No such file #{ self.store_file_id }!"
+      fail "No such file #{ store_file_id }!"
     end
     file.content
   end
 
   def provider
-    file = Store::File.find_by( id: self.store_file_id )
+    file = Store::File.find_by( id: store_file_id )
     if !file
-      fail "No such file #{ self.store_file_id }!"
+      fail "No such file #{ store_file_id }!"
     end
     file.provider
   end

@@ -18,7 +18,7 @@ returns
   def subject_build (subject)
 
     # clena subject
-    subject = self.subject_clean(subject)
+    subject = subject_clean(subject)
 
     ticket_hook         = Setting.get('ticket_hook')
     ticket_hook_divider = Setting.get('ticket_hook_divider')
@@ -30,11 +30,11 @@ returns
 
     # right position
     if Setting.get('ticket_hook_position') == 'right'
-      return subject + " [#{ticket_hook}#{ticket_hook_divider}#{self.number}] "
+      return subject + " [#{ticket_hook}#{ticket_hook_divider}#{number}] "
     end
 
     # left position
-    "[#{ticket_hook}#{ticket_hook_divider}#{self.number}] " + subject
+    "[#{ticket_hook}#{ticket_hook_divider}#{number}] " + subject
   end
 
 =begin
@@ -56,14 +56,14 @@ returns
     ticket_subject_size = Setting.get('ticket_subject_size')
 
     # remove all possible ticket hook formats with []
-    subject = subject.gsub(/\[#{ticket_hook}: #{self.number}\](\s+?|)/, '')
-    subject = subject.gsub(/\[#{ticket_hook}:#{self.number}\](\s+?|)/, '')
-    subject = subject.gsub(/\[#{ticket_hook}#{ticket_hook_divider}#{self.number}\](\s+?|)/, '')
+    subject = subject.gsub(/\[#{ticket_hook}: #{number}\](\s+?|)/, '')
+    subject = subject.gsub(/\[#{ticket_hook}:#{number}\](\s+?|)/, '')
+    subject = subject.gsub(/\[#{ticket_hook}#{ticket_hook_divider}#{number}\](\s+?|)/, '')
 
     # remove all possible ticket hook formats without []
-    subject = subject.gsub(/#{ticket_hook}: #{self.number}(\s+?|)/, '')
-    subject = subject.gsub(/#{ticket_hook}:#{self.number}(\s+?|)/, '')
-    subject = subject.gsub(/#{ticket_hook}#{ticket_hook_divider}#{self.number}(\s+?|)/, '')
+    subject = subject.gsub(/#{ticket_hook}: #{number}(\s+?|)/, '')
+    subject = subject.gsub(/#{ticket_hook}:#{number}(\s+?|)/, '')
+    subject = subject.gsub(/#{ticket_hook}#{ticket_hook_divider}#{number}(\s+?|)/, '')
 
     # remove leading "..:\s" and "..[\d+]:\s" e. g. "Re: " or "Re[5]: "
     subject = subject.gsub(/^(..(\[\d+\])?:\s)+/, '')

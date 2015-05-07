@@ -23,7 +23,7 @@ class Channel::Facebook
       'id',
       'comments',
       {
-        message: self.body
+        message: body
       }
     )
     #            client.direct_message_create(

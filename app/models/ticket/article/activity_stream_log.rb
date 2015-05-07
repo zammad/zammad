@@ -25,14 +25,14 @@ returns
 
     return if !self.class.activity_stream_support_config
     role = self.class.activity_stream_support_config[:role]
-    ticket = Ticket.lookup( id: self.ticket_id )
+    ticket = Ticket.lookup( id: ticket_id )
     ActivityStream.add(
       o_id: self['id'],
       type: type,
       object: self.class.name,
       group_id: ticket.group_id,
       role: role,
-      created_at: self.updated_at,
+      created_at: updated_at,
       created_by_id: user_id,
     )
   end

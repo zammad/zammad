@@ -32,7 +32,7 @@ class Token < ActiveRecord::Base
     loop do
       self.name = SecureRandom.hex(20)
 
-      break if !Token.exists?( name: self.name )
+      break if !Token.exists?( name: name )
     end
   end
 end

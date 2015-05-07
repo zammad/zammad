@@ -28,7 +28,7 @@ class ObjectLookup < ApplicationModel
     end
 
     # create
-    lookup = self.create(
+    lookup = create(
       name: name
     )
     @@cache_object[ name ] = lookup.id

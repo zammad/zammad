@@ -25,8 +25,8 @@ returns
     if !data[ self.class.to_app_model ]
       data[ self.class.to_app_model ] = {}
     end
-    if !data[ self.class.to_app_model ][ self.id ]
-      data[ self.class.to_app_model ][ self.id ] = self.attributes_with_associations
+    if !data[ self.class.to_app_model ][ id ]
+      data[ self.class.to_app_model ][ id ] = attributes_with_associations
     end
 
     return data if !self['created_by_id'] && !self['updated_by_id']

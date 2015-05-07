@@ -26,19 +26,19 @@ returns
     if !data[ Ticket.to_app_model ]
       data[ Ticket.to_app_model ] = {}
     end
-    if !data[ Ticket.to_app_model ][ self.ticket_id ]
-      ticket = Ticket.find( self.ticket_id )
+    if !data[ Ticket.to_app_model ][ ticket_id ]
+      ticket = Ticket.find( ticket_id )
       data = ticket.assets(data)
     end
 
     if !data[ Ticket::Article.to_app_model ]
       data[ Ticket::Article.to_app_model ] = {}
     end
-    if !data[ Ticket::Article.to_app_model ][ self.id ]
-      data[ Ticket::Article.to_app_model ][ self.id ] = self.attributes
+    if !data[ Ticket::Article.to_app_model ][ id ]
+      data[ Ticket::Article.to_app_model ][ id ] = attributes
 
       # add attachment list to article
-      data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = self.attachments
+      data[ Ticket::Article.to_app_model ][ id ]['attachments'] = attachments
     end
 
     %w(created_by_id updated_by_id).each {|item|

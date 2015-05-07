@@ -33,13 +33,13 @@ class Sessions::Backend::TicketCreate
   def push
 
     # check timeout
-    timeout = Sessions::CacheIn.get( self.client_key )
+    timeout = Sessions::CacheIn.get( client_key )
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
-    ticket_create_attributes = self.load
+    ticket_create_attributes = load
 
     return if !ticket_create_attributes
 

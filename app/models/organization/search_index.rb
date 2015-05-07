@@ -50,7 +50,7 @@ returns
 
       # add org member for search index data
       attributes['member'] = []
-      users = User.where( organization_id: self.id )
+      users = User.where( organization_id: id )
       users.each { |user|
         attributes['member'].push user.search_index_data
       }

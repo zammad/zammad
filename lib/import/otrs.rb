@@ -207,7 +207,7 @@ module Import::OTRS
 =end
 
   def self.connection_test
-    self.request_json({})
+    request_json({})
   end
 
 =begin
@@ -235,7 +235,7 @@ module Import::OTRS
     end
 
     # retrive statistic
-    statistic = self.request_json( { Subaction: 'List' }, 1)
+    statistic = request_json( { Subaction: 'List' }, 1)
     if statistic
       Cache.write('import_otrs_stats', statistic)
     end
@@ -264,7 +264,7 @@ module Import::OTRS
 =end
 
   def self.current_state
-    data = self.statistic
+    data = statistic
     base = Group.count + Ticket::State.count + Ticket::Priority.count
     base_total = data['Queue'] + data['State'] + data['Priority']
     user = User.count
@@ -415,7 +415,7 @@ module Import::OTRS
   def self.diff_worker
     return if !Setting.get('import_mode')
     return if Setting.get('import_otrs_endpoint') == 'http://otrs_host/otrs'
-    self.diff
+    diff
   end
 
   def self.diff
@@ -453,7 +453,7 @@ module Import::OTRS
     organization(organizations)
 
     # get changed tickets
-    self.ticket_diff
+    ticket_diff
 
   end
 

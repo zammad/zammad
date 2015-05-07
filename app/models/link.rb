@@ -20,7 +20,7 @@ class Link < ApplicationModel
 =end
 
   def self.list(data)
-    linkobject = self.link_object_get( name: data[:link_object] )
+    linkobject = link_object_get( name: data[:link_object] )
     return if !linkobject
     items = []
 
@@ -75,19 +75,19 @@ class Link < ApplicationModel
   def self.add(data)
 
     if data.key?(:link_type)
-      linktype = self.link_type_get( name: data[:link_type] )
+      linktype = link_type_get( name: data[:link_type] )
       data[:link_type_id] = linktype.id
       data.delete( :link_type )
     end
 
     if data.key?(:link_object_source)
-      linkobject = self.link_object_get( name: data[:link_object_source] )
+      linkobject = link_object_get( name: data[:link_object_source] )
       data[:link_object_source_id] = linkobject.id
       data.delete( :link_object_source )
     end
 
     if data.key?(:link_object_target)
-      linkobject = self.link_object_get( name: data[:link_object_target] )
+      linkobject = link_object_get( name: data[:link_object_target] )
       data[:link_object_target_id] = linkobject.id
       data.delete( :link_object_target )
     end
@@ -109,18 +109,18 @@ class Link < ApplicationModel
 
   def self.remove(data)
     if data.key?(:link_object_source)
-      linkobject = self.link_object_get( name: data[:link_object_source] )
+      linkobject = link_object_get( name: data[:link_object_source] )
       data[:link_object_source_id] = linkobject.id
     end
 
     if data.key?(:link_object_target)
-      linkobject = self.link_object_get( name: data[:link_object_target] )
+      linkobject = link_object_get( name: data[:link_object_target] )
       data[:link_object_target_id] = linkobject.id
     end
 
     # from one site
     if data.key?(:link_type)
-      linktype = self.link_type_get( name: data[:link_type] )
+      linktype = link_type_get( name: data[:link_type] )
       data[:link_type_id] = linktype.id
     end
     links = Link.where(
@@ -134,7 +134,7 @@ class Link < ApplicationModel
 
     # from the other site
     if data.key?(:link_type)
-      linktype = self.link_type_get( name: @map[ data[:link_type] ] )
+      linktype = link_type_get( name: @map[ data[:link_type] ] )
       data[:link_type_id] = linktype.id
     end
     links = Link.where(

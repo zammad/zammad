@@ -85,7 +85,7 @@ class Observer::Ticket::Notification::BackgroundJob
       recipient_list += user.email.to_s
 
       # ignore if no changes has been done
-      changes = self.human_changes(user, ticket)
+      changes = human_changes(user, ticket)
       if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
         next
       end
@@ -93,9 +93,9 @@ class Observer::Ticket::Notification::BackgroundJob
       # get user based notification template
       # if create, send create message / block update messages
       if @p[:type] == 'create'
-        template = self.template_create(user, ticket, article, changes)
+        template = template_create(user, ticket, article, changes)
       elsif @p[:type] == 'update'
-        template = self.template_update(user, ticket, article, changes)
+        template = template_update(user, ticket, article, changes)
       else
         fail "unknown type for notification #{@p[:type]}"
       end

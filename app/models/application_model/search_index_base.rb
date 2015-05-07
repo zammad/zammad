@@ -32,7 +32,7 @@ returns
 
     # for performance reasons, Model.search_index_reload will only collect if of object
     # get whole data here
-    data = self.class.find(self.id)
+    data = self.class.find(id)
 
     # remove ignored attributes
     attributes = data.attributes
@@ -47,10 +47,10 @@ returns
 
     # update backend
     if self.class.column_names.include? 'active'
-      if self.active
+      if active
         SearchIndexBackend.add( self.class.to_s, attributes )
       else
-        SearchIndexBackend.remove( self.class.to_s, self.id )
+        SearchIndexBackend.remove( self.class.to_s, id )
       end
     else
       SearchIndexBackend.add( self.class.to_s, attributes )

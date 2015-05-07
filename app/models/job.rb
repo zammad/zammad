@@ -75,7 +75,7 @@ class Job < ApplicationModel
   private
 
   def updated_matching
-    count = Ticket.where( self.condition.permit! ).count
+    count = Ticket.where( condition.permit! ).count
     self.matching = count
   end
 

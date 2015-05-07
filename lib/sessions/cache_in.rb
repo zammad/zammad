@@ -47,7 +47,7 @@ module Sessions::CacheIn
 
   def self.get( key, params = {} )
 #    puts 'CacheIn.get:' + key + '-' + @@data[ key ].inspect
-    return if self.expired( key, params )
+    return if expired( key, params )
     @@data[ key ]
   end
 end

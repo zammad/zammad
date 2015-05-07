@@ -223,7 +223,7 @@ returns:
 =end
 
   def self.by_object_as_hash(object, user)
-    list = self.by_object(object, user)
+    list = by_object(object, user)
     hash = {}
     list.each {|item|
       hash[ item[:name] ] = item

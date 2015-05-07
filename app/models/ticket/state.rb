@@ -47,7 +47,7 @@ returns:
 
   def ignore_escalation?
     ignore_escalation = %w(removed closed merged)
-    return true if ignore_escalation.include?( self.name )
+    return true if ignore_escalation.include?( name )
     false
   end
 end

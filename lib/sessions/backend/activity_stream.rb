@@ -35,13 +35,13 @@ class Sessions::Backend::ActivityStream
   def push
 
     # check timeout
-    timeout = Sessions::CacheIn.get( self.client_key )
+    timeout = Sessions::CacheIn.get( client_key )
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
-    data = self.load
+    data = load
 
     return if !data || data.empty?
 

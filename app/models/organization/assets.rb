@@ -29,10 +29,10 @@ returns
       if !data[ User.to_app_model ]
         data[ User.to_app_model ] = {}
       end
-      if !data[ Organization.to_app_model ][ self.id ]
-        data[ Organization.to_app_model ][ self.id ] = self.attributes_with_associations
-        if data[ Organization.to_app_model ][ self.id ]['member_ids']
-          data[ Organization.to_app_model ][ self.id ]['member_ids'].each {|user_id|
+      if !data[ Organization.to_app_model ][ id ]
+        data[ Organization.to_app_model ][ id ] = attributes_with_associations
+        if data[ Organization.to_app_model ][ id ]['member_ids']
+          data[ Organization.to_app_model ][ id ]['member_ids'].each {|user_id|
             if !data[ User.to_app_model ][ user_id ]
               user = User.lookup( id: user_id )
               data = user.assets( data )

@@ -40,7 +40,7 @@ returns
       next if !config_item[:adapter]
 
       # load backend
-      backend = self.load_adapter( config_item[:adapter] )
+      backend = load_adapter( config_item[:adapter] )
       next if !backend
 
       user_auth = backend.check( username, password, config_item, user )

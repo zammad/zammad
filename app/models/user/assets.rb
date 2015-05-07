@@ -26,8 +26,8 @@ returns
       if !data[ User.to_app_model ]
         data[ User.to_app_model ] = {}
       end
-      if !data[ User.to_app_model ][ self.id ]
-        attributes = self.attributes_with_associations
+      if !data[ User.to_app_model ][ id ]
+        attributes = attributes_with_associations
 
         # do not transfer crypted pw
         attributes['password'] = ''
@@ -42,7 +42,7 @@ returns
           }
         end
 
-        data[ User.to_app_model ][ self.id ] = attributes
+        data[ User.to_app_model ][ id ] = attributes
 
         # get roles
         if attributes['role_ids']

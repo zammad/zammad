@@ -30,7 +30,7 @@ returns
   def self.location(address)
 
     # load backend
-    backend = self.load_adapter_by_setting( 'geo_ip_backend' )
+    backend = load_adapter_by_setting( 'geo_ip_backend' )
     return if !backend
 
     # db lookup

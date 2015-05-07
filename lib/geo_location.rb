@@ -18,7 +18,7 @@ returns
   def self.geocode(address)
 
     # load backend
-    backend = self.load_adapter_by_setting( 'geo_location_backend' )
+    backend = load_adapter_by_setting( 'geo_location_backend' )
     return if !backend
 
     # db lookup
@@ -40,7 +40,7 @@ returns
   def self.reverse_geocode(lat, lng)
 
     # load backend
-    backend = self.load_adapter_by_setting( 'geo_location_backend' )
+    backend = load_adapter_by_setting( 'geo_location_backend' )
     return if !backend
 
     # db lookup
