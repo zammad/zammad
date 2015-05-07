@@ -79,9 +79,9 @@ module Ticket::Number::Increment
 
     # probe format
     if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,48})/i
-      ticket = Ticket.where( number: $1 ).first
+      ticket = Ticket.find_by( number: $1 )
     elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i
-      ticket = Ticket.where( number: $1 ).first
+      ticket = Ticket.find_by( number: $1 )
     end
     ticket
   end

@@ -81,7 +81,7 @@ class Tag < ApplicationModel
     return @@cache_item[ name ] if @@cache_item[ name ]
 
     # lookup
-    tag_item = Tag::Item.where( name: name ).first
+    tag_item = Tag::Item.find_by( name: name )
     if tag_item
       @@cache_item[ name ] = tag_item.id
       return tag_item.id
@@ -112,7 +112,7 @@ class Tag < ApplicationModel
     return @@cache_object[ name ] if @@cache_object[ name ]
 
     # lookup
-    tag_object = Tag::Object.where( name: name ).first
+    tag_object = Tag::Object.find_by( name: name )
     if tag_object
       @@cache_object[ name ] = tag_object.id
       return tag_object.id

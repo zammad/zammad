@@ -312,7 +312,7 @@ returns
       cache = self.cache_get( data[:id] )
       return cache if cache
 
-      record = self.where( id: data[:id] ).first
+      record = self.find_by( id: data[:id] )
       self.cache_set( data[:id], record )
       return record
     elsif data[:name]
@@ -358,7 +358,7 @@ returns
 
   def self.create_if_not_exists(data)
     if data[:id]
-      record = self.where( id: data[:id] ).first
+      record = self.find_by( id: data[:id] )
       return record if record
     elsif data[:name]
       records = self.where( name: data[:name] )

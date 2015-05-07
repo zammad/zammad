@@ -75,7 +75,7 @@ class Channel::TWITTER2
     all_tweets.each do |tweet|
 
       # check if tweet is already imported
-      article = Ticket::Article.where( message_id: tweet.id.to_s ).first
+      article = Ticket::Article.find_by( message_id: tweet.id.to_s )
 
       # check if sender already exists
       next if article
@@ -141,11 +141,11 @@ class Channel::TWITTER2
     # create sender in db
     #    puts tweet.inspect
     #    user = User.where( :login => tweet.sender.screen_name ).first
-    auth = Authorization.where( uid: sender.id, provider: 'twitter' ).first
+    auth = Authorization.find_by( uid: sender.id, provider: 'twitter' )
     user = nil
     if auth
       Rails.logger.info 'user_id', auth.user_id
-      user = User.where( id: auth.user_id ).first
+      user = User.find_by( id: auth.user_id )
     end
     if !user
       Rails.logger.info 'create user...'
@@ -186,7 +186,7 @@ class Channel::TWITTER2
     # check if ticket exists
     if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
       Rails.logger.info 'tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
-      article = Ticket::Article.where( message_id: tweet.in_reply_to_status_id.to_s ).first
+      article = Ticket::Article.find_by( message_id: tweet.in_reply_to_status_id.to_s )
       if article
         Rails.logger.info 'article with id found tweet.in_reply_to_status_id found: ' + tweet.in_reply_to_status_id.to_s
         return article.ticket
@@ -194,14 +194,14 @@ class Channel::TWITTER2
     end
 
     # find if record already exists
-    article = Ticket::Article.where( message_id: tweet.id.to_s ).first
+    article = Ticket::Article.find_by( message_id: tweet.id.to_s )
     if article
       return article.ticket
     end
 
     ticket = nil
     if @article_type == 'twitter direct-message'
-      ticket = Ticket.where( customer_id: user.id ).first
+      ticket = Ticket.find_by( customer_id: user.id )
       if ticket
         state_type = Ticket::StateType.where( ticket.state.state_type_id )
         if state_type.name == 'closed' || state_type.name == 'closed'
@@ -210,17 +210,17 @@ class Channel::TWITTER2
       end
     end
     if !ticket
-      group = Group.where( name: group ).first
+      group = Group.find_by( name: group )
       group_id = 1
       if group
         group_id = group.id
       end
-      state = Ticket::State.where( name: 'new' ).first
+      state = Ticket::State.find_by( name: 'new' )
       state_id = 1
       if state
         state_id = state.id
       end
-      priority = Ticket::Priority.where( name: '2 normal' ).first
+      priority = Ticket::Priority.find_by( name: '2 normal' )
       priority_id = 1
       if priority
         priority_id = priority.id
@@ -240,12 +240,12 @@ class Channel::TWITTER2
   def fetch_article_create( _user, ticket, tweet, sender )
 
     # find if record already exists
-    article = Ticket::Article.where( message_id: tweet.id.to_s ).first
+    article = Ticket::Article.find_by( message_id: tweet.id.to_s )
     return article if article
 
     # set ticket state to open if not new
     if ticket.state.name != 'new'
-      ticket.state = Ticket::State.where( name: 'open' ).first
+      ticket.state = Ticket::State.find_by( name: 'open' )
       ticket.save
     end
 
@@ -257,8 +257,8 @@ class Channel::TWITTER2
 
     article = Ticket::Article.create(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.where( name: @article_type ).first.id,
-      sender_id: Ticket::Article::Sender.where( name: 'Customer' ).first.id,
+      type_id: Ticket::Article::Type.find_by( name: @article_type ).id,
+      sender_id: Ticket::Article::Sender.find_by( name: 'Customer' ).id,
       body: tweet.text,
       from: sender.name,
       to: to,
@@ -270,7 +270,7 @@ class Channel::TWITTER2
 
   def send(attr, _notification = false)
     #    Rails.logger.debug('tweeeeettttt!!!!!!')
-    channel = Channel.where( area: 'Twitter::Inbound', active: true ).first
+    channel = Channel.find_by( area: 'Twitter::Inbound', active: true )
 
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = channel[:options][:consumer_key]

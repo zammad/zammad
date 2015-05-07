@@ -152,7 +152,7 @@ class Link < ApplicationModel
   end
 
   def self.link_type_get(data)
-    linktype = Link::Type.where( name: data[:name] ).first
+    linktype = Link::Type.find_by( name: data[:name] )
     if !linktype
       linktype = Link::Type.create(
         name: data[:name]
@@ -162,7 +162,7 @@ class Link < ApplicationModel
   end
 
   def self.link_object_get(data)
-    linkobject = Link::Object.where( name: data[:name] ).first
+    linkobject = Link::Object.find_by( name: data[:name] )
     if !linkobject
       linkobject = Link::Object.create(
         name: data[:name]

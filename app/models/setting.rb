@@ -37,7 +37,7 @@ class Setting < ApplicationModel
   end
 
   def self.set(name, value)
-    setting = Setting.where( name: name ).first
+    setting = Setting.find_by( name: name )
     if !setting
       raise "Can't find config setting '#{name}'"
     end

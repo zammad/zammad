@@ -17,7 +17,7 @@ class Observer::User::Geo < ActiveRecord::Observer
 
     # check if geo update is needed based on old/new location
     if record.id
-      current = User.where( id: record.id ).first
+      current = User.find_by( id: record.id )
       return if !current
 
       current_location = {}

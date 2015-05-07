@@ -9,7 +9,7 @@ class Store
     def self.add(data)
       sha = Digest::SHA256.hexdigest( data )
 
-      file = Store::File.where( sha: sha ).first
+      file = Store::File.find_by( sha: sha )
       if file.nil?
 
         # load backend based on config
@@ -34,7 +34,7 @@ class Store
         c = adapter.get( self.sha )
       else
         # fallback until migration is done
-        c = Store::Provider::DB.where( md5: self.md5 ).first.data
+        c = Store::Provider::DB.find_by( md5: self.md5 ).data
       end
       c
     end

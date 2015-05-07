@@ -166,7 +166,7 @@ returns
     self.state_id = Ticket::State.lookup( name: 'merged' ).id
 
     # rest owner
-    self.owner_id = User.where( login: '-' ).first.id
+    self.owner_id = User.find_by( login: '-' ).id
 
     # save ticket
     self.save

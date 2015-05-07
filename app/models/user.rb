@@ -184,11 +184,11 @@ returns
     return if !password || password == ''
 
     # try to find user based on login
-    user = User.where( login: username.downcase, active: true ).first
+    user = User.find_by( login: username.downcase, active: true )
 
     # try second lookup with email
     if !user
-      user = User.where( email: username.downcase, active: true ).first
+      user = User.find_by( email: username.downcase, active: true )
     end
 
     # check failed logins
@@ -280,11 +280,11 @@ returns
     return if !username || username == ''
 
     # try to find user based on login
-    user = User.where( login: username.downcase, active: true ).first
+    user = User.find_by( login: username.downcase, active: true )
 
     # try second lookup with email
     if !user
-      user = User.where( email: username.downcase, active: true ).first
+      user = User.find_by( email: username.downcase, active: true )
     end
 
     # check if email address exists
@@ -377,7 +377,7 @@ returns
     user.update_attributes( password: password )
 
     # delete token
-    Token.where( action: 'PasswordReset', name: token ).first.destroy
+    Token.find_by( action: 'PasswordReset', name: token ).destroy
     user
   end
 
@@ -476,7 +476,7 @@ returns
     self.login = self.login.downcase
     check      = true
     while check
-      exists = User.where( login: self.login ).first
+      exists = User.find_by( login: self.login )
       if exists && exists.id != self.id
         self.login = self.login + rand(999).to_s
       else

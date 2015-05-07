@@ -360,10 +360,10 @@ class Channel::EmailParser
 
       # create sender
       if mail[ 'x-zammad-customer-login'.to_sym ]
-        user = User.where( login: mail[ 'x-zammad-customer-login'.to_sym ] ).first
+        user = User.find_by( login: mail[ 'x-zammad-customer-login'.to_sym ] )
       end
       if !user
-        user = User.where( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] ).first
+        user = User.find_by( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] )
       end
       if !user
         user = user_create(
@@ -407,7 +407,7 @@ class Channel::EmailParser
         end
 
         if state_type.name != 'new'
-          ticket.state = Ticket::State.where( name: 'open' ).first
+          ticket.state = Ticket::State.find_by( name: 'open' )
           ticket.save
         end
       end
@@ -420,8 +420,8 @@ class Channel::EmailParser
           group_id: channel[:group_id] || 1,
           customer_id: user.id,
           title: mail[:subject] || '',
-          state_id: Ticket::State.where( name: 'new' ).first.id,
-          priority_id: Ticket::Priority.where( name: '2 normal' ).first.id,
+          state_id: Ticket::State.find_by( name: 'new' ).id,
+          priority_id: Ticket::Priority.find_by( name: '2 normal' ).id,
         )
 
         set_attributes_by_x_headers( ticket, 'ticket', mail )
@@ -435,8 +435,8 @@ class Channel::EmailParser
       # set attributes
       article = Ticket::Article.new(
         ticket_id: ticket.id,
-        type_id: Ticket::Article::Type.where( name: 'email' ).first.id,
-        sender_id: Ticket::Article::Sender.where( name: 'Customer' ).first.id,
+        type_id: Ticket::Article::Type.find_by( name: 'email' ).id,
+        sender_id: Ticket::Article::Sender.find_by( name: 'Customer' ).id,
         body: mail[:body],
         from: mail[:from],
         to: mail[:to],
@@ -500,7 +500,7 @@ class Channel::EmailParser
   def user_create(data)
 
     # return existing
-    user = User.where( login: data[:email].downcase ).first
+    user = User.find_by( login: data[:email].downcase )
     return user if user
 
     # create new user

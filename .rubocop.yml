@@ -182,10 +182,6 @@ Rails/ActionFilter:
   Description: 'Enforces consistent use of action filter methods.'
   Enabled: false
 
-Rails/FindBy:
-  Description: 'Prefer find_by over where.first.'
-  Enabled: false
-
 Style/SymbolProc:
   Description: 'Use symbols as procs instead of blocks when possible.'
   Enabled: false

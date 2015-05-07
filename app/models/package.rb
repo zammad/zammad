@@ -195,7 +195,7 @@ class Package < ApplicationModel
     }
 
     # verify if package can get installed
-    package_db = Package.where( name: meta[:name] ).first
+    package_db = Package.find_by( name: meta[:name] )
     if package_db
       if !data[:reinstall]
         if Gem::Version.new( package_db.version ) == Gem::Version.new( meta[:version] )
@@ -253,7 +253,7 @@ class Package < ApplicationModel
 
   # Package.reinstall( package_name )
   def self.reinstall(package_name)
-    package = Package.where( name: package_name ).first
+    package = Package.find_by( name: package_name )
     if !package
       raise "No such package '#{package_name}'"
     end
@@ -300,10 +300,10 @@ class Package < ApplicationModel
     end
 
     # delete package
-    record = Package.where(
+    record = Package.find_by(
       name: meta[:name],
       version: meta[:version],
-    ).first
+    )
     record.destroy
 
     true
@@ -340,10 +340,10 @@ class Package < ApplicationModel
   end
 
   def self._get_bin( name, version )
-    package = Package.where(
+    package = Package.find_by(
       name: name,
       version: version,
-    ).first
+    )
     if !package
       raise "No such package '#{name}' version '#{version}'"
     end
@@ -475,20 +475,20 @@ class Package < ApplicationModel
 
         # down
         if direction == 'reverse'
-          done = Package::Migration.where( name: package.underscore, version: version ).first
+          done = Package::Migration.find_by( name: package.underscore, version: version )
           next if !done
           logger.info "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).down
-          record = Package::Migration.where( name: package.underscore, version: version ).first
+          record = Package::Migration.find_by( name: package.underscore, version: version )
           if record
             record.destroy
           end
 
           # up
         else
-          done = Package::Migration.where( name: package.underscore, version: version ).first
+          done = Package::Migration.find_by( name: package.underscore, version: version )
           next if done
           logger.info "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
