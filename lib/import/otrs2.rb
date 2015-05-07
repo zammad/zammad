@@ -1001,7 +1001,7 @@ module Import::OTRS2
       groups.each {|group_lookup|
 
         next if group_id != group_lookup['ID']
-        next if permissions
+        next if !permissions
 
         if group_lookup['Name'] == 'admin' && permissions.include?('rw')
           roles.push 'Admin'
