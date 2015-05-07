@@ -208,7 +208,5 @@ Style/SpaceBeforeComment:
   Enabled: false
 Lint/UselessAssignment:
   Enabled: false
-Lint/UnreachableCode:
-  Enabled: false
 Lint/ShadowingOuterLocalVariable:
   Enabled: false

@@ -10,7 +10,6 @@ module Rss
       response = UserAgent.request(url)
       if !response.success?
         fail "Can't fetch '#{url}', http code: #{response.code}"
-        return
       end
       rss     = SimpleRSS.parse response.body
       items   = []

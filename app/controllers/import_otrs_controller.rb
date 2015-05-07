@@ -104,7 +104,6 @@ class ImportOtrsController < ApplicationController
   private
 
   def setup_done
-    return false
     count = User.all.count()
     done = true
     if count <= 2
