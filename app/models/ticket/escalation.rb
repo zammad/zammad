@@ -90,7 +90,7 @@ returns
       # set ticket escalation
       self.escalation_time = calculation_higher_time( escalation_time, first_response_escal_date, first_response )
     end
-    if first_response# && !self.first_response_in_min
+    if first_response
 
       # get response time in min between created and first response
       self.first_response_in_min = escalation_suspend( created_at, first_response, 'real', sla_selected )

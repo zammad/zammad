@@ -171,7 +171,7 @@ class Channel::TWITTER2
         provider: 'twitter'
       )
     else
-      Rails.logger.info 'user exists'#, user.inspect
+      Rails.logger.info 'user exists'
     end
 
     # set current user
