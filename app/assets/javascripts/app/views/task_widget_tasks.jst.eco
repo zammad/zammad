@@ -1,12 +1,19 @@
 <% for item in @item_list: %>
-  <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="task <%= item.data.class %> <% if item.task.active: %>active<% end %>" data-key="<%- item.task.key %>">
-    <div class="icon-holder centered">
-      <div class="<% if item.task.active: %>white <% end %><%= item.data.iconClass %> icon<% if item.task.notify: %> modified<% end %>"></div>
+  <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="task <%= item.data.class %><% if item.task.active: %> is-active<% end %>" data-key="<%- item.task.key %>">
+    <div class="icon-holder">
+      <svg class="task-icon">
+        <% if item.task.notify && item.data.iconClass is 'priority': %>
+        <use class="inner-circle" xlink:href="#icon-priority-modified-inner-circle" />
+        <use class="outer-circle" xlink:href="#icon-priority-modified-outer-circle" />
+        <% else: %>
+        <use xlink:href="#icon-<%= item.data.iconClass %>" />
+        <% end %>
+      </svg>
     </div>
-    <div class="name u-textTruncate flex"><%= item.data.head %></div>
-    <div class="closeTask js-close u-clickable horizontal centered" title="<%- @Ti('close') %>">
-      <div class="closeTask-inner centered">
-        <div class="white close icon"></div>
+    <div class="task-name u-textTruncate flex"><%= item.data.head %></div>
+    <div class="closeTask js-close" title="<%- @Ti('close') %>">
+      <div class="closeTask-inner">
+        <svg class="icon"><use xlink:href="#icon-close" /></svg>
       </div>
     </div>
   </a>

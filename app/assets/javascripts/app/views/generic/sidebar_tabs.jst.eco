@@ -3,7 +3,7 @@
   <div class="sidebar-header">
     <h2 class="u-textTruncate"><%- @T( item.head ) %></h2>
     <div class="js-actions flex"></div>
-    <div class="tabsSidebar-close centered u-clickable">
+    <div class="tabsSidebar-close">
       <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
     </div>
   </div>
@@ -15,7 +15,7 @@
 <% end %>
 <div class="tabsSidebar-tabs vertical justified">
 <% for item in @items: %>
-  <div class="tabsSidebar-tab centered" data-tab="<%= item.name %>">
+  <div class="tabsSidebar-tab" data-tab="<%= item.name %>">
     <svg class="icon"><use xlink:href="#icon-<%= item.icon %>" /></svg>
   </div>
 <% end %>

@@ -1378,45 +1378,6 @@ ol.tabs li {
     background-position: -15px -98px;
   }
 
-  .priority.icon {
-    background: none;
-    border-radius: 100%;
-    width: 10px;
-    height: 10px;
-    position: relative;
-  }
-
-  .modified.priority.icon {
-    width: 12px;
-    height: 12px;
-    background: none !important;
-    border: 1px solid;
-  }
-
-    .priority.icon:after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin: -3px 0 0 -3px;
-      width: 6px;
-      height: 6px;
-      border-radius: 100%;
-      background: #2c2d36;
-      will-change: opacity;
-      transform: translateZ(0);
-    }
-
-    .modified.priority.icon:after {
-      -webkit-animation: fade 2s ease-in-out infinite;
-         -moz-animation: fade 2s ease-in-out infinite;
-              animation: fade 2s ease-in-out infinite;
-    }
-
-    @-webkit-keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
-       @-moz-keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
-            @keyframes fade { from { opacity: 1 } 50% { opacity: 0 } to { opacity: 1 } }
-
   .organization.icon {
     height: 13px;
     width: 14px;
@@ -2231,25 +2192,32 @@ footer {
     @extend .center;
   }
 
+    .task-icon {
+      width: 16px;
+      height: 16px;
+      fill: #808080;
+    }
+
     .tasks-navigation .task {
       height: 38px;
       border-bottom: 1px solid #33363e;
     }
 
-    .tasks-navigation .task:not(.active):hover {
+    .tasks-navigation .task:not(.is-active):hover {
       background: #26272e;
     }
 
-    .tasks-navigation .name {
+    .tasks-navigation .task-name {
       color: #808080;
     }
 
     .tasks-navigation .icon-holder {
       width: 30px;
       position: relative;
+      @extend .centered;
     }
 
-    .tasks-navigation .icon-holder .icon {
+    .tasks-navigation .task-icon {
       margin-right: 3px;
       margin-top: -3px;
       
@@ -2267,67 +2235,52 @@ footer {
     text-decoration: none;
   }
 
-  .task.active {
+  .task.is-active {
     background: #389ed9;
-  }
+    
+    .task-icon {
+      fill: white;
+    }
 
-  .task.active .name {
-    color: white;
-  }
-
-  .task.active .priority.icon,
-  .task.active .modified.priority.icon,
-  .task.active .modified.priority.icon:after {
-    background-color: white;
-    border-color: white;
+    .task-name {
+      color: white;
+    }
   }
 
   .task.active .priority.icon:after {
     background-color: #389ed9;
   }
 
-  .level-1 {
-    color: #38ae6a;
-  }
-
-  .level-1.priority.icon,
-  .level-1 .priority.icon,
-  .level-1.active,
-  .level-1.active .priority.icon:after,
-  .level-1 .modified.priority.icon,
-  .level-1 .modified.priority.icon:after {
+  .level-1.is-active {
     background-color: #38ae6a;
-    border-color: #38ae6a;
-    color: #38ae6a;
+  }
+  .level-1 .task-icon {
+    fill: #38ae6a;
   }
 
-  .level-2 {
-    color: #f35910;
-  }
-
-  .level-2.priority.icon,
-  .level-2 .priority.icon,
-  .level-2.active,
-  .level-2.active .priority.icon:after,
-  .level-2 .modified.priority.icon,
-  .level-2 .modified.priority.icon:after {
+  .level-2.is-active {
     background-color: #f35910;
-    border-color: #f35910;
-    color: #f35910;
+  }
+  .level-2 .task-icon {
+    fill: #f35910;
   }
 
-  .level-3 {
-    color: #faab00;
-  }
-
-  .level-3.priority.icon,
-  .level-3 .priority.icon,
-  .level-3.active,
-  .level-3.active .priority.icon:after,
-  .level-3 .modified.priority.icon,
-  .level-3 .modified.priority.icon:after {
+  .level-3.is-active {
     background-color: #faab00;
-    border-color: #faab00;
+  }
+  .level-3 .task-icon {
+    fill: #faab00;
+  }
+
+  .task-icon .inner-circle {
+    will-change: opacity;
+    animation: fade 3s ease-in-out infinite;
+  }
+
+  @keyframes fade { 
+    50% { opacity: 1 }
+    75% { opacity: 0 }
+    to { opacity: 1 }
   }
 
   .task .closeTask {
@@ -2337,6 +2290,8 @@ footer {
     width: 50px;
     height: 100%;
     visibility: hidden;
+    @extend .u-clickable;
+    @extend .centered;
   }
 
     .task:hover .closeTask {
@@ -2348,6 +2303,7 @@ footer {
       height: 21px;
       background-color: #2c2d36;
       border-radius: 100%;
+      @extend .centered;
     }
 
     .closeTask:hover .closeTask-inner {
@@ -2355,6 +2311,9 @@ footer {
     }
 
     .closeTask .icon {
+      width: 13px;
+      height: 13px;
+      fill: white;
       opacity: 0.3;
       -webkit-transform: scale(0.7);
               transform: scale(0.7);
@@ -4021,6 +3980,14 @@ footer {
   .tabsSidebar-close {
     padding: 20px;
     margin: -15px;
+    @extend .centered;
+    @extend .u-clickable;
+    
+    .icon {
+      width: 13px;
+      height: 13px;
+      fill: black;
+    }
   }
 
   .tabsSidebar .sidebar-content {
@@ -4072,7 +4039,10 @@ footer {
     position: relative;
     border-top: 1px solid hsl(202,12%,87%);
     @extend .u-clickable;
+    @extend .centered;
   }
+
+  .tabs
 
     .tabsSidebar-tab.is-changed:before {
       position: absolute;
@@ -4231,12 +4201,19 @@ footer {
   list-style: none;
 }
 
-.type-tabs .icon {
+.type-tabs .tab-icon {
+  width: 16px;
+  height: 16px;
+  fill: #ccc;
   vertical-align: top;
   margin-right: 9px;
   margin-top: 11px;
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+}
+
+.type-tabs .tab.active .tab-icon {
+  fill: white;
 }
 
 .tokenfield .token {
