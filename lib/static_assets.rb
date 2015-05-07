@@ -7,7 +7,7 @@ module StaticAssets
       data[:content]   = Base64.decode64($2)
       return data
     end
-    raise "Unable to parse data url: #{data_url.substr(0, 100)}"
+    fail "Unable to parse data url: #{data_url.substr(0, 100)}"
   end
 
   # store image 1:1
@@ -31,7 +31,7 @@ module StaticAssets
     if list && list[0]
       return Store.find( list[0] )
     end
-    raise 'No such raw logo!'
+    fail 'No such raw logo!'
   end
 
   # store image in right size

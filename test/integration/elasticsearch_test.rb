@@ -6,11 +6,11 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
   # set config
   if !ENV['ES_URL']
-    raise "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
+    fail "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
   end
   Setting.set('es_url', ENV['ES_URL'])
   if !ENV['ES_INDEX']
-    raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+    fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
   end
   Setting.set('es_index', ENV['ES_INDEX'])
 

@@ -100,7 +100,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
           end
         end
       else
-        raise "unknown object for notification #{event[:name]}"
+        fail "unknown object for notification #{event[:name]}"
       end
     }
     list_objects

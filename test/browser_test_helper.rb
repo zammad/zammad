@@ -105,7 +105,7 @@ class TestCase < Test::Unit::TestCase
     element = instance.find_elements( { css: '#login input[name="username"]' } )[0]
     if !element
       screenshot( browser: instance, comment: 'login_failed' )
-      raise 'No login box found'
+      fail 'No login box found'
     end
 
     screenshot( browser: instance, comment: 'login' )
@@ -126,7 +126,7 @@ class TestCase < Test::Unit::TestCase
     login = instance.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     if login != params[:username]
       screenshot( browser: instance, comment: 'login_failed' )
-      raise 'login failed'
+      fail 'login failed'
     end
     screenshot( browser: instance, comment: 'login_ok' )
     assert( true, 'login ok' )
@@ -159,7 +159,7 @@ class TestCase < Test::Unit::TestCase
       end
     }
     screenshot( browser: instance, comment: 'logout_failed' )
-    raise 'no login box found, seems logout was not successfully!'
+    fail 'no login box found, seems logout was not successfully!'
   end
 
 =begin
@@ -194,7 +194,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     if instance.current_url !~ /#{Regexp.quote(params[:url])}/
       screenshot( browser: instance, comment: 'location_check_failed' )
-      raise "url #{instance.current_url} is not matching #{params[:url]}"
+      fail "url #{instance.current_url} is not matching #{params[:url]}"
     end
     assert( true, "url #{instance.current_url} is matching #{params[:url]}" )
   end
@@ -259,7 +259,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     if !instance.find_elements( { css: params[:css] } )[0]
       screenshot( browser: instance, comment: 'exists_failed' )
-      raise "#{params[:css]} dosn't exist, but should"
+      fail "#{params[:css]} dosn't exist, but should"
     end
     true
   end
@@ -279,7 +279,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     if instance.find_elements( { css: params[:css] } )[0]
       screenshot( browser: instance, comment: 'exists_not_failed' )
-      raise "#{params[:css]} exists but should not"
+      fail "#{params[:css]} exists but should not"
     end
     true
   end
@@ -454,12 +454,12 @@ class TestCase < Test::Unit::TestCase
       end
       if params[:should_not_match]
         if success
-          raise "should not match '#{params[:value]}' in select list, but is matching"
+          fail "should not match '#{params[:value]}' in select list, but is matching"
         end
         return true
       else
         if !success
-          raise "not matching '#{params[:value]}' in select list"
+          fail "not matching '#{params[:value]}' in select list"
         end
         return true
       end
@@ -503,11 +503,11 @@ class TestCase < Test::Unit::TestCase
     end
     if match
       if params[:should_not_match]
-        raise "matching '#{params[:value]}' in content '#{text}' but should not!"
+        fail "matching '#{params[:value]}' in content '#{text}' but should not!"
       end
     else
       if !params[:should_not_match]
-        raise "not matching '#{params[:value]}' in content '#{text}' but should!"
+        fail "not matching '#{params[:value]}' in content '#{text}' but should!"
       end
     end
     sleep 0.8
@@ -569,16 +569,16 @@ class TestCase < Test::Unit::TestCase
         if params.key?( :value ) && cookie[:value].to_s =~ /#{params[:value]}/i
           assert( true, "matching value '#{params[:value]}' in cookie '#{cookie}'" )
         else
-          raise "not matching value '#{params[:value]}' in cookie '#{cookie}'"
+          fail "not matching value '#{params[:value]}' in cookie '#{cookie}'"
         end
         if params.key?( :expires ) && cookie[:expires].to_s =~ /#{params[:expires]}/i
           assert( true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie}'" )
         else
-          raise "not matching expires '#{params[:expires]}' in cookie '#{cookie}'"
+          fail "not matching expires '#{params[:expires]}' in cookie '#{cookie}'"
         end
 
         if params[:should_not_exist]
-          raise "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies}'"
+          fail "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies}'"
         end
         return
       end
@@ -587,7 +587,7 @@ class TestCase < Test::Unit::TestCase
       assert( true, "cookie with name '#{params[:name]}' is not existing" )
       return
     end
-    raise "not matching name '#{params[:name]}' in cookie '#{cookies}'"
+    fail "not matching name '#{params[:name]}' in cookie '#{cookies}'"
   end
 
 =begin
@@ -608,7 +608,7 @@ class TestCase < Test::Unit::TestCase
     if title =~ /#{params[:value]}/i
       assert( true, "matching '#{params[:value]}' in title '#{title}'" )
     else
-      raise "not matching '#{params[:value]}' in title '#{title}'"
+      fail "not matching '#{params[:value]}' in title '#{title}'"
     end
   end
 
@@ -640,7 +640,7 @@ class TestCase < Test::Unit::TestCase
         if title =~ /#{data[:title]}/i
           assert( true, "matching '#{data[:title]}' in title '#{title}'" )
         else
-          raise "not matching '#{data[:title]}' in title '#{title}'"
+          fail "not matching '#{data[:title]}' in title '#{title}'"
         end
       end
       puts "tv #{params.inspect}"
@@ -659,17 +659,17 @@ class TestCase < Test::Unit::TestCase
           if is_modified
             assert( true, "task '#{data[:title]}' is modifed" )
           elsif !exists
-            raise "task '#{data[:title]}' not exists, should not modified"
+            fail "task '#{data[:title]}' not exists, should not modified"
           else
-            raise "task '#{data[:title]}' is not modifed"
+            fail "task '#{data[:title]}' is not modifed"
           end
         else
           if !is_modified
             assert( true, "task '#{data[:title]}' is modifed" )
           elsif !exists
-            raise "task '#{data[:title]}' not exists, should be not modified"
+            fail "task '#{data[:title]}' not exists, should be not modified"
           else
-            raise "task '#{data[:title]}' is modifed, but should not"
+            fail "task '#{data[:title]}' is modifed, but should not"
           end
         end
       end
@@ -705,7 +705,7 @@ class TestCase < Test::Unit::TestCase
     element = instance.find_elements( { partial_link_text: data[:title] } )[0]
     if !element
       screenshot( browser: instance, comment: 'open_task_failed' )
-      raise "no task with title '#{data[:title]}' found"
+      fail "no task with title '#{data[:title]}' found"
     end
     element.click
     true
@@ -785,7 +785,7 @@ class TestCase < Test::Unit::TestCase
       sleep 0.5
     }
     screenshot( browser: instance, comment: 'watch_for_failed' )
-    raise "'#{params[:value]}' found in '#{text}'"
+    fail "'#{params[:value]}' found in '#{text}'"
   end
 
 =begin
@@ -842,7 +842,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'disappear_failed' )
-    raise "#{params[:css]}) still exsists"
+    fail "#{params[:css]}) still exsists"
   end
 
 =begin
@@ -955,7 +955,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'overview_create_failed' )
-    raise 'overview creation failed'
+    fail 'overview creation failed'
   end
 
 =begin
@@ -990,7 +990,7 @@ wait untill text in selector disabppears
     element = instance.find_elements( { css: '.active .newTicket' } )[0]
     if !element
       screenshot( browser: instance, comment: 'ticket_create_failed' )
-      raise 'no ticket create screen found!'
+      fail 'no ticket create screen found!'
     end
     sleep 1
 
@@ -1086,7 +1086,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'ticket_create_failed' )
-    raise "ticket creation failed, can't get zoom url (current url is '#{ instance.current_url }')"
+    fail "ticket creation failed, can't get zoom url (current url is '#{ instance.current_url }')"
   end
 
 =begin
@@ -1235,7 +1235,7 @@ wait untill text in selector disabppears
       }
       if !found
         screenshot( browser: instance, comment: 'ticket_update_discard_message_failed' )
-        raise 'no discard message found'
+        fail 'no discard message found'
       end
     end
 
@@ -1259,7 +1259,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'ticket_update_failed' )
-    raise 'unable to update ticket'
+    fail 'unable to update ticket'
   end
 
 =begin
@@ -1287,7 +1287,7 @@ wait untill text in selector disabppears
       if title =~ /#{data[:title]}/i
         assert( true, "matching '#{data[:title]}' in title '#{title}'" )
       else
-        raise "not matching '#{data[:title]}' in title '#{title}'"
+        fail "not matching '#{data[:title]}' in title '#{title}'"
       end
     end
 
@@ -1296,7 +1296,7 @@ wait untill text in selector disabppears
       if body =~ /#{data[:body]}/i
         assert( true, "matching '#{data[:body]}' in body '#{body}'" )
       else
-        raise "not matching '#{data[:body]}' in body '#{body}'"
+        fail "not matching '#{data[:body]}' in body '#{body}'"
       end
     end
     true
@@ -1326,7 +1326,7 @@ wait untill text in selector disabppears
     number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
       screenshot( browser: instance, comment: 'ticket_open_by_overview_failed' )
-      raise "unable to search/find ticket #{params[:number]}!"
+      fail "unable to search/find ticket #{params[:number]}!"
     end
     sleep 1
     assert( true, "ticket #{params[:number]} found" )
@@ -1359,7 +1359,7 @@ wait untill text in selector disabppears
     sleep 0.5
     text = instance.find_elements( { css: '#global-search' } )[0].attribute('value')
     if !text
-      raise '#global-search is not empty!'
+      fail '#global-search is not empty!'
     end
 
     # search by number again
@@ -1374,7 +1374,7 @@ wait untill text in selector disabppears
     number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
       screenshot( browser: instance, comment: 'ticket_open_by_search_failed' )
-      raise "unable to search/find ticket #{params[:number]}!"
+      fail "unable to search/find ticket #{params[:number]}!"
     end
     sleep 1
     true
@@ -1439,7 +1439,7 @@ wait untill text in selector disabppears
     sleep 0.5
     text = instance.find_elements( { css: '#global-search' } )[0].attribute('value')
     if !text
-      raise '#global-search is not empty!'
+      fail '#global-search is not empty!'
     end
     element = instance.find_elements( { css: '#global-search' } )[0]
     element.click
@@ -1450,7 +1450,7 @@ wait untill text in selector disabppears
     name = instance.find_elements( { css: '.active h1' } )[0].text
     if name !~ /#{params[:value]}/
       screenshot( browser: instance, comment: 'organization_open_by_search_failed' )
-      raise "unable to search/find org #{params[:value]}!"
+      fail "unable to search/find org #{params[:value]}!"
     end
     assert( true, "org #{params[:value]} found" )
     sleep 2
@@ -1480,7 +1480,7 @@ wait untill text in selector disabppears
     name = instance.find_elements( { css: '.active h1' } )[0].text
     if name !~ /#{params[:value]}/
       screenshot( browser: instance, comment: 'user_open_by_search_failed' )
-      raise "unable to search/find user #{params[:value]}!"
+      fail "unable to search/find user #{params[:value]}!"
     end
     assert( true, "user #{params[:term]} found" )
     sleep 2
@@ -1586,7 +1586,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'sla_create_failed' )
-    raise 'sla creation failed'
+    fail 'sla creation failed'
   end
 
 =begin
@@ -1633,7 +1633,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'text_module_create_failed' )
-    raise 'text module creation failed'
+    fail 'text module creation failed'
   end
 
 =begin
@@ -1677,7 +1677,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'signature_create_failed' )
-    raise 'signature creation failed'
+    fail 'signature creation failed'
   end
 
 =begin
@@ -1748,7 +1748,7 @@ wait untill text in selector disabppears
       return true
     }
     screenshot( browser: instance, comment: 'group_create_failed' )
-    raise 'group creation failed'
+    fail 'group creation failed'
   end
 
   def quote(string)

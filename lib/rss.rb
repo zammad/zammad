@@ -9,7 +9,7 @@ module Rss
       Rails.logger.info "fetch rss... #{url}"
       response = UserAgent.request(url)
       if !response.success?
-        raise "Can't fetch '#{url}', http code: #{response.code}"
+        fail "Can't fetch '#{url}', http code: #{response.code}"
         return
       end
       rss     = SimpleRSS.parse response.body

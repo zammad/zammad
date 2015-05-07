@@ -117,7 +117,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-      raise 'System is not in import mode!'
+      fail 'System is not in import mode!'
     end
 
     response = request('public.pl?Action=Export')
@@ -180,7 +180,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-      raise 'System is not in import mode!'
+      fail 'System is not in import mode!'
     end
 
     # create states

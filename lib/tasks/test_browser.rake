@@ -11,7 +11,7 @@ namespace :test do
     end
     Dir.glob('test/browser/*_test.rb').sort.each { |r|
       sh "#{args.opts} ruby -Itest #{r}" do |ok, res|
-        raise 'Failed test. ' + res.inspect if !ok
+        fail 'Failed test. ' + res.inspect if !ok
       end
     }
     puts 'All browser tests, elapsed: ' + (Time.now() - start).to_s + ' seconds'

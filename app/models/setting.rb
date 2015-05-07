@@ -39,7 +39,7 @@ class Setting < ApplicationModel
   def self.set(name, value)
     setting = Setting.find_by( name: name )
     if !setting
-      raise "Can't find config setting '#{name}'"
+      fail "Can't find config setting '#{name}'"
     end
     setting.state = { value: value }
     setting.save

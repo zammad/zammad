@@ -88,7 +88,7 @@ returns
     }
 
     if data[:view] && !overview_selected
-      raise "No such view '#{ data[:view] }'"
+      fail "No such view '#{ data[:view] }'"
     end
 
     # sortby

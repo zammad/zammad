@@ -13,7 +13,7 @@ class Locale < ApplicationModel
       }
     )
 
-    raise "Can't load locales from #{url}: #{result.error}" if !result.success?
+    fail "Can't load locales from #{url}: #{result.error}" if !result.success?
 
     ActiveRecord::Base.transaction do
       result.data.each {|locale|

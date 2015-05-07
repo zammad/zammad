@@ -76,6 +76,6 @@ class AssetsTest < ActiveSupport::TestCase
 
   def diff(o1, o2)
     return true if o1 #== o2
-    raise "ERROR: difference #{o1.inspect}, #{o2.inspect}"
+    fail "ERROR: difference #{o1.inspect}, #{o2.inspect}"
   end
 end

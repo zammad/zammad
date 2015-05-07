@@ -85,7 +85,7 @@ class Package < ApplicationModel
       package = entry.sub( %r{^.*/(.+?)\.szpm$}, '\1')
     end
     if package == false
-      raise "Can't link package, '#{package_base_dir}' is no package source directory!"
+      fail "Can't link package, '#{package_base_dir}' is no package source directory!"
     end
     logger.debug package.inspect
     package
@@ -154,7 +154,7 @@ class Package < ApplicationModel
       if File.file?( entry.to_s ) && ( File.file?( dest.to_s ) && !File.symlink?( dest.to_s ) )
         backup_file = dest.to_s + '.link_backup'
         if File.exist?( backup_file )
-          raise "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
+          fail "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
         else
           logger.info "Create backup file of #{dest} -> #{backup_file}."
           File.rename( dest.to_s, backup_file )
@@ -199,10 +199,10 @@ class Package < ApplicationModel
     if package_db
       if !data[:reinstall]
         if Gem::Version.new( package_db.version ) == Gem::Version.new( meta[:version] )
-          raise "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
+          fail "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
         end
         if Gem::Version.new( package_db.version ) > Gem::Version.new( meta[:version] )
-          raise "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
+          fail "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
         end
       end
 
@@ -255,7 +255,7 @@ class Package < ApplicationModel
   def self.reinstall(package_name)
     package = Package.find_by( name: package_name )
     if !package
-      raise "No such package '#{package_name}'"
+      fail "No such package '#{package_name}'"
     end
 
     file = self._get_bin( package.name, package.version )
@@ -345,7 +345,7 @@ class Package < ApplicationModel
       version: version,
     )
     if !package
-      raise "No such package '#{name}' version '#{version}'"
+      fail "No such package '#{name}' version '#{version}'"
     end
     list = Store.list(
       object: 'Package',
@@ -354,10 +354,10 @@ class Package < ApplicationModel
 
     # find file
     if !list || !list.first
-      raise "No such file in storage list #{name} #{version}"
+      fail "No such file in storage list #{name} #{version}"
     end
     if !list.first.content
-      raise "No such file in storage #{name} #{version}"
+      fail "No such file in storage #{name} #{version}"
     end
     list.first.content
   end
@@ -470,7 +470,7 @@ class Package < ApplicationModel
           name    = $2
         end
         if !version || !name
-          raise "Invalid package migration '#{migration}'"
+          fail "Invalid package migration '#{migration}'"
         end
 
         # down

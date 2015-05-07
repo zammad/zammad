@@ -26,7 +26,7 @@ load translations from online
         json: true,
       }
     )
-    raise "Can't load translations from #{url}: #{result.error}" if !result.success?
+    fail "Can't load translations from #{url}: #{result.error}" if !result.success?
 
     ActiveRecord::Base.transaction do
       result.data.each {|translation|
@@ -87,7 +87,7 @@ push translations to online
         json: true,
       }
     )
-    raise "Can't push translations to #{url}: #{result.error}" if !result.success?
+    fail "Can't push translations to #{url}: #{result.error}" if !result.success?
     true
   end
 

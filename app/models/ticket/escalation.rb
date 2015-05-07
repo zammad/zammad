@@ -300,7 +300,7 @@ returns
       relative = total_time - total_time_without_pending
       return relative
     else
-      raise "ERROR: Unknown type #{type}"
+      fail "ERROR: Unknown type #{type}"
     end
   end
 

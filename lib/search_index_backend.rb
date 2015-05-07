@@ -59,7 +59,7 @@ create/update/delete index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise response.inspect
+    fail response.inspect
   end
 
 =begin
@@ -91,7 +91,7 @@ add new object to search index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise response.inspect
+    fail response.inspect
   end
 
 =begin

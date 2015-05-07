@@ -23,7 +23,7 @@ returns
       ticket = Ticket.find_by( number: number )
       return number if !ticket
     }
-    raise "Can't generate new ticket number!"
+    fail "Can't generate new ticket number!"
   end
 
 =begin
@@ -47,11 +47,11 @@ returns
     # load backend based on config
     adapter_name = Setting.get('ticket_number')
     if !adapter_name
-      raise 'Missing ticket_number setting option'
+      fail 'Missing ticket_number setting option'
     end
     adapter = load_adapter(adapter_name)
     if !adapter
-      raise "Can't load ticket_number adapter '#{adapter_name}'"
+      fail "Can't load ticket_number adapter '#{adapter_name}'"
     end
     adapter
   end

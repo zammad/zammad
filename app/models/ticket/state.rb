@@ -28,7 +28,7 @@ returns:
         state_type_id: Ticket::StateType.where( name: ['closed'] )
       )
     end
-    raise "Unknown category '#{category}'"
+    fail "Unknown category '#{category}'"
   end
 
 =begin

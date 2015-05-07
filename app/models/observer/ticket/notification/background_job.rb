@@ -97,7 +97,7 @@ class Observer::Ticket::Notification::BackgroundJob
       elsif @p[:type] == 'update'
         template = self.template_update(user, ticket, article, changes)
       else
-        raise "unknown type for notification #{@p[:type]}"
+        fail "unknown type for notification #{@p[:type]}"
       end
 
       # prepare subject & body

@@ -66,7 +66,6 @@ class GeoLocationTest < ActiveSupport::TestCase
     assert_equal(52.52204, user2.preferences['lat'])
     assert_equal(13.38319, user2.preferences['lng'])
 
-
     user3 = User.create(
       login: 'some_geo_login3',
       firstname: 'First',
@@ -83,7 +82,6 @@ class GeoLocationTest < ActiveSupport::TestCase
     assert(user3.preferences['lng'])
     assert_equal(47.4366664, user3.preferences['lat'])
     assert_equal(9.409814899999999, user3.preferences['lng'])
-
 
     user4 = User.create(
       login: 'some_geo_login4',

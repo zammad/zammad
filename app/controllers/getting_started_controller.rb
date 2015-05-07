@@ -831,7 +831,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # validate params
     if !params[:adapter]
-      raise 'need :adapter param'
+      fail 'need :adapter param'
     end
 
     # connection test
