@@ -150,14 +150,22 @@ Rails/HasAndBelongsToMany:
 #  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Description: 'Checks style of children classes and modules.'
+  Enabled: false
+
+# 2.0
+
 Metrics/PerceivedComplexity:
   Description: >-
                  A complexity metric geared towards measuring complexity for a
                  human reader.
   Enabled: false
 
-Style/ClassAndModuleChildren:
-  Description: 'Checks style of children classes and modules.'
+Metrics/AbcSize:
+  Description: >-
+                 A calculated magnitude based on number of assignments,
+                 branches, and conditions.
   Enabled: false
 
 # TODO
@@ -171,12 +179,6 @@ Style/FileName:
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
-  Enabled: false
-
-Metrics/AbcSize:
-  Description: >-
-                 A calculated magnitude based on number of assignments,
-                 branches, and conditions.
   Enabled: false
 
 Style/RedundantSelf:
