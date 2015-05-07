@@ -9,7 +9,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     UserInfo.current_user_id = 1
 
     # create users
-    roles  = Role.where( name: [ 'Agent', 'Admin'] )
+    roles  = Role.where( name: %w(Agent Admin) )
     groups = Group.all
 
     agent1 = User.create_or_update(

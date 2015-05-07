@@ -15,7 +15,7 @@ Setting.create_or_update(
     uid: 'mail',
     base: 'dc=example,dc=org',
     always_filter: '',
-    always_roles: ['Admin', 'Agent'],
+    always_roles: %w(Admin Agent),
     always_groups: ['Users'],
     sync_params: {
       firstname: 'sn',

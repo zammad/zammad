@@ -311,7 +311,7 @@ class Package < ApplicationModel
 
   # reload .rb files in case they have changed
   def self.reload_classes
-    ['app', 'lib'].each {|dir|
+    %w(app lib).each {|dir|
       Dir.glob( Rails.root.join( dir + '/**/*') ).each {|entry|
         if entry =~ /\.rb$/
           begin

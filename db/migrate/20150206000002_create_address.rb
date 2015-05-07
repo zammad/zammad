@@ -19,7 +19,7 @@ class CreateAddress < ActiveRecord::Migration
       end
     }
 
-    ['street', 'zip', 'city', 'department'].each {|attribute_name|
+    %w(street zip city department).each {|attribute_name|
       attribute = ObjectManager::Attribute.get(
         object: 'User',
         name: attribute_name,

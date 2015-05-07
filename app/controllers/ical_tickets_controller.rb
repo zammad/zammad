@@ -75,10 +75,7 @@ class IcalTicketsController < ApplicationController
       'tickets.owner_id' => current_user.id,
       'tickets.state_id' => Ticket::State.where(
         state_type_id: Ticket::StateType.where(
-          name: [
-            'new',
-            'open',
-          ],
+          name: %w(new open),
         ),
       ),
     }

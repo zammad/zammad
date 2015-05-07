@@ -215,11 +215,6 @@ Style/SignalException:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#fail-method'
   Enabled: false
 
-Style/WordArray:
-  Description: 'Use %w or %W for arrays of words.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-w'
-  Enabled: false
-
 Metrics/AbcSize:
   Description: >-
                  A calculated magnitude based on number of assignments,

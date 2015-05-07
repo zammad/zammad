@@ -13,7 +13,7 @@ class Observer::User::Geo < ActiveRecord::Observer
   # check if geo need to be updated
   def check_geo(record)
 
-    location = ['street', 'zip', 'city', 'country']
+    location = %w(street zip city country)
 
     # check if geo update is needed based on old/new location
     if record.id
@@ -42,7 +42,7 @@ class Observer::User::Geo < ActiveRecord::Observer
   # update geo data of user
   def geo_update(record)
     address = ''
-    location = ['street', 'zip', 'city', 'country']
+    location = %w(street zip city country)
     location.each { |item|
       if record[item] && record[item] != ''
         address = address + ',' + record[item]

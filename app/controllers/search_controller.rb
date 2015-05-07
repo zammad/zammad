@@ -20,7 +20,7 @@ class SearchController < ApplicationController
     assets = {}
     result = []
     if SearchIndexBackend.enabled?
-      items = SearchIndexBackend.search( query, limit, ['User', 'Organization'] )
+      items = SearchIndexBackend.search( query, limit, %w(User Organization) )
       items.each { |item|
         require item[:type].to_filename
         record = Kernel.const_get( item[:type] ).find( item[:id] )

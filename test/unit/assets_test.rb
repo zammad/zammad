@@ -4,7 +4,7 @@ require 'test_helper'
 class AssetsTest < ActiveSupport::TestCase
   test 'user' do
 
-    roles  = Role.where( name: [ 'Agent', 'Admin'] )
+    roles  = Role.where( name: %w(Agent Admin) )
     groups = Group.all
     org    = Organization.create_or_update(
       name: 'some org',

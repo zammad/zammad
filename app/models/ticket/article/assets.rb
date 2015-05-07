@@ -41,7 +41,7 @@ returns
       data[ Ticket::Article.to_app_model ][ self.id ]['attachments'] = self.attachments
     end
 
-    ['created_by_id', 'updated_by_id'].each {|item|
+    %w(created_by_id updated_by_id).each {|item|
       next if !self[ item ]
       if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
         user = User.lookup( id: self[ item ] )

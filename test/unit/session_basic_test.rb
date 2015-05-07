@@ -181,7 +181,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   end
 
   user = User.lookup(id: 1)
-  roles  = Role.where( name: [ 'Agent', 'Admin'] )
+  roles  = Role.where( name: %w(Agent Admin) )
   user.roles = roles
   user.save
 
@@ -258,7 +258,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'c activity stream' do
 
     # create users
-    roles  = Role.where( name: [ 'Agent', 'Admin'] )
+    roles  = Role.where( name: %w(Agent Admin) )
     groups = Group.all
 
     UserInfo.current_user_id = 2

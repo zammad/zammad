@@ -72,7 +72,7 @@ returns
 
   def search_index_data
     attributes = {}
-    ['name', 'note'].each { |key|
+    %w(name note).each { |key|
       if self[key] && !self[key].empty?
         attributes[key] = self[key]
       end

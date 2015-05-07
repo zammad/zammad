@@ -363,7 +363,7 @@ Setting.create_if_not_exists(
     uid: 'mail',
     base: 'dc=example,dc=org',
     always_filter: '',
-    always_roles: ['Admin', 'Agent'],
+    always_roles: %w(Admin Agent),
     always_groups: ['Users'],
     sync_params: {
       firstname: 'sn',
@@ -1432,9 +1432,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: [ 'title', 'customer', 'group', 'created_at' ],
-    s: [ 'title', 'customer', 'group', 'created_at' ],
-    m: [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    d: %w(title customer group created_at),
+    s: %w(title customer group created_at),
+    m: %w(number title customer group created_at),
     view_mode_default: 's',
   },
 )
@@ -1454,9 +1454,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: [ 'title', 'customer', 'group', 'created_at' ],
-    s: [ 'title', 'customer', 'group', 'created_at' ],
-    m: [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    d: %w(title customer group created_at),
+    s: %w(title customer group created_at),
+    m: %w(number title customer group created_at),
     view_mode_default: 's',
   },
 )
@@ -1475,9 +1475,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: [ 'title', 'customer', 'group', 'created_at' ],
-    s: [ 'title', 'customer', 'group', 'created_at' ],
-    m: [ 'number', 'title', 'customer', 'group', 'created_at' ],
+    d: %w(title customer group created_at),
+    s: %w(title customer group created_at),
+    m: %w(number title customer group created_at),
     view_mode_default: 's',
   },
 )
@@ -1495,9 +1495,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: [ 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
-    s: [ 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
-    m: [ 'number', 'title', 'customer', 'group', 'state', 'owner', 'created_at' ],
+    d: %w(title customer group state owner created_at),
+    s: %w(title customer group state owner created_at),
+    m: %w(number title customer group state owner created_at),
     view_mode_default: 's',
   },
 )
@@ -1516,9 +1516,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: [ 'title', 'customer', 'group', 'owner', 'created_at' ],
-    s: [ 'title', 'customer', 'group', 'owner', 'created_at' ],
-    m: [ 'number', 'title', 'customer', 'group', 'owner', 'created_at' ],
+    d: %w(title customer group owner created_at),
+    s: %w(title customer group owner created_at),
+    m: %w(number title customer group owner created_at),
     view_mode_default: 's',
   },
 )
@@ -1536,9 +1536,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: [ 'title', 'customer', 'group', 'owner', 'escalation_time' ],
-    s: [ 'title', 'customer', 'group', 'owner', 'escalation_time' ],
-    m: [ 'number', 'title', 'customer', 'group', 'owner', 'escalation_time' ],
+    d: %w(title customer group owner escalation_time),
+    s: %w(title customer group owner escalation_time),
+    m: %w(number title customer group owner escalation_time),
     view_mode_default: 's',
   },
 )
@@ -1558,9 +1558,9 @@ Overview.create_if_not_exists(
     direction: 'DESC',
   },
   view: {
-    d: [ 'title', 'customer', 'state', 'created_at' ],
-    s: [ 'number', 'title', 'state', 'created_at' ],
-    m: [ 'number', 'title', 'state', 'created_at' ],
+    d: %w(title customer state created_at),
+    s: %w(number title state created_at),
+    m: %w(number title state created_at),
     view_mode_default: 's',
   },
 )
@@ -1579,9 +1579,9 @@ Overview.create_if_not_exists(
     direction: 'DESC',
   },
   view: {
-    d: [ 'title', 'customer', 'state', 'created_at' ],
-    s: [ 'number', 'title', 'customer', 'state', 'created_at' ],
-    m: [ 'number', 'title', 'customer', 'state', 'created_at' ],
+    d: %w(title customer state created_at),
+    s: %w(number title customer state created_at),
+    m: %w(number title customer state created_at),
     view_mode_default: 's',
   },
 )

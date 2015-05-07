@@ -23,9 +23,9 @@ class UpdateOverviewAndTicketState < ActiveRecord::Migration
         direction: 'ASC',
       },
       view: {
-        d: [ 'title', 'customer', 'group', 'created_at' ],
-        s: [ 'title', 'customer', 'group', 'created_at' ],
-        m: [ 'number', 'title', 'customer', 'group', 'created_at' ],
+        d: %w(title customer group created_at),
+        s: %w(title customer group created_at),
+        m: %w(number title customer group created_at),
         view_mode_default: 's',
       },
     )

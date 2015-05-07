@@ -63,7 +63,7 @@ returns
       article_attributes = article.attributes
 
       # remove note needed attributes
-      ignore = ['created_by_id', 'updated_by_id', 'updated_at', 'references', 'message_id_md5', 'message_id', 'in_reply_to', 'ticket_id']
+      ignore = %w(created_by_id updated_by_id updated_at references message_id_md5 message_id in_reply_to ticket_id)
       ignore.each {|attribute|
         article_attributes.delete( attribute )
       }

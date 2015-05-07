@@ -12,7 +12,7 @@ class RestTest < ActiveSupport::TestCase
     end
 
     # create agent
-    roles  = Role.where( name: ['Admin', 'Agent'] )
+    roles  = Role.where( name: %w(Admin Agent) )
     groups = Group.all
 
     UserInfo.current_user_id = 1

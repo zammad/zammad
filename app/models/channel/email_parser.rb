@@ -503,7 +503,7 @@ class Channel::EmailParser
     roles = Role.where( name: 'Customer' )
 
     # fillup
-    ['firstname', 'lastname'].each { |item|
+    %w(firstname lastname).each { |item|
       if data[item.to_sym] == nil
         data[item.to_sym] = ''
       end

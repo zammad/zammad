@@ -34,7 +34,7 @@ returns
     # create Users
     if auto_wizard_hash['Users']
 
-      roles  = Role.where( name: ['Agent', 'Admin'] )
+      roles  = Role.where( name: %w(Agent Admin) )
       groups = Group.all
 
       auto_wizard_hash['Users'].each { |user_data|
