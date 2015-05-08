@@ -1,3 +1,9 @@
+$supergood-color: hsl(145,51%,45%);
+$good-color:      hsl(62,45%,46%);
+$ok-color:        hsl(41,100%,49%);
+$bad-color:       hsl(30,93%,50%);
+$superbad-color:  hsl(19,90%,51%);
+
 html {
   height: 100%;
 }
@@ -487,8 +493,7 @@ table {
   padding: 0;
   margin: 0;
   height: 38px;
-  @extend .u-clickable;
-  @extend .centered;
+  @extend .u-clickable, .centered;
 }
 
 .input-replacement input {
@@ -675,8 +680,7 @@ fieldset > *:not(.form-group) .form-control {
   padding: 0 2px;
   margin-bottom: 3px;
   position: relative;
-  @extend .horizontal;
-  @extend .center;
+  @extend .horizontal, .center;
   
   label {
     margin: 0;
@@ -688,10 +692,7 @@ fieldset > *:not(.form-group) .form-control {
 }
 
 .formGroup-bookmark {
-  @extend .u-clickable;
-  @extend .horizontal;
-  @extend .center;
-  @extend .reverse;
+  @extend .u-clickable, .horizontal, .center, .reverse;
   width: 30px;
   height: 30px;
   position: absolute;
@@ -913,8 +914,7 @@ textarea,
 .page-header-meta {
   margin-top: 6px;
   margin-left: auto;
-  @extend .horizontal;
-  @extend .self-start;
+  @extend .horizontal, .self-start;
   
   .btn {
     margin: 0 0 2px 9px;
@@ -1128,8 +1128,7 @@ ol.tabs li {
     padding: 10px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
-    @extend .flex-auto;
-    @extend .u-clickable;
+    @extend .flex-auto, .u-clickable;
   }
 
   .tab.active {
@@ -1570,11 +1569,6 @@ ol.tabs li {
     background-position: -324px -146px;
   }
 
-  .mood.icon {
-    width: 60px;
-    height: 59px;
-  }
-
   .mood.icon.superbad-state {
     background-position: 0 -163px;
   }
@@ -1601,43 +1595,6 @@ ol.tabs li {
     background-position: 0 -223px;
   }
 
-  .in-process.icon {
-    width: 64px;
-    height: 64px;
-    background-position: -79px -225px;
-  }
-
-  .in-process.superbad-state,
-  .reopening.superbad-state {
-    background-color: #f35910;
-  }
-
-  .in-process.bad-state,
-  .reopening.bad-state {
-    background-color: #f6820b;
-  }
-
-  .in-process.ok-state,
-  .reopening.ok-state {
-    background-color: #faab00;
-  }
-
-  .in-process.good-state,
-  .reopening.good-state {
-    background-color: #a9ac41;
-  }
-
-  .in-process.supergood-state,
-  .reopening.supergood-state {
-    background-color: #38ae6a;
-  }
-
-  .reopening.icon {
-    width: 68px;
-    height: 47px;
-    background-position: -146px -225px;
-  }
-
   .paperclip.icon {
     width: 31px;
     height: 29px;
@@ -1648,19 +1605,6 @@ ol.tabs li {
     width: 48px;
     height: 83px;
     background-position: -216px -224px;
-  }
-
-  .stat-tickets {
-    height: 83px;
-    margin-right: 4px;
-    margin-bottom: -9px;
-  }
-
-  .stat-ticket.icon {
-    width: 48px;
-    height: 10px;
-    margin-top: -7px;
-    margin-bottom: 2px;
   }
 
   .stat-ticket.supergood-state {
@@ -2006,8 +1950,7 @@ footer {
 }
 
 .tableOverview-edit {
-  @extend .u-clickable;
-  @extend .u-highlight;
+  @extend .u-clickable, .u-highlight;
 }
 
 .bulkAction {
@@ -2164,8 +2107,7 @@ footer {
     }
 
     .tasks-standalone .name {
-      @extend .u-highlight;
-      @extend .u-textTruncate;
+      @extend .u-highlight, .u-textTruncate;
     }
 
     .tasks--standalone .icon-holder {
@@ -2187,9 +2129,7 @@ footer {
   .task {
     padding: 10px 15px 7px 0;
     position: relative;
-    @extend .u-clickable;
-    @extend .horizontal;
-    @extend .center;
+    @extend .u-clickable, .horizontal, .center;
   }
 
     .task-icon {
@@ -2290,8 +2230,7 @@ footer {
     width: 50px;
     height: 100%;
     visibility: hidden;
-    @extend .u-clickable;
-    @extend .centered;
+    @extend .u-clickable, .centered;
   }
 
     .task:hover .closeTask {
@@ -2396,8 +2335,7 @@ footer {
     height: 36px;
     transition: 240ms;
     position: relative;
-    @extend .u-clickable;
-    @extend .zIndex-5;
+    @extend .u-clickable, .zIndex-5;
   }
 
     .logo .activity-counter {
@@ -2486,8 +2424,7 @@ footer {
       height: 60px;
       position: relative;
       text-decoration: none;
-      @extend .centered;
-      @extend .u-clickable;
+      @extend .centered, .u-clickable;
     }
 
     .user-menu .list-button *:not(.dropdown-nose) {
@@ -2950,6 +2887,72 @@ footer {
     }
   }
 
+.stat-icon {
+  position: relative;
+}
+
+.mood-icon {
+  width: 60px;
+  height: 59px;
+}
+
+.stopwatch-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stat-stopwatch {
+  width: 77px;
+  height: 83px;
+  position: relative;
+}
+
+.stat-channel-icon {
+  width: 16px;
+  height: 16px;
+  fill: hsl(198,18%,72%);
+}
+
+.total-tickets {
+  height: 83px;
+  width: 48px;
+  margin-right: 4px;
+  margin-bottom: -9px;
+}
+
+.one-ticket {
+  width: 48px;
+  height: 10px;
+  margin-top: -7px;
+  margin-bottom: 2px;
+}
+
+.stat-tickets {
+  height: 100px;
+}
+
+
+.in-process-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.reopening-icon {
+  width: 68px;
+  height: 47px;
+}
+
+.state-color {
+  &.supergood-state { fill: $supergood-color;}
+  &.good-state      { fill: $good-color; }
+  &.ok-state        { fill: $ok-color; }
+  &.bad-state       { fill: $bad-color; }
+  &.superbad-state  { fill: $superbad-color; }
+}
+
 .stat-widgets {
   margin: 0 -7px 20px;
 }
@@ -2991,11 +2994,7 @@ footer {
     }
 
   .stat-graphic {
-    @extend .flex, .horizontal, .centered;
-  }
-
-  .time.stat-widget .stat-graphic .icon {
-    position: relative;
+    @extend .flex, .centered;
   }
 
     .time.stat-widget .stat-amount {
@@ -3280,9 +3279,7 @@ footer {
 }
 
 .ticketZoom-controls {
-  @extend .horizontal;
-  @extend .justify-end;
-  @extend .center;
+  @extend .horizontal, .justify-end, .center;
 }
 
 .ticketZoom .page-header {
@@ -3940,8 +3937,7 @@ footer {
 .tabsSidebar-holder {
   overflow: hidden;
   position: relative;
-  @extend .flex;
-  @extend .vertical;
+  @extend .flex, .vertical;
 }
 
 .tabsSidebar .sidebar {
@@ -3955,8 +3951,7 @@ footer {
   }
 
   .tabsSidebar .sidebar-header {
-    @extend .horizontal;
-    @extend .center;
+    @extend .horizontal, .center;
     margin: 20px 20px 0;
     padding: 0 0 5px;
     position: relative;
@@ -3980,8 +3975,7 @@ footer {
   .tabsSidebar-close {
     padding: 20px;
     margin: -15px;
-    @extend .centered;
-    @extend .u-clickable;
+    @extend .centered, .u-clickable;
     
     .icon {
       width: 13px;
@@ -4038,8 +4032,7 @@ footer {
     background: hsl(197,20%,93%);
     position: relative;
     border-top: 1px solid hsl(202,12%,87%);
-    @extend .u-clickable;
-    @extend .centered;
+    @extend .u-clickable, .centered;
   }
 
   .tabs
@@ -4331,10 +4324,7 @@ footer {
 }
 
 .switchBackToUser {
-  @extend .fit;
-  @extend .horizontal;
-  @extend .center;
-  @extend .zIndex-7;
+  @extend .fit, .horizontal, .center, .zIndex-7;
   background: hsl(200,87%,45%);
   color: #fff;
   height: 45px;
@@ -4421,9 +4411,7 @@ footer {
   .modal-leftFooter,
   .modal-centerFooter,
   .modal-rightFooter {
-    @extend .flex;
-    @extend .horizontal;
-    @extend .start;
+    @extend .flex, .horizontal, .start;
   }
 
 .modal.modal--local {
@@ -4511,14 +4499,12 @@ footer {
   .dropdown.dropdown--actions {
     li {
       padding: 0;
-      @extend .horizontal;
-      @extend .center;
+      @extend .horizontal, .center;
     }
 
     .dropdown-iconSpacer,
     .dropdown-activeSpacer {
-      @extend .horizontal;
-      @extend .center;
+      @extend .horizontal, .center;
     }
 
     .dropdown-iconSpacer {
@@ -4532,8 +4518,7 @@ footer {
     }
 
     a {
-      @extend .u-clickable;
-      @extend .horizontal;
+      @extend .u-clickable, .horizontal;
       min-width: 100%;
       padding: 3px 18px;
     }
@@ -4755,10 +4740,7 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .tabsSidebar-sidebarSpacer;
-  @extend .zIndex-6;
-  @extend .horizontal;
-  @extend .center;
+  @extend .tabsSidebar-sidebarSpacer, .zIndex-6, .horizontal, .center;
   background: white;
   border-bottom: 1px solid hsl(0,0%,78%);
   height: 64px;
@@ -4789,8 +4771,7 @@ footer {
   }
 
 .wizard-slide {
-  @extend .vertical;
-  @extend .hero-unit;
+  @extend .vertical, .hero-unit;
   width: 400px;
   padding-bottom: 18px;
   margin-bottom: 20px;
@@ -4948,8 +4929,7 @@ label + .wizard-buttonList {
 }
 
 .channelList {
-  @extend .flex;
-  @extend .vertical;
+  @extend .flex, .vertical;
   background: white;
   border-radius: 2px;
   margin: 5px 0 20px;
@@ -4985,8 +4965,7 @@ label + .wizard-buttonList {
 }
 
 .channelList-placeholder {
-  @extend .flex;
-  @extend .centered;
+  @extend .flex, .centered;
   color: #999;
 }
 
@@ -5000,8 +4979,7 @@ label + .wizard-buttonList {
 }
 
 .channelList-controlEntry {
-  @extend .horizontal;
-  @extend .justified;
+  @extend .horizontal, .justified;
   width: 26px;
   height: 26px;
   border-left: none;
@@ -5222,9 +5200,7 @@ label + .wizard-buttonList {
 }
 
 .profile-organizationMember {
-  @extend .profile-detailsEntry;
-  @extend .horizontal;
-  @extend .center;
+  @extend .profile-detailsEntry, .horizontal, .center;
   
   .avatar {
     margin-right: 10px;
@@ -5232,16 +5208,14 @@ label + .wizard-buttonList {
 }
 
 .profile-ticketList {
-  @extend .flex;
-  @extend .vertical;
+  @extend .flex, .vertical;
   
   &:not(:last-child) {
     margin-right: 50px;
   }
 
   .tasks {
-    @extend .flex;
-    @extend .vertical;
+    @extend .flex, .vertical;
   }
 }
 
@@ -5563,6 +5537,13 @@ body.fit {
      -moz-align-self: start;
       -ms-align-self: start;
           align-self: start;
+}
+
+.self-end {
+  -webkit-align-self: end;
+     -moz-align-self: end;
+      -ms-align-self: end;
+          align-self: end;
 }
 
 .two-columns,
