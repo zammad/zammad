@@ -13,9 +13,7 @@ gulp.task('svgstore', function () {
     .pipe(cheerio({
       run: function ($) {
           // remove green-screen color
-          $('[fill="#50E3C2"]').removeAttr('fill');
-          // remove fill=none (<g>'s have it)
-          $('[fill="none"]').removeAttr('fill');
+          $('[fill="#50E3C2"]').removeAttr('fill').parents('[fill="none"]').removeAttr('fill');
       },
       parserOptions: { xmlMode: true }
     }))

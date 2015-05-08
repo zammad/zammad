@@ -39,7 +39,7 @@ class App.Ticket extends App.Model
     level
 
   icon: (user) ->
-    "priority icon level-#{ @level() }"
+    "priority"
 
   iconTitle: (user) ->
     App.TicketState.find( @state_id ).displayName()
