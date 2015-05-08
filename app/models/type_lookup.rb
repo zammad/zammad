@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TypeLookup < ApplicationModel
-  @@cache_object = {}
+  @@cache_object = {} # rubocop:disable Style/ClassVars
 
   def self.by_id( id )
 

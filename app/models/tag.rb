@@ -4,8 +4,10 @@ class Tag < ApplicationModel
   belongs_to :tag_object,       class_name: 'Tag::Object'
   belongs_to :tag_item,         class_name: 'Tag::Item'
 
+  # rubocop:disable Style/ClassVars
   @@cache_item = {}
   @@cache_object = {}
+  # rubocop:enable Style/ClassVars
 
   def self.tag_add(data)
 

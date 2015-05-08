@@ -13,7 +13,7 @@ module Sessions
   @path = "#{@root}/tmp/websocket"
 
   # create global vars for threads
-  @@client_threads = {}
+  @@client_threads = {} # rubocop:disable Style/ClassVars
 
 =begin
 

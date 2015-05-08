@@ -9,7 +9,7 @@ class Setting < ApplicationModel
   after_create  :delete_cache
   after_update  :delete_cache
 
-  @@current = {}
+  @@current = {} # rubocop:disable Style/ClassVars
 
   def self.load
 

@@ -187,7 +187,5 @@ Style/Documentation:
 
 Lint/RescueException:
   Enabled: false
-Style/ClassVars:
-  Enabled: false
 Lint/UselessAssignment:
   Enabled: false

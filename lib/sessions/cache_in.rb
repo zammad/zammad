@@ -1,8 +1,11 @@
 module Sessions::CacheIn
+
+  # rubocop:disable Style/ClassVars
   @@data = {}
   @@data_time = {}
   @@expires_in = {}
   @@expires_in_ttl = {}
+  # rubocop:enable Style/ClassVars
 
   def self.delete( key )
     @@data.delete( key )

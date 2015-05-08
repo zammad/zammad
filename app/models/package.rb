@@ -2,7 +2,7 @@
 
 require 'rexml/document'
 class Package < ApplicationModel
-  @@root = Rails.root.to_s
+  @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
 
   # build package based on .szpm
   # Package.build(
@@ -437,7 +437,7 @@ class Package < ApplicationModel
   end
 
   class Migration < ApplicationModel
-    @@root = Rails.root.to_s
+    @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
 
     def self.migrate( package, direction = 'normal' )
       location = @@root + '/db/addon/' + package.underscore

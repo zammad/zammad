@@ -11,9 +11,11 @@ class History < ApplicationModel
   #  before_validation :check_type, :check_object
   #  attr_writer :history_type, :history_object
 
+  # rubocop:disable Style/ClassVars
   @@cache_type = {}
   @@cache_object = {}
   @@cache_attribute = {}
+# rubocop:enable Style/ClassVars
 
 =begin
 
