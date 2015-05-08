@@ -110,8 +110,6 @@ class Scheduler < ApplicationModel
 
       count = result.sum
 
-      break if $exit
-
       if count.zero?
         sleep(wait)
         logger.info '*** worker loop'
