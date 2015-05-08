@@ -2,9 +2,9 @@
   <% if i > 0: %> <li class="divider"></li> <% end %>
   <% for item in area.result: %>
     <li>
-      <a href="<%- item.url %>" class="tab tab--search <%= item.class %>" data-id="<%= item.id %>">
-        <svg class="tab-icon tab-icon--search"><use xlink:href="#icon-<%= item.iconClass %>" /></svg>
-        <span class="tab-name flex u-textTruncate"><%= item.display %></span>
+      <a href="<%- item.url %>" class="nav-tab nav-tab--search <%= item.class %>" data-id="<%= item.id %>">
+        <svg class="nav-tab-icon tab-icon--search"><use xlink:href="#icon-<%= item.iconClass %>" /></svg>
+        <span class="nav-tab-name flex u-textTruncate"><%= item.display %></span>
       </a>
     </li>
   <% end %>

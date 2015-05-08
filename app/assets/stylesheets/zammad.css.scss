@@ -2113,27 +2113,27 @@ footer {
       color: hsl(198,19%,72%);
     }
 
-  .tab {
+  .nav-tab {
     padding: 10px 15px 7px 0;
     position: relative;
     color: #808080;
     @extend .u-clickable, .horizontal, .center;
   }
 
-    .tasks-navigation .tab {
+    .tasks-navigation .nav-tab {
       height: 38px;
       border-bottom: 1px solid #33363e;
     }
 
-    .tasks-navigation .tab:not(.is-active):hover {
+    .tasks-navigation .nav-tab:not(.is-active):hover {
       background: #26272e;
     }
 
-    .navigation .tab-name {
+    .navigation .nav-tab-name {
       text-align: left;
     }
 
-    .tasks-navigation .tab-icon {
+    .tasks-navigation .nav-tab-icon {
       
       &.loading {
         width: 10px;
@@ -2145,26 +2145,26 @@ footer {
       }
     }
 
-  .tab:hover {
+  .nav-tab:hover {
     color: #808080;
     text-decoration: none;
   }
 
-  .tab.is-active,
-  .tab.tab--search:hover {
+  .nav-tab.is-active,
+  .nav-tab.nav-tab--search:hover {
     background: #389ed9;
     color: white;
     
-    .tab-icon {
+    .nav-tab-icon {
       fill: white;
     }
   }
 
-  .tab.tab--search {
+  .nav-tab.nav-tab--search {
     height: 30px;
   }
 
-  .tab-icon {
+  .nav-tab-icon {
     width: 16px;
     height: 16px;
     fill: #808080;
@@ -2176,25 +2176,25 @@ footer {
   .level-1.is-active {
     background-color: #38ae6a;
   }
-  .level-1 .tab-icon {
+  .level-1 .nav-tab-icon {
     fill: #38ae6a;
   }
 
   .level-2.is-active {
     background-color: #f35910;
   }
-  .level-2 .tab-icon {
+  .level-2 .nav-tab-icon {
     fill: #f35910;
   }
 
   .level-3.is-active {
     background-color: #faab00;
   }
-  .level-3 .tab-icon {
+  .level-3 .nav-tab-icon {
     fill: #faab00;
   }
 
-  .tab-icon .inner-circle {
+  .nav-tab-icon .inner-circle {
     will-change: opacity;
     animation: fade 3s ease-in-out infinite;
   }
@@ -2205,7 +2205,7 @@ footer {
     to { opacity: 1 }
   }
 
-  .tab .closeTab {
+  .nav-tab-close {
     position: absolute;
     right: 0;
     top: 0;
@@ -2215,11 +2215,11 @@ footer {
     @extend .u-clickable, .centered;
   }
 
-    .tab:hover .closeTab {
+    .nav-tab:hover .nav-tab-close {
       visibility: visible;
     }
 
-    .closeTab-inner {
+    .nav-tab-close-inner {
       width: 21px;
       height: 21px;
       background-color: #2c2d36;
@@ -2227,11 +2227,11 @@ footer {
       @extend .centered;
     }
 
-    .closeTab:hover .closeTab-inner {
+    .nav-tab-close:hover .nav-tab-close-inner {
       background-color: #972e29;
     }
 
-    .closeTab .icon {
+    .nav-tab-close .icon {
       width: 13px;
       height: 13px;
       fill: white;
@@ -2240,7 +2240,7 @@ footer {
               transform: scale(0.7);
     }
 
-    .closeTab:hover .icon {
+    .nav-tab-close:hover .icon {
       opacity: 1;
     } 
 
@@ -4341,8 +4341,10 @@ footer {
     @extend .u-clickable;
   }
 
-  .modal-close .close.icon {
+  .modal-close .close-icon {
     opacity: 0.18;
+    width: 13px;
+    height: 13px;
   }
 
   .modal-body {
