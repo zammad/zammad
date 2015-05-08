@@ -187,8 +187,6 @@ Style/Documentation:
 
 Style/CommentIndentation:
   Enabled: false
-Style/GlobalVars:
-  Enabled: false
 Lint/RescueException:
   Enabled: false
 Style/ClassVars:
