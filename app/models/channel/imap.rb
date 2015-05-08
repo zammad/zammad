@@ -29,7 +29,7 @@ class Channel::IMAP < Channel::EmailParser
     # try LOGIN, if not - try plain
     begin
       @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
-    rescue Exception => e
+    rescue => e
       if e.to_s !~ /(unsupported\s(authenticate|authentication)\smechanism|not\ssupported)/i
         raise e
       end

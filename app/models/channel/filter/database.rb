@@ -25,7 +25,7 @@ module Channel::Filter::Database
             Rails.logger.info "  is not matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
             match = false
           end
-        rescue Exception => e
+        rescue => e
           match = false
           Rails.logger.error "can't use match rule #{value} on #{mail[ key.to_sym ]}"
           Rails.logger.error e.inspect

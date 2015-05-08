@@ -266,7 +266,7 @@ returns
           data[:user] = data_json['user'] # for compat. reasons
         end
       }
-    rescue Exception => e
+    rescue => e
       Rails.logger.error e.inspect
       destory(client_id)
       Rails.logger.error "ERROR: reading session file '#{session_file}', remove session."

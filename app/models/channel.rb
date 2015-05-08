@@ -9,7 +9,7 @@ class Channel < ApplicationModel
       begin
         c = eval 'Channel::' + channel[:adapter].upcase + '.new' # rubocop:disable Lint/Eval
         c.fetch(channel)
-      rescue Exception => e
+      rescue => e
         logger.error "can't use " + 'Channel::' + channel[:adapter].upcase
         logger.error e.inspect
         logger.error e.backtrace

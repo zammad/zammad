@@ -8,7 +8,7 @@ module Channel::EmailSend
     begin
       c = eval 'Channel::' + channel[:adapter] + '.new' # rubocop:disable Lint/Eval
       c.send(attr, channel, notification)
-    rescue Exception => e
+    rescue => e
       Rails.logger.error "can't use " + 'Channel::' + channel[:adapter]
       Rails.logger.error e.inspect
       Rails.logger.error e.backtrace

@@ -57,7 +57,7 @@ returns
     begin
       response = http.request(request)
       return process(response, uri, count, params, options)
-    rescue Exception => e
+    rescue => e
       return Result.new(
         error: e.inspect,
         success: false,
@@ -105,7 +105,7 @@ returns
     begin
       response = http.request(request)
       return process(response, uri, count, params, options)
-    rescue Exception => e
+    rescue => e
       return Result.new(
         error: e.inspect,
         success: false,
@@ -153,7 +153,7 @@ returns
     begin
       response = http.request(request)
       return process(response, uri, count, params, options)
-    rescue Exception => e
+    rescue => e
       return Result.new(
         error: e.inspect,
         success: false,
@@ -194,7 +194,7 @@ returns
     begin
       response = http.request(request)
       return process(response, uri, count, {}, options)
-    rescue Exception => e
+    rescue => e
       return Result.new(
         error: e.inspect,
         success: false,

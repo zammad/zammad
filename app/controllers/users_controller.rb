@@ -176,7 +176,7 @@ class UsersController < ApplicationController
 
       user_new = User.find( user.id )
       render json: user_new, status: :created
-    rescue Exception => e
+    rescue => e
       render json: { error: e.message }, status: :unprocessable_entity
     end
   end
@@ -220,7 +220,7 @@ class UsersController < ApplicationController
       # get new data
       user_new = User.find( params[:id] )
       render json: user_new, status: :ok
-    rescue Exception => e
+    rescue => e
       render json: { error: e.message }, status: :unprocessable_entity
     end
   end

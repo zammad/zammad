@@ -628,7 +628,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         else
           found = Channel::POP3.new.fetch( { options: params[:inbound][:options] }, 'verify', subject )
         end
-      rescue Exception => e
+      rescue => e
         render json: {
           result: 'invalid',
           message: e.to_s,
@@ -762,7 +762,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
             options: params[:options]
           }
         )
-      rescue Exception => e
+      rescue => e
 
         # check if sending email was ok, but mailserver rejected
         if !subject
@@ -806,7 +806,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         mail,
         nil
       )
-    rescue Exception => e
+    rescue => e
       message_human = ''
       translation_map.each {|key, message|
         if e.message =~ /#{Regexp.escape(key)}/i
@@ -846,7 +846,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
       begin
         Channel::IMAP.new.fetch( { options: params[:options] }, 'check' )
-      rescue Exception => e
+      rescue => e
         message_human = ''
         translation_map.each {|key, message|
           if e.message =~ /#{Regexp.escape(key)}/i
@@ -869,7 +869,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     begin
       Channel::POP3.new.fetch( { options: params[:options] }, 'check' )
-    rescue Exception => e
+    rescue => e
       message_human = ''
       translation_map.each {|key, message|
         if e.message =~ /#{Regexp.escape(key)}/i
@@ -896,7 +896,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
         ress = dns.getresources(domain, Resolv::DNS::Resource::IN::MX)
         ress.map { |r| [r.exchange.to_s, IPSocket.getaddress(r.exchange.to_s), r.preference] }
       end
-    rescue Exception => e
+    rescue => e
       logger.error e.message
       logger.error e.backtrace.inspect
     end

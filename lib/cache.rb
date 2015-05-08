@@ -32,7 +32,7 @@ write a cache
     end
     begin
       Rails.cache.write( key.to_s, data, params)
-    rescue Exception => e
+    rescue => e
       Rails.logger.error "NOTICE: #{e.message}"
     end
   end

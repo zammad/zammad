@@ -287,7 +287,7 @@ class ApplicationController < ActionController::Base
     generic_object.param_set_associations( params )
 
     model_create_render_item(generic_object)
-  rescue Exception => e
+  rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
     render json: { error: e.message }, status: :unprocessable_entity
@@ -309,7 +309,7 @@ class ApplicationController < ActionController::Base
     generic_object.param_set_associations( params )
 
     model_update_render_item( generic_object )
-  rescue Exception => e
+  rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
     render json: { error: e.message }, status: :unprocessable_entity
@@ -323,7 +323,7 @@ class ApplicationController < ActionController::Base
     generic_object = object.find( params[:id] )
     generic_object.destroy
     model_destory_render_item()
-  rescue Exception => e
+  rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
     render json: { error: e.message }, status: :unprocessable_entity
@@ -343,7 +343,7 @@ class ApplicationController < ActionController::Base
 
     generic_object = object.find( params[:id] )
     model_show_render_item(generic_object)
-  rescue Exception => e
+  rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
     render json: { error: e.message }, status: :unprocessable_entity
@@ -356,7 +356,7 @@ class ApplicationController < ActionController::Base
   def model_index_render (object, _params)
     generic_objects = object.all
     model_index_render_result( generic_objects )
-  rescue Exception => e
+  rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
     render json: { error: e.message }, status: :unprocessable_entity

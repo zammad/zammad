@@ -137,7 +137,7 @@ class LongPollingController < ApplicationController
           return
         end
       end
-    rescue Exception => e
+    rescue => e
       logger.error e.inspect
       logger.error e.backtrace
       render json: { error: 'Invalid client_id in receive loop!' }, status: :unprocessable_entity

@@ -338,7 +338,7 @@ class Channel::EmailParser
     filters.each {|_prio, backend|
       begin
         backend.run( channel, mail )
-      rescue Exception => e
+      rescue => e
         Rails.logger.error "can't run postmaster pre filter #{backend}"
         Rails.logger.error e.inspect
         return false
@@ -487,7 +487,7 @@ class Channel::EmailParser
     filters.each {|_prio, backend|
       begin
         backend.run( channel, mail, ticket, article, user )
-      rescue Exception => e
+      rescue => e
         Rails.logger.error "can't run postmaster post filter #{backend}"
         Rails.logger.error e.inspect
       end

@@ -112,7 +112,7 @@ class Channel::TWITTER2
     elsif tweet.respond_to?('from_user_id')
       begin
         sender = @client.user(tweet.from_user_id)
-      rescue Exception => e
+      rescue => e
         Rails.logger.error 'Exception: twitter: ' + e.inspect
         return
       end

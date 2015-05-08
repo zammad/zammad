@@ -27,7 +27,7 @@ module Rss
         break item if fetched == limit.to_i
       }
       Cache.write( cache_key, items, expires_in: 4.hours )
-    rescue Exception => e
+    rescue => e
       Rails.logger.error "can't fetch #{url}"
       Rails.logger.error e.inspect
       return

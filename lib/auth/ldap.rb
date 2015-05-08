@@ -21,7 +21,7 @@ module Auth::Ldap
         Rails.logger.info "Can't bind to '#{config[:host]}', #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
         return
       end
-    rescue Exception => e
+    rescue => e
       Rails.logger.info "Can't connect to '#{config[:host]}', #{e}"
       return
     end

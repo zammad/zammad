@@ -193,7 +193,5 @@ Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
   Enabled: false
 
-Lint/RescueException:
-  Enabled: false
 Lint/UselessAssignment:
   Enabled: false
