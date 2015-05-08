@@ -43,7 +43,7 @@ class App.TicketZoom extends App.Controller
 
     # fetch new data if triggered
     @bind(
-      'Ticket:update'
+      'Ticket:update Ticket:touch'
       (data) =>
 
         # check if current ticket has changed
