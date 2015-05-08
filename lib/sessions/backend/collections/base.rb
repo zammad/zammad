@@ -96,14 +96,14 @@ class Sessions::Backend::Collections::Base
     @model = model
   end
 
-  def self.roles_add(role)
+  def self.add_if_role(role)
     if !@roles
       @roles = []
     end
     @roles.push role
   end
 
-  def self.not_roles_add(role)
+  def self.add_if_not_role(role)
     if !@not_roles
       @not_roles = []
     end
