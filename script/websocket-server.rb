@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
-
+# rubocop:disable Style/FileName, Rails/TimeZone
 $LOAD_PATH << './lib'
 require 'rubygems'
 require 'eventmachine'
@@ -95,7 +95,7 @@ EventMachine.run {
       if !@clients.include? client_id
         @clients[client_id] = {
           websocket: ws,
-          last_ping: Time.zone.now,
+          last_ping: Time.now,
           error_count: 0,
         }
       end
@@ -139,7 +139,7 @@ EventMachine.run {
 
         # error handling
         if data['timestamp']
-          log 'notice', "request spool data > '#{Time.zone.at(data['timestamp'])}'", client_id
+          log 'notice', "request spool data > '#{Time.at(data['timestamp'])}'", client_id
         else
           log 'notice', 'request spool with init data', client_id
         end
@@ -164,7 +164,7 @@ EventMachine.run {
 
         # send spool:sent event to client
         log 'notice', 'send spool:sent event', client_id
-        @clients[client_id][:websocket].send( '[{"event":"spool:sent","data":{"timestamp":' + Time.zone.now.to_i.to_s + '}}]' )
+        @clients[client_id][:websocket].send( '[{"event":"spool:sent","data":{"timestamp":' + Time.now.to_i.to_s + '}}]' )
       end
 
       # get session
@@ -175,7 +175,7 @@ EventMachine.run {
         # remember ping, send pong back
       elsif data['action'] == 'ping'
         Sessions.touch(client_id)
-        @clients[client_id][:last_ping] = Time.zone.now
+        @clients[client_id][:last_ping] = Time.now
         @clients[client_id][:websocket].send( '[{"action":"pong"}]' )
 
         # broadcast
@@ -298,7 +298,7 @@ EventMachine.run {
     # close unused web socket sessions
     @clients.each { |client_id, client|
 
-      next if ( client[:last_ping] + idle_time_in_sec ) >= Time.zone.now
+      next if ( client[:last_ping] + idle_time_in_sec ) >= Time.now
 
       log 'notice', 'closing idle websocket connection', client_id
 
@@ -324,8 +324,8 @@ EventMachine.run {
     if !@options[:v]
       return if level == 'debug'
     end
-    puts "#{Time.zone.now}:client(#{ client_id }) #{ data }"
-    #    puts "#{Time.zone.now}:#{ level }:client(#{ client_id }) #{ data }"
+    puts "#{Time.now}:client(#{ client_id }) #{ data }"
+    #    puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
   end
 
 }
