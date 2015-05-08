@@ -27,6 +27,6 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
     return true if state_type.name != 'closed'
 
     # set close_time
-    record.close_time = Time.now
+    record.close_time = Time.zone.now
   end
 end

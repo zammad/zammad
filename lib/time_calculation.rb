@@ -22,15 +22,15 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     time_diff = 0
     if timezone
       begin
-        time_diff = Time.parse(start_time.to_s).in_time_zone(timezone).utc_offset
+        time_diff = Time.zone.parse(start_time.to_s).in_time_zone(timezone).utc_offset
      rescue Exception => e
        Rails.logger.error "Can't fine tomezone #{timezone}"
        Rails.logger.error e.inspect
        Rails.logger.error e.backtrace
       end
     end
-    beginning_of_workday = Time.parse("1977-10-27 #{config['beginning_of_workday']}")
-    end_of_workday       = Time.parse("1977-10-27 #{config['end_of_workday']}") - 3600
+    beginning_of_workday = Time.zone.parse("1977-10-27 #{config['beginning_of_workday']}")
+    end_of_workday       = Time.zone.parse("1977-10-27 #{config['end_of_workday']}") - 3600
     config_ok = false
     working_hours = {}
     [:Mon, :Tue, :Wed, :Thu, :Fri, :Sat, :Sun].each {|day|
@@ -43,7 +43,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
       config_ok = true
       (0..23).each {|hour|
-        time = Time.parse("1977-10-27 #{hour}:00:00")
+        time = Time.zone.parse("1977-10-27 #{hour}:00:00")
         if time >= beginning_of_workday && time <= end_of_workday
           working_hours[day].push true
         else
@@ -116,10 +116,10 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
   def self.business_time_diff(start_time, end_time, config = nil, timezone = '')
     if start_time.class == String
-      start_time  = Time.parse( start_time.to_s + 'UTC' )
+      start_time  = Time.zone.parse( start_time.to_s + 'UTC' )
     end
     if end_time.class == String
-      end_time = Time.parse( end_time.to_s + 'UTC' )
+      end_time = Time.zone.parse( end_time.to_s + 'UTC' )
     end
 
     # if no config is given, just return calculation directly
@@ -236,7 +236,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
   def self.dest_time(start_time, diff_in_min, config = nil, timezone = '')
     if start_time.class == String
-      start_time = Time.parse( start_time.to_s + ' UTC' )
+      start_time = Time.zone.parse( start_time.to_s + ' UTC' )
     end
 
     return start_time if diff_in_min == 0

@@ -33,7 +33,7 @@ returns
     session_file = "#{path_tmp}/session"
 
     # collect session data
-    meta[:last_ping] = Time.new.to_i.to_s
+    meta[:last_ping] = Time.zone.now.to_i.to_s
     data = {
       user: session,
       meta: meta,
@@ -189,7 +189,7 @@ returns
     list_of_closed_sessions = []
     clients                 = Sessions.list
     clients.each { |client_id, client|
-      if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.now.to_i
+      if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.zone.now.to_i
         list_of_closed_sessions.push client_id
         Sessions.destory( client_id )
       end
@@ -213,7 +213,7 @@ returns
     data = get(client_id)
     return false if !data
     path = "#{@path}/#{client_id}"
-    data[:meta][:last_ping] = Time.new.to_i.to_s
+    data[:meta][:last_ping] = Time.zone.now.to_i.to_s
     content = data.to_json
     File.open( path + '/session', 'wb' ) { |file|
       file.write content
@@ -289,7 +289,7 @@ returns
 
   def self.send( client_id, data )
     path     = "#{@path}/#{client_id}/"
-    filename = "send-#{ Time.new().to_f }"
+    filename = "send-#{ Time.zone.now.to_f }"
     check    = true
     count    = 0
     while check
@@ -422,11 +422,11 @@ returns
   def self.spool_create( msg )
     path = "#{@path}/spool/"
     FileUtils.mkpath path
-    file = "#{Time.new.to_f}-#{rand(99_999)}"
+    file = "#{Time.zone.now.to_f}-#{rand(99_999)}"
     File.open( path + '/' + file, 'wb' ) { |file|
       data = {
         msg: msg,
-        timestamp: Time.now.to_i,
+        timestamp: Time.zone.now.to_i,
       }
       file.write data.to_json
     }
@@ -457,7 +457,7 @@ returns
         end
 
         # ignore message older then 48h
-        if spool['timestamp'] + (2 * 86_400) < Time.now.to_i
+        if spool['timestamp'] + (2 * 86_400) < Time.zone.now.to_i
           to_delete.push "#{path}/#{entry}"
           next
         end
@@ -568,7 +568,7 @@ returns
 
 =end
 
-  def self.thread_client(client_id, try_count = 0, try_run_time = Time.now)
+  def self.thread_client(client_id, try_count = 0, try_run_time = Time.zone.now)
     Rails.logger.debug "LOOP #{client_id} - #{try_count}"
     begin
       Sessions::Client.new(client_id)
@@ -586,10 +586,10 @@ returns
       try_count += 1
 
       # reset error counter if to old
-      if try_run_time + ( 60 * 5 ) < Time.now
+      if try_run_time + ( 60 * 5 ) < Time.zone.now
         try_count = 0
       end
-      try_run_time = Time.now
+      try_run_time = Time.zone.now
 
       # restart job again
       if try_run_max > try_count

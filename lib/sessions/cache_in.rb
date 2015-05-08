@@ -11,11 +11,11 @@ module Sessions::CacheIn
 
   def self.set( key, value, params = {} )
     if params[:expires_in]
-      @@expires_in[key]     = Time.now + params[:expires_in]
+      @@expires_in[key]     = Time.zone.now + params[:expires_in]
       @@expires_in_ttl[key] = params[:expires_in]
     end
     @@data[ key ]      = value
-    @@data_time[ key ] = Time.now
+    @@data_time[ key ] = Time.zone.now
   end
 
   def self.expired( key, params = {} )
@@ -29,14 +29,14 @@ module Sessions::CacheIn
     # set re_expire
     if params[:re_expire]
       if @@expires_in[key]
-        @@expires_in[key] = Time.now + @@expires_in_ttl[key]
+        @@expires_in[key] = Time.zone.now + @@expires_in_ttl[key]
       end
       return false
     end
 
     # check if expired
     if @@expires_in[key]
-      return true if @@expires_in[key] < Time.now
+      return true if @@expires_in[key] < Time.zone.now
       return false
     end
 

@@ -12,7 +12,7 @@ class Job < ApplicationModel
   notify_clients_support
 
   def self.run
-    time    = Time.new
+    time    = Time.zone.now
     day_map = {
       0 => 'sun',
       1 => 'mon',
@@ -26,11 +26,11 @@ class Job < ApplicationModel
     jobs.each do |job|
 
       # only execute jobs, older then 1 min, to give admin posibility to change
-      next if job.updated_at > Time.now - 1.minutes
+      next if job.updated_at > Time.zone.now - 1.minutes
 
       # check if jobs need to be executed
       # ignore if job was running within last 10 min.
-      next if job.last_run_at && job.last_run_at > Time.now - 10.minutes
+      next if job.last_run_at && job.last_run_at > Time.zone.now - 10.minutes
 
       # check day
       next if !job.timeplan['days'].include?( day_map[time.wday] )
@@ -66,7 +66,7 @@ class Job < ApplicationModel
         ticket.save
       end
 
-      job.last_run_at = Time.now
+      job.last_run_at = Time.zone.now
       job.save
     end
     true

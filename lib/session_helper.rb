@@ -29,10 +29,10 @@ module SessionHelper
   def self.cleanup_expired
 
     # web sessions
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 90.days ).delete_all
+    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.zone.now - 90.days ).delete_all
 
     # http basic auth calls
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.now - 2.days ).delete_all
+    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.zone.now - 2.days ).delete_all
   end
 
   def self.get(id)

@@ -29,7 +29,7 @@ class LongPollingController < ApplicationController
 
       # error handling
       if params['data']['timestamp']
-        log "request spool data > '#{Time.at( params['data']['timestamp'] )}'", client_id
+        log "request spool data > '#{Time.zone.at( params['data']['timestamp'] )}'", client_id
       else
         log 'request spool init data', client_id
       end
@@ -50,7 +50,7 @@ class LongPollingController < ApplicationController
       # send spool:sent event to client
       sleep 0.2
       log 'send spool:sent event', client_id
-      Sessions.send( client_id, { event: 'spool:sent', data: { timestamp: Time.now.utc.to_i } } )
+      Sessions.send( client_id, { event: 'spool:sent', data: { timestamp: Time.zone.now.utc.to_i } } )
     end
 
     # receive message

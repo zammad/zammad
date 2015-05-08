@@ -20,7 +20,7 @@ class Package < ApplicationModel
     end
 
     build_date = REXML::Element.new('build_date')
-    build_date.text = Time.now.utc.iso8601
+    build_date.text = Time.zone.now.iso8601
     build_host = REXML::Element.new('build_host')
     build_host.text = Socket.gethostname
 

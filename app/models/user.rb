@@ -399,7 +399,7 @@ returns
 =end
 
   def update_last_login
-    self.last_login = Time.now
+    self.last_login = Time.zone.now
 
     # reset login failed
     self.login_failed = 0

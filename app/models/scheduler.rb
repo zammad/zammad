@@ -61,10 +61,10 @@ class Scheduler < ApplicationModel
     }
   end
 
-  def self._start_job( job, runner, runner_count, try_count = 0, try_run_time = Time.now )
+  def self._start_job( job, runner, runner_count, try_count = 0, try_run_time = Time.zone.now )
     sleep 5
     begin
-      job.last_run = Time.now
+      job.last_run = Time.zone.now
       job.pid = Thread.current.object_id
       job.save
       logger.info "execute #{job.method} (runner #{runner} of #{runner_count}, try_count #{try_count})..."
@@ -83,10 +83,10 @@ class Scheduler < ApplicationModel
       try_count += 1
 
       # reset error counter if to old
-      if try_run_time + ( 60 * 5 ) < Time.now
+      if try_run_time + ( 60 * 5 ) < Time.zone.now
         try_count = 0
       end
-      try_run_time = Time.now
+      try_run_time = Time.zone.now
 
       # restart job again
       if try_run_max > try_count
@@ -122,8 +122,8 @@ class Scheduler < ApplicationModel
   end
 
   def self.check( name, time_warning = 10, time_critical = 20 )
-    time_warning_time  = Time.now - time_warning.minutes
-    time_critical_time = Time.now - time_critical.minutes
+    time_warning_time  = Time.zone.now - time_warning.minutes
+    time_critical_time = Time.zone.now - time_critical.minutes
     scheduler = Scheduler.find_by( name: name )
     if !scheduler
       puts "CRITICAL - no such scheduler jobs '#{name}'"

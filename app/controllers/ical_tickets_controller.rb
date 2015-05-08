@@ -125,8 +125,10 @@ class IcalTicketsController < ApplicationController
 
       event_data = {}
 
+      # rubocop:disable Rails/TimeZone
       event_data[:dtstart]     = Icalendar::Values::DateTime.new( ticket.pending_time )
       event_data[:dtend]       = Icalendar::Values::DateTime.new( ticket.pending_time )
+      # rubocop:enable Rails/TimeZone
       event_data[:summary]     = "#{ ticket.state.name } ticket: '#{ ticket.title }'"
       event_data[:description] = "T##{ ticket.number }"
 
@@ -153,8 +155,10 @@ class IcalTicketsController < ApplicationController
 
       event_data = {}
 
+      # rubocop:disable Rails/TimeZone
       event_data[:dtstart]     = Icalendar::Values::DateTime.new( ticket.escalation_time )
       event_data[:dtend]       = Icalendar::Values::DateTime.new( ticket.escalation_time )
+      # rubocop:enable Rails/TimeZone
       event_data[:summary]     = "ticket escalation: '#{ ticket.title }'"
       event_data[:description] = "T##{ ticket.number }"
 

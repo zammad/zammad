@@ -206,7 +206,7 @@ returns
         sql += " #{key} IN (?)"
         bind.push value
       elsif value.class == Hash || value.class == ActiveSupport::HashWithIndifferentAccess
-        time = Time.now
+        time = Time.zone.now
         if value['area'] == 'minute'
           if value['direction'] == 'last'
             time -= value['count'].to_i * 60

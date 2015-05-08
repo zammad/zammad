@@ -29,7 +29,7 @@ returns
     role       = self.class.activity_stream_support_config[:role]
     updated_at = self.updated_at
     if force
-      updated_at = Time.new
+      updated_at = Time.zone.now
     end
     ActivityStream.add(
       o_id: self['id'],

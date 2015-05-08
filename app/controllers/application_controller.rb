@@ -82,9 +82,7 @@ class ApplicationController < ActionController::Base
   def session_update
     #sleep 0.6
 
-    # on many paralell requests, session got reinitialised if Time. is used, as workaround use DateTime.
-    #session[:ping] = Time.now.utc.iso8601
-    session[:ping] = DateTime.now.iso8601
+    session[:ping] = Time.zone.now.iso8601
 
     # check if remote ip need to be updated
     if !session[:remote_id] || session[:remote_id] != request.remote_ip
