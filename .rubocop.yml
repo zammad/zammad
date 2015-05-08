@@ -154,6 +154,14 @@ Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
   Enabled: false
 
+Style/FileName:
+  Description: 'Use snake_case for source file names.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
+  Enabled: true
+  Exclude:
+    - 'script/websocket-server.rb'
+
+
 # 2.0
 
 Metrics/PerceivedComplexity:
