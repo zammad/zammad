@@ -381,11 +381,11 @@ class Channel::EmailParser
         next if !mail[item.to_sym].tree
 
         items = mail[item.to_sym].tree
-        items.addresses.each {|item|
+        items.addresses.each {|address_data|
           user_create(
-            firstname: item.display_name,
+            firstname: address_data.display_name,
             lastname: '',
-            email: item.address,
+            email: address_data.address,
           )
         }
       }

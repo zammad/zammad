@@ -202,5 +202,3 @@ Style/ClassVars:
   Enabled: false
 Lint/UselessAssignment:
   Enabled: false
-Lint/ShadowingOuterLocalVariable:
-  Enabled: false

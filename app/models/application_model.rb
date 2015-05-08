@@ -320,10 +320,10 @@ returns
       return cache if cache
 
       records = where( name: data[:name] )
-      records.each {|record|
-        if record.name == data[:name]
-          cache_set( data[:name], record )
-          return record
+      records.each {|loop_record|
+        if loop_record.name == data[:name]
+          cache_set( data[:name], loop_record )
+          return loop_record
         end
       }
       return
@@ -332,10 +332,10 @@ returns
       return cache if cache
 
       records = where( login: data[:login] )
-      records.each {|record|
-        if record.login == data[:login]
-          cache_set( data[:login], record )
-          return record
+      records.each {|loop_record|
+        if loop_record.login == data[:login]
+          cache_set( data[:login], loop_record )
+          return loop_record
         end
       }
       return
@@ -362,18 +362,18 @@ returns
       return record if record
     elsif data[:name]
       records = where( name: data[:name] )
-      records.each {|record|
-        return record if record.name == data[:name]
+      records.each {|loop_record|
+        return loop_record if loop_record.name == data[:name]
       }
     elsif data[:login]
       records = where( login: data[:login] )
-      records.each {|record|
-        return record if record.login == data[:login]
+      records.each {|loop_record|
+        return loop_record if loop_record.login == data[:login]
       }
     elsif data[:locale] && data[:source]
       records = where( locale: data[:locale], source: data[:source] )
-      records.each {|record|
-        return record if record.source == data[:source]
+      records.each {|loop_record|
+        return loop_record if loop_record.source == data[:source]
       }
     end
     create(data)
@@ -394,19 +394,19 @@ returns
   def self.create_or_update(data)
     if data[:id]
       records = where( id: data[:id] )
-      records.each {|record|
-        record.update_attributes( data )
-        return record
+      records.each {|loop_record|
+        loop_record.update_attributes( data )
+        return loop_record
       }
       record = new( data )
       record.save
       return record
     elsif data[:name]
       records = where( name: data[:name] )
-      records.each {|record|
-        if record.name == data[:name]
-          record.update_attributes( data )
-          return record
+      records.each {|loop_record|
+        if loop_record.name == data[:name]
+          loop_record.update_attributes( data )
+          return loop_record
         end
       }
       record = new( data )
@@ -414,10 +414,10 @@ returns
       return record
     elsif data[:login]
       records = where( login: data[:login] )
-      records.each {|record|
-        if record.login.downcase == data[:login].downcase
-          record.update_attributes( data )
-          return record
+      records.each {|loop_record|
+        if loop_record.login.downcase == data[:login].downcase
+          loop_record.update_attributes( data )
+          return loop_record
         end
       }
       record = new( data )
@@ -425,10 +425,10 @@ returns
       return record
     elsif data[:locale]
       records = where( locale: data[:locale] )
-      records.each {|record|
-        if record.locale.downcase == data[:locale].downcase
-          record.update_attributes( data )
-          return record
+      records.each {|loop_record|
+        if loop_record.locale.downcase == data[:locale].downcase
+          loop_record.update_attributes( data )
+          return loop_record
         end
       }
       record = new( data )

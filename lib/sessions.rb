@@ -422,8 +422,8 @@ returns
   def self.spool_create( msg )
     path = "#{@path}/spool/"
     FileUtils.mkpath path
-    file = "#{Time.zone.now.to_f}-#{rand(99_999)}"
-    File.open( path + '/' + file, 'wb' ) { |file|
+    file_path = path + "/#{Time.zone.now.to_f}-#{rand(99_999)}"
+    File.open( file_path, 'wb' ) { |file|
       data = {
         msg: msg,
         timestamp: Time.zone.now.to_i,
