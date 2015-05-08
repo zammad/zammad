@@ -167,9 +167,9 @@ class App.Navigation extends App.Controller
                 data =
                   display:    "##{ticket.number} - #{ticket.title}"
                   id:         ticket.id
-                  class:      "task level-1 ticket-popover"
+                  class:      "level-1 ticket-popover"
                   url:        ticket.uiUrl()
-                  iconClass:  "priority " + ticket.icon()
+                  iconClass:  ticket.icon()
                 area.result.push data
             else if area.name is 'User'
               area.result = []

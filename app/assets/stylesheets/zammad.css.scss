@@ -2074,7 +2074,7 @@ footer {
     color: white;
   }
 
-  .main-navigation > li.active > a .icon {
+  .main-navigation > li.active .nav-icon {
     fill: currentColor;
   }
 
@@ -2082,7 +2082,7 @@ footer {
     background: #389ed9;
   }
 
-  .navigation .nav-item-icon .icon {
+  .nav-icon {
     margin-right: 15px;
     vertical-align: bottom;
     width: 24px;
@@ -2110,56 +2110,31 @@ footer {
       @extend .u-highlight, .u-textTruncate;
     }
 
-    .tasks--standalone .icon-holder {
-      width: 20px;
-    }
-
-    .tasks--standalone .icon-holder .icon {
-      margin-top: 4px;
-    }
-
     .tasks--standalone .time {
       color: hsl(198,19%,72%);
     }
 
-    .tasks--standalone .task .priority.icon:after {
-      background: white;
-    }
-
-  .task {
+  .tab {
     padding: 10px 15px 7px 0;
     position: relative;
+    color: #808080;
     @extend .u-clickable, .horizontal, .center;
   }
 
-    .task-icon {
-      width: 16px;
-      height: 16px;
-      fill: #808080;
-    }
-
-    .tasks-navigation .task {
+    .tasks-navigation .tab {
       height: 38px;
       border-bottom: 1px solid #33363e;
     }
 
-    .tasks-navigation .task:not(.is-active):hover {
+    .tasks-navigation .tab:not(.is-active):hover {
       background: #26272e;
     }
 
-    .tasks-navigation .task-name {
-      color: #808080;
+    .navigation .tab-name {
+      text-align: left;
     }
 
-    .tasks-navigation .icon-holder {
-      width: 30px;
-      position: relative;
-      @extend .centered;
-    }
-
-    .tasks-navigation .task-icon {
-      margin-right: 3px;
-      margin-top: -3px;
+    .tasks-navigation .tab-icon {
       
       &.loading {
         width: 10px;
@@ -2171,48 +2146,56 @@ footer {
       }
     }
 
-  .task:hover {
+  .tab:hover {
+    color: #808080;
     text-decoration: none;
   }
 
-  .task.is-active {
+  .tab.is-active,
+  .tab.tab--search:hover {
     background: #389ed9;
+    color: white;
     
-    .task-icon {
+    .tab-icon {
       fill: white;
-    }
-
-    .task-name {
-      color: white;
     }
   }
 
-  .task.active .priority.icon:after {
-    background-color: #389ed9;
+  .tab.tab--search {
+    height: 30px;
+  }
+
+  .tab-icon {
+    width: 16px;
+    height: 16px;
+    fill: #808080;
+    margin-right: 7px;
+    margin-left: 7px;
+    margin-top: -3px;
   }
 
   .level-1.is-active {
     background-color: #38ae6a;
   }
-  .level-1 .task-icon {
+  .level-1 .tab-icon {
     fill: #38ae6a;
   }
 
   .level-2.is-active {
     background-color: #f35910;
   }
-  .level-2 .task-icon {
+  .level-2 .tab-icon {
     fill: #f35910;
   }
 
   .level-3.is-active {
     background-color: #faab00;
   }
-  .level-3 .task-icon {
+  .level-3 .tab-icon {
     fill: #faab00;
   }
 
-  .task-icon .inner-circle {
+  .tab-icon .inner-circle {
     will-change: opacity;
     animation: fade 3s ease-in-out infinite;
   }
@@ -2223,7 +2206,7 @@ footer {
     to { opacity: 1 }
   }
 
-  .task .closeTask {
+  .tab .closeTab {
     position: absolute;
     right: 0;
     top: 0;
@@ -2233,11 +2216,11 @@ footer {
     @extend .u-clickable, .centered;
   }
 
-    .task:hover .closeTask {
+    .tab:hover .closeTab {
       visibility: visible;
     }
 
-    .closeTask-inner {
+    .closeTab-inner {
       width: 21px;
       height: 21px;
       background-color: #2c2d36;
@@ -2245,11 +2228,11 @@ footer {
       @extend .centered;
     }
 
-    .closeTask:hover .closeTask-inner {
+    .closeTab:hover .closeTab-inner {
       background-color: #972e29;
     }
 
-    .closeTask .icon {
+    .closeTab .icon {
       width: 13px;
       height: 13px;
       fill: white;
@@ -2258,7 +2241,7 @@ footer {
               transform: scale(0.7);
     }
 
-    .closeTask:hover .icon {
+    .closeTab:hover .icon {
       opacity: 1;
     }
 
@@ -2378,34 +2361,6 @@ footer {
     height: 1px;
     background: #2f3238;
     margin: 14px 0 17px;
-  }
-
-  .search .custom-dropdown-menu > li > a {
-    height: 30px;
-    padding: 0 15px 0 10px;
-    color: #808080;
-    border: none;
-  }
-
-  .search .custom-dropdown-menu > li > a .icon {
-    margin-right: 13px;
-  }
-
-  .search .custom-dropdown-menu > li:hover > a,
-  .search .custom-dropdown-menu > li.active > a {
-    background: #3fa9f5;
-    color: white;
-    text-decoration: none;
-  }
-
-  .search .custom-dropdown-menu > li:hover > a .priority.icon,
-  .search .custom-dropdown-menu > li.active > a .priority.icon {
-    background: white;
-  }
-
-  .search .custom-dropdown-menu > li:hover > a .priority.icon:after,
-  .search .custom-dropdown-menu > li.active > a .priority.icon:after {
-    background: #3fa9f5;
   }
 
   .user-menu {

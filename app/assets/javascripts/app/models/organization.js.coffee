@@ -18,7 +18,7 @@ class App.Organization extends App.Model
     '#organization/profile/' + @id
 
   icon: (user) ->
-    "organization icon"
+    "organization"
 
   @_fillUp: (data) ->
 

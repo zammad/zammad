@@ -34,7 +34,7 @@ class App.User extends App.Model
     '#user/profile/' + @id
 
   icon: (user) ->
-    "user icon"
+    "user"
 
   initials: ->
     if @firstname && @lastname && @firstname[0] && @lastname[0]
