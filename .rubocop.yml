@@ -1,9 +1,6 @@
 # Default enabled cops
 # https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
 
-# TODO:
-# https://github.com/bbatsov/rubocop#includingexcluding-files
-
 AllCops:
   RunRailsCops: true
   Exclude:
