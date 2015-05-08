@@ -200,8 +200,6 @@ Rails/TimeZone:
   Enabled: false
 Lint/RescueException:
   Enabled: false
-Style/PredicateName:
-  Enabled: false
 Style/ClassVars:
   Enabled: false
 Lint/UselessAssignment:

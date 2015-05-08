@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
                 :authentication_check,
                 :authentication_check_action_token,
                 :config_frontend,
-                :is_role,
+                :role?,
                 :model_create_render,
                 :model_update_render,
                 :model_restory_render,
@@ -215,10 +215,9 @@ class ApplicationController < ActionController::Base
     true
   end
 
-  def is_role( role_name )
+  def role?( role_name )
     return false if !current_user
-    return true if current_user.is_role( role_name )
-    false
+    current_user.role?( role_name )
   end
 
   def ticket_permission(ticket)
@@ -227,12 +226,8 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def is_not_role( role_name )
-    deny_if_not_role( role_name )
-  end
-
   def deny_if_not_role( role_name )
-    return false if is_role( role_name )
+    return false if role?( role_name )
     response_access_deny
     true
   end

@@ -27,7 +27,7 @@ returns
       current_user = params[:current_user]
 
       # enable search only for agents and admins
-      return [] if !current_user.is_role('Agent') && !current_user.is_role(Z_ROLENAME_ADMIN)
+      return [] if !current_user.role?('Agent') && !current_user.role?(Z_ROLENAME_ADMIN)
 
       # try search index backend
       if SearchIndexBackend.enabled?

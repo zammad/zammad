@@ -24,7 +24,7 @@ module ExtraCollection
     Ticket::Article::Sender.all.each {|item|
       assets = item.assets(assets)
     }
-    if !user.is_role(Z_ROLENAME_CUSTOMER)
+    if !user.role?(Z_ROLENAME_CUSTOMER)
 
       # all signatures
       collections[ Signature.to_app_model ] = []

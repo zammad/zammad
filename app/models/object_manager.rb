@@ -191,7 +191,7 @@ returns:
           roles_options.each {|role, options|
             if role == '-all-'
               data[:screen][screen] = options
-            elsif user && user.is_role(role)
+            elsif user && user.role?(role)
               data[:screen][screen] = options
             end
           }

@@ -1,4 +1,4 @@
 class Sessions::Backend::Collections::Signature < Sessions::Backend::Collections::Base
   model_set 'Signature'
-  is_not_role_set 'Customer'
+  not_roles_add 'Customer'
 end

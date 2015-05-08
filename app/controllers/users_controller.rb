@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def index
 
     # only allow customer to fetch him self
-    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
+    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
       users = User.where( id: current_user.id )
     else
       users = User.all
@@ -203,17 +203,17 @@ class UsersController < ApplicationController
       user.update_attributes( User.param_cleanup(params) )
 
       # only allow Admin's and Agent's
-      if is_role(Z_ROLENAME_ADMIN) && is_role('Agent') && params[:role_ids]
+      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && params[:role_ids]
         user.role_ids = params[:role_ids]
       end
 
       # only allow Admin's
-      if is_role(Z_ROLENAME_ADMIN) && params[:group_ids]
+      if role?(Z_ROLENAME_ADMIN) && params[:group_ids]
         user.group_ids = params[:group_ids]
       end
 
       # only allow Admin's and Agent's
-      if is_role(Z_ROLENAME_ADMIN) && is_role('Agent') && params[:organization_ids]
+      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && params[:organization_ids]
         user.organization_ids = params[:organization_ids]
       end
 
@@ -260,7 +260,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def search
 
-    if is_role(Z_ROLENAME_CUSTOMER) && !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
+    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
       response_access_deny
       return
     end
@@ -324,7 +324,7 @@ class UsersController < ApplicationController
   def history
 
     # permissin check
-    if !is_role(Z_ROLENAME_ADMIN) && !is_role('Agent')
+    if !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
       response_access_deny
       return
     end
@@ -715,19 +715,19 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   end
 
   def permission_check_by_role
-    return true if is_role(Z_ROLENAME_ADMIN)
-    return true if is_role('Agent')
+    return true if role?(Z_ROLENAME_ADMIN)
+    return true if role?('Agent')
 
     response_access_deny
     false
   end
 
   def permission_check
-    return true if is_role(Z_ROLENAME_ADMIN)
-    return true if is_role('Agent')
+    return true if role?(Z_ROLENAME_ADMIN)
+    return true if role?('Agent')
 
     # allow to update customer by him self
-    return true if is_role(Z_ROLENAME_CUSTOMER) && params[:id].to_i == current_user.id
+    return true if role?(Z_ROLENAME_CUSTOMER) && params[:id].to_i == current_user.id
 
     response_access_deny
     false

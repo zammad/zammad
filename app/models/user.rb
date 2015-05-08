@@ -107,7 +107,7 @@ returns
 check if user is in role
 
   user = User.find(123)
-  result = user.is_role('Customer')
+  result = user.role?('Customer')
 
 returns
 
@@ -115,11 +115,15 @@ returns
 
 =end
 
-  def is_role( role_name )
+  def role?( role_name )
+
+    result = false
     roles.each { |role|
-      return role if role.name == role_name
+      next if role.name != role_name
+      result = true
+      break
     }
-    false
+    result
   end
 
 =begin

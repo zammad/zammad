@@ -62,7 +62,7 @@ returns
       query_extention['bool'] = {}
       query_extention['bool']['must'] = []
 
-      if current_user.is_role('Agent')
+      if current_user.role?('Agent')
         groups = Group.joins(:users)
                  .where( 'groups_users.user_id = ?', current_user.id )
                  .where( 'groups.active = ?', true )

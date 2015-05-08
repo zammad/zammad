@@ -5,7 +5,7 @@ class Sessions::Backend::Collections::Organization < Sessions::Backend::Collecti
 
     # get whole collection
     all = []
-    if !@user.is_role('Customer')
+    if !@user.role?('Customer')
       all = Organization.all
     else
       if @user.organization_id

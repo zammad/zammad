@@ -19,8 +19,8 @@ returns
   def self.all (data)
 
     # get customer overviews
-    if data[:current_user].is_role('Customer')
-      role = data[:current_user].is_role( 'Customer' )
+    if data[:current_user].role?('Customer')
+      role = Role.find_by( name: 'Customer' )
       if data[:current_user].organization_id && data[:current_user].organization.shared
         overviews = Overview.where( role_id: role.id, active: true )
       else
@@ -30,8 +30,8 @@ returns
     end
 
     # get agent overviews
-    role = data[:current_user].is_role( 'Agent' )
-    return if !role
+    return if !data[:current_user].role?( 'Agent' )
+    role = Role.find_by( name: 'Agent' )
     Overview.where( role_id: role.id, active: true )
   end
 
@@ -112,7 +112,7 @@ returns
 
     #    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
     # get only tickets with permissions
-    if data[:current_user].is_role('Customer')
+    if data[:current_user].role?('Customer')
       group_ids = Group.select( 'groups.id' )
                   .where( 'groups.active = ?', true )
                   .map( &:id )

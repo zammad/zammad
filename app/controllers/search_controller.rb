@@ -7,7 +7,7 @@ class SearchController < ApplicationController
   def search_user_org
 
     # enable search only for agents and admins
-    if !current_user.is_role(Z_ROLENAME_AGENT) && !current_user.is_role(Z_ROLENAME_ADMIN)
+    if !current_user.role?(Z_ROLENAME_AGENT) && !current_user.role?(Z_ROLENAME_ADMIN)
       response_access_deny
       return true
     end

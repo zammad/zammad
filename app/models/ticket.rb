@@ -93,7 +93,7 @@ returns
 
   def self.access_condition(user)
     access_condition = []
-    if user.is_role(Z_ROLENAME_AGENT)
+    if user.role?(Z_ROLENAME_AGENT)
       group_ids = Group.select( 'groups.id' ).joins(:users)
                   .where( 'groups_users.user_id = ?', user.id )
                   .where( 'groups.active = ?', true )

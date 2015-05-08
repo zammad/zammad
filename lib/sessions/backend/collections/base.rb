@@ -1,5 +1,5 @@
 class Sessions::Backend::Collections::Base
-  class << self; attr_accessor :model, :is_role, :is_not_role end
+  class << self; attr_accessor :model, :roles, :not_roles end
 
   def initialize( user, client = nil, client_id = nil, ttl )
     @user        = user
@@ -22,19 +22,19 @@ class Sessions::Backend::Collections::Base
   def push
 
     # check role based access
-    if self.class.is_role
+    if self.class.roles
       access = false
-      self.class.is_role.each {|role|
-        next if !@user.is_role(role)
+      self.class.roles.each {|role|
+        next if !@user.role?(role)
         access = true
         break
       }
       return if !access
     end
-    if self.class.is_not_role
+    if self.class.not_roles
       access = false
-      self.class.is_not_role.each {|role|
-        next if @user.is_role(role)
+      self.class.not_roles.each {|role|
+        next if @user.role?(role)
         access = true
         break
       }
@@ -96,18 +96,18 @@ class Sessions::Backend::Collections::Base
     @model = model
   end
 
-  def self.is_role_set(role)
-    if !@is_role
-      @is_role = []
+  def self.roles_add(role)
+    if !@roles
+      @roles = []
     end
-    @is_role.push role
+    @roles.push role
   end
 
-  def self.is_not_role_set(role)
-    if !@is_not_role
-      @is_not_role = []
+  def self.not_roles_add(role)
+    if !@not_roles
+      @not_roles = []
     end
-    @is_not_role.push role
+    @not_roles.push role
   end
 
 end
