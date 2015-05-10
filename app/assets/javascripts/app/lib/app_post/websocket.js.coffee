@@ -244,7 +244,9 @@ class _webSocketSingleton extends App.Controller
 
         # use ajax fallback if no connection was possible
         if @backend is 'websocketPort'
-          @log 'notice', 'no websocket connection on :port/, use ajax long polling as fallback'
+          if @backend_port
+            port = ":#{@backend_port}"
+          @log 'notice', 'no websocket connection on port #{port}, use ajax long polling as fallback'
           @backend = 'ajax'
           @connect()
           return
