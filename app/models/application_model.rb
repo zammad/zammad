@@ -497,6 +497,7 @@ returns
     # if we do not have it cached, do lookup
     if !updated_at
       o = select(:updated_at).order(updated_at: :desc).limit(1).first
+      logger.debug "result latest_change #{o.inspect}"
       if o
         updated_at = o.updated_at
         latest_change_set(updated_at)
