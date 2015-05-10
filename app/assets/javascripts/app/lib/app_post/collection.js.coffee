@@ -29,22 +29,6 @@ class _collectionSingleton extends Spine.Module
 
   constructor: (@args) ->
 
-    # add trigger - bind new events
-    App.Event.bind 'loadAssets', (data) =>
-      if !data
-        @log 'error', 'loadAssets:trigger, got no data, cant load assets'
-        return
-
-      @loadAssets( data )
-
-    # add trigger - bind new events
-    App.Event.bind 'resetCollection', (data) =>
-      if !data
-        @log 'error', 'resetCollection:trigger, got no data, cant for collections'
-        return
-
-      @resetCollections( data )
-
     # find collections to load
     @_loadObjectsFromLocalStore()
 
