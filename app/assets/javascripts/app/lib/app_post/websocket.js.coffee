@@ -34,7 +34,7 @@ class App.WebSocket
 class _webSocketSingleton extends App.Controller
   @include App.LogInclude
 
-  queue: []
+  queue:                    []
   supported:                true
   lastSpoolMessage:         undefined
   sentSpoolFinished:        true
@@ -43,6 +43,7 @@ class _webSocketSingleton extends App.Controller
   connectionWasEstablished: false
   tryToConnect:             false
   backend:                  'websocket'
+  backend_port:             ''
   client_id:                undefined
   error:                    false
 
@@ -185,14 +186,16 @@ class _webSocketSingleton extends App.Controller
     if @backend is 'websocket'
       @ws = new window.WebSocket( protocol + window.location.hostname + '/ws' )
     else if @backend is 'websocketPort'
-      websocket_port = App.Config.get('websocket_port') || '6042'
-      @ws            = new window.WebSocket( protocol + window.location.hostname + ':' + websocket_port + '/' )
+      @backend_port = App.Config.get('websocket_port') || '6042'
+      @ws           = new window.WebSocket( protocol + window.location.hostname + ':' + @backend_port + '/' )
     else
       @_ajaxInit()
 
     # Set event handlers.
     @ws.onopen = =>
-      @log 'notice', "new websocket (#{@channel()}) connection open"
+      if @backend_port
+        port = ":#{@backend_port}"
+      @log 'notice', "new websocket (#{@channel()}#{port}) connection open"
 
       @connectionEstablished    = true
       @connectionWasEstablished = true
@@ -201,7 +204,7 @@ class _webSocketSingleton extends App.Controller
       App.Delay.clear('websocket-no-connection-try-reconnect-message', 'ws')
       if @error
         @error.hide()
-        @error = false
+        @error        = false
         @tryToConnect = false
 
       @auth()
