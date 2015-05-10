@@ -15,11 +15,11 @@ class App.Run extends App.Controller
     # init collections
     App.Collection.init()
 
-    # create web socket connection
-    App.WebSocket.connect()
-
     # check if session already exists/try to get session data from server
     App.Auth.loginCheck()
+
+    # create web socket connection
+    App.WebSocket.connect()
 
     # start navbars
     @setupWidget( 'Navigations', 'nav', @el )
