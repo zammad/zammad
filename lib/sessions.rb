@@ -35,7 +35,7 @@ returns
     session_file = "#{path_tmp}/session"
 
     # collect session data
-    meta[:last_ping] = Time.now.utc.to_i.to_s
+    meta[:last_ping] = Time.now.utc.to_i
     data = {
       user: session,
       meta: meta,
@@ -215,7 +215,7 @@ returns
     data = get(client_id)
     return false if !data
     path = "#{@path}/#{client_id}"
-    data[:meta][:last_ping] = Time.now.utc.to_i.to_s
+    data[:meta][:last_ping] = Time.now.utc.to_i
     content = data.to_json
     File.open( path + '/session', 'wb' ) { |file|
       file.write content
@@ -264,7 +264,7 @@ returns
         file.flock( File::LOCK_UN )
         data_json = JSON.parse( all )
         if data_json
-          data = symbolize_keys(data_json)
+          data        = symbolize_keys(data_json)
           data[:user] = data_json['user'] # for compat. reasons
         end
       }

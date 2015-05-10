@@ -95,8 +95,8 @@ EventMachine.run {
 
       if !@clients.include? client_id
         @clients[client_id] = {
-          websocket: ws,
-          last_ping: Time.now.utc.iso8601,
+          websocket:   ws,
+          last_ping:   Time.now.utc.to_i,
           error_count: 0,
         }
       end
@@ -176,7 +176,7 @@ EventMachine.run {
         # remember ping, send pong back
       elsif data['action'] == 'ping'
         Sessions.touch(client_id)
-        @clients[client_id][:last_ping] = Time.now.utc.iso8601
+        @clients[client_id][:last_ping] = Time.now.utc.to_i
         @clients[client_id][:websocket].send( '[{"action":"pong"}]' )
 
         # broadcast
@@ -299,7 +299,7 @@ EventMachine.run {
     # close unused web socket sessions
     @clients.each { |client_id, client|
 
-      next if ( client[:last_ping] + idle_time_in_sec ) >= Time.now.utc.iso8601
+      next if ( client[:last_ping].to_i + idle_time_in_sec ) >= Time.now.utc.to_i
 
       log 'notice', 'closing idle websocket connection', client_id
 
