@@ -492,19 +492,14 @@ returns
     key        = "#{new.class.name}_latest_change"
     updated_at = Cache.get( key )
 
-    logger.debug "request latest_change for #{key}/#{updated_at}"
-
     # if we do not have it cached, do lookup
     if !updated_at
       o = select(:updated_at).order(updated_at: :desc).limit(1).first
-      logger.debug "result latest_change #{o.inspect}"
       if o
         updated_at = o.updated_at
         latest_change_set(updated_at)
       end
-      logger.debug "lookup latest_change for #{key}/#{updated_at}"
     end
-    logger.debug "return latest_change for #{key}/#{updated_at}"
     updated_at
   end
 

@@ -15,17 +15,10 @@ class Sessions::Backend::TicketOverviewIndex
       current_user: @user,
     )
 
-    if !overview || overview.empty?
-      Rails.logger.debug "ERR no overview for #{@user.inspect}/#{overview.isnpect}"
-    end
-
     # no data exists
     return if !overview
 
     # no change exists
-    if @last_change == overview
-      Rails.logger.debug "ERR @last_change == overview #{@user.inspect}/#{overview.isnpect}"
-    end
     return if @last_change == overview
 
     # remember last state
@@ -40,10 +33,6 @@ class Sessions::Backend::TicketOverviewIndex
 
   def push
 
-    if Sessions::CacheIn.get( client_key )
-      Rails.logger.debug "ERR CACHE FILLED #{@client_key}"
-    end
-
     # check check interval
     return if Sessions::CacheIn.get( client_key )
 
@@ -52,13 +41,11 @@ class Sessions::Backend::TicketOverviewIndex
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
-    Rails.logger.debug "ERR last_ticket_change #{last_ticket_change}"
     return if last_ticket_change == @last_ticket_change
     @last_ticket_change = last_ticket_change
 
     # load current data
     data = load
-    Rails.logger.debug "ERR push/load #{data.inspect}"
 
     return if !data
 

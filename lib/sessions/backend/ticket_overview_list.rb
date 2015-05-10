@@ -24,15 +24,12 @@ class Sessions::Backend::TicketOverviewList
       data = { list: overview_data, index: overview }
       result.push data
     }
-    if !result || result.empty?
-      Rails.logger.debug "LOG A PROBLEM #{result.inspect} / #{@last_change}"
-    end
+
     # no data exists
     return if !result || result.empty?
 
     # no change exists
     return if @last_change == result
-    Rails.logger.debug "LOG B #{result.inspect}"
 
     # remember last state
     @last_change = result
@@ -47,26 +44,18 @@ class Sessions::Backend::TicketOverviewList
   def push
 
     # check interval
-    if Sessions::CacheIn.get( client_key )
-      Rails.logger.debug "LOG 1 CACH KEY EXISTS #{@user.inspect}"
-    end
     return if Sessions::CacheIn.get( client_key )
 
     # reset check interval
-    Rails.logger.debug "LOG 2 #{@ttl.seconds}"
     Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
-    if last_ticket_change == @last_ticket_change
-      Rails.logger.debug "LOG 3 #{last_ticket_change}/#{@last_ticket_change}"
-    end
     return if last_ticket_change == @last_ticket_change
     @last_ticket_change = last_ticket_change
 
     # load current data
     items = load
-    Rails.logger.debug "LOG 4 set new from load #{items.inspect}"
     return if !items
 
     # push overviews
