@@ -29,6 +29,9 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = client1.push
+    if !result1
+      Rails.logger.debug "FAILD Sessions::Backend::TicketOverviewIndex push"
+    end
     assert( result1, 'check ticket_overview_index' )
 
     # next check should be empty / no changes
