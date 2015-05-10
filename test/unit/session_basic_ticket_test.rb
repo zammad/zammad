@@ -3,32 +3,29 @@
 require 'test_helper'
 
 class SessionBasicTicketTest < ActiveSupport::TestCase
-  UserInfo.current_user_id = 1
-
-  # create users
-  roles  = Role.where( name: [ 'Agent' ] )
-  groups = Group.all
-
-  agent1 = User.create_or_update(
-    login: 'session-basic-ticket-agent-1',
-    firstname: 'Session',
-    lastname: 'session basic ' + rand(99_999).to_s,
-    email: 'session-basic-ticket-agent-1@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: groups,
-  )
-
-  # create ticket
-  ticket = Ticket.create( title: 'default overview test', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1 )
-  sleep 6
 
   test 'b ticket_overview_index' do
     UserInfo.current_user_id = 1
 
+    # create users
+    roles  = Role.where( name: [ 'Agent' ] )
+    groups = Group.all
+
+    agent1 = User.create_or_update(
+      login: 'session-basic-ticket-agent-1',
+      firstname: 'Session',
+      lastname: 'session basic ' + rand(99_999).to_s,
+      email: 'session-basic-ticket-agent-1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+
     agent1.roles = roles
     assert( agent1.save, 'create/update agent1' )
+
+    Ticket.create( title: 'default overview test', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1 )
 
     user = User.lookup( id: agent1.id )
     client1 = Sessions::Backend::TicketOverviewIndex.new(user, false, '123-1', 5)
@@ -61,8 +58,25 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
   test 'b ticket_overview_list' do
     UserInfo.current_user_id = 1
 
+    # create users
+    roles  = Role.where( name: [ 'Agent' ] )
+    groups = Group.all
+
+    agent1 = User.create_or_update(
+      login: 'session-basic-ticket-agent-1',
+      firstname: 'Session',
+      lastname: 'session basic ' + rand(99_999).to_s,
+      email: 'session-basic-ticket-agent-1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+
     agent1.roles = roles
     assert( agent1.save, 'create/update agent1' )
+
+    Ticket.create( title: 'default overview test', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1 )
 
     user = User.lookup( id: agent1.id )
 
