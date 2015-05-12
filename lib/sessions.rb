@@ -247,11 +247,15 @@ returns
     session_dir  = "#{@path}/#{client_id}"
     session_file = "#{session_dir}/session"
     data         = nil
+
+    # if no session dir exists, session got destoried
     if !File.exist? session_dir
       destory(client_id)
-      Rails.logger.error "missing session directory for '#{client_id}', remove session."
+      Rails.logger.debug "missing session directory for '#{client_id}', remove session."
       return
     end
+
+    # if only session file is missing, then it's an error behavior
     if !File.exist? session_file
       destory(client_id)
       Rails.logger.errror "missing session file for '#{client_id}', remove session."
@@ -271,7 +275,7 @@ returns
     rescue => e
       Rails.logger.error e.inspect
       destory(client_id)
-      Rails.logger.error "ERROR: reading session file '#{session_file}', remove session."
+      Rails.logger.error "error in reading/parsing session file '#{session_file}', remove session."
       return
     end
     data

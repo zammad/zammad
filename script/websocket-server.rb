@@ -119,7 +119,7 @@ EventMachine.run {
     ws.onmessage { |msg|
 
       client_id = ws.object_id.to_s
-      log 'debug', "received message: #{ msg } ", client_id
+      log 'debug', "received: #{ msg } ", client_id
       begin
         data = JSON.parse(msg)
       rescue => e
@@ -153,10 +153,10 @@ EventMachine.run {
             msg = JSON.generate( item[:message] )
             if item[:type] == 'direct'
               log 'notice', "send spool to (user_id=#{ @clients[client_id][:session]['id'] })", client_id
-              @clients[client_id][:websocket].send( "[#{ msg }]" )
+              websocket_send(msg, client_id)
             else
               log 'notice', 'send spool', client_id
-              @clients[client_id][:websocket].send( "[#{ msg }]" )
+              websocket_send(msg, client_id)
             end
           }
         else
@@ -165,7 +165,13 @@ EventMachine.run {
 
         # send spool:sent event to client
         log 'notice', 'send spool:sent event', client_id
-        @clients[client_id][:websocket].send( '[{"event":"spool:sent","data":{"timestamp":' + Time.now.utc.iso8601.to_i.to_s + '}}]' )
+        message = {
+          event: 'spool:sent',
+          data: {
+            timestamp: Time.now.utc.iso8601.to_i.to_s,
+          },
+        }
+        websocket_send(message.to_json, client_id)
       end
 
       # get session
@@ -177,7 +183,10 @@ EventMachine.run {
       elsif data['action'] == 'ping'
         Sessions.touch(client_id)
         @clients[client_id][:last_ping] = Time.now.utc.to_i
-        @clients[client_id][:websocket].send( '[{"action":"pong"}]' )
+        message = {
+          action: 'pong',
+        }
+        websocket_send(message.to_json, client_id)
 
         # broadcast
       elsif data['action'] == 'broadcast'
@@ -204,9 +213,9 @@ EventMachine.run {
 
                       log 'notice', "send broadcast from (#{client_id}) to (user_id=#{user_id})", local_client_id
                       if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                        @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
+                        websocket_send(msg, local_client_id)
                       else
-                        Sessions.send( local_client_id, data )
+                        Sessions.send(local_client_id, data)
                       end
                     }
                   end
@@ -217,9 +226,9 @@ EventMachine.run {
             else
               log 'notice', "send broadcast from (#{client_id})", local_client_id
               if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                @clients[ local_client_id ][:websocket].send( "[#{msg}]" )
+                websocket_send(msg, local_client_id)
               else
-                Sessions.send( local_client_id, data )
+                Sessions.send(local_client_id, data)
               end
             end
           else
@@ -265,16 +274,15 @@ EventMachine.run {
 
   EventMachine.add_periodic_timer(0.4) {
     next if @clients.size == 0
-    log 'debug', 'checking for data to send...'
+    #log 'debug', 'checking for data to send...'
     @clients.each { |client_id, client|
       next if client[:disconnect]
       log 'debug', 'checking for data...', client_id
       begin
         queue = Sessions.queue( client_id )
         if queue && queue[0]
-          #          log "send " + queue.inspect, client_id
           log 'notice', 'send data to client', client_id
-          client[:websocket].send( queue.to_json )
+          websocket_send(queue.to_json, client_id)
         end
       rescue => e
 
@@ -290,6 +298,15 @@ EventMachine.run {
       end
     }
   }
+
+  def websocket_send(msg, client_id)
+    log 'debug', "send #{msg}", client_id
+    if !@clients[client_id]
+      log 'error', "no such @clients for #{client_id}", client_id
+      return
+    end
+    @clients[client_id][:websocket].send( "[#{ msg }]" )
+  end
 
   def check_unused_connections
     log 'notice', 'check unused idle connections...'
@@ -326,7 +343,7 @@ EventMachine.run {
       return if level == 'debug'
     end
     puts "#{Time.now.utc.iso8601}:client(#{ client_id }) #{ data }"
-    #    puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
+    #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
   end
 
 }
