@@ -150,13 +150,12 @@ EventMachine.run {
           spool.each { |item|
 
             # create new msg to push to client
-            msg = JSON.generate( item[:message] )
             if item[:type] == 'direct'
               log 'notice', "send spool to (user_id=#{ @clients[client_id][:session]['id'] })", client_id
-              websocket_send(msg, client_id)
+              websocket_send(client_id, item[:message])
             else
               log 'notice', 'send spool', client_id
-              websocket_send(msg, client_id)
+              websocket_send(client_id, item[:message])
             end
           }
         else
@@ -168,10 +167,10 @@ EventMachine.run {
         message = {
           event: 'spool:sent',
           data: {
-            timestamp: Time.now.utc.iso8601.to_i.to_s,
+            timestamp: Time.now.utc.to_i,
           },
         }
-        websocket_send(message.to_json, client_id)
+        websocket_send(client_id, message)
       end
 
       # get session
@@ -186,7 +185,7 @@ EventMachine.run {
         message = {
           action: 'pong',
         }
-        websocket_send(message.to_json, client_id)
+        websocket_send(client_id, message)
 
         # broadcast
       elsif data['action'] == 'broadcast'
@@ -213,7 +212,7 @@ EventMachine.run {
 
                       log 'notice', "send broadcast from (#{client_id}) to (user_id=#{user_id})", local_client_id
                       if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                        websocket_send(msg, local_client_id)
+                        websocket_send(local_client_id, data)
                       else
                         Sessions.send(local_client_id, data)
                       end
@@ -226,7 +225,7 @@ EventMachine.run {
             else
               log 'notice', "send broadcast from (#{client_id})", local_client_id
               if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                websocket_send(msg, local_client_id)
+                websocket_send(local_client_id, data)
               else
                 Sessions.send(local_client_id, data)
               end
@@ -282,7 +281,7 @@ EventMachine.run {
         queue = Sessions.queue( client_id )
         if queue && queue[0]
           log 'notice', 'send data to client', client_id
-          websocket_send(queue.to_json, client_id)
+          websocket_send(client_id, queue)
         end
       rescue => e
 
@@ -299,13 +298,18 @@ EventMachine.run {
     }
   }
 
-  def websocket_send(msg, client_id)
+  def websocket_send(client_id, data)
+    if data.class != Array
+      msg = "[#{data.to_json}]"
+    else
+      msg = data.to_json
+    end
     log 'debug', "send #{msg}", client_id
     if !@clients[client_id]
       log 'error', "no such @clients for #{client_id}", client_id
       return
     end
-    @clients[client_id][:websocket].send( "[#{ msg }]" )
+    @clients[client_id][:websocket].send(msg)
   end
 
   def check_unused_connections
