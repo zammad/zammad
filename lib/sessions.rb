@@ -251,14 +251,14 @@ returns
     # if no session dir exists, session got destoried
     if !File.exist? session_dir
       destory(client_id)
-      Rails.logger.debug "missing session directory for '#{client_id}', remove session."
+      log('debug', "missing session directory for '#{client_id}', remove session.")
       return
     end
 
     # if only session file is missing, then it's an error behavior
     if !File.exist? session_file
       destory(client_id)
-      Rails.logger.errror "missing session file for '#{client_id}', remove session."
+      log('error', "missing session file for '#{client_id}', remove session.")
       return
     end
     begin
@@ -273,9 +273,9 @@ returns
         end
       }
     rescue => e
-      Rails.logger.error e.inspect
+      log('error', e.inspect)
       destory(client_id)
-      Rails.logger.error "error in reading/parsing session file '#{session_file}', remove session."
+      log('error', "error in reading/parsing session file '#{session_file}', remove session.")
       return
     end
     data
@@ -458,7 +458,7 @@ returns
         begin
           message_parsed = JSON.parse( spool['msg'] )
         rescue => e
-          Rails.logger.error "can't parse spool message: #{ message }, #{ e.inspect }"
+          log('error', "can't parse spool message: #{ message }, #{ e.inspect }")
           next
         end
 
@@ -535,7 +535,7 @@ returns
         @@client_threads[client_id] = Thread.new {
           thread_client(client_id)
           @@client_threads[client_id] = nil
-          Rails.logger.debug "close client (#{client_id}) thread"
+          log('debug', "close client (#{client_id}) thread")
           ActiveRecord::Base.connection.close
         }
         sleep 0.5
@@ -575,17 +575,17 @@ returns
 =end
 
   def self.thread_client(client_id, try_count = 0, try_run_time = Time.now.utc)
-    Rails.logger.debug "LOOP #{client_id} - #{try_count}"
+    log('debug', "LOOP #{client_id} - #{try_count}")
     begin
       Sessions::Client.new(client_id)
     rescue => e
-      Rails.logger.error "thread_client #{client_id} exited with error #{ e.inspect }"
-      Rails.logger.error e.backtrace.join("\n  ")
+      log('error', "thread_client #{client_id} exited with error #{ e.inspect }")
+      log('error', e.backtrace.join("\n  ") )
       sleep 10
       begin
         ActiveRecord::Base.connection_pool.release_connection
       rescue => e
-        Rails.logger.error "Can't reconnect to database #{ e.inspect }"
+        log('error', "Can't reconnect to database #{ e.inspect }")
       end
 
       try_run_max = 10
@@ -604,7 +604,7 @@ returns
         raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
       end
     end
-    Rails.logger.debug "/LOOP #{client_id} - #{try_count}"
+    log('debug', "/LOOP #{client_id} - #{try_count}")
   end
 
   def self.symbolize_keys(hash)
@@ -621,4 +621,18 @@ returns
     }
   end
 
+  # we use it in rails and non rails context
+  def self.log(level, message)
+    if defined?(Rails)
+      if level == 'debug'
+        Rails.logger.debug message
+      elsif level == 'notice'
+        Rails.logger.notice message
+      else
+        Rails.logger.error message
+      end
+      return
+    end
+    puts "#{Time.now.utc.iso8601}:#{level} #{message}" # rubocop:disable Rails/Output
+  end
 end
