@@ -22,6 +22,7 @@ class AgentUserManageTest < TestCase
     click( css: 'a[href="#new"]' )
     click( css: 'a[href="#ticket/create"]' )
     click( css: '.active .newTicket [name="customer_id_completion"]' )
+    sleep 1
     sendkey( value: :arrow_down )
     sleep 1
     click( css: '.active .newTicket .recipientList-entry.js-user-new' )
