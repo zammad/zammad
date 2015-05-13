@@ -55,7 +55,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_instance_preferences(local_browser)
-    local_browser.manage.window.resize_to(1024, 800)
+    local_browser.manage.window.resize_to(1024, 760)
     if ENV['REMOTE_URL'] !~ /saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i
       if @browsers.size < 1
         local_browser.manage.window.move_to(0, 0)
