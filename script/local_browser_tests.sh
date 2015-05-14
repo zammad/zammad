@@ -14,19 +14,25 @@ export RAILS_ENV=production
 
 bundle install
 
-rm -rf tmp/cache/file_store
+rm -rf tmp/screenshot*
+rm -rf tmp/cache*
 rm -f public/assets/*.css*
 rm -f public/assets/*.js*
 
-rake assets:precompile
+echo "rake assets:precompile"
+time rake assets:precompile
 
-rake db:drop
-rake db:create
-rake db:migrate
-rake db:seed
+echo "rake db:drop"
+time rake db:drop
+echo "rake db:create"
+time rake db:create
+echo "rake db:migrate"
+time rake db:migrate
+echo "rake db:seed"
+time rake db:seed
 
 # modify production.rb to serve assets
-cat config/environments/production.rb | sed -e 's/config.serve_static_assets = false/config.serve_static_assets = true/' > /tmp/production.rb && cp /tmp/production.rb config/environments/production.rb
+sed -i -e 's/config.serve_static_assets = false/config.serve_static_assets = true/' config/environments/production.rb
 
 # set system to develop mode
 rails r "Setting.set('developer_mode', true)"
@@ -36,15 +42,19 @@ script/websocket-server.rb stop
 
 pumactl start --pidfile tmp/pids/puma.pid -d -p 4444 -e $RAILS_ENV
 script/websocket-server.rb start -d
+script/scheduler.rb start
 
 sleep 15
 
-#export REMOTE_URL='http://medenhofer:765d0dd4-994b-4e15-9f89-13f3aedeb462@ondemand.saucelabs.com:80/wd/hub' BROWSER_OS='Windows 2012' BROWSER_VERSION=20 BROWSER=firefox
+#export REMOTE_URL='http://medenhofer:765d0dd4-994b-4e15-9f89-13f3aedeb462@ondemand.saucelabs.com:80/wd/hub' BROWSER_OS='Windows 2012' BROWSER_VERSION=35 BROWSER=firefox
+#export REMOTE_URL='http://192.168.178.32:4444/wd/hub'
+#export REMOTE_URL='http://192.168.178.45:4444/wd/hub'
 
 rake test:browser["BROWSER_URL=http://localhost:4444"]
+#rake test:browser["BROWSER_URL=http://localhost:4444 BROWSER=chrome"]
 #rake test:browser["BROWSER_URL=http://192.168.178.28:4444"]
 
-
+script/scheduler.rb stop
 script/websocket-server.rb stop
 pumactl --pidfile tmp/pids/puma.pid stop
 
